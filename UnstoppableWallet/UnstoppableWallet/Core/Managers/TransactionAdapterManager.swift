@@ -5,6 +5,7 @@ class TransactionAdapterManager {
     private let disposeBag = DisposeBag()
 
     private let adapterManager: AdapterManager
+    private let evmBlockchainManager: EvmBlockchainManager
     private let adapterFactory: AdapterFactory
 
     private let adaptersReadyRelay = PublishRelay<Void>()
@@ -12,8 +13,9 @@ class TransactionAdapterManager {
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions_adapter_manager", qos: .userInitiated)
     private var _adapterMap = [TransactionSource: ITransactionsAdapter]()
 
-    init(adapterManager: AdapterManager, adapterFactory: AdapterFactory) {
+    init(adapterManager: AdapterManager, evmBlockchainManager: EvmBlockchainManager, adapterFactory: AdapterFactory) {
         self.adapterManager = adapterManager
+        self.evmBlockchainManager = evmBlockchainManager
         self.adapterFactory = adapterFactory
 
         adapterManager.adaptersReadyObservable
@@ -36,13 +38,11 @@ class TransactionAdapterManager {
 
             let transactionsAdapter: ITransactionsAdapter?
 
-            switch source.blockchain {
-            case .evm(let blockchain):
-                transactionsAdapter = adapterFactory.evmTransactionsAdapter(transactionSource: wallet.transactionSource, blockchain: blockchain)
-            default:
+            if evmBlockchainManager.allBlockchains.contains(where: { $0.type == source.blockchainType }) {
+                transactionsAdapter = adapterFactory.evmTransactionsAdapter(transactionSource: source)
+            } else {
                 transactionsAdapter = adapter as? ITransactionsAdapter
             }
-
 
             if let transactionsAdapter = transactionsAdapter {
                 newAdapterMap[source] = transactionsAdapter

@@ -13,7 +13,7 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
     private let iconImageView = UIImageView()
 
     private let saveButtonHolder = BottomGradientHolder()
-    private let saveButton = ThemeButton()
+    private let saveButton = PrimaryButton()
 
     private var restoreModeViewItems = [BtcBlockchainSettingsViewModel.ViewItem]()
     private var transactionModeViewItems = [BtcBlockchainSettingsViewModel.ViewItem]()
@@ -37,7 +37,7 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
 
-        iconImageView.image = UIImage(named: viewModel.icon)
+        iconImageView.setImage(withUrlString: viewModel.iconUrl, placeholder: nil)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -48,8 +48,6 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         view.addSubview(saveButtonHolder)
         saveButtonHolder.snp.makeConstraints { maker in
@@ -60,10 +58,9 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
         saveButtonHolder.addSubview(saveButton)
         saveButton.snp.makeConstraints { maker in
             maker.edges.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        saveButton.apply(style: .primaryYellow)
+        saveButton.set(style: .yellow)
         saveButton.setTitle("button.save".localized, for: .normal)
         saveButton.addTarget(self, action: #selector(onTapSave), for: .touchUpInside)
 
@@ -116,26 +113,6 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
 
 extension BtcBlockchainSettingsViewController: SectionsDataSource {
 
-    private func footer(text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { $0.bind(text: text)},
-                dynamicHeight: { BottomDescriptionHeaderFooterView.height(containerWidth: $0, text: text) }
-        )
-    }
-
-    private func highlightedDescriptionRow(text: String) -> RowProtocol {
-        Row<HighlightedDescriptionCell>(
-                id: "restore-alert",
-                dynamicHeight: { width in
-                    HighlightedDescriptionCell.height(containerWidth: width, text: text)
-                },
-                bind: { cell, _ in
-                    cell.descriptionText = text
-                }
-        )
-    }
-
     private func row(id: String, viewItem: BtcBlockchainSettingsViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol {
         CellBuilder.selectableRow(
                 elements: [.multiText, .image20],
@@ -149,8 +126,10 @@ extension BtcBlockchainSettingsViewController: SectionsDataSource {
 
                     cell.bind(index: 0, block: { (component: MultiTextComponent) in
                         component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
+                        component.title.font = .body
+                        component.title.textColor = .themeLeah
+                        component.subtitle.font = .subhead2
+                        component.subtitle.textColor = .themeGray
 
                         component.title.text = viewItem.name
                         component.subtitle.text = viewItem.description
@@ -170,12 +149,13 @@ extension BtcBlockchainSettingsViewController: SectionsDataSource {
             Section(
                     id: "restore-alert",
                     rows: [
-                        highlightedDescriptionRow(text: "btc_blockchain_settings.restore_source.alert".localized(viewModel.title))
+                        tableView.highlightedDescriptionRow(id: "restore-alert", text: "btc_blockchain_settings.restore_source.alert".localized(viewModel.title))
                     ]
             ),
             Section(
                     id: "restore-mode",
-                    footerState: footer(text: "btc_blockchain_settings.restore_source.description".localized),
+                    headerState: .margin(height: .margin12),
+                    footerState: tableView.sectionFooter(text: "btc_blockchain_settings.restore_source.description".localized),
                     rows: [
                         tableView.subtitleWithInfoButtonRow(text: "btc_blockchain_settings.restore_source".localized) { [weak self] in
                             self?.openRestoreModeInfo()
@@ -188,7 +168,7 @@ extension BtcBlockchainSettingsViewController: SectionsDataSource {
             ),
             Section(
                     id: "transaction-mode",
-                    footerState: footer(text: "btc_blockchain_settings.transaction_inputs_outputs.description".localized(viewModel.title)),
+                    footerState: tableView.sectionFooter(text: "btc_blockchain_settings.transaction_inputs_outputs.description".localized(viewModel.title)),
                     rows: [
                         tableView.subtitleWithInfoButtonRow(text: "btc_blockchain_settings.transaction_inputs_outputs".localized) { [weak self] in
                             self?.openTransactionModeInfo()

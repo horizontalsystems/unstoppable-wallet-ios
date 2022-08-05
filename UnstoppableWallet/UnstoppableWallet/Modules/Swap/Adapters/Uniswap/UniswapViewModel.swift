@@ -144,10 +144,10 @@ class UniswapViewModel {
 
     private func tradeViewItem(trade: UniswapTradeService.Trade) -> TradeViewItem {
         TradeViewItem(
-                executionPrice: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)?.formattedFull,
-                executionPriceInverted: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPriceInverted, platformCoinIn: tradeService.platformCoinOut, platformCoinOut: tradeService.platformCoinIn)?.formattedFull,
+                executionPrice: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, tokenIn: tradeService.tokenIn, tokenOut: tradeService.tokenOut)?.formattedFull,
+                executionPriceInverted: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPriceInverted, tokenIn: tradeService.tokenOut, tokenOut: tradeService.tokenIn)?.formattedFull,
                 priceImpact: viewItemHelper.priceImpactViewItem(trade: trade, minLevel: .warning),
-                guaranteedAmount: viewItemHelper.guaranteedAmountViewItem(tradeData: trade.tradeData, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)
+                guaranteedAmount: viewItemHelper.guaranteedAmountViewItem(tradeData: trade.tradeData, tokenIn: tradeService.tokenIn, tokenOut: tradeService.tokenOut)
         )
     }
 
@@ -232,7 +232,7 @@ extension UniswapViewModel {
                 slippage: viewItemHelper.slippage(tradeService.settings.allowedSlippage),
                 deadline: viewItemHelper.deadline(tradeService.settings.ttl),
                 recipientDomain: tradeService.settings.recipient?.domain,
-                price: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, platformCoinIn: tradeService.platformCoinIn, platformCoinOut: tradeService.platformCoinOut)?.formattedFull,
+                price: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, tokenIn: tradeService.tokenIn, tokenOut: tradeService.tokenOut)?.formattedFull,
                 priceImpact: viewItemHelper.priceImpactViewItem(trade: trade)
         )
 

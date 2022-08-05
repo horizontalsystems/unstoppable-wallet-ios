@@ -856,6 +856,7 @@
 
 // Settings -> Privacy
 
+
 "settings.privacy.description" = "Unstoppable не собирает данные и не использует инструменты аналитики, которые могут раскрывать любые данные о своих пользователях. Кошелек разработан для обеспечения высокого уровня конфиденциальности для своих пользователей.";
 "settings.privacy.statement.user_data_storage" = "Данные пользователя всегда остаются на устройстве пользователя.";
 "settings.privacy.statement.data_usage" = "Кошелек не собирает никаких данных о пользователях.";
@@ -1210,4 +1211,5 @@
 "nft.activity.event_type.payout" = "Выплата";
 "nft.activity.event_type.cancel" = "Отменить";
 "nft.activity.event_type.bulkCancel" = "Массовая Отмена";
+
 "nft.activity.event_type.unknown" = "Неизвестная";

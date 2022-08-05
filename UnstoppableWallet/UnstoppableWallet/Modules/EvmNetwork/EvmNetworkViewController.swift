@@ -34,7 +34,7 @@ class EvmNetworkViewController: ThemeViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
 
-        iconImageView.image = UIImage(named: viewModel.icon)
+        iconImageView.setImage(withUrlString: viewModel.iconUrl, placeholder: nil)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -89,8 +89,10 @@ extension EvmNetworkViewController: SectionsDataSource {
 
                     cell.bind(index: 0, block: { (component: MultiTextComponent) in
                         component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
+                        component.title.font = .body
+                        component.title.textColor = .themeLeah
+                        component.subtitle.font = .subhead2
+                        component.subtitle.textColor = .themeGray
 
                         component.title.text = viewItem.name
                         component.subtitle.text = viewItem.url

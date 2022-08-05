@@ -21,7 +21,11 @@ class MarketOverviewTopPlatformsDataSource: BaseMarketOverviewTopListDataSource 
     }
 
     override func onSelect(listViewItem: MarketModule.ListViewItem) {
-        print("onSelect(listViewItem")
+        guard let uid = listViewItem.uid, let topPlatform = viewModel.topPlatform(uid: uid) else {
+            return
+        }
+
+        presentDelegate?.present(viewController: TopPlatformModule.viewController(topPlatform: topPlatform))
     }
 
 }

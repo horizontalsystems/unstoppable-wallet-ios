@@ -56,7 +56,7 @@ class NftCollectionOverviewViewModel {
 
     private func contractViewItem(contract: NftCollection.Contract) -> ContractViewItem {
         ContractViewItem(
-                iconName: "ethereum_24",
+                iconUrl: BlockchainType.ethereum.imageUrl,
                 reference: contract.address,
                 explorerUrl: "https://etherscan.io/token/\(contract.address)"
         )
@@ -98,8 +98,8 @@ class NftCollectionOverviewViewModel {
         let diff = DiffLabel.formatted(value: diffValue)
         let diffColor = DiffLabel.color(value: diffValue)
 
-        let value: String? = first.coin.flatMap {
-            let coinValue = CoinValue(kind: .platformCoin(platformCoin: $0), value: last.value)
+        let value: String? = first.token.flatMap {
+            let coinValue = CoinValue(kind: .token(token: $0), value: last.value)
             return ValueFormatter.instance.formatShort(coinValue: coinValue)
         }
 
@@ -136,7 +136,7 @@ class NftCollectionOverviewViewModel {
         let value = ValueFormatter.instance.formatShort(value: last.value, decimalCount: 0, symbol: "NFT")
 
         let averageValue: String? = averagePrice.flatMap {
-            let coinValue = CoinValue(kind: .platformCoin(platformCoin: $0.platformCoin), value: $0.value)
+            let coinValue = CoinValue(kind: .token(token: $0.token), value: $0.value)
             return ValueFormatter.instance.formatShort(coinValue: coinValue)
         }
         let additional = averageValue.map { "~\($0) / NFT" }
@@ -197,7 +197,7 @@ extension NftCollectionOverviewViewModel {
     }
 
     struct ContractViewItem {
-        let iconName: String
+        let iconUrl: String
         let reference: String
         let explorerUrl: String
     }

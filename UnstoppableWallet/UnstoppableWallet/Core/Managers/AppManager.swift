@@ -16,8 +16,7 @@ class AppManager {
     private let logRecordManager: LogRecordManager
     private let deepLinkManager: DeepLinkManager
     private let evmLabelManager: EvmLabelManager
-    private let restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker
-    private let fillWalletInfoWorker: FillWalletInfoWorker
+    private let walletConnectV2SocketConnectionService: WalletConnectV2SocketConnectionService
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
@@ -28,7 +27,7 @@ class AppManager {
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
          logRecordManager: LogRecordManager,
          deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager,
-         restoreFavoriteCoinWorker: RestoreFavoriteCoinWorker, fillWalletInfoWorker: FillWalletInfoWorker
+         walletConnectV2SocketConnectionService: WalletConnectV2SocketConnectionService
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -43,8 +42,7 @@ class AppManager {
         self.logRecordManager = logRecordManager
         self.deepLinkManager = deepLinkManager
         self.evmLabelManager = evmLabelManager
-        self.restoreFavoriteCoinWorker = restoreFavoriteCoinWorker
-        self.fillWalletInfoWorker = fillWalletInfoWorker
+        self.walletConnectV2SocketConnectionService = walletConnectV2SocketConnectionService
     }
 
 }
@@ -64,9 +62,6 @@ extension AppManager {
         rateAppManager.onLaunch()
 
         evmLabelManager.sync()
-
-        try? restoreFavoriteCoinWorker.run()
-        try? fillWalletInfoWorker.run()
     }
 
     func willResignActive() {
@@ -86,6 +81,7 @@ extension AppManager {
         debugBackgroundLogger?.logEnterBackground()
 
         pinKit.didEnterBackground()
+        walletConnectV2SocketConnectionService.didEnterBackground()
     }
 
     func willEnterForeground() {
@@ -98,6 +94,7 @@ extension AppManager {
         keychainKit.handleForeground()
         pinKit.willEnterForeground()
         adapterManager.refresh()
+        walletConnectV2SocketConnectionService.willEnterForeground()
     }
 
     func willTerminate() {

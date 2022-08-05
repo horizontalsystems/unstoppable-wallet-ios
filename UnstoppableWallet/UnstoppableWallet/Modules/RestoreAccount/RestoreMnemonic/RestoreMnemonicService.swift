@@ -4,9 +4,7 @@ import RxSwift
 import RxRelay
 
 class RestoreMnemonicService {
-    private let wordsManager: WordsManager
-
-    private let wordList = Mnemonic.wordList(for: .english).map(String.init)
+    private let wordList: [String]
     private let passphraseEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let passphraseValidator: PassphraseValidator
 
@@ -14,9 +12,14 @@ class RestoreMnemonicService {
     let defaultName: String
     private var name: String = ""
 
-    init(accountFactory: AccountFactory, wordsManager: WordsManager, passphraseValidator: PassphraseValidator) {
-        self.wordsManager = wordsManager
+    init(accountFactory: AccountFactory, passphraseValidator: PassphraseValidator) {
         self.passphraseValidator = passphraseValidator
+
+        wordList = Mnemonic.Language.allCases.reduce([String]()) { array, language in
+            var array = array
+            array.append(contentsOf: Mnemonic.wordList(for: language).map(String.init))
+            return array
+        }
 
         defaultName = accountFactory.nextAccountName
     }
@@ -58,15 +61,20 @@ extension RestoreMnemonicService {
     }
 
     func accountType(words: [String]) throws -> AccountType {
+        var errors = [Error]()
         if passphraseEnabled, passphrase.isEmpty {
-            throw RestoreError.emptyPassphrase
+            errors.append(RestoreError.emptyPassphrase)
         }
 
-        guard words.count == 12 || words.count == 24 else {
-            throw ValidationError.invalidWordsCount(count: words.count)
+        do {
+            try Mnemonic.validate(words: words)
+        } catch {
+            errors.append(error)
         }
 
-        try Mnemonic.validate(words: words)
+        guard errors.isEmpty else {
+            throw ErrorList.errors(errors)
+        }
 
         return .mnemonic(words: words, salt: passphrase)
     }
@@ -79,16 +87,8 @@ extension RestoreMnemonicService {
         case emptyPassphrase
     }
 
-    enum ValidationError: LocalizedError {
-        case invalidWordsCount(count: Int)
-
-        public var errorDescription: String? {
-            switch self {
-            case .invalidWordsCount(let count):
-                return "restore_error.mnemonic_word_count".localized("\(count)")
-            }
-        }
-
+    enum ErrorList: Error {
+        case errors([Error])
     }
 
 }

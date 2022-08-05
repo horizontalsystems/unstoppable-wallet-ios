@@ -1,12 +1,13 @@
 import RxSwift
 import RxRelay
 import EthereumKit
+import MarketKit
 
 class EvmSyncSourceManager {
     private let appConfigProvider: AppConfigProvider
     private let storage: BlockchainSettingsStorage
 
-    private let syncSourceRelay = PublishRelay<EvmBlockchain>()
+    private let syncSourceRelay = PublishRelay<BlockchainType>()
     let infuraRpcSource: RpcSource
 
     init(appConfigProvider: AppConfigProvider, storage: BlockchainSettingsStorage) {
@@ -16,8 +17,8 @@ class EvmSyncSourceManager {
         infuraRpcSource = .ethereumInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret)
     }
 
-    private func defaultSyncSources(blockchain: EvmBlockchain) -> [EvmSyncSource] {
-        switch blockchain {
+    private func defaultSyncSources(blockchainType: BlockchainType) -> [EvmSyncSource] {
+        switch blockchainType {
         case .ethereum:
             return [
                 EvmSyncSource(
@@ -57,12 +58,20 @@ class EvmSyncSourceManager {
                         transactionSource: .polygonscan(apiKey: appConfigProvider.polygonscanKey)
                 )
             ]
+        case .avalanche:
+            return [
+                EvmSyncSource(
+                        name: "Avax.network HTTP",
+                        rpcSource: .avaxNetworkHttp(),
+                        transactionSource: .snowtrace(apiKey: appConfigProvider.snowtraceKey)
+                )
+            ]
         case .optimism:
             return [
                 EvmSyncSource(
                         name: "Optimism.io HTTP",
                         rpcSource: .optimismRpcHttp(),
-                        transactionSource: .optimisticEtherscan(apiKey: "")
+                        transactionSource: .optimisticEtherscan(apiKey: appConfigProvider.optimismEtherscanKey)
                 )
             ]
         case .arbitrumOne:
@@ -70,9 +79,11 @@ class EvmSyncSourceManager {
                 EvmSyncSource(
                         name: "Arbitrum.io HTTP",
                         rpcSource: .arbitrumOneRpcHttp(),
-                        transactionSource: .arbiscan(apiKey: "")
+                        transactionSource: .arbiscan(apiKey: appConfigProvider.arbiscanKey)
                 )
             ]
+        default:
+            return []
         }
     }
 
@@ -80,29 +91,29 @@ class EvmSyncSourceManager {
 
 extension EvmSyncSourceManager {
 
-    var syncSourceObservable: Observable<EvmBlockchain> {
+    var syncSourceObservable: Observable<BlockchainType> {
         syncSourceRelay.asObservable()
     }
 
-    func allSyncSources(blockchain: EvmBlockchain) -> [EvmSyncSource] {
-        defaultSyncSources(blockchain: blockchain)
+    func allSyncSources(blockchainType: BlockchainType) -> [EvmSyncSource] {
+        defaultSyncSources(blockchainType: blockchainType)
 
         // todo: load custom network from DB
     }
 
-    func syncSource(blockchain: EvmBlockchain) -> EvmSyncSource {
-        let syncSources = allSyncSources(blockchain: blockchain)
+    func syncSource(blockchainType: BlockchainType) -> EvmSyncSource {
+        let syncSources = allSyncSources(blockchainType: blockchainType)
 
-        if let name = storage.evmSyncSourceName(evmBlockchain: blockchain), let syncSource = syncSources.first(where: { $0.name == name }) {
+        if let name = storage.evmSyncSourceName(blockchainType: blockchainType), let syncSource = syncSources.first(where: { $0.name == name }) {
             return syncSource
         }
 
         return syncSources[0]
     }
 
-    func save(syncSource: EvmSyncSource, blockchain: EvmBlockchain) {
-        storage.save(evmSyncSourceName: syncSource.name, evmBlockchain: blockchain)
-        syncSourceRelay.accept(blockchain)
+    func save(syncSource: EvmSyncSource, blockchainType: BlockchainType) {
+        storage.save(evmSyncSourceName: syncSource.name, blockchainType: blockchainType)
+        syncSourceRelay.accept(blockchainType)
     }
 
 }

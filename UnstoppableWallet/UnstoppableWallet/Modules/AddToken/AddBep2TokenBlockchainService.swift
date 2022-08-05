@@ -7,9 +7,15 @@ import MarketKit
 class AddBep2TokenBlockchainService {
     private let apiUrl = "https://markets-dev.horizontalsystems.xyz"
 
+    private let blockchain: Blockchain
     private let networkManager: NetworkManager
 
-    init(networkManager: NetworkManager) {
+    init?(marketKit: MarketKit.Kit, networkManager: NetworkManager) {
+        guard let blockchain = try? marketKit.blockchain(uid: BlockchainType.binanceChain.uid) else {
+            return nil
+        }
+
+        self.blockchain = blockchain
         self.networkManager = networkManager
     }
 
@@ -25,25 +31,28 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
         return regex.firstMatch(in: reference, range: NSRange(location: 0, length: reference.count)) != nil
     }
 
-    func coinType(reference: String) -> CoinType {
-        .bep2(symbol: reference.uppercased())
+    func tokenQuery(reference: String) -> TokenQuery {
+        TokenQuery(blockchainType: blockchain.type, tokenType: .bep2(symbol: reference.uppercased()))
     }
 
-    func customCoinSingle(reference: String) -> Single<AddTokenModule.CustomCoin> {
+    func tokenSingle(reference: String) -> Single<Token> {
         let reference = reference.uppercased()
 
         let parameters: Parameters = [
+            "blockchain": blockchain.uid,
             "symbol": reference
         ]
 
         let url = "\(apiUrl)/v1/token_info/bep2"
         let request = networkManager.session.request(url, parameters: parameters)
+        let tokenQuery = tokenQuery(reference: reference)
+        let blockchain = blockchain
 
         return networkManager.single(request: request).map { (tokenInfo: TokenInfo) in
-            AddTokenModule.CustomCoin(
-                    type: .bep2(symbol: reference),
-                    name: tokenInfo.name,
-                    code: tokenInfo.originalSymbol,
+            Token(
+                    coin: Coin(uid: tokenQuery.customCoinUid, name: tokenInfo.name, code: tokenInfo.originalSymbol),
+                    blockchain: blockchain,
+                    type: tokenQuery.tokenType,
                     decimals: tokenInfo.decimals
             )
         }

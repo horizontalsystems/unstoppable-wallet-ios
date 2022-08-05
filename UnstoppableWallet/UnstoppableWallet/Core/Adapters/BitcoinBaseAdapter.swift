@@ -25,13 +25,13 @@ class BitcoinBaseAdapter {
     }
     private(set) var transactionState: AdapterState
 
-    private let coin: PlatformCoin
+    private let token: Token
     private let transactionSource: TransactionSource
 
     init(abstractKit: AbstractKit, wallet: Wallet, testMode: Bool) {
         self.abstractKit = abstractKit
         self.testMode = testMode
-        coin = wallet.platformCoin
+        token = wallet.token
         transactionSource = wallet.transactionSource
 
         balanceState = .notSynced(error: AppError.unknownError)
@@ -71,7 +71,7 @@ class BitcoinBaseAdapter {
         switch transaction.type {
         case .incoming:
             return BitcoinIncomingTransactionRecord(
-                    coin: coin,
+                    token: token,
                     source: transactionSource,
                     uid: transaction.uid,
                     transactionHash: transaction.transactionHash,
@@ -89,7 +89,7 @@ class BitcoinBaseAdapter {
             )
         case .outgoing:
             return BitcoinOutgoingTransactionRecord(
-                    coin: coin,
+                    token: token,
                     source: transactionSource,
                     uid: transaction.uid,
                     transactionHash: transaction.transactionHash,
@@ -108,7 +108,7 @@ class BitcoinBaseAdapter {
             )
         case .sentToSelf:
             return BitcoinOutgoingTransactionRecord(
-                    coin: coin,
+                    token: token,
                     source: transactionSource,
                     uid: transaction.uid,
                     transactionHash: transaction.transactionHash,
@@ -339,7 +339,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
         lastBlockUpdatedSubject.asObservable()
     }
 
-    func transactionsObservable(coin: PlatformCoin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+    func transactionsObservable(token: Token?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
         transactionRecordsSubject.asObservable()
                 .map { transactions in
                     transactions.compactMap { transaction -> TransactionRecord? in
@@ -355,7 +355,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
                 .filter { !$0.isEmpty }
     }
 
-    func transactionsSingle(from: TransactionRecord?, coin: PlatformCoin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, token: Token?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
         let bitcoinFilter: TransactionFilterType?
         switch filter {
         case .all: bitcoinFilter = nil

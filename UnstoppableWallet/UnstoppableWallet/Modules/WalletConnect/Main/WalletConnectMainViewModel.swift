@@ -12,6 +12,7 @@ class WalletConnectMainViewModel {
 
     private let showErrorRelay = PublishRelay<String>()
     private let showSuccessRelay = PublishRelay<()>()
+    private let showDisconnectRelay = PublishRelay<()>()
     private let connectingRelay = BehaviorRelay<Bool>(value: false)
     private let cancelVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let connectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
@@ -57,13 +58,18 @@ class WalletConnectMainViewModel {
         )
     }
 
-    private func sync(state: WalletConnectMainModule.State? = nil, connectionState: WalletConnectMainModule.ConnectionState? = nil, allowedBlockchains: [WalletConnectMainModule.Blockchain]? = nil) {
+    private func sync(state: WalletConnectMainModule.State? = nil, connectionState: WalletConnectMainModule.ConnectionState? = nil, allowedBlockchains: [WalletConnectMainModule.BlockchainItem]? = nil) {
         let state = state ?? service.state
         let connectionState = connectionState ?? service.connectionState
         let allowedBlockchains = allowedBlockchains ?? service.allowedBlockchains
 
-        guard state != .killed else {
-            showSuccessRelay.accept(())
+        if case let .killed(reason) = state {
+//            showSuccessRelay.accept(())
+            switch reason {
+            case .rejectProposal: ()
+            case .killSession, .rejectSession: showDisconnectRelay.accept(())
+            }
+
             finishRelay.accept(())
             return
         }
@@ -87,12 +93,12 @@ class WalletConnectMainViewModel {
 
         blockchainViewItemRelay.accept(
                 allowedBlockchains
-                        .map { blockchain in
+                        .map { item in
                             BlockchainViewItem(
-                                    chainId: blockchain.chainId,
-                                    chainTitle: blockchain.evmBlockchain.name,
-                                    address: blockchain.address.shortenedAddress,
-                                    selected: blockchain.selected
+                                    chainId: item.chainId,
+                                    chainTitle: item.blockchain.name,
+                                    address: item.address.shortened,
+                                    selected: item.selected
                             )
                         }
         )
@@ -127,6 +133,10 @@ extension WalletConnectMainViewModel {
 
     var showSuccessSignal: Signal<()> {
         showSuccessRelay.asSignal()
+    }
+
+    var showDisconnectSignal: Signal<()> {
+        showDisconnectRelay.asSignal()
     }
 
     var connectingDriver: Driver<Bool> {
@@ -263,6 +273,7 @@ extension WalletConnectMainModule.SessionError: LocalizedError {
 
     public var errorDescription: String? {
         switch self {
+        case .noAnySupportedChainId: return "wallet_connect.main.no_any_supported_chains".localized
         case .unsupportedChainId: return "wallet_connect.main.unsupported_chains".localized
         default: return nil
         }

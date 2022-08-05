@@ -3,12 +3,12 @@ import BigInt
 import MarketKit
 
 class CoinService {
-    let platformCoin: PlatformCoin
+    let token: Token
     private let currencyKit: CurrencyKit.Kit
     private let marketKit: MarketKit.Kit
 
-    init(platformCoin: PlatformCoin, currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
-        self.platformCoin = platformCoin
+    init(token: Token, currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
+        self.token = token
         self.currencyKit = currencyKit
         self.marketKit = marketKit
     }
@@ -20,14 +20,14 @@ extension CoinService {
     var rate: CurrencyValue? {
         let baseCurrency = currencyKit.baseCurrency
 
-        return marketKit.coinPrice(coinUid: platformCoin.coin.uid, currencyCode: baseCurrency.code).map { coinPrice in
+        return marketKit.coinPrice(coinUid: token.coin.uid, currencyCode: baseCurrency.code).map { coinPrice in
             CurrencyValue(currency: baseCurrency, value: coinPrice.value)
         }
     }
 
     func coinValue(value: BigUInt) -> CoinValue {
-        let decimalValue = Decimal(bigUInt: value, decimals: platformCoin.decimals) ?? 0
-        return CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: decimalValue)
+        let decimalValue = Decimal(bigUInt: value, decimals: token.decimals) ?? 0
+        return CoinValue(kind: .token(token: token), value: decimalValue)
     }
 
     // Example: Dollar, Bitcoin, Ether, etc
@@ -37,12 +37,12 @@ extension CoinService {
 
     // Example: Cent, Satoshi, GWei, etc
     func fractionalMonetaryValue(value: Decimal) -> BigUInt {
-        BigUInt(value.roundedString(decimal: platformCoin.decimals)) ?? 0
+        BigUInt(value.roundedString(decimal: token.decimals)) ?? 0
     }
 
     func amountData(value: Decimal, sign: FloatingPointSign) -> AmountData {
         AmountData(
-                coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: Decimal(sign: sign, exponent: value.exponent, significand: value.significand)),
+                coinValue: CoinValue(kind: .token(token: token), value: Decimal(sign: sign, exponent: value.exponent, significand: value.significand)),
                 currencyValue: rate.map {
                     CurrencyValue(currency: $0.currency, value: $0.value * value)
                 }
@@ -50,7 +50,7 @@ extension CoinService {
     }
 
     func amountData(value: BigUInt, sign: FloatingPointSign = .plus) -> AmountData {
-        amountData(value: Decimal(bigUInt: value, decimals: platformCoin.decimals) ?? 0, sign: sign)
+        amountData(value: Decimal(bigUInt: value, decimals: token.decimals) ?? 0, sign: sign)
     }
 
 }

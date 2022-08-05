@@ -29,51 +29,37 @@ class UnlinkWatchViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.onTapClose = { [weak self] in self?.dismiss(animated: true) }
-        titleView.bind(
-                title: "settings_manage_keys.delete.title".localized,
-                subtitle: viewModel.accountName,
-                image: UIImage(named: "warning_2_24"),
-                tintColor: .themeLucian
-        )
+        titleView.title = "settings_manage_keys.delete.title".localized
+        titleView.image = UIImage(named: "trash_24")?.withTintColor(.themeLucian)
+        titleView.onTapClose = { [weak self] in
+            self?.dismiss(animated: true)
+        }
 
         let descriptionView = HighlightedDescriptionView()
 
         view.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
+            maker.top.equalTo(titleView.snp.bottom)
         }
 
         descriptionView.text = "settings_manage_keys.delete.confirmation_watch".localized
 
-        let separatorView = UIView()
-
-        view.addSubview(separatorView)
-        separatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin12)
-            maker.height.equalTo(CGFloat.heightOneDp)
-        }
-
-        separatorView.backgroundColor = .themeSteel10
-
-        let deleteButton = ThemeButton()
+        let deleteButton = PrimaryButton()
 
         view.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(separatorView.snp.bottom).offset(CGFloat.margin16)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin24)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
-        deleteButton.apply(style: .primaryRed)
+        deleteButton.set(style: .red)
         deleteButton.setTitle("settings_manage_keys.delete.confirmation_watch.button".localized, for: .normal)
         deleteButton.addTarget(self, action: #selector(onTapDeleteButton), for: .touchUpInside)
 
         subscribe(disposeBag, viewModel.successSignal) { [weak self] in
-            HudHelper.instance.showSuccess(title: "alert.success_action".localized)
+            HudHelper.instance.show(banner: .deleted)
             self?.dismiss(animated: true)
         }
     }

@@ -1,11 +1,12 @@
-import EthereumKit
-import MarketKit
-import RxSwift
-import RxCocoa
 import BigInt
+import EthereumKit
+import Foundation
+import MarketKit
+import RxCocoa
+import RxSwift
 
 class LegacyGasPriceService {
-    private static let gasPriceSafeRangeBounds = RangeBounds(lower: .distance(1_000_000_000), upper: .distance(1_000_000_000))
+    private static let gasPriceSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))
     private static let gasPriceAvailableRangeBounds = RangeBounds(lower: .factor(0.6), upper: .factor(3))
 
     private var disposeBag = DisposeBag()
@@ -14,7 +15,7 @@ class LegacyGasPriceService {
     private let gasPriceProvider: LegacyGasPriceProvider
     private let minRecommendedGasPrice: Int?
 
-    private var recommendedGasPrice: Int = 0
+    private(set) var recommendedGasPrice: Int = 0
     private var legacyGasPrice: Int = 0 {
         didSet {
             sync()
@@ -53,22 +54,18 @@ class LegacyGasPriceService {
         }
 
         status = .completed(FallibleData(
-                data: .legacy(gasPrice: legacyGasPrice), errors: [], warnings: warnings
+            data: .legacy(gasPrice: legacyGasPrice), errors: [], warnings: warnings
         ))
     }
-
 }
 
 extension LegacyGasPriceService: IGasPriceService {
-
     var statusObservable: Observable<DataStatus<FallibleData<GasPrice>>> {
         statusRelay.asObservable()
     }
-
 }
 
 extension LegacyGasPriceService {
-
     var gasPriceRange: ClosedRange<Int> {
         Self.gasPriceAvailableRangeBounds.range(around: recommendedGasPrice)
     }
@@ -88,20 +85,20 @@ extension LegacyGasPriceService {
         status = .loading
 
         gasPriceProvider.gasPriceSingle()
-                .subscribe(
-                        onSuccess: { [weak self] gasPrice in
-                            self?.recommendedGasPrice = gasPrice
-                            if let minRecommendedGasPrice = self?.minRecommendedGasPrice {
-                                self?.recommendedGasPrice = max(gasPrice, minRecommendedGasPrice)
-                            }
-                            self?.legacyGasPrice = initialGasPrice ?? gasPrice
-                            self?.usingRecommended = true
-                        },
-                        onError: { [weak self] error in
-                            self?.status = .failed(error)
-                        }
-                )
-                .disposed(by: disposeBag)
+            .subscribe(
+                onSuccess: { [weak self] gasPrice in
+                    self?.recommendedGasPrice = gasPrice
+                    if let minRecommendedGasPrice = self?.minRecommendedGasPrice {
+                        self?.recommendedGasPrice = max(gasPrice, minRecommendedGasPrice)
+                    }
+                    self?.legacyGasPrice = initialGasPrice ?? gasPrice
+                    self?.usingRecommended = true
+                },
+                onError: { [weak self] error in
+                    self?.status = .failed(error)
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
 }

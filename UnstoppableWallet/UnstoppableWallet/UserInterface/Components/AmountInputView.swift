@@ -59,7 +59,7 @@ class AmountInputView: UIView {
 
         secondaryButton.titleLabel?.font = .subhead2
         secondaryButton.contentHorizontalAlignment = .leading
-        secondaryButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: .margin12, bottom: 0, right: .margin12)
+        secondaryButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16)
         secondaryButton.setTitleColor(.themeBran, for: .normal)
         secondaryButton.setTitleColor(.themeGray50, for: .disabled)
         secondaryButton.addTarget(self, action: #selector(onTapSecondaryButton), for: .touchUpInside)
@@ -88,7 +88,7 @@ class AmountInputView: UIView {
             self?.handleChange(text: nil)
         }
 
-        inputStackView.prependSubview(prefixView, customSpacing: 0)
+        inputStackView.prependSubview(prefixView, customSpacing: .margin4)
         inputStackView.appendSubview(estimatedView)
         inputStackView.appendSubview(maxView)
         inputStackView.appendSubview(clearView)

@@ -28,8 +28,6 @@ class App {
     let reachabilityManager: IReachabilityManager
     let networkManager: NetworkManager
 
-    let wordsManager: WordsManager
-
     let accountManager: AccountManager
     let accountFactory: AccountFactory
     let backupManager: BackupManager
@@ -41,6 +39,7 @@ class App {
     let walletManager: WalletManager
     let adapterManager: AdapterManager
     let transactionAdapterManager: TransactionAdapterManager
+    let watchAddressBlockchainManager: WatchAddressBlockchainManager
 
     let enabledWalletCacheManager: EnabledWalletCacheManager
 
@@ -53,6 +52,7 @@ class App {
     let evmBlockchainManager: EvmBlockchainManager
 
     let restoreSettingsManager: RestoreSettingsManager
+    let predefinedBlockchainService: PredefinedBlockchainService
 
     private let testModeIndicator: TestModeIndicator
 
@@ -76,6 +76,7 @@ class App {
     let termsManager: TermsManager
 
     let walletConnectSessionManager: WalletConnectSessionManager
+    let walletConnectV2SocketConnectionService: WalletConnectV2SocketConnectionService
     let walletConnectV2SessionManager: WalletConnectV2SessionManager
     let walletConnectManager: WalletConnectManager
 
@@ -85,6 +86,7 @@ class App {
     let nftManager: NftManager
 
     let balancePrimaryValueManager: BalancePrimaryValueManager
+    let balanceHiddenManager: BalanceHiddenManager
     let balanceConversionManager: BalanceConversionManager
 
     let appIconManager = AppIconManager()
@@ -135,8 +137,6 @@ class App {
         pasteboardManager = PasteboardManager()
         reachabilityManager = ReachabilityManager()
 
-        wordsManager = WordsManager()
-
         let accountRecordStorage = AccountRecordStorage(dbPool: dbPool)
         let accountStorage = AccountStorage(secureStorage: keychainKit.secureStorage, storage: accountRecordStorage)
         let activeAccountStorage = ActiveAccountStorage(dbPool: dbPool)
@@ -155,7 +155,7 @@ class App {
 
         let blockchainSettingRecordStorage = try! BlockchainSettingRecordStorage(dbPool: dbPool)
         let blockchainSettingsStorage = BlockchainSettingsStorage(storage: blockchainSettingRecordStorage)
-        btcBlockchainManager = BtcBlockchainManager(storage: blockchainSettingsStorage)
+        btcBlockchainManager = BtcBlockchainManager(marketKit: marketKit, storage: blockchainSettingsStorage)
 
         evmSyncSourceManager = EvmSyncSourceManager(appConfigProvider: appConfigProvider, storage: blockchainSettingsStorage)
 
@@ -168,6 +168,7 @@ class App {
 
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)
+        predefinedBlockchainService = PredefinedBlockchainService(restoreSettingsManager: restoreSettingsManager)
 
         let hsLabelProvider = HsLabelProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
         let evmLabelStorage = EvmLabelStorage(dbPool: dbPool)
@@ -192,7 +193,14 @@ class App {
         )
         transactionAdapterManager = TransactionAdapterManager(
                 adapterManager: adapterManager,
+                evmBlockchainManager: evmBlockchainManager,
                 adapterFactory: adapterFactory
+        )
+        watchAddressBlockchainManager = WatchAddressBlockchainManager(
+                marketKit: marketKit,
+                walletManager: walletManager,
+                accountManager: accountManager,
+                evmBlockchainManager: evmBlockchainManager
         )
 
         let enabledWalletCacheStorage = EnabledWalletCacheStorage(dbPool: dbPool)
@@ -211,7 +219,19 @@ class App {
 
         let appVersionRecordStorage = AppVersionRecordStorage(dbPool: dbPool)
         let appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)
-        appStatusManager = AppStatusManager(systemInfoManager: systemInfoManager, storage: appVersionStorage, accountManager: accountManager, walletManager: walletManager, adapterManager: adapterManager, logRecordManager: logRecordManager, restoreSettingsManager: restoreSettingsManager)
+
+        appStatusManager = AppStatusManager(
+                systemInfoManager: systemInfoManager,
+                storage: appVersionStorage,
+                accountManager: accountManager,
+                walletManager: walletManager,
+                adapterManager: adapterManager,
+                logRecordManager: logRecordManager,
+                restoreSettingsManager: restoreSettingsManager,
+                evmBlockchainManager: evmBlockchainManager,
+                binanceKitManager: binanceKitManager
+        )
+
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, storage: appVersionStorage)
 
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
@@ -232,14 +252,18 @@ class App {
         let walletClientInfo = WalletConnectClientInfo(
                 projectId: appConfigProvider.walletConnectV2ProjectKey ?? "c4f79cc821944d9680842e34466bfb",
                 relayHost: "relay.walletconnect.com",
-                clientName: "io.horizontalsystems.bank.dev",
                 name: "Unstoppable Wallet",
-                description: nil,
+                description: "Wallet App",
                 url: appConfigProvider.companyWebPageLink,
                 icons: []
         )
 
-        let walletConnectV2Service = WalletConnectV2Service(info: walletClientInfo)
+        walletConnectV2SocketConnectionService = WalletConnectV2SocketConnectionService(reachabilityManager: reachabilityManager, logger: logger)
+        let walletConnectV2Service = WalletConnectV2Service(
+                connectionService: walletConnectV2SocketConnectionService,
+                info: walletClientInfo,
+                logger: logger
+        )
         let walletConnectV2SessionStorage = WalletConnectV2SessionStorage(dbPool: dbPool)
         walletConnectV2SessionManager = WalletConnectV2SessionManager(service: walletConnectV2Service, storage: walletConnectV2SessionStorage, accountManager: accountManager, currentDateProvider: CurrentDateProvider())
 
@@ -251,25 +275,12 @@ class App {
         nftManager = NftManager(accountManager: accountManager, evmBlockchainManager: evmBlockchainManager, storage: nftStorage, marketKit: marketKit)
 
         balancePrimaryValueManager = BalancePrimaryValueManager(localStorage: StorageKit.LocalStorage.default)
+        balanceHiddenManager = BalanceHiddenManager(localStorage: StorageKit.LocalStorage.default)
         balanceConversionManager = BalanceConversionManager(marketKit: marketKit, localStorage: StorageKit.LocalStorage.default)
 
         let proFeaturesStorage = ProFeaturesStorage(secureStorage: keychainKit.secureStorage)
         proFeaturesAuthorizationAdapter = ProFeaturesAuthorizationAdapter(networkManager: networkManager, appConfigProvider: appConfigProvider)
         proFeaturesAuthorizationManager = ProFeaturesAuthorizationManager(storage: proFeaturesStorage, accountManager: accountManager, evmSyncSourceManager: evmSyncSourceManager)
-
-        let restoreFavoriteCoinWorker = RestoreFavoriteCoinWorker(
-                marketKit: marketKit,
-                favoritesManager: favoritesManager,
-                localStorage: StorageKit.LocalStorage.default,
-                storage: favoriteCoinRecordStorage
-        )
-
-        let fillWalletInfoWorker = FillWalletInfoWorker(
-                marketKit: marketKit,
-                walletManager: walletManager,
-                storage: enabledWalletStorage,
-                localStorage: StorageKit.LocalStorage.default
-        )
 
         appManager = AppManager(
                 accountManager: accountManager,
@@ -285,8 +296,7 @@ class App {
                 logRecordManager: logRecordManager,
                 deepLinkManager: deepLinkManager,
                 evmLabelManager: evmLabelManager,
-                restoreFavoriteCoinWorker: restoreFavoriteCoinWorker,
-                fillWalletInfoWorker: fillWalletInfoWorker
+                walletConnectV2SocketConnectionService: walletConnectV2SocketConnectionService
         )
     }
 

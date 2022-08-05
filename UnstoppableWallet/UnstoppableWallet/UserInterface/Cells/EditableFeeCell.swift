@@ -25,7 +25,8 @@ class EditableFeeCell: BaseSelectableThemeCell {
         CellBuilder.build(cell: self, elements: [.text, .text, .margin8, .image20, .spinner20])
 
         bind(index: 0) { (component: TextComponent) in
-            component.set(style: .d1)
+            component.font = .subhead2
+            component.textColor = .themeGray
             component.text = "send.fee".localized
         }
 
@@ -37,7 +38,8 @@ class EditableFeeCell: BaseSelectableThemeCell {
             self?.bind(index: 1) { (component: TextComponent) in
                 if let value = value {
                     component.isHidden = false
-                    component.set(style: value.type.style)
+                    component.font = .subhead1
+                    component.textColor = value.type.textColor
                     component.text = value.text
                 } else {
                     component.isHidden = true

@@ -81,7 +81,7 @@ class MarketAdvancedSearchViewModel {
         volumeViewItemRelay.accept(ViewItem(value: service.volume.title, valueStyle: service.volume.valueStyle))
     }
 
-    private func sync(blockchains: [MarketAdvancedSearchModule.Blockchain]) {
+    private func sync(blockchains: [Blockchain]) {
         let value: String
         let valueStyle: ValueStyle
 
@@ -89,7 +89,7 @@ class MarketAdvancedSearchViewModel {
             value = "market.advanced_search.any".localized
             valueStyle = .none
         } else if service.blockchains.count == 1 {
-            value = service.blockchains[0].rawValue
+            value = service.blockchains[0].name
             valueStyle = .normal
         } else {
             value = "\(service.blockchains.count)"
@@ -198,9 +198,9 @@ extension MarketAdvancedSearchViewModel {
     }
 
     var blockchainViewItems: [MultiSelectorViewController.ViewItem] {
-        MarketAdvancedSearchModule.Blockchain.allCases.map { blockchain in
+        service.allBlockchains.map { blockchain in
             MultiSelectorViewController.ViewItem(
-                    value: blockchain.rawValue,
+                    value: blockchain.name,
                     selected: service.blockchains.contains(blockchain)
             )
         }
@@ -243,7 +243,7 @@ extension MarketAdvancedSearchViewModel {
     }
 
     func setBlockchains(indexes: [Int]) {
-        service.blockchains = indexes.map { MarketAdvancedSearchModule.Blockchain.allCases[$0] }
+        service.blockchains = indexes.map { service.allBlockchains[$0] }
     }
 
     func setPriceChangeType(at index: Int) {

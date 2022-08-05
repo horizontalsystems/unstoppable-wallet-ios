@@ -20,9 +20,9 @@ class EvmAccountManagerFactory {
 
 extension EvmAccountManagerFactory {
 
-    func evmAccountManager(blockchain: EvmBlockchain, evmKitManager: EvmKitManager) -> EvmAccountManager {
+    func evmAccountManager(blockchainType: BlockchainType, evmKitManager: EvmKitManager) -> EvmAccountManager {
         EvmAccountManager(
-                blockchain: blockchain,
+                blockchainType: blockchainType,
                 accountManager: accountManager,
                 walletManager: walletManager,
                 marketKit: marketKit,

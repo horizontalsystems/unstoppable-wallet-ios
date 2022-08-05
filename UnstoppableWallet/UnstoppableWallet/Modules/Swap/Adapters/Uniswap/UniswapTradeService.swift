@@ -16,18 +16,18 @@ class UniswapTradeService {
 
     private var swapData: SwapData?
 
-    private(set) var platformCoinIn: PlatformCoin? {
+    private(set) var tokenIn: MarketKit.Token? {
         didSet {
-            if platformCoinIn != oldValue {
-                platformCoinInRelay.accept(platformCoinIn)
+            if tokenIn != oldValue {
+                tokenInRelay.accept(tokenIn)
             }
         }
     }
 
-    private(set) var platformCoinOut: PlatformCoin? {
+    private(set) var tokenOut: MarketKit.Token? {
         didSet {
-            if platformCoinOut != oldValue {
-                platformCoinOutRelay.accept(platformCoinOut)
+            if tokenOut != oldValue {
+                tokenOutRelay.accept(tokenOut)
             }
         }
     }
@@ -57,8 +57,8 @@ class UniswapTradeService {
     }
 
     private var tradeTypeRelay = PublishRelay<TradeType>()
-    private var platformCoinInRelay = PublishRelay<PlatformCoin?>()
-    private var platformCoinOutRelay = PublishRelay<PlatformCoin?>()
+    private var tokenInRelay = PublishRelay<MarketKit.Token?>()
+    private var tokenOutRelay = PublishRelay<MarketKit.Token?>()
 
     private var amountInRelay = PublishRelay<Decimal>()
     private var amountOutRelay = PublishRelay<Decimal>()
@@ -80,8 +80,8 @@ class UniswapTradeService {
 
     init(uniswapProvider: UniswapProvider, state: SwapModule.DataSourceState, evmKit: EthereumKit.Kit) {
         self.uniswapProvider = uniswapProvider
-        platformCoinIn = state.platformCoinFrom
-        platformCoinOut = state.platformCoinTo
+        tokenIn = state.tokenFrom
+        tokenOut = state.tokenTo
         if state.exactFrom {
             amountIn = state.amountFrom ?? 0
         } else {
@@ -99,7 +99,7 @@ class UniswapTradeService {
     }
 
     private func syncSwapData() {
-        guard let platformCoinIn = platformCoinIn, let platformCoinOut = platformCoinOut else {
+        guard let tokenIn = tokenIn, let tokenOut = tokenOut else {
             state = .notReady(errors: [])
             return
         }
@@ -111,7 +111,7 @@ class UniswapTradeService {
         }
 
         uniswapProvider
-                .swapDataSingle(platformCoinIn: platformCoinIn, platformCoinOut: platformCoinOut)
+                .swapDataSingle(tokenIn: tokenIn, tokenOut: tokenOut)
                 .subscribe(onSuccess: { [weak self] swapData in
                     self?.swapData = swapData
                     _ = self?.syncTradeData()
@@ -169,12 +169,12 @@ extension UniswapTradeService {
         tradeTypeRelay.asObservable()
     }
 
-    var platformCoinInObservable: Observable<PlatformCoin?> {
-        platformCoinInRelay.asObservable()
+    var tokenInObservable: Observable<MarketKit.Token?> {
+        tokenInRelay.asObservable()
     }
 
-    var platformCoinOutObservable: Observable<PlatformCoin?> {
-        platformCoinOutRelay.asObservable()
+    var tokenOutObservable: Observable<MarketKit.Token?> {
+        tokenOutRelay.asObservable()
     }
 
     var amountInObservable: Observable<Decimal> {
@@ -193,20 +193,20 @@ extension UniswapTradeService {
         try uniswapProvider.transactionData(tradeData: tradeData)
     }
 
-    func set(platformCoinIn: PlatformCoin?) {
-        guard self.platformCoinIn != platformCoinIn else {
+    func set(tokenIn: MarketKit.Token?) {
+        guard self.tokenIn != tokenIn else {
             return
         }
 
-        self.platformCoinIn = platformCoinIn
+        self.tokenIn = tokenIn
         amountIn = 0
 
         if tradeType == .exactIn {
             amountOut = 0
         }
 
-        if platformCoinOut == platformCoinIn {
-            platformCoinOut = nil
+        if tokenOut == tokenIn {
+            tokenOut = nil
             amountOut = 0
         }
 
@@ -214,20 +214,20 @@ extension UniswapTradeService {
         syncSwapData()
     }
 
-    func set(platformCoinOut: PlatformCoin?) {
-        guard self.platformCoinOut != platformCoinOut else {
+    func set(tokenOut: MarketKit.Token?) {
+        guard self.tokenOut != tokenOut else {
             return
         }
 
-        self.platformCoinOut = platformCoinOut
+        self.tokenOut = tokenOut
         amountOut = 0
 
         if tradeType == .exactOut {
             amountIn = 0
         }
 
-        if platformCoinIn == platformCoinOut {
-            platformCoinIn = nil
+        if tokenIn == tokenOut {
+            tokenIn = nil
             amountIn = 0
         }
 
@@ -264,10 +264,10 @@ extension UniswapTradeService {
     }
 
     func switchCoins() {
-        let swapPlatformCoin = platformCoinOut
-        platformCoinOut = platformCoinIn
+        let swapToken = tokenOut
+        tokenOut = tokenIn
 
-        set(platformCoinIn: swapPlatformCoin)
+        set(tokenIn: swapToken)
     }
 
 }

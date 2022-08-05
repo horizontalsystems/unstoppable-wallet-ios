@@ -4,6 +4,7 @@ import RxSwift
 import ThemeKit
 import ComponentKit
 import PinKit
+import MarketKit
 
 class SecuritySettingsViewController: ThemeViewController {
     private let viewModel: SecuritySettingsViewModel
@@ -42,7 +43,6 @@ class SecuritySettingsViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.sectionDataSource = self
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
         subscribe(disposeBag, viewModel.pinViewItemDriver) { [weak self] in self?.sync(pinViewItem: $0) }
         subscribe(disposeBag, viewModel.blockchainViewItemsDriver) { [weak self] in self?.sync(blockchainViewItems: $0) }
@@ -74,7 +74,7 @@ class SecuritySettingsViewController: ThemeViewController {
     }
 
     private func show(error: String) {
-        HudHelper.instance.showError(title: error)
+        HudHelper.instance.show(banner: .error(string: error))
     }
 
     private func openSetPin() {
@@ -89,25 +89,17 @@ class SecuritySettingsViewController: ThemeViewController {
         present(App.shared.pinKit.unlockPinModule(delegate: self, biometryUnlockMode: .disabled, insets: .zero, cancellable: true, autoDismiss: true), animated: true)
     }
 
-    private func openBtc(blockchain: BtcBlockchain) {
+    private func openBtc(blockchain: Blockchain) {
         present(BtcBlockchainSettingsModule.viewController(blockchain: blockchain), animated: true)
     }
 
-    private func openEvm(blockchain: EvmBlockchain) {
+    private func openEvm(blockchain: Blockchain) {
         present(EvmNetworkModule.viewController(blockchain: blockchain), animated: true)
     }
 
 }
 
 extension SecuritySettingsViewController: SectionsDataSource {
-
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { $0.bind(text: text)},
-                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
-        )
-    }
 
     private func passcodeRows(viewItem: SecuritySettingsViewModel.PinViewItem) -> [RowProtocol] {
         let passcodeRow = CellBuilder.row(
@@ -116,7 +108,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
                 id: "passcode",
                 hash: "\(viewItem.enabled)",
                 height: .heightCell48,
-                bind: { cell in
+                bind: { [weak self] cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !viewItem.editVisible)
 
                     cell.bind(index: 0, block: { (component: ImageComponent) in
@@ -124,7 +116,8 @@ extension SecuritySettingsViewController: SectionsDataSource {
                     })
 
                     cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = "settings_security.passcode".localized
                     })
 
@@ -135,7 +128,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
 
                     cell.bind(index: 3, block: { (component: SwitchComponent) in
                         component.switchView.isOn = viewItem.enabled
-                        component.onSwitch = { [weak self] isOn in
+                        component.onSwitch = { isOn in
                             self?.viewModel.onTogglePin(isOn: isOn)
                         }
                     })
@@ -155,7 +148,8 @@ extension SecuritySettingsViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isLast: true)
 
                         cell.bind(index: 0, block: { (component: TextComponent) in
-                            component.set(style: .b2)
+                            component.font = .body
+                            component.textColor = .themeLeah
                             component.text = "settings_security.change_pin".localized
                         })
 
@@ -181,7 +175,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
                 id: "biometry",
                 hash: "\(viewItem.enabled)",
                 height: .heightCell48,
-                bind: { cell in
+                bind: { [weak self] cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
                     cell.bind(index: 0, block: { (component: ImageComponent) in
@@ -189,13 +183,14 @@ extension SecuritySettingsViewController: SectionsDataSource {
                     })
 
                     cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = viewItem.title
                     })
 
                     cell.bind(index: 2, block: { (component: SwitchComponent) in
                         component.switchView.isOn = viewItem.enabled
-                        component.onSwitch = { [weak self] isOn in
+                        component.onSwitch = { isOn in
                             self?.viewModel.onToggleBiometry(isOn: isOn)
                         }
                     })
@@ -215,13 +210,15 @@ extension SecuritySettingsViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
 
                     cell.bind(index: 0, block: { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: viewItem.icon)
+                        component.setImage(urlString: viewItem.iconUrl, placeholder: nil)
                     })
 
                     cell.bind(index: 1, block: { (component: MultiTextComponent) in
                         component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
+                        component.title.font = .body
+                        component.title.textColor = .themeLeah
+                        component.subtitle.font = .subhead2
+                        component.subtitle.textColor = .themeGray
 
                         component.title.text = viewItem.name
                         component.subtitle.text = viewItem.value
@@ -243,7 +240,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
         let passcodeSection = Section(
                 id: "passcode",
                 headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin32),
+                footerState: .margin(height: .margin24),
                 rows: passcodeRows(viewItem: pinViewItem)
         )
         sections.append(passcodeSection)
@@ -261,7 +258,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
 
         let blockchainSection = Section(
                 id: "blockchains",
-                headerState: header(text: "settings_security.blockchain_settings".localized),
+                headerState: tableView.sectionHeader(text: "settings_security.blockchain_settings".localized),
                 footerState: .margin(height: .margin32),
                 rows: blockchainViewItems.enumerated().map { index, viewItem in
                     blockchainRow(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == blockchainViewItems.count - 1)

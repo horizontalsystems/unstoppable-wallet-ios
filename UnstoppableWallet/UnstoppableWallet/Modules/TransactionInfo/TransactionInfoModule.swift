@@ -10,7 +10,7 @@ struct TransactionInfoModule {
         }
 
         let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
-        let factory = TransactionInfoViewItemFactory(evmLabelManager: App.shared.evmLabelManager)
+        let factory = TransactionInfoViewItemFactory(evmLabelManager: App.shared.evmLabelManager, actionEnabled: transactionRecord.source.blockchainType.resendable)
         let viewModel = TransactionInfoViewModel(service: service, factory: factory)
         let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
 
@@ -41,8 +41,8 @@ extension TransactionInfoModule {
 
         var description: String {
             switch self {
-            case .speedUp: return "send.confirmation.resend_description"
-            case .cancel: return "send.confirmation.cancel_description"
+            case .speedUp: return "send.confirmation.resend_description".localized
+            case .cancel: return "send.confirmation.cancel_description".localized
             }
         }
     }

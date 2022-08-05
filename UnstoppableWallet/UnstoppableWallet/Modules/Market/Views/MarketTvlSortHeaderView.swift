@@ -14,9 +14,9 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
 
     weak var viewController: UIViewController?
 
-    private let dropdownButton = ThemeButton()
-    private let sortButton = ThemeButton()
-    private let marketTvlFieldButton = ThemeButton()
+    private let dropdownButton = SecondaryButton()
+    private let sortButton = SecondaryCircleButton()
+    private let marketTvlFieldButton = SecondaryCircleButton()
 
     init(viewModel: MarketTvlSortHeaderViewModel, hasTopSeparator: Bool = true) {
         self.viewModel = viewModel
@@ -41,20 +41,15 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(dropdownButton)
         dropdownButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
-            maker.top.bottom.equalToSuperview()
+            maker.centerY.equalToSuperview()
         }
 
-        dropdownButton.apply(style: .secondaryTransparentIcon)
+        dropdownButton.set(style: .transparent)
+        dropdownButton.set(image: UIImage(named: "arrow_small_down_20"))
         dropdownButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
-        dropdownButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray), for: .normal)
-        dropdownButton.setImage(UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray50), for: .highlighted)
-
         dropdownButton.addTarget(self, action: #selector(onTapDropdownButton), for: .touchUpInside)
 
-        marketTvlFieldButton.apply(style: .secondaryIcon)
         marketTvlFieldButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
         marketTvlFieldButton.addTarget(self, action: #selector(onTapMarketTvlFieldButton), for: .touchUpInside)
 
         contentView.addSubview(marketTvlFieldButton)
@@ -69,9 +64,7 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
             maker.centerY.equalToSuperview()
         }
 
-        sortButton.apply(style: .secondaryIcon)
         sortButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
         sortButton.addTarget(self, action: #selector(onTapSortButton), for: .touchUpInside)
 
         subscribe(disposeBag, viewModel.platformFieldDriver) { [weak self] in self?.syncDropdownButton(title: $0) }
@@ -105,8 +98,7 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
         case .diff: imageName = "percent_20"
         }
 
-        marketTvlFieldButton.setImage(UIImage(named: imageName)?.withTintColor(.themeGray), for: .normal)
-        marketTvlFieldButton.setImage(UIImage(named: imageName)?.withTintColor(.themeGray50), for: .highlighted)
+        marketTvlFieldButton.set(image: UIImage(named: imageName))
     }
 
     @objc private func onTapMarketTvlFieldButton() {
@@ -118,7 +110,7 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
     }
 
     private func syncSortButton(ascending: Bool) {
-        sortButton.setImage(UIImage(named: ascending ? "arrow_medium_2_up_20" : "arrow_medium_2_down_20"), for: .normal)
+        sortButton.set(image: UIImage(named: ascending ? "arrow_medium_2_up_20" : "arrow_medium_2_down_20"))
     }
 
 }

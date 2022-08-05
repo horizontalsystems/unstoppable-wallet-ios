@@ -83,8 +83,8 @@ extension ManageAccountService {
     var accountSettingsInfo: [(Coin, RestoreSettingType, String)] {
         let accountWallets = walletManager.wallets(account: account)
 
-        return restoreSettingsManager.accountSettingsInfo(account: account).compactMap { coinType, restoreSettingType, value in
-            guard let wallet = accountWallets.first(where: { $0.coinType == coinType }) else {
+        return restoreSettingsManager.accountSettingsInfo(account: account).compactMap { blockchainType, restoreSettingType, value in
+            guard let wallet = accountWallets.first(where: { $0.token.blockchainType == blockchainType }) else {
                 return nil
             }
 

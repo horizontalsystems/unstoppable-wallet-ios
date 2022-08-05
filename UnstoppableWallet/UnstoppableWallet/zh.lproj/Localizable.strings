@@ -1205,7 +1205,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "nft.activity.event_type.bid" = "已输入出价";
 "nft.activity.event_type.bid_cancel" = "已撤回出价";
 "nft.activity.event_type.transfer" = "转帐";
-"nft.activity.event_type.approve" = "批准请求";
+
+"nft.activity.event_type.approve" = "批准";
 "nft.activity.event_type.custom" = "自定义";
 "nft.activity.event_type.payout" = "支出";
 "nft.activity.event_type.cancel" = "取消";

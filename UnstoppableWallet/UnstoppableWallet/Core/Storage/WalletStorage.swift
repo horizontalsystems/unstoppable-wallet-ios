@@ -12,12 +12,12 @@ class WalletStorage {
 
     private func enabledWallet(wallet: Wallet) -> EnabledWallet {
         EnabledWallet(
-                coinId: wallet.platform.coinType.id,
+                tokenQueryId: wallet.token.tokenQuery.id,
                 coinSettingsId: wallet.coinSettings.id,
                 accountId: wallet.account.id,
                 coinName: wallet.coin.name,
                 coinCode: wallet.coin.code,
-                coinDecimals: wallet.platform.decimals
+                tokenDecimals: wallet.token.decimals
         )
     }
 
@@ -27,28 +27,38 @@ extension WalletStorage {
 
     func wallets(account: Account) throws -> [Wallet] {
         let enabledWallets = try storage.enabledWallets(accountId: account.id)
-        let coinTypeIds = enabledWallets.map { $0.coinId }
-        let platformCoins = try marketKit.platformCoins(coinTypeIds: coinTypeIds)
+
+        let queries = enabledWallets.compactMap { TokenQuery(id: $0.tokenQueryId) }
+        let tokens = try marketKit.tokens(queries: queries)
+
+        let blockchainUids = queries.map { $0.blockchainType.uid }
+        let blockchains = try marketKit.blockchains(uids: blockchainUids)
 
         return enabledWallets.compactMap { enabledWallet in
-            if let platformCoin = platformCoins.first(where: { $0.coinType.id == enabledWallet.coinId }) {
-                let coinSettings = CoinSettings(id: enabledWallet.coinSettingsId)
-                let configuredPlatformCoin = ConfiguredPlatformCoin(platformCoin: platformCoin, coinSettings: coinSettings)
-                return Wallet(configuredPlatformCoin: configuredPlatformCoin, account: account)
+            guard let tokenQuery = TokenQuery(id: enabledWallet.tokenQueryId) else {
+                return nil
             }
 
-            if let coinName = enabledWallet.coinName, let coinCode = enabledWallet.coinCode, let coinDecimals = enabledWallet.coinDecimals {
+            if let token = tokens.first(where: { $0.tokenQuery == tokenQuery }) {
                 let coinSettings = CoinSettings(id: enabledWallet.coinSettingsId)
-                let coinType = CoinType(id: enabledWallet.coinId)
-                let coinUid = coinType.customCoinUid
+                let configuredToken = ConfiguredToken(token: token, coinSettings: coinSettings)
+                return Wallet(configuredToken: configuredToken, account: account)
+            }
 
-                let platformCoin = PlatformCoin(
+            if let coinName = enabledWallet.coinName, let coinCode = enabledWallet.coinCode, let tokenDecimals = enabledWallet.tokenDecimals,
+               let blockchain = blockchains.first(where: { $0.uid == tokenQuery.blockchainType.uid }) {
+                let coinSettings = CoinSettings(id: enabledWallet.coinSettingsId)
+                let coinUid = tokenQuery.customCoinUid
+
+                let token = Token(
                         coin: Coin(uid: coinUid, name: coinName, code: coinCode),
-                        platform: Platform(coinType: coinType, decimals: coinDecimals, coinUid: coinUid)
+                        blockchain: blockchain,
+                        type: tokenQuery.tokenType,
+                        decimals: tokenDecimals
                 )
 
-                let configuredPlatformCoin = ConfiguredPlatformCoin(platformCoin: platformCoin, coinSettings: coinSettings)
-                return Wallet(configuredPlatformCoin: configuredPlatformCoin, account: account)
+                let configuredToken = ConfiguredToken(token: token, coinSettings: coinSettings)
+                return Wallet(configuredToken: configuredToken, account: account)
             }
 
             return nil

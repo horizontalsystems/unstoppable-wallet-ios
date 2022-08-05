@@ -109,19 +109,19 @@ extension CoinDetailsService {
     }
 
     var auditAddresses: [String] {
-        fullCoin.supportedPlatforms.compactMap { platform in
-            switch platform.coinType {
-            case .erc20(let address): return address
-            case .bep20(let address): return address
+        fullCoin.supportedTokens.compactMap { token in
+            switch (token.blockchainType, token.type) {
+            case (.ethereum, .eip20(let address)): return address
+            case (.binanceSmartChain, .eip20(let address)): return address
             default: return nil
             }
         }
     }
 
     var hasMajorHolders: Bool {
-        for platform in fullCoin.supportedPlatforms {
-            switch platform.coinType {
-            case .erc20: return true
+        for token in fullCoin.supportedTokens {
+            switch (token.blockchainType, token.type) {
+            case (.ethereum, .eip20): return true
             default: ()
             }
         }

@@ -28,16 +28,7 @@ class BitcoinTransactionRecord: TransactionRecord {
         )
     }
 
-    private func becomesUnlocked(oldTimestamp: Int?, newTimestamp: Int?) -> Bool {
-        guard let lockTime = lockInfo?.lockedUntil.timeIntervalSince1970, let newTimestamp = newTimestamp else {
-            return false
-        }
-
-        return lockTime > Double(oldTimestamp ?? 0) && // was locked
-                lockTime <= Double(newTimestamp)       // now unlocked
-    }
-
-    func lockState(lastBlockTimestamp: Int?) -> TransactionLockState? {
+    override func lockState(lastBlockTimestamp: Int?) -> TransactionLockState? {
         guard let lockInfo = lockInfo else {
             return nil
         }
@@ -49,11 +40,6 @@ class BitcoinTransactionRecord: TransactionRecord {
         }
 
         return TransactionLockState(locked: locked, date: lockInfo.lockedUntil)
-    }
-
-    override func changedBy(oldBlockInfo: LastBlockInfo?, newBlockInfo: LastBlockInfo?) -> Bool {
-        super.changedBy(oldBlockInfo: oldBlockInfo, newBlockInfo: newBlockInfo) ||
-                becomesUnlocked(oldTimestamp: oldBlockInfo?.timestamp, newTimestamp: newBlockInfo?.timestamp)
     }
 
 }

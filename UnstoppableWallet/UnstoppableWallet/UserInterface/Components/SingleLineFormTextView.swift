@@ -35,7 +35,7 @@ class SingleLineFormTextView: UIView, IFormTextView {
         textField.tintColor = .themeInputFieldTintColor
         textField.keyboardAppearance = .themeDefault
         textField.autocapitalizationType = .none
-        textField.textColor = .themeOz
+        textField.textColor = .themeLeah
         textField.font = textViewFont
         textField.backgroundColor = .clear
         textField.autocorrectionType = .no

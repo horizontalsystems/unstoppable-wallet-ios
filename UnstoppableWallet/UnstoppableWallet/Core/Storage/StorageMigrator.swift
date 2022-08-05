@@ -365,13 +365,13 @@ class StorageMigrator {
         }
 
         migrator.registerMigration("createRestoreSettings") { db in
-            try db.create(table: RestoreSettingRecord.databaseTableName) { t in
-                t.column(RestoreSettingRecord.Columns.accountId.name, .text).notNull()
-                t.column(RestoreSettingRecord.Columns.coinId.name, .text).notNull()
-                t.column(RestoreSettingRecord.Columns.key.name, .text).notNull()
-                t.column(RestoreSettingRecord.Columns.value.name, .text)
+            try db.create(table: RestoreSettingRecord_v_0_25.databaseTableName) { t in
+                t.column(RestoreSettingRecord_v_0_25.Columns.accountId.name, .text).notNull()
+                t.column(RestoreSettingRecord_v_0_25.Columns.coinId.name, .text).notNull()
+                t.column(RestoreSettingRecord_v_0_25.Columns.key.name, .text).notNull()
+                t.column(RestoreSettingRecord_v_0_25.Columns.value.name, .text)
 
-                t.primaryKey([RestoreSettingRecord.Columns.accountId.name, RestoreSettingRecord.Columns.coinId.name, RestoreSettingRecord.Columns.key.name], onConflict: .replace)
+                t.primaryKey([RestoreSettingRecord_v_0_25.Columns.accountId.name, RestoreSettingRecord_v_0_25.Columns.coinId.name, RestoreSettingRecord_v_0_25.Columns.key.name], onConflict: .replace)
             }
         }
 
@@ -401,7 +401,7 @@ class StorageMigrator {
 
                     let key = "zcash_\(oldAccount.id)_birthdayHeight"
                     if let birthdayHeightString = keychain[key], let birthdayHeight = Int(birthdayHeightString) {
-                        let restoreSetting = RestoreSettingRecord(accountId: oldAccount.id, coinId: "zcash", key: "birthdayHeight", value: String(birthdayHeight))
+                        let restoreSetting = RestoreSettingRecord_v_0_25(accountId: oldAccount.id, coinId: "zcash", key: "birthdayHeight", value: String(birthdayHeight))
                         try restoreSetting.insert(db)
                     }
                     try? keychain.remove(key)
@@ -438,12 +438,12 @@ class StorageMigrator {
 
             try db.drop(table: EnabledWallet_v_0_20.databaseTableName)
 
-            try db.create(table: EnabledWallet.databaseTableName) { t in
-                t.column(EnabledWallet.Columns.coinId.name, .text).notNull()
-                t.column(EnabledWallet.Columns.coinSettingsId.name, .text).notNull()
-                t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
+            try db.create(table: EnabledWallet_v_0_25.databaseTableName) { t in
+                t.column(EnabledWallet_v_0_25.Columns.coinId.name, .text).notNull()
+                t.column(EnabledWallet_v_0_25.Columns.coinSettingsId.name, .text).notNull()
+                t.column(EnabledWallet_v_0_25.Columns.accountId.name, .text).notNull()
 
-                t.primaryKey([EnabledWallet.Columns.coinId.name, EnabledWallet.Columns.coinSettingsId.name, EnabledWallet.Columns.accountId.name], onConflict: .replace)
+                t.primaryKey([EnabledWallet_v_0_25.Columns.coinId.name, EnabledWallet_v_0_25.Columns.coinSettingsId.name, EnabledWallet_v_0_25.Columns.accountId.name], onConflict: .replace)
             }
 
             let settingRecords = try BlockchainSettingRecord_v_0_24.fetchAll(db)
@@ -462,7 +462,7 @@ class StorageMigrator {
                     coinSettingsId = "bitcoinCashCoinType:\(newValue)"
                 }
 
-                let newWallet = EnabledWallet(
+                let newWallet = EnabledWallet_v_0_25(
                         coinId: oldWallet.coinId,
                         coinSettingsId: coinSettingsId,
                         accountId: oldWallet.accountId
@@ -513,19 +513,6 @@ class StorageMigrator {
                 try keychain.set("", key: "mnemonic_\(record.id)_salt")
             }
         }
-
-        migrator.registerMigration("createEnabledWalletCaches") { db in
-            try db.create(table: EnabledWalletCache.databaseTableName) { t in
-                t.column(EnabledWalletCache.Columns.coinId.name, .text).notNull()
-                t.column(EnabledWalletCache.Columns.coinSettingsId.name, .text).notNull()
-                t.column(EnabledWalletCache.Columns.accountId.name, .text).notNull()
-                t.column(EnabledWalletCache.Columns.balance.name, .text).notNull()
-                t.column(EnabledWalletCache.Columns.balanceLocked.name, .text).notNull()
-
-                t.primaryKey([EnabledWalletCache.Columns.coinId.name, EnabledWalletCache.Columns.coinSettingsId.name, EnabledWalletCache.Columns.accountId.name], onConflict: .replace)
-            }
-        }
-
 
         migrator.registerMigration("createCustomTokens") { db in
             try db.create(table: CustomToken.databaseTableName) { t in
@@ -591,18 +578,18 @@ class StorageMigrator {
         }
 
         migrator.registerMigration("migrateCustomTokensToEnabledWallets") { db in
-            try db.alter(table: EnabledWallet.databaseTableName) { t in
-                t.add(column: EnabledWallet.Columns.coinName.name, .text)
-                t.add(column: EnabledWallet.Columns.coinCode.name, .text)
-                t.add(column: EnabledWallet.Columns.coinDecimals.name, .integer)
+            try db.alter(table: EnabledWallet_v_0_25.databaseTableName) { t in
+                t.add(column: EnabledWallet_v_0_25.Columns.coinName.name, .text)
+                t.add(column: EnabledWallet_v_0_25.Columns.coinCode.name, .text)
+                t.add(column: EnabledWallet_v_0_25.Columns.coinDecimals.name, .integer)
             }
 
             let customTokens = try CustomToken.fetchAll(db)
             try db.drop(table: CustomToken.databaseTableName)
 
             for customToken in customTokens {
-                if let enabledWallet = try EnabledWallet.filter(EnabledWallet.Columns.coinId == customToken.coinType.id).fetchOne(db) {
-                    let newEnabledWallet = EnabledWallet(
+                if let enabledWallet = try EnabledWallet_v_0_25.filter(EnabledWallet_v_0_25.Columns.coinId == customToken.coinTypeId).fetchOne(db) {
+                    let newEnabledWallet = EnabledWallet_v_0_25(
                             coinId: enabledWallet.coinId,
                             coinSettingsId: enabledWallet.coinSettingsId,
                             accountId: enabledWallet.accountId,
@@ -637,7 +624,116 @@ class StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Migrate refactoring of MarketKit") { db in
+
+            // RestoreSettingRecord
+
+            let oldRestoreSettings = try RestoreSettingRecord_v_0_25.fetchAll(db)
+
+            try db.drop(table: RestoreSettingRecord_v_0_25.databaseTableName)
+
+            try db.create(table: RestoreSettingRecord.databaseTableName) { t in
+                t.column(RestoreSettingRecord.Columns.accountId.name, .text).notNull()
+                t.column(RestoreSettingRecord.Columns.blockchainUid.name, .text).notNull()
+                t.column(RestoreSettingRecord.Columns.key.name, .text).notNull()
+                t.column(RestoreSettingRecord.Columns.value.name, .text)
+
+                t.primaryKey([RestoreSettingRecord.Columns.accountId.name, RestoreSettingRecord.Columns.blockchainUid.name, RestoreSettingRecord.Columns.key.name], onConflict: .replace)
+            }
+
+            for old in oldRestoreSettings {
+                let record = RestoreSettingRecord(
+                        accountId: old.accountId,
+                        blockchainUid: old.coinId, // old setting used coin type id and for Zcash only. Blockchain uid and coin type id for Zcash is the same
+                        key: old.key,
+                        value: old.value
+                )
+
+                try record.insert(db)
+            }
+
+            // BlockchainSettingRecord
+
+            try BlockchainSettingRecord
+                    .filter(BlockchainSettingRecord.Columns.blockchainUid == "bitcoinCash")
+                    .updateAll(db, BlockchainSettingRecord.Columns.blockchainUid.set(to: "bitcoin-cash"))
+
+            try BlockchainSettingRecord
+                    .filter(BlockchainSettingRecord.Columns.blockchainUid == "binanceSmartChain")
+                    .updateAll(db, BlockchainSettingRecord.Columns.blockchainUid.set(to: "binance-smart-chain"))
+
+            // EnabledWallet
+
+            let oldWallets = try EnabledWallet_v_0_25.fetchAll(db)
+
+            try db.drop(table: EnabledWallet_v_0_25.databaseTableName)
+
+            try db.create(table: EnabledWallet.databaseTableName) { t in
+                t.column(EnabledWallet.Columns.tokenQueryId.name, .text).notNull()
+                t.column(EnabledWallet.Columns.coinSettingsId.name, .text).notNull()
+                t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWallet.Columns.coinName.name, .text)
+                t.column(EnabledWallet.Columns.coinCode.name, .text)
+                t.column(EnabledWallet.Columns.tokenDecimals.name, .integer)
+
+                t.primaryKey([EnabledWallet.Columns.tokenQueryId.name, EnabledWallet.Columns.coinSettingsId.name, EnabledWallet.Columns.accountId.name], onConflict: .replace)
+            }
+
+            for old in oldWallets {
+                let record = EnabledWallet(
+                        tokenQueryId: tokenQuery(coinTypeId: old.coinId).id,
+                        coinSettingsId: old.coinSettingsId,
+                        accountId: old.accountId,
+                        coinName: old.coinName,
+                        coinCode: old.coinCode,
+                        tokenDecimals: old.coinDecimals
+                )
+
+                try record.insert(db)
+            }
+
+            // EnabledWalletCache
+
+            if try db.tableExists("enabled_wallet_caches") {
+                try db.drop(table: "enabled_wallet_caches")
+            }
+
+            try db.create(table: EnabledWalletCache.databaseTableName) { t in
+                t.column(EnabledWalletCache.Columns.tokenQueryId.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.coinSettingsId.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.balance.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.balanceLocked.name, .text).notNull()
+
+                t.primaryKey([EnabledWalletCache.Columns.tokenQueryId.name, EnabledWalletCache.Columns.coinSettingsId.name, EnabledWalletCache.Columns.accountId.name], onConflict: .replace)
+            }
+        }
+
         try migrator.migrate(dbPool)
+    }
+
+    private static func tokenQuery(coinTypeId: String) -> TokenQuery {
+        let coinType = CoinType(id: coinTypeId)
+
+        switch coinType {
+        case .bitcoin: return TokenQuery(blockchainType: .bitcoin, tokenType: .native)
+        case .bitcoinCash: return TokenQuery(blockchainType: .bitcoinCash, tokenType: .native)
+        case .litecoin: return TokenQuery(blockchainType: .litecoin, tokenType: .native)
+        case .dash: return TokenQuery(blockchainType: .dash, tokenType: .native)
+        case .zcash: return TokenQuery(blockchainType: .zcash, tokenType: .native)
+        case .ethereum: return TokenQuery(blockchainType: .ethereum, tokenType: .native)
+        case .binanceSmartChain: return TokenQuery(blockchainType: .binanceSmartChain, tokenType: .native)
+        case .polygon: return TokenQuery(blockchainType: .polygon, tokenType: .native)
+        case .ethereumOptimism: return TokenQuery(blockchainType: .optimism, tokenType: .native)
+        case .ethereumArbitrumOne: return TokenQuery(blockchainType: .arbitrumOne, tokenType: .native)
+        case .erc20(let address): return TokenQuery(blockchainType: .ethereum, tokenType: .eip20(address: address))
+        case .bep20(let address): return TokenQuery(blockchainType: .binanceSmartChain, tokenType: .eip20(address: address))
+        case .mrc20(let address): return TokenQuery(blockchainType: .polygon, tokenType: .eip20(address: address))
+        case .optimismErc20(let address): return TokenQuery(blockchainType: .optimism, tokenType: .eip20(address: address))
+        case .arbitrumOneErc20(let address): return TokenQuery(blockchainType: .arbitrumOne, tokenType: .eip20(address: address))
+        case .bep2(let symbol): return symbol == "BNB" ? TokenQuery(blockchainType: .binanceChain, tokenType: .native) : TokenQuery(blockchainType: .binanceChain, tokenType: .bep2(symbol: symbol))
+        default: return TokenQuery(blockchainType: .unsupported(uid: ""), tokenType: .unsupported(type: "", reference: nil))
+        }
     }
 
 }

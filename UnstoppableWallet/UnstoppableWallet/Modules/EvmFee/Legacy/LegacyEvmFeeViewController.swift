@@ -19,7 +19,7 @@ class LegacyEvmFeeViewController: ThemeViewController {
     private var gasPriceCell = BaseSelectableThemeCell()
     private let gasPriceSliderCell: FeeSliderCell
     private let cautionCell = TitledHighlightedDescriptionCell()
-    private let doneButton = ThemeButton()
+    private let doneButton = PrimaryButton()
 
     private var loaded = false
 
@@ -69,10 +69,9 @@ class LegacyEvmFeeViewController: ThemeViewController {
             maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        doneButton.apply(style: .primaryYellow)
+        doneButton.set(style: .yellow)
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDone), for: .touchUpInside)
 
@@ -82,11 +81,13 @@ class LegacyEvmFeeViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "circle_information_20")
         })
         gasLimitCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .d1)
+            component.font = .subhead2
+            component.textColor = .themeGray
             component.text = "fee_settings.gas_limit".localized
         })
         gasLimitCell.bind(index: 2, block: { (component: TextComponent) in
-            component.set(style: .c2)
+            component.font = .subhead1
+            component.textColor = .themeLeah
         })
 
         gasPriceCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
@@ -95,11 +96,13 @@ class LegacyEvmFeeViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "circle_information_20")
         })
         gasPriceCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .d1)
+            component.font = .subhead2
+            component.textColor = .themeGray
             component.text = "fee_settings.gas_price".localized
         })
         gasPriceCell.bind(index: 2, block: { (component: TextComponent) in
-            component.set(style: .c2)
+            component.font = .subhead1
+            component.textColor = .themeLeah
         })
 
         gasPriceSliderCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)

@@ -13,7 +13,7 @@ class CoinTweetsViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
     private let infoView = PlaceholderView()
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
     private let refreshControl = UIRefreshControl()
 
     weak var parentNavigationController: UINavigationController?
@@ -65,7 +65,7 @@ class CoinTweetsViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        errorView.configureSyncError(target: self, action: #selector(onRetry))
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -77,7 +77,7 @@ class CoinTweetsViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: TweetCell.self)
-        tableView.registerCell(forClass: ButtonCell.self)
+        tableView.registerCell(forClass: SecondaryButtonCell.self)
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
@@ -180,11 +180,13 @@ extension CoinTweetsViewController: SectionsDataSource {
                 headerState: .margin(height: .margin16),
                 footerState: .margin(height: .margin16),
                 rows: [
-                    Row<ButtonCell>(
+                    Row<SecondaryButtonCell>(
                             id: "see-on-twitter",
-                            height: ButtonCell.height(style: .secondaryDefault),
+                            height: SecondaryButtonCell.height,
                             bind: { [weak self] cell, _ in
-                                cell.bind(style: .secondaryDefault, title: "coin_page.tweets.see_on_twitter".localized, compact: true) { [weak self] in
+                                cell.set(style: .default)
+                                cell.title = "coin_page.tweets.see_on_twitter".localized
+                                cell.onTap = {
                                     self?.onTapSeeOnTwitter()
                                 }
                             }

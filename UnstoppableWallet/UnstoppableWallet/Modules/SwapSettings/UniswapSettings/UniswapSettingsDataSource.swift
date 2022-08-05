@@ -1,3 +1,4 @@
+import UIKit
 import ThemeKit
 import RxSwift
 import RxCocoa
@@ -19,11 +20,10 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
 
     private let deadlineCell = ShortcutInputCell()
 
-    private let buttonCell = ButtonCell(style: .default, reuseIdentifier: nil)
-
     var onOpen: ((UIViewController) -> ())?
     var onClose: (() -> ())?
     var onReload: (() -> ())?
+    var onChangeButtonState: ((Bool, String) -> ())?
 
     init(viewModel: UniswapSettingsViewModel, recipientViewModel: RecipientAddressViewModel, slippageViewModel: SwapSlippageViewModel, deadlineViewModel: SwapDeadlineViewModel) {
         self.viewModel = viewModel
@@ -32,7 +32,6 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
 
         recipientCell = RecipientAddressInputCell(viewModel: recipientViewModel)
         recipientCautionCell = RecipientAddressCautionCell(viewModel: recipientViewModel)
-        viewDidLoad()
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -63,10 +62,6 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
         deadlineCell.onChangeHeight = { [weak self] in self?.onReload?() }
         deadlineCell.onChangeText = { [weak self] text in self?.deadlineViewModel.onChange(text: text) }
 
-        buttonCell.bind(style: .primaryYellow, title: "button.apply".localized) { [weak self] in
-            self?.didTapApply()
-        }
-
         subscribe(disposeBag, slippageViewModel.cautionDriver) { [weak self] in
             self?.slippageCell.set(cautionType: $0?.type)
             self?.slippageCautionCell.set(caution: $0)
@@ -75,52 +70,26 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
         subscribe(disposeBag, viewModel.actionDriver) { [weak self] actionState in
             switch actionState {
             case .enabled:
-                self?.buttonCell.isEnabled = true
-                self?.buttonCell.title = "button.apply".localized
+                self?.onChangeButtonState?(true, "button.apply".localized)
             case .disabled(let title):
-                self?.buttonCell.isEnabled = false
-                self?.buttonCell.title = title
+                self?.onChangeButtonState?(false, title)
             }
         }
     }
 
-    @objc private func didTapApply() {
+    @objc func didTapApply() {
         if viewModel.doneDidTap() {
             onClose?()
         } else {
-            HudHelper.instance.showError(title: "alert.unknown_error".localized)
+            HudHelper.instance.show(banner: .error(string: "alert.unknown_error".localized))
         }
-    }
-
-    private func header(hash: String, text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: hash,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { _ in
-                    SubtitleHeaderFooterView.height
-                }
-        )
-    }
-
-    private func footer(hash: String, text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: hash,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { width in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: width, text: text)
-                }
-        )
     }
 
 }
 
-extension UniswapSettingsDataSource: SectionsDataSource {
+extension UniswapSettingsDataSource {
 
-    func buildSections() -> [SectionProtocol] {
+    func buildSections(tableView: SectionsTableView) -> [SectionProtocol] {
         [
             Section(
                     id: "top-margin",
@@ -129,8 +98,8 @@ extension UniswapSettingsDataSource: SectionsDataSource {
 
             Section(
                     id: "recipient",
-                    headerState: header(hash: "recipient_header", text: "swap.advanced_settings.recipient_address".localized),
-                    footerState: footer(hash: "recipient_footer", text: "swap.advanced_settings.recipient.footer".localized),
+                    headerState: tableView.sectionHeader(text: "swap.advanced_settings.recipient_address".localized),
+                    footerState: tableView.sectionFooter(text: "swap.advanced_settings.recipient.footer".localized),
                     rows: [
                         StaticRow(
                                 cell: recipientCell,
@@ -151,8 +120,8 @@ extension UniswapSettingsDataSource: SectionsDataSource {
 
             Section(
                     id: "slippage",
-                    headerState: header(hash: "slippage_header", text: "swap.advanced_settings.slippage".localized),
-                    footerState: footer(hash: "slippage_footer", text: "swap.advanced_settings.slippage.footer".localized),
+                    headerState: tableView.sectionHeader(text: "swap.advanced_settings.slippage".localized),
+                    footerState: tableView.sectionFooter(text: "swap.advanced_settings.slippage.footer".localized),
                     rows: [
                         StaticRow(
                                 cell: slippageCell,
@@ -173,8 +142,8 @@ extension UniswapSettingsDataSource: SectionsDataSource {
 
             Section(
                     id: "deadline",
-                    headerState: header(hash: "deadline_header", text: "swap.advanced_settings.deadline".localized),
-                    footerState: footer(hash: "deadline_footer", text: "swap.advanced_settings.deadline.footer".localized),
+                    headerState: tableView.sectionHeader(text: "swap.advanced_settings.deadline".localized),
+                    footerState: tableView.sectionFooter(text: "swap.advanced_settings.deadline.footer".localized),
                     rows: [
                         StaticRow(
                                 cell: deadlineCell,
@@ -185,17 +154,6 @@ extension UniswapSettingsDataSource: SectionsDataSource {
                         )
                     ]
             ),
-
-            Section(
-                    id: "button",
-                    rows: [
-                        StaticRow(
-                                cell: buttonCell,
-                                id: "button",
-                                height: ButtonCell.height(style: .primaryYellow)
-                        )
-                    ]
-            )
         ]
     }
 

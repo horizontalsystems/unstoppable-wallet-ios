@@ -154,7 +154,10 @@ class ValueFormatter {
         }
 
         if let signValue = signValue {
-            let sign = signValue.isSignMinus ? "-" : "+"
+            var sign = ""
+            if !signValue.isZero {
+                sign = signValue.isSignMinus ? "-" : "+"
+            }
             string = "\(sign)\(string)"
         }
 

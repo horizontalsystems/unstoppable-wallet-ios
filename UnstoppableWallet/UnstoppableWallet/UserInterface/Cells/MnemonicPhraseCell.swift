@@ -1,26 +1,29 @@
 import UIKit
 import ThemeKit
 import SnapKit
+import ComponentKit
+import CollectionViewCenteredFlowLayout
 
-class MnemonicPhraseCell: UITableViewCell {
-    private let horizontalMargin: CGFloat = .margin16
-    private static let rowHeight: CGFloat = 20
-    private static let lineSpacing: CGFloat = .margin4
-    private static let sectionSpacing: CGFloat = .margin32
+class MnemonicPhraseCell: BaseThemeCell {
+    private static let backgroundStyle: BaseThemeCell.BackgroundStyle = .bordered
+    private static let horizontalPadding: CGFloat = .margin16
+    private static let verticalPadding: CGFloat = .margin24
+    private static let itemSpacing: CGFloat = .margin16
+    private static let lineSpacing: CGFloat = .margin16
 
     private var words = [String]()
 
-    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewCenteredFlowLayout())
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    init() {
+        super.init(style: .default, reuseIdentifier: nil)
 
-        backgroundColor = .clear
-        selectionStyle = .none
+        set(backgroundStyle: Self.backgroundStyle, cornerRadius: 24, isFirst: true, isLast: true)
 
-        contentView.addSubview(collectionView)
+        wrapperView.addSubview(collectionView)
         collectionView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.leading.trailing.equalToSuperview().inset(Self.horizontalPadding)
+            maker.top.bottom.equalToSuperview().inset(Self.verticalPadding)
         }
 
         collectionView.backgroundColor = .clear
@@ -35,24 +38,9 @@ class MnemonicPhraseCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func wordIndex(indexPath: IndexPath) -> Int {
-        let sectionWordCount = Self.sectionWordCount(wordCount: words.count)
-        let sectionRowCount = sectionWordCount / 2
-
-        if indexPath.row % 2 == 0 {
-            return indexPath.section * sectionRowCount + indexPath.row / 2
-        } else {
-            return words.count / 2 + indexPath.section * sectionRowCount + indexPath.row / 2
-        }
-    }
-
 }
 
 extension MnemonicPhraseCell {
-
-    var cellHeight: CGFloat {
-        collectionView.contentSize.height
-    }
 
     func set(words: [String]) {
         self.words = words
@@ -65,12 +53,8 @@ extension MnemonicPhraseCell {
 
 extension MnemonicPhraseCell: UICollectionViewDataSource {
 
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        Self.sectionCount(wordCount: words.count)
-    }
-
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        Self.sectionWordCount(wordCount: words.count)
+        words.count
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -83,7 +67,7 @@ extension MnemonicPhraseCell: UICollectionViewDelegate {
 
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? MnemonicWordCell {
-            let index = wordIndex(indexPath: indexPath)
+            let index = indexPath.item
             cell.bind(index: index + 1, word: words[index])
         }
     }
@@ -93,16 +77,12 @@ extension MnemonicPhraseCell: UICollectionViewDelegate {
 extension MnemonicPhraseCell: UICollectionViewDelegateFlowLayout {
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: (collectionView.width - horizontalMargin * 2) / 2, height: Self.rowHeight)
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let bottom = section < numberOfSections(in: collectionView) - 1 ? Self.sectionSpacing : 0
-        return UIEdgeInsets(top: 0, left: horizontalMargin, bottom: bottom, right: horizontalMargin)
+        let index = indexPath.item
+        return MnemonicWordCell.size(index: index + 1, word: words[index])
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        0
+        Self.itemSpacing
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -113,25 +93,28 @@ extension MnemonicPhraseCell: UICollectionViewDelegateFlowLayout {
 
 extension MnemonicPhraseCell {
 
-    private static func sectionWordCount(wordCount: Int) -> Int {
-        wordCount == 12 ? 6 : 8
-    }
+    static func height(containerWidth: CGFloat, words: [String]) -> CGFloat {
+        let collectionWidth = containerWidth - margin(backgroundStyle: backgroundStyle).width - horizontalPadding * 2
 
-    private static func sectionCount(wordCount: Int) -> Int {
-        wordCount / sectionWordCount(wordCount: wordCount)
-    }
+        var lines = 1
+        var lineHeight: CGFloat = 0
+        var remainingWidth = collectionWidth
 
-    static func height(wordCount: Int) -> CGFloat {
-        let sectionRowCount = sectionWordCount(wordCount: wordCount) / 2
-        let sectionRowsHeight = CGFloat(sectionRowCount) * rowHeight
-        let sectionSpacingsHeight = CGFloat(sectionRowCount - 1) * lineSpacing
-        let sectionHeight = sectionRowsHeight + sectionSpacingsHeight
+        for (index, word) in words.enumerated() {
+            let size = MnemonicWordCell.size(index: index + 1, word: word)
 
-        let sectionCount = Self.sectionCount(wordCount: wordCount)
-        let allSectionsHeight = CGFloat(sectionCount) * sectionHeight
-        let allSectionsSpacingsHeight = CGFloat(sectionCount - 1) * sectionSpacing
+            lineHeight = max(lineHeight, size.height)
 
-        return allSectionsHeight + allSectionsSpacingsHeight
+            if size.width <= remainingWidth {
+                remainingWidth = remainingWidth - size.width - itemSpacing
+            } else {
+                remainingWidth = collectionWidth - size.width - itemSpacing
+                lines += 1
+            }
+        }
+
+        let collectionHeight = CGFloat(lines) * lineHeight + CGFloat(lines - 1) * lineSpacing
+        return collectionHeight + verticalPadding * 2
     }
 
 }

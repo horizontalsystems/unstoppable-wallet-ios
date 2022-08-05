@@ -34,21 +34,22 @@ class SwapSelectProviderViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(title: "swap.switch_provider.title".localized, subtitle: viewModel.blockchainTitle, image: UIImage(named: "arrow_swap_2_24")?.withTintColor(.themeJacob))
-        titleView.onTapClose = { [weak self] in self?.dismiss(animated: true) }
+        titleView.title = "swap.switch_provider.title".localized
+        titleView.image = UIImage(named: "arrow_swap_2_24")?.withTintColor(.themeJacob)
+        titleView.onTapClose = { [weak self] in
+            self?.dismiss(animated: true)
+        }
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.top.equalTo(titleView.snp.bottom)
             maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        tableView.registerCell(forClass: A4Cell.self)
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.sectionViewItemsDriver) { [weak self] viewItems in
@@ -77,32 +78,26 @@ class SwapSelectProviderViewController: ThemeActionSheetController {
 extension SwapSelectProviderViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [Section(
-                id: "theme",
-                rows: viewItems.enumerated().map { index, viewItem in
-                    let isFirst = index == 0
-                    let isLast = index == viewItems.count - 1
-
-                    return Row<A4Cell>(
-                            id: viewItem.title,
-                            hash: "\(viewItem.selected)",
-                            height: .heightCell48,
-                            autoDeselect: true,
-                            bind: { cell, _ in
-                                cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
-                                cell.title = viewItem.title
-                                cell.titleImage = UIImage(named: viewItem.icon)
-                                cell.titleImageTintColor = .themeGray
-                                cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
-                                cell.valueImageTintColor = .themeJacob
-                            },
-                            action: { [weak self] _ in
-                                self?.viewModel.onSelect(index: index)
-                                self?.dismiss(animated: true)
-                            }
-                    )
-                }
-        )]
+        [
+            Section(
+                    id: "theme",
+                    rows: viewItems.enumerated().map { index, viewItem in
+                        tableView.imageTitleCheckRow(
+                                id: viewItem.title,
+                                backgroundStyle: .bordered,
+                                image: viewItem.icon,
+                                title: viewItem.title,
+                                selected: viewItem.selected,
+                                isFirst: index == 0,
+                                isLast: index == viewItems.count - 1,
+                                action: { [weak self] in
+                                    self?.viewModel.onSelect(index: index)
+                                    self?.dismiss(animated: true)
+                                }
+                        )
+                    }
+            )
+        ]
     }
 
 }

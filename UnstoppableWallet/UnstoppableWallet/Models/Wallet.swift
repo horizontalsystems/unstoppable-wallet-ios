@@ -1,74 +1,45 @@
 import MarketKit
 
 struct Wallet {
-    let configuredPlatformCoin: ConfiguredPlatformCoin
+    let configuredToken: ConfiguredToken
     let account: Account
 
-    init(configuredPlatformCoin: ConfiguredPlatformCoin, account: Account) {
-        self.configuredPlatformCoin = configuredPlatformCoin
+    init(configuredToken: ConfiguredToken, account: Account) {
+        self.configuredToken = configuredToken
         self.account = account
     }
 
-    init(platformCoin: PlatformCoin, account: Account) {
-        configuredPlatformCoin = ConfiguredPlatformCoin(platformCoin: platformCoin)
+    init(token: Token, account: Account) {
+        configuredToken = ConfiguredToken(token: token)
         self.account = account
     }
 
-    var platformCoin: PlatformCoin {
-        configuredPlatformCoin.platformCoin
+    var token: Token {
+        configuredToken.token
     }
 
     var coinSettings: CoinSettings {
-        configuredPlatformCoin.coinSettings
+        configuredToken.coinSettings
     }
 
     var coin: Coin {
-        platformCoin.coin
-    }
-
-    var platform: Platform {
-        platformCoin.platform
-    }
-
-    var coinType: CoinType {
-        platform.coinType
+        token.coin
     }
 
     var decimals: Int {
-        platform.decimals
+        token.decimals
+    }
+
+    var badge: String? {
+        configuredToken.badge
     }
 
     var transactionSource: TransactionSource {
-        let blockchain: TransactionSource.Blockchain
-
-        switch coinType {
-        case .bitcoin:
-            blockchain = .bitcoin
-        case .bitcoinCash:
-            blockchain = .bitcoinCash
-        case .dash:
-            blockchain = .dash
-        case .litecoin:
-            blockchain = .litecoin
-        case .zcash:
-            blockchain = .zcash
-        case .bep2(let symbol):
-            blockchain = .bep2(symbol: symbol)
-        case .ethereum, .erc20:
-            blockchain = .evm(blockchain: .ethereum)
-        case .binanceSmartChain, .bep20:
-            blockchain = .evm(blockchain: .binanceSmartChain)
-        case .polygon, .mrc20:
-            blockchain = .evm(blockchain: .polygon)
-        case .ethereumOptimism, .optimismErc20:
-            blockchain = .evm(blockchain: .optimism)
-        case .ethereumArbitrumOne, .arbitrumOneErc20:
-            blockchain = .evm(blockchain: .arbitrumOne)
-        default:
-            fatalError("Unsupported coin may not have transactions to show")
-        }
-
-        return TransactionSource(blockchain: blockchain, account: account, coinSettings: coinSettings)
+        TransactionSource(
+                blockchainType: token.blockchainType,
+                coinSettings: coinSettings,
+                bep2Symbol: token.type.bep2Symbol
+        )
     }
 
 }
@@ -76,27 +47,12 @@ struct Wallet {
 extension Wallet: Hashable {
 
     public static func ==(lhs: Wallet, rhs: Wallet) -> Bool {
-        lhs.configuredPlatformCoin == rhs.configuredPlatformCoin && lhs.account == rhs.account
+        lhs.configuredToken == rhs.configuredToken && lhs.account == rhs.account
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(configuredPlatformCoin)
+        hasher.combine(configuredToken)
         hasher.combine(account)
-    }
-
-}
-
-extension Wallet {
-
-    public var badge: String? {
-        switch coinType {
-        case .bitcoin, .litecoin:
-            return coinSettings.derivation?.rawValue.uppercased()
-        case .bitcoinCash:
-            return coinSettings.bitcoinCashCoinType?.rawValue.uppercased()
-        default:
-            return coinType.blockchainType
-        }
     }
 
 }

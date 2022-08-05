@@ -15,7 +15,7 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
 
     private let titleView = BottomSheetTitleView()
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
-    private let doneButton = ThemeButton()
+    private let doneButton = PrimaryButton()
 
     private var currentIndexes: Set<Int>
     private var didTapDone = false
@@ -41,12 +41,13 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(title: config.title, subtitle: config.subtitle)
+        titleView.title = config.title
+
         switch config.icon {
-        case .local(let icon, let tintColor):
-            titleView.bind(image: icon, tintColor: tintColor)
-        case .remote(let iconUrl, let iconPlaceholder):
-            titleView.bind(imageUrl: iconUrl, placeholder: UIImage(named: iconPlaceholder))
+        case .local(let name):
+            titleView.image = UIImage(named: name)
+        case .remote(let url, let placeholder):
+            titleView.set(imageUrl: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
         }
 
         titleView.onTapClose = { [weak self] in
@@ -54,6 +55,7 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
         }
 
         var lastView: UIView = titleView
+        var lastMargin: CGFloat = 0
 
         if let description = config.description {
             let descriptionView = HighlightedDescriptionView()
@@ -61,42 +63,31 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
             view.addSubview(descriptionView)
             descriptionView.snp.makeConstraints { maker in
                 maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-                maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
+                maker.top.equalTo(titleView.snp.bottom)
             }
 
             descriptionView.text = description
 
-            let separatorView = UIView()
-
-            view.addSubview(separatorView)
-            separatorView.snp.makeConstraints { maker in
-                maker.leading.trailing.equalToSuperview()
-                maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin12)
-                maker.height.equalTo(CGFloat.heightOneDp)
-            }
-
-            separatorView.backgroundColor = .themeSteel10
-
-            lastView = separatorView
+            lastView = descriptionView
+            lastMargin = .margin12
         }
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(lastView.snp.bottom)
+            maker.top.equalTo(lastView.snp.bottom).offset(lastMargin)
         }
 
         tableView.sectionDataSource = self
 
         view.addSubview(doneButton)
         doneButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(tableView.snp.bottom).offset(CGFloat.margin24)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
-        doneButton.apply(style: .primaryYellow)
+        doneButton.set(style: .yellow)
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDone), for: .touchUpInside)
 
@@ -130,7 +121,11 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
     }
 
     private func syncDoneButton() {
-        doneButton.isEnabled = !currentIndexes.isEmpty
+        if config.allowEmpty {
+            doneButton.isEnabled = true
+        } else {
+            doneButton.isEnabled = !currentIndexes.isEmpty
+        }
     }
 
 }
@@ -146,38 +141,50 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
                         let isFirst = index == 0
                         let isLast = index == config.viewItems.count - 1
 
-                        return CellBuilder.row(
-                                elements: [.image24, .multiText, .switch],
-                                tableView: tableView,
-                                id: "item_\(index)",
-                                hash: "\(selected)",
-                                height: .heightDoubleLineCell,
-                                bind: { cell in
-                                    cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
-
-                                    cell.bind(index: 0) { (component: ImageComponent) in
-                                        if let iconName = viewItem.iconName {
-                                            component.imageView.image = UIImage(named: iconName)
+                        return CellBuilderNew.row(
+                                rootElement: .hStack([
+                                    .image24 { component in
+                                        if let icon = viewItem.icon {
+                                            switch icon {
+                                            case .local(let name):
+                                                component.imageView.image = UIImage(named: name)
+                                            case .remote(let url, let placeholder):
+                                                component.setImage(urlString: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
+                                            }
                                             component.isHidden = false
                                         } else {
                                             component.isHidden = true
                                         }
-                                    }
-
-                                    cell.bind(index: 1) { (component: MultiTextComponent) in
-                                        component.set(style: .m1)
-                                        component.title.set(style: .b2)
-                                        component.subtitle.set(style: .d1)
-
-                                        component.title.text = viewItem.title
-                                        component.subtitle.text = viewItem.subtitle
-                                        component.subtitle.lineBreakMode = .byTruncatingMiddle
-                                    }
-
-                                    cell.bind(index: 2) { (component: SwitchComponent) in
+                                    },
+                                    .vStackCentered([
+                                        .text { component in
+                                            component.font = .body
+                                            component.textColor = .themeLeah
+                                            component.text = viewItem.title
+                                        },
+                                        .margin(3),
+                                        .text { component in
+                                            component.font = .subhead2
+                                            component.textColor = .themeGray
+                                            component.lineBreakMode = .byTruncatingMiddle
+                                            component.text = viewItem.subtitle
+                                        }
+                                    ]),
+                                    .switch { [weak self] component in
                                         component.switchView.isOn = selected
-                                        component.onSwitch = { [weak self] in self?.onToggle(index: index, isOn: $0) }
+                                        component.onSwitch = { self?.onToggle(index: index, isOn: $0) }
                                     }
+                                ]),
+                                tableView: tableView,
+                                id: "item_\(index)",
+                                hash: "\(selected)",
+                                height: .heightDoubleLineCell,
+                                autoDeselect: true,
+                                bind: { cell in
+                                    cell.set(backgroundStyle: .bordered, isFirst: isFirst, isLast: isLast)
+                                },
+                                action: viewItem.copyableString.map { string in
+                                    { CopyHelper.copyAndNotify(value: string) }
                                 }
                         )
                     }
@@ -192,27 +199,29 @@ extension BottomMultiSelectorViewController {
     struct Config {
         let icon: IconStyle
         let title: String
-        let subtitle: String
         let description: String?
+        let allowEmpty: Bool
         let selectedIndexes: [Int]
         let viewItems: [ViewItem]
-
-        enum IconStyle {
-            case local(icon: UIImage?, iconTint: UIColor?)
-            case remote(iconUrl: String, placeholder: String)
-        }
     }
 
     struct ViewItem {
-        let iconName: String?
+        let icon: IconStyle?
         let title: String
         let subtitle: String
+        let copyableString: String?
 
-        init(iconName: String? = nil, title: String, subtitle: String) {
-            self.iconName = iconName
+        init(icon: IconStyle? = nil, title: String, subtitle: String, copyableString: String? = nil) {
+            self.icon = icon
             self.title  = title
             self.subtitle = subtitle
+            self.copyableString = copyableString
         }
+    }
+
+    enum IconStyle {
+        case local(name: String)
+        case remote(url: String, placeholder: String?)
     }
 
 }

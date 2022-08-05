@@ -31,7 +31,7 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
         let rank = item.rank
         let rankDiff: Int? = rank.flatMap { rank in
             item.ranks[service.timePeriod].flatMap { pastRank in
-                let diff = rank - pastRank
+                let diff = pastRank - rank
                 return diff == 0 ? nil : diff
             }
         }
@@ -41,11 +41,11 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
         let dataValue: MarketModule.MarketDataValue = .diff(diff)
 
         return MarketModule.ListViewItem(
-                uid: item.uid,
+                uid: item.blockchain.uid,
                 iconUrl: item.imageUrl,
                 iconShape: .square,
                 iconPlaceholderName: "placeholder_24",
-                leftPrimaryValue: item.name,
+                leftPrimaryValue: item.blockchain.name,
                 leftSecondaryValue: protocols,
                 badge: rank.map { "\($0)" },
                 badgeSecondaryValue: rankChange,

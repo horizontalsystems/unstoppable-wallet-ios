@@ -23,7 +23,7 @@ class SendFeeService: ISendFeeService {
     }
 
     private let fiatService: FiatService
-    private let feeCoin: PlatformCoin
+    private let feeToken: Token
 
     private let stateRelay = BehaviorRelay<DataStatus<State>>(value: .loading)
     private(set) var state: DataStatus<State> = .loading {
@@ -39,11 +39,11 @@ class SendFeeService: ISendFeeService {
         }
     }
 
-    init(fiatService: FiatService, feeCoin: PlatformCoin) {
+    init(fiatService: FiatService, feeToken: Token) {
         self.fiatService = fiatService
-        self.feeCoin = feeCoin
+        self.feeToken = feeToken
 
-        fiatService.set(platformCoin: feeCoin)
+        fiatService.set(token: feeToken)
         subscribe(scheduler, disposeBag, fiatService.amountAlreadyUpdatedObservable) { [weak self] in self?.sync() }
         subscribe(scheduler, disposeBag, fiatService.coinAmountObservable) { [weak self] _ in self?.sync() }
         subscribe(scheduler, disposeBag, fiatService.primaryInfoObservable) { [weak self] in self?.sync(primaryInfo: $0) }
@@ -70,7 +70,7 @@ class SendFeeService: ISendFeeService {
     }
 
     private func amountInfo(value: Decimal) -> AmountInfo {
-        let coinValue = CoinValue(kind: .platformCoin(platformCoin: feeCoin), value: value)
+        let coinValue = CoinValue(kind: .token(token: feeToken), value: value)
         return AmountInfo.coinValue(coinValue: coinValue)
     }
 

@@ -12,8 +12,8 @@ class WalletConnectShowSigningMessageViewController: ThemeViewController {
     private let textView = UITextView.appDebug
     private let bottomWrapper = BottomGradientHolder()
 
-    private let signButton = ThemeButton()
-    private let rejectButton = ThemeButton()
+    private let signButton = PrimaryButton()
+    private let rejectButton = PrimaryButton()
 
     init(viewModel: WalletConnectSignMessageRequestViewModel) {
         self.viewModel = viewModel
@@ -46,10 +46,9 @@ class WalletConnectShowSigningMessageViewController: ThemeViewController {
         signButton.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        signButton.apply(style: .primaryYellow)
+        signButton.set(style: .yellow)
         signButton.setTitle("button.sign".localized, for: .normal)
         signButton.addTarget(self, action: #selector(onTapSign), for: .touchUpInside)
 
@@ -58,10 +57,9 @@ class WalletConnectShowSigningMessageViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(signButton.snp.bottom).offset(CGFloat.margin16)
             maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        rejectButton.apply(style: .primaryGray)
+        rejectButton.set(style: .gray)
         rejectButton.setTitle("button.reject".localized, for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
 
@@ -84,7 +82,7 @@ class WalletConnectShowSigningMessageViewController: ThemeViewController {
     }
 
     private func show(error: Error) {
-        HudHelper.instance.showError(title: error.localizedDescription)
+        HudHelper.instance.show(banner: .error(string: error.localizedDescription))
     }
 
     private func dismiss() {

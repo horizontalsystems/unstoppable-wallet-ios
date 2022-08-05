@@ -57,21 +57,18 @@ class CoinToggleViewController: ThemeSearchViewController {
     }
 
     private func bind(cell: BaseThemeCell, viewItem: CoinToggleViewModel.ViewItem, isLast: Bool) {
-        cell.set(backgroundStyle: .claude, isLast: isLast)
+        cell.set(backgroundStyle: .transparent, isLast: isLast)
 
         cell.bind(index: 0, block: { (component: ImageComponent) in
             component.setImage(urlString: viewItem.imageUrl, placeholder: viewItem.placeholderImageName.flatMap { UIImage(named: $0) })
         })
 
         cell.bind(index: 1, block: { (component: MultiTextComponent) in
-            if let badge = viewItem.blockchainBadge {
-                component.set(style: .m7)
-                component.titleBadge.text = badge
-            } else {
-                component.set(style: .m1)
-            }
-            component.title.set(style: .b2)
-            component.subtitle.set(style: .d1)
+            component.set(style: .m1)
+            component.title.font = .body
+            component.title.textColor = .themeLeah
+            component.subtitle.font = .subhead2
+            component.subtitle.textColor = .themeGray
 
             component.title.text = viewItem.title
             component.subtitle.text = viewItem.subtitle

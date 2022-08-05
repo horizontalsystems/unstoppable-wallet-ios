@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ArbiscanApiKey</key>
+	<string>${arbiscan_api_key}</string>
 	<key>BscscanApiKey</key>
 	<string>${bscscan_api_key}</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -33,8 +35,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>CryptoCompareApiKey</key>
-	<string>$(cryptocompare_com_api_key)</string>
 	<key>DefaultWords</key>
 	<string>${default_words}</string>
 	<key>DefiYieldApiKey</key>
@@ -69,10 +69,14 @@
 	<string>We need access to photo library to save NFT images</string>
 	<key>OfficeMode</key>
 	<string>${OfficeMode}</string>
+	<key>OptimismEtherscanApiKey</key>
+	<string>${optimism_etherscan_api_key}</string>
 	<key>PolygonscanApiKey</key>
 	<string>${polygonscan_api_key}</string>
 	<key>ShowBuildNumber</key>
 	<string>${ShowBuildNumber}</string>
+	<key>SnowtraceApiKey</key>
+	<string>${snowtrace_api_key}</string>
 	<key>TestMode</key>
 	<string>${TestMode}</string>
 	<key>TwitterBearerToken</key>

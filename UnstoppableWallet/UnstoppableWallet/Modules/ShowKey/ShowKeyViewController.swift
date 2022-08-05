@@ -14,14 +14,14 @@ class ShowKeyViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let descriptionView = HighlightedDescriptionView()
-    private let showButton = ThemeButton()
+    private let showButton = PrimaryButton()
 
     private let tableView = SectionsTableView(style: .plain)
     private let filterHeaderView = FilterHeaderView(buttonStyle: .tab)
     private let mnemonicPhraseCell = MnemonicPhraseCell()
 
     private let closeButtonHolder = BottomGradientHolder()
-    private let closeButton = ThemeButton()
+    private let closeButton = PrimaryButton()
 
     private var currentTab: Tab = .mnemonicPhrase
 
@@ -55,10 +55,8 @@ class ShowKeyViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.sectionDataSource = self
-        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.registerCell(forClass: Cell9.self)
         tableView.registerCell(forClass: EmptyCell.self)
-        tableView.registerCell(forClass: C9Cell.self)
 
         view.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
@@ -72,10 +70,9 @@ class ShowKeyViewController: ThemeViewController {
         showButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin6x)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        showButton.apply(style: .primaryYellow)
+        showButton.set(style: .yellow)
         showButton.setTitle("show_key.button_show".localized, for: .normal)
         showButton.addTarget(self, action: #selector(onTapShowButton), for: .touchUpInside)
 
@@ -98,10 +95,9 @@ class ShowKeyViewController: ThemeViewController {
         closeButtonHolder.addSubview(closeButton)
         closeButton.snp.makeConstraints { maker in
             maker.leading.top.trailing.bottom.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        closeButton.apply(style: .primaryYellow)
+        closeButton.set(style: .yellow)
         closeButton.setTitle("button.close".localized, for: .normal)
         closeButton.addTarget(self, action: #selector(onTapCloseButton), for: .touchUpInside)
 
@@ -152,22 +148,10 @@ class ShowKeyViewController: ThemeViewController {
 
     private func rows(privateKey: String) -> [RowProtocol] {
         let viewItem = CopyableSecondaryButton.ViewItem(type: .raw, value: { privateKey })
-        let text = "show_key.private_key.description".localized
 
         return [
-            Row<HighlightedDescriptionCell>(
-                    id: "private-key-description",
-                    dynamicHeight: { containerWidth in
-                        HighlightedDescriptionCell.height(containerWidth: containerWidth, text: text)
-                    },
-                    bind: { cell, _ in
-                        cell.descriptionText = text
-                    }
-            ),
-            marginRow(
-                    id: "private-key-margin",
-                    height: .margin4
-            ),
+            tableView.highlightedDescriptionRow(id: "private-key-description", text: "show_key.private_key.description".localized),
+            marginRow(id: "private-key-margin", height: .margin4),
             Row<Cell9>(
                     id: "private-key-value",
                     dynamicHeight: { width in
@@ -196,7 +180,8 @@ extension ShowKeyViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .transparent, isFirst: true)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .c1)
+                        component.font = .subhead1
+                        component.textColor = .themeGray
                         component.text = text.uppercased()
                     }
                 }
@@ -213,7 +198,8 @@ extension ShowKeyViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
 
@@ -257,7 +243,9 @@ extension ShowKeyViewController: SectionsDataSource {
             let phraseRow = StaticRow(
                     cell: mnemonicPhraseCell,
                     id: "mnemonic-phrase",
-                    height: MnemonicPhraseCell.height(wordCount: words.count),
+                    dynamicHeight: { width in
+                        MnemonicPhraseCell.height(containerWidth: width, words: words)
+                    },
                     onReady: { [weak self] in
                         self?.mnemonicPhraseCell.set(words: words)
                     }
@@ -267,14 +255,29 @@ extension ShowKeyViewController: SectionsDataSource {
             rows.append(phraseRow)
 
             if let passphrase = viewModel.passphrase {
-                let passphraseRow = Row<C9Cell>(
+                let passphraseRow = CellBuilder.row(
+                        elements: [.image20, .text, .secondaryButton],
+                        tableView: tableView,
                         id: "passphrase",
                         height: .heightCell48,
-                        bind: { cell, _ in
+                        bind: { cell in
                             cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                            cell.title = "show_key.passphrase".localized
-                            cell.titleImage = UIImage(named: "key_phrase_20")
-                            cell.viewItem = .init(type: .raw, value: { passphrase })
+
+                            cell.bind(index: 0) { (component: ImageComponent) in
+                                component.imageView.image = UIImage(named: "key_phrase_20")?.withTintColor(.themeGray)
+                            }
+                            cell.bind(index: 1) { (component: TextComponent) in
+                                component.font = .subhead2
+                                component.textColor = .themeGray
+                                component.text = "show_key.passphrase".localized
+                            }
+                            cell.bind(index: 2) { (component: SecondaryButtonComponent) in
+                                component.button.set(style: .default)
+                                component.button.setTitle(passphrase, for: .normal)
+                                component.onTap = {
+                                    CopyHelper.copyAndNotify(value: passphrase)
+                                }
+                            }
                         }
                 )
 

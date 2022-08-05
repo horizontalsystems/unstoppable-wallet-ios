@@ -53,7 +53,7 @@ extension ShowKeyService {
     }
 
     var ethereumPrivateKey: String? {
-        try? Signer.privateKey(seed: seed, chain: evmBlockchainManager.chain(blockchain: .ethereum)).raw.hex
+        try? Signer.privateKey(seed: seed, chain: evmBlockchainManager.chain(blockchainType: .ethereum)).raw.hex
     }
 
     func bitcoinPublicKeys(derivation: MnemonicDerivation) throws -> String? {

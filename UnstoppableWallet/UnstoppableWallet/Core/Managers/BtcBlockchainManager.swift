@@ -4,58 +4,75 @@ import MarketKit
 import BitcoinCore
 
 class BtcBlockchainManager {
+    private let blockchainTypes: [BlockchainType] = [
+        .bitcoin,
+        .bitcoinCash,
+        .litecoin,
+        .dash
+    ]
+
+    private let marketKit: MarketKit.Kit
     private let storage: BlockchainSettingsStorage
 
-    private let restoreModeUpdatedRelay = PublishRelay<BtcBlockchain>()
-    private let transactionSortModeUpdatedRelay = PublishRelay<BtcBlockchain>()
+    private let restoreModeUpdatedRelay = PublishRelay<BlockchainType>()
+    private let transactionSortModeUpdatedRelay = PublishRelay<BlockchainType>()
 
-    init(storage: BlockchainSettingsStorage) {
+    let allBlockchains: [Blockchain]
+
+    init(marketKit: MarketKit.Kit, storage: BlockchainSettingsStorage) {
+        self.marketKit = marketKit
         self.storage = storage
+
+        do {
+            allBlockchains = try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
+        } catch {
+            allBlockchains = []
+        }
     }
 
 }
 
 extension BtcBlockchainManager {
 
-    func blockchain(coinType: CoinType) -> BtcBlockchain? {
-        BtcBlockchain.allCases.first(where: { $0.supports(coinType: coinType) })
+    func blockchain(token: Token) -> Blockchain? {
+        allBlockchains.first(where: { token.blockchain == $0 })
     }
 
-    var restoreModeUpdatedObservable: Observable<BtcBlockchain> {
+    var restoreModeUpdatedObservable: Observable<BlockchainType> {
         restoreModeUpdatedRelay.asObservable()
     }
 
-    var transactionSortModeUpdatedObservable: Observable<BtcBlockchain> {
+    var transactionSortModeUpdatedObservable: Observable<BlockchainType> {
         transactionSortModeUpdatedRelay.asObservable()
     }
 
-    func restoreMode(blockchain: BtcBlockchain) -> BtcRestoreMode {
-        storage.btcRestoreMode(btcBlockchain: blockchain) ?? .api
+    func restoreMode(blockchainType: BlockchainType) -> BtcRestoreMode {
+        storage.btcRestoreMode(blockchainType: blockchainType) ?? .api
     }
 
-    func syncMode(blockchain: BtcBlockchain, accountOrigin: AccountOrigin) -> BitcoinCore.SyncMode {
+    func syncMode(blockchainType: BlockchainType, accountOrigin: AccountOrigin) -> BitcoinCore.SyncMode {
         if accountOrigin == .created {
             return .newWallet
         }
 
-        switch restoreMode(blockchain: blockchain) {
+        switch restoreMode(blockchainType: blockchainType) {
         case .api: return .api
         case .blockchain: return .full
         }
     }
 
-    func save(restoreMode: BtcRestoreMode, blockchain: BtcBlockchain) {
-        storage.save(btcRestoreMode: restoreMode, btcBlockchain: blockchain)
-        restoreModeUpdatedRelay.accept(blockchain)
+    func save(restoreMode: BtcRestoreMode, blockchainType: BlockchainType) {
+        storage.save(btcRestoreMode: restoreMode, blockchainType: blockchainType)
+        restoreModeUpdatedRelay.accept(blockchainType)
     }
 
-    func transactionSortMode(blockchain: BtcBlockchain) -> TransactionDataSortMode {
-        storage.btcTransactionSortMode(btcBlockchain: blockchain) ?? .shuffle
+    func transactionSortMode(blockchainType: BlockchainType) -> TransactionDataSortMode {
+        storage.btcTransactionSortMode(blockchainType: blockchainType) ?? .shuffle
     }
 
-    func save(transactionSortMode: TransactionDataSortMode, blockchain: BtcBlockchain) {
-        storage.save(btcTransactionSortMode: transactionSortMode, btcBlockchain: blockchain)
-        transactionSortModeUpdatedRelay.accept(blockchain)
+    func save(transactionSortMode: TransactionDataSortMode, blockchainType: BlockchainType) {
+        storage.save(btcTransactionSortMode: transactionSortMode, blockchainType: blockchainType)
+        transactionSortModeUpdatedRelay.accept(blockchainType)
     }
 
 }

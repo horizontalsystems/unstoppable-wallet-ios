@@ -58,7 +58,7 @@ class SwapCoinCardCell: UITableViewCell {
 
         titleLabel.setContentHuggingPriority(.required, for: .horizontal)
         titleLabel.font = .body
-        titleLabel.textColor = .themeOz
+        titleLabel.textColor = .themeLeah
         titleLabel.text = title
 
         cardView.contentView.addSubview(paddingView)
@@ -174,8 +174,8 @@ extension SwapCoinCardCell {
 
 extension SwapCoinCardCell: ICoinSelectDelegate {
 
-    func didSelect(platformCoin: PlatformCoin) {
-        viewModel.onSelect(platformCoin: platformCoin)
+    func didSelect(token: Token) {
+        viewModel.onSelect(token: token)
     }
 
 }

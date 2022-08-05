@@ -17,7 +17,7 @@ class ChartCurrentValueView: UIView {
         }
 
         valueLabel.font = .title3
-        valueLabel.textColor = .themeOz
+        valueLabel.textColor = .themeLeah
         valueLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         addSubview(diffLabel)

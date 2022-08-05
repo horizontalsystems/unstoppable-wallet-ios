@@ -66,7 +66,7 @@ class ProFeaturesPassesCell: BaseThemeCell {
         }
         subscribe(disposeBag, viewModel.showLockInfoSignal) { [weak self] in self?.showLockInfo() }
         subscribe(disposeBag, viewModel.showSignMessageSignal) { [weak self] in self?.showSignMessage() }
-        subscribe(disposeBag, viewModel.showErrorSignal) { HudHelper.instance.showError(title: $0) }
+        subscribe(disposeBag, viewModel.showErrorSignal) { HudHelper.instance.show(banner: .error(string: $0)) }
         subscribe(disposeBag, viewModel.showSuccessSignedSignal) { [weak self] in self?.showSuccessSigned() }
     }
 
@@ -101,7 +101,7 @@ class ProFeaturesPassesCell: BaseThemeCell {
     }
 
     private func showSuccessSigned() {
-        HudHelper.instance.showSuccess()
+        HudHelper.instance.show(banner: .success)
         proFeaturesActivateViewController?.dismiss(animated: true)
     }
 

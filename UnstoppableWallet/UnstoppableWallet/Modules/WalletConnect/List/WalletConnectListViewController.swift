@@ -14,7 +14,7 @@ class WalletConnectListViewController: ThemeViewController {
 
     private let emptyView = PlaceholderView()
     private let bottomButtonHolder = BottomGradientHolder()
-    private let bottomButton = ThemeButton()
+    private let bottomButton = PrimaryButton()
 
     let tableView = SectionsTableView(style: .grouped)
     private weak var scanQrViewController: WalletConnectScanQrViewController?
@@ -48,10 +48,7 @@ class WalletConnectListViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        tableView.registerCell(forClass: A1Cell.self)
         tableView.registerCell(forClass: G1Cell.self)
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         view.addSubview(emptyView)
@@ -71,10 +68,9 @@ class WalletConnectListViewController: ThemeViewController {
         bottomButtonHolder.addSubview(bottomButton)
         bottomButton.snp.makeConstraints { maker in
             maker.edges.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        bottomButton.apply(style: .primaryYellow)
+        bottomButton.set(style: .yellow)
         bottomButton.setTitle("wallet_connect_list.new_connection".localized, for: .normal)
         bottomButton.addTarget(self, action: #selector(startNewConnection), for: .touchUpInside)
 
@@ -132,7 +128,7 @@ class WalletConnectListViewController: ThemeViewController {
 extension WalletConnectListViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        (listViewV2.sections + listViewV1.sections).compactMap { $0 }
+        (listViewV2.sections(tableView: tableView) + listViewV1.sections(tableView: tableView)).compactMap { $0 }
     }
 
 }

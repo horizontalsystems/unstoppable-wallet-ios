@@ -19,7 +19,7 @@ def appPods
   pod 'BitcoinCore.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   # pod 'BitcoinCore.swift', path: '../bitcoin-kit-ios/'
 
-  pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit', :tag => '0.14.0-beta'
+  pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit', :tag => '0.16.3-beta'
 #  pod 'ZcashLightClientKit', path: '../ZcashLightClientKit'
 
   pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
@@ -89,11 +89,12 @@ def appPods
   pod 'BigInt'
   pod 'KeychainAccess'
   pod 'SnapKit'
+  pod 'CollectionViewCenteredFlowLayout'
 
   pod 'WalletConnect', git: 'https://github.com/horizontalsystems/wallet-connect-swift'
 
   pod 'EthereumABI', git: 'https://github.com/horizontalsystems/EthereumABI'
-  pod 'UnstoppableDomainsResolution', '~> 3.0.0'
+  pod 'UnstoppableDomainsResolution', '~> 4.0.0'
 end
 
 target 'Unstoppable Dev T' do

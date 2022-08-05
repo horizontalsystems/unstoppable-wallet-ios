@@ -3,8 +3,8 @@ import MarketKit
 extension FullCoin {
 
     var placeholderImageName: String {
-        let supportedPlatforms = supportedPlatforms
-        return supportedPlatforms.count == 1 ? supportedPlatforms[0].coinType.placeholderImageName : "icon_placeholder_24"
+        let supportedTokens = supportedTokens
+        return supportedTokens.count == 1 ? supportedTokens[0].placeholderImageName : "icon_placeholder_24"
     }
 
 }

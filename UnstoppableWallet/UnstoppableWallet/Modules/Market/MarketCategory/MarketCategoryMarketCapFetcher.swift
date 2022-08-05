@@ -36,7 +36,7 @@ extension MarketCategoryMarketCapFetcher: IMetricChartFetcher {
                 .coinCategoryMarketCapChartSingle(category: category, currencyCode: currencyCode, timePeriod: interval)
                 .map { points in
                     points.map { point -> MetricChartModule.Item in
-                        return MetricChartModule.Item(value: point.marketCap, timestamp: point.timestamp)
+                        MetricChartModule.Item(value: point.marketCap, timestamp: point.timestamp)
                     }
                 }
     }

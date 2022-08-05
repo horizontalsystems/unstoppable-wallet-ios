@@ -69,9 +69,11 @@ extension MarketOverviewCategoryDataSource: IMarketOverviewDataSource {
                                     cell.set(backgroundStyle: .transparent)
 
                                     cell.buttonMode = .seeAll
-                                    cell.onSeeAll = {
+                                    let onSeeAll: () -> () = { [weak self] in
                                         self?.presentDelegate?.push(viewController: MarketDiscoveryModule.viewController())
                                     }
+                                    cell.onSeeAll = onSeeAll
+                                    cell.onTapTitle = onSeeAll
 
                                     cell.titleImage = UIImage(named: "categories_20")
                                     cell.title = "market.top.section.header.top_sectors".localized

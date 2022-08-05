@@ -14,7 +14,7 @@ class FaqViewController: ThemeViewController {
 
     private let spinner = HUDActivityView.create(with: .large48)
 
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
 
     private var currentSection = 0
     private var sectionItems = [FaqService.SectionItem]()

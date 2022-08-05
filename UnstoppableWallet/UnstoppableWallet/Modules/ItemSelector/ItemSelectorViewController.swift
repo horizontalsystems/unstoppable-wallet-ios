@@ -54,12 +54,12 @@ class ItemSelectorViewController: ThemeActionSheetController {
             } else {
                 maker.top.equalToSuperview()
             }
-            maker.leading.trailing.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
 //        tableView.allowsSelection = false
 
-        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
         tableView.registerCell(forClass: ItemSelectorSimpleCell.self)
         tableView.sectionDataSource = self
 
@@ -77,15 +77,7 @@ class ItemSelectorViewController: ThemeActionSheetController {
     private func row(viewItem: ItemSelectorModule.Item, rowIndex: Int, isLast: Bool) -> RowProtocol {
         switch viewItem {
         case .description(let text):
-            return Row<HighlightedDescriptionCell>(
-                    id: "description_\(text)",
-                    dynamicHeight: { width in
-                        HighlightedDescriptionCell.height(containerWidth: width, text: text)
-                    },
-                    bind: { cell, _ in
-                        cell.descriptionText = text
-                    }
-            )
+            return tableView.highlightedDescriptionRow(id: "description_\(text)", text: text)
         case .simple(let viewItem):
             return Row<ItemSelectorSimpleCell>(
                     id: "item_\(viewItem.title)",
@@ -93,7 +85,7 @@ class ItemSelectorViewController: ThemeActionSheetController {
                     height: .heightCell48,
                     autoDeselect: true,
                     bind: { cell, _ in
-                        cell.set(backgroundStyle: .transparent, isFirst: rowIndex == 0, isLast: isLast)
+                        cell.set(backgroundStyle: .lawrence, isFirst: rowIndex == 0, isLast: isLast)
                         cell.title = viewItem.title
                         cell.titleColor = viewItem.titleColor
                         cell.isSelected = viewItem.selected
@@ -112,15 +104,17 @@ class ItemSelectorViewController: ThemeActionSheetController {
                         height: .heightDoubleLineCell,
                         autoDeselect: true,
                         bind: { cell in
-                            cell.set(backgroundStyle: .transparent, isFirst: rowIndex == 0, isLast: isLast)
+                            cell.set(backgroundStyle: .lawrence, isFirst: rowIndex == 0, isLast: isLast)
 
                             cell.bind(index: 0, block: { (component: MultiTextComponent) in
                                 component.set(style: .m1)
 
-                                component.title.set(style: viewItem.titleStyle)
+                                component.title.font = .body
+                                component.title.textColor = viewItem.titleColor
                                 component.title.text = viewItem.title
 
-                                component.subtitle.set(style: viewItem.subtitleStyle)
+                                component.subtitle.font = .subhead2
+                                component.subtitle.textColor = viewItem.subtitleColor
                                 component.subtitle.text = subtitle
                             })
 
@@ -143,10 +137,11 @@ class ItemSelectorViewController: ThemeActionSheetController {
                     height: .heightCell48,
                     autoDeselect: true,
                     bind: { cell in
-                        cell.set(backgroundStyle: .transparent, isFirst: rowIndex == 0, isLast: isLast)
+                        cell.set(backgroundStyle: .bordered, isFirst: rowIndex == 0, isLast: isLast)
 
                         cell.bind(index: 0, block: { (component: TextComponent) in
-                            component.set(style: viewItem.titleStyle)
+                            component.font = .body
+                            component.textColor = viewItem.titleColor
                             component.text = viewItem.title
                         })
 
@@ -176,10 +171,11 @@ class ItemSelectorViewController: ThemeActionSheetController {
             return
         }
 
-        titleView.bind(title: viewItem.title, subtitle: viewItem.subtitle, image: viewItem.image, tintColor: viewItem.tintColor)
-        titleView.titleColor = viewItem.titleColor
-        titleView.subtitleColor = viewItem.subtitleColor
-        titleView.onTapClose = { [weak self] in self?.onTapClose() }
+        titleView.title = viewItem.title
+        titleView.image = viewItem.image
+        titleView.onTapClose = { [weak self] in
+            self?.onTapClose()
+        }
     }
 
 }

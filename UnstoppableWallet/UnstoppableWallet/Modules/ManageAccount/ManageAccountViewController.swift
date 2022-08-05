@@ -47,7 +47,6 @@ class ManageAccountViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
         nameCell.inputText = viewModel.accountName
         nameCell.autocapitalizationType = .words
@@ -59,7 +58,8 @@ class ManageAccountViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "key_20")?.withTintColor(.themeGray)
         })
         showRecoveryPhraseCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .b2)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = "manage_account.show_recovery_phrase".localized
         })
         showRecoveryPhraseCell.bind(index: 2, block: { (component: ImageComponent) in
@@ -72,7 +72,8 @@ class ManageAccountViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "key_20")?.withTintColor(.themeGray)
         })
         backupRecoveryPhraseCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .b2)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = "manage_account.backup_recovery_phrase".localized
         })
         backupRecoveryPhraseCell.bind(index: 2, block: { (component: ImageComponent) in
@@ -88,7 +89,8 @@ class ManageAccountViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "trash_20")?.withTintColor(.themeLucian)
         })
         unlinkCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .b5)
+            component.font = .body
+            component.textColor = .themeLucian
             component.text = "manage_account.unlink".localized
         })
 
@@ -152,14 +154,6 @@ class ManageAccountViewController: ThemeViewController {
 
 extension ManageAccountViewController: SectionsDataSource {
 
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { $0.bind(text: text) },
-                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
-        )
-    }
-
     private var keyActionSection: SectionProtocol {
         var rows = [RowProtocol]()
 
@@ -206,7 +200,8 @@ extension ManageAccountViewController: SectionsDataSource {
                             component.imageView.image = UIImage(named: viewItem.iconName)?.withTintColor(.themeGray)
                         })
                         cell.bind(index: 1, block: { (component: TextComponent) in
-                            component.set(style: .b2)
+                            component.font = .body
+                            component.textColor = .themeLeah
                             component.text = viewItem.title
                         })
                         cell.bind(index: 2, block: { (component: SecondaryButtonComponent) in
@@ -237,7 +232,7 @@ extension ManageAccountViewController: SectionsDataSource {
             ),
             Section(
                     id: "name",
-                    headerState: header(text: "manage_account.name".localized),
+                    headerState: tableView.sectionHeader(text: "manage_account.name".localized),
                     footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(

@@ -12,8 +12,8 @@ class CreateAccountViewController: KeyboardAwareViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
-    private let mnemonicCell = A5Cell()
-    private let passphraseToggleCell = A11Cell()
+    private let mnemonicCell = BaseSelectableThemeCell()
+    private let passphraseToggleCell = BaseSelectableThemeCell()
     private let passphraseCell = TextFieldCell()
     private let passphraseCautionCell = FormCautionCell()
     private let passphraseConfirmationCell = TextFieldCell()
@@ -48,16 +48,40 @@ class CreateAccountViewController: KeyboardAwareViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         mnemonicCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        mnemonicCell.titleImage = UIImage(named: "key_20")
-        mnemonicCell.title = "create_wallet.mnemonic".localized
+        CellBuilder.build(cell: mnemonicCell, elements: [.image20, .text, .text, .image20])
+        mnemonicCell.bind(index: 0) { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "key_20")
+        }
+        mnemonicCell.bind(index: 1) { (component: TextComponent) in
+            component.font = .body
+            component.textColor = .themeLeah
+            component.text = "create_wallet.mnemonic".localized
+        }
+        mnemonicCell.bind(index: 2) { (component: TextComponent) in
+            component.font = .subhead1
+            component.textColor = .themeLeah
+        }
+        mnemonicCell.bind(index: 3) { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "arrow_small_down_20")
+        }
 
         passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        passphraseToggleCell.titleImage = UIImage(named: "key_phrase_20")
-        passphraseToggleCell.title = "create_wallet.passphrase".localized
-        passphraseToggleCell.onToggle = { [weak self] in self?.viewModel.onTogglePassphrase(isOn: $0) }
+        CellBuilder.build(cell: passphraseToggleCell, elements: [.image20, .text, .switch])
+        passphraseToggleCell.bind(index: 0) { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "key_phrase_20")
+        }
+        passphraseToggleCell.bind(index: 1) { (component: TextComponent) in
+            component.font = .body
+            component.textColor = .themeLeah
+            component.text = "create_wallet.passphrase".localized
+        }
+        passphraseToggleCell.bind(index: 2) { (component: SwitchComponent) in
+            component.onSwitch = { [weak self] in
+                self?.viewModel.onTogglePassphrase(isOn: $0)
+            }
+        }
 
         passphraseCell.inputPlaceholder = "create_wallet.input.passphrase".localized
         passphraseCell.onChangeText = { [weak self] in self?.viewModel.onChange(passphrase: $0 ?? "") }
@@ -71,7 +95,11 @@ class CreateAccountViewController: KeyboardAwareViewController {
 
         passphraseConfirmationCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
-        subscribe(disposeBag, viewModel.kindDriver) { [weak self] in self?.mnemonicCell.value = $0 }
+        subscribe(disposeBag, viewModel.wordCountDriver) { [weak self] kind in
+            self?.mnemonicCell.bind(index: 2) { (component: TextComponent) in
+                component.text = kind
+            }
+        }
         subscribe(disposeBag, viewModel.inputsVisibleDriver) { [weak self] in self?.sync(inputsVisible: $0) }
         subscribe(disposeBag, viewModel.passphraseCautionDriver) { [weak self] caution in
             self?.passphraseCell.set(cautionType: caution?.type)
@@ -85,7 +113,7 @@ class CreateAccountViewController: KeyboardAwareViewController {
             self?.passphraseCell.inputText = nil
             self?.passphraseConfirmationCell.inputText = nil
         }
-        subscribe(disposeBag, viewModel.openSelectKindSignal) { [weak self] in self?.openSelectKind(viewItems: $0) }
+        subscribe(disposeBag, viewModel.openSelectWordCountSignal) { [weak self] in self?.openSelectKind(viewItems: $0) }
         subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.show(error: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.finish() }
 
@@ -110,18 +138,18 @@ class CreateAccountViewController: KeyboardAwareViewController {
 
     private func openSelectKind(viewItems: [AlertViewItem]) {
         let alertController = AlertRouter.module(title: "create_wallet.mnemonic".localized, viewItems: viewItems) { [weak self] index in
-            self?.viewModel.onSelectKind(index: index)
+            self?.viewModel.onSelectWordCount(index: index)
         }
 
         present(alertController, animated: true)
     }
 
     private func show(error: String) {
-        HudHelper.instance.showError(title: error)
+        HudHelper.instance.show(banner: .error(string: error))
     }
 
     private func finish() {
-        HudHelper.instance.showSuccess(title: "create_wallet.success".localized)
+        HudHelper.instance.show(banner: .created)
         dismiss(animated: true)
     }
 
@@ -139,18 +167,6 @@ class CreateAccountViewController: KeyboardAwareViewController {
 
 extension CreateAccountViewController: SectionsDataSource {
 
-    private func footer(text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: "bottom_description",
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { width in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: width, text: text)
-                }
-        )
-    }
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
@@ -163,7 +179,7 @@ extension CreateAccountViewController: SectionsDataSource {
                                 height: .heightCell48,
                                 autoDeselect: true,
                                 action: { [weak self] in
-                                    self?.viewModel.onTapKind()
+                                    self?.viewModel.onTapWordCount()
                                 }
                         )
                     ]
@@ -200,7 +216,7 @@ extension CreateAccountViewController: SectionsDataSource {
             ),
             Section(
                     id: "passphrase-confirmation",
-                    footerState: inputsVisible ? footer(text: "create_wallet.passphrase_description".localized) : .margin(height: .margin32),
+                    footerState: inputsVisible ? tableView.sectionFooter(text: "create_wallet.passphrase_description".localized) : .margin(height: .margin32),
                     rows: [
                         StaticRow(
                                 cell: passphraseConfirmationCell,

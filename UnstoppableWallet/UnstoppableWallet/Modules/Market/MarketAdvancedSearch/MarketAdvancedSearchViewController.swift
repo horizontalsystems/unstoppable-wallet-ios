@@ -26,7 +26,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private let priceCloseToAtlCell = BaseThemeCell()
 
     private let showResultButtonHolder = BottomGradientHolder()
-    private let showResultButton = ThemeButton()
+    private let showResultButton = PrimaryButton()
 
     private let spinner = HUDActivityView.create(with: .small20)
 
@@ -52,8 +52,6 @@ class MarketAdvancedSearchViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview()
         }
 
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -113,10 +111,9 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         showResultButtonHolder.addSubview(showResultButton)
         showResultButton.snp.makeConstraints { maker in
             maker.edges.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        showResultButton.apply(style: .primaryYellow)
+        showResultButton.set(style: .yellow)
         showResultButton.addTarget(self, action: #selector(onTapShowResult), for: .touchUpInside)
 
         view.addSubview(spinner)
@@ -145,7 +142,8 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func buildSelector(cell: BaseThemeCell, title: String) {
         CellBuilder.build(cell: cell, elements: [.text, .text, .margin8, .image20])
         cell.bind(index: 0) { (component: TextComponent) in
-            component.set(style: .b2)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = title
         }
         cell.bind(index: 2) { (component: ImageComponent) in
@@ -156,7 +154,8 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func buildToggle(cell: BaseThemeCell, title: String, onToggle: @escaping (Bool) -> ()) {
         CellBuilder.build(cell: cell, elements: [.text, .switch])
         cell.bind(index: 0) { (component: TextComponent) in
-            component.set(style: .b2)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = title
         }
         cell.bind(index: 1) { (component: SwitchComponent) in
@@ -166,7 +165,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func selectorItems(viewItems: [MarketAdvancedSearchViewModel.FilterViewItem]) -> [ItemSelectorModule.Item] {
         viewItems.map {
-            ItemSelectorModule.Item.complex(viewItem: ItemSelectorModule.ComplexViewItem(title: $0.title, titleStyle: $0.style.filterTextStyle, selected: $0.selected))
+            ItemSelectorModule.Item.complex(viewItem: ItemSelectorModule.ComplexViewItem(title: $0.title, titleColor: $0.style.filterTextColor, selected: $0.selected))
         }
     }
 
@@ -184,9 +183,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func onTapCoinListCell() {
         let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
                 title: "market.advanced_search.choose_set".localized,
-                subtitle: "---------",
-                image: UIImage(named: "circle_coin_24"),
-                tintColor: .themeJacob
+                image: UIImage(named: "circle_coin_24")?.withTintColor(.themeJacob)
         )
 
         showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.coinListViewItems), action: { [weak self] index in
@@ -197,9 +194,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func onTapMarketCapCell() {
         let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
                 title: "market.advanced_search.market_cap".localized,
-                subtitle: "---------",
-                image: UIImage(named: "usd_24"),
-                tintColor: .themeJacob
+                image: UIImage(named: "usd_24")?.withTintColor(.themeJacob)
         )
 
         showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.marketCapViewItems), action: { [weak self] index in
@@ -210,9 +205,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func onTapVolumeCell() {
         let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
                 title: "market.advanced_search.volume".localized,
-                subtitle: "market.advanced_search.24h".localized,
-                image: UIImage(named: "chart_2_24"),
-                tintColor: .themeJacob
+                image: UIImage(named: "chart_2_24")?.withTintColor(.themeJacob)
         )
 
         showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.volumeViewItems), action: { [weak self] index in
@@ -235,9 +228,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func onTapPeriodCell() {
         let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
                 title: "market.advanced_search.price_period".localized,
-                subtitle: "---------",
-                image: UIImage(named: "circle_clock_24"),
-                tintColor: .themeJacob
+                image: UIImage(named: "circle_clock_24")?.withTintColor(.themeJacob)
         )
 
         showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.priceChangeTypeViewItems), action: { [weak self] index in
@@ -248,9 +239,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func onTapPriceChangeCell() {
         let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
                 title: "market.advanced_search.price_change".localized,
-                subtitle: "---------",
-                image: UIImage(named: "markets_24"),
-                tintColor: .themeJacob
+                image: UIImage(named: "markets_24")?.withTintColor(.themeJacob)
         )
 
         showAlert(titleViewItem: titleViewItem, items: selectorItems(viewItems: viewModel.priceChangeViewItems), action: { [weak self] index in
@@ -289,7 +278,8 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
     private func set(viewItem: MarketAdvancedSearchViewModel.ViewItem, cell: BaseThemeCell) {
         cell.bind(index: 1) { (component: TextComponent) in
-            component.set(style: viewItem.valueStyle.valueTextStyle)
+            component.font = .subhead1
+            component.textColor = viewItem.valueStyle.valueTextColor
             component.text = viewItem.value
         }
     }
@@ -376,18 +366,6 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         )
     }
 
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { _ in
-                    SubtitleHeaderFooterView.height
-                }
-        )
-    }
-
 }
 
 extension MarketAdvancedSearchViewController: SectionsDataSource {
@@ -398,7 +376,7 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
         sections.append(Section(
                 id: "coin_list",
                 headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin32),
+                footerState: .margin(height: .margin24),
                 rows: [
                     row(cell: coinListCell, id: "coin_list") { [weak self] in self?.onTapCoinListCell() }
                 ])
@@ -406,8 +384,8 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
 
         sections.append(Section(
                 id: "market_filters",
-                headerState: header(text: "market.advanced_search.market_parameters".localized.uppercased()),
-                footerState: .margin(height: .margin32),
+                headerState: tableView.sectionHeader(text: "market.advanced_search.market_parameters".localized.uppercased()),
+                footerState: .margin(height: .margin24),
                 rows: [
                     row(cell: marketCapCell, id: "market_cap") { [weak self] in self?.onTapMarketCapCell() },
                     row(cell: volumeCell, id: "volume") { [weak self] in self?.onTapVolumeCell() }
@@ -416,8 +394,8 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
 
         sections.append(Section(
                 id: "network_filters",
-                headerState: header(text: "market.advanced_search.network_parameters".localized.uppercased()),
-                footerState: .margin(height: .margin32),
+                headerState: tableView.sectionHeader(text: "market.advanced_search.network_parameters".localized.uppercased()),
+                footerState: .margin(height: .margin24),
                 rows: [
                     row(cell: blockchainsCell, id: "blockchains") { [weak self] in self?.onTapBlockchainsCell() }
                 ])
@@ -425,7 +403,7 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
 
         sections.append(Section(
                 id: "price_filters",
-                headerState: header(text: "market.advanced_search.price_parameters".localized.uppercased()),
+                headerState: tableView.sectionHeader(text: "market.advanced_search.price_parameters".localized.uppercased()),
                 footerState: .margin(height: .margin32),
                 rows: [
                     row(cell: priceChangeCell, id: "price_change") { [weak self] in self?.onTapPriceChangeCell() },
@@ -445,21 +423,21 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
 
 extension MarketAdvancedSearchViewModel.ValueStyle {
 
-    var valueTextStyle: TextComponent.Style {
+    var valueTextColor: UIColor {
         switch self {
-        case .none: return .c1
-        case .positive: return .c4
-        case .negative: return .c5
-        case .normal: return .c2
+        case .none: return .themeGray
+        case .positive: return .themeRemus
+        case .negative: return .themeLucian
+        case .normal: return .themeLeah
         }
     }
 
-    var filterTextStyle: TextComponent.Style {
+    var filterTextColor: UIColor {
         switch self {
-        case .none: return .b1
-        case .positive: return .b4
-        case .negative: return .b5
-        case .normal: return .b2
+        case .none: return .themeGray
+        case .positive: return .themeRemus
+        case .negative: return .themeLucian
+        case .normal: return .themeLeah
         }
     }
 

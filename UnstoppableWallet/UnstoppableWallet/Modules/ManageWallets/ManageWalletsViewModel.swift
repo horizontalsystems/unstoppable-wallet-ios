@@ -28,17 +28,13 @@ class ManageWalletsViewModel {
         case .unsupported: viewItemState = .toggleHidden
         }
 
-        let supportedPlatforms = item.fullCoin.supportedPlatforms
-        let blockchainBadge = supportedPlatforms.count == 1 ? item.fullCoin.supportedPlatforms.first?.coinType.blockchainType : nil
-
         return CoinToggleViewModel.ViewItem(
                 uid: item.fullCoin.coin.uid,
                 imageUrl: item.fullCoin.coin.imageUrl,
                 placeholderImageName: item.fullCoin.placeholderImageName,
-                title: item.fullCoin.coin.name,
-                subtitle: item.fullCoin.coin.code,
-                state: viewItemState,
-                blockchainBadge: blockchainBadge
+                title: item.fullCoin.coin.code,
+                subtitle: item.fullCoin.coin.name,
+                state: viewItemState
         )
     }
 

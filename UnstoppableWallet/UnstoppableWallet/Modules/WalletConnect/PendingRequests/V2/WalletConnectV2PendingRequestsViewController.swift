@@ -3,7 +3,6 @@ import SectionsTableView
 import ThemeKit
 import RxSwift
 import ComponentKit
-import WalletConnect
 
 class WalletConnectV2PendingRequestsViewController: ThemeViewController {
     private let viewModel: WalletConnectV2PendingRequestsViewModel
@@ -39,7 +38,6 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.sectionViewItemsDriver) { [weak self] in self?.sync(items: $0) }
@@ -102,7 +100,8 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
             }
 
             cell.bind(index: 1) { (component: TextComponent) in
-                component.set(style: .b2)
+                component.font = .body
+                component.textColor = .themeLeah
                 component.text = title
             }
 
@@ -138,22 +137,10 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
         )
     }
 
-    private func footer(hash: String, text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: hash,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { width in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: width, text: text)
-                }
-        )
-    }
-
     private func section(sectionViewItem: WalletConnectV2PendingRequestsViewModel.SectionViewItem) -> SectionProtocol {
         Section(id: "section-\(sectionViewItem.title)",
                 headerState: .margin(height: .margin12),
-                footerState: sectionViewItem.selected ? .margin(height: .margin32) : footer(hash: "non-active-wallet-\(sectionViewItem.id)", text: "wallet_connect.pending_requests.nonactive_footer".localized),
+                footerState: sectionViewItem.selected ? .margin(height: .margin32) : tableView.sectionFooter(text: "wallet_connect.pending_requests.nonactive_footer".localized),
                 rows: [
                     accountCell(
                             id: sectionViewItem.id,
@@ -174,8 +161,10 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
 
                                     cell.bind(index: 0) { (component: MultiTextComponent) in
                                         component.set(style: .m1)
-                                        component.title.set(style: .b2)
-                                        component.subtitle.set(style: .d1)
+                                        component.title.font = .body
+                                        component.title.textColor = .themeLeah
+                                        component.subtitle.font = .subhead2
+                                        component.subtitle.textColor = .themeGray
 
                                         component.title.text = viewItem.title
                                         component.subtitle.text = viewItem.subtitle
@@ -198,8 +187,10 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
 
                                     cell.bind(index: 0) { (component: MultiTextComponent) in
                                         component.set(style: .m1)
-                                        component.title.set(style: .b7)
-                                        component.subtitle.set(style: .d7)
+                                        component.title.font = .body
+                                        component.title.textColor = .themeGray50
+                                        component.subtitle.font = .subhead2
+                                        component.subtitle.textColor = .themeGray50
 
                                         component.title.text = viewItem.title
                                         component.subtitle.text = viewItem.subtitle

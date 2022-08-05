@@ -7,7 +7,7 @@ class RestoreSettingsViewModel {
     private let service: RestoreSettingsService
     private let disposeBag = DisposeBag()
 
-    private let openBirthdayAlertRelay = PublishRelay<PlatformCoin>()
+    private let openBirthdayAlertRelay = PublishRelay<Token>()
 
     private var currentRequest: RestoreSettingsService.Request?
 
@@ -22,7 +22,7 @@ class RestoreSettingsViewModel {
 
         switch request.type {
         case .birthdayHeight:
-            openBirthdayAlertRelay.accept(request.platformCoin)
+            openBirthdayAlertRelay.accept(request.token)
         }
     }
 
@@ -30,18 +30,18 @@ class RestoreSettingsViewModel {
 
 extension RestoreSettingsViewModel {
 
-    var openBirthdayAlertSignal: Signal<PlatformCoin> {
+    var openBirthdayAlertSignal: Signal<Token> {
         openBirthdayAlertRelay.asSignal()
     }
 
-    func onEnter(birthdayHeight: Int) {
+    func onEnter(birthdayHeight: Int?) {
         guard let request = currentRequest else {
             return
         }
 
         switch request.type {
         case .birthdayHeight:
-            service.enter(birthdayHeight: birthdayHeight, platformCoin: request.platformCoin)
+            service.enter(birthdayHeight: birthdayHeight, token: request.token)
         }
     }
 
@@ -50,7 +50,7 @@ extension RestoreSettingsViewModel {
             return
         }
 
-        service.cancel(platformCoin: request.platformCoin)
+        service.cancel(token: request.token)
     }
 
 }

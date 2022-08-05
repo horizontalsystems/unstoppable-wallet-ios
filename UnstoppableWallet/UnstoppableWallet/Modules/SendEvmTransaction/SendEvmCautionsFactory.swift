@@ -10,7 +10,7 @@ class SendEvmCautionsFactory {
                     return [
                         TitledCaution(
                                 title: "fee_settings.errors.insufficient_balance".localized,
-                                text: "fee_settings.errors.insufficient_balance.info".localized(baseCoinService.platformCoin.coin.code),
+                                text: "fee_settings.errors.insufficient_balance.info".localized(baseCoinService.token.coin.code),
                                 type: .error
                         )
                     ]
@@ -18,7 +18,7 @@ class SendEvmCautionsFactory {
                     return [
                         TitledCaution(
                                 title: "fee_settings.errors.low_max_fee".localized,
-                                text: "fee_settings.errors.low_max_fee.info".localized(baseCoinService.platformCoin.coin.code),
+                                text: "fee_settings.errors.low_max_fee.info".localized(baseCoinService.token.coin.code),
                                 type: .error
                         )
                     ]
@@ -61,7 +61,7 @@ class SendEvmCautionsFactory {
             switch reason {
             case .insufficientBalanceWithFee, .executionReverted:
                 title = "fee_settings.errors.insufficient_balance".localized
-                text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(baseCoinService.platformCoin.coin.code)
+                text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(baseCoinService.token.coin.code)
             case .lowerThanBaseGasLimit:
                 title = "fee_settings.errors.low_max_fee".localized
                 text = "fee_settings.errors.low_max_fee.info".localized
@@ -72,10 +72,10 @@ class SendEvmCautionsFactory {
             switch reason {
             case .insufficientBalanceWithFee:
                 title = "fee_settings.errors.insufficient_balance".localized
-                text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(baseCoinService.platformCoin.coin.code)
+                text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(baseCoinService.token.coin.code)
             case .cannotEstimate:
                 title = "swap.one_inch.error.cannot_estimate".localized
-                text = "swap.one_inch.error.cannot_estimate.info".localized(baseCoinService.platformCoin.coin.code)
+                text = "swap.one_inch.error.cannot_estimate.info".localized(baseCoinService.token.coin.code)
             case .insufficientLiquidity:
                 text = "swap.one_inch.error.insufficient_liquidity".localized()
                 text = "swap.one_inch.error.insufficient_liquidity.info".localized()

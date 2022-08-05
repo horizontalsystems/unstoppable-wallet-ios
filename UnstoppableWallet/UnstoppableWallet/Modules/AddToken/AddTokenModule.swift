@@ -12,24 +12,16 @@ struct AddTokenModule {
         var addTokenServices: [IAddTokenBlockchainService] = App.shared.evmBlockchainManager.allBlockchains.map {
             AddEvmTokenBlockchainService(blockchain: $0, networkManager: App.shared.networkManager)
         }
-        addTokenServices.append(AddBep2TokenBlockchainService(networkManager: App.shared.networkManager))
 
-        let service = AddTokenService(account: account, blockchainServices: addTokenServices, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager)
+        if let service = AddBep2TokenBlockchainService(marketKit: App.shared.marketKit, networkManager: App.shared.networkManager) {
+            addTokenServices.append(service)
+        }
+
+        let service = AddTokenService(account: account, blockchainServices: addTokenServices, marketKit: App.shared.marketKit, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager)
         let viewModel = AddTokenViewModel(service: service)
         let viewController = AddTokenViewController(viewModel: viewModel)
 
         return ThemeNavigationController(rootViewController: viewController)
-    }
-
-}
-
-extension AddTokenModule {
-
-    struct CustomCoin {
-        let type: CoinType
-        let name: String
-        let code: String
-        let decimals: Int
     }
 
 }

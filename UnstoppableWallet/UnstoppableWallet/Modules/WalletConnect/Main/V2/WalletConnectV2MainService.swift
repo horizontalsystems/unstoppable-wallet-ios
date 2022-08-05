@@ -1,7 +1,7 @@
 import RxSwift
 import RxRelay
-import WalletConnect
 import WalletConnectUtils
+import WalletConnectSign
 import HsToolKit
 import EthereumKit
 
@@ -16,15 +16,18 @@ class WalletConnectV2MainService {
     private let evmBlockchainManager: EvmBlockchainManager
     private let evmChainParser: WalletConnectEvmChainParser
 
-    private var proposal: Session.Proposal?
-    private var session: Session?
+    private var proposal: WalletConnectSign.Session.Proposal?
+    private var session: WalletConnectSign.Session?
 
     private let connectionStateRelay = PublishRelay<WalletConnectMainModule.ConnectionState>()
-    private let requestRelay = PublishRelay<Request>()
+    private let requestRelay = PublishRelay<WalletConnectSign.Request>()
     private let errorRelay = PublishRelay<Error>()
 
-    private let allowedBlockchainsRelay = PublishRelay<[WalletConnectMainModule.Blockchain]>()
-    private var blockchains = Set<WalletConnectMainModule.Blockchain>()
+    private let allowedBlockchainsRelay = PublishRelay<[WalletConnectMainModule.BlockchainItem]>()
+
+    private var blockchains = WalletConnectMainModule.BlockchainSet.empty
+    private var methods = Set<String>()
+    private var events = Set<String>()
 
     private let stateRelay = PublishRelay<WalletConnectMainModule.State>()
     private(set) var state: WalletConnectMainModule.State = .idle {
@@ -33,7 +36,7 @@ class WalletConnectV2MainService {
         }
     }
 
-    init(session: Session? = nil, uri: String? = nil, service: WalletConnectV2Service, pingService: WalletConnectV2PingService, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, evmChainParser: WalletConnectEvmChainParser) {
+    init(session: WalletConnectSign.Session? = nil, uri: String? = nil, service: WalletConnectV2Service, pingService: WalletConnectV2PingService, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, evmChainParser: WalletConnectEvmChainParser) {
         self.session = session
         self.service = service
         self.pingService = pingService
@@ -57,9 +60,7 @@ class WalletConnectV2MainService {
         }
         subscribe(disposeBag, reachabilityManager.reachabilityObservable) { [weak self] reachable in
             if reachable {
-                if let topic = self?.session?.topic {
-                    self?.pingService.ping(topic: topic)
-                }
+                self?.pingService.ping()
             } else {
                 if self?.session != nil {
                     self?.pingService.disconnect()
@@ -69,88 +70,117 @@ class WalletConnectV2MainService {
 
         if let session = session {
             state = .ready
-            blockchains = initialBlockchains
+            do {
+                blockchains = try initialBlockchains()
+                allowedBlockchainsRelay.accept(allowedBlockchains)
+
+                self.pingService.topic = session.topic
+                pingService.ping()
+            } catch {
+                state = .invalid(error: WalletConnectMainModule.SessionError.noAnySupportedChainId)
+                return
+            }
+        }
+    }
+
+    private func didReceive(proposal: WalletConnectSign.Session.Proposal) {
+        self.proposal = proposal
+        do {
+            blockchains = try initialBlockchains()
             allowedBlockchainsRelay.accept(allowedBlockchains)
 
-            pingService.ping(topic: session.topic)
-        }
-    }
+            guard !blockchains.items.isEmpty else {
+                state = .invalid(error: WalletConnectMainModule.SessionError.noAnySupportedChainId)
+                return
+            }
 
-    private func didReceive(proposal: Session.Proposal) {
-        self.proposal = proposal
-        blockchains = initialBlockchains
-        allowedBlockchainsRelay.accept(allowedBlockchains)
-
-        guard !initialBlockchains.isEmpty else {
-            state = .invalid(error: WalletConnectMainModule.SessionError.unsupportedChainId)
+            state = .waitingForApproveSession
+            pingService.receiveResponse()
+        } catch {
+            state = .invalid(error: error)
             return
         }
-
-        state = .waitingForApproveSession
-        pingService.receiveResponse()
     }
 
-    private func didReceive(session: Session) {
+    private func didReceive(session: WalletConnectSign.Session) {
         self.session = session
-        blockchains = initialBlockchains
-        allowedBlockchainsRelay.accept(allowedBlockchains)
+        do {
+            blockchains = try initialBlockchains()
+            allowedBlockchainsRelay.accept(allowedBlockchains)
 
-        state = .ready
-        pingService.receiveResponse()
+            state = .ready
+            pingService.topic = session.topic
+            pingService.receiveResponse()
+        } catch {
+            state = .invalid(error: WalletConnectMainModule.SessionError.noAnySupportedChainId)
+            return
+        }
     }
 
-    private func didDelete(topic: String, reason: Reason) {
+    private func didDelete(topic: String, reason: WalletConnectSign.Reason) {
         guard let currentTopic = session?.topic, currentTopic == topic else {
             return
         }
 
+        pingService.topic = nil
         pingService.disconnect()
-        state = .killed
+        state = .killed(reason: .killSession) // todo: ???
     }
 
-    private var initialBlockchains: Set<WalletConnectMainModule.Blockchain> {
+    private func initialBlockchains() throws -> WalletConnectMainModule.BlockchainSet {
         guard let seed = accountManager.activeAccount?.type.mnemonicSeed else {
-            return Set()
+            return .empty
         }
 
-        if let session = session {
-            let sessionAccountData = session.accounts.compactMap {
-                evmChainParser.parse(string: $0)
-            }
+        let supportedNamespace = "eip155" // Support only EVM blockchains yet
 
-            var blockchains = Set<WalletConnectMainModule.Blockchain>()
-            sessionAccountData.forEach { account in
-                guard let evmBlockchain = evmBlockchainManager.blockchain(chainId: account.chainId),
-                      let address = account.address else {
+        if let session = session,
+            let eip155 = session.namespaces[supportedNamespace] {
+            let accounts = Array(eip155.accounts)
+            var blockchainItems = Set<WalletConnectMainModule.BlockchainItem>()
+            accounts.forEach { account in
+                guard let chainId = Int(account.reference),
+                        let blockchain = evmBlockchainManager.blockchain(chainId: chainId) else {
                     return
                 }
 
-                blockchains.insert(WalletConnectMainModule.Blockchain(chainId: account.chainId, evmBlockchain: evmBlockchain, address: address, selected: true))
+                blockchainItems.insert(WalletConnectMainModule.BlockchainItem(namespace: supportedNamespace, chainId: chainId, blockchain: blockchain, address: account.address, selected: true))
             }
-            return blockchains
+
+            return WalletConnectMainModule.BlockchainSet(items: blockchainItems, methods: eip155.methods, events: eip155.events)
         }
 
-        if let proposal = proposal {
-            // get chainIds
-            let chainIds = proposal.permissions.blockchains.compactMap {
-                evmChainParser.parse(string: $0)?.chainId
-            }
-
-            // get addresses
-            var blockchains = Set<WalletConnectMainModule.Blockchain>()
-            chainIds.forEach { chainId in
-                guard let evmBlockchain = evmBlockchainManager.blockchain(chainId: chainId),
-                      let chain = evmBlockchainManager.chain(chainId: chainId),
-                      let address = try? Signer.address(seed: seed, chain: chain) else {
-                    return
-                }
-
-                blockchains.insert(WalletConnectMainModule.Blockchain(chainId: chainId, evmBlockchain: evmBlockchain, address: address.eip55, selected: true))
-            }
-            return blockchains
+        guard let proposal = proposal, let eip155 = proposal.requiredNamespaces[supportedNamespace] else {
+            return .empty
         }
 
-        return Set()
+
+        guard proposal.requiredNamespaces.filter({ key, _ in key != supportedNamespace }).isEmpty else {
+            throw WalletConnectMainModule.SessionError.unsupportedChainId
+        }
+
+        // get chainIds
+        let chainIds = eip155.chains.compactMap { Int($0.reference) }
+
+        // get addresses
+        var blockchainItems = Set<WalletConnectMainModule.BlockchainItem>()
+        try chainIds.forEach { chainId in
+            guard let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
+                  let chain = evmBlockchainManager.chain(chainId: chainId),
+                  let address = try? Signer.address(seed: seed, chain: chain) else {
+                throw WalletConnectMainModule.SessionError.unsupportedChainId
+            }
+
+            blockchainItems.insert(WalletConnectMainModule.BlockchainItem(
+                    namespace: supportedNamespace,
+                    chainId: chainId,
+                    blockchain: blockchain,
+                    address: address.eip55,
+                    selected: true
+            ))
+        }
+
+        return WalletConnectMainModule.BlockchainSet(items: blockchainItems, methods: eip155.methods, events: eip155.events)
     }
 
 }
@@ -165,27 +195,27 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         if let session = session {
             return WalletConnectMainModule.AppMetaItem(
                     editable: false,
-                    name: session.peer.name ?? "",
-                    url: session.peer.url ?? "",
-                    description: session.peer.description ?? "",
-                    icons: session.peer.icons ?? []
+                    name: session.peer.name,
+                    url: session.peer.url,
+                    description: session.peer.description,
+                    icons: session.peer.icons
             )
         }
         if let proposal = proposal {
             return WalletConnectMainModule.AppMetaItem(
-                    editable: true,
-                    name: proposal.proposer.name ?? "",
-                    url: proposal.proposer.url ?? "",
-                    description: proposal.proposer.description ?? "",
-                    icons: proposal.proposer.icons ?? []
+                    editable: false,
+                    name: proposal.proposer.name,
+                    url: proposal.proposer.url,
+                    description: proposal.proposer.description,
+                    icons: proposal.proposer.icons
             )
         }
 
         return nil
     }
 
-    var allowedBlockchains: [WalletConnectMainModule.Blockchain] {
-        blockchains.sorted { blockchain, blockchain2 in
+    var allowedBlockchains: [WalletConnectMainModule.BlockchainItem] {
+        blockchains.items.sorted { blockchain, blockchain2 in
             blockchain.chainId < blockchain2.chainId
         }
     }
@@ -226,20 +256,26 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         errorRelay.asObservable()
     }
 
-    var allowedBlockchainsObservable: Observable<[WalletConnectMainModule.Blockchain]> {
+    var allowedBlockchainsObservable: Observable<[WalletConnectMainModule.BlockchainItem]> {
         allowedBlockchainsRelay.asObservable()
     }
 
     func toggle(chainId: Int) {
-        guard let blockchain = blockchains.first(where: { $0.chainId == chainId }) else {
+        guard let blockchain = blockchains.items.first(where: { $0.chainId == chainId }) else {
             return
         }
-        if blockchain.selected, blockchains.filter({ $0.selected }).count < 2 {
+        if blockchain.selected, blockchains.items.filter({ $0.selected }).count < 2 {
             return
         }
 
-        let toggledBlockchain = WalletConnectMainModule.Blockchain(chainId: chainId, evmBlockchain: blockchain.evmBlockchain, address: blockchain.address, selected: !blockchain.selected)
-        blockchains.update(with: toggledBlockchain)
+        let toggledBlockchain = WalletConnectMainModule.BlockchainItem(
+                namespace: "eip155",
+                chainId: chainId,
+                blockchain: blockchain.blockchain,
+                address: blockchain.address,
+                selected: !blockchain.selected
+        )
+        blockchains.items.update(with: toggledBlockchain)
         allowedBlockchainsRelay.accept(allowedBlockchains)
     }
 
@@ -253,7 +289,8 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
             return
         }
 
-        pingService.ping(topic: session.topic)
+        pingService.topic = session.topic
+        pingService.ping()
     }
 
     func approveSession() {
@@ -271,22 +308,30 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
             return
         }
 
-        var accounts = [String]()
-        blockchains.forEach { blockchain in
+        var accounts = [WalletConnectUtils.Account]()
+        blockchains.items.forEach { blockchain in
             guard blockchain.selected,
                   evmBlockchainManager.blockchain(chainId: blockchain.chainId) != nil else {
                 return
             }
 
-            accounts.append("eip155:\(blockchain.chainId):\(blockchain.address)")
+
+            if let wcBlockchain = WalletConnectUtils.Blockchain(namespace: blockchain.namespace, reference: blockchain.chainId.description),
+               let account = WalletConnectUtils.Account(blockchain: wcBlockchain, address: blockchain.address) {
+                accounts.append(account)
+            }
         }
 
         guard !accounts.isEmpty else {
-            state = .invalid(error: WalletConnectMainModule.SessionError.unsupportedChainId)
+            state = .invalid(error: WalletConnectMainModule.SessionError.noAnySupportedChainId)
             return
         }
 
-        service.approve(proposal: proposal, accounts: Set(accounts))
+        do {
+            try service.approve(proposal: proposal, accounts: Set(accounts), methods: blockchains.methods, events: blockchains.events)
+        } catch {
+            errorRelay.accept(error)
+        }
     }
 
     func rejectSession() {
@@ -296,9 +341,13 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         }
 
         if let proposal = proposal {
-            service.reject(proposal: proposal)
-            pingService.disconnect()
-            state = .killed
+            do {
+                try service.reject(proposal: proposal)
+                pingService.disconnect()
+                state = .killed(reason: .rejectProposal)
+            } catch {
+                errorRelay.accept(error)
+            }
         }
     }
 
@@ -314,7 +363,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
 
         service.disconnect(topic: session.topic, reason: Reason(code: 1, message: "Session Killed by User"))
         pingService.disconnect()
-        state = .killed
+        state = .killed(reason: .killSession) //todo: ???
     }
 
 }
@@ -322,7 +371,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
 extension WalletConnectV2MainService {
 
     struct SessionData {
-        let proposal: Session.Proposal
+        let proposal: WalletConnectSign.Session.Proposal
         let appMeta: WalletConnectMainModule.AppMetaItem
     }
 

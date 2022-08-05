@@ -1,9 +1,10 @@
 import LitecoinKit
 import BitcoinCore
 import RxSwift
+import MarketKit
 
 class LitecoinAdapter: BitcoinBaseAdapter {
-    private let litecoinKit: Kit
+    private let litecoinKit: LitecoinKit.Kit
 
     init(wallet: Wallet, syncMode: BitcoinCore.SyncMode, testMode: Bool) throws {
         guard let seed = wallet.account.type.mnemonicSeed else {
@@ -14,11 +15,11 @@ class LitecoinAdapter: BitcoinBaseAdapter {
             throw AdapterError.wrongParameters
         }
 
-        let networkType: Kit.NetworkType = testMode ? .testNet : .mainNet
+        let networkType: LitecoinKit.Kit.NetworkType = testMode ? .testNet : .mainNet
         let bip = BitcoinBaseAdapter.bip(from: walletDerivation)
         let logger = App.shared.logger.scoped(with: "LitecoinKit")
 
-        litecoinKit = try Kit(seed: seed, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
+        litecoinKit = try LitecoinKit.Kit(seed: seed, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
 
         super.init(abstractKit: litecoinKit, wallet: wallet, testMode: testMode)
 
@@ -37,7 +38,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
 
 extension LitecoinAdapter: ISendBitcoinAdapter {
 
-    var blockchain: BtcBlockchain {
+    var blockchainType: BlockchainType {
         .litecoin
     }
 

@@ -8,9 +8,11 @@ class FeeSliderWrapper: UIView {
     private let increaseButton = UIButton()
 
     private let feeRateView = FeeSliderValueView()
-    private var sliderLastValue: Int?
+    private var sliderLastValue: Float?
+    private var step: Int = 1
+    var scale: FeePriceScale = FeePriceScale.gwei
 
-    var finishTracking: ((Int) -> ())?
+    var finishTracking: ((Float) -> ())?
 
     var sliderRange: ClosedRange<Int> {
         Int(slider.minimumValue)...Int(slider.maximumValue)
@@ -63,24 +65,25 @@ class FeeSliderWrapper: UIView {
         guard Int(slider.value) > Int(slider.minimumValue) else {
             return
         }
-        slider.value = slider.value - 1
+        slider.value = max(slider.value - Float(step), slider.minimumValue)
 
-        finishTracking?(Int(slider.value))
+        finishTracking?(slider.value)
     }
 
     @objc private func increase() {
         guard Int(slider.value) < Int(slider.maximumValue) else {
             return
         }
-        slider.value = slider.value + 1
+        slider.value = min(slider.value + Float(step), slider.maximumValue)
 
-        finishTracking?(Int(slider.value))
+        finishTracking?(slider.value)
     }
 
-    func set(value: Int, range: ClosedRange<Int>, description: String?) {
-        slider.minimumValue = Float(range.lowerBound)
-        slider.maximumValue = Float(range.upperBound)
-        slider.value = Float(value)
+    func set(value: Float, range: ClosedRange<Float>, step: Int, description: String?) {
+        slider.minimumValue = range.lowerBound
+        slider.maximumValue = range.upperBound
+        slider.value = value
+        self.step = step
 
         feeRateView.set(descriptionText: description)
         sliderLastValue = value
@@ -99,7 +102,7 @@ class FeeSliderWrapper: UIView {
         feeConfig.blurEffectIntensity = nil
         feeConfig.borderColor = .themeSteel20
         feeConfig.borderWidth = .heightOnePixel
-        feeConfig.exactSize = true
+        feeConfig.exactSize = false
         feeConfig.preferredSize = CGSize(width: hudWidth, height: 48)
         feeConfig.cornerRadius = CGFloat.cornerRadius2x
         feeConfig.handleKeyboard = .none
@@ -112,14 +115,17 @@ class FeeSliderWrapper: UIView {
         return feeConfig
     }
 
-    private func onTracking(_ value: Int, position: CGPoint) {
+    private func onTracking(_ value: Float, position: CGPoint) {
         HUD.instance.config = hudConfig(position: position)
 
-        feeRateView.set(value: "\(value)")
+        let roundedValue = scale.wrap(value: value, step: step)
+        let displayValue = scale.description(value: roundedValue, showSymbol: false)
+
+        feeRateView.set(value: displayValue)
         HUD.instance.showHUD(feeRateView)
     }
 
-    private func onFinishTracking(_ value: Int) {
+    private func onFinishTracking(_ value: Float) {
         HUD.instance.hide()
 
         guard sliderLastValue != value else {

@@ -77,8 +77,8 @@ class WalletViewController: ThemeViewController {
 
         emptyView.image = UIImage(named: "add_to_wallet_2_48")
         emptyView.text = "balance.empty.description".localized
-        emptyView.addButton(
-                style: .primaryYellow,
+        emptyView.addPrimaryButton(
+                style: .yellow,
                 title: "balance.empty.add_coins".localized,
                 target: self,
                 action: #selector(onTapAddCoin)
@@ -100,7 +100,7 @@ class WalletViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.openReceiveSignal) { [weak self] in self?.openReceive(wallet: $0) }
         subscribe(disposeBag, viewModel.openBackupRequiredSignal) { [weak self] in self?.openBackupRequired(wallet: $0) }
         subscribe(disposeBag, viewModel.openCoinPageSignal) { [weak self] in self?.openCoinPage(coin: $0) }
-        subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.show(error: $0) }
+        subscribe(disposeBag, viewModel.noConnectionErrorSignal) { HudHelper.instance.show(banner: .noInternet) }
         subscribe(disposeBag, viewModel.openSyncErrorSignal) { [weak self] in self?.openSyncError(wallet: $0, error: $1) }
         subscribe(disposeBag, viewModel.showAccountsLostSignal) { [weak self] in self?.showAccountsLost() }
         subscribe(disposeBag, viewModel.playHapticSignal) { [weak self] in self?.playHaptic() }
@@ -282,7 +282,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openSwap(wallet: Wallet) {
-        if let module = SwapModule.viewController(platformCoinFrom: wallet.platformCoin) {
+        if let module = SwapModule.viewController(tokenFrom: wallet.token) {
             present(module, animated: true)
         }
     }
@@ -302,10 +302,6 @@ class WalletViewController: ThemeViewController {
     private func openSyncError(wallet: Wallet, error: Error) {
         let viewController = BalanceErrorModule.viewController(wallet: wallet, error: error, sourceViewController: navigationController)
         present(viewController, animated: true)
-    }
-
-    private func show(error: String) {
-        HudHelper.instance.showError(title: error)
     }
 
     private func openManageWallets() {

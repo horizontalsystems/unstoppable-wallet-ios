@@ -52,8 +52,8 @@ class CoinSelectViewController: ThemeSearchViewController {
         dismiss(animated: true)
     }
 
-    private func onSelect(platformCoin: PlatformCoin) {
-        delegate?.didSelect(platformCoin: platformCoin)
+    private func onSelect(token: Token) {
+        delegate?.didSelect(token: token)
         dismiss(animated: true)
     }
 
@@ -81,20 +81,20 @@ extension CoinSelectViewController: SectionsDataSource {
                         let isLast = index == viewItems.count - 1
 
                         return Row<G12Cell>(
-                                id: "coin_\(viewItem.platformCoin.platform.coinType.id)",
+                                id: "coin_\(index)",
                                 height: .heightDoubleLineCell,
                                 autoDeselect: true,
                                 bind: { cell, _ in
-                                    cell.set(backgroundStyle: .claude, isLast: isLast)
-                                    cell.topText = viewItem.platformCoin.coin.name
-                                    cell.bottomText = viewItem.platformCoin.coin.code
+                                    cell.set(backgroundStyle: .transparent, isLast: isLast)
+                                    cell.topText = viewItem.token.coin.code
+                                    cell.bottomText = viewItem.token.coin.name
                                     cell.valueTopText = viewItem.balance
                                     cell.valueBottomText = viewItem.fiatBalance
 
-                                    cell.setTitleImage(urlString: viewItem.platformCoin.coin.imageUrl, placeholder: UIImage(named: viewItem.platformCoin.platform.coinType.placeholderImageName))
+                                    cell.setTitleImage(urlString: viewItem.token.coin.imageUrl, placeholder: UIImage(named: viewItem.token.placeholderImageName))
                                 },
                                 action: { [weak self] _ in
-                                    self?.onSelect(platformCoin: viewItem.platformCoin)
+                                    self?.onSelect(token: viewItem.token)
                                 }
                         )
                     }

@@ -62,28 +62,31 @@ class CoinOverviewViewItemFactory {
         return categories.isEmpty ? nil : categories.map { $0.name }
     }
 
-    private func contractViewItems(info: MarketInfoOverview) -> [CoinOverviewViewModel.ContractViewItem]? {
-        let coinTypes = info.coinTypes.sorted
+    private func explorerUrl(token: Token, reference: String) -> String? {
+        guard let explorerUrl = token.blockchain.explorerUrl else {
+            return nil
+        }
 
-        let contracts: [CoinOverviewViewModel.ContractViewItem] = coinTypes.compactMap { coinType in
-            switch coinType {
-            case .erc20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "ethereum_24", reference: address, explorerUrl: "https://etherscan.io/token/\(address)")
-            case .bep20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "binance_smart_chain_24", reference: address, explorerUrl: "https://bscscan.com/token/\(address)")
-            case .mrc20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "polygon_24", reference: address, explorerUrl: "https://polygonscan.com/token/\(address)")
-            case .optimismErc20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "optimism_24", reference: address, explorerUrl: "https://optimistic.etherscan.io/token/\(address)")
-            case .arbitrumOneErc20(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "arbitrum_one_24", reference: address, explorerUrl: "https://arbiscan.io/token/\(address)")
-            case .bep2(let symbol): return CoinOverviewViewModel.ContractViewItem(iconName: "binance_chain_24", reference: symbol, explorerUrl: "https://explorer.binance.org/asset/\(symbol)")
-            case .avalanche(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "avalanche_24", reference: address, explorerUrl: "https://avascan.info/blockchain/c/token/\(address)")
-            case .fantom(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "fantom_24", reference: address, explorerUrl: "https://ftmscan.com/token/\(address)")
-            case .harmonyShard0(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "harmony_24", reference: address, explorerUrl: "https://explorer.harmony.one/address/\(address)")
-            case .huobiToken(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "heco_24", reference: address, explorerUrl: "https://hecoinfo.com/token/\(address)")
-            case .iotex(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "iotex_24", reference: address, explorerUrl: "https://iotexscan.io/token/\(address)")
-            case .moonriver(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "moonriver_24", reference: address, explorerUrl: "https://blockscout.moonriver.moonbeam.network/address/\(address)")
-            case .okexChain(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "okex_24", reference: address, explorerUrl: "https://www.oklink.com/oec/address/\(address)")
-            case .solana(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "solana_24", reference: address, explorerUrl: "https://explorer.solana.com/address/\(address)")
-            case .sora(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "sora_24", reference: address, explorerUrl: "https://sorascan.com/sora-mainnet/asset/\(address)")
-            case .tomochain(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "tomochain_24", reference: address, explorerUrl: "https://scan.tomochain.com/tokens/\(address)")
-            case .xdai(let address): return CoinOverviewViewModel.ContractViewItem(iconName: "xdai_24", reference: address, explorerUrl: "https://blockscout.com/xdai/mainnet/address/\(address)")
+        return explorerUrl.replacingOccurrences(of: "$ref", with: reference)
+    }
+
+    private func contractViewItems(info: MarketInfoOverview) -> [CoinOverviewViewModel.ContractViewItem]? {
+        let tokens = info.fullCoin.tokens.sorted { lhsToken, rhsToken in
+            lhsToken.blockchain.type.order < rhsToken.blockchain.type.order
+        }
+
+        let contracts: [CoinOverviewViewModel.ContractViewItem] = tokens.compactMap { token in
+            switch token.type {
+            case .eip20(let address):
+                return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, reference: address, explorerUrl: explorerUrl(token: token, reference: address))
+            case .bep2(let symbol):
+                return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, reference: symbol, explorerUrl: explorerUrl(token: token, reference: symbol))
+            case let .unsupported(_, reference):
+                if let reference = reference {
+                    return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, reference: reference, explorerUrl: explorerUrl(token: token, reference: reference))
+                } else {
+                    return nil
+                }
             default: return nil
             }
         }
@@ -164,9 +167,17 @@ extension CoinOverviewViewItemFactory {
     func viewItem(item: CoinOverviewService.Item, currency: Currency, fullCoin: FullCoin) -> CoinOverviewViewModel.ViewItem {
         let info = item.info
         let coinCode = fullCoin.coin.code
+        let marketCapRank = info.marketCapRank.map { "#\($0)" }
 
         return CoinOverviewViewModel.ViewItem(
-                marketCapRank: info.marketCapRank.map { "#\($0)" },
+                coinViewItem: CoinOverviewViewModel.CoinViewItem(
+                        name: fullCoin.coin.name,
+                        marketCapRank: marketCapRank,
+                        imageUrl: fullCoin.coin.imageUrl,
+                        imagePlaceholderName: fullCoin.placeholderImageName
+                ),
+
+                marketCapRank: marketCapRank,
                 marketCap: info.marketCap.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) },
                 totalSupply: roundedFormat(coinCode: coinCode, value: info.totalSupply),
                 circulatingSupply: roundedFormat(coinCode: coinCode, value: info.circulatingSupply),

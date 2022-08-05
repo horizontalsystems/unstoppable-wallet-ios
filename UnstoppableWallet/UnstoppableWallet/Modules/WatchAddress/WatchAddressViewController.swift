@@ -1,21 +1,26 @@
+import UIKit
 import ThemeKit
 import SnapKit
 import SectionsTableView
 import ComponentKit
 import RxSwift
 import RxCocoa
+import UIExtensions
 
 class WatchAddressViewController: KeyboardAwareViewController {
+    private let wrapperViewHeight: CGFloat = .heightButton + .margin16 + .margin16
     private let viewModel: WatchAddressViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
-    private let watchButton = ThemeButton()
 
-    private let nameCell = TextFieldCell()
+    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    private let watchButton = PrimaryButton()
 
     private let addressCell: RecipientAddressInputCell
     private let addressCautionCell: RecipientAddressCautionCell
+
+    private let nameCell = TextFieldCell()
 
     private var isLoaded = false
 
@@ -25,7 +30,7 @@ class WatchAddressViewController: KeyboardAwareViewController {
         addressCell = RecipientAddressInputCell(viewModel: addressViewModel)
         addressCautionCell = RecipientAddressCautionCell(viewModel: addressViewModel)
 
-        super.init(scrollViews: [tableView])
+        super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -46,28 +51,32 @@ class WatchAddressViewController: KeyboardAwareViewController {
 
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-
         tableView.sectionDataSource = self
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
-        view.addSubview(watchButton)
-        watchButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
+        view.addSubview(gradientWrapperView)
+        gradientWrapperView.snp.makeConstraints { maker in
+            maker.height.equalTo(wrapperViewHeight).priority(.high)
+            maker.leading.trailing.bottom.equalToSuperview()
         }
 
-        watchButton.apply(style: .primaryYellow)
+        gradientWrapperView.addSubview(watchButton)
+        watchButton.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(CGFloat.margin16)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide)
+        }
+
+        watchButton.set(style: .yellow)
         watchButton.setTitle("watch_address.watch".localized, for: .normal)
         watchButton.addTarget(self, action: #selector(onTapWatch), for: .touchUpInside)
-
-        nameCell.inputPlaceholder = viewModel.namePlaceholder
-        nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
 
         addressCell.onChangeHeight = { [weak self] in self?.reloadTable() }
         addressCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
 
         addressCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+
+        nameCell.inputPlaceholder = viewModel.namePlaceholder
+        nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
 
         subscribe(disposeBag, viewModel.nameDriver) { [weak self] name in
             self?.nameCell.inputText = name
@@ -79,6 +88,8 @@ class WatchAddressViewController: KeyboardAwareViewController {
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
             self?.dismiss(animated: true)
         }
+
+        setInitialState(bottomPadding: wrapperViewHeight)
 
         tableView.buildSections()
         isLoaded = true
@@ -106,31 +117,13 @@ class WatchAddressViewController: KeyboardAwareViewController {
 
 extension WatchAddressViewController: SectionsDataSource {
 
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { $0.bind(text: text) },
-                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
-        )
-    }
-
     func buildSections() -> [SectionProtocol] {
         [
-            Section(
-                    id: "name",
-                    headerState: header(text: "watch_address.name".localized),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: nameCell,
-                                id: "name",
-                                height: .heightSingleLineCell
-                        )
-                    ]
-            ),
+            Section(id: "top-margin", headerState: .margin(height: .margin12)),
             Section(
                     id: "address",
-                    headerState: header(text: "watch_address.address".localized),
+                    headerState: tableView.sectionHeader(text: "watch_address.address".localized),
+                    footerState: tableView.sectionFooter(text: "watch_address.description".localized),
                     rows: [
                         StaticRow(
                                 cell: addressCell,
@@ -145,6 +138,18 @@ extension WatchAddressViewController: SectionsDataSource {
                                 dynamicHeight: { [weak self] width in
                                     self?.addressCautionCell.height(containerWidth: width) ?? 0
                                 }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "name",
+                    headerState: tableView.sectionHeader(text: "watch_address.name".localized),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        StaticRow(
+                                cell: nameCell,
+                                id: "name",
+                                height: .heightSingleLineCell
                         )
                     ]
             ),

@@ -1,23 +1,29 @@
 import UIKit
 import ThemeKit
+import MarketKit
 
 struct OneInchSettingsModule {
 
     static func dataSource(tradeService: OneInchTradeService) -> ISwapSettingsDataSource? {
-        guard let ethereumPlatformCoin = try? App.shared.marketKit.platformCoin(coinType: .ethereum) else {
+        guard let ethereumToken = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: .ethereum, tokenType: .native)) else {
             return nil
         }
-        let platformCoin = tradeService.platformCoinIn
+        let token = tradeService.tokenIn
 
-        let coinCode = platformCoin?.code ?? ethereumPlatformCoin.code
+        let coinCode = token?.coin.code ?? ethereumToken.coin.code
 
         let evmAddressParserItem = EvmAddressParser()
-        let udnAddressParserItem = UDNAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, coinCode: coinCode, coinType: platformCoin?.coinType)
-        let addressParserChain = AddressParserChain()
-                    .append(handler: evmAddressParserItem)
-                    .append(handler: udnAddressParserItem)
+        let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, coinCode: coinCode, token: token)
 
-        let addressUriParser = AddressParserFactory.parser(coinType: ethereumPlatformCoin.coinType)
+        let addressParserChain = AddressParserChain()
+                .append(handler: evmAddressParserItem)
+                .append(handler: udnAddressParserItem)
+
+        if let ensAddressParserItem = EnsAddressParserItem(rpcSource: App.shared.evmSyncSourceManager.infuraRpcSource, rawAddressParserItem: evmAddressParserItem) {
+            addressParserChain.append(handler: ensAddressParserItem)
+        }
+
+        let addressUriParser = AddressParserFactory.parser(blockchainType: ethereumToken.blockchainType)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain, initialAddress: tradeService.settings.recipient)
 
         let service = OneInchSettingsService(settings: tradeService.settings, addressService: addressService)

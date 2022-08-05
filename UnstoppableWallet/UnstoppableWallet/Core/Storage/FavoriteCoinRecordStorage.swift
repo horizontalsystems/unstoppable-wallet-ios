@@ -47,10 +47,4 @@ extension FavoriteCoinRecordStorage {
         }
     }
 
-    var favoriteCoinRecords_v_0_22: [FavoriteCoinRecord_v_0_22] {
-        try! dbPool.read { db in
-            try FavoriteCoinRecord_v_0_22.fetchAll(db)
-        }
-    }
-
 }

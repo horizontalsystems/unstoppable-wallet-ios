@@ -13,7 +13,7 @@ class FiatService {
     private let currencyKit: CurrencyKit.Kit
     private let marketKit: MarketKit.Kit
 
-    private(set) var platformCoin: PlatformCoin?
+    private(set) var token: Token?
     private var price: Decimal? {
         didSet {
             toggleAvailableRelay.accept(price != nil)
@@ -82,8 +82,8 @@ class FiatService {
 
     private func sync() {
         queue.async {
-            if let platformCoin = self.platformCoin {
-                let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: self.coinAmount))
+            if let token = self.token {
+                let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(kind: .token(token: token), value: self.coinAmount))
                 let currencyAmountInfo: AmountInfo? = self.currencyAmount.map { .currencyValue(currencyValue: CurrencyValue(currency: self.currency, value: $0)) }
 
                 switch self.switchService.amountType {
@@ -143,16 +143,16 @@ extension FiatService {
         toggleAvailableRelay.asObservable()
     }
 
-    func set(platformCoin: PlatformCoin?) {
-        self.platformCoin = platformCoin
+    func set(token: Token?) {
+        self.token = token
 
         coinPriceDisposeBag = DisposeBag()
 
-        if let platformCoin = platformCoin {
-            sync(coinPrice: marketKit.coinPrice(coinUid: platformCoin.coin.uid, currencyCode: currency.code))
+        if let token = token {
+            sync(coinPrice: marketKit.coinPrice(coinUid: token.coin.uid, currencyCode: currency.code))
 
-            if !platformCoin.isCustom {
-                marketKit.coinPriceObservable(coinUid: platformCoin.coin.uid, currencyCode: currency.code)
+            if !token.isCustom {
+                marketKit.coinPriceObservable(coinUid: token.coin.uid, currencyCode: currency.code)
                         .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                         .subscribe(onNext: { [weak self] coinPrice in
                             self?.sync(coinPrice: coinPrice)

@@ -22,7 +22,7 @@ class SendEvmViewController: ThemeViewController {
     private let recipientCell: RecipientAddressInputCell
     private let recipientCautionCell: RecipientAddressCautionCell
 
-    private let buttonCell = ButtonCell()
+    private let buttonCell = PrimaryButtonCell()
 
     private var isLoaded = false
     private var keyboardShown = false
@@ -48,12 +48,12 @@ class SendEvmViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "send.title".localized(viewModel.platformCoin.coin.code)
+        title = "send.title".localized(viewModel.token.coin.code)
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(didTapCancel))
 
-        iconImageView.setImage(withUrlString: viewModel.platformCoin.coin.imageUrl, placeholder: UIImage(named: viewModel.platformCoin.coinType.placeholderImageName))
+        iconImageView.setImage(withUrlString: viewModel.token.coin.imageUrl, placeholder: UIImage(named: viewModel.token.placeholderImageName))
         iconImageView.tintColor = .themeGray
 
         view.addSubview(tableView)
@@ -74,7 +74,9 @@ class SendEvmViewController: ThemeViewController {
 
         recipientCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
-        buttonCell.bind(style: .primaryYellow, title: "send.next_button".localized) { [weak self] in
+        buttonCell.set(style: .yellow)
+        buttonCell.title = "send.next_button".localized
+        buttonCell.onTap = { [weak self] in
             self?.didTapProceed()
         }
 
@@ -186,7 +188,7 @@ extension SendEvmViewController: SectionsDataSource {
                         StaticRow(
                                 cell: buttonCell,
                                 id: "button",
-                                height: ButtonCell.height(style: .primaryYellow)
+                                height: PrimaryButtonCell.height
                         )
                     ]
             )

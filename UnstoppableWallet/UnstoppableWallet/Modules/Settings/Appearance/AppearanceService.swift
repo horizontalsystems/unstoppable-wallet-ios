@@ -58,12 +58,12 @@ class AppearanceService {
         subscribe(disposeBag, launchScreenManager.launchScreenObservable) { [weak self] in self?.syncLaunchScreenItems(current: $0) }
         subscribe(disposeBag, appIconManager.appIconObservable) { [weak self] in self?.syncAppIconItems(current: $0) }
         subscribe(disposeBag, balancePrimaryValueManager.balancePrimaryValueObservable) { [weak self] in self?.syncBalancePrimaryValueItems(current: $0) }
-        subscribe(disposeBag, balanceConversionManager.conversionCoinObservable) { [weak self] in self?.syncConversionItems(current: $0) }
+        subscribe(disposeBag, balanceConversionManager.conversionTokenObservable) { [weak self] in self?.syncConversionItems(current: $0) }
 
         syncThemeModeItems()
         syncLaunchScreenItems(current: launchScreenManager.launchScreen)
         syncAppIconItems(current: appIconManager.appIcon)
-        syncConversionItems(current: balanceConversionManager.conversionCoin)
+        syncConversionItems(current: balanceConversionManager.conversionToken)
         syncBalancePrimaryValueItems(current: balancePrimaryValueManager.balancePrimaryValue)
     }
 
@@ -85,9 +85,9 @@ class AppearanceService {
         }
     }
 
-    private func syncConversionItems(current: PlatformCoin?) {
-        conversionItems = balanceConversionManager.conversionPlatformCoins.map { platformCoin in
-            ConversionItem(platformCoin: platformCoin, current: platformCoin == current)
+    private func syncConversionItems(current: Token?) {
+        conversionItems = balanceConversionManager.conversionTokens.map { token in
+            ConversionItem(token: token, current: token == current)
         }
     }
 
@@ -135,7 +135,7 @@ extension AppearanceService {
     }
 
     func setConversionCoin(index: Int) {
-        balanceConversionManager.setConversionCoin(index: index)
+        balanceConversionManager.setConversionToken(index: index)
     }
 
     func setBalancePrimaryValue(index: Int) {
@@ -162,7 +162,7 @@ extension AppearanceService {
     }
 
     struct ConversionItem {
-        let platformCoin: PlatformCoin
+        let token: Token
         let current: Bool
     }
 

@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import ComponentKit
 import SectionsTableView
 import RxSwift
 import RxCocoa
@@ -9,11 +10,12 @@ class SendBitcoinViewController: BaseSendViewController {
     private let feeSettingsFactory: ISendFeeSettingsFactory
 
     private let feeWarningViewModel: ITitledCautionViewModel
+    private let timeLockViewModel: SendTimeLockViewModel?
 
     private let feeCell: EditableFeeCell
     private let feeCautionCell = TitledHighlightedDescriptionCell()
 
-    private let timeLockCell: SendTimeLockCell?
+    private var timeLockCell: BaseSelectableThemeCell?
 
     init(confirmationFactory: ISendConfirmationFactory,
          feeSettingsFactory: ISendFeeSettingsFactory,
@@ -29,11 +31,26 @@ class SendBitcoinViewController: BaseSendViewController {
 
         self.feeSettingsFactory = feeSettingsFactory
         self.feeWarningViewModel = feeWarningViewModel
+        self.timeLockViewModel = timeLockViewModel
 
         feeCell = EditableFeeCell(viewModel: feeViewModel, isLast: timeLockViewModel == nil)
 
-        timeLockCell = timeLockViewModel.map {
-            SendTimeLockCell(viewModel: $0)
+        if timeLockViewModel != nil {
+            let timeLockCell = BaseSelectableThemeCell()
+
+            CellBuilder.build(cell: timeLockCell, elements: [.text, .text, .margin8, .image20])
+            timeLockCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+
+            timeLockCell.bind(index: 0) { (component: TextComponent) in
+                component.font = .subhead2
+                component.textColor = .themeGray
+                component.text = "send.hodler_locktime".localized
+            }
+            timeLockCell.bind(index: 2) { (component: ImageComponent) in
+                component.imageView.image = UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray)
+            }
+
+            self.timeLockCell = timeLockCell
         }
 
         super.init(
@@ -44,9 +61,6 @@ class SendBitcoinViewController: BaseSendViewController {
                 amountCautionViewModel: amountCautionViewModel,
                 recipientViewModel: recipientViewModel
         )
-
-        timeLockCell?.sourceViewController = self
-        timeLockCell?.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -58,6 +72,16 @@ class SendBitcoinViewController: BaseSendViewController {
 
         subscribe(disposeBag, feeWarningViewModel.cautionDriver) { [weak self] in
             self?.handle(caution: $0)
+        }
+
+        if let timeLockViewModel = timeLockViewModel {
+            subscribe(disposeBag, timeLockViewModel.lockTimeDriver) { [weak self] priority in
+                self?.timeLockCell?.bind(index: 1) { (component: TextComponent) in
+                    component.font = .subhead1
+                    component.textColor = .themeLeah
+                    component.text = priority
+                }
+            }
         }
 
         didLoad()
@@ -79,6 +103,21 @@ class SendBitcoinViewController: BaseSendViewController {
         }
 
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
+    private func onTapLockTimeSelect() {
+        guard let timeLockViewModel = timeLockViewModel else {
+            return
+        }
+
+        let alertController = AlertRouter.module(
+                title: "send.hodler_locktime".localized,
+                viewItems: timeLockViewModel.lockTimeViewItems
+        ) { index in
+            timeLockViewModel.onSelect(index)
+        }
+
+        present(alertController, animated: true)
     }
 
     var feeSection: SectionProtocol {
@@ -107,7 +146,11 @@ class SendBitcoinViewController: BaseSendViewController {
                         StaticRow(
                                 cell: cell,
                                 id: "time_lock_cell",
-                                height: .heightSingleLineCell
+                                height: .heightSingleLineCell,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.onTapLockTimeSelect()
+                                }
                         )
                     ]
             )

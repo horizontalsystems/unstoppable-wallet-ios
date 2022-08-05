@@ -11,12 +11,12 @@ class Evm20Adapter: BaseEvmAdapter {
     private let contractAddress: EthereumKit.Address
     private let transactionConverter: EvmTransactionConverter
 
-    init(evmKitWrapper: EvmKitWrapper, contractAddress: String, wallet: Wallet, baseCoin: PlatformCoin, coinManager: CoinManager, evmLabelManager: EvmLabelManager) throws {
+    init(evmKitWrapper: EvmKitWrapper, contractAddress: String, wallet: Wallet, baseToken: Token, coinManager: CoinManager, evmLabelManager: EvmLabelManager) throws {
         let address = try EthereumKit.Address(hex: contractAddress)
         evm20Kit = try Erc20Kit.Kit.instance(ethereumKit: evmKitWrapper.evmKit, contractAddress: address)
         self.contractAddress = address
 
-        transactionConverter = EvmTransactionConverter(source: wallet.transactionSource, baseCoin: baseCoin, coinManager: coinManager, evmKitWrapper: evmKitWrapper, evmLabelManager: evmLabelManager)
+        transactionConverter = EvmTransactionConverter(source: wallet.transactionSource, baseToken: baseToken, coinManager: coinManager, evmKitWrapper: evmKitWrapper, evmLabelManager: evmLabelManager)
 
         super.init(evmKitWrapper: evmKitWrapper, decimals: wallet.decimals)
     }
@@ -47,7 +47,9 @@ extension Evm20Adapter: IBalanceAdapter {
     }
 
     var balanceStateUpdatedObservable: Observable<AdapterState> {
-        evm20Kit.syncStateObservable.map { [unowned self] in self.convertToAdapterState(evmSyncState: $0) }
+        evm20Kit.syncStateObservable.map { [weak self] in
+            self?.convertToAdapterState(evmSyncState: $0) ?? .syncing(progress: nil, lastBlockDate: nil)
+        }
     }
 
     var balanceData: BalanceData {
@@ -55,7 +57,9 @@ extension Evm20Adapter: IBalanceAdapter {
     }
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
-        evm20Kit.balanceObservable.map { [unowned self] in self.balanceData(balance: $0) }
+        evm20Kit.balanceObservable.map { [weak self] in
+            self?.balanceData(balance: $0) ?? BalanceData(balance: 0)
+        }
     }
 
 }
@@ -75,8 +79,10 @@ extension Evm20Adapter: IErc20Adapter {
     }
 
     func allowanceSingle(spenderAddress: EthereumKit.Address, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Decimal> {
-        evm20Kit.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
-                .map { [unowned self] allowanceString in
+        let decimals = decimals
+
+        return evm20Kit.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
+                .map { allowanceString in
                     if let significand = Decimal(string: allowanceString) {
                         return Decimal(sign: .plus, exponent: -decimals, significand: significand)
                     }

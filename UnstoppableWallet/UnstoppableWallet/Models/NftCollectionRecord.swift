@@ -51,9 +51,9 @@ class NftCollectionRecord: Record {
         case externalUrl
         case discordUrl
         case twitterUsername
-        case averagePrice7dCoinTypeId
+        case averagePrice7dTokenQueryId
         case averagePrice7dValue
-        case averagePrice30dCoinTypeId
+        case averagePrice30dTokenQueryId
         case averagePrice30dValue
         case totalSupply
     }
@@ -69,8 +69,8 @@ class NftCollectionRecord: Record {
         externalUrl = row[Columns.externalUrl]
         discordUrl = row[Columns.discordUrl]
         twitterUsername = row[Columns.twitterUsername]
-        averagePrice7d = NftPriceRecord(coinTypeId: row[Columns.averagePrice7dCoinTypeId], value: row[Columns.averagePrice7dValue])
-        averagePrice30d = NftPriceRecord(coinTypeId: row[Columns.averagePrice30dCoinTypeId], value: row[Columns.averagePrice30dValue])
+        averagePrice7d = NftPriceRecord(tokenQueryId: row[Columns.averagePrice7dTokenQueryId], value: row[Columns.averagePrice7dValue])
+        averagePrice30d = NftPriceRecord(tokenQueryId: row[Columns.averagePrice30dTokenQueryId], value: row[Columns.averagePrice30dValue])
         totalSupply = row[Columns.totalSupply]
 
         super.init(row: row)
@@ -87,9 +87,9 @@ class NftCollectionRecord: Record {
         container[Columns.externalUrl] = externalUrl
         container[Columns.discordUrl] = discordUrl
         container[Columns.twitterUsername] = twitterUsername
-        container[Columns.averagePrice7dCoinTypeId] = averagePrice7d?.coinTypeId
+        container[Columns.averagePrice7dTokenQueryId] = averagePrice7d?.tokenQuery.id
         container[Columns.averagePrice7dValue] = averagePrice7d?.value
-        container[Columns.averagePrice30dCoinTypeId] = averagePrice30d?.coinTypeId
+        container[Columns.averagePrice30dTokenQueryId] = averagePrice30d?.tokenQuery.id
         container[Columns.averagePrice30dValue] = averagePrice30d?.value
         container[Columns.totalSupply] = totalSupply
     }

@@ -10,7 +10,7 @@ class WalletConnectV1ListViewModel {
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
     private let showLoadingRelay = PublishRelay<()>()
-    private let showSuccessRelay = PublishRelay<String?>()
+    private let showSuccessRelay = PublishRelay<()>()
 
     init(service: WalletConnectListService) {
         self.service = service
@@ -27,7 +27,7 @@ class WalletConnectV1ListViewModel {
             ViewItem(
                 id: $0.id,
                 title: $0.appName,
-                description: $0.chains.map { $0.shortName }.joined(separator: ", "),
+                description: $0.blockchains.map { $0.shortName }.joined(separator: ", "),
                 imageUrl: $0.appIcons.last
             )
         }
@@ -38,8 +38,8 @@ class WalletConnectV1ListViewModel {
     private func sync(sessionKillingState: WalletConnectListService.SessionKillingState) {
         switch sessionKillingState {
         case .processing: showLoadingRelay.accept(())
-        case .completed: showSuccessRelay.accept("alert.success_action".localized)
-        case .removedOnly: showSuccessRelay.accept("alert.success_action".localized)     // app just remove peerId from database
+        case .completed: showSuccessRelay.accept(())        // don't needed different text
+        case .removedOnly: showSuccessRelay.accept(())      // app just remove peerId from database
         }
     }
 
@@ -65,7 +65,7 @@ extension WalletConnectV1ListViewModel {
         showLoadingRelay.asSignal()
     }
 
-    var showSuccessSignal: Signal<String?> {
+    var showSuccessSignal: Signal<()> {
         showSuccessRelay.asSignal()
     }
 

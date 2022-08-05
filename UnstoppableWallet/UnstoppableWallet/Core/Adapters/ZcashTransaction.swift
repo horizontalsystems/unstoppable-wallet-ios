@@ -1,3 +1,4 @@
+import Foundation
 import ZcashLightClientKit
 
 class ZcashTransaction {
@@ -9,7 +10,7 @@ class ZcashTransaction {
     let expiryHeight: Int?
     let minedHeight: Int?
     let timestamp: TimeInterval
-    let value: Int
+    let value: Zatoshi
     let memo: String?
     let failed: Bool
 

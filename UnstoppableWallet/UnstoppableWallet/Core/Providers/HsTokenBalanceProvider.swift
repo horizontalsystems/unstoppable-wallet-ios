@@ -38,33 +38,29 @@ class HsTokenBalanceProvider {
         return EvmAccountManager.AddressInfo(blockNumber: response.blockNumber, addresses: addresses)
     }
 
-    private func chain(blockchain: EvmBlockchain) -> String {
-        switch blockchain {
-        case .ethereum: return "ethereum"
-        case .binanceSmartChain: return "bsc"
-        case .polygon: return "matic"
-        case .optimism: return "optimism"
-        case .arbitrumOne: return "arbitrum-one"
-        }
-    }
-
 }
 
 extension HsTokenBalanceProvider {
 
-    func addressInfoSingle(evmBlockchain: EvmBlockchain, address: String) -> Single<EvmAccountManager.AddressInfo> {
+    func addressInfoSingle(blockchainType: BlockchainType, address: String) -> Single<EvmAccountManager.AddressInfo> {
         let parameters: Parameters = [
-            "chain": chain(blockchain: evmBlockchain)
+            "blockchain": blockchainType.uid
         ]
 
         let request = networkManager.session.request("\(apiUrl)/v1/addresses/\(address)/coins", parameters: parameters, headers: headers)
-        return networkManager.single(request: request).map { [unowned self] response in
-            addressInfo(response: response)
-        }
+
+        return networkManager.single(request: request)
+                .flatMap { [weak self] (response: AddressResponse) in
+                    guard let strongSelf = self else {
+                        throw AppError.weakReference
+                    }
+
+                    return Single.just(strongSelf.addressInfo(response: response))
+                }
     }
 
-    func blockNumberSingle(evmBlockchain: EvmBlockchain) -> Single<Int> {
-        let request = networkManager.session.request("\(apiUrl)/v1/chain/\(chain(blockchain: evmBlockchain))", headers: headers)
+    func blockNumberSingle(blockchainType: BlockchainType) -> Single<Int> {
+        let request = networkManager.session.request("\(apiUrl)/v1/blockchains/\(blockchainType.uid)", headers: headers)
         return networkManager.single(request: request).map { (response: ChainResponse) in
             response.blockNumber
         }

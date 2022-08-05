@@ -1,248 +1,449 @@
 import Foundation
 import RxSwift
+import RxRelay
 import CurrencyKit
+import MarketKit
 
 class TransactionsService {
-    private var disposeBag = DisposeBag()
-    private let recordsService: TransactionRecordsService
-    private let syncStateService: TransactionSyncStateService
+    private static let pageLimit = 20
+
+    private let walletManager: WalletManager
     private let rateService: HistoricalRateService
-    private let filterHelper: TransactionFilterHelper
+    private let poolGroupFactory = PoolGroupFactory()
 
-    private let queue = DispatchQueue(label: "transactions_services.items_queue", qos: .userInitiated)
+    private let disposeBag = DisposeBag()
+    private var poolGroupDisposeBag = DisposeBag()
 
-    private var walletFiltersSubject = BehaviorSubject<(wallets: [TransactionWallet], selected: Int?)>(value: (wallets: [], selected: nil))
-    private var typeFiltersSubject = BehaviorSubject<(types: [TransactionTypeFilter], selected: Int)>(value: (types: [], selected: 0))
-    private var itemsSubject = PublishSubject<[Item]>()
-    private var updatedItemSubject = PublishSubject<Item>()
+    private var poolGroup = PoolGroup(pools: [])
 
-    private var records = [TransactionRecord]()
-    private var items = [Item]()
-    private var loadingMore = false
+    private let itemDataRelay = PublishRelay<ItemData>()
+    private let itemUpdatedRelay = PublishRelay<Item>()
+    private(set) var items: [Item] = []
 
-    init(walletManager: WalletManager, adapterManager: TransactionAdapterManager) {
-        recordsService = TransactionRecordsService(adapterManager: adapterManager)
-        syncStateService = TransactionSyncStateService(adapterManager: adapterManager)
-        rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
-        filterHelper = TransactionFilterHelper()
-
-        subscribe(disposeBag, recordsService.recordsObservable) { [weak self] in self?.handle(records: $0) }
-        subscribe(disposeBag, recordsService.updatedRecordObservable) { [weak self] in self?.handle(updatedRecord: $0) }
-        subscribe(disposeBag, syncStateService.lastBlockInfoObservable) { [weak self] in self?.handle(source: $0, lastBlockInfo: $1) }
-        subscribe(disposeBag, rateService.ratesChangedObservable) { [weak self] in self?.handleRatesChanged() }
-        subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
-        subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in self?.handle(updatedWallets: walletManager.activeWallets) }
-
-        if !adapterManager.adapterMap.isEmpty {
-            handle(updatedWallets: walletManager.activeWallets)
+    private let syncingRelay = PublishRelay<Bool>()
+    private(set) var syncing = false {
+        didSet {
+            if oldValue != syncing {
+                syncingRelay.accept(syncing)
+            }
         }
     }
 
-    private func groupWalletsBySource(transactionWallets: [TransactionWallet]) -> [TransactionWallet] {
-        var groupedWallets = [TransactionWallet]()
+    private let typeFilterRelay = PublishRelay<TransactionTypeFilter>()
+    private(set) var typeFilter: TransactionTypeFilter = .all {
+        didSet {
+            typeFilterRelay.accept(typeFilter)
+        }
+    }
 
-        for wallet in transactionWallets {
-            switch wallet.source.blockchain {
-            case .bitcoin, .bitcoinCash, .litecoin, .dash, .zcash, .bep2: groupedWallets.append(wallet)
-            case .evm:
-                if !groupedWallets.contains(where: { wallet.source == $0.source }) {
-                    groupedWallets.append(TransactionWallet(coin: nil, source: wallet.source, badge: wallet.badge))
+    private let blockchainRelay = PublishRelay<Blockchain?>()
+    private(set) var blockchain: Blockchain? {
+        didSet {
+            blockchainRelay.accept(blockchain)
+        }
+    }
+
+    private let configuredTokenRelay = PublishRelay<ConfiguredToken?>()
+    private(set) var configuredToken: ConfiguredToken? {
+        didSet {
+            configuredTokenRelay.accept(configuredToken)
+        }
+    }
+
+    private let canResetRelay = PublishRelay<Bool>()
+
+    private(set) var allBlockchains = [Blockchain]()
+
+    private var lastRequestedCount = TransactionsService.pageLimit
+    private var loading = false {
+        didSet {
+            _syncSyncing()
+        }
+    }
+    private var poolGroupSyncing = false {
+        didSet {
+            _syncSyncing()
+        }
+    }
+    private var loadMoreRequested = false
+    private var poolUpdateRequested = false
+
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions-service")
+
+    init(walletManager: WalletManager, adapterManager: TransactionAdapterManager, rateService: HistoricalRateService) {
+        self.walletManager = walletManager
+        self.rateService = rateService
+
+        subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in self?.syncWallets() }
+        subscribe(disposeBag, rateService.ratesChangedObservable) { [weak self] in self?.handleRatesChanged() }
+        subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
+
+        _syncWallets()
+    }
+
+    private var _canReset: Bool {
+        typeFilter != .all || blockchain != nil || configuredToken != nil
+    }
+
+    private func syncWallets() {
+        queue.async {
+            self._syncWallets()
+        }
+    }
+
+    private func _syncWallets() {
+        allBlockchains = Array(Set(walletManager.activeWallets.map { $0.token.blockchain }))
+
+        if let blockchain = blockchain, !allBlockchains.contains(blockchain) {
+            self.blockchain = nil
+        }
+
+        if let configuredToken = configuredToken, !walletManager.activeWallets.contains(where: { $0.configuredToken == configuredToken }) {
+            self.configuredToken = nil
+            blockchain = nil
+        }
+
+        _syncCanReset()
+
+//        print("SYNC POOL GROUP: sync wallets: \(walletManager.activeWallets.count)")
+        _syncPoolGroup()
+    }
+
+    private func syncPoolGroup() {
+        queue.async {
+            self._syncPoolGroup()
+        }
+    }
+
+    private func _syncPoolGroup() {
+        poolGroup = poolGroupFactory.poolGroup(
+                wallets: walletManager.activeWallets,
+                blockchainType: blockchain?.type,
+                filter: typeFilter,
+                configuredToken: configuredToken
+        )
+
+        _initPoolGroup()
+    }
+
+    private func _initPoolGroup() {
+        poolGroupDisposeBag = DisposeBag()
+
+        lastRequestedCount = Self.pageLimit
+        loading = false
+        loadMoreRequested = true
+        poolUpdateRequested = false
+
+//        transactions = [] // todo: required???
+
+//        print("LOAD: init pool group")
+        _load()
+
+        poolGroupSyncing = poolGroup.syncing
+
+        poolGroup.invalidatedObservable
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribe(onNext: { [weak self] in
+                    self?.onPoolGroupInvalidated()
+                })
+                .disposed(by: poolGroupDisposeBag)
+
+        poolGroup.itemsUpdatedObservable
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribe(onNext: { [weak self] transactionItems in
+                    self?.handleUpdated(transactionItems: transactionItems)
+                })
+                .disposed(by: poolGroupDisposeBag)
+
+        poolGroup.syncingObservable
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribe(onNext: { [weak self] syncing in
+                    self?.handleUpdated(poolGroupSyncing: syncing)
+                })
+                .disposed(by: poolGroupDisposeBag)
+    }
+
+    private func _load() {
+        guard !loading else {
+            return
+        }
+
+        guard loadMoreRequested || poolUpdateRequested else {
+            return
+        }
+
+        loading = true
+        poolUpdateRequested = false
+
+        let loadingMore = loadMoreRequested
+
+        poolGroup.itemsSingle(count: lastRequestedCount)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribe(onSuccess: { [weak self] transactionItems in
+                    self?.handle(transactionItems: transactionItems, loadedMore: loadingMore)
+                })
+                .disposed(by: poolGroupDisposeBag)
+
+    }
+
+    private func handle(transactionItems: [TransactionItem], loadedMore: Bool) {
+        queue.async {
+//            print("Fetched tx items: \(transactionItems.count): \(transactionItems)")
+
+            self.items = transactionItems.map { transactionItem in
+                Item(
+                        transactionItem: transactionItem,
+                        currencyValue: self.currencyValue(record: transactionItem.record, rate: self.rate(record: transactionItem.record))
+                )
+            }
+            self._reportItemData()
+
+            if loadedMore {
+                self.loadMoreRequested = false
+            }
+
+            self.loading = false
+            self._load()
+        }
+    }
+
+    private func handleUpdated(transactionItems: [TransactionItem]) {
+        queue.async {
+//            print("Handle updated tx items: \(transactionItems.count): \(transactionItems)")
+
+            for transactionItem in transactionItems {
+                for item in self.items {
+                    if item.record == transactionItem.record {
+                        item.transactionItem = transactionItem
+                        item.currencyValue = self.currencyValue(record: transactionItem.record, rate: self.rate(record: transactionItem.record))
+                        self.itemUpdatedRelay.accept(item)
+                        break
+                    }
                 }
             }
         }
-
-        return groupedWallets
     }
 
-    private func handle(updatedWallets: [Wallet]) {
-        queue.sync {
-            records = []
-            items = []
-            itemsSubject.onNext(items)
-        }
-
-        filterHelper.set(wallets: updatedWallets)
-
-        let wallets = filterHelper.wallets
-        let walletsGroupedBySource = groupWalletsBySource(transactionWallets: wallets)
-
-        syncStateService.set(sources: walletsGroupedBySource.map { $0.source })
-        recordsService.set(wallets: wallets, walletsGroupedBySource: walletsGroupedBySource, selectedWallet: filterHelper.selectedWallet, typeFilter: filterHelper.selectedType)
-
-        walletFiltersSubject.onNext(filterHelper.walletFilters)
-        typeFiltersSubject.onNext(filterHelper.typeFilters)
-    }
-
-    private func handle(records: [TransactionRecord]) {
+    private func handleUpdated(poolGroupSyncing: Bool) {
         queue.async {
-            let allLoaded = records.count < self.records.count + TransactionsModule.pageLimit
+            self.poolGroupSyncing = poolGroupSyncing
+        }
+    }
 
-            self.records = records
-
-            let nonSpamRecords = records.filter { !$0.spam }
-
-            if !allLoaded && nonSpamRecords.count < self.items.count + TransactionsModule.pageLimit {
-                self.recordsService.load(count: self.records.count + TransactionsModule.pageLimit)
-                return
-            }
-
-            self.items = nonSpamRecords.map { record in
-                self.createItem(from: record)
-            }
-
-            self.itemsSubject.onNext(self.items)
-
-            self.loadingMore = false
+    private func onPoolGroupInvalidated() {
+        queue.async {
+            self.poolUpdateRequested = true
+//            print("LOAD: pool group invalidated")
+            self._load()
         }
     }
 
     private func handleRatesChanged() {
         queue.async {
-            for (index, item) in self.items.enumerated() {
-                if item.record.mainValue != nil {
-                    self.items[index] = self.createItem(from: item.record)
-                }
+            for item in self.items {
+                item.currencyValue = self.currencyValue(record: item.record, rate: self.rate(record: item.record))
             }
 
-            self.itemsSubject.onNext(self.items)
-        }
-    }
-
-    private func handle(updatedRecord record: TransactionRecord) {
-        queue.async {
-            for (index, item) in self.items.enumerated() {
-                if item.record.uid == record.uid {
-                    self.update(item: item, index: index, record: record)
-                }
-            }
-        }
-    }
-
-    private func handle(source: TransactionSource, lastBlockInfo: LastBlockInfo) {
-        queue.async {
-            for (index, item) in self.items.enumerated() {
-                if item.record.source == source && item.record.changedBy(oldBlockInfo: item.lastBlockInfo, newBlockInfo: lastBlockInfo) {
-                    self.update(item: item, index: index, lastBlockInfo: lastBlockInfo)
-                }
-            }
+            self._reportItemData()
         }
     }
 
     private func handle(rate: (RateKey, CurrencyValue)) {
         queue.async {
-            for (index, item) in self.items.enumerated() {
-                if let transactionValue = item.record.mainValue, transactionValue.coin == rate.0.coin && item.record.date == rate.0.date {
-                    self.update(item: item, index: index, currencyValue: self._currencyValue(transactionValue: transactionValue, rate: rate.1))
+            for item in self.items {
+                if let rateKey = self.rateKey(record: item.record), rateKey == rate.0 {
+                    item.currencyValue = self.currencyValue(record: item.record, rate: rate.1)
+                    self.itemUpdatedRelay.accept(item)
                 }
             }
         }
     }
 
-    private func update(item: Item, index: Int, record: TransactionRecord? = nil, lastBlockInfo: LastBlockInfo? = nil, currencyValue: CurrencyValue? = nil) {
-        let record = record ?? item.record
-        let lastBlockInfo = lastBlockInfo ?? item.lastBlockInfo
-        let currencyValue = currencyValue ?? item.currencyValue
-
-        let item = Item(record: record, lastBlockInfo: lastBlockInfo, currencyValue: currencyValue)
-        items[index] = item
-        updatedItemSubject.onNext(item)
-    }
-
-    private func createItem(from record: TransactionRecord) -> Item {
-        let lastBlockInfo = syncStateService.lastBlockInfo(source: record.source)
-
-        var currencyValue: CurrencyValue? = nil
-        if let transactionValue = record.mainValue, case .coinValue(let platformCoin, _) = transactionValue {
-            currencyValue = _currencyValue(transactionValue: transactionValue, rate: rateService.rate(key: RateKey(coin: platformCoin.coin, date: record.date)))
+    private func rateKey(record: TransactionRecord) -> RateKey? {
+        guard let coin = record.mainValue?.coin else {
+            return nil
         }
 
-        return Item(record: record, lastBlockInfo: lastBlockInfo, currencyValue: currencyValue)
+        return RateKey(coinUid: coin.uid, date: record.date)
     }
 
-    private func _currencyValue(transactionValue: TransactionValue, rate: CurrencyValue?) -> CurrencyValue? {
-        if let rate = rate, case .coinValue(_, let value) = transactionValue {
-            return CurrencyValue(currency: rate.currency, value: value * rate.value)
+    private func rate(record: TransactionRecord) -> CurrencyValue? {
+        guard let rateKey = rateKey(record: record) else {
+            return nil
         }
 
-        return nil
+        return rateService.rate(key: rateKey)
+    }
+
+    private func currencyValue(record: TransactionRecord, rate: CurrencyValue?) -> CurrencyValue? {
+        guard let rate = rate, let decimalValue = record.mainValue?.decimalValue else {
+            return nil
+        }
+
+        return CurrencyValue(currency: rate.currency, value: decimalValue * rate.value)
+    }
+
+    private func _reportItemData() {
+        itemDataRelay.accept(itemData)
+    }
+
+    private func _syncCanReset() {
+        canResetRelay.accept(_canReset)
+    }
+
+    private func _syncSyncing() {
+        syncing = loading || poolGroupSyncing
     }
 
 }
 
 extension TransactionsService {
 
-    var allItems: [Item] {
-        queue.sync {
-            items
-        }
+    var typeFilterObservable: Observable<TransactionTypeFilter> {
+        typeFilterRelay.asObservable()
     }
 
-    var typeFilters: (types: [TransactionTypeFilter], selected: Int) {
-        filterHelper.typeFilters
+    var blockchainObservable: Observable<Blockchain?> {
+        blockchainRelay.asObservable()
     }
 
-    var walletFilters: (wallets: [TransactionWallet], selected: Int?) {
-        filterHelper.walletFilters
+    var configuredTokenObservable: Observable<ConfiguredToken?> {
+        configuredTokenRelay.asObservable()
     }
 
-    var walletFiltersObservable: Observable<(wallets: [TransactionWallet], selected: Int?)> {
-        walletFiltersSubject.asObservable()
+    var itemDataObservable: Observable<ItemData> {
+        itemDataRelay.asObservable()
     }
 
-    var typeFiltersObservable: Observable<(types: [TransactionTypeFilter], selected: Int)> {
-        typeFiltersSubject.asObservable()
-    }
-
-    var itemsObservable: Observable<[Item]> {
-        itemsSubject.asObservable()
-    }
-
-    var updatedItemObservable: Observable<Item> {
-        updatedItemSubject.asObservable()
-    }
-
-    var syncing: Bool {
-        syncStateService.syncing
+    var itemUpdatedObservable: Observable<Item> {
+        itemUpdatedRelay.asObservable()
     }
 
     var syncingObservable: Observable<Bool> {
-        syncStateService.syncingObservable
+        syncingRelay.asObservable()
     }
 
-    func set(selectedWalletIndex: Int?) {
-        filterHelper.set(selectedWalletIndex: selectedWalletIndex)
-        recordsService.set(selectedWallet: filterHelper.selectedWallet)
+    var canResetObservable: Observable<Bool> {
+        canResetRelay.asObservable()
     }
 
-    func set(selectedTypeIndex: Int) {
-        filterHelper.set(selectedTypeIndex: selectedTypeIndex)
-        recordsService.set(typeFilter: filterHelper.selectedType)
+    var itemData: ItemData {
+        ItemData(items: items, allLoaded: lastRequestedCount > items.count)
     }
 
-    func loadMore() {
-        guard !loadingMore else {
-            return
-        }
-
-        loadingMore = true
-
-        queue.async {
-            self.recordsService.load(count: self.records.count + TransactionsModule.pageLimit)
-        }
-    }
-
-    func fetchRate(for uid: String) {
-        queue.async {
-            if let item = self.items.first(where: { $0.record.uid == uid }), item.currencyValue == nil,
-               let transactionValue = item.record.mainValue, case .coinValue(let platformCoin, _) = transactionValue {
-                self.rateService.fetchRate(key: RateKey(coin: platformCoin.coin, date: item.record.date))
-            }
-        }
-    }
-
-    func item(uid: String) -> Item? {
+    var canReset: Bool {
         queue.sync {
-            items.first(where: { $0.record.uid == uid })
+            _canReset
+        }
+    }
+
+    func set(typeFilter: TransactionTypeFilter) {
+        queue.async {
+            guard self.typeFilter != typeFilter else {
+                return
+            }
+
+            self.typeFilter = typeFilter
+
+            self._syncCanReset()
+
+//            print("SYNC POOL GROUP: set type filter")
+            self._syncPoolGroup()
+        }
+    }
+
+    func set(blockchain: Blockchain?) {
+        queue.async {
+            guard self.blockchain != blockchain else {
+                return
+            }
+
+            self.blockchain = blockchain
+            self.configuredToken = nil
+
+            self._syncCanReset()
+
+//            print("SYNC POOL GROUP: set blockchain")
+            self._syncPoolGroup()
+        }
+    }
+
+    func set(configuredToken: ConfiguredToken?) {
+        queue.async {
+            guard self.configuredToken != configuredToken else {
+                return
+            }
+
+            self.configuredToken = configuredToken
+            self.blockchain = configuredToken?.token.blockchain
+
+            self._syncCanReset()
+
+//            print("SYNC POOL GROUP: set token")
+            self._syncPoolGroup()
+        }
+    }
+
+    func reset() {
+        queue.async {
+            guard self._canReset else {
+                return
+            }
+
+            self.typeFilter = .all
+            self.blockchain = nil
+            self.configuredToken = nil
+
+            self._syncCanReset()
+
+//            print("SYNC POOL GROUP: reset")
+            self._syncPoolGroup()
+        }
+    }
+
+    func record(uid: String) -> TransactionRecord? {
+        queue.sync {
+            items.first(where: { $0.record.uid == uid })?.record
+        }
+    }
+
+    func fetchRate(index: Int) {
+        queue.async {
+            guard index < self.items.count else {
+                return
+            }
+
+            let item = self.items[index]
+
+            guard item.currencyValue == nil, let rateKey = self.rateKey(record: item.record) else {
+                return
+            }
+
+            self.rateService.fetchRate(key: rateKey)
+        }
+    }
+
+    func loadMoreIfRequired(index: Int) {
+        queue.async {
+//            print("load more: \(index) --- \(self.items.count)")
+
+            guard index > self.items.count - 5 else {
+                return
+            }
+
+            guard !self.loadMoreRequested else {
+                return
+            }
+
+            guard self.lastRequestedCount == self.items.count else {
+                return
+            }
+
+            self.lastRequestedCount = self.items.count + Self.pageLimit
+            self.loadMoreRequested = true
+//            print("LOAD: load more")
+            self._load()
         }
     }
 
@@ -250,10 +451,24 @@ extension TransactionsService {
 
 extension TransactionsService {
 
-    struct Item {
-        let record: TransactionRecord
-        var lastBlockInfo: LastBlockInfo?
+    struct ItemData {
+        let items: [Item]
+        let allLoaded: Bool
+    }
+
+    class Item {
+        var transactionItem: TransactionItem
         var currencyValue: CurrencyValue?
+
+        var record: TransactionRecord {
+            transactionItem.record
+        }
+
+        init(transactionItem: TransactionItem, currencyValue: CurrencyValue?) {
+            self.transactionItem = transactionItem
+            self.currencyValue = currencyValue
+        }
     }
 
 }
+

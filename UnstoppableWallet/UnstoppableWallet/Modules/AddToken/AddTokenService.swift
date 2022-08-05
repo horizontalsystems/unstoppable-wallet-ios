@@ -5,13 +5,14 @@ import MarketKit
 
 protocol IAddTokenBlockchainService {
     func isValid(reference: String) -> Bool
-    func coinType(reference: String) -> CoinType
-    func customCoinSingle(reference: String) -> Single<AddTokenModule.CustomCoin>
+    func tokenQuery(reference: String) -> TokenQuery
+    func tokenSingle(reference: String) -> Single<Token>
 }
 
 class AddTokenService {
     private let account: Account
     private let blockchainServices: [IAddTokenBlockchainService]
+    private let marketKit: MarketKit.Kit
     private let coinManager: CoinManager
     private let walletManager: WalletManager
 
@@ -24,22 +25,48 @@ class AddTokenService {
         }
     }
 
-    init(account: Account, blockchainServices: [IAddTokenBlockchainService], coinManager: CoinManager, walletManager: WalletManager) {
+    init(account: Account, blockchainServices: [IAddTokenBlockchainService], marketKit: MarketKit.Kit, coinManager: CoinManager, walletManager: WalletManager) {
         self.account = account
         self.blockchainServices = blockchainServices
+        self.marketKit = marketKit
         self.coinManager = coinManager
         self.walletManager = walletManager
     }
 
-    private func joinedCustomCoinsSingle(services: [IAddTokenBlockchainService], reference: String) -> Single<[AddTokenModule.CustomCoin]> {
-        let singles: [Single<AddTokenModule.CustomCoin?>] = services.map { service in
-            service.customCoinSingle(reference: reference)
-                    .map { customCoin -> AddTokenModule.CustomCoin? in customCoin}
+    private func joinedTokensSingle(services: [IAddTokenBlockchainService], reference: String) -> Single<[Token]> {
+        let singles: [Single<Token?>] = services.map { service in
+            service.tokenSingle(reference: reference)
+                    .map { token -> Token? in token}
                     .catchErrorJustReturn(nil)
         }
 
-        return Single.zip(singles) { customCoins in
-            customCoins.compactMap { $0 }
+        return Single.zip(singles) { tokens in
+            tokens.compactMap { $0 }
+        }
+    }
+
+    private func initialItems(tokens: [Token]) -> ([Item], [Item]) {
+        let activeTokens = walletManager.activeWallets.map { $0.token }
+
+        let sortedTokens = tokens.sorted { lhsToken, rhsToken in
+            lhsToken.blockchain.type.order < rhsToken.blockchain.type.order
+        }
+
+        let addedTokens = sortedTokens.filter { activeTokens.contains($0) }
+        let tokens = sortedTokens.filter { !activeTokens.contains($0) }
+
+        let addedItems = addedTokens.map { Item(token: $0, enabled: true) }
+        let items = tokens.map { Item(token: $0, enabled: true) }
+
+        return (addedItems, items)
+    }
+
+    private func handleInitialState(tokens: [Token]) {
+        if tokens.isEmpty {
+            state = .failed(error: TokenError.notFound)
+        } else {
+            let (addedItems, items) = initialItems(tokens: tokens)
+            state = .fetched(addedItems: addedItems, items: items)
         }
     }
 
@@ -66,51 +93,60 @@ extension AddTokenService {
             return
         }
 
-        var existingPlatformCoins = [PlatformCoin]()
+        var tokens = [Token]()
+        var notFoundServices = [IAddTokenBlockchainService]()
 
         for service in validServices {
-            let coinType = service.coinType(reference: reference)
+            let tokenQuery = service.tokenQuery(reference: reference)
 
-            if let existingPlatformCoin = try? coinManager.platformCoin(coinType: coinType) {
-                existingPlatformCoins.append(existingPlatformCoin)
+            if let existingToken = try? coinManager.token(query: tokenQuery) {
+                tokens.append(existingToken)
+            } else {
+                notFoundServices.append(service)
             }
         }
 
-        if !existingPlatformCoins.isEmpty {
-            state = .alreadyExists(platformCoins: existingPlatformCoins)
+        if notFoundServices.isEmpty {
+            handleInitialState(tokens: tokens)
             return
         }
 
         state = .loading
 
-        joinedCustomCoinsSingle(services: validServices, reference: reference)
+        joinedTokensSingle(services: notFoundServices, reference: reference)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] customCoins in
-                    if customCoins.isEmpty {
-                        self?.state = .failed(error: TokenError.notFound)
-                    } else {
-                        self?.state = .fetched(customCoins: customCoins)
-                    }
+                .subscribe(onSuccess: { [weak self] serviceTokens in
+                    self?.handleInitialState(tokens: tokens + serviceTokens)
                 })
                 .disposed(by: disposeBag)
     }
 
-    func save() {
-        guard case .fetched(let customCoins) = state else {
+    func toggleToken(index: Int) {
+        guard case .fetched(let addedItems, let items) = state else {
             return
         }
 
-        let platformCoins = customCoins.map { customCoin -> PlatformCoin in
-            let coinType = customCoin.type
-            let coinUid = coinType.customCoinUid
-
-            return PlatformCoin(
-                    coin: Coin(uid: coinUid, name: customCoin.name, code: customCoin.code),
-                    platform: Platform(coinType: coinType, decimals: customCoin.decimals, coinUid: coinUid)
-            )
+        guard index < items.count else {
+            return
         }
 
-        let wallets = platformCoins.map { Wallet(platformCoin: $0, account: account) }
+        items[index].enabled = !items[index].enabled
+
+        state = .fetched(addedItems: addedItems, items: items)
+    }
+
+    func save() throws {
+        guard case .fetched(_, let items) = state else {
+            return
+        }
+
+        let enabledItems = items.filter { $0.enabled }
+
+        guard !enabledItems.isEmpty else {
+            return
+        }
+
+        let wallets = enabledItems.map { Wallet(token: $0.token, account: account) }
         walletManager.save(wallets: wallets)
     }
 
@@ -121,9 +157,18 @@ extension AddTokenService {
     enum State {
         case idle
         case loading
-        case alreadyExists(platformCoins: [PlatformCoin])
-        case fetched(customCoins: [AddTokenModule.CustomCoin])
+        case fetched(addedItems: [Item], items: [Item])
         case failed(error: Error)
+    }
+
+    class Item {
+        let token: Token
+        var enabled: Bool
+
+        init(token: Token, enabled: Bool) {
+            self.token = token
+            self.enabled = enabled
+        }
     }
 
     enum TokenError: LocalizedError {

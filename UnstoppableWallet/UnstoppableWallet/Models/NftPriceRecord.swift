@@ -2,17 +2,17 @@ import Foundation
 import MarketKit
 
 struct NftPriceRecord {
-    let coinTypeId: String
+    let tokenQuery: TokenQuery
     let value: Decimal
 
     init(price: NftPrice) {
-        coinTypeId = price.platformCoin.coinType.id
+        tokenQuery = price.token.tokenQuery
         value = price.value
     }
 
-    init?(coinTypeId: String?, value: Decimal?) {
-        if let coinTypeId = coinTypeId, let value = value {
-            self.coinTypeId = coinTypeId
+    init?(tokenQueryId: String?, value: Decimal?) {
+        if let tokenQueryId = tokenQueryId, let tokenQuery = TokenQuery(id: tokenQueryId), let value = value {
+            self.tokenQuery = tokenQuery
             self.value = value
         } else {
             return nil

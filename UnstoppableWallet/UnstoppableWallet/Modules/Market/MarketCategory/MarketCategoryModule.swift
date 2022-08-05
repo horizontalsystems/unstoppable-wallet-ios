@@ -7,11 +7,16 @@ import MarketKit
 struct MarketCategoryModule {
 
     static func viewController(category: CoinCategory) -> UIViewController {
-        let service = MarketCategoryService(
+        let serviceConfigProvider = MarketCategoryConfigProvider(
                 category: category,
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
                 languageManager: LanguageManager.shared
+        )
+
+        let service = MarketCategoryService(
+                currencyKit: App.shared.currencyKit,
+                configProvider: serviceConfigProvider
         )
 
         let watchlistToggleService = MarketWatchlistToggleService(

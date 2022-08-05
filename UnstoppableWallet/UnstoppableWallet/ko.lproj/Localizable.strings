@@ -860,6 +860,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "settings.privacy.statement.data_privacy" = "지갑은 사용자에 대한 데이터를 공유하지 않습니다.";
 "settings.privacy.statement.user_account" = "사용자 데이터를 다른 곳에 보관하는 사용자 계정이나 데이터베이스가 없습니다.";
 
+
 // Settings -> Appearance
 
 "appearance.title" = "모양";

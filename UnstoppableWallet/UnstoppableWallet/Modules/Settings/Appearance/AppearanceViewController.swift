@@ -44,7 +44,6 @@ class AppearanceViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.registerCell(forClass: AppearanceAppIconsCell.self)
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.themeModeViewItemsDriver) { [weak self] in self?.sync(themeModeViewItems: $0) }
@@ -92,14 +91,6 @@ class AppearanceViewController: ThemeViewController {
 
 extension AppearanceViewController: SectionsDataSource {
 
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { $0.bind(text: text) },
-                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
-        )
-    }
-
     private func row(viewItem: AppearanceViewModel.ViewItem, id: String, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol {
         CellBuilder.selectableRow(
                 elements: [.image20, .text, .image20],
@@ -115,7 +106,8 @@ extension AppearanceViewController: SectionsDataSource {
                         component.imageView.image = UIImage(named: viewItem.iconName)?.withTintColor(.themeGray)
                     }
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = viewItem.title
                     }
                     cell.bind(index: 2) { (component: ImageComponent) in
@@ -130,7 +122,7 @@ extension AppearanceViewController: SectionsDataSource {
     private func themeModeSection(viewItems: [AppearanceViewModel.ViewItem]) -> SectionProtocol {
         Section(
                 id: "theme-mode",
-                headerState: header(text: "appearance.theme".localized),
+                headerState: tableView.sectionHeader(text: "appearance.theme".localized),
                 footerState: .margin(height: .margin24),
                 rows: viewItems.enumerated().map { index, viewItem in
                     row(
@@ -148,7 +140,7 @@ extension AppearanceViewController: SectionsDataSource {
     private func launchScreenSection(viewItems: [AppearanceViewModel.ViewItem]) -> SectionProtocol {
         Section(
                 id: "launch-screen",
-                headerState: header(text: "appearance.launch_screen".localized),
+                headerState: tableView.sectionHeader(text: "appearance.launch_screen".localized),
                 footerState: .margin(height: .margin24),
                 rows: viewItems.enumerated().map { index, viewItem in
                     row(
@@ -166,17 +158,17 @@ extension AppearanceViewController: SectionsDataSource {
     private func appIconSection(viewItems: [AppearanceViewModel.AppIconViewItem]) -> SectionProtocol {
         Section(
                 id: "app-icon",
-                headerState: header(text: "appearance.app_icon".localized),
+                headerState: tableView.sectionHeader(text: "appearance.app_icon".localized),
                 footerState: .margin(height: .margin24),
                 rows: [
                     Row<AppearanceAppIconsCell>(
                             id: "app-icon",
                             hash: "\(viewItems.map { "\($0.selected)" }.joined(separator: "-"))",
                             height: AppearanceAppIconsCell.height(viewItemsCount: viewItems.count),
-                            bind: { cell, _ in
+                            bind: { [weak self] cell, _ in
                                 cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
-                                cell.bind(viewItems: viewItems) { [weak self] index in
+                                cell.bind(viewItems: viewItems) { index in
                                     self?.viewModel.onSelectAppIcon(index: index)
                                 }
                             }
@@ -188,7 +180,7 @@ extension AppearanceViewController: SectionsDataSource {
     private func conversionSection(viewItems: [AppearanceViewModel.ConversionViewItem]) -> SectionProtocol {
         Section(
                 id: "balance-conversion",
-                headerState: header(text: "appearance.balance_conversion".localized),
+                headerState: tableView.sectionHeader(text: "appearance.balance_conversion".localized),
                 footerState: .margin(height: .margin24),
                 rows: viewItems.enumerated().map { index, viewItem in
                     let isFirst = index == 0
@@ -208,7 +200,8 @@ extension AppearanceViewController: SectionsDataSource {
                                     component.setImage(urlString: viewItem.urlString, placeholder: nil)
                                 }
                                 cell.bind(index: 1) { (component: TextComponent) in
-                                    component.set(style: .b2)
+                                    component.font = .body
+                                    component.textColor = .themeLeah
                                     component.text = viewItem.title
                                 }
                                 cell.bind(index: 2) { (component: ImageComponent) in
@@ -227,7 +220,7 @@ extension AppearanceViewController: SectionsDataSource {
     private func balanceValueSection(viewItems: [AppearanceViewModel.BalanceValueViewItem]) -> SectionProtocol {
         Section(
                 id: "balance-value",
-                headerState: header(text: "appearance.balance_value".localized),
+                headerState: tableView.sectionHeader(text: "appearance.balance_value".localized),
                 footerState: .margin(height: .margin32),
                 rows: viewItems.enumerated().map { index, viewItem in
                     let isFirst = index == 0
@@ -245,8 +238,10 @@ extension AppearanceViewController: SectionsDataSource {
 
                                 cell.bind(index: 0) { (component: MultiTextComponent) in
                                     component.set(style: .m1)
-                                    component.title.set(style: .b2)
-                                    component.subtitle.set(style: .d1)
+                                    component.title.font = .body
+                                    component.title.textColor = .themeLeah
+                                    component.subtitle.font = .subhead2
+                                    component.subtitle.textColor = .themeGray
 
                                     component.title.text = viewItem.title
                                     component.subtitle.text = viewItem.subtitle
@@ -266,6 +261,7 @@ extension AppearanceViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         [
+            Section(id: "top-margin", headerState: .margin(height: .margin12)),
             themeModeSection(viewItems: themeModeViewItems),
             launchScreenSection(viewItems: launchScreenViewItems),
             appIconSection(viewItems: appIconViewItems),

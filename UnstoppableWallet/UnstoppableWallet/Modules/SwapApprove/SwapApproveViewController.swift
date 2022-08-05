@@ -16,7 +16,7 @@ class SwapApproveViewController: KeyboardAwareViewController {
 
     private let amountCell = InputCell()
     private let amountCautionCell = FormCautionCell()
-    private let buttonCell: ButtonCell
+    private let buttonCell = PrimaryButtonCell()
 
     private var isLoaded = false
 
@@ -24,8 +24,6 @@ class SwapApproveViewController: KeyboardAwareViewController {
         self.viewModel = viewModel
         self.delegate = delegate
         self.dex = dex
-
-        buttonCell = ButtonCell()
 
         super.init(scrollViews: [tableView])
     }
@@ -39,8 +37,6 @@ class SwapApproveViewController: KeyboardAwareViewController {
 
         title = "swap.approve.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onTapCancel))
-
-        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -61,7 +57,11 @@ class SwapApproveViewController: KeyboardAwareViewController {
 
         amountCautionCell.onChangeHeight = { [weak self] in self?.onChangeHeight() }
 
-        buttonCell.bind(style: .primaryYellow, title: "swap.proceed_button".localized, compact: false, onTap: { [weak self] in self?.onTapApprove() })
+        buttonCell.set(style: .yellow)
+        buttonCell.title = "swap.proceed_button".localized
+        buttonCell.onTap = { [weak self] in
+            self?.onTapApprove()
+        }
 
         subscribeToViewModel()
         tableView.buildSections()
@@ -70,7 +70,7 @@ class SwapApproveViewController: KeyboardAwareViewController {
     }
 
     private func subscribeToViewModel() {
-        subscribe(disposeBag, viewModel.approveAllowedDriver) { [weak self] approveAllowed in self?.buttonCell.set(enabled: approveAllowed) }
+        subscribe(disposeBag, viewModel.approveAllowedDriver) { [weak self] approveAllowed in self?.buttonCell.isEnabled = approveAllowed }
         subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openConfirm(transactionData: $0) }
 
         subscribe(disposeBag, viewModel.amountCautionDriver) { [weak self] caution in
@@ -107,15 +107,7 @@ extension SwapApproveViewController: SectionsDataSource {
             Section(
                     id: "main",
                     rows: [
-                        Row<HighlightedDescriptionCell>(
-                                id: "description",
-                                dynamicHeight: { width in
-                                    HighlightedDescriptionCell.height(containerWidth: width, text: "swap.approve.description".localized)
-                                },
-                                bind: { cell, _ in
-                                    cell.descriptionText = "swap.approve.description".localized
-                                }
-                        )
+                        tableView.highlightedDescriptionRow(id: "description", text: "swap.approve.description".localized)
                     ]
             ),
             Section(
@@ -146,7 +138,7 @@ extension SwapApproveViewController: SectionsDataSource {
                         StaticRow(
                                 cell: buttonCell,
                                 id: "approve-button",
-                                height: ButtonCell.height(style: .primaryYellow)
+                                height: PrimaryButtonCell.height
                         )
                     ]
             )

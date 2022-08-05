@@ -12,11 +12,7 @@ class ProFeaturesLockInfoViewController: ThemeActionSheetController {
     private let config: Config
     private weak var delegate: IProFeaturesLockDelegate?
 
-    private let titleView = BottomSheetTitleView()
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
-    private let highlightedDescriptionCell = HighlightedDescriptionCell()
-    private let goToMintButton = ThemeButton()
-    private let cancelButton = ThemeButton()
 
     init(config: Config, delegate: IProFeaturesLockDelegate) {
         self.config = config
@@ -32,51 +28,50 @@ class ProFeaturesLockInfoViewController: ThemeActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let titleView = BottomSheetTitleView()
+
         view.addSubview(titleView)
         titleView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(title: config.title, subtitle: config.subtitle)
-        titleView.bind(image: config.icon, tintColor: .themeJacob)
-
+        titleView.title = config.title
+        titleView.image = config.icon?.withTintColor(.themeJacob)
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
         }
 
-        highlightedDescriptionCell.descriptionText = config.description
+        let descriptionView = HighlightedDescriptionView()
+
+        view.addSubview(descriptionView)
+        descriptionView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalTo(titleView.snp.bottom)
+        }
+
+        descriptionView.text = config.description
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(titleView.snp.bottom)
+            maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin12)
         }
 
         tableView.sectionDataSource = self
 
+        let goToMintButton = PrimaryButton()
+
         view.addSubview(goToMintButton)
         goToMintButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(tableView.snp.bottom).offset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.top.equalTo(tableView.snp.bottom).offset(CGFloat.margin24)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
-        goToMintButton.apply(style: .primaryYellow)
+        goToMintButton.set(style: .yellow)
         goToMintButton.setTitle("pro_features.lock_info.go_to_mint".localized, for: .normal)
         goToMintButton.isEnabled = false
         goToMintButton.addTarget(self, action: #selector(onTapGoToMint), for: .touchUpInside)
-
-        view.addSubview(cancelButton)
-        cancelButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(goToMintButton.snp.bottom).offset(CGFloat.margin12)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
-        }
-
-        cancelButton.apply(style: .primaryGray)
-        cancelButton.setTitle("button.cancel".localized, for: .normal)
-        cancelButton.addTarget(self, action: #selector(onTapCancel), for: .touchUpInside)
 
         tableView.buildSections()
     }
@@ -85,38 +80,16 @@ class ProFeaturesLockInfoViewController: ThemeActionSheetController {
         delegate?.onGoToMint(viewController: self)
     }
 
-    @objc private func onTapCancel() {
-        dismiss(animated: true)
-    }
-
-    private var descriptionRow: RowProtocol? {
-        guard let description = config.description else {
-            return nil
-        }
-
-        return StaticRow(
-                cell: highlightedDescriptionCell,
-                id: "description",
-                dynamicHeight: { width in
-                    HighlightedDescriptionCell.height(containerWidth: width, text: description)
-                }
-        )
-    }
-
 }
 
 extension ProFeaturesLockInfoViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let isFirst = config.description == nil
-        return [
-            Section(
-                    id: "description",
-                    rows: [descriptionRow].compactMap { $0 }
-            ),
+        [
             Section(
                     id: "main",
                     rows: config.viewItems.enumerated().map { index, viewItem in
+                        let isFirst = index == 0
                         let isLast = index == config.viewItems.count - 1
 
                         return CellBuilder.row(
@@ -125,10 +98,11 @@ extension ProFeaturesLockInfoViewController: SectionsDataSource {
                                 id: "item_\(index)",
                                 height: .heightCell48,
                                 bind: { cell in
-                                    cell.set(backgroundStyle: .transparent, isFirst: isFirst, isLast: isLast)
+                                    cell.set(backgroundStyle: .bordered, isFirst: isFirst, isLast: isLast)
 
                                     cell.bind(index: 0) { (component: TextComponent) in
-                                        component.set(style: .d1)
+                                        component.font = .subhead2
+                                        component.textColor = .themeLeah
                                         component.text = viewItem
                                     }
 
@@ -150,7 +124,6 @@ extension ProFeaturesLockInfoViewController {
     struct Config {
         let icon: UIImage?
         let title: String
-        let subtitle: String
         let description: String?
         let viewItems: [String]
 
@@ -158,7 +131,6 @@ extension ProFeaturesLockInfoViewController {
             Config(
                     icon: UIImage(named: "lock_24"),
                     title: "pro_features.lock_info.title".localized,
-                    subtitle: "pro_features.lock_info.subtitle".localized,
                     description: "pro_features.lock_info.coin_details.description".localized,
                     viewItems: [
                         "pro_features.lock_info.coin_details.volume".localized,

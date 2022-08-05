@@ -30,8 +30,6 @@ class ExperimentalFeaturesViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: B1Cell.self)
-        tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -49,27 +47,23 @@ class ExperimentalFeaturesViewController: ThemeViewController {
 extension ExperimentalFeaturesViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let descriptionText = "settings.experimental_features.description".localized
-
-        let headerState: ViewState<TopDescriptionHeaderFooterView> = .cellType(hash: "top_description", binder: { view in
-            view.bind(text: descriptionText)
-        }, dynamicHeight: { [unowned self] _ in
-            TopDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
-        })
-
-        return [
+        [
+            Section(
+                    id: "alert",
+                    rows: [
+                        tableView.highlightedDescriptionRow(id: "alert", text: "settings.experimental_features.description".localized)
+                    ]
+            ),
             Section(
                     id: "bitcoin_hodling_section",
-                    headerState: headerState,
+                    headerState: .margin(height: .margin12),
                     rows: [
-                        Row<B1Cell>(
+                        tableView.titleArrowRow(
                                 id: "bitcoin_hodling",
-                                height: .heightCell48,
-                                bind: { cell, _ in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                                    cell.title = "settings.experimental_features.bitcoin_hodling".localized
-                                },
-                                action: { [weak self] _ in
+                                title: "settings.experimental_features.bitcoin_hodling".localized,
+                                isFirst: true,
+                                isLast: true,
+                                action: { [weak self] in
                                     self?.delegate.didTapBitcoinHodling()
                                 }
                         )

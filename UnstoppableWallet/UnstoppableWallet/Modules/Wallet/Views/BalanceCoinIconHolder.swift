@@ -12,7 +12,7 @@ class BalanceCoinIconHolder: UIView {
             strokeColor: .themeGray,
             duration: 2
     )
-    private let failedButton = ThemeButton()
+    private let failedButton = UIButton()
 
     private var onTapError: (() -> ())?
 

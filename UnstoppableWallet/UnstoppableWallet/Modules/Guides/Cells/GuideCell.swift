@@ -62,7 +62,7 @@ class GuideCell: UITableViewCell {
 
         titleLabel.numberOfLines = 0
         titleLabel.font = GuideCell.titleFont
-        titleLabel.textColor = .themeOz
+        titleLabel.textColor = .themeLeah
     }
 
     required init?(coder aDecoder: NSCoder) {

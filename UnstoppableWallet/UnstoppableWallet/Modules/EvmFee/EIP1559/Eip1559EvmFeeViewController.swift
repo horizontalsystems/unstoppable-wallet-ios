@@ -22,7 +22,7 @@ class Eip1559EvmFeeViewController: ThemeViewController {
     private var tipsCell = BaseSelectableThemeCell()
     private let tipsSliderCell: FeeSliderCell
     private let cautionCell = TitledHighlightedDescriptionCell()
-    private let doneButton = ThemeButton()
+    private let doneButton = PrimaryButton()
 
     private var loaded = false
 
@@ -50,11 +50,13 @@ class Eip1559EvmFeeViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "circle_information_20")
         })
         cell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .d1)
+            component.font = .subhead2
+            component.textColor = .themeGray
             component.text = title
         })
         cell.bind(index: 2, block: { (component: TextComponent) in
-            component.set(style: .c2)
+            component.font = .subhead1
+            component.textColor = .themeLeah
         })
         subscribe(disposeBag, driver) { value in
             cell.bind(index: 2, block: { (component: TextComponent) in
@@ -83,11 +85,13 @@ class Eip1559EvmFeeViewController: ThemeViewController {
         currentBaseFeeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
         CellBuilder.build(cell: currentBaseFeeCell, elements: [.text, .text])
         currentBaseFeeCell.bind(index: 0, block: { (component: TextComponent) in
-            component.set(style: .d1)
+            component.font = .subhead2
+            component.textColor = .themeGray
             component.text = "fee_settings.current_base_fee".localized
         })
         currentBaseFeeCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .c2)
+            component.font = .subhead1
+            component.textColor = .themeLeah
         })
         subscribe(disposeBag, viewModel.currentBaseFeeDriver) { [weak self] value in
            self?.currentBaseFeeCell.bind(index: 1, block: { (component: TextComponent) in
@@ -101,11 +105,13 @@ class Eip1559EvmFeeViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "circle_information_20")
         })
         baseFeeCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .d1)
+            component.font = .subhead2
+            component.textColor = .themeGray
             component.text = "fee_settings.base_fee".localized
         })
         baseFeeCell.bind(index: 2, block: { (component: TextComponent) in
-            component.set(style: .c2)
+            component.font = .subhead1
+            component.textColor = .themeLeah
         })
         subscribe(disposeBag, viewModel.baseFeeDriver) { [weak self] value in
             self?.baseFeeCell.bind(index: 2, block: { (component: TextComponent) in
@@ -133,10 +139,9 @@ class Eip1559EvmFeeViewController: ThemeViewController {
             maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        doneButton.apply(style: .primaryYellow)
+        doneButton.set(style: .yellow)
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDone), for: .touchUpInside)
 

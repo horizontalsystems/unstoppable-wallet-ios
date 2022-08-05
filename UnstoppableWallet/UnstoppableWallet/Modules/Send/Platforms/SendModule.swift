@@ -15,56 +15,60 @@ class SendModule {
             return nil
         }
 
-        let platformCoin = wallet.platformCoin
+        let token = wallet.token
 
         switch adapter {
         case let adapter as ISendBitcoinAdapter:
-            return SendModule.viewController(platformCoin: platformCoin, adapter: adapter)
+            return SendModule.viewController(token: token, adapter: adapter)
         case let adapter as ISendBinanceAdapter:
-            return SendModule.viewController(platformCoin: platformCoin, adapter: adapter)
+            return SendModule.viewController(token: token, adapter: adapter)
         case let adapter as ISendZcashAdapter:
-            return SendModule.viewController(platformCoin: platformCoin, adapter: adapter)
+            return SendModule.viewController(token: token, adapter: adapter)
         case let adapter as ISendEthereumAdapter:
-            return SendEvmModule.viewController(platformCoin: platformCoin, adapter: adapter)
+            return SendEvmModule.viewController(token: token, adapter: adapter)
         default: return nil
         }
     }
 
-    private static func viewController(platformCoin: PlatformCoin, adapter: ISendBitcoinAdapter) -> UIViewController? {
-        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(coinType: platformCoin.coinType) else {
+    private static func viewController(token: Token, adapter: ISendBitcoinAdapter) -> UIViewController? {
+        guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(blockchainType: token.blockchainType) else {
             return nil
         }
 
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
-        let coinService = CoinService(platformCoin: platformCoin, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let coinService = CoinService(token: token, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
         let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 
         // Amount
-        let amountInputService = SendBitcoinAmountInputService(platformCoin: platformCoin)
+        let amountInputService = SendBitcoinAmountInputService(token: token)
         let amountCautionService = SendAmountCautionService(amountInputService: amountInputService)
 
         // Address
         let bitcoinParserItem = BitcoinAddressParserItem(adapter: adapter)
-        let udnAddressParserItem = UDNAddressParserItem.item(rawAddressParserItem: bitcoinParserItem, coinCode: platformCoin.code, coinType: platformCoin.coinType)
+        let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: bitcoinParserItem, coinCode: token.coin.code, token: token)
         let addressParserChain = AddressParserChain()
                 .append(handler: bitcoinParserItem)
                 .append(handler: udnAddressParserItem)
 
-        let addressUriParser = AddressParserFactory.parser(coinType: platformCoin.coinType)
+        if let ensAddressParserItem = EnsAddressParserItem(rpcSource: App.shared.evmSyncSourceManager.infuraRpcSource, rawAddressParserItem: bitcoinParserItem) {
+            addressParserChain.append(handler: ensAddressParserItem)
+        }
+
+        let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
 
         // Fee
         let feePriorityService = SendFeePriorityService(provider: feeRateProvider)
         let feeRateService = SendFeeRateService(priorityService: feePriorityService, provider: feeRateProvider)
         let feeFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
-        let feeService = SendBitcoinFeeService(fiatService: feeFiatService, feePriorityService: feePriorityService, feeCoin: platformCoin)
+        let feeService = SendBitcoinFeeService(fiatService: feeFiatService, feePriorityService: feePriorityService, feeToken: token)
 
         // TimeLock
         var timeLockService: SendTimeLockService?
         var timeLockErrorService: SendTimeLockErrorService?
         var timeLockViewModel: SendTimeLockViewModel?
 
-        if App.shared.localStorage.lockTimeEnabled, adapter.blockchain == .bitcoin {
+        if App.shared.localStorage.lockTimeEnabled, adapter.blockchainType == .bitcoin {
             let timeLockServiceInstance = SendTimeLockService()
             timeLockService = timeLockServiceInstance
             timeLockErrorService = SendTimeLockErrorService(timeLockService: timeLockServiceInstance, addressService: addressService, adapter: adapter)
@@ -87,7 +91,7 @@ class SendModule {
                 feeService: feeRateService,
                 timeLockErrorService: timeLockErrorService,
                 reachabilityManager: App.shared.reachabilityManager,
-                platformCoin: platformCoin
+                token: token
         )
 
         //Add dependencies
@@ -111,6 +115,8 @@ class SendModule {
                 switchService: switchService,
                 decimalParser: AmountDecimalParser()
         )
+        addressService.amountPublishService = amountInputViewModel
+
         let amountCautionViewModel = SendAmountCautionViewModel(
                 service: amountCautionService,
                 switchService: switchService,
@@ -137,7 +143,7 @@ class SendModule {
                 adapterService: bitcoinAdapterService,
                 customFeeRateProvider: customRangedFeeRateProvider,
                 logger: App.shared.logger,
-                platformCoin: platformCoin
+                token: token
         )
 
         let viewController = SendBitcoinViewController(
@@ -156,16 +162,16 @@ class SendModule {
         return ThemeNavigationController(rootViewController: viewController)
     }
 
-    private static func viewController(platformCoin: PlatformCoin, adapter: ISendBinanceAdapter) -> UIViewController? {
-        let feeCoin = App.shared.feeCoinProvider.feeCoin(coinType: platformCoin.coinType) ?? platformCoin
-        let feeCoinProtocol = App.shared.feeCoinProvider.feeCoinProtocol(coinType: platformCoin.coinType)
+    private static func viewController(token: Token, adapter: ISendBinanceAdapter) -> UIViewController? {
+        let feeToken = App.shared.feeCoinProvider.feeToken(token: token) ?? token
+        let feeTokenProtocol = App.shared.feeCoinProvider.feeTokenProtocol(token: token)
 
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
-        let coinService = CoinService(platformCoin: platformCoin, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let coinService = CoinService(token: token, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
         let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 
         // Amount
-        let amountInputService = SendBitcoinAmountInputService(platformCoin: platformCoin)
+        let amountInputService = SendBitcoinAmountInputService(token: token)
         let amountCautionService = SendAmountCautionService(amountInputService: amountInputService)
 
         // Address
@@ -173,14 +179,14 @@ class SendModule {
         let addressParserChain = AddressParserChain()
                 .append(handler: binanceParserItem)
 
-        let addressUriParser = AddressParserFactory.parser(coinType: platformCoin.coinType)
+        let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
 
         let memoService = SendMemoInputService(maxSymbols: 120)
 
         // Fee
         let feeFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
-        let feeService = SendFeeService(fiatService: feeFiatService, feeCoin: feeCoin)
+        let feeService = SendFeeService(fiatService: feeFiatService, feeToken: feeToken)
 
         let service = SendBinanceService(
                 amountService: amountInputService,
@@ -189,7 +195,7 @@ class SendModule {
                 memoService: memoService,
                 adapter: adapter,
                 reachabilityManager: App.shared.reachabilityManager,
-                platformCoin: platformCoin
+                token: token
         )
 
         //Add dependencies
@@ -209,6 +215,8 @@ class SendModule {
                 switchService: switchService,
                 decimalParser: AmountDecimalParser()
         )
+        addressService.amountPublishService = amountInputViewModel
+
         let amountCautionViewModel = SendAmountCautionViewModel(
                 service: amountCautionService,
                 switchService: switchService,
@@ -219,7 +227,7 @@ class SendModule {
 
         // Fee
         let feeViewModel = SendFeeViewModel(service: feeService)
-        let feeWarningViewModel = SendBinanceFeeWarningViewModel(adapter: adapter, coinCode: platformCoin.code, coinProtocol: feeCoinProtocol, feeCoin: feeCoin)
+        let feeWarningViewModel = SendBinanceFeeWarningViewModel(adapter: adapter, coinCode: token.coin.code, tokenProtocol: feeTokenProtocol, feeToken: feeToken)
 
         // Confirmation and Settings
         let sendFactory = SendBinanceFactory(
@@ -229,7 +237,7 @@ class SendModule {
                 memoService: memoService,
                 feeFiatService: feeFiatService,
                 logger: App.shared.logger,
-                platformCoin: platformCoin
+                token: token
         )
 
         let viewController = SendBinanceViewController(
@@ -247,13 +255,13 @@ class SendModule {
         return ThemeNavigationController(rootViewController: viewController)
     }
 
-    private static func viewController(platformCoin: PlatformCoin, adapter: ISendZcashAdapter) -> UIViewController? {
+    private static func viewController(token: Token, adapter: ISendZcashAdapter) -> UIViewController? {
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
-        let coinService = CoinService(platformCoin: platformCoin, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let coinService = CoinService(token: token, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
         let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 
         // Amount
-        let amountInputService = SendBitcoinAmountInputService(platformCoin: platformCoin)
+        let amountInputService = SendBitcoinAmountInputService(token: token)
         let amountCautionService = SendAmountCautionService(amountInputService: amountInputService)
 
         // Address
@@ -261,14 +269,14 @@ class SendModule {
         let addressParserChain = AddressParserChain()
                 .append(handler: zcashParserItem)
 
-        let addressUriParser = AddressParserFactory.parser(coinType: platformCoin.coinType)
+        let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
 
         let memoService = SendMemoInputService(maxSymbols: 120)
 
         // Fee
         let feeFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
-        let feeService = SendFeeService(fiatService: feeFiatService, feeCoin: platformCoin)
+        let feeService = SendFeeService(fiatService: feeFiatService, feeToken: token)
 
         let service = SendZcashService(
                 amountService: amountInputService,
@@ -277,7 +285,7 @@ class SendModule {
                 memoService: memoService,
                 adapter: adapter,
                 reachabilityManager: App.shared.reachabilityManager,
-                platformCoin: platformCoin
+                token: token
         )
 
         //Add dependencies
@@ -298,6 +306,8 @@ class SendModule {
                 switchService: switchService,
                 decimalParser: AmountDecimalParser()
         )
+        addressService.amountPublishService = amountInputViewModel
+
         let amountCautionViewModel = SendAmountCautionViewModel(
                 service: amountCautionService,
                 switchService: switchService,
@@ -317,7 +327,7 @@ class SendModule {
                 memoService: memoService,
                 feeFiatService: feeFiatService,
                 logger: App.shared.logger,
-                platformCoin: platformCoin
+                token: token
         )
 
         let viewController = SendZcashViewController(

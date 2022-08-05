@@ -5,8 +5,8 @@ class BinanceChainTransactionRecord: TransactionRecord {
     let fee: TransactionValue
     let memo: String?
 
-    init(source: TransactionSource, transaction: TransactionInfo, feeCoin: PlatformCoin) {
-        fee = .coinValue(platformCoin: feeCoin, value: BinanceAdapter.transferFee)
+    init(source: TransactionSource, transaction: TransactionInfo, feeToken: Token) {
+        fee = .coinValue(token: feeToken, value: BinanceAdapter.transferFee)
         memo = transaction.memo
 
         super.init(

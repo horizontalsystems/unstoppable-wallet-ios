@@ -25,34 +25,32 @@ class WalletConnectWatchAccountViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(
-                title: "Wallet Connect",
-                subtitle: "alert".localized,
-                image: UIImage(named: "wallet_connect_24"),
-                tintColor: .themeJacob
-        )
-        titleView.onTapClose = { [weak self] in self?.dismiss(animated: true) }
+        titleView.title = "Wallet Connect"
+        titleView.image = UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)
+        titleView.onTapClose = { [weak self] in
+            self?.dismiss(animated: true)
+        }
 
         let descriptionView = HighlightedDescriptionView()
 
         view.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
+            maker.top.equalTo(titleView.snp.bottom)
         }
 
         descriptionView.text = "wallet_connect.watch_account.description".localized
 
-        let switchButton = ThemeButton()
+        let switchButton = PrimaryButton()
 
         view.addSubview(switchButton)
         switchButton.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.top.equalTo(descriptionView.snp.bottom).offset(CGFloat.margin24)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
-        switchButton.apply(style: .primaryYellow)
+        switchButton.set(style: .yellow)
         switchButton.setTitle("wallet_connect.watch_account.switch".localized, for: .normal)
         switchButton.addTarget(self, action: #selector(onTapSwitchButton), for: .touchUpInside)
     }

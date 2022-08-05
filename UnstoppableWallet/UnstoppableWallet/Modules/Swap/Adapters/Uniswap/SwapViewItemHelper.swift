@@ -4,13 +4,13 @@ import MarketKit
 
 class SwapViewItemHelper {
 
-    func priceValue(executionPrice: Decimal?, platformCoinIn: PlatformCoin?, platformCoinOut: PlatformCoin?) -> PriceCoinValue? {
-        guard let price = executionPrice, let platformCoinOut = platformCoinOut, let platformCoinIn = platformCoinIn else {
+    func priceValue(executionPrice: Decimal?, tokenIn: MarketKit.Token?, tokenOut: MarketKit.Token?) -> PriceCoinValue? {
+        guard let price = executionPrice, let tokenOut = tokenOut, let tokenIn = tokenIn else {
             return nil
         }
 
         let value = price.isZero ? 0 : 1 / price
-        return PriceCoinValue(baseCoin: platformCoinOut.coin, quoteCoinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoinIn), value: value))
+        return PriceCoinValue(baseCoin: tokenOut.coin, quoteCoinValue: CoinValue(kind: .token(token: tokenIn), value: value))
     }
 
     func priceImpactViewItem(trade: UniswapTradeService.Trade, minLevel: UniswapTradeService.PriceImpactLevel = .normal) -> UniswapModule.PriceImpactViewItem? {
@@ -24,25 +24,25 @@ class SwapViewItemHelper {
         )
     }
 
-    func guaranteedAmountViewItem(tradeData: TradeData, platformCoinIn: PlatformCoin?, platformCoinOut: PlatformCoin?) -> UniswapModule.GuaranteedAmountViewItem? {
+    func guaranteedAmountViewItem(tradeData: TradeData, tokenIn: MarketKit.Token?, tokenOut: MarketKit.Token?) -> UniswapModule.GuaranteedAmountViewItem? {
         switch tradeData.type {
         case .exactIn:
-            guard let amount = tradeData.amountOutMin, let platformCoin = platformCoinOut else {
+            guard let amount = tradeData.amountOutMin, let token = tokenOut else {
                 return nil
             }
 
             return UniswapModule.GuaranteedAmountViewItem(
                     title: "swap.minimum_got".localized,
-                    value: ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: amount))
+                    value: ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: token), value: amount))
             )
         case .exactOut:
-            guard let amount = tradeData.amountInMax, let platformCoin = platformCoinIn else {
+            guard let amount = tradeData.amountInMax, let token = tokenIn else {
                 return nil
             }
 
             return UniswapModule.GuaranteedAmountViewItem(
                     title: "swap.maximum_paid".localized,
-                    value: ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .platformCoin(platformCoin: platformCoin), value: amount))
+                    value: ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .token(token: token), value: amount))
             )
         }
     }

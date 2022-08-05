@@ -46,7 +46,8 @@ class FeeCell: BaseSelectableThemeCell {
         })
 
         bind(index: 1) { (component: TextComponent) in
-            component.set(style: .d1)
+            component.font = .subhead2
+            component.textColor = .themeGray
             component.text = viewModel.title
         }
 
@@ -54,7 +55,8 @@ class FeeCell: BaseSelectableThemeCell {
             self?.bind(index: 2) { (component: TextComponent) in
                 if let value = value {
                     component.isHidden = false
-                    component.set(style: value.type.style)
+                    component.font = .subhead1
+                    component.textColor = value.type.textColor
                     component.text = value.text
                 } else {
                     component.isHidden = true
@@ -82,11 +84,11 @@ extension FeeCell {
         case regular
         case error
 
-        var style: TextComponent.Style {
+        var textColor: UIColor {
             switch self {
-            case .disabled: return .c1
-            case .regular: return .c2
-            case .error: return .c5
+            case .disabled: return .themeGray
+            case .regular: return .themeLeah
+            case .error: return .themeLucian
             }
         }
     }

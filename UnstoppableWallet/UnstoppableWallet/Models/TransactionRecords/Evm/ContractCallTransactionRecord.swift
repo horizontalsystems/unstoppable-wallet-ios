@@ -8,14 +8,14 @@ class ContractCallTransactionRecord: EvmTransactionRecord {
     let incomingEvents: [TransferEvent]
     let outgoingEvents: [TransferEvent]
 
-    init(source: TransactionSource, transaction: Transaction, baseCoin: PlatformCoin,
+    init(source: TransactionSource, transaction: Transaction, baseToken: Token,
          contractAddress: String, method: String?, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent]) {
         self.contractAddress = contractAddress
         self.method = method
         self.incomingEvents = incomingEvents
         self.outgoingEvents = outgoingEvents
 
-        super.init(source: source, transaction: transaction, baseCoin: baseCoin, ownTransaction: true)
+        super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: true)
     }
 
     var combinedValues: ([TransactionValue], [TransactionValue]) {

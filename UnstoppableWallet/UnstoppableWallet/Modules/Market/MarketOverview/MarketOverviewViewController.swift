@@ -21,7 +21,7 @@ class MarketOverviewViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
     private let refreshControl = UIRefreshControl()
 
     init(viewModel: MarketOverviewViewModel, dataSources: [IMarketOverviewDataSource]) {
@@ -65,7 +65,7 @@ class MarketOverviewViewController: ThemeViewController {
             maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        errorView.configureSyncError(target: self, action: #selector(onRetry))
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
         subscribe(disposeBag, viewModel.successDriver) { [weak self] in self?.sync(success: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in

@@ -86,7 +86,7 @@ extension EvmLabelManager {
             return label
         }
 
-        return String(address.prefix(5)) + "..." + String(address.suffix(5))
+        return address.shortened
     }
 
 }

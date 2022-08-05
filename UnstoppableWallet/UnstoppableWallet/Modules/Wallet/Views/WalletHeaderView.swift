@@ -5,18 +5,15 @@ import ComponentKit
 import HUD
 
 class WalletHeaderView: UITableViewHeaderFooterView {
-    private static let amountHeight: CGFloat = 100
     private static let bottomMargin: CGFloat = .margin4
+    static var height: CGFloat = HeaderAmountView.height + TextDropDownAndSettingsView.height + bottomMargin
 
-    private let amountButton = UIButton()
-    private let convertedAmountButton = UIButton()
+    private let amountView = HeaderAmountView()
     private let sortAddCoinView = TextDropDownAndSettingsView()
-    private let addressButton = ThemeButton()
+    private let addressButton = SecondaryButton()
 
     private var currentAddress: String?
 
-    var onTapAmount: (() -> ())?
-    var onTapConvertedAmount: (() -> ())?
     var onTapSortBy: (() -> ())?
     var onTapAddCoin: (() -> ())?
 
@@ -24,85 +21,46 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
 
         backgroundView = UIView()
+        backgroundView?.backgroundColor = .themeNavigationBarBackground
 
-        let wrapperView = UIView()
-
-        contentView.addSubview(wrapperView)
-        wrapperView.snp.makeConstraints { maker in
+        contentView.addSubview(amountView)
+        amountView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(Self.amountHeight + TextDropDownAndSettingsView.height)
         }
-
-        wrapperView.backgroundColor = .themeNavigationBarBackground
-
-        let amountWrapperView = UIView()
-
-        wrapperView.addSubview(amountWrapperView)
-        amountWrapperView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(Self.amountHeight)
-        }
-
-        amountWrapperView.addSubview(amountButton)
-        amountButton.snp.makeConstraints { maker in
-            maker.leading.top.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(41)
-        }
-
-        amountButton.titleLabel?.font = .title2R
-        amountButton.addTarget(self, action: #selector(onTapAmountButton), for: .touchUpInside)
-
-        amountWrapperView.addSubview(convertedAmountButton)
-        convertedAmountButton.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(amountButton.snp.bottom).offset(CGFloat.margin6)
-            maker.height.equalTo(20)
-        }
-
-        convertedAmountButton.titleLabel?.font = .body
-        convertedAmountButton.addTarget(self, action: #selector(onTapConvertedAmountButton), for: .touchUpInside)
 
         let separatorView = UIView()
 
-        wrapperView.addSubview(separatorView)
+        contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(amountWrapperView.snp.bottom)
+            maker.top.equalTo(amountView.snp.bottom)
             maker.height.equalTo(CGFloat.heightOneDp)
         }
 
         separatorView.backgroundColor = .themeSteel10
 
-        wrapperView.addSubview(sortAddCoinView)
+        contentView.addSubview(sortAddCoinView)
         sortAddCoinView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(amountWrapperView.snp.bottom)
+            maker.top.equalTo(amountView.snp.bottom)
             maker.height.equalTo(TextDropDownAndSettingsView.height)
         }
 
         sortAddCoinView.onTapDropDown = { [weak self] in self?.onTapSortBy?() }
         sortAddCoinView.onTapSettings = { [weak self] in self?.onTapAddCoin?() }
 
-        wrapperView.addSubview(addressButton)
+        contentView.addSubview(addressButton)
         addressButton.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
             maker.centerY.equalTo(sortAddCoinView)
         }
 
-        addressButton.apply(style: .secondaryDefault)
+        addressButton.set(style: .default)
         addressButton.addTarget(self, action: #selector(onTapAddressButton), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    @objc private func onTapAmountButton() {
-        onTapAmount?()
-    }
-
-    @objc private func onTapConvertedAmountButton() {
-        onTapConvertedAmount?()
     }
 
     @objc private func onTapAddressButton() {
@@ -113,25 +71,29 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         CopyHelper.copyAndNotify(value: address)
     }
 
+    var onTapAmount: (() -> ())? {
+        get { amountView.onTapAmount }
+        set { amountView.onTapAmount = newValue }
+    }
+
+    var onTapConvertedAmount: (() -> ())? {
+        get { amountView.onTapConvertedAmount }
+        set { amountView.onTapConvertedAmount = newValue }
+    }
+
     func bind(viewItem: WalletViewModel.HeaderViewItem, sortBy: String?) {
-        amountButton.setTitle(viewItem.amount, for: .normal)
-        amountButton.setTitleColor(viewItem.amountExpired ? .themeGray50 : .themeLeah, for: .normal)
-        convertedAmountButton.setTitle(viewItem.convertedValue, for: .normal)
-        convertedAmountButton.setTitleColor(viewItem.convertedValueExpired ? .themeGray50 : .themeGray, for: .normal)
+        amountView.set(amountText: viewItem.amount, expired: viewItem.amountExpired)
+        amountView.set(convertedAmountText: viewItem.convertedValue, expired: viewItem.convertedValueExpired)
 
         sortAddCoinView.bind(dropdownTitle: sortBy, settingsHidden: viewItem.manageWalletsHidden)
 
         if let address = viewItem.address {
             addressButton.isHidden = false
-            addressButton.setTitle(address.shortenedAddress, for: .normal)
+            addressButton.setTitle(address.shortened, for: .normal)
             currentAddress = address
         } else {
             addressButton.isHidden = true
         }
-    }
-
-    static var height: CGFloat {
-        amountHeight + TextDropDownAndSettingsView.height + bottomMargin
     }
 
 }

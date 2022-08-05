@@ -11,21 +11,23 @@ class TransactionsViewController: ThemeViewController {
     private let viewModel: TransactionsViewModel
     private let disposeBag = DisposeBag()
 
+    private let headerView: TransactionsHeaderView
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let emptyView = PlaceholderView()
     private let typeFiltersView = FilterHeaderView(buttonStyle: .tab)
-    private let coinFiltersView = MarketDiscoveryFilterHeaderView()
     private let syncSpinner = HUDActivityView.create(with: .medium24)
 
     private var sectionViewItems = [TransactionsViewModel.SectionViewItem]()
-
+    private var allLoaded = true
     private var loaded = false
 
     init(viewModel: TransactionsViewModel) {
         self.viewModel = viewModel
+        headerView = TransactionsHeaderView(viewModel: viewModel)
 
         super.init()
 
+        headerView.viewController = self
         tabBarItem = UITabBarItem(title: "transactions.tab_bar_item".localized, image: UIImage(named: "filled_transaction_2n_24"), tag: 0)
         navigationItem.largeTitleDisplayMode = .never
     }
@@ -38,6 +40,7 @@ class TransactionsViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "transactions.title".localized
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.reset".localized, style: .plain, target: self, action: #selector(onTapReset))
 
         view.addSubview(tableView)
 
@@ -49,10 +52,13 @@ class TransactionsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.estimatedRowHeight = 0
+        tableView.estimatedSectionHeaderHeight = 0
+        tableView.estimatedSectionFooterHeight = 0
         tableView.delaysContentTouches = false
 
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerHeaderFooter(forClass: TransactionDateHeaderView.self)
 
         view.addSubview(typeFiltersView)
@@ -62,26 +68,26 @@ class TransactionsViewController: ThemeViewController {
             maker.height.equalTo(FilterHeaderView.height)
         }
 
+        typeFiltersView.reload(filters: viewModel.typeFilterViewItems)
+
         typeFiltersView.onSelect = { [weak self] index in
-            self?.viewModel.typeFilterSelected(index: index)
+            self?.viewModel.onSelectTypeFilter(index: index)
         }
 
-        view.addSubview(coinFiltersView)
-        coinFiltersView.snp.makeConstraints { maker in
+        view.addSubview(headerView)
+        headerView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(typeFiltersView.snp.bottom)
-            maker.height.equalTo(MarketDiscoveryFilterHeaderView.headerHeight)
-        }
-
-        coinFiltersView.onSelect = { [weak self] index in
-            self?.viewModel.coinFilterSelected(index: index)
+            maker.height.equalTo(CGFloat.heightSingleLineCell)
         }
 
         view.addSubview(emptyView)
         emptyView.snp.makeConstraints { maker in
-            maker.top.equalTo(coinFiltersView.snp.bottom)
+            maker.top.equalTo(headerView.snp.bottom)
             maker.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+
+        emptyView.isHidden = true
 
         let holder = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         holder.addSubview(syncSpinner)
@@ -89,22 +95,29 @@ class TransactionsViewController: ThemeViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: holder)
 
         tableView.snp.makeConstraints { maker in
-            maker.top.equalTo(coinFiltersView.snp.bottom)
+            maker.top.equalTo(headerView.snp.bottom)
             maker.leading.trailing.bottom.equalToSuperview()
         }
 
-        subscribe(disposeBag, viewModel.sectionViewItemsDriver) { [weak self] in self?.handle(sectionViewItems: $0) }
-        subscribe(disposeBag, viewModel.updatedViewItemSignal) { [weak self] (sectionIndex, rowIndex, item) in self?.update(sectionIndex: sectionIndex, rowIndex: rowIndex, item: item) }
-        subscribe(disposeBag, viewModel.typeFiltersDriver) { [weak self] coinFilters in self?.show(typeFilters: coinFilters) }
-        subscribe(disposeBag, viewModel.coinFiltersDriver) { [weak self] coinFilters in self?.show(coinFilters: coinFilters) }
-        subscribe(disposeBag, viewModel.viewStatusDriver) { [weak self] status in self?.show(status: status) }
+        subscribe(disposeBag, viewModel.typeFilterIndexDriver) { [weak self] index in
+            self?.typeFiltersView.select(index: index)
+        }
+        subscribe(disposeBag, viewModel.viewDataDriver) { [weak self] in self?.handle(viewData: $0) }
+        subscribe(disposeBag, viewModel.viewStatusDriver) { [weak self] in self?.sync(viewStatus: $0) }
+        subscribe(disposeBag, viewModel.resetEnabledDriver) { [weak self] in
+            self?.navigationItem.leftBarButtonItem?.isEnabled = $0
+        }
 
         loaded = true
     }
 
+    @objc private func onTapReset() {
+        viewModel.onTapReset()
+    }
+
     private func itemClicked(item: TransactionsViewModel.ViewItem) {
-        if let item = viewModel.transactionItem(uid: item.uid) {
-            guard let module = TransactionInfoModule.instance(transactionRecord: item.record) else {
+        if let record = viewModel.record(uid: item.uid) {
+            guard let module = TransactionInfoModule.instance(transactionRecord: record) else {
                 return
             }
 
@@ -112,131 +125,49 @@ class TransactionsViewController: ThemeViewController {
         }
     }
 
-    private func update(sectionIndex: Int, rowIndex: Int, item: TransactionsViewModel.ViewItem) {
-        DispatchQueue.main.async {
-            self.sectionViewItems[sectionIndex].viewItems[rowIndex] = item
-
-            let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
-            if let cell = self.tableView.cellForRow(at: indexPath) as? BaseThemeCell {
-                self.bind(item: item, cell: cell)
-            }
-        }
-    }
-
-    private func primaryStyle(valueType: TransactionsViewModel.ValueType) -> TextComponent.Style {
+    private func color(valueType: TransactionsViewModel.ValueType) -> UIColor {
         switch valueType {
-        case .incoming: return .b4
-        case .outgoing: return .b5
-        case .neutral: return .b2
-        case .secondary: return .b1
+        case .incoming: return .themeRemus
+        case .outgoing: return .themeLucian
+        case .neutral: return .themeLeah
+        case .secondary: return .themeGray
         }
     }
 
-    private func secondaryStyle(valueType: TransactionsViewModel.ValueType) -> TextComponent.Style {
-        switch valueType {
-        case .incoming: return .d4
-        case .outgoing: return .d5
-        case .neutral: return .d2
-        case .secondary: return .d1
+    private func handle(viewData: TransactionsViewModel.ViewData) {
+        sectionViewItems = viewData.sectionViewItems
+
+        if let allLoaded = viewData.allLoaded {
+            self.allLoaded = allLoaded
         }
-    }
 
-    private func bind(item: TransactionsViewModel.ViewItem, cell: BaseThemeCell) {
-        cell.bind(index: 0) { (component: TransactionImageComponent) in
-            component.set(progress: item.progress)
+        guard loaded else {
+            return
+        }
 
-            switch item.iconType {
-            case .icon(let imageUrl, let placeholderImageName):
-                component.setImage(
-                        urlString: imageUrl,
-                        placeholder: UIImage(named: placeholderImageName)
-                )
-            case .localIcon(let imageName):
-                component.set(image: imageName.flatMap { UIImage(named: $0)?.withTintColor(.themeLeah) })
-            case let .doubleIcon(frontImageUrl, frontPlaceholderImageName, backImageUrl, backPlaceholderImageName):
-                component.setDoubleImage(
-                        frontUrlString: frontImageUrl,
-                        frontPlaceholder: UIImage(named: frontPlaceholderImageName),
-                        backUrlString: backImageUrl,
-                        backPlaceholder: UIImage(named: backPlaceholderImageName)
-                )
-            case .failedIcon:
-                component.set(image: UIImage(named: "warning_2_20")?.withTintColor(.themeLucian))
+        if let updateInfo = viewData.updateInfo {
+//            print("Update Item: \(updateInfo.sectionIndex)-\(updateInfo.index)")
+            let indexPath = IndexPath(row: updateInfo.index, section: updateInfo.sectionIndex)
+
+            if let cell = tableView.cellForRow(at: indexPath) as? BaseThemeCell {
+                cell.bind(rootElement: rootElement(viewItem: sectionViewItems[updateInfo.sectionIndex].viewItems[updateInfo.index]))
             }
-        }
-
-        cell.bind(index: 1) { (component: MultiTextComponent) in
-            component.set(style: .m1)
-            component.title.set(style: .b2)
-            component.subtitle.set(style: .d1)
-
-            component.title.text = item.title
-            component.subtitle.text = item.subTitle
-        }
-
-        cell.bind(index: 2) { (component: MultiTextComponent) in
-            component.titleSpacingView.isHidden = true
-            component.set(style: .m6)
-            component.title.set(style: item.primaryValue.map { primaryStyle(valueType: $0.type) } ?? .b2)
-            component.subtitle.set(style: item.secondaryValue.map { secondaryStyle(valueType: $0.type) } ?? .d1)
-
-            component.title.text = item.primaryValue?.text ?? " "
-            component.title.textAlignment = .right
-            component.subtitle.text = item.secondaryValue?.text ?? " "
-            component.subtitle.textAlignment = .right
-
-            if item.sentToSelf {
-                component.titleImageLeft.imageView.image = UIImage(named: "arrow_return_20")?.withTintColor(.themeGray)
-                component.titleImageLeft.isHidden = false
-            } else {
-                component.titleImageLeft.isHidden = true
-            }
-
-            if let locked = item.locked {
-                component.titleImageRight.imageView.image = locked ? UIImage(named: "lock_20")?.withTintColor(.themeGray) : UIImage(named: "unlock_20")?.withTintColor(.themeGray)
-                component.titleImageRight.isHidden = false
-            } else {
-                component.titleImageRight.isHidden = true
-            }
-        }
-    }
-
-    private func rowsBeforeBottom(indexPath: IndexPath) -> Int {
-        var section = tableView.numberOfSections
-        var count = 0
-
-        while indexPath.section < section {
-            section -= 1
-            let rowsCount = tableView.numberOfRows(inSection: section)
-
-            if indexPath.section == section {
-                return count + rowsCount - (indexPath.row + 1)
-            } else {
-                count += rowsCount
-            }
-        }
-
-        return count
-    }
-
-    private func handle(sectionViewItems: [TransactionsViewModel.SectionViewItem]) {
-        self.sectionViewItems = sectionViewItems
-
-        if loaded {
+        } else {
+//            print("RELOAD TABLE VIEW")
             tableView.reloadData()
         }
     }
 
-    private func show(status: TransactionsModule.ViewStatus) {
-        syncSpinner.isHidden = !status.showProgress
+    private func sync(viewStatus: TransactionsViewModel.ViewStatus) {
+        syncSpinner.isHidden = !viewStatus.showProgress
 
-        if status.showProgress {
+        if viewStatus.showProgress {
             syncSpinner.startAnimating()
         } else {
             syncSpinner.stopAnimating()
         }
 
-        if let messageType = status.messageType {
+        if let messageType = viewStatus.messageType {
             switch messageType {
             case .syncing:
                 emptyView.image = UIImage(named: "clock_48")
@@ -252,14 +183,89 @@ class TransactionsViewController: ThemeViewController {
         }
     }
 
-    private func show(typeFilters: (filters: [FilterHeaderView.ViewItem], selected: Int)) {
-        typeFiltersView.reload(filters: typeFilters.filters)
-        typeFiltersView.select(index: typeFilters.selected)
-    }
+    private func rootElement(viewItem: TransactionsViewModel.ViewItem) -> CellBuilderNew.CellElement {
+        .hStack([
+            .transactionImage { component in
+                component.set(progress: viewItem.progress)
 
-    private func show(coinFilters: (filters: [MarketDiscoveryFilterHeaderView.ViewItem], selected: Int?)) {
-        coinFiltersView.set(filters: coinFilters.filters)
-        coinFiltersView.setSelected(index: coinFilters.selected)
+                switch viewItem.iconType {
+                case .icon(let imageUrl, let placeholderImageName):
+                    component.setImage(
+                            urlString: imageUrl,
+                            placeholder: UIImage(named: placeholderImageName)
+                    )
+                case .localIcon(let imageName):
+                    component.set(image: imageName.flatMap { UIImage(named: $0)?.withTintColor(.themeLeah) })
+                case let .doubleIcon(frontImageUrl, frontPlaceholderImageName, backImageUrl, backPlaceholderImageName):
+                    component.setDoubleImage(
+                            frontUrlString: frontImageUrl,
+                            frontPlaceholder: UIImage(named: frontPlaceholderImageName),
+                            backUrlString: backImageUrl,
+                            backPlaceholder: UIImage(named: backPlaceholderImageName)
+                    )
+                case .failedIcon:
+                    component.set(image: UIImage(named: "warning_2_20")?.withTintColor(.themeLucian))
+                }
+            },
+            .margin8,
+            .vStackCentered([
+                .hStack([
+                    .text { component in
+                        component.font = .body
+                        component.textColor = .themeLeah
+                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                        component.text = viewItem.title
+                    },
+                    .text { [weak self] component in
+                        if let primaryValue = viewItem.primaryValue, !primaryValue.text.isEmpty {
+                            component.isHidden = false
+                            component.font = .body
+                            component.textColor = self?.color(valueType: primaryValue.type) ?? .themeLeah
+                            component.textAlignment = .right
+                            component.lineBreakMode = .byTruncatingMiddle
+                            component.text = primaryValue.text
+                        } else {
+                            component.isHidden = true
+                        }
+                    },
+                    .margin8,
+                    .image20 { component in
+                        component.isHidden = !viewItem.sentToSelf
+                        component.imageView.image = UIImage(named: "arrow_return_20")?.withTintColor(.themeGray)
+                    },
+                    .margin(6),
+                    .image20 { component in
+                        if let locked = viewItem.locked {
+                            component.imageView.image = locked ? UIImage(named: "lock_20")?.withTintColor(.themeGray) : UIImage(named: "unlock_20")?.withTintColor(.themeGray)
+                            component.isHidden = false
+                        } else {
+                            component.isHidden = true
+                        }
+                    }
+                ]),
+                .margin(3),
+                .hStack([
+                    .text { component in
+                        component.font = .subhead2
+                        component.textColor = .themeGray
+                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                        component.text = viewItem.subTitle
+                    },
+                    .text { [weak self] component in
+                        if let secondaryValue = viewItem.secondaryValue, !secondaryValue.text.isEmpty {
+                            component.isHidden = false
+                            component.font = .subhead2
+                            component.textColor = self?.color(valueType: secondaryValue.type) ?? .themeLeah
+                            component.textAlignment = .right
+                            component.lineBreakMode = .byTruncatingMiddle
+                            component.text = secondaryValue.text
+                        } else {
+                            component.isHidden = true
+                        }
+                    }
+                ])
+            ])
+        ])
     }
 
 }
@@ -267,35 +273,49 @@ class TransactionsViewController: ThemeViewController {
 extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        sectionViewItems.count
+        sectionViewItems.count + (allLoaded ? 0 : 1)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        sectionViewItems[section].viewItems.count
+        if section < sectionViewItems.count {
+            return sectionViewItems[section].viewItems.count
+        } else {
+            return 1
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        CellBuilder.preparedSelectableCell(tableView: tableView, indexPath: indexPath, elements: [.transactionImage, .margin8, .multiText, .multiText], layoutMargins: UIEdgeInsets(top: 0, left: .margin8, bottom: 0, right: .margin16))
+        if indexPath.section < sectionViewItems.count {
+            return CellBuilderNew.preparedCell(
+                    tableView: tableView,
+                    indexPath: indexPath,
+                    selectable: true,
+                    rootElement: rootElement(viewItem: sectionViewItems[indexPath.section].viewItems[indexPath.row]),
+                    layoutMargins: UIEdgeInsets(top: 0, left: .margin8, bottom: 0, right: .margin16)
+            )
+        } else {
+            return tableView.dequeueReusableCell(withIdentifier: String(describing: SpinnerCell.self), for: indexPath)
+        }
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let item = sectionViewItems[indexPath.section].viewItems[indexPath.row]
+        if indexPath.section < sectionViewItems.count {
+            let viewItem = sectionViewItems[indexPath.section].viewItems[indexPath.row]
 
-        viewModel.willShow(uid: item.uid)
+            if let cell = cell as? BaseThemeCell {
+                cell.set(backgroundStyle: .transparent, isFirst: indexPath.row != 0, isLast: true)
+                cell.bind(rootElement: rootElement(viewItem: viewItem))
+            }
 
-        if let cell = cell as? BaseThemeCell {
-            cell.set(backgroundStyle: .transparent, isFirst: indexPath.row != 0, isLast: true)
-            bind(item: item, cell: cell)
-        }
-
-        if rowsBeforeBottom(indexPath: indexPath) <= 5 {
-            viewModel.bottomReached()
+            viewModel.onDisplay(sectionIndex: indexPath.section, index: indexPath.row)
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        itemClicked(item: sectionViewItems[indexPath.section].viewItems[indexPath.row])
+        if indexPath.section < sectionViewItems.count {
+            tableView.deselectRow(at: indexPath, animated: true)
+            itemClicked(item: sectionViewItems[indexPath.section].viewItems[indexPath.row])
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -303,11 +323,15 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        .heightSingleLineCell
+        section < sectionViewItems.count ? .heightSingleLineCell : 0
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: TransactionDateHeaderView.self))
+        if section < sectionViewItems.count {
+            return tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: TransactionDateHeaderView.self))
+        } else {
+            return nil
+        }
     }
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {

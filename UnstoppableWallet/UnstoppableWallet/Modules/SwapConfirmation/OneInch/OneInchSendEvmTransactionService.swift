@@ -75,8 +75,8 @@ class OneInchSendEvmTransactionService {
     private func additionalInfo(parameters: OneInchSwapParameters) -> SendEvmData.AdditionInfo {
         .oneInchSwap(info:
             SendEvmData.OneInchSwapInfo(
-                platformCoinFrom: parameters.platformCoinFrom,
-                platformCoinTo: parameters.platformCoinTo,
+                tokenFrom: parameters.tokenFrom,
+                tokenTo: parameters.tokenTo,
                 amountFrom: parameters.amountFrom,
                 estimatedAmountTo: parameters.amountTo,
                 slippage: parameters.slippage,
@@ -115,8 +115,8 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
 
         evmKitWrapper.sendSingle(
                         transactionData: transaction.transactionData,
-                        gasPrice: transaction.gasData.gasPrice,
-                        gasLimit: transaction.gasData.gasLimit
+                        gasPrice: transaction.gasData.price,
+                        gasLimit: transaction.gasData.limit
                 )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] fullTransaction in

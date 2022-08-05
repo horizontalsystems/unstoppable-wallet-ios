@@ -29,8 +29,6 @@ class BitcoinHodlingViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: B11Cell.self)
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -46,29 +44,30 @@ class BitcoinHodlingViewController: ThemeViewController {
 extension BitcoinHodlingViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let descriptionText = "settings.bitcoin_hodling.description".localized
-
-        let footerState: ViewState<BottomDescriptionHeaderFooterView> = .cellType(hash: "bottom_description", binder: { view in
-            view.bind(text: descriptionText)
-        }, dynamicHeight: { [unowned self] _ in
-            BottomDescriptionHeaderFooterView.height(containerWidth: self.tableView.bounds.width, text: descriptionText)
-        })
-
-        return [
+        [
             Section(
                     id: "lock_time_section",
                     headerState: .margin(height: .margin3x),
-                    footerState: footerState,
+                    footerState: tableView.sectionFooter(text: "settings.bitcoin_hodling.description".localized),
                     rows: [
-                        Row<B11Cell>(
+                        CellBuilder.row(
+                                elements: [.text, .switch],
+                                tableView: tableView,
                                 id: "lock_time",
                                 height: .heightCell48,
-                                bind: { [weak self] cell, _ in
+                                bind: { [weak self] cell in
                                     cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                                    cell.title = "settings.bitcoin_hodling.lock_time".localized
-                                    cell.isOn = self?.lockTimeIsOn ?? false
-                                    cell.onToggle = { [weak self] isOn in
-                                        self?.delegate.onSwitchLockTime(isOn: isOn)
+
+                                    cell.bind(index: 0) { (component: TextComponent) in
+                                        component.font = .body
+                                        component.textColor = .themeLeah
+                                        component.text = "settings.bitcoin_hodling.lock_time".localized
+                                    }
+                                    cell.bind(index: 1) { (component: SwitchComponent) in
+                                        component.switchView.isOn = self?.lockTimeIsOn ?? false
+                                        component.onSwitch = { [weak self] isOn in
+                                            self?.delegate.onSwitchLockTime(isOn: isOn)
+                                        }
                                     }
                                 }
                         )

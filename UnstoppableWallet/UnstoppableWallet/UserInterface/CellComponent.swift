@@ -25,12 +25,14 @@ struct CellComponent {
                     }
 
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
 
                     cell.bind(index: 2) { (component: TextComponent) in
-                        component.set(style: .c1)
+                        component.font = .subhead1
+                        component.textColor = .themeGray
                         component.text = value
                     }
                 }
@@ -52,12 +54,16 @@ struct CellComponent {
                     }
 
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: type.textStyle)
+                        component.font = type.textFont
+                        component.textColor = type.textColor
+                        component.lineBreakMode = .byTruncatingMiddle
                         component.text = coinAmount
                     }
 
                     cell.bind(index: 2) { (component: TextComponent) in
-                        component.set(style: .d1)
+                        component.font = .subhead2
+                                component.textColor = .themeGray
+                        component.lineBreakMode = .byTruncatingMiddle
                         component.text = currencyAmount
                     }
                 }
@@ -79,8 +85,10 @@ struct CellComponent {
                     }
                     cell.bind(index: 1) { (component: MultiTextComponent) in
                         component.set(style: .m1)
-                        component.title.set(style: primaryType.textStyle)
-                        component.subtitle.set(style: secondaryType.textStyle)
+                        component.title.font = primaryType.textFont
+                        component.title.textColor = primaryType.textColor
+                        component.subtitle.font = secondaryType.textFont
+                        component.subtitle.textColor = secondaryType.textColor
 
                         component.title.text = primaryCoinAmount
                         component.subtitle.text = secondaryCoinAmount
@@ -88,8 +96,10 @@ struct CellComponent {
                     cell.bind(index: 2) { (component: MultiTextComponent) in
                         component.titleSpacingView.isHidden = true
                         component.set(style: .m1)
-                        component.title.set(style: .d1)
-                        component.subtitle.set(style: .f1)
+                        component.title.font = .subhead2
+                        component.title.textColor = .themeGray
+                        component.subtitle.font = .caption
+                        component.subtitle.textColor = .themeGray
 
                         component.title.textAlignment = .right
                         component.title.text = primaryCurrencyAmount
@@ -112,13 +122,14 @@ struct CellComponent {
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .d1)
+                        component.font = .subhead2
+                        component.textColor = .themeGray
                         component.text = title
                     }
 
                     cell.bind(index: 1) { (component: SecondaryButtonComponent) in
                         component.button.set(style: .default)
-                        component.button.setTitle(valueTitle ?? value, for: .normal)
+                        component.button.setTitle(valueTitle ?? value.shortened, for: .normal)
                         component.button.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
                         component.onTap = {
                             CopyHelper.copyAndNotify(value: value)
@@ -148,12 +159,14 @@ struct CellComponent {
                     }
 
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .d1)
+                        component.font = .subhead2
+                        component.textColor = .themeGray
                         component.text = title
                     }
 
                     cell.bind(index: 2) { (component: TextComponent) in
-                        component.set(style: type.textStyle)
+                        component.font = .subhead1
+                        component.textColor = type.textColor
                         component.text = value
                     }
                 }
@@ -188,12 +201,19 @@ enum AmountType {
         }
     }
 
-    var textStyle: TextComponent.Style {
+    var textFont: UIFont {
         switch self {
-        case .incoming: return .c4
-        case .outgoing: return .c5
-        case .neutral: return .c2
-        case .secondary: return .f1
+        case .incoming, .outgoing, .neutral: return .subhead1
+        case .secondary: return .caption
+        }
+    }
+
+    var textColor: UIColor {
+        switch self {
+        case .incoming: return .themeRemus
+        case .outgoing: return .themeLucian
+        case .neutral: return .themeLeah
+        case .secondary: return .themeGray
         }
     }
 
@@ -204,11 +224,11 @@ enum ValueType {
     case warning
     case alert
 
-    var textStyle: TextComponent.Style {
+    var textColor: UIColor {
         switch self {
-        case .regular: return .c2
-        case .warning: return .c3
-        case .alert: return .c5
+        case .regular: return .themeLeah
+        case .warning: return .themeJacob
+        case .alert: return .themeLucian
         }
     }
 

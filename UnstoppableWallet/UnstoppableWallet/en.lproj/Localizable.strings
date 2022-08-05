@@ -22,11 +22,30 @@
 
 "alert" = "Alert";
 "alert.copied" = "Copied";
+"alert.saved" = "Saved";
 "alert.no_internet" = "No Internet";
 "alert.wrong_amount" = "Wrong Amount";
 "alert.no_fee" = "Wrong Fee";
 "alert.unknown_error" = "Unknown Error";
 "alert.success_action" = "Done";
+
+"alert.added_to_watchlist" = "Added to Watchlist";
+"alert.removed_from_watchlist" = "Removed from Watchlist";
+"alert.added_to_wallet" = "Added to Wallet";
+"alert.already_added_to_wallet" = "Already added to Wallet";
+"alert.not_supported_yet" = "Not Supported Yet";
+"alert.copied" = "Copied";
+"alert.created" = "Created";
+"alert.deleted" = "Deleted";
+"alert.disconnecting" = "Disconnecting";
+"alert.disconnected" = "Disconnected";
+"alert.enabling" = "Enabling";
+"alert.enabled_coins" = "Enabled %@ more coins";
+"alert.sending" = "Sending";
+"alert.sent" = "Sent";
+"alert.swapping" = "Swapping";
+"alert.approving" = "Approving";
+
 
 "action.loading" = "loading...";
 "placeholder.search" = "Search";
@@ -62,12 +81,11 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Restore
 
-"restore.title" = "Choose Wallet";
-"restore.enter_key" = "Enter Key";
+"restore.title" = "Restore";
 "restore.mnemonic.name" = "Name (optional)";
 "restore.mnemonic.key" = "Key";
-"restore.mnemonic.description" = "Enter your mnemonic which consists of 12 or 24 words. The words need to be entered in the correct order and separated by spaces.";
-"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 or 24 words. You entered: %@";
+"restore.mnemonic.description" = "Enter your wallet recovery phrase (aka mnemonic) which consists of 12, 15, 18, 21 or 24 words and may include additional alphanumeric password.";
+"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
 "restore.checksum_error" = "Invalid checksum";
 "restore.passphrase" = "Passphrase";
 "restore.input.passphrase" = "Passphrase";
@@ -85,13 +103,11 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
 "sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.title" = "Address Format";
 "blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
-"coin_platforms.title" = "Coin Type";
-"coin_platforms.description" = "This token exists on multiple blockchains. Select version(s) you would like to use.";
+"coin_platforms.description" = "This token exists on multiple blockchains.";
 "coin_platforms.native" = "Native";
 
 // Show Key
@@ -105,9 +121,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "show_key.private_key.description" = "This key is for all EVM-compatible blockchains.";
 
 "private_key_copying.title" = "Warning";
-"private_key_copying.subtitle" = "Risk of Private Key copy";
 "private_key_copying.description" = "As a security measure we recommend not to use copy action on private key.";
-"private_key_copying.copy_button" = "I will risk it";
+"private_key_copying.i_will_risk_it" = "I will risk it";
 
 // Backup Key
 
@@ -165,11 +180,13 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "lost_accounts.warning_title" = "iOS Keychain Error";
 "lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
 
-//Account switcher
+// Account switcher
 
 "switch_account.title" = "Switch Wallet";
-"switch_account.subtitle" = "Select wallet for quick switch";
-//Release notes
+"switch_account.wallets" = "Wallets";
+"switch_account.watch_addresses" = "Watch Addresses";
+
+// Release notes
 
 "release_notes.title" = "What's New";
 "release_notes.follow_us" = "Follow Us";
@@ -355,7 +372,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.defi_cap" = "DeFi Cap";
 "market.defi_tvl" = "TVL in DeFi";
 
-"market.coin_not_supported_yet" = "This coin is not supported by Unstoppable yet";
+"market.coin_not_supported_yet" = "Not supported yet";
 
 "market.top.section.header.see_all" = "See All";
 "market.top.section.header.top_gainers" = "Top Gainers";
@@ -390,8 +407,11 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.top.top_platforms" = "Top Platforms";
 "market.top.protocols" = "Protocols";
 
-"top_platforms.title" = "Top Blockchain Platforms";
+"top_platforms.title" = "Platforms Rank";
 "top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
+
+"top_platform.title" = "%@ Ecosystem";
+"top_platform.description" = "Market cap of all protocols on the %@ chain";
 
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";
@@ -470,7 +490,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
 
-"market.global.subtitle" = "Chart";
 "market.global.btc_dominance.title" = "Bitcoin Dominance";
 "market.global.volume_24h.title" = "24h Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
@@ -615,7 +634,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "pro_features.lock_info.go_to_mint" = "Coming Soon";
 
 "pro_features.lock_info.title" = "Unstoppable Pass";
-"pro_features.lock_info.subtitle" = "NFT";
 "pro_features.lock_info.coin_details.description" = "To enable this data, you must have the Unstoppable Pass NFT on your balance\n\nAlso you get access to data below:";
 "pro_features.lock_info.coin_details.volume" = "DEX Volume";
 "pro_features.lock_info.coin_details.liquidity" = "DEX Liquidity";
@@ -634,6 +652,11 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
+"transactions.blockchain" = "Blockchain";
+"transactions.all_blockchains" = "All Blockchains";
+"transactions.all_coins" = "All Coins";
+"transactions.choose_coin" = "Choose Coin";
+"transactions.clear" = "Clear";
 "transactions.filter_all" = "All";
 "transactions.syncing_text" = "Please wait for the sync to finish";
 "transactions.empty_text" = "You don't have any pending or past transactions yet";
@@ -724,14 +747,13 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.base_currency.other" = "Other";
 "settings.base_currency.disclaimer" = "Disclaimer";
 "settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe Unstoppable wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
-"settings.base_currency.disclaimer.i_understand" = "I Understand";
-
+"settings.base_currency.disclaimer.set" = "Set";
 
 // Settings -> Manage Wallet
 
 "manage_wallets.title" = "Coin Manager";
-"manage_wallets.not_found" = "No results found. Try to add token manually if you know its smart contract address.";
-"manage_wallets.search_placeholder" = "Token code or name";
+"manage_wallets.not_found" = "No results found. Try to add token manually.";
+"manage_wallets.search_placeholder" = "Name, code or contract address";
 
 "manage_coins.add_coin.title" = "Add %@";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
@@ -831,7 +853,14 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "Rate Us";
 "settings.about_app.tell_friends" = "Tell Friends";
-"settings.about_app.email_copied" = "Email address copied";
+
+// Settings -> Privacy
+
+"settings.privacy.description" = "Unstoppable doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
+"settings.privacy.statement.user_data_storage" = "User data always remains on the user's device.";
+"settings.privacy.statement.data_usage" = "The wallet doesn't collect any data about users.";
+"settings.privacy.statement.data_privacy" = "The wallet doesn't share any data about users.";
+"settings.privacy.statement.user_account" = "There are no user accounts or databases keeping user data elsewhere.";
 
 // Settings -> Appearance
 
@@ -922,7 +951,6 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
 "create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
 "create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
-"create_wallet.success" = "Created";
 
 // Restore Select
 
@@ -963,14 +991,14 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 // Add Token
 
 "add_token.title" = "Add Token";
-"add_token.coin_types" = "Coin Type(s)";
 "add_token.coin_name" = "Coin Name";
 "add_token.coin_code" = "Coin Code";
 "add_token.decimals" = "Decimals";
-"add_token.already_exists" = "This token is already in the coin manager list.";
+"add_token.already_added" = "Already Added";
+"add_token.coin_types" = "Coin Types";
+"add_token.choose_type" = "Choose Type";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
 "add_token.token_not_found" = "Token not found";
-"add_token.success_add" = "Added";
 "add_token.input_placeholder" = "Contract Address";
 
 // Wallet Connect
@@ -979,7 +1007,8 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "wallet_connect.error.invalid_url" = "Invalid URL Address";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Active Wallet";
-"wallet_connect.main.unsupported_chains" = "No any supported chains!";
+"wallet_connect.main.no_any_supported_chains" = "No any supported chains!";
+"wallet_connect.main.unsupported_chains" = "Some chains are unsupported!";
 "wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is an important security step to protect your data from potential phishing risks.";
 "wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
 "wallet_connect.no_connection" = "Failed to establish connection. Try reconnecting again.";
@@ -1064,6 +1093,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 
 "birthday_input.title" = "Birthday Height";
 "birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing.";
+"birthday_input.new_wallet" = "It's a new Wallet";
 "birthday_input.input_placeholder" = "%@ (optional)";
 "restore_setting.birthday_height" = "%@ Birthday Height";
 
@@ -1104,10 +1134,12 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "watch_address.watch" = "Watch";
 "watch_address.name" = "Name (optional)";
 "watch_address.address" = "Address";
+"watch_address.description" = "Available only for Ethereum and other supported EVM blockchains.";
 
 // Nft Collections
 
 "nft_collections.title" = "NFTs";
+"nft_collections.price_mode" = "Price Mode";
 "nft_collections.last_sale" = "Last Sale";
 "nft_collections.average_7d" = "Average 7D";
 "nft_collections.average_30d" = "Average 30D";
@@ -1118,6 +1150,9 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
+
+"nft_asset.tab.overview" = "Overview";
+"nft_asset.tab.activity" = "Activity";
 
 "nft_asset.last_sale" = "Last Sale";
 "nft_asset.average_7d" = "7 Day Average";
@@ -1140,7 +1175,6 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "nft_asset.links.website" = "Website";
 "nft_asset.options.save_to_photos" = "Save to Photos";
 "nft_asset.options.set_as_watch_face" = "Set as Watch Face";
-"nft_asset.save_to_photos.success" = "NFT image is saved to your photo library";
 "nft_asset.save_to_photos.failed" = "Failed to save NFT image";
 
 // Nft Collection
@@ -1162,17 +1196,18 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "nft_collection.overview.floor_price" = "Floor Price";
 "nft_collection.overview.all_time_average" = "All time average";
 
-"nft_collection.activity.event_types" = "Event Types";
-"nft_collection.activity.event_type.all" = "All Events";
-"nft_collection.activity.event_type.list" = "List";
-"nft_collection.activity.event_type.sale" = "Sale";
-"nft_collection.activity.event_type.offer" = "Offer Entered";
-"nft_collection.activity.event_type.bid" = "Bid Entered";
-"nft_collection.activity.event_type.bid_cancel" = "Bid Withdrawn";
-"nft_collection.activity.event_type.transfer" = "Transfer";
-"nft_collection.activity.event_type.approve" = "Approve";
-"nft_collection.activity.event_type.custom" = "Custom";
-"nft_collection.activity.event_type.payout" = "Payout";
-"nft_collection.activity.event_type.cancel" = "Cancel";
-"nft_collection.activity.event_type.bulkCancel" = "Bulk Cancel";
-"nft_collection.activity.event_type.unknown" = "Unknown";
+"nft.activity.empty_list" = "No item activity yet";
+"nft.activity.event_types" = "Event Types";
+"nft.activity.event_type.all" = "All Events";
+"nft.activity.event_type.list" = "List";
+"nft.activity.event_type.sale" = "Sale";
+"nft.activity.event_type.offer" = "Offer Entered";
+"nft.activity.event_type.bid" = "Bid Entered";
+"nft.activity.event_type.bid_cancel" = "Bid Withdrawn";
+"nft.activity.event_type.transfer" = "Transfer";
+"nft.activity.event_type.approve" = "Approve";
+"nft.activity.event_type.custom" = "Custom";
+"nft.activity.event_type.payout" = "Payout";
+"nft.activity.event_type.cancel" = "Cancel";
+"nft.activity.event_type.bulkCancel" = "Bulk Cancel";
+"nft.activity.event_type.unknown" = "Unknown";

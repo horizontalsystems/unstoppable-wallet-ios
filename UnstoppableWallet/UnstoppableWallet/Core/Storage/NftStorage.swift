@@ -11,23 +11,23 @@ class NftStorage {
         self.storage = storage
     }
 
-    private func coinTypeIds(records: [NftPriceRecord]) -> [String] {
-        Array(Set(records.map { $0.coinTypeId }))
+    private func tokenQueries(records: [NftPriceRecord]) -> [TokenQuery] {
+        Array(Set(records.map { $0.tokenQuery }))
     }
 
-    private func nftPrice(record: NftPriceRecord?, platformCoins: [PlatformCoin]) -> NftPrice? {
+    private func nftPrice(record: NftPriceRecord?, tokens: [Token]) -> NftPrice? {
         guard let record = record else {
             return nil
         }
 
-        guard let platformCoin = platformCoins.first(where: { $0.coinType.id == record.coinTypeId }) else {
+        guard let token = tokens.first(where: { $0.tokenQuery == record.tokenQuery }) else {
             return nil
         }
 
-        return NftPrice(platformCoin: platformCoin, value: record.value)
+        return NftPrice(token: token, value: record.value)
     }
 
-    private func asset(record: NftAssetRecord, platformCoins: [PlatformCoin]) -> NftAsset {
+    private func asset(record: NftAssetRecord, tokens: [Token]) -> NftAsset {
         NftAsset(
                 contract: record.contract,
                 collectionUid: record.collectionUid,
@@ -39,13 +39,13 @@ class NftStorage {
                 externalLink: record.externalLink,
                 permalink: record.permalink,
                 traits: record.traits,
-                lastSalePrice: nftPrice(record: record.lastSalePrice, platformCoins: platformCoins),
+                lastSalePrice: nftPrice(record: record.lastSalePrice, tokens: tokens),
                 onSale: record.onSale,
                 orders: []
         )
     }
 
-    private func collection(record: NftCollectionRecord, platformCoins: [PlatformCoin]) -> NftCollection {
+    private func collection(record: NftCollectionRecord, tokens: [Token]) -> NftCollection {
         NftCollection(
                 contracts: record.contracts,
                 uid: record.uid,
@@ -61,8 +61,8 @@ class NftStorage {
                         ownerCount: nil,
                         totalSupply: record.totalSupply,
                         averagePrice1d: nil,
-                        averagePrice7d: nftPrice(record: record.averagePrice7d, platformCoins: platformCoins),
-                        averagePrice30d: nftPrice(record: record.averagePrice30d, platformCoins: platformCoins),
+                        averagePrice7d: nftPrice(record: record.averagePrice7d, tokens: tokens),
+                        averagePrice30d: nftPrice(record: record.averagePrice30d, tokens: tokens),
                         floorPrice: nil,
                         totalVolume: nil,
                         marketCap: nil,
@@ -90,11 +90,11 @@ extension NftStorage {
         let assetRecords = try storage.assets(accountId: accountId)
 
         let priceRecords = priceRecords(collectionRecords: collectionRecords) + priceRecords(assetRecords: assetRecords)
-        let platformCoins = try marketKit.platformCoins(coinTypeIds: coinTypeIds(records: priceRecords))
+        let tokens = try marketKit.tokens(queries: tokenQueries(records: priceRecords))
 
         return NftAssetCollection(
-                collections: collectionRecords.map { collection(record: $0, platformCoins: platformCoins) },
-                assets: assetRecords.map { asset(record: $0, platformCoins: platformCoins) }
+                collections: collectionRecords.map { collection(record: $0, tokens: tokens) },
+                assets: assetRecords.map { asset(record: $0, tokens: tokens) }
         )
     }
 
@@ -103,9 +103,9 @@ extension NftStorage {
             return nil
         }
         let priceRecords = priceRecords(collectionRecords: [record])
-        let platformCoins = try marketKit.platformCoins(coinTypeIds: coinTypeIds(records: priceRecords))
+        let tokens = try marketKit.tokens(queries: tokenQueries(records: priceRecords))
 
-        return collection(record: record, platformCoins: platformCoins)
+        return collection(record: record, tokens: tokens)
     }
 
     func asset(accountId: String, collectionUid: String, tokenId: String) throws -> NftAsset? {
@@ -113,9 +113,9 @@ extension NftStorage {
             return nil
         }
         let priceRecords = priceRecords(assetRecords: [record])
-        let platformCoins = try marketKit.platformCoins(coinTypeIds: coinTypeIds(records: priceRecords))
+        let tokens = try marketKit.tokens(queries: tokenQueries(records: priceRecords))
 
-        return asset(record: record, platformCoins: platformCoins)
+        return asset(record: record, tokens: tokens)
     }
 
     func save(assetCollection: NftAssetCollection, accountId: String) throws {

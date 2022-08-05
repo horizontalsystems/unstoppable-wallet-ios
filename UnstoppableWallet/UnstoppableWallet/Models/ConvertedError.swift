@@ -64,6 +64,8 @@ extension BinanceError: ConvertibleError {
 extension Mnemonic.ValidationError: ConvertibleError {
     var convertedError: Error {
         switch self {
+        case .invalidWords(count: let count):
+            return AppError.invalidWords(count: count)
         case .invalidChecksum:
             return AppError.wordsChecksum
         default:

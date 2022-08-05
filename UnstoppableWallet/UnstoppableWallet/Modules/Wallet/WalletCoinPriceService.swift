@@ -3,13 +3,13 @@ import RxRelay
 import CurrencyKit
 import MarketKit
 
-protocol IWalletRateServiceDelegate: AnyObject {
+protocol IWalletCoinPriceServiceDelegate: AnyObject {
     func didUpdateBaseCurrency()
     func didUpdate(itemsMap: [String: WalletCoinPriceService.Item])
 }
 
 class WalletCoinPriceService {
-    weak var delegate: IWalletRateServiceDelegate?
+    weak var delegate: IWalletCoinPriceServiceDelegate?
 
     private let currencyKit: CurrencyKit.Kit
     private let marketKit: MarketKit.Kit
@@ -74,6 +74,10 @@ extension WalletCoinPriceService {
 
     func itemMap(coinUids: [String]) -> [String: Item] {
         marketKit.coinPriceMap(coinUids: coinUids, currencyCode: currency.code).mapValues { item(coinPrice: $0) }
+    }
+
+    func item(coinUid: String) -> Item? {
+        marketKit.coinPrice(coinUid: coinUid, currencyCode: currency.code).map { item(coinPrice: $0) }
     }
 
     func refresh() {

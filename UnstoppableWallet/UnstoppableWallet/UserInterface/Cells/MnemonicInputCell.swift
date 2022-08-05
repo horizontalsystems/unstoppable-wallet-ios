@@ -8,8 +8,9 @@ class MnemonicInputCell: UITableViewCell {
     private let horizontalMargin: CGFloat = .margin16
     private let textViewInset: CGFloat = .margin12
     private let textViewFont: UIFont = .body
-    private let textViewTextColor: UIColor = .themeOz
+    private let textViewTextColor: UIColor = .themeLeah
 
+    private let borderView = UIView()
     private let textView = UITextView()
 
     var onChangeHeight: (() -> ())?
@@ -37,8 +38,6 @@ class MnemonicInputCell: UITableViewCell {
         textView.keyboardAppearance = .themeDefault
         textView.backgroundColor = .themeLawrence
         textView.layer.cornerRadius = .cornerRadius8
-        textView.layer.borderWidth = .heightOneDp
-        textView.layer.borderColor = UIColor.themeSteel20.cgColor
         textView.textColor = textViewTextColor
         textView.font = textViewFont
         textView.tintColor = .themeJacob
@@ -48,6 +47,18 @@ class MnemonicInputCell: UITableViewCell {
         textView.spellCheckingType = .no
 
         textView.delegate = self
+
+        contentView.addSubview(borderView)
+        borderView.snp.makeConstraints { maker in
+            maker.edges.equalTo(textView)
+        }
+
+        borderView.backgroundColor = .clear
+        borderView.isUserInteractionEnabled = false
+        borderView.layer.cornerRadius = .cornerRadius8
+        borderView.layer.borderWidth = .heightOneDp
+        borderView.layer.borderColor = UIColor.themeSteel20.cgColor
+
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -108,6 +119,18 @@ extension MnemonicInputCell {
         textForHeight = text
         textView.text = text
         onChangeText?(text, text.count)
+    }
+
+    func set(cautionType: CautionType?) {
+        let borderColor: UIColor
+
+        if let cautionType = cautionType {
+            borderColor = cautionType.borderColor
+        } else {
+            borderColor = .themeSteel20
+        }
+
+        borderView.layer.borderColor = borderColor.cgColor
     }
 
 }

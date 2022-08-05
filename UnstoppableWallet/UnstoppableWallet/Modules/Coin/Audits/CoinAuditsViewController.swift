@@ -15,7 +15,7 @@ class CoinAuditsViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     private let emptyView = PlaceholderView()
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
 
     private var viewItems: [CoinAuditsViewModel.ViewItem]?
 
@@ -67,7 +67,7 @@ class CoinAuditsViewController: ThemeViewController {
             maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        errorView.configureSyncError(target: self, action: #selector(onRetry))
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
@@ -118,7 +118,8 @@ extension CoinAuditsViewController: SectionsDataSource {
                     })
 
                     cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = name
                     })
                 }
@@ -131,8 +132,10 @@ extension CoinAuditsViewController: SectionsDataSource {
 
             cell.bind(index: 0, block: { (component: MultiTextComponent) in
                 component.set(style: .m1)
-                component.title.set(style: .b2)
-                component.subtitle.set(style: .d1)
+                component.title.font = .body
+                component.title.textColor = .themeLeah
+                component.subtitle.font = .subhead2
+                component.subtitle.textColor = .themeGray
 
                 component.title.text = auditViewItem.date
                 component.subtitle.text = auditViewItem.name
@@ -140,7 +143,8 @@ extension CoinAuditsViewController: SectionsDataSource {
 
             cell.bind(index: 1, block: { (component: TextComponent) in
                 component.setContentHuggingPriority(.required, for: .horizontal)
-                component.set(style: .c1)
+                component.font = .subhead1
+                component.textColor = .themeGray
                 component.text = auditViewItem.issues
             })
         }

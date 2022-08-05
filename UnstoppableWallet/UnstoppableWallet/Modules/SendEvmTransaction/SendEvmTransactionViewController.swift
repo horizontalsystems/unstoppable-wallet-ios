@@ -49,7 +49,6 @@ class SendEvmTransactionViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.delaysContentTouches = false
 
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         view.addSubview(bottomWrapper)
@@ -60,7 +59,7 @@ class SendEvmTransactionViewController: ThemeViewController {
         }
 
         subscribe(disposeBag, transactionViewModel.cautionsDriver) { [weak self] in self?.handle(cautions: $0) }
-        subscribe(disposeBag, transactionViewModel.sendingSignal) { HudHelper.instance.showSpinner() }
+        subscribe(disposeBag, transactionViewModel.sendingSignal) { [weak self] in self?.handleSending() }
         subscribe(disposeBag, transactionViewModel.sendSuccessSignal) { [weak self] in self?.handleSendSuccess(transactionHash: $0) }
         subscribe(disposeBag, transactionViewModel.sendFailedSignal) { [weak self] in self?.handleSendFailed(error: $0) }
 
@@ -92,9 +91,10 @@ class SendEvmTransactionViewController: ThemeViewController {
         reloadTable()
     }
 
-    func handleSendSuccess(transactionHash: Data) {
-        HudHelper.instance.showSuccess(title: "alert.success_action".localized)
+    func handleSending() {
+    }
 
+    func handleSendSuccess(transactionHash: Data) {
         dismiss(animated: true)
     }
 
@@ -107,7 +107,7 @@ class SendEvmTransactionViewController: ThemeViewController {
     }
 
     private func handleSendFailed(error: String) {
-        HudHelper.instance.showError(title: error)
+        HudHelper.instance.show(banner: .error(string: error))
     }
 
     private func reloadTable() {
@@ -141,19 +141,15 @@ class SendEvmTransactionViewController: ThemeViewController {
     }
 
     private func section(sectionViewItem: SendEvmTransactionViewModel.SectionViewItem, index: Int) -> SectionProtocol {
-        var headerState: ViewState<BottomDescriptionHeaderFooterView>?
+        var headerText: String?
 
-        if index == 0, let topDescription = topDescription?.localized {
-            headerState = .cellType(hash: "top_description", binder: { view in
-                view.bind(text: topDescription)
-            }, dynamicHeight: { [weak self] containerWidth in
-                BottomDescriptionHeaderFooterView.height(containerWidth: self?.view.width ?? 0, text: topDescription)
-            })
+        if index == 0, let topDescription = topDescription {
+            headerText = topDescription
         }
 
         return Section(
                 id: "section_\(index)",
-                headerState: headerState ?? .margin(height: .margin12),
+                headerState: headerText.map { tableView.sectionFooter(text: $0) } ?? .margin(height: .margin12),
                 rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
                     row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1))
                 }

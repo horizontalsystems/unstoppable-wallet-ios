@@ -1,11 +1,13 @@
 import Foundation
-import WalletConnect
+import WalletConnectSign
 import WalletConnectV1
 
 struct WalletConnectV2RequestMapper {
 
-    static func map(dAppName: String?, request: Request) throws -> WalletConnectRequest? {
-        let chainId = request.chainId.flatMap { Int($0) }
+    static func map(dAppName: String?, request: WalletConnectSign.Request) throws -> WalletConnectRequest? {
+        guard let chainId = Int(request.chainId.reference) else {
+            return nil
+        }
 
         switch request.method {
         case "eth_sign":

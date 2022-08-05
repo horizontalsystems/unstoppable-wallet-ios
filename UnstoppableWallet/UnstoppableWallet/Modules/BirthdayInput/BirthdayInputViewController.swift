@@ -5,20 +5,22 @@ import MarketKit
 import ComponentKit
 
 protocol IBirthdayInputDelegate: AnyObject {
-    func didEnter(birthdayHeight: Int)
+    func didEnter(birthdayHeight: Int?)
     func didCancelEnterBirthdayHeight()
 }
 
 class BirthdayInputViewController: ThemeActionSheetController {
-    private let platformCoin: PlatformCoin
+    private let token: Token
     private weak var delegate: IBirthdayInputDelegate?
 
     private let heightInputView = InputView()
+    private let checkboxView = CheckboxView()
+    private let checkboxButton = UIButton()
 
     private var didTapDone = false
 
-    init(platformCoin: PlatformCoin, delegate: IBirthdayInputDelegate) {
-        self.platformCoin = platformCoin
+    init(token: Token, delegate: IBirthdayInputDelegate) {
+        self.token = token
         self.delegate = delegate
 
         super.init()
@@ -38,11 +40,8 @@ class BirthdayInputViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(
-                title: "birthday_input.title".localized,
-                subtitle: platformCoin.coin.name,
-                image: .image(coinType: platformCoin.platform.coinType)
-        )
+        titleView.title = "birthday_input.title".localized
+        titleView.image = UIImage(named: "zcash_24")?.withTintColor(.themeJacob)
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
         }
@@ -81,16 +80,48 @@ class BirthdayInputViewController: ThemeActionSheetController {
 
         separatorView.backgroundColor = .themeSteel10
 
-        let doneButton = ThemeButton()
+        view.addSubview(checkboxView)
+
+        let text = "birthday_input.new_wallet".localized
+        let height = CheckboxView.height(containerWidth: view.width, text: text)
+
+        checkboxView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(separatorView.snp.bottom)
+            maker.height.equalTo(height)
+        }
+
+        checkboxView.text = text
+        checkboxView.textColor = .themeLeah
+        checkboxView.checked = false
+
+        checkboxView.addSubview(checkboxButton)
+        checkboxButton.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        checkboxButton.addTarget(self, action: #selector(onTapCheckBox), for: .touchUpInside)
+
+        let secondSeparatorView = UIView()
+
+        view.addSubview(secondSeparatorView)
+        secondSeparatorView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(checkboxView.snp.bottom)
+            maker.height.equalTo(CGFloat.heightOneDp)
+        }
+
+        secondSeparatorView.backgroundColor = .themeSteel10
+
+        let doneButton = PrimaryButton()
 
         view.addSubview(doneButton)
         doneButton.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(separatorView.snp.bottom).offset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
+            maker.top.equalTo(secondSeparatorView.snp.bottom).offset(CGFloat.margin16)
         }
 
-        doneButton.apply(style: .primaryYellow)
+        doneButton.set(style: .yellow)
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDoneButton), for: .touchUpInside)
     }
@@ -109,9 +140,20 @@ class BirthdayInputViewController: ThemeActionSheetController {
         }
     }
 
+    @objc private func onTapCheckBox() {
+        checkboxView.checked = !checkboxView.checked
+
+        heightInputView.isEnabled = !checkboxView.checked
+        heightInputView.textColor = checkboxView.checked ? .themeGray : .themeLeah
+    }
+
     @objc private func onTapDoneButton() {
-        let birthdayHeight = heightInputView.inputText.flatMap { Int($0) } ?? 0
-        delegate?.didEnter(birthdayHeight: birthdayHeight)
+        if checkboxView.checked {
+            delegate?.didEnter(birthdayHeight: nil)
+        } else {
+            let birthdayHeight = heightInputView.inputText.flatMap { Int($0) } ?? 0
+            delegate?.didEnter(birthdayHeight: birthdayHeight)
+        }
 
         didTapDone = true
         dismiss(animated: true)

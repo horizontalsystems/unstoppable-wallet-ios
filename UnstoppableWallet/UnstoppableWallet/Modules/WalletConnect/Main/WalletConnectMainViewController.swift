@@ -17,21 +17,10 @@ class WalletConnectMainViewController: ThemeViewController {
 
     private let buttonsHolder = BottomGradientHolder()
 
-    private let disconnectButton = ThemeButton()
-    private var disconnectButtonBottomConstraint: Constraint?
-    private var disconnectButtonHeightConstraint: Constraint?
-
-    private let connectButton = ThemeButton()
-    private var connectButtonBottomConstraint: Constraint?
-    private var connectButtonHeightConstraint: Constraint?
-
-    private let reconnectButton = ThemeButton()
-    private var reconnectButtonBottomConstraint: Constraint?
-    private var reconnectButtonHeightConstraint: Constraint?
-
-    private let cancelButton = ThemeButton()
-    private var cancelButtonBottomConstraint: Constraint?
-    private var cancelButtonHeightConstraint: Constraint?
+    private let disconnectButton = PrimaryButton()
+    private let connectButton = PrimaryButton()
+    private let reconnectButton = PrimaryButton()
+    private let cancelButton = PrimaryButton()
 
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -71,7 +60,6 @@ class WalletConnectMainViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.registerCell(forClass: LogoHeaderCell.self)
-        tableView.registerCell(forClass: HighlightedDescriptionCell.self)
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
@@ -86,78 +74,70 @@ class WalletConnectMainViewController: ThemeViewController {
             maker.leading.trailing.bottom.equalToSuperview()
         }
 
-        buttonsHolder.addSubview(disconnectButton)
-        disconnectButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+        let stackView = UIStackView()
 
-            disconnectButtonBottomConstraint = maker.bottom.equalToSuperview().offset(-CGFloat.margin4x).constraint
-            disconnectButtonHeightConstraint = maker.height.equalTo(CGFloat.heightButton).constraint
+        buttonsHolder.addSubview(stackView)
+        stackView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.top.equalToSuperview().inset(CGFloat.margin32)
+            maker.bottom.equalToSuperview().offset(-CGFloat.margin16)
         }
 
-        disconnectButton.apply(style: .primaryRed)
-        disconnectButton.setTitle("wallet_connect.button_disconnect".localized, for: .normal)
-        disconnectButton.addTarget(self, action: #selector(onTapDisconnect), for: .touchUpInside)
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.spacing = .margin16
 
-        buttonsHolder.addSubview(cancelButton)
-        cancelButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+        stackView.addArrangedSubview(connectButton)
 
-            cancelButtonBottomConstraint = maker.bottom.equalTo(disconnectButton.snp.top).offset(-CGFloat.margin4x).constraint
-            cancelButtonHeightConstraint = maker.height.equalTo(CGFloat.heightButton).constraint
-        }
+        connectButton.set(style: .yellow)
+        connectButton.setTitle("button.connect".localized, for: .normal)
+        connectButton.addTarget(self, action: #selector(onTapConnect), for: .touchUpInside)
 
-        cancelButton.apply(style: .primaryGray)
-        cancelButton.setTitle("button.cancel".localized, for: .normal)
-        cancelButton.addTarget(self, action: #selector(onTapCancel), for: .touchUpInside)
+        stackView.addArrangedSubview(reconnectButton)
 
-        buttonsHolder.addSubview(reconnectButton)
-        reconnectButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
-
-            reconnectButtonBottomConstraint = maker.bottom.equalTo(cancelButton.snp.top).offset(-CGFloat.margin4x).constraint
-            reconnectButtonHeightConstraint = maker.height.equalTo(CGFloat.heightButton).constraint
-        }
-
-        reconnectButton.apply(style: .primaryYellow)
+        reconnectButton.set(style: .yellow)
         reconnectButton.setTitle("wallet_connect.button_reconnect".localized, for: .normal)
         reconnectButton.addTarget(self, action: #selector(onTapReconnect), for: .touchUpInside)
 
-        buttonsHolder.addSubview(connectButton)
-        connectButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin8x)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
+        stackView.addArrangedSubview(cancelButton)
 
-            connectButtonBottomConstraint = maker.bottom.equalTo(reconnectButton.snp.top).offset(-CGFloat.margin4x).constraint
-            connectButtonHeightConstraint = maker.height.equalTo(CGFloat.heightButton).constraint
-        }
+        cancelButton.set(style: .gray)
+        cancelButton.setTitle("button.cancel".localized, for: .normal)
+        cancelButton.addTarget(self, action: #selector(onTapCancel), for: .touchUpInside)
 
-        connectButton.apply(style: .primaryYellow)
-        connectButton.setTitle("button.connect".localized, for: .normal)
-        connectButton.addTarget(self, action: #selector(onTapConnect), for: .touchUpInside)
+        stackView.addArrangedSubview(disconnectButton)
+
+        disconnectButton.set(style: .red)
+        disconnectButton.setTitle("wallet_connect.button_disconnect".localized, for: .normal)
+        disconnectButton.addTarget(self, action: #selector(onTapDisconnect), for: .touchUpInside)
 
         subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in
             self?.show(error: $0)
         }
         subscribe(disposeBag, viewModel.showSuccessSignal) {
-            HudHelper.instance.showSuccess(title: "alert.success_action".localized)
+            HudHelper.instance.show(banner: .success)
+        }
+        subscribe(disposeBag, viewModel.showDisconnectSignal) {
+            HudHelper.instance.show(banner: .disconnectedWalletConnect)
         }
         subscribe(disposeBag, viewModel.connectingDriver) { [weak self] in
             self?.sync(connecting: $0)
         }
         subscribe(disposeBag, viewModel.cancelVisibleDriver) { [weak self] in
-            self?.syncButtonConstraints(bottom: self?.cancelButtonBottomConstraint, height: self?.cancelButtonHeightConstraint, visible: $0)
+            self?.cancelButton.isHidden = !$0
         }
         subscribe(disposeBag, viewModel.connectButtonDriver) { [weak self] state in
-            self?.syncButtonConstraints(bottom: self?.connectButtonBottomConstraint, height: self?.connectButtonHeightConstraint, visible: state != .hidden)
+            self?.connectButton.isHidden = state == .hidden
             self?.connectButton.isEnabled = state == .enabled
         }
         subscribe(disposeBag, viewModel.reconnectButtonDriver) { [weak self] state in
-            self?.syncButtonConstraints(bottom: self?.reconnectButtonBottomConstraint, height: self?.reconnectButtonHeightConstraint, visible: state != .hidden)
+            self?.reconnectButton.isHidden = state == .hidden
             self?.reconnectButton.isEnabled = state == .enabled
         }
         subscribe(disposeBag, viewModel.disconnectButtonDriver) { [weak self] state in
             self?.isModalInPresentation = state != .enabled
-            self?.syncButtonConstraints(bottom: self?.disconnectButtonBottomConstraint, height: self?.disconnectButtonHeightConstraint, visible: state != .hidden)
+            self?.disconnectButton.isHidden = state == .hidden
             self?.disconnectButton.isEnabled = state == .enabled
         }
         subscribe(disposeBag, viewModel.closeVisibleDriver) { [weak self] in
@@ -192,7 +172,7 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     private func show(error: String) {
-        HudHelper.instance.showError(title: error)
+        HudHelper.instance.show(banner: .error(string: error))
     }
 
     private func sync(connecting: Bool) {
@@ -202,11 +182,6 @@ class WalletConnectMainViewController: ThemeViewController {
         } else {
             spinner.stopAnimating()
         }
-    }
-
-    private func syncButtonConstraints(bottom: Constraint?, height: Constraint?, visible: Bool) {
-        bottom?.update(offset: visible ? -CGFloat.margin4x : 0)
-        height?.update(offset: visible ? CGFloat.heightButton : 0)
     }
 
     @objc private func onTapCancel() {
@@ -247,16 +222,7 @@ class WalletConnectMainViewController: ThemeViewController {
 
     private var footer: RowProtocol? {
         hint.map { hint -> RowProtocol in
-            Row<HighlightedDescriptionCell>(
-                    id: "hint_footer",
-                    hash: hint,
-                    dynamicHeight: { width in
-                        HighlightedDescriptionCell.height(containerWidth: width, text: hint)
-                    },
-                    bind: { cell, _ in
-                        cell.descriptionText = hint
-                    }
-            )
+            tableView.highlightedDescriptionRow(id: "hint_footer", text: hint)
         }
     }
 
@@ -282,11 +248,13 @@ class WalletConnectMainViewController: ThemeViewController {
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                     cell.bind(index: 0, block: { (component: TextComponent) in
-                        component.set(style: .d1)
+                        component.font = .subhead2
+                        component.textColor = .themeGray
                         component.text = title
                     })
                     cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.set(style: .c2)
+                        component.font = .subhead1
+                        component.textColor = .themeLeah
                         component.text = value
                         if let color = valueColor {
                             component.textColor = color
@@ -310,11 +278,13 @@ class WalletConnectMainViewController: ThemeViewController {
                         component.imageView.image = selected ? UIImage(named: "checkbox_active_24") : UIImage(named: "checkbox_diactive_24")
                     })
                     cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.set(style: .d1)
+                        component.font = .subhead2
+                        component.textColor = .themeGray
                         component.text = title
                     })
                     cell.bind(index: 2, block: { (component: TextComponent) in
-                        component.set(style: .c2)
+                        component.font = .subhead1
+                        component.textColor = .themeLeah
                         component.text = value
                         if let color = valueColor {
                             component.textColor = color

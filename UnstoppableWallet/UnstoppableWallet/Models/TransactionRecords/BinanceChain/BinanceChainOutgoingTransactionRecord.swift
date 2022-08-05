@@ -7,12 +7,12 @@ class BinanceChainOutgoingTransactionRecord: BinanceChainTransactionRecord {
     let to: String
     let sentToSelf: Bool
 
-    init(source: TransactionSource, transaction: TransactionInfo, feeCoin: PlatformCoin, coin: PlatformCoin, sentToSelf: Bool) {
-        value = .coinValue(platformCoin: coin, value: Decimal(sign: .minus, exponent: transaction.amount.exponent, significand: transaction.amount.significand))
+    init(source: TransactionSource, transaction: TransactionInfo, feeToken: Token, token: Token, sentToSelf: Bool) {
+        value = .coinValue(token: token, value: Decimal(sign: .minus, exponent: transaction.amount.exponent, significand: transaction.amount.significand))
         to = transaction.to
         self.sentToSelf = sentToSelf
 
-        super.init(source: source, transaction: transaction, feeCoin: feeCoin)
+        super.init(source: source, transaction: transaction, feeToken: feeToken)
     }
 
     override var mainValue: TransactionValue? {

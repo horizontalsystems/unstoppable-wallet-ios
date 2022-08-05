@@ -33,7 +33,6 @@ class InfoViewController: ThemeViewController {
 
         tableView.registerCell(forClass: InfoSeparatorHeaderCell.self)
         tableView.registerCell(forClass: InfoHeaderCell.self)
-        tableView.registerCell(forClass: ButtonCell.self)
         tableView.registerCell(forClass: DescriptionCell.self)
         tableView.registerCell(forClass: InfoHeader2Cell.self)
         tableView.registerCell(forClass: EmptyCell.self)
@@ -97,18 +96,6 @@ class InfoViewController: ThemeViewController {
         )
     }
 
-    private func linkButtonRow(index: Int, text: String, url: String) -> RowProtocol {
-        Row<ButtonCell>(
-                id: "link-button-\(index)",
-                height: ButtonCell.height(style: .secondaryDefault),
-                bind: { [weak self] cell, _ in
-                    cell.bind(style: .secondaryDefault, title: text, compact: true) { [weak self] in
-                        self?.onTapLink(url: url)
-                    }
-                }
-        )
-    }
-
     private func marginRow(index: Int, height: CGFloat) -> RowProtocol {
         Row<EmptyCell>(
                 id: "margin-\(index)",
@@ -138,7 +125,6 @@ extension InfoViewController: SectionsDataSource {
             case .header(let text): return headerRow(index: index, text: text)
             case .text(let text): return textRow(index: index, text: text)
             case .header2(let text): return header2Row(index: index, text: text)
-            case .button(let text, let url): return linkButtonRow(index: index, text: text, url: url)
             }
         }
     }

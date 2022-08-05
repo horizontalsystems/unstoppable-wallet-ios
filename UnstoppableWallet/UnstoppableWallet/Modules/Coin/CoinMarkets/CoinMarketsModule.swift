@@ -13,7 +13,7 @@ struct CoinMarketsModule {
         let viewModel = CoinMarketsViewModel(service: service)
         let headerViewModel = MarketSingleSortHeaderViewModel(service: service, decorator: viewModel)
 
-        return CoinMarketsViewController(viewModel: viewModel, headerViewModel: headerViewModel)
+        return CoinMarketsViewController(viewModel: viewModel, headerViewModel: headerViewModel, urlManager: UrlManager(inApp: false))
     }
 
 }

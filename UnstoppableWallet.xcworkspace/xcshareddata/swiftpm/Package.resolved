@@ -1,52 +1,68 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "AlignedCollectionViewFlowLayout",
-        "repositoryURL": "https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout",
-        "state": {
-          "branch": "master",
-          "revision": "49330ef67177dba5c9e1a3efdd0df93d83f12ee7",
-          "version": null
-        }
-      },
-      {
-        "package": "DeepDiff",
-        "repositoryURL": "https://github.com/onmyway133/DeepDiff",
-        "state": {
-          "branch": null,
-          "revision": "2639b3a11054d666a4c5ec1b7dd2808e437f3289",
-          "version": "2.3.3"
-        }
-      },
-      {
-        "package": "Down",
-        "repositoryURL": "https://github.com/johnxnguyen/Down",
-        "state": {
-          "branch": null,
-          "revision": "f34b166be1f1db4aa8f573067e901d72f2a6be57",
-          "version": "0.11.0"
-        }
-      },
-      {
-        "package": "UnicodeURL",
-        "repositoryURL": "https://github.com/nysander/UnicodeURL.git",
-        "state": {
-          "branch": "main",
-          "revision": "fe15c8b585c2e6d22dfe81da899183e6aa376a93",
-          "version": null
-        }
-      },
-      {
-        "package": "WalletConnect",
-        "repositoryURL": "https://github.com/WalletConnect/WalletConnectSwiftV2",
-        "state": {
-          "branch": "main",
-          "revision": "784eafb6c40965addf6d4c0ddee70ad413de4c84",
-          "version": null
-        }
+  "pins" : [
+    {
+      "identity" : "alignedcollectionviewflowlayout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout",
+      "state" : {
+        "branch" : "master",
+        "revision" : "49330ef67177dba5c9e1a3efdd0df93d83f12ee7"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "deepdiff",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onmyway133/DeepDiff",
+      "state" : {
+        "revision" : "2639b3a11054d666a4c5ec1b7dd2808e437f3289",
+        "version" : "2.3.3"
+      }
+    },
+    {
+      "identity" : "down",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/johnxnguyen/Down",
+      "state" : {
+        "revision" : "f34b166be1f1db4aa8f573067e901d72f2a6be57",
+        "version" : "0.11.0"
+      }
+    },
+    {
+      "identity" : "starscream",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/daltoniam/Starscream.git",
+      "state" : {
+        "revision" : "e6b65c6d9077ea48b4a7bdda8994a1d3c6969c8d",
+        "version" : "3.1.1"
+      }
+    },
+    {
+      "identity" : "swift-nio-zlib-support",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-nio-zlib-support.git",
+      "state" : {
+        "revision" : "37760e9a52030bb9011972c5213c3350fa9d41fd",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "unicodeurl",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nysander/UnicodeURL.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "fe15c8b585c2e6d22dfe81da899183e6aa376a93"
+      }
+    },
+    {
+      "identity" : "walletconnectswiftv2",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/WalletConnect/WalletConnectSwiftV2",
+      "state" : {
+        "branch" : "main",
+        "revision" : "58b6a7433648a4ea6687c692ca5f059370694aaa"
+      }
+    }
+  ],
+  "version" : 2
 }

@@ -26,7 +26,7 @@ class SendFeeSettingsViewController: ThemeViewController {
     private let feeWarningCell = TitledHighlightedDescriptionCell()
     private let feeAmountErrorCell = TitledHighlightedDescriptionCell()
 
-    private let doneButton = ThemeButton()
+    private let doneButton = PrimaryButton()
 
     private var loaded = false
 
@@ -42,6 +42,7 @@ class SendFeeSettingsViewController: ThemeViewController {
 
         feePriorityCell = SendFeePriorityCell(viewModel: feePriorityViewModel)
         feeSliderCell = FeeSliderCell(sliderDriver: feeSliderViewModel.sliderDriver)
+        feeSliderCell.set(scale: .satoshi)
 
         super.init()
 
@@ -74,11 +75,13 @@ class SendFeeSettingsViewController: ThemeViewController {
         feeRateCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
         CellBuilder.build(cell: feeRateCell, elements: [.text, .text])
         feeRateCell.bind(index: 0, block: { (component: TextComponent) in
-            component.set(style: .d1)
+            component.font = .subhead2
+            component.textColor = .themeGray
             component.text = "fee_settings.fee_rate".localized
         })
         feeRateCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .c2)
+            component.font = .subhead1
+            component.textColor = .themeLeah
         })
 
         feePriorityCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
@@ -96,10 +99,9 @@ class SendFeeSettingsViewController: ThemeViewController {
             maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        doneButton.apply(style: .primaryYellow)
+        doneButton.set(style: .yellow)
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDone), for: .touchUpInside)
 
@@ -150,11 +152,9 @@ class SendFeeSettingsViewController: ThemeViewController {
         }
     }
 
-    private func sync(feeSliderViewItem: FeeSliderViewItem?) {
+    private func sync(feeSliderViewItem: FeeViewItem?) {
         feeRateCell.bind(index: 1, block: { (component: TextComponent) in
-            component.text = feeSliderViewItem.map {
-                "\($0.initialValue) \($0.description ?? "")"
-            }
+            component.text = feeSliderViewItem?.description
         })
     }
 

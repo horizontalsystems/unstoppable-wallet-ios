@@ -13,7 +13,7 @@ class CoinMajorHoldersViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
     private var chartCell = CoinMajorHolderChartCell()
 
     private var stateViewItem: CoinMajorHoldersViewModel.StateViewItem?
@@ -44,7 +44,6 @@ class CoinMajorHoldersViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
-        tableView.registerCell(forClass: BCell.self)
         tableView.registerCell(forClass: CoinMajorHolderCell.self)
 
         view.addSubview(spinner)
@@ -59,7 +58,7 @@ class CoinMajorHoldersViewController: ThemeViewController {
             maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        errorView.configureSyncError(target: self, action: #selector(onRetry))
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
         subscribe(disposeBag, viewModel.stateViewItemDriver) { [weak self] in self?.sync(stateViewItem: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
@@ -94,18 +93,6 @@ class CoinMajorHoldersViewController: ThemeViewController {
 }
 
 extension CoinMajorHoldersViewController: SectionsDataSource {
-
-    private var headerRow: RowProtocol {
-        Row<BCell>(
-                id: "header",
-                height: .heightCell48,
-                bind: { cell, _ in
-                    cell.set(backgroundStyle: .transparent)
-                    cell.selectionStyle = .none
-                    cell.title = "coin_page.major_holders.top_ethereum_wallets".localized
-                }
-        )
-    }
 
     private func row(viewItem: CoinMajorHoldersViewModel.ViewItem, isLast: Bool) -> RowProtocol {
         Row<CoinMajorHolderCell>(
@@ -144,7 +131,8 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
             Section(
                     id: "holders",
                     footerState: .margin(height: .margin32),
-                    rows: [headerRow] + stateViewItem.viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == stateViewItem.viewItems.count - 1) }
+                    rows: [tableView.subtitleRow(text: "coin_page.major_holders.top_ethereum_wallets".localized)]
+                            + stateViewItem.viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == stateViewItem.viewItems.count - 1) }
             )
         ]
     }

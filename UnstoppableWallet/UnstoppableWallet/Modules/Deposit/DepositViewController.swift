@@ -32,7 +32,7 @@ class DepositViewController: ThemeViewController {
 
         imageView.kf.setImage(
                 with: URL(string: viewModel.coin.imageUrl),
-                placeholder: UIImage(named: viewModel.coinType.placeholderImageName),
+                placeholder: UIImage(named: viewModel.placeholderImageName),
                 options: [.scaleFactor(UIScreen.main.scale)]
         )
 
@@ -139,7 +139,7 @@ class DepositViewController: ThemeViewController {
         addressLabel.textColor = .themeBran
         addressLabel.text = viewModel.address
 
-        let copyButton = ThemeButton()
+        let copyButton = PrimaryButton()
 
         view.addSubview(copyButton)
         copyButton.snp.makeConstraints { maker in
@@ -147,11 +147,11 @@ class DepositViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
         }
 
-        copyButton.apply(style: .primaryYellow)
+        copyButton.set(style: .yellow)
         copyButton.setTitle("button.copy".localized, for: .normal)
         copyButton.addTarget(self, action: #selector(onTapCopy), for: .touchUpInside)
         copyButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        let shareButton = ThemeButton()
+        let shareButton = PrimaryButton()
 
         view.addSubview(shareButton)
         shareButton.snp.makeConstraints { maker in
@@ -160,14 +160,13 @@ class DepositViewController: ThemeViewController {
             maker.bottom.equalToSuperview().inset(44)
         }
 
-        shareButton.apply(style: .primaryGray)
+        shareButton.set(style: .gray)
         shareButton.setTitle("button.share".localized, for: .normal)
         shareButton.addTarget(self, action: #selector(onTapShare), for: .touchUpInside)
     }
 
     @objc private func onTapCopy() {
-        UIPasteboard.general.setValue(viewModel.address, forPasteboardType: "public.plain-text")
-        HudHelper.instance.showSuccess(title: "alert.copied".localized)
+        CopyHelper.copyAndNotify(value: viewModel.address)
     }
 
     @objc private func onTapShare() {

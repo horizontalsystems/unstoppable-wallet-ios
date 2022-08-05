@@ -42,7 +42,7 @@ class FilterCard: UICollectionViewCell {
         }
 
         titleLabel.font = FilterCard.titleFont
-        titleLabel.textColor = .themeOz
+        titleLabel.textColor = .themeLeah
 
         contentView.backgroundColor = .themeLawrence
     }

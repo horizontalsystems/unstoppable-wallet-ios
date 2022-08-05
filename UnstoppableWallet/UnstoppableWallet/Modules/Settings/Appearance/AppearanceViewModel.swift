@@ -64,8 +64,8 @@ class AppearanceViewModel {
     private func sync(conversionItems: [AppearanceService.ConversionItem]) {
         let viewItems = conversionItems.map { item in
             ConversionViewItem(
-                    urlString: item.platformCoin.coin.imageUrl,
-                    title: item.platformCoin.code,
+                    urlString: item.token.coin.imageUrl,
+                    title: item.token.coin.code,
                     selected: item.current
             )
         }

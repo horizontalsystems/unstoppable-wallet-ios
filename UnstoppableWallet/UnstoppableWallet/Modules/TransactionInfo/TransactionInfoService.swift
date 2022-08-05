@@ -21,7 +21,7 @@ class TransactionInfoService {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
 
-        subscribe(disposeBag, adapter.transactionsObservable(coin: nil, filter: .all)) { [weak self] in self?.sync(transactionRecords: $0) }
+        subscribe(disposeBag, adapter.transactionsObservable(token: nil, filter: .all)) { [weak self] in self?.sync(transactionRecords: $0) }
         subscribe(disposeBag, adapter.lastBlockUpdatedObservable) { [weak self] in self?.syncLastBlockUpdated() }
 
         fetchRates()
@@ -74,9 +74,21 @@ class TransactionInfoService {
         let baseCurrency = currencyKit.baseCurrency
 
         let singles: [Single<(coin: Coin, currencyValue: CurrencyValue)>] = coinsForRates.map { coin in
-            marketKit
-                    .coinHistoricalPriceValueSingle(coinUid: coin.uid, currencyCode: baseCurrency.code, timestamp: transactionRecord.date.timeIntervalSince1970)
-                    .map { (coin: coin, currencyValue: CurrencyValue(currency: baseCurrency, value: $0)) }
+            let coinUid = coin.uid
+            let currencyCode = baseCurrency.code
+            let timestamp = transactionRecord.date.timeIntervalSince1970
+
+            let single: Single<Decimal>
+
+            if let rate = marketKit.coinHistoricalPriceValue(coinUid: coinUid, currencyCode: currencyCode, timestamp: timestamp) {
+                single = Single.just(rate)
+            } else {
+                single = marketKit.coinHistoricalPriceValueSingle(coinUid: coinUid, currencyCode: currencyCode, timestamp: timestamp)
+            }
+
+            return single.map {
+                (coin: coin, currencyValue: CurrencyValue(currency: baseCurrency, value: $0))
+            }
         }
 
         Single.zip(singles)

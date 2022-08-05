@@ -14,9 +14,9 @@ class NftCollectionViewController: ThemeViewController {
 
     private let overviewController: NftCollectionOverviewViewController
     private let assetsController: NftCollectionAssetsViewController
-    private let activityController: NftCollectionActivityViewController
+    private let activityController: NftActivityViewController
 
-    init(viewModel: NftCollectionViewModel, overviewController: NftCollectionOverviewViewController, assetsController: NftCollectionAssetsViewController, activityController: NftCollectionActivityViewController) {
+    init(viewModel: NftCollectionViewModel, overviewController: NftCollectionOverviewViewController, assetsController: NftCollectionAssetsViewController, activityController: NftActivityViewController) {
         self.viewModel = viewModel
         self.overviewController = overviewController
         self.assetsController = assetsController

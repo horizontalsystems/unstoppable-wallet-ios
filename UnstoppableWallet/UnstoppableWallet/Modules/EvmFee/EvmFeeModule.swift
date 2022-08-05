@@ -11,15 +11,16 @@ struct EvmFeeModule {
         let feeService = feeViewModel.service
         let coinService = feeViewModel.coinService
         let gasPriceService = feeViewModel.gasPriceService
+        let feeViewItemFactory = FeeViewItemFactory(scale: .gwei)
         let cautionsFactory = SendEvmCautionsFactory()
 
         switch gasPriceService {
         case let legacyService as LegacyGasPriceService:
-            let viewModel = LegacyEvmFeeViewModel(gasPriceService: legacyService, feeService: feeService, coinService: coinService, cautionsFactory: cautionsFactory)
+            let viewModel = LegacyEvmFeeViewModel(gasPriceService: legacyService, feeService: feeService, coinService: coinService, feeViewItemFactory: feeViewItemFactory, cautionsFactory: cautionsFactory)
             return ThemeNavigationController(rootViewController: LegacyEvmFeeViewController(viewModel: viewModel))
 
         case let eip1559Service as Eip1559GasPriceService:
-            let viewModel = Eip1559EvmFeeViewModel(gasPriceService: eip1559Service, feeService: feeService, coinService: coinService, cautionsFactory: cautionsFactory)
+            let viewModel = Eip1559EvmFeeViewModel(gasPriceService: eip1559Service, feeService: feeService, coinService: coinService, feeViewItemFactory: feeViewItemFactory, cautionsFactory: cautionsFactory)
             return ThemeNavigationController(rootViewController: Eip1559EvmFeeViewController(viewModel: viewModel))
 
         default: return nil
@@ -73,12 +74,38 @@ extension EvmFeeModule {
         case overpricing
     }
 
-    struct GasData {
-        let gasLimit: Int
-        let gasPrice: GasPrice
+    class GasData {
+        let limit: Int
+        let price: GasPrice
+
+        init(limit: Int, price: GasPrice) {
+            self.limit = limit
+            self.price = price
+        }
 
         var fee: BigUInt {
-            BigUInt(gasLimit * gasPrice.max)
+            BigUInt(limit * price.max)
+        }
+
+        var description: String {
+            "L1 transaction: gasLimit:\(limit) - gasPrice:\(price.description)"
+        }
+    }
+
+    class RollupGasData: GasData {
+        let additionalFee: BigUInt
+
+        init(additionalFee: BigUInt, limit: Int, price: GasPrice) {
+            self.additionalFee = additionalFee
+            super.init(limit: limit, price: price)
+        }
+
+        override var fee: BigUInt {
+            super.fee + additionalFee
+        }
+
+        override var description: String {
+            "L2 transaction: gasLimit:\(limit) - gasPrice:\(price.description) - l1fee:\(additionalFee.description)"
         }
     }
 

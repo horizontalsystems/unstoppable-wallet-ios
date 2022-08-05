@@ -2,7 +2,7 @@ import UIKit
 
 class HighlightedDescriptionBaseView: UIView {
     internal static let font: UIFont = .subhead2
-    internal static let sidePadding: CGFloat = .margin12
+    internal static let sidePadding: CGFloat = .margin16
     internal static let verticalPadding: CGFloat = .margin12
 
     internal let label = UILabel()
@@ -11,9 +11,9 @@ class HighlightedDescriptionBaseView: UIView {
         super.init(frame: .zero)
 
         backgroundColor = .themeYellow20
-        borderColor = .themeJacob
+        borderColor = .themeYellowD
         borderWidth = 1
-        cornerRadius = .cornerRadius2x
+        cornerRadius = .cornerRadius12
     }
 
     required public init?(coder aDecoder: NSCoder) {

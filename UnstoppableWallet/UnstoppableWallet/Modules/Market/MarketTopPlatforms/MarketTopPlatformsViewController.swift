@@ -56,7 +56,11 @@ class MarketTopPlatformsViewController: MarketListViewController {
     }
 
     override func onSelect(viewItem: MarketModule.ListViewItem) {
-        print("onSelect(viewItem")
+        guard let uid = viewItem.uid, let topPlatform = viewModel.topPlatform(uid: uid) else {
+            return
+        }
+
+        present(TopPlatformModule.viewController(topPlatform: topPlatform), animated: true)
     }
 
 }

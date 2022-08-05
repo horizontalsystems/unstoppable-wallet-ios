@@ -1,30 +1,36 @@
 import UIKit
+import ComponentKit
 
 class MnemonicWordCell: UICollectionViewCell {
-    private let indexLabel = UILabel()
-    private let wordLabel = UILabel()
+    private static let indexFont: UIFont = .subhead1
+    private static let wordFont: UIFont = .body
+    private static let spacing: CGFloat = .margin8
+
+    private let indexText = TextComponent()
+    private let wordText = TextComponent()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.addSubview(indexLabel)
-        indexLabel.snp.makeConstraints { maker in
-            maker.leading.centerY.equalToSuperview()
-            maker.width.equalTo(32)
+        let stackView = UIStackView()
+
+        contentView.addSubview(stackView)
+        stackView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
         }
 
-        indexLabel.font = .headline2
-        indexLabel.textColor = .themeGray
+        stackView.alignment = .lastBaseline
+        stackView.spacing = Self.spacing
 
-        contentView.addSubview(wordLabel)
+        stackView.addArrangedSubview(indexText)
 
-        wordLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(indexLabel.snp.trailing).offset(CGFloat.margin4)
-            maker.trailing.centerY.equalToSuperview()
-        }
+        indexText.font = Self.indexFont
+        indexText.textColor = .themeGray50
 
-        wordLabel.font = .headline2
-        wordLabel.textColor = .themeOz
+        stackView.addArrangedSubview(wordText)
+
+        wordText.font = Self.wordFont
+        wordText.textColor = .themeLeah
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -32,8 +38,22 @@ class MnemonicWordCell: UICollectionViewCell {
     }
 
     func bind(index: Int, word: String) {
-        indexLabel.text = "\(index)."
-        wordLabel.text = word
+        indexText.text = "\(index)"
+        wordText.text = word
+    }
+
+}
+
+extension MnemonicWordCell {
+
+    static func size(index: Int, word: String) -> CGSize {
+        let indexSize = "\(index)".size(containerWidth: .greatestFiniteMagnitude, font: indexFont)
+        let wordSize = word.size(containerWidth: .greatestFiniteMagnitude, font: wordFont)
+
+        return CGSize(
+                width: indexSize.width + spacing + wordSize.width,
+                height: max(indexSize.height, wordSize.height)
+        )
     }
 
 }

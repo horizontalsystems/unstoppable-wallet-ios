@@ -14,12 +14,12 @@ class BackupKeyViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let descriptionView = HighlightedDescriptionView()
-    private let showButton = ThemeButton()
+    private let showButton = PrimaryButton()
 
     private let tableView = SectionsTableView(style: .grouped)
 
     private let backupButtonHolder = BottomGradientHolder()
-    private let backupButton = ThemeButton()
+    private let backupButton = PrimaryButton()
 
     private let mnemonicPhraseCell = MnemonicPhraseCell()
 
@@ -50,7 +50,6 @@ class BackupKeyViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.sectionDataSource = self
-        tableView.registerCell(forClass: C9Cell.self)
 
         view.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
@@ -64,10 +63,9 @@ class BackupKeyViewController: ThemeViewController {
         showButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin6x)
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin6x)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        showButton.apply(style: .primaryYellow)
+        showButton.set(style: .yellow)
         showButton.setTitle("backup_key.button_show".localized, for: .normal)
         showButton.addTarget(self, action: #selector(onTapShowButton), for: .touchUpInside)
 
@@ -82,10 +80,9 @@ class BackupKeyViewController: ThemeViewController {
         backupButtonHolder.addSubview(backupButton)
         backupButton.snp.makeConstraints { maker in
             maker.leading.top.trailing.bottom.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        backupButton.apply(style: .primaryYellow)
+        backupButton.set(style: .yellow)
         backupButton.setTitle("backup_key.button_backup".localized, for: .normal)
         backupButton.addTarget(self, action: #selector(onTapBackupButton), for: .touchUpInside)
 
@@ -146,7 +143,9 @@ extension BackupKeyViewController: SectionsDataSource {
                         StaticRow(
                                 cell: mnemonicPhraseCell,
                                 id: "mnemonic-phrase",
-                                height: MnemonicPhraseCell.height(wordCount: words.count),
+                                dynamicHeight: { width in
+                                    MnemonicPhraseCell.height(containerWidth: width, words: words)
+                                },
                                 onReady: { [weak self] in
                                     self?.mnemonicPhraseCell.set(words: words)
                                 }
@@ -160,14 +159,29 @@ extension BackupKeyViewController: SectionsDataSource {
                     id: "passphrase",
                     footerState: .margin(height: .margin32),
                     rows: [
-                        Row<C9Cell>(
+                        CellBuilder.row(
+                                elements: [.image20, .text, .secondaryButton],
+                                tableView: tableView,
                                 id: "passphrase",
                                 height: .heightCell48,
-                                bind: { cell, _ in
+                                bind: { cell in
                                     cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                                    cell.title = "backup_key.passphrase".localized
-                                    cell.titleImage = UIImage(named: "key_phrase_20")
-                                    cell.viewItem = .init(type: .raw, value: { passphrase })
+
+                                    cell.bind(index: 0) { (component: ImageComponent) in
+                                        component.imageView.image = UIImage(named: "key_phrase_20")?.withTintColor(.themeGray)
+                                    }
+                                    cell.bind(index: 1) { (component: TextComponent) in
+                                        component.font = .subhead2
+                                        component.textColor = .themeGray
+                                        component.text = "backup_key.passphrase".localized
+                                    }
+                                    cell.bind(index: 2) { (component: SecondaryButtonComponent) in
+                                        component.button.set(style: .default)
+                                        component.button.setTitle(passphrase, for: .normal)
+                                        component.onTap = {
+                                            CopyHelper.copyAndNotify(value: passphrase)
+                                        }
+                                    }
                                 }
                         )
                     ]

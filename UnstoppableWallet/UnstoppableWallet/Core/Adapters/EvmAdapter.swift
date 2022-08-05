@@ -46,7 +46,9 @@ extension EvmAdapter: IBalanceAdapter {
     }
 
     var balanceStateUpdatedObservable: Observable<AdapterState> {
-        evmKit.syncStateObservable.map { [unowned self] in self.convertToAdapterState(evmSyncState: $0) }
+        evmKit.syncStateObservable.map { [weak self] in
+            self?.convertToAdapterState(evmSyncState: $0) ?? .syncing(progress: nil, lastBlockDate: nil)
+        }
     }
 
     var balanceData: BalanceData {
@@ -54,7 +56,9 @@ extension EvmAdapter: IBalanceAdapter {
     }
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
-        evmKit.accountStateObservable.map { [unowned self] in self.balanceData(balance: $0.balance) }
+        evmKit.accountStateObservable.map { [weak self] in
+            self?.balanceData(balance: $0.balance) ?? BalanceData(balance: 0)
+        }
     }
 
 }

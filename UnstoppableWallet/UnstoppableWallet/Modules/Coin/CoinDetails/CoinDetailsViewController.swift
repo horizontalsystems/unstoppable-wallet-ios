@@ -15,7 +15,7 @@ class CoinDetailsViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
     private let proFeaturesCell: ProFeaturesPassesCell
 
     weak var parentNavigationController: UINavigationController?
@@ -57,7 +57,7 @@ class CoinDetailsViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        errorView.configureSyncError(target: self, action: #selector(onRetry))
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -185,7 +185,8 @@ extension CoinDetailsViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .transparent, isFirst: !topSeparator)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                     cell.bind(index: 1) { (component: ImageComponent) in
@@ -206,7 +207,8 @@ extension CoinDetailsViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .transparent, isFirst: !topSeparator)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                 }
@@ -455,7 +457,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasRatio)
                         cell.title = "coin_page.tvl_rank".localized
                         cell.value = tvlRank
-                        cell.valueColor = .themeOz
+                        cell.valueColor = .themeLeah
                     },
                     action: { [weak self] _ in
                         self?.openTvlRank()
@@ -507,7 +509,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasFundsInvested && !hasReports)
                         cell.title = "coin_page.treasuries".localized
                         cell.value = treasuries
-                        cell.valueColor = .themeOz
+                        cell.valueColor = .themeLeah
                     },
                     action: { [weak self] _ in
                         self?.openTreasuries()
@@ -525,7 +527,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isFirst: !hasTreasuries, isLast: !hasReports)
                         cell.title = "coin_page.funds_invested".localized
                         cell.value = fundsInvested
-                        cell.valueColor = .themeOz
+                        cell.valueColor = .themeLeah
                     },
                     action: { [weak self] _ in
                         self?.openFundsInvested()
@@ -543,7 +545,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isFirst: !hasTreasuries && !hasFundsInvested, isLast: true)
                         cell.title = "coin_page.reports".localized
                         cell.value = reportsCount
-                        cell.valueColor = .themeOz
+                        cell.valueColor = .themeLeah
                     },
                     action: { [weak self] _ in
                         self?.openReports()
@@ -592,11 +594,13 @@ extension CoinDetailsViewController: SectionsDataSource {
                         cell.set(backgroundStyle: .lawrence, isFirst: index == 0, isLast: index == securityViewItems.count - 1 && !hasAudits)
 
                         cell.bind(index: 0) { (component: TextComponent) in
-                            component.set(style: .d1)
+                            component.font = .subhead2
+                            component.textColor = .themeGray
                             component.text = viewItem.type.title
                         }
                         cell.bind(index: 1) { (component: TextComponent) in
-                            component.set(style: viewItem.valueGrade.textStyle)
+                            component.font = .subhead1
+                            component.textColor = viewItem.valueGrade.textColor
                             component.text = viewItem.value
                             component.setContentCompressionResistancePriority(.required, for: .horizontal)
                             component.setContentHuggingPriority(.required, for: .horizontal)
@@ -681,11 +685,11 @@ extension CoinDetailsViewController: SectionsDataSource {
 
 extension CoinDetailsViewModel.SecurityGrade {
 
-    var textStyle: TextComponent.Style {
+    var textColor: UIColor {
         switch self {
-        case .low: return .c5
-        case .medium: return .c6
-        case .high: return .c4
+        case .low: return .themeLucian
+        case .medium: return .themeIssykBlue
+        case .high: return .themeRemus
         }
     }
 

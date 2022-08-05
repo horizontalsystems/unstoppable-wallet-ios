@@ -5,8 +5,8 @@ import MarketKit
 class RestoreSettingsService {
     private let manager: RestoreSettingsManager
 
-    private let approveSettingsRelay = PublishRelay<CoinWithSettings>()
-    private let rejectApproveSettingsRelay = PublishRelay<PlatformCoin>()
+    private let approveSettingsRelay = PublishRelay<TokenWithSettings>()
+    private let rejectApproveSettingsRelay = PublishRelay<Token>()
 
     private let requestRelay = PublishRelay<Request>()
 
@@ -18,11 +18,11 @@ class RestoreSettingsService {
 
 extension RestoreSettingsService {
 
-    var approveSettingsObservable: Observable<CoinWithSettings> {
+    var approveSettingsObservable: Observable<TokenWithSettings> {
         approveSettingsRelay.asObservable()
     }
 
-    var rejectApproveSettingsObservable: Observable<PlatformCoin> {
+    var rejectApproveSettingsObservable: Observable<Token> {
         rejectApproveSettingsRelay.asObservable()
     }
 
@@ -30,25 +30,25 @@ extension RestoreSettingsService {
         requestRelay.asObservable()
     }
 
-    func approveSettings(platformCoin: PlatformCoin, account: Account? = nil) {
-        let coinType = platformCoin.coinType
+    func approveSettings(token: Token, account: Account? = nil) {
+        let blockchainType = token.blockchainType
 
         if let account = account, case .created = account.origin {
             var settings = RestoreSettings()
 
-            for type in coinType.restoreSettingTypes {
-                settings[type] = type.createdAccountValue(coinType: coinType)
+            for type in blockchainType.restoreSettingTypes {
+                settings[type] = type.createdAccountValue(blockchainType: blockchainType)
             }
 
-            approveSettingsRelay.accept(CoinWithSettings(platformCoin: platformCoin, settings: settings))
+            approveSettingsRelay.accept(TokenWithSettings(token: token, settings: settings))
             return
         }
 
-        let existingSettings = account.map { manager.settings(account: $0, coinType: coinType) } ?? [:]
+        let existingSettings = account.map { manager.settings(account: $0, blockchainType: blockchainType) } ?? [:]
 
-        if coinType.restoreSettingTypes.contains(.birthdayHeight) && existingSettings[.birthdayHeight] == nil {
+        if blockchainType.restoreSettingTypes.contains(.birthdayHeight) && existingSettings[.birthdayHeight] == nil {
             let request = Request(
-                    platformCoin: platformCoin,
+                    token: token,
                     type: .birthdayHeight
             )
 
@@ -56,36 +56,38 @@ extension RestoreSettingsService {
             return
         }
 
-        approveSettingsRelay.accept(CoinWithSettings(platformCoin: platformCoin, settings: [:]))
+        approveSettingsRelay.accept(TokenWithSettings(token: token, settings: [:]))
     }
 
-    func save(settings: RestoreSettings, account: Account, coinType: CoinType) {
-        manager.save(settings: settings, account: account, coinType: coinType)
+    func save(settings: RestoreSettings, account: Account, blockchainType: BlockchainType) {
+        manager.save(settings: settings, account: account, blockchainType: blockchainType)
     }
 
-    func enter(birthdayHeight: Int, platformCoin: PlatformCoin) {
+    func enter(birthdayHeight: Int?, token: Token) {
         var settings = RestoreSettings()
-        settings[.birthdayHeight] = String(birthdayHeight)
+        if let birthdayHeight = birthdayHeight?.description ?? RestoreSettingType.birthdayHeight.createdAccountValue(blockchainType: token.blockchainType) {
+            settings[.birthdayHeight] = String(birthdayHeight)
+        }
 
-        let coinWithSettings = CoinWithSettings(platformCoin: platformCoin, settings: settings)
-        approveSettingsRelay.accept(coinWithSettings)
+        let tokenWithSettings = TokenWithSettings(token: token, settings: settings)
+        approveSettingsRelay.accept(tokenWithSettings)
     }
 
-    func cancel(platformCoin: PlatformCoin) {
-        rejectApproveSettingsRelay.accept(platformCoin)
+    func cancel(token: Token) {
+        rejectApproveSettingsRelay.accept(token)
     }
 
 }
 
 extension RestoreSettingsService {
 
-    struct CoinWithSettings {
-        let platformCoin: PlatformCoin
+    struct TokenWithSettings {
+        let token: Token
         let settings: RestoreSettings
     }
 
     struct Request {
-        let platformCoin: PlatformCoin
+        let token: Token
         let type: RequestType
     }
 

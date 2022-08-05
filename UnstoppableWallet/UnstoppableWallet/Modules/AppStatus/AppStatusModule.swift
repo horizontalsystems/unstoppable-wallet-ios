@@ -12,15 +12,3 @@ protocol IAppStatusInteractor {
 
     func copyToClipboard(string: String)
 }
-
-import UIKit
-
-struct AppStatusModule {
-
-    static func viewController() -> UIViewController {
-        let viewModel = AppStatusViewModel()
-
-        return AppStatusViewControllerNew(viewModel: viewModel)
-    }
-
-}

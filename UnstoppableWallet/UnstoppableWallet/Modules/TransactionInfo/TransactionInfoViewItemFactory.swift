@@ -4,14 +4,16 @@ import EthereumKit
 
 class TransactionInfoViewItemFactory {
     private let evmLabelManager: EvmLabelManager
+    private let actionEnabled: Bool
 
-    init(evmLabelManager: EvmLabelManager) {
+    init(evmLabelManager: EvmLabelManager, actionEnabled: Bool) {
         self.evmLabelManager = evmLabelManager
+        self.actionEnabled = actionEnabled
     }
 
     private func amount(source: TransactionSource, transactionValue: TransactionValue, rate: CurrencyValue?, type: AmountType) -> TransactionInfoModule.ViewItem {
         let iconUrl = transactionValue.coin?.imageUrl
-        let iconPlaceholderImageName = source.blockchain.coinPlaceholderImage
+        let iconPlaceholderImageName = source.blockchainType.placeholderImageName(tokenProtocol: transactionValue.tokenProtocol)
 
         if transactionValue.isMaxValue {
             return .amount(
@@ -55,20 +57,24 @@ class TransactionInfoViewItemFactory {
     }
 
     private func priceString(valueIn: TransactionValue, valueOut: TransactionValue, coinPriceIn: CurrencyValue?) -> String? {
-        guard case .coinValue(let valueInPlatformCoin, let valueInDecimal) = valueIn,
-              case .coinValue(let valueOutPlatformCoin, let valueOutDecimal) = valueOut else {
+        guard case .coinValue(let valueInToken, let valueInDecimal) = valueIn,
+              case .coinValue(let valueOutToken, let valueOutDecimal) = valueOut else {
             return nil
         }
 
         let priceDecimal = valueInDecimal.magnitude / valueOutDecimal.magnitude
-        let price = ValueFormatter.instance.formatFull(value: priceDecimal, decimalCount: priceDecimal.decimalCount, symbol: valueInPlatformCoin.coin.code) ?? ""
+        let price = ValueFormatter.instance.formatFull(value: priceDecimal, decimalCount: priceDecimal.decimalCount, symbol: valueInToken.coin.code) ?? ""
         let rate = coinPriceIn.map { CurrencyValue(currency: $0.currency, value: abs(priceDecimal * $0.value)) }
         let rateFormatted = rate.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0).map { " (\($0))"} } ?? ""
 
-        return "\(valueOutPlatformCoin.coin.code) = \(price)\(rateFormatted)"
+        return "\(valueOutToken.coin.code) = \(price)\(rateFormatted)"
     }
 
-    private func rateString(currencyValue: CurrencyValue, coinCode: String) -> String {
+    private func rateString(currencyValue: CurrencyValue?, coinCode: String?) -> String {
+        guard let currencyValue = currencyValue, let coinCode = coinCode else {
+            return "---"
+        }
+
         let formattedValue = ValueFormatter.instance.formatFull(currencyValue: currencyValue) ?? ""
 
         return "balance.rate_per_coin".localized(formattedValue, coinCode)
@@ -95,18 +101,24 @@ class TransactionInfoViewItemFactory {
 
         var viewItems: [TransactionInfoModule.ViewItem] = [
             .actionTitle(iconName: "arrow_medium_2_up_right_24", iconDimmed: true, title: "transactions.send".localized, subTitle: transactionValue.coinName),
-            amount(source: source, transactionValue: transactionValue, rate: rate, type: sentToSelf ? .neutral : .outgoing)
+            amount(source: source, transactionValue: transactionValue, rate: rate, type: type(value: transactionValue, condition: sentToSelf, .neutral, .outgoing))
         ]
 
         if let to = to {
             viewItems.append(.to(value: to, valueTitle: evmLabelManager.addressLabel(address: to)))
         }
 
-        if let rate = rate, let coin = transactionValue.coin {
-            viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
-        }
+        viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code)))
 
         return viewItems
+    }
+
+    private func type(value: TransactionValue, condition: Bool = true, _ trueType: AmountType, _ falseType: AmountType? = nil) -> AmountType {
+        guard !value.zeroValue else {
+            return .neutral
+        }
+
+        return condition ? trueType : (falseType ?? trueType)
     }
 
     private func receiveSection(source: TransactionSource, transactionValue: TransactionValue, from: String?, rates: [Coin: CurrencyValue]) -> [TransactionInfoModule.ViewItem] {
@@ -114,16 +126,14 @@ class TransactionInfoViewItemFactory {
 
         var viewItems: [TransactionInfoModule.ViewItem] = [
             .actionTitle(iconName: "arrow_medium_2_down_left_24", iconDimmed: true, title: "transactions.receive".localized, subTitle: transactionValue.coinName),
-            amount(source: source, transactionValue: transactionValue, rate: rate, type: .incoming)
+            amount(source: source, transactionValue: transactionValue, rate: rate, type: type(value: transactionValue, .incoming))
         ]
 
         if let from = from {
             viewItems.append(.from(value: from, valueTitle: evmLabelManager.addressLabel(address: from)))
         }
 
-        if let rate = rate, let coin = transactionValue.coin {
-            viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
-        }
+        viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code)))
 
         return viewItems
     }
@@ -161,7 +171,7 @@ class TransactionInfoViewItemFactory {
         switch record {
         case let record as ContractCreationTransactionRecord:
             sections.append([
-                .actionTitle(iconName: record.source.blockchain.image, iconDimmed: false, title: "transactions.contract_creation".localized, subTitle: nil)
+                .actionTitle(iconName: record.source.blockchainType.iconPlain24, iconDimmed: false, title: "transactions.contract_creation".localized, subTitle: nil)
             ])
 
         case let record as EvmOutgoingTransactionRecord:
@@ -184,22 +194,20 @@ class TransactionInfoViewItemFactory {
                 .spender(value: record.spender, valueTitle: evmLabelManager.addressLabel(address: record.spender))
             ]
 
-            if let rate = rate, let coin = transactionValue.coin {
-                viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: coin.code)))
-            }
+            viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code)))
 
             sections.append(viewItems)
 
         case let record as SwapTransactionRecord:
             sections.append([
                 .actionTitle(iconName: "arrow_medium_2_up_right_24", iconDimmed: true, title: youPayString(status: status), subTitle: record.valueIn.coinName),
-                amount(source: record.source, transactionValue: record.valueIn, rate: _rate(record.valueIn), type: .outgoing)
+                amount(source: record.source, transactionValue: record.valueIn, rate: _rate(record.valueIn), type: type(value: record.valueIn, .outgoing))
             ])
 
             if let valueOut = record.valueOut {
                 var viewItems: [TransactionInfoModule.ViewItem] = [
                     .actionTitle(iconName: "arrow_medium_2_down_left_24", iconDimmed: true, title: youGetString(status: status), subTitle: valueOut.coinName),
-                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: record.recipient == nil ? .incoming : .neutral)
+                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: type(value: valueOut, condition: record.recipient == nil, .incoming, .outgoing))
                 ]
 
                 if let recipient = record.recipient {
@@ -233,14 +241,14 @@ class TransactionInfoViewItemFactory {
             if let valueIn = record.valueIn {
                 sections.append([
                     .actionTitle(iconName: "arrow_medium_2_up_right_24", iconDimmed: true, title: youPayString(status: status), subTitle: valueIn.coinName),
-                    amount(source: record.source, transactionValue: valueIn, rate: _rate(valueIn), type: .outgoing)
+                    amount(source: record.source, transactionValue: valueIn, rate: _rate(valueIn), type: type(value: valueIn, .outgoing))
                 ])
             }
 
             if let valueOut = record.valueOut {
                 sections.append([
                     .actionTitle(iconName: "arrow_medium_2_down_left_24", iconDimmed: true, title: youGetString(status: status), subTitle: valueOut.coinName),
-                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: .incoming)
+                    amount(source: record.source, transactionValue: valueOut, rate: _rate(valueOut), type: type(value: valueOut, .incoming))
                 ])
             }
 
@@ -262,7 +270,7 @@ class TransactionInfoViewItemFactory {
 
         case let record as ContractCallTransactionRecord:
             sections.append([
-                .actionTitle(iconName: record.source.blockchain.image, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress))
+                .actionTitle(iconName: record.source.blockchainType.iconPlain24, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress))
             ])
 
             for event in record.outgoingEvents {
@@ -341,7 +349,7 @@ class TransactionInfoViewItemFactory {
             .status(status: status)
         ]
 
-        if let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction {
+        if actionEnabled, let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction {
             switch status {
             case .pending:
                 transactionViewItems.append(.options(actions: [

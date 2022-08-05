@@ -12,8 +12,8 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     private let bottomWrapper = BottomGradientHolder()
 
-    private let signButton = ThemeButton()
-    private let rejectButton = ThemeButton()
+    private let signButton = PrimaryButton()
+    private let rejectButton = PrimaryButton()
 
     private var domainCell: D7Cell?
     private let messageCell = D1Cell()
@@ -45,8 +45,6 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
 
         tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: D1Cell.self)
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         view.addSubview(bottomWrapper)
@@ -60,10 +58,9 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
         signButton.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        signButton.apply(style: .primaryYellow)
+        signButton.set(style: .yellow)
         signButton.setTitle("button.sign".localized, for: .normal)
         signButton.addTarget(self, action: #selector(onTapSign), for: .touchUpInside)
 
@@ -72,10 +69,9 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(signButton.snp.bottom).offset(CGFloat.margin16)
             maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        rejectButton.apply(style: .primaryGray)
+        rejectButton.set(style: .gray)
         rejectButton.setTitle("button.reject".localized, for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
 
@@ -120,7 +116,7 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
     }
 
     private func show(error: Error) {
-        HudHelper.instance.showError(title: error.localizedDescription)
+        HudHelper.instance.show(banner: .error(string: error.localizedDescription))
     }
 
     private func dismiss() {
@@ -156,24 +152,14 @@ extension WalletConnectSignMessageRequestViewController: SectionsDataSource {
             ))
         }
 
-        return [Section(
-                id: "sign_section",
-                headerState: .margin(height: .margin12),
-                footerState: footer(text: "wallet_connect.sign.description".localized),
-                rows: rows
-        )]
-    }
-
-    private func footer(text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: "bottom_description",
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { width in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: width, text: text)
-                }
-        )
+        return [
+            Section(
+                    id: "sign_section",
+                    headerState: .margin(height: .margin12),
+                    footerState: tableView.sectionFooter(text: "wallet_connect.sign.description".localized),
+                    rows: rows
+            )
+        ]
     }
 
 }

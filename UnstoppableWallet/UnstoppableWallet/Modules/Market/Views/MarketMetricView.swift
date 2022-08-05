@@ -12,7 +12,7 @@ class MarketMetricView: UIView {
     private let valueLabel = UILabel()
     private let diffLabel = DiffLabel()
     private let chartView = RateChartView()
-    private let button = ThemeButton()
+    private let button = UIButton()
 
     var onTap: (() -> ())? {
         didSet {
@@ -24,7 +24,6 @@ class MarketMetricView: UIView {
 
     init(configuration: ChartConfiguration? = nil) {
         super.init(frame: .zero)
-
 
         addSubview(button)
         button.snp.makeConstraints { maker in

@@ -8,7 +8,7 @@ class SendFeeSettingsAmountCautionViewModel {
     private let disposeBag = DisposeBag()
 
     private let service: SendAmountCautionService
-    private let feeCoin: PlatformCoin
+    private let feeToken: Token
 
     private let amountCautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
     private(set) var amountCaution: TitledCaution? = nil {
@@ -17,9 +17,9 @@ class SendFeeSettingsAmountCautionViewModel {
         }
     }
 
-    init(service: SendAmountCautionService, feeCoin: PlatformCoin) {
+    init(service: SendAmountCautionService, feeToken: Token) {
         self.service = service
-        self.feeCoin = feeCoin
+        self.feeToken = feeToken
 
         subscribe(disposeBag, service.amountCautionObservable) { [weak self] in
             self?.sync(amountCaution: $0)
@@ -36,7 +36,7 @@ class SendFeeSettingsAmountCautionViewModel {
         case .insufficientBalance:
             self.amountCaution = TitledCaution(
                     title: "send.fee_settings.amount_error.balance.title".localized,
-                    text: "send.fee_settings.amount_error.balance".localized(feeCoin.code),
+                    text: "send.fee_settings.amount_error.balance".localized(feeToken.coin.code),
                     type: .error)
         default: self.amountCaution = nil
         }

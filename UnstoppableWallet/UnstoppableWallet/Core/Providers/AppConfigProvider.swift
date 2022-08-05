@@ -31,12 +31,24 @@ class AppConfigProvider {
         (Bundle.main.object(forInfoDictionaryKey: "EtherscanApiKey") as? String) ?? ""
     }
 
+    var arbiscanKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "ArbiscanApiKey") as? String) ?? ""
+    }
+
+    var optimismEtherscanKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "OptimismEtherscanApiKey") as? String) ?? ""
+    }
+
     var bscscanKey: String {
         (Bundle.main.object(forInfoDictionaryKey: "BscscanApiKey") as? String) ?? ""
     }
 
     var polygonscanKey: String {
         (Bundle.main.object(forInfoDictionaryKey: "PolygonscanApiKey") as? String) ?? ""
+    }
+
+    var snowtraceKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "SnowtraceApiKey") as? String) ?? ""
     }
 
     var cryptoCompareApiKey: String? {

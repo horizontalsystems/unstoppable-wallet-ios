@@ -18,8 +18,8 @@ class WalletConnectV1MainService {
     private var interactor: WalletConnectInteractor?
     private var sessionData: SessionData?
 
-    private let allowedBlockchainsRelay = PublishRelay<[WalletConnectMainModule.Blockchain]>()
-    private(set) var blockchains = Set<WalletConnectMainModule.Blockchain>() {
+    private let allowedBlockchainsRelay = PublishRelay<[WalletConnectMainModule.BlockchainItem]>()
+    private(set) var blockchains = Set<WalletConnectMainModule.BlockchainItem>() {
         didSet {
             allowedBlockchainsRelay.accept(allowedBlockchains)
         }
@@ -37,7 +37,9 @@ class WalletConnectV1MainService {
 
     private(set) var state: WalletConnectMainModule.State = .idle {
         didSet {
-            stateRelay.accept(state)
+            if oldValue != state {
+                stateRelay.accept(state)
+            }
         }
     }
 
@@ -97,12 +99,12 @@ class WalletConnectV1MainService {
             throw WalletConnectMainModule.SessionError.noSuitableAccount
         }
 
-        guard let evmBlockchain = evmBlockchainManager.blockchain(chainId: chainId),
+        guard let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
               let evmKitWrapper = manager.evmKitWrapper(chainId: chainId, account: account) else {
-            throw WalletConnectMainModule.SessionError.unsupportedChainId
+            throw WalletConnectMainModule.SessionError.noAnySupportedChainId
         }
 
-        blockchains.insert(WalletConnectMainModule.Blockchain(chainId: chainId, evmBlockchain: evmBlockchain, address: evmKitWrapper.evmKit.address.eip55, selected: true))
+        blockchains.insert(WalletConnectMainModule.BlockchainItem(namespace: "eip155", chainId: chainId, blockchain: blockchain, address: evmKitWrapper.evmKit.address.eip55, selected: true))
         sessionData = SessionData(peerId: peerId, chainId: chainId, peerMeta: peerMeta, account: account, evmKitWrapper: evmKitWrapper)
     }
 
@@ -144,13 +146,13 @@ extension WalletConnectV1MainService: IWalletConnectMainService {
     var stateObservable: Observable<WalletConnectMainModule.State> {
         stateRelay.asObservable()
     }
-    var allowedBlockchains: [WalletConnectMainModule.Blockchain] {
+    var allowedBlockchains: [WalletConnectMainModule.BlockchainItem] {
         blockchains.sorted { blockchain, blockchain2 in
             blockchain.chainId < blockchain2.chainId
         }
     }
 
-    var allowedBlockchainsObservable: Observable<[WalletConnectMainModule.Blockchain]> {
+    var allowedBlockchainsObservable: Observable<[WalletConnectMainModule.BlockchainItem]> {
         allowedBlockchainsRelay.asObservable()
     }
 
@@ -270,7 +272,7 @@ extension WalletConnectV1MainService: IWalletConnectMainService {
 
         interactor.rejectSession(message: "Session Rejected by User")
 
-        state = .killed
+        state = .killed(reason: .rejectProposal)
     }
 
     func approveRequest(id: Int, anyResult: Any) {
@@ -339,7 +341,7 @@ extension WalletConnectV1MainService: IWalletConnectInteractorDelegate {
             sessionManager.deleteSession(peerId: sessionData.peerId)
         }
 
-        state = .killed
+        state = .killed(reason: .killSession)
     }
 
     func didRequestSendEthereumTransaction(id: Int, transaction: WCEthereumTransaction) {

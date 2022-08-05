@@ -43,7 +43,7 @@ class BaseMarketOverviewTopListDataSource {
                     isFirst: index == 0,
                     isLast: false,
                     rowActionProvider: nil,
-                    action:  {[weak self] in
+                    action:  { [weak self] in
                         self?.onSelect(listViewItem: listViewItem)
                     })
         }
@@ -60,7 +60,8 @@ class BaseMarketOverviewTopListDataSource {
                     cell.set(backgroundStyle: .lawrence, isLast: true)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = "market.top.section.header.see_all".localized
                     }
                     cell.bind(index: 1) { (component: ImageComponent) in
@@ -100,6 +101,7 @@ extension BaseMarketOverviewTopListDataSource: IMarketOverviewDataSource {
         cell.onSelect = { [weak self] index in
             self?.topListViewModel.onSelect(selectorIndex: index)
         }
+        cell.onTapTitle = { [weak self] in self?.didTapSeeAll() }
 
         cell.titleImage = UIImage(named: imageName)
         cell.title = title

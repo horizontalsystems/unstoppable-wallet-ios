@@ -27,8 +27,6 @@ class MainSettingsViewController: ThemeViewController {
     private let aboutCell = BaseSelectableThemeCell()
     private let footerCell = MainSettingsFooterCell()
 
-    private let titleStyle: TextComponent.Style = .b2
-
     init(viewModel: MainSettingsViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
         self.urlManager = urlManager
@@ -47,8 +45,6 @@ class MainSettingsViewController: ThemeViewController {
 
         title = "settings.title".localized
         navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
-
-        tableView.registerCell(forClass: A1Cell.self)
 
         tableView.sectionDataSource = self
 
@@ -136,7 +132,8 @@ class MainSettingsViewController: ThemeViewController {
             component.imageView.image = image
         }
         cell.bind(index: 1) { (component: TextComponent) in
-            component.set(style: titleStyle)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = title
         }
         cell.bind(index: 3) { (component: ImageComponent) in
@@ -150,11 +147,13 @@ class MainSettingsViewController: ThemeViewController {
             component.imageView.image = image
         }
         cell.bind(index: 1) { (component: TextComponent) in
-            component.set(style: titleStyle)
+            component.font = .body
+            component.textColor = .themeLeah
             component.text = title
         }
         cell.bind(index: 2) { (component: TextComponent) in
-            component.set(style: .c1)
+            component.font = .subhead1
+            component.textColor = .themeGray
         }
         cell.bind(index: 3) { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "arrow_big_forward_20")
@@ -223,15 +222,12 @@ class MainSettingsViewController: ThemeViewController {
                         self?.navigationController?.pushViewController(module, animated: true)
                     }
             ),
-            Row<A1Cell>(
+            tableView.imageTitleArrowRow(
                     id: "experimental-features",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isLast: true)
-                        cell.titleImage = UIImage(named: "flask_20")
-                        cell.title = "settings.experimental_features".localized
-                    },
-                    action: { [weak self] _ in
+                    image: "flask_20",
+                    title: "settings.experimental_features".localized,
+                    isLast: true,
+                    action: { [weak self] in
                         self?.navigationController?.pushViewController(ExperimentalFeaturesRouter.module(), animated: true)
                     }
             )
@@ -240,27 +236,21 @@ class MainSettingsViewController: ThemeViewController {
 
     private var knowledgeRows: [RowProtocol] {
         [
-            Row<A1Cell>(
+            tableView.imageTitleArrowRow(
                     id: "faq",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true)
-                        cell.titleImage = UIImage(named: "message_square_20")
-                        cell.title = "settings.faq".localized
-                    },
-                    action: { [weak self] _ in
+                    image: "message_square_20",
+                    title: "settings.faq".localized,
+                    isFirst: true,
+                    action: { [weak self] in
                         self?.navigationController?.pushViewController(FaqModule.viewController(), animated: true)
                     }
             ),
-            Row<A1Cell>(
+            tableView.imageTitleArrowRow(
                     id: "academy",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isLast: true)
-                        cell.titleImage = UIImage(named: "academy_1_20")
-                        cell.title = "guides.title".localized
-                    },
-                    action: { [weak self] _ in
+                    image: "academy_1_20",
+                    title: "guides.title".localized,
+                    isLast: true,
+                    action: { [weak self] in
                         self?.navigationController?.pushViewController(GuidesModule.instance(), animated: true)
                     }
             )

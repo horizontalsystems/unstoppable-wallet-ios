@@ -1,10 +1,10 @@
 import UIKit
 
 class FeeSlider: UISlider {
-    var onTracking: ((Int, CGPoint) -> ())?
-    var finishTracking: ((Int) -> ())?
+    var onTracking: ((Float, CGPoint) -> ())?
+    var finishTracking: ((Float) -> ())?
 
-    private var lastValue: Int?
+    private var lastValue: Float?
 
     required init() {
         let thumbImage: UIImage? = .circleImage(size: 18, color: .themeGray)
@@ -41,12 +41,9 @@ class FeeSlider: UISlider {
     override open func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         super.beginTracking(touch, with: event)
 
-        let intValue = Int(value)
-        lastValue = intValue
-
+        lastValue = value
         let position = correctCenter(touch: touch)
-
-        onTracking?(intValue, position)
+        onTracking?(value, position)
 
         return true
     }
@@ -54,18 +51,18 @@ class FeeSlider: UISlider {
     override open func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         super.continueTracking(touch, with: event)
 
-        let intValue = Int(value)
-        if lastValue != intValue {
-            lastValue = intValue
+        if lastValue != value {
+            lastValue = value
             let position = correctCenter(touch: touch)
 
-            onTracking?(intValue, position)
+            onTracking?(value, position)
         }
 
         return true
     }
+
     private func finish() {
-        finishTracking?(lastValue ?? Int(value))
+        finishTracking?(lastValue ?? value)
         lastValue = nil
     }
 

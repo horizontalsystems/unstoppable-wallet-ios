@@ -7,16 +7,23 @@ class BinanceAdapter {
     static let transferFee: Decimal = 0.000075
 
     private let binanceKit: BinanceChainKit
-    private let feeCoin: PlatformCoin
-    private let coin: PlatformCoin
+    private let feeToken: Token
+    private let token: Token
     private let asset: Asset
     private let transactionSource: TransactionSource
 
-    init(binanceKit: BinanceChainKit, symbol: String, feeCoin: PlatformCoin, wallet: Wallet) {
+    init(binanceKit: BinanceChainKit, feeToken: Token, wallet: Wallet) {
         self.binanceKit = binanceKit
-        self.feeCoin = feeCoin
-        coin = wallet.platformCoin
+        self.feeToken = feeToken
+        token = wallet.token
         transactionSource = wallet.transactionSource
+
+        let symbol: String
+
+        switch token.type {
+        case .bep2(let value): symbol = value
+        default: symbol = "BNB"
+        }
 
         asset = binanceKit.register(symbol: symbol)
     }
@@ -26,11 +33,11 @@ class BinanceAdapter {
         let toMine = transaction.to == binanceKit.account
 
         if fromMine && !toMine {
-            return BinanceChainOutgoingTransactionRecord(source: transactionSource, transaction: transaction, feeCoin: feeCoin, coin: coin, sentToSelf: false)
+            return BinanceChainOutgoingTransactionRecord(source: transactionSource, transaction: transaction, feeToken: feeToken, token: token, sentToSelf: false)
         } else if !fromMine && toMine {
-            return BinanceChainIncomingTransactionRecord(source: transactionSource, transaction: transaction, feeCoin: feeCoin, coin: coin)
+            return BinanceChainIncomingTransactionRecord(source: transactionSource, transaction: transaction, feeToken: feeToken, token: token)
         } else {
-            return BinanceChainOutgoingTransactionRecord(source: transactionSource, transaction: transaction, feeCoin: feeCoin, coin: coin, sentToSelf: true)
+            return BinanceChainOutgoingTransactionRecord(source: transactionSource, transaction: transaction, feeToken: feeToken, token: token, sentToSelf: true)
         }
     }
 
@@ -95,7 +102,9 @@ extension BinanceAdapter: IBalanceAdapter {
     }
 
     var balanceStateUpdatedObservable: Observable<AdapterState> {
-        binanceKit.syncStateObservable.map { [unowned self] in self.adapterState(syncState: $0) }
+        binanceKit.syncStateObservable.map { [weak self] in
+            self?.adapterState(syncState: $0) ?? .syncing(progress: nil, lastBlockDate: nil)
+        }
     }
 
     var balanceData: BalanceData {
@@ -103,7 +112,9 @@ extension BinanceAdapter: IBalanceAdapter {
     }
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
-        asset.balanceObservable.map { [unowned self] in self.balanceInfo(balance: $0) }
+        asset.balanceObservable.map { [weak self] in
+            self?.balanceInfo(balance: $0) ?? BalanceData(balance: 0)
+        }
     }
 
 }
@@ -174,7 +185,7 @@ extension BinanceAdapter: ITransactionsAdapter {
                 : "https://testnet-explorer.binance.org/tx/" + transactionHash
     }
 
-    func transactionsObservable(coin: PlatformCoin?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
+    func transactionsObservable(token: Token?, filter: TransactionTypeFilter) -> Observable<[TransactionRecord]> {
         let binanceChainFilter: TransactionFilterType?
         switch filter {
             case .all: binanceChainFilter = nil
@@ -190,7 +201,7 @@ extension BinanceAdapter: ITransactionsAdapter {
         }
     }
 
-    func transactionsSingle(from: TransactionRecord?, coin: PlatformCoin?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(from: TransactionRecord?, token: Token?, filter: TransactionTypeFilter, limit: Int) -> Single<[TransactionRecord]> {
         let binanceChainFilter: TransactionFilterType?
 
         switch filter {

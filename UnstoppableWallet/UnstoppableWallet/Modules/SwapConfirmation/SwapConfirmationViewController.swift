@@ -6,7 +6,7 @@ import RxCocoa
 import ComponentKit
 
 class SwapConfirmationViewController: SendEvmTransactionViewController {
-    private let swapButton = ThemeButton()
+    private let swapButton = PrimaryButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,10 +19,9 @@ class SwapConfirmationViewController: SendEvmTransactionViewController {
             maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        swapButton.apply(style: .primaryYellow)
+        swapButton.set(style: .yellow)
         swapButton.setTitle("swap.confirmation.swap_button".localized, for: .normal)
         swapButton.addTarget(self, action: #selector(onTapSwap), for: .touchUpInside)
 
@@ -36,5 +35,16 @@ class SwapConfirmationViewController: SendEvmTransactionViewController {
     @objc private func onTapSwap() {
         transactionViewModel.send()
     }
+
+    override func handleSending() {
+        HudHelper.instance.show(banner: .swapping)
+    }
+
+    override func handleSendSuccess(transactionHash: Data) {
+        HudHelper.instance.show(banner: .swapped)
+
+        super.handleSendSuccess(transactionHash: transactionHash)
+    }
+
 
 }

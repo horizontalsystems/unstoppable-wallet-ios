@@ -36,7 +36,6 @@ class BaseCurrencySettingsViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.registerCell(forClass: G4Cell.self)
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.disclaimerSignal) { [weak self] in self?.openDisclaimer(codes: $0) }
@@ -82,29 +81,17 @@ extension BaseCurrencySettingsViewController: SectionsDataSource {
         }
     }
 
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { containerWidth in
-                    SubtitleHeaderFooterView.height
-                }
-        )
-    }
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
                     id: "popular",
                     headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin12),
+                    footerState: .margin(height: .margin24),
                     rows: rows(viewItems: viewModel.popularViewItems)
             ),
             Section(
                     id: "other",
-                    headerState: header(text: "settings.base_currency.other".localized.uppercased()),
+                    headerState: tableView.sectionHeader(text: "settings.base_currency.other".localized.uppercased()),
                     footerState: .margin(height: .margin32),
                     rows: rows(viewItems: viewModel.otherViewItems)
             ),

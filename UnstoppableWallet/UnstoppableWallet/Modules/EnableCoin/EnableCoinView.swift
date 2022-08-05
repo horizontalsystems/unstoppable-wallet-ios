@@ -1,20 +1,20 @@
 import UIKit
 
 class EnableCoinView {
-    private let coinPlatformsView: CoinPlatformsView
+    private let coinTokensView: CoinTokensView
     private let restoreSettingsView: RestoreSettingsView
     private let coinSettingsView: CoinSettingsView
 
     var onOpenController: ((UIViewController) -> ())? {
         didSet {
-            coinPlatformsView.onOpenController = onOpenController
+            coinTokensView.onOpenController = onOpenController
             restoreSettingsView.onOpenController = onOpenController
             coinSettingsView.onOpenController = onOpenController
         }
     }
 
-    init(coinPlatformsView: CoinPlatformsView, restoreSettingsView: RestoreSettingsView, coinSettingsView: CoinSettingsView) {
-        self.coinPlatformsView = coinPlatformsView
+    init(coinTokensView: CoinTokensView, restoreSettingsView: RestoreSettingsView, coinSettingsView: CoinSettingsView) {
+        self.coinTokensView = coinTokensView
         self.restoreSettingsView = restoreSettingsView
         self.coinSettingsView = coinSettingsView
     }

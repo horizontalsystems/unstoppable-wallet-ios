@@ -3,12 +3,12 @@ import MarketKit
 struct NftCollectionOverviewModule {
 
     static func viewController(collectionUid: String) -> NftCollectionOverviewViewController? {
-        guard let basePlatformCoin = try? App.shared.marketKit.platformCoin(coinType: .ethereum) else {
+        guard let ethereumToken = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: .ethereum, tokenType: .native)) else {
             return nil
         }
 
         let coinService = CoinService(
-                platformCoin: basePlatformCoin,
+                token: ethereumToken,
                 currencyKit: App.shared.currencyKit,
                 marketKit: App.shared.marketKit
         )

@@ -49,7 +49,6 @@ class ManageAccountsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         createCell.set(backgroundStyle: .lawrence, isFirst: true)
         CellBuilder.build(cell: createCell, elements: [.image20, .text])
@@ -57,7 +56,8 @@ class ManageAccountsViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "plus_20")?.withTintColor(.themeJacob)
         })
         createCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .b3)
+            component.font = .body
+            component.textColor = .themeJacob
             component.text = "onboarding.balance.create".localized
         })
 
@@ -67,7 +67,8 @@ class ManageAccountsViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "download_20")?.withTintColor(.themeJacob)
         })
         restoreCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .b3)
+            component.font = .body
+            component.textColor = .themeJacob
             component.text = "onboarding.balance.restore".localized
         })
 
@@ -77,7 +78,8 @@ class ManageAccountsViewController: ThemeViewController {
             component.imageView.image = UIImage(named: "eye_20")?.withTintColor(.themeJacob)
         })
         watchCell.bind(index: 1, block: { (component: TextComponent) in
-            component.set(style: .b3)
+            component.font = .body
+            component.textColor = .themeJacob
             component.text = "onboarding.balance.watch".localized
         })
 
@@ -154,8 +156,10 @@ extension ManageAccountsViewController: SectionsDataSource {
                     })
                     cell.bind(index: 1, block: { (component: MultiTextComponent) in
                         component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
+                        component.title.font = .body
+                        component.title.textColor = .themeLeah
+                        component.subtitle.font = .subhead2
+                        component.subtitle.textColor = .themeGray
 
                         component.title.text = viewItem.title
                         component.subtitle.text = viewItem.subtitle
@@ -186,14 +190,7 @@ extension ManageAccountsViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-        let hint = "onboarding.balance.password_hint".localized
-        let footerState: ViewState<BottomDescriptionHeaderFooterView> = .cellType(hash: "hint_footer", binder: { view in
-            view.bind(text: hint)
-        }, dynamicHeight: { containerWidth in
-            BottomDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: hint)
-        })
-
-        return [
+        [
             Section(
                     id: "regular-view-items",
                     headerState: .margin(height: .margin12),
@@ -211,7 +208,7 @@ extension ManageAccountsViewController: SectionsDataSource {
             ),
             Section(
                     id: "actions",
-                    footerState: footerState,
+                    footerState: tableView.sectionFooter(text: "onboarding.balance.password_hint".localized),
                     rows: [
                         StaticRow(
                                 cell: createCell,

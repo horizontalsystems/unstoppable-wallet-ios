@@ -12,13 +12,13 @@ class RestoreSettingsView {
     init(viewModel: RestoreSettingsViewModel) {
         self.viewModel = viewModel
 
-        subscribe(disposeBag, viewModel.openBirthdayAlertSignal) { [weak self] platformCoin in
-            self?.showBirthdayAlert(platformCoin: platformCoin)
+        subscribe(disposeBag, viewModel.openBirthdayAlertSignal) { [weak self] token in
+            self?.showBirthdayAlert(token: token)
         }
     }
 
-    private func showBirthdayAlert(platformCoin: PlatformCoin) {
-        let controller = BirthdayInputViewController(platformCoin: platformCoin, delegate: self).toAlert
+    private func showBirthdayAlert(token: Token) {
+        let controller = BirthdayInputViewController(token: token, delegate: self).toAlert
         onOpenController?(controller)
     }
 
@@ -26,7 +26,7 @@ class RestoreSettingsView {
 
 extension RestoreSettingsView: IBirthdayInputDelegate {
 
-    func didEnter(birthdayHeight: Int) {
+    func didEnter(birthdayHeight: Int?) {
         viewModel.onEnter(birthdayHeight: birthdayHeight)
     }
 

@@ -6,6 +6,7 @@ import MarketKit
 import ComponentKit
 import StorageKit
 import SectionsTableView
+import Kingfisher
 
 enum RowActionType {
     case additive
@@ -35,8 +36,63 @@ struct MarketModule {
     }
 
     static func marketListCell(tableView: UITableView, backgroundStyle: BaseThemeCell.BackgroundStyle, listViewItem: MarketModule.ListViewItem, isFirst: Bool, isLast: Bool, rowActionProvider: (() -> [RowAction])?, action: (() -> ())?) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image24, .multiText, .multiText],
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image24 { component in
+                        component.imageView.contentMode = .scaleAspectFill
+                        component.imageView.clipsToBounds = true
+                        component.imageView.cornerRadius = listViewItem.iconShape.radius
+                        component.imageView.kf.setImage(
+                                with: URL(string: listViewItem.iconUrl),
+                                placeholder: UIImage(named: listViewItem.iconPlaceholderName),
+                                options: [.onlyLoadFirstFrame]
+                        )
+                    },
+                    .vStackCentered([
+                        .hStack([
+                            .text { component in
+                                component.font = .body
+                                component.textColor = .themeLeah
+                                component.text = listViewItem.leftPrimaryValue
+                            },
+                            .text { component in
+                                component.font = .body
+                                component.textColor = .themeLeah
+                                component.textAlignment = .right
+                                component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                                component.text = listViewItem.rightPrimaryValue
+                            }
+                        ]),
+                        .margin(3),
+                        .hStack([
+                            .badge { component in
+                                if let badge = listViewItem.badge {
+                                    component.isHidden = false
+                                    component.badgeView.set(style: .small)
+                                    component.badgeView.text = badge
+                                    component.badgeView.change = listViewItem.badgeSecondaryValue
+                                } else {
+                                    component.isHidden = true
+                                }
+                            },
+                            .margin8,
+                            .text { component in
+                                component.font = .subhead2
+                                component.textColor = .themeGray
+                                component.text = listViewItem.leftSecondaryValue
+                            },
+                            .text { component in
+                                component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                                component.setContentHuggingPriority(.required, for: .horizontal)
+                                component.textAlignment = .right
+                                let marketFieldData = marketFieldPreference(dataValue: listViewItem.rightSecondaryValue)
+                                component.font = .subhead2
+                                component.textColor = marketFieldData.color
+                                component.text = marketFieldData.value
+                            }
+                        ])
+                    ])
+                ]),
                 tableView: tableView,
                 id: "\(listViewItem.uid ?? "")-\(listViewItem.leftPrimaryValue)",
                 height: .heightDoubleLineCell,
@@ -44,40 +100,8 @@ struct MarketModule {
                 rowActionProvider: rowActionProvider,
                 bind: { cell in
                     cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.imageView.clipsToBounds = true
-                        component.imageView.cornerRadius = listViewItem.iconShape.radius
-                        component.setImage(urlString: listViewItem.iconUrl, placeholder: UIImage(named: listViewItem.iconPlaceholderName))
-                    }
-                    cell.bind(index: 1) { (component: MultiTextComponent) in
-                        component.set(style: .m3)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
-
-                        component.title.text = listViewItem.leftPrimaryValue
-                        component.subtitle.text = listViewItem.leftSecondaryValue
-                        component.subtitleBadge.text = listViewItem.badge
-                        component.subtitleBadge.change = listViewItem.badgeSecondaryValue
-                    }
-                    cell.bind(index: 2) { (component: MultiTextComponent) in
-                        component.titleSpacingView.isHidden = true
-                        component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
-
-                        component.title.textAlignment = .right
-                        component.title.text = listViewItem.rightPrimaryValue
-
-                        let marketFieldData = marketFieldPreference(dataValue: listViewItem.rightSecondaryValue)
-                        component.subtitle.textAlignment = .right
-                        component.subtitle.textColor = marketFieldData.color
-                        component.subtitle.text = marketFieldData.value
-                    }
                 },
-                action: {
-                    action?()
-                }
+                action: action
         )
     }
 

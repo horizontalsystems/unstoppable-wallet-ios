@@ -67,14 +67,14 @@ extension LocalStorage {
         set { storage.set(value: newValue, for: keyZCashRewind) }
     }
 
-    func defaultProvider(blockchain: EvmBlockchain) -> SwapModule.Dex.Provider {
-        let key = [keyDefaultProvider, blockchain.rawValue].joined(separator: "|")
+    func defaultProvider(blockchainType: BlockchainType) -> SwapModule.Dex.Provider {
+        let key = [keyDefaultProvider, blockchainType.uid].joined(separator: "|")
         let raw: String? = storage.value(for: key)
-        return (raw.flatMap { SwapModule.Dex.Provider(rawValue: $0) }) ?? blockchain.allowedProviders[0]
+        return (raw.flatMap { SwapModule.Dex.Provider(rawValue: $0) }) ?? blockchainType.allowedProviders[0]
     }
 
-    func setDefaultProvider(blockchain: EvmBlockchain, provider: SwapModule.Dex.Provider) {
-        let key = [keyDefaultProvider, blockchain.rawValue].joined(separator: "|")
+    func setDefaultProvider(blockchainType: BlockchainType, provider: SwapModule.Dex.Provider) {
+        let key = [keyDefaultProvider, blockchainType.uid].joined(separator: "|")
         storage.set(value: provider.rawValue, for: key)
     }
 

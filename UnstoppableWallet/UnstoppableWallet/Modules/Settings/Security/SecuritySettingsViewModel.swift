@@ -1,6 +1,7 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import MarketKit
 
 class SecuritySettingsViewModel {
     private let service: SecuritySettingsService
@@ -11,8 +12,8 @@ class SecuritySettingsViewModel {
     private let showErrorRelay = PublishRelay<String>()
     private let openSetPinRelay = PublishRelay<()>()
     private let openUnlockRelay = PublishRelay<()>()
-    private let openBtcBlockchainRelay = PublishRelay<BtcBlockchain>()
-    private let openEvmBlockchainRelay = PublishRelay<EvmBlockchain>()
+    private let openBtcBlockchainRelay = PublishRelay<Blockchain>()
+    private let openEvmBlockchainRelay = PublishRelay<Blockchain>()
 
     init(service: SecuritySettingsService) {
         self.service = service
@@ -55,13 +56,13 @@ class SecuritySettingsViewModel {
             switch item {
             case .btc(let blockchain, let restoreMode, let transactionMode):
                 return BlockchainViewItem(
-                        icon: blockchain.icon24,
+                        iconUrl: blockchain.type.imageUrl,
                         name: blockchain.name,
                         value: "\(restoreMode.title), \(transactionMode.title)"
                 )
             case .evm(let blockchain, let syncSource):
                 return BlockchainViewItem(
-                        icon: blockchain.icon24,
+                        iconUrl: blockchain.type.imageUrl,
                         name: blockchain.name,
                         value: syncSource.name
                 )
@@ -95,11 +96,11 @@ extension SecuritySettingsViewModel {
         openUnlockRelay.asSignal()
     }
 
-    var openBtcBlockchainSignal: Signal<BtcBlockchain> {
+    var openBtcBlockchainSignal: Signal<Blockchain> {
         openBtcBlockchainRelay.asSignal()
     }
 
-    var openEvmBlockchainSignal: Signal<EvmBlockchain> {
+    var openEvmBlockchainSignal: Signal<Blockchain> {
         openEvmBlockchainRelay.asSignal()
     }
 
@@ -153,7 +154,7 @@ extension SecuritySettingsViewModel {
     }
 
     struct BlockchainViewItem {
-        let icon: String
+        let iconUrl: String
         let name: String
         let value: String
     }

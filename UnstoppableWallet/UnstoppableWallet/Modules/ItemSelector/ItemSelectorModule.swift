@@ -37,20 +37,12 @@ extension ItemSelectorModule {
     }
 
     struct ComplexTitleViewItem {
-        let title: String?
-        let titleColor: UIColor
-        let subtitle: String?
-        let subtitleColor: UIColor
+        let title: String
         let image: UIImage?
-        let tintColor: UIColor?
 
-        init(title: String?, titleColor: UIColor = .themeOz, subtitle: String?, subtitleColor: UIColor = .themeGray, image: UIImage?, tintColor: UIColor?) {
+        init(title: String, image: UIImage?) {
             self.title = title
-            self.titleColor = titleColor
-            self.subtitle = subtitle
-            self.subtitleColor = titleColor
             self.image = image
-            self.tintColor = tintColor
         }
     }
 
@@ -68,16 +60,16 @@ extension ItemSelectorModule {
 
     struct ComplexViewItem {
         let title: String
-        let titleStyle: TextComponent.Style
+        let titleColor: UIColor
         let subtitle: String?
-        let subtitleStyle: TextComponent.Style
+        let subtitleColor: UIColor
         let selected: Bool
 
-        init(title: String, titleStyle: TextComponent.Style = .b2, subtitle: String? = nil, subtitleStyle: TextComponent.Style = .d1, selected: Bool) {
+        init(title: String, titleColor: UIColor = .themeLeah, subtitle: String? = nil, subtitleColor: UIColor = .themeGray, selected: Bool) {
             self.title = title
-            self.titleStyle = titleStyle
+            self.titleColor = titleColor
             self.subtitle = subtitle
-            self.subtitleStyle = subtitleStyle
+            self.subtitleColor = subtitleColor
             self.selected = selected
         }
     }

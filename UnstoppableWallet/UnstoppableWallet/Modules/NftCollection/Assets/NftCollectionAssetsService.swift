@@ -104,7 +104,7 @@ class NftCollectionAssetsService {
 
         for item in items {
             if let price = item.price {
-                uids.insert(price.platformCoin.coin.uid)
+                uids.insert(price.token.coin.uid)
             }
         }
 
@@ -113,13 +113,13 @@ class NftCollectionAssetsService {
 
     private func updatePriceItems(items: [Item], map: [String: WalletCoinPriceService.Item]) {
         for item in items {
-            item.priceItem = item.price.flatMap { map[$0.platformCoin.coin.uid] }
+            item.priceItem = item.price.flatMap { map[$0.token.coin.uid] }
         }
     }
 
 }
 
-extension NftCollectionAssetsService: IWalletRateServiceDelegate {
+extension NftCollectionAssetsService: IWalletCoinPriceServiceDelegate {
 
     func didUpdateBaseCurrency() {
         queue.async {

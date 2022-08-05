@@ -38,7 +38,6 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
         }
 
         tableView.registerCell(forClass: D9Cell.self)
-        tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
         tableView.sectionDataSource = self
         tableView.separatorStyle = .none
 
@@ -47,24 +46,17 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
         tableView.buildSections()
     }
 
-    private var header: ViewState<TopDescriptionHeaderFooterView> {
-        let descriptionText = "double_spend_info.header".localized
-
-        return .cellType(
-                hash: "top_description",
-                binder: { view in
-                    view.bind(text: descriptionText)
-                }, dynamicHeight: { containerWidth in
-                    TopDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: descriptionText)
-                }
-        )
-    }
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
+                    id: "alert",
+                    rows: [
+                        tableView.highlightedDescriptionRow(id: "alert", text: "double_spend_info.header".localized)
+                    ]
+            ),
+            Section(
                     id: "hashes",
-                    headerState: header,
+                    headerState: .margin(height: .margin12),
                     footerState: .margin(height: .margin6x),
                     rows: [
                         Row<D9Cell>(
@@ -90,14 +82,6 @@ class DoubleSpendInfoViewController: ThemeViewController, SectionsDataSource {
         ]
     }
 
-    func onTapHash() {
-        delegate.onTapHash()
-    }
-
-    func onConflictingTapHash() {
-        delegate.onTapConflictingHash()
-    }
-
     @objc func onClose() {
         dismiss(animated: true)
     }
@@ -113,7 +97,7 @@ extension DoubleSpendInfoViewController: IDoubleSpendInfoView {
     }
 
     func showCopied() {
-        HudHelper.instance.showSuccess(title: "alert.copied".localized)
+        HudHelper.instance.show(banner: .copied)
     }
 
 }

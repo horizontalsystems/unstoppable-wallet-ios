@@ -3,6 +3,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import MarketKit
+import ComponentKit
 
 class CoinPageViewModel {
     private let service: CoinPageService
@@ -10,8 +11,7 @@ class CoinPageViewModel {
 
     private let addWalletStateRelay = BehaviorRelay<AddWalletState>(value: .hidden)
     private let favoriteRelay: BehaviorRelay<Bool>
-    private let successHudRelay = PublishRelay<String>()
-    private let attentionHudRelay = PublishRelay<String>()
+    private let hudRelay = PublishRelay<HudHelper.BannerType>()
 
     init(service: CoinPageService) {
         self.service = service
@@ -20,7 +20,7 @@ class CoinPageViewModel {
 
         subscribe(disposeBag, service.favoriteObservable) { [weak self] favorite in
             self?.favoriteRelay.accept(favorite)
-            self?.successHudRelay.accept(favorite ? "coin_page.favorited".localized : "coin_page.unfavorited".localized)
+            self?.hudRelay.accept(favorite ? .addedToWatchlist : .removedFromWatchlist)
         }
 
         subscribe(disposeBag, service.walletStateObservable) { [weak self] in self?.sync(walletState: $0) }
@@ -36,7 +36,7 @@ class CoinPageViewModel {
             addWalletStateRelay.accept(.visible(added: added))
 
             if added {
-                successHudRelay.accept("coin_page.added_to_wallet".localized)
+                hudRelay.accept(.addedToWallet)
             }
         }
     }
@@ -53,12 +53,8 @@ extension CoinPageViewModel {
         favoriteRelay.asDriver()
     }
 
-    var successHudSignal: Signal<String> {
-        successHudRelay.asSignal()
-    }
-
-    var attentionHudSignal: Signal<String> {
-        attentionHudRelay.asSignal()
+    var hudSignal: Signal<HudHelper.BannerType> {
+        hudRelay.asSignal()
     }
 
     var title: String {
@@ -73,7 +69,7 @@ extension CoinPageViewModel {
         switch service.walletState {
         case .supported(let added):
             if added {
-                attentionHudRelay.accept("coin_page.already_added_to_wallet".localized)
+                hudRelay.accept(.alreadyAddedToWallet)
             } else {
                 service.addWallet()
             }

@@ -24,8 +24,8 @@ class OneInchDataSource {
 
     private let errorCell = SendEthereumErrorCell()
     private let buttonStackCell = StackViewCell()
-    private let approveButton = ThemeButton()
-    private let proceedButton = ThemeButton()
+    private let approveButton = PrimaryButton()
+    private let proceedButton = PrimaryButton()
     private let approveStepCell = SwapStepCell()
 
     var onOpen: ((_ viewController: UIViewController,_ viaPush: Bool) -> ())? = nil
@@ -69,11 +69,11 @@ class OneInchDataSource {
         buyPriceCell.isVisible = false
         allowanceCell.title = "swap.allowance".localized
 
-        approveButton.apply(style: .primaryGray)
+        approveButton.set(style: .gray)
         approveButton.addTarget(self, action: #selector((onTapApproveButton)), for: .touchUpInside)
         buttonStackCell.add(view: approveButton)
 
-        proceedButton.apply(style: .primaryYellow)
+        proceedButton.set(style: .yellow)
         proceedButton.addTarget(self, action: #selector((onTapProceedButton)), for: .touchUpInside)
         buttonStackCell.add(view: proceedButton)
 
@@ -118,7 +118,7 @@ class OneInchDataSource {
         handle(actionState: approveActionState, button: approveButton)
     }
 
-    private func handle(actionState: OneInchViewModel.ActionState, button: ThemeButton) {
+    private func handle(actionState: OneInchViewModel.ActionState, button: PrimaryButton) {
         switch actionState {
         case .hidden:
             button.isHidden = true
@@ -178,8 +178,8 @@ extension OneInchDataSource: ISwapDataSource {
 
     var state: SwapModule.DataSourceState {
         SwapModule.DataSourceState(
-                platformCoinFrom: viewModel.tradeService.platformCoinIn,
-                platformCoinTo: viewModel.tradeService.platformCoinOut,
+                tokenFrom: viewModel.tradeService.tokenIn,
+                tokenTo: viewModel.tradeService.tokenOut,
                 amountFrom: viewModel.tradeService.amountIn,
                 amountTo: viewModel.tradeService.amountOut,
                 exactFrom: false)
@@ -248,7 +248,7 @@ extension OneInchDataSource: ISwapDataSource {
                     StaticRow(
                             cell: buttonStackCell,
                             id: "button",
-                            height: ThemeButton.height(style: .primaryYellow)
+                            height: .heightButton
                     )
                 ]
         ))

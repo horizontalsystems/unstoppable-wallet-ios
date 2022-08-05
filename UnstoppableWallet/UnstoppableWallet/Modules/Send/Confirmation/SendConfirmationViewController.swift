@@ -11,7 +11,7 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
 
     private let tableView = SectionsTableView(style: .grouped)
     private let bottomWrapper = BottomGradientHolder()
-    private let sendButton = ThemeButton()
+    private let sendButton = PrimaryButton()
 
     private var viewItems = [[SendConfirmationViewModel.ViewItem]]()
 
@@ -53,17 +53,16 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
             maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        sendButton.apply(style: .primaryYellow)
+        sendButton.set(style: .yellow)
         sendButton.setTitle("send.confirmation.send_button".localized, for: .normal)
         sendButton.addTarget(self, action: #selector(onTapSend), for: .touchUpInside)
 
         subscribe(disposeBag, viewModel.sendEnabledDriver) { [weak self] in self?.sendButton.isEnabled = $0 }
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItems: $0) }
 
-        subscribe(disposeBag, viewModel.sendingSignal) { HudHelper.instance.showSpinner() }
+        subscribe(disposeBag, viewModel.sendingSignal) { HudHelper.instance.show(banner: .sending) }
         subscribe(disposeBag, viewModel.sendSuccessSignal) { [weak self] in self?.handleSendSuccess() }
         subscribe(disposeBag, viewModel.sendFailedSignal) { [weak self] in self?.handleSendFailed(error: $0) }
 
@@ -83,13 +82,13 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
     }
 
     func handleSendSuccess() {
-        HudHelper.instance.showSuccess(title: "alert.success_action".localized)
+        HudHelper.instance.show(banner: .sent)
 
         dismiss(animated: true)
     }
 
     private func handleSendFailed(error: String) {
-        HudHelper.instance.showError(title: error)
+        HudHelper.instance.show(banner: .error(string: error))
     }
 
     private func row(viewItem: SendConfirmationViewModel.ViewItem, rowInfo: RowInfo) -> RowProtocol {

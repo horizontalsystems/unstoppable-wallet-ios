@@ -14,7 +14,7 @@ class NftCollectionOverviewViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
-    private let errorView = PlaceholderView()
+    private let errorView = PlaceholderViewModule.reachabilityView()
     private let descriptionTextCell = ReadMoreTextCell()
 
     private var viewItem: NftCollectionOverviewViewModel.ViewItem?
@@ -55,7 +55,7 @@ class NftCollectionOverviewViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        errorView.configureSyncError(target: self, action: #selector(onRetry))
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -166,7 +166,8 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .transparent)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                 }
@@ -299,29 +300,29 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                             tableView: tableView,
                             id: "contract-\(index)",
                             height: .heightCell48,
-                            bind: { cell in
+                            bind: { [weak self] cell in
                                 cell.set(backgroundStyle: .lawrence, isFirst: index == 0, isLast: index == viewItems.count - 1)
 
                                 cell.bind(index: 0) { (component: ImageComponent) in
-                                    component.imageView.image = UIImage(named: viewItem.iconName)
+                                    component.setImage(urlString: viewItem.iconUrl, placeholder: nil)
                                 }
 
                                 cell.bind(index: 1) { (component: TextComponent) in
-                                    component.set(style: .d1)
-                                    component.text = viewItem.reference
+                                    component.font = .subhead2
+                                    component.textColor = .themeGray
+                                    component.text = viewItem.reference.shortened
                                 }
 
                                 cell.bind(index: 2) { (component: SecondaryCircleButtonComponent) in
                                     component.button.set(image: UIImage(named: "copy_20"))
                                     component.onTap = {
-                                        UIPasteboard.general.setValue(viewItem.reference, forPasteboardType: "public.plain-text")
-                                        HudHelper.instance.showSuccess(title: "alert.copied".localized)
+                                        CopyHelper.copyAndNotify(value: viewItem.reference)
                                     }
                                 }
 
                                 cell.bind(index: 3) { (component: SecondaryCircleButtonComponent) in
                                     component.button.set(image: UIImage(named: "globe_20"))
-                                    component.onTap = { [weak self] in
+                                    component.onTap = {
                                         self?.urlManager.open(url: viewItem.explorerUrl, from: self?.parentNavigationController)
                                     }
                                 }
@@ -370,7 +371,8 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                         component.imageView.image = iconImage?.withTintColor(.themeGray)
                     }
                     cell.bind(index: 1) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = title
                     }
                     cell.bind(index: 2) { (component: ImageComponent) in

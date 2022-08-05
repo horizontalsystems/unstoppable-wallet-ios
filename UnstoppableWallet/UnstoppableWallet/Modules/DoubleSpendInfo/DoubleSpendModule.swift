@@ -5,10 +5,4 @@ protocol IDoubleSpendInfoView: AnyObject {
 
 protocol IDoubleSpendInfoViewDelegate {
     func onLoad()
-    func onTapHash()
-    func onTapConflictingHash()
-}
-
-protocol IDoubleSpendInfoInteractor {
-    func copy(value: String)
 }

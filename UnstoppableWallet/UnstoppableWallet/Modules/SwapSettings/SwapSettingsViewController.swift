@@ -6,23 +6,30 @@ import RxSwift
 import RxCocoa
 import SectionsTableView
 import ComponentKit
+import UIExtensions
 
-class SwapSettingsViewController: ThemeViewController {
+class SwapSettingsViewController: KeyboardAwareViewController {
+    private let wrapperViewHeight: CGFloat = .heightButton + .margin16 + .margin16
     private let animationDuration: TimeInterval = 0.2
     private let disposeBag = DisposeBag()
 
     private let dataSourceManager: ISwapDataSourceManager
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let chooseServiceCell = B2Cell()
     private var dataSource: ISwapSettingsDataSource?
 
+    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    private let applyButton = PrimaryButton()
+
     private var isLoaded: Bool = false
+    override var accessoryViewHeight: CGFloat {
+        super.accessoryViewHeight
+    }
 
     init(dataSourceManager: ISwapDataSourceManager) {
         self.dataSourceManager = dataSourceManager
 
-        super.init()
+        super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -35,7 +42,6 @@ class SwapSettingsViewController: ThemeViewController {
         title = "swap.advanced_settings".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(didTapCancel))
 
-
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -44,18 +50,28 @@ class SwapSettingsViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 //        tableView.allowsSelection = false
-        tableView.keyboardDismissMode = .onDrag
         tableView.sectionDataSource = self
 
-        tableView.registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
-        tableView.registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
+        view.addSubview(gradientWrapperView)
+        gradientWrapperView.snp.makeConstraints { maker in
+            maker.height.equalTo(wrapperViewHeight).priority(.high)
+            maker.leading.trailing.bottom.equalToSuperview()
+        }
 
-        chooseServiceCell.title = "swap.service".localized
-        chooseServiceCell.valueColor = .themeLeah
-        chooseServiceCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        gradientWrapperView.addSubview(applyButton)
+        applyButton.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(CGFloat.margin16)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide)
+        }
+        applyButton.set(style: .yellow)
+        applyButton.setTitle("button.apply".localized, for: .normal)
+        applyButton.addTarget(self, action: #selector(onTapDoneButton), for: .touchUpInside)
 
         subscribe(disposeBag, dataSourceManager.dataSourceUpdated) { [weak self] _ in self?.updateDataSource() }
         updateDataSource()
+
+        setInitialState(bottomPadding: wrapperViewHeight)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -64,12 +80,12 @@ class SwapSettingsViewController: ThemeViewController {
         isLoaded = true
     }
 
-    private func sync(providerName: String?) {
-        chooseServiceCell.value = providerName
-    }
-
     @objc private func didTapCancel() {
         dismiss(animated: true)
+    }
+
+    @objc private func onTapDoneButton() {
+        dataSource?.didTapApply()
     }
 
     private func updateDataSource() {
@@ -78,12 +94,20 @@ class SwapSettingsViewController: ThemeViewController {
         dataSource?.onReload = { [weak self] in self?.reloadTable() }
         dataSource?.onClose = { [weak self] in self?.didTapCancel() }
         dataSource?.onOpen = { [weak self] viewController in self?.present(viewController, animated: true) }
+        dataSource?.onChangeButtonState = { [weak self] in self?.syncButton(enabled: $0, title: $1) }
+
+        dataSource?.viewDidLoad()
 
         if isLoaded {
             tableView.reload()
         } else {
             tableView.buildSections()
         }
+    }
+
+    private func syncButton(enabled: Bool, title: String) {
+        applyButton.isEnabled = enabled
+        applyButton.setTitle(title, for: .normal)
     }
 
     private func reloadTable() {
@@ -101,11 +125,10 @@ extension SwapSettingsViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let dataSource = dataSource {
-            sections.append(contentsOf: dataSource.buildSections())
+            sections.append(contentsOf: dataSource.buildSections(tableView: tableView))
         }
 
         return sections
     }
 
 }
-

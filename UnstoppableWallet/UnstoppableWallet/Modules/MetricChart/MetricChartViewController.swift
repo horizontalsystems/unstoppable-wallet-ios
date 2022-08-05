@@ -45,12 +45,8 @@ class MetricChartViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.bind(
-                title: viewModel.title,
-                subtitle: "market.global.subtitle".localized,
-                image: UIImage(named: "chart_2_24"),
-                tintColor: .themeJacob
-        )
+        titleView.title = viewModel.title
+        titleView.image = UIImage(named: "chart_2_24")?.withTintColor(.themeJacob)
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
         }
@@ -72,13 +68,12 @@ class MetricChartViewController: ThemeActionSheetController {
         tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerCell(forClass: ErrorCell.self)
         tableView.registerCell(forClass: TextCell.self)
-        tableView.registerHeaderFooter(forClass: TopDescriptionHeaderFooterView.self)
 
         view.addSubview(poweredByLabel)
         poweredByLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.top.equalTo(tableView.snp.bottom)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin12 + CGFloat.margin16)
+            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
         poweredByLabel.textAlignment = .center
@@ -104,16 +99,9 @@ class MetricChartViewController: ThemeActionSheetController {
 extension MetricChartViewController {
 
     private var chartSection: SectionProtocol {
-        let description = viewModel.description
-        let footerState: ViewState<TopDescriptionHeaderFooterView> = .cellType(hash: "bottom_description", binder: { view in
-            view.bind(text: description)
-        }, dynamicHeight: { [unowned self] _ in
-            TopDescriptionHeaderFooterView.height(containerWidth: tableView.bounds.width, text: description ?? "")
-        })
-
-        return Section(
+        Section(
                 id: "chart",
-                footerState: footerState,
+                footerState: tableView.sectionFooter(text: viewModel.description ?? ""),
                 rows: [chartRow]
         )
     }

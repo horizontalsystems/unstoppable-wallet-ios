@@ -1,6 +1,7 @@
 import UIKit
 import LanguageKit
 import MarketKit
+import ThemeKit
 
 struct NftCollectionModule {
 
@@ -13,7 +14,7 @@ struct NftCollectionModule {
         }
 
         let assetsController = NftCollectionAssetsModule.viewController(collectionUid: collectionUid)
-        let activityController = NftCollectionActivityModule.viewController(collectionUid: collectionUid)
+        let activityController = NftActivityModule.viewController(eventListType: .collection(uid: collectionUid))
 
         return NftCollectionViewController(
                 viewModel: viewModel,

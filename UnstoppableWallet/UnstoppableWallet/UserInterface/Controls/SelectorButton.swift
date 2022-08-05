@@ -1,6 +1,6 @@
 import ComponentKit
 
-class SelectorButton: ThemeButton {
+class SelectorButton: SecondaryButton {
     private var items = [String]()
 
     var currentIndex: Int = 0
@@ -10,6 +10,7 @@ class SelectorButton: ThemeButton {
 
     override init() {
         super.init()
+
         addTarget(self, action: #selector(onTap), for: .touchUpInside)
     }
 
@@ -18,7 +19,7 @@ class SelectorButton: ThemeButton {
     }
 
     func set(items: [String]) {
-        apply(style: .secondaryDefaultIcon)
+        set(style: .default)
 
         self.items = items
 
@@ -46,6 +47,7 @@ class SelectorButton: ThemeButton {
 
         setTitle(items[index], for: .normal)
         setImage(UIImage(named: imageName(count: items.count, index: index)), for: .normal)
+        syncInsets()
 
         currentIndex = index
 

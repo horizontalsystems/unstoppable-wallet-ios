@@ -10,7 +10,7 @@ class ProFeaturesActivateViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let backupButtonHolder = BottomGradientHolder()
-    private let activateButton = ThemeButton()
+    private let activateButton = PrimaryButton()
 
     private let onSuccess: (() -> ())?
     private let onCancel: (() -> ())?
@@ -58,10 +58,9 @@ class ProFeaturesActivateViewController: ThemeViewController {
         backupButtonHolder.addSubview(activateButton)
         activateButton.snp.makeConstraints { maker in
             maker.leading.top.trailing.bottom.equalToSuperview().inset(CGFloat.margin24)
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        activateButton.apply(style: .primaryYellow)
+        activateButton.set(style: .yellow)
         activateButton.setTitle("pro_features.activate".localized, for: .normal)
         activateButton.addTarget(self, action: #selector(onActivate), for: .touchUpInside)
 

@@ -2,8 +2,8 @@ import UIKit
 import ComponentKit
 
 class NftAssetButtonCell: UITableViewCell {
-    private let openSeaButton = ThemeButton()
-    private let moreButton = ThemeButton()
+    private let openSeaButton = PrimaryButton()
+    private let moreButton = PrimaryCircleButton()
 
     private var onTapOpenSea: (() -> ())?
     private var onTapMore: (() -> ())?
@@ -18,10 +18,9 @@ class NftAssetButtonCell: UITableViewCell {
         openSeaButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
             maker.top.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightButton)
         }
 
-        openSeaButton.apply(style: .primaryGray)
+        openSeaButton.set(style: .gray)
         openSeaButton.setTitle("OpenSea", for: .normal)
         openSeaButton.addTarget(self, action: #selector(onTapOpenSeaButton), for: .touchUpInside)
 
@@ -30,11 +29,10 @@ class NftAssetButtonCell: UITableViewCell {
             maker.leading.equalTo(openSeaButton.snp.trailing).offset(CGFloat.margin8)
             maker.top.equalToSuperview()
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.size.equalTo(CGFloat.heightButton)
         }
 
-        moreButton.apply(style: .primaryIconGray)
-        moreButton.setImage(UIImage(named: "more_24"), for: .normal)
+        moreButton.set(style: .gray)
+        moreButton.set(image: UIImage(named: "more_24"))
         moreButton.addTarget(self, action: #selector(onTapMoreButton), for: .touchUpInside)
     }
 

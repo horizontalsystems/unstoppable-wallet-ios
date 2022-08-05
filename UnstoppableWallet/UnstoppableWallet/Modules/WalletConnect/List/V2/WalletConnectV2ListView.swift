@@ -4,7 +4,7 @@ import SectionsTableView
 import ComponentKit
 import RxSwift
 import RxCocoa
-import WalletConnect
+import WalletConnectSign
 
 class WalletConnectV2ListView {
     private let disposeBag = DisposeBag()
@@ -24,7 +24,7 @@ class WalletConnectV2ListView {
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.pendingRequestCountDriver) { [weak self] in self?.sync(pendingRequestCount: $0) }
         subscribe(disposeBag, viewModel.showLoadingSignal) { HudHelper.instance.showSpinner(title: "wallet_connect_list.disconnecting".localized, userInteractionEnabled: false) }
-        subscribe(disposeBag, viewModel.showSuccessSignal) { HudHelper.instance.showSuccess(title: $0) }
+        subscribe(disposeBag, viewModel.showSuccessSignal) { _ in HudHelper.instance.show(banner: .success) }
         subscribe(disposeBag, viewModel.showWalletConnectSessionSignal) { [weak self] in self?.show(session: $0) }
     }
 
@@ -40,7 +40,7 @@ class WalletConnectV2ListView {
         reloadTableRelay.accept(())
     }
 
-    private func show(session: Session) {
+    private func show(session: WalletConnectSign.Session) {
         guard let viewController = WalletConnectMainModule.viewController(session: session, sourceViewController: sourceViewController) else {
             return
         }
@@ -61,30 +61,6 @@ class WalletConnectV2ListView {
         ), action: { [weak self] cell in
             self?.viewModel.kill(id: id)
         })
-    }
-
-    private func header(text: String) -> ViewState<SubtitleHeaderFooterView> {
-        .cellType(
-                hash: text,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { _ in
-                    SubtitleHeaderFooterView.height
-                }
-        )
-    }
-
-    private func footer(hash: String, text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
-        .cellType(
-                hash: hash,
-                binder: { view in
-                    view.bind(text: text)
-                },
-                dynamicHeight: { containerWidth in
-                    BottomDescriptionHeaderFooterView.height(containerWidth: containerWidth, text: text)
-                }
-        )
     }
 
     private func cell(viewItem: WalletConnectListViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol? {
@@ -111,8 +87,10 @@ class WalletConnectV2ListView {
 
                     cell.bind(index: 1) { (component: MultiTextComponent) in
                         component.set(style: .m1)
-                        component.title.set(style: .b2)
-                        component.subtitle.set(style: .d1)
+                        component.title.font = .body
+                        component.title.textColor = .themeLeah
+                        component.subtitle.font = .subhead2
+                        component.subtitle.textColor = .themeGray
 
                         component.title.text = viewItem.title
                         component.subtitle.text = viewItem.description
@@ -141,7 +119,8 @@ class WalletConnectV2ListView {
                     cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
                     cell.bind(index: 0) { (component: TextComponent) in
-                        component.set(style: .b2)
+                        component.font = .body
+                        component.textColor = .themeLeah
                         component.text = "wallet_connect.list.pending_requests".localized
                     }
 
@@ -160,11 +139,11 @@ class WalletConnectV2ListView {
         )
     }
 
-    private func pendingRequestSection() -> SectionProtocol {
+    private func pendingRequestSection(tableView: SectionsTableView) -> SectionProtocol {
         let cell = pendingRequestCountCell(pendingRequestCount: pendingRequestCount)
         return Section(
                 id: "section_pending_requests",
-                headerState: header(text: "wallet_connect.list.version_text".localized("2.0")),
+                headerState: tableView.sectionHeader(text: "wallet_connect.list.version_text".localized("2.0")),
                 footerState: .margin(height: cell == nil ? 0 : .margin12),
                 rows: [cell].compactMap { $0 }
         )
@@ -189,12 +168,12 @@ class WalletConnectV2ListView {
 
 extension WalletConnectV2ListView {
 
-    var sections: [SectionProtocol] {
+    func sections(tableView: SectionsTableView) -> [SectionProtocol] {
         guard !viewItems.isEmpty else {
             return []
         }
 
-        return [pendingRequestSection(), section(viewItems: viewItems)].compactMap { $0 }
+        return [pendingRequestSection(tableView: tableView), section(viewItems: viewItems)].compactMap { $0 }
     }
 
     var reloadTableSignal: Signal<()> {

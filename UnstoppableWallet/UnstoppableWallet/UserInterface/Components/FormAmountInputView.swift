@@ -60,7 +60,7 @@ class FormAmountInputView: UIView {
 
     private func textColor(inputType: AmountInputViewModel.InputType) -> UIColor {
         switch inputType {
-        case .coin: return .themeOz
+        case .coin: return .themeLeah
         case .currency: return .themeJacob
         }
     }
