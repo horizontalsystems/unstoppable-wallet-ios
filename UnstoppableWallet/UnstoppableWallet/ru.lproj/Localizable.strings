@@ -377,7 +377,7 @@
 "market.top.section.header.see_all" = "Посмотреть Всё";
 "market.top.section.header.top_gainers" = "Взлеты";
 "market.top.section.header.top_losers" = "Падения";
-"market.top.section.header.top_sectors" = "Лучшие Секторы";
+"market.top.section.header.top_sectors" = "Топ Секторы";
 "market.top.section.header.news" = "Новости";
 "market.top.volume.title" = "Объём";
 "market.top.market_cap.title" = "Рын. кап.";
@@ -393,7 +393,7 @@
 
 "market.sort_by" = "Сортировать По";
 
-"market.top.title" = "Лучшие токены";
+"market.top.title" = "Лучшие Токены";
 "market.top.description" = "Топ токенов по рыночной капитализации";
 
 "market.top.highest_cap" = "Наивысшей Кап.";
@@ -402,9 +402,9 @@
 "market.top.lowest_volume" = "Наименьшему Объему";
 "market.top.top_gainers" = "Взлеты";
 "market.top.top_losers" = "Падения";
-"market.top.top_collections" = "Лучшие NFT Коллекции";
+"market.top.top_collections" = "Топ NFT Коллекции";
 "market.top.floor_price" = "Минимальная цена:";
-"market.top.top_platforms" = "Лучшие Платформы";
+"market.top.top_platforms" = "Топ Платформы";
 "market.top.protocols" = "Протоколы";
 
 "top_platforms.title" = "Рейтинг Платформ";
@@ -416,7 +416,7 @@
 "market_discovery.title" = "Токены";
 "market_discovery.filters" = "Фильтры";
 "market_discovery.browse_categories" = "Обзор Категорий";
-"market_discovery.top_coins" = "Лучшие токены";
+"market_discovery.top_coins" = "Лучшие Токены";
 "market_discovery.not_found" = "Ничего не найдено";
 "market_discovery.category.chart.title" = "Общая Капитализация";
 
@@ -856,7 +856,6 @@
 
 // Settings -> Privacy
 
-
 "settings.privacy.description" = "Unstoppable не собирает данные и не использует инструменты аналитики, которые могут раскрывать любые данные о своих пользователях. Кошелек разработан для обеспечения высокого уровня конфиденциальности для своих пользователей.";
 "settings.privacy.statement.user_data_storage" = "Данные пользователя всегда остаются на устройстве пользователя.";
 "settings.privacy.statement.data_usage" = "Кошелек не собирает никаких данных о пользователях.";
@@ -883,8 +882,8 @@
 "appearance.balance_conversion" = "Конвертация Баланса";
 
 "appearance.balance_value" = "Значение Баланса";
-"appearance.balance_value.coin_value" = "Coin Value";
-"appearance.balance_value.fiat_value" = "Fiat Value";
+"appearance.balance_value.coin_value" = "Токен Значение";
+"appearance.balance_value.fiat_value" = "Фиатное Значение";
 
 // Set PIN
 
@@ -1211,5 +1210,4 @@
 "nft.activity.event_type.payout" = "Выплата";
 "nft.activity.event_type.cancel" = "Отменить";
 "nft.activity.event_type.bulkCancel" = "Массовая Отмена";
-
 "nft.activity.event_type.unknown" = "Неизвестная";
