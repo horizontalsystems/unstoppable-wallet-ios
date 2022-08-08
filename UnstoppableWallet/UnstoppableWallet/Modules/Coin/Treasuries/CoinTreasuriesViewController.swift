@@ -48,7 +48,6 @@ class CoinTreasuriesViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-        tableView.registerCell(forClass: G14Cell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
 
         view.addSubview(spinner)
@@ -100,19 +99,49 @@ class CoinTreasuriesViewController: ThemeViewController {
 extension CoinTreasuriesViewController: SectionsDataSource {
 
     private func row(viewItem: CoinTreasuriesViewModel.ViewItem, index: Int, isLast: Bool) -> RowProtocol {
-        Row<G14Cell>(
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image24 { component in
+                        component.setImage(urlString: viewItem.logoUrl, placeholder: UIImage(named: "icon_placeholder_24"))
+                    },
+                    .vStackCentered([
+                        .hStack([
+                            .text { component in
+                                component.font = .body
+                                component.textColor = .themeLeah
+                                component.text = viewItem.fund
+                            },
+                            .text { component in
+                                component.font = .body
+                                component.textColor = .themeLeah
+                                component.textAlignment = .right
+                                component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                                component.text = viewItem.amount
+                            }
+                        ]),
+                        .margin(3),
+                        .hStack([
+                            .text { component in
+                                component.font = .subhead2
+                                component.textColor = .themeGray
+                                component.text = viewItem.country
+                            },
+                            .text { component in
+                                component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                                component.setContentHuggingPriority(.required, for: .horizontal)
+                                component.textAlignment = .right
+                                component.font = .subhead2
+                                component.textColor = .themeJacob
+                                component.text = viewItem.amountInCurrency
+                            }
+                        ])
+                    ])
+                ]),
+                tableView: tableView,
                 id: "treasury-\(index)",
                 height: .heightDoubleLineCell,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .transparent, isLast: isLast)
-
-                    cell.setTitleImage(urlString: viewItem.logoUrl, placeholder: UIImage(named: "icon_placeholder_24"))
-                    cell.topText = viewItem.fund
-                    cell.bottomText = viewItem.country
-
-                    cell.primaryValueText = viewItem.amount
-                    cell.secondaryValueText = viewItem.amountInCurrency
-                    cell.secondaryValueTextColor = .themeJacob
                 }
         )
     }

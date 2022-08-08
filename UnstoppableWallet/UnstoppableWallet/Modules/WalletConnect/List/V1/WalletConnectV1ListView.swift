@@ -58,19 +58,39 @@ class WalletConnectV1ListView {
                     let isLast = index == viewItems.count - 1
                     let rowAction = deleteRowAction(id: viewItem.id)
 
-                    return Row<G1Cell>(
+                    return CellBuilderNew.row(
+                            rootElement: .hStack([
+                                .image24 { component in
+                                    component.imageView.cornerRadius = .cornerRadius4
+                                    component.imageView.layer.cornerCurve = .continuous
+                                    component.setImage(urlString: viewItem.imageUrl, placeholder: nil)
+                                },
+                                .vStackCentered([
+                                    .text { component in
+                                        component.font = .body
+                                        component.textColor = .themeLeah
+                                        component.text = viewItem.title
+                                    },
+                                    .margin(3),
+                                    .text { component in
+                                        component.font = .subhead2
+                                        component.textColor = .themeGray
+                                        component.text = viewItem.description
+                                    }
+                                ]),
+                                .image20 { component in
+                                    component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+                                }
+                            ]),
+                            tableView: tableView,
                             id: viewItem.id.description,
                             height: .heightDoubleLineCell,
                             autoDeselect: true,
                             rowActionProvider: { [rowAction] },
-                            bind: { cell, _ in
+                            bind: { cell in
                                 cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                                cell.titleImageCornerRadius = .cornerRadius4
-                                cell.setTitleImage(urlString: viewItem.imageUrl, placeholder: nil)
-                                cell.title = viewItem.title
-                                cell.subtitle = viewItem.description
                             },
-                            action: { [weak self] _ in
+                            action: { [weak self] in
                                 self?.viewModel.showSession(id: viewItem.id)
                             }
                     )
