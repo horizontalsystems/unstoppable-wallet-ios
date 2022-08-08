@@ -23,7 +23,8 @@ class TestModeIndicator {
         window?.isUserInteractionEnabled = false
 
         let view = UIView()
-        view.layer.cornerRadius = 4
+        view.layer.cornerRadius = .cornerRadius4
+        view.layer.cornerCurve = .continuous
         view.backgroundColor = .red
 
         window?.addSubview(view)

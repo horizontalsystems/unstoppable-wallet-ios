@@ -31,6 +31,7 @@ class BlurManager {
 
         logoImageView.contentMode = .scaleAspectFill
         logoImageView.cornerRadius = .cornerRadius16
+        logoImageView.layer.cornerCurve = .continuous
         logoImageView.clipsToBounds = true
 
         let logoTitleLabel = UILabel()

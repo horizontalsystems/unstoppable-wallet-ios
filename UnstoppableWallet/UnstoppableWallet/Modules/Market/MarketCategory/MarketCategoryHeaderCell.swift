@@ -57,6 +57,7 @@ class MarketCategoryHeaderCell: UITableViewCell {
 
         backgroundView.backgroundColor = .themeLawrence
         backgroundView.cornerRadius = .cornerRadius12
+        backgroundView.layer.cornerCurve = .continuous
 
         backgroundView.addSubview(topPlatformImageView)
         topPlatformImageView.snp.makeConstraints { maker in

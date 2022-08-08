@@ -19,7 +19,8 @@ class FormValidatedView: UIView {
         }
 
         wrapperView.backgroundColor = .themeLawrence
-        wrapperView.layer.cornerRadius = .cornerRadius2x
+        wrapperView.layer.cornerRadius = .cornerRadius8
+        wrapperView.layer.cornerCurve = .continuous
         wrapperView.layer.borderWidth = CGFloat.heightOneDp
         wrapperView.layer.borderColor = UIColor.themeSteel20.cgColor
 

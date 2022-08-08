@@ -23,6 +23,7 @@ class MarketCardView: UIView {
 
         backgroundColor = .themeLawrence
         layer.cornerRadius = .cornerRadius12
+        layer.cornerCurve = .continuous
         clipsToBounds = true
 
         addSubview(button)

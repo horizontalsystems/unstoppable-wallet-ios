@@ -14,6 +14,7 @@ class MarketDiscoveryCell: UICollectionViewCell {
 
         contentView.backgroundColor = .themeLawrence
         contentView.cornerRadius = .cornerRadius12
+        contentView.layer.cornerCurve = .continuous
 
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { maker in

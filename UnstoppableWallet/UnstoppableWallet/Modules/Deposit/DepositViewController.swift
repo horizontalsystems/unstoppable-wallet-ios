@@ -67,6 +67,7 @@ class DepositViewController: ThemeViewController {
         qrCodeImageView.contentMode = .center
         qrCodeImageView.clipsToBounds = true
         qrCodeImageView.layer.cornerRadius = .cornerRadius8
+        qrCodeImageView.layer.cornerCurve = .continuous
 
         let qrCodeRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapCopy))
         qrCodeImageView.addGestureRecognizer(qrCodeRecognizer)

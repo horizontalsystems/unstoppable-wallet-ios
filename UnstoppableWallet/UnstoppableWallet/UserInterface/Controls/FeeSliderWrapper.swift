@@ -104,7 +104,7 @@ class FeeSliderWrapper: UIView {
         feeConfig.borderWidth = .heightOnePixel
         feeConfig.exactSize = false
         feeConfig.preferredSize = CGSize(width: hudWidth, height: 48)
-        feeConfig.cornerRadius = CGFloat.cornerRadius2x
+        feeConfig.cornerRadius = .cornerRadius8
         feeConfig.handleKeyboard = .none
         feeConfig.inAnimationDuration = 0
         feeConfig.outAnimationDuration = 0

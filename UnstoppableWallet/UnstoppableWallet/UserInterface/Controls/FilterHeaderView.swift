@@ -83,6 +83,7 @@ class FilterHeaderView: UITableViewHeaderFooterView {
         }
 
         selectedView.cornerRadius = 2
+        selectedView.layer.cornerCurve = .continuous
         selectedView.backgroundColor = buttonStyle == .tab ? .themeJacob : .clear
     }
 

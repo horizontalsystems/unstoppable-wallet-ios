@@ -17,6 +17,7 @@ class FilterCard: UICollectionViewCell {
         super.init(frame: frame)
 
         contentView.cornerRadius = .margin12
+        contentView.layer.cornerCurve = .continuous
         contentView.borderWidth = .heightOneDp
         contentView.borderColor = .clear
 

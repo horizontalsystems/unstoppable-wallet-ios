@@ -42,6 +42,7 @@ struct MarketModule {
                         component.imageView.contentMode = .scaleAspectFill
                         component.imageView.clipsToBounds = true
                         component.imageView.cornerRadius = listViewItem.iconShape.radius
+                        component.imageView.layer.cornerCurve = .continuous
                         component.imageView.kf.setImage(
                                 with: URL(string: listViewItem.iconUrl),
                                 placeholder: UIImage(named: listViewItem.iconPlaceholderName),

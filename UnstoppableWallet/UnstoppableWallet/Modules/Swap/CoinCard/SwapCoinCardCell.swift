@@ -96,8 +96,9 @@ class SwapCoinCardCell: UITableViewCell {
             maker.height.equalTo(formAmountInput.viewHeight)
         }
 
-        amountInputWrapper.layer.cornerRadius = .cornerRadius2x
-        amountInputWrapper.layer.borderWidth = CGFloat.heightOnePixel
+        amountInputWrapper.layer.cornerRadius = .cornerRadius8
+        amountInputWrapper.layer.cornerCurve = .continuous
+        amountInputWrapper.layer.borderWidth = .heightOnePixel
         amountInputWrapper.layer.borderColor = UIColor.themeSteel20.cgColor
 
         amountInputWrapper.addSubview(formAmountInput)

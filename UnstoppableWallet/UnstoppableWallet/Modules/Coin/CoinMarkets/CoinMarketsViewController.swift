@@ -134,6 +134,7 @@ extension CoinMarketsViewController: SectionsDataSource {
                     cell.bind(index: 0) { (component: ImageComponent) in
                         component.setImage(urlString: viewItem.marketImageUrl, placeholder: UIImage(named: "placeholder_24"))
                         component.imageView.cornerRadius = .cornerRadius4
+                        component.imageView.layer.cornerCurve = .continuous
                     }
                     cell.bind(index: 1) { (component: MultiTextComponent) in
                         component.set(style: .m1)

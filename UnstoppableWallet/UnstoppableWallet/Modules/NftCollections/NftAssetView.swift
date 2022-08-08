@@ -27,6 +27,7 @@ class NftAssetView: UIView {
         }
 
         button.cornerRadius = .cornerRadius12
+        button.layer.cornerCurve = .continuous
         button.setBackgroundColor(.themeLawrence, for: .normal)
         button.setBackgroundColor(.themeLawrencePressed, for: .highlighted)
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
@@ -52,6 +53,7 @@ class NftAssetView: UIView {
 
         imageView.contentMode = .scaleAspectFill
         imageView.cornerRadius = .cornerRadius8
+        imageView.layer.cornerCurve = .continuous
         imageView.backgroundColor = .themeSteel10
 
         addSubview(onSaleWrapper)
@@ -62,6 +64,7 @@ class NftAssetView: UIView {
 
         onSaleWrapper.backgroundColor = .themeLightGray
         onSaleWrapper.cornerRadius = .cornerRadius4
+        onSaleWrapper.layer.cornerCurve = .continuous
 
         onSaleWrapper.addSubview(onSaleLabel)
         onSaleLabel.snp.makeConstraints { maker in

@@ -14,6 +14,7 @@ class HighlightedDescriptionBaseView: UIView {
         borderColor = .themeYellowD
         borderWidth = 1
         cornerRadius = .cornerRadius12
+        layer.cornerCurve = .continuous
     }
 
     required public init?(coder aDecoder: NSCoder) {

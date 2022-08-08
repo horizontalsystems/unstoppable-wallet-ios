@@ -38,6 +38,7 @@ class MnemonicInputCell: UITableViewCell {
         textView.keyboardAppearance = .themeDefault
         textView.backgroundColor = .themeLawrence
         textView.layer.cornerRadius = .cornerRadius8
+        textView.layer.cornerCurve = .continuous
         textView.textColor = textViewTextColor
         textView.font = textViewFont
         textView.tintColor = .themeJacob
@@ -56,6 +57,7 @@ class MnemonicInputCell: UITableViewCell {
         borderView.backgroundColor = .clear
         borderView.isUserInteractionEnabled = false
         borderView.layer.cornerRadius = .cornerRadius8
+        borderView.layer.cornerCurve = .continuous
         borderView.layer.borderWidth = .heightOneDp
         borderView.layer.borderColor = UIColor.themeSteel20.cgColor
 

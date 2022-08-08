@@ -16,7 +16,8 @@ class TweetAttachmentView: UIView {
 
         addSubview(imageView)
 
-        imageView.cornerRadius = 4
+        imageView.cornerRadius = .cornerRadius4
+        imageView.layer.cornerCurve = .continuous
         imageView.contentMode = .scaleAspectFill
 
         imageView.addSubview(imageTransparencyView)
@@ -24,7 +25,8 @@ class TweetAttachmentView: UIView {
             maker.edges.equalToSuperview()
         }
         
-        imageTransparencyView.cornerRadius = 4
+        imageTransparencyView.cornerRadius = .cornerRadius4
+        imageTransparencyView.layer.cornerCurve = .continuous
         imageTransparencyView.backgroundColor = UIColor(white: 0, alpha: 0.5)
         
         imageView.addSubview(videoPlayImageView)

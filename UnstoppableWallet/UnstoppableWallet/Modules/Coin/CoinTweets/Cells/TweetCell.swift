@@ -43,7 +43,8 @@ class TweetCell: BaseSelectableThemeCell {
             maker.height.width.equalTo(CGFloat.iconSize24)
         }
 
-        titleImage.cornerRadius = 12
+        titleImage.cornerRadius = .cornerRadius12
+        titleImage.layer.cornerCurve = .continuous
 
         headerView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in

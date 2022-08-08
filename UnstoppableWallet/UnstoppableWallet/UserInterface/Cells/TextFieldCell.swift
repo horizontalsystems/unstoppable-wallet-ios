@@ -15,6 +15,7 @@ class TextFieldCell: UITableViewCell {
 
         wrapperView.backgroundColor = .themeLawrence
         wrapperView.layer.cornerRadius = .cornerRadius8
+        wrapperView.layer.cornerCurve = .continuous
         wrapperView.layer.borderWidth = .heightOneDp
         wrapperView.layer.borderColor = UIColor.themeSteel20.cgColor
 
