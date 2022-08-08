@@ -37,7 +37,6 @@ class CoinSelectViewController: ThemeSearchViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: G12Cell.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -80,20 +79,52 @@ extension CoinSelectViewController: SectionsDataSource {
                     rows: viewItems.enumerated().map { index, viewItem in
                         let isLast = index == viewItems.count - 1
 
-                        return Row<G12Cell>(
+                        return CellBuilderNew.row(
+                                rootElement: .hStack([
+                                    .image24 { component in
+                                        component.setImage(urlString: viewItem.token.coin.imageUrl, placeholder: UIImage(named: viewItem.token.placeholderImageName))
+                                    },
+                                    .vStackCentered([
+                                        .hStack([
+                                            .text { component in
+                                                component.font = .body
+                                                component.textColor = .themeLeah
+                                                component.text = viewItem.token.coin.code
+                                            },
+                                            .text { component in
+                                                component.font = .body
+                                                component.textColor = .themeLeah
+                                                component.textAlignment = .right
+                                                component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                                                component.text = viewItem.balance
+                                            }
+                                        ]),
+                                        .margin(3),
+                                        .hStack([
+                                            .text { component in
+                                                component.font = .subhead2
+                                                component.textColor = .themeGray
+                                                component.text = viewItem.token.coin.name
+                                            },
+                                            .text { component in
+                                                component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                                                component.setContentHuggingPriority(.required, for: .horizontal)
+                                                component.textAlignment = .right
+                                                component.font = .subhead2
+                                                component.textColor = .themeGray
+                                                component.text = viewItem.fiatBalance
+                                            }
+                                        ])
+                                    ])
+                                ]),
+                                tableView: tableView,
                                 id: "coin_\(index)",
                                 height: .heightDoubleLineCell,
                                 autoDeselect: true,
-                                bind: { cell, _ in
+                                bind: { cell in
                                     cell.set(backgroundStyle: .transparent, isLast: isLast)
-                                    cell.topText = viewItem.token.coin.code
-                                    cell.bottomText = viewItem.token.coin.name
-                                    cell.valueTopText = viewItem.balance
-                                    cell.valueBottomText = viewItem.fiatBalance
-
-                                    cell.setTitleImage(urlString: viewItem.token.coin.imageUrl, placeholder: UIImage(named: viewItem.token.placeholderImageName))
                                 },
-                                action: { [weak self] _ in
+                                action: { [weak self] in
                                     self?.onSelect(token: viewItem.token)
                                 }
                         )

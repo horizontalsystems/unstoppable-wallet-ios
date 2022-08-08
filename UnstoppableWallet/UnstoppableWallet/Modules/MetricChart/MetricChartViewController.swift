@@ -64,7 +64,6 @@ class MetricChartViewController: ThemeActionSheetController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
-        tableView.registerCell(forClass: G14Cell.self)
         tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerCell(forClass: TextCell.self)
 

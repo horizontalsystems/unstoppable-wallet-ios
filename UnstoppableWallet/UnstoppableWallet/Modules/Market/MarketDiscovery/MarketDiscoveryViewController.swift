@@ -80,7 +80,6 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: G4Cell.self)
         tableView.sectionDataSource = self
 
         tableView.backgroundColor = .clear
@@ -268,19 +267,35 @@ extension MarketDiscoveryViewController: SectionsDataSource {
                     rows: searchViewItems.enumerated().map { index, viewItem in
                         let isLast = index == searchViewItems.count - 1
 
-                        return Row<G4Cell>(
+                        return CellBuilderNew.row(
+                                rootElement: .hStack([
+                                    .image24 { component in
+                                        component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.placeholderImageName))
+                                    },
+                                    .vStackCentered([
+                                        .text { component in
+                                            component.font = .body
+                                            component.textColor = .themeLeah
+                                            component.text = viewItem.name
+                                        },
+                                        .margin(3),
+                                        .text { component in
+                                            component.font = .subhead2
+                                            component.textColor = .themeGray
+                                            component.text = viewItem.code
+                                        }
+                                    ])
+                                ]),
+                                tableView: tableView,
                                 id: "coin_\(viewItem.uid)",
                                 hash: "\(viewItem.favorite)",
                                 height: .heightDoubleLineCell,
                                 autoDeselect: true,
                                 rowActionProvider: { [weak self] in self?.rowActions(index: index) ?? [] },
-                                bind: { cell, _ in
+                                bind: { cell in
                                     cell.set(backgroundStyle: .transparent, isLast: isLast)
-                                    cell.setTitleImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.placeholderImageName))
-                                    cell.title = viewItem.name
-                                    cell.subtitle = viewItem.code
                                 },
-                                action: { [weak self] _ in
+                                action: { [weak self] in
                                     self?.onSelect(viewItem: viewItem)
                                 }
                         )

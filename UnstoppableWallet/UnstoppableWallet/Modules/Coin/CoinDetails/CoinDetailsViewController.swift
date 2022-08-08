@@ -71,9 +71,6 @@ class CoinDetailsViewController: ThemeViewController {
 
         tableView.showsVerticalScrollIndicator = false
 
-        tableView.registerCell(forClass: D1Cell.self)
-        tableView.registerCell(forClass: D2Cell.self)
-        tableView.registerCell(forClass: D7Cell.self)
         tableView.registerCell(forClass: ChartMarketCardCell<ChartMarketCardView>.self)
 
         proFeaturesCell.parentViewController = parentNavigationController
@@ -173,6 +170,35 @@ extension CoinDetailsViewController: IProFeaturesLockDelegate {
 }
 
 extension CoinDetailsViewController: SectionsDataSource {
+
+    private func titleValueRow(id: String, title: String, value: String, isFirst: Bool = true, isLast: Bool = true, onTap: @escaping () -> ()) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .text { component in
+                        component.font = .subhead2
+                        component.textColor = .themeGray
+                        component.text = title
+                    },
+                    .text { component in
+                        component.font = .subhead1
+                        component.textColor = .themeLeah
+                        component.text = value
+                    },
+                    .margin8,
+                    .image20 { component in
+                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+                    }
+                ]),
+                tableView: tableView,
+                id: id,
+                height: .heightCell48,
+                autoDeselect: true,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                },
+                action: onTap
+        )
+    }
 
     private func infoHeaderRow(id: String, title: String, topSeparator: Bool = true, onTap: @escaping () -> ()) -> RowProtocol {
         CellBuilder.selectableRow(
@@ -365,18 +391,14 @@ extension CoinDetailsViewController: SectionsDataSource {
         var sections = distributionCharts(viewItem: viewItem, isLast: !viewItem.hasMajorHolders)
 
         if viewItem.hasMajorHolders {
-            let majorHoldersRow = Row<D1Cell>(
+            let majorHoldersRow = tableView.grayTitleWithArrowRow(
                     id: "major-holders",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                        cell.title = "coin_page.major_holders".localized
-                    },
-                    action: { [weak self] _ in
-                        self?.openMajorHolders()
-                    }
-            )
-
+                    title: "coin_page.major_holders".localized,
+                    isFirst: true,
+                    isLast: true
+            ) { [weak self] in
+                self?.openMajorHolders()
+            }
 
             sections.append(
                     Section(
@@ -450,31 +472,38 @@ extension CoinDetailsViewController: SectionsDataSource {
         let hasRatio = viewItem.tvlRatio != nil
 
         if let tvlRank = viewItem.tvlRank {
-            let tvlRankRow = Row<D2Cell>(
+            let tvlRankRow = titleValueRow(
                     id: "market-cap-tvl-rank",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasRatio)
-                        cell.title = "coin_page.tvl_rank".localized
-                        cell.value = tvlRank
-                        cell.valueColor = .themeLeah
-                    },
-                    action: { [weak self] _ in
-                        self?.openTvlRank()
-                    }
-            )
+                    title: "coin_page.tvl_rank".localized,
+                    value: tvlRank,
+                    isLast: !hasRatio
+            ) { [weak self] in
+                self?.openTvlRank()
+            }
 
             rows.append(tvlRankRow)
         }
 
         if let tvlRatio = viewItem.tvlRatio {
-            let tvlRatioRow = Row<D7Cell>(
+            let tvlRatioRow = CellBuilderNew.row(
+                    rootElement: .hStack([
+                        .text { component in
+                            component.font = .subhead2
+                            component.textColor = .themeGray
+                            component.text = "coin_page.market_cap_tvl_ratio".localized
+                        },
+                        .text { component in
+                            component.font = .subhead2
+                            component.textColor = .themeLeah
+                            component.text = tvlRatio
+                        }
+                    ]),
+                    tableView: tableView,
                     id: "market-cap-tvl-ratio",
                     height: .heightCell48,
-                    bind: { cell, _ in
+                    autoDeselect: true,
+                    bind: { cell in
                         cell.set(backgroundStyle: .lawrence, isFirst: !hasRank, isLast: true)
-                        cell.title = "coin_page.market_cap_tvl_ratio".localized
-                        cell.value = tvlRatio
                     }
             )
 
@@ -502,55 +531,41 @@ extension CoinDetailsViewController: SectionsDataSource {
         let hasReports = reportsCount != nil
 
         if let treasuries = treasuries {
-            let row = Row<D2Cell>(
+            let row = titleValueRow(
                     id: "treasuries",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !hasFundsInvested && !hasReports)
-                        cell.title = "coin_page.treasuries".localized
-                        cell.value = treasuries
-                        cell.valueColor = .themeLeah
-                    },
-                    action: { [weak self] _ in
-                        self?.openTreasuries()
-                    }
-            )
+                    title: "coin_page.treasuries".localized,
+                    value: treasuries,
+                    isLast: !hasFundsInvested && !hasReports
+            ) { [weak self] in
+                self?.openTreasuries()
+            }
 
             rows.append(row)
         }
 
         if let fundsInvested = fundsInvested {
-            let row = Row<D2Cell>(
+            let row = titleValueRow(
                     id: "funds-invested",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: !hasTreasuries, isLast: !hasReports)
-                        cell.title = "coin_page.funds_invested".localized
-                        cell.value = fundsInvested
-                        cell.valueColor = .themeLeah
-                    },
-                    action: { [weak self] _ in
-                        self?.openFundsInvested()
-                    }
-            )
+                    title: "coin_page.funds_invested".localized,
+                    value: fundsInvested,
+                    isFirst: !hasTreasuries,
+                    isLast: !hasReports
+            ) { [weak self] in
+                self?.openFundsInvested()
+            }
 
             rows.append(row)
         }
 
         if let reportsCount = reportsCount {
-            let row = Row<D2Cell>(
+            let row = titleValueRow(
                     id: "reports",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: !hasTreasuries && !hasFundsInvested, isLast: true)
-                        cell.title = "coin_page.reports".localized
-                        cell.value = reportsCount
-                        cell.valueColor = .themeLeah
-                    },
-                    action: { [weak self] _ in
-                        self?.openReports()
-                    }
-            )
+                    title: "coin_page.reports".localized,
+                    value: reportsCount,
+                    isFirst: !hasTreasuries && !hasFundsInvested
+            ) { [weak self] in
+                self?.openReports()
+            }
 
             rows.append(row)
         }
@@ -612,17 +627,14 @@ extension CoinDetailsViewController: SectionsDataSource {
         }
 
         if !auditAddresses.isEmpty {
-            let row = Row<D1Cell>(
+            let row = tableView.grayTitleWithArrowRow(
                     id: "audits",
-                    height: .heightCell48,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: !hasSecurity, isLast: true)
-                        cell.title = "coin_page.audits".localized
-                    },
-                    action: { [weak self] _ in
-                        self?.openAudits(addresses: auditAddresses)
-                    }
-            )
+                    title: "coin_page.audits".localized,
+                    isFirst: !hasSecurity,
+                    isLast: true
+            ) { [weak self] in
+                self?.openAudits(addresses: auditAddresses)
+            }
 
             rows.append(row)
         }

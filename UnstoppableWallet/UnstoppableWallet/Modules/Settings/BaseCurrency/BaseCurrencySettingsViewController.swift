@@ -35,7 +35,6 @@ class BaseCurrencySettingsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        tableView.registerCell(forClass: G4Cell.self)
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.disclaimerSignal) { [weak self] in self?.openDisclaimer(codes: $0) }
@@ -57,19 +56,37 @@ class BaseCurrencySettingsViewController: ThemeViewController {
 extension BaseCurrencySettingsViewController: SectionsDataSource {
 
     private func row(viewItem: BaseCurrencySettingsViewModel.ViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        Row<G4Cell>(
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image24 { component in
+                        component.imageView.image = viewItem.icon
+                    },
+                    .vStackCentered([
+                        .text { component in
+                            component.font = .body
+                            component.textColor = .themeLeah
+                            component.text = viewItem.code
+                        },
+                        .margin(3),
+                        .text { component in
+                            component.font = .subhead2
+                            component.textColor = .themeGray
+                            component.text = viewItem.symbol
+                        }
+                    ]),
+                    .image20 { component in
+                        component.isHidden = !viewItem.selected
+                        component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
+                    }
+                ]),
+                tableView: tableView,
                 id: viewItem.code,
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
-                bind: { cell, _ in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                    cell.title = viewItem.code
-                    cell.titleImage = viewItem.icon
-                    cell.subtitle = viewItem.symbol
-                    cell.valueImage = viewItem.selected ? UIImage(named: "check_1_20")?.withRenderingMode(.alwaysTemplate) : nil
-                    cell.valueImageTintColor = .themeJacob
                 },
-                action: { [weak self] _ in
+                action: { [weak self] in
                     self?.viewModel.onSelect(viewItem: viewItem)
                 }
         )

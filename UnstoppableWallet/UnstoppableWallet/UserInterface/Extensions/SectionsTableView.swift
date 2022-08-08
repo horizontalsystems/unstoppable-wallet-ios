@@ -161,4 +161,49 @@ extension SectionsTableView {
         )
     }
 
+    func grayTitleWithArrowRow(id: String, title: String, isFirst: Bool = false, isLast: Bool = false, onTap: @escaping () -> ()) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .text { component in
+                        component.font = .subhead2
+                        component.textColor = .themeGray
+                        component.text = title
+                    },
+                    .image20 { component in
+                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+                    }
+                ]),
+                tableView: self,
+                id: id,
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                },
+                action: onTap
+        )
+    }
+
+    func grayTitleWithLeahValueRow(id: String, title: String, value: String, isFirst: Bool = false, isLast: Bool = false) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .text { component in
+                        component.font = .subhead2
+                        component.textColor = .themeGray
+                        component.text = title
+                    },
+                    .text { component in
+                        component.font = .subhead1
+                        component.textColor = .themeLeah
+                        component.text = value
+                    }
+                ]),
+                tableView: self,
+                id: id,
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                }
+        )
+    }
+
 }

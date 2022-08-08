@@ -3,7 +3,8 @@ import SnapKit
 import ComponentKit
 
 class MarketOverviewHeaderCell: BaseThemeCell {
-    private let leftView = LeftAView()
+    private let leftImage = ImageComponent(size: .iconSize20)
+    private let titleText = TextComponent()
     private let buttonWrapper = UIView()
     private let rightButton = SelectorButton()
     private let seeAllButton = SecondaryButton()
@@ -19,12 +20,29 @@ class MarketOverviewHeaderCell: BaseThemeCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        layout(leftView: leftView, rightView: buttonWrapper)
+        wrapperView.addSubview(leftImage)
+        leftImage.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().inset(CGFloat.margin16)
+            maker.centerY.equalToSuperview()
+        }
+
+        wrapperView.addSubview(titleText)
+        titleText.snp.makeConstraints { maker in
+            maker.leading.equalTo(leftImage.snp.trailing).offset(CGFloat.margin16)
+            maker.centerY.equalToSuperview()
+        }
+
+        wrapperView.addSubview(buttonWrapper)
+        buttonWrapper.snp.makeConstraints { maker in
+            maker.leading.equalTo(titleText.snp.trailing).offset(CGFloat.margin16)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.bottom.equalToSuperview()
+        }
 
         let leftButton = UIButton()
         wrapperView.addSubview(leftButton)
         leftButton.snp.makeConstraints { maker in
-            maker.edges.equalTo(leftView)
+            maker.edges.equalTo(titleText)
         }
 
         leftButton.addTarget(self, action: #selector(onTapLeftView), for: .touchUpInside)
@@ -58,17 +76,13 @@ class MarketOverviewHeaderCell: BaseThemeCell {
     }
 
     var title: String? {
-        get { leftView.text }
-        set { leftView.text = newValue }
+        get { titleText.text }
+        set { titleText.text = newValue }
     }
 
     var titleImage: UIImage? {
-        get { leftView.image }
-        set { leftView.image = newValue }
-    }
-
-    func set(titleImageSize: CGFloat) {
-        leftView.set(imageSize: titleImageSize)
+        get { leftImage.imageView.image }
+        set { leftImage.imageView.image = newValue }
     }
 
     var currentIndex: Int {

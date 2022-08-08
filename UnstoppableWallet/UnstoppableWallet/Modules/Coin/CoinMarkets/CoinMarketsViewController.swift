@@ -67,7 +67,6 @@ class CoinMarketsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
-        tableView.registerCell(forClass: G14Cell.self)
 
         wrapperView.addSubview(infoView)
         infoView.snp.makeConstraints { maker in

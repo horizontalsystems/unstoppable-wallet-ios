@@ -48,7 +48,6 @@ class WalletConnectListViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        tableView.registerCell(forClass: G1Cell.self)
         tableView.sectionDataSource = self
 
         view.addSubview(emptyView)

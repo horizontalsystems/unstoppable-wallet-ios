@@ -15,10 +15,6 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
     private let signButton = PrimaryButton()
     private let rejectButton = PrimaryButton()
 
-    private var domainCell: D7Cell?
-    private let messageCell = D1Cell()
-    private var dAppNameCell: D7Cell?
-
     init(viewModel: WalletConnectSignMessageRequestViewModel) {
         self.viewModel = viewModel
 
@@ -43,8 +39,6 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.delaysContentTouches = false
 
-        tableView.registerCell(forClass: D7Cell.self)
-        tableView.registerCell(forClass: D1Cell.self)
         tableView.sectionDataSource = self
 
         view.addSubview(bottomWrapper)
@@ -75,22 +69,6 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
         rejectButton.setTitle("button.reject".localized, for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
 
-        if let domain = viewModel.domain {
-            domainCell = D7Cell()
-            domainCell?.set(backgroundStyle: .lawrence, isFirst: true)
-            domainCell?.title = "wallet_connect.sign.domain".localized
-            domainCell?.value = domain
-        }
-
-        messageCell.set(backgroundStyle: .lawrence, isFirst: domainCell == nil, isLast: viewModel.dAppName == nil)
-        messageCell.title = "wallet_connect.sign.message".localized
-
-        if let dAppName = viewModel.dAppName {
-            dAppNameCell = D7Cell()
-            dAppNameCell?.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
-            dAppNameCell?.title = "wallet_connect.sign.dapp_name".localized
-            dAppNameCell?.value = dAppName
-        }
         tableView.buildSections()
 
         subscribe(disposeBag, viewModel.errorSignal) { [weak self] in self?.show(error: $0) }
@@ -129,27 +107,38 @@ extension WalletConnectSignMessageRequestViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var rows: [RowProtocol] = []
-        if let domainCell = domainCell {
-            rows.append(StaticRow(
-                    cell: domainCell,
+
+        if let domain = viewModel.domain {
+            let row = tableView.grayTitleWithLeahValueRow(
                     id: "sign_domain",
-                    height: .heightCell48
-            ))
+                    title: "wallet_connect.sign.domain".localized,
+                    value: domain,
+                    isFirst: true
+            )
+
+            rows.append(row)
         }
-        rows.append(StaticRow(
-                cell: messageCell,
+
+        let messageRow = tableView.grayTitleWithArrowRow(
                 id: "sign_message",
-                height: .heightCell48,
-                action: { [weak self] in
-                    self?.showMessage()
-                }
-        ))
-        if let dAppNameCell = dAppNameCell {
-            rows.append(StaticRow(
-                    cell: dAppNameCell,
+                title: "wallet_connect.sign.message".localized,
+                isFirst: viewModel.domain == nil,
+                isLast: viewModel.dAppName == nil
+        ) { [weak self] in
+            self?.showMessage()
+        }
+
+        rows.append(messageRow)
+
+        if let dAppName = viewModel.dAppName {
+            let row = tableView.grayTitleWithLeahValueRow(
                     id: "dApp_name",
-                    height: .heightCell48
-            ))
+                    title: "wallet_connect.sign.dapp_name".localized,
+                    value: dAppName,
+                    isLast: true
+            )
+
+            rows.append(row)
         }
 
         return [
