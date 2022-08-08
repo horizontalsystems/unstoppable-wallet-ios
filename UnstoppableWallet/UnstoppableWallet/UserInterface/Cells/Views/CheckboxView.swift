@@ -27,6 +27,7 @@ class CheckboxView: UIView {
         }
 
         checkBoxView.layer.cornerRadius = .cornerRadius4
+        checkBoxView.layer.cornerCurve = .continuous
         checkBoxView.layer.borderColor = UIColor.themeGray.cgColor
         checkBoxView.layer.borderWidth = .heightOneDp + .heightOnePixel
 

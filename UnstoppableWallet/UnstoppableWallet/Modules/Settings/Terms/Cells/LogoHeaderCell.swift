@@ -26,7 +26,8 @@ class LogoHeaderCell: UITableViewCell {
         }
 
         logoImageView.contentMode = .scaleAspectFill
-        logoImageView.cornerRadius = .margin16
+        logoImageView.cornerRadius = .cornerRadius16
+        logoImageView.layer.cornerCurve = .continuous
         logoImageView.clipsToBounds = true
         logoImageView.backgroundColor = .themeSteel20
 

@@ -21,6 +21,7 @@ class TraitCell: UICollectionViewCell {
 
         contentView.backgroundColor = .themeLawrence
         contentView.cornerRadius = .cornerRadius12
+        contentView.layer.cornerCurve = .continuous
 
         contentView.addSubview(titleStackView)
         titleStackView.snp.makeConstraints { maker in

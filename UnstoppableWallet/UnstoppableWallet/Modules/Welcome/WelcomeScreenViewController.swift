@@ -173,6 +173,7 @@ class WelcomeScreenViewController: ThemeViewController {
         logoImageView.image = UIImage(named: AppIcon.main.imageName)
         logoImageView.contentMode = .scaleAspectFill
         logoImageView.cornerRadius = .cornerRadius16
+        logoImageView.layer.cornerCurve = .continuous
         logoImageView.clipsToBounds = true
 
         let logoTitleLabel = UILabel()

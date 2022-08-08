@@ -19,6 +19,7 @@ class NftAssetImageCell: UITableViewCell {
         }
 
         nftImageView.cornerRadius = .cornerRadius12
+        nftImageView.layer.cornerCurve = .continuous
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -44,7 +44,8 @@ class TweetPollView: UIView {
             }
 
             wrapperView.backgroundColor = .themeSteel10
-            wrapperView.cornerRadius = 4
+            wrapperView.cornerRadius = .cornerRadius4
+            wrapperView.layer.cornerCurve = .continuous
 
             let votesView = UIView()
             wrapperView.addSubview(votesView)
@@ -54,7 +55,8 @@ class TweetPollView: UIView {
                 maker.width.equalTo(width)
             }
 
-            votesView.cornerRadius = 4
+            votesView.cornerRadius = .cornerRadius4
+            votesView.layer.cornerCurve = .continuous
 
             let label = UILabel()
             wrapperView.addSubview(label)
