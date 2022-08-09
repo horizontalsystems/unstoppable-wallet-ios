@@ -34,7 +34,7 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "복사됨";
+"alert.copied" = "Copied";
 "alert.created" = "생성됨";
 "alert.deleted" = "삭제";
 "alert.disconnecting" = "연결을 끊는 중...";
