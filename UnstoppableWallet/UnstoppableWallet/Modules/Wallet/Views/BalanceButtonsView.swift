@@ -7,11 +7,14 @@ import ComponentKit
 class BalanceButtonsView: UIView {
     public static let height: CGFloat = 72
 
+    private let sendButtonWrapper = UIControl()
     private let sendButton = PrimaryButton()
     private let receiveButton = PrimaryButton()
     private let receiveCircleButton = PrimaryCircleButton()
+    private let addressButton = PrimaryButton()
     private let swapButtonWrapper = UIControl()
     private let swapButton = PrimaryCircleButton()
+    private let chartButtonWrapper = UIControl()
     private let chartButton = PrimaryCircleButton()
 
     private var onTapReceive: (() -> ())?
@@ -35,7 +38,6 @@ class BalanceButtonsView: UIView {
         stackView.alignment = .fill
         stackView.spacing = .margin8
 
-        let sendButtonWrapper = UIControl()
         stackView.addArrangedSubview(sendButtonWrapper)
 
         sendButtonWrapper.addSubview(sendButton)
@@ -62,6 +64,12 @@ class BalanceButtonsView: UIView {
         receiveCircleButton.set(image: UIImage(named: "arrow_medium_3_down_left_24"))
         receiveCircleButton.addTarget(self, action: #selector(onReceive), for: .touchUpInside)
 
+        stackView.addArrangedSubview(addressButton)
+
+        addressButton.set(style: .gray)
+        addressButton.setTitle("balance.address".localized, for: .normal)
+        addressButton.addTarget(self, action: #selector(onReceive), for: .touchUpInside)
+
         stackView.addArrangedSubview(swapButtonWrapper)
 
         swapButtonWrapper.addSubview(swapButton)
@@ -73,8 +81,6 @@ class BalanceButtonsView: UIView {
         swapButton.set(image: UIImage(named: "arrow_swap_2_24"))
         swapButton.addTarget(self, action: #selector(onSwap), for: .touchUpInside)
 
-        let chartButtonWrapper = UIControl()
-
         stackView.addArrangedSubview(chartButtonWrapper)
 
         chartButtonWrapper.addSubview(chartButton)
@@ -85,14 +91,6 @@ class BalanceButtonsView: UIView {
         chartButton.set(style: .gray)
         chartButton.set(image: UIImage(named: "chart_2_24"))
         chartButton.addTarget(self, action: #selector(onChart), for: .touchUpInside)
-
-        updateButtons(swapHidden: true)
-    }
-
-    private func updateButtons(swapHidden: Bool) {
-        receiveButton.isHidden = !swapHidden
-        receiveCircleButton.isHidden = swapHidden
-        swapButtonWrapper.isHidden = swapHidden
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -102,10 +100,17 @@ class BalanceButtonsView: UIView {
     func bind(viewItem: BalanceButtonsViewItem, sendAction: @escaping () -> (), receiveAction: @escaping () -> (), swapAction: @escaping () -> (), chartAction: @escaping () -> ()) {
         sendButton.isEnabled = viewItem.sendButtonState == .enabled
         receiveButton.isEnabled = viewItem.receiveButtonState == .enabled
+        receiveCircleButton.isEnabled = viewItem.receiveButtonState == .enabled
+        addressButton.isEnabled = viewItem.addressButtonState == .enabled
         swapButton.isEnabled = viewItem.swapButtonState == .enabled
         chartButton.isEnabled = viewItem.chartButtonState == .enabled
 
-        updateButtons(swapHidden: viewItem.swapButtonState == .hidden)
+        sendButtonWrapper.isHidden = viewItem.sendButtonState == .hidden
+        receiveButton.isHidden = viewItem.receiveButtonState == .hidden || viewItem.swapButtonState != .hidden
+        receiveCircleButton.isHidden = viewItem.receiveButtonState == .hidden || viewItem.swapButtonState == .hidden
+        addressButton.isHidden = viewItem.addressButtonState == .hidden
+        swapButtonWrapper.isHidden = viewItem.swapButtonState == .hidden
+        chartButtonWrapper.isHidden = viewItem.chartButtonState == .hidden
 
         onTapSend = sendAction
         onTapReceive = receiveAction

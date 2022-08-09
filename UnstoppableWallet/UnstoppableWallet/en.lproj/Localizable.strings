@@ -159,6 +159,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance.send" = "Send";
 "balance.swap" = "Swap";
 "balance.deposit" = "Receive";
+"balance.address" = "Address";
 "balance.rate_per_coin" = "%@ per %@";
 "balance.syncing" = "Syncing...";
 "balance.searching" = "Searching transactions...";
@@ -194,6 +195,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Deposit
 
 "deposit.receive_coin" = "Receive %@";
+"deposit.address" = "Address";
 "deposit.your_address" = "Your Address";
 "receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
 

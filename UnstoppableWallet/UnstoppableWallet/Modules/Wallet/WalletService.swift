@@ -364,17 +364,6 @@ extension WalletService {
         accountManager.activeAccount?.watchAccount ?? false
     }
 
-    var watchAccountAddress: EthereumKit.Address? {
-        guard let account = accountManager.activeAccount else {
-            return nil
-        }
-
-        switch account.type {
-        case .address(let address): return address
-        default: return nil
-        }
-    }
-
     var activeAccount: Account? {
         accountManager.activeAccount
     }

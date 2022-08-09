@@ -23,6 +23,10 @@ extension DepositService {
         wallet.token
     }
 
+    var watchAccount: Bool {
+        wallet.account.watchAccount
+    }
+
     var isMainNet: Bool {
         adapter.isMainNet
     }
