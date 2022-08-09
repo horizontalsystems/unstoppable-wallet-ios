@@ -34,7 +34,7 @@
 "alert.added_to_wallet" = "Zum Wallet hinzugefügt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
-"alert.copied" = "Kopiert";
+"alert.copied" = "Copied";
 "alert.created" = "Erstellt";
 "alert.deleted" = "Gelöscht";
 "alert.disconnecting" = "Verbindung wird getrennt";
