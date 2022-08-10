@@ -159,6 +159,7 @@
 "balance.send" = "Отправить";
 "balance.swap" = "Обменять";
 "balance.deposit" = "Получить";
+"balance.address" = "Address";
 "balance.rate_per_coin" = "%@ за %@";
 "balance.syncing" = "Синхронизация...";
 "balance.searching" = "Поиск транзакций...";
@@ -194,6 +195,7 @@
 // Deposit
 
 "deposit.receive_coin" = "Получить %@";
+"deposit.address" = "Address";
 "deposit.your_address" = "Ваш Адрес";
 "receive_alert.not_backed_up_description" = "Вам нужно сделать резервную копию %@ перед получением %@.";
 
