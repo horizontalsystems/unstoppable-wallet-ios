@@ -157,6 +157,7 @@
 "balance.send" = "전송";
 "balance.swap" = "스왑";
 "balance.deposit" = "수신";
+"balance.address" = "Address";
 "balance.rate_per_coin" = "%@ 당 %@";
 "balance.syncing" = "동기화 중입니다...";
 "balance.searching" = "거래 검색 중...";
@@ -192,6 +193,7 @@
 // Deposit
 
 "deposit.receive_coin" = "수신%@";
+"deposit.address" = "Address";
 "deposit.your_address" = "당신의 주소";
 "receive_alert.not_backed_up_description" = "%@를 백업해야 %@를 받을 수 있습니다.";
 
