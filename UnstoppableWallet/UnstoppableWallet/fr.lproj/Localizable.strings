@@ -157,6 +157,7 @@
 "balance.send" = "Envoyer";
 "balance.swap" = "Echanger";
 "balance.deposit" = "Recevoir";
+"balance.address" = "Address";
 "balance.rate_per_coin" = "%@ par %@";
 "balance.syncing" = "Synchronisation...";
 "balance.searching" = "Recherche des transactions…...";
@@ -192,6 +193,7 @@
 // Deposit
 
 "deposit.receive_coin" = "Recevoir %@";
+"deposit.address" = "Address";
 "deposit.your_address" = "Votre address";
 "receive_alert.not_backed_up_description" = "Vous devez sauvegarder %@ avant de recevoir %@.";
 
