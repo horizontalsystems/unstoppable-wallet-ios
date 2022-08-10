@@ -160,6 +160,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "balance.send" = "Gönder";
 "balance.swap" = "Takas";
 "balance.deposit" = "Al";
+"balance.address" = "Address";
 "balance.rate_per_coin" = "%@ = 1 %@";
 "balance.syncing" = "Eşitleniyor...";
 "balance.searching" = "İşlemler aranıyor ...";
@@ -195,6 +196,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Deposit
 
 "deposit.receive_coin" = "%@ al";
+"deposit.address" = "Address";
 "deposit.your_address" = "Adresiniz";
 "receive_alert.not_backed_up_description" = "%@ almadan önce %@ anahtarlarınızı yedeklemeniz gerekiyor.";
 
