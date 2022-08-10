@@ -159,6 +159,7 @@
 "balance.send" = "发送​​";
 "balance.swap" = "掉期交易";
 "balance.deposit" = "接收";
+"balance.address" = "Address";
 "balance.rate_per_coin" = "%@ / %@";
 "balance.syncing" = "正在同步...";
 "balance.searching" = "正在搜索交易…...";
@@ -194,6 +195,7 @@
 // Deposit
 
 "deposit.receive_coin" = "收到%@";
+"deposit.address" = "Address";
 "deposit.your_address" = "您的地址";
 "receive_alert.not_backed_up_description" = "您必须在接收%@之前先备份%@。";
 
