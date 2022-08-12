@@ -18,6 +18,7 @@ protocol IWalletConnectMainService {
     var connectionStateObservable: Observable<WalletConnectMainModule.ConnectionState> { get }
     var errorObservable: Observable<Error> { get }
 
+    func select(chainId: Int)
     func toggle(chainId: Int)
     func reconnect()
     func approveSession()

@@ -60,7 +60,6 @@ class ItemSelectorViewController: ThemeActionSheetController {
 
 //        tableView.allowsSelection = false
 
-        tableView.registerCell(forClass: ItemSelectorSimpleCell.self)
         tableView.sectionDataSource = self
 
         tableView.reload()
@@ -79,18 +78,35 @@ class ItemSelectorViewController: ThemeActionSheetController {
         case .description(let text):
             return tableView.highlightedDescriptionRow(id: "description_\(text)", text: text)
         case .simple(let viewItem):
-            return Row<ItemSelectorSimpleCell>(
-                    id: "item_\(viewItem.title)",
+            return CellBuilderNew.row(
+                    rootElement: .hStack([
+                        .image24 { component in
+                            if let imageUrl = viewItem.imageUrl {
+                                component.isHidden = false
+                                component.setImage(urlString: imageUrl, placeholder: nil)
+                            } else {
+                                component.isHidden = true
+                            }
+                        },
+                        .text { component in
+                            component.font = .body
+                            component.textColor = viewItem.titleColor
+                            component.text = viewItem.title
+                        },
+                        .image20 { component in
+                            component.isHidden = !viewItem.selected
+                            component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
+                        }
+                    ]),
+                    tableView: tableView,
+                    id: "row_\(rowIndex)",
                     hash: "\(viewItem.selected)",
                     height: .heightCell48,
                     autoDeselect: true,
-                    bind: { cell, _ in
-                        cell.set(backgroundStyle: .lawrence, isFirst: rowIndex == 0, isLast: isLast)
-                        cell.title = viewItem.title
-                        cell.titleColor = viewItem.titleColor
-                        cell.isSelected = viewItem.selected
+                    bind: { cell in
+                        cell.set(backgroundStyle: .bordered, isFirst: rowIndex == 0, isLast: isLast)
                     },
-                    action: { [weak self] _ in
+                    action: { [weak self] in
                         self?.onTap(at: rowIndex)
                     }
             )
