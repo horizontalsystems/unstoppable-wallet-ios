@@ -10,13 +10,14 @@ import ComponentKit
 
 class WalletConnectMainViewController: ThemeViewController {
     private let viewModel: WalletConnectMainViewModel
+    private let disposeBag = DisposeBag()
+
     private weak var sourceViewController: UIViewController?
+
     var requestView: IWalletConnectMainRequestView?
 
     private let spinner = HUDActivityView.create(with: .large48)
-
     private let buttonsHolder = BottomGradientHolder()
-
     private let disconnectButton = PrimaryButton()
     private let connectButton = PrimaryButton()
     private let reconnectButton = PrimaryButton()
@@ -24,14 +25,7 @@ class WalletConnectMainViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let disposeBag = DisposeBag()
-
-    private var activeAccountName: String?
-    private var appMeta: WalletConnectMainViewModel.AppMetaViewItem?
-    private var blockchainEditable: Bool = false
-    private var blockchains: [WalletConnectMainViewModel.BlockchainViewItem]?
-    private var status: WalletConnectMainViewModel.Status?
-    private var hint: String?
+    private var viewItem: WalletConnectMainViewModel.ViewItem?
 
     init(viewModel: WalletConnectMainViewModel, sourceViewController: UIViewController?) {
         self.viewModel = viewModel
@@ -143,32 +137,15 @@ class WalletConnectMainViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.closeVisibleDriver) { [weak self] in
             self?.syncCloseButton(visible: $0)
         }
-        subscribe(disposeBag, viewModel.activeAccountNameDriver) { [weak self] in
-            self?.activeAccountName = $0
-        }
-        subscribe(disposeBag, viewModel.appMetaDriver) { [weak self] in
-            self?.appMeta = $0
-        }
-        subscribe(disposeBag, viewModel.blockchainsEditableDriver) { [weak self] in
-            self?.blockchainEditable = $0
-        }
-        subscribe(disposeBag, viewModel.blockchainViewItemDriver) { [weak self] in
-            self?.blockchains = $0
-        }
-        subscribe(disposeBag, viewModel.hintDriver) { [weak self] in
-            self?.hint = $0
-        }
-        subscribe(disposeBag, viewModel.statusDriver) { [weak self] in
-            self?.status = $0
-        }
-        subscribe(disposeBag, viewModel.reloadTableSignal) { [weak self] in
-            self?.tableView.reload(animated: true)
+        subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in
+            self?.viewItem = $0
+            self?.tableView.reload()
         }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
             self?.close()
         }
 
-        tableView.reload()
+        tableView.buildSections()
     }
 
     private func show(error: String) {
@@ -220,11 +197,37 @@ class WalletConnectMainViewController: ThemeViewController {
         sourceViewController?.dismiss(animated: true)
     }
 
-    private var footer: RowProtocol? {
-        hint.map { hint -> RowProtocol in
-            tableView.highlightedDescriptionRow(id: "hint_footer", text: hint)
+    private func openSelectNetwork() {
+        let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
+                title: "wallet_connect.network".localized,
+                image: UIImage(named: "blocks_24")?.withTintColor(.themeJacob)
+        )
+
+        let viewItems = viewModel.blockchainSelectorViewItems
+
+        let items = viewItems.map {
+            ItemSelectorModule.Item.simple(
+                    viewItem: ItemSelectorModule.SimpleViewItem(
+                            imageUrl: $0.imageUrl,
+                            title: $0.title,
+                            selected: $0.selected
+                    )
+            )
+        }
+
+        let itemSelector = ItemSelectorModule.viewController(title: .complex(viewItem: titleViewItem), items: items, onTap: { [weak self] selector, index in
+            selector.dismiss(animated: true)
+            self?.viewModel.onSelect(chainId: viewItems[index].chainId)
+        })
+
+        DispatchQueue.main.async {
+            self.present(itemSelector.toBottomSheet, animated: true)
         }
     }
+
+}
+
+extension WalletConnectMainViewController: SectionsDataSource {
 
     private func headerRow(imageUrl: String?, title: String) -> RowProtocol {
         Row<LogoHeaderCell>(
@@ -238,118 +241,147 @@ class WalletConnectMainViewController: ThemeViewController {
         )
     }
 
-    private func valueRow(title: String, value: String, isFirst: Bool, isLast: Bool, valueColor: UIColor? = nil) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text, .text],
-                tableView: tableView,
-                id: "non-selectable-row-\(title)",
-                hash: "non-selectable-\(title)-\(value)-\(isFirst.description)-\(isLast.description)",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                    cell.bind(index: 0, block: { (component: TextComponent) in
-                        component.font = .subhead2
-                        component.textColor = .themeGray
-                        component.text = title
-                    })
-                    cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.font = .subhead1
-                        component.textColor = .themeLeah
-                        component.text = value
-                        if let color = valueColor {
-                            component.textColor = color
-                        }
-                    })
-                })
-    }
+    func buildSections() -> [SectionProtocol] {
+        var rows = [RowProtocol]()
 
-    private func selectableValueRow(title: String, value: String, selected: Bool, isFirst: Bool, isLast: Bool, valueColor: UIColor? = nil, action: @escaping () -> ()) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image24, .text, .text],
-                tableView: tableView,
-                id: "selectable-row-\(title)",
-                hash: "selectable-\(title)-\(value)-\(selected.description)-\(isFirst.description)-\(isLast.description)",
-                height: .heightCell48,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+        if let viewItem = viewItem {
+            if let dAppMeta = viewItem.dAppMeta {
+                rows.append(headerRow(imageUrl: dAppMeta.icon, title: dAppMeta.name))
+            }
 
-                    cell.bind(index: 0, block: { (component: ImageComponent) in
-                        component.imageView.image = selected ? UIImage(named: "checkbox_active_24") : UIImage(named: "checkbox_diactive_24")
-                    })
-                    cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.font = .subhead2
-                        component.textColor = .themeGray
-                        component.text = title
-                    })
-                    cell.bind(index: 2, block: { (component: TextComponent) in
-                        component.font = .subhead1
-                        component.textColor = .themeLeah
-                        component.text = value
-                        if let color = valueColor {
-                            component.textColor = color
-                        }
-                    })
-                },
-                action: action)
+            var rowInfos = [RowInfo]()
+
+            if let status = viewItem.status {
+                rowInfos.append(.value(title: "status".localized, value: status.title, valueColor: status.color))
+            }
+
+            if let dAppMeta = viewItem.dAppMeta {
+                rowInfos.append(.value(title: "wallet_connect.url".localized, value: dAppMeta.url, valueColor: nil))
+            }
+
+            if let accountName = viewItem.activeAccountName {
+                rowInfos.append(.value(title: "wallet_connect.active_account".localized, value: accountName, valueColor: nil))
+            }
+
+            if let address = viewItem.address {
+                rowInfos.append(.value(title: "wallet_connect.address".localized, value: address, valueColor: nil))
+            }
+
+            if let network = viewItem.network {
+                rowInfos.append(.network(value: network, editable: viewItem.networkEditable))
+            }
+
+            if let blockchains = viewItem.blockchains {
+                for blockchain in blockchains {
+                    rowInfos.append(.chain(
+                            title: blockchain.chainTitle ?? "Unsupported",
+                            value: blockchain.address,
+                            selected: blockchain.selected,
+                            chainId: blockchain.chainId
+                    ))
+                }
+            }
+
+            for (index, rowInfo) in rowInfos.enumerated() {
+                let isFirst = index == 0
+                let isLast = index == rowInfos.count - 1
+
+                switch rowInfo {
+                case let .value(title, value, valueColor):
+                    rows.append(tableView.grayTitleWithValueRow(
+                            id: "value-\(index)",
+                            hash: value,
+                            title: title,
+                            value: value,
+                            valueColor: valueColor ?? .themeLeah,
+                            isFirst: isFirst,
+                            isLast: isLast
+                    ))
+                case let .network(value, editable):
+                    let row = CellBuilderNew.row(
+                            rootElement: .hStack([
+                                .text { component in
+                                    component.font = .subhead2
+                                    component.textColor = .themeGray
+                                    component.text = "wallet_connect.network".localized
+                                },
+                                .text { component in
+                                    component.font = .subhead1
+                                    component.textColor = .themeLeah
+                                    component.text = value
+                                },
+                                .margin8,
+                                .image20 { component in
+                                    component.isHidden = !editable
+                                    component.imageView.image = UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray)
+                                }
+                            ]),
+                            tableView: tableView,
+                            id: "network-\(index)",
+                            hash: value,
+                            height: .heightCell48,
+                            autoDeselect: true,
+                            bind: { cell in
+                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                            },
+                            action: editable ? { [weak self] in
+                                self?.openSelectNetwork()
+                            } : nil
+                    )
+
+                    rows.append(row)
+                case let .chain(title, value, selected, chainId):
+                    let row = CellBuilderNew.row(
+                            rootElement: .hStack([
+                                .image24 { component in
+                                    component.imageView.image = selected ? UIImage(named: "checkbox_active_24") : UIImage(named: "checkbox_diactive_24")
+                                },
+                                .text { component in
+                                    component.font = .subhead2
+                                    component.textColor = .themeGray
+                                    component.text = title
+                                },
+                                .text { component in
+                                    component.font = .subhead1
+                                    component.textColor = .themeLeah
+                                    component.text = value
+                                }
+                            ]),
+                            tableView: tableView,
+                            id: "chain-\(index)",
+                            hash: "\(selected)",
+                            height: .heightCell48,
+                            autoDeselect: true,
+                            bind: { cell in
+                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                            },
+                            action: { [weak self] in
+                                self?.viewModel.onToggle(chainId: chainId)
+                            }
+                    )
+
+                    rows.append(row)
+                }
+            }
+
+            if let hint = viewItem.hint {
+                rows.append(tableView.highlightedDescriptionRow(id: "hint_footer", text: hint))
+            }
+        }
+
+        return [
+            Section(id: "wallet_connect", rows: rows)
+        ]
     }
 
 }
 
-extension WalletConnectMainViewController: SectionsDataSource {
+extension WalletConnectMainViewController {
 
-    public func buildSections() -> [SectionProtocol] {
-        var rows = [RowProtocol]()
-
-        guard let appMeta = appMeta else {
-            return [Section(id: "wallet_connect", rows: rows)]
-        }
-
-        if let imageUrl = appMeta.icon {
-            rows.append(headerRow(imageUrl: imageUrl, title: appMeta.name))
-        }
-
-        if let status = status {
-            rows.append(valueRow(title: "status".localized, value: status.title, isFirst: true, isLast: activeAccountName == nil, valueColor: status.color))
-        }
-
-        rows.append(valueRow(title: "wallet_connect.url".localized, value: appMeta.url, isFirst: status == nil, isLast: activeAccountName == nil))
-
-        if let accountName = activeAccountName {
-            rows.append(valueRow(title: "wallet_connect.active_account".localized, value: accountName, isFirst: status == nil, isLast: (blockchains ?? []).isEmpty))
-        }
-
-        if let blockchains = blockchains, !blockchains.isEmpty {
-            rows.append(contentsOf: blockchains
-                    .enumerated()
-                    .map { index, blockchain in
-                        if blockchainEditable {
-                            return selectableValueRow(
-                                    title: blockchain.chainTitle ?? "Unsupported",
-                                    value: blockchain.address,
-                                    selected: blockchain.selected,
-                                    isFirst: false,
-                                    isLast: index == blockchains.count - 1,
-                                    action: { [weak self] in
-                                        self?.viewModel.onToggle(chainId: blockchain.chainId)
-                                    }
-                            )
-                        } else {
-                            return valueRow(
-                                    title: blockchain.chainTitle ?? "Unsupported",
-                                    value: blockchain.address,
-                                    isFirst: false,
-                                    isLast: index == blockchains.count - 1
-                            )
-                        }
-                    })
-        }
-
-        if let footerRow = footer {
-            rows.append(footerRow)
-        }
-
-        return [Section(id: "wallet_connect", rows: rows)]
+    enum RowInfo {
+        case value(title: String, value: String, valueColor: UIColor?)
+        case network(value: String, editable: Bool)
+        case chain(title: String, value: String, selected: Bool, chainId: Int)
     }
 
 }
