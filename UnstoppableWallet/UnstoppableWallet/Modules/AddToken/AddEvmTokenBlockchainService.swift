@@ -7,14 +7,14 @@ import HsToolKit
 import MarketKit
 
 class AddEvmTokenBlockchainService {
-    private let apiUrl = "https://markets-dev.horizontalsystems.xyz"
-
     private let blockchain: Blockchain
     private let networkManager: NetworkManager
+    private let apiUrl: String
 
-    init(blockchain: Blockchain, networkManager: NetworkManager) {
+    init(blockchain: Blockchain, networkManager: NetworkManager, appConfigProvider: AppConfigProvider) {
         self.blockchain = blockchain
         self.networkManager = networkManager
+        apiUrl = appConfigProvider.marketApiUrl
     }
 
 }

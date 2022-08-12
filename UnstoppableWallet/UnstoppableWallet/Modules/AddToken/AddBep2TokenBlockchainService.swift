@@ -5,18 +5,18 @@ import ObjectMapper
 import MarketKit
 
 class AddBep2TokenBlockchainService {
-    private let apiUrl = "https://markets-dev.horizontalsystems.xyz"
-
     private let blockchain: Blockchain
     private let networkManager: NetworkManager
+    private let apiUrl: String
 
-    init?(marketKit: MarketKit.Kit, networkManager: NetworkManager) {
+    init?(marketKit: MarketKit.Kit, networkManager: NetworkManager, appConfigProvider: AppConfigProvider) {
         guard let blockchain = try? marketKit.blockchain(uid: BlockchainType.binanceChain.uid) else {
             return nil
         }
 
         self.blockchain = blockchain
         self.networkManager = networkManager
+        apiUrl = appConfigProvider.marketApiUrl
     }
 
 }

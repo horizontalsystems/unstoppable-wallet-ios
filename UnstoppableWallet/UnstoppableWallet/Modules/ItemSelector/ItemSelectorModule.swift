@@ -47,11 +47,13 @@ extension ItemSelectorModule {
     }
 
     struct SimpleViewItem {
+        let imageUrl: String?
         let title: String
         let titleColor: UIColor
         let selected: Bool
 
-        init(title: String, titleColor: UIColor = .themeGray, selected: Bool) {
+        init(imageUrl: String? = nil, title: String, titleColor: UIColor = .themeLeah, selected: Bool) {
+            self.imageUrl = imageUrl
             self.title = title
             self.titleColor = titleColor
             self.selected = selected
