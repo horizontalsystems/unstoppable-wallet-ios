@@ -60,7 +60,7 @@ extension HsTokenBalanceProvider {
     }
 
     func blockNumberSingle(blockchainType: BlockchainType) -> Single<Int> {
-        let request = networkManager.session.request("\(apiUrl)/v1/blockchains/\(blockchainType.uid)", headers: headers)
+        let request = networkManager.session.request("\(apiUrl)/v1/blockchains/\(blockchainType.uid)/block-number", headers: headers)
         return networkManager.single(request: request).map { (response: ChainResponse) in
             response.blockNumber
         }

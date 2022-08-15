@@ -73,10 +73,9 @@ class Eip1559GasPriceService {
             usingRecommended = false
             tips = maxTips
             baseFee = maxBaseFee
-            sync()
-        } else {
-            updateFeeHistory()
         }
+
+        updateFeeHistory()
     }
 
     private func updateFeeHistory() {
