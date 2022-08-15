@@ -11,7 +11,7 @@ struct EvmFeeModule {
         let feeService = feeViewModel.service
         let coinService = feeViewModel.coinService
         let gasPriceService = feeViewModel.gasPriceService
-        let feeViewItemFactory = FeeViewItemFactory(scale: .gwei)
+        let feeViewItemFactory = FeeViewItemFactory(scale: coinService.token.blockchainType.feePriceScale)
         let cautionsFactory = SendEvmCautionsFactory()
 
         switch gasPriceService {
