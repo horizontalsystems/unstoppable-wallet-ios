@@ -239,6 +239,14 @@ extension MarketKit.BlockchainType {
         }
     }
 
+    // used for EVM blockchains only
+    var feePriceScale: FeePriceScale {
+        switch self {
+        case .avalanche: return .nAvax
+        default: return .gwei
+        }
+    }
+
 }
 
 extension MarketKit.Coin {
