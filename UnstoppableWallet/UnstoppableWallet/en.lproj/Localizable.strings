@@ -946,6 +946,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "create_wallet.create_button" = "Create";
 "create_wallet.mnemonic" = "Mnemonic";
 "create_wallet.n_words" = "%@ words";
+"create_wallet.word_list" = "Word List";
 "create_wallet.passphrase" = "Passphrase";
 "create_wallet.input.passphrase" = "Passphrase";
 "create_wallet.input.confirm" = "Confirm";
