@@ -16,7 +16,7 @@ class CreateAccountViewController: KeyboardAwareViewController {
     private let tableView = SectionsTableView(style: .grouped)
     private let mnemonicCell = BaseSelectableThemeCell()
     private let wordListCell = BaseSelectableThemeCell()
-    private let passphraseToggleCell = BaseSelectableThemeCell()
+    private let passphraseToggleCell = BaseThemeCell()
     private let passphraseCell = TextFieldCell()
     private let passphraseCautionCell = FormCautionCell()
     private let passphraseConfirmationCell = TextFieldCell()

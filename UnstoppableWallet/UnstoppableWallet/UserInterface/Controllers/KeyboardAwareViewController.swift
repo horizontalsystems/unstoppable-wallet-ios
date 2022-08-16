@@ -120,6 +120,7 @@ class KeyboardAwareViewController: ThemeViewController {
         // try to disable dismiss controller by swipe when keyboard is visible
         navigationController?.presentationController?.presentedView?.gestureRecognizers?.first?.isEnabled = false
         self.keyboardFrame = keyboardFrame
+        pseudoAccessoryView?.heightValue = accessoryViewHeight
 
         for scrollView in scrollViews {
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - view.safeAreaInsets.bottom, right: 0)
@@ -131,9 +132,10 @@ class KeyboardAwareViewController: ThemeViewController {
         // try to enable dismiss controller by swipe when keyboard is hidden
         navigationController?.presentationController?.presentedView?.gestureRecognizers?.first?.isEnabled = true
         keyboardFrame = nil
+        pseudoAccessoryView?.heightValue = accessoryViewHeight
 
         for scrollView in scrollViews {
-            scrollView.contentInset = .zero
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (pseudoAccessoryView?.height ?? 0) - view.safeAreaInsets.bottom, right: 0)
             scrollView.scrollIndicatorInsets = .zero
         }
     }

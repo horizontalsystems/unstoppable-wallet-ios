@@ -4,7 +4,7 @@ import ComponentKit
 class MnemonicWordCell: UICollectionViewCell {
     private static let indexFont: UIFont = .subhead1
     private static let wordFont: UIFont = .body
-    private static let spacing: CGFloat = .margin8
+    private static let spacing: CGFloat = .margin6
 
     private let indexText = TextComponent()
     private let wordText = TextComponent()

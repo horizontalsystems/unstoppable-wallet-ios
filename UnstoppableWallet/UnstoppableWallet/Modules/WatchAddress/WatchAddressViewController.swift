@@ -8,7 +8,7 @@ import RxCocoa
 import UIExtensions
 
 class WatchAddressViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .heightButton + .margin16 + .margin16
+    private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
     private let viewModel: WatchAddressViewModel
     private let disposeBag = DisposeBag()
 
@@ -61,9 +61,9 @@ class WatchAddressViewController: KeyboardAwareViewController {
 
         gradientWrapperView.addSubview(watchButton)
         watchButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide)
+            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
         }
 
         watchButton.set(style: .yellow)

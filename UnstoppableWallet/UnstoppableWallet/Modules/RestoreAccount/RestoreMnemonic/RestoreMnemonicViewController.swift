@@ -14,11 +14,13 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
     private let mnemonicInputCell = MnemonicInputCell()
     private let mnemonicCautionCell = FormCautionCell()
 
-    private let passphraseToggleCell = BaseSelectableThemeCell()
+    private let passphraseToggleCell = BaseThemeCell()
     private let passphraseCell = TextFieldCell()
     private let passphraseCautionCell = FormCautionCell()
 
     private let nameCell = TextFieldCell()
+
+    private let hintView = RestoreMnemonicHintView()
 
     private var inputsVisible = false
     private var isLoaded = false
@@ -27,7 +29,7 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
     init(viewModel: RestoreMnemonicViewModel) {
         self.viewModel = viewModel
 
-        super.init(scrollViews: [tableView])
+        super.init(scrollViews: [tableView], accessoryView: hintView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -53,8 +55,9 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         tableView.sectionDataSource = self
 
         mnemonicInputCell.onChangeHeight = { [weak self] in self?.reloadTable() }
-        mnemonicInputCell.onChangeText = { [weak self] in self?.viewModel.onChange(text: $0, cursorOffset: $1) }
+        mnemonicInputCell.onChangeText = { [weak self] in self?.viewModel.onChange(text: $0, cursorOffset: $1, language: $2) }
         mnemonicInputCell.onChangeTextViewCaret = { [weak self] in self?.syncContentOffsetIfRequired(textView: $0) }
+        mnemonicInputCell.onChangeEntering = { [weak self] in self?.syncHintView() }
 
         mnemonicCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
@@ -84,7 +87,23 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         nameCell.autocapitalizationType = .words
         nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
 
+        view.addSubview(hintView)
+        hintView.snp.makeConstraints { maker in
+            maker.leading.trailing.bottom.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightSingleLineCell).priority(.high)
+        }
+
+        hintView.onSelectWord = { [weak self] word in
+            self?.viewModel.onSelect(word: word)
+        }
+        hintView.isHidden = true
+
+        subscribe(disposeBag, viewModel.possibleWordsDriver) { [weak self] in
+            self?.hintView.set(words: $0)
+            self?.syncHintView()
+        }
         subscribe(disposeBag, viewModel.invalidRangesDriver) { [weak self] in self?.mnemonicInputCell.set(invalidRanges: $0) }
+        subscribe(disposeBag, viewModel.replaceWordSignal) { [weak self] in self?.mnemonicInputCell.replaceWord(range: $0, word: $1) }
         subscribe(disposeBag, viewModel.showErrorSignal) { HudHelper.instance.show(banner: .error(string: $0)) }
         subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openSelectCoins(accountName: $0, accountType: $1) }
         subscribe(disposeBag, viewModel.inputsVisibleDriver) { [weak self] in self?.sync(inputsVisible: $0) }
@@ -124,6 +143,10 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         viewModel.onTapProceed()
     }
 
+    private func syncHintView() {
+        hintView.isHidden = !mnemonicInputCell.entering || hintView.words.isEmpty
+    }
+
     private func sync(inputsVisible: Bool) {
         self.inputsVisible = inputsVisible
 
@@ -132,7 +155,7 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
     }
 
     private func showDefaultWords() {
-        let text = App.shared.appConfigProvider.defaultWords
+        let text = App.shared.appConfigProvider.defaultWords + " "
         mnemonicInputCell.set(text: text)
     }
 
