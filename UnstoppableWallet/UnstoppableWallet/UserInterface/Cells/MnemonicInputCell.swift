@@ -14,8 +14,15 @@ class MnemonicInputCell: UITableViewCell {
     private let textView = UITextView()
 
     var onChangeHeight: (() -> ())?
-    var onChangeText: ((String, Int) -> ())?
+    var onChangeText: ((String, Int, String?) -> ())?
     var onChangeTextViewCaret: ((UITextView) -> ())?
+    var onChangeEntering: (() -> ())?
+
+    private(set) var entering = false {
+        didSet {
+            onChangeEntering?()
+        }
+    }
 
     private(set) var textForHeight: String = "" {
         didSet {
@@ -60,7 +67,6 @@ class MnemonicInputCell: UITableViewCell {
         borderView.layer.cornerCurve = .continuous
         borderView.layer.borderWidth = .heightOneDp
         borderView.layer.borderColor = UIColor.themeSteel20.cgColor
-
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -88,8 +94,15 @@ extension MnemonicInputCell: UITextViewDelegate {
         }
 
         let cursorOffset = textView.offset(from: textView.beginningOfDocument, to: selectedTextRange.start)
+        onChangeText?(textView.text, cursorOffset, textView.textInputMode?.primaryLanguage)
+    }
 
-        onChangeText?(textView.text, cursorOffset)
+    public func textViewDidBeginEditing(_ textView: UITextView) {
+        entering = true
+    }
+
+    public func textViewDidEndEditing(_ textView: UITextView) {
+        entering = false
     }
 
 }
@@ -117,10 +130,31 @@ extension MnemonicInputCell {
         textView.selectedRange = range
     }
 
+    func replaceWord(range: NSRange, word: String) {
+        var text: String = textView.text
+
+        guard let textRange = Range(range, in: text) else {
+            return
+        }
+
+        let replaceWord = word + " "
+        text.replaceSubrange(textRange, with: replaceWord)
+
+        textForHeight = text
+        textView.text = text
+
+        let cursorOffset = range.lowerBound + replaceWord.count
+        if let newPosition = textView.position(from: textView.beginningOfDocument, offset: cursorOffset) {
+            textView.selectedTextRange = textView.textRange(from: newPosition, to: newPosition)
+        }
+
+        onChangeText?(text, cursorOffset, textView.textInputMode?.primaryLanguage)
+    }
+
     func set(text: String) {
         textForHeight = text
         textView.text = text
-        onChangeText?(text, text.count)
+        onChangeText?(text, text.count, textView.textInputMode?.primaryLanguage)
     }
 
     func set(cautionType: CautionType?) {
