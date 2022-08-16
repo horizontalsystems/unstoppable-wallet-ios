@@ -29,6 +29,7 @@ enum BalanceSecondaryInfoViewItem {
     case amount(viewItem: BalanceSecondaryAmountViewItem)
     case searchingTx(count: Int)
     case syncing(progress: Int?, syncedUntil: String?)
+    case custom(leftString: String, rightString: String?)
 }
 
 struct BalanceSecondaryAmountViewItem {
@@ -84,6 +85,9 @@ extension BalanceSecondaryInfoViewItem: Equatable {
         case (.syncing(let lhsProgress, let lhsSyncedUntil), .syncing(let rhsProgress, let rhsSyncedUntil)):
             return lhsProgress == rhsProgress &&
                     lhsSyncedUntil == rhsSyncedUntil
+        case (.custom(let lPrimary, let lSecondary), .custom(let rPrimary, let rSecondary)):
+            return lPrimary == rPrimary &&
+                    lSecondary ?? "" == rSecondary ?? ""
         default: return false
         }
     }
@@ -164,6 +168,7 @@ extension BalanceSecondaryInfoViewItem: CustomStringConvertible {
         case .amount(let viewItem): return "[amount: \(viewItem)]"
         case .searchingTx(let count): return "[searchingTx: \(count)]"
         case .syncing(let progress, let syncedUntil): return "[syncing: [progress: \(progress.map { "\($0)" } ?? "nil"); syncedUntil: \(syncedUntil ?? "nil")]]"
+        case .custom(let left, let right): return "[\([left, right].flatMap { $0 }.joined(separator: " : "))]"
         }
     }
 

@@ -33,6 +33,18 @@ class WalletViewItemFactory {
             return .syncing(progress: progress, syncedUntil: lastBlockDate.map { DateHelper.instance.formatSyncedThroughDate(from: $0) })
         } else if case let .searchingTxs(count) = item.state, expanded {
             return .searchingTx(count: count)
+        } else if case let .zCash(state) = item.state, expanded {
+            switch state {
+            case .downloadingSapling(let progress):
+                return .custom(leftString: "Downloading Sapling... \(progress)%", rightString: nil)
+            case .downloadingBlocks(let number, let lastBlock):
+                return .custom(leftString: "Downloading Blocks", rightString: "\(number)/\(lastBlock)")
+            case .scanningBlocks(let number, let lastBlock):
+                return .custom(leftString: "Scanning Blocks", rightString: "\(number)/\(lastBlock)")
+            case .enhancingTransactions(let number, let count):
+                let progress: String? = count == 0 ? nil : "\(number)/\(count)"
+                return .custom(leftString: "Enhancing Transactions", rightString: progress)
+            }
         } else {
             return .amount(viewItem: BalanceSecondaryAmountViewItem(
                     secondaryValue: balanceHidden ? nil : secondaryValue(item: item, balancePrimaryValue: balancePrimaryValue, expanded: expanded),
@@ -84,13 +96,15 @@ class WalletViewItemFactory {
             } else {
                 return infiniteProgress
             }
+        case let .zCash:
+            return infiniteProgress
         default: return nil
         }
     }
 
     private func indefiniteSearchCircle(state: AdapterState) -> Bool {
         switch state {
-        case .searchingTxs: return true
+        case .searchingTxs, .zCash: return true
         default: return false
         }
     }
