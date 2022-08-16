@@ -7,10 +7,6 @@ import HsToolKit
 import MarketKit
 
 class ZcashAdapter {
-    private let saplingDownloadRange: Double = 10
-    private let blockDownloadRange: Double = 50
-    private let blockScanningRange: Double = 40
-
     private let disposeBag = DisposeBag()
 
     var fee: Decimal { defaultFee() }
@@ -33,7 +29,7 @@ class ZcashAdapter {
 
     private let birthday: BlockHeight
 
-    private var lastBlockHeight: Int? = 0
+    private var lastBlockHeight: Int = 0
 
     private(set) var balanceState: AdapterState {
         didSet {
@@ -107,7 +103,7 @@ class ZcashAdapter {
         transactionPool = ZcashTransactionPool(receiveAddress: address.zAddress)
         transactionPool.store(confirmedTransactions: synchronizer.clearedTransactions, pendingTransactions: synchronizer.pendingTransactions)
 
-        balanceState = .syncing(progress: 0, lastBlockDate: nil)
+        balanceState = .zCash(state: .downloadingBlocks(number: 0, lastBlock: lastBlockHeight))
         transactionState = balanceState
 //        lastBlockHeight = try? synchronizer.latestHeight()
 
@@ -150,7 +146,7 @@ class ZcashAdapter {
         switch state {
         case .idle: sync()
         case .inProgress(let progress):
-            balanceState = .syncing(progress: Int(progress * saplingDownloadRange), lastBlockDate: nil)
+            balanceState = .zCash(state: .downloadingSapling(progress: Int(progress * 100)))
         }
     }
 
@@ -171,15 +167,15 @@ class ZcashAdapter {
         case .stopped: newState = .notSynced(error: AppError.unknownError)
         case .synced: newState = .synced
         case .downloading(let p):
-            newState = .syncing(progress: Int(saplingDownloadRange + progress(p: p) * blockDownloadRange), lastBlockDate: blockDate)
+            newState = .zCash(state: .downloadingBlocks(number: p.progressHeight, lastBlock: p.targetHeight))
         case .enhancing(let p):
-            newState = .syncing(progress: p.progress, lastBlockDate: blockDate)
+            newState = .zCash(state: .enhancingTransactions(number: p.enhancedTransactions, count: p.totalTransactions))
         case .unprepared:
             newState = .notSynced(error: AppError.unknownError)
         case .validating:
             newState = .syncing(progress: 0, lastBlockDate: blockDate)
-        case .scanning(let scanProgress):
-            newState = .syncing(progress: Int((saplingDownloadRange + blockDownloadRange) + progress(p: scanProgress) * blockScanningRange), lastBlockDate: blockDate)
+        case .scanning(let p):
+            newState = .zCash(state: .scanningBlocks(number: p.progressHeight, lastBlock: p.targetHeight))
         case .fetching:
             newState = .syncing(progress: 0, lastBlockDate: nil)
         case .error:
@@ -453,7 +449,7 @@ extension ZcashAdapter: IAdapter {
 extension ZcashAdapter: ITransactionsAdapter {
 
     var lastBlockInfo: LastBlockInfo? {
-        lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
+        LastBlockInfo(height: lastBlockHeight, timestamp: nil)
     }
 
     var transactionStateUpdatedObservable: Observable<Void> {
