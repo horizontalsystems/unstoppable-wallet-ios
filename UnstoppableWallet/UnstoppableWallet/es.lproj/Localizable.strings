@@ -945,6 +945,7 @@ poner en peligro la seguridad de mis fondos.";
 "create_wallet.create_button" = "Crear";
 "create_wallet.mnemonic" = "Mnemotécnica";
 "create_wallet.n_words" = "%@ palabras";
+"create_wallet.word_list" = "Word List";
 "create_wallet.passphrase" = "Frase de contraseña";
 "create_wallet.input.passphrase" = "Frase de contraseña";
 "create_wallet.input.confirm" = "Confirmar";
