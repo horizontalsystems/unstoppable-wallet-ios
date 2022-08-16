@@ -946,6 +946,7 @@
 "create_wallet.create_button" = "Создать";
 "create_wallet.mnemonic" = "Мнемоническая Фраза";
 "create_wallet.n_words" = "%@ слов";
+"create_wallet.word_list" = "Word List";
 "create_wallet.passphrase" = "Кодовая Фраза";
 "create_wallet.input.passphrase" = "Кодовая Фраза";
 "create_wallet.input.confirm" = "Подтвердить";
