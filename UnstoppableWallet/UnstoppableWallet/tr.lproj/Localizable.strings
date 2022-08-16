@@ -164,6 +164,11 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "balance.rate_per_coin" = "%@ = 1 %@";
 "balance.syncing" = "Eşitleniyor...";
 "balance.searching" = "İşlemler aranıyor ...";
+"balance.downloading_sapling" = "Downloading Sapling... %d%%";
+"balance.downloading_blocks" = "Downloading Blocks";
+"balance.scanning_blocks" = "Scanning Blocks";
+"balance.enhancing_transactions" = "Enhancing Transactions";
+
 "balance.searching.count" = "bakiye.araması.miktar";
 "balance.syncing_percent" = "Senkronize ediliyor... %@";
 "balance.synced_through" = "%@ kadar";
@@ -1011,6 +1016,8 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "wallet_connect.error.invalid_url" = "Geçersiz URL Adresi";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Aktif Cüzdan";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.address" = "Address";
 "wallet_connect.network" = "Network";
 "wallet_connect.main.no_any_supported_chains" = "Desteklenen zincir yok!";
