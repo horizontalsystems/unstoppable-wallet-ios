@@ -163,6 +163,11 @@
 "balance.rate_per_coin" = "%@ за %@";
 "balance.syncing" = "Синхронизация...";
 "balance.searching" = "Поиск транзакций...";
+"balance.downloading_sapling" = "Downloading Sapling... %d%%";
+"balance.downloading_blocks" = "Downloading Blocks";
+"balance.scanning_blocks" = "Scanning Blocks";
+"balance.enhancing_transactions" = "Enhancing Transactions";
+
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Синхронизация... %@";
 "balance.synced_through" = "до %@";
@@ -1010,6 +1015,8 @@
 "wallet_connect.error.invalid_url" = "Неверный URL-адрес";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Активный Кошелек";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.address" = "Address";
 "wallet_connect.network" = "Network";
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
