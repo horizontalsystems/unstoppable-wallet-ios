@@ -184,6 +184,18 @@ class BalanceTopView: UIView {
             } else {
                 bottomRightLabel.isHidden = true
             }
+        case let .custom(left, right):
+            diffLabel.isHidden = true
+
+            bottomLeftLabel.text = left
+            bottomLeftLabel.textColor = .themeGray
+            if let right = right {
+                bottomRightLabel.isHidden = false
+                bottomRightLabel.text = right
+                bottomRightLabel.textColor = .themeGray
+            } else {
+                bottomRightLabel.isHidden = true
+            }
         }
     }
 
