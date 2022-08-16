@@ -944,6 +944,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "create_wallet.create_button" = "Créer";
 "create_wallet.mnemonic" = "Mnémonique";
 "create_wallet.n_words" = "%@ mots";
+"create_wallet.word_list" = "Word List";
 "create_wallet.passphrase" = "Phrase d'authentification";
 "create_wallet.input.passphrase" = "Phrase d'authentification";
 "create_wallet.input.confirm" = "Confirmer";
