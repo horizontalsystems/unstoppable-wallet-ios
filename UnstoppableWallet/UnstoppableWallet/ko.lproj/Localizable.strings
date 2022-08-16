@@ -944,6 +944,7 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 "create_wallet.create_button" = "만들기";
 "create_wallet.mnemonic" = "연상 기호";
 "create_wallet.n_words" = "%@ 단어";
+"create_wallet.word_list" = "Word List";
 "create_wallet.passphrase" = "암호 문구";
 "create_wallet.input.passphrase" = "암호 문구";
 "create_wallet.input.confirm" = "확인";
