@@ -163,6 +163,11 @@
 "balance.rate_per_coin" = "%@ / %@";
 "balance.syncing" = "正在同步...";
 "balance.searching" = "正在搜索交易…...";
+"balance.downloading_sapling" = "Downloading Sapling... %d%%";
+"balance.downloading_blocks" = "Downloading Blocks";
+"balance.scanning_blocks" = "Scanning Blocks";
+"balance.enhancing_transactions" = "Enhancing Transactions";
+
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "正在同步... %@";
 "balance.synced_through" = "直到 %@";
@@ -1010,6 +1015,8 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "wallet_connect.error.invalid_url" = "无效的URL地址";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "激活钱包";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.address" = "Address";
 "wallet_connect.network" = "Network";
 "wallet_connect.main.no_any_supported_chains" = "没有任何支持的链！";
