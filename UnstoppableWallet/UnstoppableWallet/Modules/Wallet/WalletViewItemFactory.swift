@@ -36,14 +36,14 @@ class WalletViewItemFactory {
         } else if case let .zCash(state) = item.state, expanded {
             switch state {
             case .downloadingSapling(let progress):
-                return .custom(leftString: "balance.downloading_sapling".localized(progress), rightString: nil)
+                return .custom(leftString: "Downloading Sapling... \(progress)%", rightString: nil)
             case .downloadingBlocks(let number, let lastBlock):
-                return .custom(leftString: "balance.downloading_blocks".localized, rightString: "\(number)/\(lastBlock)")
+                return .custom(leftString: "Downloading Blocks", rightString: "\(number)/\(lastBlock)")
             case .scanningBlocks(let number, let lastBlock):
-                return .custom(leftString: "balance.scanning_blocks".localized, rightString: "\(number)/\(lastBlock)")
+                return .custom(leftString: "Scanning Blocks", rightString: "\(number)/\(lastBlock)")
             case .enhancingTransactions(let number, let count):
                 let progress: String? = count == 0 ? nil : "\(number)/\(count)"
-                return .custom(leftString: "balance.enhancing_transactions".localized, rightString: progress)
+                return .custom(leftString: "Enhancing Transactions", rightString: progress)
             }
         } else {
             return .amount(viewItem: BalanceSecondaryAmountViewItem(
