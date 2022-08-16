@@ -947,6 +947,7 @@ Mevcut çözümler yeterli olmadığından kendimiz için Durdurulamaz'ı geliş
 "create_wallet.create_button" = "Oluştur";
 "create_wallet.mnemonic" = "Mnemonic";
 "create_wallet.n_words" = "%@ kelime";
+"create_wallet.word_list" = "Word List";
 "create_wallet.passphrase" = "Parola";
 "create_wallet.input.passphrase" = "Parola";
 "create_wallet.input.confirm" = "Onayla";
