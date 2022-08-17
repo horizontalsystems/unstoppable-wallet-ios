@@ -108,19 +108,30 @@
 "coin_platforms.description" = "Dieses Token existiert auf mehreren Blockchains.";
 "coin_platforms.native" = "Nativ";
 
-// Show Key
+// Copy Warning
 
-"show_key.title" = "Schlüssel";
-"show_key.description" = "Die Wiederherstellungsphrasen, die als nächstes gezeigt werden, sind die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, falls Ihr Mobiltelefon jemals verloren geht, gestohlen wird, kaputt geht usw.\n\nStellen Sie sicher, dass niemand Ihren Bildschirm beobachtet.";
-"show_key.button_show" = "Anzeigen";
-"show_key.tab.recovery_phrase" = "Wiederherstellungsphrase";
-"show_key.tab.private_key" = "Privater Schlüssel";
-"show_key.passphrase" = "Passphrase";
-"show_key.private_key.description" = "Dieser Schlüssel ist für alle EVM-kompatiblen Blockchains.";
+"copy_warning.title" = "Risk of Copying";
+"copy_warning.description" = "As a safety measure, we recommend that you do not use the copy action for this value.";
+"copy_warning.i_will_risk_it" = "I will risk it";
 
-"private_key_copying.title" = "Warnung";
-"private_key_copying.description" = "Als Sicherheitsmaßnahme empfehlen wir, keine Kopieraktion für Private Keys durchzuführen.";
-"private_key_copying.i_will_risk_it" = "Ich werde es riskieren";
+// Recovery Phrase
+
+"recovery_phrase.title" = "Recovery Phrase";
+"recovery_phrase.warning" = "Never share your recovery phrase with anyone. Unstoppable team will never ask for your recovery phrase.";
+"recovery_phrase.tap_to_show" = "Tap to show recovery phrase";
+"recovery_phrase.passphrase" = "Passphrase";
+"recovery_phrase.copy_warning.title" = "Risk of Recovery Phrase copy";
+"recovery_phrase.copy_warning.description" = "As a security measure we recommend not to use copy action on recovery phrase.";
+
+// EVM Private Key
+
+"evm_private_key.title" = "EVM Private Key";
+"evm_private_key.warning" = "This key is for all EVM-compatible blockchains. Do not share it with anyone.";
+"evm_private_key.tap_to_show" = "Tap to show private key";
+
+// Public Keys
+
+"public_keys.title" = "Public Keys";
 
 // Backup Key
 
@@ -1095,8 +1106,10 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 // Manage Account
 
 "manage_account.name" = "Name";
-"manage_account.show_recovery_phrase" = "Phrase anzeigen";
-"manage_account.backup_recovery_phrase" = "Wiederherstellungsphrase";
+"manage_account.recovery_phrase" = "Recovery Phrase";
+"manage_account.evm_private_key" = "EVM Private Key";
+"manage_account.public_keys" = "Public Keys";
+"manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
 "manage_account.unlink" = "Verknüpfung trennen";
 
 // Birthday Input
