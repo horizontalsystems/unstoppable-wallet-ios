@@ -2,56 +2,21 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-class ShowKeyViewModel {
-    private let service: ShowKeyService
-    private let disposeBag = DisposeBag()
+class PublicKeysViewModel {
+    private let service: PublicKeysService
 
-    private let openUnlockRelay = PublishRelay<()>()
-    private let showKeyRelay = PublishRelay<()>()
     private let copyRelay = PublishRelay<String>()
 
-    init(service: ShowKeyService) {
+    init(service: PublicKeysService) {
         self.service = service
     }
 
 }
 
-extension ShowKeyViewModel {
-
-    var openUnlockSignal: Signal<()> {
-        openUnlockRelay.asSignal()
-    }
-
-    var showKeySignal: Signal<()> {
-        showKeyRelay.asSignal()
-    }
+extension PublicKeysViewModel {
 
     var copySignal: Signal<String> {
         copyRelay.asSignal()
-    }
-
-    var words: [String] {
-        service.words
-    }
-
-    var passphrase: String? {
-        service.salt.isEmpty ? nil : service.salt
-    }
-
-    var evmPrivateKey: String? {
-        service.ethereumPrivateKey
-    }
-
-    func onTapShow() {
-        if service.isPinSet {
-            openUnlockRelay.accept(())
-        } else {
-            showKeyRelay.accept(())
-        }
-    }
-
-    func onUnlock() {
-        showKeyRelay.accept(())
     }
 
     func onCopyBitcoin(derivation: MnemonicDerivation) {

@@ -224,7 +224,7 @@ class MainSettingsViewController: ThemeViewController {
             ),
             tableView.imageTitleArrowRow(
                     id: "experimental-features",
-                    image: "flask_20",
+                    image: UIImage(named: "flask_20"),
                     title: "settings.experimental_features".localized,
                     isLast: true,
                     action: { [weak self] in
@@ -238,7 +238,7 @@ class MainSettingsViewController: ThemeViewController {
         [
             tableView.imageTitleArrowRow(
                     id: "faq",
-                    image: "message_square_20",
+                    image: UIImage(named: "message_square_20"),
                     title: "settings.faq".localized,
                     isFirst: true,
                     action: { [weak self] in
@@ -247,7 +247,7 @@ class MainSettingsViewController: ThemeViewController {
             ),
             tableView.imageTitleArrowRow(
                     id: "academy",
-                    image: "academy_1_20",
+                    image: UIImage(named: "academy_1_20"),
                     title: "guides.title".localized,
                     isLast: true,
                     action: { [weak self] in

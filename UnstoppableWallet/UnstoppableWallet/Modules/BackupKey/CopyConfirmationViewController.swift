@@ -3,11 +3,11 @@ import ThemeKit
 import SnapKit
 import ComponentKit
 
-class PrivateKeyCopyConfirmationViewController: ThemeActionSheetController {
-    private let privateKey: String
+class CopyConfirmationViewController: ThemeActionSheetController {
+    private let value: String
 
-    init(privateKey: String) {
-        self.privateKey = privateKey
+    init(value: String) {
+        self.value = value
 
         super.init()
 
@@ -18,7 +18,7 @@ class PrivateKeyCopyConfirmationViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.title = "private_key_copying.title".localized
+        titleView.title = "copy_warning.title".localized
         titleView.image = UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
@@ -32,7 +32,7 @@ class PrivateKeyCopyConfirmationViewController: ThemeActionSheetController {
             maker.top.equalTo(titleView.snp.bottom)
         }
 
-        descriptionView.text = "private_key_copying.description".localized
+        descriptionView.text = "copy_warning.description".localized
 
         let okButton = PrimaryButton()
 
@@ -56,7 +56,7 @@ class PrivateKeyCopyConfirmationViewController: ThemeActionSheetController {
         }
 
         riskButton.set(style: .transparent)
-        riskButton.setTitle("private_key_copying.i_will_risk_it".localized, for: .normal)
+        riskButton.setTitle("copy_warning.i_will_risk_it".localized, for: .normal)
         riskButton.addTarget(self, action: #selector(onTapRisk), for: .touchUpInside)
     }
 
@@ -69,7 +69,8 @@ class PrivateKeyCopyConfirmationViewController: ThemeActionSheetController {
     }
 
     @objc private func onTapRisk() {
-        UIPasteboard.general.setValue(privateKey, forPasteboardType: "public.plain-text")
+        UIPasteboard.general.string = value
+
         dismiss(animated: true) {
             HudHelper.instance.show(banner: .copied)
         }

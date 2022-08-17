@@ -119,7 +119,7 @@ class ManageAccountsViewController: ThemeViewController {
             return
         }
 
-        navigationController?.pushViewController(viewController, animated: true)
+        present(viewController, animated: true)
     }
 
     private func sync(viewState: ManageAccountsViewModel.ViewState) {
