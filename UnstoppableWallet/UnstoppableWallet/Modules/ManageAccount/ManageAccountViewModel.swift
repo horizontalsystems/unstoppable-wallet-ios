@@ -8,12 +8,17 @@ class ManageAccountViewModel {
 
     private let keyActionStateRelay = BehaviorRelay<KeyActionState>(value: .none)
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let openShowKeyRelay = PublishRelay<Account>()
+    private let openUnlockRelay = PublishRelay<()>()
+    private let openRecoveryPhraseRelay = PublishRelay<Account>()
+    private let openEvmPrivateKeyRelay = PublishRelay<Account>()
+    private let openPublicKeysRelay = PublishRelay<Account>()
     private let openBackupKeyRelay = PublishRelay<Account>()
     private let openUnlinkRelay = PublishRelay<Account>()
     private let finishRelay = PublishRelay<()>()
 
     private(set) var additionalViewItems = [AdditionalViewItem]()
+
+    private var unlockRequest: UnlockRequest = .recoveryPhrase
 
     init(service: ManageAccountService) {
         self.service = service
@@ -50,7 +55,7 @@ class ManageAccountViewModel {
     private func syncAccountSettings() {
         additionalViewItems = service.accountSettingsInfo.map { coin, restoreSettingType, value in
             AdditionalViewItem(
-                    iconName: "\(coin.uid)_20",
+                    imageUrl: coin.imageUrl,
                     title: restoreSettingType.title(coin: coin),
                     value: value
             )
@@ -69,8 +74,20 @@ extension ManageAccountViewModel {
         keyActionStateRelay.asDriver()
     }
 
-    var openShowKeySignal: Signal<Account> {
-        openShowKeyRelay.asSignal()
+    var openUnlockSignal: Signal<()> {
+        openUnlockRelay.asSignal()
+    }
+
+    var openRecoveryPhraseSignal: Signal<Account> {
+        openRecoveryPhraseRelay.asSignal()
+    }
+
+    var openEvmPrivateKeySignal: Signal<Account> {
+        openEvmPrivateKeyRelay.asSignal()
+    }
+
+    var openPublicKeysSignal: Signal<Account> {
+        openPublicKeysRelay.asSignal()
     }
 
     var openBackupKeySignal: Signal<Account> {
@@ -89,6 +106,13 @@ extension ManageAccountViewModel {
         service.account.name
     }
 
+    func onUnlock() {
+        switch unlockRequest {
+        case .recoveryPhrase: openRecoveryPhraseRelay.accept(service.account)
+        case .evmPrivateKey: openEvmPrivateKeyRelay.accept(service.account)
+        }
+    }
+
     func onChange(name: String?) {
         service.set(name: name ?? "")
     }
@@ -98,8 +122,26 @@ extension ManageAccountViewModel {
         finishRelay.accept(())
     }
 
-    func onTapShowKey() {
-        openShowKeyRelay.accept(service.account)
+    func onTapRecoveryPhrase() {
+        if service.isPinSet {
+            unlockRequest = .recoveryPhrase
+            openUnlockRelay.accept(())
+        } else {
+            openRecoveryPhraseRelay.accept(service.account)
+        }
+    }
+
+    func onTapEvmPrivateKey() {
+        if service.isPinSet {
+            unlockRequest = .evmPrivateKey
+            openUnlockRelay.accept(())
+        } else {
+            openEvmPrivateKeyRelay.accept(service.account)
+        }
+    }
+
+    func onTapPublicKeys() {
+        openPublicKeysRelay.accept(service.account)
     }
 
     func onTapBackupKey() {
@@ -114,6 +156,11 @@ extension ManageAccountViewModel {
 
 extension ManageAccountViewModel {
 
+    enum UnlockRequest {
+        case recoveryPhrase
+        case evmPrivateKey
+    }
+
     enum KeyActionState {
         case none
         case showRecoveryPhrase
@@ -121,7 +168,7 @@ extension ManageAccountViewModel {
     }
 
     struct AdditionalViewItem {
-        let iconName: String
+        let imageUrl: String
         let title: String
         let value: String
     }

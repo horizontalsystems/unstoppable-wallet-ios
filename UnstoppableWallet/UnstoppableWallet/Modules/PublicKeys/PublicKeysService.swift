@@ -1,30 +1,18 @@
-import PinKit
-import EthereumKit
 import HdWalletKit
 import BitcoinKit
 import BitcoinCashKit
 import LitecoinKit
 import DashKit
 
-class ShowKeyService {
-    private let account: Account
-    let words: [String]
-    let salt: String
-    let seed: Data
-    private let pinKit: IPinKit
-    private let evmBlockchainManager: EvmBlockchainManager
+class PublicKeysService {
+    private let seed: Data
 
-    init?(account: Account, pinKit: IPinKit, evmBlockchainManager: EvmBlockchainManager) {
-        guard case let .mnemonic(words, salt) = account.type, let seed = account.type.mnemonicSeed else {
+    init?(account: Account, evmBlockchainManager: EvmBlockchainManager) {
+        guard let seed = account.type.mnemonicSeed else {
             return nil
         }
 
-        self.account = account
-        self.words = words
-        self.salt = salt
         self.seed = seed
-        self.pinKit = pinKit
-        self.evmBlockchainManager = evmBlockchainManager
     }
 
     private func purpose(derivation: MnemonicDerivation) -> UInt32 {
@@ -46,15 +34,7 @@ class ShowKeyService {
 
 }
 
-extension ShowKeyService {
-
-    var isPinSet: Bool {
-        pinKit.isPinSet
-    }
-
-    var ethereumPrivateKey: String? {
-        try? Signer.privateKey(seed: seed, chain: evmBlockchainManager.chain(blockchainType: .ethereum)).raw.hex
-    }
+extension PublicKeysService {
 
     func bitcoinPublicKeys(derivation: MnemonicDerivation) throws -> String? {
         let network = BitcoinKit.MainNet()

@@ -81,27 +81,50 @@ extension SectionsTableView {
         )
     }
 
-    func imageTitleArrowRow(id: String, image: String, title: String, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: @escaping () -> ()) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image20, .text, .image20],
+    func imageTitleRow(id: String, image: UIImage?, title: String, color: UIColor = .themeLeah, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: @escaping () -> ()) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image20 { component in
+                        component.imageView.image = image?.withTintColor(color)
+                    },
+                    .text { component in
+                        component.font = .body
+                        component.textColor = color
+                        component.text = title
+                    }
+                ]),
                 tableView: self,
                 id: id,
                 height: .heightCell48,
                 autoDeselect: autoDeselect,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                },
+                action: action
+        )
+    }
 
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: image)
-                    }
-                    cell.bind(index: 1) { (component: TextComponent) in
+    func imageTitleArrowRow(id: String, image: UIImage?, title: String, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: @escaping () -> ()) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image20 { component in
+                        component.imageView.image = image?.withTintColor(.themeGray)
+                    },
+                    .text { component in
                         component.font = .body
                         component.textColor = .themeLeah
                         component.text = title
-                    }
-                    cell.bind(index: 2) { (component: ImageComponent) in
+                    },
+                    .image20 { component in
                         component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
                     }
+                ]),
+                tableView: self,
+                id: id,
+                height: .heightCell48,
+                autoDeselect: autoDeselect,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                 },
                 action: action
         )
