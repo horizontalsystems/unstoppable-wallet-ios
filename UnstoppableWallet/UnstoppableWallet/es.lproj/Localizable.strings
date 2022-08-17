@@ -108,19 +108,30 @@
 "coin_platforms.description" = "Este token existe en múltiples blockchains.";
 "coin_platforms.native" = "Nativa";
 
-// Show Key
+// Copy Warning
 
-"show_key.title" = "Clave";
-"show_key.description" = "Las frase de recuperación que se mostrará a continuación es la única forma de restaurar sus fondos en caso de que su teléfono se pierda, lo roben, se averíe, etc.\n\nAsegúrese de que nadie está viendo su pantalla.";
-"show_key.button_show" = "Mostrar";
-"show_key.tab.recovery_phrase" = "Frase de Recuperación";
-"show_key.tab.private_key" = "Clave privada";
-"show_key.passphrase" = "Frase de contraseña";
-"show_key.private_key.description" = "Esta clave es para todos los blockchains compatibles con EVM.";
+"copy_warning.title" = "Risk of Copying";
+"copy_warning.description" = "As a safety measure, we recommend that you do not use the copy action for this value.";
+"copy_warning.i_will_risk_it" = "I will risk it";
 
-"private_key_copying.title" = "Aviso";
-"private_key_copying.description" = "Como medida de seguridad recomendamos no utilizar la acción de copia en la clave privada.";
-"private_key_copying.i_will_risk_it" = "Lo arriesgaré";
+// Recovery Phrase
+
+"recovery_phrase.title" = "Recovery Phrase";
+"recovery_phrase.warning" = "Never share your recovery phrase with anyone. Unstoppable team will never ask for your recovery phrase.";
+"recovery_phrase.tap_to_show" = "Tap to show recovery phrase";
+"recovery_phrase.passphrase" = "Passphrase";
+"recovery_phrase.copy_warning.title" = "Risk of Recovery Phrase copy";
+"recovery_phrase.copy_warning.description" = "As a security measure we recommend not to use copy action on recovery phrase.";
+
+// EVM Private Key
+
+"evm_private_key.title" = "EVM Private Key";
+"evm_private_key.warning" = "This key is for all EVM-compatible blockchains. Do not share it with anyone.";
+"evm_private_key.tap_to_show" = "Tap to show private key";
+
+// Public Keys
+
+"public_keys.title" = "Public Keys";
 
 // Backup Key
 
@@ -1096,8 +1107,10 @@ poner en peligro la seguridad de mis fondos.";
 // Manage Account
 
 "manage_account.name" = "Nombre";
-"manage_account.show_recovery_phrase" = "Mostrar Frase";
-"manage_account.backup_recovery_phrase" = "Frase de copia de seguridad";
+"manage_account.recovery_phrase" = "Recovery Phrase";
+"manage_account.evm_private_key" = "EVM Private Key";
+"manage_account.public_keys" = "Public Keys";
+"manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
 "manage_account.unlink" = "Desenlazar";
 
 // Birthday Input
