@@ -108,19 +108,30 @@
 "coin_platforms.description" = "This token exists on multiple blockchains.";
 "coin_platforms.native" = "네이티브";
 
-// Show Key
+// Copy Warning
 
-"show_key.title" = "키";
-"show_key.description" = "다음에 표시될 복구 문구는 휴대폰을 분실, 도난, 파손된 경우 자금을 복구할 수 있는 유일한 방법입니다.\n\n아무도 화면을 보고 있지 않은지 확인합니다.";
-"show_key.button_show" = "표시";
-"show_key.tab.recovery_phrase" = "복구 문구";
-"show_key.tab.private_key" = "개인 암호";
-"show_key.passphrase" = "암호 문구";
-"show_key.private_key.description" = "이 키는 모든 EVM 호환 블록체인용입니다.";
+"copy_warning.title" = "Risk of Copying";
+"copy_warning.description" = "As a safety measure, we recommend that you do not use the copy action for this value.";
+"copy_warning.i_will_risk_it" = "I will risk it";
 
-"private_key_copying.title" = "경고";
-"private_key_copying.description" = "보안 조치로 개인 키에 복사 작업을 사용하지 않는 것이 좋습니다.";
-"private_key_copying.i_will_risk_it" = "위험을 감수하겠습니다";
+// Recovery Phrase
+
+"recovery_phrase.title" = "Recovery Phrase";
+"recovery_phrase.warning" = "Never share your recovery phrase with anyone. Unstoppable team will never ask for your recovery phrase.";
+"recovery_phrase.tap_to_show" = "Tap to show recovery phrase";
+"recovery_phrase.passphrase" = "Passphrase";
+"recovery_phrase.copy_warning.title" = "Risk of Recovery Phrase copy";
+"recovery_phrase.copy_warning.description" = "As a security measure we recommend not to use copy action on recovery phrase.";
+
+// EVM Private Key
+
+"evm_private_key.title" = "EVM Private Key";
+"evm_private_key.warning" = "This key is for all EVM-compatible blockchains. Do not share it with anyone.";
+"evm_private_key.tap_to_show" = "Tap to show private key";
+
+// Public Keys
+
+"public_keys.title" = "Public Keys";
 
 // Backup Key
 
@@ -1095,8 +1106,10 @@ Unstoppable 지갑은 완전한 오픈소스여서 누구나 앱이 요구하는
 // Manage Account
 
 "manage_account.name" = "이름";
-"manage_account.show_recovery_phrase" = "문구 표시";
-"manage_account.backup_recovery_phrase" = "백업 문구";
+"manage_account.recovery_phrase" = "Recovery Phrase";
+"manage_account.evm_private_key" = "EVM Private Key";
+"manage_account.public_keys" = "Public Keys";
+"manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
 "manage_account.unlink" = "링크 해제";
 
 // Birthday Input
