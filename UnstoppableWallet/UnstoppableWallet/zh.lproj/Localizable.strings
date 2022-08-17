@@ -110,19 +110,30 @@
 "coin_platforms.description" = "此令牌存在于多个区块链中。";
 "coin_platforms.native" = "原生";
 
-// Show Key
+// Copy Warning
 
-"show_key.title" = "密钥";
-"show_key.description" = "如果您的手机出现丢失、被盗或损坏等情况，那么在下一步显示的恢复码将是恢复您资金的唯一方法。\n\n确保不会有任何人看到您的屏幕。";
-"show_key.button_show" = "显示";
-"show_key.tab.recovery_phrase" = "恢复码";
-"show_key.tab.private_key" = "私钥";
-"show_key.passphrase" = "密码";
-"show_key.private_key.description" = "此密鑰適用於所有與 EVM 兼容的區塊鏈。";
+"copy_warning.title" = "Risk of Copying";
+"copy_warning.description" = "As a safety measure, we recommend that you do not use the copy action for this value.";
+"copy_warning.i_will_risk_it" = "I will risk it";
 
-"private_key_copying.title" = "警告";
-"private_key_copying.description" = "作为一项安全措施，我们建议不要在私钥上使用复制操作。";
-"private_key_copying.i_will_risk_it" = "我会冒险！";
+// Recovery Phrase
+
+"recovery_phrase.title" = "Recovery Phrase";
+"recovery_phrase.warning" = "Never share your recovery phrase with anyone. Unstoppable team will never ask for your recovery phrase.";
+"recovery_phrase.tap_to_show" = "Tap to show recovery phrase";
+"recovery_phrase.passphrase" = "Passphrase";
+"recovery_phrase.copy_warning.title" = "Risk of Recovery Phrase copy";
+"recovery_phrase.copy_warning.description" = "As a security measure we recommend not to use copy action on recovery phrase.";
+
+// EVM Private Key
+
+"evm_private_key.title" = "EVM Private Key";
+"evm_private_key.warning" = "This key is for all EVM-compatible blockchains. Do not share it with anyone.";
+"evm_private_key.tap_to_show" = "Tap to show private key";
+
+// Public Keys
+
+"public_keys.title" = "Public Keys";
 
 // Backup Key
 
@@ -1097,8 +1108,10 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 // Manage Account
 
 "manage_account.name" = "名称";
-"manage_account.show_recovery_phrase" = "显示恢复码";
-"manage_account.backup_recovery_phrase" = "备份码";
+"manage_account.recovery_phrase" = "Recovery Phrase";
+"manage_account.evm_private_key" = "EVM Private Key";
+"manage_account.public_keys" = "Public Keys";
+"manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
 "manage_account.unlink" = "取消链接";
 
 // Birthday Input
