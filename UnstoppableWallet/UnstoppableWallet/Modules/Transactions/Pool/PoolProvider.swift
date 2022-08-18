@@ -21,23 +21,14 @@ class PoolProvider {
         self.adapter = adapter
         self.source = source
 
-        adapter.transactionStateUpdatedObservable
+        adapter.syncingObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] in
-                    self?.syncState()
+                    self?.syncing = adapter.syncing
                 })
                 .disposed(by: disposeBag)
 
-        syncState()
-    }
-
-    private func syncState() {
-        switch adapter.transactionState {
-        case .syncing, .searchingTxs:
-            syncing = true
-        default:
-            syncing = false
-        }
+        syncing = adapter.syncing
     }
 
 }

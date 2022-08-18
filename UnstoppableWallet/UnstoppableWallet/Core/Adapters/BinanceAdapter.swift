@@ -155,12 +155,9 @@ extension BinanceAdapter: ISendBinanceAdapter {
 
 extension BinanceAdapter: ITransactionsAdapter {
 
-    var transactionState: AdapterState {
-        switch binanceKit.syncState {
-            case .synced: return .synced
-            case .notSynced(let error): return .notSynced(error: error.convertedError)
-            case .syncing: return .syncing(progress: nil, lastBlockDate: nil)
-        }
+    var syncing: Bool {
+        if case .syncing = binanceKit.syncState { return true }
+        return false
     }
 
     var lastBlockInfo: LastBlockInfo? {
@@ -171,7 +168,7 @@ extension BinanceAdapter: ITransactionsAdapter {
         binanceKit.lastBlockHeightObservable.map { _ in () }
     }
 
-    var transactionStateUpdatedObservable: Observable<Void> {
+    var syncingObservable: Observable<Void> {
         binanceKit.syncStateObservable.map { _ in () }
     }
 

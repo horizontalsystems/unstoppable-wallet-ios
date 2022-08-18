@@ -60,12 +60,11 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
 }
 
 extension EvmTransactionsAdapter: ITransactionsAdapter {
-
-    var transactionState: AdapterState {
-        convertToAdapterState(evmSyncState: evmKit.transactionsSyncState)
+    var syncing: Bool {
+        evmKit.transactionsSyncState.syncing
     }
 
-    var transactionStateUpdatedObservable: Observable<Void> {
+    var syncingObservable: Observable<()> {
         evmKit.transactionsSyncStateObservable.map { _ in () }
     }
 
