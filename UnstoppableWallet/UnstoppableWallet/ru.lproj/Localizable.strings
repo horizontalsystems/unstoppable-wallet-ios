@@ -135,33 +135,37 @@
 
 "public_keys.title" = "Public Keys";
 
-// Backup Key
-
-"backup_key.title" = "Резервная Копия";
-"backup_key.description" = "Показанные далее фразы для восстановления являются единственным способом восстановления ваших средств в случае потери, кражи или поломки вашего телефона.\n\nУбедитесь, что никто не смотрит на ваш экран.";
-"backup_key.button_show" = "Показать";
-"backup_key.button_backup" = "Резервная Копия";
-"backup_key.passphrase" = "Кодовая Фраза";
-
-"backup_key.confirmation.description" = "Введите фразы для восстановления в правильном порядке, чтобы подтвердить";
-"backup_key.confirmation.passphrase" = "Кодовая Фраза";
-"backup_key.confirmation.passphrase_description" = "Введите кодовую фразу";
-
-"backup_key.confirmation.empty_word" = "Отсутствует слово";
-"backup_key.confirmation.invalid_word" = "Неверное слово";
-"backup_key.confirmation.empty_passphrase" = "Отсутствует кодовая фраза";
-"backup_key.confirmation.invalid_passphrase" = "Неверная кодовая фраза";
-
 // Backup
 
-"backup.backup_required" = "Необходима Резервная Копия";
+"backup.title" = "Recovery Phrase";
+"backup.description" = "Write these words down in the correct order and keep them in a safe place";
+"backup.tap_to_show" = "Tap to show recovery phrase";
+"backup.passphrase" = "Passphrase";
+"backup.verify" = "Verify";
+"backup.verified" = "Verified";
+
+// Backup Verify Words
+
+"backup_verify_words.title" = "Verify";
+"backup_verify_words.description" = "Select two requested words from your wallet recovery phrase";
+"backup_verify_words.incorrect_word" = "Incorrect Word";
+
+// Backup Verify Passphrase
+
+"backup_verify_passphrase.title" = "Verify";
+"backup_verify_passphrase.description" = "Enter the passphrase";
+"backup_verify_passphrase.incorrect_passphrase" = "Incorrect passphrase";
+
+// Backup Required
+
+"backup_required.title" = "Backup Required";
+
+// Errors
 
 "error.send.self_transfer" = "Отправка самому себе невозможна";
 "error.send_binance.memo_required" = "При отправке транзакции получателю необходимо заполнить поле мемо";
 "error.send_binance.only_digits_allowed" = "Поле мемо должно содержать только цифры";
 "error.send_z_cash.transparent_address" = "Unstoppable не поддерживает платежи на публичный адрес";
-
-"backup.confirmation.title" = "Проверка...";
 
 // Balance
 
