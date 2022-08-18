@@ -133,33 +133,37 @@
 
 "public_keys.title" = "Public Keys";
 
-// Backup Key
-
-"backup_key.title" = "백업";
-"backup_key.description" = "다음에 표시될 복구 문구는 휴대폰을 분실, 도난, 파손된 경우 자금을 복구할 수 있는 유일한 방법입니다.\n\n아무도 화면을 보고 있지 않은지 확인합니다.";
-"backup_key.button_show" = "표시";
-"backup_key.button_backup" = "백업";
-"backup_key.passphrase" = "암호 문구";
-
-"backup_key.confirmation.description" = "확인할 복구 문구를 올바른 순서로 입력하십시오";
-"backup_key.confirmation.passphrase" = "암호 문구";
-"backup_key.confirmation.passphrase_description" = "암호 문구 입력";
-
-"backup_key.confirmation.empty_word" = "빈 단어";
-"backup_key.confirmation.invalid_word" = "잘못된 단어";
-"backup_key.confirmation.empty_passphrase" = "빈 암호 문구";
-"backup_key.confirmation.invalid_passphrase" = "잘못된 암호 문구";
-
 // Backup
 
-"backup.backup_required" = "백업이 필요합니다";
+"backup.title" = "Recovery Phrase";
+"backup.description" = "Write these words down in the correct order and keep them in a safe place";
+"backup.tap_to_show" = "Tap to show recovery phrase";
+"backup.passphrase" = "Passphrase";
+"backup.verify" = "Verify";
+"backup.verified" = "Verified";
+
+// Backup Verify Words
+
+"backup_verify_words.title" = "Verify";
+"backup_verify_words.description" = "Select two requested words from your wallet recovery phrase";
+"backup_verify_words.incorrect_word" = "Incorrect Word";
+
+// Backup Verify Passphrase
+
+"backup_verify_passphrase.title" = "Verify";
+"backup_verify_passphrase.description" = "Enter the passphrase";
+"backup_verify_passphrase.incorrect_passphrase" = "Incorrect passphrase";
+
+// Backup Required
+
+"backup_required.title" = "Backup Required";
+
+// Errors
 
 "error.send.self_transfer" = "자체로 전송이 지원되지 않음";
 "error.send_binance.memo_required" = "수신자는 송금 내역에 메모 기록을 필요로 합니다";
 "error.send_binance.only_digits_allowed" = "메모에는 숫자만 포함하셔야 합니다";
 "error.send_z_cash.transparent_address" = "Unstoppable은 투명 주소에 대한 지불을 지원하지 않습니다";
-
-"backup.confirmation.title" = "확인 중...";
 
 // Balance
 
