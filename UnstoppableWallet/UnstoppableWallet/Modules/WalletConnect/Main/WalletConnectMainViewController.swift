@@ -110,7 +110,7 @@ class WalletConnectMainViewController: ThemeViewController {
             self?.show(error: $0)
         }
         subscribe(disposeBag, viewModel.showSuccessSignal) {
-            HudHelper.instance.show(banner: .success)
+            HudHelper.instance.show(banner: .done)
         }
         subscribe(disposeBag, viewModel.showDisconnectSignal) {
             HudHelper.instance.show(banner: .disconnectedWalletConnect)

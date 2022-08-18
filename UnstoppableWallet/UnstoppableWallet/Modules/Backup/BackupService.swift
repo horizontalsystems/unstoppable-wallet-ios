@@ -1,12 +1,9 @@
-import PinKit
-
-class BackupKeyService {
+class BackupService {
     let account: Account
     let words: [String]
     let salt: String
-    private let pinKit: IPinKit
 
-    init?(account: Account, pinKit: IPinKit) {
+    init?(account: Account) {
         guard case let .mnemonic(words, salt) = account.type else {
             return nil
         }
@@ -14,15 +11,6 @@ class BackupKeyService {
         self.account = account
         self.words = words
         self.salt = salt
-        self.pinKit = pinKit
-    }
-
-}
-
-extension BackupKeyService {
-
-    var isPinSet: Bool {
-        pinKit.isPinSet
     }
 
 }

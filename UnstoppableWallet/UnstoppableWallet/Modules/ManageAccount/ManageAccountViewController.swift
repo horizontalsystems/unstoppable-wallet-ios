@@ -60,7 +60,7 @@ class ManageAccountViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.openRecoveryPhraseSignal) { [weak self] in self?.openRecoveryPhrase(account: $0) }
         subscribe(disposeBag, viewModel.openEvmPrivateKeySignal) { [weak self] in self?.openEvmPrivateKey(account: $0) }
         subscribe(disposeBag, viewModel.openPublicKeysSignal) { [weak self] in self?.openPublicKeys(account: $0) }
-        subscribe(disposeBag, viewModel.openBackupKeySignal) { [weak self] in self?.openBackupKey(account: $0) }
+        subscribe(disposeBag, viewModel.openBackupSignal) { [weak self] in self?.openBackup(account: $0) }
         subscribe(disposeBag, viewModel.openUnlinkSignal) { [weak self] in self?.openUnlink(account: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.dismiss(animated: true) }
 
@@ -111,8 +111,8 @@ class ManageAccountViewController: ThemeViewController {
         present(viewController, animated: true)
     }
 
-    private func openBackupKey(account: Account) {
-        guard let viewController = BackupKeyModule.viewController(account: account) else {
+    private func openBackup(account: Account) {
+        guard let viewController = BackupModule.viewController(account: account) else {
             return
         }
 
@@ -238,7 +238,7 @@ extension ManageAccountViewController: SectionsDataSource {
                                         isFirst: true,
                                         isLast: true
                                 ) { [weak self] in
-                                    self?.viewModel.onTapBackupKey()
+                                    self?.viewModel.onTapBackup()
                                 }
                             ]
                     )

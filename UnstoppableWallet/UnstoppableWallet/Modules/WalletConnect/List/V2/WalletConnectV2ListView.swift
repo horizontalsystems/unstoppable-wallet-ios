@@ -24,7 +24,7 @@ class WalletConnectV2ListView {
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.pendingRequestCountDriver) { [weak self] in self?.sync(pendingRequestCount: $0) }
         subscribe(disposeBag, viewModel.showLoadingSignal) { HudHelper.instance.showSpinner(title: "wallet_connect_list.disconnecting".localized, userInteractionEnabled: false) }
-        subscribe(disposeBag, viewModel.showSuccessSignal) { _ in HudHelper.instance.show(banner: .success) }
+        subscribe(disposeBag, viewModel.showSuccessSignal) { _ in HudHelper.instance.show(banner: .done) }
         subscribe(disposeBag, viewModel.showWalletConnectSessionSignal) { [weak self] in self?.show(session: $0) }
     }
 

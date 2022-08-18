@@ -22,7 +22,7 @@ class BackupRequiredViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.title = "backup.backup_required".localized
+        titleView.title = "backup_required.title".localized
         titleView.image = UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)
         titleView.onTapClose = { [weak self] in
             self?.dismiss(animated: true)
@@ -59,7 +59,7 @@ class BackupRequiredViewController: ThemeActionSheetController {
     }
 
     private func openBackup() {
-        guard let viewController = BackupKeyModule.viewController(account: account) else {
+        guard let viewController = BackupModule.viewController(account: account) else {
             return
         }
 

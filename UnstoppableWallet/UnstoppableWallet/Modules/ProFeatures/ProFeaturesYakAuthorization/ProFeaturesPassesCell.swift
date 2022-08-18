@@ -101,7 +101,7 @@ class ProFeaturesPassesCell: BaseThemeCell {
     }
 
     private func showSuccessSigned() {
-        HudHelper.instance.show(banner: .success)
+        HudHelper.instance.show(banner: .done)
         proFeaturesActivateViewController?.dismiss(animated: true)
     }
 
