@@ -133,33 +133,37 @@
 
 "public_keys.title" = "Public Keys";
 
-// Backup Key
-
-"backup_key.title" = "Sauvegarde";
-"backup_key.description" = "Les phrases de réinitialisation qui vont suivre sont le seul moyen de restaurer vos fonds si votre téléphone est perdu, volé, endommagé, etc.\n\nVeuillez vous assurer que personne ne regarde votre écran.";
-"backup_key.button_show" = "Afficher";
-"backup_key.button_backup" = "Sauvegarde";
-"backup_key.passphrase" = "Phrase d'authentification";
-
-"backup_key.confirmation.description" = "Entrez les phrases de réinitialisation dans l'ordre correct pour confirmer";
-"backup_key.confirmation.passphrase" = "Phrase d'authentification";
-"backup_key.confirmation.passphrase_description" = "Saisir la phrase d'authentification";
-
-"backup_key.confirmation.empty_word" = "Mot manquant";
-"backup_key.confirmation.invalid_word" = "Mot incorrect";
-"backup_key.confirmation.empty_passphrase" = "Phrase d'authentification manquante";
-"backup_key.confirmation.invalid_passphrase" = "Phrase d'authentification incorrecte";
-
 // Backup
 
-"backup.backup_required" = "Sauvegarde requise";
+"backup.title" = "Recovery Phrase";
+"backup.description" = "Write these words down in the correct order and keep them in a safe place";
+"backup.tap_to_show" = "Tap to show recovery phrase";
+"backup.passphrase" = "Passphrase";
+"backup.verify" = "Verify";
+"backup.verified" = "Verified";
+
+// Backup Verify Words
+
+"backup_verify_words.title" = "Verify";
+"backup_verify_words.description" = "Select two requested words from your wallet recovery phrase";
+"backup_verify_words.incorrect_word" = "Incorrect Word";
+
+// Backup Verify Passphrase
+
+"backup_verify_passphrase.title" = "Verify";
+"backup_verify_passphrase.description" = "Enter the passphrase";
+"backup_verify_passphrase.incorrect_passphrase" = "Incorrect passphrase";
+
+// Backup Required
+
+"backup_required.title" = "Backup Required";
+
+// Errors
 
 "error.send.self_transfer" = "L'envoi à soi-même n'est pas pris en charge";
 "error.send_binance.memo_required" = "Le destinataire a besoin d'une note non vide pour une opération de transfert";
 "error.send_binance.only_digits_allowed" = "Nécessite que le mémo ne contienne que des chiffres";
 "error.send_z_cash.transparent_address" = "Unstoppable ne prend pas en charge les paiements à une adresse transparente";
-
-"backup.confirmation.title" = "Vérification...";
 
 // Balance
 
