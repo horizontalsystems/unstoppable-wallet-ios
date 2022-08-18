@@ -36,6 +36,8 @@
 "alert.not_supported_yet" = "아직 지원하지 않음";
 "alert.copied" = "Copied";
 "alert.created" = "생성됨";
+"alert.restored" = "Restored";
+"alert.address_added" = "Address Added";
 "alert.deleted" = "삭제";
 "alert.disconnecting" = "연결을 끊는 중...";
 "alert.disconnected" = "연결 해제";
@@ -157,6 +159,13 @@
 // Backup Required
 
 "backup_required.title" = "Backup Required";
+
+// Backup Prompt
+
+"backup_prompt.title" = "Backup Recovery Phrase";
+"backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.backup" = "Backup";
+"backup_prompt.later" = "Later";
 
 // Errors
 
