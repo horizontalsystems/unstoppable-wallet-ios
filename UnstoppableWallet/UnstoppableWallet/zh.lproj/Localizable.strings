@@ -135,33 +135,37 @@
 
 "public_keys.title" = "Public Keys";
 
-// Backup Key
-
-"backup_key.title" = "备份";
-"backup_key.description" = "如果您的手机出现丢失、被盗或损坏等情况，那么在下一步显示的恢复码将是恢复您资金的唯一方法。\n\n确保不会有任何人看到您的屏幕。";
-"backup_key.button_show" = "显示";
-"backup_key.button_backup" = "备份";
-"backup_key.passphrase" = "密码";
-
-"backup_key.confirmation.description" = "以正确顺序输入恢复码进行确认";
-"backup_key.confirmation.passphrase" = "密码";
-"backup_key.confirmation.passphrase_description" = "输入密码";
-
-"backup_key.confirmation.empty_word" = "空单词";
-"backup_key.confirmation.invalid_word" = "无效单词";
-"backup_key.confirmation.empty_passphrase" = "空密码";
-"backup_key.confirmation.invalid_passphrase" = "无效密码";
-
 // Backup
 
-"backup.backup_required" = "需要备份";
+"backup.title" = "Recovery Phrase";
+"backup.description" = "Write these words down in the correct order and keep them in a safe place";
+"backup.tap_to_show" = "Tap to show recovery phrase";
+"backup.passphrase" = "Passphrase";
+"backup.verify" = "Verify";
+"backup.verified" = "Verified";
+
+// Backup Verify Words
+
+"backup_verify_words.title" = "Verify";
+"backup_verify_words.description" = "Select two requested words from your wallet recovery phrase";
+"backup_verify_words.incorrect_word" = "Incorrect Word";
+
+// Backup Verify Passphrase
+
+"backup_verify_passphrase.title" = "Verify";
+"backup_verify_passphrase.description" = "Enter the passphrase";
+"backup_verify_passphrase.incorrect_passphrase" = "Incorrect passphrase";
+
+// Backup Required
+
+"backup_required.title" = "Backup Required";
+
+// Errors
 
 "error.send.self_transfer" = "不支持发送给自己";
 "error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
 "error.send_binance.only_digits_allowed" = "要求备注仅包含数字";
 "error.send_z_cash.transparent_address" = "Unstoppable不支持对透明地址付款";
-
-"backup.confirmation.title" = "正在检查...";
 
 // Balance
 
