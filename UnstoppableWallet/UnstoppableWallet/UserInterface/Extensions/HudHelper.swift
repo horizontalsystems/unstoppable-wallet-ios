@@ -15,6 +15,8 @@ extension HudHelper {
         case saved
         case done
         case created
+        case restored
+        case addressAdded
         case deleted
         case noInternet
         case disconnectingWalletConnect
@@ -43,6 +45,8 @@ extension HudHelper {
             case .saved: image = UIImage(named: "download_24")
             case .done: image = UIImage(named: "circle_check_24")
             case .created: image = UIImage(named: "add_to_wallet_24")
+            case .restored: image = UIImage(named: "add_to_wallet_2_24")
+            case .addressAdded: image = UIImage(named: "binocule_24")
             case .deleted: image = UIImage(named: "trash_24")
             case .noInternet: image = UIImage(named: "no_internet_24")
             case .disconnectingWalletConnect, .disconnectedWalletConnect: image = UIImage(named: "disconnecting_2_24")
@@ -62,7 +66,7 @@ extension HudHelper {
             switch self {
             case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .attention: return .themeJacob
             case .removedFromWatchlist,  .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
-            case .addedToWallet, .copied, .saved, .done, .created, .enabled, .success: return .themeRemus
+            case .addedToWallet, .copied, .saved, .done, .created, .restored, .addressAdded, .enabled, .success: return .themeRemus
             case .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving: return .themeGray
             }
         }
@@ -78,6 +82,8 @@ extension HudHelper {
             case .saved: return "alert.saved".localized
             case .done: return "alert.success_action".localized
             case .created: return "alert.created".localized
+            case .restored: return "alert.restored".localized
+            case .addressAdded: return "alert.address_added".localized
             case .deleted: return "alert.deleted".localized
             case .noInternet: return "alert.no_internet".localized
             case .disconnectingWalletConnect: return "alert.disconnecting".localized

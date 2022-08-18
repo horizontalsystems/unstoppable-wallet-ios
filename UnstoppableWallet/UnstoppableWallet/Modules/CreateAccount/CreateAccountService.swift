@@ -141,6 +141,8 @@ extension CreateAccountService {
 
         accountManager.save(account: account)
         activateDefaultWallets(account: account)
+
+        accountManager.set(lastCreatedAccount: account)
     }
 
 }

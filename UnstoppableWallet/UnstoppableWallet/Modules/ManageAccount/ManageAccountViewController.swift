@@ -18,8 +18,11 @@ class ManageAccountViewController: ThemeViewController {
     private var keyActionState: ManageAccountViewModel.KeyActionState = .none
     private var isLoaded = false
 
-    init(viewModel: ManageAccountViewModel) {
+    private weak var sourceViewController: ManageAccountsViewController?
+
+    init(viewModel: ManageAccountViewModel, sourceViewController: ManageAccountsViewController) {
         self.viewModel = viewModel
+        self.sourceViewController = sourceViewController
 
         super.init()
 
@@ -62,7 +65,11 @@ class ManageAccountViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.openPublicKeysSignal) { [weak self] in self?.openPublicKeys(account: $0) }
         subscribe(disposeBag, viewModel.openBackupSignal) { [weak self] in self?.openBackup(account: $0) }
         subscribe(disposeBag, viewModel.openUnlinkSignal) { [weak self] in self?.openUnlink(account: $0) }
-        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.dismiss(animated: true) }
+        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
+            self?.dismiss(animated: true) { [weak self] in
+                self?.sourceViewController?.handleDismiss()
+            }
+        }
 
         tableView.buildSections()
 

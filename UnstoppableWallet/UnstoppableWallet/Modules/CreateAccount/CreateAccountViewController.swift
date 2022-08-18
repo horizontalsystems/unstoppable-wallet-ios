@@ -8,6 +8,10 @@ import HUD
 import ComponentKit
 import UIExtensions
 
+protocol ICreateAccountListener: UIViewController {
+    func handleCreateAccount()
+}
+
 class CreateAccountViewController: KeyboardAwareViewController {
     private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
     private let viewModel: CreateAccountViewModel
@@ -28,8 +32,11 @@ class CreateAccountViewController: KeyboardAwareViewController {
     private var inputsVisible = false
     private var isLoaded = false
 
-    init(viewModel: CreateAccountViewModel) {
+    private weak var listener: ICreateAccountListener?
+
+    init(viewModel: CreateAccountViewModel, listener: ICreateAccountListener?) {
         self.viewModel = viewModel
+        self.listener = listener
 
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
@@ -168,7 +175,12 @@ class CreateAccountViewController: KeyboardAwareViewController {
 
     private func finish() {
         HudHelper.instance.show(banner: .created)
-        dismiss(animated: true)
+
+        if let listener = listener {
+            listener.handleCreateAccount()
+        } else {
+            dismiss(animated: true)
+        }
     }
 
     private func reloadTable() {

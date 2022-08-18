@@ -57,6 +57,14 @@ extension ManageAccountsViewModel {
         mode == .switcher
     }
 
+    var lastCreatedAccount: Account? {
+        service.lastCreatedAccount
+    }
+
+    var shouldClose: Bool {
+        mode == .switcher && !service.hasAccounts
+    }
+
     func onSelect(accountId: String) {
         service.set(activeAccountId: accountId)
 

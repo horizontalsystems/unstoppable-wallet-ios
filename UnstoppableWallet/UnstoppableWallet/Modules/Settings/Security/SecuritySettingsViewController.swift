@@ -123,7 +123,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
 
                     cell.bind(index: 2, block: { (component: ImageComponent) in
                         component.isHidden = viewItem.enabled
-                        component.imageView.image = UIImage(named: "warning_2_20")?.withTintColor(.themeJacob)
+                        component.imageView.image = UIImage(named: "warning_2_20")?.withTintColor(.themeLucian)
                     })
 
                     cell.bind(index: 3, block: { (component: SwitchComponent) in

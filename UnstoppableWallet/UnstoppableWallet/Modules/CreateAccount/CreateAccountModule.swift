@@ -4,7 +4,7 @@ import LanguageKit
 
 struct CreateAccountModule {
 
-    static func viewController() -> UIViewController {
+    static func viewController(listener: ICreateAccountListener? = nil) -> UIViewController {
         let service = CreateAccountService(
                 accountFactory: App.shared.accountFactory,
                 predefinedBlockchainService: App.shared.predefinedBlockchainService,
@@ -15,7 +15,7 @@ struct CreateAccountModule {
                 marketKit: App.shared.marketKit
         )
         let viewModel = CreateAccountViewModel(service: service)
-        let viewController = CreateAccountViewController(viewModel: viewModel)
+        let viewController = CreateAccountViewController(viewModel: viewModel, listener: listener)
 
         return ThemeNavigationController(rootViewController: viewController)
     }

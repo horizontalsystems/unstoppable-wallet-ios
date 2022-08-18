@@ -26,8 +26,11 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
     private var isLoaded = false
     private var isFirstShownKeyboard = false
 
-    init(viewModel: RestoreMnemonicViewModel) {
+    private weak var sourceViewController: UIViewController?
+
+    init(viewModel: RestoreMnemonicViewModel, sourceViewController: UIViewController?) {
         self.viewModel = viewModel
+        self.sourceViewController = sourceViewController
 
         super.init(scrollViews: [tableView], accessoryView: hintView)
     }
@@ -40,9 +43,11 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         super.viewDidLoad()
 
         title = "restore.title".localized
+
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancelButton))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .done, target: self, action: #selector(onTapProceedButton))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -168,7 +173,7 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
     }
 
     private func openSelectCoins(accountName: String, accountType: AccountType) {
-        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType)
+        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, sourceViewController: sourceViewController)
         navigationController?.pushViewController(viewController, animated: true)
     }
 

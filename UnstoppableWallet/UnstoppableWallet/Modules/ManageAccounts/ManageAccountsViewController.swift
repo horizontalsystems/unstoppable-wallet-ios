@@ -19,8 +19,11 @@ class ManageAccountsViewController: ThemeViewController {
     private var viewState = ManageAccountsViewModel.ViewState.empty
     private var isLoaded = false
 
-    init(viewModel: ManageAccountsViewModel) {
+    private weak var createAccountListener: ICreateAccountListener?
+
+    init(viewModel: ManageAccountsViewModel, createAccountListener: ICreateAccountListener?) {
         self.viewModel = viewModel
+        self.createAccountListener = createAccountListener
 
         super.init()
 
@@ -100,22 +103,22 @@ class ManageAccountsViewController: ThemeViewController {
     }
 
     private func onTapCreate() {
-        let viewController = CreateAccountModule.viewController()
+        let viewController = CreateAccountModule.viewController(listener: createAccountListener ?? self)
         present(viewController, animated: true)
     }
 
     private func onTapRestore() {
-        let viewController = RestoreMnemonicModule.viewController()
+        let viewController = RestoreMnemonicModule.viewController(sourceViewController: createAccountListener)
         present(viewController, animated: true)
     }
 
     private func onTapWatch() {
-        let viewController = WatchAddressModule.viewController()
+        let viewController = WatchAddressModule.viewController(sourceViewController: createAccountListener)
         present(viewController, animated: true)
     }
 
     private func onTapEdit(accountId: String) {
-        guard let viewController = ManageAccountModule.viewController(accountId: accountId) else {
+        guard let viewController = ManageAccountModule.viewController(accountId: accountId, sourceViewController: self) else {
             return
         }
 
@@ -133,6 +136,31 @@ class ManageAccountsViewController: ThemeViewController {
         }
 
         tableView.reload(animated: true)
+    }
+
+}
+
+extension ManageAccountsViewController {
+
+    func handleDismiss() {
+        if viewModel.shouldClose {
+            dismiss(animated: true)
+        }
+    }
+
+}
+
+extension ManageAccountsViewController: ICreateAccountListener {
+
+    func handleCreateAccount() {
+        dismiss(animated: true) { [weak self] in
+            guard let account = self?.viewModel.lastCreatedAccount else {
+                return
+            }
+
+            let viewController = BackupPromptViewController(account: account, sourceViewController: self).toBottomSheet
+            self?.present(viewController, animated: true)
+        }
     }
 
 }
