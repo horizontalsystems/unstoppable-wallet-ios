@@ -17,8 +17,11 @@ class KeyboardAwareViewController: ThemeViewController {
     public var shouldObserveKeyboard = true
     var pendingFrame: CGRect?
 
+    private let keyboardVisibilityRelay = BehaviorRelay<CGFloat>(value: 0)
+    var showAccessoryView: Bool = true
+
     open var accessoryViewHeight: CGFloat {
-        floor(accessoryView?.frame.size.height ?? 0)
+        showAccessoryView ? floor(accessoryView?.frame.size.height ?? 0) : 0
     }
 
     override open var inputAccessoryView: UIView? {
@@ -156,12 +159,15 @@ class KeyboardAwareViewController: ThemeViewController {
     private func layoutAccessoryView(keyboardFrame: CGRect) {
         let inputHeight = pseudoAccessoryView?.heightValue ?? 0
         var bottomPadding = -inputHeight
-
         if !keyboardFrame.equalTo(CGRect.zero) {
             bottomPadding += view.frame.size.height - keyboardFrame.origin.y
         }
 
+        let maxPadding = keyboardFrame.size.height - inputHeight
         bottomPadding = min(max(0, bottomPadding), keyboardFrame.size.height - inputHeight)
+
+        let visiblePercent = maxPadding == 0 ? 0 : bottomPadding / maxPadding
+        keyboardVisibilityRelay.accept(visiblePercent)
 
         accessoryView?.snp.updateConstraints { make in
             make.bottom.equalToSuperview().offset(-bottomPadding)
@@ -202,6 +208,11 @@ class KeyboardAwareViewController: ThemeViewController {
     }
 
 }
+extension KeyboardAwareViewController {
+    public var keyboardVisibilityDriver: Driver<CGFloat> {
+        keyboardVisibilityRelay.asDriver()
+    }
+}
 
 extension KeyboardAwareViewController: PseudoAccessoryViewDelegate {
 
@@ -215,4 +226,25 @@ extension KeyboardAwareViewController: PseudoAccessoryViewDelegate {
         }
     }
 
+}
+
+extension UIView {
+    public func set(alpha: CGFloat, animated: Bool = true, duration: TimeInterval = 0.3, completion: ((Bool) -> ())? = nil) {
+        if alpha == self.alpha {
+            return
+        }
+        if animated {
+            if alpha != 0, isHidden {
+                isHidden = false
+            }
+            UIView.animate(withDuration: duration, animations: { [weak self] in
+                self?.alpha = alpha
+            }, completion: { success in
+                completion?(success)
+            })
+        } else {
+            self.alpha = alpha
+            completion?(true)
+        }
+    }
 }

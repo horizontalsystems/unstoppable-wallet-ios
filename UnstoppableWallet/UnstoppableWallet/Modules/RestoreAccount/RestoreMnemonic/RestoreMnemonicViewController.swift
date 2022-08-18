@@ -96,7 +96,6 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         hintView.onSelectWord = { [weak self] word in
             self?.viewModel.onSelect(word: word)
         }
-        hintView.isHidden = true
 
         subscribe(disposeBag, viewModel.possibleWordsDriver) { [weak self] in
             self?.hintView.set(words: $0)
@@ -116,6 +115,7 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
             self?.mnemonicCautionCell.set(caution: caution)
         }
         subscribe(disposeBag, viewModel.clearInputsSignal) { [weak self] in self?.passphraseCell.inputText = nil }
+        subscribe(disposeBag, keyboardVisibilityDriver) { [weak self] in self?.update(keyboardVisibility: $0) }
 
         showDefaultWords()
 
@@ -135,6 +135,10 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         }
     }
 
+    private func update(keyboardVisibility: CGFloat) {
+        hintView.alpha = keyboardVisibility
+    }
+
     @objc private func onTapCancelButton() {
         dismiss(animated: true)
     }
@@ -144,7 +148,11 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
     }
 
     private func syncHintView() {
-        hintView.isHidden = !mnemonicInputCell.entering || hintView.words.isEmpty
+        let hideHint = !mnemonicInputCell.entering
+
+        showAccessoryView = !hideHint
+        hintView.isHidden = hideHint
+        setInitialState(bottomPadding: hideHint ? 0 : hintView.height)
     }
 
     private func sync(inputsVisible: Bool) {

@@ -9,6 +9,7 @@ class RestoreMnemonicHintView: UIView {
 
     var words = [String]()
 
+    private let emptyView = UIImageView()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
     var onSelectWord: ((String) -> ())?
@@ -28,11 +29,20 @@ class RestoreMnemonicHintView: UIView {
 
         separator.backgroundColor = .themeSteel10
 
+        addSubview(emptyView)
+        emptyView.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+            maker.size.equalTo(CGFloat.iconSize24)
+        }
+
         addSubview(collectionView)
         collectionView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(Self.horizontalPadding)
             maker.top.bottom.equalToSuperview()
         }
+
+        emptyView.isHidden = false
+        emptyView.image = UIImage(named: "more_24")
 
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
@@ -56,6 +66,7 @@ extension RestoreMnemonicHintView {
     func set(words: [String]) {
         self.words = words
 
+        emptyView.isHidden = !words.isEmpty
         collectionView.reloadData()
         collectionView.layoutIfNeeded()
     }
