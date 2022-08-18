@@ -136,33 +136,37 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "public_keys.title" = "Public Keys";
 
-// Backup Key
-
-"backup_key.title" = "Yedekle";
-"backup_key.description" = "Telefonunuzun kaybolması, çalınması, kırılması vb. Durumunda, aşağıda gösterilecek olan kurtarma ifadeleri paranızı geri yüklemenin tek yoludur. \n\nKimsenin ekranınızı izlemediğinden emin olun.";
-"backup_key.button_show" = "Göster";
-"backup_key.button_backup" = "Yedekle";
-"backup_key.passphrase" = "Parola";
-
-"backup_key.confirmation.description" = "Onaylamak için kurtarma ifadelerini doğru sırayla girin";
-"backup_key.confirmation.passphrase" = "Parola";
-"backup_key.confirmation.passphrase_description" = "Parolayı girin";
-
-"backup_key.confirmation.empty_word" = "Boş kelime";
-"backup_key.confirmation.invalid_word" = "Geçersiz kelime";
-"backup_key.confirmation.empty_passphrase" = "Boş parola";
-"backup_key.confirmation.invalid_passphrase" = "Geçersiz parola";
-
 // Backup
 
-"backup.backup_required" = "Yedekleme Gerekli";
+"backup.title" = "Recovery Phrase";
+"backup.description" = "Write these words down in the correct order and keep them in a safe place";
+"backup.tap_to_show" = "Tap to show recovery phrase";
+"backup.passphrase" = "Passphrase";
+"backup.verify" = "Verify";
+"backup.verified" = "Verified";
+
+// Backup Verify Words
+
+"backup_verify_words.title" = "Verify";
+"backup_verify_words.description" = "Select two requested words from your wallet recovery phrase";
+"backup_verify_words.incorrect_word" = "Incorrect Word";
+
+// Backup Verify Passphrase
+
+"backup_verify_passphrase.title" = "Verify";
+"backup_verify_passphrase.description" = "Enter the passphrase";
+"backup_verify_passphrase.incorrect_passphrase" = "Incorrect passphrase";
+
+// Backup Required
+
+"backup_required.title" = "Backup Required";
+
+// Errors
 
 "error.send.self_transfer" = "Kendine gönderme desteklenmiyor";
 "error.send_binance.memo_required" = "Aktarım işleminde alıcı boş olmayan not istiyor";
 "error.send_binance.only_digits_allowed" = "Notun yalnızca rakam içermesini gerektirir";
 "error.send_z_cash.transparent_address" = "Unstoppable, bir transparan adrese yapılan ödemeleri desteklemez";
-
-"backup.confirmation.title" = "Kontrol etme ...";
 
 // Balance
 
