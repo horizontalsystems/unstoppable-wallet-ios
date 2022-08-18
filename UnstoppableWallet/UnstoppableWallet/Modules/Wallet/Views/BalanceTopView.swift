@@ -154,19 +154,6 @@ class BalanceTopView: UIView {
             } else {
                 bottomRightLabel.isHidden = true
             }
-        case let .searchingTx(count):
-            diffLabel.isHidden = true
-
-            bottomLeftLabel.text = "balance.searching".localized()
-            bottomLeftLabel.textColor = .themeGray
-
-            if count > 0 {
-                bottomRightLabel.isHidden = false
-                bottomRightLabel.text = "balance.searching.count".localized("\(count)")
-                bottomRightLabel.textColor = .themeGray
-            } else {
-                bottomRightLabel.isHidden = true
-            }
         case let .syncing(progress, syncedUntil):
             diffLabel.isHidden = true
 
@@ -184,7 +171,7 @@ class BalanceTopView: UIView {
             } else {
                 bottomRightLabel.isHidden = true
             }
-        case let .custom(left, right):
+        case let .customSyncing(left, right):
             diffLabel.isHidden = true
 
             bottomLeftLabel.text = left

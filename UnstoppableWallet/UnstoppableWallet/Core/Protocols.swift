@@ -34,8 +34,8 @@ protocol IDepositAdapter: IBaseAdapter {
 }
 
 protocol ITransactionsAdapter {
-    var transactionState: AdapterState { get }
-    var transactionStateUpdatedObservable: Observable<Void> { get }
+    var syncing: Bool { get }
+    var syncingObservable: Observable<Void> { get }
     var lastBlockInfo: LastBlockInfo? { get }
     var lastBlockUpdatedObservable: Observable<Void> { get }
     var explorerTitle: String { get }
