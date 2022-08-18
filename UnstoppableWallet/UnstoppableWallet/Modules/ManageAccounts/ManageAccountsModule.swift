@@ -2,10 +2,10 @@ import UIKit
 
 struct ManageAccountsModule {
 
-    static func viewController(mode: Mode) -> UIViewController {
+    static func viewController(mode: Mode, createAccountListener: ICreateAccountListener? = nil) -> UIViewController {
         let service = ManageAccountsService(accountManager: App.shared.accountManager)
         let viewModel = ManageAccountsViewModel(service: service, mode: mode)
-        return ManageAccountsViewController(viewModel: viewModel)
+        return ManageAccountsViewController(viewModel: viewModel, createAccountListener: createAccountListener)
     }
 
 }

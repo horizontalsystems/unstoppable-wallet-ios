@@ -36,6 +36,8 @@
 "alert.not_supported_yet" = "Not Supported Yet";
 "alert.copied" = "Copied";
 "alert.created" = "Created";
+"alert.restored" = "Restored";
+"alert.address_added" = "Address Added";
 "alert.deleted" = "Deleted";
 "alert.disconnecting" = "Disconnecting";
 "alert.disconnected" = "Disconnected";
@@ -159,6 +161,13 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Backup Required
 
 "backup_required.title" = "Backup Required";
+
+// Backup Prompt
+
+"backup_prompt.title" = "Backup Recovery Phrase";
+"backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.backup" = "Backup";
+"backup_prompt.later" = "Later";
 
 // Errors
 

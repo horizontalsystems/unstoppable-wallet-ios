@@ -115,6 +115,7 @@ class WalletViewController: ThemeViewController {
         tableView.refreshControl = refreshControl
 
         viewModel.onAppear()
+        showBackupPromptIfRequired()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -132,7 +133,7 @@ class WalletViewController: ThemeViewController {
     }
 
     @objc private func onTapSwitchWallet() {
-        let viewController = ManageAccountsModule.viewController(mode: .switcher)
+        let viewController = ManageAccountsModule.viewController(mode: .switcher, createAccountListener: self)
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
@@ -342,6 +343,15 @@ class WalletViewController: ThemeViewController {
         viewModel.onDisable(wallet: wallet)
     }
 
+    private func showBackupPromptIfRequired() {
+        guard let account = viewModel.lastCreatedAccount else {
+            return
+        }
+
+        let viewController = BackupPromptViewController(account: account, sourceViewController: self).toBottomSheet
+        present(viewController, animated: true)
+    }
+
 }
 
 extension WalletViewController: UITableViewDataSource {
@@ -408,6 +418,16 @@ extension WalletViewController: UITableViewDelegate {
         action.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
 
         return UISwipeActionsConfiguration(actions: [action])
+    }
+
+}
+
+extension WalletViewController: ICreateAccountListener {
+
+    func handleCreateAccount() {
+        dismiss(animated: true) { [weak self] in
+            self?.showBackupPromptIfRequired()
+        }
     }
 
 }

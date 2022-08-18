@@ -179,6 +179,10 @@ extension WalletViewModel {
         !service.watchAccount
     }
 
+    var lastCreatedAccount: Account? {
+        service.lastCreatedAccount
+    }
+
     func onSelectSortType(index: Int) {
         service.sortType = WalletModule.SortType.allCases[index]
     }

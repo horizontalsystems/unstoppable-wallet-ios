@@ -36,6 +36,14 @@ extension ManageAccountsService {
         itemsRelay.asObservable()
     }
 
+    var lastCreatedAccount: Account? {
+        accountManager.popLastCreatedAccount()
+    }
+
+    var hasAccounts: Bool {
+        !accountManager.accounts.isEmpty
+    }
+
     func set(activeAccountId: String) {
         accountManager.set(activeAccountId: activeAccountId)
     }

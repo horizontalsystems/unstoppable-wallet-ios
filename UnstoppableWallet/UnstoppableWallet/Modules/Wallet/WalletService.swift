@@ -372,6 +372,10 @@ extension WalletService {
         reachabilityManager.isReachable
     }
 
+    var lastCreatedAccount: Account? {
+        accountManager.popLastCreatedAccount()
+    }
+
     func item(wallet: Wallet) -> Item? {
         queue.sync { _item(wallet: wallet) }
     }

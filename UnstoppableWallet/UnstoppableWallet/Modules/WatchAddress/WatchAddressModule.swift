@@ -4,7 +4,7 @@ import MarketKit
 
 struct WatchAddressModule {
 
-    static func viewController() -> UIViewController {
+    static func viewController(sourceViewController: UIViewController? = nil) -> UIViewController {
         let ethereumToken = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: .ethereum, tokenType: .native))
 
         let evmAddressParserItem = EvmAddressParser()
@@ -29,7 +29,7 @@ struct WatchAddressModule {
 
         let addressViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
 
-        let viewController = WatchAddressViewController(viewModel: viewModel, addressViewModel: addressViewModel)
+        let viewController = WatchAddressViewController(viewModel: viewModel, addressViewModel: addressViewModel, sourceViewController: sourceViewController)
 
         return ThemeNavigationController(rootViewController: viewController)
     }

@@ -24,8 +24,11 @@ class WatchAddressViewController: KeyboardAwareViewController {
 
     private var isLoaded = false
 
-    init(viewModel: WatchAddressViewModel, addressViewModel: RecipientAddressViewModel) {
+    private weak var sourceViewController: UIViewController?
+
+    init(viewModel: WatchAddressViewModel, addressViewModel: RecipientAddressViewModel, sourceViewController: UIViewController?) {
         self.viewModel = viewModel
+        self.sourceViewController = sourceViewController
 
         addressCell = RecipientAddressInputCell(viewModel: addressViewModel)
         addressCautionCell = RecipientAddressCautionCell(viewModel: addressViewModel)
@@ -86,7 +89,8 @@ class WatchAddressViewController: KeyboardAwareViewController {
             self?.watchButton.isEnabled = enabled
         }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
-            self?.dismiss(animated: true)
+            HudHelper.instance.show(banner: .addressAdded)
+            (self?.sourceViewController ?? self)?.dismiss(animated: true)
         }
 
         setInitialState(bottomPadding: wrapperViewHeight)
