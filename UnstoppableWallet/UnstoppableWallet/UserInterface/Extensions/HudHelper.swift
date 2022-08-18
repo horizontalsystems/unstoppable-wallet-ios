@@ -13,7 +13,7 @@ extension HudHelper {
         case notSupportedYet
         case copied
         case saved
-        case success
+        case done
         case created
         case deleted
         case noInternet
@@ -27,6 +27,7 @@ extension HudHelper {
         case swapped
         case approving
         case approved
+        case success(string: String)
         case attention(string: String)
         case error(string: String)
 
@@ -40,7 +41,7 @@ extension HudHelper {
             case .notSupportedYet: image = UIImage(named: "warning_2_24")
             case .copied: image = UIImage(named: "copy_24")
             case .saved: image = UIImage(named: "download_24")
-            case .success: image = UIImage(named: "circle_check_24")
+            case .done: image = UIImage(named: "circle_check_24")
             case .created: image = UIImage(named: "add_to_wallet_24")
             case .deleted: image = UIImage(named: "trash_24")
             case .noInternet: image = UIImage(named: "no_internet_24")
@@ -50,6 +51,7 @@ extension HudHelper {
             case .sending, .sent: image = UIImage(named: "arrow_medium_2_up_right_24")
             case .swapping, .swapped: image = UIImage(named: "arrow_swap_2_24")
             case .approving, .approved: image = UIImage(named: "unordered_24")
+            case .success: image = UIImage(named: "circle_check_24")
             case .attention: image = UIImage(named: "warning_2_24")
             case .error: image = UIImage(named: "warning_2_24")
             }
@@ -60,7 +62,7 @@ extension HudHelper {
             switch self {
             case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .attention: return .themeJacob
             case .removedFromWatchlist,  .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
-            case .addedToWallet, .copied, .saved, .success, .created, .enabled: return .themeRemus
+            case .addedToWallet, .copied, .saved, .done, .created, .enabled, .success: return .themeRemus
             case .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving: return .themeGray
             }
         }
@@ -74,7 +76,7 @@ extension HudHelper {
             case .notSupportedYet: return "alert.not_supported_yet".localized
             case .copied: return "alert.copied".localized
             case .saved: return "alert.saved".localized
-            case .success: return "alert.success_action".localized
+            case .done: return "alert.success_action".localized
             case .created: return "alert.created".localized
             case .deleted: return "alert.deleted".localized
             case .noInternet: return "alert.no_internet".localized
@@ -86,6 +88,7 @@ extension HudHelper {
             case .sent: return "alert.sent".localized
             case .swapping, .swapped: return "alert.swapping".localized
             case .approving, .approved: return "alert.approving".localized
+            case .success(let description): return description
             case .attention(let description): return description
             case .error(let description): return description
             }

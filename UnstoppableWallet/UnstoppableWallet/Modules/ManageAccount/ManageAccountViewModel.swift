@@ -12,7 +12,7 @@ class ManageAccountViewModel {
     private let openRecoveryPhraseRelay = PublishRelay<Account>()
     private let openEvmPrivateKeyRelay = PublishRelay<Account>()
     private let openPublicKeysRelay = PublishRelay<Account>()
-    private let openBackupKeyRelay = PublishRelay<Account>()
+    private let openBackupRelay = PublishRelay<Account>()
     private let openUnlinkRelay = PublishRelay<Account>()
     private let finishRelay = PublishRelay<()>()
 
@@ -90,8 +90,8 @@ extension ManageAccountViewModel {
         openPublicKeysRelay.asSignal()
     }
 
-    var openBackupKeySignal: Signal<Account> {
-        openBackupKeyRelay.asSignal()
+    var openBackupSignal: Signal<Account> {
+        openBackupRelay.asSignal()
     }
 
     var openUnlinkSignal: Signal<Account> {
@@ -110,6 +110,7 @@ extension ManageAccountViewModel {
         switch unlockRequest {
         case .recoveryPhrase: openRecoveryPhraseRelay.accept(service.account)
         case .evmPrivateKey: openEvmPrivateKeyRelay.accept(service.account)
+        case .backup: openBackupRelay.accept(service.account)
         }
     }
 
@@ -144,8 +145,13 @@ extension ManageAccountViewModel {
         openPublicKeysRelay.accept(service.account)
     }
 
-    func onTapBackupKey() {
-        openBackupKeyRelay.accept(service.account)
+    func onTapBackup() {
+        if service.isPinSet {
+            unlockRequest = .backup
+            openUnlockRelay.accept(())
+        } else {
+            openBackupRelay.accept(service.account)
+        }
     }
 
     func onTapUnlink() {
@@ -159,6 +165,7 @@ extension ManageAccountViewModel {
     enum UnlockRequest {
         case recoveryPhrase
         case evmPrivateKey
+        case backup
     }
 
     enum KeyActionState {
