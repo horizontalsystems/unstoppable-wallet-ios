@@ -133,33 +133,37 @@
 
 "public_keys.title" = "Public Keys";
 
-// Backup Key
-
-"backup_key.title" = "Sicherung";
-"backup_key.description" = "Die Wiederherstellungsphrasen, die als nächstes gezeigt werden, sind die einzige Möglichkeit, Ihr Guthaben wiederherzustellen, falls Ihr Mobiltelefon jemals verloren geht, gestohlen wird, kaputt geht usw.\n\nStellen Sie sicher, dass niemand Ihren Bildschirm beobachtet.";
-"backup_key.button_show" = "Anzeigen";
-"backup_key.button_backup" = "Sicherung";
-"backup_key.passphrase" = "Passphrase";
-
-"backup_key.confirmation.description" = "Geben Sie die Wiederherstellungsphrasen in der richtigen Reihenfolge ein, um zu bestätigen";
-"backup_key.confirmation.passphrase" = "Passphrase";
-"backup_key.confirmation.passphrase_description" = "Geben Sie Ihre Passphrase ein";
-
-"backup_key.confirmation.empty_word" = "Leeres Wort";
-"backup_key.confirmation.invalid_word" = "Ungültiges Wort";
-"backup_key.confirmation.empty_passphrase" = "Leere Passphrase";
-"backup_key.confirmation.invalid_passphrase" = "Ungültige Passphrase";
-
 // Backup
 
-"backup.backup_required" = "Sicherung erforderlich";
+"backup.title" = "Recovery Phrase";
+"backup.description" = "Write these words down in the correct order and keep them in a safe place";
+"backup.tap_to_show" = "Tap to show recovery phrase";
+"backup.passphrase" = "Passphrase";
+"backup.verify" = "Verify";
+"backup.verified" = "Verified";
+
+// Backup Verify Words
+
+"backup_verify_words.title" = "Verify";
+"backup_verify_words.description" = "Select two requested words from your wallet recovery phrase";
+"backup_verify_words.incorrect_word" = "Incorrect Word";
+
+// Backup Verify Passphrase
+
+"backup_verify_passphrase.title" = "Verify";
+"backup_verify_passphrase.description" = "Enter the passphrase";
+"backup_verify_passphrase.incorrect_passphrase" = "Incorrect passphrase";
+
+// Backup Required
+
+"backup_required.title" = "Backup Required";
+
+// Errors
 
 "error.send.self_transfer" = "Sich selbst zu senden wird nicht unterstützt";
 "error.send_binance.memo_required" = "Empfänger benötigt nicht-leeren Vermerk bei Transfer einer Transaktion";
 "error.send_binance.only_digits_allowed" = "Der Vermerk darf nur Zahlen enthalten";
 "error.send_z_cash.transparent_address" = "Unstoppable unterstützt keine Zahlungen an eine transparente Adresse";
-
-"backup.confirmation.title" = "Prüfen …";
 
 // Balance
 
