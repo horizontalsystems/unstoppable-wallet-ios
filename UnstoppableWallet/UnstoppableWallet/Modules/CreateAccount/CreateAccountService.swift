@@ -43,7 +43,7 @@ class CreateAccountService {
     }
 
     private func activateDefaultWallets(account: Account) {
-        let defaultBlockchainTypes: [BlockchainType] = [.bitcoin, .ethereum, .binanceSmartChain, .polygon, .avalanche, .zcash]
+        let defaultBlockchainTypes: [BlockchainType] = [.bitcoin, .ethereum, .binanceSmartChain, .avalanche]
 
         var wallets = [Wallet]()
 
