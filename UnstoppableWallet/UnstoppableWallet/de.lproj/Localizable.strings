@@ -982,7 +982,6 @@ Wir haben Unstoppable für uns selbst entwickelt, da die verfügbaren Lösungen 
 "create_wallet.input.confirm" = "Bestätigen";
 "create_wallet.passphrase_description" = "Passphrasen fügen den Wallets eine zusätzliche Sicherheitsebene hinzu, wodurch Benutzer mehrere unabhängige Multi-Coin-Wallets mit einer einzigen mnemonischen Wiederherstellungsphrase erstellen können, die jedoch mit unterschiedlichen Passwörtern verbunden sind. \n\nUm diese Wallets wiederherzustellen, benötigt der Benutzer eine mnemonische Wiederherstellungsphrase sowie ein Passwort für jedes wiederherzustellende Wallet.";
 "create_wallet.error.empty_passphrase" = "Passphrase darf nicht leer sein";
-"create_wallet.error.forbidden_symbols" = "Bitte verwenden Sie nur lateinische Buchstaben und Zahlen für die Passphrase";
 "create_wallet.error.invalid_confirmation" = "Passphrase-Bestätigung stimmt nicht überein";
 
 // Restore Select
