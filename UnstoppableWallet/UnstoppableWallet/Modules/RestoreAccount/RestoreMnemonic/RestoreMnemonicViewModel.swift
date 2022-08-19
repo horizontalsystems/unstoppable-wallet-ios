@@ -127,14 +127,6 @@ extension RestoreMnemonicViewModel {
         clearCautions()
     }
 
-    func validatePassphrase(text: String?) -> Bool {
-        let validated = service.validate(text: text)
-        if !validated {
-            passphraseCautionRelay.accept(Caution(text: "create_wallet.error.forbidden_symbols".localized, type: .warning))
-        }
-        return validated
-    }
-
     func onTapProceed() {
         mnemonicCautionRelay.accept(nil)
         passphraseCautionRelay.accept(nil)

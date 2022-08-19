@@ -2066,7 +2066,6 @@
 		58AAA1E262DAEEC337B250A0 /* LockScreenModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5B9EF4DD882EF4020C5 /* LockScreenModule.swift */; };
 		58AAA1E977EB94A7A7937BE3 /* FeeSliderValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA3C555FBFB5423CCF8E0 /* FeeSliderValueView.swift */; };
 		58AAA1EC97682F9347B8CA32 /* ChartModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5C1F206B755B477A30B /* ChartModule.swift */; };
-		58AAA20181AEB01CC29D253D /* PassphraseValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADB9D09085944AD272D2 /* PassphraseValidator.swift */; };
 		58AAA203CEB400A883379822 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2B7F82F42442ED27A67 /* DownloadService.swift */; };
 		58AAA2100166FDFB110FA6D0 /* ChartConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA9D5D29115C5F435CF1B /* ChartConfiguration.swift */; };
 		58AAA22615CDAAB130560277 /* MarketTvlSortHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4A4F31EAB9164B33299 /* MarketTvlSortHeaderView.swift */; };
@@ -2113,7 +2112,6 @@
 		58AAA3F0AFD0D0F5FCD24DEF /* SelectorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE153E9683CB79DCF857 /* SelectorButton.swift */; };
 		58AAA3FE5DE72D3CEFFE4399 /* MarketPostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA657E30EBD52A5E06ACF /* MarketPostService.swift */; };
 		58AAA3FF95AB8AD32BD8853E /* SwapDeadlineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAFF25BF263B5EC4188F7 /* SwapDeadlineViewModel.swift */; };
-		58AAA400749D38F06EA01B0C /* PassphraseValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADB9D09085944AD272D2 /* PassphraseValidator.swift */; };
 		58AAA4109DE36F8934808DE0 /* MarketGlobalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA7D7F06F7C044DF9CE0A /* MarketGlobalModule.swift */; };
 		58AAA410C9996BA929E3CEEF /* InfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD7AC450FEF913E5417F /* InfoModule.swift */; };
 		58AAA415B26725FEF4A1128D /* DoubleSpendInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA72BD42697A894C2383C /* DoubleSpendInfoViewController.swift */; };
@@ -2347,7 +2345,6 @@
 		58AAAD33B32694AFA2E954D6 /* GradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAE622FCAB8C2400A3149 /* GradientLayer.swift */; };
 		58AAAD3A237C3A2F46FD2509 /* DebugPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA4022C5803D2440F43C7 /* DebugPresenter.swift */; };
 		58AAAD3AC2B87E6AAFE535D8 /* DebugLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA18F75B95ACBBAE94DF3 /* DebugLogger.swift */; };
-		58AAAD4F46EA0DFA89B4BE3E /* PassphraseValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADB9D09085944AD272D2 /* PassphraseValidator.swift */; };
 		58AAAD5A82FA3A8768E44FBB /* CoinOverviewViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0B8ECE5854FAB9362AC /* CoinOverviewViewItemFactory.swift */; };
 		58AAAD67414CEB7A9F4AE166 /* AmountDecimalParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF740AE2BEBD7CEBD563 /* AmountDecimalParser.swift */; };
 		58AAAD86292623E8EC2512FE /* SwapAllowanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA892221B1283EFC14B9E /* SwapAllowanceService.swift */; };
@@ -3873,7 +3870,6 @@
 		58AAAD40C9A99F0EDEFCAD14 /* AddressUriParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressUriParser.swift; sourceTree = "<group>"; };
 		58AAAD7AC450FEF913E5417F /* InfoModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoModule.swift; sourceTree = "<group>"; };
 		58AAAD81E45666E783B8B2EA /* MarketGlobalDefiMetricService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketGlobalDefiMetricService.swift; sourceTree = "<group>"; };
-		58AAADB9D09085944AD272D2 /* PassphraseValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassphraseValidator.swift; sourceTree = "<group>"; };
 		58AAADBB7B760C189AD6032F /* MarketGlobalTvlMetricService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketGlobalTvlMetricService.swift; sourceTree = "<group>"; };
 		58AAADD445F174344AFB6AAC /* DebugModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugModule.swift; sourceTree = "<group>"; };
 		58AAADE7CE3F004B908CEDA1 /* SwapApproveService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapApproveService.swift; sourceTree = "<group>"; };
@@ -5030,7 +5026,6 @@
 				11B3592A5323E54639864FC7 /* CreateAccountService.swift */,
 				11B35B56BE1EA9891306D6EB /* CreateAccountViewModel.swift */,
 				11B35399E91DA7AAF4104C8F /* CreateAccountViewController.swift */,
-				58AAADB9D09085944AD272D2 /* PassphraseValidator.swift */,
 			);
 			path = CreateAccount;
 			sourceTree = "<group>";
@@ -7775,7 +7770,6 @@
 				58AAABB6B1B9557E9FD70EA2 /* MarketPostViewModel.swift in Sources */,
 				58AAA613B9C66837267F9DDA /* MarketPostService.swift in Sources */,
 				11B35CDF34A9DE16278A9117 /* BaseCurrencyDisclaimerViewController.swift in Sources */,
-				58AAA20181AEB01CC29D253D /* PassphraseValidator.swift in Sources */,
 				1A5641B737FA8E49AB4BA051 /* JailbreakService.swift in Sources */,
 				58AAA46AA4EE187E674AC308 /* CoinPageMarkdownParser.swift in Sources */,
 				11B3523CFEC738AAD31D4B05 /* BalanceLockedAmountView.swift in Sources */,
@@ -8780,7 +8774,6 @@
 				58AAAAED41A83519EFB94237 /* MarketPostViewModel.swift in Sources */,
 				58AAA3FE5DE72D3CEFFE4399 /* MarketPostService.swift in Sources */,
 				11B3519C20927E60B94688FD /* BaseCurrencyDisclaimerViewController.swift in Sources */,
-				58AAA400749D38F06EA01B0C /* PassphraseValidator.swift in Sources */,
 				1A564CFD8F22A2F5FDB346EA /* JailbreakService.swift in Sources */,
 				58AAA097F8417B30693547FE /* CoinPageMarkdownParser.swift in Sources */,
 				11B35607DD0F0E613B4E26B5 /* BalanceLockedAmountView.swift in Sources */,
@@ -9775,7 +9768,6 @@
 				58AAA25AF71DF84F42A27157 /* MarketPostViewModel.swift in Sources */,
 				58AAA2494D41B33DC091A3E6 /* MarketPostService.swift in Sources */,
 				11B357F47136DBB875DE4C96 /* BaseCurrencyDisclaimerViewController.swift in Sources */,
-				58AAAD4F46EA0DFA89B4BE3E /* PassphraseValidator.swift in Sources */,
 				1A56464440899E3299F79D32 /* JailbreakService.swift in Sources */,
 				58AAAE5341084CFA30D4832C /* CoinPageMarkdownParser.swift in Sources */,
 				11B35FAF403FC3E99C416C99 /* BalanceLockedAmountView.swift in Sources */,
