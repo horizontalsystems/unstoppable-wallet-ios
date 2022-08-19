@@ -115,7 +115,7 @@ class KeyboardAwareViewController: ThemeViewController {
             return
         }
         // check in visible only accessoryView. If true - keyboard is hidden
-        if let inputAccessoryViewHeight = inputAccessoryView?.height, keyboardFrame.height == inputAccessoryViewHeight {
+        if let inputAccessoryViewHeight = accessoryView?.height, keyboardFrame.height.isZero || keyboardFrame.height == inputAccessoryViewHeight {
             keyboardWillHide(notification: notification)
             return
         }
