@@ -229,7 +229,8 @@ class App {
                 logRecordManager: logRecordManager,
                 restoreSettingsManager: restoreSettingsManager,
                 evmBlockchainManager: evmBlockchainManager,
-                binanceKitManager: binanceKitManager
+                binanceKitManager: binanceKitManager,
+                marketKit: marketKit
         )
 
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, storage: appVersionStorage)
