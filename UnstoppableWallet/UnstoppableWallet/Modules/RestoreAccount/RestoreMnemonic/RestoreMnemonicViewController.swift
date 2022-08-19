@@ -88,10 +88,6 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
 
         passphraseCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
-        nameCell.inputPlaceholder = viewModel.namePlaceholder
-        nameCell.autocapitalizationType = .words
-        nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
-
         view.addSubview(hintView)
         hintView.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview()
@@ -109,7 +105,7 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         subscribe(disposeBag, viewModel.invalidRangesDriver) { [weak self] in self?.mnemonicInputCell.set(invalidRanges: $0) }
         subscribe(disposeBag, viewModel.replaceWordSignal) { [weak self] in self?.mnemonicInputCell.replaceWord(range: $0, word: $1) }
         subscribe(disposeBag, viewModel.showErrorSignal) { HudHelper.instance.show(banner: .error(string: $0)) }
-        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openSelectCoins(accountName: $0, accountType: $1) }
+        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openSelectCoins(accountType: $0) }
         subscribe(disposeBag, viewModel.inputsVisibleDriver) { [weak self] in self?.sync(inputsVisible: $0) }
         subscribe(disposeBag, viewModel.passphraseCautionDriver) { [weak self] caution in
             self?.passphraseCell.set(cautionType: caution?.type)
@@ -172,8 +168,8 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
         mnemonicInputCell.set(text: text)
     }
 
-    private func openSelectCoins(accountName: String, accountType: AccountType) {
-        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, sourceViewController: sourceViewController)
+    private func openSelectCoins(accountType: AccountType) {
+        let viewController = RestoreSelectModule.viewController(accountType: accountType, sourceViewController: sourceViewController)
         navigationController?.pushViewController(viewController, animated: true)
     }
 
@@ -241,18 +237,6 @@ extension RestoreMnemonicViewController: SectionsDataSource {
                                 dynamicHeight: { [weak self] width in
                                     self?.passphraseCautionCell.height(containerWidth: width) ?? 0
                                 }
-                        )
-                    ]
-            ),
-            Section(
-                    id: "name",
-                    headerState: tableView.sectionHeader(text: "restore.mnemonic.name".localized),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: nameCell,
-                                id: "name",
-                                height: .heightSingleLineCell
                         )
                     ]
             )

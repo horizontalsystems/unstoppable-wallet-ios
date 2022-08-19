@@ -16,20 +16,9 @@ class WatchAddressService {
         }
     }
 
-    let defaultName: String
-
-    private let nameRelay = PublishRelay<String>()
-    private(set) var name: String = "" {
-        didSet {
-            nameRelay.accept(name)
-        }
-    }
-
     init(accountFactory: AccountFactory, accountManager: AccountManager, addressService: AddressService) {
         self.accountFactory = accountFactory
         self.accountManager = accountManager
-
-        defaultName = accountFactory.nextWatchAccountName
 
         subscribe(disposeBag, addressService.stateObservable) { [weak self] in self?.sync(addressState: $0) }
     }
@@ -39,10 +28,6 @@ class WatchAddressService {
         case .success(let address):
             do {
                 state = .ready(address: try EthereumKit.Address(hex: address.raw), domain: address.domain)
-
-                if let domain = address.domain, name.trimmingCharacters(in: .whitespaces).isEmpty {
-                    name = domain
-                }
             } catch {
                 state = .notReady
             }
@@ -59,21 +44,12 @@ extension WatchAddressService {
         stateRelay.asObservable()
     }
 
-    var nameObservable: Observable<String> {
-        nameRelay.asObservable()
-    }
-
-    func set(name: String) {
-        self.name = name
-    }
-
     func watch() throws {
         guard case let .ready(address, domain) = state else {
             throw StateError.notReady
         }
 
-        let name = name.trimmingCharacters(in: .whitespaces).isEmpty ? defaultName : name
-        let account = accountFactory.watchAccount(name: name, address: address, domain: domain)
+        let account = accountFactory.watchAccount(address: address, domain: domain)
         accountManager.save(account: account)
     }
 

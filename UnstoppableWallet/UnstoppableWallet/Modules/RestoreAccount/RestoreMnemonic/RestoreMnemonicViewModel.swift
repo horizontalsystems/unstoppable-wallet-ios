@@ -10,7 +10,7 @@ class RestoreMnemonicViewModel {
     private let possibleWordsRelay = BehaviorRelay<[String]>(value: [])
     private let invalidRangesRelay = BehaviorRelay<[NSRange]>(value: [])
     private let replaceWordRelay = PublishRelay<(NSRange, String)>()
-    private let proceedRelay = PublishRelay<(String, AccountType)>()
+    private let proceedRelay = PublishRelay<AccountType>()
     private let showErrorRelay = PublishRelay<String>()
 
     private let mnemonicCautionRelay = BehaviorRelay<Caution?>(value: nil)
@@ -60,7 +60,7 @@ extension RestoreMnemonicViewModel {
         replaceWordRelay.asSignal()
     }
 
-    var proceedSignal: Signal<(String, AccountType)> {
+    var proceedSignal: Signal<AccountType> {
         proceedRelay.asSignal()
     }
 
@@ -82,14 +82,6 @@ extension RestoreMnemonicViewModel {
 
     var showErrorSignal: Signal<String> {
         showErrorRelay.asSignal()
-    }
-
-    var namePlaceholder: String {
-        service.defaultName
-    }
-
-    func onChange(name: String?) {
-        service.set(name: name ?? "")
     }
 
     func onChange(text: String, cursorOffset: Int, language: String?) {
@@ -155,7 +147,7 @@ extension RestoreMnemonicViewModel {
         do {
             let accountType = try service.accountType(words: service.items.map { $0.word })
 
-            proceedRelay.accept((service.resolvedName, accountType))
+            proceedRelay.accept(accountType)
         } catch {
             if case RestoreMnemonicService.ErrorList.errors(let errors) = error {
                 errors.forEach { error in
