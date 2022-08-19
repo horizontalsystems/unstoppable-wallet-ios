@@ -82,7 +82,6 @@
 // Restore
 
 "restore.title" = "Restaurar desde";
-"restore.mnemonic.name" = "Nombre (opcional)";
 "restore.mnemonic.key" = "Clave";
 "restore.mnemonic.description" = "Introduzca su frase de recuperación de cartera (conocido como mnemonic) que consta de 12, 15, 18, 21 o 24 palabras y puede incluir una contraseña alfanumérica adicional.";
 "restore_error.mnemonic_word_count" = "Número de palabras erróneas. Debe tener entre 12 y 24 palabras. Has ingresado: %@";
@@ -861,6 +860,10 @@ poner en peligro la seguridad de mis fondos.";
 "blockchain_settings.info.sync_mode" = "Modo de sincronización";
 "blockchain_settings.info.sync_mode.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
 
+// Manage Accounts
+
+"manage_accounts.backup_required" = "Backup required";
+
 // Manage Keys
 
 "settings_manage_keys.title" = "Gestionar monederos";
@@ -1169,7 +1172,6 @@ poner en peligro la seguridad de mis fondos.";
 
 "watch_address.title" = "Ver Dirección";
 "watch_address.watch" = "Ver";
-"watch_address.name" = "Nombre (opcional)";
 "watch_address.address" = "Dirección";
 "watch_address.description" = "Disponible sólo para Ethereum y otras blockchains EVM soportadas.";
 
