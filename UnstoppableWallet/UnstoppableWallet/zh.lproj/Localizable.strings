@@ -984,7 +984,6 @@ Unstoppable钱包完全开源且任何人都可以确定应用按照其宣称的
 "create_wallet.input.confirm" = "确认";
 "create_wallet.passphrase_description" = "密码为钱包增加了一个额外的保安层，让用户可以使用可关联不同密码的单一个助记词恢复码来创建多个独立的多代币钱包。\n\n要恢复这些钱包，用户必须具备助记词恢复码以及每一个待恢复钱包的密码。";
 "create_wallet.error.empty_passphrase" = "密码不能为空";
-"create_wallet.error.forbidden_symbols" = "请只对密码使用拉丁字母和数字";
 "create_wallet.error.invalid_confirmation" = "确认密码不匹配";
 
 // Restore Select
