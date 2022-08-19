@@ -983,7 +983,6 @@ poner en peligro la seguridad de mis fondos.";
 "create_wallet.input.confirm" = "Confirmar";
 "create_wallet.passphrase_description" = "La frase de contraseña añade una capa de seguridad adicional a los monederos permitiendo a los usuarios crear múltiples monederos multi-monedas independientes usando una sola frase de recuperación mnemotécnica pero asociada con diferentes contraseñas.\n\nPara restaurar estos monederos un usuario necesitará una frase de recuperación mnemotécnica, así como una contraseña para cada monedero restaurado.";
 "create_wallet.error.empty_passphrase" = "La frase de contraseña no puede estar vacía";
-"create_wallet.error.forbidden_symbols" = "Por favor, utiliza solo letras del alfabeto latino y números para la frase de contraseña";
 "create_wallet.error.invalid_confirmation" = "La confirmación de la frase de contraseña no coincide";
 
 // Restore Select
