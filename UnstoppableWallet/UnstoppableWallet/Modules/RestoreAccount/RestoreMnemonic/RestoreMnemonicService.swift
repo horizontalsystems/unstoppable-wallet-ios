@@ -12,13 +12,9 @@ class RestoreMnemonicService {
     private(set) var items: [WordItem] = []
 
     var passphrase: String = ""
-    let defaultName: String
-    private var name: String = ""
 
-    init(accountFactory: AccountFactory, passphraseValidator: PassphraseValidator) {
+    init(passphraseValidator: PassphraseValidator) {
         self.passphraseValidator = passphraseValidator
-
-        defaultName = accountFactory.nextAccountName
     }
 
 }
@@ -31,10 +27,6 @@ extension RestoreMnemonicService {
 
     var passphraseEnabledObservable: Observable<Bool> {
         passphraseEnabledRelay.asObservable()
-    }
-
-    var resolvedName: String {
-        name.trimmingCharacters(in: .whitespaces).isEmpty ? defaultName : name
     }
 
     func set(language: String?) {
@@ -81,10 +73,6 @@ extension RestoreMnemonicService {
 
     func possibleWords(string: String) -> [String] {
         wordList.filter { $0.hasPrefix(string) }
-    }
-
-    func set(name: String) {
-        self.name = name
     }
 
     func set(passphraseEnabled: Bool) {

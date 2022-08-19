@@ -240,7 +240,7 @@ extension ManageAccountViewController: SectionsDataSource {
                                         id: "backup-recovery-phrase",
                                         image: UIImage(named: "warning_2_20"),
                                         title: "manage_account.backup_recovery_phrase".localized,
-                                        color: .themeJacob,
+                                        color: .themeLucian,
                                         autoDeselect: true,
                                         isFirst: true,
                                         isLast: true

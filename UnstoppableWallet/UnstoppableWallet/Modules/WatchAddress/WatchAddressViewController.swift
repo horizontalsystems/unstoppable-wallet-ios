@@ -20,8 +20,6 @@ class WatchAddressViewController: KeyboardAwareViewController {
     private let addressCell: RecipientAddressInputCell
     private let addressCautionCell: RecipientAddressCautionCell
 
-    private let nameCell = TextFieldCell()
-
     private var isLoaded = false
 
     private weak var sourceViewController: UIViewController?
@@ -78,12 +76,6 @@ class WatchAddressViewController: KeyboardAwareViewController {
 
         addressCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
-        nameCell.inputPlaceholder = viewModel.namePlaceholder
-        nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
-
-        subscribe(disposeBag, viewModel.nameDriver) { [weak self] name in
-            self?.nameCell.inputText = name
-        }
         subscribe(disposeBag, viewModel.watchEnabledDriver) { [weak self] enabled in
             self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
             self?.watchButton.isEnabled = enabled
@@ -144,19 +136,7 @@ extension WatchAddressViewController: SectionsDataSource {
                                 }
                         )
                     ]
-            ),
-            Section(
-                    id: "name",
-                    headerState: tableView.sectionHeader(text: "watch_address.name".localized),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: nameCell,
-                                id: "name",
-                                height: .heightSingleLineCell
-                        )
-                    ]
-            ),
+            )
         ]
     }
 

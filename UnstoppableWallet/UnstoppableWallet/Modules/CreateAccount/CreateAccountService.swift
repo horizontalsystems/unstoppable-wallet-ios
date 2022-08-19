@@ -137,7 +137,7 @@ extension CreateAccountService {
 
         let words = try Mnemonic.generate(wordCount: wordCount, language: wordList)
         let accountType: AccountType = .mnemonic(words: words, salt: passphrase)
-        let account = accountFactory.account(name: accountFactory.nextAccountName, type: accountType, origin: .created)
+        let account = accountFactory.account(type: accountType, origin: .created)
 
         accountManager.save(account: account)
         activateDefaultWallets(account: account)
