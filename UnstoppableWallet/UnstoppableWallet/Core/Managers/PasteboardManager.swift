@@ -8,7 +8,7 @@ class PasteboardManager {
     }
 
     func set(value: String) {
-        UIPasteboard.general.setValue(value, forPasteboardType: "public.plain-text")
+        UIPasteboard.general.string = value
     }
 
 }
@@ -16,7 +16,7 @@ class PasteboardManager {
 class CopyHelper {
 
     static func copyAndNotify(value: String) {
-        UIPasteboard.general.setValue(value, forPasteboardType: "public.plain-text")
+        UIPasteboard.general.string = value
         HudHelper.instance.show(banner: .copied)
     }
 

@@ -11,10 +11,11 @@ class AppStatusManager {
     private let restoreSettingsManager: RestoreSettingsManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let binanceKitManager: BinanceKitManager
+    private let marketKit: MarketKit.Kit
 
     init(systemInfoManager: SystemInfoManager, storage: AppVersionStorage, accountManager: AccountManager,
          walletManager: WalletManager, adapterManager: AdapterManager, logRecordManager: LogRecordManager, restoreSettingsManager: RestoreSettingsManager,
-         evmBlockchainManager: EvmBlockchainManager, binanceKitManager: BinanceKitManager) {
+         evmBlockchainManager: EvmBlockchainManager, binanceKitManager: BinanceKitManager, marketKit: MarketKit.Kit) {
         self.systemInfoManager = systemInfoManager
         self.storage = storage
         self.accountManager = accountManager
@@ -24,6 +25,17 @@ class AppStatusManager {
         self.restoreSettingsManager = restoreSettingsManager
         self.evmBlockchainManager = evmBlockchainManager
         self.binanceKitManager = binanceKitManager
+        self.marketKit = marketKit
+    }
+
+    private var marketLastSyncTimestamps: [(String, Any)] {
+        let syncInfo = marketKit.syncInfo()
+
+        return [
+            ("Coins", syncInfo.coinsTimestamp ?? "nil"),
+            ("Blockchains", syncInfo.blockchainsTimestamp ?? "nil"),
+            ("Tokens", syncInfo.tokensTimestamp ?? "nil")
+        ]
     }
 
     private var accountStatus: [(String, Any)] {
@@ -98,6 +110,7 @@ extension AppStatusManager {
             ]),
             ("App Log", logRecordManager.logsGroupedBy(context: "Send")),
             ("Version History", storage.appVersions.map { ($0.description, $0.date) }),
+            ("Market Last Sync Timestamps", marketLastSyncTimestamps),
             ("Wallets Status", accountStatus),
             ("Blockchains Status", blockchainStatus)
         ]

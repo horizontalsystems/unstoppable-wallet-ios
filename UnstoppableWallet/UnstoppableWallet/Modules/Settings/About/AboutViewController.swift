@@ -82,8 +82,7 @@ class AboutViewController: ThemeViewController {
 
             present(controller, animated: true)
         } else {
-            UIPasteboard.general.setValue(email, forPasteboardType: "public.plain-text")
-            HudHelper.instance.show(banner: .copied)
+            CopyHelper.copyAndNotify(value: email)
         }
     }
 
