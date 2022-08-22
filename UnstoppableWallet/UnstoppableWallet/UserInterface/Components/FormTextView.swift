@@ -17,6 +17,7 @@ protocol IFormTextView: UIView {
     var isEditable: Bool { get set }
     var keyboardType: UIKeyboardType { get set }
     var autocapitalizationType: UITextAutocapitalizationType { get set }
+    var autocorrectionType: UITextAutocorrectionType { get set }
     var textViewInset: UIEdgeInsets { get set }
 
     func height(containerWidth: CGFloat) -> CGFloat
@@ -44,12 +45,10 @@ class FormTextView: UIView, IFormTextView {
         textView.delegate = self
         textView.tintColor = .themeInputFieldTintColor
         textView.keyboardAppearance = .themeDefault
-        textView.autocapitalizationType = .none
         textView.textColor = .themeLeah
         textView.font = textViewFont
         textView.textContainer.lineFragmentPadding = 0
         textView.backgroundColor = .clear
-        textView.autocorrectionType = .no
         textView.isScrollEnabled = false
 
         addSubview(placeholderLabel)
@@ -149,6 +148,11 @@ extension FormTextView {
     var autocapitalizationType: UITextAutocapitalizationType {
         get { textView.autocapitalizationType }
         set { textView.autocapitalizationType = newValue }
+    }
+
+    var autocorrectionType: UITextAutocorrectionType {
+        get { textView.autocorrectionType }
+        set { textView.autocorrectionType = newValue }
     }
 
     var textViewInset: UIEdgeInsets {

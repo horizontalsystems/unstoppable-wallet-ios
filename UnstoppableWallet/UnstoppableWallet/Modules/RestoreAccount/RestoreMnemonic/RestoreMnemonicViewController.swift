@@ -18,8 +18,6 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
     private let passphraseCell = TextFieldCell()
     private let passphraseCautionCell = FormCautionCell()
 
-    private let nameCell = TextFieldCell()
-
     private let hintView = RestoreMnemonicHintView()
 
     private var inputsVisible = false

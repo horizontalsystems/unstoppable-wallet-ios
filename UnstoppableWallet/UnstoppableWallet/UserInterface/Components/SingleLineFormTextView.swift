@@ -34,11 +34,9 @@ class SingleLineFormTextView: UIView, IFormTextView {
         textField.delegate = self
         textField.tintColor = .themeInputFieldTintColor
         textField.keyboardAppearance = .themeDefault
-        textField.autocapitalizationType = .none
         textField.textColor = .themeLeah
         textField.font = textViewFont
         textField.backgroundColor = .clear
-        textField.autocorrectionType = .no
 
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
 
@@ -118,6 +116,11 @@ extension SingleLineFormTextView {
     var autocapitalizationType: UITextAutocapitalizationType {
         get { textField.autocapitalizationType }
         set { textField.autocapitalizationType = newValue }
+    }
+
+    var autocorrectionType: UITextAutocorrectionType {
+        get { textField.autocorrectionType }
+        set { textField.autocorrectionType = newValue }
     }
 
     var textViewInset: UIEdgeInsets {

@@ -2,6 +2,7 @@ import UIKit
 import ThemeKit
 import SnapKit
 import ComponentKit
+import AlignedCollectionViewFlowLayout
 
 class RestoreMnemonicHintView: UIView {
     private static let horizontalPadding: CGFloat = .margin16
@@ -10,7 +11,7 @@ class RestoreMnemonicHintView: UIView {
     var words = [String]()
 
     private let emptyView = UIImageView()
-    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: AlignedCollectionViewFlowLayout(horizontalAlignment: .leading))
 
     var onSelectWord: ((String) -> ())?
 
