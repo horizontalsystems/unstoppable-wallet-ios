@@ -94,21 +94,21 @@ class NftCollectionAssetsService {
             Item(asset: asset, price: asset.lastSalePrice)
         }
 
-        updatePriceItems(items: items, map: coinPriceService.itemMap(coinUids: Array(allCoinUids(items: items))))
+        updatePriceItems(items: items, map: coinPriceService.itemMap(tokens: Array(allTokens(items: items))))
 
         return items
     }
 
-    private func allCoinUids(items: [Item]) -> Set<String> {
-        var uids = Set<String>()
+    private func allTokens(items: [Item]) -> Set<Token> {
+        var tokens = Set<Token>()
 
         for item in items {
             if let price = item.price {
-                uids.insert(price.token.coin.uid)
+                tokens.insert(price.token)
             }
         }
 
-        return uids
+        return tokens
     }
 
     private func updatePriceItems(items: [Item], map: [String: WalletCoinPriceService.Item]) {
@@ -127,7 +127,7 @@ extension NftCollectionAssetsService: IWalletCoinPriceServiceDelegate {
                 return
             }
 
-            self.updatePriceItems(items: items, map: self.coinPriceService.itemMap(coinUids: Array(self.allCoinUids(items: items))))
+            self.updatePriceItems(items: items, map: self.coinPriceService.itemMap(tokens: Array(self.allTokens(items: items))))
             self.state = .loaded(items: items, allLoaded: allLoaded)
         }
     }

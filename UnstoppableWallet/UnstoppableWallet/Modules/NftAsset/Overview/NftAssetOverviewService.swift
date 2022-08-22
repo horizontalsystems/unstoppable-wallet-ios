@@ -48,21 +48,21 @@ class NftAssetOverviewService {
 
     private func handle(item: Item) {
         queue.async {
-            let coinUids = self._allCoinUids(item: item)
-            self._fillCoinPrices(item: item, coinUids: coinUids)
-            self.coinPriceService.set(coinUids: coinUids)
+            let tokens = self._allTokens(item: item)
+            self._fillCoinPrices(item: item, tokens: tokens)
+            self.coinPriceService.set(tokens: tokens)
 
             self.state = .completed(item)
         }
     }
 
-    private func _allCoinUids(item: Item) -> Set<String> {
+    private func _allTokens(item: Item) -> Set<Token> {
         let priceItems = [item.lastSale, item.average7d, item.average30d, item.collectionFloor, item.bestOffer, item.sale?.price]
-        return Set(priceItems.compactMap { $0?.nftPrice.token.coin.uid })
+        return Set(priceItems.compactMap { $0?.nftPrice.token })
     }
 
-    private func _fillCoinPrices(item: Item, coinUids: Set<String>) {
-        _fillCoinPrices(item: item, map: coinPriceService.itemMap(coinUids: Array(coinUids)))
+    private func _fillCoinPrices(item: Item, tokens: Set<Token>) {
+        _fillCoinPrices(item: item, map: coinPriceService.itemMap(tokens: Array(tokens)))
     }
 
     private func _fillCoinPrices(item: Item, map: [String: WalletCoinPriceService.Item]) {
@@ -90,7 +90,7 @@ extension NftAssetOverviewService: IWalletCoinPriceServiceDelegate {
                 return
             }
 
-            self._fillCoinPrices(item: item, coinUids: self._allCoinUids(item: item))
+            self._fillCoinPrices(item: item, tokens: self._allTokens(item: item))
             self.state = .completed(item)
         }
     }
