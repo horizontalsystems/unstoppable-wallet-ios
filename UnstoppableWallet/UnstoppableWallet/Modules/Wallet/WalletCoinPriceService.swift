@@ -76,31 +76,16 @@ class WalletCoinPriceService {
 extension WalletCoinPriceService {
 
     func set(tokens: Set<Token>) {
-        print("================================================")
-        print("COME COIN IDS:")
-        tokens.forEach { s in
-            print(" => \(s.coin.uid) : custom: \(s.isCustom)")
-        }
         let filteredIds = filteredIds(tokens: Array(tokens))
         guard coinUids != filteredIds else {
             return
         }
 
-        print("================================================")
-        print("SET COIN IDS:")
-        coinUids.forEach { s in
-            print(" => \(s)")
-        }
-        self.coinUids = filteredIds
+        coinUids = filteredIds
         subscribeToCoinPrices()
     }
 
     func itemMap(tokens: [Token]) -> [String: Item] {
-        print("================================================")
-        print("COME COIN IDS:")
-        tokens.forEach { s in
-            print(" => \(s.coin.uid) : custom: \(s.isCustom)")
-        }
         return marketKit.coinPriceMap(coinUids: Array(filteredIds(tokens: tokens)), currencyCode: currency.code).mapValues { item(coinPrice: $0) }
     }
 
