@@ -88,6 +88,11 @@ extension InputStackView {
         set { formTextView.autocapitalizationType = newValue }
     }
 
+    var autocorrectionType: UITextAutocorrectionType {
+        get { formTextView.autocorrectionType }
+        set { formTextView.autocorrectionType = newValue }
+    }
+
     var onChangeText: ((String?) -> ())? {
         get { formTextView.onChangeText }
         set { formTextView.onChangeText = newValue }

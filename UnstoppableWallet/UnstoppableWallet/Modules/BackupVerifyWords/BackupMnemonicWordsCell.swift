@@ -7,7 +7,7 @@ import CollectionViewCenteredFlowLayout
 class BackupMnemonicWordsCell: UITableViewCell {
     private static let horizontalPadding: CGFloat = .margin16
     private static let itemSpacing: CGFloat = .margin12
-    private static let lineSpacing: CGFloat = .margin12
+    private static let lineSpacing: CGFloat = .margin16
 
     private var viewItems = [BackupVerifyWordsViewModel.WordViewItem]()
     private var onTap: ((Int) -> ())?

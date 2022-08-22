@@ -87,6 +87,16 @@ extension ShortcutInputCell {
         set { inputStackView.keyboardType = newValue }
     }
 
+    var autocapitalizationType: UITextAutocapitalizationType {
+        get { inputStackView.autocapitalizationType }
+        set { inputStackView.autocapitalizationType = newValue }
+    }
+
+    var autocorrectionType: UITextAutocorrectionType {
+        get { inputStackView.autocorrectionType }
+        set { inputStackView.autocorrectionType = newValue }
+    }
+
     func set(cautionType: CautionType?) {
         formValidatedView.set(cautionType: cautionType)
     }

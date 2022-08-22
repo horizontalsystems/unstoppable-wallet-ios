@@ -42,6 +42,9 @@ class AddressInputView: UIView {
         pasteView.onTapButton = { [weak self] in self?.onTapPaste() }
         pasteView.button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
+        inputStackView.autocapitalizationType = .none
+        inputStackView.autocorrectionType = .no
+
         inputStackView.appendSubview(stateView)
         inputStackView.appendSubview(deleteView)
         inputStackView.appendSubview(scanView)
