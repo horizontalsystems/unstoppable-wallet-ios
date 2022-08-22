@@ -43,12 +43,12 @@ class HistoricalRateService {
     }
 
     private func _fetchRate(key: RateKey) {
-        marketKit.coinHistoricalPriceValueSingle(coinUid: key.coinUid, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onSuccess: { [weak self] decimal in
-                    self?.handle(key: key, rate: decimal)
-                })
-                .disposed(by: ratesDisposeBag)
+        marketKit.coinHistoricalPriceValueSingle(coinUid: key.token.coin.uid, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+            .subscribe(onSuccess: { [weak self] decimal in
+                self?.handle(key: key, rate: decimal)
+            })
+            .disposed(by: ratesDisposeBag)
     }
 
 }
@@ -69,7 +69,11 @@ extension HistoricalRateService {
                 return currencyValue
             }
 
-            if let value = marketKit.coinHistoricalPriceValue(coinUid: key.coinUid, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970) {
+            guard !key.token.isCustom else {
+                return nil
+            }
+
+            if let value = marketKit.coinHistoricalPriceValue(coinUid: key.token.coin.uid, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970) {
                 let currencyValue = CurrencyValue(currency: currency, value: value)
                 rates[key]  = currencyValue
                 return currencyValue
@@ -80,6 +84,10 @@ extension HistoricalRateService {
     }
 
     func fetchRate(key: RateKey) {
+        guard !key.token.isCustom else {
+            return
+        }
+
         queue.async {
             if self.rates[key] == nil {
                 self._fetchRate(key: key)
@@ -90,16 +98,16 @@ extension HistoricalRateService {
 }
 
 struct RateKey: Hashable {
-    let coinUid: String
+    let token: Token
     let date: Date
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(coinUid)
+        hasher.combine(token)
         hasher.combine(date)
     }
 
-    static func ==(lhs: RateKey, rhs: RateKey) -> Bool {
-        lhs.coinUid == rhs.coinUid && lhs.date == rhs.date
+    static func == (lhs: RateKey, rhs: RateKey) -> Bool {
+        lhs.token == rhs.token && lhs.date == rhs.date
     }
 
 }

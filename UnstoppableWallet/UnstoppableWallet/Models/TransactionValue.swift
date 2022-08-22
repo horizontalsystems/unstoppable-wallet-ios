@@ -34,7 +34,7 @@ enum TransactionValue {
     var token: Token? {
         switch self {
         case .coinValue(let token, _): return token
-        case .tokenValue: return Token()
+        case .tokenValue: return nil
         case .rawValue: return nil
         }
     }

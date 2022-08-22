@@ -261,11 +261,11 @@ class TransactionsService {
     }
 
     private func rateKey(record: TransactionRecord) -> RateKey? {
-        guard let token = record.mainValue?.token, !token.isCustom else {
+        guard let token = record.mainValue?.token else {
             return nil
         }
 
-        return RateKey(coinUid: coin.uid, date: record.date)
+        return RateKey(token: token, date: record.date)
     }
 
     private func rate(record: TransactionRecord) -> CurrencyValue? {
