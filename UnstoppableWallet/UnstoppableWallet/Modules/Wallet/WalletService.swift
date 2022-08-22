@@ -132,7 +132,7 @@ class WalletService {
 
     private func _sync(wallets: [Wallet]) {
         let cacheContainer = accountManager.activeAccount.map { cacheManager.cacheContainer(accountId: $0.id) }
-        let priceItemMap = coinPriceService.itemMap(coinUids: wallets.map { $0.coin.uid })
+        let priceItemMap = coinPriceService.itemMap(tokens: wallets.map { $0.token })
 
         let items: [Item] = wallets.map { wallet in
             let item = Item(
@@ -150,11 +150,10 @@ class WalletService {
         allItems = sorter.sort(items: items, sortType: sortType)
         syncTotalItem()
 
-        let coinUids = Set(wallets.filter { !$0.token.isCustom }.map { $0.coin.uid })
-        let feeCoinUids = Set(wallets.compactMap { feeCoinProvider.feeToken(token: $0.token)?.coin.uid })
-        let conversionCoinUids = balanceConversionManager.conversionTokens.map { $0.coin.uid }
+        let tokens = Set(wallets.map { $0.token })
+        let feeCoinTokens = Set(wallets.compactMap { feeCoinProvider.feeToken(token: $0.token) })
 
-        coinPriceService.set(coinUids: coinUids.union(feeCoinUids).union(conversionCoinUids))
+        coinPriceService.set(tokens: tokens.union(feeCoinTokens).union(balanceConversionManager.conversionTokens))
     }
 
     private func items(coinUid: String) -> [Item] {
@@ -184,7 +183,7 @@ class WalletService {
         var convertedValue: CoinValue?
         var convertedValueExpired = false
 
-        if let conversionToken = balanceConversionManager.conversionToken, let priceItem = coinPriceService.item(coinUid: conversionToken.coin.uid) {
+        if let conversionToken = balanceConversionManager.conversionToken, let priceItem = coinPriceService.item(token: conversionToken) {
             convertedValue = CoinValue(kind: .token(token: conversionToken), value: total / priceItem.price.value)
             convertedValueExpired = priceItem.expired
         }
@@ -306,7 +305,7 @@ extension WalletService: IWalletCoinPriceServiceDelegate {
 
     func didUpdateBaseCurrency() {
         queue.async {
-            self.handleUpdated(priceItemMap: self.coinPriceService.itemMap(coinUids: self.allItems.map { $0.wallet.coin.uid }))
+            self.handleUpdated(priceItemMap: self.coinPriceService.itemMap(tokens: self.allItems.map { $0.wallet.token }))
         }
     }
 

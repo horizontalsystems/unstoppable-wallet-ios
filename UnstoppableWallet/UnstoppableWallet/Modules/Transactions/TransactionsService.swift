@@ -261,7 +261,7 @@ class TransactionsService {
     }
 
     private func rateKey(record: TransactionRecord) -> RateKey? {
-        guard let coin = record.mainValue?.coin else {
+        guard let token = record.mainValue?.token, !token.isCustom else {
             return nil
         }
 
