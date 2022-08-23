@@ -23,7 +23,6 @@ class RestoreSelectService {
     private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let marketKit: MarketKit.Kit
-    private let evmBlockchainManager: EvmBlockchainManager
     private let enableCoinService: EnableCoinService
     private let disposeBag = DisposeBag()
 
@@ -42,13 +41,12 @@ class RestoreSelectService {
         }
     }
 
-    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmBlockchainManager: EvmBlockchainManager, enableCoinService: EnableCoinService) {
+    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, enableCoinService: EnableCoinService) {
         self.accountType = accountType
         self.accountFactory = accountFactory
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.marketKit = marketKit
-        self.evmBlockchainManager = evmBlockchainManager
         self.enableCoinService = enableCoinService
 
         subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredTokens, restoreSettings in
@@ -205,14 +203,6 @@ extension RestoreSelectService {
 
         for (token, settings) in restoreSettingsMap {
             enableCoinService.save(restoreSettings: settings, account: account, blockchainType: token.blockchainType)
-        }
-
-        for item in items {
-            guard item.enabled else {
-                continue
-            }
-
-            evmBlockchainManager.markAutoEnable(blockchainType: item.blockchain.type, account: account)
         }
 
         guard !enabledConfiguredTokens.isEmpty else {

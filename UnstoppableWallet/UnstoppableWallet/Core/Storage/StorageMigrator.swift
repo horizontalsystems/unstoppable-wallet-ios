@@ -531,16 +531,6 @@ class StorageMigrator {
             }
         }
 
-        migrator.registerMigration("createEvmAccountSyncStates") { db in
-            try db.create(table: EvmAccountSyncState.databaseTableName) { t in
-                t.column(EvmAccountSyncState.Columns.accountId.name, .text).notNull()
-                t.column(EvmAccountSyncState.Columns.chainId.name, .integer).notNull()
-                t.column(EvmAccountSyncState.Columns.lastBlockNumber.name, .integer).notNull()
-
-                t.primaryKey([EvmAccountSyncState.Columns.accountId.name, EvmAccountSyncState.Columns.chainId.name], onConflict: .replace)
-            }
-        }
-
         migrator.registerMigration("createWalletConnectV2Sessions") { db in
             try db.create(table: WalletConnectV2Session.databaseTableName) { t in
                 t.column(WalletConnectV2Session.Columns.accountId.name, .text).notNull()

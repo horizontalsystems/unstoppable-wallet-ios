@@ -12,22 +12,16 @@ class EvmAccountManager {
     private let walletManager: WalletManager
     private let marketKit: MarketKit.Kit
     private let evmKitManager: EvmKitManager
-    private let provider: HsTokenBalanceProvider
-    private let storage: EvmAccountSyncStateStorage
 
     private let disposeBag = DisposeBag()
     private var internalDisposeBag = DisposeBag()
 
-    private var syncing = false
-
-    init(blockchainType: BlockchainType, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmKitManager: EvmKitManager, provider: HsTokenBalanceProvider, storage: EvmAccountSyncStateStorage) {
+    init(blockchainType: BlockchainType, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmKitManager: EvmKitManager) {
         self.blockchainType = blockchainType
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.marketKit = marketKit
         self.evmKitManager = evmKitManager
-        self.provider = provider
-        self.storage = storage
 
         subscribe(ConcurrentDispatchQueueScheduler(qos: .utility), disposeBag, evmKitManager.evmKitCreatedObservable) { [weak self] in self?.handleEvmKitCreated() }
     }
@@ -35,70 +29,7 @@ class EvmAccountManager {
     private func handleEvmKitCreated() {
         internalDisposeBag = DisposeBag()
 
-        initialSync()
         subscribeToTransactions()
-    }
-
-    private func initialSync() {
-        guard let account = accountManager.activeAccount else {
-//            print("Initial Sync: \(blockchain.name): no active account")
-            return
-        }
-
-        let chainId = evmKitManager.chain.id
-        let syncState = storage.evmAccountSyncState(accountId: account.id, chainId: chainId)
-        let lastBlockNumber = syncState?.lastBlockNumber ?? 0
-
-        guard lastBlockNumber == 0 else  {
-//            print("Initial Sync: \(blockchain.name): last block is not 0")
-            return
-        }
-
-        guard let evmKitWrapper = evmKitManager.evmKitWrapper else {
-//            print("Initial Sync: \(blockchain.name): no EvmKitWrapper")
-            return
-        }
-
-        guard !syncing else {
-//            print("Initial Sync: \(blockchain.name): already syncing")
-            return
-        }
-
-        syncing = true
-
-//        print("Initial Sync: \(evmKitWrapper.blockchain.name): start syncing...")
-
-        if syncState == nil {
-            provider.blockNumberSingle(blockchainType: blockchainType)
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                    .subscribe(onSuccess: { [weak self] blockNumber in
-//                        print("Only block number: \(evmKitWrapper.blockchain.name) - \(blockNumber)")
-
-                        let state = EvmAccountSyncState(accountId: account.id, chainId: chainId, lastBlockNumber: blockNumber)
-                        self?.storage.save(evmAccountSyncState: state)
-
-                        self?.syncing = false
-                    }, onError: { [weak self] _ in
-                        self?.syncing = false
-                    })
-                    .disposed(by: internalDisposeBag)
-        } else {
-            provider.addressInfoSingle(blockchainType: blockchainType, address: evmKitWrapper.evmKit.address.hex)
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                    .subscribe(onSuccess: { [weak self] info in
-//                        print("Full sync \(evmKitWrapper.blockchain.name) --- count: \(info.addresses.count) --- blockNumber: \(info.blockNumber)")
-
-                        self?.handle(addresses: info.addresses, account: account)
-
-                        let state = EvmAccountSyncState(accountId: account.id, chainId: chainId, lastBlockNumber: info.blockNumber)
-                        self?.storage.save(evmAccountSyncState: state)
-
-                        self?.syncing = false
-                    }, onError: { [weak self] _ in
-                        self?.syncing = false
-                    })
-                    .disposed(by: internalDisposeBag)
-        }
     }
 
     private func subscribeToTransactions() {
@@ -117,7 +48,7 @@ class EvmAccountManager {
     }
 
     private func handle(fullTransactions: [FullTransaction]) {
-//        print("Tx Sync: \(blockchain.name): full transactions: \(fullTransactions.count)")
+//        print("Tx Sync: \(blockchainType): full transactions: \(fullTransactions.count)")
 
         guard let account = accountManager.activeAccount else {
             return
@@ -128,45 +59,38 @@ class EvmAccountManager {
         }
 
         let address = evmKitWrapper.evmKit.address
-        let lastBlockNumber = storage.evmAccountSyncState(accountId: account.id, chainId: evmKitManager.chain.id)?.lastBlockNumber
 
-        var tokenTypes = [TokenType]()
-        var maxBlockNumber = 0
+        var foundTokens = Set<FoundToken>()
+        var suspiciousTokenTypes = Set<TokenType>()
 
         for fullTransaction in fullTransactions {
-            guard let blockNumber = fullTransaction.transaction.blockNumber, let lastBlockNumber = lastBlockNumber, blockNumber > lastBlockNumber else {
-                continue
-            }
-
-            maxBlockNumber = max(maxBlockNumber, blockNumber)
-
             switch fullTransaction.decoration {
             case is IncomingDecoration:
-                tokenTypes.append(.native)
+                foundTokens.insert(FoundToken(tokenType: .native))
 
             case let decoration as SwapDecoration:
                 switch decoration.tokenOut {
-                case .eip20Coin(let address, _): tokenTypes.append(.eip20(address: address.hex))
+                case .eip20Coin(let address, _): foundTokens.insert(FoundToken(tokenType: .eip20(address: address.hex), tokenInfo: decoration.tokenOut.tokenInfo))
                 default: ()
                 }
 
             case let decoration as OneInchSwapDecoration:
                 switch decoration.tokenOut {
-                case .eip20Coin(let address, _): tokenTypes.append(.eip20(address: address.hex))
+                case .eip20Coin(let address, _): foundTokens.insert(FoundToken(tokenType: .eip20(address: address.hex), tokenInfo: decoration.tokenOut.tokenInfo))
                 default: ()
                 }
 
             case let decoration as OneInchUnoswapDecoration:
                 if let tokenOut = decoration.tokenOut {
                     switch tokenOut {
-                    case .eip20Coin(let address, _): tokenTypes.append(.eip20(address: address.hex))
+                    case .eip20Coin(let address, _): foundTokens.insert(FoundToken(tokenType: .eip20(address: address.hex), tokenInfo: tokenOut.tokenInfo))
                     default: ()
                     }
                 }
 
             case let decoration as UnknownTransactionDecoration:
                 if decoration.internalTransactions.contains(where: { $0.to == address }) {
-                    tokenTypes.append(.native)
+                    foundTokens.insert(FoundToken(tokenType: .native))
                 }
 
                 for eventInstance in decoration.eventInstances {
@@ -175,7 +99,12 @@ class EvmAccountManager {
                     }
 
                     if transferEventInstance.to == address {
-                        tokenTypes.append(.eip20(address: transferEventInstance.contractAddress.hex))
+                        let tokenType: TokenType = .eip20(address: transferEventInstance.contractAddress.hex)
+                        if let fromAddress = decoration.fromAddress, fromAddress == address {
+                            foundTokens.insert(FoundToken(tokenType: tokenType, tokenInfo: transferEventInstance.tokenInfo))
+                        } else {
+                            suspiciousTokenTypes.insert(tokenType)
+                        }
                     }
                 }
 
@@ -183,67 +112,110 @@ class EvmAccountManager {
             }
         }
 
-        if maxBlockNumber != 0 {
-            let state = EvmAccountSyncState(accountId: account.id, chainId: evmKitManager.chain.id, lastBlockNumber: maxBlockNumber)
-            storage.save(evmAccountSyncState: state)
-        }
-
-//        print("Tx Sync: \(blockchain.name): coin types: \(coinTypes)")
-        handle(tokenTypes: tokenTypes, account: account)
+        handle(foundTokens: Array(foundTokens), suspiciousTokenTypes: Array(suspiciousTokenTypes.subtracting(foundTokens.map { $0.tokenType })), account: account)
     }
 
-    private func handle(addresses: [String], account: Account) {
-        handle(tokenTypes: addresses.map { TokenType.eip20(address: $0) }, account: account)
-    }
-
-    private func handle(tokenTypes: [TokenType], account: Account) {
-        guard !tokenTypes.isEmpty else {
+    private func handle(foundTokens: [FoundToken], suspiciousTokenTypes: [TokenType], account: Account) {
+        guard !foundTokens.isEmpty || !suspiciousTokenTypes.isEmpty else {
             return
         }
 
+//        print("FOUND TOKEN TYPES: \(foundTokens.count): \n\(foundTokens.map { "\($0.tokenType.id) --- \($0.tokenInfo?.tokenName) --- \($0.tokenInfo?.tokenSymbol) --- \($0.tokenInfo?.tokenDecimal)" }.joined(separator: "\n"))")
+//        print("SUSPICIOUS TOKEN TYPES: \(suspiciousTokenTypes.count): \n\(suspiciousTokenTypes.map { $0.id }.joined(separator: "\n"))")
+
         do {
-            let queries = tokenTypes.map { TokenQuery(blockchainType: blockchainType, tokenType: $0) }
+            let queries = (foundTokens.map { $0.tokenType } + suspiciousTokenTypes).map { TokenQuery(blockchainType: blockchainType, tokenType: $0) }
             let tokens = try marketKit.tokens(queries: queries)
-            handle(tokens: tokens, account: account)
+
+            var enabledWallets = [EnabledWallet]()
+
+            for foundToken in foundTokens {
+                let tokenQuery = TokenQuery(blockchainType: blockchainType, tokenType: foundToken.tokenType)
+
+                if let token = tokens.first(where: { $0.type == foundToken.tokenType }) {
+                    let enabledWallet = EnabledWallet(
+                            tokenQueryId: tokenQuery.id,
+                            coinSettingsId: "",
+                            accountId: account.id,
+                            coinName: token.coin.name,
+                            coinCode: token.coin.code,
+                            tokenDecimals: token.decimals
+                    )
+
+                    enabledWallets.append(enabledWallet)
+                } else if let tokenInfo = foundToken.tokenInfo {
+                    let enabledWallet = EnabledWallet(
+                            tokenQueryId: tokenQuery.id,
+                            coinSettingsId: "",
+                            accountId: account.id,
+                            coinName: tokenInfo.tokenName,
+                            coinCode: tokenInfo.tokenSymbol,
+                            tokenDecimals: tokenInfo.tokenDecimal
+                    )
+
+                    enabledWallets.append(enabledWallet)
+                }
+            }
+
+            for tokenType in suspiciousTokenTypes {
+                if let token = tokens.first(where: { $0.type == tokenType }) {
+                    let enabledWallet = EnabledWallet(
+                            tokenQueryId: TokenQuery(blockchainType: blockchainType, tokenType: tokenType).id,
+                            coinSettingsId: "",
+                            accountId: account.id,
+                            coinName: token.coin.name,
+                            coinCode: token.coin.code,
+                            tokenDecimals: token.decimals
+                    )
+
+                    enabledWallets.append(enabledWallet)
+                }
+            }
+
+            handle(enabledWallets: enabledWallets, account: account)
         } catch {
             // do nothing
         }
     }
 
-    private func handle(tokens: [MarketKit.Token], account: Account) {
-        guard !tokens.isEmpty else {
+    private func handle(enabledWallets: [EnabledWallet], account: Account) {
+        guard !enabledWallets.isEmpty else {
             return
         }
 
-        let wallets = tokens.map { Wallet(token: $0, account: account) }
         let existingWallets = walletManager.activeWallets
-        let newWallets = wallets.filter { !existingWallets.contains($0) }
+        let existingTokenQueryIds = existingWallets.map { $0.token.tokenQuery.id }
+        let newEnabledWallets = enabledWallets.filter { !existingTokenQueryIds.contains($0.tokenQueryId) }
 
-//        print("New wallets: \(newWallets.count)")
+//        print("New wallets: \(newEnabledWallets.count): \n\(newEnabledWallets.map { $0.tokenQueryId }.joined(separator: ", "))")
 
-        guard !newWallets.isEmpty else {
+        guard !newEnabledWallets.isEmpty else {
             return
         }
 
-        walletManager.save(wallets: newWallets)
+        walletManager.save(enabledWallets: newEnabledWallets)
     }
 
 }
 
 extension EvmAccountManager {
 
-    func markAutoEnable(account: Account) {
-        let state = EvmAccountSyncState(accountId: account.id, chainId: evmKitManager.chain.id, lastBlockNumber: 0)
-        storage.save(evmAccountSyncState: state)
-    }
+    struct FoundToken: Hashable {
+        let tokenType: MarketKit.TokenType
+        let tokenInfo: Erc20Kit.TokenInfo?
 
-}
+        init(tokenType: MarketKit.TokenType, tokenInfo: Erc20Kit.TokenInfo? = nil) {
+            self.tokenType = tokenType
+            self.tokenInfo = tokenInfo
+        }
 
-extension EvmAccountManager {
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(tokenType)
+        }
 
-    struct AddressInfo {
-        let blockNumber: Int
-        let addresses: [String]
+        static func ==(lhs: FoundToken, rhs: FoundToken) -> Bool {
+            lhs.tokenType == rhs.tokenType
+        }
     }
 
 }

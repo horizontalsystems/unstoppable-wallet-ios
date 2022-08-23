@@ -86,6 +86,11 @@ extension WalletManager {
         handle(newWallets: wallets, deletedWallets: [])
     }
 
+    func save(enabledWallets: [EnabledWallet]) {
+        storage.handle(newEnabledWallets: enabledWallets)
+        reloadWallets()
+    }
+
     func delete(wallets: [Wallet]) {
         handle(newWallets: [], deletedWallets: wallets)
     }
