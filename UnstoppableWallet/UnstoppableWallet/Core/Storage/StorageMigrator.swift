@@ -699,6 +699,16 @@ class StorageMigrator {
             }
         }
 
+        migrator.registerMigration("createEvmAccountRestoreStates") { db in
+            try db.create(table: EvmAccountRestoreState.databaseTableName) { t in
+                t.column(EvmAccountRestoreState.Columns.accountId.name, .text).notNull()
+                t.column(EvmAccountRestoreState.Columns.blockchainUid.name, .text).notNull()
+                t.column(EvmAccountRestoreState.Columns.restored.name, .boolean).notNull()
+
+                t.primaryKey([EvmAccountRestoreState.Columns.accountId.name, EvmAccountRestoreState.Columns.blockchainUid.name], onConflict: .replace)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 
