@@ -118,10 +118,10 @@ class EvmAccountManager {
             }
         }
 
-        handle(foundTokens: Array(foundTokens), suspiciousTokenTypes: Array(suspiciousTokenTypes.subtracting(foundTokens.map { $0.tokenType })), account: account)
+        handle(foundTokens: Array(foundTokens), suspiciousTokenTypes: Array(suspiciousTokenTypes.subtracting(foundTokens.map { $0.tokenType })), account: account, evmKit: evmKitWrapper.evmKit)
     }
 
-    private func handle(foundTokens: [FoundToken], suspiciousTokenTypes: [TokenType], account: Account) {
+    private func handle(foundTokens: [FoundToken], suspiciousTokenTypes: [TokenType], account: Account, evmKit: EthereumKit.Kit) {
         guard !foundTokens.isEmpty || !suspiciousTokenTypes.isEmpty else {
             return
         }
@@ -133,78 +133,119 @@ class EvmAccountManager {
             let queries = (foundTokens.map { $0.tokenType } + suspiciousTokenTypes).map { TokenQuery(blockchainType: blockchainType, tokenType: $0) }
             let tokens = try marketKit.tokens(queries: queries)
 
-            var enabledWallets = [EnabledWallet]()
+            var tokenInfos = [TokenInfo]()
 
             for foundToken in foundTokens {
-                let tokenQuery = TokenQuery(blockchainType: blockchainType, tokenType: foundToken.tokenType)
-
                 if let token = tokens.first(where: { $0.type == foundToken.tokenType }) {
-                    let enabledWallet = EnabledWallet(
-                            tokenQueryId: tokenQuery.id,
-                            coinSettingsId: "",
-                            accountId: account.id,
+                    let tokenInfo = TokenInfo(
+                            type: foundToken.tokenType,
                             coinName: token.coin.name,
                             coinCode: token.coin.code,
                             tokenDecimals: token.decimals
                     )
 
-                    enabledWallets.append(enabledWallet)
+                    tokenInfos.append(tokenInfo)
                 } else if let tokenInfo = foundToken.tokenInfo {
-                    let enabledWallet = EnabledWallet(
-                            tokenQueryId: tokenQuery.id,
-                            coinSettingsId: "",
-                            accountId: account.id,
+                    let tokenInfo = TokenInfo(
+                            type: foundToken.tokenType,
                             coinName: tokenInfo.tokenName,
                             coinCode: tokenInfo.tokenSymbol,
                             tokenDecimals: tokenInfo.tokenDecimal
                     )
 
-                    enabledWallets.append(enabledWallet)
+                    tokenInfos.append(tokenInfo)
                 }
             }
 
             for tokenType in suspiciousTokenTypes {
                 if let token = tokens.first(where: { $0.type == tokenType }) {
-                    let enabledWallet = EnabledWallet(
-                            tokenQueryId: TokenQuery(blockchainType: blockchainType, tokenType: tokenType).id,
-                            coinSettingsId: "",
-                            accountId: account.id,
+                    let tokenInfo = TokenInfo(
+                            type: tokenType,
                             coinName: token.coin.name,
                             coinCode: token.coin.code,
                             tokenDecimals: token.decimals
                     )
 
-                    enabledWallets.append(enabledWallet)
+                    tokenInfos.append(tokenInfo)
                 }
             }
 
-            handle(enabledWallets: enabledWallets, account: account)
+            handle(tokenInfos: tokenInfos, account: account, evmKit: evmKit)
         } catch {
             // do nothing
         }
     }
 
-    private func handle(enabledWallets: [EnabledWallet], account: Account) {
-        guard !enabledWallets.isEmpty else {
-            return
-        }
+    private func handle(tokenInfos: [TokenInfo], account: Account, evmKit: EthereumKit.Kit) {
+//        print("Handle Tokens: \(tokenInfos.count)\n\(tokenInfos.map { $0.type.id }.joined(separator: " "))")
 
         let existingWallets = walletManager.activeWallets
-        let existingTokenQueryIds = existingWallets.map { $0.token.tokenQuery.id }
-        let newEnabledWallets = enabledWallets.filter { !existingTokenQueryIds.contains($0.tokenQueryId) }
+        let existingTokenTypeIds = existingWallets.map { $0.token.type.id }
+        let newTokenInfos = tokenInfos.filter { !existingTokenTypeIds.contains($0.type.id) }
 
-//        print("New wallets: \(newEnabledWallets.count): \n\(newEnabledWallets.map { $0.tokenQueryId }.joined(separator: ", "))")
+//        print("New Tokens: \(newTokenInfos.count)")
 
-        guard !newEnabledWallets.isEmpty else {
+        guard !newTokenInfos.isEmpty else {
             return
         }
 
-        walletManager.save(enabledWallets: newEnabledWallets)
+//        handle(processedTokenInfos: newTokenInfos, account: account)
+//        return
+
+        let userAddress = evmKit.address
+        let dataProvider = DataProvider(ethereumKit: evmKit)
+
+        let singles: [Single<TokenInfo?>] = newTokenInfos.map { info in
+            guard case let .eip20(address) = info.type, let contractAddress = try? EthereumKit.Address(hex: address) else {
+                return Single.just(nil)
+            }
+
+            return dataProvider.getBalance(contractAddress: contractAddress, address: userAddress)
+                    .map { balance in
+                        balance > 0 ? info : nil
+                    }
+                    .catchErrorJustReturn(info)
+        }
+
+        Single.zip(singles)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribe(onSuccess: { [weak self] tokenInfos in
+                    self?.handle(processedTokenInfos: tokenInfos.compactMap { $0 }, account: account)
+                })
+                .disposed(by: internalDisposeBag)
+    }
+
+    private func handle(processedTokenInfos infos: [TokenInfo], account: Account) {
+//        print("Processed Tokens: \(infos.count): \n\(infos.map { $0.type.id }.joined(separator: ", "))")
+
+        guard !infos.isEmpty else {
+            return
+        }
+
+        let enabledWallets = infos.map { info in
+            EnabledWallet(
+                    tokenQueryId: TokenQuery(blockchainType: blockchainType, tokenType: info.type).id,
+                    coinSettingsId: "",
+                    accountId: account.id,
+                    coinName: info.coinName,
+                    coinCode: info.coinCode,
+                    tokenDecimals: info.tokenDecimals
+            )
+        }
+
+        walletManager.save(enabledWallets: enabledWallets)
     }
 
 }
 
 extension EvmAccountManager {
+
+    struct TokenInfo {
+        let type: TokenType
+        let coinName: String
+        let coinCode: String
+        let tokenDecimals: Int
+    }
 
     struct FoundToken: Hashable {
         let tokenType: MarketKit.TokenType
