@@ -39,10 +39,6 @@ extension WatchAddressBlockchainManager {
         }
 
         do {
-            for blockchain in disabledBlockchains {
-                evmBlockchainManager.evmAccountManager(blockchainType: blockchain.type).markAutoEnable(account: account)
-            }
-
             let tokens = try marketKit.tokens(queries: disabledBlockchains.map { TokenQuery(blockchainType: $0.type, tokenType: .native) })
             let wallets = tokens.map { Wallet(token: $0, account: account) }
 

@@ -71,6 +71,10 @@ extension WalletStorage {
         try? storage.handle(newEnabledWallets: newEnabledWallets, deletedEnabledWallets: deletedEnabledWallets)
     }
 
+    func handle(newEnabledWallets: [EnabledWallet]) {
+        try? storage.handle(newEnabledWallets: newEnabledWallets, deletedEnabledWallets: [])
+    }
+
     func clearWallets() {
         try? storage.clear()
     }
