@@ -1,2 +1,3 @@
 "NSCameraUsageDescription" = "The app needs to access camera in order to scan QR codes.";
 "NSFaceIDUsageDescription" = "FaceID will be used to unlock the wallet.";
+"NSPhotoLibraryAddUsageDescription" = "We need access to photo library to save NFT images";
