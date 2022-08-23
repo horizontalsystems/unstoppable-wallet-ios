@@ -12,6 +12,7 @@ struct RestoreSelectModule {
                 accountFactory: App.shared.accountFactory,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
+                evmAccountRestoreStateManager: App.shared.evmAccountRestoreStateManager,
                 marketKit: App.shared.marketKit,
                 enableCoinService: enableCoinService
         )

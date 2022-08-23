@@ -12,16 +12,18 @@ class EvmAccountManager {
     private let walletManager: WalletManager
     private let marketKit: MarketKit.Kit
     private let evmKitManager: EvmKitManager
+    private let evmAccountRestoreStateManager: EvmAccountRestoreStateManager
 
     private let disposeBag = DisposeBag()
     private var internalDisposeBag = DisposeBag()
 
-    init(blockchainType: BlockchainType, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmKitManager: EvmKitManager) {
+    init(blockchainType: BlockchainType, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmKitManager: EvmKitManager, evmAccountRestoreStateManager: EvmAccountRestoreStateManager) {
         self.blockchainType = blockchainType
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.marketKit = marketKit
         self.evmKitManager = evmKitManager
+        self.evmAccountRestoreStateManager = evmAccountRestoreStateManager
 
         subscribe(ConcurrentDispatchQueueScheduler(qos: .utility), disposeBag, evmKitManager.evmKitCreatedObservable) { [weak self] in self?.handleEvmKitCreated() }
     }
@@ -41,16 +43,20 @@ class EvmAccountManager {
 
         evmKitWrapper.evmKit.allTransactionsObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] fullTransactions in
-                    self?.handle(fullTransactions: fullTransactions)
+                .subscribe(onNext: { [weak self] fullTransactions, initial in
+                    self?.handle(fullTransactions: fullTransactions, initial: initial)
                 })
                 .disposed(by: internalDisposeBag)
     }
 
-    private func handle(fullTransactions: [FullTransaction]) {
-//        print("Tx Sync: \(blockchainType): full transactions: \(fullTransactions.count)")
+    private func handle(fullTransactions: [FullTransaction], initial: Bool) {
+//        print("Tx Sync: \(blockchainType): full transactions: \(fullTransactions.count); initial: \(initial)")
 
         guard let account = accountManager.activeAccount else {
+            return
+        }
+
+        if initial, account.origin == .restored, !account.watchAccount, !evmAccountRestoreStateManager.isRestored(account: account, blockchainType: blockchainType) {
             return
         }
 
