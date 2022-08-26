@@ -1,93 +1,93 @@
 "button.ok" = "OK";
-"button.apply" = "Toepassen";
-"button.cancel" = "Annuleren";
-"button.close" = "Sluiten";
-"button.done" = "Klaar";
+"button.apply" = "Apply";
+"button.cancel" = "Cancel";
+"button.close" = "Close";
+"button.done" = "Done";
 "button.reset" = "Reset";
-"button.restore" = "Herstellen";
-"button.next" = "Verder";
-"button.share" = "Delen";
-"button.paste" = "Plakken";
-"button.backup" = "Reservekopie";
-"button.copy" = "Kopie";
-"button.retry" = "Opnieuw";
-"button.report" = "Rapporteer";
-"button.add" = "Toevoegen";
-"button.approve" = "Goedkeuren";
-"button.reject" = "Afwijzen";
-"button.connect" = "Verbinden";
-"button.save" = "Opslaan";
-"button.sign" = "Ondertekenen";
-"button.more" = "Toon meer";
+"button.restore" = "Restore";
+"button.next" = "Next";
+"button.share" = "Share";
+"button.paste" = "Paste";
+"button.backup" = "Backup";
+"button.copy" = "Copy";
+"button.retry" = "Retry";
+"button.report" = "Report";
+"button.add" = "Add";
+"button.approve" = "Approve";
+"button.reject" = "Reject";
+"button.connect" = "Connect";
+"button.save" = "Save";
+"button.sign" = "Sign";
+"button.more" = "Show More";
 
-"alert" = "Melding";
-"alert.copied" = "Gekopieerd";
-"alert.saved" = "Opgeslagen";
-"alert.no_internet" = "Geen internetverbinding";
-"alert.wrong_amount" = "Verkeerd bedrag";
-"alert.no_fee" = "Verkeerde transactiekosten";
-"alert.unknown_error" = "Onbekende foutmelding";
-"alert.success_action" = "Gereed";
+"alert" = "Alert";
+"alert.copied" = "Copied";
+"alert.saved" = "Saved";
+"alert.no_internet" = "No Internet";
+"alert.wrong_amount" = "Wrong Amount";
+"alert.no_fee" = "Wrong Fee";
+"alert.unknown_error" = "Unknown Error";
+"alert.success_action" = "Done";
 
-"alert.added_to_watchlist" = "Toegevoegd aan watchlist";
-"alert.removed_from_watchlist" = "Verwijderd van watchlist";
-"alert.added_to_wallet" = "Toegevoegd aan Wallet";
-"alert.already_added_to_wallet" = "Al toegevoegd aan Wallet";
-"alert.not_supported_yet" = "Nog niet ondersteund";
-"alert.copied" = "Gekopieerd";
-"alert.created" = "Aangemaakt";
-"alert.restored" = "Hersteld";
-"alert.address_added" = "Adres toegevoegd";
-"alert.deleted" = "Verwijderd";
-"alert.disconnecting" = "Verbinding wordt verbroken";
-"alert.disconnected" = "Verbinding verbroken";
-"alert.enabling" = "Inschakelen";
-"alert.enabled_coins" = "Meer coins ingeschakeld";
-"alert.sending" = "Bezig met verzenden";
-"alert.sent" = "Verzonden";
-"alert.swapping" = "Ruilen";
-"alert.approving" = "Goedkeuren";
+"alert.added_to_watchlist" = "Added to Watchlist";
+"alert.removed_from_watchlist" = "Removed from Watchlist";
+"alert.added_to_wallet" = "Added to Wallet";
+"alert.already_added_to_wallet" = "Already added to Wallet";
+"alert.not_supported_yet" = "Not Supported Yet";
+"alert.copied" = "Copied";
+"alert.created" = "Created";
+"alert.restored" = "Restored";
+"alert.address_added" = "Address Added";
+"alert.deleted" = "Deleted";
+"alert.disconnecting" = "Disconnecting";
+"alert.disconnected" = "Disconnected";
+"alert.enabling" = "Enabling";
+"alert.enabled_coins" = "Enabled %@ more coins";
+"alert.sending" = "Sending";
+"alert.sent" = "Sent";
+"alert.swapping" = "Swapping";
+"alert.approving" = "Approving";
 
 
-"action.loading" = "Bezig met laden...";
-"placeholder.search" = "Zoeken";
+"action.loading" = "loading...";
+"placeholder.search" = "Search";
 
 "status" = "Status";
-"connecting" = "Bezig met verbinden...";
+"connecting" = "Connecting...";
 "online" = "Online";
 "offline" = "Offline";
-"confirm" = "Bevestigen";
-"connect" = "Verbinden";
-"price" = "Prijs";
-"value" = "Waarde";
-"note" = "Opmerking";
+"confirm" = "Confirm";
+"connect" = "Connect";
+"price" = "Price";
+"value" = "Value";
+"note" = "Note";
 
-"version" = "Versie";
+"version" = "Version %@";
 
-"n/a" = "N.v.t.";
+"n/a" = "N/A";
 
-"sync_error" = "Synchronisatiefout. Probeer het nog eens.";
+"sync_error" = "Sync error. Try again.";
 
-"number.thousand" = "K";
-"number.million" = "M";
-"number.billion" = "B";
-"number.trillion" = "T";
-"number.quadrillion" = "Q";
+"number.thousand" = "%@K";
+"number.million" = "%@M";
+"number.billion" = "%@B";
+"number.trillion" = "%@T";
+"number.quadrillion" = "%@Q";
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable vereist toegang tot uw camera om de QR-code te scannen.
+"access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
 
-Ga naar Instellingen - > Unstoppable en geef toegang tot de camera.";
-"access_camera.settings" = "Instellingen";
+Go to Settings - > Unstoppable and allow access to the camera.";
+"access_camera.settings" = "Settings";
 
 // Restore
 
-"restore.title" = "Herstellen";
-"restore.mnemonic.key" = "Sleutel";
-"restore.mnemonic.description" = "Voer de herstelzin van uw portemonnee (aka mnemonic) in die 12, 15, 18, 21 of 24 woorden bevat en kan extra alfanumeriek wachtwoord bevatten.";
-"restore_error.mnemonic_word_count" = "Verkeerd aantal woorden. Het moet tussen 12 en 24 woorden zijn. U heeft ingevoerd:";
-"restore.checksum_error" = "Ongeldige controlesom";
+"restore.title" = "Restore";
+"restore.mnemonic.key" = "Key";
+"restore.mnemonic.description" = "Enter your wallet recovery phrase (aka mnemonic) which consists of 12, 15, 18, 21 or 24 words and may include additional alphanumeric password.";
+"restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
+"restore.checksum_error" = "Invalid checksum";
 "restore.passphrase" = "Passphrase";
 "restore.input.passphrase" = "Passphrase";
 "restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase";
