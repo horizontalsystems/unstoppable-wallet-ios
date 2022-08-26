@@ -17,12 +17,6 @@ class NftChartMarketCardView: ChartMarketCardView {
         commonInit()
     }
 
-    required init(configuration: ChartConfiguration?) {
-        super.init(configuration: configuration)
-
-        commonInit()
-    }
-
     private func commonInit() {
         let separatorView = UIView()
         separatorView.snp.makeConstraints { maker in
@@ -71,6 +65,9 @@ extension NftChartMarketCardView {
             super.init(title: title, value: value, diff: diff, diffColor: diffColor, data: data, trend: trend)
         }
 
+        override var viewType: MarketCardView.Type {
+            NftChartMarketCardView.self
+        }
     }
 
 }

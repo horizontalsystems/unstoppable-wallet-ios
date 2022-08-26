@@ -97,6 +97,9 @@ extension MarketCardView {
             self.diffColor = diffColor
         }
 
+        var viewType: MarketCardView.Type {
+            MarketCardView.self
+        }
     }
 
 }

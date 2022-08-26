@@ -5,10 +5,10 @@ import ThemeKit
 import ComponentKit
 
 class ChartMarketCardView: MarketCardView {
-    override class func viewHeight() -> CGFloat { MarketCardView.viewHeight() + .margin8 + ChartConfiguration.chartPreview.mainHeight }
+    private static let configuration: ChartConfiguration = .chartPreview
+    override class func viewHeight() -> CGFloat { MarketCardView.viewHeight() + .margin8 + ChartMarketCardView.configuration.mainHeight }
 
     private let chartView = RateChartView()
-    private var configuration: ChartConfiguration?
 
     var alreadyHasData: Bool = false
 
@@ -18,36 +18,17 @@ class ChartMarketCardView: MarketCardView {
         commonInit()
     }
 
-    required init(configuration: ChartConfiguration?) {
-        self.configuration = configuration
-        super.init()
-
-        commonInit()
-    }
-
     private func commonInit() {
         stackView.addArrangedSubview(chartView)
-
-        if let configuration = configuration {
-            chartView.apply(configuration: configuration)
-            chartView.snp.makeConstraints { maker in
-                maker.height.equalTo(configuration.mainHeight)
-            }
-        }
-
         chartView.isUserInteractionEnabled = false
+
+        chartView.snp.remakeConstraints { maker in
+            maker.height.equalTo(Self.configuration.mainHeight)
+        }
     }
 
     required init?(coder: NSCoder) {
         fatalError()
-    }
-
-    func set(configuration: ChartConfiguration) {
-        self.configuration = configuration
-        chartView.apply(configuration: configuration)
-        chartView.snp.remakeConstraints { maker in
-            maker.height.equalTo(configuration.mainHeight)
-        }
     }
 
     override func set(viewItem: MarketCardView.ViewItem) {
@@ -56,6 +37,7 @@ class ChartMarketCardView: MarketCardView {
         guard let viewItem = viewItem as? ChartMarketCardView.ViewItem else {
             return
         }
+        chartView.apply(configuration: Self.configuration)
 
         let colorType: ChartColorType
         switch viewItem.trend {
@@ -90,6 +72,9 @@ extension ChartMarketCardView {
             super.init(title: title, value: value, diff: diff, diffColor: diffColor)
         }
 
+        override var viewType: MarketCardView.Type {
+            ChartMarketCardView.self
+        }
     }
 
 }

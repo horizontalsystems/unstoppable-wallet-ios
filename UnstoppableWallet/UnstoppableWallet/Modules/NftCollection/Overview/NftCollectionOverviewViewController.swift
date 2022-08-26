@@ -68,8 +68,7 @@ class NftCollectionOverviewViewController: ThemeViewController {
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: LogoHeaderCell.self)
         tableView.registerCell(forClass: BrandFooterCell.self)
-        tableView.registerCell(forClass: ChartMarketCardCell<NftChartMarketCardView>.self)
-        tableView.registerCell(forClass: MarketCardCell<MarketCardView>.self)
+        tableView.registerCell(forClass: MarketCardCell.self)
 
         tableView.showsVerticalScrollIndicator = false
 
@@ -176,89 +175,48 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
 
     private func chartSection(statCharts: NftCollectionOverviewViewModel.StatChartViewItem) -> [SectionProtocol] {
         var sections = [SectionProtocol]()
+        var rows = [RowProtocol]()
 
-        let counters = [
-            statCharts.ownerCount.map { (title: "nft_collection.overview.owners".localized, value: $0) },
-            statCharts.itemCount.map { (title: "nft_collection.overview.items".localized, value: $0) }
-        ].compactMap { $0 }
+        var marketCards = [MarketCardView.ViewItem]()
+        let counterItem = StatsMarketCardView.ViewItem(
+                title:  "nft_collection.overview.items".localized,
+                value: statCharts.itemCount,
+                secondaryTitle: "nft_collection.overview.owners".localized,
+                secondaryValue: statCharts.ownerCount
+        )
+        let counterView =
+        marketCards.append(counterItem)
 
-        let charts = [
-            statCharts.oneDayVolumeItems,
-            statCharts.oneDaySalesItems,
+        marketCards.append(contentsOf: [
             statCharts.floorPriceItems,
-            statCharts.averagePriceItems
+            statCharts.oneDayVolumeItems,
+            statCharts.oneDaySalesItems
         ].compactMap { $0 }
+        )
 
-        if !counters.isEmpty {
-            let row = Row<MarketCardCell<MarketCardView>>(
-                    id: "count_row",
-                    height: MarketCardView.viewHeight(),
-                    bind: { cell, _ in
-                        cell.clear()
-                        if let viewItem = counters.at(index: 0) {
-                            cell.append(viewItem: MarketCardView.ViewItem(title: viewItem.title, value: viewItem.value, diff: nil, diffColor: nil))
-                        }
-                        if let viewItem = counters.at(index: 1) {
-                            cell.append(viewItem: MarketCardView.ViewItem(title: viewItem.title, value: viewItem.value, diff: nil, diffColor: nil))
-                        }
-                    }
-            )
-            sections.append(
-                    Section(
-                            id: "count_section",
-                            footerState: .margin(height: charts.isEmpty ? .margin24 : .margin8),
-                            rows: [row]
-                    )
-            )
-        }
-
-        guard !charts.isEmpty else {
+        guard !marketCards.isEmpty else {
             return sections
         }
 
-        let topChartRow = Row<ChartMarketCardCell<NftChartMarketCardView>>(
-                    id: "top_chart_row",
-                    height: NftChartMarketCardView.viewHeight(),
-                    bind: { cell, _ in
-                        cell.clear()
-                        cell.set(configuration: .chartPreview)
-                        if let viewItem = charts.at(index: 0) {
-                            cell.append(viewItem: viewItem)
-                        }
-                        if let viewItem = charts.at(index: 1) {
-                            cell.append(viewItem: viewItem)
-                        }
-                    }
-        )
-        let hasBottomRow = charts.count > 2
-        sections.append(
-                Section(
-                        id: "top_chart_section",
-                        footerState: .margin(height: hasBottomRow ? .margin8 : .margin24),
-                        rows: [topChartRow]
-                )
-        )
-
-        if hasBottomRow {
-            let bottomChartRow = Row<ChartMarketCardCell<NftChartMarketCardView>>(
-                    id: "bottom_chart_row",
-                    height: NftChartMarketCardView.viewHeight(),
-                    bind: { cell, _ in
-                        cell.clear()
-                        cell.set(configuration: .chartPreview)
-                        if let viewItem = charts.at(index: 2) {
-                            cell.append(viewItem: viewItem)
-                        }
-                        if let viewItem = charts.at(index: 3) {
-                            cell.append(viewItem: viewItem)
-                        }
-                    }
-            )
+        let chunks = marketCards.chunks(2)
+        chunks.enumerated().forEach { index, marketCards in
+            let isLast = index == chunks.count - 1
             sections.append(
                     Section(
-                            id: "bottom_chart_section",
-                            footerState: .margin(height: .margin24),
-                            rows: [bottomChartRow]
+                            id: "chart_section_\(index)",
+                            footerState: .margin(height: isLast ? .margin24 : .margin8),
+                            rows: [
+                                Row<MarketCardCell>(
+                                        id: "chart_row_\(index)",
+                                        height: NftChartMarketCardView.viewHeight(),
+                                        bind: { cell, _ in
+                                            cell.clear()
+                                            marketCards.forEach {
+                                                cell.append(viewItem: $0)
+                                            }
+                                        }
+                                )
+                            ]
                     )
             )
         }
