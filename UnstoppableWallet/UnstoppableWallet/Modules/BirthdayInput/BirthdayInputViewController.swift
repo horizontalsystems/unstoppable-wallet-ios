@@ -3,27 +3,38 @@ import ThemeKit
 import SnapKit
 import MarketKit
 import ComponentKit
+import SectionsTableView
+import UIExtensions
 
 protocol IBirthdayInputDelegate: AnyObject {
     func didEnter(birthdayHeight: Int?)
     func didCancelEnterBirthdayHeight()
 }
 
-class BirthdayInputViewController: ThemeActionSheetController {
+class BirthdayInputViewController: KeyboardAwareViewController {
+    private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
+
     private let token: Token
     private weak var delegate: IBirthdayInputDelegate?
 
-    private let heightInputView = InputView()
-    private let checkboxView = CheckboxView()
-    private let checkboxButton = UIButton()
+    private let iconImageView = UIImageView()
+    private let tableView = SectionsTableView(style: .grouped)
 
+    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    let doneButton = PrimaryButton()
+
+    private let heightInputCell = InputCell(singleLine: true)
+
+    private var isLoaded = false
+    private var disclaimerShown = false
+    private var walletType: WalletType = .new
     private var didTapDone = false
 
     init(token: Token, delegate: IBirthdayInputDelegate) {
         self.token = token
         self.delegate = delegate
 
-        super.init()
+        super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -33,103 +44,109 @@ class BirthdayInputViewController: ThemeActionSheetController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let titleView = BottomSheetTitleView()
+        title = "watch_address.title".localized
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
+        navigationItem.largeTitleDisplayMode = .never
 
-        view.addSubview(titleView)
-        titleView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-        }
+        iconImageView.setImage(withUrlString: token.blockchain.type.imageUrl, placeholder: nil)
 
-        titleView.title = "birthday_input.title".localized
-        titleView.image = UIImage(named: "zcash_24")?.withTintColor(.themeJacob)
-        titleView.onTapClose = { [weak self] in
-            self?.dismiss(animated: true)
-        }
-
-        let descriptionLabel = UILabel()
-
-        view.addSubview(descriptionLabel)
-        descriptionLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
-        }
-
-        descriptionLabel.text = "birthday_input.description".localized
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.font = .subhead2
-        descriptionLabel.textColor = .themeGray
-
-        view.addSubview(heightInputView)
-        heightInputView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(descriptionLabel.snp.bottom).offset(CGFloat.margin24)
-        }
-
-        heightInputView.inputPlaceholder = "birthday_input.input_placeholder".localized("000000000")
-        heightInputView.keyboardType = .numberPad
-        heightInputView.isValidText = { Int($0) != nil }
-
-        let separatorView = UIView()
-
-        view.addSubview(separatorView)
-        separatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(heightInputView.snp.bottom).offset(CGFloat.margin12)
-            maker.height.equalTo(CGFloat.heightOneDp)
-        }
-
-        separatorView.backgroundColor = .themeSteel10
-
-        view.addSubview(checkboxView)
-
-        let text = "birthday_input.new_wallet".localized
-        let height = CheckboxView.height(containerWidth: view.width, text: text)
-
-        checkboxView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(separatorView.snp.bottom)
-            maker.height.equalTo(height)
-        }
-
-        checkboxView.text = text
-        checkboxView.textColor = .themeLeah
-        checkboxView.checked = false
-
-        checkboxView.addSubview(checkboxButton)
-        checkboxButton.snp.makeConstraints { maker in
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
 
-        checkboxButton.addTarget(self, action: #selector(onTapCheckBox), for: .touchUpInside)
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.sectionDataSource = self
 
-        let secondSeparatorView = UIView()
-
-        view.addSubview(secondSeparatorView)
-        secondSeparatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(checkboxView.snp.bottom)
-            maker.height.equalTo(CGFloat.heightOneDp)
+        heightInputCell.inputPlaceholder = "birthday_input.input_placeholder".localized("000000000")
+        heightInputCell.keyboardType = .numberPad
+        heightInputCell.isValidText = { Int($0) != nil }
+        heightInputCell.onChangeEditing = { [weak self] startEditing in
+            self?.onInputCell(inFocus: startEditing)
         }
 
-        secondSeparatorView.backgroundColor = .themeSteel10
+        view.addSubview(gradientWrapperView)
+        gradientWrapperView.snp.makeConstraints { maker in
+            maker.height.equalTo(wrapperViewHeight).priority(.high)
+            maker.leading.trailing.bottom.equalToSuperview()
+        }
 
-        let doneButton = PrimaryButton()
-
-        view.addSubview(doneButton)
+        gradientWrapperView.addSubview(doneButton)
         doneButton.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(secondSeparatorView.snp.bottom).offset(CGFloat.margin16)
+            maker.top.equalToSuperview().inset(CGFloat.margin32)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
         }
 
         doneButton.set(style: .yellow)
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDoneButton), for: .touchUpInside)
-    }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        setInitialState(bottomPadding: wrapperViewHeight)
 
-        _ = heightInputView.becomeFirstResponder()
+        tableView.buildSections()
+        isLoaded = true
+
+//        descriptionLabel.text = "birthday_input.description".localized
+//        descriptionLabel.numberOfLines = 0
+//        descriptionLabel.font = .subhead2
+//        descriptionLabel.textColor = .themeGray
+
+//        view.addSubview(heightInputView)
+//        heightInputView.snp.makeConstraints { maker in
+//            maker.leading.trailing.equalToSuperview()
+//            maker.top.equalTo(descriptionLabel.snp.bottom).offset(CGFloat.margin24)
+//        }
+//
+//        heightInputView.inputPlaceholder = "birthday_input.input_placeholder".localized("000000000")
+//        heightInputView.keyboardType = .numberPad
+//        heightInputView.isValidText = { Int($0) != nil }
+//
+//        let separatorView = UIView()
+//
+//        view.addSubview(separatorView)
+//        separatorView.snp.makeConstraints { maker in
+//            maker.leading.trailing.equalToSuperview()
+//            maker.top.equalTo(heightInputView.snp.bottom).offset(CGFloat.margin12)
+//            maker.height.equalTo(CGFloat.heightOneDp)
+//        }
+//
+//        separatorView.backgroundColor = .themeSteel10
+//
+//        view.addSubview(checkboxView)
+//
+//        let text = "birthday_input.new_wallet".localized
+//        let height = CheckboxView.height(containerWidth: view.width, text: text)
+
+//        checkboxView.snp.makeConstraints { maker in
+//            maker.leading.trailing.equalToSuperview()
+//            maker.top.equalTo(separatorView.snp.bottom)
+//            maker.height.equalTo(height)
+//        }
+
+//        checkboxView.text = text
+//        checkboxView.textColor = .themeLeah
+//        checkboxView.checked = false
+//
+//        checkboxView.addSubview(checkboxButton)
+//        checkboxButton.snp.makeConstraints { maker in
+//            maker.edges.equalToSuperview()
+//        }
+//
+//        checkboxButton.addTarget(self, action: #selector(onTapCheckBox), for: .touchUpInside)
+//
+//        let secondSeparatorView = UIView()
+//
+//        view.addSubview(secondSeparatorView)
+//        secondSeparatorView.snp.makeConstraints { maker in
+//            maker.leading.trailing.equalToSuperview()
+//            maker.top.equalTo(checkboxView.snp.bottom)
+//            maker.height.equalTo(CGFloat.heightOneDp)
+//        }
+//
+//        secondSeparatorView.backgroundColor = .themeSteel10
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -140,23 +157,168 @@ class BirthdayInputViewController: ThemeActionSheetController {
         }
     }
 
-    @objc private func onTapCheckBox() {
-        checkboxView.checked = !checkboxView.checked
-
-        heightInputView.isEnabled = !checkboxView.checked
-        heightInputView.textColor = checkboxView.checked ? .themeGray : .themeLeah
-    }
-
-    @objc private func onTapDoneButton() {
-        if checkboxView.checked {
-            delegate?.didEnter(birthdayHeight: nil)
-        } else {
-            let birthdayHeight = heightInputView.inputText.flatMap { Int($0) } ?? 0
-            delegate?.didEnter(birthdayHeight: birthdayHeight)
+    private func reloadTable() {
+        guard isLoaded else {
+            return
         }
 
+        tableView.buildSections()
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+
+    private func onInputCell(inFocus: Bool) {
+        guard inFocus else {
+            return
+        }
+
+        walletType = .old
+        tableView.reload(animated: true)
+
+        heightInputCell.textColor = .themeBran
+        heightInputCell.accessoryEnabled = true
+        if !disclaimerShown {
+            showDisclaimer()
+        }
+    }
+
+    private func showDisclaimer(setInputActive: Bool = true) {
+        disclaimerShown = true
+        // show disclaimer
+        let viewItem = ItemSelectorModule.SimpleTitleViewItem(title: "Hello World")
+        let item = ItemSelectorModule.Item.simple(viewItem: ItemSelectorModule.SimpleViewItem(title: "Job", selected: false))
+        let alertController = ItemSelectorModule.viewController(title: .simple(viewItem: viewItem), items: [item], onTap: { selector, index in
+            selector.dismiss(animated: true) { [weak self] in
+                if setInputActive {
+                    self?.setInputActive()
+                }
+            }
+        })
+        present(alertController.toBottomSheet, animated: true)
+        // show keyboard
+
+    }
+
+    private func setInputActive() {
+        heightInputCell.becomeFirstResponder()
+    }
+
+    @objc private func onTapCancel() {
+        delegate?.didCancelEnterBirthdayHeight()
+        dismiss(animated: true)
+    }
+
+
+
+//    @objc private func onTapCheckBox() {
+//        checkboxView.checked = !checkboxView.checked
+//
+//        heightInputView.isEnabled = !checkboxView.checked
+//        heightInputView.textColor = checkboxView.checked ? .themeGray : .themeLeah
+//    }
+
+    @objc private func onTapDoneButton() {
+//        if checkboxView.checked {
+//            delegate?.didEnter(birthdayHeight: nil)
+//        } else {
+//            let birthdayHeight = heightInputView.inputText.flatMap { Int($0) } ?? 0
+//            delegate?.didEnter(birthdayHeight: birthdayHeight)
+//        }
+//
         didTapDone = true
         dismiss(animated: true)
     }
 
+    private func row(type: WalletType) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .text { component in
+                        component.font = .body
+                        component.textColor = .themeLeah
+                        component.text = type.title
+                    },
+                    .image20 { [weak self] component in
+                        component.isHidden = type != self?.walletType
+                        component.imageView.image = ComponentKit.image(named: "check_1_20")?.withTintColor(.themeJacob)
+                    }
+                ]),
+                tableView: tableView,
+                id: "wallet_type_\(type.title)",
+                hash: "wallet_type_\(type.title)_\(type == walletType)",
+                height: .heightCell48,
+                autoDeselect: true,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: type.rawValue == 0, isLast: type.rawValue == WalletType.allCases.count - 1)
+                }, action: { [weak self] in
+                    self?.didTap(type: type)
+                }
+        )
+    }
+
+    private func didTap(type: WalletType) {
+        guard type != walletType else {
+            return
+        }
+        switch type {
+        case .new:
+            walletType = .new
+            heightInputCell.textColor = .themeGray
+            heightInputCell.accessoryEnabled = false
+            view.endEditing(true)
+        case .old:
+            walletType = .old
+            heightInputCell.textColor = .themeBran
+            heightInputCell.accessoryEnabled = true
+
+            if !disclaimerShown {
+                showDisclaimer()
+            } else {
+                setInputActive()
+            }
+        }
+
+        tableView.reload(animated: true)
+    }
+
+}
+extension BirthdayInputViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        [
+            Section(id: "top-margin", headerState: .margin(height: .margin12)),
+            Section(
+                    id: "wallet-type",
+                    footerState: .margin(height: .margin24),
+                    rows: WalletType.allCases.map {
+                        row(type: $0)
+                    }
+            ),
+            Section(
+                    id: "input_height",
+                    headerState: tableView.sectionHeader(text: "birthday_input.title".localized),
+                    footerState: tableView.sectionFooter(text: "birthday_input.description".localized),
+                    rows: [
+                        StaticRow(
+                                cell: heightInputCell,
+                                id: "height-input",
+                                height: .heightSingleLineCell
+                        )
+                    ]
+            )
+        ]
+    }
+
+}
+
+extension BirthdayInputViewController {
+    enum WalletType: Int, CaseIterable {
+        case new, old
+
+        var title: String {
+            switch self {
+            case .new: return "birthday_input.new_wallet".localized
+            case .old: return "birthday_input.old_wallet".localized;
+            }
+        }
+    }
 }

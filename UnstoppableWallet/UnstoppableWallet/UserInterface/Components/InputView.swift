@@ -95,6 +95,11 @@ extension InputView {
         set { inputStackView.font = newValue }
     }
 
+    var accessoryEnabled: Bool {
+        get { deleteView.button.isEnabled }
+        set { deleteView.button.isEnabled = newValue }
+    }
+
     var keyboardType: UIKeyboardType {
         get { inputStackView.keyboardType }
         set { inputStackView.keyboardType = newValue }
