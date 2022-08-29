@@ -110,6 +110,7 @@ PODS:
     - GRDB.swift (~> 5.0)
     - HdWalletKit.swift (~> 1.5)
     - HsToolKit.swift (~> 1.3)
+    - ObjectMapper (~> 4.0)
     - OpenSslKit.swift (~> 1.0)
     - RxSwift (~> 5.0)
     - Secp256k1Kit.swift (~> 1.0)
@@ -173,6 +174,14 @@ PODS:
     - LanguageKit.swift (~> 1.0)
     - SectionsTableView.swift (~> 1.1)
     - UIExtensions.swift (~> 1.1)
+  - NftKit.swift (0.16.0):
+    - BigInt (~> 5.0)
+    - EthereumKit.swift (~> 0.16)
+    - GRDB.swift (~> 5.0)
+    - OpenSslKit.swift (~> 1.0)
+    - RxSwift (~> 5.0)
+    - Secp256k1Kit.swift (~> 1.0)
+    - UIExtensions.swift (~> 1.1.0)
   - Nimble (10.0.0)
   - ObjectMapper (4.2.0)
   - OneInchKit.swift (0.16.0):
@@ -433,6 +442,7 @@ DEPENDENCIES:
   - LitecoinKit.swift (from `https://github.com/horizontalsystems/bitcoin-kit-ios.git`)
   - MarketKit.swift (from `https://github.com/horizontalsystems/market-kit-ios/`)
   - ModuleKit.swift (from `https://github.com/horizontalsystems/component-kit-ios/`)
+  - NftKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
   - Nimble
   - ObjectMapper
   - OneInchKit.swift (from `https://github.com/horizontalsystems/ethereum-kit-ios`)
@@ -553,6 +563,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/horizontalsystems/market-kit-ios/
   ModuleKit.swift:
     :git: https://github.com/horizontalsystems/component-kit-ios/
+  NftKit.swift:
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios
   OneInchKit.swift:
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   OpenSslKit.swift:
@@ -606,13 +618,13 @@ CHECKOUT OPTIONS:
     :commit: aad34bd645d6cc57dd502798e4411259de4044a2
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
-    :commit: d7b1039f1d2c14fbb0fa59b8a357376156f3d7af
+    :commit: 8f85d30e72a6b82fec968e7e07ec44d1c4e8fb83
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumABI:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :commit: d7b1039f1d2c14fbb0fa59b8a357376156f3d7af
+    :commit: 8f85d30e72a6b82fec968e7e07ec44d1c4e8fb83
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 0a28d5bf25389b72227aac160dcafd07b819428b
@@ -641,8 +653,11 @@ CHECKOUT OPTIONS:
   ModuleKit.swift:
     :commit: c59abf7b24cda1308668290e2560df48b687c5a8
     :git: https://github.com/horizontalsystems/component-kit-ios/
+  NftKit.swift:
+    :commit: 8f85d30e72a6b82fec968e7e07ec44d1c4e8fb83
+    :git: https://github.com/horizontalsystems/ethereum-kit-ios
   OneInchKit.swift:
-    :commit: d7b1039f1d2c14fbb0fa59b8a357376156f3d7af
+    :commit: df8733e80c046ec95808900536746470ee6c4e1f
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   OpenSslKit.swift:
     :commit: c912734ed3a89af24a6779c6cd1f694075af55fd
@@ -666,7 +681,7 @@ CHECKOUT OPTIONS:
     :commit: ea5172b5a9bb54c0f2736917acc01b7f93cc0312
     :git: https://github.com/horizontalsystems/gui-kit/
   UniswapKit.swift:
-    :commit: d7b1039f1d2c14fbb0fa59b8a357376156f3d7af
+    :commit: df8733e80c046ec95808900536746470ee6c4e1f
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   WalletConnect:
     :commit: 0e7d70923756d408b2ee7180fb2c3ec49bb8e509
@@ -705,7 +720,7 @@ SPEC CHECKSUMS:
   Erc20Kit.swift: 45f76da262a8a8d616ef3b0b09784b2e3db3cf0c
   EthereumABI: a999809dee0ccf1f945a76fe5ed7394eaa73a27b
   EthereumAddress: 39fe8e11cf04e4e9902b55ae653dbc4e0aee5f30
-  EthereumKit.swift: 9f03569fb3e89a8bc325eed72e33046a560ebe22
+  EthereumKit.swift: 30e0407c0fc2d80c97b7243553f3ec72780bd278
   FeeRateKit.swift: 12713618d623d057382b964d2d16d220b1db8df5
   GRDB.swift: 1395cb3556df6b16ed69dfc74c3886abc75d2825
   gRPC-Swift: 74adcaaa62ac5e0a018938840328cb1fdfb09e7b
@@ -721,6 +736,7 @@ SPEC CHECKSUMS:
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
   MarketKit.swift: f7c3f204005c0ed3beb3dd6ec2a631a31028a4a8
   ModuleKit.swift: 36eeb5f146157ce3159d6179e160c632db270ba8
+  NftKit.swift: 5c3cc311c3ff65c75314ae31659a92d790f8d7c2
   Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   OneInchKit.swift: a30eafefc02a12a14042125dc1de32e7b76c6eca
@@ -763,6 +779,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   ZcashLightClientKit: ca6f8383f964a6840b840eeb1c86bb9ba85c44a3
 
-PODFILE CHECKSUM: e4a3220283973fb4e33d1ec9faac164727d6ef4c
+PODFILE CHECKSUM: 2bfe4058c359d70d52a77d9bab49d711b4a05c48
 
 COCOAPODS: 1.11.3

@@ -28,7 +28,7 @@ class NftCollectionCellFactory: NftAssetCellFactory {
     }
 
     private func openAsset(viewItem: NftActivityViewModel.EventViewItem, imageRatio: CGFloat) {
-        let module = NftAssetModule.viewController(collectionUid: viewItem.collectionUid, contractAddress: viewItem.contractAddress, tokenId: viewItem.tokenId, imageRatio: imageRatio)
-        parentNavigationController?.pushViewController(module, animated: true)
+//        let module = NftAssetModule.viewController(collectionUid: viewItem.collectionUid, contractAddress: viewItem.contractAddress, tokenId: viewItem.tokenId, imageRatio: imageRatio)
+//        parentNavigationController?.pushViewController(module, animated: true)
     }
 }

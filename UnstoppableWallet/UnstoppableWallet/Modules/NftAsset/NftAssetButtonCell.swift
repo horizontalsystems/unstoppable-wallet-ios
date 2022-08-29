@@ -5,7 +5,7 @@ class NftAssetButtonCell: UITableViewCell {
     private let openSeaButton = PrimaryButton()
     private let moreButton = PrimaryCircleButton()
 
-    private var onTapOpenSea: (() -> ())?
+    private var onTapProvider: (() -> ())?
     private var onTapMore: (() -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -21,7 +21,7 @@ class NftAssetButtonCell: UITableViewCell {
         }
 
         openSeaButton.set(style: .gray)
-        openSeaButton.setTitle("OpenSea", for: .normal)
+        openSeaButton.setTitle("OpenSea", for: .normal) // todo: show corresponding provider name
         openSeaButton.addTarget(self, action: #selector(onTapOpenSeaButton), for: .touchUpInside)
 
         contentView.addSubview(moreButton)
@@ -41,15 +41,15 @@ class NftAssetButtonCell: UITableViewCell {
     }
 
     @objc private func onTapOpenSeaButton() {
-        onTapOpenSea?()
+        onTapProvider?()
     }
 
     @objc private func onTapMoreButton() {
         onTapMore?()
     }
 
-    func bind(onTapOpenSea: @escaping () -> (), onTapMore: @escaping () -> ()) {
-        self.onTapOpenSea = onTapOpenSea
+    func bind(onTapProvider: @escaping () -> (), onTapMore: @escaping () -> ()) {
+        self.onTapProvider = onTapProvider
         self.onTapMore = onTapMore
     }
 

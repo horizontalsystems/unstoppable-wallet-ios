@@ -41,6 +41,9 @@ class App {
     let transactionAdapterManager: TransactionAdapterManager
     let watchAddressBlockchainManager: WatchAddressBlockchainManager
 
+    let nftMetadataManager: NftMetadataManager
+    let nftAdapterManager: NftAdapterManager
+
     let enabledWalletCacheManager: EnabledWalletCacheManager
 
     let favoritesManager: FavoritesManager
@@ -202,6 +205,12 @@ class App {
                 marketKit: marketKit,
                 walletManager: walletManager,
                 accountManager: accountManager,
+                evmBlockchainManager: evmBlockchainManager
+        )
+
+        nftMetadataManager = NftMetadataManager(networkManager: networkManager)
+        nftAdapterManager = NftAdapterManager(
+                adapterManager: adapterManager,
                 evmBlockchainManager: evmBlockchainManager
         )
 

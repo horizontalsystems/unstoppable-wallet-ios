@@ -77,21 +77,17 @@ extension NftDoubleCell {
 extension NftDoubleCell {
 
     struct ViewItem {
-        let collectionUid: String
-        let contractAddress: String
-        let tokenId: String
+        let providerCollectionUid: String?
+        let nftUid: NftUid
         let imageUrl: String?
         let name: String
+        let count: String?
         let onSale: Bool
         let coinPrice: String
         let fiatPrice: String?
 
-        var uid: String {
-            "\(collectionUid)-\(tokenId)"
-        }
-
         var hash: String {
-            "\(onSale)-\(coinPrice)-\(fiatPrice ?? "nil")"
+            "\(count ?? "nil")-\(onSale)-\(coinPrice)-\(fiatPrice ?? "nil")"
         }
     }
 
