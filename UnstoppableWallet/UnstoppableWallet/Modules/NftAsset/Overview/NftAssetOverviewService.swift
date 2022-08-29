@@ -5,9 +5,9 @@ import MarketKit
 import CurrencyKit
 
 class NftAssetOverviewService {
-    private let collectionUid: String
-    private let contractAddress: String
-    private let tokenId: String
+    let providerCollectionUid: String
+    let nftUid: NftUid
+    private let nftMetadataManager: NftMetadataManager
     private let marketKit: MarketKit.Kit
     private let coinPriceService: WalletCoinPriceService
     private var disposeBag = DisposeBag()
@@ -21,10 +21,10 @@ class NftAssetOverviewService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-asset-service", qos: .userInitiated)
 
-    init(collectionUid: String, contractAddress: String, tokenId: String, marketKit: MarketKit.Kit, coinPriceService: WalletCoinPriceService) {
-        self.collectionUid = collectionUid
-        self.contractAddress = contractAddress
-        self.tokenId = tokenId
+    init(providerCollectionUid: String, nftUid: NftUid, nftMetadataManager: NftMetadataManager, marketKit: MarketKit.Kit, coinPriceService: WalletCoinPriceService) {
+        self.providerCollectionUid = providerCollectionUid
+        self.nftUid = nftUid
+        self.nftMetadataManager = nftMetadataManager
         self.marketKit = marketKit
         self.coinPriceService = coinPriceService
 
@@ -36,10 +36,10 @@ class NftAssetOverviewService {
 
         state = .loading
 
-        Single.zip(marketKit.nftCollectionSingle(uid: collectionUid), marketKit.nftAssetSingle(contractAddress: contractAddress, tokenId: tokenId))
+        nftMetadataManager.nftAssetMetadataSingle(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] collection, asset in
-                    self?.handle(item: Item(collection: collection, asset: asset))
+                .subscribe(onSuccess: { [weak self] metadata in
+                    self?.handle(item: Item(metadata: metadata))
                 }, onError: { [weak self] error in
                     self?.state = .failed(error)
                 })
@@ -81,9 +81,11 @@ class NftAssetOverviewService {
 
         priceItem?.coinPrice = map[coinUid]
     }
+
 }
 
 extension NftAssetOverviewService: IWalletCoinPriceServiceDelegate {
+
     func didUpdateBaseCurrency() {
         queue.async {
             guard case .completed(let item) = self.state else {
@@ -108,6 +110,7 @@ extension NftAssetOverviewService: IWalletCoinPriceServiceDelegate {
 }
 
 extension NftAssetOverviewService {
+
     var stateObservable: Observable<DataStatus<Item>> {
         stateRelay.asObservable()
     }
@@ -115,12 +118,13 @@ extension NftAssetOverviewService {
     func resync() {
         sync()
     }
+
 }
 
 extension NftAssetOverviewService {
+
     class Item {
-        let collection: NftCollection
-        let asset: NftAsset
+        let metadata: NftAssetMetadata
 
         var lastSale: PriceItem?
         var average7d: PriceItem?
@@ -129,59 +133,30 @@ extension NftAssetOverviewService {
         var bestOffer: PriceItem?
         var sale: SaleItem?
 
-        init(collection: NftCollection, asset: NftAsset) {
-            self.collection = collection
-            self.asset = asset
+        init(metadata: NftAssetMetadata) {
+            self.metadata = metadata
 
-            lastSale = asset.lastSalePrice.map { PriceItem(nftPrice: $0) }
-            average7d = collection.stats.averagePrice7d.map { PriceItem(nftPrice: $0) }
-            average30d = collection.stats.averagePrice30d.map { PriceItem(nftPrice: $0) }
-            collectionFloor = collection.stats.floorPrice.map { PriceItem(nftPrice: $0) }
-
-            let orders = asset.orders
-            var hasTopBid = false
-            let auctionOrders = orders.filter { $0.side == 1 && $0.v == nil }.sorted { $0.ethValue < $1.ethValue }
-
-            if let order = auctionOrders.first {
-                let bidOrders = orders.filter { $0.side == 0 && !$0.emptyTaker }.sorted { $0.ethValue > $1.ethValue }
-
-                let type: SalePriceType
-                var nftPrice: NftPrice?
-
-                if let bidOrder = bidOrders.first {
-                    type = .topBid
-                    nftPrice = bidOrder.price
-                    hasTopBid = true
-                } else {
-                    type = .minimumBid
-                    nftPrice = order.price
-                }
-
-                sale = SaleItem(untilDate: order.closingDate, type: type, price: nftPrice.map { PriceItem(nftPrice: $0) })
-            } else {
-                let buyNowOrders = orders.filter { $0.side == 1 && $0.v != nil }.sorted { $0.ethValue < $1.ethValue }
-
-                if let order = buyNowOrders.first {
-                    sale = SaleItem(untilDate: order.closingDate, type: .buyNow, price: order.price.map { PriceItem(nftPrice: $0) })
-                }
-            }
-
-            if !hasTopBid {
-                let offerOrders = orders.filter { $0.side == 0 }.sorted { $0.ethValue > $1.ethValue }
-
-                if let order = offerOrders.first {
-                    bestOffer = order.price.map { PriceItem(nftPrice: $0) }
-                }
+            lastSale = metadata.lastSalePrice.map { PriceItem(nftPrice: $0) }
+            average7d = metadata.collectionAveragePrice7d.map { PriceItem(nftPrice: $0) }
+            average30d = metadata.collectionAveragePrice30d.map { PriceItem(nftPrice: $0) }
+            collectionFloor = metadata.collectionFloorPrice.map { PriceItem(nftPrice: $0) }
+            bestOffer = metadata.bestOffer.map { PriceItem(nftPrice: $0) }
+            sale = metadata.saleInfo.map { saleInfo in
+                SaleItem(
+                        untilDate: saleInfo.untilDate,
+                        type: saleInfo.type,
+                        price: saleInfo.price.map { PriceItem(nftPrice: $0) }
+                )
             }
         }
     }
 
     class SaleItem {
         let untilDate: Date
-        let type: SalePriceType
+        let type: NftAssetMetadata.SalePriceType
         let price: PriceItem?
 
-        init(untilDate: Date, type: SalePriceType, price: PriceItem?) {
+        init(untilDate: Date, type: NftAssetMetadata.SalePriceType, price: PriceItem?) {
             self.untilDate = untilDate
             self.type = type
             self.price = price
@@ -198,9 +173,4 @@ extension NftAssetOverviewService {
         }
     }
 
-    enum SalePriceType {
-        case buyNow
-        case topBid
-        case minimumBid
-    }
 }

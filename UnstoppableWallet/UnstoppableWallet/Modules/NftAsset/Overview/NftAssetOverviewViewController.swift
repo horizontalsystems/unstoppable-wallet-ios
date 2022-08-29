@@ -140,7 +140,7 @@ class NftAssetOverviewViewController: ThemeViewController {
     private func linkTitle(type: NftAssetOverviewViewModel.LinkType) -> String {
         switch type {
         case .website: return "nft_asset.links.website".localized
-        case .openSea: return "OpenSea"
+        case .provider(let title): return title
         case .discord: return "Discord"
         case .twitter: return "Twitter"
         }
@@ -149,13 +149,13 @@ class NftAssetOverviewViewController: ThemeViewController {
     private func linkIcon(type: NftAssetOverviewViewModel.LinkType) -> UIImage? {
         switch type {
         case .website: return UIImage(named: "globe_20")
-        case .openSea: return UIImage(named: "open_sea_20")
+        case .provider: return UIImage(named: "open_sea_20")
         case .discord: return UIImage(named: "discord_20")
         case .twitter: return UIImage(named: "twitter_20")
         }
     }
 
-    private func saleTitle(type: NftAssetOverviewService.SalePriceType) -> String {
+    private func saleTitle(type: NftAssetMetadata.SalePriceType) -> String {
         switch type {
         case .buyNow: return "nft_asset.buy_now".localized
         case .topBid: return "nft_asset.top_bid".localized
@@ -198,8 +198,8 @@ class NftAssetOverviewViewController: ThemeViewController {
     }
 
     private func handleShare() {
-        if let openSeaUrl = openSeaUrl {
-            openShare(text: openSeaUrl)
+        if let providerUrl = providerUrl {
+            openShare(text: providerUrl)
         }
     }
 
@@ -213,8 +213,19 @@ class NftAssetOverviewViewController: ThemeViewController {
         print("Set as Watch Face")
     }
 
-    private var openSeaUrl: String? {
-        viewItem?.links.first(where: { $0.type == .openSea })?.url
+    private var providerUrl: String? {
+        guard let viewItem = viewItem else {
+            return nil
+        }
+
+        for link in viewItem.links {
+            switch link.type {
+            case .provider: return link.url
+            default: ()
+            }
+        }
+
+        return nil
     }
 
     @objc private func onSaveToPhotos(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
@@ -322,8 +333,8 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                             height: .heightButton,
                             bind: { [weak self] cell, _ in
                                 cell.bind(
-                                        onTapOpenSea: {
-                                            if let url = self?.openSeaUrl {
+                                        onTapProvider: {
+                                            if let url = self?.providerUrl {
                                                 self?.openLink(url: url)
                                             }
                                         },
@@ -706,7 +717,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                 sections.append(imageSection(url: imageUrl, ratio: imageRatio))
             }
 
-            sections.append(titleSection(assetName: viewItem.name, collectionName: viewItem.collectionName, collectionUid: viewItem.collectionUid))
+            sections.append(titleSection(assetName: viewItem.name, collectionName: viewItem.collectionName, collectionUid: viewItem.providerCollectionUid))
             sections.append(buttonsSection())
 
             if let section = statsSection(viewItem: viewItem) {

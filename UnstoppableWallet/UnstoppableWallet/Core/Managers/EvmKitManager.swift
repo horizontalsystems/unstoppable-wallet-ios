@@ -2,6 +2,7 @@ import RxSwift
 import RxRelay
 import EthereumKit
 import Erc20Kit
+import NftKit
 import UniswapKit
 import OneInchKit
 import HdWalletKit
@@ -77,13 +78,29 @@ class EvmKitManager {
         Erc20Kit.Kit.addDecorators(to: evmKit)
         Erc20Kit.Kit.addTransactionSyncer(to: evmKit)
 
+        var nftKit: NftKit.Kit?
+        let supportedNftTypes = blockchainType.supportedNftTypes
+
+        if !supportedNftTypes.isEmpty {
+            let kit = try NftKit.Kit.instance(evmKit: evmKit)
+
+            for nftType in supportedNftTypes {
+                switch nftType {
+                case .eip721: NftKit.Kit.addEip721TransactionSyncer(nftKit: kit, evmKit: evmKit)
+                case .eip1155: NftKit.Kit.addEip1155TransactionSyncer(nftKit: kit, evmKit: evmKit)
+                }
+            }
+
+            nftKit = kit
+        }
+
         UniswapKit.Kit.addDecorators(to: evmKit)
 
         OneInchKit.Kit.addDecorators(to: evmKit)
 
         evmKit.start()
 
-        let wrapper = EvmKitWrapper(blockchainType: blockchainType, evmKit: evmKit, signer: signer)
+        let wrapper = EvmKitWrapper(blockchainType: blockchainType, evmKit: evmKit, nftKit: nftKit, signer: signer)
 
         _evmKitWrapper = wrapper
         currentAccount = account
@@ -122,11 +139,13 @@ extension EvmKitManager {
 class EvmKitWrapper {
     let blockchainType: BlockchainType
     let evmKit: EthereumKit.Kit
+    let nftKit: NftKit.Kit?
     let signer: Signer?
 
-    init(blockchainType: BlockchainType, evmKit: EthereumKit.Kit, signer: Signer?) {
+    init(blockchainType: BlockchainType, evmKit: EthereumKit.Kit, nftKit: NftKit.Kit?, signer: Signer?) {
         self.blockchainType = blockchainType
         self.evmKit = evmKit
+        self.nftKit = nftKit
         self.signer = signer
     }
 

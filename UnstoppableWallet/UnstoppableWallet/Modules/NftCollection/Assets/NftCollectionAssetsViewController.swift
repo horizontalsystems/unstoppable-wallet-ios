@@ -99,7 +99,11 @@ class NftCollectionAssetsViewController: ThemeViewController {
     }
 
     private func openAsset(viewItem: NftDoubleCell.ViewItem, imageRatio: CGFloat) {
-        let module = NftAssetModule.viewController(collectionUid: viewItem.collectionUid, contractAddress: viewItem.contractAddress, tokenId: viewItem.tokenId, imageRatio: imageRatio)
+        guard let providerCollectionUid = viewItem.providerCollectionUid else {
+            return
+        }
+
+        let module = NftAssetModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: viewItem.nftUid, imageRatio: imageRatio)
         parentNavigationController?.pushViewController(module, animated: true)
     }
 
@@ -109,7 +113,7 @@ extension NftCollectionAssetsViewController: SectionsDataSource {
 
     private func row(leftViewItem: NftDoubleCell.ViewItem, rightViewItem: NftDoubleCell.ViewItem?, isLast: Bool) -> RowProtocol {
         Row<NftDoubleCell>(
-                id: "token-\(leftViewItem.uid)-\(rightViewItem?.uid ?? "nil")",
+                id: "token-\(leftViewItem.nftUid.uid)-\(rightViewItem?.nftUid.uid ?? "nil")",
                 hash: "\(leftViewItem.hash)-\(rightViewItem?.hash ?? "nil")",
                 dynamicHeight: { width in
                     NftDoubleCell.height(containerWidth: width, isLast: isLast)

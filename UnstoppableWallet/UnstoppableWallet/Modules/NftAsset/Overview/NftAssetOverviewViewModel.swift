@@ -40,27 +40,26 @@ class NftAssetOverviewViewModel {
     }
 
     private func viewItem(item: NftAssetOverviewService.Item) -> ViewItem {
-        let asset = item.asset
-        let collection = item.collection
+        let metadata = item.metadata
 
         return ViewItem(
-                imageUrl: asset.imageUrl,
-                name: asset.name ?? "#\(asset.tokenId)",
-                collectionUid: collection.uid,
-                collectionName: collection.name,
+                imageUrl: metadata.imageUrl,
+                name: metadata.name ?? "#\(service.nftUid.tokenId)",
+                providerCollectionUid: metadata.providerCollectionUid,
+                collectionName: metadata.collectionName,
                 lastSale: priceViewItem(priceItem: item.lastSale),
                 average7d: priceViewItem(priceItem: item.average7d),
                 average30d: priceViewItem(priceItem: item.average30d),
                 collectionFloor: priceViewItem(priceItem: item.collectionFloor),
                 bestOffer: priceViewItem(priceItem: item.bestOffer),
                 sale: saleViewItem(saleItem: item.sale),
-                traits: asset.traits.enumerated().map { traitViewItem(index: $0, trait: $1, totalSupply: collection.stats.totalSupply) },
-                description: asset.description,
-                contractAddress: asset.contract.address,
-                tokenId: asset.tokenId,
-                schemaName: asset.contract.schemaName,
-                blockchain: "Ethereum",
-                links: linkViewItems(collection: collection, asset: asset)
+                traits: metadata.traits.enumerated().map { traitViewItem(index: $0, trait: $1, totalSupply: metadata.collectionTotalSupply) },
+                description: metadata.description,
+                contractAddress: service.nftUid.contractAddress,
+                tokenId: service.nftUid.tokenId,
+                schemaName: metadata.nftType,
+                blockchain: service.nftUid.blockchainType.uid,
+                links: linkViewItems(metadata: metadata)
         )
     }
 
@@ -104,7 +103,7 @@ class NftAssetOverviewViewModel {
         return ValueFormatter.instance.formatShort(currency: coinPrice.price.currency, value: priceItem.nftPrice.value * coinPrice.price.value) ?? "---"
     }
 
-    private func traitViewItem(index: Int, trait: NftAsset.Trait, totalSupply: Int) -> TraitViewItem {
+    private func traitViewItem(index: Int, trait: NftAssetMetadata.Trait, totalSupply: Int) -> TraitViewItem {
         var percentString: String?
 
         if trait.count != 0 && totalSupply != 0 {
@@ -130,19 +129,19 @@ class NftAssetOverviewViewModel {
         )
     }
 
-    private func linkViewItems(collection: NftCollection, asset: NftAsset) -> [LinkViewItem] {
+    private func linkViewItems(metadata: NftAssetMetadata) -> [LinkViewItem] {
         var viewItems = [LinkViewItem]()
 
-        if let url = asset.externalLink {
+        if let url = metadata.websiteLink {
             viewItems.append(LinkViewItem(type: .website, url: url))
         }
-        if let url = asset.permalink {
-            viewItems.append(LinkViewItem(type: .openSea, url: url))
+        if let providerLink = metadata.providerLink {
+            viewItems.append(LinkViewItem(type: .provider(title: providerLink.title), url: providerLink.url))
         }
-        if let url = collection.discordUrl {
+        if let url = metadata.collectionDiscordLink {
             viewItems.append(LinkViewItem(type: .discord, url: url))
         }
-        if let username = collection.twitterUsername {
+        if let username = metadata.collectionTwitterUsername {
             viewItems.append(LinkViewItem(type: .twitter, url: "https://twitter.com/\(username)"))
         }
 
@@ -177,19 +176,24 @@ extension NftAssetOverviewViewModel {
             return
         }
 
-        guard index < item.asset.traits.count else {
+        guard index < item.metadata.traits.count else {
             return
         }
 
-        let trait = item.asset.traits[index]
+        let trait = item.metadata.traits[index]
 
         guard let traitName = trait.type.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let traitValue = trait.value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             return
         }
 
-        let slug = item.collection.uid
+        guard let providerTraitLink = item.metadata.providerTraitLink else {
+            return
+        }
 
-        let url = "https://opensea.io/assets/\(slug)?search[stringTraits][0][name]=\(traitName)&search[stringTraits][0][values][0]=\(traitValue)&search[sortAscending]=true&search[sortBy]=PRICE"
+        let url = providerTraitLink
+                .replacingOccurrences(of: "$traitName", with: traitName)
+                .replacingOccurrences(of: "$traitValue", with: traitValue)
+
         openTraitRelay.accept(url)
     }
 
@@ -200,7 +204,7 @@ extension NftAssetOverviewViewModel {
     struct ViewItem {
         let imageUrl: String?
         let name: String
-        let collectionUid: String
+        let providerCollectionUid: String
         let collectionName: String
         let lastSale: PriceViewItem?
         let average7d: PriceViewItem?
@@ -219,7 +223,7 @@ extension NftAssetOverviewViewModel {
 
     struct SaleViewItem {
         let untilDate: String
-        let type: NftAssetOverviewService.SalePriceType
+        let type: NftAssetMetadata.SalePriceType
         let price: PriceViewItem
     }
 
@@ -242,7 +246,7 @@ extension NftAssetOverviewViewModel {
 
     enum LinkType {
         case website
-        case openSea
+        case provider(title: String)
         case discord
         case twitter
     }

@@ -60,11 +60,11 @@ class NftCollectionAssetsViewModel {
         }
 
         return NftDoubleCell.ViewItem(
-                collectionUid: asset.collectionUid,
-                contractAddress: asset.contract.address,
-                tokenId: asset.tokenId,
+                providerCollectionUid: asset.collectionUid,
+                nftUid: .evm(blockchainType: .ethereum, contractAddress: asset.contract.address, tokenId: asset.tokenId),
                 imageUrl: asset.imagePreviewUrl,
                 name: asset.name ?? "#\(asset.tokenId)",
+                count: nil,
                 onSale: asset.onSale,
                 coinPrice: coinPrice,
                 fiatPrice: fiatPrice

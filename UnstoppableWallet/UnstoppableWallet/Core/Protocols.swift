@@ -90,6 +90,14 @@ protocol ISendZcashAdapter {
     func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
 }
 
+// Nft Adapters
+
+protocol INftAdapter: AnyObject {
+    var nftRecordsObservable: Observable<[NftRecord]> { get }
+    var nftRecords: [NftRecord] { get }
+    func sync()
+}
+
 protocol IFeeRateProvider {
     var feeRatePriorityList: [FeeRatePriority] { get }
     var defaultFeeRatePriority: FeeRatePriority { get }
