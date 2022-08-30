@@ -13,10 +13,6 @@ class NftRecord {
         fatalError("Should be overridden")
     }
 
-    var collectionUid: String {
-        fatalError("Should be overridden")
-    }
-
     var displayName: String {
         fatalError("Should be overridden")
     }

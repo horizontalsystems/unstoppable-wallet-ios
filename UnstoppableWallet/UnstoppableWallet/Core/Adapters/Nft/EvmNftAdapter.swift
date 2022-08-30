@@ -1,14 +1,17 @@
 import RxSwift
 import NftKit
 import MarketKit
+import EthereumKit
 
 class EvmNftAdapter {
     private let blockchainType: BlockchainType
     private let nftKit: NftKit.Kit
+    private let address: EthereumKit.Address
 
-    init(blockchainType: BlockchainType, nftKit: NftKit.Kit) {
+    init(blockchainType: BlockchainType, nftKit: NftKit.Kit, address: EthereumKit.Address) {
         self.blockchainType = blockchainType
         self.nftKit = nftKit
+        self.address = address
     }
 
     private func record(nftBalance: NftBalance) -> EvmNftRecord {
@@ -25,6 +28,10 @@ class EvmNftAdapter {
 }
 
 extension EvmNftAdapter: INftAdapter {
+
+    var userAddress: String {
+        address.hex
+    }
 
     var nftRecordsObservable: Observable<[NftRecord]> {
         nftKit.nftBalancesObservable

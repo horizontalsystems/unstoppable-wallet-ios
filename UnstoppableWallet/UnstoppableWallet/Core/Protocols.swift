@@ -93,9 +93,15 @@ protocol ISendZcashAdapter {
 // Nft Adapters
 
 protocol INftAdapter: AnyObject {
+    var userAddress: String { get }
     var nftRecordsObservable: Observable<[NftRecord]> { get }
     var nftRecords: [NftRecord] { get }
     func sync()
+}
+
+protocol INftProvider {
+    func addressMetadataSingle(blockchainType: BlockchainType, address: String) -> Single<NftAddressMetadata>
+    func assetMetadataSingle(providerCollectionUid: String, nftUid: NftUid) -> Single<NftAssetMetadata>
 }
 
 protocol IFeeRateProvider {

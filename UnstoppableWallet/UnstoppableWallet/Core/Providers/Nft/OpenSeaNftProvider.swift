@@ -13,7 +13,41 @@ class OpenSeaNftProvider {
 
 extension OpenSeaNftProvider: INftProvider {
 
-    func nftAssetMetadataSingle(providerCollectionUid: String, nftUid: NftUid) -> Single<NftAssetMetadata> {
+    func addressMetadataSingle(blockchainType: BlockchainType, address: String) -> Single<NftAddressMetadata> {
+        marketKit.nftAssetCollectionSingle(address: address)
+                .map { assetCollection in
+                    let assetMetadatas = assetCollection.assets.map { asset in
+                        NftAssetShortMetadata(
+                                nftUid: .evm(blockchainType: blockchainType, contractAddress: asset.contract.address, tokenId: asset.tokenId),
+                                providerCollectionUid: asset.collectionUid,
+                                name: asset.name,
+                                previewImageUrl: asset.imagePreviewUrl,
+                                onSale: asset.onSale,
+                                lastSalePrice: asset.lastSalePrice
+                        )
+                    }
+
+                    let collectionMetadatas = assetCollection.collections.map { collection -> NftCollectionShortMetadata in
+                        let collectionAssets = assetCollection.assets.filter { $0.collectionUid == collection.uid }
+                        let assetContractAddresses = collectionAssets.map { $0.contract.address }
+
+                        return NftCollectionShortMetadata(
+                                uids: Array(Set(collection.contracts.map { $0.address } + assetContractAddresses)),
+                                providerUid: collection.uid,
+                                name: collection.name,
+                                thumbnailImageUrl: collection.imageUrl,
+                                averagePrice7d: collection.stats.averagePrice7d,
+                                averagePrice30d: collection.stats.averagePrice30d
+                        )
+                    }
+
+
+
+                    return NftAddressMetadata(collections: collectionMetadatas, assets: assetMetadatas)
+                }
+    }
+
+    func assetMetadataSingle(providerCollectionUid: String, nftUid: NftUid) -> Single<NftAssetMetadata> {
         Single.zip(marketKit.nftCollectionSingle(uid: providerCollectionUid), marketKit.nftAssetSingle(contractAddress: nftUid.contractAddress, tokenId: nftUid.tokenId))
                 .map { collection, asset in
                     var bestOffer: NftPrice?

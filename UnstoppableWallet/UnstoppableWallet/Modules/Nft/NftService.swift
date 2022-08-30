@@ -5,7 +5,9 @@ import MarketKit
 import CurrencyKit
 
 class NftService {
+    private let account: Account
     private let nftAdapterManager: NftAdapterManager
+    private let nftMetadataManager: NftMetadataManager
     private let balanceHiddenManager: BalanceHiddenManager
     private let balanceConversionManager: BalanceConversionManager
     private let coinPriceService: WalletCoinPriceService
@@ -21,9 +23,8 @@ class NftService {
     }
 
     private var recordMap = [BlockchainType: [NftRecord]]()
-    private var collectionRecordMap = [String: [NftRecord]]()
-    private var nftMetadataMap = [NftUid: NftAssetShortMetadata]()
-    private var collectionMetadataMap = [String: NftCollectionShortMetadata]()
+    private var metadataMap = [BlockchainType: NftAddressMetadata]()
+    private var nftItemMap = [String: NftCollectionItem]()
 
     private let totalItemRelay = PublishRelay<TotalItem?>()
     private(set) var totalItem: TotalItem? {
@@ -41,8 +42,10 @@ class NftService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-collections-service", qos: .userInitiated)
 
-    init(nftAdapterManager: NftAdapterManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager, coinPriceService: WalletCoinPriceService) {
+    init(account: Account, nftAdapterManager: NftAdapterManager, nftMetadataManager: NftMetadataManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager, coinPriceService: WalletCoinPriceService) {
+        self.account = account
         self.nftAdapterManager = nftAdapterManager
+        self.nftMetadataManager = nftMetadataManager
         self.balanceHiddenManager = balanceHiddenManager
         self.balanceConversionManager = balanceConversionManager
         self.coinPriceService = coinPriceService
@@ -75,28 +78,37 @@ class NftService {
         }
     }
 
-    private func handle(adapterMap: [BlockchainType: INftAdapter]) {
+    private func handle(adapterMap: [NftKey: INftAdapter]) {
         queue.async {
             self._handle(adapterMap: adapterMap)
         }
     }
 
-    private func _handle(adapterMap: [BlockchainType: INftAdapter]) {
+    private func _handle(adapterMap: [NftKey: INftAdapter]) {
         adapterDisposeBag = DisposeBag()
         recordMap = [:]
+        metadataMap = [:]
 
-        for (blockchainType, adapter) in adapterMap {
-            recordMap[blockchainType] = adapter.nftRecords
+        for (nftKey, adapter) in adapterMap {
+            recordMap[nftKey.blockchainType] = adapter.nftRecords
+            metadataMap[nftKey.blockchainType] = nftMetadataManager.addressMetadata(nftKey: nftKey)
 
             adapter.nftRecordsObservable
                     .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                     .subscribe(onNext: { [weak self] records in
-                        self?.handleUpdated(records: records, blockchainType: blockchainType)
+                        self?.handleUpdated(records: records, blockchainType: nftKey.blockchainType)
                     })
-                    .disposed(by: disposeBag)
+                    .disposed(by: adapterDisposeBag)
+
+            nftMetadataManager.addressMetadataObservable
+                    .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                    .subscribe(onNext: { [weak self] nftKey, addressMetadata in
+                        self?.handleUpdated(addressMetadata: addressMetadata, blockchainType: nftKey.blockchainType)
+                    })
+                    .disposed(by: adapterDisposeBag)
         }
 
-        _syncCollectionRecordMap()
+        _syncNftItemMap()
     }
 
     private func handleUpdated(records: [NftRecord], blockchainType: BlockchainType) {
@@ -107,25 +119,56 @@ class NftService {
 
     private func _handleUpdated(records: [NftRecord], blockchainType: BlockchainType) {
         recordMap[blockchainType] = records
-        _syncCollectionRecordMap()
+        _syncNftItemMap()
     }
 
-    private func _syncCollectionRecordMap() {
-        collectionRecordMap = [:]
+    private func handleUpdated(addressMetadata: NftAddressMetadata, blockchainType: BlockchainType) {
+        queue.async {
+            self._handleUpdated(addressMetadata: addressMetadata, blockchainType: blockchainType)
+        }
+    }
 
-        for records in recordMap.values {
+    private func _handleUpdated(addressMetadata: NftAddressMetadata, blockchainType: BlockchainType) {
+        metadataMap[blockchainType] = addressMetadata
+        _syncNftItemMap()
+    }
+
+    private func _syncNftItemMap() {
+        nftItemMap = [:]
+
+        for (blockchainType, records) in recordMap {
+            var assetMetadataMap = [NftUid: NftAssetShortMetadata]()
+            var collectionMetadataMap = [String: NftCollectionShortMetadata]()
+
+            if let metadata = metadataMap[blockchainType] {
+                for meta in metadata.assets {
+                    assetMetadataMap[meta.nftUid] = meta
+                }
+                for meta in metadata.collections {
+                    collectionMetadataMap[meta.providerUid] = meta
+                }
+            }
+
             for record in records {
-                let collectionUid = record.collectionUid
+                guard let assetMetadata = assetMetadataMap[record.nftUid], let collectionMetadata = collectionMetadataMap[assetMetadata.providerCollectionUid] else {
+//                    print("No meta for: \(record.nftUid.uid)")
+                    continue
+                }
 
-                if collectionRecordMap[collectionUid] == nil {
-                    collectionRecordMap[collectionUid] = [record]
+                let uid = assetMetadata.providerCollectionUid
+                let nftItem = NftItem(record: record, assetMetadata: assetMetadata)
+
+                if nftItemMap[uid] == nil {
+                    nftItemMap[uid] = NftCollectionItem(metadata: collectionMetadata, nftItems: [nftItem])
                 } else {
-                    collectionRecordMap[collectionUid]?.append(record)
+                    nftItemMap[uid]?.nftItems.append(nftItem)
                 }
             }
         }
 
         _syncItems()
+
+        coinPriceService.set(tokens: allTokens(items: items).union(balanceConversionManager.conversionTokens))
     }
 
     private func syncItems() {
@@ -135,17 +178,21 @@ class NftService {
     }
 
     private func _syncItems() {
-        let items = collectionRecordMap.map { collectionUid, records -> Item in
-            let collectionMetadata = collectionMetadataMap[collectionUid]
+        let items = nftItemMap.map { providerCollectionUid, nftCollectionItem -> Item in
+            let collectionMetadata = nftCollectionItem.metadata
 
             return Item(
-                    uid: collectionUid,
+                    uid: providerCollectionUid,
                     providerCollectionUid: collectionMetadata?.providerUid,
                     imageUrl: collectionMetadata?.thumbnailImageUrl,
-                    name: collectionMetadata?.name ?? collectionUid,
-                    count: records.map { $0.balance }.reduce(0, +),
-                    assetItems: records.map { record in
-                        let metadata = nftMetadataMap[record.nftUid]
+                    name: collectionMetadata?.name ?? providerCollectionUid,
+                    count: nftCollectionItem.nftItems.map {
+                                $0.record.balance
+                            }
+                            .reduce(0, +),
+                    assetItems: nftCollectionItem.nftItems.map { nftItem in
+                        let record = nftItem.record
+                        let metadata = nftItem.assetMetadata
 
                         var price: NftPrice?
 
@@ -157,7 +204,7 @@ class NftService {
 
                         return AssetItem(
                                 nftUid: record.nftUid,
-                                imageUrl: metadata?.imageUrl,
+                                imageUrl: metadata?.previewImageUrl,
 //                                name: metadata?.name ?? record.displayName,
                                 name: record.blockchainType.uid + " - " + (metadata?.name ?? record.displayName),
                                 count: record.balance,
@@ -172,8 +219,6 @@ class NftService {
 
         self.items = sort(items: items)
         syncTotalItem()
-
-//        coinPriceService.set(tokens: allTokens(items: items).union(balanceConversionManager.conversionTokens))
     }
 
     private func syncTotalItem() {
@@ -261,6 +306,16 @@ extension NftService {
 
 extension NftService {
 
+    struct NftCollectionItem {
+        let metadata: NftCollectionShortMetadata?
+        var nftItems: [NftItem]
+    }
+
+    struct NftItem {
+        let record: NftRecord
+        let assetMetadata: NftAssetShortMetadata?
+    }
+
     class Item {
         let uid: String
         let providerCollectionUid: String?
@@ -310,52 +365,6 @@ extension NftService {
         case lastSale
         case average7d
         case average30d
-    }
-
-}
-
-enum NftUid: Hashable {
-    case evm(blockchainType: BlockchainType, contractAddress: String, tokenId: String)
-    case solana(contractAddress: String, tokenId: String)
-
-    var tokenId: String {
-        switch self {
-        case let .evm(_, _, tokenId): return tokenId
-        case let .solana(_, tokenId): return tokenId
-        }
-    }
-
-    var contractAddress: String {
-        switch self {
-        case let .evm(_, contractAddress, _): return contractAddress
-        case let .solana(contractAddress, _): return contractAddress
-        }
-    }
-
-    var uid: String {
-        switch self {
-        case let .evm(blockchainType, contractAddress, tokenId): return "evm-\(blockchainType)-\(contractAddress)-\(tokenId)"
-        case let .solana(contractAddress, tokenId): return "solana-\(contractAddress)-\(tokenId)"
-        }
-    }
-
-    var blockchainType: BlockchainType {
-        switch self {
-        case let .evm(blockchainType, _, _): return blockchainType
-        case .solana: return .unsupported(uid: "solana") // todo
-        }
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(uid)
-    }
-
-    static func ==(lhs: NftUid, rhs: NftUid) -> Bool {
-        switch (lhs, rhs) {
-        case let (.evm(lhsBlockchainType, lhsContractAddress, lhsTokenId), .evm(rhsBlockchainType, rhsContractAddress, rhsTokenId)): return lhsBlockchainType == rhsBlockchainType && lhsContractAddress == rhsContractAddress && lhsTokenId == rhsTokenId
-        case let (.solana(lhsContractAddress, lhsTokenId), .solana(rhsContractAddress, rhsTokenId)): return lhsContractAddress == rhsContractAddress && lhsTokenId == rhsTokenId
-        default: return false
-        }
     }
 
 }
