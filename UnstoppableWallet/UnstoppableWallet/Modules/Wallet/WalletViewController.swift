@@ -138,7 +138,11 @@ class WalletViewController: ThemeViewController {
     }
 
     @objc private func onTapNft() {
-        navigationController?.pushViewController(NftModule.viewController(), animated: true)
+        guard let module = NftModule.viewController() else {
+            return
+        }
+
+        navigationController?.pushViewController(module, animated: true)
     }
 
     @objc private func onTapAddCoin() {

@@ -43,6 +43,7 @@ class App {
 
     let nftMetadataManager: NftMetadataManager
     let nftAdapterManager: NftAdapterManager
+    let nftMetadataSyncer: NftMetadataSyncer
 
     let enabledWalletCacheManager: EnabledWalletCacheManager
 
@@ -86,8 +87,6 @@ class App {
 
     let deepLinkManager: DeepLinkManager
     let launchScreenManager: LaunchScreenManager
-
-    let nftManager: NftManager
 
     let balancePrimaryValueManager: BalancePrimaryValueManager
     let balanceHiddenManager: BalanceHiddenManager
@@ -208,11 +207,14 @@ class App {
                 evmBlockchainManager: evmBlockchainManager
         )
 
-        nftMetadataManager = NftMetadataManager(networkManager: networkManager)
+        let nftDatabaseStorage = try! NftDatabaseStorage(dbPool: dbPool)
+        let nftStorage = NftStorage(marketKit: marketKit, storage: nftDatabaseStorage)
+        nftMetadataManager = NftMetadataManager(networkManager: networkManager, storage: nftStorage)
         nftAdapterManager = NftAdapterManager(
                 adapterManager: adapterManager,
                 evmBlockchainManager: evmBlockchainManager
         )
+        nftMetadataSyncer = NftMetadataSyncer(nftAdapterManager: nftAdapterManager, nftMetadataManager: nftMetadataManager)
 
         let enabledWalletCacheStorage = EnabledWalletCacheStorage(dbPool: dbPool)
         enabledWalletCacheManager = EnabledWalletCacheManager(storage: enabledWalletCacheStorage, accountManager: accountManager)
@@ -281,10 +283,6 @@ class App {
 
         deepLinkManager = DeepLinkManager()
         launchScreenManager = LaunchScreenManager(storage: StorageKit.LocalStorage.default)
-
-        let nftDatabaseStorage = try! NftDatabaseStorage(dbPool: dbPool)
-        let nftStorage = NftStorage(marketKit: marketKit, storage: nftDatabaseStorage)
-        nftManager = NftManager(accountManager: accountManager, evmBlockchainManager: evmBlockchainManager, storage: nftStorage, marketKit: marketKit)
 
         balancePrimaryValueManager = BalancePrimaryValueManager(localStorage: StorageKit.LocalStorage.default)
         balanceHiddenManager = BalanceHiddenManager(localStorage: StorageKit.LocalStorage.default)

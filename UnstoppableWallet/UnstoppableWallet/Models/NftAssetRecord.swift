@@ -3,35 +3,25 @@ import GRDB
 import MarketKit
 
 class NftAssetRecord: Record {
+    let blockchainTypeUid: String
     let accountId: String
 
-    let contract: NftCollection.Contract
-    let collectionUid: String
-    let tokenId: String
+    let nftUid: NftUid
+    let providerCollectionUid: String
     let name: String?
-    let imageUrl: String?
-    let imagePreviewUrl: String?
-    let description: String?
-    let externalLink: String?
-    let permalink: String?
-    let traits: [NftAsset.Trait]
-    let lastSalePrice: NftPriceRecord?
+    let previewImageUrl: String?
     let onSale: Bool
+    let lastSalePrice: NftPriceRecord?
 
-    init(accountId: String, asset: NftAsset) {
+    init(blockchainTypeUid: String, accountId: String, asset: NftAssetShortMetadata) {
+        self.blockchainTypeUid = blockchainTypeUid
         self.accountId = accountId
-        contract = asset.contract
-        collectionUid = asset.collectionUid
-        tokenId = asset.tokenId
+        nftUid = asset.nftUid
+        providerCollectionUid = asset.providerCollectionUid
         name = asset.name
-        imageUrl = asset.imageUrl
-        imagePreviewUrl = asset.imagePreviewUrl
-        description = asset.description
-        externalLink = asset.externalLink
-        permalink = asset.permalink
-        traits = asset.traits
-        lastSalePrice = asset.lastSalePrice.map { NftPriceRecord(price: $0) }
+        previewImageUrl = asset.previewImageUrl
         onSale = asset.onSale
+        lastSalePrice = asset.lastSalePrice.map { NftPriceRecord(price: $0) }
 
         super.init()
     }
@@ -41,57 +31,40 @@ class NftAssetRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
+        case blockchainTypeUid
         case accountId
-        case contractAddress
-        case contractSchemaName
-        case collectionUid
-        case tokenId
+        case nftUid
+        case providerCollectionUid
         case name
-        case imageUrl
-        case imagePreviewUrl
-        case description
-        case externalLink
-        case permalink
-        case traits
+        case previewImageUrl
+        case onSale
         case lastSalePriceTokenQueryId
         case lastSalePriceValue
-        case onSale
     }
 
     required init(row: Row) {
+        blockchainTypeUid = row[Columns.blockchainTypeUid]
         accountId = row[Columns.accountId]
-        contract = NftCollection.Contract(address: row[Columns.contractAddress], schemaName: row[Columns.contractSchemaName])
-        collectionUid = row[Columns.collectionUid]
-        tokenId = row[Columns.tokenId]
+        nftUid = row[Columns.nftUid]
+        providerCollectionUid = row[Columns.providerCollectionUid]
         name = row[Columns.name]
-        imageUrl = row[Columns.imageUrl]
-        imagePreviewUrl = row[Columns.imagePreviewUrl]
-        description = row[Columns.description]
-        externalLink = row[Columns.externalLink]
-        permalink = row[Columns.permalink]
-        traits = [NftAsset.Trait](JSONString: row[Columns.traits]) ?? []
-        lastSalePrice = NftPriceRecord(tokenQueryId: row[Columns.lastSalePriceTokenQueryId], value: row[Columns.lastSalePriceValue])
+        previewImageUrl = row[Columns.previewImageUrl]
         onSale = row[Columns.onSale]
+        lastSalePrice = NftPriceRecord(tokenQueryId: row[Columns.lastSalePriceTokenQueryId], value: row[Columns.lastSalePriceValue])
 
         super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
+        container[Columns.blockchainTypeUid] = blockchainTypeUid
         container[Columns.accountId] = accountId
-        container[Columns.contractAddress] = contract.address
-        container[Columns.contractSchemaName] = contract.schemaName
-        container[Columns.collectionUid] = collectionUid
-        container[Columns.tokenId] = tokenId
+        container[Columns.nftUid] = nftUid
+        container[Columns.providerCollectionUid] = providerCollectionUid
         container[Columns.name] = name
-        container[Columns.imageUrl] = imageUrl
-        container[Columns.imagePreviewUrl] = imagePreviewUrl
-        container[Columns.description] = description
-        container[Columns.externalLink] = externalLink
-        container[Columns.permalink] = permalink
-        container[Columns.traits] = traits.toJSONString()
+        container[Columns.previewImageUrl] = previewImageUrl
+        container[Columns.onSale] = onSale
         container[Columns.lastSalePriceTokenQueryId] = lastSalePrice?.tokenQuery.id
         container[Columns.lastSalePriceValue] = lastSalePrice?.value
-        container[Columns.onSale] = onSale
     }
 
 }

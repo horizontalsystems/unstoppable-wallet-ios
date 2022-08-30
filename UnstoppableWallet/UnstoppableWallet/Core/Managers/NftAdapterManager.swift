@@ -7,8 +7,8 @@ class NftAdapterManager {
     private let evmBlockchainManager: EvmBlockchainManager
     private let disposeBag = DisposeBag()
 
-    private let adaptersUpdatedRelay = PublishRelay<[BlockchainType: INftAdapter]>()
-    private var _adapterMap = [BlockchainType: INftAdapter]()
+    private let adaptersUpdatedRelay = PublishRelay<[NftKey: INftAdapter]>()
+    private var _adapterMap = [NftKey: INftAdapter]()
 
     private let queue = DispatchQueue(label: "io.horizontal-systems.unstoppable.nft-adapter_manager", qos: .userInitiated)
 
@@ -27,14 +27,19 @@ class NftAdapterManager {
     }
 
     private func _initAdapters(wallets: [Wallet]) {
-        let blockchainTypes = Array(Set(wallets.map { $0.token.blockchainType }))
+        let nftKeys = Array(Set(wallets.map { NftKey(account: $0.account, blockchainType: $0.token.blockchainType) }))
 
-        var newAdapterMap = [BlockchainType: INftAdapter]()
+        var newAdapterMap = [NftKey: INftAdapter]()
 
-        for blockchainType in blockchainTypes {
-            if evmBlockchainManager.blockchain(type: blockchainType) != nil {
-                if let nftKit = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.nftKit {
-                    newAdapterMap[blockchainType] = EvmNftAdapter(blockchainType: blockchainType, nftKit: nftKit)
+        for nftKey in nftKeys {
+            if let adapter = _adapterMap[nftKey] {
+                newAdapterMap[nftKey] = adapter
+                continue
+            }
+
+            if evmBlockchainManager.blockchain(type: nftKey.blockchainType) != nil {
+                if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: nftKey.blockchainType).evmKitWrapper, let nftKit = evmKitWrapper.nftKit {
+                    newAdapterMap[nftKey] = EvmNftAdapter(blockchainType: nftKey.blockchainType, nftKit: nftKit, address: evmKitWrapper.evmKit.address)
                 }
             } else {
                 // Init other blockchain adapter here (e.g. Solana)
@@ -57,11 +62,11 @@ class NftAdapterManager {
 
 extension NftAdapterManager {
 
-    var adapterMap: [BlockchainType: INftAdapter] {
+    var adapterMap: [NftKey: INftAdapter] {
         queue.sync { _adapterMap }
     }
 
-    var adaptersUpdatedObservable: Observable<[BlockchainType: INftAdapter]> {
+    var adaptersUpdatedObservable: Observable<[NftKey: INftAdapter]> {
         adaptersUpdatedRelay.asObservable()
     }
 

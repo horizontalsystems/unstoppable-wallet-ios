@@ -36,7 +36,7 @@ class NftAssetOverviewService {
 
         state = .loading
 
-        nftMetadataManager.nftAssetMetadataSingle(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
+        nftMetadataManager.assetMetadataSingle(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] metadata in
                     self?.handle(item: Item(metadata: metadata))

@@ -118,7 +118,7 @@ extension NftViewController: SectionsDataSource {
                 elements: [.image24, .text, .text, .margin8, .image20],
                 tableView: tableView,
                 id: "collection-\(viewItem.uid)",
-                hash: "\(viewItem.count)-\(expanded)",
+                hash: "\(viewItem.name)-\(viewItem.count)-\(expanded)",
                 height: .heightCell48,
                 bind: { cell in
                     cell.set(backgroundStyle: .transparent)

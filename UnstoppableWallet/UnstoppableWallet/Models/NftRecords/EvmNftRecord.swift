@@ -21,10 +21,6 @@ class EvmNftRecord: NftRecord {
         .evm(blockchainType: blockchainType, contractAddress: contractAddress, tokenId: tokenId)
     }
 
-    override var collectionUid: String {
-        contractAddress
-    }
-
     override var displayName: String {
         tokenName ?? "#\(tokenId)"
     }
