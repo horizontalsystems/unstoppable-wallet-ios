@@ -40,7 +40,6 @@ class NftStorage {
 
     private func collection(record: NftCollectionRecord, tokens: [Token]) -> NftCollectionShortMetadata {
         NftCollectionShortMetadata(
-                uids: record.uids,
                 providerUid: record.providerUid,
                 name: record.name,
                 thumbnailImageUrl: record.thumbnailImageUrl,
