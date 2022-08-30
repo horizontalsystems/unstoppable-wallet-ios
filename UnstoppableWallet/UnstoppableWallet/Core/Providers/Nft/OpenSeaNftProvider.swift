@@ -28,11 +28,7 @@ extension OpenSeaNftProvider: INftProvider {
                     }
 
                     let collectionMetadatas = assetCollection.collections.map { collection -> NftCollectionShortMetadata in
-                        let collectionAssets = assetCollection.assets.filter { $0.collectionUid == collection.uid }
-                        let assetContractAddresses = collectionAssets.map { $0.contract.address }
-
-                        return NftCollectionShortMetadata(
-                                uids: Array(Set(collection.contracts.map { $0.address } + assetContractAddresses)),
+                        NftCollectionShortMetadata(
                                 providerUid: collection.uid,
                                 name: collection.name,
                                 thumbnailImageUrl: collection.imageUrl,

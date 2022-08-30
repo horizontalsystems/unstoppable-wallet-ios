@@ -6,7 +6,6 @@ struct NftAddressMetadata {
 }
 
 struct NftCollectionShortMetadata {
-    let uids: [String]
     let providerUid: String
     let name: String
     let thumbnailImageUrl: String?

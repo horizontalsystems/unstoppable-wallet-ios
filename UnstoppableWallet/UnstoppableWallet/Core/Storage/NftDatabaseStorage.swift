@@ -24,7 +24,6 @@ class NftDatabaseStorage {
             try db.create(table: NftCollectionRecord.databaseTableName) { t in
                 t.column(NftCollectionRecord.Columns.blockchainTypeUid.name, .text).notNull()
                 t.column(NftCollectionRecord.Columns.accountId.name, .text).notNull()
-                t.column(NftCollectionRecord.Columns.uids.name, .text).notNull()
                 t.column(NftCollectionRecord.Columns.providerUid.name, .text).notNull()
                 t.column(NftCollectionRecord.Columns.name.name, .text).notNull()
                 t.column(NftCollectionRecord.Columns.thumbnailImageUrl.name, .text)

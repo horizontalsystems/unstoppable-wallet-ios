@@ -6,7 +6,6 @@ class NftCollectionRecord: Record {
     let blockchainTypeUid: String
     let accountId: String
 
-    let uids: [String]
     let providerUid: String
     let name: String
     let thumbnailImageUrl: String?
@@ -16,7 +15,6 @@ class NftCollectionRecord: Record {
     init(blockchainTypeUid: String, accountId: String, collection: NftCollectionShortMetadata) {
         self.blockchainTypeUid = blockchainTypeUid
         self.accountId = accountId
-        uids = collection.uids
         providerUid = collection.providerUid
         name = collection.name
         thumbnailImageUrl = collection.thumbnailImageUrl
@@ -33,7 +31,6 @@ class NftCollectionRecord: Record {
     enum Columns: String, ColumnExpression {
         case blockchainTypeUid
         case accountId
-        case uids
         case providerUid
         case name
         case thumbnailImageUrl
@@ -46,8 +43,6 @@ class NftCollectionRecord: Record {
     required init(row: Row) {
         blockchainTypeUid = row[Columns.blockchainTypeUid]
         accountId = row[Columns.accountId]
-        let rawUids: String = row[Columns.uids]
-        uids = rawUids.components(separatedBy: ",")
         providerUid = row[Columns.providerUid]
         name = row[Columns.name]
         thumbnailImageUrl = row[Columns.thumbnailImageUrl]
@@ -60,7 +55,6 @@ class NftCollectionRecord: Record {
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.blockchainTypeUid] = blockchainTypeUid
         container[Columns.accountId] = accountId
-        container[Columns.uids] = uids.joined(separator: ",")
         container[Columns.providerUid] = providerUid
         container[Columns.name] = name
         container[Columns.thumbnailImageUrl] = thumbnailImageUrl
