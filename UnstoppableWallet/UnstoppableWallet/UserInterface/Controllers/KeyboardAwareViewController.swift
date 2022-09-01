@@ -79,7 +79,6 @@ class KeyboardAwareViewController: ThemeViewController {
 
     private func observeKeyboard(_ start: Bool) {
         if start {
-
             NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
@@ -252,4 +251,5 @@ extension KeyboardAwareViewController: UIAdaptivePresentationControllerDelegate 
     public func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
 //        print("presentationControllerDidDismiss : \(presentationController)")
     }
+
 }

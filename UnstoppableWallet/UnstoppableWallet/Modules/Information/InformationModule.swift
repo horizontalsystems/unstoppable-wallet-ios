@@ -1,29 +1,29 @@
-import ThemeKit
 import UIKit
+import ThemeKit
 import ComponentKit
 
 class InformationModule {
-    static func afterClose(_ action: @escaping () -> ()) -> (UIViewController) -> () {
+    static func afterClose(_ action: (() -> ())? = nil) -> (UIViewController) -> () {
         { controller in
             controller.dismiss(animated: true) {
-                action()
+                action?()
             }
         }
     }
 
-    static func simpleInfo(title: String, image: UIImage?, description: String, buttonTitle: String, onTapButton: ((UIViewController) -> ())?, onDismiss: (() -> ())? = nil) -> UIViewController {
+    static func simpleInfo(title: String, image: UIImage?, description: String, buttonTitle: String, onTapButton: ((UIViewController) -> ())?, onInteractiveDismiss: (() -> ())? = nil) -> UIViewController {
         let title = BottomSheetItem.ComplexTitleViewItem(title: title, image: image)
         let description = InformationModule.Item.description(text: description)
         let button = InformationModule.ButtonItem(style: .yellow, title: buttonTitle, action: onTapButton)
 
-        return InformationModule.viewController(title: .complex(viewItem: title), items: [description], buttons: [button], onDismiss: onDismiss)
+        return InformationModule.viewController(title: .complex(viewItem: title), items: [description], buttons: [button], onInteractiveDismiss: onInteractiveDismiss)
     }
 
-    static func viewController(title: BottomSheetItem.Title, items: [Item], buttons: [ButtonItem], onDismiss: (() -> ())? = nil) -> UIViewController {
+    static func viewController(title: BottomSheetItem.Title, items: [Item], buttons: [ButtonItem], onInteractiveDismiss: (() -> ())? = nil) -> UIViewController {
         let viewController = InformationViewController(title: title)
         viewController.set(items: items)
         viewController.set(buttons: buttons)
-        viewController.onDismiss = onDismiss
+        viewController.onInteractiveDismiss = onInteractiveDismiss
 
         return viewController
     }

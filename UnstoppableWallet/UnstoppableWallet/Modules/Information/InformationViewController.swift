@@ -1,8 +1,8 @@
 import UIKit
-import ActionSheet
 import ThemeKit
-import SectionsTableView
+import ActionSheet
 import ComponentKit
+import SectionsTableView
 
 class InformationViewController: ThemeActionSheetController {
     private static let buttonSpacing = CGFloat.margin12
@@ -15,8 +15,6 @@ class InformationViewController: ThemeActionSheetController {
     private var items = [InformationModule.Item]()
     private var buttons = [InformationModule.ButtonItem]()
 
-    public var onDismiss: (() -> ())?
-
     init(title: BottomSheetItem.Title) {
         titleItem = title
 
@@ -25,12 +23,6 @@ class InformationViewController: ThemeActionSheetController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-
-
-    deinit {
-        print("Deinit \(self)")
     }
 
     override func viewDidLoad() {
@@ -87,7 +79,7 @@ class InformationViewController: ThemeActionSheetController {
 
     private func onTapClose() {
         dismiss(animated: true) { [weak self] in
-            self?.onDismiss?()
+            self?.onInteractiveDismiss?()
         }
     }
 
@@ -208,14 +200,6 @@ extension InformationViewController {
         case (.complex, .complex(let viewItem)): updateComplexTitle(viewItem: viewItem)
         default: ()
         }
-    }
-
-}
-
-extension InformationViewController: ActionSheetViewDelegate {
-
-    public func didInteractiveDismissed() {
-        onDismiss?()
     }
 
 }

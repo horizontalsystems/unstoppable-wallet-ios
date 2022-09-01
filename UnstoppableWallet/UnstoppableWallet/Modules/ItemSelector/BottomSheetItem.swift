@@ -1,7 +1,6 @@
-import ComponentKit
-import Foundation
-import SectionsTableView
 import UIKit
+import ComponentKit
+import SectionsTableView
 
 class BottomSheetItem {
     enum Title {
