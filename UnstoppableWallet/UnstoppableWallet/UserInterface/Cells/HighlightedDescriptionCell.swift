@@ -69,10 +69,10 @@ extension HighlightedDescriptionCell {
         return Self.height(containerWidth: containerWidth, text: descriptionText)
     }
 
-    static func height(containerWidth: CGFloat, text: String) -> CGFloat {
+    static func height(containerWidth: CGFloat, text: String, ignoreBottomMargin: Bool = false) -> CGFloat {
         let descriptionViewWidth = containerWidth - 2 * horizontalMargin
         let descriptionViewHeight = HighlightedDescriptionView.height(containerWidth: descriptionViewWidth, text: text)
-        return descriptionViewHeight + 2 * verticalMargin
+        return descriptionViewHeight + (ignoreBottomMargin ? 1 : 2) * verticalMargin
     }
 
 }

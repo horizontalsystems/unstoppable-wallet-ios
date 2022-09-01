@@ -414,7 +414,7 @@ PODS:
     - SQLite.swift (~> 0.13)
 
 DEPENDENCIES:
-  - ActionSheet.swift (from `https://github.com/horizontalsystems/gui-kit/`)
+  - ActionSheet.swift (from `../gui-kit/`)
   - Alamofire
   - BigInt
   - BinanceChainKit.swift (from `https://github.com/horizontalsystems/binance-chain-kit-ios`)
@@ -522,7 +522,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   ActionSheet.swift:
-    :git: https://github.com/horizontalsystems/gui-kit/
+    :path: "../gui-kit/"
   BinanceChainKit.swift:
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
@@ -590,9 +590,6 @@ EXTERNAL SOURCES:
     :tag: 0.16.3-beta
 
 CHECKOUT OPTIONS:
-  ActionSheet.swift:
-    :commit: ea5172b5a9bb54c0f2736917acc01b7f93cc0312
-    :git: https://github.com/horizontalsystems/gui-kit/
   BinanceChainKit.swift:
     :commit: 234a76b599b6474a1a4057602b8418a5c42228b8
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
@@ -692,7 +689,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   _NIODataStructures: 3d45d8e70a1d17a15b1dc59d102c63dbc0525ffd
-  ActionSheet.swift: fcfca3360d0855247bdb0fcdac27f4a7a4d7d593
+  ActionSheet.swift: 9ff4cc1292f0b612ad7e7eb1908f54b349aae044
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
   BigInt: f668a80089607f521586bbe29513d708491ef2f7
   BinanceChainKit.swift: 5c282784ee82eb95117b584858f640e9769d4562
@@ -779,6 +776,6 @@ SPEC CHECKSUMS:
   X11Kit.swift: 6cfd05473e41c7b866c1a016300da02af63ad049
   ZcashLightClientKit: ca6f8383f964a6840b840eeb1c86bb9ba85c44a3
 
-PODFILE CHECKSUM: 2bfe4058c359d70d52a77d9bab49d711b4a05c48
+PODFILE CHECKSUM: 4f2ba046260125c43b4275e5f6bbd6f3e4879173
 
 COCOAPODS: 1.11.3

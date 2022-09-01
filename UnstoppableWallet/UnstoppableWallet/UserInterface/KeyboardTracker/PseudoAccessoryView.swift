@@ -6,6 +6,7 @@ protocol PseudoAccessoryViewDelegate: AnyObject {
 
 public class PseudoAccessoryView: UIView {
     private let keyPathSelector = #keyPath(center)
+    private var oldFrame = CGRect.zero
 
     weak var delegate: PseudoAccessoryViewDelegate?
 
@@ -45,7 +46,8 @@ public class PseudoAccessoryView: UIView {
     }
 
     override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if let superview = superview, object as? UIView == superview, keyPath == keyPathSelector {
+        if let superview = superview, object as? UIView == superview, keyPath == keyPathSelector, superview.frame != oldFrame {
+            oldFrame = superview.frame
             delegate?.pseudoAccessoryView(self, keyboardFrameDidChange: superview.frame)
         }
     }
