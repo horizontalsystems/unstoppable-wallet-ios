@@ -214,7 +214,7 @@ class App {
                 adapterManager: adapterManager,
                 evmBlockchainManager: evmBlockchainManager
         )
-        nftMetadataSyncer = NftMetadataSyncer(nftAdapterManager: nftAdapterManager, nftMetadataManager: nftMetadataManager)
+        nftMetadataSyncer = NftMetadataSyncer(nftAdapterManager: nftAdapterManager, nftMetadataManager: nftMetadataManager, nftStorage: nftStorage)
 
         let enabledWalletCacheStorage = EnabledWalletCacheStorage(dbPool: dbPool)
         enabledWalletCacheManager = EnabledWalletCacheManager(storage: enabledWalletCacheStorage, accountManager: accountManager)
@@ -306,7 +306,8 @@ class App {
                 logRecordManager: logRecordManager,
                 deepLinkManager: deepLinkManager,
                 evmLabelManager: evmLabelManager,
-                walletConnectV2SocketConnectionService: walletConnectV2SocketConnectionService
+                walletConnectV2SocketConnectionService: walletConnectV2SocketConnectionService,
+                nftMetadataSyncer: nftMetadataSyncer
         )
     }
 

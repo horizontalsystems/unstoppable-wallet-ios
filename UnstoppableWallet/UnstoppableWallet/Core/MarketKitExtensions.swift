@@ -252,10 +252,10 @@ extension MarketKit.BlockchainType {
     var supportedNftTypes: [NftType] {
         switch self {
         case .ethereum: return [.eip721, .eip1155]
-        case .binanceSmartChain: return [.eip721]
-        case .polygon: return [.eip721, .eip1155]
-        case .avalanche: return [.eip721]
-        case .arbitrumOne: return [.eip721]
+//        case .binanceSmartChain: return [.eip721]
+//        case .polygon: return [.eip721, .eip1155]
+//        case .avalanche: return [.eip721]
+//        case .arbitrumOne: return [.eip721]
         default: return []
         }
     }

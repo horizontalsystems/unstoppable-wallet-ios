@@ -17,6 +17,7 @@ class AppManager {
     private let deepLinkManager: DeepLinkManager
     private let evmLabelManager: EvmLabelManager
     private let walletConnectV2SocketConnectionService: WalletConnectV2SocketConnectionService
+    private let nftMetadataSyncer: NftMetadataSyncer
 
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
@@ -27,7 +28,7 @@ class AppManager {
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
          logRecordManager: LogRecordManager,
          deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager,
-         walletConnectV2SocketConnectionService: WalletConnectV2SocketConnectionService
+         walletConnectV2SocketConnectionService: WalletConnectV2SocketConnectionService, nftMetadataSyncer: NftMetadataSyncer
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -43,6 +44,7 @@ class AppManager {
         self.deepLinkManager = deepLinkManager
         self.evmLabelManager = evmLabelManager
         self.walletConnectV2SocketConnectionService = walletConnectV2SocketConnectionService
+        self.nftMetadataSyncer = nftMetadataSyncer
     }
 
 }
@@ -95,6 +97,8 @@ extension AppManager {
         pinKit.willEnterForeground()
         adapterManager.refresh()
         walletConnectV2SocketConnectionService.willEnterForeground()
+
+        nftMetadataSyncer.sync()
     }
 
     func willTerminate() {

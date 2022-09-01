@@ -49,11 +49,11 @@ extension NftMetadataManager {
     }
 
     func addressMetadata(nftKey: NftKey) -> NftAddressMetadata? {
-        try? storage.addressMetadata(nftKey: nftKey)
+        storage.addressMetadata(nftKey: nftKey)
     }
 
     func handle(addressMetadata: NftAddressMetadata, nftKey: NftKey) {
-        try? storage.save(addressMetadata: addressMetadata, nftKey: nftKey)
+        storage.save(addressMetadata: addressMetadata, nftKey: nftKey)
         addressMetadataRelay.accept((nftKey, addressMetadata))
     }
 
