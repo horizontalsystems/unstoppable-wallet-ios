@@ -50,6 +50,16 @@ class NftDatabaseStorage {
             }
         }
 
+        migrator.registerMigration("create NftMetadataSyncRecord") { db in
+            try db.create(table: NftMetadataSyncRecord.databaseTableName) { t in
+                t.column(NftMetadataSyncRecord.Columns.blockchainTypeUid.name, .text).notNull()
+                t.column(NftMetadataSyncRecord.Columns.accountId.name, .text).notNull()
+                t.column(NftMetadataSyncRecord.Columns.lastSyncTimestamp.name, .double).notNull()
+
+                t.primaryKey([NftMetadataSyncRecord.Columns.blockchainTypeUid.name, NftMetadataSyncRecord.Columns.accountId.name], onConflict: .replace)
+            }
+        }
+
         return migrator
     }
 
@@ -89,6 +99,20 @@ extension NftDatabaseStorage {
             for asset in assets {
                 try asset.insert(db)
             }
+        }
+    }
+
+    func metadataSyncRecord(blockchainTypeUid: String, accountId: String) throws -> NftMetadataSyncRecord? {
+        try dbPool.read { db in
+            try NftMetadataSyncRecord
+                    .filter(NftMetadataSyncRecord.Columns.blockchainTypeUid == blockchainTypeUid && NftMetadataSyncRecord.Columns.accountId == accountId)
+                    .fetchOne(db)
+        }
+    }
+
+    func save(metadataSyncRecord: NftMetadataSyncRecord) throws {
+        _ = try dbPool.write { db in
+            try metadataSyncRecord.insert(db)
         }
     }
 
