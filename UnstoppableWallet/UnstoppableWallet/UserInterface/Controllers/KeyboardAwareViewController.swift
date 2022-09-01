@@ -74,10 +74,21 @@ class KeyboardAwareViewController: ThemeViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        observeKeyboard(true)
+    }
 
-        shouldObserveKeyboard = true
+    private func observeKeyboard(_ start: Bool) {
+        if start {
+
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+
+            shouldObserveKeyboard = true
+        } else {
+            NotificationCenter.default.removeObserver(self)
+
+            shouldObserveKeyboard = false
+        }
     }
 
     override open func viewDidAppear(_ animated: Bool) {
@@ -94,9 +105,7 @@ class KeyboardAwareViewController: ThemeViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        NotificationCenter.default.removeObserver(self)
-
-        shouldObserveKeyboard = false
+        observeKeyboard(false)
     }
 
     override open func viewDidDisappear(_ animated: Bool) {
@@ -115,11 +124,10 @@ class KeyboardAwareViewController: ThemeViewController {
             return
         }
         // check in visible only accessoryView. If true - keyboard is hidden
-        if let inputAccessoryViewHeight = accessoryView?.height, keyboardFrame.height.isZero || keyboardFrame.height == inputAccessoryViewHeight {
+        if let inputAccessoryViewHeight = accessoryView?.height, inputAccessoryViewHeight.isZero || keyboardFrame.height.isZero || keyboardFrame.height == inputAccessoryViewHeight {
             keyboardWillHide(notification: notification)
             return
         }
-
         // try to disable dismiss controller by swipe when keyboard is visible
         navigationController?.presentationController?.presentedView?.gestureRecognizers?.first?.isEnabled = false
         self.keyboardFrame = keyboardFrame
@@ -183,6 +191,8 @@ class KeyboardAwareViewController: ThemeViewController {
             view.endEditing(true)
         }
 
+        observeKeyboard(false)
+        viewControllerToPresent.presentationController?.delegate = self
         super.present(viewControllerToPresent, animated: flag, completion: completion)
     }
 
@@ -228,23 +238,18 @@ extension KeyboardAwareViewController: PseudoAccessoryViewDelegate {
 
 }
 
-extension UIView {
-    public func set(alpha: CGFloat, animated: Bool = true, duration: TimeInterval = 0.3, completion: ((Bool) -> ())? = nil) {
-        if alpha == self.alpha {
-            return
-        }
-        if animated {
-            if alpha != 0, isHidden {
-                isHidden = false
-            }
-            UIView.animate(withDuration: duration, animations: { [weak self] in
-                self?.alpha = alpha
-            }, completion: { success in
-                completion?(success)
-            })
-        } else {
-            self.alpha = alpha
-            completion?(true)
-        }
+extension KeyboardAwareViewController: UIAdaptivePresentationControllerDelegate {
+
+    public func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+//        print("presentationControllerWillDismiss : \(presentationController)")
+    }
+
+    public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        observeKeyboard(true)
+//        print("presentationControllerDidDismiss : \(presentationController)")
+    }
+
+    public func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+//        print("presentationControllerDidDismiss : \(presentationController)")
     }
 }

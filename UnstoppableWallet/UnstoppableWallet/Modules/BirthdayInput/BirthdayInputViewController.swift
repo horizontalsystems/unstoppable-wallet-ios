@@ -41,6 +41,10 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        print(" => \(self) Deinit")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -149,8 +153,9 @@ class BirthdayInputViewController: KeyboardAwareViewController {
 //        secondSeparatorView.backgroundColor = .themeSteel10
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
 
         if !didTapDone {
             delegate?.didCancelEnterBirthdayHeight()
@@ -182,21 +187,23 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         }
     }
 
-    private func showDisclaimer(setInputActive: Bool = true) {
+    private func showDisclaimer() {
         disclaimerShown = true
         // show disclaimer
-        let viewItem = ItemSelectorModule.SimpleTitleViewItem(title: "Hello World")
-        let item = ItemSelectorModule.Item.simple(viewItem: ItemSelectorModule.SimpleViewItem(title: "Job", selected: false))
-        let alertController = ItemSelectorModule.viewController(title: .simple(viewItem: viewItem), items: [item], onTap: { selector, index in
-            selector.dismiss(animated: true) { [weak self] in
-                if setInputActive {
-                    self?.setInputActive()
-                }
-            }
-        })
-        present(alertController.toBottomSheet, animated: true)
-        // show keyboard
 
+        let alertController = InformationModule.simpleInfo(
+                title: "alert.warning".localized,
+                image: UIImage(named: "circle_information_24"),
+                description: "restore_setting.download.disclaimer".localized,
+                buttonTitle: "button.ok".localized,
+                onTapButton: InformationModule.afterClose { [weak self] in
+                    self?.setInputActive()
+                },
+                onDismiss: {
+                    self?.setInputActive()
+                })
+
+        return present(alertController.toBottomSheet, animated: true)
     }
 
     private func setInputActive() {
@@ -208,23 +215,7 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         dismiss(animated: true)
     }
 
-
-
-//    @objc private func onTapCheckBox() {
-//        checkboxView.checked = !checkboxView.checked
-//
-//        heightInputView.isEnabled = !checkboxView.checked
-//        heightInputView.textColor = checkboxView.checked ? .themeGray : .themeLeah
-//    }
-
     @objc private func onTapDoneButton() {
-//        if checkboxView.checked {
-//            delegate?.didEnter(birthdayHeight: nil)
-//        } else {
-//            let birthdayHeight = heightInputView.inputText.flatMap { Int($0) } ?? 0
-//            delegate?.didEnter(birthdayHeight: birthdayHeight)
-//        }
-//
         didTapDone = true
         dismiss(animated: true)
     }

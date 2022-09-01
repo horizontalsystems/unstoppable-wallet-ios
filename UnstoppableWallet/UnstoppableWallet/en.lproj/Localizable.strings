@@ -26,6 +26,7 @@
 "alert.no_internet" = "No Internet";
 "alert.wrong_amount" = "Wrong Amount";
 "alert.no_fee" = "Wrong Fee";
+"alert.warning" = "Warning";
 "alert.unknown_error" = "Unknown Error";
 "alert.success_action" = "Done";
 
@@ -1137,6 +1138,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "birthday_input.old_wallet" = "Old Wallet";
 "birthday_input.input_placeholder" = "%@ (optional)";
 "restore_setting.birthday_height" = "%@ Birthday Height";
+"restore_setting.download.disclaimer" = "The initial synchronization with the blockchain can consume a lot of internet traffic.";
 
 // EVM Network
 

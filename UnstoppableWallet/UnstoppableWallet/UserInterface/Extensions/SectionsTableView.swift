@@ -24,13 +24,13 @@ extension SectionsTableView {
         )
     }
 
-    func highlightedDescriptionRow(id: String, text: String) -> RowProtocol {
+    func highlightedDescriptionRow(id: String, text: String, ignoreBottomMargin: Bool = false) -> RowProtocol {
         registerCell(forClass: HighlightedDescriptionCell.self)
 
         return Row<HighlightedDescriptionCell>(
                 id: id,
                 dynamicHeight: { width in
-                    HighlightedDescriptionCell.height(containerWidth: width, text: text)
+                    HighlightedDescriptionCell.height(containerWidth: width, text: text, ignoreBottomMargin: ignoreBottomMargin)
                 },
                 bind: { cell, _ in
                     cell.descriptionText = text

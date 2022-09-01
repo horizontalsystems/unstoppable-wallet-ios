@@ -198,7 +198,7 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     private func openSelectNetwork() {
-        let titleViewItem = ItemSelectorModule.ComplexTitleViewItem(
+        let titleViewItem = BottomSheetItem.ComplexTitleViewItem(
                 title: "wallet_connect.network".localized,
                 image: UIImage(named: "blocks_24")?.withTintColor(.themeJacob)
         )
@@ -207,7 +207,7 @@ class WalletConnectMainViewController: ThemeViewController {
 
         let items = viewItems.map {
             ItemSelectorModule.Item.simple(
-                    viewItem: ItemSelectorModule.SimpleViewItem(
+                    viewItem: BottomSheetItem.SimpleViewItem(
                             imageUrl: $0.imageUrl,
                             title: $0.title,
                             selected: $0.selected
