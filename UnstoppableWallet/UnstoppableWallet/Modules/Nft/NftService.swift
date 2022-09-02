@@ -206,7 +206,7 @@ class NftService {
                                 nftUid: record.nftUid,
                                 imageUrl: metadata?.previewImageUrl,
 //                                name: metadata?.name ?? record.displayName,
-                                name: record.blockchainType.uid + " - " + (metadata?.name ?? record.displayName),
+                                name: record.blockchainType.uid + " - " + (metadata?.displayName ?? ""),
                                 count: record.balance,
                                 onSale: metadata?.onSale ?? false,
                                 price: price

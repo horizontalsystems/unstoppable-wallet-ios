@@ -103,6 +103,7 @@ protocol INftProvider {
     func collectionLink(providerUid: String) -> ProviderLink?
     func addressMetadataSingle(blockchainType: BlockchainType, address: String) -> Single<NftAddressMetadata>
     func assetMetadataSingle(nftUid: NftUid) -> Single<NftAssetMetadata>
+    func collectionAssetsMetadataSingle(blockchainType: BlockchainType, providerCollectionUid: String, paginationData: PaginationData?) -> Single<([NftAssetMetadata], PaginationData?)>
     func collectionMetadataSingle(blockchainType: BlockchainType, providerUid: String) -> Single<NftCollectionMetadata>
 }
 

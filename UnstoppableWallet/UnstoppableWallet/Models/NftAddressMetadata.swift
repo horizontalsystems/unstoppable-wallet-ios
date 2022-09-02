@@ -20,4 +20,8 @@ struct NftAssetShortMetadata {
     let previewImageUrl: String?
     let onSale: Bool
     let lastSalePrice: NftPrice?
+
+    var displayName: String {
+        name ?? "#\(nftUid.tokenId)"
+    }
 }
