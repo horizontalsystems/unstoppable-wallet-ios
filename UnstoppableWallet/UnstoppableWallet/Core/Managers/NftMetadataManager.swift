@@ -66,6 +66,22 @@ extension NftMetadataManager {
         return provider.collectionMetadataSingle(blockchainType: blockchainType, providerUid: providerUid)
     }
 
+    func assetEventsMetadataSingle(nftUid: NftUid, eventType: NftEventMetadata.EventType?, paginationData: PaginationData? = nil) -> Single<([NftEventMetadata], PaginationData?)> {
+        guard let provider = providerMap[nftUid.blockchainType] else {
+            return Single.error(ProviderError.noProviderForBlockchainType)
+        }
+
+        return provider.assetEventsMetadataSingle(nftUid: nftUid, eventType: eventType, paginationData: paginationData)
+    }
+
+    func collectionEventsMetadataSingle(blockchainType: BlockchainType, providerUid: String, eventType: NftEventMetadata.EventType?, paginationData: PaginationData? = nil) -> Single<([NftEventMetadata], PaginationData?)> {
+        guard let provider = providerMap[blockchainType] else {
+            return Single.error(ProviderError.noProviderForBlockchainType)
+        }
+
+        return provider.collectionEventsMetadataSingle(blockchainType: blockchainType, providerUid: providerUid, eventType: eventType, paginationData: paginationData)
+    }
+
     func addressMetadata(nftKey: NftKey) -> NftAddressMetadata? {
         storage.addressMetadata(nftKey: nftKey)
     }

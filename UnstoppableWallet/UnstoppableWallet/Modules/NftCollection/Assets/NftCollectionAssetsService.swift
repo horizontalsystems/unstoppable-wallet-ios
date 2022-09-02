@@ -26,8 +26,6 @@ class NftCollectionAssetsService {
         self.providerCollectionUid = providerCollectionUid
         self.nftMetadataManager = nftMetadataManager
         self.coinPriceService = coinPriceService
-
-        _loadInitial()
     }
 
     private func _loadInitial() {
@@ -151,6 +149,12 @@ extension NftCollectionAssetsService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
+    }
+
+    func loadInitial() {
+        queue.async {
+            self._loadInitial()
+        }
     }
 
     func reload() {

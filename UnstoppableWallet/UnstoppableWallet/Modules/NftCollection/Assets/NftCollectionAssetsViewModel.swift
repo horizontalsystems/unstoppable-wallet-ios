@@ -87,6 +87,10 @@ extension NftCollectionAssetsViewModel {
         syncErrorRelay.asDriver()
     }
 
+    func onLoad() {
+        service.loadInitial()
+    }
+
     func onTapRetry() {
         service.reload()
     }

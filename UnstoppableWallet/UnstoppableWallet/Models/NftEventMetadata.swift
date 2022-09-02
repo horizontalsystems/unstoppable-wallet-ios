@@ -25,8 +25,3 @@ extension NftEventMetadata {
     }
 
 }
-
-//struct PagedNftEvents {
-//    let events: [NftEvent]
-//    let cursor: String?
-//}

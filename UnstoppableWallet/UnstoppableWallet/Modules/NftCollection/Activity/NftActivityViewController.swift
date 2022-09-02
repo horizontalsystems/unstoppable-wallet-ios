@@ -103,6 +103,8 @@ class NftActivityViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
             self?.errorView.isHidden = !visible
         }
+
+        viewModel.onLoad()
     }
 
     @objc private func onRetry() {

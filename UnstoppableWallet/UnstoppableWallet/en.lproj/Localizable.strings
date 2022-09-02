@@ -1249,7 +1249,7 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "nft.activity.event_type.sale" = "Sale";
 "nft.activity.event_type.offer" = "Offer Entered";
 "nft.activity.event_type.bid" = "Bid Entered";
-"nft.activity.event_type.bid_cancel" = "Bid Withdrawn";
+"nft.activity.event_type.bidCancel" = "Bid Withdrawn";
 "nft.activity.event_type.transfer" = "Transfer";
 "nft.activity.event_type.approve" = "Approve";
 "nft.activity.event_type.custom" = "Custom";
