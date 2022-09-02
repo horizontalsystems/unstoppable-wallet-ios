@@ -60,12 +60,12 @@ class NftCollectionAssetsViewModel {
         }
 
         return NftDoubleCell.ViewItem(
-                providerCollectionUid: asset.collectionUid,
-                nftUid: .evm(blockchainType: .ethereum, contractAddress: asset.contract.address, tokenId: asset.tokenId),
-                imageUrl: asset.imagePreviewUrl,
-                name: asset.name ?? "#\(asset.tokenId)",
+                providerCollectionUid: asset.providerCollectionUid,
+                nftUid: asset.nftUid,
+                imageUrl: asset.previewImageUrl,
+                name: asset.displayName,
                 count: nil,
-                onSale: asset.onSale,
+                onSale: false, // todo
                 coinPrice: coinPrice,
                 fiatPrice: fiatPrice
         )
@@ -85,10 +85,6 @@ extension NftCollectionAssetsViewModel {
 
     var syncErrorDriver: Driver<Bool> {
         syncErrorRelay.asDriver()
-    }
-
-    func asset(tokenId: String) -> NftAsset? {
-        service.asset(tokenId: tokenId)
     }
 
     func onTapRetry() {

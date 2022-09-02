@@ -19,6 +19,10 @@ struct NftAssetMetadata {
     let bestOffer: NftPrice?
     let saleInfo: SaleInfo?
 
+    var displayName: String {
+        name ?? "#\(nftUid.tokenId)"
+    }
+
     struct SaleInfo {
         let untilDate: Date
         let type: SalePriceType

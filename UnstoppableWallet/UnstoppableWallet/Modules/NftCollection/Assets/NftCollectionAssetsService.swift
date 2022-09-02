@@ -3,8 +3,9 @@ import RxRelay
 import MarketKit
 
 class NftCollectionAssetsService {
-    private let collectionUid: String
-    private let marketKit: MarketKit.Kit
+    private let blockchainType: BlockchainType
+    private let providerCollectionUid: String
+    private let nftMetadataManager: NftMetadataManager
     private let coinPriceService: WalletCoinPriceService
     private var disposeBag = DisposeBag()
 
@@ -15,14 +16,15 @@ class NftCollectionAssetsService {
         }
     }
 
-    private var cursor: String?
+    private var paginationData: PaginationData?
     private var loadingMore = false
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-collection-assets-service", qos: .userInitiated)
 
-    init(collectionUid: String, marketKit: MarketKit.Kit, coinPriceService: WalletCoinPriceService) {
-        self.collectionUid = collectionUid
-        self.marketKit = marketKit
+    init(blockchainType: BlockchainType, providerCollectionUid: String, nftMetadataManager: NftMetadataManager, coinPriceService: WalletCoinPriceService) {
+        self.blockchainType = blockchainType
+        self.providerCollectionUid = providerCollectionUid
+        self.nftMetadataManager = nftMetadataManager
         self.coinPriceService = coinPriceService
 
         _loadInitial()
@@ -33,10 +35,10 @@ class NftCollectionAssetsService {
 
         state = .loading
 
-        marketKit.nftAssetsSingle(collectionUid: collectionUid)
+        nftMetadataManager.collectionAssetsMetadataSingle(blockchainType: blockchainType, providerCollectionUid: providerCollectionUid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] pagedAssets in
-                    self?.handle(pagedAssets: pagedAssets)
+                .subscribe(onSuccess: { [weak self] (assets, paginationData) in
+                    self?.handle(assets: assets, paginationData: paginationData)
                 }, onError: { [weak self] error in
                     self?.handle(error: error)
                 })
@@ -44,7 +46,7 @@ class NftCollectionAssetsService {
     }
 
     private func _loadMore() {
-        guard cursor != nil else {
+        guard paginationData != nil else {
             return
         }
 
@@ -54,10 +56,10 @@ class NftCollectionAssetsService {
 
         loadingMore = true
 
-        marketKit.nftAssetsSingle(collectionUid: collectionUid, cursor: cursor)
+        nftMetadataManager.collectionAssetsMetadataSingle(blockchainType: blockchainType, providerCollectionUid: providerCollectionUid, paginationData: paginationData)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] pagedAssets in
-                    self?.handleMore(pagedAssets: pagedAssets)
+                .subscribe(onSuccess: { [weak self] (assets, paginationData) in
+                    self?.handleMore(assets: assets, paginationData: paginationData)
                     self?.loadingMore = false
                 }, onError: { [weak self] error in
                     self?.loadingMore = false
@@ -65,21 +67,21 @@ class NftCollectionAssetsService {
                 .disposed(by: disposeBag)
     }
 
-    private func handle(pagedAssets: PagedNftAssets) {
+    private func handle(assets: [NftAssetMetadata], paginationData: PaginationData?) {
         queue.async {
-            self.cursor = pagedAssets.cursor
-            self.state = .loaded(items: self.items(assets: pagedAssets.assets), allLoaded: self.cursor == nil)
+            self.paginationData = paginationData
+            self.state = .loaded(items: self.items(assets: assets), allLoaded: self.paginationData == nil)
         }
     }
 
-    private func handleMore(pagedAssets: PagedNftAssets) {
+    private func handleMore(assets: [NftAssetMetadata], paginationData: PaginationData?) {
         queue.async {
             guard case .loaded(let items, _) = self.state else {
                 return
             }
 
-            self.cursor = pagedAssets.cursor
-            self.state = .loaded(items: items + self.items(assets: pagedAssets.assets), allLoaded: self.cursor == nil)
+            self.paginationData = paginationData
+            self.state = .loaded(items: items + self.items(assets: assets), allLoaded: self.paginationData == nil)
         }
     }
 
@@ -89,7 +91,7 @@ class NftCollectionAssetsService {
         }
     }
 
-    private func items(assets: [NftAsset]) -> [Item] {
+    private func items(assets: [NftAssetMetadata]) -> [Item] {
         let items = assets.map { asset in
             Item(asset: asset, price: asset.lastSalePrice)
         }
@@ -163,14 +165,6 @@ extension NftCollectionAssetsService {
         }
     }
 
-    func asset(tokenId: String) -> NftAsset? {
-        guard case .loaded(let items, _) = state else {
-            return nil
-        }
-
-        return items.first { $0.asset.tokenId == tokenId }?.asset
-    }
-
 }
 
 extension NftCollectionAssetsService {
@@ -182,11 +176,11 @@ extension NftCollectionAssetsService {
     }
 
     class Item {
-        let asset: NftAsset
+        let asset: NftAssetMetadata
         let price: NftPrice?
         var priceItem: WalletCoinPriceService.Item?
 
-        init(asset: NftAsset, price: NftPrice?) {
+        init(asset: NftAssetMetadata, price: NftPrice?) {
             self.asset = asset
             self.price = price
         }

@@ -50,6 +50,14 @@ extension NftMetadataManager {
         return provider.assetMetadataSingle(nftUid: nftUid)
     }
 
+    func collectionAssetsMetadataSingle(blockchainType: BlockchainType, providerCollectionUid: String, paginationData: PaginationData? = nil) -> Single<([NftAssetMetadata], PaginationData?)> {
+        guard let provider = providerMap[blockchainType] else {
+            return Single.error(ProviderError.noProviderForBlockchainType)
+        }
+
+        return provider.collectionAssetsMetadataSingle(blockchainType: blockchainType, providerCollectionUid: providerCollectionUid, paginationData: paginationData)
+    }
+
     func collectionMetadataSingle(blockchainType: BlockchainType, providerUid: String) -> Single<NftCollectionMetadata> {
         guard let provider = providerMap[blockchainType] else {
             return Single.error(ProviderError.noProviderForBlockchainType)
@@ -75,4 +83,23 @@ extension NftMetadataManager {
         case noProviderForBlockchainType
     }
 
+}
+
+enum PaginationData {
+    case cursor(value: String)
+    case page(value: Int)
+
+    var cursor: String? {
+        switch self {
+        case .cursor(let value): return value
+        default: return nil
+        }
+    }
+
+    var page: Int? {
+        switch self {
+        case .page(let value): return value
+        default: return nil
+        }
+    }
 }

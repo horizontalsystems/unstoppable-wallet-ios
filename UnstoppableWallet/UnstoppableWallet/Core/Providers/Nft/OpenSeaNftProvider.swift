@@ -312,6 +312,19 @@ extension OpenSeaNftProvider: INftProvider {
                 }
     }
 
+    func collectionAssetsMetadataSingle(blockchainType: BlockchainType, providerCollectionUid: String, paginationData: PaginationData?) -> Single<([NftAssetMetadata], PaginationData?)> {
+        assetsSingle(collection: providerCollectionUid, cursor: paginationData?.cursor)
+                .map { [weak self] response in
+                    guard let strongSelf = self else {
+                        throw ProviderError.weakReference
+                    }
+
+                    let assets = response.assets.map { strongSelf.asset(blockchainType: blockchainType, response: $0) }
+
+                    return (assets, response.cursor.map { .cursor(value: $0) })
+                }
+    }
+
     func collectionMetadataSingle(blockchainType: BlockchainType, providerUid: String) -> Single<NftCollectionMetadata> {
         collectionSingle(slug: providerUid)
                 .map { [weak self] response in
@@ -509,7 +522,7 @@ extension OpenSeaNftProvider {
         let assets: [NftAssetResponse]
 
         init(map: Map) throws {
-            cursor = try? map.value("cursor.next")
+            cursor = try? map.value("next")
             assets = try map.value("assets")
         }
     }
