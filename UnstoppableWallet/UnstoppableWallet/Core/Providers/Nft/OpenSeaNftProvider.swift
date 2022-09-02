@@ -78,6 +78,33 @@ class OpenSeaNftProvider {
         return networkManager.single(request: request)
     }
 
+    private func eventsSingle(collection: String? = nil, contractAddress: String? = nil, tokenId: String? = nil, eventType: String?, cursor: String?) -> Single<NftEventsResponse> {
+        var parameters: Parameters = [:]
+
+        if let collection = collection {
+            parameters["collection_slug"] = collection
+        }
+
+        if let contractAddress = contractAddress {
+            parameters["asset_contract_address"] = contractAddress
+        }
+
+        if let tokenId = tokenId {
+            parameters["token_id"] = tokenId
+        }
+
+        if let eventType = eventType {
+            parameters["event_type"] = eventType
+        }
+
+        if let cursor = cursor {
+            parameters["cursor"] = cursor
+        }
+
+        let request = networkManager.session.request("\(baseUrl)/events", parameters: parameters, encoding: encoding, headers: headers)
+        return networkManager.single(request: request)
+    }
+
     private func recursiveCollectionsSingle(address: String, offset: Int = 0, allCollections: [NftCollectionResponse] = []) -> Single<[NftCollectionResponse]> {
         collectionsSingle(address: address, offset: offset)
                 .flatMap { [weak self] collections in
@@ -207,6 +234,37 @@ class OpenSeaNftProvider {
         )
     }
 
+    private func events(blockchainType: BlockchainType, responses: [NftEventResponse]) -> [NftEventMetadata] {
+        var addresses = [String]()
+
+        for response in responses {
+            if let paymentToken = response.paymentToken {
+                addresses.append(paymentToken.address)
+            }
+        }
+
+        let tokenMap = tokenMap(addresses: addresses)
+
+        return responses.compactMap { response in
+            var amount: NftPrice?
+
+            if let paymentToken = response.paymentToken, let value = response.amount {
+                amount = nftPrice(token: tokenMap[paymentToken.address], value: value, shift: true)
+            }
+
+            guard let assetResponse = response.asset else {
+                return nil
+            }
+
+            return NftEventMetadata(
+                    asset: asset(blockchainType: blockchainType, response: assetResponse, tokenMap: [:]),
+                    type: eventType(openSeaEventType: response.type),
+                    date: response.date,
+                    amount: amount
+            )
+        }
+    }
+
     private func nftPrice(token: Token?, value: Decimal?, shift: Bool) -> NftPrice? {
         guard let token = token, let value = value else {
             return nil
@@ -246,6 +304,47 @@ class OpenSeaNftProvider {
             return map
         } catch {
             return [:]
+        }
+    }
+
+    private func openSeaEventType(eventType: NftEventMetadata.EventType?) -> String? {
+        guard let eventType = eventType else {
+            return nil
+        }
+
+        switch eventType {
+        case .list: return "created"
+        case .sale: return "successful"
+        case .offer: return "offer_entered"
+        case .bid: return "bid_entered"
+        case .bidCancel: return "bid_withdrawn"
+        case .transfer: return "transfer"
+        case .approve: return "approve"
+        case .custom: return "custom"
+        case .payout: return "payout"
+        case .cancel: return "cancelled"
+        case .bulkCancel: return "bulk_cancel"
+        }
+    }
+
+    private func eventType(openSeaEventType: String?) -> NftEventMetadata.EventType? {
+        guard let openSeaEventType = openSeaEventType else {
+            return nil
+        }
+
+        switch openSeaEventType {
+        case "created": return .list
+        case "successful": return .sale
+        case "offer_entered": return .offer
+        case "bid_entered": return .bid
+        case "bid_withdrawn": return .bidCancel
+        case "transfer": return .transfer
+        case "approve": return .approve
+        case "custom": return .custom
+        case "payout": return .payout
+        case "cancelled": return .cancel
+        case "bulk_cancel": return .bulkCancel
+        default: return nil
         }
     }
 
@@ -336,6 +435,32 @@ extension OpenSeaNftProvider: INftProvider {
                 }
     }
 
+    func assetEventsMetadataSingle(nftUid: NftUid, eventType: NftEventMetadata.EventType?, paginationData: PaginationData?) -> Single<([NftEventMetadata], PaginationData?)> {
+        eventsSingle(contractAddress: nftUid.contractAddress, tokenId: nftUid.tokenId, eventType: openSeaEventType(eventType: eventType), cursor: paginationData?.cursor)
+                .map { [weak self] response in
+                    guard let strongSelf = self else {
+                        throw ProviderError.weakReference
+                    }
+
+                    let events = strongSelf.events(blockchainType: nftUid.blockchainType, responses: response.events)
+
+                    return (events, response.cursor.map { .cursor(value: $0) })
+                }
+    }
+
+    func collectionEventsMetadataSingle(blockchainType: BlockchainType, providerUid: String, eventType: NftEventMetadata.EventType?, paginationData: PaginationData?) -> Single<([NftEventMetadata], PaginationData?)> {
+        eventsSingle(collection: providerUid, eventType: openSeaEventType(eventType: eventType), cursor: paginationData?.cursor)
+                .map { [weak self] response in
+                    guard let strongSelf = self else {
+                        throw ProviderError.weakReference
+                    }
+
+                    let events = strongSelf.events(blockchainType: blockchainType, responses: response.events)
+
+                    return (events, response.cursor.map { .cursor(value: $0) })
+                }
+    }
+
 }
 
 extension OpenSeaNftProvider {
@@ -390,9 +515,9 @@ extension OpenSeaNftProvider {
             description = try? map.value("description")
             externalLink = try? map.value("external_link")
             permalink = try? map.value("permalink")
-            traits = try map.value("traits")
+            traits = (try? map.value("traits")) ?? []
             lastSale = try? map.value("last_sale")
-//            sellOrders = try map.value("seaport_sell_orders")
+//            sellOrders = (try? map.value("seaport_sell_orders")) ?? []
             sellOrders = []
         }
     }
@@ -517,6 +642,33 @@ extension OpenSeaNftProvider {
         }
     }
 
+    private struct NftEventResponse: ImmutableMappable {
+        private static let reusableDateFormatter: DateFormatter = {
+            let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd'T'HH:mm:ss", locale: "en_US_POSIX")
+            dateFormatter.timeZone = TimeZone(abbreviation: "GMT")!
+            return dateFormatter
+        }()
+        private static let reusableDateFormatter2: DateFormatter = {
+            let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS", locale: "en_US_POSIX")
+            dateFormatter.timeZone = TimeZone(abbreviation: "GMT")!
+            return dateFormatter
+        }()
+
+        let asset: NftAssetResponse?
+        let type: String
+        let date: Date
+        let amount: Decimal?
+        let paymentToken: NftPaymentTokenResponse?
+
+        init(map: Map) throws {
+            asset = try? map.value("asset")
+            type = try map.value("event_type")
+            date = try (try? map.value("event_timestamp", using: DateFormatterTransform(dateFormatter: Self.reusableDateFormatter))) ?? map.value("event_timestamp", using: DateFormatterTransform(dateFormatter: Self.reusableDateFormatter2))
+            amount = try? map.value("total_price", using: Transform.stringToDecimalTransform)
+            paymentToken = try? map.value("payment_token")
+        }
+    }
+
     private struct NftAssetsResponse: ImmutableMappable {
         let cursor: String?
         let assets: [NftAssetResponse]
@@ -524,6 +676,16 @@ extension OpenSeaNftProvider {
         init(map: Map) throws {
             cursor = try? map.value("next")
             assets = try map.value("assets")
+        }
+    }
+
+    private struct NftEventsResponse: ImmutableMappable {
+        let cursor: String?
+        let events: [NftEventResponse]
+
+        init(map: Map) throws {
+            cursor = try? map.value("next")
+            events = try map.value("asset_events")
         }
     }
 

@@ -14,7 +14,7 @@ struct NftCollectionModule {
         }
 
         let assetsController = NftCollectionAssetsModule.viewController(blockchainType: blockchainType, providerCollectionUid: providerCollectionUid)
-        let activityController = NftActivityModule.viewController(eventListType: .collection(uid: providerCollectionUid))
+        let activityController = NftActivityModule.viewController(eventListType: .collection(blockchainType: blockchainType, providerUid: providerCollectionUid))
 
         return NftCollectionViewController(
                 viewModel: viewModel,

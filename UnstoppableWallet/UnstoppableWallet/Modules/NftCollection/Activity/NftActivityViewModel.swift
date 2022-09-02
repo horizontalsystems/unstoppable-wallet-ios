@@ -24,7 +24,7 @@ class NftActivityViewModel {
         sync(state: service.state)
     }
 
-    private func sync(eventType: NftEvent.EventType?) {
+    private func sync(eventType: NftEventMetadata.EventType?) {
         eventTypeRelay.accept(title(eventType: eventType))
     }
 
@@ -70,29 +70,28 @@ class NftActivityViewModel {
         let type: String
 
         if let eventType = event.type {
-            type = "nft.activity.event_type.\(eventType.rawValue)".localized
+            type = "nft.activity.event_type.\(eventType)".localized
         } else {
             type = "nft.activity.event_type.unknown".localized
         }
 
         return EventViewItem(
-                collectionUid: event.asset.collectionUid,
-                contractAddress: event.asset.contract.address,
-                tokenId: event.asset.tokenId,
+                providerCollectionUid: event.asset.providerCollectionUid,
+                nftUid: event.asset.nftUid,
                 type: type,
                 date: DateHelper.instance.formatFullTime(from: event.date),
-                imageUrl: event.asset.imagePreviewUrl,
+                imageUrl: event.asset.previewImageUrl,
                 coinPrice: coinPrice,
                 fiatPrice: fiatPrice
         )
     }
 
-    private func title(eventType: NftEvent.EventType?) -> String {
+    private func title(eventType: NftEventMetadata.EventType?) -> String {
         guard let eventType = eventType else {
             return "nft.activity.event_type.all".localized
         }
 
-        return "nft.activity.event_type.\(eventType.rawValue)".localized
+        return "nft.activity.event_type.\(eventType)".localized
     }
 
 }
@@ -143,6 +142,10 @@ extension NftActivityViewModel {
         syncErrorRelay.asDriver()
     }
 
+    func onLoad() {
+        service.loadInitial()
+    }
+
     func onTapRetry() {
         service.reload()
     }
@@ -161,9 +164,8 @@ extension NftActivityViewModel {
     }
 
     struct EventViewItem {
-        let collectionUid: String
-        let contractAddress: String
-        let tokenId: String
+        let providerCollectionUid: String
+        let nftUid: NftUid
         let type: String
         let date: String
         let imageUrl: String?
