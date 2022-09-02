@@ -48,30 +48,32 @@ class NftCollectionOverviewViewModel {
                 logoImageUrl: collection.imageUrl,
                 name: collection.name,
                 description: collection.description,
-                contracts: collection.contracts.map { contractViewItem(contract: $0) },
+                contracts: collection.contracts.map { contractViewItem(address: $0) },
                 links: linkViewItems(collection: collection),
-                statCharts: statViewItem(item: item)
+                statCharts: statViewItem(collection: collection)
         )
     }
 
-    private func contractViewItem(contract: NftCollection.Contract) -> ContractViewItem {
+    private func contractViewItem(address: String) -> ContractViewItem {
         ContractViewItem(
-                iconUrl: BlockchainType.ethereum.imageUrl,
-                reference: contract.address,
-                explorerUrl: "https://etherscan.io/token/\(contract.address)"
+                iconUrl: service.blockchainType.imageUrl,
+                reference: address,
+                explorerUrl: service.blockchain?.explorerUrl.map { $0.replacingOccurrences(of: "$ref", with: address) }
         )
     }
 
-    private func linkViewItems(collection: NftCollection) -> [LinkViewItem] {
+    private func linkViewItems(collection: NftCollectionMetadata) -> [LinkViewItem] {
         var viewItems = [LinkViewItem]()
 
-        if let url = collection.externalUrl {
+        if let url = collection.externalLink {
             viewItems.append(LinkViewItem(type: .website, url: url))
         }
 
-        viewItems.append(LinkViewItem(type: .openSea, url: "https://opensea.io/collection/\(collection.uid)"))
+        if let providerLink = service.providerLink {
+            viewItems.append(LinkViewItem(type: .provider(title: providerLink.title), url: providerLink.url))
+        }
 
-        if let url = collection.discordUrl {
+        if let url = collection.discordLink {
             viewItems.append(LinkViewItem(type: .discord, url: url))
         }
         if let username = collection.twitterUsername {
@@ -152,14 +154,14 @@ class NftCollectionOverviewViewModel {
         )
     }
 
-    private func statViewItem(item: NftCollectionOverviewService.Item) -> StatChartViewItem {
+    private func statViewItem(collection: NftCollectionMetadata) -> StatChartViewItem {
         StatChartViewItem(
-                ownerCount: item.collection.stats.ownerCount.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
-                itemCount: item.collection.stats.count.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
-                oneDayVolumeItems: statPricePointViewItem(title: "nft_collection.overview.24h_volume".localized, pricePoints: item.collection.statCharts?.oneDayVolumePoints),
-                averagePriceItems: statPricePointViewItem(title: "nft_collection.overview.all_time_average".localized, pricePoints: item.collection.statCharts?.averagePricePoints),
-                floorPriceItems: statPricePointViewItem(title: "nft_collection.overview.floor_price".localized, pricePoints: item.collection.statCharts?.floorPricePoints),
-                oneDaySalesItems: statPointViewItem(title: "nft_collection.overview.today_sellers".localized, points: item.collection.statCharts?.oneDaySalesPoints, averagePrice: item.collection.stats.averagePrice1d)
+                ownerCount: collection.ownerCount.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
+                itemCount: collection.count.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
+                oneDayVolumeItems: statPricePointViewItem(title: "nft_collection.overview.24h_volume".localized, pricePoints: []),
+                averagePriceItems: statPricePointViewItem(title: "nft_collection.overview.all_time_average".localized, pricePoints: []),
+                floorPriceItems: statPricePointViewItem(title: "nft_collection.overview.floor_price".localized, pricePoints: []),
+                oneDaySalesItems: statPointViewItem(title: "nft_collection.overview.today_sellers".localized, points: [], averagePrice: collection.averagePrice1d)
         )
     }
 
@@ -199,7 +201,7 @@ extension NftCollectionOverviewViewModel {
     struct ContractViewItem {
         let iconUrl: String
         let reference: String
-        let explorerUrl: String
+        let explorerUrl: String?
     }
 
     struct LinkViewItem {
@@ -218,7 +220,7 @@ extension NftCollectionOverviewViewModel {
 
     enum LinkType {
         case website
-        case openSea
+        case provider(title: String)
         case discord
         case twitter
     }
