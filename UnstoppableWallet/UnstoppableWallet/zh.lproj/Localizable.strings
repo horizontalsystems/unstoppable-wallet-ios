@@ -2,6 +2,7 @@
 "button.apply" = "Apply";
 "button.cancel" = "Cancel";
 "button.close" = "Close";
+"button.continue" = "Continue";
 "button.done" = "Done";
 "button.reset" = "Reset";
 "button.restore" = "Restore";
@@ -26,6 +27,7 @@
 "alert.no_internet" = "No Internet";
 "alert.wrong_amount" = "Wrong Amount";
 "alert.no_fee" = "Wrong Fee";
+"alert.warning" = "Warning";
 "alert.unknown_error" = "Unknown Error";
 "alert.success_action" = "Done";
 
@@ -1132,10 +1134,15 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 // Birthday Input
 
 "birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "If you know your birthday height of wallet enter it for quick syncing.";
-"birthday_input.new_wallet" = "It's a new Wallet";
+"birthday_input.description" = "For quick synchronization you can enter the wallet's birthday height.";
+"birthday_input.new_wallet" = "New Wallet";
+"birthday_input.new_wallet.description" = "Don’t have any transaction before";
+"birthday_input.old_wallet" = "Old Wallet";
+"birthday_input.old_wallet.description" = "Used before and has transactions";
 "birthday_input.input_placeholder" = "%@ (optional)";
+
 "restore_setting.birthday_height" = "%@ Birthday Height";
+"restore_setting.download.disclaimer" = "The initial synchronization with the blockchain can consume a lot of internet traffic.";
 
 // EVM Network
 
