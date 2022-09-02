@@ -138,6 +138,14 @@ class ManageAccountsViewController: ThemeViewController {
         tableView.reload(animated: true)
     }
 
+    private func showBackupModule(account: Account) {
+        guard let viewController = BackupModule.viewController(account: account) else {
+            return
+        }
+
+        present(viewController, animated: true)
+    }
+
 }
 
 extension ManageAccountsViewController {
@@ -158,7 +166,10 @@ extension ManageAccountsViewController: ICreateAccountListener {
                 return
             }
 
-            let viewController = BackupPromptViewController(account: account, sourceViewController: self).toBottomSheet
+            let viewController = InformationModule.backupPrompt { [weak self] in
+                self?.showBackupModule(account: account)
+            }
+
             self?.present(viewController, animated: true)
         }
     }

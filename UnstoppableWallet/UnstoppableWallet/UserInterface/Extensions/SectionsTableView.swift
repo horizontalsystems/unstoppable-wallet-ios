@@ -38,6 +38,20 @@ extension SectionsTableView {
         )
     }
 
+    func descriptionRow(id: String, text: String, ignoreBottomMargin: Bool = false) -> RowProtocol {
+        registerCell(forClass: DescriptionCell.self)
+
+        return Row<DescriptionCell>(
+                id: id,
+                dynamicHeight: { width in
+                    DescriptionCell.height(containerWidth: width, text: text, ignoreBottomMargin: ignoreBottomMargin)
+                },
+                bind: { cell, _ in
+                    cell.bind(text: text)
+                }
+        )
+    }
+
     func subtitleRow(text: String) -> RowProtocol {
         CellBuilder.row(
                 elements: [.text],

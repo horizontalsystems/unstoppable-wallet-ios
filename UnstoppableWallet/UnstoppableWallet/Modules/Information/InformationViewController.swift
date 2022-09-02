@@ -104,10 +104,22 @@ class InformationViewController: ThemeActionSheetController {
         }
     }
 
-    private func descriptionSection(text: String) -> SectionProtocol {
+    private func descriptionSection(text: String, isHighlighted: Bool = true) -> SectionProtocol {
         Section(
                 id: "description_section",
-                rows: [tableView.highlightedDescriptionRow(id: "description_\(text)", text: text, ignoreBottomMargin: true)]
+                rows: [
+                    isHighlighted ?
+                        tableView.highlightedDescriptionRow(id: "description_\(text)", text: text, ignoreBottomMargin: true) :
+                        tableView.descriptionRow(id: "description_\(text)", text: text, ignoreBottomMargin: true)
+                ]
+        )
+    }
+
+    private func marginSection(height: CGFloat) -> SectionProtocol {
+        Section(
+                id: "description_section",
+                headerState: .margin(height: height),
+                rows: []
         )
     }
 
@@ -124,7 +136,7 @@ class InformationViewController: ThemeActionSheetController {
 
         return Section(
                 id: "item_section",
-                footerState: .margin(height: .margin16),
+                headerState: .margin(height: .margin12),
                 rows: rows
         )
     }
@@ -174,7 +186,8 @@ extension InformationViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         items.enumerated().map { (index: Int, item: InformationModule.Item) in
             switch item {
-            case .description(let text): return descriptionSection(text: text)
+            case let .description(text, isHighlighted): return descriptionSection(text: text, isHighlighted: isHighlighted)
+            case .margin(let height): return marginSection(height: height)
             case .section(let items): return itemSection(items: items)
             }
         }

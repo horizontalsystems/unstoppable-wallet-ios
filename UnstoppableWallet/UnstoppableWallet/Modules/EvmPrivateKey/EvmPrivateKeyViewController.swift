@@ -70,8 +70,9 @@ class EvmPrivateKeyViewController: ThemeViewController {
     }
 
     @objc private func onTapCopy() {
-        let viewController = CopyConfirmationViewController(value: viewModel.privateKey)
-        present(viewController.toBottomSheet, animated: true)
+
+        let viewController = InformationModule.copyConfirmation(value: viewModel.privateKey)
+        present(viewController, animated: true)
     }
 
     private func toggle() {

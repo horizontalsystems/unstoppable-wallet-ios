@@ -44,9 +44,13 @@ class BaseCurrencySettingsViewController: ThemeViewController {
     }
 
     private func openDisclaimer(codes: String) {
-        let viewController = BaseCurrencyDisclaimerViewController(codes: codes) { [weak self] in
+        let title = BottomSheetItem.ComplexTitleViewItem(title: "settings.base_currency.disclaimer".localized, image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob))
+        let description = InformationModule.Item.description(text: "settings.base_currency.disclaimer.description".localized(codes), isHighlighted: true)
+        let setButton = InformationModule.ButtonItem(style: .yellow, title: "settings.base_currency.disclaimer.set".localized, action: InformationModule.afterClose{ [weak self] in
             self?.viewModel.onAcceptDisclaimer()
-        }
+        })
+        let cancelButton = InformationModule.ButtonItem(style: .transparent, title: "button.cancel".localized, action: InformationModule.afterClose())
+        let viewController = InformationModule.viewController(title: .complex(viewItem: title), items: [description], buttons: [setButton, cancelButton]).toBottomSheet
 
         present(viewController.toBottomSheet, animated: true)
     }

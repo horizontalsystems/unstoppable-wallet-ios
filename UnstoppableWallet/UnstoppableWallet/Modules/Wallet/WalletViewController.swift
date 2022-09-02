@@ -299,9 +299,20 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openBackupRequired(wallet: Wallet) {
-        let text = "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name)
-        let module = BackupRequiredViewController(account: wallet.account, text: text, sourceViewController: self).toBottomSheet
-        present(module, animated: true)
+        let viewController = InformationModule.simpleInfo(
+                title: "backup_required.title".localized,
+                image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob),
+                description: "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name),
+                buttonTitle: "settings_manage_keys.backup".localized,
+                onTapButton: InformationModule.afterClose { [weak self] in
+                    guard let viewController = BackupModule.viewController(account: wallet.account) else {
+                        return
+                    }
+
+                    self?.present(viewController, animated: true)
+                })
+
+        present(viewController, animated: true)
     }
 
     private func openSyncError(wallet: Wallet, error: Error) {
@@ -352,7 +363,17 @@ class WalletViewController: ThemeViewController {
             return
         }
 
-        let viewController = BackupPromptViewController(account: account, sourceViewController: self).toBottomSheet
+        let viewController = InformationModule.backupPrompt { [weak self] in
+            self?.showBackupModule(account: account)
+        }
+        present(viewController, animated: true)
+    }
+
+    private func showBackupModule(account: Account) {
+        guard let viewController = BackupModule.viewController(account: account) else {
+            return
+        }
+
         present(viewController, animated: true)
     }
 
