@@ -40,26 +40,27 @@ class NftAssetOverviewViewModel {
     }
 
     private func viewItem(item: NftAssetOverviewService.Item) -> ViewItem {
-        let metadata = item.metadata
+        let asset = item.asset
+        let collection = item.collection
 
         return ViewItem(
-                imageUrl: metadata.imageUrl,
-                name: metadata.name ?? "#\(service.nftUid.tokenId)",
-                providerCollectionUid: metadata.providerCollectionUid,
-                collectionName: metadata.collectionName,
+                imageUrl: asset.imageUrl,
+                name: asset.name ?? "#\(service.nftUid.tokenId)",
+                providerCollectionUid: asset.providerCollectionUid,
+                collectionName: collection.name,
                 lastSale: priceViewItem(priceItem: item.lastSale),
                 average7d: priceViewItem(priceItem: item.average7d),
                 average30d: priceViewItem(priceItem: item.average30d),
                 collectionFloor: priceViewItem(priceItem: item.collectionFloor),
                 bestOffer: priceViewItem(priceItem: item.bestOffer),
                 sale: saleViewItem(saleItem: item.sale),
-                traits: metadata.traits.enumerated().map { traitViewItem(index: $0, trait: $1, totalSupply: metadata.collectionTotalSupply) },
-                description: metadata.description,
+                traits: asset.traits.enumerated().map { traitViewItem(index: $0, trait: $1, totalSupply: collection.totalSupply) },
+                description: asset.description,
                 contractAddress: service.nftUid.contractAddress,
                 tokenId: service.nftUid.tokenId,
-                schemaName: metadata.nftType,
+                schemaName: asset.nftType,
                 blockchain: service.nftUid.blockchainType.uid,
-                links: linkViewItems(metadata: metadata)
+                links: linkViewItems(asset: asset, collection: collection)
         )
     }
 
@@ -129,19 +130,19 @@ class NftAssetOverviewViewModel {
         )
     }
 
-    private func linkViewItems(metadata: NftAssetMetadata) -> [LinkViewItem] {
+    private func linkViewItems(asset: NftAssetMetadata, collection: NftCollectionMetadata) -> [LinkViewItem] {
         var viewItems = [LinkViewItem]()
 
-        if let url = metadata.websiteLink {
+        if let url = asset.externalLink {
             viewItems.append(LinkViewItem(type: .website, url: url))
         }
-        if let providerLink = metadata.providerLink {
+        if let providerLink = asset.providerLink {
             viewItems.append(LinkViewItem(type: .provider(title: providerLink.title), url: providerLink.url))
         }
-        if let url = metadata.collectionDiscordLink {
+        if let url = collection.discordLink {
             viewItems.append(LinkViewItem(type: .discord, url: url))
         }
-        if let username = metadata.collectionTwitterUsername {
+        if let username = collection.twitterUsername {
             viewItems.append(LinkViewItem(type: .twitter, url: "https://twitter.com/\(username)"))
         }
 
@@ -167,6 +168,10 @@ extension NftAssetOverviewViewModel {
         openTraitRelay.asSignal()
     }
 
+    var blockchainType: BlockchainType {
+        service.nftUid.blockchainType
+    }
+
     func onTapRetry() {
         service.resync()
     }
@@ -176,17 +181,17 @@ extension NftAssetOverviewViewModel {
             return
         }
 
-        guard index < item.metadata.traits.count else {
+        guard index < item.asset.traits.count else {
             return
         }
 
-        let trait = item.metadata.traits[index]
+        let trait = item.asset.traits[index]
 
         guard let traitName = trait.type.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let traitValue = trait.value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             return
         }
 
-        guard let providerTraitLink = item.metadata.providerTraitLink else {
+        guard let providerTraitLink = item.asset.providerTraitLink else {
             return
         }
 

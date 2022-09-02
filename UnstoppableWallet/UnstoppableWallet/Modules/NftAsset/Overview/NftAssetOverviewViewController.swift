@@ -236,8 +236,8 @@ class NftAssetOverviewViewController: ThemeViewController {
         }
     }
 
-    private func openCollection(uid: String) {
-        if let module = NftCollectionModule.viewController(collectionUid: uid) {
+    private func openCollection(providerUid: String) {
+        if let module = NftCollectionModule.viewController(blockchainType: viewModel.blockchainType, providerCollectionUid: providerUid) {
             (parentNavigationController ?? navigationController)?.pushViewController(module, animated: true)
         }
     }
@@ -281,7 +281,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         )
     }
 
-    private func titleSection(assetName: String, collectionName: String, collectionUid: String) -> SectionProtocol {
+    private func titleSection(assetName: String, collectionName: String, providerCollectionUid: String) -> SectionProtocol {
         Section(
                 id: "title",
                 headerState: .margin(height: .margin12),
@@ -316,7 +316,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                                 }
                             },
                             action: { [weak self] in
-                                self?.openCollection(uid: collectionUid)
+                                self?.openCollection(providerUid: providerCollectionUid)
                             }
                     )
                 ]
@@ -717,7 +717,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                 sections.append(imageSection(url: imageUrl, ratio: imageRatio))
             }
 
-            sections.append(titleSection(assetName: viewItem.name, collectionName: viewItem.collectionName, collectionUid: viewItem.providerCollectionUid))
+            sections.append(titleSection(assetName: viewItem.name, collectionName: viewItem.collectionName, providerCollectionUid: viewItem.providerCollectionUid))
             sections.append(buttonsSection())
 
             if let section = statsSection(viewItem: viewItem) {

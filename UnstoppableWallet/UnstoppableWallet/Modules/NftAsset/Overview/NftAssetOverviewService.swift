@@ -36,10 +36,13 @@ class NftAssetOverviewService {
 
         state = .loading
 
-        nftMetadataManager.assetMetadataSingle(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
+        Single.zip(
+                nftMetadataManager.collectionMetadataSingle(blockchainType: nftUid.blockchainType, providerUid: providerCollectionUid),
+                nftMetadataManager.assetMetadataSingle(nftUid: nftUid)
+        )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] metadata in
-                    self?.handle(item: Item(metadata: metadata))
+                .subscribe(onSuccess: { [weak self] collection, asset in
+                    self?.handle(item: Item(collection: collection, asset: asset))
                 }, onError: { [weak self] error in
                     self?.state = .failed(error)
                 })
@@ -124,7 +127,8 @@ extension NftAssetOverviewService {
 extension NftAssetOverviewService {
 
     class Item {
-        let metadata: NftAssetMetadata
+        let collection: NftCollectionMetadata
+        let asset: NftAssetMetadata
 
         var lastSale: PriceItem?
         var average7d: PriceItem?
@@ -133,15 +137,16 @@ extension NftAssetOverviewService {
         var bestOffer: PriceItem?
         var sale: SaleItem?
 
-        init(metadata: NftAssetMetadata) {
-            self.metadata = metadata
+        init(collection: NftCollectionMetadata, asset: NftAssetMetadata) {
+            self.collection = collection
+            self.asset = asset
 
-            lastSale = metadata.lastSalePrice.map { PriceItem(nftPrice: $0) }
-            average7d = metadata.collectionAveragePrice7d.map { PriceItem(nftPrice: $0) }
-            average30d = metadata.collectionAveragePrice30d.map { PriceItem(nftPrice: $0) }
-            collectionFloor = metadata.collectionFloorPrice.map { PriceItem(nftPrice: $0) }
-            bestOffer = metadata.bestOffer.map { PriceItem(nftPrice: $0) }
-            sale = metadata.saleInfo.map { saleInfo in
+            lastSale = asset.lastSalePrice.map { PriceItem(nftPrice: $0) }
+            average7d = collection.averagePrice7d.map { PriceItem(nftPrice: $0) }
+            average30d = collection.averagePrice30d.map { PriceItem(nftPrice: $0) }
+            collectionFloor = collection.floorPrice.map { PriceItem(nftPrice: $0) }
+            bestOffer = asset.bestOffer.map { PriceItem(nftPrice: $0) }
+            sale = asset.saleInfo.map { saleInfo in
                 SaleItem(
                         untilDate: saleInfo.untilDate,
                         type: saleInfo.type,

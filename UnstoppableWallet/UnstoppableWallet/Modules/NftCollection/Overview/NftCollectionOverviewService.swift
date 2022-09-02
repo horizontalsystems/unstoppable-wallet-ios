@@ -3,7 +3,9 @@ import RxRelay
 import MarketKit
 
 class NftCollectionOverviewService {
-    private let collectionUid: String
+    let blockchainType: BlockchainType
+    private let providerCollectionUid: String
+    private let nftMetadataManager: NftMetadataManager
     private let marketKit: MarketKit.Kit
     private var disposeBag = DisposeBag()
 
@@ -14,8 +16,10 @@ class NftCollectionOverviewService {
         }
     }
 
-    init(collectionUid: String, marketKit: MarketKit.Kit) {
-        self.collectionUid = collectionUid
+    init(blockchainType: BlockchainType, providerCollectionUid: String, nftMetadataManager: NftMetadataManager, marketKit: MarketKit.Kit) {
+        self.blockchainType = blockchainType
+        self.providerCollectionUid = providerCollectionUid
+        self.nftMetadataManager = nftMetadataManager
         self.marketKit = marketKit
 
         sync()
@@ -26,7 +30,7 @@ class NftCollectionOverviewService {
 
         state = .loading
 
-        marketKit.nftCollectionSingle(uid: collectionUid)
+        nftMetadataManager.collectionMetadataSingle(blockchainType: blockchainType, providerUid: providerCollectionUid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] collection in
                     let item = Item(collection: collection)
@@ -45,6 +49,14 @@ extension NftCollectionOverviewService {
         stateRelay.asObservable()
     }
 
+    var blockchain: Blockchain? {
+        try? marketKit.blockchain(uid: blockchainType.uid)
+    }
+
+    var providerLink: ProviderLink? {
+        nftMetadataManager.collectionLink(blockchainType: blockchainType, providerUid: providerCollectionUid)
+    }
+
     func resync() {
         sync()
     }
@@ -54,7 +66,7 @@ extension NftCollectionOverviewService {
 extension NftCollectionOverviewService {
 
     struct Item {
-        let collection: NftCollection
+        let collection: NftCollectionMetadata
     }
 
 }

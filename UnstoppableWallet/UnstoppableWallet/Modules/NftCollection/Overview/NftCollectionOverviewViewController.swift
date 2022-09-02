@@ -112,7 +112,7 @@ class NftCollectionOverviewViewController: ThemeViewController {
     private func linkTitle(type: NftCollectionOverviewViewModel.LinkType) -> String {
         switch type {
         case .website: return "nft_collection.overview.links.website".localized
-        case .openSea: return "OpenSea"
+        case .provider(let title): return title
         case .discord: return "Discord"
         case .twitter: return "Twitter"
         }
@@ -121,7 +121,7 @@ class NftCollectionOverviewViewController: ThemeViewController {
     private func linkIcon(type: NftCollectionOverviewViewModel.LinkType) -> UIImage? {
         switch type {
         case .website: return UIImage(named: "globe_20")
-        case .openSea: return UIImage(named: "open_sea_20")
+        case .provider: return UIImage(named: "open_sea_20")
         case .discord: return UIImage(named: "discord_20")
         case .twitter: return UIImage(named: "twitter_20")
         }
@@ -279,9 +279,14 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                                 }
 
                                 cell.bind(index: 3) { (component: SecondaryCircleButtonComponent) in
-                                    component.button.set(image: UIImage(named: "globe_20"))
-                                    component.onTap = {
-                                        self?.urlManager.open(url: viewItem.explorerUrl, from: self?.parentNavigationController)
+                                    if let explorerUrl = viewItem.explorerUrl {
+                                        component.isHidden = false
+                                        component.button.set(image: UIImage(named: "globe_20"))
+                                        component.onTap = {
+                                            self?.urlManager.open(url: explorerUrl, from: self?.parentNavigationController)
+                                        }
+                                    } else {
+                                        component.isHidden = true
                                     }
                                 }
                             }
