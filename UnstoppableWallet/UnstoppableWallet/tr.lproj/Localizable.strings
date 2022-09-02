@@ -117,6 +117,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "copy_warning.title" = "Risk of Copying";
 "copy_warning.description" = "As a safety measure, we recommend that you do not use the copy action for this value.";
+"copy_warning.dont_copy" = "Don't Copy";
 "copy_warning.i_will_risk_it" = "I will risk it";
 
 // Recovery Phrase
