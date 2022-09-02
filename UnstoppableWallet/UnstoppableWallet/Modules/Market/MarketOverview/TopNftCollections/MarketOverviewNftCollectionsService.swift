@@ -14,8 +14,8 @@ class MarketOverviewNftCollectionsService: IMarketListNftTopCollectionDecoratorS
         }
     }
 
-    private let collectionsRelay = PublishRelay<[NftCollection]?>()
-    private(set) var collections: [NftCollection]? {
+    private let collectionsRelay = PublishRelay<[NftTopCollection]?>()
+    private(set) var collections: [NftTopCollection]? {
         didSet {
             collectionsRelay.accept(collections)
         }
@@ -41,8 +41,16 @@ class MarketOverviewNftCollectionsService: IMarketListNftTopCollectionDecoratorS
 
 extension MarketOverviewNftCollectionsService {
 
-    var collectionsObservable: Observable<[NftCollection]?> {
+    var collectionsObservable: Observable<[NftTopCollection]?> {
         collectionsRelay.asObservable()
+    }
+
+    func topCollection(uid: String) -> NftTopCollection? {
+        guard let collections = collections else {
+            return nil
+        }
+
+        return collections.first { $0.uid == uid }
     }
 
 }

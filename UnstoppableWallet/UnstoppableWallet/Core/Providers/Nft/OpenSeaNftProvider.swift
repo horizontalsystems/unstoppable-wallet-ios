@@ -191,7 +191,7 @@ class OpenSeaNftProvider {
             }
         }
 
-        let tokenMap = tokenMap(addresses: addresses)
+        let tokenMap = tokenMap(blockchainType: blockchainType, addresses: addresses)
 
         return responses.map { response in
             asset(blockchainType: blockchainType, response: response, tokenMap: tokenMap)
@@ -213,7 +213,7 @@ class OpenSeaNftProvider {
                 addresses.append(order.paymentToken.address)
             }
 
-            map = self.tokenMap(addresses: addresses)
+            map = self.tokenMap(blockchainType: blockchainType, addresses: addresses)
         }
 
         return NftAssetMetadata(
@@ -243,7 +243,7 @@ class OpenSeaNftProvider {
             }
         }
 
-        let tokenMap = tokenMap(addresses: addresses)
+        let tokenMap = tokenMap(blockchainType: blockchainType, addresses: addresses)
 
         return responses.compactMap { response in
             var amount: NftPrice?
@@ -284,11 +284,11 @@ class OpenSeaNftProvider {
         }
     }
 
-    private func tokenMap(addresses: [String]) -> [String: Token] {
+    private func tokenMap(blockchainType: BlockchainType, addresses: [String]) -> [String: Token] {
         do {
             var map = [String: Token]()
             let tokenTypes = addresses.map { tokenType(address: $0) }
-            let tokens = try marketKit.tokens(queries: tokenTypes.map { TokenQuery(blockchainType: .ethereum, tokenType: $0) })
+            let tokens = try marketKit.tokens(queries: tokenTypes.map { TokenQuery(blockchainType: blockchainType, tokenType: $0) })
 
             for token in tokens {
                 switch token.type {
