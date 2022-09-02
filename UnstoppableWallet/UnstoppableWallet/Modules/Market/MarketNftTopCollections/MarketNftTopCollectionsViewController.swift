@@ -56,9 +56,13 @@ class MarketNftTopCollectionsViewController: MarketListViewController {
     }
 
     override func onSelect(viewItem: MarketModule.ListViewItem) {
-//        if let uid = viewItem.uid, let module = NftCollectionModule.viewController(collectionUid: uid) {
-//            present(ThemeNavigationController(rootViewController: module), animated: true)
-//        }
+        guard let uid = viewItem.uid, let topCollection = viewModel.topCollection(uid: uid) else {
+            return
+        }
+
+        if let module = NftCollectionModule.viewController(blockchainType: topCollection.blockchainType, providerCollectionUid: topCollection.providerUid) {
+            present(ThemeNavigationController(rootViewController: module), animated: true)
+        }
     }
 
 }

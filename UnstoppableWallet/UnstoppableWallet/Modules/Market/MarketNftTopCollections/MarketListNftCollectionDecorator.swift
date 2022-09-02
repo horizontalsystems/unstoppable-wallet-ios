@@ -23,7 +23,7 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
 
         var floorPriceString = "---"
         var iconPlaceholderName = "icon_placeholder_24"
-        if let floorPrice = collection.stats.floorPrice {
+        if let floorPrice = collection.floorPrice {
             iconPlaceholderName = floorPrice.token.placeholderImageName
 
             let coinValue = CoinValue(kind: .token(token: floorPrice.token), value: floorPrice.value)
@@ -34,8 +34,8 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
 
 
         var volumeString = "n/a".localized
-        let volume = collection.stats.volumes[service.timePeriod]
-        let diff = collection.stats.changes[service.timePeriod]
+        let volume = collection.volumes[service.timePeriod]
+        let diff = collection.changes[service.timePeriod]
 
         if let volume = volume, let value = ValueFormatter.instance.formatShort(coinValue: CoinValue(kind: .token(token: volume.token), value: volume.value)) {
             volumeString = value
@@ -44,7 +44,7 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
 
         return MarketModule.ListViewItem(
                 uid: collection.uid,
-                iconUrl: collection.imageUrl ?? "",
+                iconUrl: collection.thumbnailImageUrl ?? "",
                 iconShape: .square,
                 iconPlaceholderName: iconPlaceholderName,
                 leftPrimaryValue: collection.name,

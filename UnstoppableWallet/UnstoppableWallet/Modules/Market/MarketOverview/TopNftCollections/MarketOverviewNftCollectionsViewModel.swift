@@ -19,7 +19,7 @@ class MarketOverviewNftCollectionsViewModel {
         sync(collections: service.collections)
     }
 
-    private func sync(collections: [NftCollection]?) {
+    private func sync(collections: [NftTopCollection]?) {
         listViewItemsRelay.accept(collections.map { $0.enumerated().map { decorator.listViewItem(item: NftCollectionItem(index: $0 + 1, collection: $1)) } })
     }
 
@@ -29,6 +29,10 @@ extension MarketOverviewNftCollectionsViewModel {
 
     var timePeriod: HsTimePeriod {
         service.timePeriod
+    }
+
+    func topCollection(uid: String) -> NftTopCollection? {
+        service.topCollection(uid: uid)
     }
 
 }

@@ -8,7 +8,7 @@ struct MarketNftTopCollectionsModule {
         let service = MarketNftTopCollectionsService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, timePeriod: timePeriod)
 
         let decorator = MarketListNftCollectionDecorator(service: service)
-        let viewModel = MarketNftTopCollectionsViewModel()
+        let viewModel = MarketNftTopCollectionsViewModel(service: service)
         let listViewModel = MarketListViewModel(service: service, decorator: decorator, itemLimit: 100)
         let headerViewModel = NftCollectionsMultiSortHeaderViewModel(service: service, decorator: decorator)
 
@@ -41,15 +41,23 @@ struct MarketNftTopCollectionsModule {
 
 }
 
-extension Array where Element == NftCollection {
+extension NftTopCollection {
 
-    func sorted(sortType: MarketNftTopCollectionsModule.SortType, timePeriod: HsTimePeriod) -> [NftCollection] {
+    var uid: String {
+        "\(blockchainType.uid)-\(providerUid)"
+    }
+
+}
+
+extension Array where Element == NftTopCollection {
+
+    func sorted(sortType: MarketNftTopCollectionsModule.SortType, timePeriod: HsTimePeriod) -> [NftTopCollection] {
         sorted { lhsCollection, rhsCollection in
-            let lhsVolume = lhsCollection.stats.volumes[timePeriod]?.value
-            let rhsVolume = rhsCollection.stats.volumes[timePeriod]?.value
+            let lhsVolume = lhsCollection.volumes[timePeriod]?.value
+            let rhsVolume = rhsCollection.volumes[timePeriod]?.value
 
-            let lhsChange = lhsCollection.stats.changes[timePeriod]
-            let rhsChange = rhsCollection.stats.changes[timePeriod]
+            let lhsChange = lhsCollection.changes[timePeriod]
+            let rhsChange = rhsCollection.changes[timePeriod]
 
             switch sortType {
             case .highestVolume, .lowestVolume:
