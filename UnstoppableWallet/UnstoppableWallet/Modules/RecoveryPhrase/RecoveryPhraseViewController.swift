@@ -71,8 +71,8 @@ class RecoveryPhraseViewController: ThemeViewController {
     }
 
     @objc private func onTapCopy() {
-        let viewController = CopyConfirmationViewController(value: viewModel.words.joined(separator: " "))
-        present(viewController.toBottomSheet, animated: true)
+        let viewController = InformationModule.copyConfirmation(value: viewModel.words.joined(separator: " "))
+        present(viewController, animated: true)
     }
 
     private func toggle() {

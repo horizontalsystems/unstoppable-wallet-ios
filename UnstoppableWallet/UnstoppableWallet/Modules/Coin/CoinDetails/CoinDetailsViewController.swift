@@ -144,7 +144,10 @@ class CoinDetailsViewController: ThemeViewController {
     }
 
     private func openProDataChart(proFeaturesActivated: Bool, type: CoinProChartModule.ProChartType) {
-        let viewController = ProFeaturesLockInfoViewController(config: .mountainYak, delegate: self).toBottomSheet
+        let viewController = ProFeatures.mountainYakBottomSheet {
+            print("Can open main mint controller!")
+        }
+
         parentNavigationController?.present(viewController, animated: true)
 
 //        guard proFeaturesActivated else {
@@ -155,16 +158,6 @@ class CoinDetailsViewController: ThemeViewController {
 //        // todo: Route pro charts.
 //        let viewController = CoinProChartModule.viewController(coinUid: viewModel.coin.uid, type: type)
 //        parentNavigationController?.present(viewController, animated: true)
-    }
-
-}
-
-extension CoinDetailsViewController: IProFeaturesLockDelegate {
-
-    func onGoToMint(viewController: UIViewController) {
-        viewController.dismiss(animated: true) {
-            print("Can open main mint controller!")
-        }
     }
 
 }

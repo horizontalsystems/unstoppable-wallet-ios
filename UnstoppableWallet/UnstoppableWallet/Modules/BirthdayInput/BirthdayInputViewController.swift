@@ -115,14 +115,14 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         // show disclaimer
 
         let title = BottomSheetItem.ComplexTitleViewItem(title: "alert.warning".localized, image: UIImage(named: "circle_information_24")?.withTintColor(.themeJacob))
-        let description = InformationModule.Item.description(text: "restore_setting.download.disclaimer".localized)
+        let description = InformationModule.Item.description(text: "restore_setting.download.disclaimer".localized, isHighlighted: true)
         let continueButton = InformationModule.ButtonItem(style: .yellow, title: "button.continue".localized, action: InformationModule.afterClose { [weak self] in
             self?.setOldTypeActive()
         })
         let cancelButton = InformationModule.ButtonItem(style: .transparent, title: "button.cancel".localized, action: InformationModule.afterClose())
         let alertController = InformationModule.viewController(title: .complex(viewItem: title), items: [description], buttons: [continueButton, cancelButton])
 
-        return present(alertController.toBottomSheet, animated: true)
+        return present(alertController, animated: true)
     }
 
     private func setOldTypeActive() {

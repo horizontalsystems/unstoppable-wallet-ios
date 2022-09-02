@@ -151,8 +151,8 @@ class LegacyEvmFeeViewController: ThemeViewController {
     }
 
     private func openInfo(title: String, description: String) {
-        let viewController = EvmGasDataInfoViewController(title: title, description: description)
-        present(viewController.toBottomSheet, animated: true)
+        let viewController = InformationModule.description(title: title, text: description)
+        present(viewController, animated: true)
     }
 
 }
