@@ -400,14 +400,20 @@ extension OpenSeaNftProvider: INftProvider {
                 }
     }
 
-    func assetMetadataSingle(nftUid: NftUid) -> Single<NftAssetMetadata> {
-        assetSingle(contractAddress: nftUid.contractAddress, tokenId: nftUid.tokenId)
-                .map { [weak self] response in
+    func extendedAssetMetadataSingle(nftUid: NftUid, providerCollectionUid: String) -> Single<(NftAssetMetadata, NftCollectionMetadata)> {
+        Single.zip(
+                        assetSingle(contractAddress: nftUid.contractAddress, tokenId: nftUid.tokenId),
+                        collectionSingle(slug: providerCollectionUid)
+        )
+                .map { [weak self] assetResponse, collectionResponse in
                     guard let strongSelf = self else {
                         throw ProviderError.weakReference
                     }
 
-                    return strongSelf.asset(blockchainType: nftUid.blockchainType, response: response)
+                    return (
+                            strongSelf.asset(blockchainType: nftUid.blockchainType, response: assetResponse),
+                            strongSelf.collection(blockchainType: nftUid.blockchainType, response: collectionResponse.collection)
+                    )
                 }
     }
 

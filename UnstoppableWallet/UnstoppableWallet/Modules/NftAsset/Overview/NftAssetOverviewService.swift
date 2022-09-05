@@ -36,13 +36,10 @@ class NftAssetOverviewService {
 
         state = .loading
 
-        Single.zip(
-                nftMetadataManager.collectionMetadataSingle(blockchainType: nftUid.blockchainType, providerUid: providerCollectionUid),
-                nftMetadataManager.assetMetadataSingle(nftUid: nftUid)
-        )
+        nftMetadataManager.extendedAssetMetadataSingle(nftUid: nftUid, providerCollectionUid: providerCollectionUid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] collection, asset in
-                    self?.handle(item: Item(collection: collection, asset: asset))
+                .subscribe(onSuccess: { [weak self] asset, collection in
+                    self?.handle(item: Item(asset: asset, collection: collection))
                 }, onError: { [weak self] error in
                     self?.state = .failed(error)
                 })
@@ -127,8 +124,8 @@ extension NftAssetOverviewService {
 extension NftAssetOverviewService {
 
     class Item {
-        let collection: NftCollectionMetadata
         let asset: NftAssetMetadata
+        let collection: NftCollectionMetadata
 
         var lastSale: PriceItem?
         var average7d: PriceItem?
@@ -137,9 +134,9 @@ extension NftAssetOverviewService {
         var bestOffer: PriceItem?
         var sale: SaleItem?
 
-        init(collection: NftCollectionMetadata, asset: NftAssetMetadata) {
-            self.collection = collection
+        init(asset: NftAssetMetadata, collection: NftCollectionMetadata) {
             self.asset = asset
+            self.collection = collection
 
             lastSale = asset.lastSalePrice.map { PriceItem(nftPrice: $0) }
             average7d = collection.averagePrice7d.map { PriceItem(nftPrice: $0) }

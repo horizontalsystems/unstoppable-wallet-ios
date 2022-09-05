@@ -49,3 +49,11 @@ extension EvmNftAdapter: INftAdapter {
     }
 
 }
+
+extension EvmNftAdapter {
+
+    static func clear(except excludedWalletIds: [String]) throws {
+        try NftKit.Kit.clear(exceptFor: excludedWalletIds)
+    }
+
+}

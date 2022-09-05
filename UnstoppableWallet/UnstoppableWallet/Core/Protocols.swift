@@ -102,7 +102,7 @@ protocol INftAdapter: AnyObject {
 protocol INftProvider {
     func collectionLink(providerUid: String) -> ProviderLink?
     func addressMetadataSingle(blockchainType: BlockchainType, address: String) -> Single<NftAddressMetadata>
-    func assetMetadataSingle(nftUid: NftUid) -> Single<NftAssetMetadata>
+    func extendedAssetMetadataSingle(nftUid: NftUid, providerCollectionUid: String) -> Single<(NftAssetMetadata, NftCollectionMetadata)>
     func collectionAssetsMetadataSingle(blockchainType: BlockchainType, providerCollectionUid: String, paginationData: PaginationData?) -> Single<([NftAssetMetadata], PaginationData?)>
     func collectionMetadataSingle(blockchainType: BlockchainType, providerUid: String) -> Single<NftCollectionMetadata>
     func assetEventsMetadataSingle(nftUid: NftUid, eventType: NftEventMetadata.EventType?, paginationData: PaginationData?) -> Single<([NftEventMetadata], PaginationData?)>

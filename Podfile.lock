@@ -618,13 +618,13 @@ CHECKOUT OPTIONS:
     :commit: aad34bd645d6cc57dd502798e4411259de4044a2
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
-    :commit: 8f85d30e72a6b82fec968e7e07ec44d1c4e8fb83
+    :commit: 0d125f30d3b907d49fafd4693d4ee18cc57d88dd
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumABI:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :commit: 8f85d30e72a6b82fec968e7e07ec44d1c4e8fb83
+    :commit: 0d125f30d3b907d49fafd4693d4ee18cc57d88dd
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 0a28d5bf25389b72227aac160dcafd07b819428b
@@ -654,7 +654,7 @@ CHECKOUT OPTIONS:
     :commit: c59abf7b24cda1308668290e2560df48b687c5a8
     :git: https://github.com/horizontalsystems/component-kit-ios/
   NftKit.swift:
-    :commit: 8f85d30e72a6b82fec968e7e07ec44d1c4e8fb83
+    :commit: 0d125f30d3b907d49fafd4693d4ee18cc57d88dd
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   OneInchKit.swift:
     :commit: df8733e80c046ec95808900536746470ee6c4e1f
