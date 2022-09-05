@@ -42,12 +42,12 @@ extension NftMetadataManager {
         return provider.addressMetadataSingle(blockchainType: blockchainType, address: address)
     }
 
-    func assetMetadataSingle(nftUid: NftUid) -> Single<NftAssetMetadata> {
+    func extendedAssetMetadataSingle(nftUid: NftUid, providerCollectionUid: String) -> Single<(NftAssetMetadata, NftCollectionMetadata)> {
         guard let provider = providerMap[nftUid.blockchainType] else {
             return Single.error(ProviderError.noProviderForBlockchainType)
         }
 
-        return provider.assetMetadataSingle(nftUid: nftUid)
+        return provider.extendedAssetMetadataSingle(nftUid: nftUid, providerCollectionUid: providerCollectionUid)
     }
 
     func collectionAssetsMetadataSingle(blockchainType: BlockchainType, providerCollectionUid: String, paginationData: PaginationData? = nil) -> Single<([NftAssetMetadata], PaginationData?)> {
