@@ -126,10 +126,13 @@ extension NftViewController: SectionsDataSource {
                     cell.selectionStyle = .none
 
                     cell.bind(index: 0, block: { (component: ImageComponent) in
-                        component.imageView.kf.setImage(with: viewItem.imageUrl.flatMap { URL(string: $0) })
                         component.imageView.cornerRadius = .cornerRadius4
                         component.imageView.layer.cornerCurve = .continuous
                         component.imageView.backgroundColor = .themeSteel20
+                        component.imageView.kf.setImage(
+                                with: viewItem.imageUrl.flatMap { URL(string: $0) },
+                                options: [.onlyLoadFirstFrame]
+                        )
                     })
                     cell.bind(index: 1, block: { (component: TextComponent) in
                         component.font = .headline2

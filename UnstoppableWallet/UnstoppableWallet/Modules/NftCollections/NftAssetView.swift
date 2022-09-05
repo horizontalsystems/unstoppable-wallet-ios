@@ -143,7 +143,7 @@ class NftAssetView: UIView {
         imagePlaceholderLabel.isHidden = false
 
         if let urlString = url, let url = URL(string: urlString) {
-            imageView.kf.setImage(with: url, options: [.transition(.fade(0.5))]) { [weak self] result in
+            imageView.kf.setImage(with: url, options: [.onlyLoadFirstFrame, .transition(.fade(0.5))]) { [weak self] result in
                 if case .success = result {
                     self?.imagePlaceholderLabel.isHidden = true
                 }

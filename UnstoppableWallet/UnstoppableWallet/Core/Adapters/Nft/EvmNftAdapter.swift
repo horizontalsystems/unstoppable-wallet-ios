@@ -5,13 +5,13 @@ import EthereumKit
 
 class EvmNftAdapter {
     private let blockchainType: BlockchainType
+    private let evmKitWrapper: EvmKitWrapper
     private let nftKit: NftKit.Kit
-    private let address: EthereumKit.Address
 
-    init(blockchainType: BlockchainType, nftKit: NftKit.Kit, address: EthereumKit.Address) {
+    init(blockchainType: BlockchainType, evmKitWrapper: EvmKitWrapper, nftKit: NftKit.Kit) {
         self.blockchainType = blockchainType
+        self.evmKitWrapper = evmKitWrapper
         self.nftKit = nftKit
-        self.address = address
     }
 
     private func record(nftBalance: NftBalance) -> EvmNftRecord {
@@ -30,7 +30,7 @@ class EvmNftAdapter {
 extension EvmNftAdapter: INftAdapter {
 
     var userAddress: String {
-        address.hex
+        evmKitWrapper.evmKit.address.hex
     }
 
     var nftRecordsObservable: Observable<[NftRecord]> {

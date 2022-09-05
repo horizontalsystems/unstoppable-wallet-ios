@@ -379,7 +379,7 @@ extension OpenSeaNftProvider: INftProvider {
                         NftCollectionShortMetadata(
                                 providerUid: collection.providerUid,
                                 name: collection.name,
-                                thumbnailImageUrl: collection.imageUrl,
+                                thumbnailImageUrl: collection.imageUrl ?? collection.thumbnailImageUrl,
                                 averagePrice7d: collection.averagePrice7d,
                                 averagePrice30d: collection.averagePrice30d
                         )
