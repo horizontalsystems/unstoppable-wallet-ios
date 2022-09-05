@@ -45,7 +45,7 @@ class NftCollectionOverviewViewModel {
         let collection = item.collection
 
         return ViewItem(
-                logoImageUrl: collection.imageUrl,
+                logoImageUrl: collection.imageUrl ?? collection.thumbnailImageUrl,
                 name: collection.name,
                 description: collection.description,
                 contracts: collection.contracts.map { contractViewItem(address: $0) },

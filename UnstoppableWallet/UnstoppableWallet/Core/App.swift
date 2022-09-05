@@ -211,7 +211,7 @@ class App {
         let nftStorage = NftStorage(marketKit: marketKit, storage: nftDatabaseStorage)
         nftMetadataManager = NftMetadataManager(networkManager: networkManager, marketKit: marketKit, storage: nftStorage)
         nftAdapterManager = NftAdapterManager(
-                adapterManager: adapterManager,
+                walletManager: walletManager,
                 evmBlockchainManager: evmBlockchainManager
         )
         nftMetadataSyncer = NftMetadataSyncer(nftAdapterManager: nftAdapterManager, nftMetadataManager: nftMetadataManager, nftStorage: nftStorage)

@@ -103,7 +103,7 @@ class NftService {
             nftMetadataManager.addressMetadataObservable
                     .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                     .subscribe(onNext: { [weak self] nftKey, addressMetadata in
-                        self?.handleUpdated(addressMetadata: addressMetadata, blockchainType: nftKey.blockchainType)
+                        self?.handleUpdated(addressMetadata: addressMetadata, nftKey: nftKey)
                     })
                     .disposed(by: adapterDisposeBag)
         }
@@ -122,14 +122,18 @@ class NftService {
         _syncNftItemMap()
     }
 
-    private func handleUpdated(addressMetadata: NftAddressMetadata, blockchainType: BlockchainType) {
+    private func handleUpdated(addressMetadata: NftAddressMetadata, nftKey: NftKey) {
         queue.async {
-            self._handleUpdated(addressMetadata: addressMetadata, blockchainType: blockchainType)
+            self._handleUpdated(addressMetadata: addressMetadata, nftKey: nftKey)
         }
     }
 
-    private func _handleUpdated(addressMetadata: NftAddressMetadata, blockchainType: BlockchainType) {
-        metadataMap[blockchainType] = addressMetadata
+    private func _handleUpdated(addressMetadata: NftAddressMetadata, nftKey: NftKey) {
+        guard account == nftKey.account else {
+            return
+        }
+
+        metadataMap[nftKey.blockchainType] = addressMetadata
         _syncNftItemMap()
     }
 

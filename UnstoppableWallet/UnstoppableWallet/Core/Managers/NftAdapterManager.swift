@@ -3,7 +3,7 @@ import RxRelay
 import MarketKit
 
 class NftAdapterManager {
-    private let adapterManager: AdapterManager
+    private let walletManager: WalletManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let disposeBag = DisposeBag()
 
@@ -12,18 +12,18 @@ class NftAdapterManager {
 
     private let queue = DispatchQueue(label: "io.horizontal-systems.unstoppable.nft-adapter_manager", qos: .userInitiated)
 
-    init(adapterManager: AdapterManager, evmBlockchainManager: EvmBlockchainManager) {
-        self.adapterManager = adapterManager
+    init(walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager) {
+        self.walletManager = walletManager
         self.evmBlockchainManager = evmBlockchainManager
 
-        adapterManager.adaptersReadyObservable
+        walletManager.activeWalletsUpdatedObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] adapterMap in
-                    self?.handleAdaptersReady(wallets: Array(adapterMap.keys))
+                .subscribe(onNext: { [weak self] wallets in
+                    self?.handleAdaptersReady(wallets: wallets)
                 })
                 .disposed(by: disposeBag)
 
-        _initAdapters(wallets: Array(adapterManager.adapterMap.keys))
+        _initAdapters(wallets: walletManager.activeWallets)
     }
 
     private func _initAdapters(wallets: [Wallet]) {
@@ -37,9 +37,15 @@ class NftAdapterManager {
                 continue
             }
 
+            guard !nftKey.blockchainType.supportedNftTypes.isEmpty else {
+                continue
+            }
+
             if evmBlockchainManager.blockchain(type: nftKey.blockchainType) != nil {
-                if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: nftKey.blockchainType).evmKitWrapper, let nftKit = evmKitWrapper.nftKit {
-                    newAdapterMap[nftKey] = EvmNftAdapter(blockchainType: nftKey.blockchainType, nftKit: nftKit, address: evmKitWrapper.evmKit.address)
+                let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: nftKey.blockchainType).evmKitWrapper(account: nftKey.account, blockchainType: nftKey.blockchainType)
+
+                if let evmKitWrapper = evmKitWrapper, let nftKit = evmKitWrapper.nftKit {
+                    newAdapterMap[nftKey] = EvmNftAdapter(blockchainType: nftKey.blockchainType, evmKitWrapper: evmKitWrapper, nftKit: nftKit)
                 }
             } else {
                 // Init other blockchain adapter here (e.g. Solana)
