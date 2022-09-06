@@ -50,7 +50,7 @@ class NftCollectionOverviewViewModel {
                 description: collection.description,
                 contracts: collection.contracts.map { contractViewItem(address: $0) },
                 links: linkViewItems(collection: collection),
-                statCharts: statViewItem(collection: collection)
+                statCharts: statViewItem(collection: collection, statCharts: item.statCharts)
         )
     }
 
@@ -154,14 +154,14 @@ class NftCollectionOverviewViewModel {
         )
     }
 
-    private func statViewItem(collection: NftCollectionMetadata) -> StatChartViewItem {
+    private func statViewItem(collection: NftCollectionMetadata, statCharts: NftCollectionStatCharts?) -> StatChartViewItem {
         StatChartViewItem(
                 ownerCount: collection.ownerCount.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
                 itemCount: collection.count.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
-                oneDayVolumeItems: statPricePointViewItem(title: "nft_collection.overview.24h_volume".localized, pricePoints: []),
-                averagePriceItems: statPricePointViewItem(title: "nft_collection.overview.all_time_average".localized, pricePoints: []),
-                floorPriceItems: statPricePointViewItem(title: "nft_collection.overview.floor_price".localized, pricePoints: []),
-                oneDaySalesItems: statPointViewItem(title: "nft_collection.overview.today_sellers".localized, points: [], averagePrice: collection.averagePrice1d)
+                oneDayVolumeItems: statPricePointViewItem(title: "nft_collection.overview.24h_volume".localized, pricePoints: statCharts?.oneDayVolumePoints),
+                averagePriceItems: statPricePointViewItem(title: "nft_collection.overview.all_time_average".localized, pricePoints: statCharts?.averagePricePoints),
+                floorPriceItems: statPricePointViewItem(title: "nft_collection.overview.floor_price".localized, pricePoints: statCharts?.floorPricePoints),
+                oneDaySalesItems: statPointViewItem(title: "nft_collection.overview.today_sellers".localized, points: statCharts?.oneDaySalesPoints, averagePrice: collection.averagePrice1d)
         )
     }
 
