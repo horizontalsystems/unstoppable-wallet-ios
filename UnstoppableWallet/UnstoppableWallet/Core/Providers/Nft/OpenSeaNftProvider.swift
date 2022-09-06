@@ -12,16 +12,21 @@ class OpenSeaNftProvider {
 
     private let networkManager: NetworkManager
     private let marketKit: MarketKit.Kit
+    private let hsBaseUrl: String
     private let headers: HTTPHeaders
+    private let hsHeaders: HTTPHeaders?
     private let encoding: ParameterEncoding = URLEncoding(boolEncoding: .literal)
 
-    init(networkManager: NetworkManager, marketKit: MarketKit.Kit) {
+    init(networkManager: NetworkManager, marketKit: MarketKit.Kit, appConfigProvider: AppConfigProvider) {
         self.networkManager = networkManager
         self.marketKit = marketKit
 
         headers = HTTPHeaders([
             HTTPHeader.userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36")
         ])
+
+        hsBaseUrl = appConfigProvider.marketApiUrl
+        hsHeaders = appConfigProvider.hsProviderApiKey.flatMap { HTTPHeaders([HTTPHeader(name: "apikey", value: $0)]) }
     }
 
     private func collectionsSingle(address: String, offset: Int) -> Single<[NftCollectionResponse]> {
@@ -79,7 +84,9 @@ class OpenSeaNftProvider {
     }
 
     private func eventsSingle(collection: String? = nil, contractAddress: String? = nil, tokenId: String? = nil, eventType: String?, cursor: String?) -> Single<NftEventsResponse> {
-        var parameters: Parameters = [:]
+        var parameters: Parameters = [
+            "simplified": true
+        ]
 
         if let collection = collection {
             parameters["collection_slug"] = collection
@@ -101,7 +108,7 @@ class OpenSeaNftProvider {
             parameters["cursor"] = cursor
         }
 
-        let request = networkManager.session.request("\(baseUrl)/events", parameters: parameters, encoding: encoding, headers: headers)
+        let request = networkManager.session.request("\(hsBaseUrl)/v1/nft/events", parameters: parameters, encoding: encoding, headers: hsHeaders)
         return networkManager.single(request: request)
     }
 
