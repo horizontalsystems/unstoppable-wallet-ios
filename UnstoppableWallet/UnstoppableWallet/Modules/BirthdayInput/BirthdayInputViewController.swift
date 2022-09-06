@@ -44,7 +44,7 @@ class BirthdayInputViewController: KeyboardAwareViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "watch_address.title".localized
+        title = token.coin.name
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
         navigationItem.largeTitleDisplayMode = .never
@@ -110,14 +110,14 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         }
     }
 
-    private func showDisclaimer() {
+    private func showDisclaimer(showKeyboard: Bool = true) {
         disclaimerShown = true
         // show disclaimer
 
         let title = BottomSheetItem.ComplexTitleViewItem(title: "alert.warning".localized, image: UIImage(named: "circle_information_24")?.withTintColor(.themeJacob))
         let description = InformationModule.Item.description(text: "restore_setting.download.disclaimer".localized, isHighlighted: true)
         let continueButton = InformationModule.ButtonItem(style: .yellow, title: "button.continue".localized, action: InformationModule.afterClose { [weak self] in
-            self?.setOldTypeActive()
+            self?.setOldTypeActive(showKeyboard: showKeyboard)
         })
         let cancelButton = InformationModule.ButtonItem(style: .transparent, title: "button.cancel".localized, action: InformationModule.afterClose())
         let alertController = InformationModule.viewController(title: .complex(viewItem: title), items: [description], buttons: [continueButton, cancelButton])
@@ -125,11 +125,13 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         return present(alertController, animated: true)
     }
 
-    private func setOldTypeActive() {
+    private func setOldTypeActive(showKeyboard: Bool = true) {
         setActive(type: .old)
         tableView.reload(animated: true)
 
-        heightInputCell.becomeFirstResponder()
+        if showKeyboard {
+            heightInputCell.becomeFirstResponder()
+        }
     }
 
     @objc private func onTapCancel() {
@@ -198,6 +200,7 @@ class BirthdayInputViewController: KeyboardAwareViewController {
             heightInputCell.accessoryEnabled = true
         }
     }
+
     private func didTap(type: WalletType) {
         guard type != walletType else {
             return
@@ -207,10 +210,10 @@ class BirthdayInputViewController: KeyboardAwareViewController {
             setActive(type: .new)
         case .old:
             if !disclaimerShown {
-                showDisclaimer()
+                showDisclaimer(showKeyboard: false)
                 return
             } else {
-                setOldTypeActive()
+                setOldTypeActive(showKeyboard: false)
             }
         }
 
