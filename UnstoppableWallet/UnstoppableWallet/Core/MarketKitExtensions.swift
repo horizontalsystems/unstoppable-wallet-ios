@@ -7,6 +7,7 @@ enum TokenProtocol {
     case native
     case eip20
     case bep2
+    case spl
     case unsupported
 }
 
@@ -83,6 +84,7 @@ extension MarketKit.TokenType {
         case .native: return .native
         case .eip20: return .eip20
         case .bep2: return .bep2
+        case .spl: return .spl
         case .unsupported: return .unsupported
         }
     }
@@ -167,6 +169,8 @@ extension MarketKit.BlockchainType {
             }
         case .bep2:
             return "BEP2"
+        case .spl:
+            return "SPL"
         default:
             return nil
         }

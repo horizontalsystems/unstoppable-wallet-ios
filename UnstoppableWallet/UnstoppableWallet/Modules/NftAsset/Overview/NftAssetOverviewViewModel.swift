@@ -65,16 +65,16 @@ class NftAssetOverviewViewModel {
     }
 
     private func saleViewItem(saleItem: NftAssetOverviewService.SaleItem?) -> SaleViewItem? {
-        guard let saleItem = saleItem else {
+        guard let saleItem = saleItem, let listing = saleItem.bestListing else {
             return nil
         }
 
         return SaleViewItem(
-                untilDate: "nft_asset.until_date".localized(DateHelper.instance.formatFullTime(from: saleItem.untilDate)),
+                untilDate: "nft_asset.until_date".localized(DateHelper.instance.formatFullTime(from: listing.untilDate)),
                 type: saleItem.type,
                 price: PriceViewItem(
-                        coinValue: saleItem.price.map { coinValue(priceItem: $0) } ?? "---",
-                        fiatValue: saleItem.price.map { fiatValue(priceItem: $0) } ?? "---"
+                        coinValue: coinValue(priceItem: listing.price),
+                        fiatValue: fiatValue(priceItem: listing.price)
                 )
         )
     }
@@ -136,8 +136,8 @@ class NftAssetOverviewViewModel {
         if let url = asset.externalLink {
             viewItems.append(LinkViewItem(type: .website, url: url))
         }
-        if let providerLink = asset.providerLink {
-            viewItems.append(LinkViewItem(type: .provider(title: providerLink.title), url: providerLink.url))
+        if let title = service.providerTitle, let link = asset.providerLink {
+            viewItems.append(LinkViewItem(type: .provider(title: title), url: link))
         }
         if let url = collection.discordLink {
             viewItems.append(LinkViewItem(type: .discord, url: url))
@@ -170,6 +170,10 @@ extension NftAssetOverviewViewModel {
 
     var blockchainType: BlockchainType {
         service.nftUid.blockchainType
+    }
+
+    var providerTitle: String? {
+        service.providerTitle
     }
 
     func onTapRetry() {
@@ -228,7 +232,7 @@ extension NftAssetOverviewViewModel {
 
     struct SaleViewItem {
         let untilDate: String
-        let type: NftAssetMetadata.SalePriceType
+        let type: NftAssetMetadata.SaleType
         let price: PriceViewItem
     }
 

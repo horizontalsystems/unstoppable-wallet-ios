@@ -155,11 +155,17 @@ class NftAssetOverviewViewController: ThemeViewController {
         }
     }
 
-    private func saleTitle(type: NftAssetMetadata.SalePriceType) -> String {
+    private func saleTitle(type: NftAssetMetadata.SaleType) -> String {
         switch type {
-        case .buyNow: return "nft_asset.buy_now".localized
-        case .topBid: return "nft_asset.top_bid".localized
-        case .minimumBid: return "nft_asset.minimum_bid".localized
+        case .onSale: return "nft_asset.on_sale".localized
+        case .onAuction: return "nft_asset.on_auction".localized
+        }
+    }
+
+    private func salePriceTitle(type: NftAssetMetadata.SaleType) -> String {
+        switch type {
+        case .onSale: return "nft_asset.buy_now".localized
+        case .onAuction: return "nft_asset.minimum_bid".localized
         }
     }
 
@@ -333,6 +339,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                             height: .heightButton,
                             bind: { [weak self] cell, _ in
                                 cell.bind(
+                                        providerTitle: self?.viewModel.providerTitle,
                                         onTapProvider: {
                                             if let url = self?.providerUrl {
                                                 self?.openLink(url: url)
@@ -417,7 +424,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         )
     }
 
-    private func saleRow(untilDate: String) -> RowProtocol {
+    private func saleRow(title: String, untilDate: String) -> RowProtocol {
         CellBuilder.row(
                 elements: [.multiText],
                 tableView: tableView,
@@ -434,7 +441,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                         component.subtitle.font = .subhead2
                         component.subtitle.textColor = .themeGray
 
-                        component.title.text = "nft_asset.on_sale".localized
+                        component.title.text = title
                         component.subtitle.text = untilDate
                     }
                 }
@@ -450,9 +457,12 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                 id: "sale",
                 footerState: .margin(height: viewItem.bestOffer == nil ? .margin24 : .margin12),
                 rows: [
-                    saleRow(untilDate: saleViewItem.untilDate),
-                    priceRow(
+                    saleRow(
                             title: saleTitle(type: saleViewItem.type),
+                            untilDate: saleViewItem.untilDate
+                    ),
+                    priceRow(
+                            title: salePriceTitle(type: saleViewItem.type),
                             viewItem: saleViewItem.price,
                             isFirst: false,
                             isLast: true
