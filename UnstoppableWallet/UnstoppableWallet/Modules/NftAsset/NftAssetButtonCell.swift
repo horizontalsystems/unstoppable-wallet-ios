@@ -2,7 +2,7 @@ import UIKit
 import ComponentKit
 
 class NftAssetButtonCell: UITableViewCell {
-    private let openSeaButton = PrimaryButton()
+    private let providerButton = PrimaryButton()
     private let moreButton = PrimaryCircleButton()
 
     private var onTapProvider: (() -> ())?
@@ -14,19 +14,18 @@ class NftAssetButtonCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        contentView.addSubview(openSeaButton)
-        openSeaButton.snp.makeConstraints { maker in
+        contentView.addSubview(providerButton)
+        providerButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
             maker.top.equalToSuperview()
         }
 
-        openSeaButton.set(style: .gray)
-        openSeaButton.setTitle("OpenSea", for: .normal) // todo: show corresponding provider name
-        openSeaButton.addTarget(self, action: #selector(onTapOpenSeaButton), for: .touchUpInside)
+        providerButton.set(style: .gray)
+        providerButton.addTarget(self, action: #selector(onTapProviderButton), for: .touchUpInside)
 
         contentView.addSubview(moreButton)
         moreButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(openSeaButton.snp.trailing).offset(CGFloat.margin8)
+            maker.leading.equalTo(providerButton.snp.trailing).offset(CGFloat.margin8)
             maker.top.equalToSuperview()
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
         }
@@ -40,7 +39,7 @@ class NftAssetButtonCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @objc private func onTapOpenSeaButton() {
+    @objc private func onTapProviderButton() {
         onTapProvider?()
     }
 
@@ -48,7 +47,9 @@ class NftAssetButtonCell: UITableViewCell {
         onTapMore?()
     }
 
-    func bind(onTapProvider: @escaping () -> (), onTapMore: @escaping () -> ()) {
+    func bind(providerTitle: String?, onTapProvider: @escaping () -> (), onTapMore: @escaping () -> ()) {
+        providerButton.setTitle(providerTitle, for: .normal)
+
         self.onTapProvider = onTapProvider
         self.onTapMore = onTapMore
     }

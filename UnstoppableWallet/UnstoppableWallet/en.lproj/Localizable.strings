@@ -1206,9 +1206,9 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "nft_asset.average_30d" = "30 Day Average";
 "nft_asset.floor_price" = "Floor Price";
 "nft_asset.on_sale" = "On Sale";
+"nft_asset.on_auction" = "On Auction";
 "nft_asset.until_date" = "until %@";
 "nft_asset.buy_now" = "Buy Now";
-"nft_asset.top_bid" = "Top Bid";
 "nft_asset.minimum_bid" = "Minimum Bid";
 "nft_asset.best_offer" = "Best Offer";
 "nft_asset.properties" = "Properties";

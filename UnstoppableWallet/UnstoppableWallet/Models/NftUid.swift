@@ -54,7 +54,7 @@ enum NftUid: Hashable {
     var blockchainType: BlockchainType {
         switch self {
         case let .evm(blockchainType, _, _): return blockchainType
-        case .solana: return .unsupported(uid: "solana") // todo
+        case .solana: return .solana
         }
     }
 

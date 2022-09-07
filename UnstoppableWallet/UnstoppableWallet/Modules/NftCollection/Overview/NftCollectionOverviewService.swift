@@ -57,7 +57,12 @@ extension NftCollectionOverviewService {
     }
 
     var providerLink: ProviderLink? {
-        nftMetadataManager.collectionLink(blockchainType: blockchainType, providerUid: providerCollectionUid)
+        guard let title = nftMetadataManager.providerTitle(blockchainType: blockchainType),
+              let link = nftMetadataManager.collectionLink(blockchainType: blockchainType, providerUid: providerCollectionUid) else {
+            return nil
+        }
+
+        return ProviderLink(title: title, url: link)
     }
 
     func resync() {

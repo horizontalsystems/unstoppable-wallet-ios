@@ -10,13 +10,13 @@ struct NftAssetMetadata {
     let description: String?
     let nftType: String
     let externalLink: String?
-    let providerLink: ProviderLink?
+    let providerLink: String?
 
     let traits: [Trait]
     let providerTraitLink: String?
 
     let lastSalePrice: NftPrice?
-    let bestOffer: NftPrice?
+    let offers: [NftPrice]
     let saleInfo: SaleInfo?
 
     var displayName: String {
@@ -24,15 +24,18 @@ struct NftAssetMetadata {
     }
 
     struct SaleInfo {
-        let untilDate: Date
-        let type: SalePriceType
-        let price: NftPrice?
+        let type: SaleType
+        let listings: [SaleListing]
     }
 
-    enum SalePriceType {
-        case buyNow
-        case topBid
-        case minimumBid
+    struct SaleListing {
+        let untilDate: Date
+        let price: NftPrice
+    }
+
+    enum SaleType {
+        case onSale
+        case onAuction
     }
 
     struct Trait {

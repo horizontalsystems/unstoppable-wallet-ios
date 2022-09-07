@@ -57,7 +57,12 @@ class NftAssetOverviewService {
     }
 
     private func _allTokens(item: Item) -> Set<Token> {
-        let priceItems = [item.lastSale, item.average7d, item.average30d, item.collectionFloor, item.bestOffer, item.sale?.price]
+        var priceItems = [item.lastSale, item.average7d, item.average30d, item.collectionFloor] + item.offers
+
+        if let saleItem = item.sale {
+            priceItems.append(contentsOf: saleItem.listings.map { $0.price })
+        }
+
         return Set(priceItems.compactMap { $0?.nftPrice.token })
     }
 
@@ -70,8 +75,16 @@ class NftAssetOverviewService {
         _fill(priceItem: item.average7d, map: map)
         _fill(priceItem: item.average30d, map: map)
         _fill(priceItem: item.collectionFloor, map: map)
-        _fill(priceItem: item.bestOffer, map: map)
-        _fill(priceItem: item.sale?.price, map: map)
+
+        item.offers.forEach {
+            _fill(priceItem: $0, map: map)
+        }
+
+        if let saleItem = item.sale {
+            for listing in saleItem.listings {
+                _fill(priceItem: listing.price, map: map)
+            }
+        }
     }
 
     private func _fill(priceItem: PriceItem?, map: [String: WalletCoinPriceService.Item]) {
@@ -115,6 +128,10 @@ extension NftAssetOverviewService {
         stateRelay.asObservable()
     }
 
+    var providerTitle: String? {
+        nftMetadataManager.providerTitle(blockchainType: nftUid.blockchainType)
+    }
+
     func resync() {
         sync()
     }
@@ -131,7 +148,7 @@ extension NftAssetOverviewService {
         var average7d: PriceItem?
         var average30d: PriceItem?
         var collectionFloor: PriceItem?
-        var bestOffer: PriceItem?
+        var offers: [PriceItem]
         var sale: SaleItem?
 
         init(asset: NftAssetMetadata, collection: NftCollectionMetadata) {
@@ -142,25 +159,78 @@ extension NftAssetOverviewService {
             average7d = collection.averagePrice7d.map { PriceItem(nftPrice: $0) }
             average30d = collection.averagePrice30d.map { PriceItem(nftPrice: $0) }
             collectionFloor = collection.floorPrice.map { PriceItem(nftPrice: $0) }
-            bestOffer = asset.bestOffer.map { PriceItem(nftPrice: $0) }
+            offers = asset.offers.map { PriceItem(nftPrice: $0) }
             sale = asset.saleInfo.map { saleInfo in
                 SaleItem(
-                        untilDate: saleInfo.untilDate,
                         type: saleInfo.type,
-                        price: saleInfo.price.map { PriceItem(nftPrice: $0) }
+                        listings: saleInfo.listings.map { listing in
+                            SaleListingItem(
+                                    untilDate: listing.untilDate,
+                                    price: PriceItem(nftPrice: listing.price)
+                            )
+                        }
                 )
             }
+        }
+
+        var bestOffer: PriceItem? {
+            guard !offers.isEmpty else {
+                return nil
+            }
+
+            guard offers.allSatisfy({ $0.coinPrice != nil }) else {
+                return nil
+            }
+
+            let sortedOffers = offers.sorted { lhsItem, rhsItem in
+                let lhsCurrencyValue = (lhsItem.coinPrice?.price.value ?? 0) * lhsItem.nftPrice.value
+                let rhsCurrencyValue = (rhsItem.coinPrice?.price.value ?? 0) * rhsItem.nftPrice.value
+
+                return lhsCurrencyValue > rhsCurrencyValue
+            }
+
+            return sortedOffers.first
         }
     }
 
     class SaleItem {
-        let untilDate: Date
-        let type: NftAssetMetadata.SalePriceType
-        let price: PriceItem?
+        let type: NftAssetMetadata.SaleType
+        let listings: [SaleListingItem]
 
-        init(untilDate: Date, type: NftAssetMetadata.SalePriceType, price: PriceItem?) {
-            self.untilDate = untilDate
+        init(type: NftAssetMetadata.SaleType, listings: [SaleListingItem]) {
             self.type = type
+            self.listings = listings
+        }
+
+        var bestListing: SaleListingItem? {
+            guard !listings.isEmpty else {
+                return nil
+            }
+
+            guard listings.allSatisfy({ $0.price.coinPrice != nil }) else {
+                return nil
+            }
+
+            let sortedListings = listings.sorted { lhsListing, rhsListing in
+                let lhsItem = lhsListing.price
+                let rhsItem = rhsListing.price
+
+                let lhsCurrencyValue = (lhsItem.coinPrice?.price.value ?? 0) * lhsItem.nftPrice.value
+                let rhsCurrencyValue = (rhsItem.coinPrice?.price.value ?? 0) * rhsItem.nftPrice.value
+
+                return lhsCurrencyValue < rhsCurrencyValue
+            }
+
+            return sortedListings.first
+        }
+    }
+
+    class SaleListingItem {
+        let untilDate: Date
+        let price: PriceItem
+
+        init(untilDate: Date, price: PriceItem) {
+            self.untilDate = untilDate
             self.price = price
         }
     }

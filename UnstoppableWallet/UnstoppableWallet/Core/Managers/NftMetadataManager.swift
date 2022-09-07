@@ -26,7 +26,15 @@ extension NftMetadataManager {
         addressMetadataRelay.asObservable()
     }
 
-    func collectionLink(blockchainType: BlockchainType, providerUid: String) -> ProviderLink? {
+    func providerTitle(blockchainType: BlockchainType) -> String? {
+        guard let provider = providerMap[blockchainType] else {
+            return nil
+        }
+
+        return provider.title
+    }
+
+    func collectionLink(blockchainType: BlockchainType, providerUid: String) -> String? {
         guard let provider = providerMap[blockchainType] else {
             return nil
         }

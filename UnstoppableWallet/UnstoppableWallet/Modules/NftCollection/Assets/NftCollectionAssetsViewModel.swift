@@ -65,7 +65,7 @@ class NftCollectionAssetsViewModel {
                 imageUrl: asset.previewImageUrl,
                 name: asset.displayName,
                 count: nil,
-                onSale: false, // todo
+                onSale: asset.saleInfo != nil,
                 coinPrice: coinPrice,
                 fiatPrice: fiatPrice
         )
