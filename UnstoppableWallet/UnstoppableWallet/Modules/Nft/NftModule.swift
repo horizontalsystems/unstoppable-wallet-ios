@@ -17,6 +17,7 @@ struct NftModule {
                 account: account,
                 nftAdapterManager: App.shared.nftAdapterManager,
                 nftMetadataManager: App.shared.nftMetadataManager,
+                nftMetadataSyncer: App.shared.nftMetadataSyncer,
                 balanceHiddenManager: App.shared.balanceHiddenManager,
                 balanceConversionManager: App.shared.balanceConversionManager,
                 coinPriceService: coinPriceService

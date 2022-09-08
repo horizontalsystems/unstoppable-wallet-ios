@@ -16,6 +16,7 @@ class NftViewController: ThemeViewController {
     private var expandedUids = Set<String>()
 
     private let tableView = SectionsTableView(style: .plain)
+    private let refreshControl = UIRefreshControl()
     private let emptyView = PlaceholderView()
 
     private var loaded = false
@@ -52,6 +53,10 @@ class NftViewController: ThemeViewController {
         tableView.registerCell(forClass: NftDoubleCell.self)
         tableView.sectionDataSource = self
 
+        refreshControl.tintColor = .themeLeah
+        refreshControl.alpha = 0.6
+        refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
+
         view.addSubview(emptyView)
         emptyView.snp.makeConstraints { maker in
             maker.edges.equalTo(view.safeAreaLayoutGuide)
@@ -65,6 +70,20 @@ class NftViewController: ThemeViewController {
 
         tableView.buildSections()
         loaded = true
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        tableView.refreshControl = refreshControl
+    }
+
+    @objc func onRefresh() {
+        viewModel.onTriggerRefresh()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.refreshControl.endRefreshing()
+        }
     }
 
     private func sync(viewItems: [NftViewModel.ViewItem]) {

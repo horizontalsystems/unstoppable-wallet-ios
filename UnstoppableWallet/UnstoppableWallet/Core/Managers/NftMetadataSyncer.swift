@@ -9,6 +9,7 @@ class NftMetadataSyncer {
     private let nftMetadataManager: NftMetadataManager
     private let nftStorage: NftStorage
     private let disposeBag = DisposeBag()
+    private var adapterDisposeBag = DisposeBag()
 
     init(nftAdapterManager: NftAdapterManager, nftMetadataManager: NftMetadataManager, nftStorage: NftStorage) {
         self.nftAdapterManager = nftAdapterManager
@@ -18,34 +19,50 @@ class NftMetadataSyncer {
         nftAdapterManager.adaptersUpdatedObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onNext: { [weak self] adapterMap in
-//                    print("SYNC: adapters updated: \(adapterMap.count)")
                     self?.sync(adapterMap: adapterMap)
+                    self?.subscribeToAdapterRecords(adapterMap: adapterMap)
                 })
                 .disposed(by: disposeBag)
+
+        subscribeToAdapterRecords(adapterMap: nftAdapterManager.adapterMap)
     }
 
-    private func sync(adapterMap: [NftKey: INftAdapter]) {
+    private func subscribeToAdapterRecords(adapterMap: [NftKey: INftAdapter]) {
+        adapterDisposeBag = DisposeBag()
+
+        for (nftKey, adapter) in adapterMap {
+            adapter.nftRecordsObservable
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                    .subscribe(onNext: { [weak self] _ in
+                        self?.sync(nftKey: nftKey, adapter: adapter, force: true)
+                    })
+                    .disposed(by: adapterDisposeBag)
+        }
+    }
+
+    private func sync(adapterMap: [NftKey: INftAdapter], force: Bool = false) {
         guard !adapterMap.isEmpty else {
             return
         }
 
-        let currentTimestamp = Date().timeIntervalSince1970
-
         for (nftKey, adapter) in adapterMap {
-            if let timestamp = nftStorage.lastSyncTimestamp(nftKey: nftKey), currentTimestamp - timestamp < syncThreshold {
-//                print("sync threshold: \(nftKey.blockchainType.uid)")
-                continue
-            }
-
-            nftMetadataManager.addressMetadataSingle(blockchainType: nftKey.blockchainType, address: adapter.userAddress)
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                    .subscribe(onSuccess: { [weak self] addressMetadata in
-                        self?.handle(addressMetadata: addressMetadata, nftKey: nftKey)
-                    }, onError: { error in
-                        // todo
-                    })
-                    .disposed(by: disposeBag)
+            sync(nftKey: nftKey, adapter: adapter, force: force)
         }
+    }
+
+    private func sync(nftKey: NftKey, adapter: INftAdapter, force: Bool = false) {
+        if !force, let timestamp = nftStorage.lastSyncTimestamp(nftKey: nftKey), Date().timeIntervalSince1970 - timestamp < syncThreshold {
+            return
+        }
+
+        nftMetadataManager.addressMetadataSingle(blockchainType: nftKey.blockchainType, address: adapter.userAddress)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribe(onSuccess: { [weak self] addressMetadata in
+                    self?.handle(addressMetadata: addressMetadata, nftKey: nftKey)
+                }, onError: { error in
+                    // todo
+                })
+                .disposed(by: disposeBag)
     }
 
     private func handle(addressMetadata: NftAddressMetadata, nftKey: NftKey) {
@@ -60,8 +77,11 @@ class NftMetadataSyncer {
 extension NftMetadataSyncer {
 
     func sync() {
-//        print("SYNC: from App Manager")
         sync(adapterMap: nftAdapterManager.adapterMap)
+    }
+
+    func forceSync() {
+        sync(adapterMap: nftAdapterManager.adapterMap, force: true)
     }
 
 }

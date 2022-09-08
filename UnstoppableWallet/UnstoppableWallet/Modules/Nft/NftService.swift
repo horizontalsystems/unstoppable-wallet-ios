@@ -8,6 +8,7 @@ class NftService {
     private let account: Account
     private let nftAdapterManager: NftAdapterManager
     private let nftMetadataManager: NftMetadataManager
+    private let nftMetadataSyncer: NftMetadataSyncer
     private let balanceHiddenManager: BalanceHiddenManager
     private let balanceConversionManager: BalanceConversionManager
     private let coinPriceService: WalletCoinPriceService
@@ -42,10 +43,11 @@ class NftService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-collections-service", qos: .userInitiated)
 
-    init(account: Account, nftAdapterManager: NftAdapterManager, nftMetadataManager: NftMetadataManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager, coinPriceService: WalletCoinPriceService) {
+    init(account: Account, nftAdapterManager: NftAdapterManager, nftMetadataManager: NftMetadataManager, nftMetadataSyncer: NftMetadataSyncer, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager, coinPriceService: WalletCoinPriceService) {
         self.account = account
         self.nftAdapterManager = nftAdapterManager
         self.nftMetadataManager = nftMetadataManager
+        self.nftMetadataSyncer = nftMetadataSyncer
         self.balanceHiddenManager = balanceHiddenManager
         self.balanceConversionManager = balanceConversionManager
         self.coinPriceService = coinPriceService
@@ -296,6 +298,10 @@ extension NftService {
 
     var balanceHidden: Bool {
         balanceHiddenManager.balanceHidden
+    }
+
+    func refreshMetadata() {
+        nftMetadataSyncer.forceSync()
     }
 
     func toggleBalanceHidden() {
