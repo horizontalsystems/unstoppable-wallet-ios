@@ -78,6 +78,10 @@ extension NftViewModel {
         expandedUidsRelay.asDriver()
     }
 
+    func onTriggerRefresh() {
+        service.refreshMetadata()
+    }
+
     func onTap(uid: String) {
         var expandedUids = expandedUidsRelay.value
 
