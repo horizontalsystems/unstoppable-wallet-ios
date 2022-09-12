@@ -302,7 +302,7 @@ extension EvmTransactionConverter {
                         outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + transferEvents(outgoingEip20Transfers: outgoingEip20Transfers) +
                                 transferEvents(outgoingEip721Transfers: outgoingEip721Transfers) + transferEvents(outgoingEip1155Transfers: outgoingEip1155Transfers)
                 )
-            } else if transaction.from != address {
+            } else if transaction.from != address && transaction.to != address {
                 return ExternalContractCallTransactionRecord(
                         source: source,
                         transaction: transaction,
