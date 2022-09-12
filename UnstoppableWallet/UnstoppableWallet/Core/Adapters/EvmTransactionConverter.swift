@@ -1,6 +1,7 @@
 import Foundation
 import EthereumKit
 import Erc20Kit
+import NftKit
 import UniswapKit
 import OneInchKit
 import MarketKit
@@ -38,7 +39,7 @@ class EvmTransactionConverter {
         return .coinValue(token: baseToken, value: amount)
     }
 
-    private func eip20Value(tokenAddress: EthereumKit.Address, value: BigUInt, sign: FloatingPointSign, tokenInfo: TokenInfo?) -> TransactionValue {
+    private func eip20Value(tokenAddress: EthereumKit.Address, value: BigUInt, sign: FloatingPointSign, tokenInfo: Erc20Kit.TokenInfo?) -> TransactionValue {
         let query = TokenQuery(blockchainType: evmKitWrapper.blockchainType, tokenType: .eip20(address: tokenAddress.hex))
 
         if let token = try? coinManager.token(query: query) {
@@ -80,8 +81,8 @@ class EvmTransactionConverter {
         }
     }
 
-    private func transferEvents(incomingTransfers: [TransferEventInstance]) -> [ContractCallTransactionRecord.TransferEvent] {
-        incomingTransfers.map { transfer in
+    private func transferEvents(incomingEip20Transfers: [TransferEventInstance]) -> [ContractCallTransactionRecord.TransferEvent] {
+        incomingEip20Transfers.map { transfer in
             ContractCallTransactionRecord.TransferEvent(
                     address: transfer.from.eip55,
                     value: eip20Value(tokenAddress: transfer.contractAddress, value: transfer.value, sign: .plus, tokenInfo: transfer.tokenInfo)
@@ -89,11 +90,67 @@ class EvmTransactionConverter {
         }
     }
 
-    private func transferEvents(outgoingTransfers: [TransferEventInstance]) -> [ContractCallTransactionRecord.TransferEvent] {
-        outgoingTransfers.map { transfer in
+    private func transferEvents(outgoingEip20Transfers: [TransferEventInstance]) -> [ContractCallTransactionRecord.TransferEvent] {
+        outgoingEip20Transfers.map { transfer in
             ContractCallTransactionRecord.TransferEvent(
                     address: transfer.to.eip55,
                     value: eip20Value(tokenAddress: transfer.contractAddress, value: transfer.value, sign: .minus, tokenInfo: transfer.tokenInfo)
+            )
+        }
+    }
+
+    private func transferEvents(incomingEip721Transfers: [Eip721TransferEventInstance]) -> [ContractCallTransactionRecord.TransferEvent] {
+        incomingEip721Transfers.map { transfer in
+            ContractCallTransactionRecord.TransferEvent(
+                    address: transfer.from.eip55,
+                    value: .nftValue(
+                            tokenId: transfer.tokenId.description,
+                            value: 1,
+                            tokenName: transfer.tokenInfo?.tokenName,
+                            tokenSymbol: transfer.tokenInfo?.tokenSymbol
+                    )
+            )
+        }
+    }
+
+    private func transferEvents(outgoingEip721Transfers: [Eip721TransferEventInstance]) -> [ContractCallTransactionRecord.TransferEvent] {
+        outgoingEip721Transfers.map { transfer in
+            ContractCallTransactionRecord.TransferEvent(
+                    address: transfer.to.eip55,
+                    value: .nftValue(
+                            tokenId: transfer.tokenId.description,
+                            value: -1,
+                            tokenName: transfer.tokenInfo?.tokenName,
+                            tokenSymbol: transfer.tokenInfo?.tokenSymbol
+                    )
+            )
+        }
+    }
+
+    private func transferEvents(incomingEip1155Transfers: [Eip1155TransferEventInstance]) -> [ContractCallTransactionRecord.TransferEvent] {
+        incomingEip1155Transfers.map { transfer in
+            ContractCallTransactionRecord.TransferEvent(
+                    address: transfer.from.eip55,
+                    value: .nftValue(
+                            tokenId: transfer.tokenId.description,
+                            value: convertAmount(amount: transfer.value, decimals: 0, sign: .plus),
+                            tokenName: transfer.tokenInfo?.tokenName,
+                            tokenSymbol: transfer.tokenInfo?.tokenSymbol
+                    )
+            )
+        }
+    }
+
+    private func transferEvents(outgoingEip1155Transfers: [Eip1155TransferEventInstance]) -> [ContractCallTransactionRecord.TransferEvent] {
+        outgoingEip1155Transfers.map { transfer in
+            ContractCallTransactionRecord.TransferEvent(
+                    address: transfer.to.eip55,
+                    value: .nftValue(
+                            tokenId: transfer.tokenId.description,
+                            value: convertAmount(amount: transfer.value, decimals: 0, sign: .minus),
+                            tokenName: transfer.tokenInfo?.tokenName,
+                            tokenSymbol: transfer.tokenInfo?.tokenSymbol
+                    )
             )
         }
     }
@@ -221,9 +278,17 @@ extension EvmTransactionConverter {
 
             let internalTransactions = decoration.internalTransactions.filter { $0.to == address }
 
-            let transferEventInstances = decoration.eventInstances.compactMap { $0 as? TransferEventInstance }
-            let incomingTransfers = transferEventInstances.filter { $0.to == address && $0.from != address }
-            let outgoingTransfers = transferEventInstances.filter { $0.from == address }
+            let eip20Transfers = decoration.eventInstances.compactMap { $0 as? TransferEventInstance }
+            let incomingEip20Transfers = eip20Transfers.filter { $0.to == address && $0.from != address }
+            let outgoingEip20Transfers = eip20Transfers.filter { $0.from == address }
+
+            let eip721Transfers = decoration.eventInstances.compactMap { $0 as? Eip721TransferEventInstance }
+            let incomingEip721Transfers = eip721Transfers.filter { $0.to == address && $0.from != address }
+            let outgoingEip721Transfers = eip721Transfers.filter { $0.from == address }
+
+            let eip1155Transfers = decoration.eventInstances.compactMap { $0 as? Eip1155TransferEventInstance }
+            let incomingEip1155Transfers = eip1155Transfers.filter { $0.to == address && $0.from != address }
+            let outgoingEip1155Transfers = eip1155Transfers.filter { $0.from == address }
 
             if transaction.from == address, let contractAddress = transaction.to, let value = transaction.value {
                 return ContractCallTransactionRecord(
@@ -232,16 +297,20 @@ extension EvmTransactionConverter {
                         baseToken: baseToken,
                         contractAddress: contractAddress.eip55,
                         method: transaction.input.flatMap { evmLabelManager.methodLabel(input: $0) },
-                        incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingTransfers: incomingTransfers),
-                        outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + transferEvents(outgoingTransfers: outgoingTransfers)
+                        incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingEip20Transfers: incomingEip20Transfers) +
+                                transferEvents(incomingEip721Transfers: incomingEip721Transfers) + transferEvents(incomingEip1155Transfers: incomingEip1155Transfers),
+                        outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + transferEvents(outgoingEip20Transfers: outgoingEip20Transfers) +
+                                transferEvents(outgoingEip721Transfers: outgoingEip721Transfers) + transferEvents(outgoingEip1155Transfers: outgoingEip1155Transfers)
                 )
             } else if transaction.from != address {
                 return ExternalContractCallTransactionRecord(
                         source: source,
                         transaction: transaction,
                         baseToken: baseToken,
-                        incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingTransfers: incomingTransfers),
-                        outgoingEvents: transferEvents(outgoingTransfers: outgoingTransfers)
+                        incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingEip20Transfers: incomingEip20Transfers) +
+                                transferEvents(incomingEip721Transfers: incomingEip721Transfers) + transferEvents(incomingEip1155Transfers: incomingEip1155Transfers),
+                        outgoingEvents: transferEvents(outgoingEip20Transfers: outgoingEip20Transfers) +
+                                transferEvents(outgoingEip721Transfers: outgoingEip721Transfers) + transferEvents(outgoingEip1155Transfers: outgoingEip1155Transfers)
                 )
             }
 
