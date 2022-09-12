@@ -174,6 +174,8 @@ class OpenSeaNftProvider {
                 totalVolume: response.stats.totalVolume,
                 floorPrice: nftPrice(token: baseToken, value: response.stats.floorPrice, shift: false),
                 marketCap: nftPrice(token: baseToken, value: response.stats.marketCap, shift: false),
+                royalty: response.devSellerFeeBasisPoints / 100,
+                inceptionDate: response.contracts.first?.createdDate,
                 volume1d: nftPrice(token: baseToken, value: response.stats.oneDayVolume, shift: false),
                 change1d: response.stats.oneDayChange,
                 sales1d: response.stats.oneDaySales,
@@ -540,6 +542,7 @@ extension OpenSeaNftProvider {
         let externalUrl: String?
         let discordUrl: String?
         let twitterUsername: String?
+        let devSellerFeeBasisPoints: Decimal
         let stats: CollectionStatsResponse
 
         init(map: Map) throws {
@@ -552,6 +555,7 @@ extension OpenSeaNftProvider {
             externalUrl = try? map.value("external_url")
             discordUrl = try? map.value("discord_url")
             twitterUsername = try? map.value("twitter_username")
+            devSellerFeeBasisPoints = try map.value("dev_seller_fee_basis_points", using: Transform.stringToDecimalTransform)
             stats = try map.value("stats")
         }
     }
@@ -587,11 +591,19 @@ extension OpenSeaNftProvider {
     }
 
     private struct AssetContractResponse: ImmutableMappable {
+        private static let reusableDateFormatter: DateFormatter = {
+            let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd'T'HH:mm:ss.SSS", locale: "en_US_POSIX")
+            dateFormatter.timeZone = TimeZone(abbreviation: "GMT")!
+            return dateFormatter
+        }()
+
         let address: String
+        let createdDate: Date
         let schemaName: String
 
         init(map: Map) throws {
             address = try map.value("address")
+            createdDate = try map.value("created_date", using: DateFormatterTransform(dateFormatter: Self.reusableDateFormatter))
             schemaName = try map.value("schema_name")
         }
     }
