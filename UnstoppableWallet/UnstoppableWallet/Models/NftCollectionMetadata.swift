@@ -21,6 +21,9 @@ struct NftCollectionMetadata {
     let floorPrice: NftPrice?
     let marketCap: NftPrice?
 
+    let royalty: Decimal?
+    let inceptionDate: Date?
+
     let volume1d: NftPrice?
     let change1d: Decimal?
     let sales1d: Int?

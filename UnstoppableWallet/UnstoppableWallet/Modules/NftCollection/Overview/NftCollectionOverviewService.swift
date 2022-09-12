@@ -30,13 +30,10 @@ class NftCollectionOverviewService {
 
         state = .loading
 
-        Single.zip(
-                        nftMetadataManager.collectionMetadataSingle(blockchainType: blockchainType, providerUid: providerCollectionUid),
-                        marketKit.nftCollectionStatChartsSingle(blockchainType: blockchainType, providerUid: providerCollectionUid)
-                )
+        nftMetadataManager.collectionMetadataSingle(blockchainType: blockchainType, providerUid: providerCollectionUid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] collection, statCharts in
-                    let item = Item(collection: collection, statCharts: statCharts)
+                .subscribe(onSuccess: { [weak self] collection in
+                    let item = Item(collection: collection)
                     self?.state = .completed(item)
                 }, onError: { [weak self] error in
                     self?.state = .failed(error)
@@ -75,7 +72,6 @@ extension NftCollectionOverviewService {
 
     struct Item {
         let collection: NftCollectionMetadata
-        let statCharts: NftCollectionStatCharts?
     }
 
 }

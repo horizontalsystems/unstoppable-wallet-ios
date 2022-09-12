@@ -50,7 +50,7 @@ class NftCollectionOverviewViewModel {
                 description: collection.description,
                 contracts: collection.contracts.map { contractViewItem(address: $0) },
                 links: linkViewItems(collection: collection),
-                statCharts: statViewItem(collection: collection, statCharts: item.statCharts)
+                statCharts: statViewItem(collection: collection)
         )
     }
 
@@ -83,85 +83,14 @@ class NftCollectionOverviewViewModel {
         return viewItems
     }
 
-    private func statPricePointViewItem(title: String, pricePoints: [NftCollectionStatCharts.PricePoint]?) -> NftChartMarketCardView.ViewItem? {
-        guard let points = pricePoints,
-              points.count > 1,
-              let first = points.first,
-              let last = points.last else {
-            return nil
-        }
-
-        let chartItems = points.map {
-            ChartItem(timestamp: $0.timestamp).added(name: .rate, value: $0.value)
-        }
-        let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
-
-        let diffValue = (last.value / first.value - 1) * 100
-        let diff = DiffLabel.formatted(value: diffValue)
-        let diffColor = DiffLabel.color(value: diffValue)
-
-        let value: String? = first.token.flatMap {
-            let coinValue = CoinValue(kind: .token(token: $0), value: last.value)
-            return ValueFormatter.instance.formatShort(coinValue: coinValue)
-        }
-
-        let additional = coinService.rate.map { ValueFormatter.instance.formatShort(currency: $0.currency, value: $0.value * last.value) }
-
-        return NftChartMarketCardView.ViewItem(
-                title: title,
-                value: value,
-                additionalValue: additional ?? "---".localized,
-                diff: diff ?? "n/a".localized,
-                diffColor: diffColor,
-                data: chartData,
-                trend: diffValue.isSignMinus ? .down : .up
-        )
-    }
-
-    private func statPointViewItem(title: String, points: [NftCollectionStatCharts.Point]?, averagePrice: NftPrice?) -> NftChartMarketCardView.ViewItem? {
-        guard let points = points,
-              points.count > 1,
-              let first = points.first,
-              let last = points.last else {
-            return nil
-        }
-
-        let chartItems = points.map {
-            ChartItem(timestamp: $0.timestamp).added(name: .rate, value: $0.value)
-        }
-        let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
-
-        let diffValue = (last.value / first.value - 1) * 100
-        let diff = DiffLabel.formatted(value: diffValue)
-        let diffColor = DiffLabel.color(value: diffValue)
-
-        let value = ValueFormatter.instance.formatShort(value: last.value, decimalCount: 0, symbol: "NFT")
-
-        let averageValue: String? = averagePrice.flatMap {
-            let coinValue = CoinValue(kind: .token(token: $0.token), value: $0.value)
-            return ValueFormatter.instance.formatShort(coinValue: coinValue)
-        }
-        let additional = averageValue.map { "~\($0) / NFT" }
-
-        return NftChartMarketCardView.ViewItem(
-                title: title,
-                value: value,
-                additionalValue: additional ?? "----".localized,
-                diff: diff ?? "n/a".localized,
-                diffColor: diffColor,
-                data: chartData,
-                trend: diffValue.isSignMinus ? .down : .up
-        )
-    }
-
-    private func statViewItem(collection: NftCollectionMetadata, statCharts: NftCollectionStatCharts?) -> StatChartViewItem {
+    private func statViewItem(collection: NftCollectionMetadata) -> StatChartViewItem {
         StatChartViewItem(
                 ownerCount: collection.ownerCount.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
                 itemCount: collection.count.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
-                oneDayVolumeItems: statPricePointViewItem(title: "nft_collection.overview.24h_volume".localized, pricePoints: statCharts?.oneDayVolumePoints),
-                averagePriceItems: statPricePointViewItem(title: "nft_collection.overview.all_time_average".localized, pricePoints: statCharts?.averagePricePoints),
-                floorPriceItems: statPricePointViewItem(title: "nft_collection.overview.floor_price".localized, pricePoints: statCharts?.floorPricePoints),
-                oneDaySalesItems: statPointViewItem(title: "nft_collection.overview.today_sellers".localized, points: statCharts?.oneDaySalesPoints, averagePrice: collection.averagePrice1d)
+                oneDayVolumeItems: nil,
+                averagePriceItems: nil,
+                floorPriceItems: nil,
+                oneDaySalesItems: nil
         )
     }
 
