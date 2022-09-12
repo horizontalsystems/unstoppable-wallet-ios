@@ -14,7 +14,7 @@ class ExternalContractCallTransactionRecord: EvmTransactionRecord {
 
         for event in incomingEvents + outgoingEvents {
             switch event.value {
-            case .coinValue:
+            case .coinValue, .nftValue:
                 spam = false
                 break
             default: ()

@@ -102,13 +102,14 @@ class NftService {
                     })
                     .disposed(by: adapterDisposeBag)
 
-            nftMetadataManager.addressMetadataObservable
-                    .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                    .subscribe(onNext: { [weak self] nftKey, addressMetadata in
-                        self?.handleUpdated(addressMetadata: addressMetadata, nftKey: nftKey)
-                    })
-                    .disposed(by: adapterDisposeBag)
         }
+
+        nftMetadataManager.addressMetadataObservable
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+                .subscribe(onNext: { [weak self] nftKey, addressMetadata in
+                    self?.handleUpdated(addressMetadata: addressMetadata, nftKey: nftKey)
+                })
+                .disposed(by: adapterDisposeBag)
 
         _syncNftItemMap()
     }
