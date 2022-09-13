@@ -1,10 +1,10 @@
-import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
-import MarketKit
 import Chart
 import CurrencyKit
+import Foundation
+import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class NftCollectionOverviewViewModel {
     private let service: NftCollectionOverviewService
@@ -50,7 +50,7 @@ class NftCollectionOverviewViewModel {
                 description: collection.description,
                 contracts: collection.contracts.map { contractViewItem(address: $0) },
                 links: linkViewItems(collection: collection),
-                statCharts: statViewItem(collection: collection)
+                statsViewItems: statViewItem(collection: collection)
         )
     }
 
@@ -83,21 +83,85 @@ class NftCollectionOverviewViewModel {
         return viewItems
     }
 
-    private func statViewItem(collection: NftCollectionMetadata) -> StatChartViewItem {
-        StatChartViewItem(
-                ownerCount: collection.ownerCount.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
-                itemCount: collection.count.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
-                oneDayVolumeItems: nil,
-                averagePriceItems: nil,
-                floorPriceItems: nil,
-                oneDaySalesItems: nil
+    private func statViewItem(collection: NftCollectionMetadata) -> StatsViewItem {
+        let ownerCount = [
+            collection.ownerCount.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
+            "nft_collection.overview.owners".localized,
+        ].compactMap { $0 }
+            .joined(separator: " ")
+
+        let ownerViewItem = MarketCardView.ViewItem(
+            title: "nft_collection.overview.items".localized,
+            value: collection.count.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
+            description: ownerCount
         )
+
+        let floorPriceViewItem = collection.floorPrice.map { floorPrice -> MarketCardView.ViewItem in
+            let floorPriceInCurrency = coinService.rate
+                    .map {
+                        ValueFormatter.instance
+                                .formatShort(currency: $0.currency, value: $0.value * floorPrice.value)
+                    } ?? "n/a".localized
+
+            return MarketCardView.ViewItem(
+                title: "nft_collection.overview.floor_price".localized,
+                value: string(nftPrice: floorPrice),
+                description:floorPriceInCurrency
+            )
+        } ??  MarketCardView.ViewItem(
+                title: "nft_collection.overview.floor_price".localized,
+                value: "---",
+                description:"n/a".localized
+        )
+
+        let volumeDiff = collection.change1d
+                .flatMap { DiffLabel.formatted(value: $0) }
+        let volumeColor = collection.change1d
+                .map { DiffLabel.color(value: $0) }
+
+        let volume24ViewItem = collection.volume1d.map { volume1d in
+            MarketCardView.ViewItem(
+                    title: "nft_collection.overview.24h_volume".localized,
+                    value: string(nftPrice: volume1d),
+                    description: volumeDiff,
+                    descriptionColor: volumeColor
+            )
+        }
+
+        let averageValue: String? = collection.averagePrice1d.flatMap {
+            let coinValue = CoinValue(kind: .token(token: $0.token), value: $0.value)
+            return ValueFormatter.instance.formatShort(coinValue: coinValue)
+        }
+        let additional = averageValue.map { "~\($0) per NFT" }
+
+        let todaySellersViewItem = collection.sales1d.map { sales1d in
+            MarketCardView.ViewItem(
+                    title: "nft_collection.overview.today_sellers".localized,
+                    value: "\(sales1d) NFT",
+                    description: additional
+            )
+        }
+
+        return StatsViewItem(
+                countItems: ownerViewItem,
+                oneDayVolumeItems: volume24ViewItem, 
+                floorPriceItems: floorPriceViewItem,
+                oneDaySalesItems: todaySellersViewItem
+        )
+    }
+
+    private func string(nftPrice: NftPrice?) -> String? {
+        guard let price = nftPrice else {
+            return nil
+        }
+
+        let coinValue = CoinValue(kind: .token(token: price.token), value: price.value)
+        return ValueFormatter.instance.formatShort(coinValue: coinValue)
     }
 
 }
 
 extension NftCollectionOverviewViewModel {
-
     var viewItemDriver: Driver<ViewItem?> {
         viewItemRelay.asDriver()
     }
@@ -113,18 +177,16 @@ extension NftCollectionOverviewViewModel {
     func onTapRetry() {
         service.resync()
     }
-
 }
 
 extension NftCollectionOverviewViewModel {
-
     struct ViewItem {
         let logoImageUrl: String?
         let name: String
         let description: String?
         let contracts: [ContractViewItem]
         let links: [LinkViewItem]
-        let statCharts: StatChartViewItem
+        let statsViewItems: StatsViewItem
     }
 
     struct ContractViewItem {
@@ -138,13 +200,11 @@ extension NftCollectionOverviewViewModel {
         let url: String
     }
 
-    struct StatChartViewItem {
-        let ownerCount: String?
-        let itemCount: String?
-        let oneDayVolumeItems: ChartMarketCardView.ViewItem?
-        let averagePriceItems: ChartMarketCardView.ViewItem?
-        let floorPriceItems: ChartMarketCardView.ViewItem?
-        let oneDaySalesItems: ChartMarketCardView.ViewItem?
+    struct StatsViewItem {
+        let countItems: MarketCardView.ViewItem?
+        let oneDayVolumeItems: MarketCardView.ViewItem?
+        let floorPriceItems: MarketCardView.ViewItem?
+        let oneDaySalesItems: MarketCardView.ViewItem?
     }
 
     enum LinkType {
@@ -153,5 +213,4 @@ extension NftCollectionOverviewViewModel {
         case discord
         case twitter
     }
-
 }
