@@ -32,7 +32,7 @@ class MarketCardCell: UITableViewCell {
     }
 
     func append(viewItem: MarketCardView.ViewItem, onTap: (() -> ())? = nil) {
-        let marketCardView = viewItem.viewType.init()
+        let marketCardView = MarketCardView()
         marketCardView.onTap = onTap
 
         append(view: marketCardView)

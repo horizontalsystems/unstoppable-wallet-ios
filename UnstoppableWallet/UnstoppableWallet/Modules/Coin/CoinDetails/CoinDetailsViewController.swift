@@ -253,7 +253,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         )
     }
 
-    private func hasCharts(items: [ChartMarketCardView.ViewItem?]) -> Bool {
+    private func hasCharts(items: [MarketCardView.ViewItem?]) -> Bool {
         !items.compactMap { $0 } .isEmpty
     }
 
@@ -264,7 +264,7 @@ extension CoinDetailsViewController: SectionsDataSource {
 
         let liquidityRow = Row<MarketCardCell>(
                 id: "liquidity_chart",
-                height: ChartMarketCardView.viewHeight(),
+                height: MarketCardView.height,
                 bind: { [weak self] cell, _ in
                     cell.clear()
 
@@ -304,7 +304,7 @@ extension CoinDetailsViewController: SectionsDataSource {
     private func transactionCharts(viewItem: CoinDetailsViewModel.ViewItem) -> RowProtocol {
         Row<MarketCardCell>(
                 id: "transaction-charts",
-                height: ChartMarketCardView.viewHeight(),
+                height: MarketCardView.height,
                 bind: { [weak self] cell, _ in
                     cell.clear()
 
@@ -325,7 +325,7 @@ extension CoinDetailsViewController: SectionsDataSource {
     private func addressChart(viewItem: CoinDetailsViewModel.ViewItem) -> RowProtocol {
         Row<MarketCardCell>(
                 id: "address-chart",
-                height: ChartMarketCardView.viewHeight(),
+                height: MarketCardView.height,
                 bind: { [weak self] cell, _ in
                     cell.clear()
 
@@ -426,11 +426,11 @@ extension CoinDetailsViewController: SectionsDataSource {
 
         let tvlRow = Row<MarketCardCell>(
                 id: "tvl_chart",
-                height: ChartMarketCardView.viewHeight(),
+                height: MarketCardView.height,
                 bind: { [weak self] cell, _ in
                     cell.clear()
 
-                    let view = ChartMarketCardView()
+                    let view = MarketCardView()
                     view.set(viewItem: tvlChart)
                     view.onTap = { [weak self] in
                         self?.openTvl()

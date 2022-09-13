@@ -5,12 +5,20 @@ import ThemeKit
 import ComponentKit
 
 class MarketCardView: UIView {
-    class func viewHeight() -> CGFloat { MarketCardTitleView.height + .margin8 + MarketCardValueView.height + 2 * .margin12 }
+    static let height: CGFloat = 109
 
     let stackView = UIStackView()
-    private let titleView = MarketCardTitleView()
-    private let valueView = MarketCardValueView()
+    private let titleView = TextComponent()
+    private let valueView = TextComponent()
+
+    private let descriptionStackView = UIStackView()
+    private let descriptionWrapper = UIView()
+    private let descriptionView = TextComponent()
+
+    private let chartView = RateChartView()
     private let button = UIButton()
+
+    private var alreadyHasData: Bool = false
 
     var onTap: (() -> ())? {
         didSet {
@@ -41,11 +49,41 @@ class MarketCardView: UIView {
 
         stackView.distribution = .fill
         stackView.axis = .vertical
-        stackView.spacing = .margin8
+        stackView.spacing = .margin12
         stackView.isUserInteractionEnabled = false
 
         stackView.addArrangedSubview(titleView)
         stackView.addArrangedSubview(valueView)
+        stackView.addArrangedSubview(descriptionStackView)
+
+        stackView.setCustomSpacing(.margin4, after: valueView)
+
+        descriptionStackView.distribution = .fill
+        descriptionStackView.axis = .horizontal
+        descriptionStackView.spacing = .margin4
+        descriptionStackView.isUserInteractionEnabled = false
+
+        descriptionStackView.addArrangedSubview(descriptionWrapper)
+        descriptionStackView.addArrangedSubview(chartView)
+        descriptionWrapper.snp.makeConstraints { maker in
+            maker.height.equalTo(CGFloat.margin24)
+        }
+
+        descriptionWrapper.addSubview(descriptionView)
+        descriptionView.snp.makeConstraints { maker in
+            maker.leading.trailing.bottom.equalToSuperview()
+        }
+
+        titleView.font = .caption
+        valueView.font = .headline1
+        descriptionView.font = .subhead1
+
+        titleView.textColor = .themeGray
+        valueView.textColor = .themeBran
+        descriptionView.textColor = .themeGray
+
+        descriptionView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        descriptionView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         updateUI()
     }
@@ -68,18 +106,58 @@ class MarketCardView: UIView {
         onTap?()
     }
 
-    func set(viewItem: ViewItem) {
-        titleView.title = viewItem.title
+    var title: String? {
+        get { titleView.text }
+        set { titleView.text = newValue }
+    }
 
-        valueView.valueColor = viewItem.value == nil ? .themeGray50 : .themeBran
-        valueView.value = viewItem.value ?? "n/a".localized
-
-        valueView.diff = viewItem.diff
-        if let diffColor = viewItem.diffColor {
-            valueView.diffColor = diffColor
+    var value: String? {
+        get { valueView.text }
+        set {
+            valueView.text = newValue
+            valueView.textColor = newValue == nil ? .themeGray50 : .themeBran
         }
     }
 
+    var descriptionText: String? {
+        get { descriptionView.text }
+        set { descriptionView.text = newValue }
+    }
+
+    var descriptionColor: UIColor! {
+        get { descriptionView.textColor}
+        set { descriptionView.textColor = newValue }
+    }
+
+    func set(chartData data: ChartData?, trend: MovementTrend?) {
+        chartView.isHidden = data == nil
+        guard let data = data, let trend = trend else {
+            alreadyHasData = false
+            return
+        }
+
+        chartView.apply(configuration: ChartConfiguration.chartPreview)
+
+        let colorType: ChartColorType
+        switch trend {
+        case .neutral: colorType = .neutral
+        case .up: colorType = .up
+        case .down: colorType = .down
+        }
+
+        chartView.setCurve(colorType: colorType)
+        chartView.set(chartData: data, animated: alreadyHasData)
+        alreadyHasData = true
+    }
+
+    func set(viewItem: ViewItem) {
+        title = viewItem.title
+        value = viewItem.value
+        descriptionText = viewItem.description
+        descriptionColor = viewItem.descriptionColor ?? .themeGray
+
+        set(chartData: viewItem.chartData, trend: viewItem.movementTrend)
+    }
 }
 
 extension MarketCardView {
@@ -87,19 +165,22 @@ extension MarketCardView {
     class ViewItem {
         let title: String?
         let value: String?
-        let diff: String?
-        let diffColor: UIColor?
+        let description: String?
+        let descriptionColor: UIColor?
+        let chartData: ChartData?
+        let movementTrend: MovementTrend?
 
-        init(title: String?, value: String?, diff: String?, diffColor: UIColor?) {
+        init(title: String?, value: String?, description: String?, descriptionColor: UIColor? = nil, chartData: ChartData? = nil, movementTrend: MovementTrend? = nil) {
             self.title = title
             self.value = value
-            self.diff = diff
-            self.diffColor = diffColor
+            self.description = description
+            self.descriptionColor = descriptionColor
+
+            self.chartData = chartData
+            self.movementTrend = movementTrend
         }
 
-        var viewType: MarketCardView.Type {
-            MarketCardView.self
-        }
     }
 
 }
+
