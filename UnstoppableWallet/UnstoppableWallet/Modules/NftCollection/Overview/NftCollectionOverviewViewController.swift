@@ -216,6 +216,28 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
         return sections
     }
 
+    private func royaltySection(viewItem: NftCollectionOverviewViewModel.ViewItem) -> SectionProtocol? {
+        let rowTexts = [
+            viewItem.royalty.map { ("nft_collection.overview.royalty".localized, $0) },
+            viewItem.inceptionDate.map { ("nft_collection.overview.inception_date".localized, $0) }
+        ].flatMap { $0 }
+
+        guard rowTexts.count > 0 else {
+            return nil
+        }
+
+        return Section(
+                id: "royalty",
+                footerState: .margin(height: .margin24),
+                rows: rowTexts.enumerated().map { index, tuple in
+                    tableView.grayTitleWithValueRow(
+                            id: "text_\(index)",
+                            title: tuple.0, value: tuple.1, valueColor: .themeLeah, isFirst: index == 0, isLast: index == rowTexts.count - 1
+                    )
+                }
+        )
+    }
+
     private func descriptionSection(description: String) -> SectionProtocol {
         descriptionTextCell.contentText = NSAttributedString(string: description, attributes: [.font: UIFont.subhead2, .foregroundColor: UIColor.themeGray])
 
@@ -372,6 +394,10 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
             sections.append(logoHeaderSection)
 
             sections.append(contentsOf: chartSection(statCharts: viewItem.statsViewItems))
+
+            if let royaltySection = royaltySection(viewItem: viewItem) {
+                sections.append(royaltySection)
+            }
 
             if let description = viewItem.description {
                 sections.append(descriptionSection(description: description))

@@ -50,7 +50,9 @@ class NftCollectionOverviewViewModel {
                 description: collection.description,
                 contracts: collection.contracts.map { contractViewItem(address: $0) },
                 links: linkViewItems(collection: collection),
-                statsViewItems: statViewItem(collection: collection)
+                statsViewItems: statViewItem(collection: collection),
+                royalty: collection.royalty.flatMap { ValueFormatter.instance.format(percentValue: $0, showSign: false) },
+                inceptionDate: collection.inceptionDate.map {DateFormatter.cachedFormatter(format: "MMMM d, yyyy").string(from: $0) }
         )
     }
 
@@ -144,7 +146,7 @@ class NftCollectionOverviewViewModel {
 
         return StatsViewItem(
                 countItems: ownerViewItem,
-                oneDayVolumeItems: volume24ViewItem, 
+                oneDayVolumeItems: volume24ViewItem,
                 floorPriceItems: floorPriceViewItem,
                 oneDaySalesItems: todaySellersViewItem
         )
@@ -187,6 +189,8 @@ extension NftCollectionOverviewViewModel {
         let contracts: [ContractViewItem]
         let links: [LinkViewItem]
         let statsViewItems: StatsViewItem
+        let royalty: String?
+        let inceptionDate: String?
     }
 
     struct ContractViewItem {

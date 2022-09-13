@@ -343,7 +343,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         let hasAddresses = hasCharts(items: [viewItem.tokenDistribution.activeAddresses])
 
         let addressMargin: CGFloat = isLast ? .margin24 : .margin12
-        let chartMargin: CGFloat = isLast ? .margin24 : hasAddresses ? .margin8 : .margin12
+        let chartMargin: CGFloat = hasAddresses ? .margin8 : isLast ? .margin24 : .margin12
 
         var sections = [SectionProtocol]()
         guard (hasTxCharts || hasAddresses) else {
