@@ -188,9 +188,9 @@ class KeyboardAwareViewController: ThemeViewController {
     override open func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
         if !viewControllerToPresent.isKind(of: UISearchController.self) {
             view.endEditing(true)
+            observeKeyboard(false)
         }
 
-        observeKeyboard(false)
         viewControllerToPresent.presentationController?.delegate = self
         super.present(viewControllerToPresent, animated: flag, completion: completion)
     }
