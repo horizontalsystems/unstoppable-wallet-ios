@@ -1242,6 +1242,8 @@ We built Unstoppable for ourselves as the other available solutions were not up 
 "nft_collection.overview.today_sellers" = "Today's Sellers";
 "nft_collection.overview.floor_price" = "Floor Price";
 "nft_collection.overview.all_time_average" = "All time average";
+"nft_collection.overview.royalty" = "Royalty";
+"nft_collection.overview.inception_date" = "Inception Date";
 
 "nft.activity.empty_list" = "No item activity yet";
 "nft.activity.event_types" = "Event Types";
