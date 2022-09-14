@@ -615,13 +615,13 @@ CHECKOUT OPTIONS:
     :commit: aad34bd645d6cc57dd502798e4411259de4044a2
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
-    :commit: 03f28fc3db65aee3df6467dac05afeb1f5f49ae0
+    :commit: 53b943b4b18920b9dab73a7f05dbf36382a96b74
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   EthereumABI:
     :commit: f77b49868885e9f909bd7dcf4c50c42e84f43ef7
     :git: https://github.com/horizontalsystems/EthereumABI
   EthereumKit.swift:
-    :commit: 03f28fc3db65aee3df6467dac05afeb1f5f49ae0
+    :commit: 53b943b4b18920b9dab73a7f05dbf36382a96b74
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   FeeRateKit.swift:
     :commit: 0a28d5bf25389b72227aac160dcafd07b819428b
