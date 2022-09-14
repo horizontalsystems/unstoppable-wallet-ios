@@ -88,10 +88,10 @@ class EvmKitManager {
                 switch nftType {
                 case .eip721:
                     NftKit.Kit.addEip721TransactionSyncer(nftKit: kit, evmKit: evmKit)
-//                    NftKit.Kit.addEip721Decorators(nftKit: kit, evmKit: evmKit)
+                    NftKit.Kit.addEip721Decorators(nftKit: kit, evmKit: evmKit)
                 case .eip1155:
                     NftKit.Kit.addEip1155TransactionSyncer(nftKit: kit, evmKit: evmKit)
-//                    NftKit.Kit.addEip1155Decorators(nftKit: kit, evmKit: evmKit)
+                    NftKit.Kit.addEip1155Decorators(nftKit: kit, evmKit: evmKit)
                 }
             }
 

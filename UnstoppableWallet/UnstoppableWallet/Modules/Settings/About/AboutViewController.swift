@@ -45,7 +45,9 @@ class AboutViewController: ThemeViewController {
 
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
+
         tableView.sectionDataSource = self
+        tableView.registerCell(forClass: DescriptionCell.self)
 
         headerCell.image = UIImage(named: AppIcon.main.imageName)
         headerCell.title = "settings.about_app.app_name".localized
@@ -86,6 +88,20 @@ class AboutViewController: ThemeViewController {
         }
     }
 
+    private func openTwitter() {
+        let account = viewModel.twitterAccount
+
+        if let appUrl = URL(string: "twitter://user?screen_name=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
+            UIApplication.shared.open(appUrl)
+        } else {
+            urlManager.open(url: "https://twitter.com/\(account)", from: self)
+        }
+    }
+
+}
+
+extension AboutViewController: SectionsDataSource {
+
     private func row(id: String, image: String, title: String, alert: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: @escaping () -> ()) -> RowProtocol {
         CellBuilder.selectableRow(
                 elements: [.image20, .text, .image20, .margin8, .image20],
@@ -116,12 +132,10 @@ class AboutViewController: ThemeViewController {
         )
     }
 
-}
-
-extension AboutViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
-        [
+        let descriptionText = "settings.about_app.description".localized
+
+        return [
             Section(
                     id: "header",
                     rows: [
@@ -129,12 +143,22 @@ extension AboutViewController: SectionsDataSource {
                                 cell: headerCell,
                                 id: "header",
                                 height: LogoHeaderCell.height
+                        ),
+                        Row<DescriptionCell>(
+                                id: "description",
+                                dynamicHeight: { containerWidth in
+                                    DescriptionCell.height(containerWidth: containerWidth, text: descriptionText)
+                                },
+                                bind: { cell, _ in
+                                    cell.bind(text: descriptionText)
+                                }
                         )
                     ]
             ),
 
             Section(
                     id: "release-notes",
+                    headerState: .margin(height: .margin24),
                     footerState: .margin(height: .margin32),
                     rows: [
                         row(
@@ -173,7 +197,7 @@ extension AboutViewController: SectionsDataSource {
                                 title: "terms.title".localized,
                                 alert: showTermsAlert,
                                 action: { [weak self] in
-                                    self?.navigationController?.pushViewController(TermsRouter.module(), animated: true)
+                                    self?.present(TermsModule.viewController(), animated: true)
                                 }
                         ),
                         row(
@@ -199,6 +223,14 @@ extension AboutViewController: SectionsDataSource {
                                 isFirst: true,
                                 action: { [weak self] in
                                     self?.viewModel.onTapGithubLink()
+                                }
+                        ),
+                        row(
+                                id: "twitter",
+                                image: "twitter_20",
+                                title: "Twitter",
+                                action: { [weak self] in
+                                    self?.openTwitter()
                                 }
                         ),
                         row(
