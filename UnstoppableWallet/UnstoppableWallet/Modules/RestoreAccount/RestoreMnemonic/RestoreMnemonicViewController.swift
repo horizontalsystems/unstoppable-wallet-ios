@@ -24,11 +24,11 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
     private var isLoaded = false
     private var isFirstShownKeyboard = false
 
-    private weak var sourceViewController: UIViewController?
+    private weak var returnViewController: UIViewController?
 
-    init(viewModel: RestoreMnemonicViewModel, sourceViewController: UIViewController?) {
+    init(viewModel: RestoreMnemonicViewModel, returnViewController: UIViewController?) {
         self.viewModel = viewModel
-        self.sourceViewController = sourceViewController
+        self.returnViewController = returnViewController
 
         super.init(scrollViews: [tableView], accessoryView: hintView)
     }
@@ -167,7 +167,7 @@ class RestoreMnemonicViewController: KeyboardAwareViewController {
     }
 
     private func openSelectCoins(accountType: AccountType) {
-        let viewController = RestoreSelectModule.viewController(accountType: accountType, sourceViewController: sourceViewController)
+        let viewController = RestoreSelectModule.viewController(accountType: accountType, returnViewController: returnViewController)
         navigationController?.pushViewController(viewController, animated: true)
     }
 

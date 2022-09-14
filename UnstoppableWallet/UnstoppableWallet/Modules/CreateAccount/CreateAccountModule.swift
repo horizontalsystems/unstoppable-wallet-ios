@@ -4,7 +4,7 @@ import LanguageKit
 
 struct CreateAccountModule {
 
-    static func viewController(listener: ICreateAccountListener? = nil) -> UIViewController {
+    static func viewController(sourceViewController: UIViewController?, listener: ICreateAccountListener? = nil) -> UIViewController {
         let service = CreateAccountService(
                 accountFactory: App.shared.accountFactory,
                 predefinedBlockchainService: App.shared.predefinedBlockchainService,
@@ -16,7 +16,13 @@ struct CreateAccountModule {
         let viewModel = CreateAccountViewModel(service: service)
         let viewController = CreateAccountViewController(viewModel: viewModel, listener: listener)
 
-        return ThemeNavigationController(rootViewController: viewController)
+        let module = ThemeNavigationController(rootViewController: viewController)
+
+        if App.shared.termsManager.termsAccepted {
+            return module
+        } else {
+            return TermsModule.viewController(sourceViewController: sourceViewController, moduleToOpen: module)
+        }
     }
 
 }

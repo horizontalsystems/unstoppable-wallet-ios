@@ -9,7 +9,10 @@ import SectionsTableView
 
 class TermsViewController: ThemeViewController {
     private let viewModel: TermsViewModel
+    private var moduleToOpen: UIViewController?
     private let disposeBag = DisposeBag()
+
+    weak var sourceViewController: UIViewController?
 
     private let tableView = SectionsTableView(style: .grouped)
     private let agreeButton = PrimaryButton()
@@ -17,8 +20,10 @@ class TermsViewController: ThemeViewController {
     private var viewItems = [TermsViewModel.ViewItem]()
     private var loaded = false
 
-    init(viewModel: TermsViewModel) {
+    init(viewModel: TermsViewModel, sourceViewController: UIViewController?, moduleToOpen: UIViewController?) {
         self.viewModel = viewModel
+        self.sourceViewController = sourceViewController
+        self.moduleToOpen = moduleToOpen
 
         super.init()
     }
@@ -79,7 +84,15 @@ class TermsViewController: ThemeViewController {
 
     @objc private func onTapAgree() {
         viewModel.onTapAgree()
-        dismiss(animated: true)
+        dismiss(animated: true) { [weak self] in
+            self?.openModuleIfRequired()
+        }
+    }
+
+    private func openModuleIfRequired() {
+        if let module = moduleToOpen {
+            sourceViewController?.present(module, animated: true)
+        }
     }
 
     private func reloadTable() {
