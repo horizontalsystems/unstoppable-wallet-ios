@@ -4,6 +4,7 @@ class AppConfigProvider {
     let companyWebPageLink = "https://horizontalsystems.io"
     let appWebPageLink = "https://unstoppable.money"
     let appGitHubLink = "https://github.com/horizontalsystems/unstoppable-wallet-ios"
+    let appTwitterAccount = "unstoppablebyhs"
     let reportEmail = "support.unstoppable@protonmail.com"
     let btcCoreRpcUrl = "https://btc.blocksdecoded.com/rpc"
     let guidesIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/v1.2/index.json")!

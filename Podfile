@@ -91,7 +91,6 @@ def appPods
   pod 'BigInt'
   pod 'KeychainAccess'
   pod 'SnapKit'
-  pod 'CollectionViewCenteredFlowLayout'
 
   pod 'WalletConnect', git: 'https://github.com/horizontalsystems/wallet-connect-swift'
 
@@ -124,6 +123,12 @@ post_install do |installer|
       config.build_settings['DEBUG_INFORMATION_FORMAT'] = 'dwarf'
       config.build_settings['ENABLE_BITCODE'] = 'NO'
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+    end
+
+    if target.respond_to?(:product_type) and target.product_type == "com.apple.product-type.bundle"
+      target.build_configurations.each do |config|
+        config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+      end
     end
   end
 end
