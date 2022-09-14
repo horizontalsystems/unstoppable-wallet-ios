@@ -4,7 +4,7 @@ import MarketKit
 
 struct RestoreSelectModule {
 
-    static func viewController(accountType: AccountType, sourceViewController: UIViewController?) -> UIViewController {
+    static func viewController(accountType: AccountType, returnViewController: UIViewController?) -> UIViewController {
         let (enableCoinService, enableCoinView) = EnableCoinModule.module()
 
         let service = RestoreSelectService(
@@ -22,7 +22,7 @@ struct RestoreSelectModule {
         return RestoreSelectViewController(
                 viewModel: viewModel,
                 enableCoinView: enableCoinView,
-                sourceViewController: sourceViewController
+                returnViewController: returnViewController
         )
     }
 

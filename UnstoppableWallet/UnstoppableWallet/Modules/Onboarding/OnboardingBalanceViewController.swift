@@ -51,12 +51,12 @@ class OnboardingBalanceViewController: ThemeViewController {
     }
 
     @objc func didTapCreate() {
-        let viewController = CreateAccountModule.viewController()
+        let viewController = CreateAccountModule.viewController(sourceViewController: self)
         present(viewController, animated: true)
     }
 
     @objc func didTapRestore() {
-        let viewController = RestoreMnemonicModule.viewController()
+        let viewController = RestoreMnemonicModule.viewController(sourceViewController: self)
         present(viewController, animated: true)
     }
 
