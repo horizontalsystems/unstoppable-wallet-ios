@@ -133,7 +133,9 @@ extension NftAssetOverviewService {
     }
 
     func resync() {
-        sync()
+        queue.async {
+            self.sync()
+        }
     }
 
 }

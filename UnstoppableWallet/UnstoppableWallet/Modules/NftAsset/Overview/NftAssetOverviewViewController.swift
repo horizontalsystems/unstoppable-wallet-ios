@@ -16,6 +16,7 @@ class NftAssetOverviewViewController: ThemeViewController {
     private var viewItem: NftAssetOverviewViewModel.ViewItem?
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let wrapperView = UIView()
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = PlaceholderViewModule.reachabilityView()
 
@@ -45,8 +46,7 @@ class NftAssetOverviewViewController: ThemeViewController {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
-        let wrapperView = UIView()
-
+        view.addSubview(tableView)
         view.addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
@@ -67,7 +67,6 @@ class NftAssetOverviewViewController: ThemeViewController {
 
         errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
-        view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
@@ -113,6 +112,7 @@ class NftAssetOverviewViewController: ThemeViewController {
 
     private func sync(viewItem: NftAssetOverviewViewModel.ViewItem?) {
         self.viewItem = viewItem
+        wrapperView.isHidden = viewItem != nil
 
         if loaded {
             tableView.reload()
