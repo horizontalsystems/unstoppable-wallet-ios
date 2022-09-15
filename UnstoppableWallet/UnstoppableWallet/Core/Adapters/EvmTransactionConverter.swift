@@ -104,6 +104,7 @@ class EvmTransactionConverter {
             ContractCallTransactionRecord.TransferEvent(
                     address: transfer.from.eip55,
                     value: .nftValue(
+                            contractAddress: transfer.contractAddress.hex,
                             tokenId: transfer.tokenId.description,
                             value: 1,
                             tokenName: transfer.tokenInfo?.tokenName,
@@ -118,6 +119,7 @@ class EvmTransactionConverter {
             ContractCallTransactionRecord.TransferEvent(
                     address: transfer.to.eip55,
                     value: .nftValue(
+                            contractAddress: transfer.contractAddress.hex,
                             tokenId: transfer.tokenId.description,
                             value: -1,
                             tokenName: transfer.tokenInfo?.tokenName,
@@ -132,6 +134,7 @@ class EvmTransactionConverter {
             ContractCallTransactionRecord.TransferEvent(
                     address: transfer.from.eip55,
                     value: .nftValue(
+                            contractAddress: transfer.contractAddress.hex,
                             tokenId: transfer.tokenId.description,
                             value: convertAmount(amount: transfer.value, decimals: 0, sign: .plus),
                             tokenName: transfer.tokenInfo?.tokenName,
@@ -146,6 +149,7 @@ class EvmTransactionConverter {
             ContractCallTransactionRecord.TransferEvent(
                     address: transfer.to.eip55,
                     value: .nftValue(
+                            contractAddress: transfer.contractAddress.hex,
                             tokenId: transfer.tokenId.description,
                             value: convertAmount(amount: transfer.value, decimals: 0, sign: .minus),
                             tokenName: transfer.tokenInfo?.tokenName,

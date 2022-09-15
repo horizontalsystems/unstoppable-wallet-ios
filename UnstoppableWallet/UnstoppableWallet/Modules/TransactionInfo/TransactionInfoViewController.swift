@@ -430,6 +430,7 @@ class TransactionInfoViewController: ThemeViewController {
                 tableView: tableView,
                 id: "explorer",
                 height: .heightCell48,
+                autoDeselect: true,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
 
@@ -461,6 +462,8 @@ class TransactionInfoViewController: ThemeViewController {
             return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: iconDimmed, title: title, value: subTitle ?? "")
         case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
             return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
+        case let .nftAmount(iconUrl, iconPlaceholderImageName, nftAmount, type, providerCollectionUid, nftUid):
+            return CellComponent.nftAmountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, nftAmount: nftAmount, type: type)
         case let .status(status):
             return statusRow(rowInfo: rowInfo, status: status)
         case let .options(actions: viewItems):

@@ -39,23 +39,28 @@ class TransactionsViewItemFactory {
         return condition ? trueType : (falseType ?? trueType)
     }
 
+    private func singleValueSecondaryValue(value: TransactionValue, currencyValue: CurrencyValue?) -> TransactionsViewModel.Value? {
+        switch value {
+        case let .nftValue(_, tokenId, _, tokenName, _):
+            let text = tokenName.map { "\($0) #\(tokenId)" } ?? "#\(tokenId)"
+            return TransactionsViewModel.Value(text: text, type: .secondary)
+        default:
+            return currencyValue.map { TransactionsViewModel.Value(text: currencyString(from: $0), type: .secondary) }
+        }
+    }
+
     private func values(incomingValues: [TransactionValue], outgoingValues: [TransactionValue], currencyValue: CurrencyValue?) -> (TransactionsViewModel.Value?, TransactionsViewModel.Value?) {
         var primaryValue: TransactionsViewModel.Value?
         var secondaryValue: TransactionsViewModel.Value?
 
         if incomingValues.count == 1, outgoingValues.isEmpty {
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValues[0]), type: type(value: incomingValues[0], .incoming))
-            if let currencyValue = currencyValue {
-                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
-            }
+            let incomingValue = incomingValues[0]
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValue), type: type(value: incomingValue, .incoming))
+            secondaryValue = singleValueSecondaryValue(value: incomingValue, currencyValue: currencyValue)
         } else if incomingValues.isEmpty, outgoingValues.count == 1 {
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValues[0]), type: type(value: outgoingValues[0], .outgoing))
-            if let currencyValue = currencyValue {
-                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
-            }
-        } else if incomingValues.count == 1, outgoingValues.count == 1 {
-            primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValues[0]), type: type(value: incomingValues[0], .incoming))
-            secondaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValues[0]), type:  type(value: outgoingValues[0], .outgoing))
+            let outgoingValue = outgoingValues[0]
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValue), type: type(value: outgoingValue, .outgoing))
+            secondaryValue = singleValueSecondaryValue(value: outgoingValue, currencyValue: currencyValue)
         } else if !incomingValues.isEmpty, outgoingValues.isEmpty {
             let coinCodes = incomingValues.map { $0.coinCode }.joined(separator: ", ")
             primaryValue = TransactionsViewModel.Value(text: coinCodes, type: .incoming)
@@ -65,10 +70,18 @@ class TransactionsViewItemFactory {
             primaryValue = TransactionsViewModel.Value(text: coinCodes, type: .outgoing)
             secondaryValue = TransactionsViewModel.Value(text: "transactions.multiple".localized, type: .secondary)
         } else {
-            let outgoingCoinCodes = outgoingValues.map { $0.coinCode }.joined(separator: ", ")
-            let incomingCoinCodes = incomingValues.map { $0.coinCode }.joined(separator: ", ")
-            primaryValue = TransactionsViewModel.Value(text: incomingCoinCodes, type: .incoming)
-            secondaryValue = TransactionsViewModel.Value(text: outgoingCoinCodes, type: .outgoing)
+            if incomingValues.count == 1 {
+                primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValues[0]), type: type(value: incomingValues[0], .incoming))
+            } else {
+                let incomingCoinCodes = incomingValues.map { $0.coinCode }.joined(separator: ", ")
+                primaryValue = TransactionsViewModel.Value(text: incomingCoinCodes, type: .incoming)
+            }
+            if outgoingValues.count == 1 {
+                secondaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValues[0]), type:  type(value: outgoingValues[0], .outgoing))
+            } else {
+                let outgoingCoinCodes = outgoingValues.map { $0.coinCode }.joined(separator: ", ")
+                secondaryValue = TransactionsViewModel.Value(text: outgoingCoinCodes, type: .outgoing)
+            }
         }
 
         return (primaryValue, secondaryValue)
