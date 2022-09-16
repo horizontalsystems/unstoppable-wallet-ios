@@ -1,23 +1,20 @@
 class WalletConnectUriHandler {
 
     private static func createModuleV1(uri: String) -> Result<IWalletConnectMainService, Error> {
-        let service = WalletConnectV1MainService(
-                session: nil,
-                uri: uri,
-                manager: App.shared.walletConnectManager,
-                sessionManager: App.shared.walletConnectSessionManager,
-                reachabilityManager: App.shared.reachabilityManager,
-                accountManager: App.shared.accountManager,
-                evmBlockchainManager: App.shared.evmBlockchainManager
-        )
-
         do {
-            try service.connect(uri: uri)
+            let service = try WalletConnectV1MainService(
+                    session: nil,
+                    uri: uri,
+                    manager: App.shared.walletConnectManager,
+                    sessionManager: App.shared.walletConnectSessionManager,
+                    reachabilityManager: App.shared.reachabilityManager,
+                    accountManager: App.shared.accountManager,
+                    evmBlockchainManager: App.shared.evmBlockchainManager
+            )
+            return .success(service)
         } catch {
             return .failure(error)
         }
-
-        return .success(service)
     }
 
     private static func createModuleV2(uri: String) -> Result<IWalletConnectMainService, Error> {
@@ -31,7 +28,6 @@ class WalletConnectUriHandler {
         let pingService = WalletConnectV2PingService(service: service, socketConnectionService: App.shared.walletConnectV2SocketConnectionService, logger: App.shared.logger)
         let mainService = WalletConnectV2MainService(
                 session: nil,
-                uri: uri,
                 service: service,
                 pingService: pingService,
                 manager: App.shared.walletConnectManager,

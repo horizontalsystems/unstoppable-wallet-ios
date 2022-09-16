@@ -50,7 +50,7 @@ class WalletConnectV1MainService {
         return connectionState(state: interactor.state)
     }
 
-    init(session: WalletConnectSession? = nil, uri: String? = nil, manager: WalletConnectManager, sessionManager: WalletConnectSessionManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager) {
+    init(session: WalletConnectSession? = nil, uri: String? = nil, manager: WalletConnectManager, sessionManager: WalletConnectSessionManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager) throws {
         self.manager = manager
         self.sessionManager = sessionManager
         self.reachabilityManager = reachabilityManager
@@ -61,13 +61,9 @@ class WalletConnectV1MainService {
             restore(session: session)
         }
         if let uri = uri {
-            do {
-                try connect(uri: uri)
+            try connect(uri: uri)
 
-                state = .idle
-            } catch {
-                state = .invalid(error: error)
-            }
+            state = .idle
         }
 
         reachabilityManager.reachabilityObservable
