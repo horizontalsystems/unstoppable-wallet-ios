@@ -700,6 +700,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "transactions.receive" = "Receive";
 "transactions.send" = "Send";
+"transactions.burn" = "Burn";
+"transactions.mint" = "Mint";
 "transactions.approve" = "Approve";
 "transactions.swap" = "Swap";
 "transactions.contract_call" = "Contract Call";
