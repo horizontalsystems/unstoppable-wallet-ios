@@ -33,7 +33,7 @@ protocol IWalletConnectMainRequestView {
 struct WalletConnectMainModule {
 
     static func viewController(session: WalletConnectSession, sourceViewController: UIViewController?) -> UIViewController? {
-        let service = WalletConnectV1MainService(
+        let service = try? WalletConnectV1MainService(
                 session: session,
                 manager: App.shared.walletConnectManager,
                 sessionManager: App.shared.walletConnectSessionManager,
@@ -42,7 +42,7 @@ struct WalletConnectMainModule {
                 evmBlockchainManager: App.shared.evmBlockchainManager
         )
 
-        return viewController(service: service, sourceViewController: sourceViewController)
+        return service.flatMap { viewController(service: $0, sourceViewController: sourceViewController) }
     }
 
     static func viewController(session: WalletConnectSign.Session, sourceViewController: UIViewController?) -> UIViewController? {
