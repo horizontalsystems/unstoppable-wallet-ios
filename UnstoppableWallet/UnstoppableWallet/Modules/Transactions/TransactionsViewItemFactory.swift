@@ -39,28 +39,28 @@ class TransactionsViewItemFactory {
         return condition ? trueType : (falseType ?? trueType)
     }
 
-    private func singleValueSecondaryValue(value: TransactionValue, currencyValue: CurrencyValue?) -> TransactionsViewModel.Value? {
+    private func singleValueSecondaryValue(value: TransactionValue, currencyValue: CurrencyValue?, nftMetadata: [NftUid: NftAssetBriefMetadata]) -> TransactionsViewModel.Value? {
         switch value {
         case let .nftValue(nftUid, _, tokenName, _):
-            let text = tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
+            let text = nftMetadata[nftUid]?.name ?? tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
             return TransactionsViewModel.Value(text: text, type: .secondary)
         default:
             return currencyValue.map { TransactionsViewModel.Value(text: currencyString(from: $0), type: .secondary) }
         }
     }
 
-    private func values(incomingValues: [TransactionValue], outgoingValues: [TransactionValue], currencyValue: CurrencyValue?) -> (TransactionsViewModel.Value?, TransactionsViewModel.Value?) {
+    private func values(incomingValues: [TransactionValue], outgoingValues: [TransactionValue], currencyValue: CurrencyValue?, nftMetadata: [NftUid: NftAssetBriefMetadata]) -> (TransactionsViewModel.Value?, TransactionsViewModel.Value?) {
         var primaryValue: TransactionsViewModel.Value?
         var secondaryValue: TransactionsViewModel.Value?
 
         if incomingValues.count == 1, outgoingValues.isEmpty {
             let incomingValue = incomingValues[0]
             primaryValue = TransactionsViewModel.Value(text: coinString(from: incomingValue), type: type(value: incomingValue, .incoming))
-            secondaryValue = singleValueSecondaryValue(value: incomingValue, currencyValue: currencyValue)
+            secondaryValue = singleValueSecondaryValue(value: incomingValue, currencyValue: currencyValue, nftMetadata: nftMetadata)
         } else if incomingValues.isEmpty, outgoingValues.count == 1 {
             let outgoingValue = outgoingValues[0]
             primaryValue = TransactionsViewModel.Value(text: coinString(from: outgoingValue), type: type(value: outgoingValue, .outgoing))
-            secondaryValue = singleValueSecondaryValue(value: outgoingValue, currencyValue: currencyValue)
+            secondaryValue = singleValueSecondaryValue(value: outgoingValue, currencyValue: currencyValue, nftMetadata: nftMetadata)
         } else if !incomingValues.isEmpty, outgoingValues.isEmpty {
             let coinCodes = incomingValues.map { $0.coinCode }.joined(separator: ", ")
             primaryValue = TransactionsViewModel.Value(text: coinCodes, type: .incoming)
@@ -185,17 +185,25 @@ class TransactionsViewItemFactory {
             subTitle = evmLabelManager.mapped(address: record.contractAddress)
 
             let (incomingValues, outgoingValues) = record.combinedValues
-            (primaryValue, secondaryValue) = values(incomingValues: incomingValues, outgoingValues: outgoingValues, currencyValue: item.currencyValue)
+            (primaryValue, secondaryValue) = values(incomingValues: incomingValues, outgoingValues: outgoingValues, currencyValue: item.currencyValue, nftMetadata: item.nftMetadata)
 
         case let record as ExternalContractCallTransactionRecord:
             let (incomingValues, outgoingValues) = record.combinedValues
 
             if outgoingValues.isEmpty && incomingValues.count == 1 {
                 let value = incomingValues[0]
-                iconType = .icon(
-                        imageUrl: value.coin?.imageUrl,
-                        placeholderImageName: record.source.blockchainType.placeholderImageName(tokenProtocol: value.tokenProtocol)
-                )
+                switch value {
+                case let .nftValue(nftUid, _, _, _):
+                    iconType = .icon(
+                            imageUrl: item.nftMetadata[nftUid]?.previewImageUrl,
+                            placeholderImageName: record.source.blockchainType.placeholderImageName(tokenProtocol: value.tokenProtocol)
+                    )
+                default:
+                    iconType = .icon(
+                            imageUrl: value.coin?.imageUrl,
+                            placeholderImageName: record.source.blockchainType.placeholderImageName(tokenProtocol: value.tokenProtocol)
+                    )
+                }
             } else {
                 iconType = .localIcon(imageName: record.source.blockchainType.iconPlain24)
             }
@@ -213,7 +221,7 @@ class TransactionsViewItemFactory {
                 subTitle = "---"
             }
 
-            (primaryValue, secondaryValue) = values(incomingValues: incomingValues, outgoingValues: outgoingValues, currencyValue: item.currencyValue)
+            (primaryValue, secondaryValue) = values(incomingValues: incomingValues, outgoingValues: outgoingValues, currencyValue: item.currencyValue, nftMetadata: item.nftMetadata)
 
         case let record as ContractCreationTransactionRecord:
             iconType = .localIcon(imageName: record.source.blockchainType.iconPlain24)

@@ -76,34 +76,6 @@ class TransactionInfoService {
         return Array(Set(tokens.compactMap({ $0 })))
     }
 
-    private func resolveNftUids() -> [NftUid] {
-        var nftUids = Set<NftUid>()
-
-        switch transactionRecord {
-        case let record as ContractCallTransactionRecord:
-            for event in record.incomingEvents + record.outgoingEvents {
-                switch event.value {
-                case let .nftValue(nftUid, _, _, _):
-                    nftUids.insert(nftUid)
-                default: ()
-                }
-            }
-
-        case let record as ExternalContractCallTransactionRecord:
-            for event in record.incomingEvents + record.outgoingEvents {
-                switch event.value {
-                case let .nftValue(nftUid, _, _, _):
-                    nftUids.insert(nftUid)
-                default: ()
-                }
-            }
-
-        default: ()
-        }
-
-        return Array(nftUids)
-    }
-
     private func fetchRates() {
         tokenForRates.forEach { token in
             let rateKey = RateKey(token: token, date: transactionRecord.date)
@@ -118,12 +90,12 @@ class TransactionInfoService {
     }
 
     private func fetchNftMetadata() {
-        let nftUids = resolveNftUids()
+        let nftUids = transactionRecord.nftUids
         let assetsBriefMetadata = nftMetadataService.assetsBriefMetadata(nftUids: nftUids)
 
         nftMetadata = assetsBriefMetadata
 
-        if assetsBriefMetadata.count < nftUids.count {
+        if !nftUids.subtracting(Set(assetsBriefMetadata.keys)).isEmpty {
             nftMetadataService.fetch(nftUids: nftUids)
         }
     }

@@ -97,3 +97,49 @@ extension TransactionStatus: Equatable {
     }
 
 }
+
+extension TransactionRecord {
+
+    var nftUids: Set<NftUid> {
+        var nftUids = Set<NftUid>()
+
+        switch self {
+        case let record as ContractCallTransactionRecord:
+            for event in record.incomingEvents + record.outgoingEvents {
+                switch event.value {
+                case let .nftValue(nftUid, _, _, _):
+                    nftUids.insert(nftUid)
+                default: ()
+                }
+            }
+
+        case let record as ExternalContractCallTransactionRecord:
+            for event in record.incomingEvents + record.outgoingEvents {
+                switch event.value {
+                case let .nftValue(nftUid, _, _, _):
+                    nftUids.insert(nftUid)
+                default: ()
+                }
+            }
+
+        default: ()
+        }
+
+        return nftUids
+    }
+
+}
+
+extension Array where Element == TransactionRecord {
+
+    var nftUids: Set<NftUid> {
+        var nftUids = Set<NftUid>()
+
+        for record in self {
+            nftUids = nftUids.union(record.nftUids)
+        }
+
+        return nftUids
+    }
+
+}
