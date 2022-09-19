@@ -28,12 +28,12 @@ extension NftMetadataService {
         assetsBriefMetadataRelay.asObservable()
     }
 
-    func assetsBriefMetadata(nftUids: [NftUid]) -> [NftUid: NftAssetBriefMetadata] {
+    func assetsBriefMetadata(nftUids: Set<NftUid>) -> [NftUid: NftAssetBriefMetadata] {
         let array = nftMetadataManager.assetsBriefMetadata(nftUids: nftUids)
         return Dictionary(uniqueKeysWithValues: array.map { ($0.nftUid, $0) })
     }
 
-    func fetch(nftUids: [NftUid]) {
+    func fetch(nftUids: Set<NftUid>) {
         nftMetadataManager.assetsBriefMetadataSingle(nftUids: nftUids)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
                 .subscribe(onSuccess: { [weak self] assetsBriefMetadata in

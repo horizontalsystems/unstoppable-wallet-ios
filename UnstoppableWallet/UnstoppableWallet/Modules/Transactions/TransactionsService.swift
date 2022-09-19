@@ -9,6 +9,7 @@ class TransactionsService {
 
     private let walletManager: WalletManager
     private let rateService: HistoricalRateService
+    private let nftMetadataService: NftMetadataService
     private let poolGroupFactory = PoolGroupFactory()
 
     private let disposeBag = DisposeBag()
@@ -70,13 +71,15 @@ class TransactionsService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions-service")
 
-    init(walletManager: WalletManager, adapterManager: TransactionAdapterManager, rateService: HistoricalRateService) {
+    init(walletManager: WalletManager, adapterManager: TransactionAdapterManager, rateService: HistoricalRateService, nftMetadataService: NftMetadataService) {
         self.walletManager = walletManager
         self.rateService = rateService
+        self.nftMetadataService = nftMetadataService
 
         subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in self?.syncWallets() }
         subscribe(disposeBag, rateService.ratesChangedObservable) { [weak self] in self?.handleRatesChanged() }
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
+        subscribe(disposeBag, nftMetadataService.assetsBriefMetadataObservable) { [weak self] in self?.handle(assetsBriefMetadata: $0) }
 
         _syncWallets()
     }
@@ -187,13 +190,32 @@ class TransactionsService {
 
     }
 
+    private func nftMetadata(transactionRecord: TransactionRecord, allMetadata: [NftUid: NftAssetBriefMetadata]) -> [NftUid: NftAssetBriefMetadata] {
+        var metadata = [NftUid: NftAssetBriefMetadata]()
+        for nftUid in transactionRecord.nftUids {
+            if let item = allMetadata[nftUid] {
+                metadata[nftUid] = item
+            }
+        }
+        return metadata
+    }
+
     private func handle(transactionItems: [TransactionItem], loadedMore: Bool) {
         queue.async {
 //            print("Fetched tx items: \(transactionItems.count): \(transactionItems)")
 
+            let nftUids = transactionItems.map { $0.record }.nftUids
+            let nftMetadata = self.nftMetadataService.assetsBriefMetadata(nftUids: nftUids)
+
+            let missingNftUids = nftUids.subtracting(Set(nftMetadata.keys))
+            if !missingNftUids.isEmpty {
+                self.nftMetadataService.fetch(nftUids: missingNftUids)
+            }
+
             self.items = transactionItems.map { transactionItem in
                 Item(
                         transactionItem: transactionItem,
+                        nftMetadata: self.nftMetadata(transactionRecord: transactionItem.record, allMetadata: nftMetadata),
                         currencyValue: self.currencyValue(record: transactionItem.record, rate: self.rate(record: transactionItem.record))
                 )
             }
@@ -294,6 +316,26 @@ class TransactionsService {
 
     private func _syncSyncing() {
         syncing = loading || poolGroupSyncing
+    }
+
+    private func handle(assetsBriefMetadata: [NftUid: NftAssetBriefMetadata]) {
+        queue.async {
+            let fetchedNftUids = Set(assetsBriefMetadata.keys)
+
+            for item in self.items {
+                let fetchedItemNftUids = item.transactionItem.record.nftUids.intersection(fetchedNftUids)
+
+                guard !fetchedItemNftUids.isEmpty else {
+                    continue
+                }
+
+                for nftUid in fetchedItemNftUids {
+                    item.nftMetadata[nftUid] = assetsBriefMetadata[nftUid]
+                }
+
+                self.itemUpdatedRelay.accept(item)
+            }
+        }
     }
 
 }
@@ -458,14 +500,16 @@ extension TransactionsService {
 
     class Item {
         var transactionItem: TransactionItem
+        var nftMetadata: [NftUid: NftAssetBriefMetadata]
         var currencyValue: CurrencyValue?
 
         var record: TransactionRecord {
             transactionItem.record
         }
 
-        init(transactionItem: TransactionItem, currencyValue: CurrencyValue?) {
+        init(transactionItem: TransactionItem, nftMetadata: [NftUid: NftAssetBriefMetadata], currencyValue: CurrencyValue?) {
             self.transactionItem = transactionItem
+            self.nftMetadata = nftMetadata
             self.currencyValue = currencyValue
         }
     }

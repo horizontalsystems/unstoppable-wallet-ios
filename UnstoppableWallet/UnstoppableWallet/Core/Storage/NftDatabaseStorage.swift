@@ -126,7 +126,7 @@ extension NftDatabaseStorage {
         }
     }
 
-    func assetsBriefMetadata(nftUids: [NftUid]) throws -> [NftAssetBriefMetadata] {
+    func assetsBriefMetadata(nftUids: Set<NftUid>) throws -> [NftAssetBriefMetadata] {
         try dbPool.read { db in
             try NftAssetBriefMetadata
                     .filter(nftUids.contains(NftAssetBriefMetadata.Columns.nftUid))

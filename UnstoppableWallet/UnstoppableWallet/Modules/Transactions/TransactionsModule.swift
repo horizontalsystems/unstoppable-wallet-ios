@@ -7,11 +7,13 @@ struct TransactionsModule {
 
     static func viewController() -> UIViewController {
         let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
+        let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
 
         let service = TransactionsService(
                 walletManager: App.shared.walletManager,
                 adapterManager: App.shared.transactionAdapterManager,
-                rateService: rateService
+                rateService: rateService,
+                nftMetadataService: nftMetadataService
         )
 
         let viewItemFactory = TransactionsViewItemFactory(evmLabelManager: App.shared.evmLabelManager)

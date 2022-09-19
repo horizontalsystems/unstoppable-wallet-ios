@@ -109,7 +109,7 @@ extension NftStorage {
         }
     }
 
-    func assetsBriefMetadata(nftUids: [NftUid]) -> [NftAssetBriefMetadata] {
+    func assetsBriefMetadata(nftUids: Set<NftUid>) -> [NftAssetBriefMetadata] {
         do {
             return try storage.assetsBriefMetadata(nftUids: nftUids)
         } catch {
