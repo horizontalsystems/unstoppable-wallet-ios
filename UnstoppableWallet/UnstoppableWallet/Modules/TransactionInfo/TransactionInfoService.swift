@@ -9,23 +9,28 @@ class TransactionInfoService {
     private let adapter: ITransactionsAdapter
     private let currencyKit: CurrencyKit.Kit
     private let rateService: HistoricalRateService
+    private let nftMetadataService: NftMetadataService
 
-    private var rates = [RateKey: CurrencyValue]()
     private var transactionRecord: TransactionRecord
+    private var rates = [RateKey: CurrencyValue]()
+    private var nftMetadata = [NftUid: NftAssetBriefMetadata]()
 
-    private let transactionInfoItemSubject = PublishSubject<TransactionInfoItem>()
+    private let transactionInfoItemSubject = PublishSubject<Item>()
 
-    init(transactionRecord: TransactionRecord, adapter: ITransactionsAdapter, currencyKit: CurrencyKit.Kit, rateService: HistoricalRateService) {
+    init(transactionRecord: TransactionRecord, adapter: ITransactionsAdapter, currencyKit: CurrencyKit.Kit, rateService: HistoricalRateService, nftMetadataService: NftMetadataService) {
         self.transactionRecord = transactionRecord
         self.adapter = adapter
         self.currencyKit = currencyKit
         self.rateService = rateService
+        self.nftMetadataService = nftMetadataService
 
         subscribe(disposeBag, adapter.transactionsObservable(token: nil, filter: .all)) { [weak self] in self?.sync(transactionRecords: $0) }
         subscribe(disposeBag, adapter.lastBlockUpdatedObservable) { [weak self] in self?.syncItem() }
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
+        subscribe(disposeBag, nftMetadataService.assetsBriefMetadataObservable) { [weak self] in self?.handle(assetsBriefMetadata: $0) }
 
         fetchRates()
+        fetchNftMetadata()
     }
 
     private var tokenForRates: [Token] {
@@ -71,8 +76,35 @@ class TransactionInfoService {
         return Array(Set(tokens.compactMap({ $0 })))
     }
 
+    private func resolveNftUids() -> [NftUid] {
+        var nftUids = Set<NftUid>()
+
+        switch transactionRecord {
+        case let record as ContractCallTransactionRecord:
+            for event in record.incomingEvents + record.outgoingEvents {
+                switch event.value {
+                case let .nftValue(nftUid, _, _, _):
+                    nftUids.insert(nftUid)
+                default: ()
+                }
+            }
+
+        case let record as ExternalContractCallTransactionRecord:
+            for event in record.incomingEvents + record.outgoingEvents {
+                switch event.value {
+                case let .nftValue(nftUid, _, _, _):
+                    nftUids.insert(nftUid)
+                default: ()
+                }
+            }
+
+        default: ()
+        }
+
+        return Array(nftUids)
+    }
+
     private func fetchRates() {
-        let baseCurrency = currencyKit.baseCurrency
         tokenForRates.forEach { token in
             let rateKey = RateKey(token: token, date: transactionRecord.date)
             if let currencyValue = rateService.rate(key: rateKey) {
@@ -85,8 +117,24 @@ class TransactionInfoService {
         syncItem()
     }
 
+    private func fetchNftMetadata() {
+        let nftUids = resolveNftUids()
+        let assetsBriefMetadata = nftMetadataService.assetsBriefMetadata(nftUids: nftUids)
+
+        nftMetadata = assetsBriefMetadata
+
+        if assetsBriefMetadata.count < nftUids.count {
+            nftMetadataService.fetch(nftUids: nftUids)
+        }
+    }
+
     private func handle(rate: (RateKey, CurrencyValue)) {
         rates[rate.0] = rate.1
+        syncItem()
+    }
+
+    private func handle(assetsBriefMetadata: [NftUid: NftAssetBriefMetadata]) {
+        nftMetadata = assetsBriefMetadata
         syncItem()
     }
 
@@ -107,22 +155,36 @@ class TransactionInfoService {
 
 extension TransactionInfoService {
 
-    var item: TransactionInfoItem {
-        TransactionInfoItem(
+    var item: Item {
+        Item(
                 record: transactionRecord,
                 lastBlockInfo: adapter.lastBlockInfo,
                 rates: Dictionary(uniqueKeysWithValues: rates.map { key, value in (key.token.coin, value) }),
+                nftMetadata: nftMetadata,
                 explorerTitle: adapter.explorerTitle,
                 explorerUrl: adapter.explorerUrl(transactionHash: transactionRecord.transactionHash)
         )
     }
 
-    var transactionItemUpdatedObserver: Observable<TransactionInfoItem> {
+    var transactionItemUpdatedObserver: Observable<Item> {
         transactionInfoItemSubject.asObservable()
     }
 
     func rawTransaction() -> String? {
         adapter.rawTransaction(hash: transactionRecord.transactionHash)
+    }
+
+}
+
+extension TransactionInfoService {
+
+    struct Item {
+        let record: TransactionRecord
+        let lastBlockInfo: LastBlockInfo?
+        let rates: [Coin: CurrencyValue]
+        let nftMetadata: [NftUid: NftAssetBriefMetadata]
+        let explorerTitle: String
+        let explorerUrl: String?
     }
 
 }

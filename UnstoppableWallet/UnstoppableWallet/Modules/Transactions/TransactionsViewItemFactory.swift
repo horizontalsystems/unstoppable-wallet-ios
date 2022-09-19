@@ -41,8 +41,8 @@ class TransactionsViewItemFactory {
 
     private func singleValueSecondaryValue(value: TransactionValue, currencyValue: CurrencyValue?) -> TransactionsViewModel.Value? {
         switch value {
-        case let .nftValue(_, tokenId, _, tokenName, _):
-            let text = tokenName.map { "\($0) #\(tokenId)" } ?? "#\(tokenId)"
+        case let .nftValue(nftUid, _, tokenName, _):
+            let text = tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
             return TransactionsViewModel.Value(text: text, type: .secondary)
         default:
             return currencyValue.map { TransactionsViewModel.Value(text: currencyString(from: $0), type: .secondary) }

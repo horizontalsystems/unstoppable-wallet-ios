@@ -70,26 +70,33 @@ struct CellComponent {
         )
     }
 
-    static func nftAmountRow(tableView: UITableView, rowInfo: RowInfo, iconUrl: String?, iconPlaceholderImageName: String, nftAmount: String, type: AmountType) -> RowProtocol {
+    static func nftAmountRow(tableView: UITableView, rowInfo: RowInfo, iconUrl: String?, iconPlaceholderImageName: String, nftAmount: String, type: AmountType, onTapOpenNft: (() -> ())?) -> RowProtocol {
         CellBuilderNew.row(
                 rootElement: .hStack([
                     .image24 { component in
                         component.setImage(urlString: iconUrl, placeholder: UIImage(named: iconPlaceholderImageName))
+                        component.imageView.cornerRadius = .cornerRadius4
                     },
                     .text { component in
                         component.font = type.textFont
                         component.textColor = type.textColor
                         component.lineBreakMode = .byTruncatingMiddle
                         component.text = nftAmount
+                    },
+                    .image20 { component in
+                        component.isHidden = onTapOpenNft == nil
+                        component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
                     }
                 ]),
                 tableView: tableView,
                 id: "nft-amount-\(rowInfo.index)",
                 hash: "\(nftAmount)",
                 height: .heightCell48,
+                autoDeselect: true,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                }
+                },
+                action: onTapOpenNft
         )
     }
 

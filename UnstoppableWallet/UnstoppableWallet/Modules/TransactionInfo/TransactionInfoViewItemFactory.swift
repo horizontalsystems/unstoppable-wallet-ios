@@ -42,14 +42,14 @@ class TransactionInfoViewItemFactory {
         }
     }
 
-    private func nftAmount(source: TransactionSource, transactionValue: TransactionValue, type: AmountType) -> TransactionInfoModule.ViewItem {
+    private func nftAmount(source: TransactionSource, transactionValue: TransactionValue, type: AmountType, metadata: NftAssetBriefMetadata?) -> TransactionInfoModule.ViewItem {
         .nftAmount(
-                iconUrl: nil,
+                iconUrl: metadata?.previewImageUrl,
                 iconPlaceholderImageName: source.blockchainType.placeholderImageName(tokenProtocol: nil),
                 nftAmount: transactionValue.formattedFull(showSign: type.showSign) ?? "n/a".localized,
                 type: type,
-                providerCollectionUid: nil,
-                nftUid: nil
+                providerCollectionUid: metadata?.providerCollectionUid,
+                nftUid: metadata?.nftUid
         )
     }
 
@@ -109,38 +109,68 @@ class TransactionInfoViewItemFactory {
         }
     }
 
-    private func sendSection(source: TransactionSource, transactionValue: TransactionValue, to: String?, rates: [Coin: CurrencyValue], sentToSelf: Bool = false) -> [TransactionInfoModule.ViewItem] {
-        let burn = to == zeroAddress
+    private func fullName(transactionValue: TransactionValue, nftMetadata: NftAssetBriefMetadata? = nil) -> String {
+        switch transactionValue {
+        case .coinValue(let token, _):
+            return token.coin.name
+        case .tokenValue(let tokenName, _, _, _):
+            return tokenName
+        case .nftValue(let nftUid, _, let tokenName, _):
+            return nftMetadata?.name ?? tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
+        case .rawValue:
+            return ""
+        }
+    }
 
-        var viewItems: [TransactionInfoModule.ViewItem] = [
-            .actionTitle(
-                    iconName: "arrow_medium_2_up_right_24",
-                    iconDimmed: true,
-                    title: burn ? "transactions.burn".localized : "transactions.send".localized,
-                    subTitle: transactionValue.fullName
-            )
-        ]
+    private func sendSection(source: TransactionSource, transactionValue: TransactionValue, to: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], sentToSelf: Bool = false) -> [TransactionInfoModule.ViewItem] {
+        let burn = to == zeroAddress
+        let subTitle: String
+        let amountViewItem: TransactionInfoModule.ViewItem
+        var toViewItem: TransactionInfoModule.ViewItem?
+        var rateViewItem: TransactionInfoModule.ViewItem?
 
         switch transactionValue {
-        case .nftValue:
-            viewItems.append(nftAmount(source: source, transactionValue: transactionValue, type: type(value: transactionValue, condition: sentToSelf, .neutral, .outgoing)))
+        case .nftValue(let nftUid, _, _, _):
+            subTitle = fullName(transactionValue: transactionValue, nftMetadata: nftMetadata[nftUid])
 
-            if !burn, let to = to {
-                viewItems.append(.to(value: to, valueTitle: evmLabelManager.addressLabel(address: to)))
-            }
+            amountViewItem = nftAmount(
+                    source: source,
+                    transactionValue: transactionValue,
+                    type: type(value: transactionValue, condition: sentToSelf, .neutral, .outgoing),
+                    metadata: nftMetadata[nftUid]
+            )
         default:
+            subTitle = fullName(transactionValue: transactionValue)
+
             let rate = transactionValue.coin.flatMap { rates[$0] }
 
-            viewItems.append(amount(source: source, transactionValue: transactionValue, rate: rate, type: type(value: transactionValue, condition: sentToSelf, .neutral, .outgoing)))
+            amountViewItem = amount(
+                    source: source,
+                    transactionValue: transactionValue,
+                    rate: rate,
+                    type: type(value: transactionValue, condition: sentToSelf, .neutral, .outgoing)
+            )
 
-            if !burn, let to = to {
-                viewItems.append(.to(value: to, valueTitle: evmLabelManager.addressLabel(address: to)))
-            }
-
-            viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code)))
+            rateViewItem = .rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code))
         }
 
-        return viewItems
+        if !burn, let to = to {
+            toViewItem = .to(value: to, valueTitle: evmLabelManager.addressLabel(address: to))
+        }
+
+        let viewItems: [TransactionInfoModule.ViewItem?] = [
+            .actionTitle(
+                    iconName: burn ? "flame_24" : "arrow_medium_2_up_right_24",
+                    iconDimmed: true,
+                    title: burn ? "transactions.burn".localized : "transactions.send".localized,
+                    subTitle: subTitle
+            ),
+            amountViewItem,
+            toViewItem,
+            rateViewItem
+        ]
+
+        return viewItems.compactMap { $0 }
     }
 
     private func type(value: TransactionValue, condition: Bool = true, _ trueType: AmountType, _ falseType: AmountType? = nil) -> AmountType {
@@ -151,38 +181,56 @@ class TransactionInfoViewItemFactory {
         return condition ? trueType : (falseType ?? trueType)
     }
 
-    private func receiveSection(source: TransactionSource, transactionValue: TransactionValue, from: String?, rates: [Coin: CurrencyValue]) -> [TransactionInfoModule.ViewItem] {
+    private func receiveSection(source: TransactionSource, transactionValue: TransactionValue, from: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:]) -> [TransactionInfoModule.ViewItem] {
         let mint = from == zeroAddress
+        let subTitle: String
+        let amountViewItem: TransactionInfoModule.ViewItem
+        var fromViewItem: TransactionInfoModule.ViewItem?
+        var rateViewItem: TransactionInfoModule.ViewItem?
 
-        var viewItems: [TransactionInfoModule.ViewItem] = [
+        switch transactionValue {
+        case .nftValue(let nftUid, _, _, _):
+            subTitle = fullName(transactionValue: transactionValue, nftMetadata: nftMetadata[nftUid])
+
+            amountViewItem = nftAmount(
+                    source: source,
+                    transactionValue: transactionValue,
+                    type: type(value: transactionValue, .incoming),
+                    metadata: nftMetadata[nftUid]
+            )
+
+        default:
+            subTitle = fullName(transactionValue: transactionValue)
+
+            let rate = transactionValue.coin.flatMap { rates[$0] }
+
+            amountViewItem = amount(
+                    source: source,
+                    transactionValue: transactionValue,
+                    rate: rate,
+                    type: type(value: transactionValue, .incoming)
+            )
+
+            rateViewItem = .rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code))
+        }
+
+        if !mint, let from = from {
+            fromViewItem = .from(value: from, valueTitle: evmLabelManager.addressLabel(address: from))
+        }
+
+        let viewItems: [TransactionInfoModule.ViewItem?] = [
             .actionTitle(
                     iconName: "arrow_medium_2_down_left_24",
                     iconDimmed: true,
                     title: mint ? "transactions.mint".localized : "transactions.receive".localized,
-                    subTitle: transactionValue.fullName
-            )
+                    subTitle: subTitle
+            ),
+            amountViewItem,
+            fromViewItem,
+            rateViewItem
         ]
 
-        switch transactionValue {
-        case .nftValue:
-            viewItems.append(nftAmount(source: source, transactionValue: transactionValue, type: type(value: transactionValue, .incoming)))
-
-            if !mint, let from = from {
-                viewItems.append(.from(value: from, valueTitle: evmLabelManager.addressLabel(address: from)))
-            }
-        default:
-            let rate = transactionValue.coin.flatMap { rates[$0] }
-
-            viewItems.append(amount(source: source, transactionValue: transactionValue, rate: rate, type: type(value: transactionValue, .incoming)))
-
-            if !mint, let from = from {
-                viewItems.append(.from(value: from, valueTitle: evmLabelManager.addressLabel(address: from)))
-            }
-
-            viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code)))
-        }
-
-        return viewItems
+        return viewItems.compactMap { $0 }
     }
 
     private func bitcoinViewItems(record: BitcoinTransactionRecord, lastBlockInfo: LastBlockInfo?) -> [TransactionInfoModule.ViewItem] {
@@ -204,7 +252,7 @@ class TransactionInfoViewItemFactory {
         return viewItems
     }
 
-    func items(item: TransactionInfoItem) -> [[TransactionInfoModule.ViewItem]] {
+    func items(item: TransactionInfoService.Item) -> [[TransactionInfoModule.ViewItem]] {
         func _rate(_ value: TransactionValue) -> CurrencyValue? {
             value.coin.flatMap { item.rates[$0] }
         }
@@ -321,20 +369,20 @@ class TransactionInfoViewItemFactory {
             ])
 
             for event in record.outgoingEvents {
-                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates))
+                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
             }
 
             for event in record.incomingEvents {
-                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates))
+                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
             }
 
         case let record as ExternalContractCallTransactionRecord:
             for event in record.outgoingEvents {
-                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates))
+                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
             }
 
             for event in record.incomingEvents {
-                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates))
+                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
             }
 
         case let record as BitcoinIncomingTransactionRecord:

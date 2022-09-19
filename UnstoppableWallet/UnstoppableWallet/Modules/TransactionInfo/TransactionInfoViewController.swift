@@ -74,6 +74,11 @@ class TransactionInfoViewController: ThemeViewController {
         }
     }
 
+    private func openNftAsset(providerCollectionUid: String, nftUid: NftUid, imageRatio: CGFloat) {
+        let module = NftAssetModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: nftUid, imageRatio: imageRatio)
+        present(ThemeNavigationController(rootViewController: module), animated: true)
+    }
+
     private func statusRow(rowInfo: RowInfo, status: TransactionStatus) -> RowProtocol {
         let hash: String
         var hasButton = true
@@ -463,7 +468,15 @@ class TransactionInfoViewController: ThemeViewController {
         case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
             return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
         case let .nftAmount(iconUrl, iconPlaceholderImageName, nftAmount, type, providerCollectionUid, nftUid):
-            return CellComponent.nftAmountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, nftAmount: nftAmount, type: type)
+            var onTapOpenNft: (() -> ())?
+
+            if let providerCollectionUid = providerCollectionUid, let nftUid = nftUid {
+                onTapOpenNft = { [weak self] in
+                    self?.openNftAsset(providerCollectionUid: providerCollectionUid, nftUid: nftUid, imageRatio: 1)
+                }
+            }
+
+            return CellComponent.nftAmountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, nftAmount: nftAmount, type: type, onTapOpenNft: onTapOpenNft)
         case let .status(status):
             return statusRow(rowInfo: rowInfo, status: status)
         case let .options(actions: viewItems):
