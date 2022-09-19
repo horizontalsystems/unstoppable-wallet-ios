@@ -109,4 +109,21 @@ extension NftStorage {
         }
     }
 
+    func assetsBriefMetadata(nftUids: [NftUid]) -> [NftAssetBriefMetadata] {
+        do {
+            return try storage.assetsBriefMetadata(nftUids: nftUids)
+        } catch {
+            print("Could not fetch [NftAssetBriefMetadata]: \(error)")
+            return []
+        }
+    }
+
+    func save(assetsBriefMetadata: [NftAssetBriefMetadata]) {
+        do {
+            try storage.save(assetsBriefMetadata: assetsBriefMetadata)
+        } catch {
+            print("Could not save [NftAssetBriefMetadata]: \(error)")
+        }
+    }
+
 }

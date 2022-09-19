@@ -104,10 +104,10 @@ class NftAssetOverviewViewModel {
         return ValueFormatter.instance.formatShort(currency: coinPrice.price.currency, value: priceItem.nftPrice.value * coinPrice.price.value) ?? "---"
     }
 
-    private func traitViewItem(index: Int, trait: NftAssetMetadata.Trait, totalSupply: Int) -> TraitViewItem {
+    private func traitViewItem(index: Int, trait: NftAssetMetadata.Trait, totalSupply: Int?) -> TraitViewItem {
         var percentString: String?
 
-        if trait.count != 0 && totalSupply != 0 {
+        if let totalSupply = totalSupply, trait.count != 0, totalSupply != 0 {
             let percent = Double(trait.count) * 100.0 / Double(totalSupply)
             let rounded: Double
 

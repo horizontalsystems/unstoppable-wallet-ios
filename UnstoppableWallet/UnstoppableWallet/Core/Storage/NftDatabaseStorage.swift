@@ -60,6 +60,16 @@ class NftDatabaseStorage {
             }
         }
 
+        migrator.registerMigration("create NftAssetBriefMetadata") { db in
+            try db.create(table: NftAssetBriefMetadata.databaseTableName) { t in
+                t.column(NftAssetBriefMetadata.Columns.nftUid.name, .text).primaryKey(onConflict: .replace)
+                t.column(NftAssetBriefMetadata.Columns.providerCollectionUid.name, .text).notNull()
+                t.column(NftAssetBriefMetadata.Columns.name.name, .text)
+                t.column(NftAssetBriefMetadata.Columns.imageUrl.name, .text)
+                t.column(NftAssetBriefMetadata.Columns.previewImageUrl.name, .text)
+            }
+        }
+
         return migrator
     }
 
@@ -113,6 +123,22 @@ extension NftDatabaseStorage {
     func save(metadataSyncRecord: NftMetadataSyncRecord) throws {
         _ = try dbPool.write { db in
             try metadataSyncRecord.insert(db)
+        }
+    }
+
+    func assetsBriefMetadata(nftUids: [NftUid]) throws -> [NftAssetBriefMetadata] {
+        try dbPool.read { db in
+            try NftAssetBriefMetadata
+                    .filter(nftUids.contains(NftAssetBriefMetadata.Columns.nftUid))
+                    .fetchAll(db)
+        }
+    }
+
+    func save(assetsBriefMetadata: [NftAssetBriefMetadata]) throws {
+        _ = try dbPool.write { db in
+            for metadata in assetsBriefMetadata {
+                try metadata.insert(db)
+            }
         }
     }
 

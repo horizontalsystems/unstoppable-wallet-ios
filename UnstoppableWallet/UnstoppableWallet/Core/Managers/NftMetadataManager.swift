@@ -90,13 +90,39 @@ extension NftMetadataManager {
         return provider.collectionEventsMetadataSingle(blockchainType: blockchainType, providerUid: providerUid, eventType: eventType, paginationData: paginationData)
     }
 
+    func assetsBriefMetadataSingle(nftUids: [NftUid]) -> Single<[NftAssetBriefMetadata]> {
+        let groupedNftUids = Dictionary(grouping: nftUids) { nftUid -> BlockchainType in nftUid.blockchainType }
+
+        let singles = groupedNftUids.compactMap { blockchainType, nftUids -> Single<[NftAssetBriefMetadata]>? in
+            guard let provider = providerMap[blockchainType] else {
+                return nil
+            }
+
+            return provider.assetsBriefMetadataSingle(blockchainType: blockchainType, nftUids: nftUids)
+                    .catchErrorJustReturn([])
+        }
+
+        return Single.zip(singles)
+                .map { arrays in
+                    arrays.reduce([], +)
+                }
+    }
+
     func addressMetadata(nftKey: NftKey) -> NftAddressMetadata? {
         storage.addressMetadata(nftKey: nftKey)
+    }
+
+    func assetsBriefMetadata(nftUids: [NftUid]) -> [NftAssetBriefMetadata] {
+        storage.assetsBriefMetadata(nftUids: nftUids)
     }
 
     func handle(addressMetadata: NftAddressMetadata, nftKey: NftKey) {
         storage.save(addressMetadata: addressMetadata, nftKey: nftKey)
         addressMetadataRelay.accept((nftKey, addressMetadata))
+    }
+
+    func save(assetsBriefMetadata: [NftAssetBriefMetadata]) {
+        storage.save(assetsBriefMetadata: assetsBriefMetadata)
     }
 
 }

@@ -36,7 +36,7 @@ class EvmTransactionRecord: TransactionRecord {
         switch (value, value2) {
         case let (.coinValue(lhsToken, _), .coinValue(rhsToken, _)): return lhsToken == rhsToken
         case let (.tokenValue(lhsTokenName, lhsTokenCode, lhsTokenDecimals, _), .tokenValue(rhsTokenName, rhsTokenCode, rhsTokenDecimals, _)): return lhsTokenName == rhsTokenName && lhsTokenCode == rhsTokenCode && lhsTokenDecimals == rhsTokenDecimals
-        case let (.nftValue(lhsContractAddress, lhsTokenId, _, _, _), .nftValue(rhsContractAddress, rhsTokenId, _, _, _)): return lhsContractAddress == rhsContractAddress && lhsTokenId == rhsTokenId
+        case let (.nftValue(lhsNftUid, _, _, _), .nftValue(rhsNftUid, _, _, _)): return lhsNftUid == rhsNftUid
         default: return false
         }
     }
@@ -60,8 +60,8 @@ class EvmTransactionRecord: TransactionRecord {
                 resultValue = .coinValue(token: token, value: totalValue)
             case let .tokenValue(tokenName, tokenCode, tokenDecimals, _):
                 resultValue = .tokenValue(tokenName: tokenName, tokenCode: tokenCode, tokenDecimals: tokenDecimals, value: totalValue)
-            case let .nftValue(contractAddress, tokenId, _, tokenName, tokenSymbol):
-                resultValue = .nftValue(contractAddress: contractAddress, tokenId: tokenId, value: totalValue, tokenName: tokenName, tokenSymbol: tokenSymbol)
+            case let .nftValue(nftUid, _, tokenName, tokenSymbol):
+                resultValue = .nftValue(nftUid: nftUid, value: totalValue, tokenName: tokenName, tokenSymbol: tokenSymbol)
             case let .rawValue(value):
                 resultValue = .rawValue(value: value)
             }

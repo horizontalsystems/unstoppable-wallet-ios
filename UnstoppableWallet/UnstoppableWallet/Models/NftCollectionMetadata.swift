@@ -17,7 +17,7 @@ struct NftCollectionMetadata {
 
     let count: Int?
     let ownerCount: Int?
-    let totalSupply: Int
+    let totalSupply: Int?
     let totalVolume: Decimal?
     let floorPrice: NftPrice?
     let marketCap: NftPrice?

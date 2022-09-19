@@ -9,8 +9,9 @@ struct TransactionInfoModule {
             return nil
         }
         let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
+        let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
 
-        let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, currencyKit: App.shared.currencyKit, rateService: rateService)
+        let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, currencyKit: App.shared.currencyKit, rateService: rateService, nftMetadataService: nftMetadataService)
         let factory = TransactionInfoViewItemFactory(evmLabelManager: App.shared.evmLabelManager, actionEnabled: transactionRecord.source.blockchainType.resendable)
         let viewModel = TransactionInfoViewModel(service: service, factory: factory)
         let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
@@ -78,12 +79,4 @@ extension TransactionInfoModule {
         case explorer(title: String, url: String?)
     }
 
-}
-
-struct TransactionInfoItem {
-    let record: TransactionRecord
-    var lastBlockInfo: LastBlockInfo?
-    var rates: [Coin: CurrencyValue]
-    let explorerTitle: String
-    let explorerUrl: String?
 }
