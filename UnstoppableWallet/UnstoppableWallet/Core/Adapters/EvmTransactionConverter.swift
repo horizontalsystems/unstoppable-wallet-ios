@@ -273,6 +273,36 @@ extension EvmTransactionConverter {
                     valueOut: decoration.tokenAmountOut.map { convertToTransactionValue(token: $0.token, value: $0.value, sign: .plus) }
             )
 
+        case let decoration as OutgoingEip721Decoration:
+            return EvmOutgoingTransactionRecord(
+                    source: source,
+                    transaction: transaction,
+                    baseToken: baseToken,
+                    to: decoration.to.eip55,
+                    value: .nftValue(
+                            nftUid: .evm(blockchainType: source.blockchainType, contractAddress: decoration.contractAddress.hex, tokenId: decoration.tokenId.description),
+                            value: convertAmount(amount: 1, decimals: 0, sign: .minus),
+                            tokenName: decoration.tokenInfo?.tokenName,
+                            tokenSymbol: decoration.tokenInfo?.tokenSymbol
+                    ),
+                    sentToSelf: decoration.sentToSelf
+            )
+
+        case let decoration as OutgoingEip1155Decoration:
+            return EvmOutgoingTransactionRecord(
+                    source: source,
+                    transaction: transaction,
+                    baseToken: baseToken,
+                    to: decoration.to.eip55,
+                    value: .nftValue(
+                            nftUid: .evm(blockchainType: source.blockchainType, contractAddress: decoration.contractAddress.hex, tokenId: decoration.tokenId.description),
+                            value: convertAmount(amount: decoration.value, decimals: 0, sign: .minus),
+                            tokenName: decoration.tokenInfo?.tokenName,
+                            tokenSymbol: decoration.tokenInfo?.tokenSymbol
+                    ),
+                    sentToSelf: decoration.sentToSelf
+            )
+
         case let decoration as UnknownTransactionDecoration:
             let address = evmKit.address
 

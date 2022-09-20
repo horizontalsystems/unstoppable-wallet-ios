@@ -104,23 +104,16 @@ extension TransactionRecord {
         var nftUids = Set<NftUid>()
 
         switch self {
-        case let record as ContractCallTransactionRecord:
-            for event in record.incomingEvents + record.outgoingEvents {
-                switch event.value {
-                case let .nftValue(nftUid, _, _, _):
-                    nftUids.insert(nftUid)
-                default: ()
-                }
+        case let record as EvmOutgoingTransactionRecord:
+            if let nftUid = record.value.nftUid {
+                nftUids.insert(nftUid)
             }
 
+        case let record as ContractCallTransactionRecord:
+            nftUids.formUnion(Set((record.incomingEvents + record.outgoingEvents).compactMap { $0.value.nftUid }))
+
         case let record as ExternalContractCallTransactionRecord:
-            for event in record.incomingEvents + record.outgoingEvents {
-                switch event.value {
-                case let .nftValue(nftUid, _, _, _):
-                    nftUids.insert(nftUid)
-                default: ()
-                }
-            }
+            nftUids.formUnion(Set((record.incomingEvents + record.outgoingEvents).compactMap { $0.value.nftUid }))
 
         default: ()
         }
