@@ -45,7 +45,7 @@ class TransactionInfoViewItemFactory {
     private func nftAmount(source: TransactionSource, transactionValue: TransactionValue, type: AmountType, metadata: NftAssetBriefMetadata?) -> TransactionInfoModule.ViewItem {
         .nftAmount(
                 iconUrl: metadata?.previewImageUrl,
-                iconPlaceholderImageName: source.blockchainType.placeholderImageName(tokenProtocol: nil),
+                iconPlaceholderImageName: "placeholder_nft_24",
                 nftAmount: transactionValue.formattedFull(showSign: type.showSign) ?? "n/a".localized,
                 type: type,
                 providerCollectionUid: metadata?.providerCollectionUid,
@@ -270,7 +270,7 @@ class TransactionInfoViewItemFactory {
             ])
 
         case let record as EvmOutgoingTransactionRecord:
-            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf))
+            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, nftMetadata: item.nftMetadata, sentToSelf: record.sentToSelf))
 
             if record.sentToSelf {
                 sections.append([.sentToSelf])

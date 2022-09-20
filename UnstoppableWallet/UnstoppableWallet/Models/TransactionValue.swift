@@ -48,6 +48,13 @@ enum TransactionValue {
         case .rawValue: return nil
         }
     }
+    
+    var nftUid: NftUid? {
+        switch self {
+        case let .nftValue(nftUid, _, _, _): return nftUid
+        default: return nil
+        }
+    }
 
     var decimalValue: Decimal? {
         switch self {
