@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import MarketKit
+import ComponentKit
 
 class TransactionsViewModel {
     private let service: TransactionsService
@@ -284,7 +285,7 @@ extension TransactionsViewModel {
 
     enum IconType {
         case icon(imageUrl: String?, placeholderImageName: String)
-        case doubleIcon(frontImageUrl: String?, frontPlaceholderImageName: String, backImageUrl: String?, backPlaceholderImageName: String)
+        case doubleIcon(frontType: TransactionImageComponent.ImageType, frontUrl: String?, frontPlaceholder: String, backType: TransactionImageComponent.ImageType, backUrl: String?, backPlaceholder: String)
         case localIcon(imageName: String?)
         case failedIcon
     }

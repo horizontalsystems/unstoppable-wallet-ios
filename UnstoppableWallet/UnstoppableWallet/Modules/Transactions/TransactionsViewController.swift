@@ -196,18 +196,20 @@ class TransactionsViewController: ThemeViewController {
                     )
                 case .localIcon(let imageName):
                     component.set(image: imageName.flatMap { UIImage(named: $0)?.withTintColor(.themeLeah) })
-                case let .doubleIcon(frontImageUrl, frontPlaceholderImageName, backImageUrl, backPlaceholderImageName):
+                case let .doubleIcon(frontType, frontUrl, frontPlaceholder, backType, backUrl, backPlaceholder):
                     component.setDoubleImage(
-                            frontUrlString: frontImageUrl,
-                            frontPlaceholder: UIImage(named: frontPlaceholderImageName),
-                            backUrlString: backImageUrl,
-                            backPlaceholder: UIImage(named: backPlaceholderImageName)
+                            frontType: frontType,
+                            frontUrl: frontUrl,
+                            frontPlaceholder: UIImage(named: frontPlaceholder),
+                            backType: backType,
+                            backUrl: backUrl,
+                            backPlaceholder: UIImage(named: backPlaceholder)
                     )
                 case .failedIcon:
                     component.set(image: UIImage(named: "warning_2_20")?.withTintColor(.themeLucian))
                 }
             },
-            .margin8,
+            .margin(6),
             .vStackCentered([
                 .hStack([
                     .text { component in
@@ -291,7 +293,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
                     indexPath: indexPath,
                     selectable: true,
                     rootElement: rootElement(viewItem: sectionViewItems[indexPath.section].viewItems[indexPath.row]),
-                    layoutMargins: UIEdgeInsets(top: 0, left: .margin8, bottom: 0, right: .margin16)
+                    layoutMargins: UIEdgeInsets(top: 0, left: .margin6, bottom: 0, right: .margin16)
             )
         } else {
             return tableView.dequeueReusableCell(withIdentifier: String(describing: SpinnerCell.self), for: indexPath)
