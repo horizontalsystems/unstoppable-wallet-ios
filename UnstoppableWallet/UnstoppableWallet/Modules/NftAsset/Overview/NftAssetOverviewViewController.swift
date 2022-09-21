@@ -182,6 +182,14 @@ class NftAssetOverviewViewController: ThemeViewController {
         urlManager.open(url: url, from: parentNavigationController ?? self)
     }
 
+    private func openSend(nftRecord: EvmNftRecord) {
+       guard let viewController = SendNftModule.viewController(nftRecord: nftRecord) else {
+           return
+       }
+
+        present(viewController, animated: true)
+    }
+
     private func openOptionsMenu() {
         let controller = AlertViewControllerNew.instance(
                 viewItems: [
@@ -329,8 +337,9 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         )
     }
 
-    private func buttonsSection() -> SectionProtocol {
-        Section(
+    private func buttonsSection(nftRecord: EvmNftRecord?) -> SectionProtocol {
+        var sendAction: (() -> ())? = nftRecord.map { [weak self] record in { self?.openSend(nftRecord: record) } }
+        return Section(
                 id: "buttons",
                 footerState: .margin(height: .margin24),
                 rows: [
@@ -340,6 +349,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                             bind: { [weak self] cell, _ in
                                 cell.bind(
                                         providerTitle: self?.viewModel.providerTitle,
+                                        onTapSend: sendAction,
                                         onTapProvider: {
                                             if let url = self?.providerUrl {
                                                 self?.openLink(url: url)
@@ -728,7 +738,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
             }
 
             sections.append(titleSection(assetName: viewItem.name, collectionName: viewItem.collectionName, providerCollectionUid: viewItem.providerCollectionUid))
-            sections.append(buttonsSection())
+            sections.append(buttonsSection(nftRecord: viewItem.nftRecord))
 
             if let section = statsSection(viewItem: viewItem) {
                 sections.append(section)

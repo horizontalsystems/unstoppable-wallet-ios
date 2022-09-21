@@ -7,11 +7,20 @@ import CurrencyKit
 class NftAssetOverviewService {
     let providerCollectionUid: String
     let nftUid: NftUid
+    let nftKey: NftKey?
+    private let nftAdapterManager: NftAdapterManager
     private let nftMetadataManager: NftMetadataManager
     private let marketKit: MarketKit.Kit
     private let coinPriceService: WalletCoinPriceService
+    private let nftAdapterDisposeBag = DisposeBag()
+    private var nftRecordDisposeBag = DisposeBag()
     private var disposeBag = DisposeBag()
 
+    private var evmNftRecord: EvmNftRecord? = nil {
+        didSet {
+            syncSendState(evmNftRecord: evmNftRecord)
+        }
+    }
     private let stateRelay = PublishRelay<DataStatus<Item>>()
     private(set) var state: DataStatus<Item> = .loading {
         didSet {
@@ -21,14 +30,44 @@ class NftAssetOverviewService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-asset-service", qos: .userInitiated)
 
-    init(providerCollectionUid: String, nftUid: NftUid, nftMetadataManager: NftMetadataManager, marketKit: MarketKit.Kit, coinPriceService: WalletCoinPriceService) {
+    init(providerCollectionUid: String, nftUid: NftUid, nftKey: NftKey?, nftAdapterManager: NftAdapterManager, nftMetadataManager: NftMetadataManager, marketKit: MarketKit.Kit, coinPriceService: WalletCoinPriceService) {
         self.providerCollectionUid = providerCollectionUid
         self.nftUid = nftUid
+        self.nftKey = nftKey
+        self.nftAdapterManager = nftAdapterManager
         self.nftMetadataManager = nftMetadataManager
         self.marketKit = marketKit
         self.coinPriceService = coinPriceService
 
+        syncNftAdapter(map: nftAdapterManager.adapterMap)
+        subscribe(nftAdapterDisposeBag, nftAdapterManager.adaptersUpdatedObservable) { [weak self] in self?.syncNftAdapter(map: $0) }
         sync()
+    }
+
+    private func syncNftAdapter(map: [NftKey: INftAdapter]) {
+        guard let nftKey = nftKey,
+              let adapter = map[nftKey] else {
+            return
+        }
+
+        nftRecordDisposeBag = DisposeBag()
+        subscribe(nftRecordDisposeBag, adapter.nftRecordsObservable) { [weak self] in self?.syncNft(records: $0) }
+        syncNft(records: adapter.nftRecords)
+    }
+
+    private func syncNft(records: [NftRecord]) {
+        evmNftRecord = records.compactMap { $0 as? EvmNftRecord }.first(where: { $0.nftUid == nftUid })
+    }
+
+    private func syncSendState(evmNftRecord: EvmNftRecord?) {
+        queue.async {
+            guard case let .completed(item) = self.state, item.evmNftRecord != evmNftRecord else {
+                return
+            }
+
+            item.evmNftRecord = evmNftRecord
+            self.state = .completed(item)
+        }
     }
 
     private func sync() {
@@ -39,7 +78,7 @@ class NftAssetOverviewService {
         nftMetadataManager.extendedAssetMetadataSingle(nftUid: nftUid, providerCollectionUid: providerCollectionUid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] asset, collection in
-                    self?.handle(item: Item(asset: asset, collection: collection))
+                    self?.handle(item: Item(asset: asset, collection: collection, evmNftRecord: self?.evmNftRecord))
                 }, onError: { [weak self] error in
                     self?.state = .failed(error)
                 })
@@ -152,8 +191,9 @@ extension NftAssetOverviewService {
         var collectionFloor: PriceItem?
         var offers: [PriceItem]
         var sale: SaleItem?
+        var evmNftRecord: EvmNftRecord?
 
-        init(asset: NftAssetMetadata, collection: NftCollectionMetadata) {
+        init(asset: NftAssetMetadata, collection: NftCollectionMetadata, evmNftRecord: EvmNftRecord?) {
             self.asset = asset
             self.collection = collection
 
@@ -173,6 +213,7 @@ extension NftAssetOverviewService {
                         }
                 )
             }
+            self.evmNftRecord = evmNftRecord
         }
 
         var bestOffer: PriceItem? {
@@ -245,6 +286,14 @@ extension NftAssetOverviewService {
             self.nftPrice = nftPrice
             self.coinPrice = coinPrice
         }
+    }
+
+}
+
+extension EvmNftRecord: Equatable {
+
+    public static func ==(lhs: EvmNftRecord, rhs: EvmNftRecord) -> Bool {
+        lhs.nftUid == rhs.nftUid && lhs.blockchainType == rhs.blockchainType
     }
 
 }

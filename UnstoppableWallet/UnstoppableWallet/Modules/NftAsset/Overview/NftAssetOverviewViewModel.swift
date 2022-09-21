@@ -60,7 +60,8 @@ class NftAssetOverviewViewModel {
                 tokenId: service.nftUid.tokenId,
                 schemaName: asset.nftType,
                 blockchain: service.nftUid.blockchainType.uid,
-                links: linkViewItems(asset: asset, collection: collection)
+                links: linkViewItems(asset: asset, collection: collection),
+                nftRecord: item.evmNftRecord
         )
     }
 
@@ -228,6 +229,7 @@ extension NftAssetOverviewViewModel {
         let schemaName: String
         let blockchain: String
         let links: [LinkViewItem]
+        let nftRecord: EvmNftRecord?
     }
 
     struct SaleViewItem {
