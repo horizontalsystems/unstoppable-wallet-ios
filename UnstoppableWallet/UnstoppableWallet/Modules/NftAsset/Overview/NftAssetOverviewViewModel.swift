@@ -61,7 +61,7 @@ class NftAssetOverviewViewModel {
                 schemaName: asset.nftType,
                 blockchain: service.nftUid.blockchainType.uid,
                 links: linkViewItems(asset: asset, collection: collection),
-                nftRecord: item.evmNftRecord
+                sendVisible: item.isOwned
         )
     }
 
@@ -169,6 +169,10 @@ extension NftAssetOverviewViewModel {
         openTraitRelay.asSignal()
     }
 
+    var nftUid: NftUid {
+        service.nftUid
+    }
+
     var blockchainType: BlockchainType {
         service.nftUid.blockchainType
     }
@@ -229,7 +233,7 @@ extension NftAssetOverviewViewModel {
         let schemaName: String
         let blockchain: String
         let links: [LinkViewItem]
-        let nftRecord: EvmNftRecord?
+        let sendVisible: Bool
     }
 
     struct SaleViewItem {

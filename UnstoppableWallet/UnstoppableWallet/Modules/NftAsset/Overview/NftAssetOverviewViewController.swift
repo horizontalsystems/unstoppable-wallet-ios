@@ -182,8 +182,8 @@ class NftAssetOverviewViewController: ThemeViewController {
         urlManager.open(url: url, from: parentNavigationController ?? self)
     }
 
-    private func openSend(nftRecord: EvmNftRecord) {
-       guard let viewController = SendNftModule.viewController(nftRecord: nftRecord) else {
+    private func openSend() {
+       guard let viewController = SendNftModule.viewController(nftUid: viewModel.nftUid) else {
            return
        }
 
@@ -337,9 +337,8 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         )
     }
 
-    private func buttonsSection(nftRecord: EvmNftRecord?) -> SectionProtocol {
-        var sendAction: (() -> ())? = nftRecord.map { [weak self] record in { self?.openSend(nftRecord: record) } }
-        return Section(
+    private func buttonsSection(sendVisible: Bool) -> SectionProtocol {
+        Section(
                 id: "buttons",
                 footerState: .margin(height: .margin24),
                 rows: [
@@ -349,7 +348,9 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                             bind: { [weak self] cell, _ in
                                 cell.bind(
                                         providerTitle: self?.viewModel.providerTitle,
-                                        onTapSend: sendAction,
+                                        onTapSend: sendVisible ? { [weak self] in
+                                            self?.openSend()
+                                        } : nil,
                                         onTapProvider: {
                                             if let url = self?.providerUrl {
                                                 self?.openLink(url: url)
@@ -738,7 +739,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
             }
 
             sections.append(titleSection(assetName: viewItem.name, collectionName: viewItem.collectionName, providerCollectionUid: viewItem.providerCollectionUid))
-            sections.append(buttonsSection(nftRecord: viewItem.nftRecord))
+            sections.append(buttonsSection(sendVisible: viewItem.sendVisible))
 
             if let section = statsSection(viewItem: viewItem) {
                 sections.append(section)
