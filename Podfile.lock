@@ -651,7 +651,7 @@ CHECKOUT OPTIONS:
     :commit: fdc11d5bed1501509567d4e4d62857c09b42512d
     :git: https://github.com/horizontalsystems/component-kit-ios/
   NftKit.swift:
-    :commit: afc7fde13fd64ce41a406ceee3b5936ffc441813
+    :commit: 6c02639aa74301de58fd70c40007d44fb8a6c337
     :git: https://github.com/horizontalsystems/ethereum-kit-ios
   OneInchKit.swift:
     :commit: 03f28fc3db65aee3df6467dac05afeb1f5f49ae0

@@ -8,13 +8,10 @@ struct NftAssetOverviewModule {
                 marketKit: App.shared.marketKit
         )
 
-        let account = App.shared.accountManager.activeAccount.flatMap { !$0.watchAccount ? $0 : nil }
-        let nftKey = account.map { NftKey(account: $0, blockchainType: .ethereum) } //can send only ethereum nfts
-
         let service = NftAssetOverviewService(
                 providerCollectionUid: providerCollectionUid,
                 nftUid: nftUid,
-                nftKey: nftKey,
+                accountManager: App.shared.accountManager,
                 nftAdapterManager: App.shared.nftAdapterManager,
                 nftMetadataManager: App.shared.nftMetadataManager,
                 marketKit: App.shared.marketKit,

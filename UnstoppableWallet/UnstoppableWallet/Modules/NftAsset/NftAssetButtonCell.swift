@@ -31,6 +31,7 @@ class NftAssetButtonCell: UITableViewCell {
 
         stackView.spacing = .margin8
         stackView.alignment = .fill
+        stackView.distribution = .fill
 
         sendButton.set(style: .yellow)
         sendButton.addTarget(self, action: #selector(onTapSendButton), for: .touchUpInside)
@@ -64,8 +65,7 @@ class NftAssetButtonCell: UITableViewCell {
         providerButton.setTitle(providerTitle, for: .normal)
 
         sendButton.isHidden = onTapSend == nil
-        moreButton.isHidden = onTapSend != nil
-        stackView.distribution = moreButton.isHidden ? .fillEqually : .fill
+        providerButton.isHidden = onTapSend != nil
 
         self.onTapSend = onTapSend
         self.onTapProvider = onTapProvider

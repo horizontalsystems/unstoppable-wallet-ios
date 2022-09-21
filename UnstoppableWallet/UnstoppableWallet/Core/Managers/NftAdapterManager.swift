@@ -76,6 +76,10 @@ extension NftAdapterManager {
         adaptersUpdatedRelay.asObservable()
     }
 
+    func adapter(nftKey: NftKey) -> INftAdapter? {
+        queue.sync { _adapterMap[nftKey] }
+    }
+
     func refresh() {
         queue.async {
             for adapter in self._adapterMap.values {

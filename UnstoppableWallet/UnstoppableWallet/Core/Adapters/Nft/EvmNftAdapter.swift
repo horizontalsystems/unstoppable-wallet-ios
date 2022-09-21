@@ -2,6 +2,7 @@ import RxSwift
 import NftKit
 import MarketKit
 import EthereumKit
+import BigInt
 
 class EvmNftAdapter {
     private let blockchainType: BlockchainType
@@ -42,6 +43,58 @@ extension EvmNftAdapter: INftAdapter {
 
     var nftRecords: [NftRecord] {
         nftKit.nftBalances.map { record(nftBalance: $0) }
+    }
+
+    func nftRecord(nftUid: NftUid) -> NftRecord? {
+        guard case let .evm(blockchainType, contractAddress, tokenId) = nftUid else {
+            return nil
+        }
+
+        guard let contractAddress = try? EthereumKit.Address(hex: contractAddress), let tokenId = BigUInt(tokenId) else {
+            return nil
+        }
+
+        guard let nftBalance = nftKit.nftBalance(contractAddress: contractAddress, tokenId: tokenId) else {
+            return nil
+        }
+
+        return record(nftBalance: nftBalance)
+    }
+
+    func transferEip721TransactionData(contractAddress: String, to: String, tokenId: String) -> TransactionData? {
+        guard let contractAddress = try? EthereumKit.Address(hex: contractAddress) else {
+            return nil
+        }
+
+        guard let to = try? EthereumKit.Address(hex: to) else {
+            return nil
+        }
+
+        guard let tokenId = BigUInt(tokenId) else {
+            return nil
+        }
+
+        return nftKit.transferEip721TransactionData(contractAddress: contractAddress, to: to, tokenId: tokenId)
+    }
+
+    func transferEip1155TransactionData(contractAddress: String, to: String, tokenId: String, value: Decimal) -> TransactionData? {
+        guard let contractAddress = try? EthereumKit.Address(hex: contractAddress) else {
+            return nil
+        }
+
+        guard let to = try? EthereumKit.Address(hex: to) else {
+            return nil
+        }
+
+        guard let tokenId = BigUInt(tokenId) else {
+            return nil
+        }
+
+        guard let value = BigUInt(value.description) else {
+            return nil
+        }
+
+        return nftKit.transferEip1155TransactionData(contractAddress: contractAddress, to: to, tokenId: tokenId, value: value)
     }
 
     func sync() {
