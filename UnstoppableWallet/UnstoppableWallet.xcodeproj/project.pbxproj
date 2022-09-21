@@ -2601,6 +2601,7 @@
 		ABC9A63A0D643295CB51D9CB /* SendAmountCautionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A580220B9FD291A6496A /* SendAmountCautionService.swift */; };
 		ABC9A63B0E4560BF519B2BA9 /* SendFeeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACF1ACFDFD53E2502C30 /* SendFeeViewModel.swift */; };
 		ABC9A63B2AABC0414000DEC2 /* SendConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3AB799024C8FC2C7DD8 /* SendConfirmationViewModel.swift */; };
+		ABC9A63EC83A82A76E67778B /* SendNftModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A82A1E9AE6CC0E24756B /* SendNftModule.swift */; };
 		ABC9A66E5775762856F8927D /* NftAssetOverviewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A90781302D793E0773CB /* NftAssetOverviewModule.swift */; };
 		ABC9A670E32C2609E425346E /* SendFeeSettingsAmountCautionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A5FEE2E46C98415563BE /* SendFeeSettingsAmountCautionViewModel.swift */; };
 		ABC9A67A87DFB11102AB607A /* SendBitcoinFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3DC5DA5B7BFDBF72B5D /* SendBitcoinFactory.swift */; };
@@ -2709,6 +2710,7 @@
 		ABC9AB8A9028DC1488166ABC /* WalletConnectV2PendingRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAD79FD756DA69A52578 /* WalletConnectV2PendingRequestsViewController.swift */; };
 		ABC9AB921BDB4C6E8B028283 /* SendFeeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A281C0AE74836096178A /* SendFeeSettingsViewController.swift */; };
 		ABC9AB967E59C4CAA9BB94B4 /* ProFeaturesYakAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A5151B44A8A21F5C8C01 /* ProFeaturesYakAuthorizationService.swift */; };
+		ABC9ABA70CEF664E8E01FA7A /* SendNftModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A82A1E9AE6CC0E24756B /* SendNftModule.swift */; };
 		ABC9ABAE470C553AE5E80A9F /* WalletConnectSessionKiller.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1667330B8DBC1A8FE52 /* WalletConnectSessionKiller.swift */; };
 		ABC9ABB2420313ECE8CAFAA1 /* MarketCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A37521CD6E2CC5BA4E68 /* MarketCardView.swift */; };
 		ABC9ABBCF4C71F327C1B7562 /* WalletConnectScanQrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB68CEA6F8AD05C5C893 /* WalletConnectScanQrViewController.swift */; };
@@ -2738,6 +2740,7 @@
 		ABC9ACADCCE9CEB2588D91D5 /* SendMemoInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A099941AA53B68270D55 /* SendMemoInputViewModel.swift */; };
 		ABC9ACB877440215AADD13BB /* SendFeeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A281C0AE74836096178A /* SendFeeSettingsViewController.swift */; };
 		ABC9ACC51D6B2D4E04C8019E /* HudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A381CB4C09FF7CB62A94 /* HudHelper.swift */; };
+		ABC9ACDC77B36D92D6D864EB /* SendNftModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A82A1E9AE6CC0E24756B /* SendNftModule.swift */; };
 		ABC9ACDD64F14C0D65A5CFBC /* SendZcashFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6F55A2C6777D25F57D5 /* SendZcashFactory.swift */; };
 		ABC9ACDEB22DC3C9DEDF6521 /* NftAssetCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A30A8F78E9C9AEE861F1 /* NftAssetCellFactory.swift */; };
 		ABC9ACDFA2F5F3BD9517723D /* NftAssetOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A806FD17A129212E3F7C /* NftAssetOverviewViewController.swift */; };
@@ -3986,6 +3989,7 @@
 		ABC9A7FC41B9F98871246E0E /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		ABC9A80143F95E28346C81FE /* SendMemoInputService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMemoInputService.swift; sourceTree = "<group>"; };
 		ABC9A806FD17A129212E3F7C /* NftAssetOverviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftAssetOverviewViewController.swift; sourceTree = "<group>"; };
+		ABC9A82A1E9AE6CC0E24756B /* SendNftModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNftModule.swift; sourceTree = "<group>"; };
 		ABC9A8449B305EAF80437266 /* WatchAddressBlockchainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchAddressBlockchainManager.swift; sourceTree = "<group>"; };
 		ABC9A84B20FB00115A271014 /* BottomSheetItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomSheetItem.swift; sourceTree = "<group>"; };
 		ABC9A857395F2521BA0A2602 /* WalletConnectV1MainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV1MainService.swift; sourceTree = "<group>"; };
@@ -4741,6 +4745,7 @@
 				11B359C7777CEA0D86D6E10C /* PublicKeys */,
 				11B358D277F396F433C4EE48 /* Nft */,
 				ABC9A36EA08B74D3591F571E /* Information */,
+				ABC9AC795DC3FDA1CBEECA52 /* SendNft */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -6667,6 +6672,14 @@
 			path = ProFeaturesYakAuthorization;
 			sourceTree = "<group>";
 		};
+		ABC9AC795DC3FDA1CBEECA52 /* SendNft */ = {
+			isa = PBXGroup;
+			children = (
+				ABC9A82A1E9AE6CC0E24756B /* SendNftModule.swift */,
+			);
+			path = SendNft;
+			sourceTree = "<group>";
+		};
 		ABC9AD0E477917E82B70A3D6 /* Confirmation */ = {
 			isa = PBXGroup;
 			children = (
@@ -7118,7 +7131,7 @@
 			);
 			mainGroup = D3285F3920BD158E00644076;
 			packageReferences = (
-				D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */,
+				D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */,
 				D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */,
 				D3BF1E61274CBBCE00229A00 /* XCRemoteSwiftPackageReference "DeepDiff" */,
 				500F1D0F27AA87BC002AA419 /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */,
@@ -8365,6 +8378,7 @@
 				11B35E83275C2D10A47A4702 /* LogoHeaderCell.swift in Sources */,
 				11B35B8D96B8BD116DEB4D0E /* NftMetadataService.swift in Sources */,
 				11B352EDC48B8CF542D50A4A /* NftAssetBriefMetadata.swift in Sources */,
+				ABC9ACDC77B36D92D6D864EB /* SendNftModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9378,6 +9392,7 @@
 				11B35124AA099FB6EF1DC64A /* LogoHeaderCell.swift in Sources */,
 				11B35494E4BA9BF6A3DAA6D6 /* NftMetadataService.swift in Sources */,
 				11B35A4CBD60780E0870E77C /* NftAssetBriefMetadata.swift in Sources */,
+				ABC9A63EC83A82A76E67778B /* SendNftModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10383,6 +10398,7 @@
 				11B35DC7CD9E62F3B47ECB98 /* LogoHeaderCell.swift in Sources */,
 				11B3516976C6C67E1EFFBD56 /* NftMetadataService.swift in Sources */,
 				11B35210D072735192AD9BC8 /* NftAssetBriefMetadata.swift in Sources */,
+				ABC9ABA70CEF664E8E01FA7A /* SendNftModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10791,7 +10807,7 @@
 				kind = branch;
 			};
 		};
-		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */ = {
+		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nysander/UnicodeURL.git";
 			requirement = {
@@ -10858,32 +10874,32 @@
 		};
 		D0DA740C272A6EFC0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = IDNSDK;
 		};
 		D0DA740E272A6EFC0072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = UnicodeURL;
 		};
 		D0DA7410272A6F180072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = IDNSDK;
 		};
 		D0DA7412272A6F180072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = UnicodeURL;
 		};
 		D0DA7414272A6F1F0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = IDNSDK;
 		};
 		D0DA7416272A6F1F0072BE86 /* UnicodeURL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
+			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL.git" */;
 			productName = UnicodeURL;
 		};
 		D36E0C2928D084AB00B622B9 /* CollectionViewCenteredFlowLayout */ = {

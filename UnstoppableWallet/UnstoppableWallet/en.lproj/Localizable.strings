@@ -18,6 +18,7 @@
 "button.reject" = "Reject";
 "button.connect" = "Connect";
 "button.save" = "Save";
+"button.send" = "Send";
 "button.sign" = "Sign";
 "button.more" = "Show More";
 
