@@ -42,6 +42,7 @@ class NftDoubleCell: UITableViewCell {
         view.coinPrice = viewItem.coinPrice
         view.fiatPrice = viewItem.fiatPrice
         view.onSaleHidden = !viewItem.onSale
+        view.count = viewItem.count
         view.setImage(url: viewItem.imageUrl)
         view.onTap = { onTap(viewItem, view.imageRatio) }
     }

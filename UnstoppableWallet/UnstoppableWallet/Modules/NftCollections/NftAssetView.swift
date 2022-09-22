@@ -13,8 +13,12 @@ class NftAssetView: UIView {
     private let nameLabel = UILabel()
     private let coinPriceLabel = UILabel()
     private let fiatPriceLabel = UILabel()
+
     private let onSaleWrapper = UIView()
     private let onSaleLabel = UILabel()
+
+    private let countWrapper = UIView()
+    private let countLabel = UILabel()
 
     var onTap: (() -> ())?
 
@@ -75,6 +79,37 @@ class NftAssetView: UIView {
         onSaleLabel.font = .microSB
         onSaleLabel.textColor = .themeDarker
         onSaleLabel.text = "nft_collections.on_sale".localized
+
+        addSubview(countWrapper)
+        countWrapper.snp.makeConstraints { maker in
+            maker.leading.top.equalTo(imageView).inset(CGFloat.margin4)
+            maker.height.equalTo(15)
+        }
+
+        countWrapper.backgroundColor = .themeBlack50
+        countWrapper.cornerRadius = .cornerRadius4
+        countWrapper.layer.cornerCurve = .continuous
+
+        let countImageView = UIImageView()
+
+        countWrapper.addSubview(countImageView)
+        countImageView.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().inset(CGFloat.margin4)
+            maker.centerY.equalToSuperview()
+            maker.size.equalTo(12)
+        }
+
+        countImageView.image = UIImage(named: "nft_amount_12")?.withTintColor(.themeSteelLight)
+
+        countWrapper.addSubview(countLabel)
+        countLabel.snp.makeConstraints { maker in
+            maker.leading.equalTo(countImageView.snp.trailing).offset(2)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin4)
+            maker.centerY.equalToSuperview()
+        }
+
+        countLabel.font = .microSB
+        countLabel.textColor = .themeSteelLight
 
         addSubview(nameLabel)
         nameLabel.snp.makeConstraints { maker in
@@ -137,6 +172,14 @@ class NftAssetView: UIView {
     var onSaleHidden: Bool {
         get { onSaleWrapper.isHidden }
         set { onSaleWrapper.isHidden = newValue }
+    }
+
+    var count: String? {
+        get { countLabel.text }
+        set {
+            countLabel.text = newValue
+            countWrapper.isHidden = newValue == nil
+        }
     }
 
     func setImage(url: String?) {
