@@ -3,6 +3,7 @@ import RxSwift
 import RxRelay
 import MarketKit
 import CurrencyKit
+import Kingfisher
 
 class NftAssetOverviewService {
     let providerCollectionUid: String
@@ -63,8 +64,35 @@ class NftAssetOverviewService {
     }
 
     private func handleFetched(asset: NftAssetMetadata, collection: NftCollectionMetadata) {
+        guard let imageUrl = asset.imageUrl, let url = URL(string: imageUrl) else {
+            handleFetched(asset: asset, collection: collection, nftImage: nil)
+            return
+        }
+
+        if url.pathExtension == "svg" {
+            if let data = try? ImageCache.default.diskStorage.value(forKey: url.absoluteString), let svgString = String(data: data, encoding: .utf8) {
+                handleFetched(asset: asset, collection: collection, nftImage: .svg(string: svgString))
+            } else if let data = try? Data(contentsOf: url), let svgString = String(data: data, encoding: .utf8) {
+                try? ImageCache.default.diskStorage.store(value: data, forKey: url.absoluteString)
+                handleFetched(asset: asset, collection: collection, nftImage: .svg(string: svgString))
+            } else {
+                handleFetched(asset: asset, collection: collection, nftImage: nil)
+            }
+        } else {
+            KingfisherManager.shared.retrieveImage(with: url) { [weak self] result in
+                switch result {
+                case .success(let result):
+                    self?.handleFetched(asset: asset, collection: collection, nftImage: .image(image: result.image))
+                case .failure:
+                    self?.handleFetched(asset: asset, collection: collection, nftImage: nil)
+                }
+            }
+        }
+    }
+
+    private func handleFetched(asset: NftAssetMetadata, collection: NftCollectionMetadata, nftImage: NftImage?) {
         queue.async {
-            let item = Item(asset: asset, collection: collection, isOwned: self._isOwned())
+            let item = Item(asset: asset, collection: collection, assetNftImage: nftImage, isOwned: self._isOwned())
             let tokens = self._allTokens(item: item)
             self._fillCoinPrices(item: item, tokens: tokens)
             self.coinPriceService.set(tokens: tokens)
@@ -181,6 +209,7 @@ extension NftAssetOverviewService {
     class Item {
         let asset: NftAssetMetadata
         let collection: NftCollectionMetadata
+        let assetNftImage: NftImage?
         var isOwned: Bool
 
         var lastSale: PriceItem?
@@ -190,9 +219,10 @@ extension NftAssetOverviewService {
         var offers: [PriceItem]
         var sale: SaleItem?
 
-        init(asset: NftAssetMetadata, collection: NftCollectionMetadata, isOwned: Bool) {
+        init(asset: NftAssetMetadata, collection: NftCollectionMetadata, assetNftImage: NftImage?, isOwned: Bool) {
             self.asset = asset
             self.collection = collection
+            self.assetNftImage = assetNftImage
             self.isOwned = isOwned
 
             lastSale = asset.lastSalePrice.map { PriceItem(nftPrice: $0) }

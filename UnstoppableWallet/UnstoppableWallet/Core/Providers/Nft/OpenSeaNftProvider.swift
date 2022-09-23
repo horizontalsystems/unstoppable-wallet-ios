@@ -7,7 +7,7 @@ import Alamofire
 class OpenSeaNftProvider {
     private let baseUrl = "https://api.opensea.io/api/v1"
     private let collectionLimit = 300
-    private let assetLimit = 50
+    private let assetLimit = 30
     private let zeroAddress = "0x0000000000000000000000000000000000000000"
 
     private let networkManager: NetworkManager
@@ -225,14 +225,16 @@ class OpenSeaNftProvider {
         }
     }
 
-    private func assetsBrief(blockchainType: BlockchainType, responses: [AssetResponse]) -> [NftAssetBriefMetadata] {
-        responses.map { response in
-            NftAssetBriefMetadata(
-                    nftUid: .evm(blockchainType: blockchainType, contractAddress: response.contract.address, tokenId: response.tokenId),
-                    providerCollectionUid: response.collection.slug,
-                    name: response.name,
-                    imageUrl: response.imageUrl,
-                    previewImageUrl: response.imagePreviewUrl
+    private func assetsBrief(requestedNftUids: [NftUid], responses: [AssetResponse]) -> [NftAssetBriefMetadata] {
+        requestedNftUids.map { nftUid in
+            let response = responses.first { $0.contract.address == nftUid.contractAddress && $0.tokenId == nftUid.tokenId }
+
+            return NftAssetBriefMetadata(
+                    nftUid: nftUid,
+                    providerCollectionUid: response?.collection.slug,
+                    name: response?.name,
+                    imageUrl: response?.imageUrl,
+                    previewImageUrl: response?.imagePreviewUrl
             )
         }
     }
@@ -485,18 +487,28 @@ extension OpenSeaNftProvider: INftProvider {
                 }
     }
 
-    func assetsBriefMetadataSingle(blockchainType: BlockchainType, nftUids: [NftUid]) -> Single<[NftAssetBriefMetadata]> {
+    func assetsBriefMetadataSingle(nftUids: [NftUid]) -> Single<[NftAssetBriefMetadata]> {
         let references = nftUids.map { nftUid in
             AssetReference(contractAddress: nftUid.contractAddress, tokenId: nftUid.tokenId)
         }
 
-        return assetsSingle(references: references)
-                .map { [weak self] assetsResponse in
+        let chunkedReferences = stride(from: 0, to: references.count, by: assetLimit).map {
+            Array(references[$0..<min($0 + assetLimit, references.count)])
+        }
+
+        let singles = chunkedReferences.map {
+            assetsSingle(references: $0)
+        }
+
+        return Single.zip(singles)
+                .map { [weak self] assetsResponses in
                     guard let strongSelf = self else {
                         throw ProviderError.weakReference
                     }
 
-                    return strongSelf.assetsBrief(blockchainType: blockchainType, responses: assetsResponse.assets)
+                    let assets = assetsResponses.map { $0.assets }.reduce([], +)
+
+                    return strongSelf.assetsBrief(requestedNftUids: nftUids, responses: assets)
                 }
     }
 

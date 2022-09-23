@@ -4,8 +4,8 @@ import MarketKit
 
 struct NftAssetModule {
 
-    static func viewController(providerCollectionUid: String, nftUid: NftUid, imageRatio: CGFloat) -> UIViewController {
-        let overviewController = NftAssetOverviewModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: nftUid, imageRatio: imageRatio)
+    static func viewController(providerCollectionUid: String, nftUid: NftUid) -> UIViewController {
+        let overviewController = NftAssetOverviewModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
         let activityController = NftActivityModule.viewController(eventListType: .asset(nftUid: nftUid), defaultEventType: nil)
 
         return NftAssetViewController(

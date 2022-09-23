@@ -10,7 +10,6 @@ import HUD
 class NftAssetOverviewViewController: ThemeViewController {
     private let viewModel: NftAssetOverviewViewModel
     private var urlManager: UrlManager
-    private var imageRatio: CGFloat
     private let disposeBag = DisposeBag()
 
     private var viewItem: NftAssetOverviewViewModel.ViewItem?
@@ -27,10 +26,9 @@ class NftAssetOverviewViewController: ThemeViewController {
 
     private var loaded = false
 
-    init(viewModel: NftAssetOverviewViewModel, urlManager: UrlManager, imageRatio: CGFloat) {
+    init(viewModel: NftAssetOverviewViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
         self.urlManager = urlManager
-        self.imageRatio = imageRatio
 
         super.init()
     }
@@ -278,7 +276,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         )
     }
 
-    private func imageSection(url: String, ratio: CGFloat) -> SectionProtocol {
+    private func imageSection(ratio: CGFloat) -> SectionProtocol {
         Section(
                 id: "image",
                 headerState: .margin(height: .margin12),
@@ -733,9 +731,9 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let viewItem = viewItem {
-            if let imageUrl = viewItem.imageUrl {
-                imageCell.bind(url: imageUrl)
-                sections.append(imageSection(url: imageUrl, ratio: imageRatio))
+            if let nftImage = viewItem.nftImage {
+                imageCell.bind(nftImage: nftImage)
+                sections.append(imageSection(ratio: nftImage.ratio))
             }
 
             sections.append(titleSection(assetName: viewItem.name, collectionName: viewItem.collectionName, providerCollectionUid: viewItem.providerCollectionUid))

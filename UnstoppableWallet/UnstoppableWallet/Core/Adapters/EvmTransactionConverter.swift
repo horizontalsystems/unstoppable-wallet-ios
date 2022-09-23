@@ -273,7 +273,7 @@ extension EvmTransactionConverter {
                     valueOut: decoration.tokenAmountOut.map { convertToTransactionValue(token: $0.token, value: $0.value, sign: .plus) }
             )
 
-        case let decoration as OutgoingEip721Decoration:
+        case let decoration as Eip721SafeTransferFromDecoration:
             return EvmOutgoingTransactionRecord(
                     source: source,
                     transaction: transaction,
@@ -288,7 +288,7 @@ extension EvmTransactionConverter {
                     sentToSelf: decoration.sentToSelf
             )
 
-        case let decoration as OutgoingEip1155Decoration:
+        case let decoration as Eip1155SafeTransferFromDecoration:
             return EvmOutgoingTransactionRecord(
                     source: source,
                     transaction: transaction,

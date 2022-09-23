@@ -74,8 +74,8 @@ class TransactionInfoViewController: ThemeViewController {
         }
     }
 
-    private func openNftAsset(providerCollectionUid: String, nftUid: NftUid, imageRatio: CGFloat) {
-        let module = NftAssetModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: nftUid, imageRatio: imageRatio)
+    private func openNftAsset(providerCollectionUid: String, nftUid: NftUid) {
+        let module = NftAssetModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
         present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
@@ -472,7 +472,7 @@ class TransactionInfoViewController: ThemeViewController {
 
             if let providerCollectionUid = providerCollectionUid, let nftUid = nftUid {
                 onTapOpenNft = { [weak self] in
-                    self?.openNftAsset(providerCollectionUid: providerCollectionUid, nftUid: nftUid, imageRatio: 1)
+                    self?.openNftAsset(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
                 }
             }
 

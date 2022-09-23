@@ -60,10 +60,14 @@ class NftDatabaseStorage {
             }
         }
 
-        migrator.registerMigration("create NftAssetBriefMetadata") { db in
+        migrator.registerMigration("recreate NftAssetBriefMetadata") { db in
+            if try db.tableExists("nftAssetBriefMetadata") {
+                try db.drop(table: "nftAssetBriefMetadata")
+            }
+
             try db.create(table: NftAssetBriefMetadata.databaseTableName) { t in
                 t.column(NftAssetBriefMetadata.Columns.nftUid.name, .text).primaryKey(onConflict: .replace)
-                t.column(NftAssetBriefMetadata.Columns.providerCollectionUid.name, .text).notNull()
+                t.column(NftAssetBriefMetadata.Columns.providerCollectionUid.name, .text)
                 t.column(NftAssetBriefMetadata.Columns.name.name, .text)
                 t.column(NftAssetBriefMetadata.Columns.imageUrl.name, .text)
                 t.column(NftAssetBriefMetadata.Columns.previewImageUrl.name, .text)

@@ -98,7 +98,7 @@ extension NftMetadataManager {
                 return nil
             }
 
-            return provider.assetsBriefMetadataSingle(blockchainType: blockchainType, nftUids: nftUids)
+            return provider.assetsBriefMetadataSingle(nftUids: nftUids)
                     .catchErrorJustReturn([])
         }
 

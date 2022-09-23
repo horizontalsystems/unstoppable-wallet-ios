@@ -104,12 +104,12 @@ class NftViewController: ThemeViewController {
         }
     }
 
-    private func openAsset(viewItem: NftDoubleCell.ViewItem, imageRatio: CGFloat) {
+    private func openAsset(viewItem: NftDoubleCell.ViewItem) {
         guard let providerCollectionUid = viewItem.providerCollectionUid else {
             return
         }
 
-        let module = NftAssetModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: viewItem.nftUid, imageRatio: imageRatio)
+        let module = NftAssetModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: viewItem.nftUid)
         present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
@@ -125,8 +125,8 @@ extension NftViewController: SectionsDataSource {
                     NftDoubleCell.height(containerWidth: width, isLast: isLast)
                 },
                 bind: { cell, _ in
-                    cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem, imageRatio in
-                        self?.openAsset(viewItem: viewItem, imageRatio: imageRatio)
+                    cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem in
+                        self?.openAsset(viewItem: viewItem)
                     }
                 }
         )
