@@ -88,8 +88,7 @@ extension SwapApproveViewModel {
     }
 
     func onChange(amount: String?) {
-        let amount = amount
-                .flatMap { Decimal(string: $0) }
+        let amount = decimalParser.parseAnyDecimal(from: amount)
                 .map { coinService.fractionalMonetaryValue(value: $0) }
 
         service.set(amount: amount)

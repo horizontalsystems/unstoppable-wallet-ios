@@ -15,6 +15,7 @@
 "button.report" = "Report";
 "button.add" = "Add";
 "button.approve" = "Approve";
+"button.revoke" = "Revoke";
 "button.reject" = "Reject";
 "button.connect" = "Connect";
 "button.save" = "Save";
@@ -49,7 +50,11 @@
 "alert.sending" = "Sending";
 "alert.sent" = "Sent";
 "alert.swapping" = "Swapping";
+"alert.swapped" = "Swapped";
 "alert.approving" = "Approving";
+"alert.approved" = "Approved";
+"alert.revoking" = "Revoking";
+"alert.revoked" = "Revoked";
 
 
 "action.loading" = "loading...";
@@ -304,6 +309,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "send.lock_time" = "TimeLock";
 
 "approve.confirmation.you_approve" = "You Approve";
+"approve.confirmation.you_revoke" = "You Revoke";
 "approve.confirmation.spender" = "Spender";
 
 // CoinSelector
@@ -325,6 +331,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.approve.description" = "You should grant permission to a smart contract to swap a given token on your behalf. This permission sets the amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute an approval transaction. \n\nWhile it may be done on-demand before each trade, it's cheaper to approve a higher amount in advance for future trades.";
 "swap.approve.amount_error.already_approved" = "You already have an allowance for this amount";
 "swap.approving_button" = "Approving...";
+"swap.revoke_warning" = "You can exchange %@, or you need to revoke and approve the new amount";
+"swap.revoking_button" = "Revoking...";
 "swap.trade_error.not_found" = "Can't swap these tokens";
 "swap.button_error.insufficient_balance" = "Insufficient balance";
 "swap.switch_provider.title" = "Swap Service";

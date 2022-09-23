@@ -56,9 +56,25 @@ class SwapModule {
 }
 
 extension SwapModule {
+    private static let addressesForRevoke = ["0xdac17f958d2ee523a2206206994597c13d831ec7"]
+
+    static func mustBeRevoked(token: Token?) -> Bool {
+        if let token = token,
+           case .ethereum = token.blockchainType,
+           case .eip20(let address) = token.type,
+           Self.addressesForRevoke.contains(address.lowercased()) {
+            return true
+        }
+
+        return false
+    }
+
+}
+
+extension SwapModule {
 
     enum ApproveStepState: Int {
-        case notApproved, approveRequired, approving, approved
+        case notApproved, revokeRequired, revoking, approveRequired, approving, approved
     }
 
     class DataSourceState {
@@ -107,10 +123,29 @@ extension SwapModule {
 
 extension SwapModule {
 
-    enum SwapError: Error {
+    enum SwapError: Error, Equatable {
         case noBalanceIn
         case insufficientBalanceIn
         case insufficientAllowance
+        case needRevokeAllowance(allowance: CoinValue)
+
+        static func ==(lhs: SwapError, rhs: SwapError) -> Bool {
+            switch (lhs, rhs) {
+            case (.noBalanceIn, .noBalanceIn): return true
+            case (.insufficientBalanceIn, .insufficientBalanceIn): return true
+            case (.insufficientAllowance, .insufficientAllowance): return true
+            case (.needRevokeAllowance(let lAllowance), .needRevokeAllowance(let rAllowance)): return lAllowance == rAllowance
+            default: return false
+            }
+        }
+
+        var revokeAllowance: CoinValue? {
+            switch self {
+            case .needRevokeAllowance(let allowance): return allowance
+            default: return nil
+            }
+        }
+
     }
 
 }

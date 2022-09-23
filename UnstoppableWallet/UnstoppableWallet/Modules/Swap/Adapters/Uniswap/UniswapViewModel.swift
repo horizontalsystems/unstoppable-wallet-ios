@@ -21,10 +21,13 @@ class UniswapViewModel {
     private var tradeViewItemRelay = BehaviorRelay<TradeViewItem?>(value: nil)
     private var settingsViewItemRelay = BehaviorRelay<SettingsViewItem?>(value: nil)
     private var proceedActionRelay = BehaviorRelay<ActionState>(value: .hidden)
+    private var revokeWarningRelay = BehaviorRelay<String?>(value: nil)
+    private var revokeActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var approveActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var approveStepRelay = BehaviorRelay<SwapModule.ApproveStepState>(value: .notApproved)
     private var openConfirmRelay = PublishRelay<SendEvmData>()
 
+    private var openRevokeRelay = PublishRelay<SwapAllowanceService.ApproveData>()
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.swap_view_model")
@@ -45,11 +48,11 @@ class UniswapViewModel {
     }
 
     private func subscribeToService() {
-        subscribe(scheduler, disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-        subscribe(scheduler, disposeBag, service.errorsObservable) { [weak self] in self?.sync(errors: $0) }
+        subscribe(scheduler, disposeBag, service.stateObservable) { [weak self] _ in self?.handleObservable() }
+        subscribe(scheduler, disposeBag, service.errorsObservable) { [weak self] in self?.handleObservable(errors: $0) }
         subscribe(scheduler, disposeBag, tradeService.stateObservable) { [weak self] in self?.sync(tradeState: $0) }
         subscribe(scheduler, disposeBag, tradeService.settingsObservable) { [weak self] in self?.sync(swapSettings: $0) }
-        subscribe(scheduler, disposeBag, pendingAllowanceService.stateObservable) { [weak self] _ in self?.syncPendingAllowanceState() }
+        subscribe(scheduler, disposeBag, pendingAllowanceService.stateObservable) { [weak self] _ in self?.handleObservable() }
     }
 
     private func sync(state: UniswapService.State? = nil) {
@@ -58,6 +61,16 @@ class UniswapViewModel {
         isLoadingRelay.accept(state == .loading)
         syncProceedAction()
     }
+
+    private func handleObservable(errors: [Error]? = nil) {
+        if let errors = errors {
+            sync(errors: errors)
+        }
+
+        syncProceedAction()
+        syncApproveAction()
+    }
+
 
     private func sync(errors: [Error]? = nil) {
         let errors = errors ?? service.errors
@@ -72,9 +85,6 @@ class UniswapViewModel {
         }
 
         swapErrorRelay.accept(filtered.first?.convertedError.smartDescription)
-
-        syncApproveAction()
-        syncProceedAction()
     }
 
     private func sync(tradeState: UniswapTradeService.State) {
@@ -85,48 +95,62 @@ class UniswapViewModel {
             tradeViewItemRelay.accept(nil)
         }
 
-        syncProceedAction()
-        syncApproveAction()
+        handleObservable()
     }
 
     private func sync(swapSettings: UniswapSettings) {
         settingsViewItemRelay.accept(settingsViewItem(settings: swapSettings))
     }
 
-    private func syncPendingAllowanceState() {
-        syncProceedAction()
-        syncApproveAction()
-    }
-
     private func syncProceedAction() {
+        var actionState = ActionState.disabled(title: "swap.proceed_button".localized)
+
         if case .ready = service.state {
-            proceedActionRelay.accept(.enabled(title: "swap.proceed_button".localized))
-        } else if case .ready = tradeService.state {
-            if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError }) {
-                proceedActionRelay.accept(.disabled(title: "swap.button_error.insufficient_balance".localized))
-            } else if pendingAllowanceService.state == .pending {
-                proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
-            } else {
-                proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
+            actionState = .enabled(title: "swap.proceed_button".localized)
+        } else if let error = service.errors.compactMap({ $0 as? SwapModule.SwapError}).first {
+            switch error {
+            case .insufficientBalanceIn: actionState = .disabled(title: "swap.button_error.insufficient_balance".localized)
+            case .needRevokeAllowance:
+                switch tradeService.state {
+                case .notReady: ()
+                default: actionState = .hidden
+                }
+            default: ()
             }
-        } else {
-            proceedActionRelay.accept(.disabled(title: "swap.proceed_button".localized))
+        } else if case .revoking = pendingAllowanceService.state {
+            actionState = .hidden
         }
+
+        proceedActionRelay.accept(actionState)
     }
 
     private func syncApproveAction() {
-        let approveAction: ActionState
+        var approveAction: ActionState = .hidden
+        var revokeAction: ActionState = .hidden
+        var revokeWarning: String?
         let approveStep: SwapModule.ApproveStepState
 
+        for error in service.errors {
+            if let allowance = (error as? SwapModule.SwapError)?.revokeAllowance {
+                revokeWarning = "swap.revoke_warning".localized(ValueFormatter.instance.formatFull(coinValue: allowance) ?? "n/a".localized)
+            }
+        }
         if case .pending = pendingAllowanceService.state {
+            revokeWarning = nil
             approveAction = .disabled(title: "swap.approving_button".localized)
             approveStep = .approving
+        } else if case .revoking = pendingAllowanceService.state {
+            revokeWarning = nil
+            revokeAction = .disabled(title: "swap.revoking_button".localized)
+            approveStep = .revoking
         } else if case .notReady = tradeService.state {
-            approveAction = .hidden
+            revokeWarning = nil
             approveStep = .notApproved
         } else if service.errors.contains(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError }) {
-            approveAction = .hidden
             approveStep = .notApproved
+        } else if revokeWarning != nil {
+            revokeAction = .enabled(title: "button.revoke".localized)
+            approveStep = .revokeRequired
         } else if service.errors.contains(where: { .insufficientAllowance == $0 as? SwapModule.SwapError }) {
             approveAction = .enabled(title: "button.approve".localized)
             approveStep = .approveRequired
@@ -134,10 +158,12 @@ class UniswapViewModel {
             approveAction = .disabled(title: "button.approve".localized)
             approveStep = .approved
         } else {
-            approveAction = .hidden
+            revokeWarning = nil
             approveStep = .notApproved
         }
 
+        revokeWarningRelay.accept(revokeWarning)
+        revokeActionRelay.accept(revokeAction)
         approveActionRelay.accept(approveAction)
         approveStepRelay.accept(approveStep)
     }
@@ -181,12 +207,24 @@ extension UniswapViewModel {
         proceedActionRelay.asDriver()
     }
 
+    var revokeWarningDriver: Driver<String?> {
+        revokeWarningRelay.asDriver()
+    }
+
+    var revokeActionDriver: Driver<ActionState> {
+        revokeActionRelay.asDriver()
+    }
+
     var approveActionDriver: Driver<ActionState> {
         approveActionRelay.asDriver()
     }
 
     var approveStepDriver: Driver<SwapModule.ApproveStepState> {
         approveStepRelay.asDriver()
+    }
+
+    var openRevokeSignal: Signal<SwapAllowanceService.ApproveData> {
+        openRevokeRelay.asSignal()
     }
 
     var openApproveSignal: Signal<SwapAllowanceService.ApproveData> {
@@ -205,8 +243,16 @@ extension UniswapViewModel {
         tradeService.switchCoins()
     }
 
+    func onTapRevoke() {
+        guard let approveData = service.approveData(amount: 0) else {
+            return
+        }
+
+        openRevokeRelay.accept(approveData)
+    }
+
     func onTapApprove() {
-        guard let approveData = service.approveData else {
+        guard let approveData = service.approveData() else {
             return
         }
 

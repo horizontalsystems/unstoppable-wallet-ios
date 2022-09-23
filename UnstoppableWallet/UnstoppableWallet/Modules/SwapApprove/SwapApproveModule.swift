@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 import EthereumKit
 import ThemeKit
 import BigInt
