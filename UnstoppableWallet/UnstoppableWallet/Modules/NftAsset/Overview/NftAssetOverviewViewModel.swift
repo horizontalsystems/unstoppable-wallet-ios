@@ -44,7 +44,7 @@ class NftAssetOverviewViewModel {
         let collection = item.collection
 
         return ViewItem(
-                imageUrl: asset.imageUrl,
+                nftImage: item.assetNftImage,
                 name: asset.name ?? "#\(service.nftUid.tokenId)",
                 providerCollectionUid: asset.providerCollectionUid,
                 collectionName: collection.name,
@@ -216,7 +216,7 @@ extension NftAssetOverviewViewModel {
 extension NftAssetOverviewViewModel {
 
     struct ViewItem {
-        let imageUrl: String?
+        let nftImage: NftImage?
         let name: String
         let providerCollectionUid: String
         let collectionName: String

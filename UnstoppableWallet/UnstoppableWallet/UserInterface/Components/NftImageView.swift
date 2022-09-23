@@ -34,37 +34,16 @@ class NftImageView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setImage(url: String?) {
-        guard let urlString = url, let url = URL(string: urlString) else {
+    func set(nftImage: NftImage) {
+        switch nftImage {
+        case .image(let image):
+            imageView.image = image
             webView.alpha = 0
+        case .svg(let string):
             imageView.image = nil
-
-            return
-        }
-
-        if url.pathExtension == "svg" {
-            imageView.image = nil
-
-            if let data = try? ImageCache.default.diskStorage.value(forKey: url.absoluteString), let svgString = String(data: data, encoding: .utf8) {
-                webView.alpha = 1
-                webView.loadHTMLString(html(svgString: svgString), baseURL: nil)
-            } else {
-                webView.alpha = 0
-
-                DispatchQueue.global(qos: .utility).async {
-                    if let data = try? Data(contentsOf: url), let svgString = String(data: data, encoding: .utf8) {
-                        DispatchQueue.main.async {
-                            self.webView.loadHTMLString(self.html(svgString: svgString), baseURL: nil)
-                            UIView.animate(withDuration: 1) { self.webView.alpha = 1 }
-                        }
-
-                        try? ImageCache.default.diskStorage.store(value: data, forKey: url.absoluteString)
-                    }
-                }
-            }
-        } else {
             webView.alpha = 0
-            imageView.kf.setImage(with: url, options: [.transition(.fade(0.5))])
+            webView.loadHTMLString(html(svgString: string), baseURL: nil)
+            UIView.animate(withDuration: 1) { self.webView.alpha = 1 }
         }
     }
 

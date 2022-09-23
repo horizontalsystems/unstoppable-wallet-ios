@@ -26,8 +26,8 @@ class NftAssetImageCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(url: String) {
-        nftImageView.setImage(url: url)
+    func bind(nftImage: NftImage) {
+        nftImageView.set(nftImage: nftImage)
     }
 
     var currentImage: UIImage? {

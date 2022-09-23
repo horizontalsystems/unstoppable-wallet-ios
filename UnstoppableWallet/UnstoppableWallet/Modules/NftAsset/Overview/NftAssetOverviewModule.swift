@@ -2,7 +2,7 @@ import UIKit
 
 struct NftAssetOverviewModule {
 
-    static func viewController(providerCollectionUid: String, nftUid: NftUid, imageRatio: CGFloat) -> NftAssetOverviewViewController {
+    static func viewController(providerCollectionUid: String, nftUid: NftUid) -> NftAssetOverviewViewController {
         let coinPriceService = WalletCoinPriceService(
                 currencyKit: App.shared.currencyKit,
                 marketKit: App.shared.marketKit
@@ -21,7 +21,19 @@ struct NftAssetOverviewModule {
         coinPriceService.delegate = service
 
         let viewModel = NftAssetOverviewViewModel(service: service)
-        return NftAssetOverviewViewController(viewModel: viewModel, urlManager: UrlManager(inApp: true), imageRatio: imageRatio)
+        return NftAssetOverviewViewController(viewModel: viewModel, urlManager: UrlManager(inApp: true))
     }
 
+}
+
+enum NftImage {
+    case image(image: UIImage)
+    case svg(string: String)
+
+    var ratio: CGFloat {
+        switch self {
+        case .image(let image): return image.size.height / image.size.width
+        case .svg: return 1
+        }
+    }
 }

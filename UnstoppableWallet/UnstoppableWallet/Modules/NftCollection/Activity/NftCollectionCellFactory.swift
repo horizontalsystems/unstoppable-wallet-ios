@@ -4,10 +4,9 @@ import ComponentKit
 
 class NftCollectionCellFactory: NftAssetCellFactory {
 
-    override func actionWithCell(viewItem: NftActivityViewModel.EventViewItem) -> ((BaseThemeCell) -> ())? {
-        { [weak self] cell in
-            let component: ImageComponent? = cell.component(index: 0)
-            self?.openAsset(viewItem: viewItem, imageRatio: component?.imageRatio ?? 1)
+    override func action(viewItem: NftActivityViewModel.EventViewItem) -> (() -> ())? {
+        { [weak self] in
+            self?.openAsset(viewItem: viewItem)
         }
     }
 
@@ -28,8 +27,8 @@ class NftCollectionCellFactory: NftAssetCellFactory {
         }
     }
 
-    private func openAsset(viewItem: NftActivityViewModel.EventViewItem, imageRatio: CGFloat) {
-        let module = NftAssetModule.viewController(providerCollectionUid: viewItem.providerCollectionUid, nftUid: viewItem.nftUid, imageRatio: imageRatio)
+    private func openAsset(viewItem: NftActivityViewModel.EventViewItem) {
+        let module = NftAssetModule.viewController(providerCollectionUid: viewItem.providerCollectionUid, nftUid: viewItem.nftUid)
         parentNavigationController?.pushViewController(module, animated: true)
     }
 }

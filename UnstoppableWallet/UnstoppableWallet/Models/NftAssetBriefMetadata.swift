@@ -2,12 +2,12 @@ import GRDB
 
 class NftAssetBriefMetadata: Record {
     let nftUid: NftUid
-    let providerCollectionUid: String
+    let providerCollectionUid: String?
     let name: String?
     let imageUrl: String?
     let previewImageUrl: String?
 
-    init(nftUid: NftUid, providerCollectionUid: String, name: String?, imageUrl: String?, previewImageUrl: String?) {
+    init(nftUid: NftUid, providerCollectionUid: String? = nil, name: String? = nil, imageUrl: String? = nil, previewImageUrl: String? = nil) {
         self.nftUid = nftUid
         self.providerCollectionUid = providerCollectionUid
         self.name = name
