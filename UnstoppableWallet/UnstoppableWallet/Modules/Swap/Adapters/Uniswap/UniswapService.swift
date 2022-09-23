@@ -29,6 +29,9 @@ class UniswapService {
     private let errorsRelay = PublishRelay<[Error]>()
     private(set) var errors: [Error] = [] {
         didSet {
+            if oldValue.isEmpty && errors.isEmpty {
+                return
+            }
             errorsRelay.accept(errors)
         }
     }
@@ -102,6 +105,20 @@ class UniswapService {
         syncState()
     }
 
+    private func checkAllowanceError(allowance: CoinValue) -> Error? {
+        guard let balanceIn = balanceIn,
+              balanceIn >= tradeService.amountIn,
+              tradeService.amountIn > allowance.value else {
+            return nil
+        }
+
+        if SwapModule.mustBeRevoked(token: tradeService.tokenIn), allowance.value != 0 {
+            return SwapModule.SwapError.needRevokeAllowance(allowance: allowance)
+        }
+
+        return SwapModule.SwapError.insufficientAllowance
+    }
+
     private func syncState() {
         var allErrors = [Error]()
         var loading = false
@@ -122,8 +139,8 @@ class UniswapService {
             case .loading:
                 loading = true
             case .ready(let allowance):
-                if tradeService.amountIn > allowance.value {
-                    allErrors.append(SwapModule.SwapError.insufficientAllowance)
+                if let error = checkAllowanceError(allowance: allowance) {
+                    allErrors.append(error)
                 }
             case .notReady(let error):
                 allErrors.append(error)
@@ -177,8 +194,9 @@ extension UniswapService: ISwapErrorProvider {
         balanceOutRelay.asObservable()
     }
 
-    var approveData: SwapAllowanceService.ApproveData? {
-        guard let amount = balanceIn else {
+    func approveData(amount: Decimal? = nil)  -> SwapAllowanceService.ApproveData? {
+        let amount = amount ?? balanceIn
+        guard let amount = amount else {
             return nil
         }
 

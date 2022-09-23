@@ -28,7 +28,9 @@ extension HudHelper {
         case swapping
         case swapped
         case approving
+        case revoking
         case approved
+        case revoked
         case success(string: String)
         case attention(string: String)
         case error(string: String)
@@ -54,7 +56,7 @@ extension HudHelper {
             case .enabled: image = UIImage(named: "circle_check_24")
             case .sending, .sent: image = UIImage(named: "arrow_medium_2_up_right_24")
             case .swapping, .swapped: image = UIImage(named: "arrow_swap_2_24")
-            case .approving, .approved: image = UIImage(named: "unordered_24")
+            case .approving, .approved, .revoking, .revoked: image = UIImage(named: "unordered_24")
             case .success: image = UIImage(named: "circle_check_24")
             case .attention: image = UIImage(named: "warning_2_24")
             case .error: image = UIImage(named: "warning_2_24")
@@ -64,10 +66,10 @@ extension HudHelper {
 
         var color: UIColor {
             switch self {
-            case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .attention: return .themeJacob
+            case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .revoked, .attention: return .themeJacob
             case .removedFromWatchlist,  .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
             case .addedToWallet, .copied, .saved, .done, .created, .restored, .addressAdded, .enabled, .success: return .themeRemus
-            case .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving: return .themeGray
+            case .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return .themeGray
             }
         }
 
@@ -92,8 +94,12 @@ extension HudHelper {
             case .enabled(let count): return "alert.enabled_coins".localized(count)
             case .sending: return "alert.sending".localized
             case .sent: return "alert.sent".localized
-            case .swapping, .swapped: return "alert.swapping".localized
-            case .approving, .approved: return "alert.approving".localized
+            case .swapping: return "alert.swapping".localized
+            case .swapped: return "alert.swapped".localized
+            case .approving: return "alert.approving".localized
+            case .approved: return "alert.approved".localized
+            case .revoking: return "alert.revoking".localized
+            case .revoked: return "alert.revoked".localized
             case .success(let description): return description
             case .attention(let description): return description
             case .error(let description): return description
@@ -109,7 +115,7 @@ extension HudHelper {
 
         var isLoading: Bool {
             switch self {
-            case .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving: return true
+            case .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return true
             default: return false
             }
         }
@@ -123,7 +129,7 @@ extension HudHelper {
 
         var forced: Bool {
             switch self {
-            case .disconnectedWalletConnect, .enabled, .sent, .swapped, .approved: return false
+            case .disconnectedWalletConnect, .enabled, .sent, .swapped, .approved, .revoked: return false
             default: return true
             }
         }

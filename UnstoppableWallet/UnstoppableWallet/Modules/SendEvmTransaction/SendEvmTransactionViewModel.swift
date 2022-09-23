@@ -269,20 +269,33 @@ class SendEvmTransactionViewModel {
             return nil
         }
 
+        let isRevokeAllowance = value == 0  // Check approved new value or revoked last allowance
+        let amountItem: ViewItem
+        if isRevokeAllowance {
+            amountItem = .amount(
+                    iconUrl: coinService.token.coin.imageUrl,
+                    iconPlaceholderImageName: coinService.token.placeholderImageName,
+                    coinAmount: coinService.token.coin.code,
+                    currencyAmount: nil,
+                    type: .neutral
+            )
+        } else {
+            amountItem = amountViewItem(
+                    coinService: coinService,
+                    value: value,
+                    type: .neutral
+            )
+        }
         let addressValue = spender.eip55
         let addressTitle = evmLabelManager.addressLabel(address: addressValue)
 
         var viewItems: [ViewItem] = [
             .subhead(
                     iconName: "check_2_24",
-                    title: "approve.confirmation.you_approve".localized,
+                    title: isRevokeAllowance ? "approve.confirmation.you_revoke".localized : "approve.confirmation.you_approve".localized,
                     value: coinService.token.coin.name
             ),
-            amountViewItem(
-                    coinService: coinService,
-                    value: value,
-                    type: .neutral
-            ),
+            amountItem,
             .address(
                     title: "approve.confirmation.spender".localized,
                     value: addressValue,
