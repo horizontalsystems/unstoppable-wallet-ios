@@ -61,12 +61,8 @@ extension EvmNftAdapter: INftAdapter {
         return record(nftBalance: nftBalance)
     }
 
-    func transferEip721TransactionData(contractAddress: String, to: String, tokenId: String) -> TransactionData? {
+    func transferEip721TransactionData(contractAddress: String, to: EthereumKit.Address, tokenId: String) -> TransactionData? {
         guard let contractAddress = try? EthereumKit.Address(hex: contractAddress) else {
-            return nil
-        }
-
-        guard let to = try? EthereumKit.Address(hex: to) else {
             return nil
         }
 

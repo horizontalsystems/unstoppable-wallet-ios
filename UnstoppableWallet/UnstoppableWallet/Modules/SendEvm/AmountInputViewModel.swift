@@ -56,14 +56,15 @@ class AmountInputViewModel {
     private var switchEnabledRelay: BehaviorRelay<Bool>
     private var amountWarningRelay = BehaviorRelay<String?>(value: nil)
 
-    private var coinDecimals = AmountInputViewModel.fallbackCoinDecimals
+    private var coinDecimals: Int
     let publishAmountRelay = PublishRelay<Decimal>()
 
-    init(service: IAmountInputService, fiatService: FiatService, switchService: AmountTypeSwitchService, decimalParser: AmountDecimalParser, isMaxSupported: Bool = true) {
+    init(service: IAmountInputService, fiatService: FiatService, switchService: AmountTypeSwitchService, decimalParser: AmountDecimalParser, coinDecimals: Int = AmountInputViewModel.fallbackCoinDecimals, isMaxSupported: Bool = true) {
         self.service = service
         self.fiatService = fiatService
         self.switchService = switchService
         self.decimalParser = decimalParser
+        self.coinDecimals = coinDecimals
         self.isMaxSupported = isMaxSupported
         switchEnabledRelay = BehaviorRelay(value: switchService.toggleAvailable)
 
