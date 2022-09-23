@@ -123,4 +123,16 @@ extension UdnAddressParserItem {
         return item
     }
 
+    static func item(rawAddressParserItem: IAddressParserItem, blockchainType: BlockchainType, default: String = "ETH") -> UdnAddressParserItem {
+        let item = UdnAddressParserItem(
+                rawAddressParserItem: rawAddressParserItem,
+                coinCode: chainCoinCode(blockchainType: blockchainType) ?? `default`,
+                platformCoinCode: nil,
+                chain: nil
+        )
+
+        item.exceptionRegistrars = EnsAddressParserItem.registrars
+        return item
+    }
+
 }

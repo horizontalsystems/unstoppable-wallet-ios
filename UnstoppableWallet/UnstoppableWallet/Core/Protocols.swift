@@ -97,7 +97,7 @@ protocol INftAdapter: AnyObject {
     var nftRecordsObservable: Observable<[NftRecord]> { get }
     var nftRecords: [NftRecord] { get }
     func nftRecord(nftUid: NftUid) -> NftRecord?
-    func transferEip721TransactionData(contractAddress: String, to: String, tokenId: String) -> TransactionData?
+    func transferEip721TransactionData(contractAddress: String, to: EthereumKit.Address, tokenId: String) -> TransactionData?
     func transferEip1155TransactionData(contractAddress: String, to: String, tokenId: String, value: Decimal) -> TransactionData?
     func sync()
 }
