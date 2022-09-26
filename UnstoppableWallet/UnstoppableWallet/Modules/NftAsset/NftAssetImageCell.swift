@@ -42,7 +42,7 @@ extension NftAssetImageCell {
 
     static func height(containerWidth: CGFloat, maxHeight: CGFloat, ratio: CGFloat) -> CGFloat {
         let imageWidth = max(0, containerWidth - 2 * horizontalMargin)
-        return min(120, imageWidth / ratio)
+        return min(120, imageWidth * ratio)
     }
 
     static func height(containerWidth: CGFloat, ratio: CGFloat) -> CGFloat {

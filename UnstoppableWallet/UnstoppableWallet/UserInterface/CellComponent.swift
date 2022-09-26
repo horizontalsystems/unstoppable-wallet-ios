@@ -61,8 +61,9 @@ struct CellComponent {
                     }
 
                     cell.bind(index: 2) { (component: TextComponent) in
+                        component.isHidden = currencyAmount == nil
                         component.font = .subhead2
-                                component.textColor = .themeGray
+                        component.textColor = .themeGray
                         component.lineBreakMode = .byTruncatingMiddle
                         component.text = currencyAmount
                     }
@@ -76,6 +77,7 @@ struct CellComponent {
                     .image24 { component in
                         component.setImage(urlString: iconUrl, placeholder: UIImage(named: iconPlaceholderImageName))
                         component.imageView.cornerRadius = .cornerRadius4
+                        component.imageView.contentMode = .scaleAspectFill
                     },
                     .text { component in
                         component.font = type.textFont

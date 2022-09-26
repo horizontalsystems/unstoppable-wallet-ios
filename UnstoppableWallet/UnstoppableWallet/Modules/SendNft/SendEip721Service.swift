@@ -54,7 +54,7 @@ class SendEip721Service {
                 state = .notReady
                 return
             }
-            let sendInfo = SendEvmData.SendInfo(domain: addressData.domain)
+            let sendInfo = SendEvmData.SendInfo(domain: addressData.domain, assetShortMetadata: assetShortMetadata)
             let sendData = SendEvmData(transactionData: transactionData, additionalInfo: .send(info: sendInfo), warnings: [])
 
             state = .ready(sendData: sendData)
