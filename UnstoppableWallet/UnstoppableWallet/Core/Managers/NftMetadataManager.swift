@@ -112,6 +112,10 @@ extension NftMetadataManager {
         storage.addressMetadata(nftKey: nftKey)
     }
 
+    func assetShortMetadata(nftUid: NftUid) -> NftAssetShortMetadata? {
+        storage.assetShortMetadata(nftUid: nftUid)
+    }
+
     func assetsBriefMetadata(nftUids: Set<NftUid>) -> [NftAssetBriefMetadata] {
         storage.assetsBriefMetadata(nftUids: nftUids)
     }

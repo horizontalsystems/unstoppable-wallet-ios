@@ -185,7 +185,7 @@ class NftAssetOverviewViewController: ThemeViewController {
            return
        }
 
-        present(viewController, animated: true)
+        parentNavigationController?.present(viewController, animated: true)
     }
 
     private func openOptionsMenu() {

@@ -97,6 +97,14 @@ extension NftDatabaseStorage {
         }
     }
 
+    func asset(nftUid: NftUid) throws -> NftAssetRecord? {
+        try dbPool.read { db in
+            try NftAssetRecord
+                    .filter(NftAssetRecord.Columns.nftUid == nftUid)
+                    .fetchOne(db)
+        }
+    }
+
     func save(collections: [NftCollectionRecord], assets: [NftAssetRecord], blockchainTypeUid: String, accountId: String) throws {
         _ = try dbPool.write { db in
             try NftCollectionRecord

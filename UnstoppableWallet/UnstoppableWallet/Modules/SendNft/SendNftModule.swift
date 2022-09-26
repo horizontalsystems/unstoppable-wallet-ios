@@ -4,9 +4,9 @@ import MarketKit
 
 class SendNftModule {
 
-    private static func addressService(nftRecord: NftRecord) -> AddressService {
+    private static func addressService(blockchainType: BlockchainType) -> AddressService {
         let evmAddressParserItem = EvmAddressParser()
-        let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, blockchainType: nftRecord.blockchainType)
+        let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, blockchainType: blockchainType)
 
         let addressParserChain = AddressParserChain()
                 .append(handler: evmAddressParserItem)
@@ -16,13 +16,13 @@ class SendNftModule {
             addressParserChain.append(handler: ensAddressParserItem)
         }
 
-        let addressUriParser = AddressParserFactory.parser(blockchainType: nftRecord.blockchainType)
+        let addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType)
         return AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
     }
 
-    private static func eip721ViewController(evmKitWrapper: EvmKitWrapper, nftRecord: EvmNftRecord, adapter: INftAdapter) -> UIViewController {
-        let addressService = addressService(nftRecord: nftRecord)
-        let service = SendEip721Service(nftRecord: nftRecord, adapter: adapter, addressService: addressService)
+    private static func eip721ViewController(evmKitWrapper: EvmKitWrapper, nftUid: NftUid, adapter: INftAdapter) -> UIViewController {
+        let addressService = addressService(blockchainType: nftUid.blockchainType)
+        let service = SendEip721Service(nftUid: nftUid, adapter: adapter, addressService: addressService, nftMetadataManager: App.shared.nftMetadataManager)
 
         let recipientAddressViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
         let viewModel = SendEip721ViewModel(service: service)
@@ -47,8 +47,8 @@ class SendNftModule {
 
         let evmBlockchainManager = App.shared.evmBlockchainManager
         guard let evmKitWrapper = try? evmBlockchainManager
-                .evmKitManager(blockchainType: nftRecord.blockchainType)
-                .evmKitWrapper(account: account, blockchainType: nftRecord.blockchainType) else {
+                .evmKitManager(blockchainType: nftUid.blockchainType)
+                .evmKitWrapper(account: account, blockchainType: nftUid.blockchainType) else {
             return nil
         }
 
@@ -62,7 +62,7 @@ class SendNftModule {
 
             switch evmNftRecord.type {
             case .eip721:
-                viewController = eip721ViewController(evmKitWrapper: evmKitWrapper, nftRecord: evmNftRecord, adapter: adapter)
+                viewController = eip721ViewController(evmKitWrapper: evmKitWrapper, nftUid: nftUid, adapter: adapter)
             case .eip1155:
                 viewController = UIViewController()
             }

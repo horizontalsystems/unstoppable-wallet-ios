@@ -13,12 +13,7 @@ class NftAssetImageCell: UITableViewCell {
         selectionStyle = .none
 
         contentView.addSubview(nftImageView)
-        nftImageView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(Self.horizontalMargin)
-            maker.top.bottom.equalToSuperview()
-        }
 
-        nftImageView.cornerRadius = .cornerRadius12
         nftImageView.layer.cornerCurve = .continuous
     }
 
@@ -26,7 +21,14 @@ class NftAssetImageCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(nftImage: NftImage) {
+    func bind(nftImage: NftImage, cornerRadius: CGFloat = .cornerRadius12) {
+        nftImageView.snp.remakeConstraints { maker in
+            maker.centerX.equalToSuperview()
+            maker.top.bottom.equalToSuperview()
+            maker.height.equalTo(nftImageView.snp.width).multipliedBy(nftImage.ratio)
+        }
+
+        nftImageView.cornerRadius = cornerRadius
         nftImageView.set(nftImage: nftImage)
     }
 
@@ -37,6 +39,11 @@ class NftAssetImageCell: UITableViewCell {
 }
 
 extension NftAssetImageCell {
+
+    static func height(containerWidth: CGFloat, maxHeight: CGFloat, ratio: CGFloat) -> CGFloat {
+        let imageWidth = max(0, containerWidth - 2 * horizontalMargin)
+        return min(120, imageWidth / ratio)
+    }
 
     static func height(containerWidth: CGFloat, ratio: CGFloat) -> CGFloat {
         let imageWidth = max(0, containerWidth - 2 * horizontalMargin)
