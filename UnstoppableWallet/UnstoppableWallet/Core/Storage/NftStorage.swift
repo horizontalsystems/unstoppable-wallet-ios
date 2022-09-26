@@ -78,6 +78,19 @@ extension NftStorage {
         }
     }
 
+    func assetShortMetadata(nftUid: NftUid) -> NftAssetShortMetadata? {
+        do {
+            guard let assetRecord = try storage.asset(nftUid: nftUid) else {
+                return nil
+            }
+
+            return asset(record: assetRecord, tokens: [])
+        } catch {
+            print("Could not fetch NftAssetRecord: \(error)")
+            return nil
+        }
+    }
+
     func save(addressMetadata: NftAddressMetadata, nftKey: NftKey) {
         do {
             try storage.save(

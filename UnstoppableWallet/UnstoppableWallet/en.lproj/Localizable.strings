@@ -239,6 +239,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Send
 
 "send.title" = "Send %@";
+"send.send" = "Send";
 "send.amount_placeholder" = "Amount";
 "send.address_placeholder" = "Address";
 "send.address_or_domain_placeholder" = "Address or Domain";

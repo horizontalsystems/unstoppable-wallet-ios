@@ -19,7 +19,7 @@ class NftImageView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .themeSteel10
 
         addSubview(webView)

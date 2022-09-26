@@ -37,8 +37,12 @@ extension SendEip721ViewModel {
         proceedRelay.asSignal()
     }
 
-    var nftRecord: EvmNftRecord {
-        service.nftRecord
+    var nftImage: NftImage? {
+        service.nftImage
+    }
+
+    var name: String {
+        service.assetShortMetadata?.displayName ?? "#\(service.nftUid.tokenId)"
     }
 
     func didTapProceed() {
