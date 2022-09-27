@@ -2,6 +2,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import MarketKit
+import ThemeKit
 
 class RestoreSettingsView {
     private let viewModel: RestoreSettingsViewModel
@@ -18,8 +19,8 @@ class RestoreSettingsView {
     }
 
     private func showBirthdayAlert(token: Token) {
-        let controller = BirthdayInputViewController(token: token, delegate: self).toAlert
-        onOpenController?(controller)
+        let controller = BirthdayInputViewController(token: token, delegate: self)
+        onOpenController?(ThemeNavigationController(rootViewController: controller))
     }
 
 }

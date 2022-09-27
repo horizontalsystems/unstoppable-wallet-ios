@@ -52,6 +52,10 @@ extension AboutViewModel {
         releaseNotesService.lastVersionUrl
     }
 
+    var twitterAccount: String {
+        service.twitterAccount
+    }
+
     func onTapGithubLink() {
         openLinkRelay.accept(service.appGitHubLink)
     }

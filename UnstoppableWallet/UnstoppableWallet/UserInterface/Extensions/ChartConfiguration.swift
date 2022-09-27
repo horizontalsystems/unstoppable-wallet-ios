@@ -38,7 +38,7 @@ extension ChartConfiguration {
     static var chartPreview: ChartConfiguration {
         let config = ChartConfiguration().applyColors()
 
-        config.mainHeight = 32
+        config.mainHeight = 25
         config.indicatorHeight = 0
         config.timelineHeight = 0
         config.curvePadding = UIEdgeInsets(top: .margin2, left: 0, bottom: 10, right: 0)
@@ -48,6 +48,12 @@ extension ChartConfiguration {
         config.showLimits = false
         config.showVerticalLines = false
         config.isInteractive = false
+
+        let clear = [UIColor.clear]
+        config.trendUpGradient = clear
+        config.trendDownGradient = clear
+        config.pressedGradient = clear
+        config.neutralGradient = clear
 
         return config
     }

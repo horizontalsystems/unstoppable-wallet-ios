@@ -1,21 +1,31 @@
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 import ThemeKit
+import ComponentKit
+import UIExtensions
 import SectionsTableView
 
 class TermsViewController: ThemeViewController {
-    private let delegate: ITermsViewDelegate
+    private let viewModel: TermsViewModel
+    private var moduleToOpen: UIViewController?
+    private let disposeBag = DisposeBag()
+
+    weak var sourceViewController: UIViewController?
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let agreeButton = PrimaryButton()
 
-    private var terms = [Term]()
+    private var viewItems = [TermsViewModel.ViewItem]()
+    private var loaded = false
 
-    init(delegate: ITermsViewDelegate) {
-        self.delegate = delegate
+    init(viewModel: TermsViewModel, sourceViewController: UIViewController?, moduleToOpen: UIViewController?) {
+        self.viewModel = viewModel
+        self.sourceViewController = sourceViewController
+        self.moduleToOpen = moduleToOpen
 
         super.init()
-
-        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -26,6 +36,8 @@ class TermsViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "terms.title".localized
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -34,110 +46,122 @@ class TermsViewController: ThemeViewController {
 
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-
-        tableView.registerCell(forClass: DescriptionCell.self)
-        tableView.registerCell(forClass: TermsSeparatorCell.self)
-        tableView.registerCell(forClass: CheckboxCell.self)
-        tableView.registerCell(forClass: TermsFooterCell.self)
-        tableView.registerCell(forClass: BrandFooterCell.self)
         tableView.sectionDataSource = self
 
-        delegate.viewDidLoad()
+        if viewModel.buttonVisible {
+            let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: .themeTyler)
+
+            view.addSubview(gradientWrapperView)
+            gradientWrapperView.snp.makeConstraints { maker in
+                maker.leading.trailing.bottom.equalToSuperview()
+            }
+
+            gradientWrapperView.addSubview(agreeButton)
+            agreeButton.snp.makeConstraints { maker in
+                maker.top.equalToSuperview().inset(CGFloat.margin32)
+                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+                maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
+            }
+
+            agreeButton.set(style: .yellow)
+            agreeButton.setTitle("terms.i_agree".localized, for: .normal)
+            agreeButton.addTarget(self, action: #selector(onTapAgree), for: .touchUpInside)
+        }
+
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] viewItems in
+            self?.viewItems = viewItems
+            self?.reloadTable()
+        }
+        subscribe(disposeBag, viewModel.buttonEnabledDriver) { [weak self] in self?.agreeButton.isEnabled = $0 }
 
         tableView.buildSections()
+        loaded = true
     }
 
-    private func checkboxRow(index: Int, text: String, checked: Bool, isLast: Bool) -> RowProtocol {
-        Row<CheckboxCell>(
-                id: "checkbox_\(index)",
-                hash: "\(checked)",
-                autoDeselect: true,
-                dynamicHeight: { containerWidth in
-                    CheckboxCell.height(containerWidth: containerWidth, text: text, backgroundStyle: .lawrence)
-                },
-                bind: { cell, _ in
-                    cell.bind(text: text, checked: checked, backgroundStyle: .lawrence, isFirst: index == 0, isLast: isLast)
-                },
-                action: { [weak self] _ in
-                    self?.delegate.onTapTerm(index: index)
-                }
-        )
+    @objc func onTapClose() {
+        dismiss(animated: true)
+    }
+
+    @objc private func onTapAgree() {
+        viewModel.onTapAgree()
+        dismiss(animated: true) { [weak self] in
+            self?.openModuleIfRequired()
+        }
+    }
+
+    private func openModuleIfRequired() {
+        if let module = moduleToOpen {
+            sourceViewController?.present(module, animated: true)
+        }
+    }
+
+    private func reloadTable() {
+        if loaded {
+            tableView.reload(animated: true)
+        }
     }
 
 }
 
 extension TermsViewController: SectionsDataSource {
 
-    func buildSections() -> [SectionProtocol] {
-        let descriptionText = "terms.description".localized
+    private func row(viewItem: TermsViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
+        let textFont: UIFont = .subhead2
+        let text = viewItem.text
 
-        return [
-            Section(
-                    id: "description",
-                    headerState: .margin(height: .margin12),
-                    rows: [
-                        Row<DescriptionCell>(
-                                id: "description",
-                                dynamicHeight: { containerWidth in
-                                    DescriptionCell.height(containerWidth: containerWidth, text: descriptionText)
-                                },
-                                bind: { cell, _ in
-                                    cell.bind(text: descriptionText)
-                                }
-                        )
-                    ]
-            ),
+        var action: (() -> ())?
+
+        if viewModel.buttonVisible {
+            action = { [weak self] in
+                self?.viewModel.onToggle(index: index)
+            }
+        }
+
+        return CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image24 { component in
+                        component.imageView.image = UIImage(named: viewItem.checked ? "checkbox_active_24" : "checkbox_diactive_24")
+                    },
+                    .text { component in
+                        component.font = textFont
+                        component.textColor = .themeLeah
+                        component.text = text
+                        component.numberOfLines = 0
+                    }
+                ]),
+                tableView: tableView,
+                id: "row-\(index)",
+                hash: "\(viewItem.checked)",
+                autoDeselect: true,
+                dynamicHeight: { width in
+                    CellBuilderNew.height(
+                            containerWidth: width,
+                            backgroundStyle: backgroundStyle,
+                            text: text,
+                            font: textFont,
+                            verticalPadding: .margin16,
+                            elements: [.fixed(width: .iconSize24), .multiline]
+                    )
+                },
+                bind: { cell in
+                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
+                },
+                action: action
+        )
+    }
+
+    func buildSections() -> [SectionProtocol] {
+        [
             Section(
                     id: "terms",
-                    headerState: .margin(height: .margin24),
-                    rows: terms.enumerated().map { index, term in
-                        checkboxRow(
-                                index: index,
-                                text: "terms.item.\(term.id)".localized,
-                                checked: term.accepted,
-                                isLast: index == terms.count - 1
-                        )
+                    headerState: .margin(height: .margin12),
+                    footerState: .margin(height: viewModel.buttonVisible ? .margin32 + .heightButton + .margin32 : .margin32),
+                    rows: viewItems.enumerated().map { index, viewItem in
+                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)
                     }
-            ),
-            Section(
-                    id: "footer",
-                    rows: [
-                        Row<TermsFooterCell>(
-                                id: "footer",
-                                dynamicHeight: { containerWidth in
-                                    TermsFooterCell.height(containerWidth: containerWidth)
-                                }
-                        )
-                    ]
-            ),
-            Section(
-                    id: "brand",
-                    headerState: .margin(height: .margin32),
-                    rows: [
-                        Row<BrandFooterCell>(
-                                id: "brand",
-                                dynamicHeight: { containerWidth in
-                                    BrandFooterCell.height(containerWidth: containerWidth, title: BrandFooterCell.brandText)
-                                },
-                                bind: { cell, _ in
-                                    cell.title = BrandFooterCell.brandText
-                                }
-                        )
-                    ]
             )
         ]
-    }
-
-}
-
-extension TermsViewController: ITermsView {
-
-    func set(terms: [Term]) {
-        self.terms = terms
-    }
-
-    func refresh() {
-        tableView.reload()
     }
 
 }

@@ -8,11 +8,7 @@ class AccountFactory {
         self.accountManager = accountManager
     }
 
-}
-
-extension AccountFactory {
-
-    var nextAccountName: String {
+    private var nextAccountName: String {
         let nonWatchAccounts = accountManager.accounts.filter { account in
             switch account.type {
             case .address: return false
@@ -25,7 +21,7 @@ extension AccountFactory {
         return "Wallet \(order)"
     }
 
-    var nextWatchAccountName: String {
+    private var nextWatchAccountName: String {
         let watchAccounts = accountManager.accounts.filter { account in
             switch account.type {
             case .address: return true
@@ -38,20 +34,24 @@ extension AccountFactory {
         return "Watch Wallet \(order)"
     }
 
-    func account(name: String, type: AccountType, origin: AccountOrigin) -> Account {
+}
+
+extension AccountFactory {
+
+    func account(type: AccountType, origin: AccountOrigin) -> Account {
         Account(
                 id: UUID().uuidString,
-                name: name,
+                name: nextAccountName,
                 type: type,
                 origin: origin,
                 backedUp: origin == .restored
         )
     }
 
-    func watchAccount(name: String, address: EthereumKit.Address, domain: String?) -> Account {
+    func watchAccount(address: EthereumKit.Address, domain: String?) -> Account {
         Account(
                 id: UUID().uuidString,
-                name: name,
+                name: domain ?? nextWatchAccountName,
                 type: .address(address: address),
                 origin: .restored,
                 backedUp: true

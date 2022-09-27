@@ -7,42 +7,20 @@ class RestoreMnemonicViewModel {
     private let service: RestoreMnemonicService
     private let disposeBag = DisposeBag()
 
+    private let possibleWordsRelay = BehaviorRelay<[String]>(value: [])
     private let invalidRangesRelay = BehaviorRelay<[NSRange]>(value: [])
-    private let proceedRelay = PublishRelay<(String, AccountType)>()
+    private let replaceWordRelay = PublishRelay<(NSRange, String)>()
+    private let proceedRelay = PublishRelay<AccountType>()
     private let showErrorRelay = PublishRelay<String>()
 
     private let mnemonicCautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let passphraseCautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let clearInputsRelay = PublishRelay<Void>()
 
-    private let regex = try! NSRegularExpression(pattern: "\\S+")
-    private var state = State(allItems: [], invalidItems: [])
+    private var cursorOffset = 0
 
     init(service: RestoreMnemonicService) {
         self.service = service
-    }
-
-    private func wordItems(text: String) -> [WordItem] {
-        let matches = regex.matches(in: text, range: NSRange(location: 0, length: (text as NSString).length))
-
-        return matches.compactMap { match in
-            guard let range = Range(match.range, in: text) else {
-                return nil
-            }
-
-            let word = String(text[range]).lowercased()
-
-            return WordItem(word: word, range: match.range)
-        }
-    }
-
-    private func syncState(text: String) {
-        let allItems = wordItems(text: text)
-        let invalidItems = allItems.filter { item in
-            !service.doesWordExist(word: item.word)
-        }
-
-        state = State(allItems: allItems, invalidItems: invalidItems)
     }
 
     private func clearInputs() {
@@ -58,23 +36,31 @@ class RestoreMnemonicViewModel {
         }
     }
 
-    func validatePassphrase(text: String?) -> Bool {
-        let validated = service.validate(text: text)
-        if !validated {
-            passphraseCautionRelay.accept(Caution(text: "create_wallet.error.forbidden_symbols".localized, type: .warning))
-        }
-        return validated
+    private func hasCursor(item: RestoreMnemonicService.WordItem) -> Bool {
+        cursorOffset >= item.range.lowerBound && cursorOffset <= item.range.upperBound
+    }
+
+    private var cursorItem: RestoreMnemonicService.WordItem? {
+        service.items.first { hasCursor(item: $0) }
     }
 
 }
 
 extension RestoreMnemonicViewModel {
 
+    var possibleWordsDriver: Driver<[String]> {
+        possibleWordsRelay.asDriver()
+    }
+
     var invalidRangesDriver: Driver<[NSRange]> {
         invalidRangesRelay.asDriver()
     }
 
-    var proceedSignal: Signal<(String, AccountType)> {
+    var replaceWordSignal: Signal<(NSRange, String)> {
+        replaceWordRelay.asSignal()
+    }
+
+    var proceedSignal: Signal<AccountType> {
         proceedRelay.asSignal()
     }
 
@@ -94,25 +80,41 @@ extension RestoreMnemonicViewModel {
         clearInputsRelay.asSignal()
     }
 
-    var namePlaceholder: String {
-        service.defaultName
+    var showErrorSignal: Signal<String> {
+        showErrorRelay.asSignal()
     }
 
-    func onChange(name: String?) {
-        service.set(name: name ?? "")
-    }
+    func onChange(text: String, cursorOffset: Int, language: String?) {
+        self.cursorOffset = cursorOffset
+        service.set(language: language)
+        service.syncItems(text: text)
 
-    func onChange(text: String, cursorOffset: Int) {
-        syncState(text: text)
         mnemonicCautionRelay.accept(nil)
 
-        let nonCursorInvalidItems = state.invalidItems.filter { item in
-            let hasCursor = cursorOffset >= item.range.lowerBound && cursorOffset <= item.range.upperBound
-
-            return !hasCursor || !service.doesWordPartiallyExist(word: item.word)
+        let nonCursorInvalidItems = service.items.filter { item in
+            switch item.type {
+            case .correct: return false
+            case .incorrect: return true
+            case .correctPrefix: return !hasCursor(item: item)
+            }
         }
 
         invalidRangesRelay.accept(nonCursorInvalidItems.map { $0.range })
+
+        if let cursorItem = cursorItem {
+            let possibleWords = service.possibleWords(string: cursorItem.word)
+            possibleWordsRelay.accept(possibleWords)
+        } else {
+            possibleWordsRelay.accept([])
+        }
+    }
+
+    func onSelect(word: String) {
+        guard let cursorItem = cursorItem else {
+            return
+        }
+
+        replaceWordRelay.accept((cursorItem.range, word))
     }
 
     func onTogglePassphrase(isOn: Bool) {
@@ -129,15 +131,15 @@ extension RestoreMnemonicViewModel {
         mnemonicCautionRelay.accept(nil)
         passphraseCautionRelay.accept(nil)
 
-        guard state.invalidItems.isEmpty else {
-            invalidRangesRelay.accept(state.invalidItems.map { $0.range })
+        guard service.items.allSatisfy({ $0.type == .correct }) else {
+            invalidRangesRelay.accept(service.items.filter { $0.type != .correct }.map { $0.range })
             return
         }
 
         do {
-            let accountType = try service.accountType(words: state.allItems.map { $0.word })
+            let accountType = try service.accountType(words: service.items.map { $0.word })
 
-            proceedRelay.accept((service.resolvedName, accountType))
+            proceedRelay.accept(accountType)
         } catch {
             if case RestoreMnemonicService.ErrorList.errors(let errors) = error {
                 errors.forEach { error in
@@ -152,24 +154,6 @@ extension RestoreMnemonicViewModel {
 
             }
         }
-    }
-
-    var showErrorSignal: Signal<String> {
-        showErrorRelay.asSignal()
-    }
-
-}
-
-extension RestoreMnemonicViewModel {
-
-    private struct WordItem {
-        let word: String
-        let range: NSRange
-    }
-
-    private struct State {
-        let allItems: [WordItem]
-        let invalidItems: [WordItem]
     }
 
 }

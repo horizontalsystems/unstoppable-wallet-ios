@@ -34,6 +34,12 @@ struct SendEvmData {
 
     struct SendInfo {
         let domain: String?
+        let assetShortMetadata: NftAssetShortMetadata?
+
+        init(domain: String?, assetShortMetadata: NftAssetShortMetadata? = nil) {
+            self.domain = domain
+            self.assetShortMetadata = assetShortMetadata
+        }
     }
 
     struct DAppInfo {

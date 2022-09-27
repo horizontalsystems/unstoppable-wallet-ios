@@ -59,25 +59,38 @@ class WalletCoinPriceService {
         )
     }
 
+    private func filteredIds(tokens: [Token]) -> Set<String> {
+        var uids = Set<String>()
+
+        for token in tokens {
+            if !token.isCustom {
+                uids.insert(token.coin.uid)
+            }
+        }
+
+        return uids
+    }
+
 }
 
 extension WalletCoinPriceService {
 
-    func set(coinUids: Set<String>) {
-        guard self.coinUids != coinUids else {
+    func set(tokens: Set<Token>) {
+        let filteredIds = filteredIds(tokens: Array(tokens))
+        guard coinUids != filteredIds else {
             return
         }
 
-        self.coinUids = coinUids
+        coinUids = filteredIds
         subscribeToCoinPrices()
     }
 
-    func itemMap(coinUids: [String]) -> [String: Item] {
-        marketKit.coinPriceMap(coinUids: coinUids, currencyCode: currency.code).mapValues { item(coinPrice: $0) }
+    func itemMap(tokens: [Token]) -> [String: Item] {
+        return marketKit.coinPriceMap(coinUids: Array(filteredIds(tokens: tokens)), currencyCode: currency.code).mapValues { item(coinPrice: $0) }
     }
 
-    func item(coinUid: String) -> Item? {
-        marketKit.coinPrice(coinUid: coinUid, currencyCode: currency.code).map { item(coinPrice: $0) }
+    func item(token: Token) -> Item? {
+        marketKit.coinPrice(coinUid: token.coin.uid, currencyCode: currency.code).map { item(coinPrice: $0) }
     }
 
     func refresh() {

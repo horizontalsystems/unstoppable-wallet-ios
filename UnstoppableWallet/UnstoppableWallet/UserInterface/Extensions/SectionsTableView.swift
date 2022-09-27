@@ -24,16 +24,30 @@ extension SectionsTableView {
         )
     }
 
-    func highlightedDescriptionRow(id: String, text: String) -> RowProtocol {
+    func highlightedDescriptionRow(id: String, text: String, ignoreBottomMargin: Bool = false) -> RowProtocol {
         registerCell(forClass: HighlightedDescriptionCell.self)
 
         return Row<HighlightedDescriptionCell>(
                 id: id,
                 dynamicHeight: { width in
-                    HighlightedDescriptionCell.height(containerWidth: width, text: text)
+                    HighlightedDescriptionCell.height(containerWidth: width, text: text, ignoreBottomMargin: ignoreBottomMargin)
                 },
                 bind: { cell, _ in
                     cell.descriptionText = text
+                }
+        )
+    }
+
+    func descriptionRow(id: String, text: String, ignoreBottomMargin: Bool = false) -> RowProtocol {
+        registerCell(forClass: DescriptionCell.self)
+
+        return Row<DescriptionCell>(
+                id: id,
+                dynamicHeight: { width in
+                    DescriptionCell.height(containerWidth: width, text: text, ignoreBottomMargin: ignoreBottomMargin)
+                },
+                bind: { cell, _ in
+                    cell.bind(text: text)
                 }
         )
     }
@@ -81,27 +95,50 @@ extension SectionsTableView {
         )
     }
 
-    func imageTitleArrowRow(id: String, image: String, title: String, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: @escaping () -> ()) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image20, .text, .image20],
+    func imageTitleRow(id: String, image: UIImage?, title: String, color: UIColor = .themeLeah, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: @escaping () -> ()) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image20 { component in
+                        component.imageView.image = image?.withTintColor(color)
+                    },
+                    .text { component in
+                        component.font = .body
+                        component.textColor = color
+                        component.text = title
+                    }
+                ]),
                 tableView: self,
                 id: id,
                 height: .heightCell48,
                 autoDeselect: autoDeselect,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                },
+                action: action
+        )
+    }
 
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: image)
-                    }
-                    cell.bind(index: 1) { (component: TextComponent) in
+    func imageTitleArrowRow(id: String, image: UIImage?, title: String, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: @escaping () -> ()) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image20 { component in
+                        component.imageView.image = image?.withTintColor(.themeGray)
+                    },
+                    .text { component in
                         component.font = .body
                         component.textColor = .themeLeah
                         component.text = title
-                    }
-                    cell.bind(index: 2) { (component: ImageComponent) in
+                    },
+                    .image20 { component in
                         component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
                     }
+                ]),
+                tableView: self,
+                id: id,
+                height: .heightCell48,
+                autoDeselect: autoDeselect,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                 },
                 action: action
         )
@@ -183,7 +220,7 @@ extension SectionsTableView {
         )
     }
 
-    func grayTitleWithLeahValueRow(id: String, title: String, value: String, isFirst: Bool = false, isLast: Bool = false) -> RowProtocol {
+    func grayTitleWithValueRow(id: String, hash: String? = nil, title: String, value: String, valueColor: UIColor = .themeLeah, isFirst: Bool = false, isLast: Bool = false) -> RowProtocol {
         CellBuilderNew.row(
                 rootElement: .hStack([
                     .text { component in
@@ -193,12 +230,13 @@ extension SectionsTableView {
                     },
                     .text { component in
                         component.font = .subhead1
-                        component.textColor = .themeLeah
+                        component.textColor = valueColor
                         component.text = value
                     }
                 ]),
                 tableView: self,
                 id: id,
+                hash: hash,
                 height: .heightCell48,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)

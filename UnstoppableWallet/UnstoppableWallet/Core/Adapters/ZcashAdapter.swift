@@ -7,10 +7,6 @@ import HsToolKit
 import MarketKit
 
 class ZcashAdapter {
-    private let saplingDownloadRange: Double = 10
-    private let blockDownloadRange: Double = 50
-    private let blockScanningRange: Double = 40
-
     private let disposeBag = DisposeBag()
 
     var fee: Decimal { defaultFee() }
@@ -33,15 +29,19 @@ class ZcashAdapter {
 
     private let birthday: BlockHeight
 
-    private var lastBlockHeight: Int? = 0
+    private var lastBlockHeight: Int = 0
 
-    private(set) var balanceState: AdapterState {
+    private var state: ZCashAdapterState {
         didSet {
-            transactionState = balanceState
             balanceStateSubject.onNext(balanceState)
+            syncing = balanceState.syncing
         }
     }
-    private(set) var transactionState: AdapterState
+
+    var balanceState: AdapterState {
+        state.adapterState
+    }
+    private(set) var syncing: Bool = true
 
     private func defaultFee(height: Int? = nil) -> Decimal {
         let fee: Zatoshi
@@ -87,7 +87,7 @@ class ZcashAdapter {
         let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId, network: network),
                 dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId, network: network),
                 pendingDbURL: try! ZcashAdapter.pendingDbURL(uniqueId: uniqueId, network: network),
-                endpoint: LightWalletEndpoint(address: endPoint, port: 9067),
+                endpoint: LightWalletEndpoint(address: endPoint, port: 9067, singleCallTimeoutInMillis: 1000000, streamingCallTimeoutInMillis: 1000000),
                 network: network,
                 spendParamsURL: try! ZcashAdapter.spendParamsURL(uniqueId: uniqueId),
                 outputParamsURL: try! ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
@@ -107,8 +107,7 @@ class ZcashAdapter {
         transactionPool = ZcashTransactionPool(receiveAddress: address.zAddress)
         transactionPool.store(confirmedTransactions: synchronizer.clearedTransactions, pendingTransactions: synchronizer.pendingTransactions)
 
-        balanceState = .syncing(progress: 0, lastBlockDate: nil)
-        transactionState = balanceState
+        state = .downloadingBlocks(number: 0, lastBlock: lastBlockHeight)
 //        lastBlockHeight = try? synchronizer.latestHeight()
 
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -150,7 +149,7 @@ class ZcashAdapter {
         switch state {
         case .idle: sync()
         case .inProgress(let progress):
-            balanceState = .syncing(progress: Int(progress * saplingDownloadRange), lastBlockDate: nil)
+            self.state = .downloadingSapling(progress: Int(progress * 100))
         }
     }
 
@@ -161,7 +160,7 @@ class ZcashAdapter {
     }
 
     @objc private func statusUpdated(_ notification: Notification) {
-        var newState = balanceState
+        var newState = state
         var blockDate: Date? = nil
         if let blockTime = notification.userInfo?[SDKSynchronizer.NotificationKeys.blockDate] as? Date {
             blockDate = blockTime
@@ -171,23 +170,23 @@ class ZcashAdapter {
         case .stopped: newState = .notSynced(error: AppError.unknownError)
         case .synced: newState = .synced
         case .downloading(let p):
-            newState = .syncing(progress: Int(saplingDownloadRange + progress(p: p) * blockDownloadRange), lastBlockDate: blockDate)
+            newState = .downloadingBlocks(number: p.progressHeight, lastBlock: p.targetHeight)
         case .enhancing(let p):
-            newState = .syncing(progress: p.progress, lastBlockDate: blockDate)
+            newState = .enhancingTransactions(number: p.enhancedTransactions, count: p.totalTransactions)
         case .unprepared:
             newState = .notSynced(error: AppError.unknownError)
         case .validating:
             newState = .syncing(progress: 0, lastBlockDate: blockDate)
-        case .scanning(let scanProgress):
-            newState = .syncing(progress: Int((saplingDownloadRange + blockDownloadRange) + progress(p: scanProgress) * blockScanningRange), lastBlockDate: blockDate)
+        case .scanning(let p):
+            newState = .scanningBlocks(number: p.progressHeight, lastBlock: p.targetHeight)
         case .fetching:
             newState = .syncing(progress: 0, lastBlockDate: nil)
         case .error:
             newState = .notSynced(error: AppError.unknownError)
         }
 
-        if newState != balanceState {
-            balanceState = newState
+        if newState != state {
+            state = newState
         }
     }
 
@@ -423,7 +422,7 @@ extension ZcashAdapter: IAdapter {
             fixPendingTransactionsIfNeeded()
             try synchronizer.start(retry: retry)
         } catch {
-            balanceState = .notSynced(error: error)
+            state = .notSynced(error: error)
         }
     }
 
@@ -453,10 +452,10 @@ extension ZcashAdapter: IAdapter {
 extension ZcashAdapter: ITransactionsAdapter {
 
     var lastBlockInfo: LastBlockInfo? {
-        lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
+        LastBlockInfo(height: lastBlockHeight, timestamp: nil)
     }
 
-    var transactionStateUpdatedObservable: Observable<Void> {
+    var syncingObservable: Observable<Void> {
         balanceStateSubject.map { _ in () }
     }
 
@@ -630,5 +629,45 @@ extension EnhancementProgress {
             return 0
         }
         return Int(Double(self.enhancedTransactions)/Double(self.totalTransactions)) * 100
+    }
+}
+
+enum ZCashAdapterState: Equatable {
+    case synced
+    case syncing(progress: Int?, lastBlockDate: Date?)
+    case downloadingSapling(progress: Int)
+    case downloadingBlocks(number: Int, lastBlock: Int)
+    case scanningBlocks(number: Int, lastBlock: Int)
+    case enhancingTransactions(number: Int, count: Int)
+    case notSynced(error: Error)
+
+    public static func ==(lhs: ZCashAdapterState, rhs: ZCashAdapterState) -> Bool {
+        switch (lhs, rhs) {
+        case (.synced, .synced): return true
+        case (.syncing(let lProgress, let lLastBlockDate), .syncing(let rProgress, let rLastBlockDate)): return lProgress == rProgress && lLastBlockDate == rLastBlockDate
+        case (.downloadingSapling(let lProgress), .downloadingSapling(let rProgress)): return lProgress == rProgress
+        case (.downloadingBlocks(let lNumber, let lLast), .downloadingBlocks(let rNumber, let rLast)): return lNumber == rNumber && lLast == rLast
+        case (.scanningBlocks(let lNumber, let lLast), .scanningBlocks(let rNumber, let rLast)): return lNumber == rNumber && lLast == rLast
+        case (.enhancingTransactions(let lNumber, let lCount), .enhancingTransactions(let rNumber, let rCount)): return lNumber == rNumber && lCount == rCount
+        case (.notSynced, .notSynced): return true
+        default: return false
+        }
+    }
+
+    var adapterState: AdapterState {
+        switch self {
+        case .synced: return .synced
+        case .syncing(let progress, let lastDate): return .syncing(progress: progress, lastBlockDate: lastDate)
+        case .downloadingSapling(let progress):
+            return .customSyncing(main: "Downloading Sapling... \(progress)%", secondary: nil, progress: progress)
+        case .downloadingBlocks(let number, let lastBlock):
+            return .customSyncing(main: "Downloading Blocks", secondary: "\(number)/\(lastBlock)", progress: nil)
+        case .scanningBlocks(let number, let lastBlock):
+            return .customSyncing(main: "Scanning Blocks", secondary: "\(number)/\(lastBlock)", progress: nil)
+        case .enhancingTransactions(let number, let count):
+            let progress: String? = count == 0 ? nil : "\(number)/\(count)"
+            return .customSyncing(main: "Enhancing Transactions", secondary: progress, progress: nil)
+        case .notSynced(let error): return .notSynced(error: error)
+        }
     }
 }

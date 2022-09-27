@@ -18,13 +18,12 @@ class RestoreSelectService {
         .binanceChain,
     ]
 
-    private let accountName: String
     private let accountType: AccountType
     private let accountFactory: AccountFactory
     private let accountManager: AccountManager
     private let walletManager: WalletManager
+    private let evmAccountRestoreStateManager: EvmAccountRestoreStateManager
     private let marketKit: MarketKit.Kit
-    private let evmBlockchainManager: EvmBlockchainManager
     private let enableCoinService: EnableCoinService
     private let disposeBag = DisposeBag()
 
@@ -43,14 +42,13 @@ class RestoreSelectService {
         }
     }
 
-    init(accountName: String, accountType: AccountType, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmBlockchainManager: EvmBlockchainManager, enableCoinService: EnableCoinService) {
-        self.accountName = accountName
+    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, evmAccountRestoreStateManager: EvmAccountRestoreStateManager, marketKit: MarketKit.Kit, enableCoinService: EnableCoinService) {
         self.accountType = accountType
         self.accountFactory = accountFactory
         self.accountManager = accountManager
         self.walletManager = walletManager
+        self.evmAccountRestoreStateManager = evmAccountRestoreStateManager
         self.marketKit = marketKit
-        self.evmBlockchainManager = evmBlockchainManager
         self.enableCoinService = enableCoinService
 
         subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredTokens, restoreSettings in
@@ -202,23 +200,19 @@ extension RestoreSelectService {
     }
 
     func restore() {
-        let account = accountFactory.account(name: accountName, type: accountType, origin: .restored)
+        let account = accountFactory.account(type: accountType, origin: .restored)
         accountManager.save(account: account)
 
         for (token, settings) in restoreSettingsMap {
             enableCoinService.save(restoreSettings: settings, account: account, blockchainType: token.blockchainType)
         }
 
-        for item in items {
-            guard item.enabled else {
-                continue
-            }
-
-            evmBlockchainManager.markAutoEnable(blockchainType: item.blockchain.type, account: account)
-        }
-
         guard !enabledConfiguredTokens.isEmpty else {
             return
+        }
+
+        for configuredToken in enabledConfiguredTokens {
+            evmAccountRestoreStateManager.setRestored(account: account, blockchainType: configuredToken.token.blockchainType)
         }
 
         let wallets = enabledConfiguredTokens.map { Wallet(configuredToken: $0, account: account) }

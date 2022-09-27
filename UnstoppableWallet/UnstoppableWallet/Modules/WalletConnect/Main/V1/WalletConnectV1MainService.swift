@@ -19,9 +19,9 @@ class WalletConnectV1MainService {
     private var sessionData: SessionData?
 
     private let allowedBlockchainsRelay = PublishRelay<[WalletConnectMainModule.BlockchainItem]>()
-    private(set) var blockchains = Set<WalletConnectMainModule.BlockchainItem>() {
+    private var blockchainItems = [WalletConnectMainModule.BlockchainItem]() {
         didSet {
-            allowedBlockchainsRelay.accept(allowedBlockchains)
+            allowedBlockchainsRelay.accept(blockchainItems)
         }
     }
 
@@ -50,7 +50,7 @@ class WalletConnectV1MainService {
         return connectionState(state: interactor.state)
     }
 
-    init(session: WalletConnectSession? = nil, uri: String? = nil, manager: WalletConnectManager, sessionManager: WalletConnectSessionManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager) {
+    init(session: WalletConnectSession? = nil, uri: String? = nil, manager: WalletConnectManager, sessionManager: WalletConnectSessionManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager) throws {
         self.manager = manager
         self.sessionManager = sessionManager
         self.reachabilityManager = reachabilityManager
@@ -61,13 +61,9 @@ class WalletConnectV1MainService {
             restore(session: session)
         }
         if let uri = uri {
-            do {
-                try connect(uri: uri)
+            try connect(uri: uri)
 
-                state = .idle
-            } catch {
-                state = .invalid(error: error)
-            }
+            state = .idle
         }
 
         reachabilityManager.reachabilityObservable
@@ -94,18 +90,35 @@ class WalletConnectV1MainService {
         }
     }
 
-    private func initSession(peerId: String, peerMeta: WCPeerMeta, chainId: Int) throws {
+    private func syncSession(peerId: String, peerMeta: WCPeerMeta, chainId: Int) throws {
         guard let account = manager.activeAccount else {
             throw WalletConnectMainModule.SessionError.noSuitableAccount
         }
 
-        guard let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
+        guard let currentBlockchain = evmBlockchainManager.blockchain(chainId: chainId),
               let evmKitWrapper = manager.evmKitWrapper(chainId: chainId, account: account) else {
             throw WalletConnectMainModule.SessionError.noAnySupportedChainId
         }
 
-        blockchains.insert(WalletConnectMainModule.BlockchainItem(namespace: "eip155", chainId: chainId, blockchain: blockchain, address: evmKitWrapper.evmKit.address.eip55, selected: true))
+        let address = evmKitWrapper.evmKit.address.eip55
+
+        blockchainItems = evmBlockchainManager.allBlockchains
+                .sorted(by: { $0.type.order < $1.type.order })
+                .map { blockchain in
+                    WalletConnectMainModule.BlockchainItem(
+                            namespace: "eip155",
+                            chainId: evmBlockchainManager.chain(blockchainType: blockchain.type).id,
+                            blockchain: blockchain,
+                            address: address,
+                            selected: blockchain == currentBlockchain
+                    )
+                }
+
         sessionData = SessionData(peerId: peerId, chainId: chainId, peerMeta: peerMeta, account: account, evmKitWrapper: evmKitWrapper)
+    }
+
+    private func initSession(peerId: String, peerMeta: WCPeerMeta, chainId: Int) throws {
+        try syncSession(peerId: peerId, peerMeta: peerMeta, chainId: chainId)
     }
 
     private func handleRequest(id: Int, requestResolver: () throws -> WalletConnectRequest) {
@@ -146,10 +159,9 @@ extension WalletConnectV1MainService: IWalletConnectMainService {
     var stateObservable: Observable<WalletConnectMainModule.State> {
         stateRelay.asObservable()
     }
+
     var allowedBlockchains: [WalletConnectMainModule.BlockchainItem] {
-        blockchains.sorted { blockchain, blockchain2 in
-            blockchain.chainId < blockchain2.chainId
-        }
+        blockchainItems
     }
 
     var allowedBlockchainsObservable: Observable<[WalletConnectMainModule.BlockchainItem]> {
@@ -188,7 +200,7 @@ extension WalletConnectV1MainService: IWalletConnectMainService {
         switch connectionState {
         case .disconnected:
             if state == .waitingForApproveSession || state == .ready {
-                return "wallet_connect.no_connection"
+                return "wallet_connect.no_connection".localized
             }
         case .connecting: return nil
         case .connected: ()
@@ -198,17 +210,24 @@ extension WalletConnectV1MainService: IWalletConnectMainService {
         case .invalid(let error):
             return error.smartDescription
         case .waitingForApproveSession:
-            return "wallet_connect.connect_description"
+            return "wallet_connect.connect_description".localized
         case .ready:
-            return "wallet_connect.usage_description"
+            return "wallet_connect.usage_description".localized
         default:
             return nil
         }
     }
 
+    func select(chainId: Int) {
+        guard let sessionData = sessionData else {
+            return
+        }
 
-    var evmKitWrapper: EvmKitWrapper? {
-        sessionData?.evmKitWrapper
+        do {
+            try syncSession(peerId: sessionData.peerId, peerMeta: sessionData.peerMeta, chainId: chainId)
+        } catch {
+            print(error)
+        }
     }
 
     func toggle(chainId: Int) {

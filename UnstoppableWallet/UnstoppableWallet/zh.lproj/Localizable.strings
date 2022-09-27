@@ -1052,7 +1052,6 @@
 "wallet_connect.address" = "地址";
 "wallet_connect.network" = "网络";
 "wallet_connect.address" = "地址";
-"wallet_connect.network" = "网络";
 "wallet_connect.main.no_any_supported_chains" = "没有任何支持的链！";
 "wallet_connect.main.unsupported_chains" = "一些链是不支持的！";
 "wallet_connect.connect_description" = "点击批准，表示您允许此应用查看您的公开地址。这是保护您的数据免受潜在钓鱼风险威胁的重要安全步骤。";

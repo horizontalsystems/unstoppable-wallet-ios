@@ -7,100 +7,107 @@ class TransactionInfoService {
     private let disposeBag = DisposeBag()
 
     private let adapter: ITransactionsAdapter
-    private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
+    private let rateService: HistoricalRateService
+    private let nftMetadataService: NftMetadataService
 
-    private var rates = [Coin: CurrencyValue]()
     private var transactionRecord: TransactionRecord
+    private var rates = [RateKey: CurrencyValue]()
+    private var nftMetadata = [NftUid: NftAssetBriefMetadata]()
 
-    private let transactionInfoItemSubject = PublishSubject<TransactionInfoItem>()
+    private let transactionInfoItemSubject = PublishSubject<Item>()
 
-    init(transactionRecord: TransactionRecord, adapter: ITransactionsAdapter, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(transactionRecord: TransactionRecord, adapter: ITransactionsAdapter, currencyKit: CurrencyKit.Kit, rateService: HistoricalRateService, nftMetadataService: NftMetadataService) {
         self.transactionRecord = transactionRecord
         self.adapter = adapter
-        self.marketKit = marketKit
         self.currencyKit = currencyKit
+        self.rateService = rateService
+        self.nftMetadataService = nftMetadataService
 
         subscribe(disposeBag, adapter.transactionsObservable(token: nil, filter: .all)) { [weak self] in self?.sync(transactionRecords: $0) }
-        subscribe(disposeBag, adapter.lastBlockUpdatedObservable) { [weak self] in self?.syncLastBlockUpdated() }
+        subscribe(disposeBag, adapter.lastBlockUpdatedObservable) { [weak self] in self?.syncItem() }
+        subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
+        subscribe(disposeBag, nftMetadataService.assetsBriefMetadataObservable) { [weak self] in self?.handle(assetsBriefMetadata: $0) }
 
         fetchRates()
+        fetchNftMetadata()
     }
 
-    private var coinsForRates: [Coin] {
-        var coins = [Coin?]()
+    private var tokenForRates: [Token] {
+        var tokens = [Token?]()
 
         switch transactionRecord {
-        case let tx as EvmIncomingTransactionRecord: coins.append(tx.value.coin)
-        case let tx as EvmOutgoingTransactionRecord: coins.append(tx.value.coin)
+        case let tx as EvmIncomingTransactionRecord: tokens.append(tx.value.token)
+        case let tx as EvmOutgoingTransactionRecord: tokens.append(tx.value.token)
         case let tx as SwapTransactionRecord:
-            coins.append(tx.valueIn.coin)
-            tx.valueOut.flatMap { coins.append($0.coin) }
+            tokens.append(tx.valueIn.token)
+            tx.valueOut.flatMap { tokens.append($0.token) }
 
         case let tx as UnknownSwapTransactionRecord:
-            tx.valueIn.flatMap { coins.append($0.coin) }
-            tx.valueOut.flatMap { coins.append($0.coin) }
+            tx.valueIn.flatMap { tokens.append($0.token) }
+            tx.valueOut.flatMap { tokens.append($0.token) }
 
-        case let tx as ApproveTransactionRecord: coins.append(tx.value.coin)
+        case let tx as ApproveTransactionRecord: tokens.append(tx.value.token)
         case let tx as ContractCallTransactionRecord:
-            coins.append(contentsOf: tx.incomingEvents.map({ $0.value.coin }))
-            coins.append(contentsOf: tx.outgoingEvents.map({ $0.value.coin }))
+            tokens.append(contentsOf: tx.incomingEvents.map({ $0.value.token }))
+            tokens.append(contentsOf: tx.outgoingEvents.map({ $0.value.token }))
 
         case let tx as ExternalContractCallTransactionRecord:
-            coins.append(contentsOf: tx.incomingEvents.map({ $0.value.coin }))
-            coins.append(contentsOf: tx.outgoingEvents.map({ $0.value.coin }))
+            tokens.append(contentsOf: tx.incomingEvents.map({ $0.value.token }))
+            tokens.append(contentsOf: tx.outgoingEvents.map({ $0.value.token }))
 
-        case let tx as BitcoinIncomingTransactionRecord: coins.append(tx.value.coin)
+        case let tx as BitcoinIncomingTransactionRecord: tokens.append(tx.value.token)
         case let tx as BitcoinOutgoingTransactionRecord:
-            tx.fee.flatMap { coins.append($0.coin) }
-            coins.append(tx.value.coin)
+            tx.fee.flatMap { tokens.append($0.token) }
+            tokens.append(tx.value.token)
 
-        case let tx as BinanceChainIncomingTransactionRecord: coins.append(tx.value.coin)
+        case let tx as BinanceChainIncomingTransactionRecord: tokens.append(tx.value.token)
         case let tx as BinanceChainOutgoingTransactionRecord:
-            coins.append(tx.fee.coin)
-            coins.append(tx.value.coin)
+            tokens.append(tx.fee.token)
+            tokens.append(tx.value.token)
 
         default: ()
         }
 
         if let evmTransaction = transactionRecord as? EvmTransactionRecord, evmTransaction.ownTransaction, let fee = evmTransaction.fee {
-            coins.append(fee.coin)
+            tokens.append(fee.token)
         }
 
-        return Array(Set(coins.compactMap({ $0 })))
+        return Array(Set(tokens.compactMap({ $0 })))
     }
 
     private func fetchRates() {
-        let baseCurrency = currencyKit.baseCurrency
-
-        let singles: [Single<(coin: Coin, currencyValue: CurrencyValue)>] = coinsForRates.map { coin in
-            let coinUid = coin.uid
-            let currencyCode = baseCurrency.code
-            let timestamp = transactionRecord.date.timeIntervalSince1970
-
-            let single: Single<Decimal>
-
-            if let rate = marketKit.coinHistoricalPriceValue(coinUid: coinUid, currencyCode: currencyCode, timestamp: timestamp) {
-                single = Single.just(rate)
+        tokenForRates.forEach { token in
+            let rateKey = RateKey(token: token, date: transactionRecord.date)
+            if let currencyValue = rateService.rate(key: rateKey) {
+                rates[rateKey] = currencyValue
             } else {
-                single = marketKit.coinHistoricalPriceValueSingle(coinUid: coinUid, currencyCode: currencyCode, timestamp: timestamp)
-            }
-
-            return single.map {
-                (coin: coin, currencyValue: CurrencyValue(currency: baseCurrency, value: $0))
+                rateService.fetchRate(key: rateKey)
             }
         }
 
-        Single.zip(singles)
-                .subscribe { [weak self] (rates: [(coin: Coin, currencyValue: CurrencyValue)]) in
-                    var ratesMap = [Coin: CurrencyValue]()
-                    for rate in rates {
-                        ratesMap[rate.coin] = rate.currencyValue
-                    }
+        syncItem()
+    }
 
-                    self?.updateRates(rates: ratesMap)
-                }
-                .disposed(by: disposeBag)
+    private func fetchNftMetadata() {
+        let nftUids = transactionRecord.nftUids
+        let assetsBriefMetadata = nftMetadataService.assetsBriefMetadata(nftUids: nftUids)
+
+        nftMetadata = assetsBriefMetadata
+
+        if !nftUids.subtracting(Set(assetsBriefMetadata.keys)).isEmpty {
+            nftMetadataService.fetch(nftUids: nftUids)
+        }
+    }
+
+    private func handle(rate: (RateKey, CurrencyValue)) {
+        rates[rate.0] = rate.1
+        syncItem()
+    }
+
+    private func handle(assetsBriefMetadata: [NftUid: NftAssetBriefMetadata]) {
+        nftMetadata = assetsBriefMetadata
+        syncItem()
     }
 
     private func sync(transactionRecords: [TransactionRecord]) {
@@ -112,12 +119,7 @@ class TransactionInfoService {
         transactionInfoItemSubject.onNext(item)
     }
 
-    private func syncLastBlockUpdated() {
-        transactionInfoItemSubject.onNext(item)
-    }
-
-    private func updateRates(rates: [Coin: CurrencyValue]) {
-        self.rates = rates
+    private func syncItem() {
         transactionInfoItemSubject.onNext(item)
     }
 
@@ -125,22 +127,36 @@ class TransactionInfoService {
 
 extension TransactionInfoService {
 
-    var item: TransactionInfoItem {
-        TransactionInfoItem(
+    var item: Item {
+        Item(
                 record: transactionRecord,
                 lastBlockInfo: adapter.lastBlockInfo,
-                rates: rates,
+                rates: Dictionary(uniqueKeysWithValues: rates.map { key, value in (key.token.coin, value) }),
+                nftMetadata: nftMetadata,
                 explorerTitle: adapter.explorerTitle,
                 explorerUrl: adapter.explorerUrl(transactionHash: transactionRecord.transactionHash)
         )
     }
 
-    var transactionItemUpdatedObserver: Observable<TransactionInfoItem> {
+    var transactionItemUpdatedObserver: Observable<Item> {
         transactionInfoItemSubject.asObservable()
     }
 
     func rawTransaction() -> String? {
         adapter.rawTransaction(hash: transactionRecord.transactionHash)
+    }
+
+}
+
+extension TransactionInfoService {
+
+    struct Item {
+        let record: TransactionRecord
+        let lastBlockInfo: LastBlockInfo?
+        let rates: [Coin: CurrencyValue]
+        let nftMetadata: [NftUid: NftAssetBriefMetadata]
+        let explorerTitle: String
+        let explorerUrl: String?
     }
 
 }

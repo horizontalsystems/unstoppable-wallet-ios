@@ -4,9 +4,9 @@ import MarketKit
 
 struct NftAssetModule {
 
-    static func viewController(collectionUid: String, contractAddress: String, tokenId: String, imageRatio: CGFloat) -> UIViewController {
-        let overviewController = NftAssetOverviewModule.viewController(collectionUid: collectionUid, contractAddress: contractAddress, tokenId: tokenId, imageRatio: imageRatio)
-        let activityController = NftActivityModule.viewController(eventListType: .asset(contractAddress: contractAddress, tokenId: tokenId), defaultEventType: nil)
+    static func viewController(providerCollectionUid: String, nftUid: NftUid) -> UIViewController {
+        let overviewController = NftAssetOverviewModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
+        let activityController = NftActivityModule.viewController(eventListType: .asset(nftUid: nftUid), defaultEventType: nil)
 
         return NftAssetViewController(
                 overviewController: overviewController,

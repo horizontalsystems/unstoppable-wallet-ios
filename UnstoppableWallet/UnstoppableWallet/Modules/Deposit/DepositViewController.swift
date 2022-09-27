@@ -24,7 +24,7 @@ class DepositViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "deposit.receive_coin".localized(viewModel.coin.code)
+        title = viewModel.watchAccount ? "deposit.address".localized : "deposit.receive_coin".localized(viewModel.coin.code)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
         let imageView = UIImageView()
@@ -105,7 +105,7 @@ class DepositViewController: ThemeViewController {
         addressTitleLabel.font = .subhead2
         addressTitleLabel.textColor = viewModel.isMainNet ? .themeGray : .themeLucian
 
-        var addressTitle = "deposit.your_address".localized
+        var addressTitle = viewModel.watchAccount ? "deposit.address".localized : "deposit.your_address".localized
 
         if let additionalInfo = viewModel.additionalInfo {
             addressTitle += " (\(additionalInfo))"

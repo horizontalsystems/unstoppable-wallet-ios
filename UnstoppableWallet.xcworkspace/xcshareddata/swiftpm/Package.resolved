@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "collectionviewcenteredflowlayout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Coeur/CollectionViewCenteredFlowLayout",
+      "state" : {
+        "revision" : "420df83f1586ae2a1fb1bdd36870b9ea50a9fab4",
+        "version" : "1.0.4"
+      }
+    },
+    {
       "identity" : "deepdiff",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onmyway133/DeepDiff",

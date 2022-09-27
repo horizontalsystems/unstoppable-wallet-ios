@@ -47,10 +47,14 @@ class CoinDetailsViewModel {
         }
     }
 
-    private func chart(title: String, item: CoinDetailsService.ProData, isCurrencyValue: Bool = true) -> ChartMarketCardView.ViewItem? {
+    private func chart(title: String, item: CoinDetailsService.ProData, isCurrencyValue: Bool = true) -> MarketCardView.ViewItem? {
         switch item {
         case .empty: return nil
-        case .forbidden: return ChartMarketCardView.ViewItem(title: title, value: "coin_page.chart.locked".localized, diff: "***", diffColor: .themeGray, data: ChartData.placeholder, trend: .neutral)
+        case .forbidden: return MarketCardView.ViewItem(
+                title: title,
+                value: "***",
+                description: "coin_page.chart.locked".localized,
+                descriptionColor: .themeGray)
         case .completed(let values):
             guard let first = values.first, let last = values.last else {
                 return nil
@@ -69,7 +73,14 @@ class CoinDetailsViewModel {
                     ValueFormatter.instance.formatShort(currency: service.currency, value: last.value) :
                     ValueFormatter.instance.formatShort(value: last.value)
 
-            return ChartMarketCardView.ViewItem(title: title, value: value, diff: diff ?? "n/a".localized, diffColor: diffColor, data: chartData, trend: diffValue.isSignMinus ? .down : .up)
+            return MarketCardView.ViewItem(
+                    title: title,
+                    value: value,
+                    description: diff ?? "n/a".localized,
+                    descriptionColor: diffColor,
+                    chartData: chartData,
+                    movementTrend: diffValue.isSignMinus ? .down : .up
+            )
         }
     }
 
@@ -174,7 +185,7 @@ extension CoinDetailsViewModel {
         let tokenLiquidity: TokenLiquidityViewItem
         let tokenDistribution: TokenDistributionViewItem
         let hasMajorHolders: Bool
-        let tvlChart: ChartMarketCardView.ViewItem?
+        let tvlChart: MarketCardView.ViewItem?
         let tvlRank: String?
         let tvlRatio: String?
         let treasuries: String?
@@ -185,14 +196,14 @@ extension CoinDetailsViewModel {
     }
 
     struct TokenLiquidityViewItem {
-        let volume: ChartMarketCardView.ViewItem?
-        let liquidity: ChartMarketCardView.ViewItem?
+        let volume: MarketCardView.ViewItem?
+        let liquidity: MarketCardView.ViewItem?
     }
 
     struct TokenDistributionViewItem {
-        let txCount: ChartMarketCardView.ViewItem?
-        let txVolume: ChartMarketCardView.ViewItem?
-        let activeAddresses: ChartMarketCardView.ViewItem?
+        let txCount: MarketCardView.ViewItem?
+        let txVolume: MarketCardView.ViewItem?
+        let activeAddresses: MarketCardView.ViewItem?
     }
 
     struct SecurityViewItem {

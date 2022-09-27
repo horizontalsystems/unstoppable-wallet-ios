@@ -1,30 +1,35 @@
 import Foundation
 
-enum FeePriceScale: Int {
-    case satoshi = 1
-    case gwei = 1_000_000_000
+enum FeePriceScale {
+    case satoshi
+    case gwei
+    case nAvax
 
-    var value: Int {
-        rawValue
+    var scaleValue: Int {
+        switch self {
+        case .satoshi: return 1
+        case .gwei, .nAvax: return 1_000_000_000
+        }
     }
 
     var unit: String {
         switch self {
         case .satoshi: return "sat/byte"
-        case .gwei: return "gwei"
+        case .gwei: return "Gwei"
+        case .nAvax: return "nAVAX"
         }
     }
 
     func description(value: Float, showSymbol: Bool = true) -> String {
-        ValueFormatter.instance.formatFull(value: Decimal(Double(value)), decimalCount: 8, symbol: showSymbol ? unit : nil, showSign: false) ?? value.description
+        ValueFormatter.instance.formatFull(value: Decimal(Double(value)), decimalCount: 9, symbol: showSymbol ? unit : nil, showSign: false) ?? value.description
     }
 
     func wrap(value: Int, step: Int) -> Float {
-        Float(value / step * step) / Float(self.value)
+        Float(value / step * step) / Float(scaleValue)
     }
 
     func wrap(value: Float, step: Int) -> Float {
-        let intValue = Int(value * Float(rawValue))
+        let intValue = Int(value * Float(scaleValue))
         return wrap(value: intValue, step: step)
     }
 }

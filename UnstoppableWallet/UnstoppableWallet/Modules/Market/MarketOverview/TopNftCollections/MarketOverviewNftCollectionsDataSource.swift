@@ -22,7 +22,11 @@ class MarketOverviewNftCollectionsDataSource: BaseMarketOverviewTopListDataSourc
     }
 
     override func onSelect(listViewItem: MarketModule.ListViewItem) {
-        if let uid = listViewItem.uid, let module = NftCollectionModule.viewController(collectionUid: uid) {
+        guard let uid = listViewItem.uid, let topCollection = viewModel.topCollection(uid: uid) else {
+            return
+        }
+
+        if let module = NftCollectionModule.viewController(blockchainType: topCollection.blockchainType, providerCollectionUid: topCollection.providerUid) {
             presentDelegate?.present(viewController: ThemeNavigationController(rootViewController: module))
         }
     }

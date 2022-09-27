@@ -5,16 +5,16 @@ import ThemeKit
 
 struct NftCollectionModule {
 
-    static func viewController(collectionUid: String) -> UIViewController? {
+    static func viewController(blockchainType: BlockchainType, providerCollectionUid: String) -> UIViewController? {
         let service = NftCollectionService()
         let viewModel = NftCollectionViewModel(service: service)
 
-        guard let overviewController = NftCollectionOverviewModule.viewController(collectionUid: collectionUid) else {
+        guard let overviewController = NftCollectionOverviewModule.viewController(blockchainType: blockchainType, providerCollectionUid: providerCollectionUid) else {
             return nil
         }
 
-        let assetsController = NftCollectionAssetsModule.viewController(collectionUid: collectionUid)
-        let activityController = NftActivityModule.viewController(eventListType: .collection(uid: collectionUid))
+        let assetsController = NftCollectionAssetsModule.viewController(blockchainType: blockchainType, providerCollectionUid: providerCollectionUid)
+        let activityController = NftActivityModule.viewController(eventListType: .collection(blockchainType: blockchainType, providerUid: providerCollectionUid))
 
         return NftCollectionViewController(
                 viewModel: viewModel,

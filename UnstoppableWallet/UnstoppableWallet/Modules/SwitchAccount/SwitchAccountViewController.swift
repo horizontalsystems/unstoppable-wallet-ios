@@ -58,29 +58,35 @@ class SwitchAccountViewController: ThemeActionSheetController {
 
 extension SwitchAccountViewController: SectionsDataSource {
 
-    private func row(viewItem: SwitchAccountViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image24, .multiText],
+    private func row(viewItem: SwitchAccountViewModel.ViewItem, watchIcon: Bool, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image24 { component in
+                        component.imageView.image = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withTintColor(.themeJacob) : UIImage(named: "circle_radiooff_24")?.withTintColor(.themeGray)
+                    },
+                    .vStackCentered([
+                        .text { component in
+                            component.font = .body
+                            component.textColor = .themeLeah
+                            component.text = viewItem.title
+                        },
+                        .margin(3),
+                        .text { component in
+                            component.font = .subhead2
+                            component.textColor = .themeGray
+                            component.text = viewItem.subtitle
+                        }
+                    ]),
+                    .image20 { component in
+                        component.isHidden = !watchIcon
+                        component.imageView.image = UIImage(named: "binocule_20")?.withTintColor(.themeGray)
+                    }
+                ]),
                 tableView: tableView,
                 id: "item_\(index)",
                 height: .heightDoubleLineCell,
                 bind: { cell in
                     cell.set(backgroundStyle: .bordered, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0, block: { (component: ImageComponent) in
-                        component.imageView.image = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withTintColor(.themeJacob) : UIImage(named: "circle_radiooff_24")?.withTintColor(.themeGray)
-                    })
-                    cell.bind(index: 1, block: { (component: MultiTextComponent) in
-                        component.set(style: .m1)
-                        component.title.font = .body
-                        component.title.textColor = .themeLeah
-                        component.subtitle.font = .subhead2
-                        component.subtitle.textColor = .themeGray
-
-                        component.title.text = viewItem.title
-                        component.subtitle.text = viewItem.subtitle
-                        component.subtitle.lineBreakMode = .byTruncatingMiddle
-                    })
                 },
                 action: { [weak self] in
                     self?.viewModel.onSelect(accountId: viewItem.accountId)
@@ -97,7 +103,7 @@ extension SwitchAccountViewController: SectionsDataSource {
                     headerState: tableView.sectionHeader(text: "switch_account.wallets".localized),
                     footerState: .margin(height: viewModel.watchViewItems.isEmpty ? 0 : .margin24),
                     rows: viewModel.regularViewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewModel.regularViewItems.count - 1)
+                        row(viewItem: viewItem, watchIcon: false, index: index, isFirst: index == 0, isLast: index == viewModel.regularViewItems.count - 1)
                     }
             )
 
@@ -109,7 +115,7 @@ extension SwitchAccountViewController: SectionsDataSource {
                     id: "watch",
                     headerState: tableView.sectionHeader(text: "switch_account.watch_addresses".localized),
                     rows: viewModel.watchViewItems.enumerated().map { index, viewItem in
-                        row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewModel.watchViewItems.count - 1)
+                        row(viewItem: viewItem, watchIcon: true, index: index, isFirst: index == 0, isLast: index == viewModel.watchViewItems.count - 1)
                     }
             )
 

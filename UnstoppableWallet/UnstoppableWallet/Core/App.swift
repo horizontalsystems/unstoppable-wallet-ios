@@ -41,6 +41,10 @@ class App {
     let transactionAdapterManager: TransactionAdapterManager
     let watchAddressBlockchainManager: WatchAddressBlockchainManager
 
+    let nftMetadataManager: NftMetadataManager
+    let nftAdapterManager: NftAdapterManager
+    let nftMetadataSyncer: NftMetadataSyncer
+
     let enabledWalletCacheManager: EnabledWalletCacheManager
 
     let favoritesManager: FavoritesManager
@@ -49,6 +53,7 @@ class App {
     let feeRateProviderFactory: FeeRateProviderFactory
 
     let evmSyncSourceManager: EvmSyncSourceManager
+    let evmAccountRestoreStateManager: EvmAccountRestoreStateManager
     let evmBlockchainManager: EvmBlockchainManager
 
     let restoreSettingsManager: RestoreSettingsManager
@@ -82,8 +87,6 @@ class App {
 
     let deepLinkManager: DeepLinkManager
     let launchScreenManager: LaunchScreenManager
-
-    let nftManager: NftManager
 
     let balancePrimaryValueManager: BalancePrimaryValueManager
     let balanceHiddenManager: BalanceHiddenManager
@@ -159,9 +162,10 @@ class App {
 
         evmSyncSourceManager = EvmSyncSourceManager(appConfigProvider: appConfigProvider, storage: blockchainSettingsStorage)
 
-        let tokenBalanceProvider = HsTokenBalanceProvider(networkManager: networkManager, marketKit: marketKit, appConfigProvider: appConfigProvider)
-        let evmAccountSyncStateStorage = EvmAccountSyncStateStorage(dbPool: dbPool)
-        let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, provider: tokenBalanceProvider, storage: evmAccountSyncStateStorage)
+        let evmAccountRestoreStateStorage = EvmAccountRestoreStateStorage(dbPool: dbPool)
+        evmAccountRestoreStateManager = EvmAccountRestoreStateManager(storage: evmAccountRestoreStateStorage)
+
+        let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, evmAccountRestoreStateManager: evmAccountRestoreStateManager, marketKit: marketKit)
         evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
 
         let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
@@ -203,6 +207,15 @@ class App {
                 evmBlockchainManager: evmBlockchainManager
         )
 
+        let nftDatabaseStorage = try! NftDatabaseStorage(dbPool: dbPool)
+        let nftStorage = NftStorage(marketKit: marketKit, storage: nftDatabaseStorage)
+        nftMetadataManager = NftMetadataManager(networkManager: networkManager, marketKit: marketKit, appConfigProvider: appConfigProvider, storage: nftStorage)
+        nftAdapterManager = NftAdapterManager(
+                walletManager: walletManager,
+                evmBlockchainManager: evmBlockchainManager
+        )
+        nftMetadataSyncer = NftMetadataSyncer(nftAdapterManager: nftAdapterManager, nftMetadataManager: nftMetadataManager, nftStorage: nftStorage)
+
         let enabledWalletCacheStorage = EnabledWalletCacheStorage(dbPool: dbPool)
         enabledWalletCacheManager = EnabledWalletCacheManager(storage: enabledWalletCacheStorage, accountManager: accountManager)
 
@@ -229,7 +242,8 @@ class App {
                 logRecordManager: logRecordManager,
                 restoreSettingsManager: restoreSettingsManager,
                 evmBlockchainManager: evmBlockchainManager,
-                binanceKitManager: binanceKitManager
+                binanceKitManager: binanceKitManager,
+                marketKit: marketKit
         )
 
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, storage: appVersionStorage)
@@ -270,10 +284,6 @@ class App {
         deepLinkManager = DeepLinkManager()
         launchScreenManager = LaunchScreenManager(storage: StorageKit.LocalStorage.default)
 
-        let nftDatabaseStorage = try! NftDatabaseStorage(dbPool: dbPool)
-        let nftStorage = NftStorage(marketKit: marketKit, storage: nftDatabaseStorage)
-        nftManager = NftManager(accountManager: accountManager, evmBlockchainManager: evmBlockchainManager, storage: nftStorage, marketKit: marketKit)
-
         balancePrimaryValueManager = BalancePrimaryValueManager(localStorage: StorageKit.LocalStorage.default)
         balanceHiddenManager = BalanceHiddenManager(localStorage: StorageKit.LocalStorage.default)
         balanceConversionManager = BalanceConversionManager(marketKit: marketKit, localStorage: StorageKit.LocalStorage.default)
@@ -296,7 +306,8 @@ class App {
                 logRecordManager: logRecordManager,
                 deepLinkManager: deepLinkManager,
                 evmLabelManager: evmLabelManager,
-                walletConnectV2SocketConnectionService: walletConnectV2SocketConnectionService
+                walletConnectV2SocketConnectionService: walletConnectV2SocketConnectionService,
+                nftMetadataSyncer: nftMetadataSyncer
         )
     }
 

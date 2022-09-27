@@ -4,26 +4,13 @@ import RxSwift
 import RxRelay
 
 class RestoreMnemonicService {
-    private let wordList: [String]
+    private var wordList: [String] = Mnemonic.wordList(for: .english).map(String.init)
     private let passphraseEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let passphraseValidator: PassphraseValidator
+
+    private let regex = try! NSRegularExpression(pattern: "\\S+")
+    private(set) var items: [WordItem] = []
 
     var passphrase: String = ""
-    let defaultName: String
-    private var name: String = ""
-
-    init(accountFactory: AccountFactory, passphraseValidator: PassphraseValidator) {
-        self.passphraseValidator = passphraseValidator
-
-        wordList = Mnemonic.Language.allCases.reduce([String]()) { array, language in
-            var array = array
-            array.append(contentsOf: Mnemonic.wordList(for: language).map(String.init))
-            return array
-        }
-
-        defaultName = accountFactory.nextAccountName
-    }
-
 }
 
 extension RestoreMnemonicService {
@@ -36,28 +23,54 @@ extension RestoreMnemonicService {
         passphraseEnabledRelay.asObservable()
     }
 
-    var resolvedName: String {
-        name.trimmingCharacters(in: .whitespaces).isEmpty ? defaultName : name
+    func set(language: String?) {
+        var mnemonicLanguage: Mnemonic.Language = .english
+
+        if let language = language {
+            if language.hasPrefix("ja-") { mnemonicLanguage = .japanese }
+            else if language.hasPrefix("ko-") { mnemonicLanguage = .korean }
+            else if language.hasPrefix("es-") { mnemonicLanguage = .spanish }
+            else if language == "zh-Hans" { mnemonicLanguage = .simplifiedChinese }
+            else if language == "zh-Hant" { mnemonicLanguage = .traditionalChinese }
+            else if language.hasPrefix("fr-") { mnemonicLanguage = .french }
+            else if language.hasPrefix("it-") { mnemonicLanguage = .italian }
+            else if language.hasPrefix("cs-") { mnemonicLanguage = .czech }
+            else if language.hasPrefix("pt-") { mnemonicLanguage = .portuguese }
+        }
+
+        wordList = Mnemonic.wordList(for: mnemonicLanguage).map(String.init)
     }
 
-    func set(name: String) {
-        self.name = name
+    func syncItems(text: String) {
+        let matches = regex.matches(in: text, range: NSRange(location: 0, length: (text as NSString).length))
+
+        items = matches.compactMap { match in
+            guard let range = Range(match.range, in: text) else {
+                return nil
+            }
+
+            let word = String(text[range]).lowercased()
+
+            let type: WordItemType
+
+            if wordList.contains(word) {
+                type = .correct
+            } else if wordList.contains(where: { $0.hasPrefix(word) }) {
+                type = .correctPrefix
+            } else {
+                type = .incorrect
+            }
+
+            return WordItem(word: word, range: match.range, type: type)
+        }
+    }
+
+    func possibleWords(string: String) -> [String] {
+        wordList.filter { $0.hasPrefix(string) }
     }
 
     func set(passphraseEnabled: Bool) {
         passphraseEnabledRelay.accept(passphraseEnabled)
-    }
-
-    func doesWordExist(word: String) -> Bool {
-        wordList.contains(word)
-    }
-
-    func doesWordPartiallyExist(word: String) -> Bool {
-        wordList.contains { $0.hasPrefix(word) }
-    }
-
-    func validate(text: String?) -> Bool {
-        passphraseValidator.validate(text: text)
     }
 
     func accountType(words: [String]) throws -> AccountType {
@@ -82,6 +95,18 @@ extension RestoreMnemonicService {
 }
 
 extension RestoreMnemonicService {
+
+    enum WordItemType {
+        case correct
+        case incorrect
+        case correctPrefix
+    }
+
+    struct WordItem {
+        let word: String
+        let range: NSRange
+        let type: WordItemType
+    }
 
     enum RestoreError: Error {
         case emptyPassphrase

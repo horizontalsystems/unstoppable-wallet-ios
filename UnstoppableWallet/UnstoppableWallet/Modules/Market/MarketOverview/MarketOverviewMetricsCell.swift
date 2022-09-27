@@ -6,22 +6,22 @@ import Chart
 import ComponentKit
 
 class MarketOverviewMetricsCell: UITableViewCell {
-    static let cellHeight: CGFloat = 240
+    static let cellHeight: CGFloat = 250
 
     private weak var presentDelegate: IPresentDelegate?
 
-    private let totalMarketCapView: MarketMetricView
-    private let volume24hView: MarketMetricView
-    private let deFiCapView: MarketMetricView
-    private let deFiTvlView: MarketMetricView
+    private let totalMarketCapView: MarketCardView
+    private let volume24hView: MarketCardView
+    private let deFiCapView: MarketCardView
+    private let deFiTvlView: MarketCardView
 
     init(chartConfiguration: ChartConfiguration, presentDelegate: IPresentDelegate) {
         self.presentDelegate = presentDelegate
 
-        totalMarketCapView = MarketMetricView(configuration: chartConfiguration)
-        volume24hView = MarketMetricView(configuration: chartConfiguration)
-        deFiCapView = MarketMetricView(configuration: chartConfiguration)
-        deFiTvlView = MarketMetricView(configuration: chartConfiguration)
+        totalMarketCapView = MarketCardView()
+        volume24hView = MarketCardView()
+        deFiCapView = MarketCardView()
+        deFiTvlView = MarketCardView()
 
         super.init(style: .default, reuseIdentifier: nil)
 
@@ -32,7 +32,7 @@ class MarketOverviewMetricsCell: UITableViewCell {
         totalMarketCapView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(CGFloat.margin12)
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(MarketMetricView.height)
+            maker.height.equalTo(MarketCardView.height)
         }
 
         contentView.addSubview(volume24hView)
@@ -41,14 +41,14 @@ class MarketOverviewMetricsCell: UITableViewCell {
             maker.leading.equalTo(totalMarketCapView.snp.trailing).offset(CGFloat.margin8)
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
             maker.width.equalTo(totalMarketCapView.snp.width)
-            maker.height.equalTo(MarketMetricView.height)
+            maker.height.equalTo(MarketCardView.height)
         }
 
         contentView.addSubview(deFiCapView)
         deFiCapView.snp.makeConstraints { maker in
             maker.top.equalTo(totalMarketCapView.snp.bottom).offset(CGFloat.margin8)
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
-            maker.height.equalTo(MarketMetricView.height)
+            maker.height.equalTo(MarketCardView.height)
         }
 
         contentView.addSubview(deFiTvlView)
@@ -57,7 +57,7 @@ class MarketOverviewMetricsCell: UITableViewCell {
             maker.leading.equalTo(deFiCapView.snp.trailing).offset(CGFloat.margin8)
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
             maker.width.equalTo(deFiCapView.snp.width)
-            maker.height.equalTo(MarketMetricView.height)
+            maker.height.equalTo(MarketCardView.height)
         }
 
         totalMarketCapView.onTap = { [weak self] in self?.onTap(metricType: .totalMarketCap) }
@@ -85,33 +85,21 @@ class MarketOverviewMetricsCell: UITableViewCell {
 extension MarketOverviewMetricsCell {
 
     func set(viewItem: MarketOverviewGlobalViewModel.GlobalMarketViewItem) {
-        totalMarketCapView.set(
-                value: viewItem.totalMarketCap.value,
-                diff: viewItem.totalMarketCap.diff,
-                chartData: viewItem.totalMarketCap.chartData,
-                trend: viewItem.totalMarketCap.chartTrend
-        )
+        totalMarketCapView.set(viewItem: viewItem.totalMarketCap)
+        volume24hView.set(viewItem: viewItem.volume24h)
+        deFiCapView.set(viewItem: viewItem.defiCap)
+        deFiTvlView.set(viewItem: viewItem.defiTvl)
+    }
 
-        volume24hView.set(
-                value: viewItem.volume24h.value,
-                diff: viewItem.volume24h.diff,
-                chartData: viewItem.volume24h.chartData,
-                trend: viewItem.volume24h.chartTrend
-        )
+}
 
-        deFiCapView.set(
-                value: viewItem.defiCap.value,
-                diff: viewItem.defiCap.diff,
-                chartData: viewItem.defiCap.chartData,
-                trend: viewItem.defiCap.chartTrend
-        )
+extension MarketCardView {
 
-        deFiTvlView.set(
-                value: viewItem.defiTvl.value,
-                diff: viewItem.defiTvl.diff,
-                chartData: viewItem.defiTvl.chartData,
-                trend: viewItem.defiTvl.chartTrend
-        )
+    func set(viewItem: MarketOverviewGlobalViewModel.ChartViewItem) {
+        value = viewItem.value
+        descriptionText = DiffLabel.formatted(value: viewItem.diff)
+        descriptionColor = DiffLabel.color(value: viewItem.diff)
+        set(chartData: viewItem.chartData, trend: viewItem.chartTrend)
     }
 
 }

@@ -10,11 +10,19 @@ class HighlightedDescriptionCell: UITableViewCell {
     private let disposeBag = DisposeBag()
     private let descriptionView = HighlightedDescriptionView()
 
+    private var showVerticalMargin = true
     private let hiddenStateRelay = BehaviorRelay<Bool>(value: false)
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
+        commonInit()
+    }
+
+    public init(showVerticalMargin: Bool) {
+        super.init(style: .default, reuseIdentifier: "highlighted_description_cell")
+
+        self.showVerticalMargin = showVerticalMargin
         commonInit()
     }
 
@@ -36,7 +44,7 @@ class HighlightedDescriptionCell: UITableViewCell {
         contentView.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(HighlightedDescriptionCell.horizontalMargin)
-            maker.top.equalToSuperview().offset(HighlightedDescriptionCell.verticalMargin)
+            maker.top.equalToSuperview().offset(showVerticalMargin ? HighlightedDescriptionCell.verticalMargin : 0)
         }
     }
 
@@ -66,13 +74,13 @@ extension HighlightedDescriptionCell {
             return 0
         }
 
-        return Self.height(containerWidth: containerWidth, text: descriptionText)
+        return Self.height(containerWidth: containerWidth, text: descriptionText, ignoreBottomMargin: !showVerticalMargin, ignoreTopMargin: !showVerticalMargin)
     }
 
-    static func height(containerWidth: CGFloat, text: String) -> CGFloat {
+    static func height(containerWidth: CGFloat, text: String, ignoreBottomMargin: Bool = false, ignoreTopMargin: Bool = false) -> CGFloat {
         let descriptionViewWidth = containerWidth - 2 * horizontalMargin
         let descriptionViewHeight = HighlightedDescriptionView.height(containerWidth: descriptionViewWidth, text: text)
-        return descriptionViewHeight + 2 * verticalMargin
+        return descriptionViewHeight + (ignoreBottomMargin ? 0 : 1) * verticalMargin + (ignoreTopMargin ? 0 : 1) * verticalMargin
     }
 
 }

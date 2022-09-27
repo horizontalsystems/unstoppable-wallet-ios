@@ -73,6 +73,8 @@ class NftCollectionAssetsViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
             self?.errorView.isHidden = !visible
         }
+
+        viewModel.onLoad()
     }
 
     @objc private func onRetry() {
@@ -98,8 +100,12 @@ class NftCollectionAssetsViewController: ThemeViewController {
         tableView.endUpdates()
     }
 
-    private func openAsset(viewItem: NftDoubleCell.ViewItem, imageRatio: CGFloat) {
-        let module = NftAssetModule.viewController(collectionUid: viewItem.collectionUid, contractAddress: viewItem.contractAddress, tokenId: viewItem.tokenId, imageRatio: imageRatio)
+    private func openAsset(viewItem: NftDoubleCell.ViewItem) {
+        guard let providerCollectionUid = viewItem.providerCollectionUid else {
+            return
+        }
+
+        let module = NftAssetModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: viewItem.nftUid)
         parentNavigationController?.pushViewController(module, animated: true)
     }
 
@@ -109,14 +115,14 @@ extension NftCollectionAssetsViewController: SectionsDataSource {
 
     private func row(leftViewItem: NftDoubleCell.ViewItem, rightViewItem: NftDoubleCell.ViewItem?, isLast: Bool) -> RowProtocol {
         Row<NftDoubleCell>(
-                id: "token-\(leftViewItem.uid)-\(rightViewItem?.uid ?? "nil")",
+                id: "token-\(leftViewItem.nftUid.uid)-\(rightViewItem?.nftUid.uid ?? "nil")",
                 hash: "\(leftViewItem.hash)-\(rightViewItem?.hash ?? "nil")",
                 dynamicHeight: { width in
                     NftDoubleCell.height(containerWidth: width, isLast: isLast)
                 },
                 bind: { [weak self] cell, _ in
-                    cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem, imageRatio in
-                        self?.openAsset(viewItem: viewItem, imageRatio: imageRatio)
+                    cell.bind(leftViewItem: leftViewItem, rightViewItem: rightViewItem) { [weak self] viewItem in
+                        self?.openAsset(viewItem: viewItem)
                     }
 
                     if isLast {

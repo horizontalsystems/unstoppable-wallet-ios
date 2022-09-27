@@ -27,8 +27,8 @@ struct BalanceTopViewItem {
 
 enum BalanceSecondaryInfoViewItem {
     case amount(viewItem: BalanceSecondaryAmountViewItem)
-    case searchingTx(count: Int)
     case syncing(progress: Int?, syncedUntil: String?)
+    case customSyncing(main: String, secondary: String?)
 }
 
 struct BalanceSecondaryAmountViewItem {
@@ -51,6 +51,7 @@ struct BalanceLockedAmountViewItem {
 struct BalanceButtonsViewItem {
     let sendButtonState: ButtonState
     let receiveButtonState: ButtonState
+    let addressButtonState: ButtonState
     let swapButtonState: ButtonState
     let chartButtonState: ButtonState
 }
@@ -78,11 +79,12 @@ extension BalanceSecondaryInfoViewItem: Equatable {
         switch (lhs, rhs) {
         case (.amount(let lhsViewItem), .amount(let rhsViewItem)):
             return lhsViewItem == rhsViewItem
-        case (.searchingTx(let lhsCount), .searchingTx(let rhsCount)):
-            return lhsCount == rhsCount
         case (.syncing(let lhsProgress, let lhsSyncedUntil), .syncing(let rhsProgress, let rhsSyncedUntil)):
             return lhsProgress == rhsProgress &&
                     lhsSyncedUntil == rhsSyncedUntil
+        case (.customSyncing(let lMain, let lSecondary), .customSyncing(let rMain, let rSecondary)):
+            return lMain == rMain &&
+                    lSecondary ?? "" == rSecondary ?? ""
         default: return false
         }
     }
@@ -116,9 +118,11 @@ extension BalanceLockedAmountViewItem: Equatable {
 extension BalanceButtonsViewItem: Equatable {
 
     static func ==(lhs: BalanceButtonsViewItem, rhs: BalanceButtonsViewItem) -> Bool {
-        lhs.receiveButtonState == rhs.receiveButtonState &&
-                lhs.sendButtonState == rhs.sendButtonState &&
-                lhs.swapButtonState == rhs.swapButtonState
+        lhs.sendButtonState == rhs.sendButtonState &&
+                lhs.receiveButtonState == rhs.receiveButtonState &&
+                lhs.addressButtonState == rhs.addressButtonState &&
+                lhs.swapButtonState == rhs.swapButtonState &&
+                lhs.chartButtonState == rhs.chartButtonState
     }
 
 }
@@ -159,8 +163,8 @@ extension BalanceSecondaryInfoViewItem: CustomStringConvertible {
     var description: String {
         switch self {
         case .amount(let viewItem): return "[amount: \(viewItem)]"
-        case .searchingTx(let count): return "[searchingTx: \(count)]"
         case .syncing(let progress, let syncedUntil): return "[syncing: [progress: \(progress.map { "\($0)" } ?? "nil"); syncedUntil: \(syncedUntil ?? "nil")]]"
+        case .customSyncing(let left, let right): return "[\([left, right].flatMap { $0 }.joined(separator: " : "))]"
         }
     }
 

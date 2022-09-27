@@ -4,11 +4,11 @@ import MarketKit
 
 class NftActivityService {
     private let eventListType: NftActivityModule.NftEventListType
-    private let marketKit: MarketKit.Kit
+    private let nftMetadataManager: NftMetadataManager
     private let coinPriceService: WalletCoinPriceService
     private var disposeBag = DisposeBag()
 
-    let filterEventTypes: [NftEvent.EventType] = [.sale, .list, .offer, .bid, .transfer]
+    let filterEventTypes: [NftEventMetadata.EventType] = [.sale, .list, .offer, .bid, .transfer]
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .loading {
@@ -17,34 +17,34 @@ class NftActivityService {
         }
     }
 
-    private let eventTypeRelay = PublishRelay<NftEvent.EventType?>()
-    var eventType: NftEvent.EventType? = .sale {
+    private let eventTypeRelay = PublishRelay<NftEventMetadata.EventType?>()
+    var eventType: NftEventMetadata.EventType? = .sale {
         didSet {
             if eventType != oldValue {
                 eventTypeRelay.accept(eventType)
-                _loadInitial()
+                queue.async {
+                    self._loadInitial()
+                }
             }
         }
     }
 
-    private var cursor: String?
+    private var paginationData: PaginationData?
     private var loadingMore = false
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-collection-activity-service", qos: .userInitiated)
 
-    init(eventListType: NftActivityModule.NftEventListType, defaultEventType: NftEvent.EventType?, marketKit: MarketKit.Kit, coinPriceService: WalletCoinPriceService) {
+    init(eventListType: NftActivityModule.NftEventListType, defaultEventType: NftEventMetadata.EventType?, nftMetadataManager: NftMetadataManager, coinPriceService: WalletCoinPriceService) {
         self.eventListType = eventListType
         eventType = defaultEventType
-        self.marketKit = marketKit
+        self.nftMetadataManager = nftMetadataManager
         self.coinPriceService = coinPriceService
-
-        _loadInitial()
     }
 
-    private func single(cursor: String? = nil) -> Single<PagedNftEvents> {
+    private func single(paginationData: PaginationData? = nil) -> Single<([NftEventMetadata], PaginationData?)> {
         switch eventListType {
-        case .collection(let uid): return marketKit.nftCollectionEventsSingle(collectionUid: uid, eventType: eventType, cursor: cursor)
-        case .asset(let contractAddress, let tokenId): return marketKit.nftAssetEventsSingle(contractAddress: contractAddress, tokenId: tokenId, eventType: eventType, cursor: cursor)
+        case let .collection(blockchainType, providerUid): return nftMetadataManager.collectionEventsMetadataSingle(blockchainType: blockchainType, providerUid: providerUid, eventType: eventType, paginationData: paginationData)
+        case let .asset(nftUid): return nftMetadataManager.assetEventsMetadataSingle(nftUid: nftUid, eventType: eventType, paginationData: paginationData)
         }
     }
 
@@ -55,8 +55,8 @@ class NftActivityService {
 
         single()
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] pagedEvents in
-                    self?.handle(pagedEvents: pagedEvents)
+                .subscribe(onSuccess: { [weak self] events, paginationData in
+                    self?.handle(events: events, paginationData: paginationData)
                 }, onError: { [weak self] error in
                     self?.handle(error: error)
                 })
@@ -64,7 +64,7 @@ class NftActivityService {
     }
 
     private func _loadMore() {
-        guard cursor != nil else {
+        guard paginationData != nil else {
             return
         }
 
@@ -74,10 +74,10 @@ class NftActivityService {
 
         loadingMore = true
 
-        single(cursor: cursor)
+        single(paginationData: paginationData)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] pagedEvents in
-                    self?.handleMore(pagedEvents: pagedEvents)
+                .subscribe(onSuccess: { [weak self] events, paginationData in
+                    self?.handleMore(events: events, paginationData: paginationData)
                     self?.loadingMore = false
                 }, onError: { [weak self] error in
                     self?.loadingMore = false
@@ -85,21 +85,21 @@ class NftActivityService {
                 .disposed(by: disposeBag)
     }
 
-    private func handle(pagedEvents: PagedNftEvents) {
+    private func handle(events: [NftEventMetadata], paginationData: PaginationData?) {
         queue.async {
-            self.cursor = pagedEvents.cursor
-            self.state = .loaded(items: self.items(events: pagedEvents.events), allLoaded: self.cursor == nil)
+            self.paginationData = paginationData
+            self.state = .loaded(items: self.items(events: events), allLoaded: self.paginationData == nil)
         }
     }
 
-    private func handleMore(pagedEvents: PagedNftEvents) {
+    private func handleMore(events: [NftEventMetadata], paginationData: PaginationData?) {
         queue.async {
             guard case .loaded(let items, _) = self.state else {
                 return
             }
 
-            self.cursor = pagedEvents.cursor
-            self.state = .loaded(items: items + self.items(events: pagedEvents.events), allLoaded: self.cursor == nil)
+            self.paginationData = paginationData
+            self.state = .loaded(items: items + self.items(events: events), allLoaded: self.paginationData == nil)
         }
     }
 
@@ -109,26 +109,26 @@ class NftActivityService {
         }
     }
 
-    private func items(events: [NftEvent]) -> [Item] {
+    private func items(events: [NftEventMetadata]) -> [Item] {
         let items = events.map { event in
             Item(event: event)
         }
 
-        updatePriceItems(items: items, map: coinPriceService.itemMap(coinUids: Array(allCoinUids(items: items))))
+        updatePriceItems(items: items, map: coinPriceService.itemMap(tokens: Array(allTokens(items: items))))
 
         return items
     }
 
-    private func allCoinUids(items: [Item]) -> Set<String> {
-        var uids = Set<String>()
+    private func allTokens(items: [Item]) -> Set<Token> {
+        var tokens = Set<Token>()
 
         for item in items {
             if let amount = item.event.amount {
-                uids.insert(amount.token.coin.uid)
+                tokens.insert(amount.token)
             }
         }
 
-        return uids
+        return tokens
     }
 
     private func updatePriceItems(items: [Item], map: [String: WalletCoinPriceService.Item]) {
@@ -147,7 +147,7 @@ extension NftActivityService: IWalletCoinPriceServiceDelegate {
                 return
             }
 
-            self.updatePriceItems(items: items, map: self.coinPriceService.itemMap(coinUids: Array(self.allCoinUids(items: items))))
+            self.updatePriceItems(items: items, map: self.coinPriceService.itemMap(tokens: Array(self.allTokens(items: items))))
             self.state = .loaded(items: items, allLoaded: allLoaded)
         }
     }
@@ -171,8 +171,14 @@ extension NftActivityService {
         stateRelay.asObservable()
     }
 
-    var eventTypeObservable: Observable<NftEvent.EventType?> {
+    var eventTypeObservable: Observable<NftEventMetadata.EventType?> {
         eventTypeRelay.asObservable()
+    }
+
+    func loadInitial() {
+        queue.async {
+            self._loadInitial()
+        }
     }
 
     func reload() {
@@ -198,10 +204,10 @@ extension NftActivityService {
     }
 
     class Item {
-        let event: NftEvent
+        let event: NftEventMetadata
         var priceItem: WalletCoinPriceService.Item?
 
-        init(event: NftEvent) {
+        init(event: NftEventMetadata) {
             self.event = event
         }
     }

@@ -71,7 +71,7 @@ class CoinDetailsViewController: ThemeViewController {
 
         tableView.showsVerticalScrollIndicator = false
 
-        tableView.registerCell(forClass: ChartMarketCardCell<ChartMarketCardView>.self)
+        tableView.registerCell(forClass: MarketCardCell.self)
 
         proFeaturesCell.parentViewController = parentNavigationController
 
@@ -144,7 +144,10 @@ class CoinDetailsViewController: ThemeViewController {
     }
 
     private func openProDataChart(proFeaturesActivated: Bool, type: CoinProChartModule.ProChartType) {
-        let viewController = ProFeaturesLockInfoViewController(config: .mountainYak, delegate: self).toBottomSheet
+        let viewController = ProFeatures.mountainYakBottomSheet {
+            print("Can open main mint controller!")
+        }
+
         parentNavigationController?.present(viewController, animated: true)
 
 //        guard proFeaturesActivated else {
@@ -155,16 +158,6 @@ class CoinDetailsViewController: ThemeViewController {
 //        // todo: Route pro charts.
 //        let viewController = CoinProChartModule.viewController(coinUid: viewModel.coin.uid, type: type)
 //        parentNavigationController?.present(viewController, animated: true)
-    }
-
-}
-
-extension CoinDetailsViewController: IProFeaturesLockDelegate {
-
-    func onGoToMint(viewController: UIViewController) {
-        viewController.dismiss(animated: true) {
-            print("Can open main mint controller!")
-        }
     }
 
 }
@@ -260,7 +253,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         )
     }
 
-    private func hasCharts(items: [ChartMarketCardView.ViewItem?]) -> Bool {
+    private func hasCharts(items: [MarketCardView.ViewItem?]) -> Bool {
         !items.compactMap { $0 } .isEmpty
     }
 
@@ -269,12 +262,11 @@ extension CoinDetailsViewController: SectionsDataSource {
             return nil
         }
 
-        let liquidityRow = Row<ChartMarketCardCell<ChartMarketCardView>>(
+        let liquidityRow = Row<MarketCardCell>(
                 id: "liquidity_chart",
-                height: ChartMarketCardView.viewHeight(),
+                height: MarketCardView.height,
                 bind: { [weak self] cell, _ in
                     cell.clear()
-                    cell.set(configuration: .chartPreview)
 
                     if let volumeViewItem = viewItem.tokenLiquidity.volume {
                         cell.append(viewItem: volumeViewItem) { [weak self] in
@@ -310,12 +302,11 @@ extension CoinDetailsViewController: SectionsDataSource {
     }
 
     private func transactionCharts(viewItem: CoinDetailsViewModel.ViewItem) -> RowProtocol {
-        Row<ChartMarketCardCell<ChartMarketCardView>>(
+        Row<MarketCardCell>(
                 id: "transaction-charts",
-                height: ChartMarketCardView.viewHeight(),
+                height: MarketCardView.height,
                 bind: { [weak self] cell, _ in
                     cell.clear()
-                    cell.set(configuration: .chartPreview)
 
                     if let txCountViewItem = viewItem.tokenDistribution.txCount {
                         cell.append(viewItem: txCountViewItem) { [weak self] in
@@ -332,12 +323,11 @@ extension CoinDetailsViewController: SectionsDataSource {
     }
 
     private func addressChart(viewItem: CoinDetailsViewModel.ViewItem) -> RowProtocol {
-        Row<ChartMarketCardCell<ChartMarketCardView>>(
+        Row<MarketCardCell>(
                 id: "address-chart",
-                height: ChartMarketCardView.viewHeight(),
+                height: MarketCardView.height,
                 bind: { [weak self] cell, _ in
                     cell.clear()
-                    cell.set(configuration: .chartPreview)
 
                     if let activeAddressesViewItem = viewItem.tokenDistribution.activeAddresses {
                         cell.append(viewItem: activeAddressesViewItem) { [weak self] in
@@ -353,7 +343,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         let hasAddresses = hasCharts(items: [viewItem.tokenDistribution.activeAddresses])
 
         let addressMargin: CGFloat = isLast ? .margin24 : .margin12
-        let chartMargin: CGFloat = isLast ? .margin24 : hasAddresses ? .margin8 : .margin12
+        let chartMargin: CGFloat = hasAddresses ? .margin8 : isLast ? .margin24 : .margin12
 
         var sections = [SectionProtocol]()
         guard (hasTxCharts || hasAddresses) else {
@@ -434,16 +424,18 @@ extension CoinDetailsViewController: SectionsDataSource {
             return nil
         }
 
-        let tvlRow = Row<ChartMarketCardCell<ChartMarketCardView>>(
+        let tvlRow = Row<MarketCardCell>(
                 id: "tvl_chart",
-                height: ChartMarketCardView.viewHeight(),
+                height: MarketCardView.height,
                 bind: { [weak self] cell, _ in
                     cell.clear()
-                    cell.set(configuration: .chartPreview)
 
-                    cell.append(viewItem: tvlChart) { [weak self] in
+                    let view = MarketCardView()
+                    view.set(viewItem: tvlChart)
+                    view.onTap = { [weak self] in
                         self?.openTvl()
                     }
+                    cell.append(view: view)
                 }
         )
 

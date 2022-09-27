@@ -20,10 +20,10 @@ class BitcoinBaseAdapter {
     private(set) var balanceState: AdapterState {
         didSet {
             balanceStateSubject.onNext(balanceState)
-            transactionState = balanceState
+            syncing = balanceState.syncing
         }
     }
-    private(set) var transactionState: AdapterState
+    private(set) var syncing: Bool = true
 
     private let token: Token
     private let transactionSource: TransactionSource
@@ -35,7 +35,6 @@ class BitcoinBaseAdapter {
         transactionSource = wallet.transactionSource
 
         balanceState = .notSynced(error: AppError.unknownError)
-        transactionState = balanceState
     }
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> BitcoinTransactionRecord {
@@ -249,11 +248,12 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
 
             balanceState = .syncing(progress: newProgress, lastBlockDate: newDate)
         case .apiSyncing(let newCount):
-            if case .searchingTxs(let count) = balanceState, newCount == count {
+            let newCountDescription = "balance.searching.count".localized("\(newCount)")
+            if case .customSyncing(_, let secondary, _) = balanceState, newCountDescription == secondary {
                 return
             }
 
-            balanceState = .searchingTxs(count: newCount)
+            balanceState = .customSyncing(main: "balance.searching".localized(), secondary: newCountDescription, progress: nil)
         }
     }
 
@@ -331,7 +331,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
         abstractKit.lastBlockInfo.map { LastBlockInfo(height: $0.height, timestamp: $0.timestamp) }
     }
 
-    var transactionStateUpdatedObservable: Observable<Void> {
+    var syncingObservable: Observable<Void> {
         balanceStateSubject.map { _ in () }
     }
 

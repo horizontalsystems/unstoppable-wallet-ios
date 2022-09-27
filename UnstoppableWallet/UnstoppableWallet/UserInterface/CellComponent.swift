@@ -6,35 +6,35 @@ import ComponentKit
 struct CellComponent {
 
     static func actionTitleRow(tableView: UITableView, rowInfo: RowInfo, iconName: String?, iconDimmed: Bool, title: String, value: String) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.image24, .text, .text],
-                tableView: tableView,
-                id: "action-\(rowInfo.index)",
-                hash: "action-\(value)",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image24 { component in
                         if let iconName = iconName {
                             component.isHidden = false
                             component.imageView.image = UIImage(named: iconName)?.withTintColor(iconDimmed ? .themeGray : .themeLeah)
                         } else {
                             component.isHidden = true
                         }
-                    }
-
-                    cell.bind(index: 1) { (component: TextComponent) in
+                    },
+                    .text { component in
                         component.font = .body
                         component.textColor = .themeLeah
                         component.text = title
-                    }
-
-                    cell.bind(index: 2) { (component: TextComponent) in
+                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                    },
+                    .text { component in
                         component.font = .subhead1
                         component.textColor = .themeGray
+                        component.lineBreakMode = .byTruncatingMiddle
                         component.text = value
                     }
+                ]),
+                tableView: tableView,
+                id: "action-\(rowInfo.index)",
+                hash: "action-\(value)",
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                 }
         )
     }
@@ -61,12 +61,44 @@ struct CellComponent {
                     }
 
                     cell.bind(index: 2) { (component: TextComponent) in
+                        component.isHidden = currencyAmount == nil
                         component.font = .subhead2
-                                component.textColor = .themeGray
+                        component.textColor = .themeGray
                         component.lineBreakMode = .byTruncatingMiddle
                         component.text = currencyAmount
                     }
                 }
+        )
+    }
+
+    static func nftAmountRow(tableView: UITableView, rowInfo: RowInfo, iconUrl: String?, iconPlaceholderImageName: String, nftAmount: String, type: AmountType, onTapOpenNft: (() -> ())?) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image24 { component in
+                        component.setImage(urlString: iconUrl, placeholder: UIImage(named: iconPlaceholderImageName))
+                        component.imageView.cornerRadius = .cornerRadius4
+                        component.imageView.contentMode = .scaleAspectFill
+                    },
+                    .text { component in
+                        component.font = type.textFont
+                        component.textColor = type.textColor
+                        component.lineBreakMode = .byTruncatingMiddle
+                        component.text = nftAmount
+                    },
+                    .image20 { component in
+                        component.isHidden = onTapOpenNft == nil
+                        component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
+                    }
+                ]),
+                tableView: tableView,
+                id: "nft-amount-\(rowInfo.index)",
+                hash: "\(nftAmount)",
+                height: .heightCell48,
+                autoDeselect: true,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+                },
+                action: onTapOpenNft
         )
     }
 

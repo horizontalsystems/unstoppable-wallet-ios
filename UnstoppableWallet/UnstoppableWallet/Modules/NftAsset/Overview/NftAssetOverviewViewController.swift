@@ -10,12 +10,12 @@ import HUD
 class NftAssetOverviewViewController: ThemeViewController {
     private let viewModel: NftAssetOverviewViewModel
     private var urlManager: UrlManager
-    private var imageRatio: CGFloat
     private let disposeBag = DisposeBag()
 
     private var viewItem: NftAssetOverviewViewModel.ViewItem?
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let wrapperView = UIView()
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = PlaceholderViewModule.reachabilityView()
 
@@ -26,10 +26,9 @@ class NftAssetOverviewViewController: ThemeViewController {
 
     private var loaded = false
 
-    init(viewModel: NftAssetOverviewViewModel, urlManager: UrlManager, imageRatio: CGFloat) {
+    init(viewModel: NftAssetOverviewViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
         self.urlManager = urlManager
-        self.imageRatio = imageRatio
 
         super.init()
     }
@@ -45,8 +44,7 @@ class NftAssetOverviewViewController: ThemeViewController {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
-        let wrapperView = UIView()
-
+        view.addSubview(tableView)
         view.addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
@@ -67,7 +65,6 @@ class NftAssetOverviewViewController: ThemeViewController {
 
         errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
-        view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
@@ -113,6 +110,7 @@ class NftAssetOverviewViewController: ThemeViewController {
 
     private func sync(viewItem: NftAssetOverviewViewModel.ViewItem?) {
         self.viewItem = viewItem
+        wrapperView.isHidden = viewItem != nil
 
         if loaded {
             tableView.reload()
@@ -140,7 +138,7 @@ class NftAssetOverviewViewController: ThemeViewController {
     private func linkTitle(type: NftAssetOverviewViewModel.LinkType) -> String {
         switch type {
         case .website: return "nft_asset.links.website".localized
-        case .openSea: return "OpenSea"
+        case .provider(let title): return title
         case .discord: return "Discord"
         case .twitter: return "Twitter"
         }
@@ -149,17 +147,23 @@ class NftAssetOverviewViewController: ThemeViewController {
     private func linkIcon(type: NftAssetOverviewViewModel.LinkType) -> UIImage? {
         switch type {
         case .website: return UIImage(named: "globe_20")
-        case .openSea: return UIImage(named: "open_sea_20")
+        case .provider: return UIImage(named: "open_sea_20")
         case .discord: return UIImage(named: "discord_20")
         case .twitter: return UIImage(named: "twitter_20")
         }
     }
 
-    private func saleTitle(type: NftAssetOverviewService.SalePriceType) -> String {
+    private func saleTitle(type: NftAssetMetadata.SaleType) -> String {
         switch type {
-        case .buyNow: return "nft_asset.buy_now".localized
-        case .topBid: return "nft_asset.top_bid".localized
-        case .minimumBid: return "nft_asset.minimum_bid".localized
+        case .onSale: return "nft_asset.on_sale".localized
+        case .onAuction: return "nft_asset.on_auction".localized
+        }
+    }
+
+    private func salePriceTitle(type: NftAssetMetadata.SaleType) -> String {
+        switch type {
+        case .onSale: return "nft_asset.buy_now".localized
+        case .onAuction: return "nft_asset.minimum_bid".localized
         }
     }
 
@@ -174,6 +178,14 @@ class NftAssetOverviewViewController: ThemeViewController {
         }
 
         urlManager.open(url: url, from: parentNavigationController ?? self)
+    }
+
+    private func openSend() {
+       guard let viewController = SendNftModule.viewController(nftUid: viewModel.nftUid) else {
+           return
+       }
+
+        parentNavigationController?.present(viewController, animated: true)
     }
 
     private func openOptionsMenu() {
@@ -198,8 +210,8 @@ class NftAssetOverviewViewController: ThemeViewController {
     }
 
     private func handleShare() {
-        if let openSeaUrl = openSeaUrl {
-            openShare(text: openSeaUrl)
+        if let providerUrl = providerUrl {
+            openShare(text: providerUrl)
         }
     }
 
@@ -213,8 +225,19 @@ class NftAssetOverviewViewController: ThemeViewController {
         print("Set as Watch Face")
     }
 
-    private var openSeaUrl: String? {
-        viewItem?.links.first(where: { $0.type == .openSea })?.url
+    private var providerUrl: String? {
+        guard let viewItem = viewItem else {
+            return nil
+        }
+
+        for link in viewItem.links {
+            switch link.type {
+            case .provider: return link.url
+            default: ()
+            }
+        }
+
+        return nil
     }
 
     @objc private func onSaveToPhotos(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
@@ -225,8 +248,8 @@ class NftAssetOverviewViewController: ThemeViewController {
         }
     }
 
-    private func openCollection(uid: String) {
-        if let module = NftCollectionModule.viewController(collectionUid: uid) {
+    private func openCollection(providerUid: String) {
+        if let module = NftCollectionModule.viewController(blockchainType: viewModel.blockchainType, providerCollectionUid: providerUid) {
             (parentNavigationController ?? navigationController)?.pushViewController(module, animated: true)
         }
     }
@@ -253,7 +276,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         )
     }
 
-    private func imageSection(url: String, ratio: CGFloat) -> SectionProtocol {
+    private func imageSection(ratio: CGFloat) -> SectionProtocol {
         Section(
                 id: "image",
                 headerState: .margin(height: .margin12),
@@ -270,7 +293,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         )
     }
 
-    private func titleSection(assetName: String, collectionName: String, collectionUid: String) -> SectionProtocol {
+    private func titleSection(assetName: String, collectionName: String, providerCollectionUid: String) -> SectionProtocol {
         Section(
                 id: "title",
                 headerState: .margin(height: .margin12),
@@ -305,14 +328,14 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                                 }
                             },
                             action: { [weak self] in
-                                self?.openCollection(uid: collectionUid)
+                                self?.openCollection(providerUid: providerCollectionUid)
                             }
                     )
                 ]
         )
     }
 
-    private func buttonsSection() -> SectionProtocol {
+    private func buttonsSection(sendVisible: Bool) -> SectionProtocol {
         Section(
                 id: "buttons",
                 footerState: .margin(height: .margin24),
@@ -322,8 +345,12 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                             height: .heightButton,
                             bind: { [weak self] cell, _ in
                                 cell.bind(
-                                        onTapOpenSea: {
-                                            if let url = self?.openSeaUrl {
+                                        providerTitle: self?.viewModel.providerTitle,
+                                        onTapSend: sendVisible ? { [weak self] in
+                                            self?.openSend()
+                                        } : nil,
+                                        onTapProvider: {
+                                            if let url = self?.providerUrl {
                                                 self?.openLink(url: url)
                                             }
                                         },
@@ -406,7 +433,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         )
     }
 
-    private func saleRow(untilDate: String) -> RowProtocol {
+    private func saleRow(title: String, untilDate: String) -> RowProtocol {
         CellBuilder.row(
                 elements: [.multiText],
                 tableView: tableView,
@@ -423,7 +450,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                         component.subtitle.font = .subhead2
                         component.subtitle.textColor = .themeGray
 
-                        component.title.text = "nft_asset.on_sale".localized
+                        component.title.text = title
                         component.subtitle.text = untilDate
                     }
                 }
@@ -439,9 +466,12 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                 id: "sale",
                 footerState: .margin(height: viewItem.bestOffer == nil ? .margin24 : .margin12),
                 rows: [
-                    saleRow(untilDate: saleViewItem.untilDate),
-                    priceRow(
+                    saleRow(
                             title: saleTitle(type: saleViewItem.type),
+                            untilDate: saleViewItem.untilDate
+                    ),
+                    priceRow(
+                            title: salePriceTitle(type: saleViewItem.type),
                             viewItem: saleViewItem.price,
                             isFirst: false,
                             isLast: true
@@ -701,13 +731,13 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let viewItem = viewItem {
-            if let imageUrl = viewItem.imageUrl {
-                imageCell.bind(url: imageUrl)
-                sections.append(imageSection(url: imageUrl, ratio: imageRatio))
+            if let nftImage = viewItem.nftImage {
+                imageCell.bind(nftImage: nftImage)
+                sections.append(imageSection(ratio: nftImage.ratio))
             }
 
-            sections.append(titleSection(assetName: viewItem.name, collectionName: viewItem.collectionName, collectionUid: viewItem.collectionUid))
-            sections.append(buttonsSection())
+            sections.append(titleSection(assetName: viewItem.name, collectionName: viewItem.collectionName, providerCollectionUid: viewItem.providerCollectionUid))
+            sections.append(buttonsSection(sendVisible: viewItem.sendVisible))
 
             if let section = statsSection(viewItem: viewItem) {
                 sections.append(section)

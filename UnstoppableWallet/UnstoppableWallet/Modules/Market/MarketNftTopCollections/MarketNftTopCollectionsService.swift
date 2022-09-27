@@ -5,7 +5,7 @@ import MarketKit
 
 struct NftCollectionItem {
     let index: Int
-    let collection: NftCollection
+    let collection: NftTopCollection
 }
 
 class MarketNftTopCollectionsService {
@@ -17,7 +17,7 @@ class MarketNftTopCollectionsService {
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
 
-    private var internalState: MarketListServiceState<NftCollection> = .loading
+    private var internalState: MarketListServiceState<NftTopCollection> = .loading
 
     private let stateRelay = PublishRelay<MarketListServiceState<NftCollectionItem>>()
     private(set) var state: MarketListServiceState<NftCollectionItem> = .loading {
@@ -44,7 +44,7 @@ class MarketNftTopCollectionsService {
             state = .loading
         }
 
-        marketKit.nftCollectionsSingle()
+        marketKit.nftTopCollectionsSingle()
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] collections in
                     self?.internalState = .loaded(items: collections, softUpdate: false, reorder: false)
@@ -56,7 +56,7 @@ class MarketNftTopCollectionsService {
                 .disposed(by: syncDisposeBag)
     }
 
-    private func sync(collections: [NftCollection], reorder: Bool = false) {
+    private func sync(collections: [NftTopCollection], reorder: Bool = false) {
         let sortedCollections = collections.sorted(sortType: sortType, timePeriod: timePeriod)
         let items = sortedCollections.enumerated().map { NftCollectionItem(index: $0 + 1, collection: $1) }
         state = .loaded(items: items, softUpdate: false, reorder: reorder)
@@ -76,6 +76,14 @@ extension MarketNftTopCollectionsService: IMarketListService {
 
     var stateObservable: Observable<MarketListServiceState<NftCollectionItem>> {
         stateRelay.asObservable()
+    }
+
+    func topCollection(uid: String) -> NftTopCollection? {
+        guard case .loaded(let collections, _, _) = internalState else {
+            return nil
+        }
+
+        return collections.first { $0.uid == uid }
     }
 
     func refresh() {

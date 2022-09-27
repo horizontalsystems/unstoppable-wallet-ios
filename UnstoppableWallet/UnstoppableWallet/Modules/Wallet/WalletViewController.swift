@@ -115,6 +115,7 @@ class WalletViewController: ThemeViewController {
         tableView.refreshControl = refreshControl
 
         viewModel.onAppear()
+        showBackupPromptIfRequired()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -132,12 +133,16 @@ class WalletViewController: ThemeViewController {
     }
 
     @objc private func onTapSwitchWallet() {
-        let viewController = ManageAccountsModule.viewController(mode: .switcher)
+        let viewController = ManageAccountsModule.viewController(mode: .switcher, createAccountListener: self)
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
     @objc private func onTapNft() {
-        navigationController?.pushViewController(NftCollectionsModule.viewController(), animated: true)
+        guard let module = NftModule.viewController() else {
+            return
+        }
+
+        navigationController?.pushViewController(module, animated: true)
     }
 
     @objc private func onTapAddCoin() {
@@ -294,9 +299,20 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openBackupRequired(wallet: Wallet) {
-        let text = "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name)
-        let module = BackupRequiredViewController(account: wallet.account, text: text, sourceViewController: self).toBottomSheet
-        present(module, animated: true)
+        let viewController = InformationModule.simpleInfo(
+                title: "backup_required.title".localized,
+                image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob),
+                description: "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name),
+                buttonTitle: "settings_manage_keys.backup".localized,
+                onTapButton: InformationModule.afterClose { [weak self] in
+                    guard let viewController = BackupModule.viewController(account: wallet.account) else {
+                        return
+                    }
+
+                    self?.present(viewController, animated: true)
+                })
+
+        present(viewController, animated: true)
     }
 
     private func openSyncError(wallet: Wallet, error: Error) {
@@ -340,6 +356,25 @@ class WalletViewController: ThemeViewController {
         tableView.endUpdates()
 
         viewModel.onDisable(wallet: wallet)
+    }
+
+    private func showBackupPromptIfRequired() {
+        guard let account = viewModel.lastCreatedAccount else {
+            return
+        }
+
+        let viewController = InformationModule.backupPrompt { [weak self] in
+            self?.showBackupModule(account: account)
+        }
+        present(viewController, animated: true)
+    }
+
+    private func showBackupModule(account: Account) {
+        guard let viewController = BackupModule.viewController(account: account) else {
+            return
+        }
+
+        present(viewController, animated: true)
     }
 
 }
@@ -408,6 +443,16 @@ extension WalletViewController: UITableViewDelegate {
         action.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
 
         return UISwipeActionsConfiguration(actions: [action])
+    }
+
+}
+
+extension WalletViewController: ICreateAccountListener {
+
+    func handleCreateAccount() {
+        dismiss(animated: true) { [weak self] in
+            self?.showBackupPromptIfRequired()
+        }
     }
 
 }

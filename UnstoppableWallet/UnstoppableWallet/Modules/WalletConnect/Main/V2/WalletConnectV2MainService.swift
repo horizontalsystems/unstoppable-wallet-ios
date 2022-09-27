@@ -36,7 +36,7 @@ class WalletConnectV2MainService {
         }
     }
 
-    init(session: WalletConnectSign.Session? = nil, uri: String? = nil, service: WalletConnectV2Service, pingService: WalletConnectV2PingService, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, evmChainParser: WalletConnectEvmChainParser) {
+    init(session: WalletConnectSign.Session? = nil, service: WalletConnectV2Service, pingService: WalletConnectV2PingService, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, evmChainParser: WalletConnectEvmChainParser) {
         self.session = session
         self.service = service
         self.pingService = pingService
@@ -224,7 +224,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         switch connectionState {
         case .disconnected:
             if state == .waitingForApproveSession || state == .ready {
-                return "wallet_connect.no_connection"
+                return "wallet_connect.no_connection".localized
             }
         case .connecting: return nil
         case .connected: ()
@@ -234,7 +234,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         case .invalid(let error):
             return error.smartDescription
         case .waitingForApproveSession:
-            return "wallet_connect.connect_description"
+            return "wallet_connect.connect_description".localized
         default:
             return nil
         }
@@ -258,6 +258,10 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
 
     var allowedBlockchainsObservable: Observable<[WalletConnectMainModule.BlockchainItem]> {
         allowedBlockchainsRelay.asObservable()
+    }
+
+    func select(chainId: Int) {
+        // not required for V2
     }
 
     func toggle(chainId: Int) {

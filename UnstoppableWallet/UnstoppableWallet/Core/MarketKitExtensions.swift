@@ -1,11 +1,13 @@
 import UIKit
 import MarketKit
 import EthereumKit
+import NftKit
 
 enum TokenProtocol {
     case native
     case eip20
     case bep2
+    case spl
     case unsupported
 }
 
@@ -82,6 +84,7 @@ extension MarketKit.TokenType {
         case .native: return .native
         case .eip20: return .eip20
         case .bep2: return .bep2
+        case .spl: return .spl
         case .unsupported: return .unsupported
         }
     }
@@ -166,6 +169,8 @@ extension MarketKit.BlockchainType {
             }
         case .bep2:
             return "BEP2"
+        case .spl:
+            return "SPL"
         default:
             return nil
         }
@@ -236,6 +241,26 @@ extension MarketKit.BlockchainType {
         switch self {
         case .optimism: return try? EthereumKit.Address(hex: "0x420000000000000000000000000000000000000F")
         default: return nil
+        }
+    }
+
+    // used for EVM blockchains only
+    var feePriceScale: FeePriceScale {
+        switch self {
+        case .avalanche: return .nAvax
+        default: return .gwei
+        }
+    }
+
+    // used for EVM blockchains only
+    var supportedNftTypes: [NftType] {
+        switch self {
+        case .ethereum: return [.eip721, .eip1155]
+//        case .binanceSmartChain: return [.eip721]
+//        case .polygon: return [.eip721, .eip1155]
+//        case .avalanche: return [.eip721]
+//        case .arbitrumOne: return [.eip721]
+        default: return []
         }
     }
 

@@ -1,14 +1,14 @@
-protocol ITermsView: AnyObject {
-    func set(terms: [Term])
-    func refresh()
-}
+import UIKit
+import ThemeKit
 
-protocol ITermsViewDelegate {
-    func viewDidLoad()
-    func onTapTerm(index: Int)
-}
+struct TermsModule {
 
-protocol ITermsInteractor: AnyObject {
-    var terms: [Term] { get }
-    func update(term: Term)
+    static func viewController(sourceViewController: UIViewController? = nil, moduleToOpen: UIViewController? = nil) -> UIViewController {
+        let service = TermsService(termsManager: App.shared.termsManager)
+        let viewModel = TermsViewModel(service: service)
+        let viewController = TermsViewController(viewModel: viewModel, sourceViewController: sourceViewController, moduleToOpen: moduleToOpen)
+
+        return ThemeNavigationController(rootViewController: viewController)
+    }
+
 }

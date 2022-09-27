@@ -531,16 +531,6 @@ class StorageMigrator {
             }
         }
 
-        migrator.registerMigration("createEvmAccountSyncStates") { db in
-            try db.create(table: EvmAccountSyncState.databaseTableName) { t in
-                t.column(EvmAccountSyncState.Columns.accountId.name, .text).notNull()
-                t.column(EvmAccountSyncState.Columns.chainId.name, .integer).notNull()
-                t.column(EvmAccountSyncState.Columns.lastBlockNumber.name, .integer).notNull()
-
-                t.primaryKey([EvmAccountSyncState.Columns.accountId.name, EvmAccountSyncState.Columns.chainId.name], onConflict: .replace)
-            }
-        }
-
         migrator.registerMigration("createWalletConnectV2Sessions") { db in
             try db.create(table: WalletConnectV2Session.databaseTableName) { t in
                 t.column(WalletConnectV2Session.Columns.accountId.name, .text).notNull()
@@ -706,6 +696,16 @@ class StorageMigrator {
                 t.column(EnabledWalletCache.Columns.balanceLocked.name, .text).notNull()
 
                 t.primaryKey([EnabledWalletCache.Columns.tokenQueryId.name, EnabledWalletCache.Columns.coinSettingsId.name, EnabledWalletCache.Columns.accountId.name], onConflict: .replace)
+            }
+        }
+
+        migrator.registerMigration("createEvmAccountRestoreStates") { db in
+            try db.create(table: EvmAccountRestoreState.databaseTableName) { t in
+                t.column(EvmAccountRestoreState.Columns.accountId.name, .text).notNull()
+                t.column(EvmAccountRestoreState.Columns.blockchainUid.name, .text).notNull()
+                t.column(EvmAccountRestoreState.Columns.restored.name, .boolean).notNull()
+
+                t.primaryKey([EvmAccountRestoreState.Columns.accountId.name, EvmAccountRestoreState.Columns.blockchainUid.name], onConflict: .replace)
             }
         }
 

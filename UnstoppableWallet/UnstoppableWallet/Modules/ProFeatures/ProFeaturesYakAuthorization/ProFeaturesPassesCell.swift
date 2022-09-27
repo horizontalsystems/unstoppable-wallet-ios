@@ -84,7 +84,10 @@ class ProFeaturesPassesCell: BaseThemeCell {
     }
 
     private func showLockInfo() {
-        let viewController = ProFeaturesLockInfoViewController(config: .mountainYak, delegate: self).toBottomSheet
+        let viewController = ProFeatures.mountainYakBottomSheet {
+            print("Can open main mint controller!")
+        }
+
         parentViewController?.present(viewController, animated: true)
     }
 
@@ -101,16 +104,8 @@ class ProFeaturesPassesCell: BaseThemeCell {
     }
 
     private func showSuccessSigned() {
-        HudHelper.instance.show(banner: .success)
+        HudHelper.instance.show(banner: .done)
         proFeaturesActivateViewController?.dismiss(animated: true)
-    }
-
-}
-
-extension ProFeaturesPassesCell: IProFeaturesLockDelegate {
-
-    func onGoToMint(viewController: UIViewController) {
-        print("GO TO MINT!")
     }
 
 }

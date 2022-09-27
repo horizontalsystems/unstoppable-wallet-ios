@@ -8,8 +8,10 @@ struct TransactionInfoModule {
         guard let adapter = App.shared.transactionAdapterManager.adapter(for: transactionRecord.source) else {
             return nil
         }
+        let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
+        let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
 
-        let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
+        let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, currencyKit: App.shared.currencyKit, rateService: rateService, nftMetadataService: nftMetadataService)
         let factory = TransactionInfoViewItemFactory(evmLabelManager: App.shared.evmLabelManager, actionEnabled: transactionRecord.source.blockchainType.resendable)
         let viewModel = TransactionInfoViewModel(service: service, factory: factory)
         let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
@@ -56,6 +58,7 @@ extension TransactionInfoModule {
     enum ViewItem {
         case actionTitle(iconName: String?, iconDimmed: Bool, title: String, subTitle: String?)
         case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
+        case nftAmount(iconUrl: String?, iconPlaceholderImageName: String, nftAmount: String, type: AmountType, providerCollectionUid: String?, nftUid: NftUid?)
         case status(status: TransactionStatus)
         case options(actions: [OptionViewItem])
         case date(date: Date)
@@ -76,12 +79,4 @@ extension TransactionInfoModule {
         case explorer(title: String, url: String?)
     }
 
-}
-
-struct TransactionInfoItem {
-    let record: TransactionRecord
-    var lastBlockInfo: LastBlockInfo?
-    var rates: [Coin: CurrencyValue]
-    let explorerTitle: String
-    let explorerUrl: String?
 }

@@ -19,8 +19,11 @@ class ManageAccountsViewController: ThemeViewController {
     private var viewState = ManageAccountsViewModel.ViewState.empty
     private var isLoaded = false
 
-    init(viewModel: ManageAccountsViewModel) {
+    private weak var createAccountListener: ICreateAccountListener?
+
+    init(viewModel: ManageAccountsViewModel, createAccountListener: ICreateAccountListener?) {
         self.viewModel = viewModel
+        self.createAccountListener = createAccountListener
 
         super.init()
 
@@ -100,26 +103,26 @@ class ManageAccountsViewController: ThemeViewController {
     }
 
     private func onTapCreate() {
-        let viewController = CreateAccountModule.viewController()
+        let viewController = CreateAccountModule.viewController(sourceViewController: self, listener: createAccountListener ?? self)
         present(viewController, animated: true)
     }
 
     private func onTapRestore() {
-        let viewController = RestoreMnemonicModule.viewController()
+        let viewController = RestoreMnemonicModule.viewController(sourceViewController: self, returnViewController: createAccountListener)
         present(viewController, animated: true)
     }
 
     private func onTapWatch() {
-        let viewController = WatchAddressModule.viewController()
+        let viewController = WatchAddressModule.viewController(sourceViewController: createAccountListener)
         present(viewController, animated: true)
     }
 
     private func onTapEdit(accountId: String) {
-        guard let viewController = ManageAccountModule.viewController(accountId: accountId) else {
+        guard let viewController = ManageAccountModule.viewController(accountId: accountId, sourceViewController: self) else {
             return
         }
 
-        navigationController?.pushViewController(viewController, animated: true)
+        present(viewController, animated: true)
     }
 
     private func sync(viewState: ManageAccountsViewModel.ViewState) {
@@ -135,53 +138,86 @@ class ManageAccountsViewController: ThemeViewController {
         tableView.reload(animated: true)
     }
 
+    private func showBackupModule(account: Account) {
+        guard let viewController = BackupModule.viewController(account: account) else {
+            return
+        }
+
+        present(viewController, animated: true)
+    }
+
+}
+
+extension ManageAccountsViewController {
+
+    func handleDismiss() {
+        if viewModel.shouldClose {
+            dismiss(animated: true)
+        }
+    }
+
+}
+
+extension ManageAccountsViewController: ICreateAccountListener {
+
+    func handleCreateAccount() {
+        dismiss(animated: true) { [weak self] in
+            guard let account = self?.viewModel.lastCreatedAccount else {
+                return
+            }
+
+            let viewController = InformationModule.backupPrompt { [weak self] in
+                self?.showBackupModule(account: account)
+            }
+
+            self?.present(viewController, animated: true)
+        }
+    }
+
 }
 
 extension ManageAccountsViewController: SectionsDataSource {
 
     private func row(viewItem: ManageAccountsViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image24, .multiText, viewItem.alert || viewItem.watchAccount ? .margin16 : .margin0, .image20, .margin0, .transparentIconButton, .margin4],
-                layoutMargins: UIEdgeInsets(top: 0, left: CellBuilder.defaultMargin, bottom: 0, right: .margin4),
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image24 { component in
+                        component.imageView.image = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withTintColor(.themeJacob) : UIImage(named: "circle_radiooff_24")?.withTintColor(.themeGray)
+                    },
+                    .vStackCentered([
+                        .text { component in
+                            component.font = .body
+                            component.textColor = .themeLeah
+                            component.text = viewItem.title
+                        },
+                        .margin(3),
+                        .text { component in
+                            component.font = .subhead2
+                            component.textColor = viewItem.alert ? .themeLucian : .themeGray
+                            component.text = viewItem.alert ? "manage_accounts.backup_required".localized : viewItem.subtitle
+                        }
+                    ]),
+                    .image20 { component in
+                        component.isHidden = !viewItem.watchAccount
+                        component.imageView.image = UIImage(named: "binocule_20")?.withTintColor(.themeGray)
+                    },
+                    .secondaryCircleButton { [weak self] component in
+                        component.button.set(
+                                image: viewItem.alert ? UIImage(named: "warning_2_20") : UIImage(named: "more_2_20"),
+                                style: viewItem.alert ? .red : .default
+                        )
+                        component.onTap = {
+                            self?.onTapEdit(accountId: viewItem.accountId)
+                        }
+                    }
+                ]),
                 tableView: tableView,
                 id: viewItem.accountId,
                 hash: "\(viewItem.title)-\(viewItem.selected)-\(viewItem.alert)-\(viewItem.watchAccount)-\(isFirst)-\(isLast)",
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
-                bind: { [weak self] cell in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0, block: { (component: ImageComponent) in
-                        component.imageView.image = viewItem.selected ? UIImage(named: "circle_radioon_24")?.withTintColor(.themeJacob) : UIImage(named: "circle_radiooff_24")?.withTintColor(.themeGray)
-                    })
-                    cell.bind(index: 1, block: { (component: MultiTextComponent) in
-                        component.set(style: .m1)
-                        component.title.font = .body
-                        component.title.textColor = .themeLeah
-                        component.subtitle.font = .subhead2
-                        component.subtitle.textColor = .themeGray
-
-                        component.title.text = viewItem.title
-                        component.subtitle.text = viewItem.subtitle
-                        component.subtitle.lineBreakMode = .byTruncatingMiddle
-                    })
-
-                    cell.bind(index: 2, block: { (component: ImageComponent) in
-                        component.isHidden = !viewItem.alert && !viewItem.watchAccount
-
-                        if viewItem.alert {
-                            component.imageView.image = UIImage(named: "warning_2_20")?.withTintColor(.themeLucian)
-                        } else if viewItem.watchAccount {
-                            component.imageView.image = UIImage(named: "eye_20")?.withTintColor(.themeGray)
-                        }
-                    })
-
-                    cell.bind(index: 3, block: { (component: TransparentIconButtonComponent) in
-                        component.button.set(image: UIImage(named: "more_2_20"))
-                        component.onTap = { [weak self] in
-                            self?.onTapEdit(accountId: viewItem.accountId)
-                        }
-                    })
                 },
                 action: { [weak self] in
                     self?.viewModel.onSelect(accountId: viewItem.accountId)

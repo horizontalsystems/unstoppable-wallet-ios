@@ -109,7 +109,7 @@ extension WalletConnectSignMessageRequestViewController: SectionsDataSource {
         var rows: [RowProtocol] = []
 
         if let domain = viewModel.domain {
-            let row = tableView.grayTitleWithLeahValueRow(
+            let row = tableView.grayTitleWithValueRow(
                     id: "sign_domain",
                     title: "wallet_connect.sign.domain".localized,
                     value: domain,
@@ -131,7 +131,7 @@ extension WalletConnectSignMessageRequestViewController: SectionsDataSource {
         rows.append(messageRow)
 
         if let dAppName = viewModel.dAppName {
-            let row = tableView.grayTitleWithLeahValueRow(
+            let row = tableView.grayTitleWithValueRow(
                     id: "dApp_name",
                     title: "wallet_connect.sign.dapp_name".localized,
                     value: dAppName,

@@ -1,10 +1,10 @@
-import Foundation
-import RxSwift
-import RxRelay
-import RxCocoa
-import MarketKit
 import Chart
 import CurrencyKit
+import Foundation
+import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class NftCollectionOverviewViewModel {
     private let service: NftCollectionOverviewService
@@ -45,33 +45,37 @@ class NftCollectionOverviewViewModel {
         let collection = item.collection
 
         return ViewItem(
-                logoImageUrl: collection.imageUrl,
+                logoImageUrl: collection.imageUrl ?? collection.thumbnailImageUrl,
                 name: collection.name,
                 description: collection.description,
-                contracts: collection.contracts.map { contractViewItem(contract: $0) },
+                contracts: collection.contracts.map { contractViewItem(address: $0) },
                 links: linkViewItems(collection: collection),
-                statCharts: statViewItem(item: item)
+                statsViewItems: statViewItem(collection: collection),
+                royalty: collection.royalty.flatMap { ValueFormatter.instance.format(percentValue: $0, showSign: false) },
+                inceptionDate: collection.inceptionDate.map {DateFormatter.cachedFormatter(format: "MMMM d, yyyy").string(from: $0) }
         )
     }
 
-    private func contractViewItem(contract: NftCollection.Contract) -> ContractViewItem {
+    private func contractViewItem(address: String) -> ContractViewItem {
         ContractViewItem(
-                iconUrl: BlockchainType.ethereum.imageUrl,
-                reference: contract.address,
-                explorerUrl: "https://etherscan.io/token/\(contract.address)"
+                iconUrl: service.blockchainType.imageUrl,
+                reference: address,
+                explorerUrl: service.blockchain?.explorerUrl.map { $0.replacingOccurrences(of: "$ref", with: address) }
         )
     }
 
-    private func linkViewItems(collection: NftCollection) -> [LinkViewItem] {
+    private func linkViewItems(collection: NftCollectionMetadata) -> [LinkViewItem] {
         var viewItems = [LinkViewItem]()
 
-        if let url = collection.externalUrl {
+        if let url = collection.externalLink {
             viewItems.append(LinkViewItem(type: .website, url: url))
         }
 
-        viewItems.append(LinkViewItem(type: .openSea, url: "https://opensea.io/collection/\(collection.uid)"))
+        if let providerLink = service.providerLink {
+            viewItems.append(LinkViewItem(type: .provider(title: providerLink.title), url: providerLink.url))
+        }
 
-        if let url = collection.discordUrl {
+        if let url = collection.discordLink {
             viewItems.append(LinkViewItem(type: .discord, url: url))
         }
         if let username = collection.twitterUsername {
@@ -81,92 +85,85 @@ class NftCollectionOverviewViewModel {
         return viewItems
     }
 
-    private func statPricePointViewItem(title: String, pricePoints: [NftCollectionStatCharts.PricePoint]?) -> NftChartMarketCardView.ViewItem? {
-        guard let points = pricePoints,
-              points.count > 1,
-              let first = points.first,
-              let last = points.last else {
-            return nil
-        }
+    private func statViewItem(collection: NftCollectionMetadata) -> StatsViewItem {
+        let ownerCount = [
+            collection.ownerCount.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
+            "nft_collection.overview.owners".localized,
+        ].compactMap { $0 }
+            .joined(separator: " ")
 
-        let chartItems = points.map {
-            ChartItem(timestamp: $0.timestamp).added(name: .rate, value: $0.value)
-        }
-        let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
-
-        let diffValue = (last.value / first.value - 1) * 100
-        let diff = DiffLabel.formatted(value: diffValue)
-        let diffColor = DiffLabel.color(value: diffValue)
-
-        let value: String? = first.token.flatMap {
-            let coinValue = CoinValue(kind: .token(token: $0), value: last.value)
-            return ValueFormatter.instance.formatShort(coinValue: coinValue)
-        }
-
-        let additional = coinService.rate.map { ValueFormatter.instance.formatShort(currency: $0.currency, value: $0.value * last.value) }
-
-        return NftChartMarketCardView.ViewItem(
-                title: title,
-                value: value,
-                additionalValue: additional ?? "---".localized,
-                diff: diff ?? "n/a".localized,
-                diffColor: diffColor,
-                data: chartData,
-                trend: diffValue.isSignMinus ? .down : .up
+        let ownerViewItem = MarketCardView.ViewItem(
+            title: "nft_collection.overview.items".localized,
+            value: collection.count.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
+            description: ownerCount
         )
-    }
 
-    private func statPointViewItem(title: String, points: [NftCollectionStatCharts.Point]?, averagePrice: NftPrice?) -> NftChartMarketCardView.ViewItem? {
-        guard let points = points,
-              points.count > 1,
-              let first = points.first,
-              let last = points.last else {
-            return nil
+        let floorPriceViewItem = collection.floorPrice.map { floorPrice -> MarketCardView.ViewItem in
+            let floorPriceInCurrency = coinService.rate
+                    .map {
+                        ValueFormatter.instance
+                                .formatShort(currency: $0.currency, value: $0.value * floorPrice.value)
+                    } ?? "n/a".localized
+
+            return MarketCardView.ViewItem(
+                title: "nft_collection.overview.floor_price".localized,
+                value: string(nftPrice: floorPrice),
+                description:floorPriceInCurrency
+            )
+        } ??  MarketCardView.ViewItem(
+                title: "nft_collection.overview.floor_price".localized,
+                value: "---",
+                description:"n/a".localized
+        )
+
+        let volumeDiff = collection.change1d
+                .flatMap { DiffLabel.formatted(value: $0) }
+        let volumeColor = collection.change1d
+                .map { DiffLabel.color(value: $0) }
+
+        let volume24ViewItem = collection.volume1d.map { volume1d in
+            MarketCardView.ViewItem(
+                    title: "nft_collection.overview.24h_volume".localized,
+                    value: string(nftPrice: volume1d),
+                    description: volumeDiff,
+                    descriptionColor: volumeColor
+            )
         }
 
-        let chartItems = points.map {
-            ChartItem(timestamp: $0.timestamp).added(name: .rate, value: $0.value)
-        }
-        let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
-
-        let diffValue = (last.value / first.value - 1) * 100
-        let diff = DiffLabel.formatted(value: diffValue)
-        let diffColor = DiffLabel.color(value: diffValue)
-
-        let value = ValueFormatter.instance.formatShort(value: last.value, decimalCount: 0, symbol: "NFT")
-
-        let averageValue: String? = averagePrice.flatMap {
+        let averageValue: String? = collection.averagePrice1d.flatMap {
             let coinValue = CoinValue(kind: .token(token: $0.token), value: $0.value)
             return ValueFormatter.instance.formatShort(coinValue: coinValue)
         }
-        let additional = averageValue.map { "~\($0) / NFT" }
+        let additional = averageValue.map { "~\($0) per NFT" }
 
-        return NftChartMarketCardView.ViewItem(
-                title: title,
-                value: value,
-                additionalValue: additional ?? "----".localized,
-                diff: diff ?? "n/a".localized,
-                diffColor: diffColor,
-                data: chartData,
-                trend: diffValue.isSignMinus ? .down : .up
+        let todaySellersViewItem = collection.sales1d.map { sales1d in
+            MarketCardView.ViewItem(
+                    title: "nft_collection.overview.today_sellers".localized,
+                    value: "\(sales1d) NFT",
+                    description: additional
+            )
+        }
+
+        return StatsViewItem(
+                countItems: ownerViewItem,
+                oneDayVolumeItems: volume24ViewItem,
+                floorPriceItems: floorPriceViewItem,
+                oneDaySalesItems: todaySellersViewItem
         )
     }
 
-    private func statViewItem(item: NftCollectionOverviewService.Item) -> StatChartViewItem {
-        StatChartViewItem(
-                ownerCount: item.collection.stats.ownerCount.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
-                itemCount: item.collection.stats.count.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) },
-                oneDayVolumeItems: statPricePointViewItem(title: "nft_collection.overview.24h_volume".localized, pricePoints: item.collection.statCharts?.oneDayVolumePoints),
-                averagePriceItems: statPricePointViewItem(title: "nft_collection.overview.all_time_average".localized, pricePoints: item.collection.statCharts?.averagePricePoints),
-                floorPriceItems: statPricePointViewItem(title: "nft_collection.overview.floor_price".localized, pricePoints: item.collection.statCharts?.floorPricePoints),
-                oneDaySalesItems: statPointViewItem(title: "nft_collection.overview.today_sellers".localized, points: item.collection.statCharts?.oneDaySalesPoints, averagePrice: item.collection.stats.averagePrice1d)
-        )
+    private func string(nftPrice: NftPrice?) -> String? {
+        guard let price = nftPrice else {
+            return nil
+        }
+
+        let coinValue = CoinValue(kind: .token(token: price.token), value: price.value)
+        return ValueFormatter.instance.formatShort(coinValue: coinValue)
     }
 
 }
 
 extension NftCollectionOverviewViewModel {
-
     var viewItemDriver: Driver<ViewItem?> {
         viewItemRelay.asDriver()
     }
@@ -182,24 +179,24 @@ extension NftCollectionOverviewViewModel {
     func onTapRetry() {
         service.resync()
     }
-
 }
 
 extension NftCollectionOverviewViewModel {
-
     struct ViewItem {
         let logoImageUrl: String?
         let name: String
         let description: String?
         let contracts: [ContractViewItem]
         let links: [LinkViewItem]
-        let statCharts: StatChartViewItem
+        let statsViewItems: StatsViewItem
+        let royalty: String?
+        let inceptionDate: String?
     }
 
     struct ContractViewItem {
         let iconUrl: String
         let reference: String
-        let explorerUrl: String
+        let explorerUrl: String?
     }
 
     struct LinkViewItem {
@@ -207,20 +204,17 @@ extension NftCollectionOverviewViewModel {
         let url: String
     }
 
-    struct StatChartViewItem {
-        let ownerCount: String?
-        let itemCount: String?
-        let oneDayVolumeItems: ChartMarketCardView.ViewItem?
-        let averagePriceItems: ChartMarketCardView.ViewItem?
-        let floorPriceItems: ChartMarketCardView.ViewItem?
-        let oneDaySalesItems: ChartMarketCardView.ViewItem?
+    struct StatsViewItem {
+        let countItems: MarketCardView.ViewItem?
+        let oneDayVolumeItems: MarketCardView.ViewItem?
+        let floorPriceItems: MarketCardView.ViewItem?
+        let oneDaySalesItems: MarketCardView.ViewItem?
     }
 
     enum LinkType {
         case website
-        case openSea
+        case provider(title: String)
         case discord
         case twitter
     }
-
 }

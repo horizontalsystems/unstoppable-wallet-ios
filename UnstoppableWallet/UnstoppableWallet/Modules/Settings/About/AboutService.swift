@@ -41,6 +41,10 @@ extension AboutService {
         systemInfoManager.appVersion.description
     }
 
+    var twitterAccount: String {
+        appConfigProvider.appTwitterAccount
+    }
+
     func rateApp() {
         rateAppManager.forceShow()
     }

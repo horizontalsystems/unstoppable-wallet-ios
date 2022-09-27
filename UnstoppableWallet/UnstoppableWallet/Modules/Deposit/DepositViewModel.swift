@@ -24,6 +24,10 @@ extension DepositViewModel {
         service.address
     }
 
+    var watchAccount: Bool {
+        service.watchAccount
+    }
+
     var isMainNet: Bool {
         service.isMainNet
     }

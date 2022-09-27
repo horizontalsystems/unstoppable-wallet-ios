@@ -27,49 +27,24 @@ class NftStorage {
         return NftPrice(token: token, value: record.value)
     }
 
-    private func asset(record: NftAssetRecord, tokens: [Token]) -> NftAsset {
-        NftAsset(
-                contract: record.contract,
-                collectionUid: record.collectionUid,
-                tokenId: record.tokenId,
+    private func asset(record: NftAssetRecord, tokens: [Token]) -> NftAssetShortMetadata {
+        NftAssetShortMetadata(
+                nftUid: record.nftUid,
+                providerCollectionUid: record.providerCollectionUid,
                 name: record.name,
-                imageUrl: record.imageUrl,
-                imagePreviewUrl: record.imagePreviewUrl,
-                description: record.description,
-                externalLink: record.externalLink,
-                permalink: record.permalink,
-                traits: record.traits,
-                lastSalePrice: nftPrice(record: record.lastSalePrice, tokens: tokens),
+                previewImageUrl: record.previewImageUrl,
                 onSale: record.onSale,
-                orders: []
+                lastSalePrice: nftPrice(record: record.lastSalePrice, tokens: tokens)
         )
     }
 
-    private func collection(record: NftCollectionRecord, tokens: [Token]) -> NftCollection {
-        NftCollection(
-                contracts: record.contracts,
-                uid: record.uid,
+    private func collection(record: NftCollectionRecord, tokens: [Token]) -> NftCollectionShortMetadata {
+        NftCollectionShortMetadata(
+                providerUid: record.providerUid,
                 name: record.name,
-                description: record.description,
-                imageUrl: record.imageUrl,
-                featuredImageUrl: record.featuredImageUrl,
-                externalUrl: record.externalUrl,
-                discordUrl: record.discordUrl,
-                twitterUsername: record.twitterUsername,
-                stats: NftCollectionStats(
-                        count: nil,
-                        ownerCount: nil,
-                        totalSupply: record.totalSupply,
-                        averagePrice1d: nil,
-                        averagePrice7d: nftPrice(record: record.averagePrice7d, tokens: tokens),
-                        averagePrice30d: nftPrice(record: record.averagePrice30d, tokens: tokens),
-                        floorPrice: nil,
-                        totalVolume: nil,
-                        marketCap: nil,
-                        volumes: [:],
-                        changes: [:]
-                ),
-                statCharts: nil
+                thumbnailImageUrl: record.thumbnailImageUrl,
+                averagePrice7d: nftPrice(record: record.averagePrice7d, tokens: tokens),
+                averagePrice30d: nftPrice(record: record.averagePrice30d, tokens: tokens)
         )
     }
 
@@ -85,45 +60,83 @@ class NftStorage {
 
 extension NftStorage {
 
-    func assetCollection(accountId: String) throws -> NftAssetCollection {
-        let collectionRecords = try storage.collections(accountId: accountId)
-        let assetRecords = try storage.assets(accountId: accountId)
+    func addressMetadata(nftKey: NftKey) -> NftAddressMetadata? {
+        do {
+            let collectionRecords = try storage.collections(blockchainTypeUid: nftKey.blockchainType.uid, accountId: nftKey.account.id)
+            let assetRecords = try storage.assets(blockchainTypeUid: nftKey.blockchainType.uid, accountId: nftKey.account.id)
 
-        let priceRecords = priceRecords(collectionRecords: collectionRecords) + priceRecords(assetRecords: assetRecords)
-        let tokens = try marketKit.tokens(queries: tokenQueries(records: priceRecords))
+            let priceRecords = priceRecords(collectionRecords: collectionRecords) + priceRecords(assetRecords: assetRecords)
+            let tokens = try marketKit.tokens(queries: tokenQueries(records: priceRecords))
 
-        return NftAssetCollection(
-                collections: collectionRecords.map { collection(record: $0, tokens: tokens) },
-                assets: assetRecords.map { asset(record: $0, tokens: tokens) }
-        )
-    }
-
-    func collection(accountId: String, uid: String) throws -> NftCollection? {
-        guard let record = try storage.collection(accountId: accountId, uid: uid) else {
+            return NftAddressMetadata(
+                    collections: collectionRecords.map { collection(record: $0, tokens: tokens) },
+                    assets: assetRecords.map { asset(record: $0, tokens: tokens) }
+            )
+        } catch {
+            print("Could not fetch NftAddressMetadata: \(error)")
             return nil
         }
-        let priceRecords = priceRecords(collectionRecords: [record])
-        let tokens = try marketKit.tokens(queries: tokenQueries(records: priceRecords))
-
-        return collection(record: record, tokens: tokens)
     }
 
-    func asset(accountId: String, collectionUid: String, tokenId: String) throws -> NftAsset? {
-        guard let record = try storage.asset(accountId: accountId, collectionUid: collectionUid, tokenId: tokenId) else {
+    func assetShortMetadata(nftUid: NftUid) -> NftAssetShortMetadata? {
+        do {
+            guard let assetRecord = try storage.asset(nftUid: nftUid) else {
+                return nil
+            }
+
+            return asset(record: assetRecord, tokens: [])
+        } catch {
+            print("Could not fetch NftAssetRecord: \(error)")
             return nil
         }
-        let priceRecords = priceRecords(assetRecords: [record])
-        let tokens = try marketKit.tokens(queries: tokenQueries(records: priceRecords))
-
-        return asset(record: record, tokens: tokens)
     }
 
-    func save(assetCollection: NftAssetCollection, accountId: String) throws {
-        try storage.save(
-                collections: assetCollection.collections.map { NftCollectionRecord(accountId: accountId, collection: $0) },
-                assets: assetCollection.assets.map { NftAssetRecord(accountId: accountId, asset: $0) },
-                accountId: accountId
-        )
+    func save(addressMetadata: NftAddressMetadata, nftKey: NftKey) {
+        do {
+            try storage.save(
+                    collections: addressMetadata.collections.map { NftCollectionRecord(blockchainTypeUid: nftKey.blockchainType.uid, accountId: nftKey.account.id, collection: $0) },
+                    assets: addressMetadata.assets.map { NftAssetRecord(blockchainTypeUid: nftKey.blockchainType.uid, accountId: nftKey.account.id, asset: $0) },
+                    blockchainTypeUid: nftKey.blockchainType.uid,
+                    accountId: nftKey.account.id
+            )
+        } catch {
+            print("Could not save NftAddressMetadata: \(error)")
+        }
+    }
+
+    func lastSyncTimestamp(nftKey: NftKey) -> TimeInterval? {
+        do {
+            return try storage.metadataSyncRecord(blockchainTypeUid: nftKey.blockchainType.uid, accountId: nftKey.account.id)?.lastSyncTimestamp
+        } catch {
+            print("Could not fetch NftMetadataSyncRecord: \(error)")
+            return nil
+        }
+    }
+
+    func save(lastSyncTimestamp: TimeInterval, nftKey: NftKey) {
+        do {
+            let record = NftMetadataSyncRecord(blockchainTypeUid: nftKey.blockchainType.uid, accountId: nftKey.account.id, lastSyncTimestamp: lastSyncTimestamp)
+            try storage.save(metadataSyncRecord: record)
+        } catch {
+            print("Could not save NftMetadataSyncRecord: \(error)")
+        }
+    }
+
+    func assetsBriefMetadata(nftUids: Set<NftUid>) -> [NftAssetBriefMetadata] {
+        do {
+            return try storage.assetsBriefMetadata(nftUids: nftUids)
+        } catch {
+            print("Could not fetch [NftAssetBriefMetadata]: \(error)")
+            return []
+        }
+    }
+
+    func save(assetsBriefMetadata: [NftAssetBriefMetadata]) {
+        do {
+            try storage.save(assetsBriefMetadata: assetsBriefMetadata)
+        } catch {
+            print("Could not save [NftAssetBriefMetadata]: \(error)")
+        }
     }
 
 }

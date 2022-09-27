@@ -5,6 +5,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import ComponentKit
+import PinKit
 
 class ManageAccountViewController: ThemeViewController {
     private let viewModel: ManageAccountViewModel
@@ -13,15 +14,15 @@ class ManageAccountViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let nameCell = TextFieldCell()
-    private let showRecoveryPhraseCell = BaseSelectableThemeCell()
-    private let backupRecoveryPhraseCell = BaseSelectableThemeCell()
-    private let unlinkCell = BaseSelectableThemeCell()
 
     private var keyActionState: ManageAccountViewModel.KeyActionState = .none
     private var isLoaded = false
 
-    init(viewModel: ManageAccountViewModel) {
+    private weak var sourceViewController: ManageAccountsViewController?
+
+    init(viewModel: ManageAccountViewModel, sourceViewController: ManageAccountsViewController) {
         self.viewModel = viewModel
+        self.sourceViewController = sourceViewController
 
         super.init()
 
@@ -36,7 +37,8 @@ class ManageAccountViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = viewModel.accountName
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.save".localized, style: .plain, target: self, action: #selector(onTapSaveButton))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.save".localized, style: .done, target: self, action: #selector(onTapSave))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -52,57 +54,22 @@ class ManageAccountViewController: ThemeViewController {
         nameCell.autocapitalizationType = .words
         nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
 
-        showRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: viewModel.additionalViewItems.isEmpty)
-        CellBuilder.build(cell: showRecoveryPhraseCell, elements: [.image20, .text, .image20])
-        showRecoveryPhraseCell.bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "key_20")?.withTintColor(.themeGray)
-        })
-        showRecoveryPhraseCell.bind(index: 1, block: { (component: TextComponent) in
-            component.font = .body
-            component.textColor = .themeLeah
-            component.text = "manage_account.show_recovery_phrase".localized
-        })
-        showRecoveryPhraseCell.bind(index: 2, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-        })
-
-        backupRecoveryPhraseCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: viewModel.additionalViewItems.isEmpty)
-        CellBuilder.build(cell: backupRecoveryPhraseCell, elements: [.image20, .text, .image20, .margin12, .image20])
-        backupRecoveryPhraseCell.bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "key_20")?.withTintColor(.themeGray)
-        })
-        backupRecoveryPhraseCell.bind(index: 1, block: { (component: TextComponent) in
-            component.font = .body
-            component.textColor = .themeLeah
-            component.text = "manage_account.backup_recovery_phrase".localized
-        })
-        backupRecoveryPhraseCell.bind(index: 2, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "warning_2_20")?.withTintColor(.themeLucian)
-        })
-        backupRecoveryPhraseCell.bind(index: 3, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-        })
-
-        unlinkCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        CellBuilder.build(cell: unlinkCell, elements: [.image20, .text])
-        unlinkCell.bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "trash_20")?.withTintColor(.themeLucian)
-        })
-        unlinkCell.bind(index: 1, block: { (component: TextComponent) in
-            component.font = .body
-            component.textColor = .themeLucian
-            component.text = "manage_account.unlink".localized
-        })
-
         subscribe(disposeBag, viewModel.saveEnabledDriver) { [weak self] in self?.navigationItem.rightBarButtonItem?.isEnabled = $0 }
         subscribe(disposeBag, viewModel.keyActionStateDriver) { [weak self] in
             self?.keyActionState = $0
             self?.reloadTable()
         }
-        subscribe(disposeBag, viewModel.openShowKeySignal) { [weak self] in self?.openShowKey(account: $0) }
-        subscribe(disposeBag, viewModel.openBackupKeySignal) { [weak self] in self?.openBackupKey(account: $0) }
+        subscribe(disposeBag, viewModel.openUnlockSignal) { [weak self] in self?.openUnlock() }
+        subscribe(disposeBag, viewModel.openRecoveryPhraseSignal) { [weak self] in self?.openRecoveryPhrase(account: $0) }
+        subscribe(disposeBag, viewModel.openEvmPrivateKeySignal) { [weak self] in self?.openEvmPrivateKey(account: $0) }
+        subscribe(disposeBag, viewModel.openPublicKeysSignal) { [weak self] in self?.openPublicKeys(account: $0) }
+        subscribe(disposeBag, viewModel.openBackupSignal) { [weak self] in self?.openBackup(account: $0) }
         subscribe(disposeBag, viewModel.openUnlinkSignal) { [weak self] in self?.openUnlink(account: $0) }
-        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.navigationController?.popViewController(animated: true) }
+        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
+            self?.dismiss(animated: true) { [weak self] in
+                self?.sourceViewController?.handleDismiss()
+            }
+        }
 
         tableView.buildSections()
 
@@ -113,20 +80,46 @@ class ManageAccountViewController: ThemeViewController {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
-    @objc private func onTapSaveButton() {
+    @objc private func onTapClose() {
+        dismiss(animated: true)
+    }
+
+    @objc private func onTapSave() {
         viewModel.onSave()
     }
 
-    private func openShowKey(account: Account) {
-        guard let viewController = ShowKeyModule.viewController(account: account) else {
+    private func openUnlock() {
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: .margin48, right: 0)
+        let viewController = App.shared.pinKit.unlockPinModule(delegate: self, biometryUnlockMode: .disabled, insets: insets, cancellable: true, autoDismiss: true)
+        present(viewController, animated: true)
+    }
+
+    private func openRecoveryPhrase(account: Account) {
+        guard let viewController = RecoveryPhraseModule.viewController(account: account) else {
             return
         }
 
         present(viewController, animated: true)
     }
 
-    private func openBackupKey(account: Account) {
-        guard let viewController = BackupKeyModule.viewController(account: account) else {
+    private func openEvmPrivateKey(account: Account) {
+        guard let viewController = EvmPrivateKeyModule.viewController(account: account) else {
+            return
+        }
+
+        present(viewController, animated: true)
+    }
+
+    private func openPublicKeys(account: Account) {
+        guard let viewController = PublicKeysModule.viewController(account: account) else {
+            return
+        }
+
+        present(viewController, animated: true)
+    }
+
+    private func openBackup(account: Account) {
+        guard let viewController = BackupModule.viewController(account: account) else {
             return
         }
 
@@ -154,78 +147,117 @@ class ManageAccountViewController: ThemeViewController {
 
 extension ManageAccountViewController: SectionsDataSource {
 
-    private var keyActionSection: SectionProtocol {
-        var rows = [RowProtocol]()
+    private func keyActionSections() -> [SectionProtocol] {
+        var sections = [SectionProtocol]()
 
         switch keyActionState {
         case .showRecoveryPhrase:
-            let row = StaticRow(
-                    cell: showRecoveryPhraseCell,
-                    id: "show-recovery-phrase",
-                    height: .heightCell48,
-                    autoDeselect: true,
-                    action: { [weak self] in
-                        self?.viewModel.onTapShowKey()
-                    }
+            sections.append(
+                    Section(
+                            id: "show-actions",
+                            footerState: .margin(height: .margin32),
+                            rows: [
+                                tableView.imageTitleRow(
+                                        id: "recovery-phrase",
+                                        image: UIImage(named: "paper_contract_20"),
+                                        title: "manage_account.recovery_phrase".localized,
+                                        color: .themeJacob,
+                                        autoDeselect: true,
+                                        isFirst: true
+                                ) { [weak self] in
+                                    self?.viewModel.onTapRecoveryPhrase()
+                                },
+                                tableView.imageTitleRow(
+                                        id: "evm-private-key",
+                                        image: UIImage(named: "key_20"),
+                                        title: "manage_account.evm_private_key".localized,
+                                        color: .themeJacob,
+                                        autoDeselect: true
+                                ) { [weak self] in
+                                    self?.viewModel.onTapEvmPrivateKey()
+                                },
+                                tableView.imageTitleRow(
+                                        id: "public-keys",
+                                        image: UIImage(named: "link_20"),
+                                        title: "manage_account.public_keys".localized,
+                                        color: .themeJacob,
+                                        autoDeselect: true,
+                                        isLast: true
+                                ) { [weak self] in
+                                    self?.viewModel.onTapPublicKeys()
+                                }
+                            ]
+                    )
             )
-            rows.append(row)
+
+            let additionalViewItems = viewModel.additionalViewItems
+
+            if !additionalViewItems.isEmpty {
+                sections.append(
+                        Section(
+                                id: "additional",
+                                footerState: .margin(height: .margin32),
+                                rows: additionalViewItems.enumerated().map { index, viewItem in
+                                    let isFirst = index == 0
+                                    let isLast = index == additionalViewItems.count - 1
+
+                                    return CellBuilderNew.row(
+                                            rootElement: .hStack([
+                                                .image20 { component in
+                                                    component.setImage(urlString: viewItem.imageUrl, placeholder: nil)
+                                                },
+                                                .text { component in
+                                                    component.font = .body
+                                                    component.textColor = .themeLeah
+                                                    component.text = viewItem.title
+                                                },
+                                                .secondaryButton { component in
+                                                    component.button.set(style: .default)
+                                                    component.button.setTitle(viewItem.value, for: .normal)
+                                                    component.onTap = {
+                                                        CopyHelper.copyAndNotify(value: viewItem.value)
+                                                    }
+                                                }
+                                            ]),
+                                            tableView: tableView,
+                                            id: "additional-\(index)",
+                                            height: .heightCell48,
+                                            bind: { cell in
+                                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                                            }
+                                    )
+                                }
+                        )
+                )
+            }
         case .backupRecoveryPhrase:
-            let row = StaticRow(
-                    cell: backupRecoveryPhraseCell,
-                    id: "backup-recovery-phrase",
-                    height: .heightCell48,
-                    autoDeselect: true,
-                    action: { [weak self] in
-                        self?.viewModel.onTapBackupKey()
-                    }
+            sections.append(
+                    Section(
+                            id: "backup-actions",
+                            footerState: .margin(height: .margin32),
+                            rows: [
+                                tableView.imageTitleRow(
+                                        id: "backup-recovery-phrase",
+                                        image: UIImage(named: "warning_2_20"),
+                                        title: "manage_account.backup_recovery_phrase".localized,
+                                        color: .themeLucian,
+                                        autoDeselect: true,
+                                        isFirst: true,
+                                        isLast: true
+                                ) { [weak self] in
+                                    self?.viewModel.onTapBackup()
+                                }
+                            ]
+                    )
             )
-            rows.append(row)
         default: ()
         }
 
-        let viewItems = viewModel.additionalViewItems
-
-        for (index, viewItem) in viewItems.enumerated() {
-            let isLast = index == viewItems.count - 1
-
-            let additionalRow = CellBuilder.row(
-                    elements: [.image20, .text, .secondaryButton],
-                    tableView: tableView,
-                    id: "additional-\(index)",
-                    height: .heightCell48,
-                    bind: { cell in
-                        cell.set(backgroundStyle: .lawrence, isLast: isLast)
-
-                        cell.bind(index: 0, block: { (component: ImageComponent) in
-                            component.imageView.image = UIImage(named: viewItem.iconName)?.withTintColor(.themeGray)
-                        })
-                        cell.bind(index: 1, block: { (component: TextComponent) in
-                            component.font = .body
-                            component.textColor = .themeLeah
-                            component.text = viewItem.title
-                        })
-                        cell.bind(index: 2, block: { (component: SecondaryButtonComponent) in
-                            component.button.set(style: .default)
-                            component.button.setTitle(viewItem.value, for: .normal)
-                            component.onTap = {
-                                CopyHelper.copyAndNotify(value: viewItem.value)
-                            }
-                        })
-                    }
-            )
-
-            rows.append(additionalRow)
-        }
-
-        return Section(
-                id: "key-action",
-                footerState: .margin(height: rows.isEmpty ? 0 : .margin32),
-                rows: rows
-        )
+        return sections
     }
 
     func buildSections() -> [SectionProtocol] {
-        [
+        var sections: [SectionProtocol] = [
             Section(
                     id: "margin",
                     headerState: .margin(height: .margin12)
@@ -241,24 +273,43 @@ extension ManageAccountViewController: SectionsDataSource {
                                 height: .heightSingleLineCell
                         )
                     ]
-            ),
-            keyActionSection,
-            Section(
-                    id: "unlink",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: unlinkCell,
-                                id: "unlink",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.onTapUnlink()
-                                }
-                        )
-                    ]
             )
         ]
+
+        sections.append(contentsOf: keyActionSections())
+
+        sections.append(
+                Section(
+                        id: "unlink",
+                        footerState: .margin(height: .margin32),
+                        rows: [
+                            tableView.imageTitleRow(
+                                    id: "unlink",
+                                    image: UIImage(named: "trash_20"),
+                                    title: "manage_account.unlink".localized,
+                                    color: .themeLucian,
+                                    autoDeselect: true,
+                                    isFirst: true,
+                                    isLast: true
+                            ) { [weak self] in
+                                self?.onTapUnlink()
+                            }
+                        ]
+                )
+        )
+
+        return sections
+    }
+
+}
+
+extension ManageAccountViewController: IUnlockDelegate {
+
+    func onUnlock() {
+        viewModel.onUnlock()
+    }
+
+    func onCancelUnlock() {
     }
 
 }

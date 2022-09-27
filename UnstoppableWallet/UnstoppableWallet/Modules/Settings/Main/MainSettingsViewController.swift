@@ -224,7 +224,7 @@ class MainSettingsViewController: ThemeViewController {
             ),
             tableView.imageTitleArrowRow(
                     id: "experimental-features",
-                    image: "flask_20",
+                    image: UIImage(named: "flask_20"),
                     title: "settings.experimental_features".localized,
                     isLast: true,
                     action: { [weak self] in
@@ -238,7 +238,7 @@ class MainSettingsViewController: ThemeViewController {
         [
             tableView.imageTitleArrowRow(
                     id: "faq",
-                    image: "message_square_20",
+                    image: UIImage(named: "message_square_20"),
                     title: "settings.faq".localized,
                     isFirst: true,
                     action: { [weak self] in
@@ -247,7 +247,7 @@ class MainSettingsViewController: ThemeViewController {
             ),
             tableView.imageTitleArrowRow(
                     id: "academy",
-                    image: "academy_1_20",
+                    image: UIImage(named: "academy_1_20"),
                     title: "guides.title".localized,
                     isLast: true,
                     action: { [weak self] in
@@ -283,9 +283,25 @@ class MainSettingsViewController: ThemeViewController {
     private func openWalletConnect(mode: MainSettingsViewModel.WalletConnectOpenMode) {
         switch mode {
         case .noAccount:
-            present(WalletConnectNoAccountViewController().toBottomSheet, animated: true)
+            let viewController = InformationModule.simpleInfo(
+                    title: "wallet_connect.title".localized,
+                    image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob),
+                    description: "wallet_connect.no_account.description".localized,
+                    buttonTitle: "wallet_connect.no_account.i_understand".localized,
+                    onTapButton: InformationModule.afterClose())
+
+            present(viewController, animated: true)
         case .watchAccount:
-            present(WalletConnectWatchAccountViewController(sourceViewController: self).toBottomSheet, animated: true)
+            let viewController = InformationModule.simpleInfo(
+                    title: "wallet_connect.title".localized,
+                    image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob),
+                    description: "wallet_connect.watch_account.description".localized,
+                    buttonTitle: "wallet_connect.watch_account.switch".localized,
+                    onTapButton: InformationModule.afterClose { [weak self] in
+                        self?.present(SwitchAccountModule.viewController(), animated: true)
+                    })
+
+            present(viewController, animated: true)
         case .list:
             navigationController?.pushViewController(WalletConnectListModule.viewController(), animated: true)
         }

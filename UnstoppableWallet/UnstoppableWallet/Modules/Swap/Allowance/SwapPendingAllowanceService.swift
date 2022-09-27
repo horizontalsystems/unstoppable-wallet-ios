@@ -49,8 +49,11 @@ class SwapPendingAllowanceService {
             return
         }
 
-//        print("new state: \(pendingAllowance != allowance.value ? State.pending : State.approved)")
-        state = pendingAllowance != allowance.value ? .pending : .approved
+        if pendingAllowance != allowance.value {
+            state = pendingAllowance == 0 ? .revoking : .pending
+        } else {
+            state = .approved
+        }
     }
 
 }
@@ -87,7 +90,7 @@ extension SwapPendingAllowanceService {
 extension SwapPendingAllowanceService {
 
     enum State: Int {
-        case notAllowed, pending, approved
+        case notAllowed, revoking, pending, approved
     }
 
 }

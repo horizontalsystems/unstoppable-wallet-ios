@@ -10,9 +10,7 @@ class WalletHeaderView: UITableViewHeaderFooterView {
 
     private let amountView = HeaderAmountView()
     private let sortAddCoinView = TextDropDownAndSettingsView()
-    private let addressButton = SecondaryButton()
-
-    private var currentAddress: String?
+    private let watchAccountImage = ImageComponent(size: .iconSize24)
 
     var onTapSortBy: (() -> ())?
     var onTapAddCoin: (() -> ())?
@@ -49,26 +47,17 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         sortAddCoinView.onTapDropDown = { [weak self] in self?.onTapSortBy?() }
         sortAddCoinView.onTapSettings = { [weak self] in self?.onTapAddCoin?() }
 
-        contentView.addSubview(addressButton)
-        addressButton.snp.makeConstraints { maker in
+        contentView.addSubview(watchAccountImage)
+        watchAccountImage.snp.makeConstraints { maker in
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
             maker.centerY.equalTo(sortAddCoinView)
         }
 
-        addressButton.set(style: .default)
-        addressButton.addTarget(self, action: #selector(onTapAddressButton), for: .touchUpInside)
+        watchAccountImage.imageView.image = UIImage(named: "binocule_24")?.withTintColor(.themeGray)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    @objc private func onTapAddressButton() {
-        guard let address = currentAddress else {
-            return
-        }
-
-        CopyHelper.copyAndNotify(value: address)
     }
 
     var onTapAmount: (() -> ())? {
@@ -85,15 +74,8 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         amountView.set(amountText: viewItem.amount, expired: viewItem.amountExpired)
         amountView.set(convertedAmountText: viewItem.convertedValue, expired: viewItem.convertedValueExpired)
 
-        sortAddCoinView.bind(dropdownTitle: sortBy, settingsHidden: viewItem.manageWalletsHidden)
-
-        if let address = viewItem.address {
-            addressButton.isHidden = false
-            addressButton.setTitle(address.shortened, for: .normal)
-            currentAddress = address
-        } else {
-            addressButton.isHidden = true
-        }
+        sortAddCoinView.bind(dropdownTitle: sortBy, settingsHidden: viewItem.watchAccount)
+        watchAccountImage.isHidden = !viewItem.watchAccount
     }
 
 }

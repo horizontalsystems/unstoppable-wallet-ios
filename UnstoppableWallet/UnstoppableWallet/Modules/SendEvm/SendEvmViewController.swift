@@ -54,7 +54,6 @@ class SendEvmViewController: ThemeViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(didTapCancel))
 
         iconImageView.setImage(withUrlString: viewModel.token.coin.imageUrl, placeholder: UIImage(named: viewModel.token.placeholderImageName))
-        iconImageView.tintColor = .themeGray
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

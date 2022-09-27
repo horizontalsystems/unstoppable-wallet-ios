@@ -18,7 +18,7 @@ class TransactionInfoViewModel {
         subscribe(disposeBag, service.transactionItemUpdatedObserver) { [weak self] in self?.updateTransactionItem(item: $0) }
     }
 
-    private func updateTransactionItem(item: TransactionInfoItem) {
+    private func updateTransactionItem(item: TransactionInfoService.Item) {
         viewItemsRelay.accept(factory.items(item: item))
     }
 

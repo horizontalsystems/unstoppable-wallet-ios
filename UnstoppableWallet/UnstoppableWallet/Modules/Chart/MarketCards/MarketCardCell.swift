@@ -5,10 +5,9 @@ import HUD
 import Chart
 import ComponentKit
 
-class MarketCardCell<PreviewView: MarketCardView>: UITableViewCell {
+class MarketCardCell: UITableViewCell {
     private let stackView = UIStackView()
-    private var configuration: ChartConfiguration?
-    private(set) var marketCardViews = [PreviewView]()
+    private(set) var marketCardViews = [UIView]()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,20 +31,23 @@ class MarketCardCell<PreviewView: MarketCardView>: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func append(viewItem: MarketCardView.ViewItem, onTap: (() -> ())? = nil) {
+        let marketCardView = MarketCardView()
+        marketCardView.onTap = onTap
+
+        append(view: marketCardView)
+        marketCardView.set(viewItem: viewItem)
+    }
+
 }
 
 extension MarketCardCell {
 
-    func append(viewItem: PreviewView.ViewItem, onTap: (() -> ())? = nil) {
-        let marketCardView = PreviewView()
-        marketCardView.onTap = onTap
+    func append(view: UIView?) {
+        guard let view = view else {
+            return
+        }
 
-        marketCardView.set(viewItem: viewItem)
-
-        append(view: marketCardView)
-    }
-
-    func append(view: PreviewView) {
         marketCardViews.append(view)
         stackView.addArrangedSubview(view)
     }

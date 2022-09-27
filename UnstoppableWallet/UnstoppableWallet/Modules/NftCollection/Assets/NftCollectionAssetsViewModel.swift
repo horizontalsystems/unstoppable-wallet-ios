@@ -60,12 +60,12 @@ class NftCollectionAssetsViewModel {
         }
 
         return NftDoubleCell.ViewItem(
-                collectionUid: asset.collectionUid,
-                contractAddress: asset.contract.address,
-                tokenId: asset.tokenId,
-                imageUrl: asset.imagePreviewUrl,
-                name: asset.name ?? "#\(asset.tokenId)",
-                onSale: asset.onSale,
+                providerCollectionUid: asset.providerCollectionUid,
+                nftUid: asset.nftUid,
+                imageUrl: asset.previewImageUrl,
+                name: asset.displayName,
+                count: nil,
+                onSale: asset.saleInfo != nil,
                 coinPrice: coinPrice,
                 fiatPrice: fiatPrice
         )
@@ -87,8 +87,8 @@ extension NftCollectionAssetsViewModel {
         syncErrorRelay.asDriver()
     }
 
-    func asset(tokenId: String) -> NftAsset? {
-        service.asset(tokenId: tokenId)
+    func onLoad() {
+        service.loadInitial()
     }
 
     func onTapRetry() {

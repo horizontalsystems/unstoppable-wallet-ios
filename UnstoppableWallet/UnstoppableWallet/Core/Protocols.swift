@@ -34,8 +34,8 @@ protocol IDepositAdapter: IBaseAdapter {
 }
 
 protocol ITransactionsAdapter {
-    var transactionState: AdapterState { get }
-    var transactionStateUpdatedObservable: Observable<Void> { get }
+    var syncing: Bool { get }
+    var syncingObservable: Observable<Void> { get }
     var lastBlockInfo: LastBlockInfo? { get }
     var lastBlockUpdatedObservable: Observable<Void> { get }
     var explorerTitle: String { get }
@@ -88,6 +88,30 @@ protocol ISendZcashAdapter {
     func validate(address: String) throws -> ZcashAdapter.AddressType
     var fee: Decimal { get }
     func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
+}
+
+// Nft Adapters
+
+protocol INftAdapter: AnyObject {
+    var userAddress: String { get }
+    var nftRecordsObservable: Observable<[NftRecord]> { get }
+    var nftRecords: [NftRecord] { get }
+    func nftRecord(nftUid: NftUid) -> NftRecord?
+    func transferEip721TransactionData(contractAddress: String, to: EthereumKit.Address, tokenId: String) -> TransactionData?
+    func transferEip1155TransactionData(contractAddress: String, to: String, tokenId: String, value: Decimal) -> TransactionData?
+    func sync()
+}
+
+protocol INftProvider {
+    var title: String { get }
+    func collectionLink(providerUid: String) -> String?
+    func addressMetadataSingle(blockchainType: BlockchainType, address: String) -> Single<NftAddressMetadata>
+    func assetsBriefMetadataSingle(nftUids: [NftUid]) -> Single<[NftAssetBriefMetadata]>
+    func extendedAssetMetadataSingle(nftUid: NftUid, providerCollectionUid: String) -> Single<(NftAssetMetadata, NftCollectionMetadata)>
+    func collectionAssetsMetadataSingle(blockchainType: BlockchainType, providerCollectionUid: String, paginationData: PaginationData?) -> Single<([NftAssetMetadata], PaginationData?)>
+    func collectionMetadataSingle(blockchainType: BlockchainType, providerUid: String) -> Single<NftCollectionMetadata>
+    func assetEventsMetadataSingle(nftUid: NftUid, eventType: NftEventMetadata.EventType?, paginationData: PaginationData?) -> Single<([NftEventMetadata], PaginationData?)>
+    func collectionEventsMetadataSingle(blockchainType: BlockchainType, providerUid: String, eventType: NftEventMetadata.EventType?, paginationData: PaginationData?) -> Single<([NftEventMetadata], PaginationData?)>
 }
 
 protocol IFeeRateProvider {

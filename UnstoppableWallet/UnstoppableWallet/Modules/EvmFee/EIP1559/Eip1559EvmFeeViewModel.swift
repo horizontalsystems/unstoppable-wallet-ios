@@ -105,7 +105,7 @@ class Eip1559EvmFeeViewModel {
         baseFeeRelay.accept(baseFeeViewItem.description)
         baseFeeSliderRelay.accept(baseFeeViewItem)
 
-        let tipsStep = gasPriceService.recommendedTips.significant(depth: FeeViewItemFactory.stepDepth)
+        let tipsStep = (gasPriceService.usingRecommended ? gasPriceService.recommendedTips : gasPriceService.tips).significant(depth: FeeViewItemFactory.stepDepth)
         let tipsViewItem = feeViewItemFactory.viewItem(value: gasPriceService.tips, step: tipsStep, range: gasPriceService.tipsRange)
         tipsRelay.accept(tipsViewItem.description)
         tipsSliderRelay.accept(tipsViewItem)

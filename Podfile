@@ -19,13 +19,15 @@ def appPods
   pod 'BitcoinCore.swift', git: 'https://github.com/horizontalsystems/bitcoin-kit-ios.git'
   # pod 'BitcoinCore.swift', path: '../bitcoin-kit-ios/'
 
-  pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit', :tag => '0.16.3-beta'
+  pod 'ZcashLightClientKit', :git => 'https://github.com/zcash/ZcashLightClientKit', :tag => '0.16.10-beta'
 #  pod 'ZcashLightClientKit', path: '../ZcashLightClientKit'
 
   pod 'EthereumKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
   # pod 'EthereumKit.swift', path: '../ethereum-kit-ios/'
   pod 'Erc20Kit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
   # pod 'Erc20Kit.swift', path: '../ethereum-kit-ios/'
+  pod 'NftKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
+  # pod 'NftKit.swift', path: '../ethereum-kit-ios/'
   pod 'UniswapKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
   # pod 'UniswapKit.swift', :path => '../ethereum-kit-ios'
   pod 'OneInchKit.swift', git: 'https://github.com/horizontalsystems/ethereum-kit-ios'
@@ -89,7 +91,6 @@ def appPods
   pod 'BigInt'
   pod 'KeychainAccess'
   pod 'SnapKit'
-  pod 'CollectionViewCenteredFlowLayout'
 
   pod 'WalletConnect', git: 'https://github.com/horizontalsystems/wallet-connect-swift'
 
@@ -122,6 +123,12 @@ post_install do |installer|
       config.build_settings['DEBUG_INFORMATION_FORMAT'] = 'dwarf'
       config.build_settings['ENABLE_BITCODE'] = 'NO'
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+    end
+
+    if target.respond_to?(:product_type) and target.product_type == "com.apple.product-type.bundle"
+      target.build_configurations.each do |config|
+        config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+      end
     end
   end
 end

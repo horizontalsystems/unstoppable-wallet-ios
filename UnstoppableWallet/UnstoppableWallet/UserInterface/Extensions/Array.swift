@@ -9,4 +9,10 @@ extension Array {
         return self[index]
     }
 
+    func chunks(_ chunkSize: Int) -> [[Element]] {
+        stride(from: 0, to: self.count, by: chunkSize).map {
+            Array(self[$0..<Swift.min($0 + chunkSize, self.count)])
+        }
+    }
+
 }

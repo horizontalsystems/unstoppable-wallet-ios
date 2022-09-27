@@ -1051,8 +1051,6 @@
 "wallet_connect.active_account" = "Активный Кошелек";
 "wallet_connect.address" = "Адрес";
 "wallet_connect.network" = "Сеть";
-"wallet_connect.address" = "Адрес";
-"wallet_connect.network" = "Сеть";
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
 "wallet_connect.main.unsupported_chains" = "Некоторые блокчейны не поддерживаются!";
 "wallet_connect.connect_description" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";

@@ -1,11 +1,12 @@
-import MarketKit
-import SectionsTableView
 import UIKit
+import SectionsTableView
+import MarketKit
 
 struct NftActivityModule {
-    static func viewController(eventListType: NftEventListType, defaultEventType: NftEvent.EventType? = .sale) -> NftActivityViewController {
+
+    static func viewController(eventListType: NftEventListType, defaultEventType: NftEventMetadata.EventType? = .sale) -> NftActivityViewController {
         let coinPriceService = WalletCoinPriceService(currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
-        let service = NftActivityService(eventListType: eventListType, defaultEventType: defaultEventType, marketKit: App.shared.marketKit, coinPriceService: coinPriceService)
+        let service = NftActivityService(eventListType: eventListType, defaultEventType: defaultEventType, nftMetadataManager: App.shared.nftMetadataManager, coinPriceService: coinPriceService)
         let viewModel = NftActivityViewModel(service: service)
 
         let cellFactory: INftActivityCellFactory
@@ -18,9 +19,10 @@ struct NftActivityModule {
     }
 
     enum NftEventListType {
-        case collection(uid: String)
-        case asset(contractAddress: String, tokenId: String)
+        case collection(blockchainType: BlockchainType, providerUid: String)
+        case asset(nftUid: NftUid)
     }
+
 }
 
 protocol INftActivityCellFactory: AnyObject {

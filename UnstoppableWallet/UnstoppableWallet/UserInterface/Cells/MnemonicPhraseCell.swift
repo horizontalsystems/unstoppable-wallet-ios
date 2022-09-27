@@ -14,9 +14,10 @@ class MnemonicPhraseCell: BaseThemeCell {
     private var words = [String]()
 
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewCenteredFlowLayout())
+    private let hintText = TextComponent()
 
-    init() {
-        super.init(style: .default, reuseIdentifier: nil)
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         set(backgroundStyle: Self.backgroundStyle, cornerRadius: .cornerRadius24, isFirst: true, isLast: true)
 
@@ -28,10 +29,22 @@ class MnemonicPhraseCell: BaseThemeCell {
 
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.isUserInteractionEnabled = false
 
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(MnemonicWordCell.self, forCellWithReuseIdentifier: String(describing: MnemonicWordCell.self))
+
+        wrapperView.addSubview(hintText)
+        hintText.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.top.bottom.equalToSuperview()
+        }
+
+        hintText.textAlignment = .center
+        hintText.numberOfLines = 0
+        hintText.font = .subhead2
+        hintText.textColor = .themeGray
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -42,11 +55,21 @@ class MnemonicPhraseCell: BaseThemeCell {
 
 extension MnemonicPhraseCell {
 
-    func set(words: [String]) {
-        self.words = words
+    func set(state: State) {
+        switch state {
+        case .hidden(let hint):
+            collectionView.isHidden = true
+            hintText.isHidden = false
 
-        collectionView.reloadData()
-        collectionView.layoutIfNeeded()
+            hintText.text = hint
+        case .visible(let words):
+            hintText.isHidden = true
+            collectionView.isHidden = false
+
+            self.words = words
+            collectionView.reloadData()
+            collectionView.layoutIfNeeded()
+        }
     }
 
 }
@@ -115,6 +138,15 @@ extension MnemonicPhraseCell {
 
         let collectionHeight = CGFloat(lines) * lineHeight + CGFloat(lines - 1) * lineSpacing
         return collectionHeight + verticalPadding * 2
+    }
+
+}
+
+extension MnemonicPhraseCell {
+
+    enum State {
+        case hidden(hint: String)
+        case visible(words: [String])
     }
 
 }

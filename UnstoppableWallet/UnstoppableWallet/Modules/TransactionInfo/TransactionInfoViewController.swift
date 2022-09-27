@@ -74,6 +74,11 @@ class TransactionInfoViewController: ThemeViewController {
         }
     }
 
+    private func openNftAsset(providerCollectionUid: String, nftUid: NftUid) {
+        let module = NftAssetModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
+        present(ThemeNavigationController(rootViewController: module), animated: true)
+    }
+
     private func statusRow(rowInfo: RowInfo, status: TransactionStatus) -> RowProtocol {
         let hash: String
         var hasButton = true
@@ -430,6 +435,7 @@ class TransactionInfoViewController: ThemeViewController {
                 tableView: tableView,
                 id: "explorer",
                 height: .heightCell48,
+                autoDeselect: true,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
 
@@ -461,6 +467,16 @@ class TransactionInfoViewController: ThemeViewController {
             return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: iconDimmed, title: title, value: subTitle ?? "")
         case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
             return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
+        case let .nftAmount(iconUrl, iconPlaceholderImageName, nftAmount, type, providerCollectionUid, nftUid):
+            var onTapOpenNft: (() -> ())?
+
+            if let providerCollectionUid = providerCollectionUid, let nftUid = nftUid {
+                onTapOpenNft = { [weak self] in
+                    self?.openNftAsset(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
+                }
+            }
+
+            return CellComponent.nftAmountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, nftAmount: nftAmount, type: type, onTapOpenNft: onTapOpenNft)
         case let .status(status):
             return statusRow(rowInfo: rowInfo, status: status)
         case let .options(actions: viewItems):

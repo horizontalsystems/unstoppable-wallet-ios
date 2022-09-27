@@ -22,6 +22,10 @@ class InputCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func becomeFirstResponder() -> Bool {
+        anInputView.becomeFirstResponder()
+    }
+
 }
 
 extension InputCell {
@@ -39,6 +43,16 @@ extension InputCell {
     var font: UIFont? {
         get { anInputView.font }
         set { anInputView.font = newValue }
+    }
+
+    var textColor: UIColor? {
+        get { anInputView.textColor }
+        set { anInputView.textColor = newValue }
+    }
+
+    var accessoryEnabled: Bool {
+        get { anInputView.accessoryEnabled }
+        set { anInputView.accessoryEnabled = newValue }
     }
 
     var keyboardType: UIKeyboardType {

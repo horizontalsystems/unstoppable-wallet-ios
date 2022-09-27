@@ -6,6 +6,7 @@ import BigInt
 import UniswapKit
 import OneInchKit
 import Erc20Kit
+import NftKit
 import MarketKit
 
 class SendEvmTransactionViewModel {
@@ -106,6 +107,24 @@ class SendEvmTransactionViewModel {
                     sendInfo: additionalInfo?.sendInfo
             )
 
+        case let decoration as Eip721SafeTransferFromDecoration:
+            return nftTransferItems(
+                    to: decoration.to,
+                    value: 1,
+                    nonce: transactionData?.nonce,
+                    sendInfo: additionalInfo?.sendInfo,
+                    tokenId: decoration.tokenId
+            )
+
+        case let decoration as Eip1155SafeTransferFromDecoration:
+            return nftTransferItems(
+                    to: decoration.to,
+                    value: decoration.value,
+                    nonce: transactionData?.nonce,
+                    sendInfo: additionalInfo?.sendInfo,
+                    tokenId: decoration.tokenId
+            )
+
         case let decoration as ApproveEip20Decoration:
             return eip20ApproveItems(
                     spender: decoration.spender,
@@ -168,6 +187,23 @@ class SendEvmTransactionViewModel {
                 iconPlaceholderImageName: token.placeholderImageName,
                 coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized,
                 currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
+                type: type
+        )
+    }
+
+    private func nftAmountViewItem(value: BigUInt, type: AmountType, iconUrl: String?) -> ViewItem {
+        let nftAmount: String
+
+        if let value = Decimal(bigUInt: value, decimals: 0) {
+            nftAmount = "\(value) NFT"
+        } else {
+            nftAmount = "n/a".localized
+        }
+
+        return .nftAmount(
+                iconUrl: iconUrl,
+                iconPlaceholderImageName: "placeholder_nft_24",
+                nftAmount: nftAmount,
                 type: type
         )
     }
@@ -264,25 +300,59 @@ class SendEvmTransactionViewModel {
         return [SectionViewItem(viewItems: viewItems)]
     }
 
+    private func nftTransferItems(to: EthereumKit.Address, value: BigUInt, nonce: Int?, sendInfo: SendEvmData.SendInfo?, tokenId: BigUInt) -> [SectionViewItem]? {
+
+        var viewItems: [ViewItem] = [
+            .subhead(
+                    iconName: "arrow_medium_2_up_right_24",
+                    title: "send.confirmation.you_send".localized,
+                    value: sendInfo?.assetShortMetadata?.displayName ?? "#\(tokenId.description)"
+            ),
+            nftAmountViewItem(value: value, type: .neutral, iconUrl: sendInfo?.assetShortMetadata?.previewImageUrl)
+        ]
+
+        let addressValue = to.eip55
+        let addressTitle = sendInfo?.domain ?? evmLabelManager.addressLabel(address: addressValue)
+        viewItems.append(.address(title: "send.confirmation.to".localized, value: addressValue, valueTitle: addressTitle))
+        if let nonce = nonce {
+            viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
+        }
+
+        return [SectionViewItem(viewItems: viewItems)]
+    }
+
     private func eip20ApproveItems(spender: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address, nonce: Int?) -> [SectionViewItem]? {
         guard let coinService = coinServiceFactory.coinService(contractAddress: contractAddress) else {
             return nil
         }
 
+        let isRevokeAllowance = value == 0  // Check approved new value or revoked last allowance
+        let amountItem: ViewItem
+        if isRevokeAllowance {
+            amountItem = .amount(
+                    iconUrl: coinService.token.coin.imageUrl,
+                    iconPlaceholderImageName: coinService.token.placeholderImageName,
+                    coinAmount: coinService.token.coin.code,
+                    currencyAmount: nil,
+                    type: .neutral
+            )
+        } else {
+            amountItem = amountViewItem(
+                    coinService: coinService,
+                    value: value,
+                    type: .neutral
+            )
+        }
         let addressValue = spender.eip55
         let addressTitle = evmLabelManager.addressLabel(address: addressValue)
 
         var viewItems: [ViewItem] = [
             .subhead(
                     iconName: "check_2_24",
-                    title: "approve.confirmation.you_approve".localized,
+                    title: isRevokeAllowance ? "approve.confirmation.you_revoke".localized : "approve.confirmation.you_approve".localized,
                     value: coinService.token.coin.name
             ),
-            amountViewItem(
-                    coinService: coinService,
-                    value: value,
-                    type: .neutral
-            ),
+            amountItem,
             .address(
                     title: "approve.confirmation.spender".localized,
                     value: addressValue,
@@ -547,6 +617,7 @@ extension SendEvmTransactionViewModel {
     enum ViewItem {
         case subhead(iconName: String, title: String, value: String)
         case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
+        case nftAmount(iconUrl: String?, iconPlaceholderImageName: String, nftAmount: String, type: AmountType)
         case doubleAmount(iconUrl: String?, iconPlaceholderImageName: String, primaryCoinAmount: String, primaryCurrencyAmount: String?, primaryType: AmountType, secondaryCoinAmount: String, secondaryCurrencyAmount: String?, secondaryType: AmountType)
         case address(title: String, value: String, valueTitle: String?)
         case value(title: String, value: String, type: ValueType)

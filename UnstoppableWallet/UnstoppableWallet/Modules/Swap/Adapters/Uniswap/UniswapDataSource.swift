@@ -28,13 +28,15 @@ class UniswapDataSource {
     private let priceImpactCell = AdditionalDataCellNew()
     private let guaranteedAmountCell = AdditionalDataCellNew()
 
+    private let warningCell = HighlightedDescriptionCell(showVerticalMargin: false)
     private let errorCell = SendEthereumErrorCell()
     private let buttonStackCell = StackViewCell()
+    private let revokeButton = PrimaryButton()
     private let approveButton = PrimaryButton()
     private let proceedButton = PrimaryButton()
     private let approveStepCell = SwapStepCell()
 
-    var onOpen: ((_ viewController: UIViewController,_ viaPush: Bool) -> ())? = nil
+    var onOpen: ((_ viewController: UIViewController, _ viaPush: Bool) -> ())? = nil
     var onOpenSelectProvider: (() -> ())? = nil
     var onOpenSettings: (() -> ())? = nil
     var onClose: (() -> ())? = nil
@@ -78,6 +80,10 @@ class UniswapDataSource {
         allowanceCell.title = "swap.allowance".localized
         priceImpactCell.title = "swap.price_impact".localized
 
+        revokeButton.set(style: .yellow)
+        revokeButton.addTarget(self, action: #selector((onTapRevokeButton)), for: .touchUpInside)
+        buttonStackCell.add(view: revokeButton)
+
         approveButton.set(style: .gray)
         approveButton.addTarget(self, action: #selector((onTapApproveButton)), for: .touchUpInside)
         buttonStackCell.add(view: approveButton)
@@ -95,15 +101,28 @@ class UniswapDataSource {
         subscribe(disposeBag, viewModel.tradeViewItemDriver) { [weak self] in self?.handle(tradeViewItem: $0) }
         subscribe(disposeBag, viewModel.settingsViewItemDriver) { [weak self] in self?.handle(settingsViewItem: $0) }
         subscribe(disposeBag, viewModel.proceedActionDriver) { [weak self] in self?.handle(proceedActionState: $0) }
+        subscribe(disposeBag, viewModel.revokeWarningDriver) { [weak self] in self?.handle(revokeWarning: $0) }
+        subscribe(disposeBag, viewModel.revokeActionDriver) { [weak self] in self?.handle(revokeActionState: $0) }
         subscribe(disposeBag, viewModel.approveActionDriver) { [weak self] in self?.handle(approveActionState: $0) }
         subscribe(disposeBag, viewModel.approveStepDriver) { [weak self] in self?.handle(approveStepState: $0) }
 
+        subscribe(disposeBag, viewModel.openRevokeSignal) { [weak self] in self?.openRevoke(approveData: $0) }
         subscribe(disposeBag, viewModel.openApproveSignal) { [weak self] in self?.openApprove(approveData: $0) }
         subscribe(disposeBag, viewModel.openConfirmSignal) { [weak self] in self?.openConfirm(sendData: $0) }
     }
 
     private func handle(loading: Bool) {
         switchCell.set(loading: loading)
+    }
+
+    private func handle(revokeWarning: String?) {
+        warningCell.descriptionText = revokeWarning
+
+        onReload?()
+    }
+
+    private func handle(revokeActionState: UniswapViewModel.ActionState) {
+        handle(actionState: revokeActionState, button: revokeButton)
     }
 
     private func handle(error: String?) {
@@ -207,11 +226,15 @@ class UniswapDataSource {
         case .approved:
             approveStepCell.isVisible = true
             approveStepCell.set(first: false)
-        case .notApproved:
+        case .notApproved, .revokeRequired, .revoking:
             approveStepCell.isVisible = false
         }
 
         onReload?()
+    }
+
+    @objc private func onTapRevokeButton() {
+        viewModel.onTapRevoke()
     }
 
     @objc private func onTapApproveButton() {
@@ -220,6 +243,14 @@ class UniswapDataSource {
 
     @objc private func onTapProceedButton() {
         viewModel.onTapProceed()
+    }
+
+    private func openRevoke(approveData: SwapAllowanceService.ApproveData) {
+        guard let viewController = SwapApproveConfirmationModule.revokeViewController(data: approveData, delegate: self) else {
+            return
+        }
+
+        onOpen?(viewController, false)
     }
 
     private func openApprove(approveData: SwapAllowanceService.ApproveData) {
@@ -277,56 +308,36 @@ extension UniswapDataSource: ISwapDataSource {
                 ]
         ))
 
+        var cells = [
+            buyPriceCell,
+            sellPriceCell,
+            allowanceCell,
+            priceImpactCell,
+            guaranteedAmountCell
+        ]
+
         sections.append(Section(
                 id: "info",
-                headerState: .margin(height: 6),
-                footerState: .margin(height: 6),
-                rows: [
-//                    StaticRow(
-//                            cell: slippageCell,
-//                            id: "slippage",
-//                            height: slippageCell.cellHeight
-//                    ),
-//                    StaticRow(
-//                            cell: deadlineCell,
-//                            id: "deadline",
-//                            height: deadlineCell.cellHeight
-//                    ),
-//                    StaticRow(
-//                            cell: recipientCell,
-//                            id: "recipient",
-//                            height: recipientCell.cellHeight
-//                    ),
+                rows: cells.enumerated().map { index, cell in
                     StaticRow(
-                            cell: buyPriceCell,
-                            id: "execution-price",
-                            height: buyPriceCell.cellHeight
-                    ),
-                    StaticRow(
-                            cell: sellPriceCell,
-                            id: "execution-price",
-                            height: sellPriceCell.cellHeight
-                    ),
-                    StaticRow(
-                            cell: allowanceCell,
-                            id: "allowance",
-                            height: allowanceCell.cellHeight
-                    ),
-                    StaticRow(
-                            cell: priceImpactCell,
-                            id: "price-impact",
-                            height: priceImpactCell.cellHeight
-                    ),
-                    StaticRow(
-                            cell: guaranteedAmountCell,
-                            id: "guaranteed-amount",
-                            height: guaranteedAmountCell.cellHeight
+                            cell: cell,
+                            id: cell.title ?? "info-cell-\(index)",
+                            height: cell.cellHeight
                     )
-                ]
+                }
         ))
 
+        let showCells = !(cells.filter { $0.isVisible }.isEmpty)
         sections.append(Section(id: "error",
+                headerState: .margin(height: showCells ? .margin12 : 0),
                 rows: [
+                    StaticRow(
+                            cell: warningCell,
+                            id: "warning",
+                            dynamicHeight: { [weak self] width in
+                                self?.warningCell.height(containerWidth: width) ?? 0
+                            }
+                    ),
                     StaticRow(
                             cell: errorCell,
                             id: "error",
@@ -337,10 +348,11 @@ extension UniswapDataSource: ISwapDataSource {
                 ]
         ))
 
+        let showApproveSteps = approveStepCell.isVisible
         sections.append(Section(
                 id: "buttons",
-                headerState: .margin(height: .margin16),
-                footerState: .margin(height: .margin24),
+                headerState: .margin(height: .margin24),
+                footerState: .margin(height: showApproveSteps ? .margin24 : 0),
                 rows: [
                     StaticRow(
                             cell: buttonStackCell,

@@ -3,35 +3,23 @@ import GRDB
 import MarketKit
 
 class NftCollectionRecord: Record {
+    let blockchainTypeUid: String
     let accountId: String
 
-    let contracts: [NftCollection.Contract]
-    let uid: String
+    let providerUid: String
     let name: String
-    let description: String?
-    let imageUrl: String?
-    let featuredImageUrl: String?
-    let externalUrl: String?
-    let discordUrl: String?
-    let twitterUsername: String?
+    let thumbnailImageUrl: String?
     let averagePrice7d: NftPriceRecord?
     let averagePrice30d: NftPriceRecord?
-    let totalSupply: Int
 
-    init(accountId: String, collection: NftCollection) {
+    init(blockchainTypeUid: String, accountId: String, collection: NftCollectionShortMetadata) {
+        self.blockchainTypeUid = blockchainTypeUid
         self.accountId = accountId
-        contracts = collection.contracts
-        uid = collection.uid
+        providerUid = collection.providerUid
         name = collection.name
-        description = collection.description
-        imageUrl = collection.imageUrl
-        featuredImageUrl = collection.featuredImageUrl
-        externalUrl = collection.externalUrl
-        discordUrl = collection.discordUrl
-        twitterUsername = collection.twitterUsername
-        averagePrice7d = collection.stats.averagePrice7d.map { NftPriceRecord(price: $0) }
-        averagePrice30d = collection.stats.averagePrice30d.map { NftPriceRecord(price: $0) }
-        totalSupply = collection.stats.totalSupply
+        thumbnailImageUrl = collection.thumbnailImageUrl
+        averagePrice7d = collection.averagePrice7d.map { NftPriceRecord(price: $0) }
+        averagePrice30d = collection.averagePrice30d.map { NftPriceRecord(price: $0) }
 
         super.init()
     }
@@ -41,57 +29,39 @@ class NftCollectionRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
+        case blockchainTypeUid
         case accountId
-        case contracts
-        case uid
+        case providerUid
         case name
-        case description
-        case imageUrl
-        case featuredImageUrl
-        case externalUrl
-        case discordUrl
-        case twitterUsername
+        case thumbnailImageUrl
         case averagePrice7dTokenQueryId
         case averagePrice7dValue
         case averagePrice30dTokenQueryId
         case averagePrice30dValue
-        case totalSupply
     }
 
     required init(row: Row) {
+        blockchainTypeUid = row[Columns.blockchainTypeUid]
         accountId = row[Columns.accountId]
-        contracts = [NftCollection.Contract](JSONString: row[Columns.contracts]) ?? []
-        uid = row[Columns.uid]
+        providerUid = row[Columns.providerUid]
         name = row[Columns.name]
-        description = row[Columns.description]
-        imageUrl = row[Columns.imageUrl]
-        featuredImageUrl = row[Columns.featuredImageUrl]
-        externalUrl = row[Columns.externalUrl]
-        discordUrl = row[Columns.discordUrl]
-        twitterUsername = row[Columns.twitterUsername]
+        thumbnailImageUrl = row[Columns.thumbnailImageUrl]
         averagePrice7d = NftPriceRecord(tokenQueryId: row[Columns.averagePrice7dTokenQueryId], value: row[Columns.averagePrice7dValue])
         averagePrice30d = NftPriceRecord(tokenQueryId: row[Columns.averagePrice30dTokenQueryId], value: row[Columns.averagePrice30dValue])
-        totalSupply = row[Columns.totalSupply]
 
         super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
+        container[Columns.blockchainTypeUid] = blockchainTypeUid
         container[Columns.accountId] = accountId
-        container[Columns.contracts] = contracts.toJSONString()
-        container[Columns.uid] = uid
+        container[Columns.providerUid] = providerUid
         container[Columns.name] = name
-        container[Columns.description] = description
-        container[Columns.imageUrl] = imageUrl
-        container[Columns.featuredImageUrl] = featuredImageUrl
-        container[Columns.externalUrl] = externalUrl
-        container[Columns.discordUrl] = discordUrl
-        container[Columns.twitterUsername] = twitterUsername
+        container[Columns.thumbnailImageUrl] = thumbnailImageUrl
         container[Columns.averagePrice7dTokenQueryId] = averagePrice7d?.tokenQuery.id
         container[Columns.averagePrice7dValue] = averagePrice7d?.value
         container[Columns.averagePrice30dTokenQueryId] = averagePrice30d?.tokenQuery.id
         container[Columns.averagePrice30dValue] = averagePrice30d?.value
-        container[Columns.totalSupply] = totalSupply
     }
 
 }

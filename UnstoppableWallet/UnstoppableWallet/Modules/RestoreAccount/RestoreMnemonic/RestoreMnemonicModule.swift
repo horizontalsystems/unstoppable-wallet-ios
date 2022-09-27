@@ -3,12 +3,18 @@ import ThemeKit
 
 struct RestoreMnemonicModule {
 
-    static func viewController() -> UIViewController {
-        let service = RestoreMnemonicService(accountFactory: App.shared.accountFactory, passphraseValidator: PassphraseValidator())
+    static func viewController(sourceViewController: UIViewController?, returnViewController: UIViewController? = nil) -> UIViewController {
+        let service = RestoreMnemonicService()
         let viewModel = RestoreMnemonicViewModel(service: service)
-        let viewController = RestoreMnemonicViewController(viewModel: viewModel)
+        let viewController = RestoreMnemonicViewController(viewModel: viewModel, returnViewController: returnViewController)
 
-        return ThemeNavigationController(rootViewController: viewController)
+        let module = ThemeNavigationController(rootViewController: viewController)
+
+        if App.shared.termsManager.termsAccepted {
+            return module
+        } else {
+            return TermsModule.viewController(sourceViewController: sourceViewController, moduleToOpen: module)
+        }
     }
 
 }

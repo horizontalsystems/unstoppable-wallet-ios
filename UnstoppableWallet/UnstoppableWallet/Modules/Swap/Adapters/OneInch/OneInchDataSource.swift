@@ -22,13 +22,15 @@ class OneInchDataSource {
     private let buyPriceCell = AdditionalDataCellNew()
     private let allowanceCell: SwapAllowanceCell
 
+    private let warningCell = HighlightedDescriptionCell(showVerticalMargin: false)
     private let errorCell = SendEthereumErrorCell()
     private let buttonStackCell = StackViewCell()
+    private let revokeButton = PrimaryButton()
     private let approveButton = PrimaryButton()
     private let proceedButton = PrimaryButton()
     private let approveStepCell = SwapStepCell()
 
-    var onOpen: ((_ viewController: UIViewController,_ viaPush: Bool) -> ())? = nil
+    var onOpen: ((_ viewController: UIViewController, _ viaPush: Bool) -> ())? = nil
     var onOpenSelectProvider: (() -> ())? = nil
     var onOpenSettings: (() -> ())? = nil
     var onClose: (() -> ())? = nil
@@ -69,6 +71,10 @@ class OneInchDataSource {
         buyPriceCell.isVisible = false
         allowanceCell.title = "swap.allowance".localized
 
+        revokeButton.set(style: .yellow)
+        revokeButton.addTarget(self, action: #selector((onTapRevokeButton)), for: .touchUpInside)
+        buttonStackCell.add(view: revokeButton)
+
         approveButton.set(style: .gray)
         approveButton.addTarget(self, action: #selector((onTapApproveButton)), for: .touchUpInside)
         buttonStackCell.add(view: approveButton)
@@ -84,9 +90,12 @@ class OneInchDataSource {
         subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in self?.handle(loading: $0) }
         subscribe(disposeBag, viewModel.swapErrorDriver) { [weak self] in self?.handle(error: $0) }
         subscribe(disposeBag, viewModel.proceedActionDriver) { [weak self] in self?.handle(proceedActionState: $0) }
+        subscribe(disposeBag, viewModel.revokeWarningDriver) { [weak self] in self?.handle(revokeWarning: $0) }
+        subscribe(disposeBag, viewModel.revokeActionDriver) { [weak self] in self?.handle(revokeActionState: $0) }
         subscribe(disposeBag, viewModel.approveActionDriver) { [weak self] in self?.handle(approveActionState: $0) }
         subscribe(disposeBag, viewModel.approveStepDriver) { [weak self] in self?.handle(approveStepState: $0) }
 
+        subscribe(disposeBag, viewModel.openRevokeSignal) { [weak self] in self?.openRevoke(approveData: $0) }
         subscribe(disposeBag, viewModel.openApproveSignal) { [weak self] in self?.openApprove(approveData: $0) }
         subscribe(disposeBag, viewModel.openConfirmSignal) { [weak self] in self?.openConfirm(parameters: $0) }
     }
@@ -108,6 +117,16 @@ class OneInchDataSource {
         }
 
         onReload?()
+    }
+
+    private func handle(revokeWarning: String?) {
+        warningCell.descriptionText = revokeWarning
+
+        onReload?()
+    }
+
+    private func handle(revokeActionState: OneInchViewModel.ActionState) {
+        handle(actionState: revokeActionState, button: revokeButton)
     }
 
     private func handle(proceedActionState: OneInchViewModel.ActionState) {
@@ -141,11 +160,15 @@ class OneInchDataSource {
         case .approved:
             approveStepCell.isVisible = true
             approveStepCell.set(first: false)
-        case .notApproved:
+        case .notApproved, .revokeRequired, .revoking:
             approveStepCell.isVisible = false
         }
 
         onReload?()
+    }
+
+    @objc private func onTapRevokeButton() {
+        viewModel.onTapRevoke()
     }
 
     @objc private func onTapApproveButton() {
@@ -154,6 +177,14 @@ class OneInchDataSource {
 
     @objc private func onTapProceedButton() {
         viewModel.onTapProceed()
+    }
+
+    private func openRevoke(approveData: SwapAllowanceService.ApproveData) {
+        guard let viewController = SwapApproveConfirmationModule.revokeViewController(data: approveData, delegate: self) else {
+            return
+        }
+
+        onOpen?(viewController, false)
     }
 
     private func openApprove(approveData: SwapAllowanceService.ApproveData) {
@@ -212,8 +243,6 @@ extension OneInchDataSource: ISwapDataSource {
 
         sections.append(Section(
                 id: "info",
-                headerState: .margin(height: 6),
-                footerState: .margin(height: 6),
                 rows: [
                     StaticRow(
                             cell: buyPriceCell,
@@ -228,8 +257,17 @@ extension OneInchDataSource: ISwapDataSource {
                 ]
         ))
 
+        let showCells = (buyPriceCell.isVisible || allowanceCell.isVisible) && (warningCell.descriptionText != nil || errorCell.isVisible)
         sections.append(Section(id: "error",
+                headerState: .margin(height: showCells ? .margin12 : 0),
                 rows: [
+                    StaticRow(
+                            cell: warningCell,
+                            id: "warning",
+                            dynamicHeight: { [weak self] width in
+                                self?.warningCell.height(containerWidth: width) ?? 0
+                            }
+                    ),
                     StaticRow(
                             cell: errorCell,
                             id: "error",
@@ -240,10 +278,11 @@ extension OneInchDataSource: ISwapDataSource {
                 ]
         ))
 
+        let showApproveSteps = approveStepCell.isVisible
         sections.append(Section(
                 id: "buttons",
-                headerState: .margin(height: .margin16),
-                footerState: .margin(height: .margin24),
+                headerState: .margin(height: .margin24),
+                footerState: .margin(height: showApproveSteps ? .margin24 : 0),
                 rows: [
                     StaticRow(
                             cell: buttonStackCell,

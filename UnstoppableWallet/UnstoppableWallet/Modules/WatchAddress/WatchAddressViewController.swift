@@ -8,7 +8,7 @@ import RxCocoa
 import UIExtensions
 
 class WatchAddressViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .heightButton + .margin16 + .margin16
+    private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
     private let viewModel: WatchAddressViewModel
     private let disposeBag = DisposeBag()
 
@@ -20,12 +20,13 @@ class WatchAddressViewController: KeyboardAwareViewController {
     private let addressCell: RecipientAddressInputCell
     private let addressCautionCell: RecipientAddressCautionCell
 
-    private let nameCell = TextFieldCell()
-
     private var isLoaded = false
 
-    init(viewModel: WatchAddressViewModel, addressViewModel: RecipientAddressViewModel) {
+    private weak var sourceViewController: UIViewController?
+
+    init(viewModel: WatchAddressViewModel, addressViewModel: RecipientAddressViewModel, sourceViewController: UIViewController?) {
         self.viewModel = viewModel
+        self.sourceViewController = sourceViewController
 
         addressCell = RecipientAddressInputCell(viewModel: addressViewModel)
         addressCautionCell = RecipientAddressCautionCell(viewModel: addressViewModel)
@@ -61,9 +62,9 @@ class WatchAddressViewController: KeyboardAwareViewController {
 
         gradientWrapperView.addSubview(watchButton)
         watchButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide)
+            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
         }
 
         watchButton.set(style: .yellow)
@@ -75,18 +76,13 @@ class WatchAddressViewController: KeyboardAwareViewController {
 
         addressCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
-        nameCell.inputPlaceholder = viewModel.namePlaceholder
-        nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
-
-        subscribe(disposeBag, viewModel.nameDriver) { [weak self] name in
-            self?.nameCell.inputText = name
-        }
         subscribe(disposeBag, viewModel.watchEnabledDriver) { [weak self] enabled in
             self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
             self?.watchButton.isEnabled = enabled
         }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
-            self?.dismiss(animated: true)
+            HudHelper.instance.show(banner: .addressAdded)
+            (self?.sourceViewController ?? self)?.dismiss(animated: true)
         }
 
         setInitialState(bottomPadding: wrapperViewHeight)
@@ -140,19 +136,7 @@ extension WatchAddressViewController: SectionsDataSource {
                                 }
                         )
                     ]
-            ),
-            Section(
-                    id: "name",
-                    headerState: tableView.sectionHeader(text: "watch_address.name".localized),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: nameCell,
-                                id: "name",
-                                height: .heightSingleLineCell
-                        )
-                    ]
-            ),
+            )
         ]
     }
 

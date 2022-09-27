@@ -17,8 +17,11 @@ class KeyboardAwareViewController: ThemeViewController {
     public var shouldObserveKeyboard = true
     var pendingFrame: CGRect?
 
+    private let keyboardVisibilityRelay = BehaviorRelay<CGFloat>(value: 0)
+    var showAccessoryView: Bool = true
+
     open var accessoryViewHeight: CGFloat {
-        floor(accessoryView?.frame.size.height ?? 0)
+        showAccessoryView ? floor(accessoryView?.frame.size.height ?? 0) : 0
     }
 
     override open var inputAccessoryView: UIView? {
@@ -71,10 +74,20 @@ class KeyboardAwareViewController: ThemeViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        observeKeyboard(true)
+    }
 
-        shouldObserveKeyboard = true
+    private func observeKeyboard(_ start: Bool) {
+        if start {
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+
+            shouldObserveKeyboard = true
+        } else {
+            NotificationCenter.default.removeObserver(self)
+
+            shouldObserveKeyboard = false
+        }
     }
 
     override open func viewDidAppear(_ animated: Bool) {
@@ -91,9 +104,7 @@ class KeyboardAwareViewController: ThemeViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        NotificationCenter.default.removeObserver(self)
-
-        shouldObserveKeyboard = false
+        observeKeyboard(false)
     }
 
     override open func viewDidDisappear(_ animated: Bool) {
@@ -112,14 +123,14 @@ class KeyboardAwareViewController: ThemeViewController {
             return
         }
         // check in visible only accessoryView. If true - keyboard is hidden
-        if let inputAccessoryViewHeight = inputAccessoryView?.height, keyboardFrame.height == inputAccessoryViewHeight {
+        if let inputAccessoryViewHeight = accessoryView?.height, inputAccessoryViewHeight.isZero || keyboardFrame.height.isZero || keyboardFrame.height == inputAccessoryViewHeight {
             keyboardWillHide(notification: notification)
             return
         }
-
         // try to disable dismiss controller by swipe when keyboard is visible
         navigationController?.presentationController?.presentedView?.gestureRecognizers?.first?.isEnabled = false
         self.keyboardFrame = keyboardFrame
+        pseudoAccessoryView?.heightValue = accessoryViewHeight
 
         for scrollView in scrollViews {
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - view.safeAreaInsets.bottom, right: 0)
@@ -131,9 +142,10 @@ class KeyboardAwareViewController: ThemeViewController {
         // try to enable dismiss controller by swipe when keyboard is hidden
         navigationController?.presentationController?.presentedView?.gestureRecognizers?.first?.isEnabled = true
         keyboardFrame = nil
+        pseudoAccessoryView?.heightValue = accessoryViewHeight
 
         for scrollView in scrollViews {
-            scrollView.contentInset = .zero
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (pseudoAccessoryView?.height ?? 0) - view.safeAreaInsets.bottom, right: 0)
             scrollView.scrollIndicatorInsets = .zero
         }
     }
@@ -154,12 +166,15 @@ class KeyboardAwareViewController: ThemeViewController {
     private func layoutAccessoryView(keyboardFrame: CGRect) {
         let inputHeight = pseudoAccessoryView?.heightValue ?? 0
         var bottomPadding = -inputHeight
-
         if !keyboardFrame.equalTo(CGRect.zero) {
             bottomPadding += view.frame.size.height - keyboardFrame.origin.y
         }
 
+        let maxPadding = keyboardFrame.size.height - inputHeight
         bottomPadding = min(max(0, bottomPadding), keyboardFrame.size.height - inputHeight)
+
+        let visiblePercent = maxPadding == 0 ? 0 : bottomPadding / maxPadding
+        keyboardVisibilityRelay.accept(visiblePercent)
 
         accessoryView?.snp.updateConstraints { make in
             make.bottom.equalToSuperview().offset(-bottomPadding)
@@ -173,8 +188,10 @@ class KeyboardAwareViewController: ThemeViewController {
     override open func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
         if !viewControllerToPresent.isKind(of: UISearchController.self) {
             view.endEditing(true)
+            observeKeyboard(false)
         }
 
+        viewControllerToPresent.presentationController?.delegate = self
         super.present(viewControllerToPresent, animated: flag, completion: completion)
     }
 
@@ -200,6 +217,11 @@ class KeyboardAwareViewController: ThemeViewController {
     }
 
 }
+extension KeyboardAwareViewController {
+    public var keyboardVisibilityDriver: Driver<CGFloat> {
+        keyboardVisibilityRelay.asDriver()
+    }
+}
 
 extension KeyboardAwareViewController: PseudoAccessoryViewDelegate {
 
@@ -211,6 +233,23 @@ extension KeyboardAwareViewController: PseudoAccessoryViewDelegate {
         } else {
             pendingFrame = keyboardFrame
         }
+    }
+
+}
+
+extension KeyboardAwareViewController: UIAdaptivePresentationControllerDelegate {
+
+    public func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+//        print("presentationControllerWillDismiss : \(presentationController)")
+    }
+
+    public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        observeKeyboard(true)
+//        print("presentationControllerDidDismiss : \(presentationController)")
+    }
+
+    public func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+//        print("presentationControllerDidDismiss : \(presentationController)")
     }
 
 }
