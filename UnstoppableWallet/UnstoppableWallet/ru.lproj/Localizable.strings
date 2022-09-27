@@ -50,9 +50,9 @@
 "alert.sending" = "Отправка";
 "alert.sent" = "Отправлено";
 "alert.swapping" = "Обмен";
-"alert.swapped" = "Swapped";
+"alert.swapped" = "Обмен выполнен";
 "alert.approving" = "Подтверждение";
-"alert.approved" = "Approved";
+"alert.approved" = "Разрешено";
 "alert.revoking" = "Revoking";
 "alert.revoked" = "Revoked";
 
@@ -329,7 +329,7 @@
 "swap.advanced_settings" = "Настройки Обмена";
 "swap.proceed_button" = "Далее";
 "swap.approve.title" = "Разрешение Обмена";
-"swap.approve.description" = "Вы должны предоставить разрешение на смарт-контракт, чтобы обменять этот токен от своего имени. С помощью этого разрешения задается сумма, которая может быть использована в рамках смарт-контракта. Это не повлияет на ваш баланс, но вам придется заплатить небольшой сбор за исполнение транзакции.\n\nРазрешение может быть запрошено перед каждой сделкой, но дешевле заранее задать более высокую сумму для будущих сделок.";
+"swap.approve.description" = "Вы должны предоставить разрешение на использование смарт-контракта для замены данного токена от вашего имени. Это разрешение устанавливает сумму, которая может быть использована смарт-контрактом. Это не повлияет на ваш баланс, но требует небольшой комиссии для выполнения утвержденной транзакции. \n\nХотя это может быть сделано по требованию перед каждой сделкой, предварительно одобрить более высокую сумму для будущих сделок.";
 "swap.approve.amount_error.already_approved" = "У вас уже есть разрешение на эту сумму";
 "swap.approving_button" = "Разрешение...";
 "swap.revoke_warning" = "You can exchange %@, or you need to revoke and approve the new amount";
@@ -824,7 +824,7 @@
 // Settings -> Terms
 
 "terms.title" = "Условия Использования";
-"terms.i_agree" = "I Agree";
+"terms.i_agree" = "Я принимаю";
 
 "terms.item.1" = "Сделайте резервную копию фраз восстановления кошелька, чтобы восстановить доступ к средствам.";
 "terms.item.2" = "Приватные ключи и фразы восстановления хранятся только на вашем устройстве.";
@@ -1049,6 +1049,8 @@
 "wallet_connect.error.invalid_url" = "Неверный URL-адрес";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Активный Кошелек";
+"wallet_connect.address" = "Адрес";
+"wallet_connect.network" = "Сеть";
 "wallet_connect.address" = "Адрес";
 "wallet_connect.network" = "Сеть";
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
