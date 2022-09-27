@@ -2,6 +2,7 @@
 "button.apply" = "Appliquer";
 "button.cancel" = "Annuler";
 "button.close" = "Fermer";
+"button.continue" = "Continuer";
 "button.done" = "Fait";
 "button.reset" = "Réinitialiser";
 "button.restore" = "Restaurer";
@@ -14,9 +15,11 @@
 "button.report" = "Signaler";
 "button.add" = "Ajouter";
 "button.approve" = "Approuver";
+"button.revoke" = "Révoquer";
 "button.reject" = "Rejeter";
 "button.connect" = "Connecter";
 "button.save" = "Sauvegarder";
+"button.send" = "Envoyer";
 "button.sign" = "Signer";
 "button.more" = "Afficher plus";
 
@@ -26,6 +29,7 @@
 "alert.no_internet" = "Aucune connexion Internet";
 "alert.wrong_amount" = "Montant incorrect";
 "alert.no_fee" = "Commission incorrecte";
+"alert.warning" = "Attention";
 "alert.unknown_error" = "Erreur inconnue";
 "alert.success_action" = "Terminé";
 
@@ -36,6 +40,8 @@
 "alert.not_supported_yet" = "Pas pris en charge pour le moment";
 "alert.copied" = "Copié";
 "alert.created" = "Établi";
+"alert.restored" = "Restauré ";
+"alert.address_added" = "Adresse ajoutée";
 "alert.deleted" = "Supprimer";
 "alert.disconnecting" = "Déconnexion";
 "alert.disconnected" = "Déconnecté";
@@ -44,7 +50,11 @@
 "alert.sending" = "En attente";
 "alert.sent" = "Envoyée";
 "alert.swapping" = "Swapping";
+"alert.swapped" = "Échangé";
 "alert.approving" = "En cours d'approbation";
+"alert.approved" = "Approuvé";
+"alert.revoking" = "Révocation en cours";
+"alert.revoked" = "Révoqué";
 
 
 "action.loading" = "chargement en cours...";
@@ -80,7 +90,6 @@
 // Restore
 
 "restore.title" = "Restaurer";
-"restore.mnemonic.name" = "Nom (optionnel)";
 "restore.mnemonic.key" = "Clé";
 "restore.mnemonic.description" = "Saisissez la phrase de récupération de votre portefeuille (mnémonique) qui se compose de 12, 15, 18, 21 ou 24 mots et peut inclure un mot de passe alphanumérique supplémentaire.";
 "restore_error.mnemonic_word_count" = "Nombre de mots incorrect. Il doit être compris entre 12 et 24 mots. Vous en avez saisi : %@";
@@ -108,47 +117,70 @@
 "coin_platforms.description" = "Ce token existe sur plusieurs blockchains.";
 "coin_platforms.native" = "Natif";
 
-// Show Key
+// Copy Warning
 
-"show_key.title" = "Clé";
-"show_key.description" = "Les phrases de réinitialisation qui vont suivre sont le seul moyen de restaurer vos fonds si votre téléphone est perdu, volé, endommagé, etc.\n\nVeuillez vous assurer que personne ne regarde votre écran.";
-"show_key.button_show" = "Afficher";
-"show_key.tab.recovery_phrase" = "Phrase de réinitialisation";
-"show_key.tab.private_key" = "Clé privée";
-"show_key.passphrase" = "Phrase d'authentification";
-"show_key.private_key.description" = "Cette clé est pour toutes les blockchains compatibles EVM.";
+"copy_warning.title" = "Risque de copie";
+"copy_warning.description" = "Comme mesure de sécurité, nous vous recommandons de ne pas utiliser l'action de copie pour cette valeur.";
+"copy_warning.dont_copy" = "Ne pas copier";
+"copy_warning.i_will_risk_it" = "Je prends le risque";
 
-"private_key_copying.title" = "Attention";
-"private_key_copying.description" = "Pour des raisons de sécurité, nous recommandons de ne pas utiliser l'action de copie sur la clé privée.";
-"private_key_copying.i_will_risk_it" = "Je prends le risque";
+// Recovery Phrase
 
-// Backup Key
+"recovery_phrase.title" = "Phrase de réinitialisation";
+"recovery_phrase.warning" = "Ne partagez jamais votre phrase de récupération avec quiconque. Une équipe imparable ne demandera jamais votre phrase de récupération.";
+"recovery_phrase.tap_to_show" = "Appuyez pour afficher la phrase de récupération";
+"recovery_phrase.passphrase" = "Phrase de passe";
+"recovery_phrase.copy_warning.title" = "Copie de la phrase de récupération";
+"recovery_phrase.copy_warning.description" = "Pour des raisons de sécurité, nous recommandons de ne pas utiliser l'action de copie sur la clé privée.";
 
-"backup_key.title" = "Sauvegarde";
-"backup_key.description" = "Les phrases de réinitialisation qui vont suivre sont le seul moyen de restaurer vos fonds si votre téléphone est perdu, volé, endommagé, etc.\n\nVeuillez vous assurer que personne ne regarde votre écran.";
-"backup_key.button_show" = "Afficher";
-"backup_key.button_backup" = "Sauvegarde";
-"backup_key.passphrase" = "Phrase d'authentification";
+// EVM Private Key
 
-"backup_key.confirmation.description" = "Entrez les phrases de réinitialisation dans l'ordre correct pour confirmer";
-"backup_key.confirmation.passphrase" = "Phrase d'authentification";
-"backup_key.confirmation.passphrase_description" = "Saisir la phrase d'authentification";
+"evm_private_key.title" = "Clé privée EVM";
+"evm_private_key.warning" = "Cette clé est pour toutes les blockchains compatibles EVM. Ne la partagez avec personne.";
+"evm_private_key.tap_to_show" = "Appuyez pour afficher la clé privée";
 
-"backup_key.confirmation.empty_word" = "Mot manquant";
-"backup_key.confirmation.invalid_word" = "Mot incorrect";
-"backup_key.confirmation.empty_passphrase" = "Phrase d'authentification manquante";
-"backup_key.confirmation.invalid_passphrase" = "Phrase d'authentification incorrecte";
+// Public Keys
+
+"public_keys.title" = "Clés publiques";
 
 // Backup
 
-"backup.backup_required" = "Sauvegarde requise";
+"backup.title" = "Phrase de récupération";
+"backup.description" = "Écrivez ces mots dans le bon ordre et conservez-les dans un endroit sûr";
+"backup.tap_to_show" = "Appuyez pour afficher la phrase de récupération";
+"backup.passphrase" = "Phrase de passe";
+"backup.verify" = "Vérifier";
+"backup.verified" = "Vérifié";
+
+// Backup Verify Words
+
+"backup_verify_words.title" = "Vérifier";
+"backup_verify_words.description" = "Sélectionnez deux mots demandés dans la phrase de récupération de votre portefeuille";
+"backup_verify_words.incorrect_word" = "Mot incorrect";
+
+// Backup Verify Passphrase
+
+"backup_verify_passphrase.title" = "Vérifier";
+"backup_verify_passphrase.description" = "Entrez le mot de passe";
+"backup_verify_passphrase.incorrect_passphrase" = "Phrase de passe incorrecte";
+
+// Backup Required
+
+"backup_required.title" = "Sauvegarde requise";
+
+// Backup Prompt
+
+"backup_prompt.title" = "Phrase de récupération de sauvegarde";
+"backup_prompt.warning" = "Créez une copie de sauvegarde de la phrase de récupération et du mot de passe qui vous permettra de récupérer votre portefeuille si votre téléphone est perdu, volé, cassé, etc.";
+"backup_prompt.backup" = "Sauvegarde";
+"backup_prompt.later" = "Plus tard";
+
+// Errors
 
 "error.send.self_transfer" = "L'envoi à soi-même n'est pas pris en charge";
 "error.send_binance.memo_required" = "Le destinataire a besoin d'une note non vide pour une opération de transfert";
 "error.send_binance.only_digits_allowed" = "Nécessite que le mémo ne contienne que des chiffres";
 "error.send_z_cash.transparent_address" = "Unstoppable ne prend pas en charge les paiements à une adresse transparente";
-
-"backup.confirmation.title" = "Vérification...";
 
 // Balance
 
@@ -157,9 +189,15 @@
 "balance.send" = "Envoyer";
 "balance.swap" = "Echanger";
 "balance.deposit" = "Recevoir";
+"balance.address" = "Adresses";
 "balance.rate_per_coin" = "%@ par %@";
 "balance.syncing" = "Synchronisation...";
 "balance.searching" = "Recherche des transactions…...";
+"balance.downloading_sapling" = "Téléchargement de la pousse... %d%%";
+"balance.downloading_blocks" = "Téléchargement des blocs";
+"balance.scanning_blocks" = "Blocs de numérisation";
+"balance.enhancing_transactions" = "Amélioration des transactions";
+
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisation... %@";
 "balance.synced_through" = "jusqu'à: %@";
@@ -192,12 +230,14 @@
 // Deposit
 
 "deposit.receive_coin" = "Recevoir %@";
+"deposit.address" = "Adresse";
 "deposit.your_address" = "Votre address";
 "receive_alert.not_backed_up_description" = "Vous devez sauvegarder %@ avant de recevoir %@.";
 
 // Send
 
 "send.title" = "Envoyer %@";
+"send.send" = "Envoyer";
 "send.amount_placeholder" = "Montant";
 "send.address_placeholder" = "Adresse";
 "send.address_or_domain_placeholder" = "Adresse ou domaine";
@@ -268,7 +308,8 @@
 "send.lock_time" = "TimeLock";
 
 "approve.confirmation.you_approve" = "Vous approuvez";
-"approve.confirmation.spender" = "Spender";
+"approve.confirmation.you_revoke" = "Vous révoquez";
+"approve.confirmation.spender" = "Dépendant";
 
 // CoinSelector
 
@@ -289,6 +330,8 @@
 "swap.approve.description" = "Vous devez accorder la permission à un contrat intelligent pour le swap d'un token donné en votre nom. Cette autorisation définit le montant qui peut être utilisé par un contrat intelligent. Elle n'affecte pas votre solde mais nécessite une petite somme pour exécuter une transaction d'autorisation. \n\nBien que cela puisse être fait à la demande avant chaque échange, il est plus économique d'approuver un montant plus élevé à l'avance pour les échanges ultérieurs.";
 "swap.approve.amount_error.already_approved" = "Vous avez déjà une provision pour ce montant";
 "swap.approving_button" = "En cours d'approbation...";
+"swap.revoke_warning" = "Vous pouvez échanger %@, ou vous devez révoquer et approuver le nouveau montant";
+"swap.revoking_button" = "Révocation en cours...";
 "swap.trade_error.not_found" = "Impossible d'échanger ces tokens";
 "swap.button_error.insufficient_balance" = "Solde insuffisant";
 "swap.switch_provider.title" = "Service de Swap";
@@ -370,7 +413,7 @@
 "market.defi_cap" = "Cap DeFi";
 "market.defi_tvl" = "TVL en DeFi";
 
-"market.coin_not_supported_yet" = "Pas encore pris en charge";
+"market.project_has_no_coin" = "Ce projet n'a pas de pièce de monnaie";
 
 "market.top.section.header.see_all" = "Tout Afficher";
 "market.top.section.header.top_gainers" = "Les grands gagnants";
@@ -484,13 +527,13 @@
 "market.advanced_search_results.title" = "Résultat";
 
 "market.global.total_market_cap.title" = "Cap totale";
-"market.global.volume_24h.title" = "Volume des dernières 24h";
+"market.global.volume_24h.title" = "Volume 24h";
 "market.global.defi_cap.title" = "Cap DeFi";
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominance Bitcoin";
 "market.global.volume_24h.title" = "Volume 24h";
-"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.defi_cap.title" = "Cap DeFi";
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
 "market.global.volume_24h.description" = "La variation historique du volume global quotidien du marché des transactions pour toutes les cryptomonnaies.";
@@ -665,6 +708,8 @@
 
 "transactions.receive" = "Recevoir";
 "transactions.send" = "Envoyer";
+"transactions.burn" = "Brûlure";
+"transactions.mint" = "Mint";
 "transactions.approve" = "Approuver";
 "transactions.swap" = "Echanger";
 "transactions.contract_call" = "Appel de contrat";
@@ -777,22 +822,14 @@
 // Settings -> Terms
 
 "terms.title" = "Conditions";
-"terms.description" = "Unstoppable Wallet est conçu pour ceux qui cherchent à investir et à stocker des cryptomonnaies de manière privée et indépendante.
+"terms.i_agree" = "J'accepte";
 
-Il s'agit d'un portefeuille non privatif de liberté, de type pair à pair, où seul l'utilisateur a le contrôle des fonds. Il ne collecte aucune donnée et permet à l'utilisateur de rester indépendant en ne verrouillant pas son portefeuille à une application de portefeuille spécifique.
-
-L'application Unstoppable Wallet est entièrement open-source et tout le monde peut confirmer que l'application fonctionne exactement comme elle le prétend.
-
-Nous avons construit Unstoppable à notre intention car les solutions disponibles n'étaient pas à la hauteur de nos attentes. Tant du point de vue de l'ingénierie que de la convivialité, nous pensons que ce portefeuille a une avance considérable sur les produits alternatifs.";
-"terms.item.academy" = "J'ai parcouru la section Académie de cette application et me suis familiarisé avec les aspects fondamentaux du stockage des cryptomonnaies.";
-"terms.item.backup" = "J'ai sauvegardé la/les clé(s) privée(s) de mes portefeuilles qui m'ont été présentées sous une formule de 12 à 24 mots. Je comprends que ces clés privées sont stockées sur mon smartphone et non ailleurs.";
-"terms.item.owner" = "Je comprends que le fait de confier mon téléphone à des entités non fiables ou de laisser l'application portefeuille sans verrouillage du code PIN peut potentiellement compromettre la sécurité de mes fonds.";
-"terms.item.recover" = "Je comprends que le fait débrider (rooting) mon téléphone, d'installer des applications tierces de sources inconnues, de conserver un système d'exploitation obsolète peut potentiellement mettre en danger la sécurité de mes fonds.";
-"terms.item.phone" = "Je suis conscient qu'il pourrait y avoir des problèmes non détectés dans le code de cette application de portefeuille, ce qui pourrait entraîner un comportement inattendu ou un dysfonctionnement de l'application.";
-"terms.item.root" = "Je suis conscient que j'aurai besoin de mes clés privées afin de pouvoir accéder à mes fonds si je perds mon téléphone ou si l'application fonctionne mal. Sans mes clés privées, il me sera impossible de récupérer l'accès à mon portefeuille.";
-"terms.item.bugs" = "Je comprends que la désactivation du code de déverrouillage du téléphone dans les paramètres iOS effacera les clés privées du portefeuille de mon appareil. J'aurai besoin de mes clés privées pour pouvoir accéder à mon portefeuille.";
-"terms.item.pin" = "Je comprends que seul je suis responsable de la sécurité de mes fonds et aucune autre entité.";
-"terms.footer" = "Merci d'avoir choisi ce portefeuille !";
+"terms.item.1" = "Sauvegardez les phrases de récupération de votre portefeuille pour regagner l'accès aux fonds.";
+"terms.item.2" = "Les clés privées et les phrases de récupération ne sont stockées que sur votre appareil.";
+"terms.item.3" = "La désactivation du code PIN du smartphone supprime tous les portefeuilles de l'application. Des phrases de récupération seront nécessaires pour regagner l'accès aux fonds.";
+"terms.item.4" = "La rupture de prison (root), l'installation d'applications à partir de sources inconnues, et l'utilisation d'un système d'exploitation obsolète peuvent mettre en danger la sécurité des fonds.";
+"terms.item.5" = "Il peut y avoir des problèmes de logiciels non découverts dans le code alimentant cette application, ce qui peut entraîner un comportement inattendu ou un dysfonctionnement de l'application.";
+"terms.item.6" = "Seul l'utilisateur est responsable de la sécurité des fonds et aucune autre entité.";
 
 // Settings -> Tell Friends
 
@@ -829,6 +866,10 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "blockchain_settings.info.sync_mode" = "Mode de synchronisation";
 "blockchain_settings.info.sync_mode.content" = "Ce paramètre contrôle la façon dont cette application interagit avec les blockchains lors de l'envoi ou de la réception de transactions.\n\nDans le cas du Bitcoin, du Bitcoin Cash, du Litecoin et du Dash, la communication avec les nœuds du réseau blockchain est entièrement de pair à pair. Unstoppable ping plusieurs nœuds et communique avec l'un d'entre eux.\n\nDans le cas d'Ethereum, de Binance Smart Chain et d'autres blockchains EVM, les portefeuilles mobiles n'ont pas d'autre choix pour interagir avec les blockchains respectives que de passer par des fournisseurs de services RPC tiers (par exemple Infura.io) ou des nœuds personnels. Cela signifie essentiellement que votre communication avec cette blockchain n'est pas décentralisée. Cela n'a aucune incidence sur vos fonds, mais seulement sur votre capacité à vous connecter au réseau de la blockchain.\n\nRassurez-vous, nous réfléchissons à une solution et nous essaierons très bientôt de vous proposer un moyen décentralisé de synchronisation. Patience.";
 
+// Manage Accounts
+
+"manage_accounts.backup_required" = "Sauvegarde requise";
+
 // Manage Keys
 
 "settings_manage_keys.title" = "Gérer les portefeuilles";
@@ -846,6 +887,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "settings.about_app.title" = "À propos de l'application";
 "settings.about_app.app_name" = "Portefeuille Unstoppable";
+"settings.about_app.description" = "Le portefeuille Unstoppable est conçu pour ceux qui cherchent à investir et à stocker des cryptomonnaies de manière privée et indépendante.\n\nC'est un portefeuille non-dépositaire, peer-to-peer où seul l'utilisateur a le contrôle sur les fonds. Il ne collecte aucune donnée et garde l'utilisateur indépendant en ne verrouillant pas les fonds de l'utilisateur sur une application spécifique de portefeuille.\n\nLe portefeuille Unstoppable est entièrement open-source et tout le monde peut confirmer que l'application fonctionne exactement comme il le prétend.";
 "settings.about_app.whats_new" = "Nouveautés";
 "settings.about_app.website" = "Site Web";
 "settings.about_app.contact" = "Contact";
@@ -942,12 +984,12 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "create_wallet.create_button" = "Créer";
 "create_wallet.mnemonic" = "Mnémonique";
 "create_wallet.n_words" = "%@ mots";
+"create_wallet.word_list" = "Listes de mots";
 "create_wallet.passphrase" = "Phrase d'authentification";
 "create_wallet.input.passphrase" = "Phrase d'authentification";
 "create_wallet.input.confirm" = "Confirmer";
 "create_wallet.passphrase_description" = "Les phrases d'authentification ajoutent une strate de sécurité supplémentaire aux portefeuilles. Les utilisateurs peuvent ainsi créer plusieurs portefeuilles indépendants à pièces multiples à l'aide d'une seule phrase de réinitialisation mnémonique, mais associée à des mots de passe différents. \n\nPour restaurer ces portefeuilles, l'utilisateur doit disposer d'une phrase de réinitialisation mnémonique et d'un mot de passe pour chaque portefeuille à restaurer.";
 "create_wallet.error.empty_passphrase" = "La phrase d'authentification ne peut pas être laissée en blanc";
-"create_wallet.error.forbidden_symbols" = "Veuillez utiliser uniquement des lettres et des chiffres latins pour la phrase d'authentification";
 "create_wallet.error.invalid_confirmation" = "La confirmation de la phrase d'authentification ne correspond pas";
 
 // Restore Select
@@ -1085,17 +1127,24 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 // Manage Account
 
 "manage_account.name" = "Nom";
-"manage_account.show_recovery_phrase" = "Afficher la phrase";
-"manage_account.backup_recovery_phrase" = "Sauvegarder la phrase";
+"manage_account.recovery_phrase" = "Phrase de réinitialisation";
+"manage_account.evm_private_key" = "Aucune clé privée";
+"manage_account.public_keys" = "Clés publiques";
+"manage_account.backup_recovery_phrase" = "Phrase de récupération de sauvegarde";
 "manage_account.unlink" = "Dissocier";
 
 // Birthday Input
 
 "birthday_input.title" = "Hauteur de l'anniversaire";
-"birthday_input.description" = "Si vous connaissez la hauteur anniversaire de votre portefeuille, saisissez-la pour accélérer la synchronisation.";
-"birthday_input.new_wallet" = "C'est un nouveau portefeuille";
+"birthday_input.description" = "Pour une synchronisation rapide, vous pouvez entrer la hauteur de l'anniversaire du portefeuille.";
+"birthday_input.new_wallet" = "Nouveau porte-monnaie";
+"birthday_input.new_wallet.description" = "Vous n'avez pas de transaction avant";
+"birthday_input.old_wallet" = "Ancien portefeuille";
+"birthday_input.old_wallet.description" = "Utilisé avant et a des transactions";
 "birthday_input.input_placeholder" = "%@ (optionnel)";
+
 "restore_setting.birthday_height" = "Hauteur de l'anniversaire %@";
+"restore_setting.download.disclaimer" = "La synchronisation initiale avec la blockchain peut consommer beaucoup de trafic Internet.";
 
 // EVM Network
 
@@ -1132,7 +1181,6 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 
 "watch_address.title" = "Adresse à suivre";
 "watch_address.watch" = "Suivi";
-"watch_address.name" = "Nom (optionnel)";
 "watch_address.address" = "Adresse";
 "watch_address.description" = "Disponible uniquement pour Ethereum et autres blockchains EVM prises en charge.";
 
@@ -1159,9 +1207,9 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft_asset.average_30d" = "Moyenne sur 30 jours";
 "nft_asset.floor_price" = "Prix plancher";
 "nft_asset.on_sale" = "En Vente";
+"nft_asset.on_auction" = "Mise aux enchères";
 "nft_asset.until_date" = "jusqu'à: %@";
 "nft_asset.buy_now" = "Acheter Maintenant";
-"nft_asset.top_bid" = "Meilleure enchère";
 "nft_asset.minimum_bid" = "Enchère minimale";
 "nft_asset.best_offer" = "Meilleure offre";
 "nft_asset.properties" = "Propriétés";
@@ -1195,6 +1243,8 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft_collection.overview.today_sellers" = "Vendeurs d'aujourd'hui";
 "nft_collection.overview.floor_price" = "Prix plancher";
 "nft_collection.overview.all_time_average" = "Moyenne du temps";
+"nft_collection.overview.royalty" = "Redevance";
+"nft_collection.overview.inception_date" = "Date de création";
 
 "nft.activity.empty_list" = "Aucune activité pour l'instant";
 "nft.activity.event_types" = "Types d'évènement";
@@ -1203,7 +1253,7 @@ Nous avons construit Unstoppable à notre intention car les solutions disponible
 "nft.activity.event_type.sale" = "Vente";
 "nft.activity.event_type.offer" = "Offre saisie";
 "nft.activity.event_type.bid" = "Enchère saisie";
-"nft.activity.event_type.bid_cancel" = "Enchère retirée";
+"nft.activity.event_type.bidCancel" = "Enchère retirée";
 "nft.activity.event_type.transfer" = "Transfert";
 "nft.activity.event_type.approve" = "Approuver";
 "nft.activity.event_type.custom" = "Personnalisé";
