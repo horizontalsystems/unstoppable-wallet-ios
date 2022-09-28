@@ -157,7 +157,7 @@
 // Backup Verify Words
 
 "backup_verify_words.title" = "Подтвердить";
-"backup_verify_words.description" = "Select two requested words from your wallet recovery phrase";
+"backup_verify_words.description" = "Выберите два запрошенные слова из вашей фразы восстановления";
 "backup_verify_words.incorrect_word" = "Неверное Слово";
 
 // Backup Verify Passphrase
@@ -172,8 +172,8 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Backup Recovery Phrase";
-"backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.title" = "Сделать резервную копию фразы восстановления";
+"backup_prompt.warning" = "Создайте резервную копию вашей фразы восстановления и пароля, которые позволят вам восстановить ваш кошелек, если телефон потерян, украден, сломал и т.д.";
 "backup_prompt.backup" = "Резервная Копия";
 "backup_prompt.later" = "Позже";
 
@@ -195,7 +195,7 @@
 "balance.rate_per_coin" = "%@ за %@";
 "balance.syncing" = "Синхронизация...";
 "balance.searching" = "Поиск транзакций...";
-"balance.downloading_sapling" = "Downloading Sapling... %d%%";
+"balance.downloading_sapling" = "Загрузка sapling... %d%%";
 "balance.downloading_blocks" = "Загрузка Блоков";
 "balance.scanning_blocks" = "Сканирование Блоков";
 "balance.enhancing_transactions" = "Улучшение Транзакций";
@@ -310,7 +310,7 @@
 "send.lock_time" = "TimeLock";
 
 "approve.confirmation.you_approve" = "Вы Разрешаете";
-"approve.confirmation.you_revoke" = "You Revoke";
+"approve.confirmation.you_revoke" = "Вы Отменяете";
 "approve.confirmation.spender" = "Покупатель";
 
 // CoinSelector
@@ -1134,7 +1134,7 @@
 "manage_account.recovery_phrase" = "Фраза для восстановления";
 "manage_account.evm_private_key" = "Приватный Ключ EVM";
 "manage_account.public_keys" = "Публичные Ключи";
-"manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
+"manage_account.backup_recovery_phrase" = "Сделать резервную копию фразы восстановления";
 "manage_account.unlink" = "Отсоединить";
 
 // Birthday Input
@@ -1142,9 +1142,9 @@
 "birthday_input.title" = "Блок Создания";
 "birthday_input.description" = "Для быстрой синхронизации вы можете ввести birthday height кошелька.";
 "birthday_input.new_wallet" = "Создать Кошелек";
-"birthday_input.new_wallet.description" = "Don’t have any transaction before";
+"birthday_input.new_wallet.description" = "Не было транзакций до";
 "birthday_input.old_wallet" = "Старый Кошелёк";
-"birthday_input.old_wallet.description" = "Used before and has transactions";
+"birthday_input.old_wallet.description" = "Использовался до и есть транзакции";
 "birthday_input.input_placeholder" = "%@ (опционально)";
 
 "restore_setting.birthday_height" = "%@ Блок Создания";
