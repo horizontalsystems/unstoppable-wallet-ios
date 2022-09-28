@@ -36,6 +36,10 @@ class DepositViewController: ThemeViewController {
                 options: [.scaleFactor(UIScreen.main.scale)]
         )
 
+        imageView.snp.makeConstraints { maker in
+            maker.size.equalTo(CGFloat.iconSize24)
+        }
+
         let topWrapperView = UIView()
 
         view.addSubview(topWrapperView)
