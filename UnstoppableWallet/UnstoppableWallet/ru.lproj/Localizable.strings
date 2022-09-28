@@ -15,7 +15,7 @@
 "button.report" = "Пожаловаться";
 "button.add" = "Добавить";
 "button.approve" = "Разрешить";
-"button.revoke" = "Revoke";
+"button.revoke" = "Отменить";
 "button.reject" = "Отклонить";
 "button.connect" = "Подключиться";
 "button.save" = "Сохранить";
@@ -53,8 +53,8 @@
 "alert.swapped" = "Обмен выполнен";
 "alert.approving" = "Подтверждение";
 "alert.approved" = "Разрешено";
-"alert.revoking" = "Revoking";
-"alert.revoked" = "Revoked";
+"alert.revoking" = "Отмена";
+"alert.revoked" = "Отменен";
 
 
 "action.loading" = "загрузка...";
@@ -124,12 +124,12 @@
 "copy_warning.title" = "Риск Копирования";
 "copy_warning.description" = "В качестве меры безопасности мы рекомендуем не использовать действие копирования.";
 "copy_warning.dont_copy" = "Не Копировать";
-"copy_warning.i_will_risk_it" = "I will risk it";
+"copy_warning.i_will_risk_it" = "Я рискую";
 
 // Recovery Phrase
 
 "recovery_phrase.title" = "Фраза Восстановления";
-"recovery_phrase.warning" = "Never share your recovery phrase with anyone. Unstoppable team will never ask for your recovery phrase.";
+"recovery_phrase.warning" = "Никогда ни с кем не делитесь вашей фразой восстановления. Команда Unstoppable никогда не запросит вашу фразу восстановления.";
 "recovery_phrase.tap_to_show" = "Нажмите, чтобы показать фразу восстановления";
 "recovery_phrase.passphrase" = "Кодовая Фраза";
 "recovery_phrase.copy_warning.title" = "Риск копирования фразы восстановления";
@@ -332,8 +332,8 @@
 "swap.approve.description" = "Вы должны предоставить разрешение на использование смарт-контракта для замены данного токена от вашего имени. Это разрешение устанавливает сумму, которая может быть использована смарт-контрактом. Это не повлияет на ваш баланс, но требует небольшой комиссии для выполнения утвержденной транзакции. \n\nХотя это может быть сделано по требованию перед каждой сделкой, предварительно одобрить более высокую сумму для будущих сделок.";
 "swap.approve.amount_error.already_approved" = "У вас уже есть разрешение на эту сумму";
 "swap.approving_button" = "Разрешение...";
-"swap.revoke_warning" = "You can exchange %@, or you need to revoke and approve the new amount";
-"swap.revoking_button" = "Revoking...";
+"swap.revoke_warning" = "Вы можете обменять %@, или вы должны отменить и одобрить новую сумму";
+"swap.revoking_button" = "Отмена...";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
 "swap.switch_provider.title" = "Служба Обмена";
@@ -710,8 +710,8 @@
 
 "transactions.receive" = "Получено";
 "transactions.send" = "Отправлено";
-"transactions.burn" = "Burn";
-"transactions.mint" = "Mint";
+"transactions.burn" = "Сжечь";
+"transactions.mint" = "Минт";
 "transactions.approve" = "Разрешение";
 "transactions.swap" = "Обмен";
 "transactions.contract_call" = "Вызов Смарт Контракта";
