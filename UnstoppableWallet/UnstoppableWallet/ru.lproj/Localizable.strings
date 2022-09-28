@@ -15,7 +15,7 @@
 "button.report" = "Пожаловаться";
 "button.add" = "Добавить";
 "button.approve" = "Разрешить";
-"button.revoke" = "Revoke";
+"button.revoke" = "Отменить";
 "button.reject" = "Отклонить";
 "button.connect" = "Подключиться";
 "button.save" = "Сохранить";
@@ -50,11 +50,11 @@
 "alert.sending" = "Отправка";
 "alert.sent" = "Отправлено";
 "alert.swapping" = "Обмен";
-"alert.swapped" = "Swapped";
+"alert.swapped" = "Обмен выполнен";
 "alert.approving" = "Подтверждение";
-"alert.approved" = "Approved";
-"alert.revoking" = "Revoking";
-"alert.revoked" = "Revoked";
+"alert.approved" = "Разрешено";
+"alert.revoking" = "Отмена";
+"alert.revoked" = "Отменен";
 
 
 "action.loading" = "загрузка...";
@@ -124,12 +124,12 @@
 "copy_warning.title" = "Риск Копирования";
 "copy_warning.description" = "В качестве меры безопасности мы рекомендуем не использовать действие копирования.";
 "copy_warning.dont_copy" = "Не Копировать";
-"copy_warning.i_will_risk_it" = "I will risk it";
+"copy_warning.i_will_risk_it" = "Я рискую";
 
 // Recovery Phrase
 
 "recovery_phrase.title" = "Фраза Восстановления";
-"recovery_phrase.warning" = "Never share your recovery phrase with anyone. Unstoppable team will never ask for your recovery phrase.";
+"recovery_phrase.warning" = "Никогда ни с кем не делитесь вашей фразой восстановления. Команда Unstoppable никогда не запросит вашу фразу восстановления.";
 "recovery_phrase.tap_to_show" = "Нажмите, чтобы показать фразу восстановления";
 "recovery_phrase.passphrase" = "Кодовая Фраза";
 "recovery_phrase.copy_warning.title" = "Риск копирования фразы восстановления";
@@ -157,7 +157,7 @@
 // Backup Verify Words
 
 "backup_verify_words.title" = "Подтвердить";
-"backup_verify_words.description" = "Select two requested words from your wallet recovery phrase";
+"backup_verify_words.description" = "Выберите два запрошенные слова из вашей фразы восстановления";
 "backup_verify_words.incorrect_word" = "Неверное Слово";
 
 // Backup Verify Passphrase
@@ -172,8 +172,8 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Backup Recovery Phrase";
-"backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.title" = "Сделать резервную копию фразы восстановления";
+"backup_prompt.warning" = "Создайте резервную копию вашей фразы восстановления и пароля, которые позволят вам восстановить ваш кошелек, если телефон потерян, украден, сломал и т.д.";
 "backup_prompt.backup" = "Резервная Копия";
 "backup_prompt.later" = "Позже";
 
@@ -195,7 +195,7 @@
 "balance.rate_per_coin" = "%@ за %@";
 "balance.syncing" = "Синхронизация...";
 "balance.searching" = "Поиск транзакций...";
-"balance.downloading_sapling" = "Downloading Sapling... %d%%";
+"balance.downloading_sapling" = "Загрузка sapling... %d%%";
 "balance.downloading_blocks" = "Загрузка Блоков";
 "balance.scanning_blocks" = "Сканирование Блоков";
 "balance.enhancing_transactions" = "Улучшение Транзакций";
@@ -310,7 +310,7 @@
 "send.lock_time" = "TimeLock";
 
 "approve.confirmation.you_approve" = "Вы Разрешаете";
-"approve.confirmation.you_revoke" = "You Revoke";
+"approve.confirmation.you_revoke" = "Вы Отменяете";
 "approve.confirmation.spender" = "Покупатель";
 
 // CoinSelector
@@ -329,11 +329,11 @@
 "swap.advanced_settings" = "Настройки Обмена";
 "swap.proceed_button" = "Далее";
 "swap.approve.title" = "Разрешение Обмена";
-"swap.approve.description" = "Вы должны предоставить разрешение на смарт-контракт, чтобы обменять этот токен от своего имени. С помощью этого разрешения задается сумма, которая может быть использована в рамках смарт-контракта. Это не повлияет на ваш баланс, но вам придется заплатить небольшой сбор за исполнение транзакции.\n\nРазрешение может быть запрошено перед каждой сделкой, но дешевле заранее задать более высокую сумму для будущих сделок.";
+"swap.approve.description" = "Вы должны предоставить разрешение на использование смарт-контракта для замены данного токена от вашего имени. Это разрешение устанавливает сумму, которая может быть использована смарт-контрактом. Это не повлияет на ваш баланс, но требует небольшой комиссии для выполнения утвержденной транзакции. \n\nХотя это может быть сделано по требованию перед каждой сделкой, предварительно одобрить более высокую сумму для будущих сделок.";
 "swap.approve.amount_error.already_approved" = "У вас уже есть разрешение на эту сумму";
 "swap.approving_button" = "Разрешение...";
-"swap.revoke_warning" = "You can exchange %@, or you need to revoke and approve the new amount";
-"swap.revoking_button" = "Revoking...";
+"swap.revoke_warning" = "Вы можете обменять %@, или вы должны отменить и одобрить новую сумму";
+"swap.revoking_button" = "Отмена...";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
 "swap.switch_provider.title" = "Служба Обмена";
@@ -710,8 +710,8 @@
 
 "transactions.receive" = "Получено";
 "transactions.send" = "Отправлено";
-"transactions.burn" = "Burn";
-"transactions.mint" = "Mint";
+"transactions.burn" = "Сжечь";
+"transactions.mint" = "Минт";
 "transactions.approve" = "Разрешение";
 "transactions.swap" = "Обмен";
 "transactions.contract_call" = "Вызов Смарт Контракта";
@@ -824,7 +824,7 @@
 // Settings -> Terms
 
 "terms.title" = "Условия Использования";
-"terms.i_agree" = "I Agree";
+"terms.i_agree" = "Я принимаю";
 
 "terms.item.1" = "Сделайте резервную копию фраз восстановления кошелька, чтобы восстановить доступ к средствам.";
 "terms.item.2" = "Приватные ключи и фразы восстановления хранятся только на вашем устройстве.";
@@ -1051,6 +1051,8 @@
 "wallet_connect.active_account" = "Активный Кошелек";
 "wallet_connect.address" = "Адрес";
 "wallet_connect.network" = "Сеть";
+"wallet_connect.address" = "Адрес";
+"wallet_connect.network" = "Сеть";
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
 "wallet_connect.main.unsupported_chains" = "Некоторые блокчейны не поддерживаются!";
 "wallet_connect.connect_description" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
@@ -1132,7 +1134,7 @@
 "manage_account.recovery_phrase" = "Фраза для восстановления";
 "manage_account.evm_private_key" = "Приватный Ключ EVM";
 "manage_account.public_keys" = "Публичные Ключи";
-"manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
+"manage_account.backup_recovery_phrase" = "Сделать резервную копию фразы восстановления";
 "manage_account.unlink" = "Отсоединить";
 
 // Birthday Input
@@ -1140,9 +1142,9 @@
 "birthday_input.title" = "Блок Создания";
 "birthday_input.description" = "Для быстрой синхронизации вы можете ввести birthday height кошелька.";
 "birthday_input.new_wallet" = "Создать Кошелек";
-"birthday_input.new_wallet.description" = "Don’t have any transaction before";
+"birthday_input.new_wallet.description" = "Не было транзакций до";
 "birthday_input.old_wallet" = "Старый Кошелёк";
-"birthday_input.old_wallet.description" = "Used before and has transactions";
+"birthday_input.old_wallet.description" = "Использовался до и есть транзакции";
 "birthday_input.input_placeholder" = "%@ (опционально)";
 
 "restore_setting.birthday_height" = "%@ Блок Создания";
