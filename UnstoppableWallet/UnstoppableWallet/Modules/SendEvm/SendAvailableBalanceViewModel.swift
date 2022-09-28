@@ -9,6 +9,10 @@ protocol IAvailableBalanceService: AnyObject {
     var availableBalanceObservable: Observable<DataStatus<Decimal>> { get }
 }
 
+protocol ISendAvailableBalanceViewModel: AnyObject {
+    var viewStateDriver: Driver<SendAvailableBalanceViewModel.ViewState> { get }
+}
+
 class SendAvailableBalanceViewModel {
     private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.available-balance-view-model", qos: .userInitiated)
 
@@ -70,7 +74,7 @@ class SendAvailableBalanceViewModel {
 
 }
 
-extension SendAvailableBalanceViewModel {
+extension SendAvailableBalanceViewModel: ISendAvailableBalanceViewModel {
 
     var viewStateDriver: Driver<ViewState> {
         viewStateRelay.asDriver()

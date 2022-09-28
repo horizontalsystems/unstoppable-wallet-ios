@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import NftKit
 import MarketKit
@@ -73,12 +74,8 @@ extension EvmNftAdapter: INftAdapter {
         return nftKit.transferEip721TransactionData(contractAddress: contractAddress, to: to, tokenId: tokenId)
     }
 
-    func transferEip1155TransactionData(contractAddress: String, to: String, tokenId: String, value: Decimal) -> TransactionData? {
+    func transferEip1155TransactionData(contractAddress: String, to: EthereumKit.Address, tokenId: String, value: Decimal) -> TransactionData? {
         guard let contractAddress = try? EthereumKit.Address(hex: contractAddress) else {
-            return nil
-        }
-
-        guard let to = try? EthereumKit.Address(hex: to) else {
             return nil
         }
 

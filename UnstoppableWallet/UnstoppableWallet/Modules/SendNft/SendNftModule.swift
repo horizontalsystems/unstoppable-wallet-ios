@@ -30,6 +30,19 @@ class SendNftModule {
         return SendEip721ViewController(evmKitWrapper: evmKitWrapper, viewModel: viewModel, recipientViewModel: recipientAddressViewModel)
     }
 
+    private static func eip1155ViewController(evmKitWrapper: EvmKitWrapper, nftUid: NftUid, balance: Int, adapter: INftAdapter) -> UIViewController {
+        let addressService = addressService(blockchainType: nftUid.blockchainType)
+        let service = SendEip1155Service(nftUid: nftUid, balance: balance, adapter: adapter, addressService: addressService, nftMetadataManager: App.shared.nftMetadataManager)
+
+        let viewModel = SendEip1155ViewModel(service: service)
+        let availableBalanceViewModel = SendEip1155AvailableBalanceViewModel(service: service)
+
+        let amountViewModel = IntegerAmountInputViewModel(service: service)
+        let recipientAddressViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
+
+        return SendEip1155ViewController(evmKitWrapper: evmKitWrapper, viewModel: viewModel, availableBalanceViewModel: availableBalanceViewModel, amountViewModel: amountViewModel, recipientViewModel: recipientAddressViewModel)
+    }
+
     static func viewController(nftUid: NftUid) -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount, !account.watchAccount else {
             return nil
@@ -64,7 +77,7 @@ class SendNftModule {
             case .eip721:
                 viewController = eip721ViewController(evmKitWrapper: evmKitWrapper, nftUid: nftUid, adapter: adapter)
             case .eip1155:
-                viewController = UIViewController()
+                viewController = eip1155ViewController(evmKitWrapper: evmKitWrapper, nftUid: nftUid, balance: nftRecord.balance, adapter: adapter)
             }
 
         default:

@@ -9,15 +9,20 @@ import Kingfisher
 import UIExtensions
 import ComponentKit
 
-class SendEip721ViewController: KeyboardAwareViewController {
+class SendEip1155ViewController: KeyboardAwareViewController {
     private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
 
     private let evmKitWrapper: EvmKitWrapper
-    private let viewModel: SendEip721ViewModel
+    private let viewModel: SendEip1155ViewModel
     private let disposeBag = DisposeBag()
 
     private let iconImageView = UIImageView()
     private let tableView = SectionsTableView(style: .grouped)
+
+    private let availableBalanceCell: SendAvailableBalanceCell
+
+    private let amountCell: IntegerAmountInputCell
+    private let amountCautionCell = FormCautionCell()
 
     private let recipientCell: RecipientAddressInputCell
     private let recipientCautionCell: RecipientAddressCautionCell
@@ -28,9 +33,13 @@ class SendEip721ViewController: KeyboardAwareViewController {
     private var isLoaded = false
     private var keyboardShown = false
 
-    init(evmKitWrapper: EvmKitWrapper, viewModel: SendEip721ViewModel, recipientViewModel: RecipientAddressViewModel) {
+    init(evmKitWrapper: EvmKitWrapper, viewModel: SendEip1155ViewModel, availableBalanceViewModel: ISendAvailableBalanceViewModel, amountViewModel: IntegerAmountInputViewModel, recipientViewModel: RecipientAddressViewModel) {
         self.evmKitWrapper = evmKitWrapper
         self.viewModel = viewModel
+
+        availableBalanceCell = SendAvailableBalanceCell(viewModel: availableBalanceViewModel)
+
+        amountCell = IntegerAmountInputCell(viewModel: amountViewModel)
 
         recipientCell = RecipientAddressInputCell(viewModel: recipientViewModel)
         recipientCautionCell = RecipientAddressCautionCell(viewModel: recipientViewModel)
@@ -63,6 +72,8 @@ class SendEip721ViewController: KeyboardAwareViewController {
 
         tableView.registerCell(forClass: NftAssetImageCell.self)
 
+        amountCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+
         recipientCell.onChangeHeight = { [weak self] in self?.reloadTable() }
         recipientCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
 
@@ -88,11 +99,27 @@ class SendEip721ViewController: KeyboardAwareViewController {
             self?.nextButton.isEnabled = $0
             self?.navigationItem.rightBarButtonItem?.isEnabled = $0
         }
+        subscribe(disposeBag, viewModel.amountCautionDriver) { [weak self] caution in
+            self?.amountCell.set(cautionType: caution?.type)
+            self?.amountCautionCell.set(caution: caution)
+        }
         subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openConfirm(sendData: $0) }
 
         setInitialState(bottomPadding: wrapperViewHeight)
         tableView.buildSections()
         isLoaded = true
+    }
+
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if !keyboardShown {
+            DispatchQueue.main.async  {
+                _ = self.amountCell.becomeFirstResponder()
+            }
+
+            keyboardShown = true
+        }
     }
 
     @objc private func onTapNext() {
@@ -123,7 +150,7 @@ class SendEip721ViewController: KeyboardAwareViewController {
 
 }
 
-extension SendEip721ViewController: SectionsDataSource {
+extension SendEip1155ViewController: SectionsDataSource {
 
     private func imageSection(nftImage: NftImage) -> SectionProtocol {
         Section(
@@ -186,11 +213,42 @@ extension SendEip721ViewController: SectionsDataSource {
                 )
         )
 
+        sections.append(contentsOf: [
+            Section(
+                    id: "available-balance",
+                    headerState: .margin(height: .margin4),
+                    rows: [
+                        StaticRow(
+                                cell: availableBalanceCell,
+                                id: "available-balance",
+                                height: availableBalanceCell.cellHeight
+                        )
+                    ]
+            ),
+            Section(
+                    id: "amount",
+                    headerState: .margin(height: .margin8),
+                    rows: [
+                        StaticRow(
+                                cell: amountCell,
+                                id: "amount-input",
+                                height: amountCell.cellHeight
+                        ),
+                        StaticRow(
+                                cell: amountCautionCell,
+                                id: "amount-caution",
+                                dynamicHeight: { [weak self] width in
+                                    self?.amountCautionCell.height(containerWidth: width) ?? 0
+                                }
+                        )
+                    ]
+            )
+        ])
+
         sections.append(
                 Section(
                         id: "recipient",
                         headerState: .margin(height: .margin12),
-                        footerState: .margin(height: .margin32),
                         rows: [
                             StaticRow(
                                     cell: recipientCell,

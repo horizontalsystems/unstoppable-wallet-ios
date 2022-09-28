@@ -6,14 +6,14 @@ import RxSwift
 class SendAvailableBalanceCell: UITableViewCell {
     let cellHeight: CGFloat = 29
 
-    private let viewModel: SendAvailableBalanceViewModel
+    private let viewModel: ISendAvailableBalanceViewModel
     private let disposeBag = DisposeBag()
 
     private let availableAmountTitleLabel = UILabel()
     private let availableAmountValueLabel = UILabel()
     private let spinner = HUDActivityView.create(with: .small20)
 
-    init(viewModel: SendAvailableBalanceViewModel) {
+    init(viewModel: ISendAvailableBalanceViewModel) {
         self.viewModel = viewModel
 
         super.init(style: .default, reuseIdentifier: nil)
