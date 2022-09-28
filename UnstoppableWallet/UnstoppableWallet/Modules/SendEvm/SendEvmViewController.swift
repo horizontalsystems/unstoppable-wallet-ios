@@ -27,7 +27,7 @@ class SendEvmViewController: ThemeViewController {
     private var isLoaded = false
     private var keyboardShown = false
 
-    init(evmKitWrapper: EvmKitWrapper, viewModel: SendEvmViewModel, availableBalanceViewModel: SendAvailableBalanceViewModel, amountViewModel: AmountInputViewModel, recipientViewModel: RecipientAddressViewModel) {
+    init(evmKitWrapper: EvmKitWrapper, viewModel: SendEvmViewModel, availableBalanceViewModel: ISendAvailableBalanceViewModel, amountViewModel: AmountInputViewModel, recipientViewModel: RecipientAddressViewModel) {
         self.evmKitWrapper = evmKitWrapper
         self.viewModel = viewModel
 

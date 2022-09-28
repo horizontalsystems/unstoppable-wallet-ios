@@ -132,9 +132,10 @@ class KeyboardAwareViewController: ThemeViewController {
         self.keyboardFrame = keyboardFrame
         pseudoAccessoryView?.heightValue = accessoryViewHeight
 
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - view.safeAreaInsets.bottom, right: 0)
         for scrollView in scrollViews {
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - view.safeAreaInsets.bottom, right: 0)
-            scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - view.safeAreaInsets.bottom, right: 0)
+            scrollView.contentInset = insets
+            scrollView.scrollIndicatorInsets = insets
         }
     }
 
