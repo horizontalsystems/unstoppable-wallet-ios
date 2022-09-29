@@ -153,6 +153,10 @@ extension IPresentDelegate {
 
 }
 
+protocol IDismissDelegate: AnyObject {
+    var onUserDismissed: (() -> ())? { get set }
+}
+
 protocol Warning {}
 
 protocol IErrorService: AnyObject {

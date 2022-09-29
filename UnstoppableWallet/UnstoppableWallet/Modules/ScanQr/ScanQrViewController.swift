@@ -8,11 +8,13 @@ protocol IScanQrViewControllerDelegate: AnyObject {
     func didScan(viewController: UIViewController, string: String)
 }
 
-class ScanQrViewController: ThemeViewController {
+class ScanQrViewController: ThemeViewController, IDismissDelegate {
     weak var delegate: IScanQrViewControllerDelegate?
 
     private let scanView = ScanQrView()
     private let cancelButton = PrimaryButton()
+
+    var onUserDismissed: (() -> ())?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +52,7 @@ class ScanQrViewController: ThemeViewController {
     }
 
     @objc func onCancel() {
+        onUserDismissed?()
         dismiss(animated: true)
     }
 
@@ -59,6 +62,7 @@ class ScanQrViewController: ThemeViewController {
 
     func onScan(string: String) {
         delegate?.didScan(viewController: self, string: string)
+        onUserDismissed?()
         dismiss(animated: true)
     }
 

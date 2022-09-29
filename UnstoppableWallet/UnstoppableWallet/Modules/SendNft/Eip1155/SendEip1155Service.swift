@@ -124,7 +124,11 @@ extension SendEip1155Service {
 extension SendEip1155Service: IIntegerAmountInputService {
 
     var amount: Int {
-        nftAmount ?? 0
+        if nftBalance == 1 {    // if balance == 1 just put it in amount cell
+            return nftBalance
+        }
+
+        return nftAmount ?? 0
     }
 
     var balance: Int? {

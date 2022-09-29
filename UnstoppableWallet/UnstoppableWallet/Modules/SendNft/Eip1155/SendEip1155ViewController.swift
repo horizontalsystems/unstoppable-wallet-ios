@@ -113,7 +113,7 @@ class SendEip1155ViewController: KeyboardAwareViewController {
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if !keyboardShown {
+        if !keyboardShown && viewModel.showKeyboard {
             DispatchQueue.main.async  {
                 _ = self.amountCell.becomeFirstResponder()
             }
