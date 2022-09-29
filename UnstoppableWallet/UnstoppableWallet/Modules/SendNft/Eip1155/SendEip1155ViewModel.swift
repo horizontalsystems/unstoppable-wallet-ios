@@ -42,6 +42,10 @@ class SendEip1155ViewModel {
 
 extension SendEip1155ViewModel {
 
+    var showKeyboard: Bool {
+        (service.balance ?? 0) != 1 // If balance == 1 don't show keyboard
+    }
+
     var proceedEnableDriver: Driver<Bool> {
         proceedEnabledRelay.asDriver()
     }

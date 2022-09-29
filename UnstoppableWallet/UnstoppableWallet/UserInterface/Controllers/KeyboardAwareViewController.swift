@@ -192,6 +192,12 @@ class KeyboardAwareViewController: ThemeViewController {
             observeKeyboard(false)
         }
 
+        if let programmaticallyDismissedViewController = viewControllerToPresent as? IDismissDelegate {
+            programmaticallyDismissedViewController.onUserDismissed = { [weak self] in
+                self?.observeKeyboard(true)
+            }
+        }
+        
         viewControllerToPresent.presentationController?.delegate = self
         super.present(viewControllerToPresent, animated: flag, completion: completion)
     }

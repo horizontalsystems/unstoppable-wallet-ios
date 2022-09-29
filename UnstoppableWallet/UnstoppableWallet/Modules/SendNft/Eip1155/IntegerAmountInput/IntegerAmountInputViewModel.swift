@@ -51,6 +51,7 @@ class IntegerAmountInputViewModel {
 
     private func sync(amount: Int) {
         queue.async { [weak self] in
+            self?.amountRelay.accept("\(amount)")
             self?.service.onChange(amount: amount)
         }
     }
