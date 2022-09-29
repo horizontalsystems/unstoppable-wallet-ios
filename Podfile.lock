@@ -594,13 +594,13 @@ CHECKOUT OPTIONS:
     :commit: 234a76b599b6474a1a4057602b8418a5c42228b8
     :git: https://github.com/horizontalsystems/binance-chain-kit-ios
   BitcoinCashKit.swift:
-    :commit: aad34bd645d6cc57dd502798e4411259de4044a2
+    :commit: 8be97ec8c9442539666355a4435b45b2871cede3
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinCore.swift:
-    :commit: aad34bd645d6cc57dd502798e4411259de4044a2
+    :commit: 8be97ec8c9442539666355a4435b45b2871cede3
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   BitcoinKit.swift:
-    :commit: aad34bd645d6cc57dd502798e4411259de4044a2
+    :commit: 8be97ec8c9442539666355a4435b45b2871cede3
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Chart.swift:
     :commit: 4590b8b5c22fb5fdc654e8e37313eed11d091828
@@ -612,7 +612,7 @@ CHECKOUT OPTIONS:
     :commit: fdc11d5bed1501509567d4e4d62857c09b42512d
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: aad34bd645d6cc57dd502798e4411259de4044a2
+    :commit: 8be97ec8c9442539666355a4435b45b2871cede3
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
     :commit: b4c3fbfc656607fca66978a86049579b362cd6c6
@@ -630,7 +630,7 @@ CHECKOUT OPTIONS:
     :commit: 1bc214b259bd7d78e5eac7146b4e200aa120c130
     :git: https://github.com/horizontalsystems/hd-wallet-kit-ios
   Hodler.swift:
-    :commit: aad34bd645d6cc57dd502798e4411259de4044a2
+    :commit: 8be97ec8c9442539666355a4435b45b2871cede3
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   HsToolKit.swift:
     :commit: dfe75b585365c516b5dfe7824a1c60f6a82a8bdf
@@ -642,10 +642,10 @@ CHECKOUT OPTIONS:
     :commit: fdc11d5bed1501509567d4e4d62857c09b42512d
     :git: https://github.com/horizontalsystems/component-kit-ios/
   LitecoinKit.swift:
-    :commit: aad34bd645d6cc57dd502798e4411259de4044a2
+    :commit: 8be97ec8c9442539666355a4435b45b2871cede3
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   MarketKit.swift:
-    :commit: aaac2d5f1f7cedc492321873917b004e4a5e55f9
+    :commit: 4c41a2da1176ccd47bbcca7557918714ffc773dc
     :git: https://github.com/horizontalsystems/market-kit-ios/
   ModuleKit.swift:
     :commit: fdc11d5bed1501509567d4e4d62857c09b42512d
