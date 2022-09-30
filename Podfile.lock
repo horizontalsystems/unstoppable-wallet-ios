@@ -612,7 +612,7 @@ CHECKOUT OPTIONS:
     :commit: fdc11d5bed1501509567d4e4d62857c09b42512d
     :git: https://github.com/horizontalsystems/component-kit-ios/
   DashKit.swift:
-    :commit: 8be97ec8c9442539666355a4435b45b2871cede3
+    :commit: 62a9193fe47f9c30d36ba81079305756bb8a6eae
     :git: https://github.com/horizontalsystems/bitcoin-kit-ios.git
   Erc20Kit.swift:
     :commit: b4c3fbfc656607fca66978a86049579b362cd6c6
