@@ -1,18 +1,19 @@
-import EthereumKit
+import Foundation
+import EvmKit
 import RxSwift
 import BigInt
 import HsToolKit
-import Erc20Kit
+import Eip20Kit
 import UniswapKit
 import MarketKit
 
 class EvmTransactionsAdapter: BaseEvmAdapter {
     static let decimal = 18
 
-    private let evmTransactionSource: EthereumKit.TransactionSource
+    private let evmTransactionSource: EvmKit.TransactionSource
     private let transactionConverter: EvmTransactionConverter
 
-    init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, evmTransactionSource: EthereumKit.TransactionSource, coinManager: CoinManager, evmLabelManager: EvmLabelManager) {
+    init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, evmTransactionSource: EvmKit.TransactionSource, coinManager: CoinManager, evmLabelManager: EvmLabelManager) {
         self.evmTransactionSource = evmTransactionSource
         transactionConverter = EvmTransactionConverter(source: source, baseToken: baseToken, coinManager: coinManager, evmKitWrapper: evmKitWrapper, evmLabelManager: evmLabelManager)
 
@@ -22,14 +23,14 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
     private func tagQuery(token: MarketKit.Token?, filter: TransactionTypeFilter) -> TransactionTagQuery {
         var type: TransactionTag.TagType?
         var `protocol`: TransactionTag.TagProtocol?
-        var contractAddress: EthereumKit.Address?
+        var contractAddress: EvmKit.Address?
 
         if let token = token {
             switch token.type {
             case .native:
                 `protocol` = .native
             case .eip20(let address):
-                if let address = try? EthereumKit.Address(hex: address) {
+                if let address = try? EvmKit.Address(hex: address) {
                     `protocol` = .eip20
                     contractAddress = address
                 }

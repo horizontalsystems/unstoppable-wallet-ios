@@ -1,6 +1,6 @@
 import UIKit
 import MarketKit
-import EthereumKit
+import EvmKit
 import SectionsTableView
 import ThemeKit
 import RxSwift

@@ -1,6 +1,7 @@
 import Foundation
 import WalletConnectSign
 import WalletConnectV1
+import HsExtensions
 
 struct WalletConnectV2RequestMapper {
 
@@ -13,7 +14,7 @@ struct WalletConnectV2RequestMapper {
         case "eth_sign":
             guard let params = try? request.params.get([String].self),
                   params.count == 2,
-                  let data = Data(hex: params[1]) else {
+                  let data = params[1].hs.hexData else {
                 return nil
             }
             return WalletConnectSignMessageRequest(
@@ -26,7 +27,7 @@ struct WalletConnectV2RequestMapper {
         case "personal_sign":
             guard let params = try? request.params.get([String].self),
                   let dataString = params.first,
-                  let data = Data(hex: dataString) else {
+                  let data = dataString.hs.hexData else {
                 return nil
             }
             return WalletConnectSignMessageRequest(

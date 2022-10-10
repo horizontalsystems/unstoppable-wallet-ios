@@ -1,6 +1,6 @@
 import Foundation
-import EthereumKit
-import Erc20Kit
+import EvmKit
+import Eip20Kit
 import NftKit
 import UniswapKit
 import OneInchKit
@@ -22,7 +22,7 @@ class EvmTransactionConverter {
         self.baseToken = baseToken
     }
 
-    private var evmKit: EthereumKit.Kit {
+    private var evmKit: EvmKit.Kit {
         evmKitWrapper.evmKit
     }
 
@@ -39,7 +39,7 @@ class EvmTransactionConverter {
         return .coinValue(token: baseToken, value: amount)
     }
 
-    private func eip20Value(tokenAddress: EthereumKit.Address, value: BigUInt, sign: FloatingPointSign, tokenInfo: Erc20Kit.TokenInfo?) -> TransactionValue {
+    private func eip20Value(tokenAddress: EvmKit.Address, value: BigUInt, sign: FloatingPointSign, tokenInfo: Eip20Kit.TokenInfo?) -> TransactionValue {
         let query = TokenQuery(blockchainType: evmKitWrapper.blockchainType, tokenType: .eip20(address: tokenAddress.hex))
 
         if let token = try? coinManager.token(query: query) {
@@ -164,7 +164,7 @@ class EvmTransactionConverter {
         }
     }
 
-    private func transferEvents(contractAddress: EthereumKit.Address, value: BigUInt) -> [ContractCallTransactionRecord.TransferEvent] {
+    private func transferEvents(contractAddress: EvmKit.Address, value: BigUInt) -> [ContractCallTransactionRecord.TransferEvent] {
         guard value != 0 else {
             return []
         }

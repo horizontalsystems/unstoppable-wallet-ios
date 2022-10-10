@@ -1,6 +1,6 @@
 import UniswapKit
 import RxSwift
-import EthereumKit
+import EvmKit
 import Foundation
 import MarketKit
 
@@ -14,7 +14,7 @@ class UniswapProvider {
     private func uniswapToken(token: MarketKit.Token) throws -> UniswapKit.Token {
         switch token.type {
         case .native: return swapKit.etherToken
-        case let .eip20(address): return swapKit.token(contractAddress: try EthereumKit.Address(hex: address), decimals: token.decimals)
+        case let .eip20(address): return swapKit.token(contractAddress: try EvmKit.Address(hex: address), decimals: token.decimals)
         default: throw TokenError.unsupportedToken
         }
     }
@@ -23,7 +23,7 @@ class UniswapProvider {
 
 extension UniswapProvider {
 
-    var routerAddress: EthereumKit.Address {
+    var routerAddress: EvmKit.Address {
         swapKit.routerAddress
     }
 

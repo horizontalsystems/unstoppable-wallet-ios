@@ -1,5 +1,5 @@
 import CurrencyKit
-import EthereumKit
+import EvmKit
 import MarketKit
 import RxSwift
 

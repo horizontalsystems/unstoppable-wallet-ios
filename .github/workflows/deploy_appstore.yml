@@ -35,7 +35,7 @@ jobs:
       - name: Add iOS targets to Rust
         run: rustup target add aarch64-apple-ios x86_64-apple-ios
 
-      - name: Run Fastlane (prepare pods, build, upload to TestFlight)
+      - name: Run Fastlane (build, upload to TestFlight)
         uses: maierj/fastlane-action@v2.0.1
         with:
           lane: release

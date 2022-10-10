@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import NftKit
 import MarketKit
-import EthereumKit
+import EvmKit
 import BigInt
 
 class EvmNftAdapter {
@@ -51,7 +51,7 @@ extension EvmNftAdapter: INftAdapter {
             return nil
         }
 
-        guard let contractAddress = try? EthereumKit.Address(hex: contractAddress), let tokenId = BigUInt(tokenId) else {
+        guard let contractAddress = try? EvmKit.Address(hex: contractAddress), let tokenId = BigUInt(tokenId) else {
             return nil
         }
 
@@ -62,8 +62,8 @@ extension EvmNftAdapter: INftAdapter {
         return record(nftBalance: nftBalance)
     }
 
-    func transferEip721TransactionData(contractAddress: String, to: EthereumKit.Address, tokenId: String) -> TransactionData? {
-        guard let contractAddress = try? EthereumKit.Address(hex: contractAddress) else {
+    func transferEip721TransactionData(contractAddress: String, to: EvmKit.Address, tokenId: String) -> TransactionData? {
+        guard let contractAddress = try? EvmKit.Address(hex: contractAddress) else {
             return nil
         }
 
@@ -74,8 +74,8 @@ extension EvmNftAdapter: INftAdapter {
         return nftKit.transferEip721TransactionData(contractAddress: contractAddress, to: to, tokenId: tokenId)
     }
 
-    func transferEip1155TransactionData(contractAddress: String, to: EthereumKit.Address, tokenId: String, value: Decimal) -> TransactionData? {
-        guard let contractAddress = try? EthereumKit.Address(hex: contractAddress) else {
+    func transferEip1155TransactionData(contractAddress: String, to: EvmKit.Address, tokenId: String, value: Decimal) -> TransactionData? {
+        guard let contractAddress = try? EvmKit.Address(hex: contractAddress) else {
             return nil
         }
 

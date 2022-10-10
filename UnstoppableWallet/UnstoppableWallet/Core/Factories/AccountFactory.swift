@@ -1,5 +1,5 @@
 import Foundation
-import EthereumKit
+import EvmKit
 
 class AccountFactory {
     private let accountManager: AccountManager
@@ -48,7 +48,7 @@ extension AccountFactory {
         )
     }
 
-    func watchAccount(address: EthereumKit.Address, domain: String?) -> Account {
+    func watchAccount(address: EvmKit.Address, domain: String?) -> Account {
         Account(
                 id: UUID().uuidString,
                 name: domain ?? nextWatchAccountName,

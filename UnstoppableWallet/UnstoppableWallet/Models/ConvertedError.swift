@@ -1,8 +1,8 @@
 import Foundation
 import BitcoinCore
 import BinanceChainKit
-import Erc20Kit
-import EthereumKit
+import Eip20Kit
+import EvmKit
 import HdWalletKit
 import Hodler
 import HsToolKit
@@ -82,7 +82,7 @@ extension ReachabilityManager.ReachabilityError: ConvertibleError {
     }
 }
 
-extension EthereumKit.Kit.SyncError: ConvertibleError {
+extension EvmKit.Kit.SyncError: ConvertibleError {
     var convertedError: Error {
         switch self {
         case .noNetworkConnection: return AppError.noConnection
@@ -91,7 +91,7 @@ extension EthereumKit.Kit.SyncError: ConvertibleError {
     }
 }
 
-extension EthereumKit.Address.ValidationError: ConvertibleError {
+extension EvmKit.Address.ValidationError: ConvertibleError {
     var convertedError: Error {
          AppError.addressInvalid
     }
@@ -121,7 +121,7 @@ extension HsToolKit.WebSocketStateError: ConvertibleError {
     }
 }
 
-extension EthereumKit.JsonRpcResponse.ResponseError: ConvertibleError {
+extension EvmKit.JsonRpcResponse.ResponseError: ConvertibleError {
 
     var convertedError: Error {
         switch self {

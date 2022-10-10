@@ -1,11 +1,12 @@
-import EthereumKit
+import EvmKit
+import HsExtensions
 
 class EvmPrivateKeyService {
     let privateKey: String
 
     init?(account: Account, evmBlockchainManager: EvmBlockchainManager) {
         guard let seed = account.type.mnemonicSeed,
-              let privateKey = try? Signer.privateKey(seed: seed, chain: evmBlockchainManager.chain(blockchainType: .ethereum)).raw.hex else {
+              let privateKey = try? Signer.privateKey(seed: seed, chain: evmBlockchainManager.chain(blockchainType: .ethereum)).raw.hs.hex else {
             return nil
         }
 

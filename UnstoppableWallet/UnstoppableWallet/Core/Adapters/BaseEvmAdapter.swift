@@ -1,4 +1,5 @@
-import EthereumKit
+import Foundation
+import EvmKit
 import RxSwift
 import BigInt
 import HsToolKit
@@ -14,7 +15,7 @@ class BaseEvmAdapter {
         self.decimals = decimals
     }
 
-    var evmKit: EthereumKit.Kit {
+    var evmKit: EvmKit.Kit {
         evmKitWrapper.evmKit
     }
 
@@ -30,7 +31,7 @@ class BaseEvmAdapter {
         return Decimal(sign: .plus, exponent: -decimals, significand: significand)
     }
 
-    func convertToAdapterState(evmSyncState: EthereumKit.SyncState) -> AdapterState {
+    func convertToAdapterState(evmSyncState: EvmKit.SyncState) -> AdapterState {
         switch evmSyncState {
             case .synced: return .synced
             case .notSynced(let error): return .notSynced(error: error.convertedError)

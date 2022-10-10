@@ -1,5 +1,7 @@
+import Foundation
+import UIKit
 import ThemeKit
-import EthereumKit
+import EvmKit
 import MarketKit
 
 struct AddTokenModule {

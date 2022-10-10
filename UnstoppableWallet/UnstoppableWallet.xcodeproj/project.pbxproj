@@ -1824,7 +1824,6 @@
 		1A564FEB0DC788DD6F80D6F8 /* TopPlatformsMultiSortHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D8F8A8A63BC9BEAAD56 /* TopPlatformsMultiSortHeaderViewModel.swift */; };
 		1A564FEF3AEC87712186DD28 /* DeepLinkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DEB9782FF55EFFD8CCA /* DeepLinkService.swift */; };
 		1A564FFA4566A5019E744E8E /* TransactionDataSortMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E6A6B7E18C287A1D77D /* TransactionDataSortMode.swift */; };
-		2DE35E37F407C194CC843915 /* libPods-Unstoppable Dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80801E7B8BFF4A8712384A65 /* libPods-Unstoppable Dev.a */; };
 		2FA5D053860AE8F6E88F7AE5 /* EvmTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D682FBA971A9D1A09B2D /* EvmTransactionRecord.swift */; };
 		2FA5D0588EFCA934B4CAC162 /* ContractCreationTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD13ED115F4177BE09AB /* ContractCreationTransactionRecord.swift */; };
 		2FA5D059D2249A3943D77A07 /* BinanceChainTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEEA5C3A80D310255459 /* BinanceChainTransactionRecord.swift */; };
@@ -2039,7 +2038,6 @@
 		50701AD025B041E700EDE51B /* JailbreakTestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564D2011D7A4E80B2B7B92 /* JailbreakTestManager.swift */; };
 		50AB06AE2158E2EE00A01E4A /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */; };
 		50AB06B7215A269200A01E4A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50AB06B5215A269200A01E4A /* InfoPlist.strings */; };
-		50EDB79F215B493000BFE8A5 /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EDB79E215B493000BFE8A5 /* GeneratedMocks.swift */; };
 		58AAA004F244AFFC352ADCEF /* MarketSingleSortHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA15F4FA7B9EC091EDFF3 /* MarketSingleSortHeaderView.swift */; };
 		58AAA02CD3C68BA4D068527F /* SwapPendingAllowanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACF9B71A0C0DCFF7117E /* SwapPendingAllowanceService.swift */; };
 		58AAA0444AD1508917D349CF /* UniswapSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAFF6E494F623AD62AF95 /* UniswapSettingsService.swift */; };
@@ -2195,7 +2193,7 @@
 		58AAA670C62548F1A92D680B /* CoinSelectModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAACD2595FD785AEF3C379 /* CoinSelectModule.swift */; };
 		58AAA67204EA6E2E07C9F75C /* ChartPointInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA5C4402819E4BC4CCE13 /* ChartPointInfoView.swift */; };
 		58AAA691DC0544582BABF263 /* CoinChartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA13C7C5B258310BA61AF /* CoinChartService.swift */; };
-		58AAA6941C8B5140B0B5DDAE /* Evm20Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA312DD0792117182B64E /* Evm20Adapter.swift */; };
+		58AAA6941C8B5140B0B5DDAE /* Eip20Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA312DD0792117182B64E /* Eip20Adapter.swift */; };
 		58AAA696C47479181333FBA5 /* UniswapSettingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAD02C2210D9DA14D1E21 /* UniswapSettingsDataSource.swift */; };
 		58AAA6995146F6C84E24662A /* SwapCoinCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA80C6D2024281A5FA3E5 /* SwapCoinCardViewModel.swift */; };
 		58AAA69C90EEB34AEB18EF47 /* ChartMarketPerformanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA0AC8DAD6E6083B332B7 /* ChartMarketPerformanceCell.swift */; };
@@ -2229,7 +2227,7 @@
 		58AAA7C644D47F3B57DF97E0 /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB126AA1B83DD40C426F /* CALayer.swift */; };
 		58AAA7E6994159CD5FFDB31E /* InputBadgeWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA885C8749392E263A615 /* InputBadgeWrapperView.swift */; };
 		58AAA81C7A95558DBD560C90 /* OneInchSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA730263782B3D5EC89A1 /* OneInchSettings.swift */; };
-		58AAA82745E47084A2B18F95 /* Evm20Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA312DD0792117182B64E /* Evm20Adapter.swift */; };
+		58AAA82745E47084A2B18F95 /* Eip20Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA312DD0792117182B64E /* Eip20Adapter.swift */; };
 		58AAA82CE1738BCC5B426CB8 /* DebugModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAADD445F174344AFB6AAC /* DebugModule.swift */; };
 		58AAA8395FE1310712EAA82C /* OneInchFeeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAF4E4A24283A9DF0191F /* OneInchFeeService.swift */; };
 		58AAA841320F43D0AA69D2CC /* SwapConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC5B35D17E82D59F7183 /* SwapConfirmationViewController.swift */; };
@@ -2330,7 +2328,7 @@
 		58AAABB6B1B9557E9FD70EA2 /* MarketPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA11651E3CE29A461BF42 /* MarketPostViewModel.swift */; };
 		58AAABC21BB15CAC923A13CB /* CoinCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8AD6794AD2AAF462B7B /* CoinCardModule.swift */; };
 		58AAABE760739C0ECC6CA720 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA2B7F82F42442ED27A67 /* DownloadService.swift */; };
-		58AAABE8E8374ED4211F610C /* Evm20Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA312DD0792117182B64E /* Evm20Adapter.swift */; };
+		58AAABE8E8374ED4211F610C /* Eip20Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA312DD0792117182B64E /* Eip20Adapter.swift */; };
 		58AAABED534A95A11B332D44 /* CoinChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8F53B1A92A391DB1CFF /* CoinChartViewModel.swift */; };
 		58AAAC124DDA9BF9F9D272C4 /* CoinTvlModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA51D834698DB1F273093 /* CoinTvlModule.swift */; };
 		58AAAC4DD7A8CE99D195EB9F /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAA6EA2DAD95D2CB417FD /* DebugViewController.swift */; };
@@ -2426,11 +2424,6 @@
 		58AAAFE644C1B236B9714B47 /* CoinSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB692B7C326319D186E4 /* CoinSelectViewModel.swift */; };
 		58AAAFEB4507E7459BED2F28 /* CoinPageModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA331E9A43EB0C7F186B1 /* CoinPageModule.swift */; };
 		58AAAFEE292730843426107D /* ChartDoubleLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8F8D0BE10313B4CA1A4 /* ChartDoubleLineView.swift */; };
-		5C6515B68A9686E10E658AE9 /* libPods-Unstoppable Dev T.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A19D870F4F261A498C6F217 /* libPods-Unstoppable Dev T.a */; };
-		6B74F00D28646E1600014850 /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = 6B74F00C28646E1600014850 /* WalletConnect */; };
-		6B74F00F28646E2000014850 /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = 6B74F00E28646E2000014850 /* WalletConnect */; };
-		6B8F0590285EF0C100407F66 /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = 6B8F058F285EF0C100407F66 /* WalletConnect */; };
-		8BBFE08CEF9408FB9EBB41A2 /* libPods-Unstoppable Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A621352E8776A1F72915821F /* libPods-Unstoppable Tests.a */; };
 		ABC9A001F335B695CD066218 /* NftAssetModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD35D41AEEBD38AA08B5 /* NftAssetModule.swift */; };
 		ABC9A00FCB0BFE4C1CA94DEA /* WatchAddressBlockchainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8449B305EAF80437266 /* WatchAddressBlockchainManager.swift */; };
 		ABC9A0103038D90233AD9F22 /* InformationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE0C65DC850E499D1038 /* InformationModule.swift */; };
@@ -2905,6 +2898,57 @@
 		D35B518A21942E7A00504FBA /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35B518821942E7A00504FBA /* TermsViewController.swift */; };
 		D35B518B21942E7A00504FBA /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35B518821942E7A00504FBA /* TermsViewController.swift */; };
 		D35B518C21942E7A00504FBA /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35B518821942E7A00504FBA /* TermsViewController.swift */; };
+		D3604E4328F02A020066C366 /* EvmKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E4228F02A020066C366 /* EvmKit */; };
+		D3604E4528F02A260066C366 /* EvmKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E4428F02A260066C366 /* EvmKit */; };
+		D3604E4728F02A2C0066C366 /* EvmKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E4628F02A2C0066C366 /* EvmKit */; };
+		D3604E4A28F02A8C0066C366 /* Eip20Kit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E4928F02A8C0066C366 /* Eip20Kit */; };
+		D3604E4D28F02AB40066C366 /* NftKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E4C28F02AB40066C366 /* NftKit */; };
+		D3604E5028F02AE70066C366 /* UniswapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E4F28F02AE70066C366 /* UniswapKit */; };
+		D3604E5328F02B150066C366 /* OneInchKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E5228F02B150066C366 /* OneInchKit */; };
+		D3604E5528F02B280066C366 /* Eip20Kit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E5428F02B280066C366 /* Eip20Kit */; };
+		D3604E5728F02B280066C366 /* NftKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E5628F02B280066C366 /* NftKit */; };
+		D3604E5928F02B280066C366 /* UniswapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E5828F02B280066C366 /* UniswapKit */; };
+		D3604E5B28F02B280066C366 /* OneInchKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E5A28F02B280066C366 /* OneInchKit */; };
+		D3604E5D28F02B320066C366 /* Eip20Kit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E5C28F02B320066C366 /* Eip20Kit */; };
+		D3604E5F28F02B330066C366 /* NftKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E5E28F02B330066C366 /* NftKit */; };
+		D3604E6128F02B330066C366 /* UniswapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E6028F02B330066C366 /* UniswapKit */; };
+		D3604E6328F02B330066C366 /* OneInchKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E6228F02B330066C366 /* OneInchKit */; };
+		D3604E6628F02D9A0066C366 /* BitcoinKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E6528F02D9A0066C366 /* BitcoinKit */; };
+		D3604E6928F02DF30066C366 /* BitcoinCashKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E6828F02DF30066C366 /* BitcoinCashKit */; };
+		D3604E6C28F02E3F0066C366 /* LitecoinKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E6B28F02E3F0066C366 /* LitecoinKit */; };
+		D3604E7028F03AC80066C366 /* MarketKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E6F28F03AC80066C366 /* MarketKit */; };
+		D3604E7328F03B0A0066C366 /* ScanQrKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E7228F03B0A0066C366 /* ScanQrKit */; };
+		D3604E7628F03B5E0066C366 /* PinKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E7528F03B5E0066C366 /* PinKit */; };
+		D3604E7928F03B9F0066C366 /* ModuleKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E7828F03B9F0066C366 /* ModuleKit */; };
+		D3604E7C28F03BD20066C366 /* CurrencyKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E7B28F03BD20066C366 /* CurrencyKit */; };
+		D3604E7F28F03C1D0066C366 /* Chart in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E7E28F03C1D0066C366 /* Chart */; };
+		D3604E8228F03C6B0066C366 /* FeeRateKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E8128F03C6B0066C366 /* FeeRateKit */; };
+		D3604E8528F03CDC0066C366 /* BinanceChainKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E8428F03CDC0066C366 /* BinanceChainKit */; };
+		D3604E8828F03D9E0066C366 /* DashKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E8728F03D9E0066C366 /* DashKit */; };
+		D3604E8A28F03DBF0066C366 /* BitcoinKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E8928F03DBF0066C366 /* BitcoinKit */; };
+		D3604E8C28F03DBF0066C366 /* BitcoinCashKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E8B28F03DBF0066C366 /* BitcoinCashKit */; };
+		D3604E8E28F03DBF0066C366 /* LitecoinKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E8D28F03DBF0066C366 /* LitecoinKit */; };
+		D3604E9028F03DC00066C366 /* MarketKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E8F28F03DC00066C366 /* MarketKit */; };
+		D3604E9228F03DC00066C366 /* ScanQrKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E9128F03DC00066C366 /* ScanQrKit */; };
+		D3604E9428F03DC00066C366 /* PinKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E9328F03DC00066C366 /* PinKit */; };
+		D3604E9628F03DC00066C366 /* ModuleKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E9528F03DC00066C366 /* ModuleKit */; };
+		D3604E9828F03DC00066C366 /* CurrencyKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E9728F03DC00066C366 /* CurrencyKit */; };
+		D3604E9A28F03DC00066C366 /* Chart in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E9928F03DC00066C366 /* Chart */; };
+		D3604E9C28F03DC00066C366 /* FeeRateKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E9B28F03DC00066C366 /* FeeRateKit */; };
+		D3604E9E28F03DC00066C366 /* BinanceChainKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E9D28F03DC00066C366 /* BinanceChainKit */; };
+		D3604EA028F03DC00066C366 /* DashKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604E9F28F03DC00066C366 /* DashKit */; };
+		D3604EA228F03DDD0066C366 /* BitcoinKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604EA128F03DDD0066C366 /* BitcoinKit */; };
+		D3604EA428F03DDD0066C366 /* BitcoinCashKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604EA328F03DDD0066C366 /* BitcoinCashKit */; };
+		D3604EA628F03DDD0066C366 /* LitecoinKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604EA528F03DDD0066C366 /* LitecoinKit */; };
+		D3604EA828F03DDD0066C366 /* MarketKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604EA728F03DDD0066C366 /* MarketKit */; };
+		D3604EAA28F03DDD0066C366 /* ScanQrKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604EA928F03DDD0066C366 /* ScanQrKit */; };
+		D3604EAC28F03DDD0066C366 /* PinKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604EAB28F03DDD0066C366 /* PinKit */; };
+		D3604EAE28F03DDD0066C366 /* ModuleKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604EAD28F03DDD0066C366 /* ModuleKit */; };
+		D3604EB028F03DDD0066C366 /* CurrencyKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604EAF28F03DDD0066C366 /* CurrencyKit */; };
+		D3604EB228F03DDD0066C366 /* Chart in Frameworks */ = {isa = PBXBuildFile; productRef = D3604EB128F03DDD0066C366 /* Chart */; };
+		D3604EB428F03DDD0066C366 /* FeeRateKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604EB328F03DDD0066C366 /* FeeRateKit */; };
+		D3604EB628F03DDD0066C366 /* BinanceChainKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604EB528F03DDD0066C366 /* BinanceChainKit */; };
+		D3604EB828F03DDE0066C366 /* DashKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3604EB728F03DDE0066C366 /* DashKit */; };
 		D368F56A2844F45800F79777 /* AppIconAlternate.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D368F5662844F2C400F79777 /* AppIconAlternate.xcassets */; };
 		D368F56B2844F45900F79777 /* AppIconAlternate.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D368F5662844F2C400F79777 /* AppIconAlternate.xcassets */; };
 		D368F56C2844F45A00F79777 /* AppIconAlternate.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D368F5662844F2C400F79777 /* AppIconAlternate.xcassets */; };
@@ -3063,6 +3107,21 @@
 		D38C70E12705D82E00B6FDE9 /* MarketDiscoveryTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354DBC5B18EE29FBB4CE7 /* MarketDiscoveryTitleCell.swift */; };
 		D38C70E22705D82F00B6FDE9 /* MarketDiscoveryTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354DBC5B18EE29FBB4CE7 /* MarketDiscoveryTitleCell.swift */; };
 		D38C70E32705D82F00B6FDE9 /* MarketDiscoveryTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354DBC5B18EE29FBB4CE7 /* MarketDiscoveryTitleCell.swift */; };
+		D3993DA528F4229F008720FB /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DA428F4229F008720FB /* ZcashLightClientKit */; };
+		D3993DA728F422BD008720FB /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DA628F422BD008720FB /* ZcashLightClientKit */; };
+		D3993DA928F422C8008720FB /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DA828F422C8008720FB /* ZcashLightClientKit */; };
+		D3993DAE28F4256F008720FB /* WalletConnectV1 in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DAD28F4256F008720FB /* WalletConnectV1 */; };
+		D3993DB028F4256F008720FB /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DAF28F4256F008720FB /* WalletConnect */; };
+		D3993DB228F4257E008720FB /* WalletConnectV1 in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DB128F4257E008720FB /* WalletConnectV1 */; };
+		D3993DB428F4257E008720FB /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DB328F4257E008720FB /* WalletConnect */; };
+		D3993DB628F42595008720FB /* WalletConnectV1 in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DB528F42595008720FB /* WalletConnectV1 */; };
+		D3993DB828F42595008720FB /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DB728F42595008720FB /* WalletConnect */; };
+		D3993DBB28F4277E008720FB /* ActionSheet in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DBA28F4277E008720FB /* ActionSheet */; };
+		D3993DBD28F4278F008720FB /* ActionSheet in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DBC28F4278F008720FB /* ActionSheet */; };
+		D3993DBF28F4279A008720FB /* ActionSheet in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DBE28F4279A008720FB /* ActionSheet */; };
+		D3993DC228F42992008720FB /* UnstoppableDomainsResolution in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DC128F42992008720FB /* UnstoppableDomainsResolution */; };
+		D3993DC428F429AA008720FB /* UnstoppableDomainsResolution in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DC328F429AA008720FB /* UnstoppableDomainsResolution */; };
+		D3993DC628F429B2008720FB /* UnstoppableDomainsResolution in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DC528F429B2008720FB /* UnstoppableDomainsResolution */; };
 		D3B62A8A20CA40DC005A9F80 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8820CA40DC005A9F80 /* MainViewController.swift */; };
 		D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3B62A9C20CA73A0005A9F80 /* Localizable.strings */; };
 		D3BF1E5C274BC29D00229A00 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E5B274BC29D00229A00 /* Down */; };
@@ -3071,21 +3130,9 @@
 		D3BF1E63274CBBCE00229A00 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E62274CBBCE00229A00 /* DeepDiff */; };
 		D3BF1E65274CBBE400229A00 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E64274CBBE400229A00 /* DeepDiff */; };
 		D3BF1E67274CBBF100229A00 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E66274CBBF100229A00 /* DeepDiff */; };
-		E8F2E995F4C993306AF951A0 /* libPods-Unstoppable.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4EFAF75360D43B969DE7634 /* libPods-Unstoppable.a */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		D3373DC420C658660082BC4A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D3285F3A20BD158E00644076 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D3285F4120BD158E00644076;
-			remoteInfo = Wallet;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		0B6F4260BBC5A8BD53346F70 /* Pods-Unstoppable.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable.debug.xcconfig"; path = "Target Support Files/Pods-Unstoppable/Pods-Unstoppable.debug.xcconfig"; sourceTree = "<group>"; };
 		11B35025FD5E96FD1AB359E9 /* EnabledWalletCacheStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnabledWalletCacheStorage.swift; sourceTree = "<group>"; };
 		11B3502637A858E6DDF9471B /* EvmSyncSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmSyncSource.swift; sourceTree = "<group>"; };
 		11B3502AEB7EF95A590A7B1B /* NftStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftStorage.swift; sourceTree = "<group>"; };
@@ -3720,7 +3767,6 @@
 		1A564F434F772A01B92379B5 /* MarketOverviewNftCollectionsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewNftCollectionsDataSource.swift; sourceTree = "<group>"; };
 		1A564F627224BDD3E99C582B /* LaunchPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchPresenter.swift; sourceTree = "<group>"; };
 		1A564FF31C5E879781A2D5E0 /* TraitsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraitsCell.swift; sourceTree = "<group>"; };
-		25748001A7D0AF250F7F2A6B /* Pods-Unstoppable Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable Tests.release.xcconfig"; path = "Target Support Files/Pods-Unstoppable Tests/Pods-Unstoppable Tests.release.xcconfig"; sourceTree = "<group>"; };
 		2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KitCleaner.swift; sourceTree = "<group>"; };
 		2FA5D106113680415EF6A168 /* ExperimentalFeaturesModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentalFeaturesModule.swift; sourceTree = "<group>"; };
 		2FA5D1D073DF0366A0E24A4F /* CurrencyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyValue.swift; sourceTree = "<group>"; };
@@ -3771,7 +3817,6 @@
 		2FA5DF48D44BB409FB94CED9 /* UnknownSwapTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownSwapTransactionRecord.swift; sourceTree = "<group>"; };
 		2FA5DF5B8B69876A526CCDDD /* BinanceChainOutgoingTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinanceChainOutgoingTransactionRecord.swift; sourceTree = "<group>"; };
 		2FA5DFE7C4A198C235B2EAB5 /* TransactionAdapterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionAdapterManager.swift; sourceTree = "<group>"; };
-		341CB5B84A8E493223058BD3 /* Pods-Unstoppable Dev T.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable Dev T.release.xcconfig"; path = "Target Support Files/Pods-Unstoppable Dev T/Pods-Unstoppable Dev T.release.xcconfig"; sourceTree = "<group>"; };
 		3AB682A025BADC20002197A5 /* MarketDiscoveryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarketDiscoveryViewModel.swift; path = UnstoppableWallet/Modules/Market/MarketDiscovery/MarketDiscoveryViewModel.swift; sourceTree = SOURCE_ROOT; };
 		3AB682A125BADC20002197A5 /* MarketDiscoveryModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarketDiscoveryModule.swift; path = UnstoppableWallet/Modules/Market/MarketDiscovery/MarketDiscoveryModule.swift; sourceTree = SOURCE_ROOT; };
 		3AB682BC25BADD97002197A5 /* MarketOverviewModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewModule.swift; sourceTree = "<group>"; };
@@ -3780,14 +3825,6 @@
 		3AF9F619253EF555000626A8 /* ZcashTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZcashTransaction.swift; sourceTree = "<group>"; };
 		3C7B94F32F315F4F753D89AD /* UrlManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlManager.swift; sourceTree = "<group>"; };
 		3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewController.swift; sourceTree = "<group>"; };
-		3F893EBA24E84454242DD71C /* Pods-Unstoppable Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable Dev.release.xcconfig"; path = "Target Support Files/Pods-Unstoppable Dev/Pods-Unstoppable Dev.release.xcconfig"; sourceTree = "<group>"; };
-		49EED44F3386B655D10F87E7 /* Pods-Unstoppable.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable.release.xcconfig"; path = "Target Support Files/Pods-Unstoppable/Pods-Unstoppable.release.xcconfig"; sourceTree = "<group>"; };
-		5026FFF421C3CA280023EEA2 /* Unstoppable Dev.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Unstoppable Dev.release.xcconfig"; sourceTree = "<group>"; };
-		5026FFF521C3CA280023EEA2 /* Unstoppable Dev T.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Unstoppable Dev T.release.xcconfig"; sourceTree = "<group>"; };
-		5026FFF621C3CA280023EEA2 /* Unstoppable.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Unstoppable.release.xcconfig; sourceTree = "<group>"; };
-		5026FFF721C3CA280023EEA2 /* Unstoppable Dev T.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Unstoppable Dev T.debug.xcconfig"; sourceTree = "<group>"; };
-		5026FFF821C3CA280023EEA2 /* Unstoppable Dev.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Unstoppable Dev.debug.xcconfig"; sourceTree = "<group>"; };
-		5026FFF921C3CA280023EEA2 /* Unstoppable.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Unstoppable.debug.xcconfig; sourceTree = "<group>"; };
 		5039F971269C5A9A004711B8 /* ReleaseNotesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseNotesViewController.swift; sourceTree = "<group>"; };
 		50A1DB5A24E407CF001D396C /* Unstoppable DT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Unstoppable DT.entitlements"; sourceTree = "<group>"; };
 		50A83FBE213FCB4B008A5F4B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -3798,7 +3835,6 @@
 		50D05F9A249A228C0067D28F /* Unstoppable D.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Unstoppable D.entitlements"; sourceTree = "<group>"; };
 		50D05F9B249A22950067D28F /* Unstoppable.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Unstoppable.entitlements; sourceTree = "<group>"; };
 		50E2A266214A67B400C51413 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		50EDB79E215B493000BFE8A5 /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		50EED18F218822E200E200AD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50EED190218822E200E200AD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50EED191218822FA00E200AD /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3831,7 +3867,7 @@
 		58AAA263DAB58FD63E6A9351 /* MarketPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketPostViewController.swift; sourceTree = "<group>"; };
 		58AAA27BACBAFC7A19DC36B6 /* UniswapSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapSettingsModule.swift; sourceTree = "<group>"; };
 		58AAA2B7F82F42442ED27A67 /* DownloadService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
-		58AAA312DD0792117182B64E /* Evm20Adapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Evm20Adapter.swift; sourceTree = "<group>"; };
+		58AAA312DD0792117182B64E /* Eip20Adapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Eip20Adapter.swift; sourceTree = "<group>"; };
 		58AAA3173853A16B2433AEC0 /* MarketModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketModule.swift; sourceTree = "<group>"; };
 		58AAA331E9A43EB0C7F186B1 /* CoinPageModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinPageModule.swift; sourceTree = "<group>"; };
 		58AAA353DAC061C2123948FC /* CoinPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinPageViewController.swift; sourceTree = "<group>"; };
@@ -3942,7 +3978,6 @@
 		58AAAFF25BF263B5EC4188F7 /* SwapDeadlineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapDeadlineViewModel.swift; sourceTree = "<group>"; };
 		58AAAFF6E494F623AD62AF95 /* UniswapSettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapSettingsService.swift; sourceTree = "<group>"; };
 		5A19D870F4F261A498C6F217 /* libPods-Unstoppable Dev T.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Unstoppable Dev T.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5B5C3982759DB04D684EE74C /* Pods-Unstoppable Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable Tests.debug.xcconfig"; path = "Target Support Files/Pods-Unstoppable Tests/Pods-Unstoppable Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		80801E7B8BFF4A8712384A65 /* libPods-Unstoppable Dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Unstoppable Dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4EFAF75360D43B969DE7634 /* libPods-Unstoppable.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Unstoppable.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A621352E8776A1F72915821F /* libPods-Unstoppable Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Unstoppable Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4080,7 +4115,6 @@
 		ABC9AF9C0D0174A5B6A91F13 /* NftAssetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftAssetViewController.swift; sourceTree = "<group>"; };
 		ABC9AFE16BDDA2ECBE8729CA /* WalletConnectV2ListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2ListView.swift; sourceTree = "<group>"; };
 		ABC9AFF7119B9AC0E32B2060 /* SendConfirmationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationModule.swift; sourceTree = "<group>"; };
-		B8E97143E5B72843BBAFAE2D /* Pods-Unstoppable Dev T.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable Dev T.debug.xcconfig"; path = "Target Support Files/Pods-Unstoppable Dev T/Pods-Unstoppable Dev T.debug.xcconfig"; sourceTree = "<group>"; };
 		D003297526CD2C67002EC21D /* TransactionLockInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionLockInfo.swift; sourceTree = "<group>"; };
 		D003297926CD2E89002EC21D /* TransactionDateHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDateHeaderView.swift; sourceTree = "<group>"; };
 		D008CA59267C8DDF00001E0A /* EvmIncomingTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmIncomingTransactionRecord.swift; sourceTree = "<group>"; };
@@ -4107,8 +4141,6 @@
 		D3285F5120BD158F00644076 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3373D9420BEC7B30082BC4A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D3373DB120C52F640082BC4A /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
-		D3373DBF20C658660082BC4A /* Unstoppable Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unstoppable Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D3373DC320C658660082BC4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3373DCC20C6B21C0082BC4A /* RestoreWordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreWordsViewController.swift; sourceTree = "<group>"; };
 		D34E941B21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D34E941C21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -4147,7 +4179,6 @@
 		D3B476A621D0D659008B0C3E /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D3B62A8820CA40DC005A9F80 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D3B62A9B20CA73A0005A9F80 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		D49B17029DA4D31B6711E524 /* Pods-Unstoppable Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unstoppable Dev.debug.xcconfig"; path = "Target Support Files/Pods-Unstoppable Dev/Pods-Unstoppable Dev.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4155,24 +4186,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3993DB428F4257E008720FB /* WalletConnect in Frameworks */,
+				D3993DB228F4257E008720FB /* WalletConnectV1 in Frameworks */,
 				500F1D1527AA87D9002AA419 /* AlignedCollectionViewFlowLayout in Frameworks */,
+				D3604EA428F03DDD0066C366 /* BitcoinCashKit in Frameworks */,
+				D3993DC628F429B2008720FB /* UnstoppableDomainsResolution in Frameworks */,
+				D3604EB628F03DDD0066C366 /* BinanceChainKit in Frameworks */,
+				D3604E5F28F02B330066C366 /* NftKit in Frameworks */,
 				D0DA7417272A6F1F0072BE86 /* UnicodeURL in Frameworks */,
 				50AB06AE2158E2EE00A01E4A /* LocalAuthentication.framework in Frameworks */,
+				D3993DBF28F4279A008720FB /* ActionSheet in Frameworks */,
 				D3BF1E60274CAF2500229A00 /* Down in Frameworks */,
+				D3604E5D28F02B320066C366 /* Eip20Kit in Frameworks */,
+				D3604E4728F02A2C0066C366 /* EvmKit in Frameworks */,
+				D3604EA828F03DDD0066C366 /* MarketKit in Frameworks */,
 				D36E0C2E28D084D500B622B9 /* CollectionViewCenteredFlowLayout in Frameworks */,
+				D3604EA228F03DDD0066C366 /* BitcoinKit in Frameworks */,
+				D3604EB228F03DDD0066C366 /* Chart in Frameworks */,
+				D3604EA628F03DDD0066C366 /* LitecoinKit in Frameworks */,
 				D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */,
-				6B74F00F28646E2000014850 /* WalletConnect in Frameworks */,
-				5C6515B68A9686E10E658AE9 /* libPods-Unstoppable Dev T.a in Frameworks */,
+				D3604E6328F02B330066C366 /* OneInchKit in Frameworks */,
+				D3604EB828F03DDE0066C366 /* DashKit in Frameworks */,
+				D3604E6128F02B330066C366 /* UniswapKit in Frameworks */,
+				D3604EAA28F03DDD0066C366 /* ScanQrKit in Frameworks */,
 				D3BF1E67274CBBF100229A00 /* DeepDiff in Frameworks */,
+				D3993DA928F422C8008720FB /* ZcashLightClientKit in Frameworks */,
+				D3604EB028F03DDD0066C366 /* CurrencyKit in Frameworks */,
 				D0DA7415272A6F1F0072BE86 /* IDNSDK in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D3373DBC20C658660082BC4A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8BBFE08CEF9408FB9EBB41A2 /* libPods-Unstoppable Tests.a in Frameworks */,
+				D3604EB428F03DDD0066C366 /* FeeRateKit in Frameworks */,
+				D3604EAC28F03DDD0066C366 /* PinKit in Frameworks */,
+				D3604EAE28F03DDD0066C366 /* ModuleKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4180,16 +4223,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3993DB028F4256F008720FB /* WalletConnect in Frameworks */,
+				D3993DAE28F4256F008720FB /* WalletConnectV1 in Frameworks */,
 				500F1D1327AA87D1002AA419 /* AlignedCollectionViewFlowLayout in Frameworks */,
+				D3604E8C28F03DBF0066C366 /* BitcoinCashKit in Frameworks */,
+				D3993DC428F429AA008720FB /* UnstoppableDomainsResolution in Frameworks */,
+				D3604E9E28F03DC00066C366 /* BinanceChainKit in Frameworks */,
+				D3604E5728F02B280066C366 /* NftKit in Frameworks */,
 				D0DA7413272A6F180072BE86 /* UnicodeURL in Frameworks */,
 				D38405B8218317DF007D50AD /* LocalAuthentication.framework in Frameworks */,
+				D3993DBD28F4278F008720FB /* ActionSheet in Frameworks */,
 				D3BF1E5E274CAF1C00229A00 /* Down in Frameworks */,
+				D3604E5528F02B280066C366 /* Eip20Kit in Frameworks */,
+				D3604E4528F02A260066C366 /* EvmKit in Frameworks */,
+				D3604E9028F03DC00066C366 /* MarketKit in Frameworks */,
 				D36E0C2C28D084CB00B622B9 /* CollectionViewCenteredFlowLayout in Frameworks */,
+				D3604E8A28F03DBF0066C366 /* BitcoinKit in Frameworks */,
+				D3604E9A28F03DC00066C366 /* Chart in Frameworks */,
+				D3604E8E28F03DBF0066C366 /* LitecoinKit in Frameworks */,
 				D38405B9218317DF007D50AD /* AVFoundation.framework in Frameworks */,
-				6B74F00D28646E1600014850 /* WalletConnect in Frameworks */,
-				2DE35E37F407C194CC843915 /* libPods-Unstoppable Dev.a in Frameworks */,
+				D3604E5B28F02B280066C366 /* OneInchKit in Frameworks */,
+				D3604EA028F03DC00066C366 /* DashKit in Frameworks */,
+				D3604E5928F02B280066C366 /* UniswapKit in Frameworks */,
+				D3604E9228F03DC00066C366 /* ScanQrKit in Frameworks */,
 				D3BF1E65274CBBE400229A00 /* DeepDiff in Frameworks */,
+				D3993DA728F422BD008720FB /* ZcashLightClientKit in Frameworks */,
+				D3604E9828F03DC00066C366 /* CurrencyKit in Frameworks */,
 				D0DA7411272A6F180072BE86 /* IDNSDK in Frameworks */,
+				D3604E9C28F03DC00066C366 /* FeeRateKit in Frameworks */,
+				D3604E9428F03DC00066C366 /* PinKit in Frameworks */,
+				D3604E9628F03DC00066C366 /* ModuleKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4197,16 +4260,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3993DB828F42595008720FB /* WalletConnect in Frameworks */,
+				D3993DB628F42595008720FB /* WalletConnectV1 in Frameworks */,
 				500F1D1127AA87BC002AA419 /* AlignedCollectionViewFlowLayout in Frameworks */,
+				D3604E6928F02DF30066C366 /* BitcoinCashKit in Frameworks */,
+				D3993DC228F42992008720FB /* UnstoppableDomainsResolution in Frameworks */,
+				D3604E8528F03CDC0066C366 /* BinanceChainKit in Frameworks */,
+				D3604E4D28F02AB40066C366 /* NftKit in Frameworks */,
 				D0DA740F272A6EFC0072BE86 /* UnicodeURL in Frameworks */,
 				D38406A721831B3D007D50AD /* LocalAuthentication.framework in Frameworks */,
+				D3993DBB28F4277E008720FB /* ActionSheet in Frameworks */,
 				D3BF1E5C274BC29D00229A00 /* Down in Frameworks */,
+				D3604E4A28F02A8C0066C366 /* Eip20Kit in Frameworks */,
+				D3604E4328F02A020066C366 /* EvmKit in Frameworks */,
+				D3604E7028F03AC80066C366 /* MarketKit in Frameworks */,
 				D36E0C2A28D084AB00B622B9 /* CollectionViewCenteredFlowLayout in Frameworks */,
+				D3604E6628F02D9A0066C366 /* BitcoinKit in Frameworks */,
+				D3604E7F28F03C1D0066C366 /* Chart in Frameworks */,
+				D3604E6C28F02E3F0066C366 /* LitecoinKit in Frameworks */,
 				D38406A821831B3D007D50AD /* AVFoundation.framework in Frameworks */,
-				6B8F0590285EF0C100407F66 /* WalletConnect in Frameworks */,
-				E8F2E995F4C993306AF951A0 /* libPods-Unstoppable.a in Frameworks */,
+				D3604E5328F02B150066C366 /* OneInchKit in Frameworks */,
+				D3604E8828F03D9E0066C366 /* DashKit in Frameworks */,
+				D3604E5028F02AE70066C366 /* UniswapKit in Frameworks */,
+				D3604E7328F03B0A0066C366 /* ScanQrKit in Frameworks */,
 				D3BF1E63274CBBCE00229A00 /* DeepDiff in Frameworks */,
+				D3993DA528F4229F008720FB /* ZcashLightClientKit in Frameworks */,
+				D3604E7C28F03BD20066C366 /* CurrencyKit in Frameworks */,
 				D0DA740D272A6EFC0072BE86 /* IDNSDK in Frameworks */,
+				D3604E8228F03C6B0066C366 /* FeeRateKit in Frameworks */,
+				D3604E7628F03B5E0066C366 /* PinKit in Frameworks */,
+				D3604E7928F03B9F0066C366 /* ModuleKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5485,7 +5568,7 @@
 				11B358CA18471A93188933B4 /* DashAdapter.swift */,
 				58AAA656A81B2C12F618FB44 /* BaseEvmAdapter.swift */,
 				11B352D314A298B6B832F309 /* EvmAdapter.swift */,
-				58AAA312DD0792117182B64E /* Evm20Adapter.swift */,
+				58AAA312DD0792117182B64E /* Eip20Adapter.swift */,
 				11B35AAAC675987369F2DA1B /* BinanceAdapter.swift */,
 				11B356861F703A5A5C6630B6 /* LitecoinAdapter.swift */,
 				3AF9F618253EF555000626A8 /* ZcashAdapter.swift */,
@@ -5889,12 +5972,6 @@
 				50A1DB5A24E407CF001D396C /* Unstoppable DT.entitlements */,
 				50D05F9B249A22950067D28F /* Unstoppable.entitlements */,
 				50D05F9A249A228C0067D28F /* Unstoppable D.entitlements */,
-				5026FFF421C3CA280023EEA2 /* Unstoppable Dev.release.xcconfig */,
-				5026FFF521C3CA280023EEA2 /* Unstoppable Dev T.release.xcconfig */,
-				5026FFF621C3CA280023EEA2 /* Unstoppable.release.xcconfig */,
-				5026FFF721C3CA280023EEA2 /* Unstoppable Dev T.debug.xcconfig */,
-				5026FFF821C3CA280023EEA2 /* Unstoppable Dev.debug.xcconfig */,
-				5026FFF921C3CA280023EEA2 /* Unstoppable.debug.xcconfig */,
 				1A564370A637B30D34776F2A /* Production.template.xcconfig */,
 				1A5641679DC88BE355F0F3A0 /* Development.template.xcconfig */,
 				1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */,
@@ -6958,11 +7035,9 @@
 			isa = PBXGroup;
 			children = (
 				D3285F4420BD158E00644076 /* UnstoppableWallet */,
-				D3373DC020C658660082BC4A /* UnstoppableWalletTests */,
 				D3285F4320BD158E00644076 /* Products */,
 				95AD93BB0A2D5F5C4A435252 /* Frameworks */,
 				3AAE9B3322CF48DA00FB065F /* Recovered References */,
-				DED72B9777C35D02702B454F /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -6970,7 +7045,6 @@
 			isa = PBXGroup;
 			children = (
 				D3285F4220BD158E00644076 /* Unstoppable DT.app */,
-				D3373DBF20C658660082BC4A /* Unstoppable Tests.xctest */,
 				D38405CE218317DF007D50AD /* Unstoppable D.app */,
 				D38406BE21831B3D007D50AD /* Unstoppable.app */,
 			);
@@ -6999,31 +7073,6 @@
 			path = UnstoppableWallet;
 			sourceTree = "<group>";
 		};
-		D3373DC020C658660082BC4A /* UnstoppableWalletTests */ = {
-			isa = PBXGroup;
-			children = (
-				50EDB79E215B493000BFE8A5 /* GeneratedMocks.swift */,
-				D3373DC320C658660082BC4A /* Info.plist */,
-			);
-			path = UnstoppableWalletTests;
-			sourceTree = "<group>";
-		};
-		DED72B9777C35D02702B454F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0B6F4260BBC5A8BD53346F70 /* Pods-Unstoppable.debug.xcconfig */,
-				49EED44F3386B655D10F87E7 /* Pods-Unstoppable.release.xcconfig */,
-				D49B17029DA4D31B6711E524 /* Pods-Unstoppable Dev.debug.xcconfig */,
-				3F893EBA24E84454242DD71C /* Pods-Unstoppable Dev.release.xcconfig */,
-				B8E97143E5B72843BBAFAE2D /* Pods-Unstoppable Dev T.debug.xcconfig */,
-				341CB5B84A8E493223058BD3 /* Pods-Unstoppable Dev T.release.xcconfig */,
-				5B5C3982759DB04D684EE74C /* Pods-Unstoppable Tests.debug.xcconfig */,
-				25748001A7D0AF250F7F2A6B /* Pods-Unstoppable Tests.release.xcconfig */,
-			);
-			name = Pods;
-			path = ../Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -7031,11 +7080,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D3285F5420BD158F00644076 /* Build configuration list for PBXNativeTarget "Unstoppable Dev T" */;
 			buildPhases = (
-				E5A08B7DF90374370B0A7D7D /* [CP] Check Pods Manifest.lock */,
 				D3285F3E20BD158E00644076 /* Sources */,
 				D3285F3F20BD158E00644076 /* Frameworks */,
 				D3285F4020BD158E00644076 /* Resources */,
-				D9213569E674D9EC49455A64 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -7048,42 +7095,41 @@
 				D3BF1E5F274CAF2500229A00 /* Down */,
 				D3BF1E66274CBBF100229A00 /* DeepDiff */,
 				500F1D1427AA87D9002AA419 /* AlignedCollectionViewFlowLayout */,
-				6B74F00E28646E2000014850 /* WalletConnect */,
 				D36E0C2D28D084D500B622B9 /* CollectionViewCenteredFlowLayout */,
+				D3604E4628F02A2C0066C366 /* EvmKit */,
+				D3604E5C28F02B320066C366 /* Eip20Kit */,
+				D3604E5E28F02B330066C366 /* NftKit */,
+				D3604E6028F02B330066C366 /* UniswapKit */,
+				D3604E6228F02B330066C366 /* OneInchKit */,
+				D3604EA128F03DDD0066C366 /* BitcoinKit */,
+				D3604EA328F03DDD0066C366 /* BitcoinCashKit */,
+				D3604EA528F03DDD0066C366 /* LitecoinKit */,
+				D3604EA728F03DDD0066C366 /* MarketKit */,
+				D3604EA928F03DDD0066C366 /* ScanQrKit */,
+				D3604EAB28F03DDD0066C366 /* PinKit */,
+				D3604EAD28F03DDD0066C366 /* ModuleKit */,
+				D3604EAF28F03DDD0066C366 /* CurrencyKit */,
+				D3604EB128F03DDD0066C366 /* Chart */,
+				D3604EB328F03DDD0066C366 /* FeeRateKit */,
+				D3604EB528F03DDD0066C366 /* BinanceChainKit */,
+				D3604EB728F03DDE0066C366 /* DashKit */,
+				D3993DA828F422C8008720FB /* ZcashLightClientKit */,
+				D3993DB128F4257E008720FB /* WalletConnectV1 */,
+				D3993DB328F4257E008720FB /* WalletConnect */,
+				D3993DBE28F4279A008720FB /* ActionSheet */,
+				D3993DC528F429B2008720FB /* UnstoppableDomainsResolution */,
 			);
 			productName = Wallet;
 			productReference = D3285F4220BD158E00644076 /* Unstoppable DT.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D3373DBE20C658660082BC4A /* Unstoppable Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D3373DC620C658660082BC4A /* Build configuration list for PBXNativeTarget "Unstoppable Tests" */;
-			buildPhases = (
-				C6268F0361A63E5412731604 /* [CP] Check Pods Manifest.lock */,
-				D3373DBB20C658660082BC4A /* Sources */,
-				D3373DBC20C658660082BC4A /* Frameworks */,
-				D3373DBD20C658660082BC4A /* Resources */,
-				5BFA8E8BC6CA5871AB2A88E1 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D3373DC520C658660082BC4A /* PBXTargetDependency */,
-			);
-			name = "Unstoppable Tests";
-			productName = WalletTests;
-			productReference = D3373DBF20C658660082BC4A /* Unstoppable Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		D38404E1218317DF007D50AD /* Unstoppable Dev */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D38405CB218317DF007D50AD /* Build configuration list for PBXNativeTarget "Unstoppable Dev" */;
 			buildPhases = (
-				41E9CEB3E94C5D0371C5F988 /* [CP] Check Pods Manifest.lock */,
 				D38404E3218317DF007D50AD /* Sources */,
 				D38405B7218317DF007D50AD /* Frameworks */,
 				D38405BB218317DF007D50AD /* Resources */,
-				404705D497FE519E24388092 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -7096,8 +7142,29 @@
 				D3BF1E5D274CAF1C00229A00 /* Down */,
 				D3BF1E64274CBBE400229A00 /* DeepDiff */,
 				500F1D1227AA87D1002AA419 /* AlignedCollectionViewFlowLayout */,
-				6B74F00C28646E1600014850 /* WalletConnect */,
 				D36E0C2B28D084CB00B622B9 /* CollectionViewCenteredFlowLayout */,
+				D3604E4428F02A260066C366 /* EvmKit */,
+				D3604E5428F02B280066C366 /* Eip20Kit */,
+				D3604E5628F02B280066C366 /* NftKit */,
+				D3604E5828F02B280066C366 /* UniswapKit */,
+				D3604E5A28F02B280066C366 /* OneInchKit */,
+				D3604E8928F03DBF0066C366 /* BitcoinKit */,
+				D3604E8B28F03DBF0066C366 /* BitcoinCashKit */,
+				D3604E8D28F03DBF0066C366 /* LitecoinKit */,
+				D3604E8F28F03DC00066C366 /* MarketKit */,
+				D3604E9128F03DC00066C366 /* ScanQrKit */,
+				D3604E9328F03DC00066C366 /* PinKit */,
+				D3604E9528F03DC00066C366 /* ModuleKit */,
+				D3604E9728F03DC00066C366 /* CurrencyKit */,
+				D3604E9928F03DC00066C366 /* Chart */,
+				D3604E9B28F03DC00066C366 /* FeeRateKit */,
+				D3604E9D28F03DC00066C366 /* BinanceChainKit */,
+				D3604E9F28F03DC00066C366 /* DashKit */,
+				D3993DA628F422BD008720FB /* ZcashLightClientKit */,
+				D3993DAD28F4256F008720FB /* WalletConnectV1 */,
+				D3993DAF28F4256F008720FB /* WalletConnect */,
+				D3993DBC28F4278F008720FB /* ActionSheet */,
+				D3993DC328F429AA008720FB /* UnstoppableDomainsResolution */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -7107,12 +7174,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D38406BB21831B3D007D50AD /* Build configuration list for PBXNativeTarget "Unstoppable" */;
 			buildPhases = (
-				8519E54196D54FF741A80E06 /* [CP] Check Pods Manifest.lock */,
 				D38405D221831B3D007D50AD /* Sources */,
 				D38406A621831B3D007D50AD /* Frameworks */,
 				D38406AB21831B3D007D50AD /* Resources */,
-				F283A4A9D6F36C7FDA4833BC /* [CP] Copy Pods Resources */,
-				3AF9FF20254008F3000626A8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -7125,8 +7189,29 @@
 				D3BF1E5B274BC29D00229A00 /* Down */,
 				D3BF1E62274CBBCE00229A00 /* DeepDiff */,
 				500F1D1027AA87BC002AA419 /* AlignedCollectionViewFlowLayout */,
-				6B8F058F285EF0C100407F66 /* WalletConnect */,
 				D36E0C2928D084AB00B622B9 /* CollectionViewCenteredFlowLayout */,
+				D3604E4228F02A020066C366 /* EvmKit */,
+				D3604E4928F02A8C0066C366 /* Eip20Kit */,
+				D3604E4C28F02AB40066C366 /* NftKit */,
+				D3604E4F28F02AE70066C366 /* UniswapKit */,
+				D3604E5228F02B150066C366 /* OneInchKit */,
+				D3604E6528F02D9A0066C366 /* BitcoinKit */,
+				D3604E6828F02DF30066C366 /* BitcoinCashKit */,
+				D3604E6B28F02E3F0066C366 /* LitecoinKit */,
+				D3604E6F28F03AC80066C366 /* MarketKit */,
+				D3604E7228F03B0A0066C366 /* ScanQrKit */,
+				D3604E7528F03B5E0066C366 /* PinKit */,
+				D3604E7828F03B9F0066C366 /* ModuleKit */,
+				D3604E7B28F03BD20066C366 /* CurrencyKit */,
+				D3604E7E28F03C1D0066C366 /* Chart */,
+				D3604E8128F03C6B0066C366 /* FeeRateKit */,
+				D3604E8428F03CDC0066C366 /* BinanceChainKit */,
+				D3604E8728F03D9E0066C366 /* DashKit */,
+				D3993DA428F4229F008720FB /* ZcashLightClientKit */,
+				D3993DB528F42595008720FB /* WalletConnectV1 */,
+				D3993DB728F42595008720FB /* WalletConnect */,
+				D3993DBA28F4277E008720FB /* ActionSheet */,
+				D3993DC128F42992008720FB /* UnstoppableDomainsResolution */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -7145,11 +7230,6 @@
 					D3285F4120BD158E00644076 = {
 						CreatedOnToolsVersion = 9.3.1;
 						LastSwiftMigration = 1020;
-					};
-					D3373DBE20C658660082BC4A = {
-						CreatedOnToolsVersion = 9.3.1;
-						LastSwiftMigration = 1020;
-						TestTargetID = D3285F4120BD158E00644076;
 					};
 					D38404E1218317DF007D50AD = {
 						SystemCapabilities = {
@@ -7181,8 +7261,29 @@
 				D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */,
 				D3BF1E61274CBBCE00229A00 /* XCRemoteSwiftPackageReference "DeepDiff" */,
 				500F1D0F27AA87BC002AA419 /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */,
-				6B8F058E285EF0C100407F66 /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */,
 				D36E0C2828D084AB00B622B9 /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */,
+				D3604E4128F02A020066C366 /* XCRemoteSwiftPackageReference "EvmKit.Swift" */,
+				D3604E4828F02A8B0066C366 /* XCRemoteSwiftPackageReference "Eip20Kit.Swift" */,
+				D3604E4B28F02AB40066C366 /* XCRemoteSwiftPackageReference "NftKit.Swift" */,
+				D3604E4E28F02AE60066C366 /* XCRemoteSwiftPackageReference "UniswapKit.Swift" */,
+				D3604E5128F02B150066C366 /* XCRemoteSwiftPackageReference "OneInchKit.Swift" */,
+				D3604E6428F02D9A0066C366 /* XCRemoteSwiftPackageReference "BitcoinKit.Swift" */,
+				D3604E6728F02DF30066C366 /* XCRemoteSwiftPackageReference "BitcoinCashKit.Swift" */,
+				D3604E6A28F02E3F0066C366 /* XCRemoteSwiftPackageReference "LitecoinKit.Swift" */,
+				D3604E6E28F03AC70066C366 /* XCRemoteSwiftPackageReference "MarketKit.Swift" */,
+				D3604E7128F03B0A0066C366 /* XCRemoteSwiftPackageReference "ScanQrKit.Swift" */,
+				D3604E7428F03B5E0066C366 /* XCRemoteSwiftPackageReference "PinKit.Swift" */,
+				D3604E7728F03B9F0066C366 /* XCRemoteSwiftPackageReference "ModuleKit.Swift" */,
+				D3604E7A28F03BD20066C366 /* XCRemoteSwiftPackageReference "CurrencyKit.Swift" */,
+				D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart.Swift" */,
+				D3604E8028F03C6B0066C366 /* XCRemoteSwiftPackageReference "FeeRateKit.Swift" */,
+				D3604E8328F03CDC0066C366 /* XCRemoteSwiftPackageReference "BinanceChainKit.Swift" */,
+				D3604E8628F03D9E0066C366 /* XCRemoteSwiftPackageReference "DashKit.Swift" */,
+				D3993D9C28F41F5C008720FB /* XCRemoteSwiftPackageReference "wallet-connect-swift" */,
+				D3993DA328F4229F008720FB /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */,
+				D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */,
+				D3993DB928F4277E008720FB /* XCRemoteSwiftPackageReference "ActionSheet.Swift" */,
+				D3993DC028F42992008720FB /* XCRemoteSwiftPackageReference "resolution-swift" */,
 			);
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
@@ -7191,7 +7292,6 @@
 				D38405D021831B3D007D50AD /* Unstoppable */,
 				D38404E1218317DF007D50AD /* Unstoppable Dev */,
 				D3285F4120BD158E00644076 /* Unstoppable Dev T */,
-				D3373DBE20C658660082BC4A /* Unstoppable Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -7207,13 +7307,6 @@
 				D38406C721832862007D50AD /* AppIconDevT.xcassets in Resources */,
 				D3B62A9A20CA73A0005A9F80 /* Localizable.strings in Resources */,
 				D368F56A2844F45800F79777 /* AppIconAlternate.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D3373DBD20C658660082BC4A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7244,182 +7337,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		3AF9FF20254008F3000626A8 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
-		};
-		404705D497FE519E24388092 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Unstoppable Dev/Pods-Unstoppable Dev-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Unstoppable Dev/Pods-Unstoppable Dev-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Unstoppable Dev/Pods-Unstoppable Dev-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		41E9CEB3E94C5D0371C5F988 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Unstoppable Dev-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5BFA8E8BC6CA5871AB2A88E1 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Unstoppable Tests/Pods-Unstoppable Tests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Unstoppable Tests/Pods-Unstoppable Tests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Unstoppable Tests/Pods-Unstoppable Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8519E54196D54FF741A80E06 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Unstoppable-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C6268F0361A63E5412731604 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Unstoppable Tests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D9213569E674D9EC49455A64 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Unstoppable Dev T/Pods-Unstoppable Dev T-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Unstoppable Dev T/Pods-Unstoppable Dev T-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Unstoppable Dev T/Pods-Unstoppable Dev T-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E5A08B7DF90374370B0A7D7D /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Unstoppable Dev T-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F283A4A9D6F36C7FDA4833BC /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Unstoppable/Pods-Unstoppable-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Unstoppable/Pods-Unstoppable-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Unstoppable/Pods-Unstoppable-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D3285F3E20BD158E00644076 /* Sources */ = {
@@ -7477,7 +7394,7 @@
 				11B35542BB8470BFD140E73D /* AuthData.swift in Sources */,
 				3C7B936067D1C0A7CDC2635D /* UrlManager.swift in Sources */,
 				58AAAC646AF735F5D1F0350A /* EvmKitManager.swift in Sources */,
-				58AAA6941C8B5140B0B5DDAE /* Evm20Adapter.swift in Sources */,
+				58AAA6941C8B5140B0B5DDAE /* Eip20Adapter.swift in Sources */,
 				58AAA2363892ED5743CBF2EB /* BaseEvmAdapter.swift in Sources */,
 				1A56451041F9A9AB607C3A73 /* Decimal.swift in Sources */,
 				11B35A4912C5B73767232C95 /* TestModeIndicator.swift in Sources */,
@@ -8434,14 +8351,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D3373DBB20C658660082BC4A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				50EDB79F215B493000BFE8A5 /* GeneratedMocks.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D38404E3218317DF007D50AD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -8496,7 +8405,7 @@
 				5046E672259C491100A941E5 /* InfoSeparatorHeaderView.swift in Sources */,
 				3C7B99D3D6AE0B1C0D8E5F09 /* UrlManager.swift in Sources */,
 				58AAA3BE2D0DEF53CE6CEE97 /* EvmKitManager.swift in Sources */,
-				58AAABE8E8374ED4211F610C /* Evm20Adapter.swift in Sources */,
+				58AAABE8E8374ED4211F610C /* Eip20Adapter.swift in Sources */,
 				58AAA4A377F356194AE08055 /* BaseEvmAdapter.swift in Sources */,
 				1A56415A4BB89B9156C6442D /* Decimal.swift in Sources */,
 				11B3524C9BD6FDCE5D72CB81 /* TestModeIndicator.swift in Sources */,
@@ -9506,7 +9415,7 @@
 				5046E671259C491000A941E5 /* InfoSeparatorHeaderView.swift in Sources */,
 				3C7B9BFD8EA7360907306675 /* UrlManager.swift in Sources */,
 				58AAA745D76A13D06800BDD1 /* EvmKitManager.swift in Sources */,
-				58AAA82745E47084A2B18F95 /* Evm20Adapter.swift in Sources */,
+				58AAA82745E47084A2B18F95 /* Eip20Adapter.swift in Sources */,
 				58AAAF011B2E9CDF8455CA7B /* BaseEvmAdapter.swift in Sources */,
 				1A56491DC545ED4F8A6E6D40 /* Decimal.swift in Sources */,
 				11B355522F6E7CD38E985901 /* TestModeIndicator.swift in Sources */,
@@ -10468,14 +10377,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		D3373DC520C658660082BC4A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D3285F4120BD158E00644076 /* Unstoppable Dev T */;
-			targetProxy = D3373DC420C658660082BC4A /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
 		50AB06B5215A269200A01E4A /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -10666,7 +10567,7 @@
 		};
 		D3285F5520BD158F00644076 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5026FFF721C3CA280023EEA2 /* Unstoppable Dev T.debug.xcconfig */;
+			baseConfigurationReference = 1A56433D5D39CCA995F97777 /* Development.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable DT.entitlements";
 				CURRENT_PROJECT_VERSION = 1;
@@ -10676,14 +10577,18 @@
 				PRODUCT_MODULE_NAME = Unstoppable_Dev_T;
 				PRODUCT_NAME = "Unstoppable DT";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development io.horizontalsystems.bank-wallet.dev.testnet";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				ShowBuildNumber = true;
+				TARGETED_DEVICE_FAMILY = 1;
 				TestMode = true;
 			};
 			name = Debug;
 		};
 		D3285F5620BD158F00644076 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5026FFF521C3CA280023EEA2 /* Unstoppable Dev T.release.xcconfig */;
+			baseConfigurationReference = 1A56433D5D39CCA995F97777 /* Development.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable DT.entitlements";
 				CURRENT_PROJECT_VERSION = 1;
@@ -10693,56 +10598,18 @@
 				PRODUCT_MODULE_NAME = Unstoppable_Dev_T;
 				PRODUCT_NAME = "Unstoppable DT";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc io.horizontalsystems.bank-wallet.dev.testnet";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				ShowBuildNumber = true;
+				TARGETED_DEVICE_FAMILY = 1;
 				TestMode = true;
-			};
-			name = Release;
-		};
-		D3373DC720C658660082BC4A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B5C3982759DB04D684EE74C /* Pods-Unstoppable Tests.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				INFOPLIST_FILE = UnstoppableWalletTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet-tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Unstoppable DT.app/Unstoppable DT";
-			};
-			name = Debug;
-		};
-		D3373DC820C658660082BC4A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 25748001A7D0AF250F7F2A6B /* Pods-Unstoppable Tests.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				INFOPLIST_FILE = UnstoppableWalletTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet-tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Unstoppable DT.app/Unstoppable DT";
 			};
 			name = Release;
 		};
 		D38405CC218317DF007D50AD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5026FFF821C3CA280023EEA2 /* Unstoppable Dev.debug.xcconfig */;
+			baseConfigurationReference = 1A56433D5D39CCA995F97777 /* Development.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable D.entitlements";
 				CURRENT_PROJECT_VERSION = 1;
@@ -10752,13 +10619,17 @@
 				PRODUCT_MODULE_NAME = Unstoppable_Dev;
 				PRODUCT_NAME = "Unstoppable D";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development io.horizontalsystems.bank-wallet.dev";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				ShowBuildNumber = true;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		D38405CD218317DF007D50AD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5026FFF421C3CA280023EEA2 /* Unstoppable Dev.release.xcconfig */;
+			baseConfigurationReference = 1A56433D5D39CCA995F97777 /* Development.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable D.entitlements";
 				CURRENT_PROJECT_VERSION = 1;
@@ -10768,13 +10639,17 @@
 				PRODUCT_MODULE_NAME = Unstoppable_Dev;
 				PRODUCT_NAME = "Unstoppable D";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc io.horizontalsystems.bank-wallet.dev";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				ShowBuildNumber = true;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		D38406BC21831B3D007D50AD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5026FFF921C3CA280023EEA2 /* Unstoppable.debug.xcconfig */;
+			baseConfigurationReference = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Unstoppable.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
@@ -10784,13 +10659,17 @@
 				PRODUCT_MODULE_NAME = Unstoppable;
 				PRODUCT_NAME = Unstoppable;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development io.horizontalsystems.bank-wallet";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = 1;
 				ZCASH_NETWORK_ENVIRONMENT = MAINNET;
 			};
 			name = Debug;
 		};
 		D38406BD21831B3D007D50AD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5026FFF621C3CA280023EEA2 /* Unstoppable.release.xcconfig */;
+			baseConfigurationReference = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Unstoppable.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
@@ -10800,6 +10679,10 @@
 				PRODUCT_MODULE_NAME = Unstoppable;
 				PRODUCT_NAME = Unstoppable;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.horizontalsystems.bank-wallet";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = 1;
 				ZCASH_NETWORK_ENVIRONMENT = MAINNET;
 			};
 			name = Release;
@@ -10821,15 +10704,6 @@
 			buildConfigurations = (
 				D3285F5520BD158F00644076 /* Debug */,
 				D3285F5620BD158F00644076 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D3373DC620C658660082BC4A /* Build configuration list for PBXNativeTarget "Unstoppable Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D3373DC720C658660082BC4A /* Debug */,
-				D3373DC820C658660082BC4A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10863,14 +10737,6 @@
 				kind = branch;
 			};
 		};
-		6B8F058E285EF0C100407F66 /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/WalletConnect/WalletConnectSwiftV2";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nysander/UnicodeURL.git";
@@ -10879,12 +10745,188 @@
 				kind = branch;
 			};
 		};
+		D3604E4128F02A020066C366 /* XCRemoteSwiftPackageReference "EvmKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/EvmKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E4828F02A8B0066C366 /* XCRemoteSwiftPackageReference "Eip20Kit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/Eip20Kit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E4B28F02AB40066C366 /* XCRemoteSwiftPackageReference "NftKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/NftKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E4E28F02AE60066C366 /* XCRemoteSwiftPackageReference "UniswapKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/UniswapKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E5128F02B150066C366 /* XCRemoteSwiftPackageReference "OneInchKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/OneInchKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E6428F02D9A0066C366 /* XCRemoteSwiftPackageReference "BitcoinKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/BitcoinKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E6728F02DF30066C366 /* XCRemoteSwiftPackageReference "BitcoinCashKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/BitcoinCashKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E6A28F02E3F0066C366 /* XCRemoteSwiftPackageReference "LitecoinKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/LitecoinKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E6E28F03AC70066C366 /* XCRemoteSwiftPackageReference "MarketKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E7128F03B0A0066C366 /* XCRemoteSwiftPackageReference "ScanQrKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/ScanQrKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E7428F03B5E0066C366 /* XCRemoteSwiftPackageReference "PinKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/PinKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E7728F03B9F0066C366 /* XCRemoteSwiftPackageReference "ModuleKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/ModuleKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E7A28F03BD20066C366 /* XCRemoteSwiftPackageReference "CurrencyKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/CurrencyKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/Chart.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E8028F03C6B0066C366 /* XCRemoteSwiftPackageReference "FeeRateKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/FeeRateKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E8328F03CDC0066C366 /* XCRemoteSwiftPackageReference "BinanceChainKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/BinanceChainKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3604E8628F03D9E0066C366 /* XCRemoteSwiftPackageReference "DashKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/DashKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		D36E0C2828D084AB00B622B9 /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Coeur/CollectionViewCenteredFlowLayout";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
+			};
+		};
+		D3993D9C28F41F5C008720FB /* XCRemoteSwiftPackageReference "wallet-connect-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/wallet-connect-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3993DA328F4229F008720FB /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/zcash/ZcashLightClientKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = "0.16.11-beta";
+			};
+		};
+		D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WalletConnect/WalletConnectSwiftV2";
+			requirement = {
+				kind = revision;
+				revision = 58b6a7433648a4ea6687c692ca5f059370694aaa;
+			};
+		};
+		D3993DB928F4277E008720FB /* XCRemoteSwiftPackageReference "ActionSheet.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/ActionSheet.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D3993DC028F42992008720FB /* XCRemoteSwiftPackageReference "resolution-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/unstoppabledomains/resolution-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
 			};
 		};
 		D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */ = {
@@ -10921,21 +10963,6 @@
 			package = 500F1D0F27AA87BC002AA419 /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */;
 			productName = AlignedCollectionViewFlowLayout;
 		};
-		6B74F00C28646E1600014850 /* WalletConnect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B8F058E285EF0C100407F66 /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
-			productName = WalletConnect;
-		};
-		6B74F00E28646E2000014850 /* WalletConnect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B8F058E285EF0C100407F66 /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
-			productName = WalletConnect;
-		};
-		6B8F058F285EF0C100407F66 /* WalletConnect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B8F058E285EF0C100407F66 /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
-			productName = WalletConnect;
-		};
 		D0DA740C272A6EFC0072BE86 /* IDNSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
@@ -10966,6 +10993,261 @@
 			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = UnicodeURL;
 		};
+		D3604E4228F02A020066C366 /* EvmKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E4128F02A020066C366 /* XCRemoteSwiftPackageReference "EvmKit.Swift" */;
+			productName = EvmKit;
+		};
+		D3604E4428F02A260066C366 /* EvmKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E4128F02A020066C366 /* XCRemoteSwiftPackageReference "EvmKit.Swift" */;
+			productName = EvmKit;
+		};
+		D3604E4628F02A2C0066C366 /* EvmKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E4128F02A020066C366 /* XCRemoteSwiftPackageReference "EvmKit.Swift" */;
+			productName = EvmKit;
+		};
+		D3604E4928F02A8C0066C366 /* Eip20Kit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E4828F02A8B0066C366 /* XCRemoteSwiftPackageReference "Eip20Kit.Swift" */;
+			productName = Eip20Kit;
+		};
+		D3604E4C28F02AB40066C366 /* NftKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E4B28F02AB40066C366 /* XCRemoteSwiftPackageReference "NftKit.Swift" */;
+			productName = NftKit;
+		};
+		D3604E4F28F02AE70066C366 /* UniswapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E4E28F02AE60066C366 /* XCRemoteSwiftPackageReference "UniswapKit.Swift" */;
+			productName = UniswapKit;
+		};
+		D3604E5228F02B150066C366 /* OneInchKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E5128F02B150066C366 /* XCRemoteSwiftPackageReference "OneInchKit.Swift" */;
+			productName = OneInchKit;
+		};
+		D3604E5428F02B280066C366 /* Eip20Kit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E4828F02A8B0066C366 /* XCRemoteSwiftPackageReference "Eip20Kit.Swift" */;
+			productName = Eip20Kit;
+		};
+		D3604E5628F02B280066C366 /* NftKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E4B28F02AB40066C366 /* XCRemoteSwiftPackageReference "NftKit.Swift" */;
+			productName = NftKit;
+		};
+		D3604E5828F02B280066C366 /* UniswapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E4E28F02AE60066C366 /* XCRemoteSwiftPackageReference "UniswapKit.Swift" */;
+			productName = UniswapKit;
+		};
+		D3604E5A28F02B280066C366 /* OneInchKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E5128F02B150066C366 /* XCRemoteSwiftPackageReference "OneInchKit.Swift" */;
+			productName = OneInchKit;
+		};
+		D3604E5C28F02B320066C366 /* Eip20Kit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E4828F02A8B0066C366 /* XCRemoteSwiftPackageReference "Eip20Kit.Swift" */;
+			productName = Eip20Kit;
+		};
+		D3604E5E28F02B330066C366 /* NftKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E4B28F02AB40066C366 /* XCRemoteSwiftPackageReference "NftKit.Swift" */;
+			productName = NftKit;
+		};
+		D3604E6028F02B330066C366 /* UniswapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E4E28F02AE60066C366 /* XCRemoteSwiftPackageReference "UniswapKit.Swift" */;
+			productName = UniswapKit;
+		};
+		D3604E6228F02B330066C366 /* OneInchKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E5128F02B150066C366 /* XCRemoteSwiftPackageReference "OneInchKit.Swift" */;
+			productName = OneInchKit;
+		};
+		D3604E6528F02D9A0066C366 /* BitcoinKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E6428F02D9A0066C366 /* XCRemoteSwiftPackageReference "BitcoinKit.Swift" */;
+			productName = BitcoinKit;
+		};
+		D3604E6828F02DF30066C366 /* BitcoinCashKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E6728F02DF30066C366 /* XCRemoteSwiftPackageReference "BitcoinCashKit.Swift" */;
+			productName = BitcoinCashKit;
+		};
+		D3604E6B28F02E3F0066C366 /* LitecoinKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E6A28F02E3F0066C366 /* XCRemoteSwiftPackageReference "LitecoinKit.Swift" */;
+			productName = LitecoinKit;
+		};
+		D3604E6F28F03AC80066C366 /* MarketKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E6E28F03AC70066C366 /* XCRemoteSwiftPackageReference "MarketKit.Swift" */;
+			productName = MarketKit;
+		};
+		D3604E7228F03B0A0066C366 /* ScanQrKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7128F03B0A0066C366 /* XCRemoteSwiftPackageReference "ScanQrKit.Swift" */;
+			productName = ScanQrKit;
+		};
+		D3604E7528F03B5E0066C366 /* PinKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7428F03B5E0066C366 /* XCRemoteSwiftPackageReference "PinKit.Swift" */;
+			productName = PinKit;
+		};
+		D3604E7828F03B9F0066C366 /* ModuleKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7728F03B9F0066C366 /* XCRemoteSwiftPackageReference "ModuleKit.Swift" */;
+			productName = ModuleKit;
+		};
+		D3604E7B28F03BD20066C366 /* CurrencyKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7A28F03BD20066C366 /* XCRemoteSwiftPackageReference "CurrencyKit.Swift" */;
+			productName = CurrencyKit;
+		};
+		D3604E7E28F03C1D0066C366 /* Chart */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart.Swift" */;
+			productName = Chart;
+		};
+		D3604E8128F03C6B0066C366 /* FeeRateKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E8028F03C6B0066C366 /* XCRemoteSwiftPackageReference "FeeRateKit.Swift" */;
+			productName = FeeRateKit;
+		};
+		D3604E8428F03CDC0066C366 /* BinanceChainKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E8328F03CDC0066C366 /* XCRemoteSwiftPackageReference "BinanceChainKit.Swift" */;
+			productName = BinanceChainKit;
+		};
+		D3604E8728F03D9E0066C366 /* DashKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E8628F03D9E0066C366 /* XCRemoteSwiftPackageReference "DashKit.Swift" */;
+			productName = DashKit;
+		};
+		D3604E8928F03DBF0066C366 /* BitcoinKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E6428F02D9A0066C366 /* XCRemoteSwiftPackageReference "BitcoinKit.Swift" */;
+			productName = BitcoinKit;
+		};
+		D3604E8B28F03DBF0066C366 /* BitcoinCashKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E6728F02DF30066C366 /* XCRemoteSwiftPackageReference "BitcoinCashKit.Swift" */;
+			productName = BitcoinCashKit;
+		};
+		D3604E8D28F03DBF0066C366 /* LitecoinKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E6A28F02E3F0066C366 /* XCRemoteSwiftPackageReference "LitecoinKit.Swift" */;
+			productName = LitecoinKit;
+		};
+		D3604E8F28F03DC00066C366 /* MarketKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E6E28F03AC70066C366 /* XCRemoteSwiftPackageReference "MarketKit.Swift" */;
+			productName = MarketKit;
+		};
+		D3604E9128F03DC00066C366 /* ScanQrKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7128F03B0A0066C366 /* XCRemoteSwiftPackageReference "ScanQrKit.Swift" */;
+			productName = ScanQrKit;
+		};
+		D3604E9328F03DC00066C366 /* PinKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7428F03B5E0066C366 /* XCRemoteSwiftPackageReference "PinKit.Swift" */;
+			productName = PinKit;
+		};
+		D3604E9528F03DC00066C366 /* ModuleKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7728F03B9F0066C366 /* XCRemoteSwiftPackageReference "ModuleKit.Swift" */;
+			productName = ModuleKit;
+		};
+		D3604E9728F03DC00066C366 /* CurrencyKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7A28F03BD20066C366 /* XCRemoteSwiftPackageReference "CurrencyKit.Swift" */;
+			productName = CurrencyKit;
+		};
+		D3604E9928F03DC00066C366 /* Chart */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart.Swift" */;
+			productName = Chart;
+		};
+		D3604E9B28F03DC00066C366 /* FeeRateKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E8028F03C6B0066C366 /* XCRemoteSwiftPackageReference "FeeRateKit.Swift" */;
+			productName = FeeRateKit;
+		};
+		D3604E9D28F03DC00066C366 /* BinanceChainKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E8328F03CDC0066C366 /* XCRemoteSwiftPackageReference "BinanceChainKit.Swift" */;
+			productName = BinanceChainKit;
+		};
+		D3604E9F28F03DC00066C366 /* DashKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E8628F03D9E0066C366 /* XCRemoteSwiftPackageReference "DashKit.Swift" */;
+			productName = DashKit;
+		};
+		D3604EA128F03DDD0066C366 /* BitcoinKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E6428F02D9A0066C366 /* XCRemoteSwiftPackageReference "BitcoinKit.Swift" */;
+			productName = BitcoinKit;
+		};
+		D3604EA328F03DDD0066C366 /* BitcoinCashKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E6728F02DF30066C366 /* XCRemoteSwiftPackageReference "BitcoinCashKit.Swift" */;
+			productName = BitcoinCashKit;
+		};
+		D3604EA528F03DDD0066C366 /* LitecoinKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E6A28F02E3F0066C366 /* XCRemoteSwiftPackageReference "LitecoinKit.Swift" */;
+			productName = LitecoinKit;
+		};
+		D3604EA728F03DDD0066C366 /* MarketKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E6E28F03AC70066C366 /* XCRemoteSwiftPackageReference "MarketKit.Swift" */;
+			productName = MarketKit;
+		};
+		D3604EA928F03DDD0066C366 /* ScanQrKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7128F03B0A0066C366 /* XCRemoteSwiftPackageReference "ScanQrKit.Swift" */;
+			productName = ScanQrKit;
+		};
+		D3604EAB28F03DDD0066C366 /* PinKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7428F03B5E0066C366 /* XCRemoteSwiftPackageReference "PinKit.Swift" */;
+			productName = PinKit;
+		};
+		D3604EAD28F03DDD0066C366 /* ModuleKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7728F03B9F0066C366 /* XCRemoteSwiftPackageReference "ModuleKit.Swift" */;
+			productName = ModuleKit;
+		};
+		D3604EAF28F03DDD0066C366 /* CurrencyKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7A28F03BD20066C366 /* XCRemoteSwiftPackageReference "CurrencyKit.Swift" */;
+			productName = CurrencyKit;
+		};
+		D3604EB128F03DDD0066C366 /* Chart */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart.Swift" */;
+			productName = Chart;
+		};
+		D3604EB328F03DDD0066C366 /* FeeRateKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E8028F03C6B0066C366 /* XCRemoteSwiftPackageReference "FeeRateKit.Swift" */;
+			productName = FeeRateKit;
+		};
+		D3604EB528F03DDD0066C366 /* BinanceChainKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E8328F03CDC0066C366 /* XCRemoteSwiftPackageReference "BinanceChainKit.Swift" */;
+			productName = BinanceChainKit;
+		};
+		D3604EB728F03DDE0066C366 /* DashKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3604E8628F03D9E0066C366 /* XCRemoteSwiftPackageReference "DashKit.Swift" */;
+			productName = DashKit;
+		};
 		D36E0C2928D084AB00B622B9 /* CollectionViewCenteredFlowLayout */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D36E0C2828D084AB00B622B9 /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */;
@@ -10980,6 +11262,81 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D36E0C2828D084AB00B622B9 /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */;
 			productName = CollectionViewCenteredFlowLayout;
+		};
+		D3993DA428F4229F008720FB /* ZcashLightClientKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993DA328F4229F008720FB /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */;
+			productName = ZcashLightClientKit;
+		};
+		D3993DA628F422BD008720FB /* ZcashLightClientKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993DA328F4229F008720FB /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */;
+			productName = ZcashLightClientKit;
+		};
+		D3993DA828F422C8008720FB /* ZcashLightClientKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993DA328F4229F008720FB /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */;
+			productName = ZcashLightClientKit;
+		};
+		D3993DAD28F4256F008720FB /* WalletConnectV1 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993D9C28F41F5C008720FB /* XCRemoteSwiftPackageReference "wallet-connect-swift" */;
+			productName = WalletConnectV1;
+		};
+		D3993DAF28F4256F008720FB /* WalletConnect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
+			productName = WalletConnect;
+		};
+		D3993DB128F4257E008720FB /* WalletConnectV1 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993D9C28F41F5C008720FB /* XCRemoteSwiftPackageReference "wallet-connect-swift" */;
+			productName = WalletConnectV1;
+		};
+		D3993DB328F4257E008720FB /* WalletConnect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
+			productName = WalletConnect;
+		};
+		D3993DB528F42595008720FB /* WalletConnectV1 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993D9C28F41F5C008720FB /* XCRemoteSwiftPackageReference "wallet-connect-swift" */;
+			productName = WalletConnectV1;
+		};
+		D3993DB728F42595008720FB /* WalletConnect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
+			productName = WalletConnect;
+		};
+		D3993DBA28F4277E008720FB /* ActionSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993DB928F4277E008720FB /* XCRemoteSwiftPackageReference "ActionSheet.Swift" */;
+			productName = ActionSheet;
+		};
+		D3993DBC28F4278F008720FB /* ActionSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993DB928F4277E008720FB /* XCRemoteSwiftPackageReference "ActionSheet.Swift" */;
+			productName = ActionSheet;
+		};
+		D3993DBE28F4279A008720FB /* ActionSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993DB928F4277E008720FB /* XCRemoteSwiftPackageReference "ActionSheet.Swift" */;
+			productName = ActionSheet;
+		};
+		D3993DC128F42992008720FB /* UnstoppableDomainsResolution */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993DC028F42992008720FB /* XCRemoteSwiftPackageReference "resolution-swift" */;
+			productName = UnstoppableDomainsResolution;
+		};
+		D3993DC328F429AA008720FB /* UnstoppableDomainsResolution */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993DC028F42992008720FB /* XCRemoteSwiftPackageReference "resolution-swift" */;
+			productName = UnstoppableDomainsResolution;
+		};
+		D3993DC528F429B2008720FB /* UnstoppableDomainsResolution */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3993DC028F42992008720FB /* XCRemoteSwiftPackageReference "resolution-swift" */;
+			productName = UnstoppableDomainsResolution;
 		};
 		D3BF1E5B274BC29D00229A00 /* Down */ = {
 			isa = XCSwiftPackageProductDependency;

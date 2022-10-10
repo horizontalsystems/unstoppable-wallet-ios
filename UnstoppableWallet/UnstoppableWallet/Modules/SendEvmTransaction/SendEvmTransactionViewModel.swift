@@ -1,13 +1,14 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import EthereumKit
+import EvmKit
 import BigInt
 import UniswapKit
 import OneInchKit
-import Erc20Kit
+import Eip20Kit
 import NftKit
 import MarketKit
+import HsExtensions
 
 class SendEvmTransactionViewModel {
     private let disposeBag = DisposeBag()
@@ -248,7 +249,7 @@ class SendEvmTransactionViewModel {
         }
     }
 
-    private func sendBaseCoinItems(to: EthereumKit.Address, value: BigUInt, sendInfo: SendEvmData.SendInfo?) -> [SectionViewItem] {
+    private func sendBaseCoinItems(to: EvmKit.Address, value: BigUInt, sendInfo: SendEvmData.SendInfo?) -> [SectionViewItem] {
         let toValue = to.eip55
 
         return [
@@ -272,7 +273,7 @@ class SendEvmTransactionViewModel {
         ]
     }
 
-    private func eip20TransferItems(to: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address, nonce: Int?, sendInfo: SendEvmData.SendInfo?) -> [SectionViewItem]? {
+    private func eip20TransferItems(to: EvmKit.Address, value: BigUInt, contractAddress: EvmKit.Address, nonce: Int?, sendInfo: SendEvmData.SendInfo?) -> [SectionViewItem]? {
         guard let coinService = coinServiceFactory.coinService(contractAddress: contractAddress) else {
             return nil
         }
@@ -300,7 +301,7 @@ class SendEvmTransactionViewModel {
         return [SectionViewItem(viewItems: viewItems)]
     }
 
-    private func nftTransferItems(to: EthereumKit.Address, value: BigUInt, nonce: Int?, sendInfo: SendEvmData.SendInfo?, tokenId: BigUInt) -> [SectionViewItem]? {
+    private func nftTransferItems(to: EvmKit.Address, value: BigUInt, nonce: Int?, sendInfo: SendEvmData.SendInfo?, tokenId: BigUInt) -> [SectionViewItem]? {
 
         var viewItems: [ViewItem] = [
             .subhead(
@@ -321,7 +322,7 @@ class SendEvmTransactionViewModel {
         return [SectionViewItem(viewItems: viewItems)]
     }
 
-    private func eip20ApproveItems(spender: EthereumKit.Address, value: BigUInt, contractAddress: EthereumKit.Address, nonce: Int?) -> [SectionViewItem]? {
+    private func eip20ApproveItems(spender: EvmKit.Address, value: BigUInt, contractAddress: EvmKit.Address, nonce: Int?) -> [SectionViewItem]? {
         guard let coinService = coinServiceFactory.coinService(contractAddress: contractAddress) else {
             return nil
         }
@@ -367,7 +368,7 @@ class SendEvmTransactionViewModel {
         return [SectionViewItem(viewItems: viewItems)]
     }
 
-    private func uniswapItems(amountIn: SwapDecoration.Amount, amountOut: SwapDecoration.Amount, tokenIn: SwapDecoration.Token, tokenOut: SwapDecoration.Token, recipient: EthereumKit.Address?, deadline: BigUInt, swapInfo: SendEvmData.SwapInfo?) -> [SectionViewItem]? {
+    private func uniswapItems(amountIn: SwapDecoration.Amount, amountOut: SwapDecoration.Amount, tokenIn: SwapDecoration.Token, tokenOut: SwapDecoration.Token, recipient: EvmKit.Address?, deadline: BigUInt, swapInfo: SendEvmData.SwapInfo?) -> [SectionViewItem]? {
         guard let coinServiceIn = coinService(token: tokenIn), let coinServiceOut = coinService(token: tokenOut) else {
             return nil
         }
@@ -436,7 +437,7 @@ class SendEvmTransactionViewModel {
         return sections
     }
 
-    private func oneInchItems(tokenIn: OneInchDecoration.Token, tokenOut: OneInchDecoration.Token?, amountIn: BigUInt, amountOut: OneInchDecoration.Amount, recipient: EthereumKit.Address? = nil, oneInchSwapInfo: SendEvmData.OneInchSwapInfo?) -> [SectionViewItem]? {
+    private func oneInchItems(tokenIn: OneInchDecoration.Token, tokenOut: OneInchDecoration.Token?, amountIn: BigUInt, amountOut: OneInchDecoration.Amount, recipient: EvmKit.Address? = nil, oneInchSwapInfo: SendEvmData.OneInchSwapInfo?) -> [SectionViewItem]? {
         var coinServiceOut = tokenOut.flatMap { coinService(token: $0) }
 
         if coinServiceOut == nil, let oneInchSwapInfo = oneInchSwapInfo {
@@ -487,21 +488,21 @@ class SendEvmTransactionViewModel {
         ]))
 
         let amountOutMinDecimal = oneInchSwapInfo.estimatedAmountTo * (1 - oneInchSwapInfo.slippage / 100)
-        let toAmountMin = BigUInt((amountOutMinDecimal * pow(10, oneInchSwapInfo.tokenTo.decimals)).roundedString(decimal: 0)) ?? 0
+        let toAmountMin = BigUInt((amountOutMinDecimal * pow(10, oneInchSwapInfo.tokenTo.decimals)).hs.roundedString(decimal: 0)) ?? 0
 
         sections.append(SectionViewItem(viewItems: [
             .subhead(iconName: "arrow_medium_2_down_left_24", title: "swap.you_get".localized, value: coinServiceOut.token.coin.code),
             doubleAmountViewItem(coinService: coinServiceOut, estimateValue: oneInchSwapInfo.estimatedAmountTo, extremumValue: toAmountMin, type: .incoming)
         ]))
 
-        if let section = additionalSectionViewItem(oneInchSwapInfo: oneInchSwapInfo, recipient: oneInchSwapInfo.recipient.flatMap { try? EthereumKit.Address(hex: $0.raw) }) {
+        if let section = additionalSectionViewItem(oneInchSwapInfo: oneInchSwapInfo, recipient: oneInchSwapInfo.recipient.flatMap { try? EvmKit.Address(hex: $0.raw) }) {
             sections.append(section)
         }
 
         return sections
     }
 
-    private func additionalSectionViewItem(oneInchSwapInfo: SendEvmData.OneInchSwapInfo?, recipient: EthereumKit.Address?) -> SectionViewItem? {
+    private func additionalSectionViewItem(oneInchSwapInfo: SendEvmData.OneInchSwapInfo?, recipient: EvmKit.Address?) -> SectionViewItem? {
         var viewItems = [ViewItem]()
 
         if let slippage = oneInchSwapInfo?.slippage, let formattedSlippage = formatted(slippage: slippage) {

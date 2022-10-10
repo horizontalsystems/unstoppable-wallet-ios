@@ -1,9 +1,10 @@
+import Foundation
 import RxSwift
 import RxRelay
 import MarketKit
 import CurrencyKit
 import StorageKit
-import EthereumKit
+import EvmKit
 import HsToolKit
 
 class WalletService {

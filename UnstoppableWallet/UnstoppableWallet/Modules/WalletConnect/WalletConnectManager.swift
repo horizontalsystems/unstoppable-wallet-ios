@@ -1,4 +1,4 @@
-import EthereumKit
+import EvmKit
 
 class WalletConnectManager {
     private let accountManager: AccountManager

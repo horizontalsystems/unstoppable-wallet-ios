@@ -1,7 +1,7 @@
 import Foundation
 import RxCocoa
 import RxSwift
-import EthereumKit
+import EvmKit
 import BigInt
 
 class SwapApproveViewModel {

@@ -1,11 +1,11 @@
 import Foundation
-import EthereumKit
+import EvmKit
 import RxSwift
 import RxRelay
 import MarketKit
 
 class SwapPendingAllowanceService {
-    private let spenderAddress: EthereumKit.Address
+    private let spenderAddress: EvmKit.Address
     private let adapterManager: AdapterManager
     private let allowanceService: SwapAllowanceService
 
@@ -23,7 +23,7 @@ class SwapPendingAllowanceService {
         }
     }
 
-    init(spenderAddress: EthereumKit.Address, adapterManager: AdapterManager, allowanceService: SwapAllowanceService) {
+    init(spenderAddress: EvmKit.Address, adapterManager: AdapterManager, allowanceService: SwapAllowanceService) {
         self.spenderAddress = spenderAddress
         self.adapterManager = adapterManager
         self.allowanceService = allowanceService

@@ -1,5 +1,6 @@
+import Foundation
 import RxSwift
-import EthereumKit
+import EvmKit
 
 class EvmLabelManager {
     private let keyMethodLabelsTimestamp = "evm-label-manager-method-labels-timestamp"

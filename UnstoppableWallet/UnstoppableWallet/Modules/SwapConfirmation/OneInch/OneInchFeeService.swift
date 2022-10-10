@@ -2,7 +2,7 @@ import Foundation
 import MarketKit
 import RxSwift
 import RxRelay
-import EthereumKit
+import EvmKit
 import OneInchKit
 import BigInt
 
@@ -33,7 +33,7 @@ class OneInchFeeService {
 
     private static let gasLimitSurchargePercent = 25
 
-    private let evmKit: EthereumKit.Kit
+    private let evmKit: EvmKit.Kit
     private let provider: OneInchProvider
     private let gasPriceService: IGasPriceService
     private(set) var parameters: OneInchSwapParameters
@@ -47,7 +47,7 @@ class OneInchFeeService {
 
     var amountTo: Decimal?
 
-    init(evmKit: EthereumKit.Kit, provider: OneInchProvider, gasPriceService: IGasPriceService, parameters: OneInchSwapParameters) {
+    init(evmKit: EvmKit.Kit, provider: OneInchProvider, gasPriceService: IGasPriceService, parameters: OneInchSwapParameters) {
         self.evmKit = evmKit
         self.provider = provider
         self.gasPriceService = gasPriceService
@@ -72,7 +72,7 @@ class OneInchFeeService {
     private func sync(fallibleGasPrice: FallibleData<GasPrice>) {
         disposeBag = DisposeBag()
 
-        let recipient: EthereumKit.Address? = parameters.recipient.flatMap { try? EthereumKit.Address(hex: $0.raw) }
+        let recipient: EvmKit.Address? = parameters.recipient.flatMap { try? EvmKit.Address(hex: $0.raw) }
 
         provider.swapSingle(
                         tokenFrom: parameters.tokenFrom,
@@ -115,7 +115,7 @@ class OneInchFeeService {
         )
 
         parameters.amountTo = swap.amountOut ?? 0
-        let transactionData = EthereumKit.TransactionData(to: tx.to, value: tx.value, input: tx.data)
+        let transactionData = EvmKit.TransactionData(to: tx.to, value: tx.value, input: tx.data)
         let totalAmount = transactionData.value + gasData.fee
         var errors: [Error] = fallibleGasPrice.errors
 

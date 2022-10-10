@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import RxRelay
 import HsToolKit

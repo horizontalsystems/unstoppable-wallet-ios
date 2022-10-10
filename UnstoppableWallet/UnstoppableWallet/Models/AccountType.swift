@@ -1,11 +1,11 @@
 import Foundation
 import HdWalletKit
-import EthereumKit
+import EvmKit
 
 enum AccountType {
     case mnemonic(words: [String], salt: String)
     case privateKey(data: Data)
-    case address(address: EthereumKit.Address)
+    case address(address: EvmKit.Address)
 
     var mnemonicSeed: Data? {
         switch self {

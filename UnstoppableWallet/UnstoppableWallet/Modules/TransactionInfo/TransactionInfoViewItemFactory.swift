@@ -1,6 +1,7 @@
+import Foundation
 import MarketKit
 import CurrencyKit
-import EthereumKit
+import EvmKit
 
 class TransactionInfoViewItemFactory {
     private let zeroAddress = "0x0000000000000000000000000000000000000000"

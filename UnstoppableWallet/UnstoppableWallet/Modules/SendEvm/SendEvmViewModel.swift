@@ -1,6 +1,7 @@
+import Foundation
 import RxSwift
 import RxCocoa
-import EthereumKit
+import EvmKit
 import MarketKit
 
 class SendEvmViewModel {

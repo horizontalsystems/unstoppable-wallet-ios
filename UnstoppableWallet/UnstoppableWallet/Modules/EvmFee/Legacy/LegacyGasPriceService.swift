@@ -1,5 +1,5 @@
 import BigInt
-import EthereumKit
+import EvmKit
 import Foundation
 import MarketKit
 import RxCocoa
@@ -11,7 +11,7 @@ class LegacyGasPriceService {
 
     private var disposeBag = DisposeBag()
 
-    private let evmKit: EthereumKit.Kit
+    private let evmKit: EvmKit.Kit
     private let gasPriceProvider: LegacyGasPriceProvider
     private let minRecommendedGasPrice: Int?
 
@@ -32,7 +32,7 @@ class LegacyGasPriceService {
         }
     }
 
-    init(evmKit: EthereumKit.Kit, initialGasPrice: Int? = nil, minRecommendedGasPrice: Int? = nil) {
+    init(evmKit: EvmKit.Kit, initialGasPrice: Int? = nil, minRecommendedGasPrice: Int? = nil) {
         self.evmKit = evmKit
         gasPriceProvider = LegacyGasPriceProvider(evmKit: evmKit)
         self.minRecommendedGasPrice = minRecommendedGasPrice

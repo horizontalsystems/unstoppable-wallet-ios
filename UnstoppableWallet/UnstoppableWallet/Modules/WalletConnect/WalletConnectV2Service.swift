@@ -1,3 +1,4 @@
+import Foundation
 import CryptoSwift
 import RxSwift
 import RxRelay

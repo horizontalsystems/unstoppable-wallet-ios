@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
-import EthereumKit
+import EvmKit
 
 protocol IAddressParserItem: AnyObject {
     func handle(address: String) -> Single<Address>

@@ -1,16 +1,16 @@
 import Foundation
 import RxCocoa
 import RxSwift
-import EthereumKit
-import Erc20Kit
+import EvmKit
+import Eip20Kit
 import BigInt
 
 class SwapApproveService {
     private let disposeBag = DisposeBag()
 
-    private let erc20Kit: Erc20Kit.Kit
+    private let eip20Kit: Eip20Kit.Kit
     private(set) var amount: BigUInt?
-    private let spenderAddress: EthereumKit.Address
+    private let spenderAddress: EvmKit.Address
     private let allowance: BigUInt
 
     private(set) var state: State = .approveNotAllowed(errors: []) {
@@ -20,8 +20,8 @@ class SwapApproveService {
     }
     private let stateRelay = BehaviorRelay<State>(value: .approveNotAllowed(errors: []))
 
-    init(erc20Kit: Erc20Kit.Kit, amount: BigUInt, spenderAddress: EthereumKit.Address, allowance: BigUInt) {
-        self.erc20Kit = erc20Kit
+    init(eip20Kit: Eip20Kit.Kit, amount: BigUInt, spenderAddress: EvmKit.Address, allowance: BigUInt) {
+        self.eip20Kit = eip20Kit
         self.amount = amount
         self.spenderAddress = spenderAddress
         self.allowance = allowance
@@ -42,11 +42,11 @@ class SwapApproveService {
         }
 
         if errors.isEmpty {
-            let erc20KitTransactionData = erc20Kit.approveTransactionData(spenderAddress: spenderAddress, amount: amount)
+            let eip20KitTransactionData = eip20Kit.approveTransactionData(spenderAddress: spenderAddress, amount: amount)
             let transactionData = TransactionData(
-                    to: erc20KitTransactionData.to,
-                    value: erc20KitTransactionData.value,
-                    input: erc20KitTransactionData.input
+                    to: eip20KitTransactionData.to,
+                    value: eip20KitTransactionData.value,
+                    input: eip20KitTransactionData.input
             )
 
             state = .approveAllowed(transactionData: transactionData)

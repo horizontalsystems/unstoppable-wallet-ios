@@ -1,6 +1,6 @@
 import UIKit
 import ThemeKit
-import EthereumKit
+import EvmKit
 import OneInchKit
 
 struct SwapConfirmationModule {

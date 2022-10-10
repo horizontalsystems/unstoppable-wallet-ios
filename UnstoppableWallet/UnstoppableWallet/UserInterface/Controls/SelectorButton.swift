@@ -1,3 +1,5 @@
+import Foundation
+import UIKit
 import ComponentKit
 
 class SelectorButton: SecondaryButton {

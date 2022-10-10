@@ -1,6 +1,6 @@
 import UIKit
 import MarketKit
-import EthereumKit
+import EvmKit
 import NftKit
 
 enum TokenProtocol {
@@ -237,9 +237,9 @@ extension MarketKit.BlockchainType {
         }
     }
 
-    var rollupFeeContractAddress: EthereumKit.Address? {
+    var rollupFeeContractAddress: EvmKit.Address? {
         switch self {
-        case .optimism: return try? EthereumKit.Address(hex: "0x420000000000000000000000000000000000000F")
+        case .optimism: return try? EvmKit.Address(hex: "0x420000000000000000000000000000000000000F")
         default: return nil
         }
     }

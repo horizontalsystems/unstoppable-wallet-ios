@@ -1,6 +1,6 @@
 import UIKit
 import BigInt
-import EthereumKit
+import EvmKit
 import RxSwift
 import RxCocoa
 import ThemeKit
@@ -27,7 +27,7 @@ struct EvmFeeModule {
         }
     }
 
-    static func gasPriceService(evmKit: EthereumKit.Kit, gasPrice: GasPrice? = nil, previousTransaction: EthereumKit.Transaction? = nil) -> IGasPriceService {
+    static func gasPriceService(evmKit: EvmKit.Kit, gasPrice: GasPrice? = nil, previousTransaction: EvmKit.Transaction? = nil) -> IGasPriceService {
         if evmKit.chain.isEIP1559Supported {
             var initialMaxBaseFee: Int? = nil
             var initialMaxTips: Int? = nil

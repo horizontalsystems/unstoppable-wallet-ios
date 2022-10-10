@@ -28,9 +28,15 @@ history_bash.txt
 fastlane/report.xml
 fastlane/README.md
 
+
 # Cuckoo
 
 GeneratedMocks.swift
 
 Development.xcconfig
 Production.xcconfig
+
+# SPM
+
+Package.resolved
+.swiftpm

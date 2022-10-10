@@ -1,7 +1,7 @@
 import BitcoinCore
 import RxSwift
 import RxRelay
-import EthereumKit
+import EvmKit
 import MarketKit
 
 class AdapterFactory {
@@ -36,7 +36,7 @@ class AdapterFactory {
         return EvmAdapter(evmKitWrapper: evmKitWrapper)
     }
 
-    private func evm20Adapter(address: String, wallet: Wallet, coinManager: CoinManager) -> IAdapter? {
+    private func eip20Adapter(address: String, wallet: Wallet, coinManager: CoinManager) -> IAdapter? {
         guard let blockchainType = evmBlockchainManager.blockchain(token: wallet.token)?.type else {
             return nil
         }
@@ -47,7 +47,7 @@ class AdapterFactory {
             return nil
         }
 
-        return try? Evm20Adapter(evmKitWrapper: evmKitWrapper, contractAddress: address, wallet: wallet, baseToken: baseToken, coinManager: coinManager, evmLabelManager: evmLabelManager)
+        return try? Eip20Adapter(evmKitWrapper: evmKitWrapper, contractAddress: address, wallet: wallet, baseToken: baseToken, coinManager: coinManager, evmLabelManager: evmLabelManager)
     }
 
 }
@@ -99,7 +99,7 @@ extension AdapterFactory {
             return evmAdapter(wallet: wallet)
 
         case (.eip20(let address), .ethereum), (.eip20(let address), .binanceSmartChain), (.eip20(let address), .polygon), (.eip20(let address), .avalanche), (.eip20(let address), .optimism), (.eip20(let address), .arbitrumOne):
-            return evm20Adapter(address: address, wallet: wallet, coinManager: coinManager)
+            return eip20Adapter(address: address, wallet: wallet, coinManager: coinManager)
 
         default: ()
         }

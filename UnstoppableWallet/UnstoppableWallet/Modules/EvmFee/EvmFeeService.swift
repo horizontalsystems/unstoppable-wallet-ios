@@ -1,11 +1,11 @@
 import BigInt
-import EthereumKit
+import EvmKit
 import MarketKit
 import RxRelay
 import RxSwift
 
 class EvmFeeService {
-    private let evmKit: EthereumKit.Kit
+    private let evmKit: EvmKit.Kit
     private let gasPriceService: IGasPriceService
     private let gasDataService: EvmCommonGasDataService
 
@@ -21,7 +21,7 @@ class EvmFeeService {
     private var disposeBag = DisposeBag()
     private var gasPriceDisposeBag = DisposeBag()
 
-    init(evmKit: EthereumKit.Kit, gasPriceService: IGasPriceService, gasDataService: EvmCommonGasDataService, transactionData: TransactionData) {
+    init(evmKit: EvmKit.Kit, gasPriceService: IGasPriceService, gasDataService: EvmCommonGasDataService, transactionData: TransactionData) {
         self.evmKit = evmKit
         self.gasPriceService = gasPriceService
         self.gasDataService = gasDataService

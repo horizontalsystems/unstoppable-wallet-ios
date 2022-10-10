@@ -3,7 +3,7 @@ import RxRelay
 import WalletConnectUtils
 import WalletConnectSign
 import HsToolKit
-import EthereumKit
+import EvmKit
 
 class WalletConnectV2MainService {
     private let disposeBag = DisposeBag()

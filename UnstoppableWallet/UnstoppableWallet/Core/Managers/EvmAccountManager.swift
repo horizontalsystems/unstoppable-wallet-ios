@@ -1,8 +1,8 @@
 import RxSwift
 import MarketKit
 import HsToolKit
-import EthereumKit
-import Erc20Kit
+import EvmKit
+import Eip20Kit
 import UniswapKit
 import OneInchKit
 
@@ -121,7 +121,7 @@ class EvmAccountManager {
         handle(foundTokens: Array(foundTokens), suspiciousTokenTypes: Array(suspiciousTokenTypes.subtracting(foundTokens.map { $0.tokenType })), account: account, evmKit: evmKitWrapper.evmKit)
     }
 
-    private func handle(foundTokens: [FoundToken], suspiciousTokenTypes: [TokenType], account: Account, evmKit: EthereumKit.Kit) {
+    private func handle(foundTokens: [FoundToken], suspiciousTokenTypes: [TokenType], account: Account, evmKit: EvmKit.Kit) {
         guard !foundTokens.isEmpty || !suspiciousTokenTypes.isEmpty else {
             return
         }
@@ -176,7 +176,7 @@ class EvmAccountManager {
         }
     }
 
-    private func handle(tokenInfos: [TokenInfo], account: Account, evmKit: EthereumKit.Kit) {
+    private func handle(tokenInfos: [TokenInfo], account: Account, evmKit: EvmKit.Kit) {
 //        print("Handle Tokens: \(tokenInfos.count)\n\(tokenInfos.map { $0.type.id }.joined(separator: " "))")
 
         let existingWallets = walletManager.activeWallets
@@ -193,10 +193,10 @@ class EvmAccountManager {
 //        return
 
         let userAddress = evmKit.address
-        let dataProvider = DataProvider(ethereumKit: evmKit)
+        let dataProvider = DataProvider(evmKit: evmKit)
 
         let singles: [Single<TokenInfo?>] = newTokenInfos.map { info in
-            guard case let .eip20(address) = info.type, let contractAddress = try? EthereumKit.Address(hex: address) else {
+            guard case let .eip20(address) = info.type, let contractAddress = try? EvmKit.Address(hex: address) else {
                 return Single.just(nil)
             }
 
@@ -249,9 +249,9 @@ extension EvmAccountManager {
 
     struct FoundToken: Hashable {
         let tokenType: MarketKit.TokenType
-        let tokenInfo: Erc20Kit.TokenInfo?
+        let tokenInfo: Eip20Kit.TokenInfo?
 
-        init(tokenType: MarketKit.TokenType, tokenInfo: Erc20Kit.TokenInfo? = nil) {
+        init(tokenType: MarketKit.TokenType, tokenInfo: Eip20Kit.TokenInfo? = nil) {
             self.tokenType = tokenType
             self.tokenInfo = tokenInfo
         }

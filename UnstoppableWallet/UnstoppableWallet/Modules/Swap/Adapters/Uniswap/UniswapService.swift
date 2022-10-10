@@ -4,7 +4,7 @@ import HsToolKit
 import UniswapKit
 import CurrencyKit
 import BigInt
-import EthereumKit
+import EvmKit
 import Foundation
 import MarketKit
 

@@ -1,10 +1,11 @@
 import Foundation
-
+import UIKit
 import ZcashLightClientKit
 import RxSwift
 import HdWalletKit
 import HsToolKit
 import MarketKit
+import HsExtensions
 
 class ZcashAdapter {
     private let disposeBag = DisposeBag()
@@ -493,7 +494,7 @@ extension ZcashAdapter: ITransactionsAdapter {
     }
 
     func rawTransaction(hash: String) -> String? {
-        transactionPool.transaction(by: hash)?.raw?.hex
+        transactionPool.transaction(by: hash)?.raw?.hs.hex
     }
 
 }

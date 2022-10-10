@@ -1,12 +1,13 @@
 import UIKit
-import EthereumKit
+import EvmKit
 import ThemeKit
 import BigInt
+import HsExtensions
 
 struct SwapApproveModule {
 
     static func instance(data: SwapAllowanceService.ApproveData, delegate: ISwapApproveDelegate) -> UIViewController? {
-        guard let evm20Adapter = App.shared.adapterManager.adapter(for: data.token) as? Evm20Adapter else {
+        guard let eip20Adapter = App.shared.adapterManager.adapter(for: data.token) as? Eip20Adapter else {
             return nil
         }
 
@@ -17,10 +18,10 @@ struct SwapApproveModule {
         )
 
         let service = SwapApproveService(
-                erc20Kit: evm20Adapter.evm20Kit,
-                amount: BigUInt(data.amount.roundedString(decimal: data.token.decimals)) ?? 0,
+                eip20Kit: eip20Adapter.eip20Kit,
+                amount: BigUInt(data.amount.hs.roundedString(decimal: data.token.decimals)) ?? 0,
                 spenderAddress: data.spenderAddress,
-                allowance: BigUInt(data.allowance.roundedString(decimal: data.token.decimals)) ?? 0
+                allowance: BigUInt(data.allowance.hs.roundedString(decimal: data.token.decimals)) ?? 0
         )
 
         let decimalParser = AmountDecimalParser()

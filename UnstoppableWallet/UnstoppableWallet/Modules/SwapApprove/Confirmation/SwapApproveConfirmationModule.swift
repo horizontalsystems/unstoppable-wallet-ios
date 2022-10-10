@@ -1,7 +1,8 @@
 import UIKit
 import ThemeKit
-import EthereumKit
+import EvmKit
 import BigInt
+import HsExtensions
 
 struct SwapApproveConfirmationModule {
 
@@ -29,13 +30,13 @@ struct SwapApproveConfirmationModule {
     }
 
     static func revokeViewController(data: SwapAllowanceService.ApproveData, delegate: ISwapApproveDelegate) -> UIViewController? {
-        guard let evm20Adapter = App.shared.adapterManager.adapter(for: data.token) as? Evm20Adapter else {
+        guard let eip20Adapter = App.shared.adapterManager.adapter(for: data.token) as? Eip20Adapter else {
             return nil
         }
 
         let service = SwapApproveService(
-                erc20Kit: evm20Adapter.evm20Kit,
-                amount: BigUInt(data.amount.roundedString(decimal: data.token.decimals)) ?? 0,
+                eip20Kit: eip20Adapter.eip20Kit,
+                amount: BigUInt(data.amount.hs.roundedString(decimal: data.token.decimals)) ?? 0,
                 spenderAddress: data.spenderAddress,
                 allowance: 0
         )
