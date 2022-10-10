@@ -1,7 +1,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import EthereumKit
+import EvmKit
 import BigInt
 import MarketKit
 import UniswapKit
@@ -16,7 +16,7 @@ protocol ISendEvmTransactionService {
     var sendState: SendEvmTransactionService.SendState { get }
     var sendStateObservable: Observable<SendEvmTransactionService.SendState> { get }
 
-    var ownAddress: EthereumKit.Address { get }
+    var ownAddress: EvmKit.Address { get }
 
     func methodName(input: Data) -> String?
     func send()
@@ -61,7 +61,7 @@ class SendEvmTransactionService {
         subscribe(disposeBag, feeService.statusObservable) { [weak self] in self?.sync(status: $0) }
     }
 
-    private var evmKit: EthereumKit.Kit {
+    private var evmKit: EvmKit.Kit {
         evmKitWrapper.evmKit
     }
 
@@ -111,7 +111,7 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
         sendStateRelay.asObservable()
     }
 
-    var ownAddress: EthereumKit.Address {
+    var ownAddress: EvmKit.Address {
         evmKit.receiveAddress
     }
 

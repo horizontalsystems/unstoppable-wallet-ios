@@ -1,7 +1,7 @@
 import RxSwift
 import RxRelay
 import RxCocoa
-import EthereumKit
+import EvmKit
 
 class ProFeaturesYakAuthorizationService {
     private var disposeBag = DisposeBag()

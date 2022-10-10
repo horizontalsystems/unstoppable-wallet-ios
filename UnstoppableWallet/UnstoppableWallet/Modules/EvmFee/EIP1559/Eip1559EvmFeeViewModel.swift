@@ -1,4 +1,4 @@
-import EthereumKit
+import EvmKit
 import Foundation
 import RxCocoa
 import RxRelay

@@ -3,7 +3,6 @@ ruby '~> 3.0'
 
 group :fastlane do
   gem 'fastlane'
-  gem 'cocoapods'
   gem 'xcodeproj'
   gem 'xcode-install'
 end

@@ -1,5 +1,5 @@
 import UIKit
-import EthereumKit
+import EvmKit
 import SectionsTableView
 import ThemeKit
 

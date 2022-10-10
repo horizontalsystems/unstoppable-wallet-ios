@@ -4,7 +4,7 @@ import SnapKit
 import SectionsTableView
 import RxSwift
 import RxCocoa
-import EthereumKit
+import EvmKit
 
 class SendEvmViewController: ThemeViewController {
     private let evmKitWrapper: EvmKitWrapper

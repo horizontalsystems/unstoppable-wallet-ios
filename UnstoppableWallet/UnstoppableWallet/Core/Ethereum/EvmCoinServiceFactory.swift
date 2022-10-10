@@ -1,7 +1,7 @@
 import CurrencyKit
 import BigInt
 import MarketKit
-import EthereumKit
+import EvmKit
 
 class EvmCoinServiceFactory {
     private let blockchainType: BlockchainType
@@ -24,7 +24,7 @@ class EvmCoinServiceFactory {
         baseCoinService = CoinService(token: baseToken, currencyKit: currencyKit, marketKit: marketKit)
     }
 
-    func coinService(contractAddress: EthereumKit.Address) -> CoinService? {
+    func coinService(contractAddress: EvmKit.Address) -> CoinService? {
         let query = TokenQuery(blockchainType: blockchainType, tokenType: .eip20(address: contractAddress.hex))
 
         guard let token = try? marketKit.token(query: query) else {

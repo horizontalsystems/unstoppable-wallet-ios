@@ -1,7 +1,7 @@
 import Foundation
 import RxSwift
 import Alamofire
-import EthereumKit
+import EvmKit
 import ObjectMapper
 import HsToolKit
 import MarketKit
@@ -23,7 +23,7 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
 
     func isValid(reference: String) -> Bool {
         do {
-            _ = try EthereumKit.Address(hex: reference)
+            _ = try EvmKit.Address(hex: reference)
             return true
         } catch {
             return false

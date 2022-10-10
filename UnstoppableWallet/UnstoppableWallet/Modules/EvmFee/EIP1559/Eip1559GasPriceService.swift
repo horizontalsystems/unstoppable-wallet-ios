@@ -1,5 +1,5 @@
 import Foundation
-import EthereumKit
+import EvmKit
 import RxRelay
 import RxSwift
 
@@ -13,7 +13,7 @@ class Eip1559GasPriceService {
 
     private var disposeBag = DisposeBag()
 
-    private let evmKit: EthereumKit.Kit
+    private let evmKit: EvmKit.Kit
     private var feeHistoryProvider: EIP1559GasPriceProvider
 
     private let minRecommendedBaseFee: Int?
@@ -57,7 +57,7 @@ class Eip1559GasPriceService {
     private let tipsRangeChangedRelay = PublishRelay<Void>()
     private let statusRelay = PublishRelay<DataStatus<FallibleData<GasPrice>>>()
 
-    init(evmKit: EthereumKit.Kit, initialMaxBaseFee: Int? = nil, initialMaxTips: Int? = nil, minRecommendedBaseFee: Int? = nil, minRecommendedTips: Int? = nil) {
+    init(evmKit: EvmKit.Kit, initialMaxBaseFee: Int? = nil, initialMaxTips: Int? = nil, minRecommendedBaseFee: Int? = nil, minRecommendedTips: Int? = nil) {
         self.evmKit = evmKit
         self.minRecommendedBaseFee = minRecommendedBaseFee
         self.minRecommendedTips = minRecommendedTips

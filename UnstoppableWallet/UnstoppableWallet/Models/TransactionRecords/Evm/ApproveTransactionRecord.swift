@@ -1,5 +1,5 @@
 import Foundation
-import EthereumKit
+import EvmKit
 import MarketKit
 
 class ApproveTransactionRecord: EvmTransactionRecord {

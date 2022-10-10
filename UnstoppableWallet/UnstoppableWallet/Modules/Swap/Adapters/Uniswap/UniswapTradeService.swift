@@ -1,5 +1,5 @@
 import Foundation
-import EthereumKit
+import EvmKit
 import UniswapKit
 import RxSwift
 import RxRelay
@@ -78,7 +78,7 @@ class UniswapTradeService {
         }
     }
 
-    init(uniswapProvider: UniswapProvider, state: SwapModule.DataSourceState, evmKit: EthereumKit.Kit) {
+    init(uniswapProvider: UniswapProvider, state: SwapModule.DataSourceState, evmKit: EvmKit.Kit) {
         self.uniswapProvider = uniswapProvider
         tokenIn = state.tokenFrom
         tokenOut = state.tokenTo

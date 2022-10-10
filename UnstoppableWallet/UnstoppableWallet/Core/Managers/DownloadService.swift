@@ -1,3 +1,4 @@
+import Foundation
 import Alamofire
 import RxSwift
 import RxRelay

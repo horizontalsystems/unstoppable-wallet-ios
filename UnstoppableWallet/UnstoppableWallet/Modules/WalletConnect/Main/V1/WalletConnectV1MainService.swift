@@ -1,4 +1,5 @@
-import EthereumKit
+import Foundation
+import EvmKit
 import WalletConnectV1
 import RxSwift
 import RxRelay

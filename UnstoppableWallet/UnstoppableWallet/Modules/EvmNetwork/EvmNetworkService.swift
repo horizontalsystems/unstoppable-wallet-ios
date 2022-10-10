@@ -1,6 +1,6 @@
 import RxSwift
 import RxRelay
-import EthereumKit
+import EvmKit
 import MarketKit
 
 class EvmNetworkService {

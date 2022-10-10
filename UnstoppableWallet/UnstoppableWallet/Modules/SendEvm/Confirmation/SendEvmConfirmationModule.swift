@@ -1,8 +1,9 @@
 import Foundation
 import UIKit
 import ThemeKit
-import EthereumKit
+import EvmKit
 import MarketKit
+import HsExtensions
 
 struct SendEvmData {
     let transactionData: TransactionData
@@ -91,7 +92,7 @@ struct SendEvmConfirmationModule {
     }
 
     static func resendViewController(adapter: ITransactionsAdapter, action: TransactionInfoModule.Option, transactionHash: String) throws -> UIViewController {
-        guard let adapter = adapter as? EvmTransactionsAdapter, let fullTransaction = adapter.evmKit.transaction(hash: Data(hex: transactionHash.stripHexPrefix())) else {
+        guard let adapter = adapter as? EvmTransactionsAdapter, let fullTransaction = adapter.evmKit.transaction(hash: Data(hex: transactionHash.hs.stripHexPrefix())) else {
             throw CreateModuleError.wrongTransaction
         }
 

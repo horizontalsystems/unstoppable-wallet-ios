@@ -1,7 +1,7 @@
 import RxSwift
 import RxCocoa
 import RxRelay
-import EthereumKit
+import EvmKit
 
 class LegacyEvmFeeViewModel {
     private let disposeBag = DisposeBag()

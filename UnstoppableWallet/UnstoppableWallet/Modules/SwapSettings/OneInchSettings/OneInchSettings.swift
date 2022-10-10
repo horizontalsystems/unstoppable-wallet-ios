@@ -1,6 +1,6 @@
 import Foundation
 import UniswapKit
-import EthereumKit
+import EvmKit
 
 struct OneInchSettings {
     var allowedSlippage: Decimal

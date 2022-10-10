@@ -1,4 +1,5 @@
-import EthereumKit
+import Foundation
+import EvmKit
 import WalletConnectV1
 import BigInt
 
@@ -28,8 +29,8 @@ class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
         }
 
         self.transaction = WalletConnectTransaction(
-                from: try EthereumKit.Address(hex: transaction.from),
-                to: try EthereumKit.Address(hex: to),
+                from: try EvmKit.Address(hex: transaction.from),
+                to: try EvmKit.Address(hex: to),
                 nonce: transaction.nonce.flatMap { Int($0.replacingOccurrences(of: "0x", with: ""), radix: 16) },
                 gasPrice: transaction.gasPrice.flatMap { Int($0.replacingOccurrences(of: "0x", with: ""), radix: 16) },
                 gasLimit: (transaction.gas ?? transaction.gasLimit).flatMap { Int($0.replacingOccurrences(of: "0x", with: ""), radix: 16) },

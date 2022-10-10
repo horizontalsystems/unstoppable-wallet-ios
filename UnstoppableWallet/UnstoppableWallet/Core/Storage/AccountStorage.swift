@@ -1,5 +1,6 @@
+import Foundation
 import StorageKit
-import EthereumKit
+import EvmKit
 
 class AccountStorage {
     private let secureStorage: ISecureStorage
@@ -43,7 +44,7 @@ class AccountStorage {
                 return nil
             }
 
-            type = .address(address: EthereumKit.Address(raw: data))
+            type = .address(address: EvmKit.Address(raw: data))
         }
 
         return Account(

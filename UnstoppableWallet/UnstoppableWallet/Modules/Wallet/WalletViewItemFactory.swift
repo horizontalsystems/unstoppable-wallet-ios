@@ -1,7 +1,7 @@
 import Foundation
 import CurrencyKit
 import MarketKit
-import EthereumKit
+import EvmKit
 
 class WalletViewItemFactory {
     private let minimumProgress = 10

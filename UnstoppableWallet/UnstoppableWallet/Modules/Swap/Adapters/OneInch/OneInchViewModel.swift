@@ -3,7 +3,7 @@ import RxSwift
 import RxCocoa
 import UniswapKit
 import CurrencyKit
-import EthereumKit
+import EvmKit
 
 class OneInchViewModel {
     private let disposeBag = DisposeBag()

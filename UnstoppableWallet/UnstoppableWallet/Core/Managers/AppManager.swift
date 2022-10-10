@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import StorageKit
 import PinKit

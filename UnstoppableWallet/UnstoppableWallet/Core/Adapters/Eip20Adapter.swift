@@ -1,19 +1,20 @@
-import EthereumKit
-import Erc20Kit
+import Foundation
+import EvmKit
+import Eip20Kit
 import RxSwift
 import BigInt
 import HsToolKit
 import MarketKit
 
-class Evm20Adapter: BaseEvmAdapter {
+class Eip20Adapter: BaseEvmAdapter {
     private static let approveConfirmationsThreshold: Int? = nil
-    let evm20Kit: Erc20Kit.Kit
-    private let contractAddress: EthereumKit.Address
+    let eip20Kit: Eip20Kit.Kit
+    private let contractAddress: EvmKit.Address
     private let transactionConverter: EvmTransactionConverter
 
     init(evmKitWrapper: EvmKitWrapper, contractAddress: String, wallet: Wallet, baseToken: Token, coinManager: CoinManager, evmLabelManager: EvmLabelManager) throws {
-        let address = try EthereumKit.Address(hex: contractAddress)
-        evm20Kit = try Erc20Kit.Kit.instance(ethereumKit: evmKitWrapper.evmKit, contractAddress: address)
+        let address = try EvmKit.Address(hex: contractAddress)
+        eip20Kit = try Eip20Kit.Kit.instance(evmKit: evmKitWrapper.evmKit, contractAddress: address)
         self.contractAddress = address
 
         transactionConverter = EvmTransactionConverter(source: wallet.transactionSource, baseToken: baseToken, coinManager: coinManager, evmKitWrapper: evmKitWrapper, evmLabelManager: evmLabelManager)
@@ -25,14 +26,14 @@ class Evm20Adapter: BaseEvmAdapter {
 
 // IAdapter
 
-extension Evm20Adapter: IAdapter {
+extension Eip20Adapter: IAdapter {
 
     func start() {
-        evm20Kit.start()
+        eip20Kit.start()
     }
 
     func stop() {
-        evm20Kit.stop()
+        eip20Kit.stop()
     }
 
     func refresh() {
@@ -40,48 +41,48 @@ extension Evm20Adapter: IAdapter {
 
 }
 
-extension Evm20Adapter: IBalanceAdapter {
+extension Eip20Adapter: IBalanceAdapter {
 
     var balanceState: AdapterState {
-        convertToAdapterState(evmSyncState: evm20Kit.syncState)
+        convertToAdapterState(evmSyncState: eip20Kit.syncState)
     }
 
     var balanceStateUpdatedObservable: Observable<AdapterState> {
-        evm20Kit.syncStateObservable.map { [weak self] in
+        eip20Kit.syncStateObservable.map { [weak self] in
             self?.convertToAdapterState(evmSyncState: $0) ?? .syncing(progress: nil, lastBlockDate: nil)
         }
     }
 
     var balanceData: BalanceData {
-        balanceData(balance: evm20Kit.balance)
+        balanceData(balance: eip20Kit.balance)
     }
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
-        evm20Kit.balanceObservable.map { [weak self] in
+        eip20Kit.balanceObservable.map { [weak self] in
             self?.balanceData(balance: $0) ?? BalanceData(balance: 0)
         }
     }
 
 }
 
-extension Evm20Adapter: ISendEthereumAdapter {
+extension Eip20Adapter: ISendEthereumAdapter {
 
-    func transactionData(amount: BigUInt, address: EthereumKit.Address) -> TransactionData {
-        evm20Kit.transferTransactionData(to: address, value: amount)
+    func transactionData(amount: BigUInt, address: EvmKit.Address) -> TransactionData {
+        eip20Kit.transferTransactionData(to: address, value: amount)
     }
 
 }
 
-extension Evm20Adapter: IErc20Adapter {
+extension Eip20Adapter: IErc20Adapter {
 
     var pendingTransactions: [TransactionRecord] {
-        evm20Kit.pendingTransactions().map { transactionConverter.transactionRecord(fromTransaction: $0) }
+        eip20Kit.pendingTransactions().map { transactionConverter.transactionRecord(fromTransaction: $0) }
     }
 
-    func allowanceSingle(spenderAddress: EthereumKit.Address, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Decimal> {
+    func allowanceSingle(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Decimal> {
         let decimals = decimals
 
-        return evm20Kit.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
+        return eip20Kit.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
                 .map { allowanceString in
                     if let significand = Decimal(string: allowanceString) {
                         return Decimal(sign: .plus, exponent: -decimals, significand: significand)

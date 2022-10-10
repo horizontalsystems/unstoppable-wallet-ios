@@ -1,4 +1,5 @@
-import EthereumKit
+import Foundation
+import EvmKit
 
 class WalletConnectSendEthereumTransactionRequestService {
     private let request: WalletConnectSendEthereumTransactionRequest

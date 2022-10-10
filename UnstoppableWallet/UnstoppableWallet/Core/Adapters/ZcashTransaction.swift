@@ -1,5 +1,6 @@
 import Foundation
 import ZcashLightClientKit
+import HsExtensions
 
 class ZcashTransaction {
     let id: String?
@@ -21,7 +22,7 @@ class ZcashTransaction {
 
         id = confirmedTransaction.id?.description
         raw = confirmedTransaction.raw
-        transactionHash = rawTransactionId.reversedHex
+        transactionHash = rawTransactionId.hs.reversedHex
         transactionIndex = confirmedTransaction.transactionIndex
         toAddress = confirmedTransaction.toAddress
         minedHeight = confirmedTransaction.minedHeight
@@ -39,7 +40,7 @@ class ZcashTransaction {
 
         id = pendingTransaction.id?.description
         raw = pendingTransaction.raw
-        transactionHash = rawTransactionId.reversedHex
+        transactionHash = rawTransactionId.hs.reversedHex
         transactionIndex = -1
         toAddress = pendingTransaction.toAddress
         minedHeight = nil

@@ -1,5 +1,5 @@
 import OneInchKit
-import EthereumKit
+import EvmKit
 import StorageKit
 
 class OneInchModule {

@@ -1,7 +1,7 @@
 import Foundation
 import RxSwift
 import RxRelay
-import EthereumKit
+import EvmKit
 import MarketKit
 
 class WatchAddressService {
@@ -27,7 +27,7 @@ class WatchAddressService {
         switch addressState {
         case .success(let address):
             do {
-                state = .ready(address: try EthereumKit.Address(hex: address.raw), domain: address.domain)
+                state = .ready(address: try EvmKit.Address(hex: address.raw), domain: address.domain)
             } catch {
                 state = .notReady
             }
@@ -58,7 +58,7 @@ extension WatchAddressService {
 extension WatchAddressService {
 
     enum State {
-        case ready(address: EthereumKit.Address, domain: String?)
+        case ready(address: EvmKit.Address, domain: String?)
         case notReady
     }
 

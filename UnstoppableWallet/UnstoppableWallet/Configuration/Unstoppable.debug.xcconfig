@@ -1,2 +1,0 @@
-#include "../Pods/Target Support Files/Pods-Unstoppable/Pods-Unstoppable.debug.xcconfig"
-#include "Production.xcconfig"

@@ -2,7 +2,7 @@ import UIKit
 import RxSwift
 import GRDB
 import UniswapKit
-import EthereumKit
+import EvmKit
 import ThemeKit
 import Alamofire
 import HsToolKit
@@ -67,12 +67,12 @@ protocol ISendDashAdapter {
 protocol ISendEthereumAdapter {
     var evmKitWrapper: EvmKitWrapper { get }
     var balanceData: BalanceData { get }
-    func transactionData(amount: BigUInt, address: EthereumKit.Address) -> TransactionData
+    func transactionData(amount: BigUInt, address: EvmKit.Address) -> TransactionData
 }
 
 protocol IErc20Adapter {
     var pendingTransactions: [TransactionRecord] { get }
-    func allowanceSingle(spenderAddress: EthereumKit.Address, defaultBlockParameter: DefaultBlockParameter) -> Single<Decimal>
+    func allowanceSingle(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter) -> Single<Decimal>
 }
 
 protocol ISendBinanceAdapter {
@@ -97,8 +97,8 @@ protocol INftAdapter: AnyObject {
     var nftRecordsObservable: Observable<[NftRecord]> { get }
     var nftRecords: [NftRecord] { get }
     func nftRecord(nftUid: NftUid) -> NftRecord?
-    func transferEip721TransactionData(contractAddress: String, to: EthereumKit.Address, tokenId: String) -> TransactionData?
-    func transferEip1155TransactionData(contractAddress: String, to: EthereumKit.Address, tokenId: String, value: Decimal) -> TransactionData?
+    func transferEip721TransactionData(contractAddress: String, to: EvmKit.Address, tokenId: String) -> TransactionData?
+    func transferEip1155TransactionData(contractAddress: String, to: EvmKit.Address, tokenId: String, value: Decimal) -> TransactionData?
     func sync()
 }
 

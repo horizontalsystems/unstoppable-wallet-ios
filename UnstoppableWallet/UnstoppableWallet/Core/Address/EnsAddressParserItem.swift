@@ -1,6 +1,6 @@
 import RxSwift
 import MarketKit
-import EthereumKit
+import EvmKit
 
 class EnsAddressParserItem {
     static let registrars = ["eth", "xyz", "luxe", "kred", "art"]

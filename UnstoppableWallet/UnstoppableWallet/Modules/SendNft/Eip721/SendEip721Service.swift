@@ -1,8 +1,9 @@
 import Foundation
+import UIKit
 import MarketKit
 import RxSwift
 import RxRelay
-import EthereumKit
+import EvmKit
 import BigInt
 import Kingfisher
 
@@ -38,7 +39,7 @@ class SendEip721Service {
         switch addressState {
         case .success(let address):
             do {
-                addressData = AddressData(evmAddress: try EthereumKit.Address(hex: address.raw), domain: address.domain)
+                addressData = AddressData(evmAddress: try EvmKit.Address(hex: address.raw), domain: address.domain)
             } catch {
                 addressData = nil
             }
@@ -95,7 +96,7 @@ extension SendEip721Service {
     }
 
     private struct AddressData {
-        let evmAddress: EthereumKit.Address
+        let evmAddress: EvmKit.Address
         let domain: String?
     }
 

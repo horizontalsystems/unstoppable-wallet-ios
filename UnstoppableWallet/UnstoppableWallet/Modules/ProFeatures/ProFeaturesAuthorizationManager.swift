@@ -2,11 +2,12 @@ import UIKit
 import RxCocoa
 import RxRelay
 import RxSwift
-import EthereumKit
+import EvmKit
 import BigInt
+import HsExtensions
 
 class ProFeaturesAuthorizationManager {
-    static let contractAddress = try! EthereumKit.Address(hex: "0x495f947276749ce646f68ac8c248420045cb7b5e")
+    static let contractAddress = try! EvmKit.Address(hex: "0x495f947276749ce646f68ac8c248420045cb7b5e")
     static let tokenId = BigUInt("77929411300911548602579223184347481465604416464327802926072149574722519040001", radix: 10)!
 
     private let disposeBag = DisposeBag()
@@ -56,7 +57,7 @@ class ProFeaturesAuthorizationManager {
                 }
     }
 
-    private func tokenHolder(provider: Eip1155Provider, contractAddress: EthereumKit.Address, tokenId: BigUInt, accountData: [AccountData], index: Int = 0) -> Single<AccountData?> {
+    private func tokenHolder(provider: Eip1155Provider, contractAddress: EvmKit.Address, tokenId: BigUInt, accountData: [AccountData], index: Int = 0) -> Single<AccountData?> {
         guard accountData.count > index else {
             return Single.just(nil)
         }
@@ -106,8 +107,8 @@ extension ProFeaturesAuthorizationManager {
             return nil
         }
 
-        let signatureData = try? EthereumKit.Kit.sign(message: data, seed: seed)
-        return signatureData.map { "0x\($0.hex)" }
+        let signatureData = try? EvmKit.Kit.sign(message: data, seed: seed)
+        return signatureData.map { "0x\($0.hs.hex)" }
     }
 
     func clearSessionKey(type: NftType?) {
@@ -124,7 +125,7 @@ extension ProFeaturesAuthorizationManager {
 
     struct AccountData {
         let accountId: String
-        let address: EthereumKit.Address
+        let address: EvmKit.Address
     }
 
     struct SessionKey {

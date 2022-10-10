@@ -1,12 +1,12 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import EthereumKit
+import EvmKit
 import BigInt
 import MarketKit
 import OneInchKit
 import UniswapKit
-import EthereumKit
+import EvmKit
 import BigInt
 
 class OneInchSendEvmTransactionService {
@@ -45,7 +45,7 @@ class OneInchSendEvmTransactionService {
         )
     }
 
-    private var evmKit: EthereumKit.Kit {
+    private var evmKit: EvmKit.Kit {
         evmKitWrapper.evmKit
     }
 
@@ -97,7 +97,7 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
         sendStateRelay.asObservable()
     }
 
-    var ownAddress: EthereumKit.Address {
+    var ownAddress: EvmKit.Address {
         evmKit.receiveAddress
     }
 

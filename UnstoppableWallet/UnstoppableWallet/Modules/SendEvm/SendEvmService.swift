@@ -2,8 +2,9 @@ import Foundation
 import MarketKit
 import RxSwift
 import RxRelay
-import EthereumKit
+import EvmKit
 import BigInt
+import HsExtensions
 
 class SendEvmService {
     let sendToken: Token
@@ -40,7 +41,7 @@ class SendEvmService {
         switch addressState {
         case .success(let address):
             do {
-                addressData = AddressData(evmAddress: try EthereumKit.Address(hex: address.raw), domain: address.domain)
+                addressData = AddressData(evmAddress: try EvmKit.Address(hex: address.raw), domain: address.domain)
             } catch {
                 addressData = nil
             }
@@ -63,7 +64,7 @@ class SendEvmService {
     }
 
     private func validEvmAmount(amount: Decimal) throws -> BigUInt {
-        guard let evmAmount = BigUInt(amount.roundedString(decimal: sendToken.decimals)) else {
+        guard let evmAmount = BigUInt(amount.hs.roundedString(decimal: sendToken.decimals)) else {
             throw AmountError.invalidDecimal
         }
 
@@ -171,7 +172,7 @@ extension SendEvmService {
     }
 
     private struct AddressData {
-        let evmAddress: EthereumKit.Address
+        let evmAddress: EvmKit.Address
         let domain: String?
     }
 

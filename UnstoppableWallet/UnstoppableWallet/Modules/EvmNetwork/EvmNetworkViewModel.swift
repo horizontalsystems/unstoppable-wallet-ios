@@ -1,7 +1,8 @@
+import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
-import EthereumKit
+import EvmKit
 
 class EvmNetworkViewModel {
     private let service: EvmNetworkService

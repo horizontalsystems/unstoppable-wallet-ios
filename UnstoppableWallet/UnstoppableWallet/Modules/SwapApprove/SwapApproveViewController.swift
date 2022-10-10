@@ -3,7 +3,7 @@ import ActionSheet
 import ThemeKit
 import RxSwift
 import SectionsTableView
-import EthereumKit
+import EvmKit
 
 class SwapApproveViewController: KeyboardAwareViewController {
     private let disposeBag = DisposeBag()

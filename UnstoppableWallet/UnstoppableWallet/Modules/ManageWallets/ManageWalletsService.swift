@@ -1,7 +1,7 @@
 import RxSwift
 import RxRelay
 import MarketKit
-import EthereumKit
+import EvmKit
 
 class ManageWalletsService {
     private let account: Account
@@ -65,7 +65,7 @@ class ManageWalletsService {
                 let customFullCoins = wallets.map { $0.token }.filter { $0.isCustom }.map { $0.fullCoin }
 
                 return featuredFullCoins + enabledFullCoins + customFullCoins
-            } else if let ethAddress = try? EthereumKit.Address(hex: filter) {
+            } else if let ethAddress = try? EvmKit.Address(hex: filter) {
                 let address = ethAddress.hex
                 let tokens = try marketKit.tokens(reference: address)
                 let coinUids = Array(Set(tokens.map { $0.coin.uid }))

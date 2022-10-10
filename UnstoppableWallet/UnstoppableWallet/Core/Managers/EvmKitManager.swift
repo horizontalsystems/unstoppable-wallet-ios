@@ -1,7 +1,8 @@
+import Foundation
 import RxSwift
 import RxRelay
-import EthereumKit
-import Erc20Kit
+import EvmKit
+import Eip20Kit
 import NftKit
 import UniswapKit
 import OneInchKit
@@ -52,12 +53,14 @@ class EvmKitManager {
 
         let syncSource = syncSourceManager.syncSource(blockchainType: blockchainType)
 
-        let address: EthereumKit.Address
+        let address: EvmKit.Address
         var signer: Signer?
 
         switch account.type {
         case let .mnemonic(words, salt):
-            let seed = Mnemonic.seed(mnemonic: words, passphrase: salt)
+            guard let seed = Mnemonic.seed(mnemonic: words, passphrase: salt) else {
+                throw KitWrapperError.mnemonicNoSeed
+            }
             address = try Signer.address(seed: seed, chain: chain)
             signer = try Signer.instance(seed: seed, chain: chain)
         case let .address(value):
@@ -66,7 +69,7 @@ class EvmKitManager {
             throw AdapterError.unsupportedAccount
         }
 
-        let evmKit = try EthereumKit.Kit.instance(
+        let evmKit = try EvmKit.Kit.instance(
                 address: address,
                 chain: chain,
                 rpcSource: syncSource.rpcSource,
@@ -75,8 +78,8 @@ class EvmKitManager {
                 minLogLevel: .error
         )
 
-        Erc20Kit.Kit.addDecorators(to: evmKit)
-        Erc20Kit.Kit.addTransactionSyncer(to: evmKit)
+        Eip20Kit.Kit.addDecorators(to: evmKit)
+        Eip20Kit.Kit.addTransactionSyncer(to: evmKit)
 
         var nftKit: NftKit.Kit?
         let supportedNftTypes = blockchainType.supportedNftTypes
@@ -142,11 +145,11 @@ extension EvmKitManager {
 
 class EvmKitWrapper {
     let blockchainType: BlockchainType
-    let evmKit: EthereumKit.Kit
+    let evmKit: EvmKit.Kit
     let nftKit: NftKit.Kit?
     let signer: Signer?
 
-    init(blockchainType: BlockchainType, evmKit: EthereumKit.Kit, nftKit: NftKit.Kit?, signer: Signer?) {
+    init(blockchainType: BlockchainType, evmKit: EvmKit.Kit, nftKit: NftKit.Kit?, signer: Signer?) {
         self.blockchainType = blockchainType
         self.evmKit = evmKit
         self.nftKit = nftKit
@@ -171,6 +174,14 @@ class EvmKitWrapper {
                         return Single.error(error)
                     }
                 }
+    }
+
+}
+
+extension EvmKitManager {
+
+    enum KitWrapperError: Error {
+        case mnemonicNoSeed
     }
 
 }

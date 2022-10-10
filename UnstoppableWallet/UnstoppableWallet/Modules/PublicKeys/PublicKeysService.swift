@@ -1,3 +1,4 @@
+import Foundation
 import HdWalletKit
 import BitcoinKit
 import BitcoinCashKit

@@ -1,5 +1,5 @@
 import BigInt
-import EthereumKit
+import EvmKit
 import RxCocoa
 import RxRelay
 import RxSwift
@@ -7,7 +7,7 @@ import RxSwift
 class EvmRollupGasDataService: EvmCommonGasDataService {
     private let l1FeeProvider: L1FeeProvider
 
-    init(evmKit: EthereumKit.Kit, l1GasFeeContractAddress: EthereumKit.Address, gasLimit: Int? = nil, gasLimitSurchargePercent: Int = 0) {
+    init(evmKit: EvmKit.Kit, l1GasFeeContractAddress: EvmKit.Address, gasLimit: Int? = nil, gasLimitSurchargePercent: Int = 0) {
         l1FeeProvider = L1FeeProvider.instance(evmKit: evmKit, contractAddress: l1GasFeeContractAddress, minLogLevel: .error)
 
         super.init(evmKit: evmKit, gasLimit: gasLimit, gasLimitSurchargePercent: gasLimitSurchargePercent)

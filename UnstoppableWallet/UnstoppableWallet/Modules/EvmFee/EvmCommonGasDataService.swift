@@ -1,17 +1,17 @@
 import BigInt
-import EthereumKit
+import EvmKit
 import MarketKit
 import RxCocoa
 import RxRelay
 import RxSwift
 
 class EvmCommonGasDataService {
-    private let evmKit: EthereumKit.Kit
+    private let evmKit: EvmKit.Kit
     private let gasLimitSurchargePercent: Int
 
     private(set) var gasLimit: Int?
 
-    init(evmKit: EthereumKit.Kit, gasLimit: Int? = nil, gasLimitSurchargePercent: Int = 0) {
+    init(evmKit: EvmKit.Kit, gasLimit: Int? = nil, gasLimitSurchargePercent: Int = 0) {
         self.evmKit = evmKit
         self.gasLimit = gasLimit
         self.gasLimitSurchargePercent = gasLimitSurchargePercent
@@ -41,7 +41,7 @@ class EvmCommonGasDataService {
 }
 
 extension EvmCommonGasDataService {
-    static func instance(evmKit: EthereumKit.Kit, blockchainType: BlockchainType, gasLimit: Int? = nil, gasLimitSurchargePercent: Int = 0) -> EvmCommonGasDataService {
+    static func instance(evmKit: EvmKit.Kit, blockchainType: BlockchainType, gasLimit: Int? = nil, gasLimitSurchargePercent: Int = 0) -> EvmCommonGasDataService {
         guard let rollupFeeContractAddress = blockchainType.rollupFeeContractAddress else {
             return EvmCommonGasDataService(evmKit: evmKit, gasLimit: gasLimit, gasLimitSurchargePercent: gasLimitSurchargePercent)
         }

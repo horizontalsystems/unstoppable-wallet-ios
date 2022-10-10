@@ -1,3 +1,5 @@
+import Foundation
+import UIKit
 import WalletConnectV1
 
 protocol IWalletConnectInteractorDelegate: AnyObject {

@@ -1,6 +1,6 @@
 import Foundation
 import UniswapKit
-import EthereumKit
+import EvmKit
 import RxCocoa
 import RxSwift
 

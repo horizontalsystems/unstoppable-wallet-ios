@@ -1,8 +1,8 @@
-import EthereumKit
+import EvmKit
 import RxSwift
 import BigInt
 import HsToolKit
-import Erc20Kit
+import Eip20Kit
 import UniswapKit
 
 class EvmAdapter: BaseEvmAdapter {
@@ -17,7 +17,7 @@ class EvmAdapter: BaseEvmAdapter {
 extension EvmAdapter {
 
     static func clear(except excludedWalletIds: [String]) throws {
-        try EthereumKit.Kit.clear(exceptFor: excludedWalletIds)
+        try EvmKit.Kit.clear(exceptFor: excludedWalletIds)
     }
 
 }
@@ -26,15 +26,15 @@ extension EvmAdapter {
 extension EvmAdapter: IAdapter {
 
     func start() {
-        // started via EthereumKitManager
+        // started via EvmKitManager
     }
 
     func stop() {
-        // stopped via EthereumKitManager
+        // stopped via EvmKitManager
     }
 
     func refresh() {
-        // refreshed via EthereumKitManager
+        // refreshed via EvmKitManager
     }
 
 }
@@ -65,7 +65,7 @@ extension EvmAdapter: IBalanceAdapter {
 
 extension EvmAdapter: ISendEthereumAdapter {
 
-    func transactionData(amount: BigUInt, address: EthereumKit.Address) -> TransactionData {
+    func transactionData(amount: BigUInt, address: EvmKit.Address) -> TransactionData {
         evmKit.transferTransactionData(to: address, value: amount)
     }
 

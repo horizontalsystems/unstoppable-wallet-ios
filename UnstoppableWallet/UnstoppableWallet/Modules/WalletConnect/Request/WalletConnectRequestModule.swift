@@ -1,12 +1,12 @@
 import RxCocoa
 import CurrencyKit
-import EthereumKit
+import EvmKit
 import BigInt
 import UIKit
 
 struct WalletConnectTransaction {
-    let from: EthereumKit.Address
-    let to: EthereumKit.Address
+    let from: EvmKit.Address
+    let to: EvmKit.Address
     let nonce: Int?
     let gasPrice: Int?
     let gasLimit: Int?

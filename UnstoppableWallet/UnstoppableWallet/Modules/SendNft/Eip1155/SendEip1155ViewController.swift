@@ -4,7 +4,7 @@ import SnapKit
 import SectionsTableView
 import RxSwift
 import RxCocoa
-import EthereumKit
+import EvmKit
 import Kingfisher
 import UIExtensions
 import ComponentKit

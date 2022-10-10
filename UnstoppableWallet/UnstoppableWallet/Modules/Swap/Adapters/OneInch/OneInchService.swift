@@ -4,7 +4,7 @@ import HsToolKit
 import UniswapKit
 import CurrencyKit
 import BigInt
-import EthereumKit
+import EvmKit
 import Foundation
 import MarketKit
 
@@ -52,7 +52,7 @@ class OneInchService {
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.swap_service")
 
-    init(dex: SwapModule.Dex, evmKit: EthereumKit.Kit, tradeService: OneInchTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: AdapterManager) {
+    init(dex: SwapModule.Dex, evmKit: EvmKit.Kit, tradeService: OneInchTradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: AdapterManager) {
         self.dex = dex
         self.tradeService = tradeService
         self.allowanceService = allowanceService

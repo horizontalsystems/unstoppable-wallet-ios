@@ -1,5 +1,5 @@
 import Foundation
-import EthereumKit
+import EvmKit
 
 class WalletConnectEvmChainParser {
 

@@ -1,3 +1,4 @@
+import Foundation
 import LanguageKit
 
 extension String {

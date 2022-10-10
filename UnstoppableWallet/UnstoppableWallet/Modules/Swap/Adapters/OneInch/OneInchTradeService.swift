@@ -1,5 +1,5 @@
 import Foundation
-import EthereumKit
+import EvmKit
 import OneInchKit
 import RxSwift
 import RxRelay
@@ -65,7 +65,7 @@ class OneInchTradeService {
         }
     }
 
-    init(oneInchProvider: OneInchProvider, state: SwapModule.DataSourceState, evmKit: EthereumKit.Kit) {
+    init(oneInchProvider: OneInchProvider, state: SwapModule.DataSourceState, evmKit: EvmKit.Kit) {
         self.oneInchProvider = oneInchProvider
         tokenIn = state.tokenFrom
         tokenOut = state.tokenTo

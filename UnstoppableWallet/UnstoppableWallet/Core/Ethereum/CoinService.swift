@@ -1,6 +1,8 @@
+import Foundation
 import CurrencyKit
 import BigInt
 import MarketKit
+import HsExtensions
 
 class CoinService {
     let token: Token
@@ -37,7 +39,7 @@ extension CoinService {
 
     // Example: Cent, Satoshi, GWei, etc
     func fractionalMonetaryValue(value: Decimal) -> BigUInt {
-        BigUInt(value.roundedString(decimal: token.decimals)) ?? 0
+        BigUInt(value.hs.roundedString(decimal: token.decimals)) ?? 0
     }
 
     func amountData(value: Decimal, sign: FloatingPointSign) -> AmountData {

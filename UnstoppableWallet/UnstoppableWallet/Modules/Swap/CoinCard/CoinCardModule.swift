@@ -1,3 +1,4 @@
+import Foundation
 import UniswapKit
 import RxSwift
 import MarketKit

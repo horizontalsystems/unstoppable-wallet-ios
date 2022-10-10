@@ -1,5 +1,5 @@
 import StorageKit
-import EthereumKit
+import EvmKit
 
 class ProFeaturesStorage {
     private let secureStorage: ISecureStorage
