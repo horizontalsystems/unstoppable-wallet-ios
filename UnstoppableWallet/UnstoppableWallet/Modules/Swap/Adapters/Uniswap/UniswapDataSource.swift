@@ -308,7 +308,7 @@ extension UniswapDataSource: ISwapDataSource {
                 ]
         ))
 
-        var cells = [
+        let cells = [
             buyPriceCell,
             sellPriceCell,
             allowanceCell,

@@ -47,7 +47,7 @@ class SendEip1155AvailableBalanceViewModel {
     private func updateViewState(availableBalance: Int) {
         let value: String?
 
-        value = ["\(availableBalance)", "NFT"].flatMap { $0 }.joined(separator: " ")
+        value = ["\(availableBalance)", "NFT"].compactMap { $0 }.joined(separator: " ")
 
         viewStateRelay.accept(.loaded(value: value))
     }

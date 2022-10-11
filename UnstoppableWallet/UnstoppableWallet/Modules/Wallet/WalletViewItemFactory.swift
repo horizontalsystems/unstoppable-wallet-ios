@@ -84,7 +84,7 @@ class WalletViewItemFactory {
             } else {
                 return infiniteProgress
             }
-        case let .customSyncing:
+        case .customSyncing:
             return infiniteProgress
         default: return nil
         }

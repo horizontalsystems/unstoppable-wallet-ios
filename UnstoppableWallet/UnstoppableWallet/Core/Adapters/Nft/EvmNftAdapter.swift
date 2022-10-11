@@ -47,7 +47,7 @@ extension EvmNftAdapter: INftAdapter {
     }
 
     func nftRecord(nftUid: NftUid) -> NftRecord? {
-        guard case let .evm(blockchainType, contractAddress, tokenId) = nftUid else {
+        guard case let .evm(_, contractAddress, tokenId) = nftUid else {
             return nil
         }
 

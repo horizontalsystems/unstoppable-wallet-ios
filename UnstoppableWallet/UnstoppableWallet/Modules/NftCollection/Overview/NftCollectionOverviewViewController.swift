@@ -174,7 +174,6 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
 
     private func chartSection(statCharts: NftCollectionOverviewViewModel.StatsViewItem) -> [SectionProtocol] {
         var sections = [SectionProtocol]()
-        var rows = [RowProtocol]()
 
         var marketCards = [MarketCardView.ViewItem]()
         marketCards.append(contentsOf:
@@ -220,7 +219,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
         let rowTexts = [
             viewItem.royalty.map { ("nft_collection.overview.royalty".localized, $0) },
             viewItem.inceptionDate.map { ("nft_collection.overview.inception_date".localized, $0) }
-        ].flatMap { $0 }
+        ].compactMap { $0 }
 
         guard rowTexts.count > 0 else {
             return nil

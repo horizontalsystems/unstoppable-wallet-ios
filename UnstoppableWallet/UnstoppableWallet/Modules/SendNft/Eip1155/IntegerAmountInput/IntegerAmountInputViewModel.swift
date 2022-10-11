@@ -42,7 +42,7 @@ class IntegerAmountInputViewModel {
     private func sync(publishedAmount: Decimal) {
         queue.async { [weak self] in
 
-            let amount = Int(NSDecimalNumber(decimal: publishedAmount))
+            let amount = Int(truncating: NSDecimalNumber(decimal: publishedAmount))
 
             self?.amountRelay.accept("\(amount)")
             self?.service.onChange(amount: amount)
@@ -72,7 +72,7 @@ extension IntegerAmountInputViewModel {
 
     func isValid(amount: String?) -> Bool {
         guard let string = amount,
-            let amount = Int(string) else {
+            let _ = Int(string) else {
             return false
         }
         return true
