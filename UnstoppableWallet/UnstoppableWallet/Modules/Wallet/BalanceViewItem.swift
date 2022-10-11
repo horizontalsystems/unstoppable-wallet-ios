@@ -164,7 +164,7 @@ extension BalanceSecondaryInfoViewItem: CustomStringConvertible {
         switch self {
         case .amount(let viewItem): return "[amount: \(viewItem)]"
         case .syncing(let progress, let syncedUntil): return "[syncing: [progress: \(progress.map { "\($0)" } ?? "nil"); syncedUntil: \(syncedUntil ?? "nil")]]"
-        case .customSyncing(let left, let right): return "[\([left, right].flatMap { $0 }.joined(separator: " : "))]"
+        case .customSyncing(let left, let right): return "[\([left, right].compactMap { $0 }.joined(separator: " : "))]"
         }
     }
 

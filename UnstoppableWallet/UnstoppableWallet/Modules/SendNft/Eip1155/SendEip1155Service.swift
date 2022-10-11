@@ -61,7 +61,7 @@ class SendEip1155Service {
 
     private func syncState() {
         if case .success = addressService.state, let nftAmount = nftAmount, let addressData = addressData {
-            guard let transactionData = adapter.transferEip1155TransactionData(contractAddress: nftUid.contractAddress, to: addressData.evmAddress, tokenId: nftUid.tokenId, value: Decimal(nftAmount) ?? 0) else {
+            guard let transactionData = adapter.transferEip1155TransactionData(contractAddress: nftUid.contractAddress, to: addressData.evmAddress, tokenId: nftUid.tokenId, value: Decimal(nftAmount)) else {
                 state = .notReady
                 return
             }

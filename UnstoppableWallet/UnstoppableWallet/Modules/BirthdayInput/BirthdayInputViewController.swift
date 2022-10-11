@@ -130,7 +130,7 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         tableView.reload(animated: true)
 
         if showKeyboard {
-            heightInputCell.becomeFirstResponder()
+            _ = heightInputCell.becomeFirstResponder()
         }
     }
 
