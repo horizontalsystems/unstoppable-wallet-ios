@@ -157,6 +157,7 @@ platform :ios do
     )
 
     gym(
+      workspace: "UnstoppableWallet/UnstoppableWallet.xcworkspace",
       scheme: "Unstoppable Dev",
       export_method: "ad-hoc",
       clean: true,
@@ -201,6 +202,7 @@ platform :ios do
     )
 
     gym(
+      workspace: "UnstoppableWallet/UnstoppableWallet.xcworkspace",
       scheme: "Unstoppable",
       export_method: "app-store",
       clean: true,
