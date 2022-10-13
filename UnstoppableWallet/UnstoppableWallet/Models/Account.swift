@@ -15,7 +15,7 @@ class Account {
 
     var watchAccount: Bool {
         switch type {
-        case .address: return true
+        case .evmAddress, .accountExtendedPublicKey: return true
         default: return false
         }
     }

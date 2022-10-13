@@ -23,7 +23,7 @@ extension CoinSettingsService {
         requestRelay.asObservable()
     }
 
-    func approveSettings(token: Token, settingsArray: [CoinSettings], allowEmpty: Bool = false) {
+    func approveSettings(token: Token, accountType: AccountType, settingsArray: [CoinSettings], allowEmpty: Bool = false) {
         let blockchainType = token.blockchainType
 
         if blockchainType.coinSettingTypes.contains(.derivation) {
@@ -31,7 +31,7 @@ extension CoinSettingsService {
 
             let request = Request(
                     token: token,
-                    type: .derivation(allDerivations: MnemonicDerivation.allCases, current: currentDerivations),
+                    type: .derivation(allDerivations: accountType.supportedDerivations, current: currentDerivations),
                     allowEmpty: allowEmpty
             )
 

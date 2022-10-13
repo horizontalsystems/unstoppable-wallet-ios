@@ -87,7 +87,7 @@ extension EnableCoinService {
         cancelEnableCoinRelay.asObservable()
     }
 
-    func enable(fullCoin: FullCoin, account: Account? = nil) {
+    func enable(fullCoin: FullCoin, accountType: AccountType, account: Account? = nil) {
         let supportedTokens = fullCoin.supportedTokens
 
         if supportedTokens.count == 1 {
@@ -96,7 +96,7 @@ extension EnableCoinService {
             if !token.blockchainType.restoreSettingTypes.isEmpty {
                 restoreSettingsService.approveSettings(token: token, account: account)
             } else if !token.blockchainType.coinSettingTypes.isEmpty {
-                coinSettingsService.approveSettings(token: token, settingsArray: token.blockchainType.defaultSettingsArray)
+                coinSettingsService.approveSettings(token: token, accountType: accountType, settingsArray: token.blockchainType.defaultSettingsArray(accountType: accountType))
             } else if token.type != .native {
                 coinTokensService.approveTokens(fullCoin: fullCoin, currentTokens: supportedTokens)
             } else {
@@ -107,7 +107,7 @@ extension EnableCoinService {
         }
     }
 
-    func configure(fullCoin: FullCoin, configuredTokens: [ConfiguredToken]) {
+    func configure(fullCoin: FullCoin, accountType: AccountType, configuredTokens: [ConfiguredToken]) {
         let supportedTokens = fullCoin.supportedTokens
 
         if supportedTokens.count == 1 {
@@ -115,7 +115,7 @@ extension EnableCoinService {
 
             if !token.blockchainType.coinSettingTypes.isEmpty {
                 let settingsArray = configuredTokens.map { $0.coinSettings }
-                coinSettingsService.approveSettings(token: token, settingsArray: settingsArray, allowEmpty: true)
+                coinSettingsService.approveSettings(token: token, accountType: accountType, settingsArray: settingsArray, allowEmpty: true)
                 return
             }
         }

@@ -67,9 +67,11 @@ class RestoreSelectService {
 
     private func syncInternalItems() {
         do {
-            let tokens = try marketKit.tokens(queries: blockchainTypes.map { TokenQuery(blockchainType: $0, tokenType: .native) })
+            let allowedBlockchainTypes = blockchainTypes.filter { $0.supports(accountType: self.accountType)}
 
-            self.tokens = blockchainTypes.sorted { $0.order < $1.order }.compactMap { type in
+            let tokens = try marketKit.tokens(queries: allowedBlockchainTypes.map { TokenQuery(blockchainType: $0, tokenType: .native) })
+
+            self.tokens = allowedBlockchainTypes.sorted { $0.order < $1.order }.compactMap { type in
                 tokens.first { $0.blockchainType == type }
             }
         } catch {
@@ -177,7 +179,7 @@ extension RestoreSelectService {
             return
         }
 
-        enableCoinService.enable(fullCoin: token.fullCoin)
+        enableCoinService.enable(fullCoin: token.fullCoin, accountType: accountType)
     }
 
     func disable(blockchainUid: String) {
@@ -196,7 +198,7 @@ extension RestoreSelectService {
             return
         }
 
-        enableCoinService.configure(fullCoin: token.fullCoin, configuredTokens: enabledConfiguredTokens.filter { $0.token == token })
+        enableCoinService.configure(fullCoin: token.fullCoin, accountType: accountType, configuredTokens: enabledConfiguredTokens.filter { $0.token == token })
     }
 
     func restore() {
