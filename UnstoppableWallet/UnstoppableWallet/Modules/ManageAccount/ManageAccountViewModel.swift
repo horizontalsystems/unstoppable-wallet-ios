@@ -40,16 +40,16 @@ class ManageAccountViewModel {
     }
 
     private func sync(account: Account) {
-        let keyAccountState: KeyActionState
+        let keyActionState: KeyActionState
 
         switch account.type {
-        case .address:
-            keyAccountState = .none
+        case .evmAddress:
+            keyActionState = .none
         default:
-            keyAccountState = account.backedUp ? .showRecoveryPhrase : .backupRecoveryPhrase
+            keyActionState = account.backedUp ? .showRecoveryPhrase : .backupRecoveryPhrase
         }
 
-        keyActionStateRelay.accept(keyAccountState)
+        keyActionStateRelay.accept(keyActionState)
     }
 
     private func syncAccountSettings() {

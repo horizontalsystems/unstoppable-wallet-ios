@@ -52,7 +52,7 @@ class CreateAccountService {
 
             predefinedBlockchainService.prepareNew(account: account, blockchainType: blockchainType)
 
-            let defaultSettingsArray = blockchainType.defaultSettingsArray
+            let defaultSettingsArray = blockchainType.defaultSettingsArray(accountType: account.type)
 
             if defaultSettingsArray.isEmpty {
                 wallets.append(Wallet(token: token, account: account))

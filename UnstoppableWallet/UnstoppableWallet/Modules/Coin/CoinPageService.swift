@@ -61,7 +61,7 @@ class CoinPageService {
 
         if activeAccount.watchAccount {
             walletState = .watchAccount
-        } else if fullCoin.supportedTokens.isEmpty {
+        } else if fullCoin.eligibleTokens(accountType: activeAccount.type).isEmpty {
             walletState = .unsupported
         } else {
             walletState = .supported(added: !enabledWallets.isEmpty)
@@ -106,7 +106,11 @@ extension CoinPageService {
             return
         }
 
-        enableCoinService.enable(fullCoin: fullCoin, account: accountManager.activeAccount)
+        guard let account = accountManager.activeAccount else {
+            return
+        }
+
+        enableCoinService.enable(fullCoin: fullCoin, accountType: account.type, account: account)
     }
 
 }

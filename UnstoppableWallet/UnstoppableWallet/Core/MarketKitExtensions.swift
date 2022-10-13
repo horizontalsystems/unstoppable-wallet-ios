@@ -197,11 +197,21 @@ extension MarketKit.BlockchainType {
         }
     }
 
-    var defaultSettingsArray: [CoinSettings] {
+    func defaultSettingsArray(accountType: AccountType) -> [CoinSettings] {
         switch self {
-        case .bitcoin, .litecoin: return [[.derivation: MnemonicDerivation.bip49.rawValue]]
-        case .bitcoinCash: return [[.bitcoinCashCoinType: BitcoinCashCoinType.type145.rawValue]]
-        default: return []
+        case .bitcoin, .litecoin:
+            switch accountType {
+            case .mnemonic:
+                return [[.derivation: MnemonicDerivation.bip49.rawValue]]
+            case .bip32RootKey(let string), .accountExtendedPrivateKey(let string), .accountExtendedPublicKey(let string):
+                return [[.derivation: string.extendedKeyType.mnemonicDerivation.rawValue]]
+            default:
+                return []
+            }
+        case .bitcoinCash:
+            return [[.bitcoinCashCoinType: BitcoinCashCoinType.type145.rawValue]]
+        default:
+            return []
         }
     }
 
@@ -264,6 +274,46 @@ extension MarketKit.BlockchainType {
         }
     }
 
+    func supports(accountType: AccountType) -> Bool {
+        switch accountType {
+        case .mnemonic:
+            return true
+        case .bip32RootKey(let string), .accountExtendedPrivateKey(let string), .accountExtendedPublicKey(let string):
+            switch string.extendedKeyType {
+            case .xprv, .xpub:
+                switch self {
+                case .bitcoin, .bitcoinCash, .litecoin, .dash: return true
+                default: return false
+                }
+            case .yprv, .ypub:
+                switch self {
+                case .bitcoin, .litecoin: return true
+                default: return false
+                }
+            case .zprv, .zpub:
+                switch self {
+                case .bitcoin, .litecoin: return true
+                default: return false
+                }
+            case .Ltpv, .Ltub:
+                switch self {
+                case .litecoin: return true
+                default: return false
+                }
+            case .Mtpv, .Mtub:
+                switch self {
+                case .litecoin: return true
+                default: return false
+                }
+            }
+        case .evmPrivateKey, .evmAddress:
+            switch self {
+            case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne: return true
+            default: return false
+            }
+        }
+    }
+
 }
 
 extension MarketKit.Coin {
@@ -288,6 +338,12 @@ extension MarketKit.FullCoin {
 
     var supportedTokens: [Token] {
         tokens.filter { $0.isSupported }
+    }
+
+    func eligibleTokens(accountType: AccountType) -> [Token] {
+        supportedTokens.filter { token in
+            token.blockchainType.supports(accountType: accountType)
+        }
     }
 
 }

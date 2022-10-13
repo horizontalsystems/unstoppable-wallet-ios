@@ -9,26 +9,14 @@ class AccountFactory {
     }
 
     private var nextAccountName: String {
-        let nonWatchAccounts = accountManager.accounts.filter { account in
-            switch account.type {
-            case .address: return false
-            default: return true
-            }
-        }
-
+        let nonWatchAccounts = accountManager.accounts.filter { !$0.watchAccount }
         let order = nonWatchAccounts.count + 1
 
         return "Wallet \(order)"
     }
 
     private var nextWatchAccountName: String {
-        let watchAccounts = accountManager.accounts.filter { account in
-            switch account.type {
-            case .address: return true
-            default: return false
-            }
-        }
-
+        let watchAccounts = accountManager.accounts.filter { $0.watchAccount }
         let order = watchAccounts.count + 1
 
         return "Watch Wallet \(order)"
@@ -52,7 +40,7 @@ extension AccountFactory {
         Account(
                 id: UUID().uuidString,
                 name: domain ?? nextWatchAccountName,
-                type: .address(address: address),
+                type: .evmAddress(address: address),
                 origin: .restored,
                 backedUp: true
         )

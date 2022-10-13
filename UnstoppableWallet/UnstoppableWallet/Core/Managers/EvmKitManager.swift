@@ -63,7 +63,10 @@ class EvmKitManager {
             }
             address = try Signer.address(seed: seed, chain: chain)
             signer = try Signer.instance(seed: seed, chain: chain)
-        case let .address(value):
+        case let .evmPrivateKey(data):
+            print("Evm Private Key no supported yet: \(data.hs.hexString)")
+            throw AdapterError.unsupportedAccount
+        case let .evmAddress(value):
             address = value
         default:
             throw AdapterError.unsupportedAccount

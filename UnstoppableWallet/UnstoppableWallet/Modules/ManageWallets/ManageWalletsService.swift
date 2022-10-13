@@ -57,7 +57,9 @@ class ManageWalletsService {
     private func fetchFullCoins() -> [FullCoin] {
         do {
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                let featuredFullCoins = try marketKit.fullCoins(filter: "", limit: 100).filter { !$0.supportedTokens.isEmpty }
+                let featuredFullCoins = try marketKit.fullCoins(filter: "", limit: 100).filter { fullCoin in
+                    !fullCoin.eligibleTokens(accountType: account.type).isEmpty
+                }
 
                 let featuredCoins = featuredFullCoins.map { $0.coin }
                 let enabledFullCoins = try marketKit.fullCoins(coinUids: wallets.filter { !featuredCoins.contains($0.coin) }.map { $0.coin.uid })
@@ -94,9 +96,9 @@ class ManageWalletsService {
         self.wallets = Set(wallets)
     }
 
-    private func hasSettingsOrTokens(supportedTokens: [Token]) -> Bool {
-        if supportedTokens.count == 1 {
-            let token = supportedTokens[0]
+    private func hasSettingsOrTokens(tokens: [Token]) -> Bool {
+        if tokens.count == 1 {
+            let token = tokens[0]
             return !token.blockchainType.coinSettingTypes.isEmpty || token.type != .native
         } else {
             return true
@@ -104,16 +106,16 @@ class ManageWalletsService {
     }
 
     private func item(fullCoin: FullCoin) -> Item {
-        let supportedTokens = fullCoin.supportedTokens
-        let fullCoin = FullCoin(coin: fullCoin.coin, tokens: supportedTokens)
-
         let itemState: ItemState
 
-        if supportedTokens.isEmpty {
+        let eligibleTokens = fullCoin.eligibleTokens(accountType: account.type)
+        let fullCoin = FullCoin(coin: fullCoin.coin, tokens: eligibleTokens)
+
+        if eligibleTokens.isEmpty {
             itemState = .unsupported
         } else {
             let enabled = isEnabled(coin: fullCoin.coin)
-            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrTokens(supportedTokens: supportedTokens))
+            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrTokens(tokens: eligibleTokens))
         }
 
         return Item(fullCoin: fullCoin, state: itemState)
@@ -196,7 +198,7 @@ extension ManageWalletsService {
             return
         }
 
-        enableCoinService.enable(fullCoin: fullCoin, account: account)
+        enableCoinService.enable(fullCoin: fullCoin, accountType: account.type, account: account)
     }
 
     func disable(uid: String) {
@@ -210,7 +212,7 @@ extension ManageWalletsService {
         }
 
         let coinWallets = wallets.filter { $0.coin.uid == uid }
-        enableCoinService.configure(fullCoin: fullCoin, configuredTokens: coinWallets.map { $0.configuredToken })
+        enableCoinService.configure(fullCoin: fullCoin, accountType: account.type, configuredTokens: coinWallets.map { $0.configuredToken })
     }
 
 }
