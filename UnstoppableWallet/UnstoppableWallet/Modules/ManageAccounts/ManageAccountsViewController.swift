@@ -108,7 +108,7 @@ class ManageAccountsViewController: ThemeViewController {
     }
 
     private func onTapRestore() {
-        let viewController = RestoreMnemonicModule.viewController(sourceViewController: self, returnViewController: createAccountListener)
+        let viewController = RestoreModule.viewController(sourceViewController: self, returnViewController: createAccountListener)
         present(viewController, animated: true)
     }
 
