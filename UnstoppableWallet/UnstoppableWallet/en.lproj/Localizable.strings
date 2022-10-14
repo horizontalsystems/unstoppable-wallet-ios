@@ -92,8 +92,13 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Restore
 
 "restore.title" = "Restore";
-"restore.mnemonic.key" = "Key";
-"restore.mnemonic.description" = "Enter your wallet recovery phrase (aka mnemonic) which consists of 12, 15, 18, 21 or 24 words and may include additional alphanumeric password.";
+"restore.by" = "By";
+"restore.restore_by" = "Restore By";
+"restore.restore_type.mnemonic" = "Recovery Phrase";
+"restore.restore_type.private_key" = "Private Key";
+"restore.mnemonic.placeholder" = "Enter 12, 15, 18, 21 or 24 words";
+"restore.private_key.placeholder" = "Enter EVM Private Key, BIP32 Root Key or Account Extended Private Key";
+"restore.private_key.invalid_key" = "Invalid Key";
 "restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
 "restore.checksum_error" = "Invalid checksum";
 "restore.passphrase" = "Passphrase";
