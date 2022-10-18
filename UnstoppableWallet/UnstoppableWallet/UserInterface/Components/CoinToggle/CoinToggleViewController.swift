@@ -114,8 +114,8 @@ class CoinToggleViewController: ThemeSearchViewController {
                     bind: { [weak self] cell in
                         self?.bind(cell: cell, viewItem: viewItem, isLast: isLast)
                     },
-                    action: {
-                        print("On click \(viewItem.uid)")
+                    action: { [weak self] in
+                        self?.onTapToggleHidden(viewItem: viewItem)
                     }
             )
         }
@@ -145,6 +145,9 @@ class CoinToggleViewController: ThemeSearchViewController {
         cell.bind(index: 3) { (component: SwitchComponent) in
             component.switchView.setOn(on, animated: true)
         }
+    }
+
+    func onTapToggleHidden(viewItem: CoinToggleViewModel.ViewItem) {
     }
 
 }
