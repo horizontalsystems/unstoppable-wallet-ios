@@ -99,7 +99,7 @@ class ManageWalletsService {
     private func hasSettingsOrTokens(tokens: [Token]) -> Bool {
         if tokens.count == 1 {
             let token = tokens[0]
-            return !token.blockchainType.coinSettingTypes.isEmpty || token.type != .native
+            return token.blockchainType.coinSettingType != nil || token.type != .native
         } else {
             return true
         }

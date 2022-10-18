@@ -26,7 +26,7 @@ extension CoinSettingsService {
     func approveSettings(token: Token, accountType: AccountType, settingsArray: [CoinSettings], allowEmpty: Bool = false) {
         let blockchainType = token.blockchainType
 
-        if blockchainType.coinSettingTypes.contains(.derivation) {
+        if blockchainType.coinSettingType == .derivation {
             let currentDerivations = settingsArray.compactMap { $0[.derivation].flatMap { MnemonicDerivation(rawValue: $0) } }
 
             let request = Request(
@@ -39,7 +39,7 @@ extension CoinSettingsService {
             return
         }
 
-        if blockchainType.coinSettingTypes.contains(.bitcoinCashCoinType) {
+        if blockchainType.coinSettingType == .bitcoinCashCoinType {
             let currentTypes = settingsArray.compactMap { $0[.bitcoinCashCoinType].flatMap { BitcoinCashCoinType(rawValue: $0) } }
 
             let request = Request(

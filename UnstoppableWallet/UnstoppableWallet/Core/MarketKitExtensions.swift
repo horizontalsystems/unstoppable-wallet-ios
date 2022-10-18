@@ -189,11 +189,11 @@ extension MarketKit.BlockchainType {
         return "https://markets.nyc3.digitaloceanspaces.com/blockchain-icons/\(uid)@\(scale)x.png"
     }
 
-    var coinSettingTypes: [CoinSettingType] {
+    var coinSettingType: CoinSettingType? {
         switch self {
-        case .bitcoin, .litecoin: return [.derivation]
-        case .bitcoinCash: return [.bitcoinCashCoinType]
-        default: return []
+        case .bitcoin, .litecoin: return .derivation
+        case .bitcoinCash: return .bitcoinCashCoinType
+        default: return nil
         }
     }
 
