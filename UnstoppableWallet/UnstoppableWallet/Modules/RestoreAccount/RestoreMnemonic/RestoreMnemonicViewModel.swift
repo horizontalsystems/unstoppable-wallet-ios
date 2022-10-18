@@ -117,9 +117,9 @@ extension RestoreMnemonicViewModel {
         clearCautions()
     }
 
-    func clear() {
+}
 
-    }
+extension RestoreMnemonicViewModel: IRestoreSubViewModel {
 
     func resolveAccountType() -> AccountType? {
         mnemonicCautionRelay.accept(nil)
@@ -144,6 +144,9 @@ extension RestoreMnemonicViewModel {
         } catch {
             return nil
         }
+    }
+
+    func clear() {
     }
 
 }

@@ -36,11 +36,11 @@ extension AccountFactory {
         )
     }
 
-    func watchAccount(address: EvmKit.Address, domain: String?) -> Account {
+    func watchAccount(type: AccountType, name: String?) -> Account {
         Account(
                 id: UUID().uuidString,
-                name: domain ?? nextWatchAccountName,
-                type: .evmAddress(address: address),
+                name: name ?? nextWatchAccountName,
+                type: type,
                 origin: .restored,
                 backedUp: true
         )

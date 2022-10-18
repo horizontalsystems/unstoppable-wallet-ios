@@ -61,7 +61,7 @@ class OnboardingBalanceViewController: ThemeViewController {
     }
 
     @objc func didTapWatch() {
-        let viewController = WatchAddressModule.viewController()
+        let viewController = WatchModule.viewController()
         present(viewController, animated: true)
     }
 

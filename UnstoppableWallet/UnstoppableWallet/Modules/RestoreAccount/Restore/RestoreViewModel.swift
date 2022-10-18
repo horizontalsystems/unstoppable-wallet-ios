@@ -3,16 +3,28 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
+protocol IRestoreSubViewModel: AnyObject {
+    func resolveAccountType() -> AccountType?
+    func clear()
+}
+
 class RestoreViewModel {
-    private let mnemonicViewModel: RestoreMnemonicViewModel
-    private let privateKeyViewModel: RestorePrivateKeyViewModel
+    private let mnemonicViewModel: IRestoreSubViewModel
+    private let privateKeyViewModel: IRestoreSubViewModel
 
     private let restoreTypeRelay = BehaviorRelay<RestoreType>(value: .mnemonic)
     private let proceedRelay = PublishRelay<AccountType>()
 
-    init(mnemonicViewModel: RestoreMnemonicViewModel, privateKeyViewModel: RestorePrivateKeyViewModel) {
+    init(mnemonicViewModel: IRestoreSubViewModel, privateKeyViewModel: IRestoreSubViewModel) {
         self.mnemonicViewModel = mnemonicViewModel
         self.privateKeyViewModel = privateKeyViewModel
+    }
+
+    private var subViewModel: IRestoreSubViewModel {
+        switch restoreTypeRelay.value {
+        case .mnemonic: return mnemonicViewModel
+        case .privateKey: return privateKeyViewModel
+        }
     }
 
 }
@@ -32,26 +44,13 @@ extension RestoreViewModel {
             return
         }
 
-        switch restoreTypeRelay.value {
-        case .mnemonic:
-            mnemonicViewModel.clear()
-        case .privateKey:
-            privateKeyViewModel.clear()
-        }
-
+        subViewModel.clear()
         restoreTypeRelay.accept(restoreType)
     }
 
     func onTapProceed() {
-        switch restoreTypeRelay.value {
-        case .mnemonic:
-            if let accountType = mnemonicViewModel.resolveAccountType() {
-                proceedRelay.accept(accountType)
-            }
-        case .privateKey:
-            if let accountType = privateKeyViewModel.resolveAccountType() {
-                proceedRelay.accept(accountType)
-            }
+        if let accountType = subViewModel.resolveAccountType() {
+            proceedRelay.accept(accountType)
         }
     }
 

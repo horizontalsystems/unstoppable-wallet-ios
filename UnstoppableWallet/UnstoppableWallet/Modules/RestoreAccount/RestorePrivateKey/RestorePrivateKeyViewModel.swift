@@ -28,9 +28,9 @@ extension RestorePrivateKeyViewModel {
         cautionRelay.accept(nil)
     }
 
-    func clear() {
+}
 
-    }
+extension RestorePrivateKeyViewModel: IRestoreSubViewModel {
 
     func resolveAccountType() -> AccountType? {
         cautionRelay.accept(nil)
@@ -41,6 +41,9 @@ extension RestorePrivateKeyViewModel {
             cautionRelay.accept(Caution(text: "restore.private_key.invalid_key".localized, type: .error))
             return nil
         }
+    }
+
+    func clear() {
     }
 
 }

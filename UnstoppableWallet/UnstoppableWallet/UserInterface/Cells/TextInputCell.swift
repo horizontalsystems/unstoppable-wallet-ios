@@ -2,7 +2,6 @@ import UIKit
 import SnapKit
 import ThemeKit
 import ComponentKit
-import HUD
 
 class TextInputCell: UITableViewCell {
     private static let minimalTextHeight: CGFloat = 64
@@ -18,8 +17,6 @@ class TextInputCell: UITableViewCell {
 
     private let placeholderLabel = UILabel()
 
-    private let checkImageView = UIImageView()
-    private let spinner = HUDActivityView.create(with: .small20)
     private let clearButton = SecondaryCircleButton()
     private let qrButton = SecondaryCircleButton()
     private let pasteButton = SecondaryButton()
@@ -94,16 +91,6 @@ class TextInputCell: UITableViewCell {
         stackView.spacing = .margin8
         stackView.alignment = .center
 
-        stackView.addArrangedSubview(checkImageView)
-        checkImageView.snp.makeConstraints { make in
-            make.size.equalTo(CGFloat.iconSize20)
-        }
-
-        checkImageView.image = UIImage(named: "circle_check_20")?.withTintColor(.themeRemus)
-
-        stackView.addArrangedSubview(spinner)
-        spinner.startAnimating()
-
         stackView.addArrangedSubview(clearButton)
         clearButton.set(image: UIImage(named: "trash_20"))
         clearButton.addTarget(self, action: #selector(onTapClear), for: .touchUpInside)
@@ -117,8 +104,6 @@ class TextInputCell: UITableViewCell {
         pasteButton.setTitle("button.paste".localized, for: .normal)
         pasteButton.addTarget(self, action: #selector(onTapPaste), for: .touchUpInside)
 
-        checkImageView.isHidden = true
-        spinner.isHidden = true
         syncComponents()
     }
 
@@ -161,6 +146,7 @@ class TextInputCell: UITableViewCell {
         textForHeight = text
         textView.text = text
         syncComponents()
+
         onChangeText?(text)
     }
 

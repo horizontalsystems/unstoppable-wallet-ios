@@ -2,11 +2,8 @@ import Foundation
 import RxSwift
 import RxRelay
 import EvmKit
-import MarketKit
 
-class WatchAddressService {
-    private let accountFactory: AccountFactory
-    private let accountManager: AccountManager
+class WatchEvmAddressService {
     private let disposeBag = DisposeBag()
 
     private let stateRelay = PublishRelay<State>()
@@ -16,10 +13,7 @@ class WatchAddressService {
         }
     }
 
-    init(accountFactory: AccountFactory, accountManager: AccountManager, addressService: AddressService) {
-        self.accountFactory = accountFactory
-        self.accountManager = accountManager
-
+    init(addressService: AddressService) {
         subscribe(disposeBag, addressService.stateObservable) { [weak self] in self?.sync(addressState: $0) }
     }
 
@@ -38,32 +32,33 @@ class WatchAddressService {
 
 }
 
-extension WatchAddressService {
+extension WatchEvmAddressService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
     }
 
-    func watch() throws {
-        guard case let .ready(address, domain) = state else {
-            throw StateError.notReady
+    func resolve() -> (AccountType, String?)? {
+        switch state {
+        case let .ready(address, domain): return (AccountType.evmAddress(address: address), domain)
+        case .notReady: return nil
         }
-
-        let account = accountFactory.watchAccount(address: address, domain: domain)
-        accountManager.save(account: account)
     }
 
 }
 
-extension WatchAddressService {
+extension WatchEvmAddressService {
 
     enum State {
         case ready(address: EvmKit.Address, domain: String?)
         case notReady
-    }
 
-    enum StateError: Error {
-        case notReady
+        var watchEnabled: Bool {
+            switch self {
+            case .ready: return true
+            case .notReady: return false
+            }
+        }
     }
 
 }
