@@ -113,7 +113,7 @@ class ManageAccountsViewController: ThemeViewController {
     }
 
     private func onTapWatch() {
-        let viewController = WatchAddressModule.viewController(sourceViewController: createAccountListener)
+        let viewController = WatchModule.viewController(sourceViewController: createAccountListener)
         present(viewController, animated: true)
     }
 

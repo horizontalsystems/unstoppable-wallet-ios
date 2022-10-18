@@ -2,7 +2,7 @@ import UIKit
 import ThemeKit
 import MarketKit
 
-struct WatchAddressModule {
+struct WatchModule {
 
     static func viewController(sourceViewController: UIViewController? = nil) -> UIViewController {
         let ethereumToken = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: .ethereum, tokenType: .native))
@@ -20,16 +20,30 @@ struct WatchAddressModule {
         let addressUriParser = AddressParserFactory.parser(blockchainType: .ethereum)
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
 
-        let service = WatchAddressService(
+        let evmAddressService = WatchEvmAddressService(addressService: addressService)
+        let evmAddressViewModel = WatchEvmAddressViewModel(service: evmAddressService)
+
+        let publicKeyService = WatchPublicKeyService()
+        let publicKeyViewModel = WatchPublicKeyViewModel(service: publicKeyService)
+
+        let service = WatchService(
                 accountFactory: App.shared.accountFactory,
-                accountManager: App.shared.accountManager,
-                addressService: addressService
+                accountManager: App.shared.accountManager
         )
-        let viewModel = WatchAddressViewModel(service: service)
+        let viewModel = WatchViewModel(
+                service: service,
+                evmAddressViewModel: evmAddressViewModel,
+                publicKeyViewModel: publicKeyViewModel
+        )
 
         let addressViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
 
-        let viewController = WatchAddressViewController(viewModel: viewModel, addressViewModel: addressViewModel, sourceViewController: sourceViewController)
+        let viewController = WatchViewController(
+                viewModel: viewModel,
+                addressViewModel: addressViewModel,
+                publicKeyViewModel: publicKeyViewModel,
+                sourceViewController: sourceViewController
+        )
 
         return ThemeNavigationController(rootViewController: viewController)
     }
