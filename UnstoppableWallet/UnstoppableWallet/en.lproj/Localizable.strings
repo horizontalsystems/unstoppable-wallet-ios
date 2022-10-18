@@ -804,6 +804,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "manage_wallets.title" = "Coin Manager";
 "manage_wallets.not_found" = "No results found. Try to add token manually.";
 "manage_wallets.search_placeholder" = "Name, code or contract address";
+"manage_wallets.not_supported" = "Not supported";
+"manage_wallets.not_supported.description" = "Your current wallet type %@ does not support %@";
 
 "manage_coins.add_coin.title" = "Add %@";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";

@@ -185,6 +185,10 @@ extension ManageWalletsService {
         cancelEnableCoinRelay.asObservable()
     }
 
+    var accountType: AccountType {
+        account.type
+    }
+
     func set(filter: String) {
         self.filter = filter
 

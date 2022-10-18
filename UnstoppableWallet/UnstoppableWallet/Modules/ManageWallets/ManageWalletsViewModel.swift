@@ -82,4 +82,8 @@ extension ManageWalletsViewModel {
         disableCoinRelay.asSignal()
     }
 
+    var accountTypeDescription: String {
+        service.accountType.description
+    }
+
 }
