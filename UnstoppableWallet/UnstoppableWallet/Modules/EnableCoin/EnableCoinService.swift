@@ -95,7 +95,7 @@ extension EnableCoinService {
 
             if !token.blockchainType.restoreSettingTypes.isEmpty {
                 restoreSettingsService.approveSettings(token: token, account: account)
-            } else if !token.blockchainType.coinSettingTypes.isEmpty {
+            } else if token.blockchainType.coinSettingType != nil {
                 coinSettingsService.approveSettings(token: token, accountType: accountType, settingsArray: token.blockchainType.defaultSettingsArray(accountType: accountType))
             } else if token.type != .native {
                 coinTokensService.approveTokens(fullCoin: fullCoin, currentTokens: supportedTokens)
@@ -113,7 +113,7 @@ extension EnableCoinService {
         if supportedTokens.count == 1 {
             let token = supportedTokens[0]
 
-            if !token.blockchainType.coinSettingTypes.isEmpty {
+            if token.blockchainType.coinSettingType != nil {
                 let settingsArray = configuredTokens.map { $0.coinSettings }
                 coinSettingsService.approveSettings(token: token, accountType: accountType, settingsArray: settingsArray, allowEmpty: true)
                 return

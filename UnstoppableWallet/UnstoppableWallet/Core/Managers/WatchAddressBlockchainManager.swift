@@ -21,18 +21,12 @@ class WatchAddressBlockchainManager {
         }
         enableDisabledBlockchains(account: accountManager.activeAccount)
     }
-}
 
-extension WatchAddressBlockchainManager {
-    func enableDisabledBlockchains(account: Account?) {
-        guard let account = account, account.watchAccount else {
-            return
-        }
-
+    private func enableEvmBlockchains(account: Account) {
         let wallets = walletManager.wallets(account: account)
         let disabledBlockchains = evmBlockchainManager
-            .allBlockchains
-            .filter { blockchain in !wallets.contains(where: { wallet in wallet.token.blockchain == blockchain }) }
+                .allBlockchains
+                .filter { blockchain in !wallets.contains(where: { wallet in wallet.token.blockchain == blockchain }) }
 
         guard !disabledBlockchains.isEmpty else {
             return
@@ -47,4 +41,65 @@ extension WatchAddressBlockchainManager {
             // do nothing
         }
     }
+
+    private func enableBtcBlockchains(account: Account, xPubKey: String) {
+        let blockchainTypes: [BlockchainType] = [.bitcoin, .bitcoinCash, .litecoin, .dash]
+        let supportedBlockchainTypes = blockchainTypes.filter { $0.supports(accountType: account.type) }
+
+        let wallets = walletManager.wallets(account: account)
+        let disabledBlockchainTypes = supportedBlockchainTypes
+                .filter { blockchainType in !wallets.contains(where: { wallet in wallet.token.blockchainType == blockchainType }) }
+
+        guard !disabledBlockchainTypes.isEmpty else {
+            return
+        }
+
+        do {
+            let tokens = try marketKit.tokens(queries: disabledBlockchainTypes.map { TokenQuery(blockchainType: $0, tokenType: .native) })
+
+            var wallets = [Wallet]()
+
+            for token in tokens {
+                if token.blockchainType.coinSettingType == .derivation {
+                    let configuredToken = ConfiguredToken(token: token, coinSettings: [.derivation: xPubKey.extendedKeyType.mnemonicDerivation.rawValue])
+                    let wallet = Wallet(configuredToken: configuredToken, account: account)
+                    wallets.append(wallet)
+                } else if token.blockchainType.coinSettingType == .bitcoinCashCoinType {
+                    let _wallets = BitcoinCashCoinType.allCases.map { coinType in
+                        let configuredToken = ConfiguredToken(token: token, coinSettings: [.bitcoinCashCoinType: coinType.rawValue])
+                        return Wallet(configuredToken: configuredToken, account: account)
+                    }
+
+                    wallets.append(contentsOf: _wallets)
+                } else {
+                    let wallet = Wallet(token: token, account: account)
+                    wallets.append(wallet)
+                }
+            }
+
+            walletManager.save(wallets: wallets)
+        } catch {
+            // do nothing
+        }
+    }
+
+}
+
+extension WatchAddressBlockchainManager {
+
+    func enableDisabledBlockchains(account: Account?) {
+        guard let account = account else {
+            return
+        }
+
+        switch account.type {
+        case .evmAddress:
+            enableEvmBlockchains(account: account)
+        case let .accountExtendedPublicKey(string):
+            enableBtcBlockchains(account: account, xPubKey: string)
+        default:
+            ()
+        }
+    }
+
 }

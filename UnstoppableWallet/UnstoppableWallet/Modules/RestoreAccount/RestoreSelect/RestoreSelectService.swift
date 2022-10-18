@@ -84,7 +84,7 @@ class RestoreSelectService {
     }
 
     private func hasSettings(token: Token) -> Bool {
-        !token.blockchainType.coinSettingTypes.isEmpty
+        token.blockchainType.coinSettingType != nil
     }
 
     private func item(token: Token) -> Item {
