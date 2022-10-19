@@ -291,12 +291,12 @@ class MainSettingsViewController: ThemeViewController {
                     onTapButton: InformationModule.afterClose())
 
             present(viewController, animated: true)
-        case .watchAccount:
+        case .nonSupportedAccountType(let accountTypeDescription):
             let viewController = InformationModule.simpleInfo(
                     title: "wallet_connect.title".localized,
                     image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob),
-                    description: "wallet_connect.watch_account.description".localized,
-                    buttonTitle: "wallet_connect.watch_account.switch".localized,
+                    description: "wallet_connect.non_supported_account.description".localized(accountTypeDescription),
+                    buttonTitle: "wallet_connect.non_supported_account.switch".localized,
                     onTapButton: InformationModule.afterClose { [weak self] in
                         self?.present(SwitchAccountModule.viewController(), animated: true)
                     })
