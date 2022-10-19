@@ -1092,8 +1092,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "wallet_connect.no_account.description" = "No suitable wallet. You need to create or restore existing wallet.";
 "wallet_connect.no_account.i_understand" = "I Understand";
 
-"wallet_connect.watch_account.description" = "This feature does not work with the watch only wallets, you need to switch to a restored or created wallet.";
-"wallet_connect.watch_account.switch" = "Switch";
+"wallet_connect.non_supported_account.description" = "You current wallet type %@ does not support WalletConnect";
+"wallet_connect.non_supported_account.switch" = "Switch";
 
 "wallet_connect.pending_requests_title" = "Pending Requests";
 "wallet_connect.pending_requests.nonactive_footer" = "To open an request you must activate the desired wallet";

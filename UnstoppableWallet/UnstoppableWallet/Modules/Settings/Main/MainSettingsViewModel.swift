@@ -111,7 +111,7 @@ extension MainSettingsViewModel {
             return
         }
 
-        openWalletConnectRelay.accept(activeAccount.watchAccount ? .watchAccount : .list)
+        openWalletConnectRelay.accept(activeAccount.type.supportsWalletConnect ? .list : .nonSupportedAccountType(accountTypeDescription: activeAccount.type.description))
     }
 
     func onTapCompanyLink() {
@@ -125,7 +125,7 @@ extension MainSettingsViewModel {
     enum WalletConnectOpenMode {
         case list
         case noAccount
-        case watchAccount
+        case nonSupportedAccountType(accountTypeDescription: String)
     }
 
 }
