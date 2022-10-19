@@ -41,6 +41,13 @@ enum AccountType {
         }
     }
 
+    var hideZeroBalances: Bool {
+        switch self {
+        case .evmAddress: return true
+        default: return false
+        }
+    }
+
     var description: String {
         switch self {
         case .mnemonic(let words, let salt):
