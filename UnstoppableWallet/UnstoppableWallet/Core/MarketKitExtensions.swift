@@ -203,8 +203,8 @@ extension MarketKit.BlockchainType {
             switch accountType {
             case .mnemonic:
                 return [[.derivation: MnemonicDerivation.bip49.rawValue]]
-            case .bip32RootKey(let string), .accountExtendedPrivateKey(let string), .accountExtendedPublicKey(let string):
-                return [[.derivation: string.extendedKeyType.mnemonicDerivation.rawValue]]
+            case .hdExtendedKey(let key):
+                return [[.derivation: key.info.purpose.mnemonicDerivation.rawValue]]
             default:
                 return []
             }
@@ -278,33 +278,21 @@ extension MarketKit.BlockchainType {
         switch accountType {
         case .mnemonic:
             return true
-        case .bip32RootKey(let string), .accountExtendedPrivateKey(let string), .accountExtendedPublicKey(let string):
-            switch string.extendedKeyType {
-            case .xprv, .xpub:
-                switch self {
-                case .bitcoin, .bitcoinCash, .litecoin, .dash: return true
-                default: return false
-                }
-            case .yprv, .ypub:
-                switch self {
-                case .bitcoin, .litecoin: return true
-                default: return false
-                }
-            case .zprv, .zpub:
-                switch self {
-                case .bitcoin, .litecoin: return true
-                default: return false
-                }
-            case .Ltpv, .Ltub:
-                switch self {
-                case .litecoin: return true
-                default: return false
-                }
-            case .Mtpv, .Mtub:
-                switch self {
-                case .litecoin: return true
-                default: return false
-                }
+        case .hdExtendedKey(let key):
+            let info = key.info
+
+            switch (self, info.coinType, info.purpose) {
+            case (.bitcoin, .bitcoin, .bip44): return true
+            case (.bitcoin, .bitcoin, .bip49): return true
+            case (.bitcoin, .bitcoin, .bip84): return true
+            case (.bitcoinCash, .bitcoin, .bip44): return true
+            case (.litecoin, .bitcoin, .bip44): return true
+            case (.litecoin, .bitcoin, .bip49): return true
+            case (.litecoin, .bitcoin, .bip84): return true
+            case (.litecoin, .litecoin, .bip44): return true
+            case (.litecoin, .litecoin, .bip49): return true
+            case (.dash, .bitcoin, .bip44): return true
+            default: return false
             }
         case .evmPrivateKey, .evmAddress:
             switch self {

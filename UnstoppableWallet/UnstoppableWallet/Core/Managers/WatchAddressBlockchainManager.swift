@@ -42,7 +42,7 @@ class WatchAddressBlockchainManager {
         }
     }
 
-    private func enableBtcBlockchains(account: Account, xPubKey: String) {
+    private func enableBtcBlockchains(account: Account, mnemonicDerivation: MnemonicDerivation) {
         let blockchainTypes: [BlockchainType] = [.bitcoin, .bitcoinCash, .litecoin, .dash]
         let supportedBlockchainTypes = blockchainTypes.filter { $0.supports(accountType: account.type) }
 
@@ -61,7 +61,7 @@ class WatchAddressBlockchainManager {
 
             for token in tokens {
                 if token.blockchainType.coinSettingType == .derivation {
-                    let configuredToken = ConfiguredToken(token: token, coinSettings: [.derivation: xPubKey.extendedKeyType.mnemonicDerivation.rawValue])
+                    let configuredToken = ConfiguredToken(token: token, coinSettings: [.derivation: mnemonicDerivation.rawValue])
                     let wallet = Wallet(configuredToken: configuredToken, account: account)
                     wallets.append(wallet)
                 } else if token.blockchainType.coinSettingType == .bitcoinCashCoinType {
@@ -95,8 +95,12 @@ extension WatchAddressBlockchainManager {
         switch account.type {
         case .evmAddress:
             enableEvmBlockchains(account: account)
-        case let .accountExtendedPublicKey(string):
-            enableBtcBlockchains(account: account, xPubKey: string)
+        case let .hdExtendedKey(key):
+            switch key {
+            case .public:
+                enableBtcBlockchains(account: account, mnemonicDerivation: key.info.purpose.mnemonicDerivation)
+            default: ()
+            }
         default:
             ()
         }

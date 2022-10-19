@@ -1,6 +1,7 @@
 import Foundation
 import RxSwift
 import RxRelay
+import HdWalletKit
 
 class WatchPublicKeyService {
     private let disposeBag = DisposeBag()
@@ -17,7 +18,7 @@ class WatchPublicKeyService {
 extension WatchPublicKeyService {
 
     func set(text: String) {
-        if text.isEmpty {
+        if text.trimmingCharacters(in: .whitespaces).isEmpty {
             state = .notReady
         } else {
             state = .ready(text: text)
@@ -35,11 +36,19 @@ extension WatchPublicKeyService {
     func resolve() throws -> AccountType {
         switch state {
         case let .ready(text):
-            print(text)
+            let extendedKey = try HDExtendedKey(extendedKey: text)
 
-            // todo
-
-            throw ResolveError.invalidKey
+            switch extendedKey {
+            case .public:
+                switch extendedKey.derivedType {
+                case .account:
+                    return .hdExtendedKey(key: extendedKey)
+                default:
+                    throw ResolveError.notSupportedDerivedType
+                }
+            default:
+                throw ResolveError.nonPublicKey
+            }
         case .notReady:
             throw ResolveError.notReady
         }
@@ -63,7 +72,8 @@ extension WatchPublicKeyService {
 
     enum ResolveError: Error {
         case notReady
-        case invalidKey
+        case notSupportedDerivedType
+        case nonPublicKey
     }
 
 }

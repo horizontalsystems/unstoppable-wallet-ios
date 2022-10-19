@@ -4,6 +4,7 @@ import Hodler
 import RxSwift
 import HsToolKit
 import MarketKit
+import HdWalletKit
 
 class BitcoinBaseAdapter {
     static let confirmationsThreshold = 3
@@ -137,14 +138,6 @@ class BitcoinBaseAdapter {
         switch sort {
         case .shuffle: return .shuffle
         case .bip69: return .bip69
-        }
-    }
-
-    class func bip(from derivation: MnemonicDerivation) -> Bip {
-        switch derivation {
-        case .bip44: return Bip.bip44
-        case .bip49: return Bip.bip49
-        case .bip84: return Bip.bip84
         }
     }
 
@@ -287,7 +280,11 @@ extension BitcoinBaseAdapter {
     }
 
     func minimumSendAmount(address: String?) -> Decimal {
-        Decimal(abstractKit.minSpendableValue(toAddress: address)) / coinRate
+        do {
+            return Decimal(try abstractKit.minSpendableValue(toAddress: address)) / coinRate
+        } catch {
+            return 0
+        }
     }
 
     func validate(address: String, pluginData: [UInt8: IBitcoinPluginData] = [:]) throws {

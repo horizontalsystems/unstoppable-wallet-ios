@@ -1,4 +1,5 @@
 import MarketKit
+import HdWalletKit
 
 enum MnemonicDerivation: String, CaseIterable {
     case bip44
@@ -21,6 +22,26 @@ enum MnemonicDerivation: String, CaseIterable {
         switch self {
         case .bip44: return self.rawValue.uppercased()
         case .bip49, .bip84: return "\(self.rawValue.uppercased()) - \(addressType)"
+        }
+    }
+
+    var purpose: Purpose {
+        switch self {
+        case .bip44: return .bip44
+        case .bip49: return .bip49
+        case .bip84: return .bip84
+        }
+    }
+
+}
+
+extension Purpose {
+
+    var mnemonicDerivation: MnemonicDerivation {
+        switch self {
+        case .bip44: return .bip44
+        case .bip49: return .bip49
+        case .bip84: return .bip84
         }
     }
 

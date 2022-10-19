@@ -1,6 +1,7 @@
 import Foundation
 import StorageKit
 import EvmKit
+import HdWalletKit
 
 class AccountStorage {
     private let secureStorage: ISecureStorage
@@ -45,36 +46,16 @@ class AccountStorage {
             }
 
             type = .evmAddress(address: EvmKit.Address(raw: data))
-        case .bip32RootKey:
-            guard let string: String = recover(id: id, typeName: typeName, keyName: .string) else {
+        case .hdExtendedKey:
+            guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
                 return nil
             }
 
-            type = .bip32RootKey(string: string)
-        case .accountExtendedPrivateKey:
-            guard let string: String = recover(id: id, typeName: typeName, keyName: .string) else {
+            guard let key = try? HDExtendedKey.deserialize(data: data) else {
                 return nil
             }
 
-            type = .accountExtendedPrivateKey(string: string)
-//        case .bip32ExtendedPrivateKey:
-//            guard let string: String = recover(id: id, typeName: typeName, keyName: .string) else {
-//                return nil
-//            }
-//
-//            type = .bip32ExtendedPrivateKey(string: string)
-        case .accountExtendedPublicKey:
-            guard let string: String = recover(id: id, typeName: typeName, keyName: .string) else {
-                return nil
-            }
-
-            type = .accountExtendedPublicKey(string: string)
-//        case .bip32ExtendedPublicKey:
-//            guard let string: String = recover(id: id, typeName: typeName, keyName: .string) else {
-//                return nil
-//            }
-//
-//            type = .bip32ExtendedPublicKey(string: string)
+            type = .hdExtendedKey(key: key)
         }
 
         return Account(
@@ -93,7 +74,6 @@ class AccountStorage {
         var wordsKey: String?
         var saltKey: String?
         var dataKey: String?
-        var stringKey: String?
 
         switch account.type {
         case .mnemonic(let words, let salt):
@@ -106,21 +86,9 @@ class AccountStorage {
         case .evmAddress(let address):
             typeName = .evmAddress
             dataKey = try store(data: address.raw, id: id, typeName: typeName, keyName: .data)
-        case .bip32RootKey(let string):
-            typeName = .bip32RootKey
-            stringKey = try store(string, id: id, typeName: typeName, keyName: .string)
-        case .accountExtendedPrivateKey(let string):
-            typeName = .accountExtendedPrivateKey
-            stringKey = try store(string, id: id, typeName: typeName, keyName: .string)
-//        case .bip32ExtendedPrivateKey(let string):
-//            typeName = .bip32ExtendedPrivateKey
-//            stringKey = try store(string, id: id, typeName: typeName, keyName: .string)
-        case .accountExtendedPublicKey(let string):
-            typeName = .accountExtendedPublicKey
-            stringKey = try store(string, id: id, typeName: typeName, keyName: .string)
-//        case .bip32ExtendedPublicKey(let string):
-//            typeName = .bip32ExtendedPublicKey
-//            stringKey = try store(string, id: id, typeName: typeName, keyName: .string)
+        case .hdExtendedKey(let key):
+            typeName = .hdExtendedKey
+            dataKey = try store(data: key.serialized, id: id, typeName: typeName, keyName: .data)
         }
 
         return AccountRecord(
@@ -131,8 +99,7 @@ class AccountStorage {
                 backedUp: account.backedUp,
                 wordsKey: wordsKey,
                 saltKey: saltKey,
-                dataKey: dataKey,
-                stringKey: stringKey
+                dataKey: dataKey
         )
     }
 
@@ -147,16 +114,8 @@ class AccountStorage {
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .evmPrivateKey, keyName: .data))
         case .evmAddress:
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .evmAddress, keyName: .data))
-        case .bip32RootKey:
-            try secureStorage.removeValue(for: secureKey(id: id, typeName: .bip32RootKey, keyName: .string))
-        case .accountExtendedPrivateKey:
-            try secureStorage.removeValue(for: secureKey(id: id, typeName: .accountExtendedPrivateKey, keyName: .string))
-//        case .bip32ExtendedPrivateKey:
-//            try secureStorage.removeValue(for: secureKey(id: id, typeName: .bip32ExtendedPrivateKey, keyName: .string))
-        case .accountExtendedPublicKey:
-            try secureStorage.removeValue(for: secureKey(id: id, typeName: .accountExtendedPublicKey, keyName: .string))
-//        case .bip32ExtendedPublicKey:
-//            try secureStorage.removeValue(for: secureKey(id: id, typeName: .bip32ExtendedPublicKey, keyName: .string))
+        case .hdExtendedKey:
+            try secureStorage.removeValue(for: secureKey(id: id, typeName: .hdExtendedKey, keyName: .data))
         }
     }
 
@@ -240,18 +199,13 @@ extension AccountStorage {
         case mnemonic
         case evmPrivateKey
         case evmAddress = "address"
-        case bip32RootKey
-        case accountExtendedPrivateKey
-//        case bip32ExtendedPrivateKey
-        case accountExtendedPublicKey
-//        case bip32ExtendedPublicKey
+        case hdExtendedKey
     }
 
     private enum KeyName: String {
         case words
         case salt
         case data
-        case string
     }
 
 }
