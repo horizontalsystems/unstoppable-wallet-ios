@@ -31,7 +31,10 @@ class ManageWalletsViewController: CoinToggleViewController {
         navigationItem.searchController?.searchBar.placeholder = "manage_wallets.search_placeholder".localized
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDoneButton))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(onTapAddTokenButton))
+
+        if viewModel.addTokenEnabled {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(onTapAddTokenButton))
+        }
 
         view.addSubview(notFoundPlaceholder)
         notFoundPlaceholder.snp.makeConstraints { maker in
