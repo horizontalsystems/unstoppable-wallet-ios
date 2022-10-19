@@ -48,7 +48,9 @@ class WalletService {
 
     private(set) var allItems: [Item] = [] {
         didSet {
-            if watchAccount {
+            let hideZeroBalances = accountManager.activeAccount?.type.hideZeroBalances ?? false
+
+            if hideZeroBalances {
                 items = allItems.filter { $0.balanceData.balanceTotal != 0 }
             } else {
                 items = allItems
