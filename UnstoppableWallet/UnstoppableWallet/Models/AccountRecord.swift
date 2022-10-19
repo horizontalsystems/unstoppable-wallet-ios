@@ -9,9 +9,8 @@ class AccountRecord: Record {
     var wordsKey: String?
     var saltKey: String?
     var dataKey: String?
-    var stringKey: String?
 
-    init(id: String, name: String, type: String, origin: String, backedUp: Bool, wordsKey: String?, saltKey: String?, dataKey: String?, stringKey: String?) {
+    init(id: String, name: String, type: String, origin: String, backedUp: Bool, wordsKey: String?, saltKey: String?, dataKey: String?) {
         self.id = id
         self.name = name
         self.type = type
@@ -20,7 +19,6 @@ class AccountRecord: Record {
         self.wordsKey = wordsKey
         self.saltKey = saltKey
         self.dataKey = dataKey
-        self.stringKey = stringKey
 
         super.init()
     }
@@ -30,7 +28,7 @@ class AccountRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case id, name, type, origin, backedUp, wordsKey, saltKey, dataKey, stringKey
+        case id, name, type, origin, backedUp, wordsKey, saltKey, dataKey
     }
 
     required init(row: Row) {
@@ -42,7 +40,6 @@ class AccountRecord: Record {
         wordsKey = row[Columns.wordsKey]
         saltKey = row[Columns.saltKey]
         dataKey = row[Columns.dataKey]
-        stringKey = row[Columns.stringKey]
 
         super.init(row: row)
     }
@@ -56,7 +53,6 @@ class AccountRecord: Record {
         container[Columns.wordsKey] = wordsKey
         container[Columns.saltKey] = saltKey
         container[Columns.dataKey] = dataKey
-        container[Columns.stringKey] = stringKey
     }
 
 }

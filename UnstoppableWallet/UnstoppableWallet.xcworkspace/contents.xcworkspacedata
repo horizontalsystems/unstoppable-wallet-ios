@@ -4,4 +4,28 @@
    <FileRef
       location = "container:UnstoppableWallet.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:../../HdWalletKit.Swift">
+   </FileRef>
+   <FileRef
+      location = "group:../../BitcoinCore.Swift">
+   </FileRef>
+   <FileRef
+      location = "group:../../BitcoinKit.Swift">
+   </FileRef>
+   <FileRef
+      location = "group:../../EvmKit.Swift">
+   </FileRef>
+   <FileRef
+      location = "group:../../BinanceChainKit.Swift">
+   </FileRef>
+   <FileRef
+      location = "group:../../BitcoinCashKit.Swift">
+   </FileRef>
+   <FileRef
+      location = "group:../../DashKit.Swift">
+   </FileRef>
+   <FileRef
+      location = "group:../../LitecoinKit.Swift">
+   </FileRef>
 </Workspace>

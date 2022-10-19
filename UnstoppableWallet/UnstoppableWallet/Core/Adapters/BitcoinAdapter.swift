@@ -1,25 +1,47 @@
 import BitcoinKit
 import BitcoinCore
 import RxSwift
+import HdWalletKit
 import MarketKit
 
 class BitcoinAdapter: BitcoinBaseAdapter {
     private let bitcoinKit: BitcoinKit.Kit
 
     init(wallet: Wallet, syncMode: BitcoinCore.SyncMode, testMode: Bool) throws {
-        guard let seed = wallet.account.type.mnemonicSeed else {
-            throw AdapterError.unsupportedAccount
-        }
-
-        guard let walletDerivation = wallet.coinSettings.derivation else {
-            throw AdapterError.wrongParameters
-        }
-
         let networkType: BitcoinKit.Kit.NetworkType = testMode ? .testNet : .mainNet
-        let bip = BitcoinBaseAdapter.bip(from: walletDerivation)
         let logger = App.shared.logger.scoped(with: "BitcoinKit")
 
-        bitcoinKit = try BitcoinKit.Kit(seed: seed, bip: bip, walletId: wallet.account.id, syncMode: syncMode, networkType: networkType, confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold, logger: logger)
+        switch wallet.account.type {
+        case let .mnemonic(words, salt):
+            guard let seed = Mnemonic.seed(mnemonic: words, passphrase: salt) else {
+                throw AdapterError.unsupportedAccount
+            }
+
+            guard let derivation = wallet.coinSettings.derivation else {
+                throw AdapterError.wrongParameters
+            }
+
+            bitcoinKit = try BitcoinKit.Kit(
+                    seed: seed,
+                    purpose: derivation.purpose,
+                    walletId: wallet.account.id,
+                    syncMode: syncMode,
+                    networkType: networkType,
+                    confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                    logger: logger
+            )
+        case let .hdExtendedKey(key):
+            bitcoinKit = try BitcoinKit.Kit(
+                    extendedKey: key,
+                    walletId: wallet.account.id,
+                    syncMode: syncMode,
+                    networkType: networkType,
+                    confirmationsThreshold: BitcoinBaseAdapter.confirmationsThreshold,
+                    logger: logger
+            )
+        default:
+            throw AdapterError.unsupportedAccount
+        }
 
         super.init(abstractKit: bitcoinKit, wallet: wallet, testMode: testMode)
 

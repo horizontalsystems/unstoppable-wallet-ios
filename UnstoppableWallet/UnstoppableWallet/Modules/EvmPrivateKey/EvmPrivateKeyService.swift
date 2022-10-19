@@ -6,7 +6,7 @@ class EvmPrivateKeyService {
 
     init?(account: Account, evmBlockchainManager: EvmBlockchainManager) {
         guard let seed = account.type.mnemonicSeed,
-              let privateKey = try? Signer.privateKey(seed: seed, chain: evmBlockchainManager.chain(blockchainType: .ethereum)).raw.hs.hex else {
+              let privateKey = try? Signer.privateKey(seed: seed, chain: evmBlockchainManager.chain(blockchainType: .ethereum)).hs.hex else {
             return nil
         }
 
