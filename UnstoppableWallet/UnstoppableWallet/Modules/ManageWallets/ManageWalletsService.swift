@@ -17,8 +17,6 @@ class ManageWalletsService {
     private let itemsRelay = PublishRelay<[Item]>()
     private let cancelEnableCoinRelay = PublishRelay<Coin>()
 
-    private var addedCoins = [Coin]()
-
     var items: [Item] = [] {
         didSet {
             itemsRelay.accept(items)

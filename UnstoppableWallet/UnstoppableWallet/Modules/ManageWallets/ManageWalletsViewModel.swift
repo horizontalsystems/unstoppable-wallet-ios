@@ -86,4 +86,8 @@ extension ManageWalletsViewModel {
         service.accountType.description
     }
 
+    var addTokenEnabled: Bool {
+        service.accountType.canAddTokens
+    }
+
 }
