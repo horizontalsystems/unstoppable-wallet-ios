@@ -6,14 +6,15 @@ import LitecoinKit
 import DashKit
 
 class PublicKeysService {
-    private let seed: Data
+    private let accountType: AccountType
 
     init?(account: Account, evmBlockchainManager: EvmBlockchainManager) {
-        guard let seed = account.type.mnemonicSeed else {
-            return nil
+        switch account.type {
+        case .evmAddress, .evmPrivateKey: return nil
+        default: ()
         }
 
-        self.seed = seed
+        self.accountType = account.type
     }
 
     private func purpose(derivation: MnemonicDerivation) -> UInt32 {
@@ -32,44 +33,69 @@ class PublicKeysService {
         let jsonData = try JSONEncoder().encode(publicKeys)
         return String(data: jsonData, encoding: .utf8)
     }
+    
+    private func rootKey(words: [String], salt: String, purpose: Purpose, coinType: HDExtendedKeyVersion.ExtendedKeyCoinType) -> HDPrivateKey? {
+        guard let seed = Mnemonic.seed(mnemonic: words, passphrase: salt),
+            let version = try? HDExtendedKeyVersion(purpose: purpose, coinType: .bitcoin) else {
+            return nil
+        }
+        return HDPrivateKey(
+            seed: seed,
+            xPrivKey: version.rawValue
+        )
+    }
+    
+    private func publicKeys(purpose: Purpose, coinType: UInt32, extendedKeyCoinType: HDExtendedKeyVersion.ExtendedKeyCoinType) throws -> String? {
+        let masterPrivateKey: HDPrivateKey?
+        switch accountType {
+        case let .mnemonic(words: words, salt: salt):
+            masterPrivateKey = rootKey(words: words, salt: salt, purpose: purpose, coinType: extendedKeyCoinType)
+        case let .hdExtendedKey(key: key):
+            switch key {
+            case let .public(key: publicKey):
+                return publicKey.extended()
+            case let .private(key: privateKey):
+                switch key.derivedType {
+                case .account: return privateKey.publicKey().extended()
+                case .master:
+                    masterPrivateKey = privateKey
+                default: return nil
+                }
+            }
+        default: return nil
+        }
+
+        guard let masterPrivateKey = masterPrivateKey else {
+            return nil
+        }
+        let keychain = HDKeychain(privateKey: masterPrivateKey)
+        return try json(keychain: keychain, purpose: purpose.rawValue, coinType: coinType)
+    }
 
 }
 
 extension PublicKeysService {
 
     func bitcoinPublicKeys(derivation: MnemonicDerivation) throws -> String? {
-        nil
-//        let network = BitcoinKit.MainNet()
-//        let keychain = HDKeychain(seed: seed, xPrivKey: network.xPrivKey, xPubKey: network.xPubKey)
-//        return try json(keychain: keychain, purpose: purpose(derivation: derivation), coinType: network.coinType)
+        try publicKeys(purpose: derivation.purpose, coinType: BitcoinKit.MainNet().coinType, extendedKeyCoinType: .bitcoin)
     }
 
     func bitcoinCashPublicKeys(coinType: BitcoinCashCoinType) throws -> String? {
-        nil
-//        let kitCoinType: BitcoinCashKit.CoinType
-//
-//        switch coinType {
-//        case .type0: kitCoinType = .type0
-//        case .type145: kitCoinType = .type145
-//        }
-//
-//        let network = BitcoinCashKit.MainNet(coinType: kitCoinType)
-//        let keychain = HDKeychain(seed: seed, xPrivKey: network.xPrivKey, xPubKey: network.xPubKey)
-//        return try json(keychain: keychain, purpose: 44, coinType: network.coinType)
+        let kitCoinType: BitcoinCashKit.CoinType
+
+        switch coinType {
+        case .type0: kitCoinType = .type0
+        case .type145: kitCoinType = .type145
+        }
+        return try publicKeys(purpose: .bip44, coinType: BitcoinCashKit.MainNet(coinType: kitCoinType).coinType, extendedKeyCoinType: .bitcoin)
     }
 
     func litecoinPublicKeys(derivation: MnemonicDerivation) throws -> String? {
-        nil
-//        let network = LitecoinKit.MainNet()
-//        let keychain = HDKeychain(seed: seed, xPrivKey: network.xPrivKey, xPubKey: network.xPubKey)
-//        return try json(keychain: keychain, purpose: purpose(derivation: derivation), coinType: network.coinType)
+        try publicKeys(purpose: derivation.purpose, coinType: LitecoinKit.MainNet().coinType, extendedKeyCoinType: .litecoin)
     }
 
     func dashPublicKeys() throws -> String? {
-        nil
-//        let network = DashKit.MainNet()
-//        let keychain = HDKeychain(seed: seed, xPrivKey: network.xPrivKey, xPubKey: network.xPubKey)
-//        return try json(keychain: keychain, purpose: 44, coinType: network.coinType)
+        try publicKeys(purpose: .bip44, coinType: DashKit.MainNet().coinType, extendedKeyCoinType: .bitcoin)
     }
 
 }
