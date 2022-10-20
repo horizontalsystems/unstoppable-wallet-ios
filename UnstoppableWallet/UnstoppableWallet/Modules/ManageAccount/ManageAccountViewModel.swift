@@ -6,12 +6,14 @@ class ManageAccountViewModel {
     private let service: ManageAccountService
     private let disposeBag = DisposeBag()
 
-    private let keyActionStateRelay = BehaviorRelay<KeyActionState>(value: .none)
+    private let keyActionGroupsRelay = BehaviorRelay<[[KeyAction]]>(value: [])
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let openUnlockRelay = PublishRelay<()>()
     private let openRecoveryPhraseRelay = PublishRelay<Account>()
     private let openEvmPrivateKeyRelay = PublishRelay<Account>()
-    private let openPublicKeysRelay = PublishRelay<Account>()
+    private let openBip32RootKeyRelay = PublishRelay<Account>()
+    private let openAccountExtendedPrivateKeyRelay = PublishRelay<Account>()
+    private let openAccountExtendedPublicKeyRelay = PublishRelay<Account>()
     private let openBackupRelay = PublishRelay<Account>()
     private let openUnlinkRelay = PublishRelay<Account>()
     private let finishRelay = PublishRelay<()>()
@@ -39,17 +41,31 @@ class ManageAccountViewModel {
         }
     }
 
-    private func sync(account: Account) {
-        let keyActionState: KeyActionState
-
-        switch account.type {
-        case .evmAddress:
-            keyActionState = .none
-        default:
-            keyActionState = account.backedUp ? .showRecoveryPhrase : .backupRecoveryPhrase
+    private func keyActionGroups(account: Account) -> [[KeyAction]] {
+        guard account.backedUp else {
+            return [[.backupRecoveryPhrase]]
         }
 
-        keyActionStateRelay.accept(keyActionState)
+        switch account.type {
+        case .mnemonic: return [[.showRecoveryPhrase], [.showEvmPrivateKey], [.showBip32RootKey, .showAccountExtendedPrivateKey, .showAccountExtendedPublicKey]]
+        case .evmPrivateKey: return [[.showEvmPrivateKey]]
+        case .evmAddress: return []
+        case .hdExtendedKey(let key):
+            switch key {
+            case .private:
+                switch key.derivedType {
+                case .master: return [[.showBip32RootKey, .showAccountExtendedPrivateKey, .showAccountExtendedPublicKey]]
+                case .account: return [[.showAccountExtendedPrivateKey, .showAccountExtendedPublicKey]]
+                default: return []
+                }
+            case .public:
+                return [[.showAccountExtendedPublicKey]]
+            }
+        }
+    }
+
+    private func sync(account: Account) {
+        keyActionGroupsRelay.accept(keyActionGroups(account: account))
     }
 
     private func syncAccountSettings() {
@@ -70,8 +86,8 @@ extension ManageAccountViewModel {
         saveEnabledRelay.asDriver()
     }
 
-    var keyActionStateDriver: Driver<KeyActionState> {
-        keyActionStateRelay.asDriver()
+    var keyActionGroupsDriver: Driver<[[KeyAction]]> {
+        keyActionGroupsRelay.asDriver()
     }
 
     var openUnlockSignal: Signal<()> {
@@ -86,8 +102,16 @@ extension ManageAccountViewModel {
         openEvmPrivateKeyRelay.asSignal()
     }
 
-    var openPublicKeysSignal: Signal<Account> {
-        openPublicKeysRelay.asSignal()
+    var openBip32RootKeySignal: Signal<Account> {
+        openBip32RootKeyRelay.asSignal()
+    }
+
+    var openAccountExtendedPrivateKeySignal: Signal<Account> {
+        openAccountExtendedPrivateKeyRelay.asSignal()
+    }
+
+    var openAccountExtendedPublicKeySignal: Signal<Account> {
+        openAccountExtendedPublicKeyRelay.asSignal()
     }
 
     var openBackupSignal: Signal<Account> {
@@ -110,6 +134,8 @@ extension ManageAccountViewModel {
         switch unlockRequest {
         case .recoveryPhrase: openRecoveryPhraseRelay.accept(service.account)
         case .evmPrivateKey: openEvmPrivateKeyRelay.accept(service.account)
+        case .bip32RootKey: openBip32RootKeyRelay.accept(service.account)
+        case .accountExtendedPrivateKey: openAccountExtendedPrivateKeyRelay.accept(service.account)
         case .backup: openBackupRelay.accept(service.account)
         }
     }
@@ -141,8 +167,26 @@ extension ManageAccountViewModel {
         }
     }
 
-    func onTapPublicKeys() {
-        openPublicKeysRelay.accept(service.account)
+    func onTapBip32RootKey() {
+        if service.isPinSet {
+            unlockRequest = .bip32RootKey
+            openUnlockRelay.accept(())
+        } else {
+            openBip32RootKeyRelay.accept(service.account)
+        }
+    }
+
+    func onTapAccountExtendedPrivateKey() {
+        if service.isPinSet {
+            unlockRequest = .accountExtendedPrivateKey
+            openUnlockRelay.accept(())
+        } else {
+            openAccountExtendedPrivateKeyRelay.accept(service.account)
+        }
+    }
+
+    func onTapAccountExtendedPublicKey() {
+        openAccountExtendedPublicKeyRelay.accept(service.account)
     }
 
     func onTapBackup() {
@@ -165,12 +209,17 @@ extension ManageAccountViewModel {
     enum UnlockRequest {
         case recoveryPhrase
         case evmPrivateKey
+        case bip32RootKey
+        case accountExtendedPrivateKey
         case backup
     }
 
-    enum KeyActionState {
-        case none
+    enum KeyAction {
         case showRecoveryPhrase
+        case showEvmPrivateKey
+        case showBip32RootKey
+        case showAccountExtendedPrivateKey
+        case showAccountExtendedPublicKey
         case backupRecoveryPhrase
     }
 
