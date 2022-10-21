@@ -146,9 +146,15 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "evm_private_key.warning" = "This key is for all EVM-compatible blockchains. Do not share it with anyone.";
 "evm_private_key.tap_to_show" = "Tap to show private key";
 
-// Public Keys
+// Extended Key
 
-"public_keys.title" = "Public Keys";
+"extended_key.bip32_root_key" = "BIP32 Root Key";
+"extended_key.account_extended_private_key" = "Account Extended Private Key";
+"extended_key.account_extended_public_key" = "Account Extended Public Key";
+"extended_key.purpose" = "Purpose";
+"extended_key.blockchain" = "Blockchain";
+"extended_key.account" = "Account";
+"extended_key.tap_to_show" = "Tap to show extended private key";
 
 // Backup
 
