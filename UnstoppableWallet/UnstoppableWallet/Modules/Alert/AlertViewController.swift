@@ -55,11 +55,11 @@ class AlertViewController: ThemeActionSheetController {
                 id: "item_\(index)",
                 hash: "\(viewItem.selected)",
                 height: .heightCell48,
-                bind: { cell, _ in
+                bind: {  [weak self] cell, _ in
                     cell.set(backgroundStyle: .transparent)
                     cell.title = viewItem.text
                     cell.isSelected = viewItem.selected
-                    cell.onSelect = { [weak self] in
+                    cell.onSelect = {
                         self?.delegate?.onTapViewItem(index: index)
                     }
                 }
