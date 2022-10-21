@@ -113,26 +113,17 @@ class ManageAccountViewController: ThemeViewController {
     }
 
     private func openBip32RootKey(account: Account) {
-        guard let viewController = PublicKeysModule.viewController(account: account) else {
-            return
-        }
-
+        let viewController = ExtendedKeyModule.viewController(mode: .bip32RootKey, accountType: account.type)
         present(viewController, animated: true)
     }
 
     private func openAccountExtendedPrivateKey(account: Account) {
-        guard let viewController = PublicKeysModule.viewController(account: account) else {
-            return
-        }
-
+        let viewController = ExtendedKeyModule.viewController(mode: .accountExtendedPrivateKey, accountType: account.type)
         present(viewController, animated: true)
     }
 
     private func openAccountExtendedPublicKey(account: Account) {
-        guard let viewController = PublicKeysModule.viewController(account: account) else {
-            return
-        }
-
+        let viewController = ExtendedKeyModule.viewController(mode: .accountExtendedPublicKey, accountType: account.type)
         present(viewController, animated: true)
     }
 
