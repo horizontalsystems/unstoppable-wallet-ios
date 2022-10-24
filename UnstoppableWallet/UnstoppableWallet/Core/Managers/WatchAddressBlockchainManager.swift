@@ -65,7 +65,7 @@ class WatchAddressBlockchainManager {
                     let wallet = Wallet(configuredToken: configuredToken, account: account)
                     wallets.append(wallet)
                 } else if token.blockchainType.coinSettingType == .bitcoinCashCoinType {
-                    let _wallets = BitcoinCashCoinType.allCases.map { coinType in
+                    let _wallets = BitcoinCashCoinType.allCases.map { coinType -> Wallet in
                         let configuredToken = ConfiguredToken(token: token, coinSettings: [.bitcoinCashCoinType: coinType.rawValue])
                         return Wallet(configuredToken: configuredToken, account: account)
                     }
