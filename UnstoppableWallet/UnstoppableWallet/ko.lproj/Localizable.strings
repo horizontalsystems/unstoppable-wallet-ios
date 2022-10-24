@@ -38,7 +38,7 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "Copied";
+"alert.copied" = "복사됨";
 "alert.created" = "생성됨";
 "alert.restored" = "복구됨";
 "alert.address_added" = "주소 추가됨";
@@ -90,8 +90,13 @@
 // Restore
 
 "restore.title" = "복구";
-"restore.mnemonic.key" = "키";
-"restore.mnemonic.description" = "12, 15, 18, 21 또는 24단어로 구성되고 추가 영숫자 비밀번호가 포함될 수 있는 지갑 복구 문구(니모닉이라고도 함)를 입력하십시오.";
+"restore.by" = "By";
+"restore.restore_by" = "Restore By";
+"restore.restore_type.mnemonic" = "Recovery Phrase";
+"restore.restore_type.private_key" = "Private Key";
+"restore.mnemonic.placeholder" = "Enter 12, 15, 18, 21 or 24 words";
+"restore.private_key.placeholder" = "Enter EVM Private Key, BIP32 Root Key or Account Extended Private Key";
+"restore.private_key.invalid_key" = "Invalid Key";
 "restore_error.mnemonic_word_count" = "단어 수가 틀렸습니다. 12 개 와 24개 사이여야 합니다. 이렇게 입력했습니다: %@";
 "restore.checksum_error" = "유효하지 않은 체크섬";
 "restore.passphrase" = "암호문구";
@@ -139,9 +144,15 @@
 "evm_private_key.warning" = "이 키는 모든 EVM 호환 블록체인용입니다. 누구와도 공유하지 마십시오.";
 "evm_private_key.tap_to_show" = "개인 키 보기";
 
-// Public Keys
+// Extended Key
 
-"public_keys.title" = "공개 키";
+"extended_key.bip32_root_key" = "BIP32 Root Key";
+"extended_key.account_extended_private_key" = "Account Extended Private Key";
+"extended_key.account_extended_public_key" = "Account Extended Public Key";
+"extended_key.purpose" = "Purpose";
+"extended_key.blockchain" = "Blockchain";
+"extended_key.account" = "Account";
+"extended_key.tap_to_show" = "Tap to show extended private key";
 
 // Backup
 
@@ -797,6 +808,8 @@
 "manage_wallets.title" = "지갑";
 "manage_wallets.not_found" = "검색 결과가 없습니다. 토큰을 수동으로 추가해 보십시오.";
 "manage_wallets.search_placeholder" = "이름, 코드 또는 계약 주소";
+"manage_wallets.not_supported" = "Not supported";
+"manage_wallets.not_supported.description" = "Your current wallet type %@ does not support %@";
 
 "manage_coins.add_coin.title" = "%@ 추가 ";
 "manage_coins.add_coin.subtitle" = "%@ 지갑";
@@ -1083,8 +1096,8 @@
 "wallet_connect.no_account.description" = "적합한 지갑이 없습니다. 기존 지갑을 생성하거나 복원해야 합니다.";
 "wallet_connect.no_account.i_understand" = "이해합니다";
 
-"wallet_connect.watch_account.description" = "이 기능은 시계 전용 지갑에서는 작동하지 않으므로 복원 또는 생성된 지갑으로 전환해야 합니다.";
-"wallet_connect.watch_account.switch" = "전환";
+"wallet_connect.non_supported_account.description" = "You current wallet type %@ does not support WalletConnect";
+"wallet_connect.non_supported_account.switch" = "Switch";
 
 "wallet_connect.pending_requests_title" = "보류 중인 요청";
 "wallet_connect.pending_requests.nonactive_footer" = "요청을 열려면 원하는 지갑을 활성화해야 합니다";
@@ -1131,6 +1144,9 @@
 "manage_account.name" = "이름";
 "manage_account.recovery_phrase" = "복구 문구";
 "manage_account.evm_private_key" = "EVM 개인 키";
+"manage_account.bip32_root_key" = "BIP32 Root Key";
+"manage_account.account_extended_private_key" = "Account Extended Private Key";
+"manage_account.account_extended_public_key" = "Account Extended Public Key";
 "manage_account.public_keys" = "공개 키";
 "manage_account.backup_recovery_phrase" = "백업 복구 문구";
 "manage_account.unlink" = "링크 해제";
@@ -1184,7 +1200,12 @@
 "watch_address.title" = "관찰 주소";
 "watch_address.watch" = "관찰";
 "watch_address.address" = "주소";
-"watch_address.description" = "Ethereum 및 기타 지원되는 EVM 블록체인에만 사용할 수 있습니다.";
+"watch_address.by" = "By";
+"watch_address.watch_by" = "Watch By";
+"watch_address.evm_address" = "EVM Address";
+"watch_address.public_key" = "Account xPubKey";
+"watch_address.public_key.placeholder" = "Enter Account Extended Public Key ";
+"watch_address.public_key.invalid_key" = "Invalid Key";
 
 // Nft Collections
 
