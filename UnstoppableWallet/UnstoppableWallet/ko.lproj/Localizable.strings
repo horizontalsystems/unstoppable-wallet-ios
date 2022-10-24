@@ -38,7 +38,7 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "복사됨";
+"alert.copied" = "Copied";
 "alert.created" = "생성됨";
 "alert.restored" = "복구됨";
 "alert.address_added" = "주소 추가됨";
@@ -1049,8 +1049,8 @@
 "wallet_connect.active_account" = "지갑 활성화";
 "wallet_connect.address" = "주소";
 "wallet_connect.network" = "네트워크";
-"wallet_connect.address" = "주소";
-"wallet_connect.network" = "네트워크";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
 "wallet_connect.main.unsupported_chains" = "일부 체인은 지원되지 않습니다!";
 "wallet_connect.connect_description" = "승인을 눌러 이 앱이 귀하의 공공 주소를 볼 수 있도록 허용하십시오. 이것은 잠재적인 피싱 위험으로부터 데이터를 보호하기 위한 중요한 보안 단계 입니다.";
