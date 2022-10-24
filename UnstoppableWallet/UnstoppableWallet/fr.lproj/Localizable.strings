@@ -38,7 +38,7 @@
 "alert.added_to_wallet" = "Ajouté au portefeuille";
 "alert.already_added_to_wallet" = "Déjà ajouté au portefeuille";
 "alert.not_supported_yet" = "Pas pris en charge pour le moment";
-"alert.copied" = "Copied";
+"alert.copied" = "Copié";
 "alert.created" = "Établi";
 "alert.restored" = "Restauré ";
 "alert.address_added" = "Adresse ajoutée";
@@ -90,8 +90,13 @@
 // Restore
 
 "restore.title" = "Restaurer";
-"restore.mnemonic.key" = "Clé";
-"restore.mnemonic.description" = "Saisissez la phrase de récupération de votre portefeuille (mnémonique) qui se compose de 12, 15, 18, 21 ou 24 mots et peut inclure un mot de passe alphanumérique supplémentaire.";
+"restore.by" = "By";
+"restore.restore_by" = "Restore By";
+"restore.restore_type.mnemonic" = "Recovery Phrase";
+"restore.restore_type.private_key" = "Private Key";
+"restore.mnemonic.placeholder" = "Enter 12, 15, 18, 21 or 24 words";
+"restore.private_key.placeholder" = "Enter EVM Private Key, BIP32 Root Key or Account Extended Private Key";
+"restore.private_key.invalid_key" = "Invalid Key";
 "restore_error.mnemonic_word_count" = "Nombre de mots incorrect. Il doit être compris entre 12 et 24 mots. Vous en avez saisi : %@";
 "restore.checksum_error" = "Somme de contrôle invalide";
 "restore.passphrase" = "Phrase d'authentification";
@@ -139,9 +144,15 @@
 "evm_private_key.warning" = "Cette clé est pour toutes les blockchains compatibles EVM. Ne la partagez avec personne.";
 "evm_private_key.tap_to_show" = "Appuyez pour afficher la clé privée";
 
-// Public Keys
+// Extended Key
 
-"public_keys.title" = "Clés publiques";
+"extended_key.bip32_root_key" = "BIP32 Root Key";
+"extended_key.account_extended_private_key" = "Account Extended Private Key";
+"extended_key.account_extended_public_key" = "Account Extended Public Key";
+"extended_key.purpose" = "Purpose";
+"extended_key.blockchain" = "Blockchain";
+"extended_key.account" = "Account";
+"extended_key.tap_to_show" = "Tap to show extended private key";
 
 // Backup
 
@@ -797,6 +808,8 @@
 "manage_wallets.title" = "Portefeuilles";
 "manage_wallets.not_found" = "Aucun résultat trouvé. Essayez d'ajouter le token manuellement.";
 "manage_wallets.search_placeholder" = "Nom, code ou adresse du contrat";
+"manage_wallets.not_supported" = "Not supported";
+"manage_wallets.not_supported.description" = "Your current wallet type %@ does not support %@";
 
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
@@ -1083,8 +1096,8 @@
 "wallet_connect.no_account.description" = "Aucun portefeuille adéquat. Vous devez créer ou restaurer un portefeuille existant.";
 "wallet_connect.no_account.i_understand" = "J’ai Compris";
 
-"wallet_connect.watch_account.description" = "Cette fonctionnalité ne peut être utilisée avec les portefeuilles de type watching only. Vous devez basculer vers un portefeuille restauré ou en créer un.";
-"wallet_connect.watch_account.switch" = "Basculer";
+"wallet_connect.non_supported_account.description" = "You current wallet type %@ does not support WalletConnect";
+"wallet_connect.non_supported_account.switch" = "Switch";
 
 "wallet_connect.pending_requests_title" = "Demandes en attente";
 "wallet_connect.pending_requests.nonactive_footer" = "Pour ouvrir une demande, vous devez activer le portefeuille désiré";
@@ -1131,6 +1144,9 @@
 "manage_account.name" = "Nom";
 "manage_account.recovery_phrase" = "Phrase de réinitialisation";
 "manage_account.evm_private_key" = "Aucune clé privée";
+"manage_account.bip32_root_key" = "BIP32 Root Key";
+"manage_account.account_extended_private_key" = "Account Extended Private Key";
+"manage_account.account_extended_public_key" = "Account Extended Public Key";
 "manage_account.public_keys" = "Clés publiques";
 "manage_account.backup_recovery_phrase" = "Phrase de récupération de sauvegarde";
 "manage_account.unlink" = "Dissocier";
@@ -1184,7 +1200,12 @@
 "watch_address.title" = "Adresse à suivre";
 "watch_address.watch" = "Suivi";
 "watch_address.address" = "Adresse";
-"watch_address.description" = "Disponible uniquement pour Ethereum et autres blockchains EVM prises en charge.";
+"watch_address.by" = "By";
+"watch_address.watch_by" = "Watch By";
+"watch_address.evm_address" = "EVM Address";
+"watch_address.public_key" = "Account xPubKey";
+"watch_address.public_key.placeholder" = "Enter Account Extended Public Key ";
+"watch_address.public_key.invalid_key" = "Invalid Key";
 
 // Nft Collections
 
