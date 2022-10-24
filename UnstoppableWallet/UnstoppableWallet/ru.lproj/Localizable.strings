@@ -38,7 +38,7 @@
 "alert.added_to_wallet" = "Добавлено в Кошелек";
 "alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Ещё не поддерживается";
-"alert.copied" = "Copied";
+"alert.copied" = "Скопировано";
 "alert.created" = "Создан";
 "alert.restored" = "Восстановлен";
 "alert.address_added" = "Адрес Добавлен";
@@ -92,8 +92,13 @@
 // Restore
 
 "restore.title" = "Восстановить";
-"restore.mnemonic.key" = "Ключ";
-"restore.mnemonic.description" = "Введите фразу для восстановления(Мнемоническая Фраза), которая состоит из 12, 15, 18, 21 или 24 слов и может содержать дополнительный буквенно-цифровой пароль.";
+"restore.by" = "By";
+"restore.restore_by" = "Restore By";
+"restore.restore_type.mnemonic" = "Recovery Phrase";
+"restore.restore_type.private_key" = "Private Key";
+"restore.mnemonic.placeholder" = "Enter 12, 15, 18, 21 or 24 words";
+"restore.private_key.placeholder" = "Enter EVM Private Key, BIP32 Root Key or Account Extended Private Key";
+"restore.private_key.invalid_key" = "Invalid Key";
 "restore_error.mnemonic_word_count" = "Неправильное количество слов. Должно быть 12-24 слова. Вы ввели: %@";
 "restore.checksum_error" = "Неверная контрольная сумма";
 "restore.passphrase" = "Кодовая Фраза";
@@ -141,9 +146,15 @@
 "evm_private_key.warning" = "Этот ключ предназначен для всех EVM-совместимых блокчейнов. Не передавайте его никому.";
 "evm_private_key.tap_to_show" = "Нажмите, чтобы показать приватный ключ";
 
-// Public Keys
+// Extended Key
 
-"public_keys.title" = "Публичные Ключи";
+"extended_key.bip32_root_key" = "BIP32 Root Key";
+"extended_key.account_extended_private_key" = "Account Extended Private Key";
+"extended_key.account_extended_public_key" = "Account Extended Public Key";
+"extended_key.purpose" = "Purpose";
+"extended_key.blockchain" = "Blockchain";
+"extended_key.account" = "Account";
+"extended_key.tap_to_show" = "Tap to show extended private key";
 
 // Backup
 
@@ -799,6 +810,8 @@
 "manage_wallets.title" = "Токены";
 "manage_wallets.not_found" = "Ничего не найдено. Попробуйте добавить токен вручную.";
 "manage_wallets.search_placeholder" = "Имя, код или адрес контракта";
+"manage_wallets.not_supported" = "Not supported";
+"manage_wallets.not_supported.description" = "Your current wallet type %@ does not support %@";
 
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.subtitle" = "%@ Кошелек";
@@ -1085,8 +1098,8 @@
 "wallet_connect.no_account.description" = "Нет подходящего кошелька. Вам нужно создать или восстановить текущий кошелек.";
 "wallet_connect.no_account.i_understand" = "Я Понимаю";
 
-"wallet_connect.watch_account.description" = "Эта функция не доступна для кошельков для просмотра, вам нужно выбрать восстановленный или созданный кошелек.";
-"wallet_connect.watch_account.switch" = "Перекл.";
+"wallet_connect.non_supported_account.description" = "You current wallet type %@ does not support WalletConnect";
+"wallet_connect.non_supported_account.switch" = "Switch";
 
 "wallet_connect.pending_requests_title" = "Отложенные Запросы";
 "wallet_connect.pending_requests.nonactive_footer" = "Чтобы открыть запрос, необходимо активировать желаемый кошелек";
@@ -1133,6 +1146,9 @@
 "manage_account.name" = "Имя";
 "manage_account.recovery_phrase" = "Фраза для восстановления";
 "manage_account.evm_private_key" = "Приватный Ключ EVM";
+"manage_account.bip32_root_key" = "BIP32 Root Key";
+"manage_account.account_extended_private_key" = "Account Extended Private Key";
+"manage_account.account_extended_public_key" = "Account Extended Public Key";
 "manage_account.public_keys" = "Публичные Ключи";
 "manage_account.backup_recovery_phrase" = "Сделать резервную копию фразы восстановления";
 "manage_account.unlink" = "Отсоединить";
@@ -1186,7 +1202,12 @@
 "watch_address.title" = "Посмотреть Адрес";
 "watch_address.watch" = "Смотреть";
 "watch_address.address" = "Адрес";
-"watch_address.description" = "Доступно только для Ethereum и других поддерживаемых EVM блокчейнов.";
+"watch_address.by" = "By";
+"watch_address.watch_by" = "Watch By";
+"watch_address.evm_address" = "EVM Address";
+"watch_address.public_key" = "Account xPubKey";
+"watch_address.public_key.placeholder" = "Enter Account Extended Public Key ";
+"watch_address.public_key.invalid_key" = "Invalid Key";
 
 // Nft Collections
 
