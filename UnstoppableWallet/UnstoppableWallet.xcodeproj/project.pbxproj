@@ -3157,6 +3157,9 @@
 		D3C187B32907A60800FE1900 /* HdWalletKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187B22907A60800FE1900 /* HdWalletKit */; };
 		D3C187B52907A63600FE1900 /* HdWalletKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187B42907A63600FE1900 /* HdWalletKit */; };
 		D3C187B72907A63D00FE1900 /* HdWalletKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187B62907A63D00FE1900 /* HdWalletKit */; };
+		D3C187BA2907CFAB00FE1900 /* Checkpoints in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187B92907CFAB00FE1900 /* Checkpoints */; };
+		D3C187BC2907CFC200FE1900 /* Checkpoints in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187BB2907CFC200FE1900 /* Checkpoints */; };
+		D3C187BE2907CFCC00FE1900 /* Checkpoints in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187BD2907CFCC00FE1900 /* Checkpoints */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -4227,6 +4230,7 @@
 				D3604EA428F03DDD0066C366 /* BitcoinCashKit in Frameworks */,
 				D3993DC628F429B2008720FB /* UnstoppableDomainsResolution in Frameworks */,
 				D3604EB628F03DDD0066C366 /* BinanceChainKit in Frameworks */,
+				D3C187BE2907CFCC00FE1900 /* Checkpoints in Frameworks */,
 				D3604E5F28F02B330066C366 /* NftKit in Frameworks */,
 				D0DA7417272A6F1F0072BE86 /* UnicodeURL in Frameworks */,
 				50AB06AE2158E2EE00A01E4A /* LocalAuthentication.framework in Frameworks */,
@@ -4265,6 +4269,7 @@
 				D3604E8C28F03DBF0066C366 /* BitcoinCashKit in Frameworks */,
 				D3993DC428F429AA008720FB /* UnstoppableDomainsResolution in Frameworks */,
 				D3604E9E28F03DC00066C366 /* BinanceChainKit in Frameworks */,
+				D3C187BC2907CFC200FE1900 /* Checkpoints in Frameworks */,
 				D3604E5728F02B280066C366 /* NftKit in Frameworks */,
 				D0DA7413272A6F180072BE86 /* UnicodeURL in Frameworks */,
 				D38405B8218317DF007D50AD /* LocalAuthentication.framework in Frameworks */,
@@ -4303,6 +4308,7 @@
 				D3604E6928F02DF30066C366 /* BitcoinCashKit in Frameworks */,
 				D3993DC228F42992008720FB /* UnstoppableDomainsResolution in Frameworks */,
 				D3604E8528F03CDC0066C366 /* BinanceChainKit in Frameworks */,
+				D3C187BA2907CFAB00FE1900 /* Checkpoints in Frameworks */,
 				D3604E4D28F02AB40066C366 /* NftKit in Frameworks */,
 				D0DA740F272A6EFC0072BE86 /* UnicodeURL in Frameworks */,
 				D38406A721831B3D007D50AD /* LocalAuthentication.framework in Frameworks */,
@@ -7181,6 +7187,7 @@
 				D3993DBE28F4279A008720FB /* ActionSheet */,
 				D3993DC528F429B2008720FB /* UnstoppableDomainsResolution */,
 				D3C187B62907A63D00FE1900 /* HdWalletKit */,
+				D3C187BD2907CFCC00FE1900 /* Checkpoints */,
 			);
 			productName = Wallet;
 			productReference = D3285F4220BD158E00644076 /* Unstoppable DT.app */;
@@ -7229,6 +7236,7 @@
 				D3993DBC28F4278F008720FB /* ActionSheet */,
 				D3993DC328F429AA008720FB /* UnstoppableDomainsResolution */,
 				D3C187B42907A63600FE1900 /* HdWalletKit */,
+				D3C187BB2907CFC200FE1900 /* Checkpoints */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -7277,6 +7285,7 @@
 				D3993DBA28F4277E008720FB /* ActionSheet */,
 				D3993DC128F42992008720FB /* UnstoppableDomainsResolution */,
 				D3C187B22907A60800FE1900 /* HdWalletKit */,
+				D3C187B92907CFAB00FE1900 /* Checkpoints */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -7350,6 +7359,7 @@
 				D3993DB928F4277E008720FB /* XCRemoteSwiftPackageReference "ActionSheet" */,
 				D3993DC028F42992008720FB /* XCRemoteSwiftPackageReference "resolution-swift" */,
 				D3C187B12907A60700FE1900 /* XCRemoteSwiftPackageReference "HdWalletKit" */,
+				D3C187B82907CFAB00FE1900 /* XCRemoteSwiftPackageReference "Checkpoints" */,
 			);
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
@@ -10904,7 +10914,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.0.1;
 			};
 		};
 		D3604E7128F03B0A0066C366 /* XCRemoteSwiftPackageReference "ScanQrKit" */ = {
@@ -11041,6 +11051,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.1;
+			};
+		};
+		D3C187B82907CFAB00FE1900 /* XCRemoteSwiftPackageReference "Checkpoints" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/Checkpoints";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -11480,6 +11498,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3C187B12907A60700FE1900 /* XCRemoteSwiftPackageReference "HdWalletKit" */;
 			productName = HdWalletKit;
+		};
+		D3C187B92907CFAB00FE1900 /* Checkpoints */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187B82907CFAB00FE1900 /* XCRemoteSwiftPackageReference "Checkpoints" */;
+			productName = Checkpoints;
+		};
+		D3C187BB2907CFC200FE1900 /* Checkpoints */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187B82907CFAB00FE1900 /* XCRemoteSwiftPackageReference "Checkpoints" */;
+			productName = Checkpoints;
+		};
+		D3C187BD2907CFCC00FE1900 /* Checkpoints */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187B82907CFAB00FE1900 /* XCRemoteSwiftPackageReference "Checkpoints" */;
+			productName = Checkpoints;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
