@@ -55,8 +55,8 @@ enum AccountType {
             return salt.isEmpty ? "manage_accounts.n_words".localized(count) : "manage_accounts.n_words_with_passphrase".localized(count)
         case .evmPrivateKey:
             return "EVM Private Key"
-        case .evmAddress(let address):
-            return address.eip55.shortened
+        case .evmAddress:
+            return "EVM Address"
         case .hdExtendedKey(let key):
             switch key {
             case .private:
@@ -71,6 +71,14 @@ enum AccountType {
                 default: return ""
                 }
             }
+        }
+    }
+
+    var detailedDescription: String {
+        switch self {
+        case .evmAddress(let address):
+            return address.eip55.shortened
+        default: return description
         }
     }
 
