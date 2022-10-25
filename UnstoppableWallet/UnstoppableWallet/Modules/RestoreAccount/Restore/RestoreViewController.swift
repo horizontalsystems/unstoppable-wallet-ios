@@ -6,14 +6,20 @@ import RxCocoa
 import SectionsTableView
 import SnapKit
 import ComponentKit
+import UIExtensions
 
 class RestoreViewController: KeyboardAwareViewController {
+    private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
+
     private let viewModel: RestoreViewModel
     private let mnemonicViewModel: RestoreMnemonicViewModel
     private let privateKeyViewModel: RestorePrivateKeyViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
+
+    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    private let nextButton = PrimaryButton()
 
     private let mnemonicInputCell = MnemonicInputCell()
     private let mnemonicCautionCell = FormCautionCell()
@@ -30,7 +36,6 @@ class RestoreViewController: KeyboardAwareViewController {
     private var restoreType: RestoreViewModel.RestoreType = .mnemonic
     private var inputsVisible = false
     private var isLoaded = false
-    private var isFirstShownKeyboard = false
 
     private weak var returnViewController: UIViewController?
 
@@ -53,8 +58,8 @@ class RestoreViewController: KeyboardAwareViewController {
         title = "restore.title".localized
 
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancelButton))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .done, target: self, action: #selector(onTapProceedButton))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .done, target: self, action: #selector(onTapNext))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         view.addSubview(tableView)
@@ -66,6 +71,23 @@ class RestoreViewController: KeyboardAwareViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
+
+        view.addSubview(gradientWrapperView)
+        gradientWrapperView.snp.makeConstraints { maker in
+            maker.height.equalTo(wrapperViewHeight).priority(.high)
+            maker.leading.trailing.bottom.equalToSuperview()
+        }
+
+        gradientWrapperView.addSubview(nextButton)
+        nextButton.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(CGFloat.margin32)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
+        }
+
+        nextButton.set(style: .yellow)
+        nextButton.setTitle("button.next".localized, for: .normal)
+        nextButton.addTarget(self, action: #selector(onTapNext), for: .touchUpInside)
 
         mnemonicInputCell.set(placeholderText: "restore.mnemonic.placeholder".localized)
         mnemonicInputCell.onChangeHeight = { [weak self] in self?.reloadTable() }
@@ -149,27 +171,15 @@ class RestoreViewController: KeyboardAwareViewController {
         isLoaded = true
     }
 
-    override open func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        if !isFirstShownKeyboard {
-            DispatchQueue.main.async  {
-                _ = self.mnemonicInputCell.becomeFirstResponder()
-            }
-
-            isFirstShownKeyboard = true
-        }
-    }
-
     private func update(keyboardVisibility: CGFloat) {
         hintView.alpha = keyboardVisibility
     }
 
-    @objc private func onTapCancelButton() {
+    @objc private func onTapCancel() {
         dismiss(animated: true)
     }
 
-    @objc private func onTapProceedButton() {
+    @objc private func onTapNext() {
         viewModel.onTapProceed()
     }
 
@@ -189,7 +199,7 @@ class RestoreViewController: KeyboardAwareViewController {
     }
 
     private func showDefaultWords() {
-        let text = App.shared.appConfigProvider.defaultWords + " "
+        let text = App.shared.appConfigProvider.defaultWords
         mnemonicInputCell.set(text: text)
     }
 
