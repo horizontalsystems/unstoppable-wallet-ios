@@ -30,7 +30,7 @@ extension TopPlatformConfigProvider: IMarketMetricsServiceConfigProvider {
     }
 
     var imageUrl: String {
-        topPlatform.imageUrl
+        topPlatform.blockchain.type.imageUrl
     }
 
     var imageMode: MarketCategoryViewModel.ViewItem.ImageMode {

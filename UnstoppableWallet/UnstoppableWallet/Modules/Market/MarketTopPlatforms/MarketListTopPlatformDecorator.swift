@@ -42,7 +42,7 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
 
         return MarketModule.ListViewItem(
                 uid: item.blockchain.uid,
-                iconUrl: item.imageUrl,
+                iconUrl: item.blockchain.type.imageUrl,
                 iconShape: .square,
                 iconPlaceholderName: "placeholder_24",
                 leftPrimaryValue: item.blockchain.name,
