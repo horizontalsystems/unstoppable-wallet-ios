@@ -22,7 +22,7 @@ class SwitchAccountViewModel {
         ViewItem(
                 accountId: item.account.id,
                 title: item.account.name,
-                subtitle: item.account.type.description,
+                subtitle: item.account.type.detailedDescription,
                 selected: item.isActive
         )
     }
