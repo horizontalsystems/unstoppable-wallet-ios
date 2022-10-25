@@ -3154,6 +3154,9 @@
 		D3BF1E63274CBBCE00229A00 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E62274CBBCE00229A00 /* DeepDiff */; };
 		D3BF1E65274CBBE400229A00 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E64274CBBE400229A00 /* DeepDiff */; };
 		D3BF1E67274CBBF100229A00 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E66274CBBF100229A00 /* DeepDiff */; };
+		D3C187B32907A60800FE1900 /* HdWalletKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187B22907A60800FE1900 /* HdWalletKit */; };
+		D3C187B52907A63600FE1900 /* HdWalletKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187B42907A63600FE1900 /* HdWalletKit */; };
+		D3C187B72907A63D00FE1900 /* HdWalletKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187B62907A63D00FE1900 /* HdWalletKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -4239,6 +4242,7 @@
 				D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */,
 				D3604E6328F02B330066C366 /* OneInchKit in Frameworks */,
 				D3604EB828F03DDE0066C366 /* DashKit in Frameworks */,
+				D3C187B72907A63D00FE1900 /* HdWalletKit in Frameworks */,
 				D3604E6128F02B330066C366 /* UniswapKit in Frameworks */,
 				D3604EAA28F03DDD0066C366 /* ScanQrKit in Frameworks */,
 				D3BF1E67274CBBF100229A00 /* DeepDiff in Frameworks */,
@@ -4276,6 +4280,7 @@
 				D38405B9218317DF007D50AD /* AVFoundation.framework in Frameworks */,
 				D3604E5B28F02B280066C366 /* OneInchKit in Frameworks */,
 				D3604EA028F03DC00066C366 /* DashKit in Frameworks */,
+				D3C187B52907A63600FE1900 /* HdWalletKit in Frameworks */,
 				D3604E5928F02B280066C366 /* UniswapKit in Frameworks */,
 				D3604E9228F03DC00066C366 /* ScanQrKit in Frameworks */,
 				D3BF1E65274CBBE400229A00 /* DeepDiff in Frameworks */,
@@ -4313,6 +4318,7 @@
 				D38406A821831B3D007D50AD /* AVFoundation.framework in Frameworks */,
 				D3604E5328F02B150066C366 /* OneInchKit in Frameworks */,
 				D3604E8828F03D9E0066C366 /* DashKit in Frameworks */,
+				D3C187B32907A60800FE1900 /* HdWalletKit in Frameworks */,
 				D3604E5028F02AE70066C366 /* UniswapKit in Frameworks */,
 				D3604E7328F03B0A0066C366 /* ScanQrKit in Frameworks */,
 				D3BF1E63274CBBCE00229A00 /* DeepDiff in Frameworks */,
@@ -7174,6 +7180,7 @@
 				D3993DB328F4257E008720FB /* WalletConnect */,
 				D3993DBE28F4279A008720FB /* ActionSheet */,
 				D3993DC528F429B2008720FB /* UnstoppableDomainsResolution */,
+				D3C187B62907A63D00FE1900 /* HdWalletKit */,
 			);
 			productName = Wallet;
 			productReference = D3285F4220BD158E00644076 /* Unstoppable DT.app */;
@@ -7221,6 +7228,7 @@
 				D3993DAF28F4256F008720FB /* WalletConnect */,
 				D3993DBC28F4278F008720FB /* ActionSheet */,
 				D3993DC328F429AA008720FB /* UnstoppableDomainsResolution */,
+				D3C187B42907A63600FE1900 /* HdWalletKit */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -7268,6 +7276,7 @@
 				D3993DB728F42595008720FB /* WalletConnect */,
 				D3993DBA28F4277E008720FB /* ActionSheet */,
 				D3993DC128F42992008720FB /* UnstoppableDomainsResolution */,
+				D3C187B22907A60800FE1900 /* HdWalletKit */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -7340,6 +7349,7 @@
 				D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */,
 				D3993DB928F4277E008720FB /* XCRemoteSwiftPackageReference "ActionSheet" */,
 				D3993DC028F42992008720FB /* XCRemoteSwiftPackageReference "resolution-swift" */,
+				D3C187B12907A60700FE1900 /* XCRemoteSwiftPackageReference "HdWalletKit" */,
 			);
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
@@ -11025,6 +11035,14 @@
 				minimumVersion = 2.3.0;
 			};
 		};
+		D3C187B12907A60700FE1900 /* XCRemoteSwiftPackageReference "HdWalletKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/HdWalletKit.Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -11447,6 +11465,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3BF1E61274CBBCE00229A00 /* XCRemoteSwiftPackageReference "DeepDiff" */;
 			productName = DeepDiff;
+		};
+		D3C187B22907A60800FE1900 /* HdWalletKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187B12907A60700FE1900 /* XCRemoteSwiftPackageReference "HdWalletKit" */;
+			productName = HdWalletKit;
+		};
+		D3C187B42907A63600FE1900 /* HdWalletKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187B12907A60700FE1900 /* XCRemoteSwiftPackageReference "HdWalletKit" */;
+			productName = HdWalletKit;
+		};
+		D3C187B62907A63D00FE1900 /* HdWalletKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187B12907A60700FE1900 /* XCRemoteSwiftPackageReference "HdWalletKit" */;
+			productName = HdWalletKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
