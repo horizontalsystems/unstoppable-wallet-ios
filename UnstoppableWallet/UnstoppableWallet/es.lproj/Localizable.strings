@@ -90,8 +90,13 @@
 // Restore
 
 "restore.title" = "Restaurar desde";
-"restore.mnemonic.key" = "Clave";
-"restore.mnemonic.description" = "Introduzca su frase de recuperación de cartera (conocido como mnemonic) que consta de 12, 15, 18, 21 o 24 palabras y puede incluir una contraseña alfanumérica adicional.";
+"restore.by" = "Por";
+"restore.restore_by" = "Restaurar por";
+"restore.restore_type.mnemonic" = "Frase de Recuperación";
+"restore.restore_type.private_key" = "Clave privada";
+"restore.mnemonic.placeholder" = "Introduzca 12, 15, 18, 21 o 24 palabras";
+"restore.private_key.placeholder" = "Introduzca la clave privada EVM, BIP32 Root Key o Account Extended Private Key";
+"restore.private_key.invalid_key" = "Clave no válida";
 "restore_error.mnemonic_word_count" = "Número de palabras erróneas. Debe tener entre 12 y 24 palabras. Has ingresado: %@";
 "restore.checksum_error" = "Suma de verificación inválida";
 "restore.passphrase" = "Frase de contraseña";
@@ -139,9 +144,15 @@
 "evm_private_key.warning" = "Esta clave es para todas las blockchains compatibles con EVM. No la comparta con nadie.";
 "evm_private_key.tap_to_show" = "Toca para mostrar la clave privada";
 
-// Public Keys
+// Extended Key
 
-"public_keys.title" = "Claves públicas";
+"extended_key.bip32_root_key" = "BIP32 Root Key";
+"extended_key.account_extended_private_key" = "Account Extended Private Key";
+"extended_key.account_extended_public_key" = "Account Extended Public Key";
+"extended_key.purpose" = "Propósito";
+"extended_key.blockchain" = "Blockchain";
+"extended_key.account" = "Account";
+"extended_key.tap_to_show" = "Toque para mostrar extended private key";
 
 // Backup
 
@@ -219,7 +230,7 @@
 // Account switcher
 
 "switch_account.title" = "Cambiar monedero";
-"switch_account.wallets" = "Wallets";
+"switch_account.wallets" = "Monederos";
 "switch_account.watch_addresses" = "Ver Dirección";
 
 // Release notes
@@ -532,9 +543,9 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominio Bitcoin";
-"market.global.volume_24h.title" = "Volumen de 24 horas";
-"market.global.defi_cap.title" = "Cap. DeFi";
-"market.global.tvl_in_defi.title" = "TVL en DeFi";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "El cambio histórico en la relación entre el límite de mercado de Bitcoin y el resto de los mercados de criptomonedas. \n\nPor lo general, cuando el dominio de Bitcoin tiende a ser más alto, el resto de las tendencias del mercado de criptomonedas disminuye y viceversa.";
 "market.global.volume_24h.description" = "El cambio histórico en el volumen diario del mercado de operaciones agregadas para todas las criptomonedas.";
 "market.global.defi_cap.description" = "El cambio histórico en el valor acumulado del mercado de los tokens en el sector de las finanzas descentralizadas.";
@@ -797,6 +808,8 @@
 "manage_wallets.title" = "Monederos";
 "manage_wallets.not_found" = "No se han encontrado resultados. Intente añadir el token manualmente.";
 "manage_wallets.search_placeholder" = "Nombre, código o dirección del contrato";
+"manage_wallets.not_supported" = "No soportado";
+"manage_wallets.not_supported.description" = "Su tipo de cartera actual %@ no soporta %@";
 
 "manage_coins.add_coin.title" = "Añadir %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Monedero";
@@ -1083,8 +1096,8 @@
 "wallet_connect.no_account.description" = "No es un monedero adecuado. Necesitas crear o restaurar el monedero existente.";
 "wallet_connect.no_account.i_understand" = "Entiendo";
 
-"wallet_connect.watch_account.description" = "Esta característica no funciona con los monederos \"watch-only\", necesita cambiar a un monedero restaurado o creado.";
-"wallet_connect.watch_account.switch" = "Cambiar";
+"wallet_connect.non_supported_account.description" = "El tipo de cartera actual %@ no es compatible con WalletConnect";
+"wallet_connect.non_supported_account.switch" = "Cambiar";
 
 "wallet_connect.pending_requests_title" = "Solicitudes Pendientes";
 "wallet_connect.pending_requests.nonactive_footer" = "Para abrir una solicitud debe activar la cartera deseada";
@@ -1131,6 +1144,9 @@
 "manage_account.name" = "Nombre";
 "manage_account.recovery_phrase" = "Frase de Recuperación";
 "manage_account.evm_private_key" = "Clave Privada EVM";
+"manage_account.bip32_root_key" = "BIP32 Root Key";
+"manage_account.account_extended_private_key" = "Account Extended Private Key";
+"manage_account.account_extended_public_key" = "Account Extended Public Key";
 "manage_account.public_keys" = "Claves públicas";
 "manage_account.backup_recovery_phrase" = "Respaldar Frase de Recuperación";
 "manage_account.unlink" = "Desenlazar";
@@ -1184,7 +1200,12 @@
 "watch_address.title" = "Ver Dirección";
 "watch_address.watch" = "Ver";
 "watch_address.address" = "Dirección";
-"watch_address.description" = "Disponible sólo para Ethereum y otras blockchains EVM soportadas.";
+"watch_address.by" = "Por";
+"watch_address.watch_by" = "Ver por";
+"watch_address.evm_address" = "Dirección EVM";
+"watch_address.public_key" = "Account xPubKey";
+"watch_address.public_key.placeholder" = "Introduzca Account Extended Public Key ";
+"watch_address.public_key.invalid_key" = "Clave no válida";
 
 // Nft Collections
 

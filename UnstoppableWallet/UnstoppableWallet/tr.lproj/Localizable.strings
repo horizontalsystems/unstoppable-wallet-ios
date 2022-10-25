@@ -47,7 +47,7 @@
 "alert.disconnecting" = "Bağlantı kesiliyor";
 "alert.disconnected" = "Bağlantı kesildi";
 "alert.enabling" = "Etkinleştiriliyor";
-"alert.enabled_coins" = "Enabled %@ more coins";
+"alert.enabled_coins" = "%@ daha fazla jeton etkinleştirildi";
 "alert.sending" = "Gönderiliyor";
 "alert.sent" = "Gönderildi";
 "alert.swapping" = "Takas";
@@ -93,8 +93,13 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Restore
 
 "restore.title" = "Geri Yükle";
-"restore.mnemonic.key" = "Anahtar";
-"restore.mnemonic.description" = "12, 15, 18, 21 veya 24 kelimeden oluşan ve ek bir alfasayısal şifre içerebilen cüzdan kurtarma ifadenizi (aka anımsatıcı) girin.";
+"restore.by" = "İçerik";
+"restore.restore_by" = "Geri Yükle";
+"restore.restore_type.mnemonic" = "Kurtarma cümlesi";
+"restore.restore_type.private_key" = "Gizli Anahtar";
+"restore.mnemonic.placeholder" = "12, 15, 18, 21 veya 24 kelime girin";
+"restore.private_key.placeholder" = "EVM Özel Anahtarını, BIP32 Root Key veya Account Extended Private Key girin";
+"restore.private_key.invalid_key" = "Geçersiz Anahtar";
 "restore_error.mnemonic_word_count" = "Hatalı sözcük sayısı. 12-24 arası sözcük olmalıdır. Girilen: %@";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
 "restore.passphrase" = "Parola";
@@ -142,9 +147,15 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "evm_private_key.warning" = "Bu anahtar, tüm EVM uyumlu blok zincirleri içindir. Onu kimseyle paylaşmayın.";
 "evm_private_key.tap_to_show" = "Özel anahtarı göstermek için dokunun";
 
-// Public Keys
+// Extended Key
 
-"public_keys.title" = "Genel Anahtarlar";
+"extended_key.bip32_root_key" = "BIP32 Root Key";
+"extended_key.account_extended_private_key" = "Account Extended Private Key";
+"extended_key.account_extended_public_key" = "Account Extended Public Key";
+"extended_key.purpose" = "Amaç";
+"extended_key.blockchain" = "Blockchain";
+"extended_key.account" = "Hesap";
+"extended_key.tap_to_show" = "Extended private key göstermek için dokunun";
 
 // Backup
 
@@ -222,7 +233,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Account switcher
 
 "switch_account.title" = "Cüzdan Değiştir";
-"switch_account.wallets" = "Wallets";
+"switch_account.wallets" = "Cüzdanlar";
 "switch_account.watch_addresses" = "Adresi İzle";
 
 // Release notes
@@ -800,6 +811,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "manage_wallets.title" = "Cüzdanlar";
 "manage_wallets.not_found" = "Sonuç bulunamadı. Belirteci manuel olarak eklemeyi deneyin.";
 "manage_wallets.search_placeholder" = "Ad, kod veya sözleşme adresi";
+"manage_wallets.not_supported" = "Desteklenmiyor";
+"manage_wallets.not_supported.description" = "Mevcut cüzdan türünüz %@, %@'yi desteklemiyor";
 
 "manage_coins.add_coin.title" = "%@ ekle ";
 "manage_coins.add_coin.subtitle" = "%@ Cüzdanı";
@@ -1086,8 +1099,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.no_account.description" = "Uygun Cüzdan yok. Cüzdan oluşturmanız veya mevcut cüzdanı geri yüklemeniz gerekiyor.";
 "wallet_connect.no_account.i_understand" = "Anlıyorum";
 
-"wallet_connect.watch_account.description" = "Bu özellik salt izlenir cüzdanlarda çalışmaz, geri yüklediğiniz veya oluşturduğunuz bir cüzdana geçmeniz gerekiyor.";
-"wallet_connect.watch_account.switch" = "Değiştir";
+"wallet_connect.non_supported_account.description" = "Mevcut cüzdan türünüz %@ WalletConnect'i desteklemiyor";
+"wallet_connect.non_supported_account.switch" = "Değiştir";
 
 "wallet_connect.pending_requests_title" = "Bekleyen Talepler";
 "wallet_connect.pending_requests.nonactive_footer" = "Bir istek açmak için istenen cüzdanı etkinleştirmelisiniz";
@@ -1134,6 +1147,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "manage_account.name" = "İsim";
 "manage_account.recovery_phrase" = "Kurtarma cümlesi";
 "manage_account.evm_private_key" = "EVM Özel anahtar";
+"manage_account.bip32_root_key" = "BIP32 Root Key";
+"manage_account.account_extended_private_key" = "Account Extended Private Key";
+"manage_account.account_extended_public_key" = "Account Extended Public Key";
 "manage_account.public_keys" = "Genel Anahtarlar";
 "manage_account.backup_recovery_phrase" = "Yedekleme Kurtarma İfadesi";
 "manage_account.unlink" = "Ayır";
@@ -1187,7 +1203,12 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "watch_address.title" = "Adresi İzle";
 "watch_address.watch" = "İzle";
 "watch_address.address" = "Adres";
-"watch_address.description" = "Yalnızca Ethereum ve diğer desteklenen EVM blok zincirleri için kullanılabilir.";
+"watch_address.by" = "İçerik";
+"watch_address.watch_by" = "İzle";
+"watch_address.evm_address" = "EVM Adresi";
+"watch_address.public_key" = "Account xPubKey";
+"watch_address.public_key.placeholder" = "Account Extended Public Key ";
+"watch_address.public_key.invalid_key" = "Geçersiz Anahtar";
 
 // Nft Collections
 
@@ -1249,7 +1270,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "nft_collection.overview.floor_price" = "Taban Fiyatı";
 "nft_collection.overview.all_time_average" = "Tüm Zamanların Ortalaması";
 "nft_collection.overview.royalty" = "Royalty";
-"nft_collection.overview.inception_date" = "Inception Date";
+"nft_collection.overview.inception_date" = "Başlangıç ​​tarihi";
 
 "nft.activity.empty_list" = "Henüz öğe etkinliği yok";
 "nft.activity.event_types" = "Etkinlik Türleri";

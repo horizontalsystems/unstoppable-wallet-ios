@@ -92,8 +92,13 @@
 // Restore
 
 "restore.title" = "恢复";
-"restore.mnemonic.key" = "密钥";
-"restore.mnemonic.description" = "输入包含12、15、18、21或24个字的钱包恢复短语(又名mnemonic)，可能包含额外的字母和数字密码。";
+"restore.by" = "由";
+"restore.restore_by" = "还原方式";
+"restore.restore_type.mnemonic" = "恢复码";
+"restore.restore_type.private_key" = "私钥";
+"restore.mnemonic.placeholder" = "输入12、15、18、21或24个单词";
+"restore.private_key.placeholder" = "輸入 EVM 私鑰、BIP32 Root Key 或  Account Extended Private Key";
+"restore.private_key.invalid_key" = "错误密钥";
 "restore_error.mnemonic_word_count" = "错误的单词数。它必须介于12到24个单词之间。您输入了： %@";
 "restore.checksum_error" = "校验和无效";
 "restore.passphrase" = "密码";
@@ -141,9 +146,15 @@
 "evm_private_key.warning" = "此密钥适用于所有EVM兼容的区块链。请不要与任何人分享。";
 "evm_private_key.tap_to_show" = "点击显示私钥";
 
-// Public Keys
+// Extended Key
 
-"public_keys.title" = "公钥";
+"extended_key.bip32_root_key" = "BIP32 Root Key";
+"extended_key.account_extended_private_key" = "Account Extended Private Key";
+"extended_key.account_extended_public_key" = "Account Extended Public Key";
+"extended_key.purpose" = "目的";
+"extended_key.blockchain" = "Blockchain";
+"extended_key.account" = "账户";
+"extended_key.tap_to_show" = "点击點擊顯示 extended private key 显示扩展私钥";
 
 // Backup
 
@@ -799,6 +810,8 @@
 "manage_wallets.title" = "钱包";
 "manage_wallets.not_found" = "未找到任何结果。请尝试手动添加令牌。";
 "manage_wallets.search_placeholder" = "姓名、代码或合同地址";
+"manage_wallets.not_supported" = "不支持";
+"manage_wallets.not_supported.description" = "您当前的钱包类型 %@ 不支持 %@";
 
 "manage_coins.add_coin.title" = "添加%@ ";
 "manage_coins.add_coin.subtitle" = "%@钱包";
@@ -1085,8 +1098,8 @@
 "wallet_connect.no_account.description" = "没有合适的钱包。您需要创建或恢复现有钱包.";
 "wallet_connect.no_account.i_understand" = "我理解";
 
-"wallet_connect.watch_account.description" = "此功能不适用于观察中的钱包，您需要切换到恢复或创建的钱包.";
-"wallet_connect.watch_account.switch" = "切换";
+"wallet_connect.non_supported_account.description" = "您当前的钱包类型 %@ 不支持 WalletConnect";
+"wallet_connect.non_supported_account.switch" = "切换";
 
 "wallet_connect.pending_requests_title" = "待处理请求";
 "wallet_connect.pending_requests.nonactive_footer" = "若要打开请求，您必须激活所需钱包";
@@ -1133,6 +1146,9 @@
 "manage_account.name" = "名称";
 "manage_account.recovery_phrase" = "恢复码";
 "manage_account.evm_private_key" = "EVM 私钥";
+"manage_account.bip32_root_key" = "BIP32 Root Key";
+"manage_account.account_extended_private_key" = "Account Extended Private Key";
+"manage_account.account_extended_public_key" = "Account Extended Public Key";
 "manage_account.public_keys" = "公钥";
 "manage_account.backup_recovery_phrase" = "备份恢复词";
 "manage_account.unlink" = "取消链接";
@@ -1186,7 +1202,12 @@
 "watch_address.title" = "观察地址";
 "watch_address.watch" = "观察";
 "watch_address.address" = "地址";
-"watch_address.description" = "仅供以太坊和其他支持 EVM 区块链使用。";
+"watch_address.by" = "由";
+"watch_address.watch_by" = "观看者";
+"watch_address.evm_address" = "EVM 地址";
+"watch_address.public_key" = "Account xPubKey";
+"watch_address.public_key.placeholder" = "輸入 Account Extended Public Key";
+"watch_address.public_key.invalid_key" = "错误密钥";
 
 // Nft Collections
 
