@@ -49,6 +49,9 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
         navigationItem.largeTitleDisplayMode = .never
 
+        iconImageView.snp.makeConstraints { make in
+            make.size.equalTo(CGFloat.iconSize24)
+        }
         iconImageView.setImage(withUrlString: token.blockchain.type.imageUrl, placeholder: nil)
 
         view.addSubview(tableView)

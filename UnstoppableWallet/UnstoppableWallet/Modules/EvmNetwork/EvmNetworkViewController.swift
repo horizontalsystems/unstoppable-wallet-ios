@@ -34,6 +34,9 @@ class EvmNetworkViewController: ThemeViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
 
+        iconImageView.snp.makeConstraints { make in
+            make.size.equalTo(CGFloat.iconSize24)
+        }
         iconImageView.setImage(withUrlString: viewModel.iconUrl, placeholder: nil)
 
         view.addSubview(tableView)

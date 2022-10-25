@@ -186,7 +186,7 @@ extension MarketKit.BlockchainType {
 
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/blockchain-icons/\(uid)@\(scale)x.png"
+        return "https://cdn.blocksdecoded.com/blockchain-icons/32px/\(uid)@\(scale)x.png"
     }
 
     var coinSettingType: CoinSettingType? {
@@ -308,16 +308,7 @@ extension MarketKit.Coin {
 
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/coin-icons/\(uid)@\(scale)x.png"
-    }
-
-}
-
-extension MarketKit.TopPlatform {
-
-    var imageUrl: String {
-        let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/platform-icons/\(blockchain.uid)@\(scale)x.png"
+        return "https://cdn.blocksdecoded.com/coin-icons/32px/\(uid)@\(scale)x.png"
     }
 
 }
@@ -340,7 +331,7 @@ extension MarketKit.CoinCategory {
 
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/category-icons/\(uid)@\(scale)x.png"
+        return "https://cdn.blocksdecoded.com/category-icons/\(uid)@\(scale)x.png"
     }
 
 }
@@ -349,7 +340,7 @@ extension MarketKit.CoinInvestment.Fund {
 
     var logoUrl: String {
         let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/fund-icons/\(uid)@\(scale)x.png"
+        return "https://cdn.blocksdecoded.com/fund-icons/\(uid)@\(scale)x.png"
     }
 
 }
@@ -358,7 +349,7 @@ extension MarketKit.CoinTreasury {
 
     var fundLogoUrl: String {
         let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/treasury-icons/\(fundUid)@\(scale)x.png"
+        return "https://cdn.blocksdecoded.com/treasury-icons/\(fundUid)@\(scale)x.png"
     }
 
 }
@@ -367,7 +358,7 @@ extension MarketKit.Auditor {
 
     var logoUrl: String? {
         let scale = Int(UIScreen.main.scale)
-        return "https://markets.nyc3.digitaloceanspaces.com/auditor-icons/\(name)@\(scale)x.png".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        return "https://cdn.blocksdecoded.com/auditor-icons/\(name)@\(scale)x.png".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
     }
 
 }
