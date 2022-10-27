@@ -200,7 +200,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
 
     private func blockchainRow(viewItem: SecuritySettingsViewModel.BlockchainViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
         CellBuilder.selectableRow(
-                elements: [.image24, .multiText, .image20],
+                elements: [.image32, .multiText, .image20],
                 tableView: tableView,
                 id: "blockchain-\(index)",
                 hash: "\(viewItem.value)",

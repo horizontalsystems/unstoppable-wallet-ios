@@ -59,6 +59,7 @@ class TransactionsViewController: ThemeViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.registerCell(forClass: SpinnerCell.self)
+        tableView.registerCell(forClass: EmptyCell.self)
         tableView.registerHeaderFooter(forClass: TransactionDateHeaderView.self)
 
         view.addSubview(typeFiltersView)
@@ -206,7 +207,7 @@ class TransactionsViewController: ThemeViewController {
                             backPlaceholder: UIImage(named: backPlaceholder)
                     )
                 case .failedIcon:
-                    component.set(image: UIImage(named: "warning_2_20")?.withTintColor(.themeLucian))
+                    component.set(image: UIImage(named: "warning_2_20")?.withTintColor(.themeLucian), contentMode: .center)
                 }
             },
             .margin(6),
@@ -275,7 +276,7 @@ class TransactionsViewController: ThemeViewController {
 extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        sectionViewItems.count + (allLoaded ? 0 : 1)
+        sectionViewItems.count + (allLoaded ? 0 : 1) + 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -295,6 +296,8 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
                     rootElement: rootElement(viewItem: sectionViewItems[indexPath.section].viewItems[indexPath.row]),
                     layoutMargins: UIEdgeInsets(top: 0, left: .margin6, bottom: 0, right: .margin16)
             )
+        } else if indexPath.section == numberOfSections(in: tableView) - 1 {
+            return tableView.dequeueReusableCell(withIdentifier: String(describing: EmptyCell.self), for: indexPath)
         } else {
             return tableView.dequeueReusableCell(withIdentifier: String(describing: SpinnerCell.self), for: indexPath)
         }
@@ -302,10 +305,11 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.section < sectionViewItems.count {
-            let viewItem = sectionViewItems[indexPath.section].viewItems[indexPath.row]
+            let viewItems = sectionViewItems[indexPath.section].viewItems
+            let viewItem = viewItems[indexPath.row]
 
             if let cell = cell as? BaseThemeCell {
-                cell.set(backgroundStyle: .transparent, isFirst: indexPath.row != 0, isLast: true)
+                cell.set(backgroundStyle: .bordered, isFirst: indexPath.row == 0, isLast: indexPath.row == viewItems.count - 1)
                 cell.bind(rootElement: rootElement(viewItem: viewItem))
             }
 
@@ -321,7 +325,7 @@ extension TransactionsViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        .heightDoubleLineCell
+        indexPath.section < sectionViewItems.count ? .heightDoubleLineCell : .margin32
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

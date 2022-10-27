@@ -269,7 +269,7 @@ extension MarketDiscoveryViewController: SectionsDataSource {
 
                         return CellBuilderNew.row(
                                 rootElement: .hStack([
-                                    .image24 { component in
+                                    .image32 { component in
                                         component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.placeholderImageName))
                                     },
                                     .vStackCentered([

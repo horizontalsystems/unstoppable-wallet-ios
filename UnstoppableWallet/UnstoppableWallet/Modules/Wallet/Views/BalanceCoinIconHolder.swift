@@ -8,7 +8,7 @@ class BalanceCoinIconHolder: UIView {
     private let syncSpinner = HUDProgressView(
             progress: 0,
             strokeLineWidth: 2,
-            radius: 15,
+            radius: 19,
             strokeColor: .themeGray,
             duration: 2
     )
@@ -23,7 +23,7 @@ class BalanceCoinIconHolder: UIView {
         coinIconImageView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
             maker.centerY.equalToSuperview()
-            maker.size.equalTo(CGFloat.iconSize24)
+            maker.size.equalTo(CGFloat.iconSize32)
         }
 
         addSubview(syncSpinner)
