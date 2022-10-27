@@ -104,7 +104,7 @@ extension CoinTreasuriesViewController: SectionsDataSource {
         CellBuilderNew.row(
                 rootElement: .hStack([
                     .image24 { component in
-                        component.setImage(urlString: viewItem.logoUrl, placeholder: UIImage(named: "icon_placeholder_24"))
+                        component.setImage(urlString: viewItem.logoUrl, placeholder: UIImage(named: "placeholder_circle_32"))
                     },
                     .vStackCentered([
                         .hStack([

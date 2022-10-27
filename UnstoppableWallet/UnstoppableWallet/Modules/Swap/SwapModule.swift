@@ -203,10 +203,10 @@ extension SwapModule.Dex {
 
         var icon: String {
             switch self {
-            case .uniswap: return "uniswap_24"
-            case .oneInch: return "1inch_24"
-            case .pancake: return "pancake_24"
-            case .quickSwap: return "quick_24"
+            case .uniswap: return "uniswap_32"
+            case .oneInch: return "1inch_32"
+            case .pancake: return "pancake_32"
+            case .quickSwap: return "quick_32"
             }
         }
 

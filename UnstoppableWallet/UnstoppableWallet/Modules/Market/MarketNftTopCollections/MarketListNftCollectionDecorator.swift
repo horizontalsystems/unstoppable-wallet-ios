@@ -22,7 +22,7 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
         let collection = item.collection
 
         var floorPriceString = "---"
-        var iconPlaceholderName = "icon_placeholder_24"
+        var iconPlaceholderName = "placeholder_rectangle_32"
         if let floorPrice = collection.floorPrice {
             iconPlaceholderName = floorPrice.token.placeholderImageName
 

@@ -132,7 +132,7 @@ extension CoinMarketsViewController: SectionsDataSource {
                     cell.selectionStyle = viewItem.tradeUrl == nil ? .none : .default
 
                     cell.bind(index: 0) { (component: ImageComponent) in
-                        component.setImage(urlString: viewItem.marketImageUrl, placeholder: UIImage(named: "placeholder_24"))
+                        component.setImage(urlString: viewItem.marketImageUrl, placeholder: UIImage(named: "placeholder_rectangle_32"))
                         component.imageView.cornerRadius = .cornerRadius4
                         component.imageView.layer.cornerCurve = .continuous
                     }

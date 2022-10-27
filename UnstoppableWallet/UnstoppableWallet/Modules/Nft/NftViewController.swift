@@ -134,7 +134,7 @@ extension NftViewController: SectionsDataSource {
 
     private func row(viewItem: NftViewModel.ViewItem, expanded: Bool, index: Int) -> RowProtocol {
         CellBuilder.selectableRow(
-                elements: [.image24, .text, .text, .margin8, .image20],
+                elements: [.image32, .text, .text, .margin8, .image20],
                 tableView: tableView,
                 id: "collection-\(viewItem.uid)",
                 hash: "\(viewItem.name)-\(viewItem.count)-\(expanded)",

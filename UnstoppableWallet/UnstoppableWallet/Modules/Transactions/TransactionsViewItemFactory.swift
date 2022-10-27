@@ -55,7 +55,7 @@ class TransactionsViewItemFactory {
         case let .nftValue(nftUid, _, _, _):
             return .icon(
                     imageUrl: nftMetadata[nftUid]?.previewImageUrl,
-                    placeholderImageName: "placeholder_nft_24"
+                    placeholderImageName: "placeholder_nft_32"
             )
         default:
             return .icon(
@@ -78,7 +78,7 @@ class TransactionsViewItemFactory {
             case let .nftValue(nftUid, _, _, _):
                 frontType = .squircle
                 frontUrl = nftMetadata[nftUid]?.previewImageUrl
-                frontPlaceholder = "placeholder_nft_24"
+                frontPlaceholder = "placeholder_nft_32"
             default:
                 frontType = .circle
                 frontUrl = primaryValue.coin?.imageUrl
@@ -87,7 +87,7 @@ class TransactionsViewItemFactory {
         } else {
             frontType = .circle
             frontUrl = nil
-            frontPlaceholder = "icon_placeholder_24"
+            frontPlaceholder = "placeholder_circle_32"
         }
 
         if let secondaryValue = secondaryValue {
@@ -95,7 +95,7 @@ class TransactionsViewItemFactory {
             case let .nftValue(nftUid, _, _, _):
                 backType = .squircle
                 backUrl = nftMetadata[nftUid]?.previewImageUrl
-                backPlaceholder = "placeholder_nft_24"
+                backPlaceholder = "placeholder_nft_32"
             default:
                 backType = .circle
                 backUrl = secondaryValue.coin?.imageUrl
@@ -104,7 +104,7 @@ class TransactionsViewItemFactory {
         } else {
             backType = .circle
             backUrl = nil
-            backPlaceholder = "icon_placeholder_24"
+            backPlaceholder = "placeholder_circle_32"
         }
 
         return .doubleIcon(frontType: frontType, frontUrl: frontUrl, frontPlaceholder: frontPlaceholder, backType: backType, backUrl: backUrl, backPlaceholder: backPlaceholder)
@@ -118,7 +118,7 @@ class TransactionsViewItemFactory {
         } else if incomingValues.count == 1, outgoingValues.count == 1 {
             return doubleValueIconType(source: source, primaryValue: incomingValues[0], secondaryValue: outgoingValues[0], nftMetadata: nftMetadata)
         } else {
-            return .localIcon(imageName: source.blockchainType.iconPlain24)
+            return .localIcon(imageName: source.blockchainType.iconPlain32)
         }
     }
 
@@ -260,7 +260,7 @@ class TransactionsViewItemFactory {
             (primaryValue, secondaryValue) = values(incomingValues: incomingValues, outgoingValues: outgoingValues, currencyValue: item.currencyValue, nftMetadata: item.nftMetadata)
 
         case let record as ContractCreationTransactionRecord:
-            iconType = .localIcon(imageName: record.source.blockchainType.iconPlain24)
+            iconType = .localIcon(imageName: record.source.blockchainType.iconPlain32)
             title = "transactions.contract_creation".localized
             subTitle = "---"
 
@@ -318,7 +318,7 @@ class TransactionsViewItemFactory {
             sentToSelf = record.sentToSelf
 
         default:
-            iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain24)
+            iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
             title = "transactions.unknown_transaction.title".localized
             subTitle = "transactions.unknown_transaction.description".localized()
         }

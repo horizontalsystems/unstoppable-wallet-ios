@@ -46,7 +46,7 @@ class TransactionInfoViewItemFactory {
     private func nftAmount(source: TransactionSource, transactionValue: TransactionValue, type: AmountType, metadata: NftAssetBriefMetadata?) -> TransactionInfoModule.ViewItem {
         .nftAmount(
                 iconUrl: metadata?.previewImageUrl,
-                iconPlaceholderImageName: "placeholder_nft_24",
+                iconPlaceholderImageName: "placeholder_nft_32",
                 nftAmount: transactionValue.formattedFull(showSign: type.showSign) ?? "n/a".localized,
                 type: type,
                 providerCollectionUid: metadata?.providerCollectionUid,
@@ -267,7 +267,7 @@ class TransactionInfoViewItemFactory {
         switch record {
         case let record as ContractCreationTransactionRecord:
             sections.append([
-                .actionTitle(iconName: record.source.blockchainType.iconPlain24, iconDimmed: false, title: "transactions.contract_creation".localized, subTitle: nil)
+                .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: "transactions.contract_creation".localized, subTitle: nil)
             ])
 
         case let record as EvmOutgoingTransactionRecord:
@@ -366,7 +366,7 @@ class TransactionInfoViewItemFactory {
 
         case let record as ContractCallTransactionRecord:
             sections.append([
-                .actionTitle(iconName: record.source.blockchainType.iconPlain24, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress))
+                .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress))
             ])
 
             for event in record.outgoingEvents {

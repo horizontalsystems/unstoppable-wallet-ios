@@ -114,7 +114,7 @@ extension CoinAuditsViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .transparent)
 
                     cell.bind(index: 0, block: { (component: ImageComponent) in
-                        component.setImage(urlString: logoUrl, placeholder: UIImage(named: "icon_placeholder_24"))
+                        component.setImage(urlString: logoUrl, placeholder: UIImage(named: "placeholder_circle_32"))
                     })
 
                     cell.bind(index: 1, block: { (component: TextComponent) in

@@ -79,7 +79,7 @@ class CoinToggleViewController: ThemeSearchViewController {
         switch viewItem.state {
         case let .toggleVisible(enabled, hasSettings):
             return CellBuilder.row(
-                    elements: [.image24, .multiText, hasSettings ? .margin4 : .margin16, .transparentIconButton, .margin4, .switch],
+                    elements: [.image32, .multiText, hasSettings ? .margin4 : .margin16, .transparentIconButton, .margin4, .switch],
                     tableView: tableView,
                     id: "coin_\(viewItem.uid)",
                     hash: "coin_\(enabled)_\(hasSettings)_\(isLast)",
@@ -105,7 +105,7 @@ class CoinToggleViewController: ThemeSearchViewController {
             )
         case .toggleHidden:
             return CellBuilder.selectableRow(
-                    elements: [.image24, .multiText],
+                    elements: [.image32, .multiText],
                     tableView: tableView,
                     id: "coin_\(viewItem.uid)",
                     hash: "coin_\(isLast)",

@@ -121,7 +121,7 @@ extension CoinInvestorsViewController: SectionsDataSource {
 
     private func bind(cell: BaseThemeCell, fundViewItem: CoinInvestorsViewModel.FundViewItem) {
         cell.bind(index: 0) { (component: ImageComponent) in
-            component.setImage(urlString: fundViewItem.logoUrl, placeholder: UIImage(named: "icon_placeholder_24"))
+            component.setImage(urlString: fundViewItem.logoUrl, placeholder: UIImage(named: "placeholder_circle_32"))
         }
 
         cell.bind(index: 1) { (component: TextComponent) in

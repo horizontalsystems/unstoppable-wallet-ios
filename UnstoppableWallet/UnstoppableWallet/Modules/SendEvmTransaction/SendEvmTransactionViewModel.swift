@@ -203,7 +203,7 @@ class SendEvmTransactionViewModel {
 
         return .nftAmount(
                 iconUrl: iconUrl,
-                iconPlaceholderImageName: "placeholder_nft_24",
+                iconPlaceholderImageName: "placeholder_nft_32",
                 nftAmount: nftAmount,
                 type: type
         )

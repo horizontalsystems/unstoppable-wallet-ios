@@ -26,7 +26,7 @@ extension MarketKit.Token {
     }
 
     var placeholderImageName: String {
-        "\(blockchainType.uid)_\(type.tokenProtocol)"
+        "\(blockchainType.uid)_\(type.tokenProtocol)_32"
     }
 
     var swappable: Bool {
@@ -177,11 +177,11 @@ extension MarketKit.BlockchainType {
     }
 
     func placeholderImageName(tokenProtocol: TokenProtocol?) -> String {
-        tokenProtocol.map { "\(uid)_\($0)" } ?? "icon_placeholder_24"
+        tokenProtocol.map { "\(uid)_\($0)_32" } ?? "placeholder_circle_32"
     }
 
-    var iconPlain24: String {
-        "\(uid)_trx_24"
+    var iconPlain32: String {
+        "\(uid)_trx_32"
     }
 
     var imageUrl: String {

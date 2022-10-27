@@ -38,7 +38,7 @@ struct MarketModule {
     static func marketListCell(tableView: UITableView, backgroundStyle: BaseThemeCell.BackgroundStyle, listViewItem: MarketModule.ListViewItem, isFirst: Bool, isLast: Bool, rowActionProvider: (() -> [RowAction])?, action: (() -> ())?) -> RowProtocol {
         CellBuilderNew.row(
                 rootElement: .hStack([
-                    .image24 { component in
+                    .image32 { component in
                         component.imageView.contentMode = .scaleAspectFill
                         component.imageView.clipsToBounds = true
                         component.imageView.cornerRadius = listViewItem.iconShape.radius

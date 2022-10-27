@@ -44,7 +44,7 @@ extension MarketListTopPlatformDecorator: IMarketListDecorator {
                 uid: item.blockchain.uid,
                 iconUrl: item.blockchain.type.imageUrl,
                 iconShape: .square,
-                iconPlaceholderName: "placeholder_24",
+                iconPlaceholderName: "placeholder_rectangle_32",
                 leftPrimaryValue: item.blockchain.name,
                 leftSecondaryValue: protocols,
                 badge: rank.map { "\($0)" },
