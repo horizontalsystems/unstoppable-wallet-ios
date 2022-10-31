@@ -11022,7 +11022,7 @@
 			repositoryURL = "https://github.com/zcash/ZcashLightClientKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = "0.16.11-beta";
+				minimumVersion = "0.16.13-beta";
 			};
 		};
 		D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */ = {
@@ -11070,7 +11070,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/HdWalletKit.Swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.1;
+				minimumVersion = 1.0.3;
 			};
 		};
 		D3C187B82907CFAB00FE1900 /* XCRemoteSwiftPackageReference "Checkpoints" */ = {

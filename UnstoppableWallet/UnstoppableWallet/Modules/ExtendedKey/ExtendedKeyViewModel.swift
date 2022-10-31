@@ -21,6 +21,7 @@ class ExtendedKeyViewModel {
                 derivation: item.derivation.rawValue.uppercased(),
                 derivationSwitchable: item.derivationSwitchable,
                 blockchain: item.blockchain.map { $0.title },
+                blockchainSwitchable: item.blockchainSwitchable,
                 account: item.account.map { "\($0)" },
                 key: item.key ?? "",
                 keyIsPrivate: item.keyIsPrivate
@@ -91,12 +92,13 @@ extension ExtendedKeyViewModel {
         let derivation: String
         let derivationSwitchable: Bool
         let blockchain: String?
+        let blockchainSwitchable: Bool
         let account: String?
         let key: String
         let keyIsPrivate: Bool
 
         static var empty: ViewItem {
-            ViewItem(derivation: "", derivationSwitchable: false, blockchain: nil, account: nil, key: "", keyIsPrivate: false)
+            ViewItem(derivation: "", derivationSwitchable: false, blockchain: nil, blockchainSwitchable: false, account: nil, key: "", keyIsPrivate: false)
         }
     }
 

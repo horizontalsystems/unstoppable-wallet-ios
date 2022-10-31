@@ -52,6 +52,10 @@ class ExtendedKeyService {
         }
     }
 
+    private var blockchainSwitchable: Bool {
+        supportedBlockchains.count > 1
+    }
+
     private var resolvedBlockchain: Blockchain? {
         switch mode {
         case .bip32RootKey:
@@ -138,6 +142,7 @@ class ExtendedKeyService {
                 derivation: derivation,
                 derivationSwitchable: derivationSwitchable,
                 blockchain: resolvedBlockchain,
+                blockchainSwitchable: blockchainSwitchable,
                 account: resolvedAccount,
                 key: resolvedKey,
                 keyIsPrivate: keyIsPrivate
@@ -151,9 +156,11 @@ class ExtendedKeyService {
         case .bip32RootKey:
             return rootKey.extended()
         case .accountExtendedPrivateKey:
-            return try? keychain.derivedKey(path: "m/\(derivation.purpose.rawValue)'/\(blockchain.coinType)'/\(account)'").extended()
+            let version = try? HDExtendedKeyVersion(purpose: derivation.purpose, coinType: blockchain.extendedKeyCoinType, isPrivate: true)
+            return try? keychain.derivedKey(path: "m/\(derivation.purpose.rawValue)'/\(blockchain.coinType)'/\(account)'").extended(customVersion: version)
         case .accountExtendedPublicKey:
-            return try? keychain.derivedKey(path: "m/\(derivation.purpose.rawValue)'/\(blockchain.coinType)'/\(account)'").publicKey().extended()
+            let version = try? HDExtendedKeyVersion(purpose: derivation.purpose, coinType: blockchain.extendedKeyCoinType, isPrivate: false)
+            return try? keychain.derivedKey(path: "m/\(derivation.purpose.rawValue)'/\(blockchain.coinType)'/\(account)'").publicKey().extended(customVersion: version)
         }
     }
 
@@ -178,10 +185,24 @@ extension ExtendedKeyService {
     }
 
     var supportedBlockchains: [Blockchain] {
-        switch derivation {
-        case .bip44: return [.bitcoin, .bitcoinCash, .litecoin, .dash]
-        case .bip49: return [.bitcoin, .litecoin]
-        case .bip84: return [.bitcoin, .litecoin]
+        switch accountType {
+        case .hdExtendedKey(let key):
+            switch key.info.coinType {
+            case .bitcoin:
+                switch derivation {
+                case .bip44: return [.bitcoin, .bitcoinCash, .litecoin, .dash]
+                case .bip49: return [.bitcoin, .litecoin]
+                case .bip84: return [.bitcoin, .litecoin]
+                }
+            case .litecoin:
+                return [.litecoin]
+            }
+        default:
+            switch derivation {
+            case .bip44: return [.bitcoin, .bitcoinCash, .litecoin, .dash]
+            case .bip49: return [.bitcoin, .litecoin]
+            case .bip84: return [.bitcoin, .litecoin]
+            }
         }
     }
 
@@ -210,12 +231,13 @@ extension ExtendedKeyService {
         let derivation: MnemonicDerivation
         let derivationSwitchable: Bool
         let blockchain: Blockchain?
+        let blockchainSwitchable: Bool
         let account: Int?
         let key: String?
         let keyIsPrivate: Bool
 
         static var empty: Item {
-            Item(derivation: .bip44, derivationSwitchable: false, blockchain: nil, account: nil, key: nil, keyIsPrivate: false)
+            Item(derivation: .bip44, derivationSwitchable: false, blockchain: nil, blockchainSwitchable: false, account: nil, key: nil, keyIsPrivate: false)
         }
     }
 
