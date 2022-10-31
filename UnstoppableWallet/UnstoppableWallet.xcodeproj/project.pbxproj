@@ -3160,12 +3160,24 @@
 		D3C187BA2907CFAB00FE1900 /* Checkpoints in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187B92907CFAB00FE1900 /* Checkpoints */; };
 		D3C187BC2907CFC200FE1900 /* Checkpoints in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187BB2907CFC200FE1900 /* Checkpoints */; };
 		D3C187BE2907CFCC00FE1900 /* Checkpoints in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187BD2907CFCC00FE1900 /* Checkpoints */; };
-		D3C187C1290AA33E00FE1900 /* ThemeKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187C0290AA33E00FE1900 /* ThemeKit */; };
-		D3C187C4290AA35800FE1900 /* ComponentKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187C3290AA35800FE1900 /* ComponentKit */; };
-		D3C187C6290AA36700FE1900 /* ComponentKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187C5290AA36700FE1900 /* ComponentKit */; };
-		D3C187C8290AA36700FE1900 /* ThemeKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187C7290AA36700FE1900 /* ThemeKit */; };
-		D3C187CA290AA37000FE1900 /* ComponentKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187C9290AA37000FE1900 /* ComponentKit */; };
-		D3C187CC290AA37000FE1900 /* ThemeKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187CB290AA37000FE1900 /* ThemeKit */; };
+		D3C187CF290FCF2D00FE1900 /* ThemeKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187CE290FCF2D00FE1900 /* ThemeKit */; };
+		D3C187D2290FCF3D00FE1900 /* ComponentKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187D1290FCF3D00FE1900 /* ComponentKit */; };
+		D3C187D5290FCF7D00FE1900 /* HUD in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187D4290FCF7D00FE1900 /* HUD */; };
+		D3C187D8290FCF9C00FE1900 /* LanguageKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187D7290FCF9C00FE1900 /* LanguageKit */; };
+		D3C187DB290FCFBC00FE1900 /* SectionsTableView in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187DA290FCFBC00FE1900 /* SectionsTableView */; };
+		D3C187DE290FCFE400FE1900 /* StorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187DD290FCFE400FE1900 /* StorageKit */; };
+		D3C187E0290FD00E00FE1900 /* ThemeKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187DF290FD00E00FE1900 /* ThemeKit */; };
+		D3C187E2290FD00E00FE1900 /* ComponentKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187E1290FD00E00FE1900 /* ComponentKit */; };
+		D3C187E4290FD00E00FE1900 /* HUD in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187E3290FD00E00FE1900 /* HUD */; };
+		D3C187E6290FD00E00FE1900 /* LanguageKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187E5290FD00E00FE1900 /* LanguageKit */; };
+		D3C187E8290FD00E00FE1900 /* SectionsTableView in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187E7290FD00E00FE1900 /* SectionsTableView */; };
+		D3C187EA290FD00E00FE1900 /* StorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187E9290FD00E00FE1900 /* StorageKit */; };
+		D3C187EC290FD01B00FE1900 /* ThemeKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187EB290FD01B00FE1900 /* ThemeKit */; };
+		D3C187EE290FD01B00FE1900 /* ComponentKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187ED290FD01B00FE1900 /* ComponentKit */; };
+		D3C187F0290FD01B00FE1900 /* HUD in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187EF290FD01B00FE1900 /* HUD */; };
+		D3C187F2290FD01B00FE1900 /* LanguageKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187F1290FD01B00FE1900 /* LanguageKit */; };
+		D3C187F4290FD01B00FE1900 /* SectionsTableView in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187F3290FD01B00FE1900 /* SectionsTableView */; };
+		D3C187F6290FD01B00FE1900 /* StorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187F5290FD01B00FE1900 /* StorageKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -4231,19 +4243,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3993DB428F4257E008720FB /* WalletConnect in Frameworks */,
+				D3C187F4290FD01B00FE1900 /* SectionsTableView in Frameworks */,
 				D3993DB228F4257E008720FB /* WalletConnectV1 in Frameworks */,
 				500F1D1527AA87D9002AA419 /* AlignedCollectionViewFlowLayout in Frameworks */,
 				D3604EA428F03DDD0066C366 /* BitcoinCashKit in Frameworks */,
 				D3993DC628F429B2008720FB /* UnstoppableDomainsResolution in Frameworks */,
 				D3604EB628F03DDD0066C366 /* BinanceChainKit in Frameworks */,
 				D3C187BE2907CFCC00FE1900 /* Checkpoints in Frameworks */,
-				D3C187CA290AA37000FE1900 /* ComponentKit in Frameworks */,
 				D3604E5F28F02B330066C366 /* NftKit in Frameworks */,
+				D3C187EC290FD01B00FE1900 /* ThemeKit in Frameworks */,
 				D0DA7417272A6F1F0072BE86 /* UnicodeURL in Frameworks */,
 				50AB06AE2158E2EE00A01E4A /* LocalAuthentication.framework in Frameworks */,
 				D3993DBF28F4279A008720FB /* ActionSheet in Frameworks */,
 				D3BF1E60274CAF2500229A00 /* Down in Frameworks */,
 				D3604E5D28F02B320066C366 /* Eip20Kit in Frameworks */,
+				D3C187F6290FD01B00FE1900 /* StorageKit in Frameworks */,
 				D3604E4728F02A2C0066C366 /* EvmKit in Frameworks */,
 				D3604EA828F03DDD0066C366 /* MarketKit in Frameworks */,
 				D36E0C2E28D084D500B622B9 /* CollectionViewCenteredFlowLayout in Frameworks */,
@@ -4251,7 +4265,6 @@
 				D3604EB228F03DDD0066C366 /* Chart in Frameworks */,
 				D3604EA628F03DDD0066C366 /* LitecoinKit in Frameworks */,
 				D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */,
-				D3C187CC290AA37000FE1900 /* ThemeKit in Frameworks */,
 				D3604E6328F02B330066C366 /* OneInchKit in Frameworks */,
 				D3604EB828F03DDE0066C366 /* DashKit in Frameworks */,
 				D3C187B72907A63D00FE1900 /* HdWalletKit in Frameworks */,
@@ -4261,9 +4274,12 @@
 				D3993DA928F422C8008720FB /* ZcashLightClientKit in Frameworks */,
 				D3604EB028F03DDD0066C366 /* CurrencyKit in Frameworks */,
 				D0DA7415272A6F1F0072BE86 /* IDNSDK in Frameworks */,
+				D3C187F0290FD01B00FE1900 /* HUD in Frameworks */,
 				D3604EB428F03DDD0066C366 /* FeeRateKit in Frameworks */,
+				D3C187EE290FD01B00FE1900 /* ComponentKit in Frameworks */,
 				D3604EAC28F03DDD0066C366 /* PinKit in Frameworks */,
 				D3604EAE28F03DDD0066C366 /* ModuleKit in Frameworks */,
+				D3C187F2290FD01B00FE1900 /* LanguageKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4272,19 +4288,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3993DB028F4256F008720FB /* WalletConnect in Frameworks */,
+				D3C187E8290FD00E00FE1900 /* SectionsTableView in Frameworks */,
 				D3993DAE28F4256F008720FB /* WalletConnectV1 in Frameworks */,
 				500F1D1327AA87D1002AA419 /* AlignedCollectionViewFlowLayout in Frameworks */,
 				D3604E8C28F03DBF0066C366 /* BitcoinCashKit in Frameworks */,
 				D3993DC428F429AA008720FB /* UnstoppableDomainsResolution in Frameworks */,
 				D3604E9E28F03DC00066C366 /* BinanceChainKit in Frameworks */,
 				D3C187BC2907CFC200FE1900 /* Checkpoints in Frameworks */,
-				D3C187C6290AA36700FE1900 /* ComponentKit in Frameworks */,
 				D3604E5728F02B280066C366 /* NftKit in Frameworks */,
+				D3C187E0290FD00E00FE1900 /* ThemeKit in Frameworks */,
 				D0DA7413272A6F180072BE86 /* UnicodeURL in Frameworks */,
 				D38405B8218317DF007D50AD /* LocalAuthentication.framework in Frameworks */,
 				D3993DBD28F4278F008720FB /* ActionSheet in Frameworks */,
 				D3BF1E5E274CAF1C00229A00 /* Down in Frameworks */,
 				D3604E5528F02B280066C366 /* Eip20Kit in Frameworks */,
+				D3C187EA290FD00E00FE1900 /* StorageKit in Frameworks */,
 				D3604E4528F02A260066C366 /* EvmKit in Frameworks */,
 				D3604E9028F03DC00066C366 /* MarketKit in Frameworks */,
 				D36E0C2C28D084CB00B622B9 /* CollectionViewCenteredFlowLayout in Frameworks */,
@@ -4292,7 +4310,6 @@
 				D3604E9A28F03DC00066C366 /* Chart in Frameworks */,
 				D3604E8E28F03DBF0066C366 /* LitecoinKit in Frameworks */,
 				D38405B9218317DF007D50AD /* AVFoundation.framework in Frameworks */,
-				D3C187C8290AA36700FE1900 /* ThemeKit in Frameworks */,
 				D3604E5B28F02B280066C366 /* OneInchKit in Frameworks */,
 				D3604EA028F03DC00066C366 /* DashKit in Frameworks */,
 				D3C187B52907A63600FE1900 /* HdWalletKit in Frameworks */,
@@ -4302,9 +4319,12 @@
 				D3993DA728F422BD008720FB /* ZcashLightClientKit in Frameworks */,
 				D3604E9828F03DC00066C366 /* CurrencyKit in Frameworks */,
 				D0DA7411272A6F180072BE86 /* IDNSDK in Frameworks */,
+				D3C187E4290FD00E00FE1900 /* HUD in Frameworks */,
 				D3604E9C28F03DC00066C366 /* FeeRateKit in Frameworks */,
+				D3C187E2290FD00E00FE1900 /* ComponentKit in Frameworks */,
 				D3604E9428F03DC00066C366 /* PinKit in Frameworks */,
 				D3604E9628F03DC00066C366 /* ModuleKit in Frameworks */,
+				D3C187E6290FD00E00FE1900 /* LanguageKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4313,6 +4333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3993DB828F42595008720FB /* WalletConnect in Frameworks */,
+				D3C187DB290FCFBC00FE1900 /* SectionsTableView in Frameworks */,
 				D3993DB628F42595008720FB /* WalletConnectV1 in Frameworks */,
 				500F1D1127AA87BC002AA419 /* AlignedCollectionViewFlowLayout in Frameworks */,
 				D3604E6928F02DF30066C366 /* BitcoinCashKit in Frameworks */,
@@ -4320,12 +4341,13 @@
 				D3604E8528F03CDC0066C366 /* BinanceChainKit in Frameworks */,
 				D3C187BA2907CFAB00FE1900 /* Checkpoints in Frameworks */,
 				D3604E4D28F02AB40066C366 /* NftKit in Frameworks */,
-				D3C187C1290AA33E00FE1900 /* ThemeKit in Frameworks */,
+				D3C187CF290FCF2D00FE1900 /* ThemeKit in Frameworks */,
 				D0DA740F272A6EFC0072BE86 /* UnicodeURL in Frameworks */,
 				D38406A721831B3D007D50AD /* LocalAuthentication.framework in Frameworks */,
 				D3993DBB28F4277E008720FB /* ActionSheet in Frameworks */,
 				D3BF1E5C274BC29D00229A00 /* Down in Frameworks */,
 				D3604E4A28F02A8C0066C366 /* Eip20Kit in Frameworks */,
+				D3C187DE290FCFE400FE1900 /* StorageKit in Frameworks */,
 				D3604E4328F02A020066C366 /* EvmKit in Frameworks */,
 				D3604E7028F03AC80066C366 /* MarketKit in Frameworks */,
 				D36E0C2A28D084AB00B622B9 /* CollectionViewCenteredFlowLayout in Frameworks */,
@@ -4342,10 +4364,12 @@
 				D3993DA528F4229F008720FB /* ZcashLightClientKit in Frameworks */,
 				D3604E7C28F03BD20066C366 /* CurrencyKit in Frameworks */,
 				D0DA740D272A6EFC0072BE86 /* IDNSDK in Frameworks */,
+				D3C187D5290FCF7D00FE1900 /* HUD in Frameworks */,
 				D3604E8228F03C6B0066C366 /* FeeRateKit in Frameworks */,
-				D3C187C4290AA35800FE1900 /* ComponentKit in Frameworks */,
+				D3C187D2290FCF3D00FE1900 /* ComponentKit in Frameworks */,
 				D3604E7628F03B5E0066C366 /* PinKit in Frameworks */,
 				D3604E7928F03B9F0066C366 /* ModuleKit in Frameworks */,
+				D3C187D8290FCF9C00FE1900 /* LanguageKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7200,8 +7224,12 @@
 				D3993DC528F429B2008720FB /* UnstoppableDomainsResolution */,
 				D3C187B62907A63D00FE1900 /* HdWalletKit */,
 				D3C187BD2907CFCC00FE1900 /* Checkpoints */,
-				D3C187C9290AA37000FE1900 /* ComponentKit */,
-				D3C187CB290AA37000FE1900 /* ThemeKit */,
+				D3C187EB290FD01B00FE1900 /* ThemeKit */,
+				D3C187ED290FD01B00FE1900 /* ComponentKit */,
+				D3C187EF290FD01B00FE1900 /* HUD */,
+				D3C187F1290FD01B00FE1900 /* LanguageKit */,
+				D3C187F3290FD01B00FE1900 /* SectionsTableView */,
+				D3C187F5290FD01B00FE1900 /* StorageKit */,
 			);
 			productName = Wallet;
 			productReference = D3285F4220BD158E00644076 /* Unstoppable DT.app */;
@@ -7251,8 +7279,12 @@
 				D3993DC328F429AA008720FB /* UnstoppableDomainsResolution */,
 				D3C187B42907A63600FE1900 /* HdWalletKit */,
 				D3C187BB2907CFC200FE1900 /* Checkpoints */,
-				D3C187C5290AA36700FE1900 /* ComponentKit */,
-				D3C187C7290AA36700FE1900 /* ThemeKit */,
+				D3C187DF290FD00E00FE1900 /* ThemeKit */,
+				D3C187E1290FD00E00FE1900 /* ComponentKit */,
+				D3C187E3290FD00E00FE1900 /* HUD */,
+				D3C187E5290FD00E00FE1900 /* LanguageKit */,
+				D3C187E7290FD00E00FE1900 /* SectionsTableView */,
+				D3C187E9290FD00E00FE1900 /* StorageKit */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -7302,8 +7334,12 @@
 				D3993DC128F42992008720FB /* UnstoppableDomainsResolution */,
 				D3C187B22907A60800FE1900 /* HdWalletKit */,
 				D3C187B92907CFAB00FE1900 /* Checkpoints */,
-				D3C187C0290AA33E00FE1900 /* ThemeKit */,
-				D3C187C3290AA35800FE1900 /* ComponentKit */,
+				D3C187CE290FCF2D00FE1900 /* ThemeKit */,
+				D3C187D1290FCF3D00FE1900 /* ComponentKit */,
+				D3C187D4290FCF7D00FE1900 /* HUD */,
+				D3C187D7290FCF9C00FE1900 /* LanguageKit */,
+				D3C187DA290FCFBC00FE1900 /* SectionsTableView */,
+				D3C187DD290FCFE400FE1900 /* StorageKit */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -7378,8 +7414,12 @@
 				D3993DC028F42992008720FB /* XCRemoteSwiftPackageReference "resolution-swift" */,
 				D3C187B12907A60700FE1900 /* XCRemoteSwiftPackageReference "HdWalletKit" */,
 				D3C187B82907CFAB00FE1900 /* XCRemoteSwiftPackageReference "Checkpoints" */,
-				D3C187BF290AA33E00FE1900 /* XCRemoteSwiftPackageReference "ThemeKit" */,
-				D3C187C2290AA35800FE1900 /* XCRemoteSwiftPackageReference "ComponentKit" */,
+				D3C187CD290FCF2D00FE1900 /* XCRemoteSwiftPackageReference "ThemeKit" */,
+				D3C187D0290FCF3D00FE1900 /* XCRemoteSwiftPackageReference "ComponentKit" */,
+				D3C187D3290FCF7D00FE1900 /* XCRemoteSwiftPackageReference "HUD" */,
+				D3C187D6290FCF9C00FE1900 /* XCRemoteSwiftPackageReference "LanguageKit" */,
+				D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView" */,
+				D3C187DC290FCFE400FE1900 /* XCRemoteSwiftPackageReference "StorageKit" */,
 			);
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
@@ -10869,136 +10909,136 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/EvmKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3604E4828F02A8B0066C366 /* XCRemoteSwiftPackageReference "Eip20Kit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/Eip20Kit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3604E4B28F02AB40066C366 /* XCRemoteSwiftPackageReference "NftKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/NftKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3604E4E28F02AE60066C366 /* XCRemoteSwiftPackageReference "UniswapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/UniswapKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3604E5128F02B150066C366 /* XCRemoteSwiftPackageReference "OneInchKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/OneInchKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3604E6428F02D9A0066C366 /* XCRemoteSwiftPackageReference "BitcoinKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3604E6728F02DF30066C366 /* XCRemoteSwiftPackageReference "BitcoinCashKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCashKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3604E6A28F02E3F0066C366 /* XCRemoteSwiftPackageReference "LitecoinKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/LitecoinKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3604E6E28F03AC70066C366 /* XCRemoteSwiftPackageReference "MarketKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.1;
+				kind = exactVersion;
+				version = 1.0.1;
 			};
 		};
 		D3604E7128F03B0A0066C366 /* XCRemoteSwiftPackageReference "ScanQrKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/ScanQrKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3604E7428F03B5E0066C366 /* XCRemoteSwiftPackageReference "PinKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/PinKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3604E7728F03B9F0066C366 /* XCRemoteSwiftPackageReference "ModuleKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/ModuleKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3604E7A28F03BD20066C366 /* XCRemoteSwiftPackageReference "CurrencyKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/CurrencyKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.1;
 			};
 		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/Chart.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3604E8028F03C6B0066C366 /* XCRemoteSwiftPackageReference "FeeRateKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/FeeRateKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3604E8328F03CDC0066C366 /* XCRemoteSwiftPackageReference "BinanceChainKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/BinanceChainKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3604E8628F03D9E0066C366 /* XCRemoteSwiftPackageReference "DashKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/DashKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D36E0C2828D084AB00B622B9 /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */ = {
@@ -11013,16 +11053,16 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/wallet-connect-swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.1;
 			};
 		};
 		D3993DA328F4229F008720FB /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/zcash/ZcashLightClientKit";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = "0.16.13-beta";
+				kind = exactVersion;
+				version = "0.16.13-beta";
 			};
 		};
 		D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */ = {
@@ -11037,8 +11077,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/ActionSheet.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 		D3993DC028F42992008720FB /* XCRemoteSwiftPackageReference "resolution-swift" */ = {
@@ -11069,32 +11109,64 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/HdWalletKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.3;
+				kind = exactVersion;
+				version = 1.0.3;
 			};
 		};
 		D3C187B82907CFAB00FE1900 /* XCRemoteSwiftPackageReference "Checkpoints" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/Checkpoints";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.3;
+				kind = exactVersion;
+				version = 1.0.3;
 			};
 		};
-		D3C187BF290AA33E00FE1900 /* XCRemoteSwiftPackageReference "ThemeKit" */ = {
+		D3C187CD290FCF2D00FE1900 /* XCRemoteSwiftPackageReference "ThemeKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/ThemeKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.1;
+				kind = exactVersion;
+				version = 1.0.1;
 			};
 		};
-		D3C187C2290AA35800FE1900 /* XCRemoteSwiftPackageReference "ComponentKit" */ = {
+		D3C187D0290FCF3D00FE1900 /* XCRemoteSwiftPackageReference "ComponentKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/ComponentKit.Swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.1;
+				kind = exactVersion;
+				version = 1.0.1;
+			};
+		};
+		D3C187D3290FCF7D00FE1900 /* XCRemoteSwiftPackageReference "HUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/HUD.Swift";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.0;
+			};
+		};
+		D3C187D6290FCF9C00FE1900 /* XCRemoteSwiftPackageReference "LanguageKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/LanguageKit.Swift";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.0;
+			};
+		};
+		D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/SectionsTableView.Swift";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.0;
+			};
+		};
+		D3C187DC290FCFE400FE1900 /* XCRemoteSwiftPackageReference "StorageKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/StorageKit.Swift";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -11550,31 +11622,95 @@
 			package = D3C187B82907CFAB00FE1900 /* XCRemoteSwiftPackageReference "Checkpoints" */;
 			productName = Checkpoints;
 		};
-		D3C187C0290AA33E00FE1900 /* ThemeKit */ = {
+		D3C187CE290FCF2D00FE1900 /* ThemeKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D3C187BF290AA33E00FE1900 /* XCRemoteSwiftPackageReference "ThemeKit" */;
+			package = D3C187CD290FCF2D00FE1900 /* XCRemoteSwiftPackageReference "ThemeKit" */;
 			productName = ThemeKit;
 		};
-		D3C187C3290AA35800FE1900 /* ComponentKit */ = {
+		D3C187D1290FCF3D00FE1900 /* ComponentKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D3C187C2290AA35800FE1900 /* XCRemoteSwiftPackageReference "ComponentKit" */;
+			package = D3C187D0290FCF3D00FE1900 /* XCRemoteSwiftPackageReference "ComponentKit" */;
 			productName = ComponentKit;
 		};
-		D3C187C5290AA36700FE1900 /* ComponentKit */ = {
+		D3C187D4290FCF7D00FE1900 /* HUD */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = ComponentKit;
+			package = D3C187D3290FCF7D00FE1900 /* XCRemoteSwiftPackageReference "HUD" */;
+			productName = HUD;
 		};
-		D3C187C7290AA36700FE1900 /* ThemeKit */ = {
+		D3C187D7290FCF9C00FE1900 /* LanguageKit */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = D3C187D6290FCF9C00FE1900 /* XCRemoteSwiftPackageReference "LanguageKit" */;
+			productName = LanguageKit;
+		};
+		D3C187DA290FCFBC00FE1900 /* SectionsTableView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView" */;
+			productName = SectionsTableView;
+		};
+		D3C187DD290FCFE400FE1900 /* StorageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187DC290FCFE400FE1900 /* XCRemoteSwiftPackageReference "StorageKit" */;
+			productName = StorageKit;
+		};
+		D3C187DF290FD00E00FE1900 /* ThemeKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187CD290FCF2D00FE1900 /* XCRemoteSwiftPackageReference "ThemeKit" */;
 			productName = ThemeKit;
 		};
-		D3C187C9290AA37000FE1900 /* ComponentKit */ = {
+		D3C187E1290FD00E00FE1900 /* ComponentKit */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = D3C187D0290FCF3D00FE1900 /* XCRemoteSwiftPackageReference "ComponentKit" */;
 			productName = ComponentKit;
 		};
-		D3C187CB290AA37000FE1900 /* ThemeKit */ = {
+		D3C187E3290FD00E00FE1900 /* HUD */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = D3C187D3290FCF7D00FE1900 /* XCRemoteSwiftPackageReference "HUD" */;
+			productName = HUD;
+		};
+		D3C187E5290FD00E00FE1900 /* LanguageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187D6290FCF9C00FE1900 /* XCRemoteSwiftPackageReference "LanguageKit" */;
+			productName = LanguageKit;
+		};
+		D3C187E7290FD00E00FE1900 /* SectionsTableView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView" */;
+			productName = SectionsTableView;
+		};
+		D3C187E9290FD00E00FE1900 /* StorageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187DC290FCFE400FE1900 /* XCRemoteSwiftPackageReference "StorageKit" */;
+			productName = StorageKit;
+		};
+		D3C187EB290FD01B00FE1900 /* ThemeKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187CD290FCF2D00FE1900 /* XCRemoteSwiftPackageReference "ThemeKit" */;
 			productName = ThemeKit;
+		};
+		D3C187ED290FD01B00FE1900 /* ComponentKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187D0290FCF3D00FE1900 /* XCRemoteSwiftPackageReference "ComponentKit" */;
+			productName = ComponentKit;
+		};
+		D3C187EF290FD01B00FE1900 /* HUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187D3290FCF7D00FE1900 /* XCRemoteSwiftPackageReference "HUD" */;
+			productName = HUD;
+		};
+		D3C187F1290FD01B00FE1900 /* LanguageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187D6290FCF9C00FE1900 /* XCRemoteSwiftPackageReference "LanguageKit" */;
+			productName = LanguageKit;
+		};
+		D3C187F3290FD01B00FE1900 /* SectionsTableView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView" */;
+			productName = SectionsTableView;
+		};
+		D3C187F5290FD01B00FE1900 /* StorageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3C187DC290FCFE400FE1900 /* XCRemoteSwiftPackageReference "StorageKit" */;
+			productName = StorageKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
