@@ -187,9 +187,9 @@ extension ExtendedKeyViewController: SectionsDataSource {
                             id: "blockchain",
                             title: "extended_key.blockchain".localized,
                             value: blockchain,
-                            action: { [weak self] in
+                            action: viewItem.blockchainSwitchable ? { [weak self] in
                                 self?.onTapBlockchain()
-                            }
+                            } : nil
                     )
             )
         }
