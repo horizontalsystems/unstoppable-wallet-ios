@@ -45,7 +45,7 @@ class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
     }
 
     override func convert(result: Any) -> String? {
-        (result as? Data)?.toHexString()
+        (result as? Data)?.hs.hexString
     }
 
     enum TransactionError: Error {
@@ -64,7 +64,7 @@ class WalletConnectSignMessageRequest: WalletConnectRequest {
     }
 
     override func convert(result: Any) -> String? {
-        (result as? Data)?.toHexString()
+        (result as? Data)?.hs.hexString
     }
 
 }
