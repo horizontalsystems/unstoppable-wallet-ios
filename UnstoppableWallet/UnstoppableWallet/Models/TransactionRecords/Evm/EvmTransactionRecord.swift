@@ -9,7 +9,7 @@ class EvmTransactionRecord: TransactionRecord {
 
     init(source: TransactionSource, transaction: Transaction, baseToken: Token, ownTransaction: Bool, spam: Bool = false) {
         self.transaction = transaction
-        let txHash = transaction.hash.toHexString()
+        let txHash = transaction.hash.hs.hexString
         self.ownTransaction = ownTransaction
 
         if let feeAmount = transaction.gasUsed ?? transaction.gasLimit, let gasPrice = transaction.gasPrice {
