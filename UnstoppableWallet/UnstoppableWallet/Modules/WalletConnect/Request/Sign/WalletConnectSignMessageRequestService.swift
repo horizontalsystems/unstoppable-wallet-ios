@@ -27,9 +27,9 @@ extension WalletConnectSignMessageRequestService {
     var message: String {
         switch request.payload {
         case let .sign(data, _):
-            return String(data: data, encoding: .utf8) ?? data.toHexString()
+            return String(data: data, encoding: .utf8) ?? data.hs.hexString
         case let .personalSign(data, _):
-            return String(data: data, encoding: .utf8) ?? data.toHexString()
+            return String(data: data, encoding: .utf8) ?? data.hs.hexString
         case let .signTypeData(_, data, _):
             guard let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                   let message = object["message"],

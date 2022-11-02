@@ -2916,6 +2916,9 @@
 		D3285F4620BD158E00644076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3285F4520BD158E00644076 /* AppDelegate.swift */; };
 		D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3373D9420BEC7B30082BC4A /* AVFoundation.framework */; };
 		D3373DB220C52F640082BC4A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3373DB120C52F640082BC4A /* LaunchScreen.xib */; };
+		D339A93D29126D0F00B895BE /* HsCryptoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D339A93C29126D0F00B895BE /* HsCryptoKit */; };
+		D339A93F29126D2A00B895BE /* HsCryptoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D339A93E29126D2A00B895BE /* HsCryptoKit */; };
+		D339A94129126D3400B895BE /* HsCryptoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D339A94029126D3400B895BE /* HsCryptoKit */; };
 		D3447DEA25E38300009928D9 /* WalletConnectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B968B299A67FC7FEAE3 /* WalletConnectManager.swift */; };
 		D3447DEB25E38300009928D9 /* WalletConnectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B968B299A67FC7FEAE3 /* WalletConnectManager.swift */; };
 		D3447DEC25E38301009928D9 /* WalletConnectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B968B299A67FC7FEAE3 /* WalletConnectManager.swift */; };
@@ -4278,6 +4281,7 @@
 				D3604EB428F03DDD0066C366 /* FeeRateKit in Frameworks */,
 				D3C187EE290FD01B00FE1900 /* ComponentKit in Frameworks */,
 				D3604EAC28F03DDD0066C366 /* PinKit in Frameworks */,
+				D339A94129126D3400B895BE /* HsCryptoKit in Frameworks */,
 				D3604EAE28F03DDD0066C366 /* ModuleKit in Frameworks */,
 				D3C187F2290FD01B00FE1900 /* LanguageKit in Frameworks */,
 			);
@@ -4323,6 +4327,7 @@
 				D3604E9C28F03DC00066C366 /* FeeRateKit in Frameworks */,
 				D3C187E2290FD00E00FE1900 /* ComponentKit in Frameworks */,
 				D3604E9428F03DC00066C366 /* PinKit in Frameworks */,
+				D339A93F29126D2A00B895BE /* HsCryptoKit in Frameworks */,
 				D3604E9628F03DC00066C366 /* ModuleKit in Frameworks */,
 				D3C187E6290FD00E00FE1900 /* LanguageKit in Frameworks */,
 			);
@@ -4368,6 +4373,7 @@
 				D3604E8228F03C6B0066C366 /* FeeRateKit in Frameworks */,
 				D3C187D2290FCF3D00FE1900 /* ComponentKit in Frameworks */,
 				D3604E7628F03B5E0066C366 /* PinKit in Frameworks */,
+				D339A93D29126D0F00B895BE /* HsCryptoKit in Frameworks */,
 				D3604E7928F03B9F0066C366 /* ModuleKit in Frameworks */,
 				D3C187D8290FCF9C00FE1900 /* LanguageKit in Frameworks */,
 			);
@@ -7230,6 +7236,7 @@
 				D3C187F1290FD01B00FE1900 /* LanguageKit */,
 				D3C187F3290FD01B00FE1900 /* SectionsTableView */,
 				D3C187F5290FD01B00FE1900 /* StorageKit */,
+				D339A94029126D3400B895BE /* HsCryptoKit */,
 			);
 			productName = Wallet;
 			productReference = D3285F4220BD158E00644076 /* Unstoppable DT.app */;
@@ -7285,6 +7292,7 @@
 				D3C187E5290FD00E00FE1900 /* LanguageKit */,
 				D3C187E7290FD00E00FE1900 /* SectionsTableView */,
 				D3C187E9290FD00E00FE1900 /* StorageKit */,
+				D339A93E29126D2A00B895BE /* HsCryptoKit */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -7340,6 +7348,7 @@
 				D3C187D7290FCF9C00FE1900 /* LanguageKit */,
 				D3C187DA290FCFBC00FE1900 /* SectionsTableView */,
 				D3C187DD290FCFE400FE1900 /* StorageKit */,
+				D339A93C29126D0F00B895BE /* HsCryptoKit */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -7420,6 +7429,7 @@
 				D3C187D6290FCF9C00FE1900 /* XCRemoteSwiftPackageReference "LanguageKit" */,
 				D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView" */,
 				D3C187DC290FCFE400FE1900 /* XCRemoteSwiftPackageReference "StorageKit" */,
+				D339A93B29126D0E00B895BE /* XCRemoteSwiftPackageReference "HsCryptoKit" */,
 			);
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
@@ -10636,7 +10646,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.28;
+				MARKETING_VERSION = 0.28.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OfficeMode = "";
@@ -10710,7 +10720,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.28;
+				MARKETING_VERSION = 0.28.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OfficeMode = "";
 				Production = YES;
@@ -10903,6 +10913,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.1.0;
+			};
+		};
+		D339A93B29126D0E00B895BE /* XCRemoteSwiftPackageReference "HsCryptoKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/HsCryptoKit.Swift";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.1;
 			};
 		};
 		D3604E4128F02A020066C366 /* XCRemoteSwiftPackageReference "EvmKit" */ = {
@@ -11110,7 +11128,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/HdWalletKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.3;
+				version = 1.0.4;
 			};
 		};
 		D3C187B82907CFAB00FE1900 /* XCRemoteSwiftPackageReference "Checkpoints" */ = {
@@ -11216,6 +11234,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */;
 			productName = UnicodeURL;
+		};
+		D339A93C29126D0F00B895BE /* HsCryptoKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D339A93B29126D0E00B895BE /* XCRemoteSwiftPackageReference "HsCryptoKit" */;
+			productName = HsCryptoKit;
+		};
+		D339A93E29126D2A00B895BE /* HsCryptoKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D339A93B29126D0E00B895BE /* XCRemoteSwiftPackageReference "HsCryptoKit" */;
+			productName = HsCryptoKit;
+		};
+		D339A94029126D3400B895BE /* HsCryptoKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D339A93B29126D0E00B895BE /* XCRemoteSwiftPackageReference "HsCryptoKit" */;
+			productName = HsCryptoKit;
 		};
 		D3604E4228F02A020066C366 /* EvmKit */ = {
 			isa = XCSwiftPackageProductDependency;

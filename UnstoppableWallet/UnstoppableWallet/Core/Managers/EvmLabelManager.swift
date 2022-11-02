@@ -74,7 +74,7 @@ extension EvmLabelManager {
     }
 
     func methodLabel(input: Data) -> String? {
-        let methodId = Data(input.prefix(4)).toHexString()
+        let methodId = Data(input.prefix(4)).hs.hexString
         return (try? storage.evmMethodLabel(methodId: methodId))?.label
     }
 

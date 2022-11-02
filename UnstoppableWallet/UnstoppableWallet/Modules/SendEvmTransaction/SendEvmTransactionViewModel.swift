@@ -542,7 +542,7 @@ class SendEvmTransactionViewModel {
             viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
         }
 
-        viewItems.append(.input(value: transactionData.input.toHexString()))
+        viewItems.append(.input(value: transactionData.input.hs.hexString))
 
         if let methodName = service.methodName(input: transactionData.input) {
             viewItems.append(.value(title: "send.confirmation.method".localized, value: methodName, type: .regular))
