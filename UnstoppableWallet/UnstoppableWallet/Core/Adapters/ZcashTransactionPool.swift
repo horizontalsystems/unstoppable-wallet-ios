@@ -5,24 +5,24 @@ import RxSwift
 class ZcashTransactionPool {
     private var confirmedTransactions = Set<ZcashTransaction>()
     private var pendingTransactions = Set<ZcashTransaction>()
-    private let receiveAddress: String
+    private let receiveAddress: SaplingAddress
 
-    init(receiveAddress: String) {
+    init(receiveAddress: SaplingAddress) {
         self.receiveAddress = receiveAddress
     }
 
     private func transactions(filter: TransactionTypeFilter) -> [ZcashTransaction] {
         var confirmedTransactions = confirmedTransactions
         var pendingTransactions = pendingTransactions
-
+        let stringEncodedSaplingAddress = receiveAddress.stringEncoded
         switch filter {
         case .all: ()
         case .incoming:
-            confirmedTransactions = confirmedTransactions.filter { $0.sentTo(address: receiveAddress) }
-            pendingTransactions = pendingTransactions.filter { $0.sentTo(address: receiveAddress) }
+            confirmedTransactions = confirmedTransactions.filter { $0.sentTo(address: stringEncodedSaplingAddress) }
+            pendingTransactions = pendingTransactions.filter { $0.sentTo(address: stringEncodedSaplingAddress) }
         case .outgoing:
-            confirmedTransactions = confirmedTransactions.filter { !$0.sentTo(address: receiveAddress) }
-            pendingTransactions = pendingTransactions.filter { !$0.sentTo(address: receiveAddress) }
+            confirmedTransactions = confirmedTransactions.filter { !$0.sentTo(address: stringEncodedSaplingAddress) }
+            pendingTransactions = pendingTransactions.filter { !$0.sentTo(address: stringEncodedSaplingAddress) }
         default:
             confirmedTransactions = []
             pendingTransactions = []

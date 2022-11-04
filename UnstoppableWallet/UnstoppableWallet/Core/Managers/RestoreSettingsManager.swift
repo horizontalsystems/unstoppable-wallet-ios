@@ -51,7 +51,6 @@ extension RestoreSettingsManager {
 
 enum RestoreSettingType: String {
     case birthdayHeight
-
     func createdAccountValue(blockchainType: BlockchainType) -> String? {
         switch self {
         case .birthdayHeight:
