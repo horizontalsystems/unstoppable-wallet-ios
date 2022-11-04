@@ -26,24 +26,7 @@ More at [https://unstoppable.money](https://unstoppable.money)
 2. You need to have `Development.xcconfig` file for Debug configuration and `Production.xcconfig` file for Release in `UnstoppableWallet/UnstoppableWallet/Configuration`.
 You can use sample configurations in `.template.xcconfig` files.
 
-3. Install Zcash library dependencies
-
-```
-$ curl https://sh.rustup.rs -sSf | sh
-```
-
-* select `Default`
-
-```
-$ cargo install cargo-lipo
-$ rustup target add aarch64-apple-ios x86_64-apple-ios
-```
-
-```
-$ brew install sourcery
-```
-
-4. Open in Xcode and run.
+3. Open in Xcode and run.
  
 
 ## License

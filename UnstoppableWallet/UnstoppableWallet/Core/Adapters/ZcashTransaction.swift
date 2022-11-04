@@ -42,7 +42,7 @@ class ZcashTransaction {
         raw = pendingTransaction.raw
         transactionHash = rawTransactionId.hs.reversedHex
         transactionIndex = -1
-        toAddress = pendingTransaction.toAddress
+        toAddress = pendingTransaction.recipient.asString
         minedHeight = nil
         expiryHeight = pendingTransaction.expiryHeight
         timestamp = pendingTransaction.createTime
@@ -59,6 +59,17 @@ class ZcashTransaction {
         return true
     }
 
+}
+/// This would mean that a pending transaction with nil `toAddress` is a shielding transaction to the user's own account
+extension PendingTransactionRecipient {
+    var asString: String? {
+        switch self {
+        case .address(let recipient):
+            return recipient.stringEncoded
+        default:
+            return nil
+        }
+    }
 }
 
 extension ZcashTransaction: Comparable {

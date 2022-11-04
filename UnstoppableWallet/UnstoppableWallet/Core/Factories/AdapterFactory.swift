@@ -65,7 +65,7 @@ extension AdapterFactory {
 
         return nil
     }
-
+    
     func adapter(wallet: Wallet) -> IAdapter? {
         switch (wallet.token.type, wallet.token.blockchain.type) {
 

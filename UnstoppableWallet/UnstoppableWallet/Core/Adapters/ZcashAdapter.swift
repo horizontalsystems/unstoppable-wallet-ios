@@ -7,10 +7,9 @@ import HsToolKit
 import MarketKit
 import HsExtensions
 
+
 class ZcashAdapter {
     private let disposeBag = DisposeBag()
-
-    var fee: Decimal { defaultFee() }
 
     private let token: Token
     private let transactionSource: TransactionSource
@@ -19,10 +18,12 @@ class ZcashAdapter {
     private let synchronizer: SDKSynchronizer
     private let transactionPool: ZcashTransactionPool
     private let address: UnifiedAddress
+    private let saplingAddress: SaplingAddress // This should be replaced by unified address.
     private let uniqueId: String
-    private let keys: [String]
+    private let spendingKey: UnifiedSpendingKey // this being a single account does not need to be an array
     private let loggingProxy = ZcashLogger(logLevel: .error)
     private(set) var network: ZcashNetwork
+    private(set) var fee: Decimal
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
     private let balanceSubject = PublishSubject<BalanceData>()
@@ -44,7 +45,7 @@ class ZcashAdapter {
     }
     private(set) var syncing: Bool = true
 
-    private func defaultFee(height: Int? = nil) -> Decimal {
+    nonisolated private func defaultFee(network: ZcashNetwork, height: Int? = nil) -> Decimal {
         let fee: Zatoshi
         if let lastBlockHeight = height {
             fee = network.constants.defaultFee(for: lastBlockHeight)
@@ -58,7 +59,10 @@ class ZcashAdapter {
         guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
+
         network = ZcashNetworkBuilder.network(for: testMode ? .testnet : .mainnet)
+        fee = network.constants.defaultFee().decimalValue.decimalValue
+
         let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "zcash.horizontalsystems.xyz"
 
         token = wallet.token
@@ -76,14 +80,13 @@ class ZcashAdapter {
 
         let seedData = [UInt8](seed)
         let derivationTool = DerivationTool(networkType: network.networkType)
-        let unifiedViewingKeys = try derivationTool.deriveUnifiedViewingKeysFromSeed(seedData, numberOfAccounts: 1)
 
-        guard let uvk = unifiedViewingKeys.first,
-              let ua = try? derivationTool.deriveUnifiedAddressFromUnifiedViewingKey(uvk) else {
+        guard let unifiedSpendingKey =  try? derivationTool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: 0),
+              let unifiedViewingKey = try? unifiedSpendingKey.deriveFullViewingKey() else {
             throw AppError.ZcashError.noReceiveAddress
         }
 
-        address = ua
+
 
         let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId, network: network),
                 dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId, network: network),
@@ -92,20 +95,23 @@ class ZcashAdapter {
                 network: network,
                 spendParamsURL: try! ZcashAdapter.spendParamsURL(uniqueId: uniqueId),
                 outputParamsURL: try! ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
-                viewingKeys: unifiedViewingKeys,
+                viewingKeys: [unifiedViewingKey],
                 walletBirthday: birthday,
                 loggerProxy: loggingProxy)
 
-
-
-        try initializer.initialize()
-        keys = try derivationTool.deriveSpendingKeys(seed: seedData, numberOfAccounts: 1)
+        spendingKey = unifiedSpendingKey
 
         synchronizer = try SDKSynchronizer(initializer: initializer)
 
-        try synchronizer.prepare()
+        _ = try synchronizer.prepare(with: seedData)
 
-        transactionPool = ZcashTransactionPool(receiveAddress: address.zAddress)
+        guard let unifiedAddress = synchronizer.getUnifiedAddress(accountIndex: 0),
+              let saplingAddress = unifiedAddress.saplingReceiver() else {
+            throw AppError.ZcashError.noReceiveAddress
+        }
+        self.address = unifiedAddress
+        self.saplingAddress = saplingAddress
+        transactionPool = ZcashTransactionPool(receiveAddress: saplingAddress)
         transactionPool.store(confirmedTransactions: synchronizer.clearedTransactions, pendingTransactions: synchronizer.pendingTransactions)
 
         state = .downloadingBlocks(number: 0, lastBlock: lastBlockHeight)
@@ -117,7 +123,7 @@ class ZcashAdapter {
         subscribeDownloadService()
     }
 
-    private func subscribeSynchronizerNotifications() {
+    nonisolated private func subscribeSynchronizerNotifications() {
         let center = NotificationCenter.default
 
         // state changing
@@ -138,7 +144,7 @@ class ZcashAdapter {
         center.addObserver(self, selector: #selector(blockHeightUpdated(_:)), name: Notification.Name.blockProcessorUpdated, object: synchronizer.blockProcessor)
     }
 
-    private func subscribeDownloadService() {
+    nonisolated private func subscribeDownloadService() {
         subscribe(disposeBag, saplingDownloader.stateObservable) { [weak self] in self?.downloaderStatusUpdated(state: $0) }
     }
 
@@ -212,7 +218,8 @@ class ZcashAdapter {
         balanceSubject.onNext(_balanceData)
     }
 
-    private func syncPending() {
+    @MainActor
+    private func syncPending() async {
         let newTxs = transactionPool.sync(transactions: synchronizer.pendingTransactions)
 
         if !newTxs.isEmpty {
@@ -236,7 +243,7 @@ class ZcashAdapter {
                     blockHeight: transaction.minedHeight,
                     confirmationsThreshold: ZcashSDK.defaultRewindDistance,
                     date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                    fee: defaultFee(height: transaction.minedHeight),
+                    fee: defaultFee(network: self.network, height: transaction.minedHeight),
                     failed: transaction.failed,
                     lockInfo: nil,
                     conflictingHash: nil,
@@ -255,7 +262,7 @@ class ZcashAdapter {
                     blockHeight: transaction.minedHeight,
                     confirmationsThreshold: ZcashSDK.defaultRewindDistance,
                     date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                    fee: defaultFee(height: transaction.minedHeight),
+                    fee: defaultFee(network: self.network, height: transaction.minedHeight),
                     failed: transaction.failed,
                     lockInfo: nil,
                     conflictingHash: nil,
@@ -346,7 +353,6 @@ class ZcashAdapter {
 }
 
 extension ZcashAdapter {
-
     public static func newBirthdayHeight(network: ZcashNetwork) -> Int {
         BlockHeight.ofLatestCheckpoint(network: network)
     }
@@ -399,7 +405,7 @@ extension ZcashAdapter {
 extension ZcashAdapter: IAdapter {
 
     var isMainNet: Bool {
-        true
+        self.network.networkType == .mainnet
     }
 
     func start() {
@@ -432,13 +438,14 @@ extension ZcashAdapter: IAdapter {
     }
 
     var debugInfo: String {
-        let taddress = synchronizer.getTransparentAddress(accountIndex: 0)
-        let tBalance = try? synchronizer.getTransparentBalance(address: taddress ?? "")
+        let tAddress = self.address.transparentReceiver()
+        let zAddress = self.address.saplingReceiver()
+        let tBalance = try? synchronizer.getTransparentBalance(accountIndex: 0)
         return """
         ZcashAdapter
-        z-address: \(String(describing: synchronizer.getShieldedAddress(accountIndex: 0)))
-        t-address: \(String(describing: taddress ))
-        spendingKeys: \(keys.description)
+        z-address: \(String(describing: zAddress))
+        t-address: \(String(describing: tAddress))
+        spendingKeys: \(spendingKey.description)
         shielded balance
                   total:  \(synchronizer.initializer.getBalance().decimalValue.decimalValue)
                verified:  \(synchronizer.initializer.getVerifiedBalance().decimalValue.decimalValue)
@@ -519,13 +526,12 @@ extension ZcashAdapter: IDepositAdapter {
 
     var receiveAddress: String {
         // only first account
-        address.zAddress
+        saplingAddress.stringEncoded
     }
 
 }
 
 extension ZcashAdapter: ISendZcashAdapter {
-
     enum AddressType {
         case shielded
         case transparent
@@ -542,45 +548,50 @@ extension ZcashAdapter: ISendZcashAdapter {
         }
 
         do {
-            let derivationTool = DerivationTool(networkType: self.network.networkType)
-
-            let validZAddress = try derivationTool.isValidShieldedAddress(address)
-            let validTAddress = try derivationTool.isValidTransparentAddress(address)
-
-            guard validZAddress || validTAddress else {
-                throw AppError.addressInvalid
+            switch try Recipient(address, network: self.network.networkType) {
+            case .transparent:
+                return .transparent
+            case .sapling, .unified: // I'm keeping changes to the minimum. Unified Address should be treated as a different address type which will include some shielded pool and possibly others as well.
+                return .shielded
             }
-
-            return validZAddress ? .shielded : .transparent
         } catch {
             //FIXME: Should this be handled another way? logged? how?
             throw AppError.addressInvalid
         }
     }
 
-    func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<()> {
-        guard let spendingKey = keys.first else {
-            return Single.error(AdapterError.unsupportedAccount)
-        }
-
+    func sendSingle(
+        amount: Decimal,
+        address: Recipient, // changed to recipient. no point to getting this far without invalid address
+        memo: Memo? // changed to Memo type
+    ) -> Single<()> {
         let zatoshi = Zatoshi.from(decimal: amount)
-
         let synchronizer = synchronizer
+        let unifiedSpendingKey = self.spendingKey
 
-        return Single<()>.create { [weak self] single in
-            synchronizer.sendToAddress(spendingKey: spendingKey, zatoshi: zatoshi, toAddress: address, memo: memo, from: 0) { result in
-                self?.syncPending()
-                switch result {
-                case .success:
+        return Single<()>.create { single in
+            Task(priority: .userInitiated) { @MainActor in
+                do {
+                    _ = try await synchronizer.sendToAddress(
+                        spendingKey: unifiedSpendingKey,
+                        zatoshi: zatoshi,
+                        toAddress: address,
+                        memo: memo
+                    )
+                    await self.syncPending()
                     single(.success(()))
-                case .failure(let error):
+                } catch {
                     single(.error(error))
                 }
             }
-
             return Disposables.create()
         }
     }
+
+    func recipient(from stringEncodedAddress: String) -> ZcashLightClientKit.Recipient? {
+        try? Recipient(stringEncodedAddress, network: self.network.networkType)
+    }
+
 
 }
 
