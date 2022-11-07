@@ -1,6 +1,6 @@
 class WalletConnectUriHandler {
 
-    private static func createModuleV1(uri: String) -> Result<IWalletConnectMainService, Error> {
+    private static func createModuleV1(uri: String, completion: ((Result<IWalletConnectMainService, Error>) -> ())?) {
         do {
             let service = try WalletConnectV1MainService(
                     session: nil,
@@ -11,50 +11,51 @@ class WalletConnectUriHandler {
                     accountManager: App.shared.accountManager,
                     evmBlockchainManager: App.shared.evmBlockchainManager
             )
-            return .success(service)
+            completion?(.success(service))
         } catch {
-            return .failure(error)
+            completion?(.failure(error))
         }
     }
 
-    private static func createModuleV2(uri: String) -> Result<IWalletConnectMainService, Error> {
-        do {
-            try App.shared.walletConnectV2SessionManager.service.pair(uri: uri)
-        } catch {
-            return .failure(error)
+    private static func createModuleV2(uri: String, completion: ((Result<IWalletConnectMainService, Error>) -> ())?) {
+        Task {
+            do {
+                try await App.shared.walletConnectV2SessionManager.service.pair(uri: uri)
+
+                let service = App.shared.walletConnectV2SessionManager.service
+                let pingService = WalletConnectV2PingService(service: service, socketConnectionService: App.shared.walletConnectV2SocketConnectionService, logger: App.shared.logger)
+                let mainService = WalletConnectV2MainService(
+                        session: nil,
+                        service: service,
+                        pingService: pingService,
+                        manager: App.shared.walletConnectManager,
+                        reachabilityManager: App.shared.reachabilityManager,
+                        accountManager: App.shared.accountManager,
+                        evmBlockchainManager: App.shared.evmBlockchainManager,
+                        evmChainParser: WalletConnectEvmChainParser()
+                )
+
+                completion?(.success(mainService))
+            } catch {
+                completion?(.failure(error))
+            }
         }
-
-        let service = App.shared.walletConnectV2SessionManager.service
-        let pingService = WalletConnectV2PingService(service: service, socketConnectionService: App.shared.walletConnectV2SocketConnectionService, logger: App.shared.logger)
-        let mainService = WalletConnectV2MainService(
-                session: nil,
-                service: service,
-                pingService: pingService,
-                manager: App.shared.walletConnectManager,
-                reachabilityManager: App.shared.reachabilityManager,
-                accountManager: App.shared.accountManager,
-                evmBlockchainManager: App.shared.evmBlockchainManager,
-                evmChainParser: WalletConnectEvmChainParser()
-        )
-
-        return .success(mainService)
     }
 
 }
 
 extension WalletConnectUriHandler {
 
-    static func connect(uri: String) -> Result<IWalletConnectMainService, Error> {
-        if uri.contains("@1?") {
-            return createModuleV1(uri: uri)
-        } else if uri.contains("@2?") {
-            return createModuleV2(uri: uri)
-        } else {
-            return .failure(ConnectionError.wrongUri)
+    static func connect(uri: String, completion: ((Result<IWalletConnectMainService, Error>) -> ())?) {
+            if uri.contains("@1?") {
+                createModuleV1(uri: uri, completion: completion)
+            } else if uri.contains("@2?") {
+                createModuleV2(uri: uri, completion: completion)
+            } else {
+                completion?(.failure(ConnectionError.wrongUri))
+            }
         }
     }
-
-}
 
 extension WalletConnectUriHandler {
 

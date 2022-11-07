@@ -166,11 +166,11 @@ extension WalletConnectListService {
     }
 
     func connect(uri: String) {
-        let result = WalletConnectUriHandler.connect(uri: uri)
-
-        switch result {
-        case .success(let service): createModuleRelay.accept(service)
-        case .failure(let error): connectionErrorRelay.accept(error)
+        WalletConnectUriHandler.connect(uri: uri) {  [weak self] result in
+            switch result {
+            case .success(let service): self?.createModuleRelay.accept(service)
+            case .failure(let error): self?.connectionErrorRelay.accept(error)
+            }
         }
     }
 

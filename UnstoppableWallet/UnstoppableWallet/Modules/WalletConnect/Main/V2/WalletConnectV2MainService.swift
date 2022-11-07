@@ -331,11 +331,15 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
             return
         }
 
-        do {
-            try service.approve(proposal: proposal, accounts: Set(accounts), methods: blockchains.methods, events: blockchains.events)
-        } catch {
-            errorRelay.accept(error)
+        let set = Set(accounts)
+        Task {
+            do {
+                try await service.approve(proposal: proposal, accounts: set, methods: blockchains.methods, events: blockchains.events)
+            } catch {
+                errorRelay.accept(error)
+            }
         }
+
     }
 
     func rejectSession() {
@@ -345,12 +349,14 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         }
 
         if let proposal = proposal {
-            do {
-                try service.reject(proposal: proposal)
-                pingService.disconnect()
-                state = .killed(reason: .rejectProposal)
-            } catch {
-                errorRelay.accept(error)
+            Task {
+                do {
+                    try await service.reject(proposal: proposal)
+                    pingService.disconnect()
+                    state = .killed(reason: .rejectProposal)
+                } catch {
+                    errorRelay.accept(error)
+                }
             }
         }
     }
@@ -365,7 +371,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
             return
         }
 
-        service.disconnect(topic: session.topic, reason: Reason(code: 1, message: "Session Killed by User"))
+        service.disconnect(topic: session.topic, reason: RejectionReason(code: 1, message: "Session Killed by User"))
         pingService.disconnect()
         state = .killed(reason: .killSession) //todo: ???
     }
@@ -373,6 +379,11 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
 }
 
 extension WalletConnectV2MainService {
+
+    struct RejectionReason: Reason {
+        let code: Int
+        let message: String
+    }
 
     struct SessionData {
         let proposal: WalletConnectSign.Session.Proposal

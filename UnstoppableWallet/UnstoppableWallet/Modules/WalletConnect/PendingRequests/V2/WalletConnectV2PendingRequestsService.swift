@@ -62,7 +62,7 @@ class WalletConnectV2PendingRequestsService {
                     active: account.id == activeAccountId,
                     requests: pendingRequests.compactMap { request in
                         RequestItem(
-                                id: request.id,
+                                id: request.id.int64Value,
                                 sessionName: allSessions.first(where: { $0.topic == request.topic })?.peer.name ?? "",
                                 method: request.method,
                                 chainId: request.chainId.reference
@@ -87,7 +87,7 @@ extension WalletConnectV2PendingRequestsService {
     }
 
     func select(requestId: Int64) {
-        guard let request = sessionManager.pendingRequests().first(where: { $0.id == requestId }) else {
+        guard let request = sessionManager.pendingRequests().first(where: { $0.id.intValue == requestId }) else {
             return
         }
         let session = sessionManager.sessions.first { $0.topic == request.topic }
