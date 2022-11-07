@@ -9,6 +9,7 @@ import HsExtensions
 
 
 class ZcashAdapter {
+    private static let limitShowingDownloadBlockCount = 100
     private let disposeBag = DisposeBag()
 
     private let token: Token
@@ -177,7 +178,10 @@ class ZcashAdapter {
         case .stopped: newState = .notSynced(error: AppError.unknownError)
         case .synced: newState = .synced
         case .downloading(let p):
-            newState = .downloadingBlocks(number: p.progressHeight, lastBlock: p.targetHeight)
+            if (p.targetHeight - p.progressHeight < Self.limitShowingDownloadBlockCount) ||
+                       (p.progressHeight % Self.limitShowingDownloadBlockCount) == 0 {
+                newState = .downloadingBlocks(number: p.progressHeight, lastBlock: p.targetHeight)
+            }
         case .enhancing(let p):
             newState = .enhancingTransactions(number: p.enhancedTransactions, count: p.totalTransactions)
         case .unprepared:
