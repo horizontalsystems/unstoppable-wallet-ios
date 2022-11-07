@@ -9,7 +9,7 @@ struct WalletConnectV2RequestMapper {
         guard let chainId = Int(request.chainId.reference) else {
             return nil
         }
-
+        let id = request.id.intValue
         switch request.method {
         case "eth_sign":
             guard let params = try? request.params.get([String].self),
@@ -18,7 +18,7 @@ struct WalletConnectV2RequestMapper {
                 return nil
             }
             return WalletConnectSignMessageRequest(
-                    id: Int(request.id),
+                    id: id,
                     chainId: chainId,
                     dAppName: dAppName,
                     payload: WCEthereumSignPayload.sign(data: data, raw: params)
@@ -31,7 +31,7 @@ struct WalletConnectV2RequestMapper {
                 return nil
             }
             return WalletConnectSignMessageRequest(
-                    id: Int(request.id),
+                    id: id,
                     chainId: chainId,
                     dAppName: dAppName,
                     payload: WCEthereumSignPayload.personalSign(data: data, raw: params)
@@ -44,10 +44,10 @@ struct WalletConnectV2RequestMapper {
                 return nil
             }
             return WalletConnectSignMessageRequest(
-                    id: Int(request.id),
+                    id: id,
                     chainId: chainId,
                     dAppName: dAppName,
-                    payload: WCEthereumSignPayload.signTypeData(id: request.id, data: data, raw: params)
+                    payload: WCEthereumSignPayload.signTypeData(id: request.id.int64Value, data: data, raw: params)
             )
 
         case "eth_sendTransaction":
@@ -56,7 +56,7 @@ struct WalletConnectV2RequestMapper {
                 return nil
             }
             return try WalletConnectSendEthereumTransactionRequest(
-                    id: Int(request.id),
+                    id: id,
                     chainId: chainId,
                     dAppName: dAppName,
                     transaction: transactions[0]

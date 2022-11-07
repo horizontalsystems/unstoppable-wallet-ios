@@ -142,7 +142,7 @@ extension WalletConnectV2SessionManager {
     }
 
     public func deleteSession(topic: String) {
-        service.disconnect(topic: topic, reason: Reason(code: 1, message: "Session Killed by User"))
+        service.disconnect(topic: topic, reason: WalletConnectV2MainService.RejectionReason(code: 1, message: "Session Killed by User"))
     }
 
     public func pendingRequests(accountId: String? = nil) -> [WalletConnectSign.Request] {

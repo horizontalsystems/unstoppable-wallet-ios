@@ -147,16 +147,24 @@ class MainViewController: ThemeTabBarController {
 
         switch deepLink {
         case let .walletConnect(url):
-            let result = WalletConnectUriHandler.connect(uri: url)
+            WalletConnectUriHandler.connect(uri: url) { [weak self] result in
+                self?.processWalletConnectPair(result: result)
+            }
+        }
+    }
+
+    private func processWalletConnectPair(result: Result<IWalletConnectMainService, Error>) {
+        DispatchQueue.main.async { [weak self] in
             switch result {
             case .success(let service):
                 guard let viewController = WalletConnectMainModule.viewController(
                         service: service,
-                        sourceViewController: visibleController) else {
+                        sourceViewController: self?.visibleController)
+                else {
                     return
                 }
 
-                visibleController.present(viewController, animated: true)
+                self?.visibleController.present(viewController, animated: true)
             default: return
             }
         }

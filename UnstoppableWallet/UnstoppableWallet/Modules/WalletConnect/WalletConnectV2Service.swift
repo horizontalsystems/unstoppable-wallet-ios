@@ -3,10 +3,22 @@ import CryptoSwift
 import RxSwift
 import RxRelay
 import Combine
+import Starscream
+import WalletConnectKMS
 import WalletConnectSign
 import WalletConnectRelay
 import WalletConnectUtils
+import WalletConnectNetworking
+import WalletConnectPairing
 import HsToolKit
+
+extension Starscream.WebSocket: WebSocketConnecting { }
+
+struct SocketFactory: WebSocketFactory {
+    func create(with url: URL) -> WebSocketConnecting {
+        Starscream.WebSocket(url: url)
+    }
+}
 
 class WalletConnectV2Service {
     private let logger: Logger?
@@ -21,7 +33,7 @@ class WalletConnectV2Service {
     private let sessionRequestReceivedRelay = PublishRelay<WalletConnectSign.Request>()
     private let socketConnectionStatusRelay = PublishRelay<WalletConnectSign.SocketConnectionStatus>()
 
-    private let signClient: SignClient
+    private var publishers = [AnyCancellable]()
 
     init(connectionService: WalletConnectV2SocketConnectionService, info: WalletConnectClientInfo, logger: Logger? = nil) {
         self.connectionService = connectionService
@@ -32,14 +44,48 @@ class WalletConnectV2Service {
                 url: info.url,
                 icons: info.icons
         )
-        let relayClient = RelayClient(relayHost: info.relayHost, projectId: info.projectId, socketConnectionType: .manual)
-        signClient = SignClient(metadata: metadata, relayClient: relayClient)
-        signClient.delegate = self
 
-        connectionService.relayClient = relayClient
+        Networking.configure(projectId: info.projectId, socketFactory: SocketFactory(), socketConnectionType: .manual)
+        Pair.configure(metadata: metadata)
+        setUpAuthSubscribing()
+
+        connectionService.relayClient = Relay.instance
 
         updateSessions()
     }
+
+    func setUpAuthSubscribing() {
+        Sign.instance.socketConnectionStatusPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] status in
+                    self?.didChangeSocketConnectionStatus(status)
+                }.store(in: &publishers)
+
+        Sign.instance.sessionProposalPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] sessionProposal in
+                    self?.didReceive(sessionProposal: sessionProposal)
+                }.store(in: &publishers)
+
+        Sign.instance.sessionSettlePublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] session in
+                    self?.didSettle(session: session)
+                }.store(in: &publishers)
+
+        Sign.instance.sessionRequestPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] sessionRequest in
+                    self?.didReceive(sessionRequest: sessionRequest)
+                }.store(in: &publishers)
+
+        Sign.instance.sessionDeletePublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] tuple in
+                    self?.didDelete(sessionTopic: tuple.0, reason: tuple.1)
+                }.store(in: &publishers)
+    }
+
 
     private func updateSessions() {
         sessionsItemUpdatedRelay.accept(())
@@ -47,7 +93,7 @@ class WalletConnectV2Service {
 
 }
 
-extension WalletConnectV2Service: SignClientDelegate {
+extension WalletConnectV2Service {
 
     public func didReceive(sessionProposal: Session.Proposal) {
         logger?.debug("WC v2 SignClient did receive session proposal: \(sessionProposal.id) : proposer: \(sessionProposal.proposer.name)")
@@ -95,12 +141,19 @@ extension WalletConnectV2Service {
 
     // helpers
     public func ping(topic: String, completion: @escaping (Result<Void, Error>) -> ()) {
-        signClient.ping(topic: topic, completion: completion)
+        Task(priority: .userInitiated) { @MainActor in
+            do {
+                try await Sign.instance.ping(topic: topic)
+                completion(.success(()))
+            } catch {
+                completion(.failure(error))
+            }
+        }
     }
 
     // works with sessions
     public var activeSessions: [WalletConnectSign.Session] {
-        signClient.getSessions()
+        Sign.instance.getSessions()
     }
 
     public var sessionsUpdatedObservable: Observable<()> {
@@ -109,7 +162,7 @@ extension WalletConnectV2Service {
 
     // works with pending requests
     public var pendingRequests: [WalletConnectSign.Request] {
-        signClient.getPendingRequests()
+        Sign.instance.getPendingRequests()
     }
 
     public var pendingRequestsUpdatedObservable: Observable<()> {
@@ -134,10 +187,13 @@ extension WalletConnectV2Service {
     }
 
     // works with dApp
-    public func pair(uri: String) throws {
+    public func pair(uri: String) async throws {
+        guard let uri = WalletConnectUtils.WalletConnectURI(string: uri) else {
+            throw WalletConnectUriHandler.ConnectionError.wrongUri
+        }
         Task.init {
             do {
-                try await signClient.pair(uri: uri) //fix async behaviour
+                try await Pair.instance.pair(uri: uri)
             } catch {
                 //can't pair with dApp, duplicate pairing or can't parse uri
                 throw error
@@ -145,39 +201,39 @@ extension WalletConnectV2Service {
         }
     }
 
-    public func approve(proposal: WalletConnectSign.Session.Proposal, accounts: Set<WalletConnectUtils.Account>, methods: Set<String>, events: Set<String>) throws {
-        do {
-            let eip155 = WalletConnectSign.SessionNamespace(
-                    accounts: accounts,
-                    methods: methods,
-                    events: events,
-                    extensions: []
-            )
-            try signClient.approve(proposalId: proposal.id, namespaces: ["eip155": eip155])
-        } catch {
-            logger?.error("WC v2 can't approve proposal, cause: \(error.localizedDescription)")
-            throw error
+    public func approve(proposal: WalletConnectSign.Session.Proposal, accounts: Set<WalletConnectUtils.Account>, methods: Set<String>, events: Set<String>) async throws {
+        logger?.debug("[WALLET] Approve Session: \(proposal.id)")
+        Task {
+            do {
+                let eip155 = WalletConnectSign.SessionNamespace(
+                        accounts: accounts,
+                        methods: methods,
+                        events: events,
+                        extensions: []
+                )
+                try await Sign.instance.approve(proposalId: proposal.id, namespaces: ["eip155": eip155])
+            } catch {
+                logger?.error("WC v2 can't approve proposal, cause: \(error.localizedDescription)")
+                throw error
+            }
         }
     }
 
-    public func reject(proposal: WalletConnectSign.Session.Proposal) throws {
+    public func reject(proposal: WalletConnectSign.Session.Proposal) async throws {
+        logger?.debug("[WALLET] Reject Session: \(proposal.id)")
         do {
-            try signClient.reject(proposalId: proposal.id, reason: .disapprovedChains)
+            try await Sign.instance.reject(proposalId: proposal.id, reason: .userRejected)
         } catch {
             logger?.error("WC v2 can't reject proposal, cause: \(error.localizedDescription)")
             throw error
         }
     }
 
-    public func respond(topic: String, response: JsonRpcResult) {
-        signClient.respond(topic: topic, response: response)
-    }
-
     public func disconnect(topic: String, reason: WalletConnectSign.Reason) {
-        Task.init {
+        Task.init { [weak self] in
             do {
-                try await signClient.disconnect(topic: topic, reason: reason) //todo: handle async behaviour
-                updateSessions()
+                try await Sign.instance.disconnect(topic: topic)
+                self?.updateSessions()
             } catch {
                 logger?.error("WC v2 can't disconnect topic, cause: \(error.localizedDescription)")
             }
@@ -191,18 +247,22 @@ extension WalletConnectV2Service {
 
     public func sign(request: WalletConnectSign.Request, result: Data) {
         let result = AnyCodable(result)// Signer.signEth(request: request)
-        let response = JSONRPCResponse<AnyCodable>(id: request.id, result: result)
-        signClient.respond(topic: request.topic, response: .response(response))
-
-        pendingRequestsUpdatedRelay.accept(())
+        Task {
+            do {
+                try await Sign.instance.respond(topic: request.topic, requestId: request.id, response: .response(result))
+                pendingRequestsUpdatedRelay.accept(())
+            }
+        }
     }
 
     public func reject(request: WalletConnectSign.Request) {
-        signClient.respond(topic: request.topic, response: .error(JSONRPCErrorResponse(id: request.id, error: JSONRPCErrorResponse.Error(code: 0, message: "reject by User"))))
-
-        pendingRequestsUpdatedRelay.accept(())
+        Task {
+            do {
+                try await Sign.instance.respond(topic: request.topic, requestId: request.id, response: .error(.init(code: 0, message: "Reject by User")))
+                pendingRequestsUpdatedRelay.accept(())
+            }
+        }
     }
-
 }
 
 struct WalletConnectClientInfo {
@@ -233,17 +293,29 @@ extension WalletConnectSign.Session: Hashable {
 extension WalletConnectV2Service: IWalletConnectSignService {
 
     func approveRequest(id: Int, result: Data) {
-        guard let request = pendingRequests.first(where: { $0.id == id }) else {
+        guard let request = pendingRequests.first(where: { $0.id.intValue == id }) else {
             return
         }
         sign(request: request, result: result)
     }
 
     func rejectRequest(id: Int) {
-        guard let request = pendingRequests.first(where: { $0.id == id }) else {
+        guard let request = pendingRequests.first(where: { $0.id.intValue == id }) else {
             return
         }
         reject(request: request)
+    }
+
+}
+
+extension RPCID {
+
+    var intValue: Int {
+        (left?.hashValue ?? 0) + Int(right ?? 0) //todo: id potentially can be wrong
+    }
+
+    var int64Value: Int64 {
+        Int64(intValue)
     }
 
 }
