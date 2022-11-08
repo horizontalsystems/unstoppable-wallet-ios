@@ -67,7 +67,7 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
         tableView.reload()
     }
 
-    private func onSelect(requestId: Int64) {
+    private func onSelect(requestId: Int) {
         viewModel.onSelect(requestId: requestId)
     }
 
@@ -149,61 +149,64 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
                             action: { [weak self] in self?.onSelect(accountId: sectionViewItem.id) }
                     )
                 ] + sectionViewItem.viewItems.enumerated().map { index, viewItem in
-                    if sectionViewItem.selected {
-                        return CellBuilder.selectableRow(
-                                elements: [.multiText, .image20],
-                                tableView: tableView,
-                                id: "request-selected-\(viewItem.id)",
-                                height: .heightDoubleLineCell,
-                                autoDeselect: true,
-                                bind: { cell in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: index == sectionViewItem.viewItems.count - 1)
+                    let selected = sectionViewItem.selected
 
-                                    cell.bind(index: 0) { (component: MultiTextComponent) in
-                                        component.set(style: .m1)
-                                        component.title.font = .body
-                                        component.title.textColor = .themeLeah
-                                        component.subtitle.font = .subhead2
-                                        component.subtitle.textColor = .themeGray
+                    var elements: [CellBuilderNew.CellElement] = [
+                        .image24 { component in
+                            component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_24"))
+                        },
+                        .vStackCentered([
+                            .text { component in
+                                component.font = .body
+                                component.textColor = selected ? .themeLeah : .themeGray50
+                                component.text = viewItem.title
+                            },
+                            .margin(3),
+                            .text { component in
+                                component.font = .subhead2
+                                component.textColor = selected ? .themeGray : .themeGray50
+                                component.lineBreakMode = .byTruncatingMiddle
+                                component.text = viewItem.subtitle
+                            }
+                        ])
+                    ]
 
-                                        component.title.text = viewItem.title
-                                        component.subtitle.text = viewItem.subtitle
-                                    }
-
-                                    cell.bind(index: 1) { (component: ImageComponent) in
-                                        component.imageView.image = UIImage(named: "arrow_big_forward_20")
-                                    }
-                                },
-                                action: { [weak self] in self?.onSelect(requestId: viewItem.id) }
-                        )
-                    } else {
-                        return CellBuilder.row(
-                                elements: [.multiText, .image20],
-                                tableView: tableView,
-                                id: "request-\(viewItem.id)",
-                                height: .heightDoubleLineCell,
-                                bind: { cell in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: index == sectionViewItem.viewItems.count - 1)
-
-                                    cell.bind(index: 0) { (component: MultiTextComponent) in
-                                        component.set(style: .m1)
-                                        component.title.font = .body
-                                        component.title.textColor = .themeGray50
-                                        component.subtitle.font = .subhead2
-                                        component.subtitle.textColor = .themeGray50
-
-                                        component.title.text = viewItem.title
-                                        component.subtitle.text = viewItem.subtitle
-                                    }
-
-                                    cell.bind(index: 1) { (component: ImageComponent) in
-                                        component.imageView.image = UIImage(named: "arrow_big_forward_20")
-                                    }
+                    var tappable = false
+                    if viewItem.unsupported {
+                        elements.append(.secondaryButton { component in
+                            component.button.set(style: .default)
+                            component.button.setTitle("Reject", for: .normal)
+                            component.button.setTitleColor(.themeLucian, for: .normal)
+                            component.onTap = { [weak self] in
+                                if selected {
+                                    self?.onTapReject(viewItem: viewItem)
                                 }
-                        )
+                            }
+                        })
+                    } else {
+                        tappable = selected
+                        elements.append(.image20 { component in
+                            component.imageView.image = UIImage(named: "arrow_big_forward_20")
+                        })
                     }
+
+                    return CellBuilderNew.row(
+                            rootElement: .hStack(elements),
+                            tableView: tableView,
+                            id: "item_\(index)",
+                            height: .heightDoubleLineCell,
+                            autoDeselect: true,
+                            bind: { cell in
+                                cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: index == sectionViewItem.viewItems.count - 1)
+                            },
+                            action: tappable ? { [weak self] in self?.onSelect(requestId: viewItem.id) } : nil
+                    )
                 }
         )
+    }
+
+    private func onTapReject(viewItem: WalletConnectV2PendingRequestsViewModel.ViewItem) {
+        viewModel.onReject(id: viewItem.id)
     }
 
 }
@@ -215,3 +218,60 @@ extension WalletConnectV2PendingRequestsViewController: SectionsDataSource {
     }
 
 }
+
+
+//return CellBuilderNew.row(
+//        elements: [.image24, .multiText, .image20],
+//        tableView: tableView,
+//        id: "request-selected-\(viewItem.id)",
+//        height: .heightDoubleLineCell,
+//        autoDeselect: true,
+//        bind: { cell in
+//            cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: index == sectionViewItem.viewItems.count - 1)
+//
+//            cell.bind(index: 0) { (component: ImageComponent) in
+//                component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_24"))
+//            }
+//            cell.bind(index: 1) { (component: MultiTextComponent) in
+//                component.set(style: .m1)
+//                component.title.font = .body
+//                component.title.textColor = .themeLeah
+//                component.subtitle.font = .subhead2
+//                component.subtitle.textColor = .themeGray
+//
+//                component.title.text = viewItem.title
+//                component.subtitle.text = viewItem.subtitle
+//            }
+//
+//            cell.bind(index: 2) { (component: ImageComponent) in
+//                component.imageView.image = UIImage(named: "arrow_big_forward_20")
+//            }
+//        },
+//        action: { [weak self] in self?.onSelect(requestId: viewItem.id) }
+//)
+//} else {
+//    return CellBuilder.row(
+//            elements: [.multiText, .image20],
+//            tableView: tableView,
+//            id: "request-\(viewItem.id)",
+//            height: .heightDoubleLineCell,
+//            bind: { cell in
+//                cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: index == sectionViewItem.viewItems.count - 1)
+//
+//                cell.bind(index: 0) { (component: MultiTextComponent) in
+//                    component.set(style: .m1)
+//                    component.title.font = .body
+//                    component.title.textColor = .themeGray50
+//                    component.subtitle.font = .subhead2
+//                    component.subtitle.textColor = .themeGray50
+//
+//                    component.title.text = viewItem.title
+//                    component.subtitle.text = viewItem.subtitle
+//                }
+//
+//                cell.bind(index: 1) { (component: ImageComponent) in
+//                    component.imageView.image = UIImage(named: "arrow_big_forward_20")
+//                }
+//            }
+//    )
+//}

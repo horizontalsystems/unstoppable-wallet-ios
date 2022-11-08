@@ -82,7 +82,7 @@ class WalletConnectV2ListView {
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
 
                     cell.bind(index: 0) { (component: ImageComponent) in
-                        component.setImage(urlString: viewItem.imageUrl, placeholder: nil)
+                        component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_24"))
                     }
 
                     cell.bind(index: 1) { (component: MultiTextComponent) in

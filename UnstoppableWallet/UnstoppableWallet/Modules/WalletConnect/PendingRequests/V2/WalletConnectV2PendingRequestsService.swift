@@ -6,6 +6,8 @@ class WalletConnectV2PendingRequestsService {
 
     private let sessionManager: WalletConnectV2SessionManager
     private let accountManager: AccountManager
+    private let evmBlockchainManager: EvmBlockchainManager
+    private let signService: IWalletConnectSignService
 
     private let itemsRelay = PublishRelay<[Item]>()
     private(set) var items = [Item]() {
@@ -18,9 +20,11 @@ class WalletConnectV2PendingRequestsService {
 
     private let showPendingRequestRelay = PublishRelay<WalletConnectRequest>()
 
-    init(sessionManager: WalletConnectV2SessionManager, accountManager: AccountManager) {
+    init(sessionManager: WalletConnectV2SessionManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, signService: IWalletConnectSignService) {
         self.sessionManager = sessionManager
         self.accountManager = accountManager
+        self.evmBlockchainManager = evmBlockchainManager
+        self.signService = signService
 
         subscribe(disposeBag, accountManager.accountsObservable) { [weak self] in self?.sync(accounts: $0) }
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] _ in self?.syncPendingRequests() }
@@ -61,13 +65,15 @@ class WalletConnectV2PendingRequestsService {
                     accountName: account.name,
                     active: account.id == activeAccountId,
                     requests: pendingRequests.compactMap { request in
-                        RequestItem(
-                                id: request.id.int64Value,
-                                sessionName: allSessions.first(where: { $0.topic == request.topic })?.peer.name ?? "",
-                                method: request.method,
+                        let session = allSessions.first(where: { $0.topic == request.topic })
+                        return RequestItem(
+                                id: request.id.intValue,
+                                sessionName: session?.peer.name ?? "N/A",
+                                sessionImageUrl: session?.peer.icons.first,
+                                method: RequestMethod(request.method),
                                 chainId: request.chainId.reference
                         )
-                    }
+                    }.sorted { $0.id > $1.id }
             ))
         }
 
@@ -78,6 +84,16 @@ class WalletConnectV2PendingRequestsService {
 
 extension WalletConnectV2PendingRequestsService {
 
+    func blockchain(chainId: String?) -> String? {
+        guard let chainId = chainId,
+              let id = Int(chainId),
+              let blockchain = evmBlockchainManager.blockchain(chainId: id) else {
+            return nil
+        }
+
+        return blockchain.name
+    }
+
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
     }
@@ -86,7 +102,7 @@ extension WalletConnectV2PendingRequestsService {
         showPendingRequestRelay.asObservable()
     }
 
-    func select(requestId: Int64) {
+    func select(requestId: Int) {
         guard let request = sessionManager.pendingRequests().first(where: { $0.id.intValue == requestId }) else {
             return
         }
@@ -102,14 +118,19 @@ extension WalletConnectV2PendingRequestsService {
         accountManager.set(activeAccountId: accountId)
     }
 
+    func onReject(id: Int) {
+        signService.rejectRequest(id: id)
+    }
+
 }
 
 extension WalletConnectV2PendingRequestsService {
 
     struct RequestItem {
-        let id: Int64
+        let id: Int
         let sessionName: String
-        let method: String
+        let sessionImageUrl: String?
+        let method: RequestMethod
         let chainId: String?
     }
 
@@ -120,4 +141,22 @@ extension WalletConnectV2PendingRequestsService {
         let requests: [RequestItem]
     }
 
+    enum RequestMethod {
+        case ethSign
+        case personalSign
+        case ethSignTypedData
+        case ethSendTransaction
+        case unsupported
+
+        init(_ string: String) {
+            switch string {
+            case "eth_sign": self = .ethSign
+            case "personal_sign": self = .personalSign
+            case "eth_signTypedData": self = .ethSignTypedData
+            case "eth_sendTransaction": self = .ethSendTransaction
+            default: self = .unsupported
+            }
+        }
+    }
+    
 }
