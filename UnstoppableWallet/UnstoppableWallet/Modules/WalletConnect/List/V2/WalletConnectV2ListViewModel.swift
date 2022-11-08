@@ -29,7 +29,7 @@ class WalletConnectV2ListViewModel {
         let viewItems = items.map {
             WalletConnectListViewModel.ViewItem(
                 id: $0.id,
-                title: $0.appName,
+                title: ($0.appName != "") ? $0.appName : "Unnamed",
                 description: $0.blockchains.map { $0.shortName }.joined(separator: ", "),
                 imageUrl: $0.appIcons.last
             )

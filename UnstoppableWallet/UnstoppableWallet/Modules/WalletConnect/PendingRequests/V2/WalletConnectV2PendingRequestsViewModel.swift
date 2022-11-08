@@ -31,8 +31,10 @@ class WalletConnectV2PendingRequestsViewModel {
                     viewItems: item.requests.map { request in
                         ViewItem(
                                 id: request.id,
-                                title: title(method: request.method),
-                                subtitle: request.sessionName
+                                title: request.method.title,
+                                subtitle: service.blockchain(chainId: request.chainId) ?? "",
+                                imageUrl: request.sessionImageUrl,
+                                unsupported: request.method == .unsupported
                         )
                     }
             )
@@ -41,16 +43,6 @@ class WalletConnectV2PendingRequestsViewModel {
         sectionViewItemsRelay.accept(viewItems)
     }
 
-    private func title(method: String) -> String {
-        switch method {
-        case "eth_sign": return "Sign Request"
-        case "personal_sign": return "Personal Sign Request"
-        case "eth_signTypedData": return "Typed Sign Request"
-        case "eth_sendTransaction": return "Approve Transaction"
-        default: return "Unsupported"
-        }
-
-    }
 }
 
 extension WalletConnectV2PendingRequestsViewModel {
@@ -63,7 +55,7 @@ extension WalletConnectV2PendingRequestsViewModel {
         showPendingRequestRelay.asSignal()
     }
 
-    func onSelect(requestId: Int64) {
+    func onSelect(requestId: Int) {
         service.select(requestId: requestId)
     }
 
@@ -71,14 +63,20 @@ extension WalletConnectV2PendingRequestsViewModel {
         service.select(accountId: accountId)
     }
 
+    func onReject(id: Int) {
+        service.onReject(id: id)
+    }
+
 }
 
 extension WalletConnectV2PendingRequestsViewModel {
 
     struct ViewItem {
-        let id: Int64
+        let id: Int
         let title: String
         let subtitle: String
+        let imageUrl: String?
+        let unsupported: Bool
     }
 
     struct SectionViewItem {
@@ -86,6 +84,20 @@ extension WalletConnectV2PendingRequestsViewModel {
         let selected: Bool
         let title: String
         let viewItems: [ViewItem]
+    }
+
+}
+
+extension WalletConnectV2PendingRequestsService.RequestMethod {
+
+    var title: String {
+        switch self {
+        case .ethSign: return "Sign Request"
+        case .personalSign: return "Personal Sign Request"
+        case .ethSignTypedData: return "Typed Sign Request"
+        case .ethSendTransaction: return "Approve Transaction"
+        case .unsupported: return "Unsupported"
+        }
     }
 
 }
