@@ -46,8 +46,8 @@ class MainViewModel {
 
 extension MainViewModel {
 
-    var settingsBadgeDriver: Driver<Bool> {
-        badgeService.settingsBadgeObservable.asDriver(onErrorJustReturn: false)
+    var settingsBadgeDriver: Driver<(Bool, Int)> {
+        badgeService.settingsBadgeObservable.asDriver(onErrorJustReturn: (false, 0))
     }
 
     var releaseNotesUrlDriver: Driver<URL?> {
