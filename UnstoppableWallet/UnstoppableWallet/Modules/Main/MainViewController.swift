@@ -36,7 +36,7 @@ class MainViewController: ThemeTabBarController {
 
         subscribe(disposeBag, viewModel.balanceTabStateDriver) { [weak self] in self?.sync(balanceTabState: $0) }
         subscribe(disposeBag, viewModel.transactionsTabEnabledDriver) { [weak self] in self?.syncTransactionsTab(enabled: $0) }
-        subscribe(disposeBag, viewModel.settingsBadgeDriver) { [weak self] in self?.setSettingsBadge(visible: $0) }
+        subscribe(disposeBag, viewModel.settingsBadgeDriver) { [weak self] in self?.setSettingsBadge(visible: $0.0, count: $0.1) }
 
         subscribe(disposeBag, viewModel.releaseNotesUrlDriver) { [weak self] url in self?.showReleaseNotes(url: url) }
         subscribe(disposeBag, viewModel.deepLinkDriver) { [weak self] deepLink in self?.handle(deepLink: deepLink) }
@@ -96,8 +96,8 @@ class MainViewController: ThemeTabBarController {
         transactionsModule.viewControllers.first?.tabBarItem.isEnabled = enabled
     }
 
-    private func setSettingsBadge(visible: Bool) {
-        settingsModule.viewControllers.first?.tabBarItem.setDotBadge(visible: visible)
+    private func setSettingsBadge(visible: Bool, count: Int = 0) {
+        settingsModule.viewControllers.first?.tabBarItem.setDotBadge(visible: visible, count: count)
     }
 
     private func showReleaseNotes(url: URL?) {

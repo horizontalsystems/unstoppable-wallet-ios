@@ -21,7 +21,8 @@ struct MainModule {
         let badgeService = MainBadgeService(
                 backupManager: App.shared.backupManager,
                 pinKit: App.shared.pinKit,
-                termsManager: App.shared.termsManager
+                termsManager: App.shared.termsManager,
+                walletConnectV2SessionManager: App.shared.walletConnectV2SessionManager
         )
         let releaseNotesService = ReleaseNotesService(
                 appVersionManager: App.shared.appVersionManager
