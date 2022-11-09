@@ -3185,6 +3185,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D3AA5ED291C247400DF8CE7 /* ZcashLightClientKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ZcashLightClientKit; path = ../../ZcashLightClientKit; sourceTree = "<group>"; };
 		11B35025FD5E96FD1AB359E9 /* EnabledWalletCacheStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnabledWalletCacheStorage.swift; sourceTree = "<group>"; };
 		11B3502637A858E6DDF9471B /* EvmSyncSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmSyncSource.swift; sourceTree = "<group>"; };
 		11B3502AEB7EF95A590A7B1B /* NftStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftStorage.swift; sourceTree = "<group>"; };
@@ -4384,6 +4385,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D3AA5EC291C247400DF8CE7 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				0D3AA5ED291C247400DF8CE7 /* ZcashLightClientKit */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		11B35043F81AA7646DFDDBBC /* CoinInvestors */ = {
 			isa = PBXGroup;
 			children = (
@@ -7146,6 +7155,7 @@
 		D3285F3920BD158E00644076 = {
 			isa = PBXGroup;
 			children = (
+				0D3AA5EC291C247400DF8CE7 /* Packages */,
 				D3285F4420BD158E00644076 /* UnstoppableWallet */,
 				D3285F4320BD158E00644076 /* Products */,
 				95AD93BB0A2D5F5C4A435252 /* Frameworks */,
@@ -11091,8 +11101,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/zcash/ZcashLightClientKit";
 			requirement = {
-				kind = exactVersion;
-				version = "0.17.0-beta.rc1";
+				kind = revision;
+				revision = 837041684469b9c2745e750c6df8a2aa4fc41da9;
 			};
 		};
 		D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */ = {
