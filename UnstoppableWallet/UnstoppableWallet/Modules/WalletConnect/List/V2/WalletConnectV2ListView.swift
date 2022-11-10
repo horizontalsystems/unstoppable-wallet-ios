@@ -169,7 +169,7 @@ class WalletConnectV2ListView {
 extension WalletConnectV2ListView {
 
     func sections(tableView: SectionsTableView) -> [SectionProtocol] {
-        guard !viewItems.isEmpty else {
+        guard !viewItems.isEmpty || pendingRequestCount != 0 else {
             return []
         }
 

@@ -73,6 +73,15 @@ extension MainSettingsService {
         }
     }
 
+    var walletConnectPendingRequestCount: Int {
+        walletConnectV2SessionManager.pendingRequests().count
+    }
+
+    var walletConnectPendingRequestCountObservable: Observable<Int> {
+        walletConnectV2SessionManager.pendingRequestsObservable.map { $0.count }
+    }
+
+
     var currentLanguageDisplayName: String? {
         LanguageManager.shared.currentLanguageDisplayName
     }

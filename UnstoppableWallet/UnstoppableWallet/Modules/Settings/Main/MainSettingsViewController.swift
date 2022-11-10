@@ -97,9 +97,23 @@ class MainSettingsViewController: ThemeViewController {
                 component.imageView.tintColor = .themeLucian
             }
         }
-        subscribe(disposeBag, viewModel.walletConnectSessionCountDriver) { [weak self] count in
+        subscribe(disposeBag, viewModel.walletConnectCountDriver) { [weak self] tuple in
             self?.walletConnectCell.bind(index: 2) { (component: TextComponent) in
-                component.text = count
+                if let tuple = tuple {
+                    component.isHidden = tuple.highlighted
+                    component.text = tuple.text
+                } else {
+                    component.isHidden = true
+                }
+            }
+            self?.walletConnectCell.bind(index: 3) { (component: BadgeComponent) in
+                if let tuple = tuple {
+                    component.isHidden = !tuple.highlighted
+                    component.badgeView.set(style: .medium)
+                    component.badgeView.text = tuple.text
+                } else {
+                    component.isHidden = true
+                }
             }
         }
         subscribe(disposeBag, viewModel.baseCurrencyDriver) { [weak self] baseCurrency in
@@ -142,7 +156,7 @@ class MainSettingsViewController: ThemeViewController {
     }
 
     private func buildTitleValue(cell: BaseThemeCell, image: UIImage?, title: String) {
-        CellBuilder.build(cell: cell, elements: [.image20, .text, .text, .margin8, .image20])
+        CellBuilder.build(cell: cell, elements: [.image20, .text, .text, .badge, .margin8, .image20])
         cell.bind(index: 0) { (component: ImageComponent) in
             component.imageView.image = image
         }
@@ -155,7 +169,10 @@ class MainSettingsViewController: ThemeViewController {
             component.font = .subhead1
             component.textColor = .themeGray
         }
-        cell.bind(index: 3) { (component: ImageComponent) in
+        cell.bind(index: 3) { (component: BadgeComponent) in
+            component.isHidden = true
+        }
+        cell.bind(index: 4) { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "arrow_big_forward_20")
         }
     }

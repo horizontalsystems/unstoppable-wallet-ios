@@ -10,7 +10,7 @@ class MainSettingsViewModel {
 
     private let manageWalletsAlertRelay: BehaviorRelay<Bool>
     private let securityCenterAlertRelay: BehaviorRelay<Bool>
-    private let walletConnectSessionCountRelay: BehaviorRelay<String?>
+    private let walletConnectCountRelay: BehaviorRelay<(highlighted: Bool,text: String)?>
     private let baseCurrencyRelay: BehaviorRelay<String>
     private let aboutAlertRelay: BehaviorRelay<Bool>
     private let openWalletConnectRelay = PublishRelay<WalletConnectOpenMode>()
@@ -21,7 +21,7 @@ class MainSettingsViewModel {
 
         manageWalletsAlertRelay = BehaviorRelay(value: !service.allBackedUp)
         securityCenterAlertRelay = BehaviorRelay(value: !service.isPinSet)
-        walletConnectSessionCountRelay = BehaviorRelay(value: Self.convert(walletConnectSessionCount: service.walletConnectSessionCount))
+        walletConnectCountRelay = BehaviorRelay(value: Self.convert(walletConnectSessionCount: service.walletConnectSessionCount, walletConnectPendingRequestCount: service.walletConnectPendingRequestCount))
         baseCurrencyRelay = BehaviorRelay(value: service.baseCurrency.code)
         aboutAlertRelay = BehaviorRelay(value: !service.termsAccepted)
 
@@ -42,7 +42,14 @@ class MainSettingsViewModel {
         service.walletConnectSessionCountObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] count in
-                    self?.walletConnectSessionCountRelay.accept(Self.convert(walletConnectSessionCount: count))
+                    self?.walletConnectCountRelay.accept(Self.convert(walletConnectSessionCount: count, walletConnectPendingRequestCount: self?.service.walletConnectPendingRequestCount ?? 0))
+                })
+                .disposed(by: disposeBag)
+
+        service.walletConnectPendingRequestCountObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] count in
+                    self?.walletConnectCountRelay.accept(Self.convert(walletConnectSessionCount: self?.service.walletConnectSessionCount ?? 0, walletConnectPendingRequestCount: count))
                 })
                 .disposed(by: disposeBag)
 
@@ -61,8 +68,11 @@ class MainSettingsViewModel {
                 .disposed(by: disposeBag)
     }
 
-    private static func convert(walletConnectSessionCount: Int) -> String? {
-        walletConnectSessionCount > 0 ? "\(walletConnectSessionCount)" : nil
+    private static func convert(walletConnectSessionCount: Int, walletConnectPendingRequestCount: Int) -> (highlighted: Bool,text: String)? {
+        if walletConnectPendingRequestCount != 0 {
+            return (highlighted: true, text: "\(walletConnectPendingRequestCount)")
+        }
+        return walletConnectSessionCount > 0 ? (highlighted: false, text: "\(walletConnectSessionCount)") : nil
     }
 
 }
@@ -85,8 +95,8 @@ extension MainSettingsViewModel {
         securityCenterAlertRelay.asDriver()
     }
 
-    var walletConnectSessionCountDriver: Driver<String?> {
-        walletConnectSessionCountRelay.asDriver()
+    var walletConnectCountDriver: Driver<(highlighted: Bool,text: String)?> {
+        walletConnectCountRelay.asDriver()
     }
 
     var baseCurrencyDriver: Driver<String> {
