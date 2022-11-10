@@ -81,13 +81,13 @@ class WalletConnectListViewController: ThemeViewController {
         listViewV1.viewDidLoad()
         listViewV2.viewDidLoad()
 
-        if viewModel.emptySessionList {
+        if viewModel.emptyList {
             startNewConnection()
         }
     }
 
     private func syncItems() {
-        emptyView.isHidden = !viewModel.emptySessionList
+        emptyView.isHidden = !viewModel.emptyList
 
         tableView.reload()
     }

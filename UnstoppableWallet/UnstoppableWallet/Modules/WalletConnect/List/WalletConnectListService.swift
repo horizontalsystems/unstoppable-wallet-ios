@@ -90,6 +90,10 @@ extension WalletConnectListService {
         (sessionManager.sessions.count + sessionManagerV2.sessions.count) == 0
     }
 
+    var emptyPendingRequestList: Bool {
+        sessionManagerV2.pendingRequests().count == 0
+    }
+
     var itemsV1: [Item] {
         items(sessions: sessionManager.sessions)
     }

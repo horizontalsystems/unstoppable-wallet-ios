@@ -31,8 +31,8 @@ class WalletConnectListViewModel {
 extension WalletConnectListViewModel {
 
     // NewConnection section
-    var emptySessionList: Bool {
-        service.emptySessionList
+    var emptyList: Bool {
+        service.emptySessionList && service.emptyPendingRequestList
     }
 
     var showWalletConnectMainModuleSignal: Signal<IWalletConnectMainService> {
