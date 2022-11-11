@@ -300,25 +300,9 @@ class MainSettingsViewController: ThemeViewController {
     private func openWalletConnect(mode: MainSettingsViewModel.WalletConnectOpenMode) {
         switch mode {
         case .noAccount:
-            let viewController = InformationModule.simpleInfo(
-                    title: "wallet_connect.title".localized,
-                    image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob),
-                    description: "wallet_connect.no_account.description".localized,
-                    buttonTitle: "wallet_connect.no_account.i_understand".localized,
-                    onTapButton: InformationModule.afterClose())
-
-            present(viewController, animated: true)
+            MainViewController.showWalletConnectError(error: .noAccount, viewController: self)
         case .nonSupportedAccountType(let accountTypeDescription):
-            let viewController = InformationModule.simpleInfo(
-                    title: "wallet_connect.title".localized,
-                    image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob),
-                    description: "wallet_connect.non_supported_account.description".localized(accountTypeDescription),
-                    buttonTitle: "wallet_connect.non_supported_account.switch".localized,
-                    onTapButton: InformationModule.afterClose { [weak self] in
-                        self?.present(SwitchAccountModule.viewController(), animated: true)
-                    })
-
-            present(viewController, animated: true)
+            MainViewController.showWalletConnectError(error: .nonSupportedAccountType(accountTypeDescription: accountTypeDescription), viewController: self)
         case .list:
             navigationController?.pushViewController(WalletConnectListModule.viewController(), animated: true)
         }
