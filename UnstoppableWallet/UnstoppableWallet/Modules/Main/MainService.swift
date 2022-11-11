@@ -9,6 +9,7 @@ class MainService {
     private let localStorage: LocalStorage
     private let storage: StorageKit.ILocalStorage
     private let launchScreenManager: LaunchScreenManager
+    private let accountManager: AccountManager
     private let walletConnectV2Manager: WalletConnectV2SessionManager
     private let presetTab: MainModule.Tab?
     private let disposeBag = DisposeBag()
@@ -35,6 +36,7 @@ class MainService {
         self.localStorage = localStorage
         self.storage = storage
         self.launchScreenManager = launchScreenManager
+        self.accountManager = accountManager
         self.walletConnectV2Manager = walletConnectV2Manager
         self.presetTab = presetTab
 
@@ -99,6 +101,10 @@ extension MainService {
 
     func set(tab: MainModule.Tab) {
         storage.set(value: tab.rawValue, for: keyTabIndex)
+    }
+
+    var activeAccount: Account? {
+        accountManager.activeAccount
     }
 
 }

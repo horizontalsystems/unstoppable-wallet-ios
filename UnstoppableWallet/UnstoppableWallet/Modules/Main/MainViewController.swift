@@ -42,6 +42,8 @@ class MainViewController: ThemeTabBarController {
         subscribe(disposeBag, viewModel.deepLinkDriver) { [weak self] deepLink in self?.handle(deepLink: deepLink) }
         subscribe(disposeBag, viewModel.showSessionRequestSignal) { [weak self] request in self?.handle(request: request) }
 
+        subscribe(disposeBag, viewModel.openWalletConnectSignal) { [weak self] in self?.openWalletConnect(mode: $0) }
+
         if viewModel.needToShowJailbreakAlert {
             showJailbreakAlert()
         }
@@ -147,6 +149,17 @@ class MainViewController: ThemeTabBarController {
 
         switch deepLink {
         case let .walletConnect(url):
+            viewModel.onWalletConnectDeepLink(url: url)
+        }
+    }
+
+    private func openWalletConnect(mode: MainViewModel.WalletConnectOpenMode) {
+        switch mode {
+        case .noAccount:
+            MainViewController.showWalletConnectError(error: .noAccount, viewController: self)
+        case .nonSupportedAccountType(let accountTypeDescription):
+            MainViewController.showWalletConnectError(error: .nonSupportedAccountType(accountTypeDescription: accountTypeDescription), viewController: self)
+        case .pair(let url):
             WalletConnectUriHandler.connect(uri: url) { [weak self] result in
                 self?.processWalletConnectPair(result: result)
             }
@@ -176,6 +189,40 @@ class MainViewController: ThemeTabBarController {
         }
 
         visibleController.present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
+}
+
+extension MainViewController {
+
+    static func showWalletConnectError(error: WalletConnectOpenError, viewController: UIViewController) {
+        switch error {
+        case .noAccount:
+            let presentingViewController = InformationModule.simpleInfo(
+                    title: "wallet_connect.title".localized,
+                    image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob),
+                    description: "wallet_connect.no_account.description".localized,
+                    buttonTitle: "wallet_connect.no_account.i_understand".localized,
+                    onTapButton: InformationModule.afterClose())
+
+            viewController.present(presentingViewController, animated: true)
+        case .nonSupportedAccountType(let accountTypeDescription):
+            let presentingViewController = InformationModule.simpleInfo(
+                    title: "wallet_connect.title".localized,
+                    image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob),
+                    description: "wallet_connect.non_supported_account.description".localized(accountTypeDescription),
+                    buttonTitle: "wallet_connect.non_supported_account.switch".localized,
+                    onTapButton: InformationModule.afterClose { [weak viewController] in
+                        viewController?.present(SwitchAccountModule.viewController(), animated: true)
+                    })
+
+            viewController.present(presentingViewController, animated: true)
+        }
+    }
+
+    enum WalletConnectOpenError {
+        case noAccount
+        case nonSupportedAccountType(accountTypeDescription: String)
     }
 
 }

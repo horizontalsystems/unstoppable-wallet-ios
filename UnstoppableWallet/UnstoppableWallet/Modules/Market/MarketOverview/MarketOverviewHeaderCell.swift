@@ -107,14 +107,18 @@ class MarketOverviewHeaderCell: BaseThemeCell {
             seeAllButton.isHidden = true
             rightButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
             seeAllButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            rightButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+            seeAllButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
 
             switch buttonMode {
             case .selector:
                 rightButton.isHidden = false
                 rightButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+                seeAllButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
             case .seeAll:
                 seeAllButton.isHidden = false
                 seeAllButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+                rightButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
             case .none: return
             }
         }
