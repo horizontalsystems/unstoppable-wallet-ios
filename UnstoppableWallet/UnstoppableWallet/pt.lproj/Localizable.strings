@@ -226,43 +226,43 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "balance_error.change_source" = "Mudar a fonte";
 "balance_error.sync_error" = "Erro de Sincronização";
-"lost_accounts.warning_title" = "iOS Keychain Error";
-"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
+"lost_accounts.warning_title" = "Erro de Keychain do iOS";
+"lost_accounts.warning_message" = "Os dados criptografados que continham sua carteira foi invalidado recentemente porque a tela de bloqueio do iOS foi alterada";
 
 // Account switcher
 
-"switch_account.title" = "Switch Wallet";
-"switch_account.wallets" = "Wallets";
-"switch_account.watch_addresses" = "Watch Addresses";
+"switch_account.title" = "Trocar Carteira";
+"switch_account.wallets" = "Carteiras";
+"switch_account.watch_addresses" = "Endereços de Observação";
 
 // Release notes
 
-"release_notes.title" = "What's New";
-"release_notes.follow_us" = "Follow Us";
+"release_notes.title" = "O que há de novo";
+"release_notes.follow_us" = "Siga a gente";
 
 // Deposit
 
-"deposit.receive_coin" = "Receive %@";
-"deposit.address" = "Address";
-"deposit.your_address" = "Your Address";
-"receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
+"deposit.receive_coin" = "Receber %@";
+"deposit.address" = "Endereço";
+"deposit.your_address" = "Seu endereço";
+"receive_alert.not_backed_up_description" = "Você precisa fazer um backup de %@ antes de poder receber %@.";
 
 // Send
 
-"send.title" = "Send %@";
-"send.send" = "Send";
-"send.amount_placeholder" = "Amount";
-"send.address_placeholder" = "Address";
-"send.address_or_domain_placeholder" = "Address or Domain";
-"send.fee" = "Fee";
-"send.network_fee" = "Network Fee";
-"send.estimated_fee" = "Estimated Fee";
-"send.max_fee" = "Max Fee";
-"send.tx_speed" = "Transaction Speed";
-"send.tx_speed_low" = "Low";
-"send.tx_speed_recommended" = "Recommended";
-"send.tx_speed_high" = "High";
-"send.tx_speed_custom" = "Custom";
+"send.title" = "Enviar %@";
+"send.send" = "Enviar";
+"send.amount_placeholder" = "Montante";
+"send.address_placeholder" = "Endereço";
+"send.address_or_domain_placeholder" = "Endereço ou Domínio";
+"send.fee" = "Taxa";
+"send.network_fee" = "Taxa de Rede";
+"send.estimated_fee" = "Taxa estimada";
+"send.max_fee" = "Taxa máxima";
+"send.tx_speed" = "Velocidade da Transação";
+"send.tx_speed_low" = "Baixa";
+"send.tx_speed_recommended" = "Recomendado";
+"send.tx_speed_high" = "Alta";
+"send.tx_speed_custom" = "Personalizado";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
 "send.available_balance" = "Saldo Disponível";
@@ -274,55 +274,55 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "send.hodler_locktime_month" = "1 mês";
 "send.hodler_locktime_half_year" = "6 meses";
 "send.hodler_locktime_year" = "1 ano";
-"send.hodler_locktime_off" = "Off";
+"send.hodler_locktime_off" = "Desligado";
 "send.hodler_error.unsupported_address" = "O bloqueio de tempo só funciona com endereços P2PKH (iniciando com 1)";
 "send.fee_info.title" = "Velocidade da Transação";
 "send.fee_info.description" = "As ‘blockchains’ exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são maiores quando muitas transações acontecem na rede e são menores quando a ‘blockchain’ está menos ocupada.";
 "send.fee_info.header_slow" = "Baixa";
-"send.fee_info.content_slow" = "Selecting a value from this range may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm.";
-"send.fee_info.header_average" = "Recommended";
-"send.fee_info.content_average" = "Typically, the recommended fee value should be sufficient for a transaction to be processed within minutes or an hour for Bitcoin and within minutes for Ethereum.";
+"send.fee_info.content_slow" = "A seleção de um valor desse intervalo pode resultar na retenção de uma transação como pendente por horas ou acarretar rejeição. Quanto menor o valor, mais tempo levará para a confirmação da transação.";
+"send.fee_info.header_average" = "Recomendado";
+"send.fee_info.content_average" = "Normalmente, o valor de taxa recomendado deve ser suficiente para que uma transação seja processada em minutos ou uma hora para Bitcoin e em minutos para o Ethereum.";
 "send.fee_info.header_fast" = "Alta";
-"send.fee_info.content_fast" = "For transactions where priority is important, we recommend using the high fee value. It's expected to be sufficient for a transaction to be completed within 10 minutes for Bitcoin and within 1-2 minutes for Ethereum.";
-"send.fee_info.content_conclusion" = "The Unstoppable wallet makes an educated guess based on the network activity and can't guarantee the suggested fee values will always result in expected behavior.";
+"send.fee_info.content_fast" = "Para as operações em que a prioridade é importante, recomendamos a utilização do alto valor de taxa. É esperado que seja suficiente para concluir uma transação dentro de 10 minutos para o Bitcoin e dentro de 1 – 2 minutos para o Ethereum.";
+"send.fee_info.content_conclusion" = "A carteira Unstoppable faz uma estimativa estudada e baseada na atividade de rede e não pode garantir que os valores de taxas sugeridas sempre resultarão no comportamento esperado.";
 
-"send.confirmation.you_send" = "You Send";
-"send.confirmation.to" = "To";
-"send.confirmation.domain" = "Domain";
-"send.confirmation.address" = "Address";
-"send.confirmation.account" = "Account";
+"send.confirmation.you_send" = "Enviar";
+"send.confirmation.to" = "Para";
+"send.confirmation.domain" = "Domínio";
+"send.confirmation.address" = "Endereço";
+"send.confirmation.account" = "Conta";
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
-"send.confirmation.fee" = "Fee";
+"send.confirmation.fee" = "Taxa";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.send_button" = "Send";
-"send.confirmation.resend_description" = "This action will attempt to invalidate previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
-"send.confirmation.resend_button" = "Resend";
-"send.confirmation.cancel_description" = "This action will attempt to invalidate previous transaction by resending as a new 0 amount transaction to self. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
-"send.confirmation.cancel_button" = "Cancel Transaction";
+"send.confirmation.send_button" = "Enviar";
+"send.confirmation.resend_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
+"send.confirmation.resend_button" = "Enviar novamente";
+"send.confirmation.cancel_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
+"send.confirmation.cancel_button" = "Cancelar transação";
 "send.confirmation.nonce" = "Nonce";
-"send.confirmation.method" = "Method";
-"send.amount_error.balance" = "Not Enough Balance";
-"send.amount_error.maximum_amount" = "Maximum amount %@";
-"send.amount_error.minimum_amount" = "Minimum amount %@";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
-"send.amount_warning.coin_needed_for_fee" = "Consider leaving some %@ on balance to be able to pay for future transactions.";
-"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
+"send.confirmation.method" = "Método";
+"send.amount_error.balance" = "Saldo insuficiente";
+"send.amount_error.maximum_amount" = "Valor máximo: %@";
+"send.amount_error.minimum_amount" = "Valor mínimo: %@";
+"send.amount_error.min_required_balance" = "Restante min. necessário %@";
+"send.amount_warning.coin_needed_for_fee" = "Considere deixar algum %@ no saldo para poder pagar transações futuras.";
+"send.token.insufficient_fee_alert" = "Taxas de transação para %@ (%@) pagas em %@. Você precisa de %@.";
 
-"send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
-"send.fee_settings.amount_error.balance" = "The current %@ balance is below the amount required to process theis transaction, including transaction fee.";
+"send.fee_settings.amount_error.balance.title" = "Saldo insuficiente";
+"send.fee_settings.amount_error.balance" = "O saldo atual de %@ está abaixo do valor necessário para processar a transação, incluindo taxa de transação.";
 
-"send.fee_settings.stuck_warning.title" = "Risk of getting stuck";
-"send.fee_settings.stuck_warning" = "The transaction may get stuck or fail.";
+"send.fee_settings.stuck_warning.title" = "Risco de ficar trancado";
+"send.fee_settings.stuck_warning" = "A transação pode ficar presa ou falhar.";
 
-"send.stuck_warning" = "Warning! Risk of getting stuck";
+"send.stuck_warning" = "Atenção! Risco de ficar preso";
 
 "send.lock_time" = "TimeLock";
 
-"approve.confirmation.you_approve" = "You Approve";
-"approve.confirmation.you_revoke" = "You Revoke";
-"approve.confirmation.spender" = "Spender";
+"approve.confirmation.you_approve" = "Você concorda";
+"approve.confirmation.you_revoke" = "Você revoga";
+"approve.confirmation.spender" = "Gastador";
 
 // CoinSelector
 
@@ -330,15 +330,15 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Swap
 
-"swap.title" = "Swap";
-"swap.you_pay" = "You Pay";
-"swap.estimated" = "estimated";
+"swap.title" = "Trocar";
+"swap.you_pay" = "Você Paga";
+"swap.estimated" = "estimado";
 "swap.balance" = "Saldo";
 "swap.allowance" = "Allowance";
-"swap.you_get" = "You Get";
-"swap.token" = "Select";
-"swap.advanced_settings" = "Swap Settings";
-"swap.proceed_button" = "Next";
+"swap.you_get" = "Você recebe";
+"swap.token" = "Selecionar";
+"swap.advanced_settings" = "Configurações de troca";
+"swap.proceed_button" = "Próximo";
 "swap.approve.title" = "Aprovar Troca";
 "swap.approve.description" = "Você deve conceder permissão a um contrato inteligente para trocar um determinado token em seu nome. Esta permissão define o valor que pode ser usado por um contrato inteligente. Isso não afeta seu saldo mas requer uma pequena taxa para executar uma transação aprovada. \n\nEmbora possa ser feito sob demanda antes de cada negociação, é mais barato aprovar um montante mais elevado antecipadamente para futuras operações.";
 "swap.approve.amount_error.already_approved" = "Você já tem uma permissão para este valor";
@@ -361,35 +361,35 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Swap Advanced Settings
 
-"swap.advanced_settings.slippage" = "Slippage Tolerance";
-"swap.advanced_settings.slippage.footer" = "Your transaction will revert if the price changes unfavorably by more than this percentage";
-"swap.advanced_settings.deadline" = "Transaction Deadline";
-"swap.advanced_settings.deadline.footer" = "Your transaction will revert if it is pending for more than this long.";
-"swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
+"swap.advanced_settings.slippage" = "Tolerância de deslizamento";
+"swap.advanced_settings.slippage.footer" = "Sua transação será revertida se o preço mudar desfavoravelmente em mais do que esta porcentagem";
+"swap.advanced_settings.deadline" = "Data-limite da operação";
+"swap.advanced_settings.deadline.footer" = "Sua transação será revertida se ficar pendente por mais tempo.";
+"swap.advanced_settings.recipient.footer" = "Após a operação de câmbio, o valor será transferido para o endereço especificado";
 "swap.advanced_settings.deadline_minute" = "%@ min";
-"swap.advanced_settings.recipient_address" = "Recipient Address";
-"swap.advanced_settings.warning.unusual_slippage" = "Your transaction may be frontrun";
-"swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";
-"swap.advanced_settings.error.higher_slippage" = "Slippage Tolerance can’t be more than %@%%";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
-"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
-"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
+"swap.advanced_settings.recipient_address" = "Endereço do Destinatário";
+"swap.advanced_settings.warning.unusual_slippage" = "Sua operação pode ser de front-running";
+"swap.advanced_settings.error.lower_slippage" = "É provável que sua transação falhe.";
+"swap.advanced_settings.error.higher_slippage" = "Tolerância do deslizamento não pode ser maior que %@%%";
+"swap.advanced_settings.error.invalid_address" = "Endereço Inválido";
+"swap.advanced_settings.error.invalid_slippage" = "Deslizamento Inválido";
+"swap.advanced_settings.error.invalid_deadline" = "Prazo de tarefa inválido";
 
-"swap.one_inch.error.cannot_estimate" = "Estimation Error";
-"swap.one_inch.error.cannot_estimate.info" = "Check balance to ensure there is enough %@ to cover fee. Or try increasing price slippage amount and try again. Will auto-retry in 3 sec...";
+"swap.one_inch.error.cannot_estimate" = "Erro de Estimativa";
+"swap.one_inch.error.cannot_estimate.info" = "Verifique o saldo para garantir que haja %@ suficiente para cobrir a taxa. Ou tente aumentar o preço do slippage e tente novamente. Será possível tentar novamente em 3 seg...";
 "swap.one_inch.error.insufficient_liquidity" = "Insufficient Liquidity";
 "swap.one_inch.error.insufficient_liquidity.info" = "Likely there is not enough liquidity available to process this trade. Try lowering the amount.";
 
-"swap.service" = "Service";
-"swap.service.title" = "Service";
+"swap.service" = "Serviço";
+"swap.service.title" = "Serviço";
 
 // Swap Approving
 
-"swap.approve.subtitle" = "Swap";
+"swap.approve.subtitle" = "Trocar";
 
 // Swap Confirmation
 
-"swap.confirmation.swap_button" = "Swap";
+"swap.confirmation.swap_button" = "Trocar";
 "swap.confirmation.impact_too_high" = "The difference between the market price and expected settlement price is too high.";
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
