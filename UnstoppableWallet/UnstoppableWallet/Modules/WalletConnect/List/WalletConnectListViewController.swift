@@ -16,7 +16,7 @@ class WalletConnectListViewController: ThemeViewController {
     private let bottomButtonHolder = BottomGradientHolder()
     private let bottomButton = PrimaryButton()
 
-    let tableView = SectionsTableView(style: .grouped)
+    private let tableView = SectionsTableView(style: .grouped)
     private weak var scanQrViewController: WalletConnectScanQrViewController?
 
     init(listViewV1: WalletConnectV1ListView, listViewV2: WalletConnectV2ListView, viewModel: WalletConnectListViewModel) {
@@ -127,6 +127,7 @@ class WalletConnectListViewController: ThemeViewController {
 extension WalletConnectListViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
+        [Section(id: "top-margin", headerState: .margin(height: .margin12))] +
         (listViewV2.sections(tableView: tableView) + listViewV1.sections(tableView: tableView)).compactMap { $0 }
     }
 

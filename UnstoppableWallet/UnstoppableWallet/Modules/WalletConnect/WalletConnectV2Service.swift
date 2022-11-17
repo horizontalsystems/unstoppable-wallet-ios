@@ -30,6 +30,7 @@ class WalletConnectV2Service {
 
     private let sessionsItemUpdatedRelay = PublishRelay<()>()
     private let pendingRequestsUpdatedRelay = PublishRelay<()>()
+    private let pairingUpdatedRelay = PublishRelay<()>()
     private let sessionRequestReceivedRelay = PublishRelay<WalletConnectSign.Request>()
     private let socketConnectionStatusRelay = PublishRelay<WalletConnectSign.SocketConnectionStatus>()
 
@@ -52,6 +53,7 @@ class WalletConnectV2Service {
         connectionService.relayClient = Relay.instance
 
         updateSessions()
+        updatePairings()
     }
 
     func setUpAuthSubscribing() {
@@ -89,6 +91,10 @@ class WalletConnectV2Service {
 
     private func updateSessions() {
         sessionsItemUpdatedRelay.accept(())
+    }
+
+    private func updatePairings() {
+        pairingUpdatedRelay.accept(())
     }
 
 }
@@ -169,6 +175,31 @@ extension WalletConnectV2Service {
         pendingRequestsUpdatedRelay.asObservable()
     }
 
+    // works with pairings
+    public var pairings: [WalletConnectPairing.Pairing] {
+        Pair.instance.getPairings()
+    }
+
+    public var pairingUpdatedObservable: Observable<()> {
+        pairingUpdatedRelay.asObservable()
+    }
+
+    public func disconnectPairing(topic: String) -> Single<()> {
+        Single.create { observer in
+            Task { [weak self] in
+                do {
+                    try await Pair.instance.disconnect(topic: topic)
+                    self?.updatePairings()
+                    observer(.success(()))
+                } catch {
+                    self?.updatePairings()
+                    observer(.error(error))
+                }
+            }
+            return Disposables.create()
+        }
+    }
+
     // connect/disconnect session
     public var receiveProposalObservable: Observable<WalletConnectSign.Session.Proposal> {
         receiveProposalRelay.asObservable()
@@ -191,9 +222,10 @@ extension WalletConnectV2Service {
         guard let uri = WalletConnectUtils.WalletConnectURI(string: uri) else {
             throw WalletConnectUriHandler.ConnectionError.wrongUri
         }
-        Task.init {
+        Task.init { [weak self] in
             do {
                 try await Pair.instance.pair(uri: uri)
+                self?.updatePairings()
             } catch {
                 //can't pair with dApp, duplicate pairing or can't parse uri
                 throw error

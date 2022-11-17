@@ -108,7 +108,6 @@ extension WalletConnectV1ListView {
         }
 
         return [
-            Section(id: "top-margin", headerState: .margin(height: .margin12)),
             section(tableView: tableView, viewItems: viewItems)
         ]
     }
