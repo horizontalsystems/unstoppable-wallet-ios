@@ -227,13 +227,13 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "balance_error.change_source" = "Mudar a fonte";
 "balance_error.sync_error" = "Erro de Sincronização";
 "lost_accounts.warning_title" = "Erro de Keychain do iOS";
-"lost_accounts.warning_message" = "Os dados criptografados que continham sua carteira foi invalidado recentemente porque a tela de bloqueio do iOS foi alterada";
+"lost_accounts.warning_message" = "Os dados criptografados que continham sua carteira foram invalidados recentemente porque a tela de bloqueio do iOS foi alterada";
 
 // Account switcher
 
-"switch_account.title" = "Trocar Carteira";
+"switch_account.title" = "Trocar carteira";
 "switch_account.wallets" = "Carteiras";
-"switch_account.watch_addresses" = "Endereços de Observação";
+"switch_account.watch_addresses" = "Observar endereços";
 
 // Release notes
 
@@ -1040,8 +1040,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Guides
 
-"guides.tab_bar_item" = "Academia";
-"guides.title" = "Academia";
+"guides.tab_bar_item" = "Treinamento";
+"guides.title" = "Treinamento";
 
 // Add Token
 
@@ -1155,15 +1155,15 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Birthday Input
 
-"birthday_input.title" = "Altura de aniversário";
-"birthday_input.description" = "Para uma sincronização rápida, você pode entrar na altura de aniversário da carteira.";
+"birthday_input.title" = "Birthday Height";
+"birthday_input.description" = "For quick synchronization you can enter the wallet's birthday height.";
 "birthday_input.new_wallet" = "Nova Carteira";
 "birthday_input.new_wallet.description" = "Não tenha nenhuma transação antes";
 "birthday_input.old_wallet" = "Carteira antiga";
 "birthday_input.old_wallet.description" = "Usado antes e tem transações";
 "birthday_input.input_placeholder" = "%@ (opcional)";
 
-"restore_setting.birthday_height" = "%@ Altura de aniversário";
+"restore_setting.birthday_height" = "%@ Birthday Height";
 "restore_setting.download.disclaimer" = "A sincronização inicial com o blockchain pode consumir muito tráfego na internet.";
 
 // EVM Network
@@ -1247,7 +1247,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "nft_asset.links" = "Links";
 "nft_asset.links.website" = "Site";
 "nft_asset.options.save_to_photos" = "Salvar na Galeria";
-"nft_asset.options.set_as_watch_face" = "Definir como Face Assistida";
+"nft_asset.options.set_as_watch_face" = "Set as Watch Face";
 "nft_asset.save_to_photos.failed" = "Falha ao salvar a imagem NFT";
 
 // Nft Collection
