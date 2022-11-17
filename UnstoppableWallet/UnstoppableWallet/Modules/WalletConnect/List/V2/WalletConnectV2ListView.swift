@@ -12,7 +12,7 @@ class WalletConnectV2ListView {
     weak var sourceViewController: WalletConnectListViewController?
 
     private var viewItems = [WalletConnectListViewModel.ViewItem]()
-    private var pendingRequestCount: Int = 0
+    private var pairingCount: Int = 0
 
     private let reloadTableRelay = PublishRelay<()>()
 
@@ -22,7 +22,7 @@ class WalletConnectV2ListView {
 
     func viewDidLoad() {
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
-        subscribe(disposeBag, viewModel.pendingRequestCountDriver) { [weak self] in self?.sync(pendingRequestCount: $0) }
+        subscribe(disposeBag, viewModel.pairingCountDriver) { [weak self] in self?.sync(pairingCount: $0) }
         subscribe(disposeBag, viewModel.showLoadingSignal) { HudHelper.instance.showSpinner(title: "wallet_connect_list.disconnecting".localized, userInteractionEnabled: false) }
         subscribe(disposeBag, viewModel.showSuccessSignal) { _ in HudHelper.instance.show(banner: .done) }
         subscribe(disposeBag, viewModel.showWalletConnectSessionSignal) { [weak self] in self?.show(session: $0) }
@@ -34,8 +34,8 @@ class WalletConnectV2ListView {
         reloadTableRelay.accept(())
     }
 
-    private func sync(pendingRequestCount: Int) {
-        self.pendingRequestCount = pendingRequestCount
+    private func sync(pairingCount: Int) {
+        self.pairingCount = pairingCount
 
         reloadTableRelay.accept(())
     }
@@ -48,8 +48,8 @@ class WalletConnectV2ListView {
         sourceViewController?.navigationController?.present(viewController, animated: true)
     }
 
-    private func showPendingRequests() {
-        let viewController = WalletConnectV2PendingRequestsModule.viewController()
+    private func showPairings() {
+        let viewController = WalletConnectV2PairingModule.viewController()
 
         sourceViewController?.navigationController?.pushViewController(viewController, animated: true)
     }
@@ -63,101 +63,106 @@ class WalletConnectV2ListView {
         })
     }
 
-    private func cell(viewItem: WalletConnectListViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol? {
-        guard let tableView = sourceViewController?.tableView else {
-            return nil
-        }
+    private func cell(tableView: UITableView, viewItem: WalletConnectListViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol? {
         let rowAction = deleteRowAction(id: viewItem.id)
 
-        return CellBuilder.selectableRow(
-                elements: [.image24, .multiText, .image20],
+        let elements: [CellBuilderNew.CellElement] = [
+            .image24 { component in
+                component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_24"))
+            },
+            .vStackCentered([
+                .text { component in
+                    component.font = .body
+                    component.textColor = .themeLeah
+                    component.text = viewItem.title
+                },
+                .margin(3),
+                .text { component in
+                    component.font = .subhead2
+                    component.textColor = .themeGray
+                    component.text = viewItem.description
+                }
+            ]),
+            .badge { component in
+                if let badge = viewItem.badge {
+                    component.isHidden = false
+                    component.badgeView.set(style: .medium)
+                    component.badgeView.text = badge
+                } else {
+                    component.isHidden = true
+                }
+            },
+            .image20 { component in
+                component.imageView.image = UIImage(named: "arrow_big_forward_20")
+            }
+        ]
+
+        return CellBuilderNew.row(
+                rootElement: .hStack(elements),
                 tableView: tableView,
-                id: "session-\(viewItem.id)",
+                id: viewItem.title,
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
-                rowActionProvider: {
-                    [rowAction]
-                },
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_24"))
-                    }
-
-                    cell.bind(index: 1) { (component: MultiTextComponent) in
-                        component.set(style: .m1)
-                        component.title.font = .body
-                        component.title.textColor = .themeLeah
-                        component.subtitle.font = .subhead2
-                        component.subtitle.textColor = .themeGray
-
-                        component.title.text = viewItem.title
-                        component.subtitle.text = viewItem.description
-                    }
-
-                    cell.bind(index: 2) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "arrow_big_forward_20")
-                    }
-                },
+                rowActionProvider: { [rowAction] },
+                bind: { cell in cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast) },
                 action: action
         )
     }
 
-    private func pendingRequestCountCell(pendingRequestCount: Int) -> RowProtocol? {
-        guard let tableView = sourceViewController?.tableView, pendingRequestCount != 0 else {
+    private func pairingCountCell(tableView: UITableView, pairingCount: Int) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .text { component in
+                        component.font = .body
+                        component.textColor = .themeLeah
+                        component.text = "wallet_connect.list.pairings".localized
+                    },
+                    .text { component in
+                        component.font = .subhead1
+                        component.textColor = .themeGray
+                        component.text = "\(pairingCount)"
+                    },
+                    .image20 { component in
+                        component.imageView.image = UIImage(named: "arrow_big_forward_20")
+                    }
+                ]),
+                tableView: tableView,
+                id: "session-pairing",
+                height: .heightCell48,
+                autoDeselect: true,
+                bind: { cell in cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true) },
+                action: { [weak self] in self?.showPairings() }
+        )
+    }
+
+    private func pairingSection(tableView: SectionsTableView, showHeader: Bool) -> SectionProtocol? {
+        guard pairingCount != 0 else {
             return nil
         }
 
-        return CellBuilder.selectableRow(
-                elements: [.text, .badge, .image20],
-                tableView: tableView,
-                id: "session-pending_requests",
-                height: .heightCell48,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = "wallet_connect.list.pending_requests".localized
-                    }
-
-                    cell.bind(index: 1) { (component: BadgeComponent) in
-                        component.badgeView.set(style: .medium)
-                        component.badgeView.text = "\(pendingRequestCount)"
-                    }
-
-                    cell.bind(index: 2) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "arrow_big_forward_20")
-                    }
-                },
-                action: { [weak self] in
-                    self?.showPendingRequests()
-                }
-        )
-    }
-
-    private func pendingRequestSection(tableView: SectionsTableView) -> SectionProtocol {
-        let cell = pendingRequestCountCell(pendingRequestCount: pendingRequestCount)
+        let cell = pairingCountCell(tableView: tableView, pairingCount: pairingCount)
         return Section(
-                id: "section_pending_requests",
-                headerState: tableView.sectionHeader(text: "wallet_connect.list.version_text".localized("2.0")),
-                footerState: .margin(height: cell == nil ? 0 : .margin12),
-                rows: [cell].compactMap { $0 }
+                id: "section_pairing",
+                headerState: showHeader ? tableView.sectionHeader(text: "wallet_connect.list.version_text".localized("2.0")) : .margin(height: 0),
+                footerState: .margin(height: .margin24),
+                rows: [cell]
         )
     }
 
-    private func section(viewItems: [WalletConnectListViewModel.ViewItem]) -> SectionProtocol {
-        Section(
+    private func section(tableView: SectionsTableView, viewItems: [WalletConnectListViewModel.ViewItem]) -> SectionProtocol? {
+        guard !viewItems.isEmpty else {
+            return nil
+        }
+
+        return Section(
                 id: "section_2",
-                footerState: .margin(height: .margin32),
+                headerState: tableView.sectionHeader(text: "wallet_connect.list.version_text".localized("2.0")),
+                footerState: .margin(height: .margin24),
                 rows: viewItems.enumerated().compactMap { index, viewItem in
                     let isFirst = index == 0
                     let isLast = index == viewItems.count - 1
 
-                    return cell(viewItem: viewItem, isFirst: isFirst, isLast: isLast) { [weak self] in
+                    return cell(tableView: tableView, viewItem: viewItem, isFirst: isFirst, isLast: isLast) { [weak self] in
                         self?.viewModel.showSession(id: viewItem.id)
                     }
                 }
@@ -169,11 +174,11 @@ class WalletConnectV2ListView {
 extension WalletConnectV2ListView {
 
     func sections(tableView: SectionsTableView) -> [SectionProtocol] {
-        guard !viewItems.isEmpty || pendingRequestCount != 0 else {
+        guard !viewItems.isEmpty || pairingCount != 0 else {
             return []
         }
 
-        return [pendingRequestSection(tableView: tableView), section(viewItems: viewItems)].compactMap { $0 }
+        return [section(tableView: tableView, viewItems: viewItems), pairingSection(tableView: tableView, showHeader: viewItems.isEmpty)].compactMap { $0 }
     }
 
     var reloadTableSignal: Signal<()> {

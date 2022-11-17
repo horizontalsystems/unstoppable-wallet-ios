@@ -3,6 +3,7 @@ import RxRelay
 import RxCocoa
 import WalletConnectUtils
 import WalletConnectSign
+import WalletConnectPairing
 import MarketKit
 
 class WalletConnectListService {
@@ -56,7 +57,6 @@ class WalletConnectListService {
             return Item(
                     id: $0.id,
                     blockchains: [blockchain],
-                    version: 1,
                     appName: $0.peerMeta.name,
                     appUrl: $0.peerMeta.url,
                     appDescription: $0.peerMeta.description,
@@ -66,18 +66,20 @@ class WalletConnectListService {
     }
 
     private func items(sessions: [WalletConnectSign.Session]) -> [Item] {
-        sessions.map { session in
-            let blockchains = session.chainIds.compactMap {
-                evmBlockchainManager.blockchain(chainId: $0)
-            }
-            return Item(
+        let pendingRequests = pendingRequestsV2
+
+        return sessions.map { session in
+            let blockchains = session.chainIds.compactMap { evmBlockchainManager.blockchain(chainId: $0) }
+            let requestCount = pendingRequests.filter { $0.topic == session.topic }.count
+
+            return ItemV2(
                     id: session.id,
                     blockchains: blockchains,
-                    version: 2,
                     appName: session.peer.name,
                     appUrl: session.peer.url,
                     appDescription: session.peer.description,
-                    appIcons: session.peer.icons
+                    appIcons: session.peer.icons,
+                    requestCount: requestCount
             )
         }
     }
@@ -90,8 +92,8 @@ extension WalletConnectListService {
         (sessionManager.sessions.count + sessionManagerV2.sessions.count) == 0
     }
 
-    var emptyPendingRequestList: Bool {
-        sessionManagerV2.pendingRequests().count == 0
+    var emptyPairingList: Bool {
+        sessionManagerV2.pairings.count == 0
     }
 
     var itemsV1: [Item] {
@@ -120,6 +122,14 @@ extension WalletConnectListService {
 
     var pendingRequestsV2Observable: Observable<[WalletConnectSign.Request]> {
         sessionManagerV2.pendingRequestsObservable
+    }
+
+    var pairings: [WalletConnectPairing.Pairing] {
+        sessionManagerV2.pairings
+    }
+
+    var pairingsObservable: Observable<[WalletConnectPairing.Pairing]> {
+        sessionManagerV2.pairingsObservable
     }
 
     var showSessionV1Observable: Observable<WalletConnectSession> {
@@ -197,15 +207,32 @@ extension WalletConnectListService {
         case removedOnly
     }
 
-    struct Item {
+    class Item {
         let id: Int
         let blockchains: [MarketKit.Blockchain]
-        let version: Int
 
         let appName: String
         let appUrl: String
         let appDescription: String
         let appIcons: [String]
+
+        init(id: Int, blockchains: [MarketKit.Blockchain], appName: String, appUrl: String, appDescription: String, appIcons: [String]) {
+            self.id = id
+            self.blockchains = blockchains
+            self.appName = appName
+            self.appUrl = appUrl
+            self.appDescription = appDescription
+            self.appIcons = appIcons
+        }
+    }
+
+    class ItemV2: Item {
+        let requestCount: Int
+
+        init(id: Int, blockchains: [MarketKit.Blockchain], appName: String, appUrl: String, appDescription: String, appIcons: [String], requestCount: Int) {
+            self.requestCount = requestCount
+            super.init(id: id, blockchains: blockchains, appName: appName, appUrl: appUrl, appDescription: appDescription, appIcons: appIcons)
+        }
     }
 
 }

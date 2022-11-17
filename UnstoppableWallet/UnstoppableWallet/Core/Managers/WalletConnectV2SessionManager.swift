@@ -2,6 +2,7 @@ import WalletConnectUtils
 import RxSwift
 import RxCocoa
 import WalletConnectSign
+import WalletConnectPairing
 
 class WalletConnectV2SessionManager {
     private let disposeBag = DisposeBag()
@@ -13,6 +14,7 @@ class WalletConnectV2SessionManager {
 
     private let sessionsRelay = BehaviorRelay<[WalletConnectSign.Session]>(value: [])
     private let pendingRequestsRelay = BehaviorRelay<[WalletConnectSign.Request]>(value: [])
+    private let pairingsRelay = BehaviorRelay<[WalletConnectPairing.Pairing]>(value: [])
     private let sessionRequestReceivedRelay = PublishRelay<WalletConnectRequest>()
 
     init(service: WalletConnectV2Service, storage: WalletConnectV2SessionStorage, accountManager: AccountManager, currentDateProvider: CurrentDateProvider) {
@@ -36,8 +38,12 @@ class WalletConnectV2SessionManager {
         subscribe(disposeBag, service.pendingRequestsUpdatedObservable) { [weak self] in
             self?.syncPendingRequest()
         }
+        subscribe(disposeBag, service.pairingUpdatedObservable) { [weak self] in
+            self?.syncPairings()
+        }
 
         syncSessions()
+        syncPairings()
     }
 
     private func handleDeleted(account: Account) {
@@ -110,6 +116,14 @@ class WalletConnectV2SessionManager {
         pendingRequestsRelay.accept(requests())
     }
 
+    private func syncPairings() {
+        pairingsRelay.accept(service.pairings)
+    }
+
+    public func disconnectPairing(topic: String) -> Single<()> {
+        service.disconnectPairing(topic: topic)
+    }
+
     private func requests(accountId: String? = nil) -> [WalletConnectSign.Request] {
         let allRequests = service.pendingRequests
         let dbSessions = storage.sessionsV2(accountId: accountId)
@@ -151,6 +165,14 @@ extension WalletConnectV2SessionManager {
 
     public var pendingRequestsObservable: Observable<[WalletConnectSign.Request]> {
         pendingRequestsRelay.asObservable()
+    }
+
+    public var pairings: [WalletConnectPairing.Pairing] {
+        service.pairings
+    }
+
+    public var pairingsObservable: Observable<[WalletConnectPairing.Pairing]> {
+        pairingsRelay.asObservable()
     }
 
     public var sessionRequestReceivedObservable: Observable<WalletConnectRequest> {

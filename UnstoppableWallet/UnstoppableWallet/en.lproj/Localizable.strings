@@ -1092,7 +1092,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "No active sessions";
 
-"wallet_connect.list.pending_requests" = "Pending Requests";
+"wallet_connect.list.pairings" = "Pairings";
 "wallet_connect.list.version_text" = "Version %@";
 "wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
 "wallet_connect_list.new_connection" = "New Connection";
@@ -1105,6 +1105,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "wallet_connect.non_supported_account.switch" = "Switch";
 
 "wallet_connect.pending_requests_title" = "Pending Requests";
+"wallet_connect.paired_dapps.title" = "Paired dApps";
+"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
+"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
 "wallet_connect.pending_requests.nonactive_footer" = "To open an request you must activate the desired wallet";
 
 // App Status

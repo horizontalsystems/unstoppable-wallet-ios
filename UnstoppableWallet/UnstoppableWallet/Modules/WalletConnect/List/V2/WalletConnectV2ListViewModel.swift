@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import WalletConnectSign
+import WalletConnectPairing
 
 class WalletConnectV2ListViewModel {
     private let service: WalletConnectListService
@@ -10,7 +11,7 @@ class WalletConnectV2ListViewModel {
     private let showWalletConnectSessionRelay = PublishRelay<WalletConnectSign.Session>()
 
     private let viewItemsRelay = BehaviorRelay<[WalletConnectListViewModel.ViewItem]>(value: [])
-    private let pendingRequestCountRelay = BehaviorRelay<Int>(value: 0)
+    private let pairingCountRelay = BehaviorRelay<Int>(value: 0)
     private let showLoadingRelay = PublishRelay<()>()
     private let showSuccessRelay = PublishRelay<String?>()
 
@@ -19,18 +20,28 @@ class WalletConnectV2ListViewModel {
 
         subscribe(disposeBag, service.itemsV2Observable) { [weak self] in self?.sync(items: $0) }
         subscribe(disposeBag, service.pendingRequestsV2Observable) { [weak self] in self?.sync(pendingRequests: $0) }
+        subscribe(disposeBag, service.pairingsObservable) { [weak self] in self?.sync(pairings: $0) }
         subscribe(disposeBag, service.showSessionV2Observable) { [weak self] in self?.show(session: $0) }
 
         sync(items: service.itemsV2)
         sync(pendingRequests: service.pendingRequestsV2)
+        sync(pairings: service.pairings)
     }
 
     private func sync(items: [WalletConnectListService.Item]) {
         let viewItems = items.map {
-            WalletConnectListViewModel.ViewItem(
+            let description = $0.blockchains.map { $0.shortName }.joined(separator: ", ")
+
+            var badge: String?
+            if let item = $0 as? WalletConnectListService.ItemV2, item.requestCount != 0 {
+                badge = "\(item.requestCount)"
+            }
+
+            return WalletConnectListViewModel.ViewItem(
                 id: $0.id,
                 title: ($0.appName != "") ? $0.appName : "Unnamed",
-                description: $0.blockchains.map { $0.shortName }.joined(separator: ", "),
+                description: description,
+                badge: badge,
                 imageUrl: $0.appIcons.last
             )
         }
@@ -38,8 +49,12 @@ class WalletConnectV2ListViewModel {
         viewItemsRelay.accept(viewItems)
     }
 
+    private func sync(pairings: [WalletConnectPairing.Pairing]) {
+        pairingCountRelay.accept(pairings.count)
+    }
+
     private func sync(pendingRequests: [WalletConnectSign.Request]) {
-        pendingRequestCountRelay.accept(pendingRequests.count)
+        sync(items: service.itemsV2)
     }
 
     private func show(session: WalletConnectSign.Session) {
@@ -60,8 +75,8 @@ extension WalletConnectV2ListViewModel {
         viewItemsRelay.asDriver()
     }
 
-    var pendingRequestCountDriver: Driver<Int> {
-        pendingRequestCountRelay.asDriver()
+    var pairingCountDriver: Driver<Int> {
+        pairingCountRelay.asDriver()
     }
 
     var showLoadingSignal: Signal<()> {

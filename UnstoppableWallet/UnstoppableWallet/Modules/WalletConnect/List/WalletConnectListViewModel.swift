@@ -32,7 +32,7 @@ extension WalletConnectListViewModel {
 
     // NewConnection section
     var emptyList: Bool {
-        service.emptySessionList && service.emptyPendingRequestList
+        service.emptySessionList && service.emptyPairingList
     }
 
     var showWalletConnectMainModuleSignal: Signal<IWalletConnectMainService> {
@@ -55,15 +55,16 @@ extension WalletConnectListViewModel {
         let id: Int
         let title: String
         let description: String
+        let badge: String?
         let imageUrl: String?
 
-        init(id: Int, title: String, description: String, imageUrl: String?) {
+        init(id: Int, title: String, description: String, badge: String? = nil, imageUrl: String?) {
             self.id = id
             self.title = title
             self.description = description
+            self.badge = badge
             self.imageUrl = imageUrl
         }
-
     }
 
 }
