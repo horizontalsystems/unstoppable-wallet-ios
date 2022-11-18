@@ -9,7 +9,6 @@ class WalletConnectV2MainService {
     private let disposeBag = DisposeBag()
 
     private let service: WalletConnectV2Service
-    private let pingService: WalletConnectV2PingService
     private let manager: WalletConnectManager
     private let reachabilityManager: IReachabilityManager
     private let accountManager: AccountManager
@@ -41,10 +40,9 @@ class WalletConnectV2MainService {
         }
     }
 
-    init(session: WalletConnectSign.Session? = nil, service: WalletConnectV2Service, pingService: WalletConnectV2PingService, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, evmChainParser: WalletConnectEvmChainParser) {
+    init(session: WalletConnectSign.Session? = nil, service: WalletConnectV2Service, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, evmChainParser: WalletConnectEvmChainParser) {
         self.session = session
         self.service = service
-        self.pingService = pingService
         self.manager = manager
         self.reachabilityManager = reachabilityManager
         self.accountManager = accountManager
@@ -60,27 +58,16 @@ class WalletConnectV2MainService {
         subscribe(disposeBag, service.deleteSessionObservable) { [weak self] in
             self?.didDelete(topic: $0, reason: $1)
         }
-        subscribe(disposeBag, pingService.stateObservable) { [weak self] in
+        subscribe(disposeBag, service.socketConnectionStatusObservable) { [weak self] in
             self?.connectionStateRelay.accept($0)
         }
-        subscribe(disposeBag, reachabilityManager.reachabilityObservable) { [weak self] reachable in
-            if reachable {
-                self?.pingService.ping()
-            } else {
-                if self?.session != nil {
-                    self?.pingService.disconnect()
-                }
-            }
-        }
+        connectionStateRelay.accept(service.socketConnectionStatus == .connected ? .connected : .disconnected)
 
-        if let session = session {
+        if session != nil {
             state = .ready
             do {
                 blockchains = try initialBlockchains()
                 allowedBlockchainsRelay.accept(allowedBlockchains)
-
-                self.pingService.topic = session.topic
-                pingService.ping()
             } catch {
                 state = .invalid(error: WalletConnectMainModule.SessionError.noAnySupportedChainId)
                 return
@@ -100,7 +87,6 @@ class WalletConnectV2MainService {
             }
 
             state = .waitingForApproveSession
-            pingService.receiveResponse()
         } catch {
             state = .invalid(error: error)
             return
@@ -114,8 +100,6 @@ class WalletConnectV2MainService {
             allowedBlockchainsRelay.accept(allowedBlockchains)
 
             state = .ready
-            pingService.topic = session.topic
-            pingService.receiveResponse()
         } catch {
             state = .invalid(error: WalletConnectMainModule.SessionError.noAnySupportedChainId)
             return
@@ -127,8 +111,6 @@ class WalletConnectV2MainService {
             return
         }
 
-        pingService.topic = nil
-        pingService.disconnect()
         state = .killed(reason: .killSession) // todo: ???
     }
 
@@ -263,7 +245,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
     }
 
     var connectionState: WalletConnectMainModule.ConnectionState {
-        pingService.state
+        service.socketConnectionStatus
     }
 
     var connectionStateObservable: Observable<WalletConnectMainModule.ConnectionState> {
@@ -310,9 +292,6 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
             errorRelay.accept(AppError.noConnection)
             return
         }
-
-        pingService.topic = session.topic
-        pingService.ping()
     }
 
     func approveSession() {
@@ -370,7 +349,6 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
             Task {
                 do {
                     try await service.reject(proposal: proposal)
-                    pingService.disconnect()
                     state = .killed(reason: .rejectProposal)
                 } catch {
                     errorRelay.accept(error)
@@ -390,7 +368,6 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         }
 
         service.disconnect(topic: session.topic, reason: RejectionReason(code: 1, message: "Session Killed by User"))
-        pingService.disconnect()
         state = .killed(reason: .killSession) //todo: ???
     }
 

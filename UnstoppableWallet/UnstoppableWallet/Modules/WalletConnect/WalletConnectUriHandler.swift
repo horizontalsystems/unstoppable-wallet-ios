@@ -23,11 +23,9 @@ class WalletConnectUriHandler {
                 try await App.shared.walletConnectV2SessionManager.service.pair(uri: uri)
 
                 let service = App.shared.walletConnectV2SessionManager.service
-                let pingService = WalletConnectV2PingService(service: service, socketConnectionService: App.shared.walletConnectV2SocketConnectionService, logger: App.shared.logger)
                 let mainService = WalletConnectV2MainService(
                         session: nil,
                         service: service,
-                        pingService: pingService,
                         manager: App.shared.walletConnectManager,
                         reachabilityManager: App.shared.reachabilityManager,
                         accountManager: App.shared.accountManager,
