@@ -74,11 +74,11 @@ extension MainSettingsService {
     }
 
     var walletConnectPendingRequestCount: Int {
-        walletConnectV2SessionManager.pendingRequests().count
+        walletConnectV2SessionManager.activePendingRequests.count
     }
 
     var walletConnectPendingRequestCountObservable: Observable<Int> {
-        walletConnectV2SessionManager.pendingRequestsObservable.map { $0.count }
+        walletConnectV2SessionManager.activePendingRequestsObservable.map { $0.count }
     }
 
 

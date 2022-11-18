@@ -284,7 +284,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
     }
 
     func reconnect() {
-        guard let session = session else {
+        guard session != nil else {
             return
         }
 

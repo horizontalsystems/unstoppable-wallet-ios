@@ -27,7 +27,7 @@ class WalletConnectV2MainPendingRequestService {
         self.session = service.session
 
         subscribe(disposeBag, service.sessionUpdatedObservable) { [weak self] in self?.update(session: $0) }
-        subscribe(disposeBag, sessionManager.pendingRequestsObservable) { [weak self] _ in self?.syncPendingRequests() }
+        subscribe(disposeBag, sessionManager.activePendingRequestsObservable) { [weak self] _ in self?.syncPendingRequests() }
 
         syncPendingRequests()
     }

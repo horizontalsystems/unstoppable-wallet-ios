@@ -42,7 +42,7 @@ class MainBadgeService {
                 })
                 .disposed(by: disposeBag)
 
-        walletConnectV2SessionManager.pendingRequestsObservable
+        walletConnectV2SessionManager.activePendingRequestsObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .subscribe(onNext: { [weak self] _ in
@@ -58,7 +58,7 @@ class MainBadgeService {
     }
 
     private func syncSettingsBadge() {
-        let count = walletConnectV2SessionManager.pendingRequests().count
+        let count = walletConnectV2SessionManager.activePendingRequests.count
         let visible = !backupManager.allBackedUp || !pinKit.isPinSet || !termsManager.termsAccepted || count != 0
         settingsBadgeRelay.accept((visible, count))
     }

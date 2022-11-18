@@ -13,7 +13,7 @@ class WalletConnectV2SessionManager {
     private let currentDateProvider: CurrentDateProvider
 
     private let sessionsRelay = BehaviorRelay<[WalletConnectSign.Session]>(value: [])
-    private let pendingRequestsRelay = BehaviorRelay<[WalletConnectSign.Request]>(value: [])
+    private let activePendingRequestsRelay = BehaviorRelay<[WalletConnectSign.Request]>(value: [])
     private let pairingsRelay = BehaviorRelay<[WalletConnectPairing.Pairing]>(value: [])
     private let sessionRequestReceivedRelay = PublishRelay<WalletConnectRequest>()
 
@@ -49,10 +49,12 @@ class WalletConnectV2SessionManager {
     private func handleDeleted(account: Account) {
         storage.deleteSessionsV2(accountId: account.id)
         syncSessions()
+        syncPendingRequest()
     }
 
     private func handle(activeAccount: Account?) {
         syncSessions()
+        syncPendingRequest()
     }
 
     private func syncSessions() {
@@ -81,7 +83,7 @@ class WalletConnectV2SessionManager {
         storage.deleteSessionV2(topics: deletedTopics)
 
         sessionsRelay.accept(sessions(accountId: accountId, sessions: currentSessions))
-        pendingRequestsRelay.accept(requests())
+        activePendingRequestsRelay.accept(activePendingRequests)
     }
 
     private func receiveSession(request: WalletConnectSign.Request) {
@@ -113,7 +115,7 @@ class WalletConnectV2SessionManager {
     }
 
     private func syncPendingRequest() {
-        pendingRequestsRelay.accept(requests())
+        activePendingRequestsRelay.accept(activePendingRequests)
     }
 
     private func syncPairings() {
@@ -159,12 +161,20 @@ extension WalletConnectV2SessionManager {
         service.disconnect(topic: topic, reason: WalletConnectV2MainService.RejectionReason(code: 1, message: "Session Killed by User"))
     }
 
+    public var activePendingRequests: [WalletConnectSign.Request] {
+        guard let accountId = accountManager.activeAccount?.id else {
+            return []
+        }
+
+        return pendingRequests(accountId: accountId)
+    }
+
     public func pendingRequests(accountId: String? = nil) -> [WalletConnectSign.Request] {
         requests(accountId: accountId)
     }
 
-    public var pendingRequestsObservable: Observable<[WalletConnectSign.Request]> {
-        pendingRequestsRelay.asObservable()
+    public var activePendingRequestsObservable: Observable<[WalletConnectSign.Request]> {
+        activePendingRequestsRelay.asObservable()
     }
 
     public var pairings: [WalletConnectPairing.Pairing] {
