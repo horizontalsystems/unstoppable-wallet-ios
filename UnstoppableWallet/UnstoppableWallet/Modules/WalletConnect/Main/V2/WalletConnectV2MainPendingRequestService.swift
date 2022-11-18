@@ -9,7 +9,7 @@ class WalletConnectV2MainPendingRequestService {
     private let sessionManager: WalletConnectV2SessionManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let signService: IWalletConnectSignService
-    private let session: WalletConnectSign.Session
+    private var session: WalletConnectSign.Session?
 
     private let itemsRelay = PublishRelay<[Item]>()
     private(set) var items = [Item]() {
@@ -18,21 +18,31 @@ class WalletConnectV2MainPendingRequestService {
         }
     }
 
-
     private let showPendingRequestRelay = PublishRelay<WalletConnectRequest>()
 
-    init(sessionManager: WalletConnectV2SessionManager, evmBlockchainManager: EvmBlockchainManager, signService: IWalletConnectSignService, session: WalletConnectSign.Session) {
+    init(service: WalletConnectV2MainService, sessionManager: WalletConnectV2SessionManager, evmBlockchainManager: EvmBlockchainManager, signService: IWalletConnectSignService) {
         self.sessionManager = sessionManager
         self.evmBlockchainManager = evmBlockchainManager
         self.signService = signService
-        self.session = session
+        self.session = service.session
 
+        subscribe(disposeBag, service.sessionUpdatedObservable) { [weak self] in self?.update(session: $0) }
         subscribe(disposeBag, sessionManager.pendingRequestsObservable) { [weak self] _ in self?.syncPendingRequests() }
 
         syncPendingRequests()
     }
 
+    private func update(session: WalletConnectSign.Session?) {
+        self.session = session
+        syncPendingRequests()
+    }
+
     private func syncPendingRequests() {
+        guard let session = session else {
+            items = []
+            return
+        }
+
         items = sessionManager.pendingRequests()
                 .filter { $0.topic == session.topic }
                 .map { request in
