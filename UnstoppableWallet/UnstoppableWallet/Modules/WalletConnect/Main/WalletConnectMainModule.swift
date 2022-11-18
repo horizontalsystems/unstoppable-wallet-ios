@@ -73,7 +73,16 @@ struct WalletConnectMainModule {
             requestView.sourceViewController = viewController
 
             viewController.requestView = requestView
-        case is WalletConnectV2MainService: ()
+        case let service as WalletConnectV2MainService:
+            if let session = service.session {
+                let pendingRequestService = WalletConnectV2MainPendingRequestService(
+                        sessionManager: App.shared.walletConnectV2SessionManager,
+                        evmBlockchainManager: App.shared.evmBlockchainManager,
+                        signService: App.shared.walletConnectV2SessionManager.service,
+                        session: session)
+                let pendingRequestViewModel = WalletConnectV2MainPendingRequestViewModel(service: pendingRequestService)
+                viewController.pendingRequestViewModel = pendingRequestViewModel
+            }
         default: return nil
         }
 
