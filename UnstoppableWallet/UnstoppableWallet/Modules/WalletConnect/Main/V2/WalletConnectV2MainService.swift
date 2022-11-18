@@ -17,11 +17,16 @@ class WalletConnectV2MainService {
     private let evmChainParser: WalletConnectEvmChainParser
 
     private var proposal: WalletConnectSign.Session.Proposal?
-    private(set) var session: WalletConnectSign.Session?
+    private(set) var session: WalletConnectSign.Session? {
+        didSet {
+            sessionUpdatedRelay.accept(session)
+        }
+    }
 
     private let connectionStateRelay = PublishRelay<WalletConnectMainModule.ConnectionState>()
     private let requestRelay = PublishRelay<WalletConnectSign.Request>()
     private let errorRelay = PublishRelay<Error>()
+    private let sessionUpdatedRelay = PublishRelay<WalletConnectSign.Session?>()
 
     private let allowedBlockchainsRelay = PublishRelay<[WalletConnectMainModule.BlockchainItem]>()
 
@@ -251,6 +256,10 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
 
     var stateObservable: Observable<WalletConnectMainModule.State> {
         stateRelay.asObservable()
+    }
+
+    var sessionUpdatedObservable: Observable<WalletConnectSign.Session?> {
+        sessionUpdatedRelay.asObservable()
     }
 
     var connectionState: WalletConnectMainModule.ConnectionState {
