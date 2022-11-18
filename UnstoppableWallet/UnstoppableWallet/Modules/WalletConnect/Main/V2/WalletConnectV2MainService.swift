@@ -128,8 +128,17 @@ class WalletConnectV2MainService {
     }
 
     private func initialBlockchains() throws -> WalletConnectMainModule.BlockchainSet {
-        guard let seed = accountManager.activeAccount?.type.mnemonicSeed else {
-            return .empty
+        var addressFetcher: (Chain) -> EvmKit.Address?
+
+        switch accountManager.activeAccount?.type {
+        case .mnemonic:
+            guard let seed = accountManager.activeAccount?.type.mnemonicSeed else {
+                return .empty
+            }
+            addressFetcher = { chain in try? Signer.address(seed: seed, chain: chain) }
+        case .evmPrivateKey(let key):
+            addressFetcher = { chain in Signer.address(privateKey: key) }
+        default: return .empty
         }
 
         let supportedNamespace = "eip155" // Support only EVM blockchains yet
@@ -167,7 +176,7 @@ class WalletConnectV2MainService {
         try chainIds.forEach { chainId in
             guard let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
                   let chain = evmBlockchainManager.chain(chainId: chainId),
-                  let address = try? Signer.address(seed: seed, chain: chain) else {
+                  let address = addressFetcher(chain) else {
                 throw WalletConnectMainModule.SessionError.unsupportedChainId
             }
 
