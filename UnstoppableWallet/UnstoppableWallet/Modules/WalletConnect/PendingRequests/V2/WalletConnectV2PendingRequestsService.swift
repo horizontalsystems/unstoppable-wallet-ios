@@ -28,7 +28,7 @@ class WalletConnectV2PendingRequestsService {
 
         subscribe(disposeBag, accountManager.accountsObservable) { [weak self] in self?.sync(accounts: $0) }
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] _ in self?.syncPendingRequests() }
-        subscribe(disposeBag, sessionManager.pendingRequestsObservable) { [weak self] _ in self?.syncPendingRequests() }
+        subscribe(disposeBag, sessionManager.activePendingRequestsObservable) { [weak self] _ in self?.syncPendingRequests() }
 
         sync(accounts: accountManager.accounts)
         syncPendingRequests()

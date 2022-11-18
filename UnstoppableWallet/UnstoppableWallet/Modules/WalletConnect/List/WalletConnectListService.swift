@@ -121,7 +121,7 @@ extension WalletConnectListService {
     }
 
     var pendingRequestsV2Observable: Observable<[WalletConnectSign.Request]> {
-        sessionManagerV2.pendingRequestsObservable
+        sessionManagerV2.activePendingRequestsObservable
     }
 
     var pairings: [WalletConnectPairing.Pairing] {
