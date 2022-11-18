@@ -11,10 +11,26 @@ import ComponentKit
 class WalletConnectMainViewController: ThemeViewController {
     private let viewModel: WalletConnectMainViewModel
     private let disposeBag = DisposeBag()
+    private var pendingRequestDisposeBag = DisposeBag()
 
     private weak var sourceViewController: UIViewController?
 
     var requestView: IWalletConnectMainRequestView?
+
+    var pendingRequestViewModel: WalletConnectV2MainPendingRequestViewModel? {
+        didSet {
+            pendingRequestDisposeBag = DisposeBag()
+            if let viewModel = pendingRequestViewModel {
+                subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in
+                    self?.sync(pendingRequestViewItems: $0)
+                }
+                subscribe(disposeBag, viewModel.showPendingRequestSignal) { [weak self] in
+                    self?.showPending(request: $0)
+                }
+            }
+        }
+    }
+    private var pendingRequestViewItems = [WalletConnectV2MainPendingRequestViewModel.ViewItem]()
 
     private let spinner = HUDActivityView.create(with: .large48)
     private let buttonsHolder = BottomGradientHolder()
@@ -225,9 +241,93 @@ class WalletConnectMainViewController: ThemeViewController {
         }
     }
 
+    // V2 pending requests section
+
+    private func sync(pendingRequestViewItems: [WalletConnectV2MainPendingRequestViewModel.ViewItem]) {
+        self.pendingRequestViewItems = pendingRequestViewItems
+
+        tableView.reload()
+    }
+
+    private func onSelect(requestId: Int) {
+        pendingRequestViewModel?.onSelect(requestId: requestId)
+    }
+
+    private func onTapReject(pendingRequestViewItem: WalletConnectV2MainPendingRequestViewModel.ViewItem) {
+        pendingRequestViewModel?.onReject(id: pendingRequestViewItem.id)
+    }
+
+    private func showPending(request: WalletConnectRequest) {
+        guard let viewController = WalletConnectRequestModule.viewController(signService: App.shared.walletConnectV2SessionManager.service, request: request) else {
+            return
+        }
+
+        present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
+
 }
 
 extension WalletConnectMainViewController: SectionsDataSource {
+
+    private func pendingRequestCell(viewItem: WalletConnectV2MainPendingRequestViewModel.ViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        var elements: [CellBuilderNew.CellElement] = [
+            .vStackCentered([
+                .text { component in
+                    component.font = .body
+                    component.textColor = .themeLeah
+                    component.text = viewItem.title
+                },
+                .margin(3),
+                .text { component in
+                    component.font = .subhead2
+                    component.textColor = .themeGray
+                    component.lineBreakMode = .byTruncatingMiddle
+                    component.text = viewItem.subtitle
+                }
+            ])
+        ]
+
+        if viewItem.unsupported {
+            elements.append(.secondaryButton { component in
+                component.button.set(style: .default)
+                component.button.setTitle("Reject", for: .normal)
+                component.button.setTitleColor(.themeLucian, for: .normal)
+                component.onTap = { [weak self] in
+                    self?.onTapReject(pendingRequestViewItem: viewItem)
+                }
+            })
+        } else {
+            elements.append(.image20 { component in
+                component.imageView.image = UIImage(named: "arrow_big_forward_20")
+            })
+        }
+
+        return CellBuilderNew.row(
+                rootElement: .hStack(elements),
+                tableView: tableView,
+                id: "request_item_\(viewItem.id)",
+                height: .heightDoubleLineCell,
+                autoDeselect: true,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                },
+                action: { [weak self] in self?.onSelect(requestId: viewItem.id) }
+        )
+    }
+
+    private func pendingRequestSection() -> SectionProtocol? {
+        guard !pendingRequestViewItems.isEmpty else {
+            return nil
+        }
+        return Section(id: "pending-requests",
+                headerState: tableView.sectionHeader(text: "wallet_connect.list.pending_requests".localized),
+                footerState: .margin(height: .margin32),
+                rows: pendingRequestViewItems.enumerated().map { index, viewItem in
+                    pendingRequestCell(viewItem: viewItem, isFirst: index == 0, isLast: index == pendingRequestViewItems.count - 1)
+                }
+        )
+    }
 
     private func headerRow(imageUrl: String?, title: String) -> RowProtocol {
         Row<LogoHeaderCell>(
@@ -242,11 +342,17 @@ extension WalletConnectMainViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
+        var sections = [SectionProtocol]()
         var rows = [RowProtocol]()
 
         if let viewItem = viewItem {
             if let dAppMeta = viewItem.dAppMeta {
-                rows.append(headerRow(imageUrl: dAppMeta.icon, title: dAppMeta.name))
+                sections.append(Section(id: "dapp-meta",
+                        rows: [headerRow(imageUrl: dAppMeta.icon, title: dAppMeta.name)]))
+            }
+
+            if let pendingRequestSection = pendingRequestSection() {
+                sections.append(pendingRequestSection)
             }
 
             var rowInfos = [RowInfo]()
@@ -369,9 +475,8 @@ extension WalletConnectMainViewController: SectionsDataSource {
             }
         }
 
-        return [
-            Section(id: "wallet_connect", rows: rows)
-        ]
+        sections.append(Section(id: "wallet_connect", rows: rows))
+        return sections
     }
 
 }

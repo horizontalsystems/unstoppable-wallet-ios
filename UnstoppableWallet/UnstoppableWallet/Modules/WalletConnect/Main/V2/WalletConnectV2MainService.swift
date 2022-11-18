@@ -17,7 +17,7 @@ class WalletConnectV2MainService {
     private let evmChainParser: WalletConnectEvmChainParser
 
     private var proposal: WalletConnectSign.Session.Proposal?
-    private var session: WalletConnectSign.Session?
+    private(set) var session: WalletConnectSign.Session?
 
     private let connectionStateRelay = PublishRelay<WalletConnectMainModule.ConnectionState>()
     private let requestRelay = PublishRelay<WalletConnectSign.Request>()
