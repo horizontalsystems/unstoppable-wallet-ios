@@ -32,9 +32,16 @@ class WalletConnectV2Service {
     private let pendingRequestsUpdatedRelay = PublishRelay<()>()
     private let pairingUpdatedRelay = PublishRelay<()>()
     private let sessionRequestReceivedRelay = PublishRelay<WalletConnectSign.Request>()
-    private let socketConnectionStatusRelay = PublishRelay<WalletConnectSign.SocketConnectionStatus>()
+
+    private let socketConnectionStatusRelay = PublishRelay<WalletConnectMainModule.ConnectionState>()
+    private(set) var socketConnectionStatus: WalletConnectMainModule.ConnectionState = .disconnected {
+        didSet {
+            socketConnectionStatusRelay.accept(socketConnectionStatus)
+        }
+    }
 
     private var publishers = [AnyCancellable]()
+
 
     init(connectionService: WalletConnectV2SocketConnectionService, info: WalletConnectClientInfo, logger: Logger? = nil) {
         self.connectionService = connectionService
@@ -138,7 +145,7 @@ extension WalletConnectV2Service {
 
     public func didChangeSocketConnectionStatus(_ status: WalletConnectSign.SocketConnectionStatus) {
         logger?.debug("WC v2 SignClient change socketStatus: \(status)")
-        socketConnectionStatusRelay.accept(status)
+        socketConnectionStatus = status.connectionState
     }
 
 }
@@ -213,7 +220,7 @@ extension WalletConnectV2Service {
         deleteSessionRelay.asObservable()
     }
 
-    public var socketConnectionStatusObservable: Observable<WalletConnectSign.SocketConnectionStatus> {
+    public var socketConnectionStatusObservable: Observable<WalletConnectMainModule.ConnectionState> {
         socketConnectionStatusRelay.asObservable()
     }
 
@@ -350,4 +357,13 @@ extension RPCID {
         Int64(intValue)
     }
 
+}
+
+extension WalletConnectSign.SocketConnectionStatus {
+    var connectionState: WalletConnectMainModule.ConnectionState {
+        switch self {
+        case .connected: return .connected
+        case .disconnected: return .disconnected
+        }
+    }
 }
