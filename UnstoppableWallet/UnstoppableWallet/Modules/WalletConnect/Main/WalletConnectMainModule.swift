@@ -45,11 +45,12 @@ struct WalletConnectMainModule {
         return service.flatMap { viewController(service: $0, sourceViewController: sourceViewController) }
     }
 
-    static func viewController(session: WalletConnectSign.Session, sourceViewController: UIViewController?) -> UIViewController? {
+    static func viewController(session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, sourceViewController: UIViewController?) -> UIViewController? {
         let service = App.shared.walletConnectV2SessionManager.service
 
         let mainService = WalletConnectV2MainService(
                 session: session,
+                proposal: proposal,
                 service: service,
                 manager: App.shared.walletConnectManager,
                 reachabilityManager: App.shared.reachabilityManager,
@@ -90,7 +91,7 @@ struct WalletConnectMainModule {
 extension WalletConnectMainModule {
 
     struct AppMetaItem {
-        let editable: Bool
+        let multiChain: Bool
         let name: String
         let url: String
         let description: String

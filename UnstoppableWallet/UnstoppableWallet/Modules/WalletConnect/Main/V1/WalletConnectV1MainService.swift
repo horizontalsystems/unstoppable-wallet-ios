@@ -188,7 +188,7 @@ extension WalletConnectV1MainService: IWalletConnectMainService {
     var appMetaItem: WalletConnectMainModule.AppMetaItem? {
         (sessionData?.peerMeta).map {
             WalletConnectMainModule.AppMetaItem(
-                    editable: false,
+                    multiChain: false,
                     name: $0.name,
                     url: $0.url,
                     description: $0.description,

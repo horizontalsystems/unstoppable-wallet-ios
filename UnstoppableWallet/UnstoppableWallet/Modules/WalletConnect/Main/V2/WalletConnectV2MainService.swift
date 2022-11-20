@@ -40,8 +40,9 @@ class WalletConnectV2MainService {
         }
     }
 
-    init(session: WalletConnectSign.Session? = nil, service: WalletConnectV2Service, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, evmChainParser: WalletConnectEvmChainParser) {
+    init(session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, service: WalletConnectV2Service, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, evmChainParser: WalletConnectEvmChainParser) {
         self.session = session
+        self.proposal = proposal
         self.service = service
         self.manager = manager
         self.reachabilityManager = reachabilityManager
@@ -50,7 +51,8 @@ class WalletConnectV2MainService {
         self.evmChainParser = evmChainParser
 
         subscribe(disposeBag, service.receiveProposalObservable) { [weak self] in
-            self?.didReceive(proposal: $0)
+            self?.proposal = $0
+            self?.syncProposal()
         }
         subscribe(disposeBag, service.receiveSessionObservable) { [weak self] in
             self?.didReceive(session: $0)
@@ -73,10 +75,13 @@ class WalletConnectV2MainService {
                 return
             }
         }
+
+        if proposal != nil {
+            syncProposal()
+        }
     }
 
-    private func didReceive(proposal: WalletConnectSign.Session.Proposal) {
-        self.proposal = proposal
+    private func syncProposal() {
         do {
             blockchains = try initialBlockchains()
             allowedBlockchainsRelay.accept(allowedBlockchains)
@@ -190,7 +195,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
     var appMetaItem: WalletConnectMainModule.AppMetaItem? {
         if let session = session {
             return WalletConnectMainModule.AppMetaItem(
-                    editable: false,
+                    multiChain: true,
                     name: session.peer.name,
                     url: session.peer.url,
                     description: session.peer.description,
@@ -199,7 +204,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         }
         if let proposal = proposal {
             return WalletConnectMainModule.AppMetaItem(
-                    editable: false,
+                    multiChain: true,
                     name: proposal.proposer.name,
                     url: proposal.proposer.url,
                     description: proposal.proposer.description,
@@ -347,9 +352,11 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
 
         if let proposal = proposal {
             Task {
+                defer {
+                    state = .killed(reason: .rejectProposal)
+                }
                 do {
                     try await service.reject(proposal: proposal)
-                    state = .killed(reason: .rejectProposal)
                 } catch {
                     errorRelay.accept(error)
                 }

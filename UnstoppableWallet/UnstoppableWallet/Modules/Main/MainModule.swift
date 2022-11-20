@@ -15,7 +15,6 @@ struct MainModule {
                 launchScreenManager: App.shared.launchScreenManager,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
-                walletConnectV2Manager: App.shared.walletConnectV2SessionManager,
                 presetTab: presetTab
         )
         let badgeService = MainBadgeService(
@@ -36,9 +35,25 @@ struct MainModule {
         let viewModel = MainViewModel(service: service, badgeService: badgeService, releaseNotesService: releaseNotesService, jailbreakService: jailbreakService, deepLinkService: deepLinkService)
         let viewController = MainViewController(viewModel: viewModel)
 
+        let walletConnectWorkerService = WalletConnectV2AppShowService(
+                walletConnectV2Manager: App.shared.walletConnectV2SessionManager,
+                accountManager: App.shared.accountManager)
+        let walletConnectWorkerViewModel = WalletConnectV2AppShowViewModel(service: walletConnectWorkerService)
+        let walletConnectWorkerView = WalletConnectV2AppShowView(
+                viewModel: walletConnectWorkerViewModel,
+                parentViewController: viewController)
+
+        viewController.workers.append(walletConnectWorkerView)
+
         App.shared.pinKitDelegate.viewController = viewController
 
         return viewController
     }
 
+}
+
+protocol IMainWorker {}
+
+protocol IDeepLinkHandler: IMainWorker {
+    func handle(deepLink: DeepLinkManager.DeepLink)
 }

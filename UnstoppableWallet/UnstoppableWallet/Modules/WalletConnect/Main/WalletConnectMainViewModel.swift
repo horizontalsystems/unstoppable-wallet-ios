@@ -77,11 +77,12 @@ class WalletConnectMainViewModel {
 
         var address: String?
         var network: String?
+        var networkEditable = false
         var blockchains: [BlockchainViewItem]?
 
-        let editable = service.appMetaItem?.editable ?? false
+        let multiChain = service.appMetaItem?.multiChain ?? false
 
-        if editable {
+        if multiChain {
             // v2
             blockchains = allowedBlockchains
                     .map { item in
@@ -97,6 +98,7 @@ class WalletConnectMainViewModel {
             if let blockchainItem = allowedBlockchains.first(where: { $0.selected }) {
                 address = blockchainItem.address.shortened
                 network = blockchainItem.blockchain.name
+                networkEditable = state == .waitingForApproveSession
             }
         }
 
@@ -106,7 +108,7 @@ class WalletConnectMainViewModel {
                 activeAccountName: service.activeAccountName,
                 address: address,
                 network: network,
-                networkEditable: state == .waitingForApproveSession,
+                networkEditable: networkEditable,
                 blockchains: blockchains,
                 hint: service.hint
         )
