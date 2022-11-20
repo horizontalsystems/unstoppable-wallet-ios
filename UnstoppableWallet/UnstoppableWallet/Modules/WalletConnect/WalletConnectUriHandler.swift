@@ -20,8 +20,6 @@ class WalletConnectUriHandler {
     private static func createModuleV2(uri: String, completion: ((Result<IWalletConnectMainService, Error>) -> ())?) {
         Task {
             do {
-                try await App.shared.walletConnectV2SessionManager.service.pair(uri: uri)
-
                 let service = App.shared.walletConnectV2SessionManager.service
                 let mainService = WalletConnectV2MainService(
                         session: nil,
@@ -33,6 +31,7 @@ class WalletConnectUriHandler {
                         evmChainParser: WalletConnectEvmChainParser()
                 )
 
+                try await App.shared.walletConnectV2SessionManager.service.pair(uri: uri)
                 completion?(.success(mainService))
             } catch {
                 completion?(.failure(error))

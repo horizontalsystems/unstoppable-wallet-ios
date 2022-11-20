@@ -369,21 +369,26 @@ extension WalletConnectMainViewController: SectionsDataSource {
                 rowInfos.append(.value(title: "wallet_connect.active_account".localized, value: accountName, valueColor: nil))
             }
 
-            if let address = viewItem.address {
-                rowInfos.append(.value(title: "wallet_connect.address".localized, value: address, valueColor: nil))
-            }
+            if viewItem.networkEditable {
+                if let address = viewItem.address {
+                    rowInfos.append(.value(title: "wallet_connect.address".localized, value: address, valueColor: nil))
+                }
 
-            if let network = viewItem.network {
-                rowInfos.append(.network(value: network, editable: viewItem.networkEditable))
+                if let network = viewItem.network {
+                    rowInfos.append(.network(value: network, editable: true))
+                }
+            } else {
+                if let network = viewItem.network, let address = viewItem.address {
+                    rowInfos.append(.value(title: network, value: address, valueColor: nil))
+                }
             }
 
             if let blockchains = viewItem.blockchains {
                 for blockchain in blockchains {
-                    rowInfos.append(.chain(
+                    rowInfos.append(.value(
                             title: blockchain.chainTitle ?? "Unsupported",
                             value: blockchain.address,
-                            selected: blockchain.selected,
-                            chainId: blockchain.chainId
+                            valueColor: nil
                     ))
                 }
             }

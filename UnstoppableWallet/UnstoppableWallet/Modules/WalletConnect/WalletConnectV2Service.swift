@@ -24,7 +24,8 @@ class WalletConnectV2Service {
     private let logger: Logger?
     private let connectionService: WalletConnectV2SocketConnectionService
 
-    private let receiveProposalRelay = PublishRelay<WalletConnectSign.Session.Proposal>()
+    private let receiveProposalSubject = PublishSubject<WalletConnectSign.Session.Proposal>()
+    private let receivePairingProposalSubject = PublishSubject<WalletConnectSign.Session.Proposal>()
     private let receiveSessionRelay = PublishRelay<WalletConnectSign.Session>()
     private let deleteSessionRelay = PublishRelay<(String, WalletConnectSign.Reason)>()
 
@@ -110,7 +111,13 @@ extension WalletConnectV2Service {
 
     public func didReceive(sessionProposal: Session.Proposal) {
         logger?.debug("WC v2 SignClient did receive session proposal: \(sessionProposal.id) : proposer: \(sessionProposal.proposer.name)")
-        receiveProposalRelay.accept(sessionProposal)
+        if receiveProposalSubject.hasObservers {
+            // proposal comes after pairing by uri (sceen already created)
+            receiveProposalSubject.onNext(sessionProposal)
+        } else {
+            // proposal comes from early pairing
+            receivePairingProposalSubject.onNext(sessionProposal)
+        }
     }
 
     public func didReceive(sessionRequest: Request) {
@@ -209,7 +216,11 @@ extension WalletConnectV2Service {
 
     // connect/disconnect session
     public var receiveProposalObservable: Observable<WalletConnectSign.Session.Proposal> {
-        receiveProposalRelay.asObservable()
+        receiveProposalSubject.asObservable()
+    }
+
+    public var receivePairingProposalObservable: Observable<WalletConnectSign.Session.Proposal> {
+        receivePairingProposalSubject.asObservable()
     }
 
     public var receiveSessionObservable: Observable<WalletConnectSign.Session> {

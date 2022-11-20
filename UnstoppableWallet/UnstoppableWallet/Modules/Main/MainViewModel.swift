@@ -13,8 +13,6 @@ class MainViewModel {
 
     private let balanceTabStateRelay = BehaviorRelay<BalanceTabState>(value: .balance)
     private let transactionsTabEnabledRelay = BehaviorRelay<Bool>(value: true)
-    private let showSessionRequestRelay = PublishRelay<WalletConnectRequest>()
-    private let openWalletConnectRelay = PublishRelay<WalletConnectOpenMode>()
 
     init(service: MainService, badgeService: MainBadgeService, releaseNotesService: ReleaseNotesService, jailbreakService: JailbreakService, deepLinkService: DeepLinkService) {
         self.service = service
@@ -25,7 +23,6 @@ class MainViewModel {
 
         subscribe(disposeBag, service.hasAccountsObservable) { [weak self] in self?.sync(hasAccounts: $0) }
         subscribe(disposeBag, service.hasWalletsObservable) { [weak self] in self?.sync(hasWallets: $0) }
-        subscribe(disposeBag, service.showSessionRequestObservable) { [weak self] in self?.showSession(request: $0) }
 
         sync(hasAccounts: service.hasAccounts)
     }
@@ -37,10 +34,6 @@ class MainViewModel {
 
     private func sync(hasWallets: Bool) {
         transactionsTabEnabledRelay.accept(service.hasAccounts && hasWallets)
-    }
-
-    private func showSession(request: WalletConnectRequest) {
-        showSessionRequestRelay.accept(request)
     }
 
 }
@@ -63,20 +56,12 @@ extension MainViewModel {
         deepLinkService.deepLinkObservable.asDriver(onErrorJustReturn: nil)
     }
 
-    var openWalletConnectSignal: Signal<WalletConnectOpenMode> {
-        openWalletConnectRelay.asSignal()
-    }
-
     var balanceTabStateDriver: Driver<BalanceTabState> {
         balanceTabStateRelay.asDriver()
     }
 
     var transactionsTabEnabledDriver: Driver<Bool> {
         transactionsTabEnabledRelay.asDriver()
-    }
-
-    var showSessionRequestSignal: Signal<WalletConnectRequest> {
-        showSessionRequestRelay.asSignal()
     }
 
     var initialTab: MainModule.Tab {
@@ -95,24 +80,9 @@ extension MainViewModel {
         service.set(tab: tab)
     }
 
-    func onWalletConnectDeepLink(url: String) {
-        guard let activeAccount = service.activeAccount else {
-            openWalletConnectRelay.accept(.noAccount)
-            return
-        }
-
-        openWalletConnectRelay.accept(activeAccount.type.supportsWalletConnect ? .pair(url: url) : .nonSupportedAccountType(accountTypeDescription: activeAccount.type.description))
-    }
-
 }
 
 extension MainViewModel {
-
-    enum WalletConnectOpenMode {
-        case pair(url: String)
-        case noAccount
-        case nonSupportedAccountType(accountTypeDescription: String)
-    }
 
     enum BalanceTabState {
         case balance

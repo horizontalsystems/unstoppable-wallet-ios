@@ -300,9 +300,9 @@ class MainSettingsViewController: ThemeViewController {
     private func openWalletConnect(mode: MainSettingsViewModel.WalletConnectOpenMode) {
         switch mode {
         case .noAccount:
-            MainViewController.showWalletConnectError(error: .noAccount, viewController: self)
+            WalletConnectV2AppShowView.showWalletConnectError(error: .noAccount, viewController: self)
         case .nonSupportedAccountType(let accountTypeDescription):
-            MainViewController.showWalletConnectError(error: .nonSupportedAccountType(accountTypeDescription: accountTypeDescription), viewController: self)
+            WalletConnectV2AppShowView.showWalletConnectError(error: .nonSupportedAccountType(accountTypeDescription: accountTypeDescription), viewController: self)
         case .list:
             navigationController?.pushViewController(WalletConnectListModule.viewController(), animated: true)
         }
