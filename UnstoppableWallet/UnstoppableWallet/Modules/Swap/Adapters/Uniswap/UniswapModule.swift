@@ -98,6 +98,10 @@ extension UniswapModule {
         case highPriceImpact
     }
 
+    enum TradeError: Error {
+        case wrapUnwrapNotAllowed
+    }
+
 }
 
 extension UniswapKit.Kit.TradeError: LocalizedError {
@@ -105,6 +109,17 @@ extension UniswapKit.Kit.TradeError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .tradeNotFound: return "swap.trade_error.not_found".localized
+        default: return nil
+        }
+    }
+
+}
+
+extension UniswapModule.TradeError: LocalizedError {
+
+    public var errorDescription: String? {
+        switch self {
+        case .wrapUnwrapNotAllowed: return "swap.trade_error.wrap_unwrap_not_allowed".localized
         default: return nil
         }
     }
