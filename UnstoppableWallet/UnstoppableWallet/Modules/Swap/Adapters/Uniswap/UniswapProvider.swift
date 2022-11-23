@@ -27,6 +27,10 @@ extension UniswapProvider {
         swapKit.routerAddress
     }
 
+    var wethAddress: EvmKit.Address {
+        swapKit.etherToken.address
+    }
+
     func swapDataSingle(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Single<SwapData> {
         do {
             let uniswapTokenIn = try uniswapToken(token: tokenIn)

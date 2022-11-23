@@ -138,6 +138,20 @@ class UniswapTradeService {
             handle(tradeData: tradeData)
             return true
         } catch {
+            var error = error
+
+            if case UniswapKit.Kit.TradeError.tradeNotFound = error {
+                let wethAddressString = uniswapProvider.wethAddress.hex
+
+                if case .native = tokenIn?.type, case .eip20(let address) = tokenOut?.type, address == wethAddressString {
+                    error = UniswapModule.TradeError.wrapUnwrapNotAllowed
+                }
+
+                if case .native = tokenOut?.type, case .eip20(let address) = tokenIn?.type, address == wethAddressString {
+                    error = UniswapModule.TradeError.wrapUnwrapNotAllowed
+                }
+            }
+
             state = .notReady(errors: [error])
             return false
         }
