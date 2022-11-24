@@ -38,7 +38,7 @@
 "alert.added_to_wallet" = "Добавлено в Кошелек";
 "alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Ещё не поддерживается";
-"alert.copied" = "Copied";
+"alert.copied" = "Скопировано";
 "alert.created" = "Создан";
 "alert.restored" = "Восстановлен";
 "alert.address_added" = "Адрес Добавлен";
@@ -346,6 +346,7 @@
 "swap.revoke_warning" = "Вы можете обменять %@, или вы должны отменить и одобрить новую сумму";
 "swap.revoking_button" = "Отмена...";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
+"swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
 "swap.switch_provider.title" = "Служба Обмена";
 
