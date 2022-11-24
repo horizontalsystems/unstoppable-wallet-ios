@@ -3,6 +3,7 @@ import RxSwift
 import RxCocoa
 import ThemeKit
 import WalletConnectSign
+import ComponentKit
 
 class WalletConnectV2AppShowView {
     private let disposeBag = DisposeBag()
@@ -23,9 +24,30 @@ class WalletConnectV2AppShowView {
             WalletConnectV2AppShowView.showWalletConnectError(error: .noAccount, viewController: parentViewController)
         case .nonSupportedAccountType(let accountTypeDescription):
             WalletConnectV2AppShowView.showWalletConnectError(error: .nonSupportedAccountType(accountTypeDescription: accountTypeDescription), viewController: parentViewController)
-        case .pair(let url):
-            WalletConnectUriHandler.connect(uri: url) { [weak self] result in
-                self?.processWalletConnectPair(result: result)
+        case .pair(let uri):
+            switch WalletConnectUriHandler.uriVersion(uri: uri) {
+            case 1:
+                WalletConnectUriHandler.createServiceV1(uri: uri)
+                        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                        .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                        .subscribe(onSuccess: { [weak self] service in
+                            self?.processWalletConnectV1(service: service)
+                        }, onError: { [weak self] error in
+                            self?.handle(error: error)
+                        })
+                        .disposed(by: disposeBag)
+            case 2:
+                WalletConnectUriHandler.pairV2(uri: uri)
+                        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                        .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                        .subscribe(onSuccess: { [weak self] service in
+                            self?.showV2PairedSuccessful()
+                        }, onError: { [weak self] error in
+                            self?.handle(error: error)
+                        })
+                        .disposed(by: disposeBag)
+            default:
+                handle(error: WalletConnectUriHandler.ConnectionError.wrongUri)
             }
         case .proposal(let proposal):
             processWalletConnectPair(proposal: proposal)
@@ -42,21 +64,26 @@ class WalletConnectV2AppShowView {
         }
     }
 
-    private func processWalletConnectPair(result: Result<IWalletConnectMainService, Error>) {
-        DispatchQueue.main.async { [weak self] in
-            switch result {
-            case .success(let service):
-                guard let viewController = WalletConnectMainModule.viewController(
-                        service: service,
-                        sourceViewController: self?.parentViewController?.visibleController)
-                else {
-                    return
-                }
 
-                self?.parentViewController?.visibleController.present(viewController, animated: true)
-            default: return
+    private func processWalletConnectV1(service: WalletConnectV1MainService) {
+        DispatchQueue.main.async { [weak self] in
+            guard let viewController = WalletConnectMainModule.viewController(
+                    service: service,
+                    sourceViewController: self?.parentViewController?.visibleController)
+            else {
+                return
             }
+
+            self?.parentViewController?.visibleController.present(viewController, animated: true)
         }
+    }
+
+    private func showV2PairedSuccessful() {
+        HudHelper.instance.show(banner: .success(string: "Pairing successful. Please wait for a new session!"))
+    }
+
+    private func handle(error: Error) {
+        HudHelper.instance.show(banner: .error(string: error.smartDescription))
     }
 
     private func handle(request: WalletConnectRequest) {

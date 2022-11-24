@@ -131,6 +131,9 @@ class WalletConnectMainViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.showDisconnectSignal) {
             HudHelper.instance.show(banner: .disconnectedWalletConnect)
         }
+        subscribe(disposeBag, viewModel.showTimeOutAttentionSignal) {
+            HudHelper.instance.show(banner: .error(string: "alert.try_again".localized))
+        }
         subscribe(disposeBag, viewModel.connectingDriver) { [weak self] in
             self?.sync(connecting: $0)
         }

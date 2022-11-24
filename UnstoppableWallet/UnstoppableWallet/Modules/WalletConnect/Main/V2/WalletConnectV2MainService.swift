@@ -257,6 +257,10 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         connectionStateRelay.asObservable()
     }
 
+    var proposalTimeOutAttentionObservable: Observable<()> {
+        Observable.empty()
+    }
+
     var errorObservable: Observable<Error> {
         errorRelay.asObservable()
     }

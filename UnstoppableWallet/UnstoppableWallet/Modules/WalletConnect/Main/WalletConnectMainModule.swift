@@ -16,6 +16,7 @@ protocol IWalletConnectMainService {
 
     var stateObservable: Observable<WalletConnectMainModule.State> { get }
     var connectionStateObservable: Observable<WalletConnectMainModule.ConnectionState> { get }
+    var proposalTimeOutAttentionObservable: Observable<()> { get }
     var errorObservable: Observable<Error> { get }
 
     func select(chainId: Int)

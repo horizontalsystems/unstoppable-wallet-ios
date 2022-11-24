@@ -33,6 +33,12 @@ class WalletConnectListViewController: ThemeViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        if viewModel.isWaitingForSession {
+            HudHelper.instance.hide()
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -74,6 +80,11 @@ class WalletConnectListViewController: ThemeViewController {
         bottomButton.addTarget(self, action: #selector(startNewConnection), for: .touchUpInside)
 
         subscribe(disposeBag, viewModel.showWalletConnectMainModuleSignal) { [weak self] in self?.show(walletConnectMainModule: $0) }
+        subscribe(disposeBag, viewModel.showWalletConnectV2ValidatedSignal) { [weak self] in self?.showV2ValidatedSuccessful(uri: $0) }
+        subscribe(disposeBag, viewModel.showWaitingForSessionSignal) { [weak self] in self?.showWaitingForSession(true) }
+        subscribe(disposeBag, viewModel.hideWaitingForSessionSignal) { [weak self] in self?.showWaitingForSession(false) }
+        subscribe(disposeBag, viewModel.disableNewConnectionSignal) { [weak self] in self?.disableNewConnection($0) }
+        subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.showError(text: $0) }
         subscribe(disposeBag, viewModel.newConnectionErrorSignal) { [weak self] in self?.show(newConnectionError: $0) }
         subscribe(disposeBag, listViewV1.reloadTableSignal) { [weak self] in self?.syncItems() }
         subscribe(disposeBag, listViewV2.reloadTableSignal) { [weak self] in self?.syncItems() }
@@ -100,7 +111,7 @@ class WalletConnectListViewController: ThemeViewController {
         present(scanQrViewController, animated: true)
     }
 
-    private func show(walletConnectMainModule: IWalletConnectMainService) {
+    private func show(walletConnectMainModule: WalletConnectV1MainService) {
         guard let viewController = WalletConnectMainModule.viewController(service: walletConnectMainModule, sourceViewController: self) else {
             return
         }
@@ -115,7 +126,33 @@ class WalletConnectListViewController: ThemeViewController {
         }
     }
 
-    private func show(newConnectionError: String) {
+    private func showV2ValidatedSuccessful(uri: String) {
+        scanQrViewController?.dismiss(animated: true) { [weak self] in
+            self?.viewModel.pairV2(validUri: uri)
+        }
+    }
+
+    private func showWaitingForSession(_ isShow: Bool) {
+        bottomButton.isEnabled = !isShow
+        navigationItem.rightBarButtonItem?.isEnabled = !isShow
+
+        if isShow {
+            HudHelper.instance.show(banner: .waitingForSession)
+        } else {
+            HudHelper.instance.hide()
+        }
+    }
+
+    private func disableNewConnection(_ isDisabled: Bool) {
+        bottomButton.isEnabled = !isDisabled
+        navigationItem.rightBarButtonItem?.isEnabled = !isDisabled
+    }
+
+    private func showError(text: String) {
+        HudHelper.instance.show(banner: .error(string: text))
+    }
+
+    private func show(newConnectionError: String) { //TODO: connection error without ScanQR???
         let viewController = WalletConnectErrorViewController(error: newConnectionError)
         viewController.delegate = scanQrViewController
 

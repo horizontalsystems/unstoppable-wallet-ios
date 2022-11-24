@@ -13,7 +13,7 @@ class WalletConnectV2AppShowService {
         self.walletConnectV2Manager = walletConnectV2Manager
         self.accountManager = accountManager
 
-        subscribe(disposeBag, walletConnectV2Manager.service.receivePairingProposalObservable) { [weak self] in self?.receive(proposal: $0) }
+        subscribe(disposeBag, walletConnectV2Manager.service.receiveProposalObservable) { [weak self] in self?.receive(proposal: $0) }
     }
 
     private func receive(proposal: WalletConnectSign.Session.Proposal) {

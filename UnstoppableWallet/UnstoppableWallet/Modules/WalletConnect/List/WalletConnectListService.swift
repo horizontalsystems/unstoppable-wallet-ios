@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -7,9 +8,17 @@ import WalletConnectPairing
 import MarketKit
 
 class WalletConnectListService {
-    private var disposeBag = DisposeBag()
+    static let timeOutInterval: Int = 5
 
-    private let createModuleRelay = PublishRelay<IWalletConnectMainService>()
+    private var disposeBag = DisposeBag()
+    private var waitingForSessionDisposeBag = DisposeBag()
+    private(set) var isWaitingForSession = false
+
+    private let createServiceV1Relay = PublishRelay<WalletConnectV1MainService>()
+    private let validateV2ResultRelay = PublishRelay<Result<String, Error>>()
+    private let pairingV2ResultRelay = PublishRelay<Result<(), Error>>()
+    private let proposalV2ReceivedRelay = PublishRelay<()>()
+    private let proposalV2timeOutRelay = PublishRelay<()>()
     private let connectionErrorRelay = PublishRelay<Error>()
 
     private let sessionManager: WalletConnectSessionManager
@@ -21,7 +30,6 @@ class WalletConnectListService {
     private let showSessionV1Relay = PublishRelay<WalletConnectSession>()
     private let showSessionV2Relay = PublishRelay<WalletConnectSign.Session>()
     private let sessionKillingRelay = PublishRelay<SessionKillingState>()
-
 
     init(sessionManager: WalletConnectSessionManager, sessionManagerV2: WalletConnectV2SessionManager, evmBlockchainManager: EvmBlockchainManager, evmChainParser: WalletConnectEvmChainParser) {
         self.sessionManager = sessionManager
@@ -81,6 +89,25 @@ class WalletConnectListService {
                     appIcons: session.peer.icons,
                     requestCount: requestCount
             )
+        }
+    }
+
+    private func waitingForSession() {
+        pairingV2ResultRelay.accept(.success(()))
+        isWaitingForSession = true
+
+        subscribe(waitingForSessionDisposeBag, sessionManagerV2.service.receiveProposalObservable) { [weak self] _ in
+            self?.waitingForSessionDisposeBag = DisposeBag()
+            self?.isWaitingForSession = false
+            self?.proposalV2ReceivedRelay.accept(())
+        }
+
+        let timeOutTimer = Observable.just(()).delay(.seconds(Self.timeOutInterval), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+
+        subscribe(waitingForSessionDisposeBag, timeOutTimer) { [weak self] in
+            self?.waitingForSessionDisposeBag = DisposeBag()
+            self?.isWaitingForSession = false
+            self?.proposalV2timeOutRelay.accept(())
         }
     }
 
@@ -149,7 +176,7 @@ extension WalletConnectListService {
             sessionKillingRelay.accept(.processing)
 
             let sessionKiller = WalletConnectSessionKiller(session: session)
-            let forceTimer = Observable.just(()).delay(.seconds(5), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            let forceTimer = Observable.just(()).delay(.seconds(Self.timeOutInterval), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
 
             subscribe(disposeBag, forceTimer) { [weak self] in
                 self?.finishSessionKill(successful: false)
@@ -171,8 +198,24 @@ extension WalletConnectListService {
         }
     }
 
-    var createModuleObservable: Observable<IWalletConnectMainService> {
-        createModuleRelay.asObservable()
+    var createServiceV1Observable: Observable<WalletConnectV1MainService> {
+        createServiceV1Relay.asObservable()
+    }
+
+    var validateV2ResultObservable: Observable<Result<String, Error>> {
+        validateV2ResultRelay.asObservable()
+    }
+
+    var pairingV2ResultObservable: Observable<Result<(), Error>> {
+        pairingV2ResultRelay.asObservable()
+    }
+
+    var proposalV2ReceivedObservable: Observable<()> {
+        proposalV2ReceivedRelay.asObservable()
+    }
+
+    var proposalV2timeOutObservable: Observable<()> {
+        proposalV2timeOutRelay.asObservable()
     }
 
     var connectionErrorObservable: Observable<Error> {
@@ -180,12 +223,39 @@ extension WalletConnectListService {
     }
 
     func connect(uri: String) {
-        WalletConnectUriHandler.connect(uri: uri) {  [weak self] result in
-            switch result {
-            case .success(let service): self?.createModuleRelay.accept(service)
-            case .failure(let error): self?.connectionErrorRelay.accept(error)
+        switch WalletConnectUriHandler.uriVersion(uri: uri) {
+        case 1:
+            WalletConnectUriHandler.createServiceV1(uri: uri)
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .subscribe(onSuccess: { [weak self] service in
+                        self?.createServiceV1Relay.accept(service)
+                    }, onError: { [weak self] error in
+                        self?.connectionErrorRelay.accept(error)
+                    })
+                    .disposed(by: disposeBag)
+        case 2:
+            do {
+                try WalletConnectUriHandler.validate(uri: uri)
+                validateV2ResultRelay.accept(.success(uri))
+            } catch {
+                validateV2ResultRelay.accept(.failure(error))
             }
+        default:
+            connectionErrorRelay.accept(WalletConnectUriHandler.ConnectionError.wrongUri)
         }
+    }
+
+    func pairV2(validUri: String) {
+        WalletConnectUriHandler.pairV2(uri: validUri)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onSuccess: { [weak self] service in
+                    self?.waitingForSession()
+                }, onError: { [weak self] error in
+                    self?.pairingV2ResultRelay.accept(.failure(error))
+                })
+                .disposed(by: disposeBag)
     }
 
     func showSession(id: Int) {
@@ -259,7 +329,7 @@ extension WalletConnectSign.Session {
     var chainIds: [Int] {
         var result = Set<Int>()
 
-        for blockchain in self.namespaces.values {
+        for blockchain in namespaces.values {
             result.formUnion(Set(blockchain.accounts.compactMap { Int($0.reference) }))
         }
 

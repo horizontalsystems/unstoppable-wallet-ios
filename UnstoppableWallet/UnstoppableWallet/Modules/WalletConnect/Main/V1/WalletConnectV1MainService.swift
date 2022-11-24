@@ -9,6 +9,7 @@ import HsToolKit
 
 class WalletConnectV1MainService {
     private let disposeBag = DisposeBag()
+    private var waitingForSessionDisposeBag = DisposeBag()
 
     private let manager: WalletConnectManager
     private let sessionManager: WalletConnectSessionManager
@@ -29,6 +30,7 @@ class WalletConnectV1MainService {
     private var stateRelay = PublishRelay<WalletConnectMainModule.State>()
     private var connectionStateRelay = PublishRelay<WalletConnectMainModule.ConnectionState>()
     private var requestRelay = PublishRelay<WalletConnectRequest>()
+    private let proposalTimeOutAttentionRelay = PublishRelay<()>()
     private var errorRelay = PublishRelay<Error>()
 
     private var pendingRequests = [Int: WalletConnectRequest]()
@@ -177,6 +179,10 @@ extension WalletConnectV1MainService: IWalletConnectMainService {
         requestRelay.asObservable()
     }
 
+    var proposalTimeOutAttentionObservable: Observable<()> {
+        proposalTimeOutAttentionRelay.asObservable()
+    }
+
     var errorObservable: Observable<Error> {
         errorRelay.asObservable()
     }
@@ -243,6 +249,13 @@ extension WalletConnectV1MainService: IWalletConnectMainService {
         interactor = try WalletConnectInteractor(uri: uri)
         interactor?.delegate = self
         interactor?.connect()
+
+        let timeOutTimer = Observable.just(()).delay(.seconds(WalletConnectListService.timeOutInterval), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+
+        subscribe(waitingForSessionDisposeBag, timeOutTimer) { [weak self] in
+            self?.waitingForSessionDisposeBag = DisposeBag()
+            self?.proposalTimeOutAttentionRelay.accept(())
+        }
     }
 
     func reconnect() {
@@ -344,6 +357,7 @@ extension WalletConnectV1MainService: IWalletConnectInteractorDelegate {
     }
 
     func didRequestSession(peerId: String, peerMeta: WCPeerMeta, chainId: Int?) {
+        waitingForSessionDisposeBag = DisposeBag()
         do {
             let chainId = chainId ?? 1 // fallback to chainId = 1 (Ethereum MainNet)
 
