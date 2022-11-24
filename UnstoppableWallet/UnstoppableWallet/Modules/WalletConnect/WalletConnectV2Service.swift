@@ -25,7 +25,6 @@ class WalletConnectV2Service {
     private let connectionService: WalletConnectV2SocketConnectionService
 
     private let receiveProposalSubject = PublishSubject<WalletConnectSign.Session.Proposal>()
-    private let receivePairingProposalSubject = PublishSubject<WalletConnectSign.Session.Proposal>()
     private let receiveSessionRelay = PublishRelay<WalletConnectSign.Session>()
     private let deleteSessionRelay = PublishRelay<(String, WalletConnectSign.Reason)>()
 
@@ -111,13 +110,7 @@ extension WalletConnectV2Service {
 
     public func didReceive(sessionProposal: Session.Proposal) {
         logger?.debug("WC v2 SignClient did receive session proposal: \(sessionProposal.id) : proposer: \(sessionProposal.proposer.name)")
-        if receiveProposalSubject.hasObservers {
-            // proposal comes after pairing by uri (sceen already created)
-            receiveProposalSubject.onNext(sessionProposal)
-        } else {
-            // proposal comes from early pairing
-            receivePairingProposalSubject.onNext(sessionProposal)
-        }
+        receiveProposalSubject.onNext(sessionProposal)
     }
 
     public func didReceive(sessionRequest: Request) {
@@ -219,10 +212,6 @@ extension WalletConnectV2Service {
         receiveProposalSubject.asObservable()
     }
 
-    public var receivePairingProposalObservable: Observable<WalletConnectSign.Session.Proposal> {
-        receivePairingProposalSubject.asObservable()
-    }
-
     public var receiveSessionObservable: Observable<WalletConnectSign.Session> {
         receiveSessionRelay.asObservable()
     }
@@ -236,10 +225,14 @@ extension WalletConnectV2Service {
     }
 
     // works with dApp
-    public func pair(uri: String) async throws {
+    public func validate(uri: String) throws -> WalletConnectUtils.WalletConnectURI {
         guard let uri = WalletConnectUtils.WalletConnectURI(string: uri) else {
             throw WalletConnectUriHandler.ConnectionError.wrongUri
         }
+        return uri
+    }
+
+    public func pair(uri: WalletConnectUtils.WalletConnectURI) async throws {
         Task.init { [weak self] in
             do {
                 try await Pair.instance.pair(uri: uri)

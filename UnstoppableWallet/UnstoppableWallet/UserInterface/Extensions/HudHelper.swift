@@ -21,6 +21,7 @@ extension HudHelper {
         case noInternet
         case disconnectingWalletConnect
         case disconnectedWalletConnect
+        case waitingForSession
         case enabling
         case enabled(coins: Int)
         case sending
@@ -51,6 +52,7 @@ extension HudHelper {
             case .addressAdded: image = UIImage(named: "binocule_24")
             case .deleted: image = UIImage(named: "trash_24")
             case .noInternet: image = UIImage(named: "no_internet_24")
+            case .waitingForSession: image = UIImage(named: "disconnecting_2_24")
             case .disconnectingWalletConnect, .disconnectedWalletConnect: image = UIImage(named: "disconnecting_2_24")
             case .enabling: image = UIImage(named: "arrow_medium_2_down_24")
             case .enabled: image = UIImage(named: "circle_check_24")
@@ -59,7 +61,7 @@ extension HudHelper {
             case .approving, .approved, .revoking, .revoked: image = UIImage(named: "unordered_24")
             case .success: image = UIImage(named: "circle_check_24")
             case .attention: image = UIImage(named: "warning_2_24")
-            case .error: image = UIImage(named: "warning_2_24")
+            case .error: image = UIImage(named: "circle_warning_24")
             }
             return image?.withRenderingMode(.alwaysTemplate)
         }
@@ -69,7 +71,7 @@ extension HudHelper {
             case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .revoked, .attention: return .themeJacob
             case .removedFromWatchlist,  .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
             case .addedToWallet, .copied, .saved, .done, .created, .restored, .addressAdded, .enabled, .success: return .themeRemus
-            case .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return .themeGray
+            case .waitingForSession, .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return .themeGray
             }
         }
 
@@ -88,6 +90,7 @@ extension HudHelper {
             case .addressAdded: return "alert.address_added".localized
             case .deleted: return "alert.deleted".localized
             case .noInternet: return "alert.no_internet".localized
+            case .waitingForSession: return "alert.waiting_for_session".localized
             case .disconnectingWalletConnect: return "alert.disconnecting".localized
             case .disconnectedWalletConnect: return "alert.disconnected".localized
             case .enabling: return "alert.enabling".localized
@@ -108,14 +111,14 @@ extension HudHelper {
 
         var showingTime: TimeInterval? {
             switch self {
-            case .disconnectingWalletConnect, .enabling: return nil
+            case .waitingForSession, .disconnectingWalletConnect, .enabling: return nil
             default: return 2
             }
         }
 
         var isLoading: Bool {
             switch self {
-            case .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return true
+            case .waitingForSession, .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return true
             default: return false
             }
         }
@@ -129,7 +132,7 @@ extension HudHelper {
 
         var forced: Bool {
             switch self {
-            case .disconnectedWalletConnect, .enabled, .sent, .swapped, .approved, .revoked: return false
+            case .attention, .disconnectedWalletConnect, .enabled, .sent, .swapped, .approved, .revoked: return false
             default: return true
             }
         }

@@ -43,6 +43,8 @@
 "alert.restored" = "Restored";
 "alert.address_added" = "Address Added";
 "alert.deleted" = "Deleted";
+"alert.waiting_for_session" = "Waiting for Session";
+"alert.try_again" = "Try Again";
 "alert.disconnecting" = "Disconnecting";
 "alert.disconnected" = "Disconnected";
 "alert.enabling" = "Enabling";

@@ -14,6 +14,7 @@ class WalletConnectMainViewModel {
     private let showErrorRelay = PublishRelay<String>()
     private let showSuccessRelay = PublishRelay<()>()
     private let showDisconnectRelay = PublishRelay<()>()
+    private let showTimeOutAttentionRelay = PublishRelay<()>()
     private let connectingRelay = BehaviorRelay<Bool>(value: false)
     private let cancelVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let connectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
@@ -38,6 +39,7 @@ class WalletConnectMainViewModel {
         subscribe(scheduler, disposeBag, service.allowedBlockchainsObservable) { [weak self] allowedBlockchains in
             self?.sync(allowedBlockchains: allowedBlockchains)
         }
+        subscribe(scheduler, disposeBag, service.proposalTimeOutAttentionObservable) { [weak self] in self?.showTimeOutAttentionRelay.accept(()) }
 
         sync()
     }
@@ -145,6 +147,10 @@ extension WalletConnectMainViewModel {
 
     var showDisconnectSignal: Signal<()> {
         showDisconnectRelay.asSignal()
+    }
+
+    var showTimeOutAttentionSignal: Signal<()> {
+        showTimeOutAttentionRelay.asSignal()
     }
 
     var connectingDriver: Driver<Bool> {

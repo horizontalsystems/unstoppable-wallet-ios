@@ -1,41 +1,47 @@
+import RxSwift
+import RxCocoa
+import WalletConnectUtils
+
 class WalletConnectUriHandler {
 
-    private static func createModuleV1(uri: String, completion: ((Result<IWalletConnectMainService, Error>) -> ())?) {
-        do {
-            let service = try WalletConnectV1MainService(
-                    session: nil,
-                    uri: uri,
-                    manager: App.shared.walletConnectManager,
-                    sessionManager: App.shared.walletConnectSessionManager,
-                    reachabilityManager: App.shared.reachabilityManager,
-                    accountManager: App.shared.accountManager,
-                    evmBlockchainManager: App.shared.evmBlockchainManager
-            )
-            completion?(.success(service))
-        } catch {
-            completion?(.failure(error))
+    public static func createServiceV1(uri: String) -> Single<WalletConnectV1MainService> {
+        Single.create { observer in
+            do {
+                let service = try WalletConnectV1MainService(
+                        session: nil,
+                        uri: uri,
+                        manager: App.shared.walletConnectManager,
+                        sessionManager: App.shared.walletConnectSessionManager,
+                        reachabilityManager: App.shared.reachabilityManager,
+                        accountManager: App.shared.accountManager,
+                        evmBlockchainManager: App.shared.evmBlockchainManager
+                )
+                observer(.success(service))
+            } catch {
+                observer(.error(error))
+            }
+
+            return Disposables.create()
         }
     }
 
-    private static func createModuleV2(uri: String, completion: ((Result<IWalletConnectMainService, Error>) -> ())?) {
-        Task {
-            do {
-                let service = App.shared.walletConnectV2SessionManager.service
-                let mainService = WalletConnectV2MainService(
-                        session: nil,
-                        service: service,
-                        manager: App.shared.walletConnectManager,
-                        reachabilityManager: App.shared.reachabilityManager,
-                        accountManager: App.shared.accountManager,
-                        evmBlockchainManager: App.shared.evmBlockchainManager,
-                        evmChainParser: WalletConnectEvmChainParser()
-                )
 
-                try await App.shared.walletConnectV2SessionManager.service.pair(uri: uri)
-                completion?(.success(mainService))
-            } catch {
-                completion?(.failure(error))
+    public static func validate(uri: String) throws {
+        _ = try App.shared.walletConnectV2SessionManager.service.validate(uri: uri)
+    }
+
+    public static func pairV2(uri: String) -> Single<()> {
+        Single.create { observer in
+            Task {
+                do {
+                    let uri = try App.shared.walletConnectV2SessionManager.service.validate(uri: uri)
+                    try await App.shared.walletConnectV2SessionManager.service.pair(uri: uri)
+                    observer(.success(()))
+                } catch {
+                    observer(.error(error))
+                }
             }
+            return Disposables.create()
         }
     }
 
@@ -43,16 +49,17 @@ class WalletConnectUriHandler {
 
 extension WalletConnectUriHandler {
 
-    static func connect(uri: String, completion: ((Result<IWalletConnectMainService, Error>) -> ())?) {
-            if uri.contains("@1?") {
-                createModuleV1(uri: uri, completion: completion)
-            } else if uri.contains("@2?") {
-                createModuleV2(uri: uri, completion: completion)
-            } else {
-                completion?(.failure(ConnectionError.wrongUri))
-            }
+    static func uriVersion(uri: String) -> Int? {
+        if uri.contains("@1?") {
+            return 1
+        } else if uri.contains("@2?") {
+            return 2
+        } else {
+            return nil
         }
     }
+
+}
 
 extension WalletConnectUriHandler {
 
