@@ -346,6 +346,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "swap.revoke_warning" = "Você pode trocar %@, ou você precisa revogar e aprovar o novo valor";
 "swap.revoking_button" = "Revogando...";
 "swap.trade_error.not_found" = "Não é possível trocar esses tokens";
+"swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
 "swap.button_error.insufficient_balance" = "Saldo insuficiente";
 "swap.switch_provider.title" = "Serviço de Troca";
 
