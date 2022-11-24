@@ -38,11 +38,13 @@
 "alert.added_to_wallet" = "添加到钱包";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
-"alert.copied" = "已复制";
+"alert.copied" = "Copied";
 "alert.created" = "已创建";
 "alert.restored" = "已恢复";
 "alert.address_added" = "地址已添加";
 "alert.deleted" = "已删除";
+"alert.waiting_for_session" = "Waiting for Session";
+"alert.try_again" = "Try Again";
 "alert.disconnecting" = "正在断开连接";
 "alert.disconnected" = "已断开连接";
 "alert.enabling" = "正在启用";
@@ -1067,6 +1069,7 @@
 "wallet_connect.network" = "网络";
 "wallet_connect.address" = "地址";
 "wallet_connect.network" = "网络";
+"wallet_connect.list.pending_requests" = "待处理请求";
 "wallet_connect.main.no_any_supported_chains" = "没有任何支持的链！";
 "wallet_connect.main.unsupported_chains" = "一些链是不支持的！";
 "wallet_connect.connect_description" = "点击批准，表示您允许此应用查看您的公开地址。这是保护您的数据免受潜在钓鱼风险威胁的重要安全步骤。";
@@ -1078,6 +1081,8 @@
 "ethereum_transaction.error.insufficient_balance" = "交易需要%@才能发送。";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "當前%@餘額低於處理此交易所需的金額，包括交易費用。";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "选定的费用值太低，将被拒绝！";
+"ethereum_transaction.error.nonce_already_in_block" = "The transaction is already in block!";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
 "ethereum_transaction.error.reverted" = "无法执行交易： %@";
 "wallet_connect.request_title" = "请求";
 "wallet_connect.button.confirm" = "确认";
@@ -1090,7 +1095,7 @@
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "没有活跃会话";
 
-"wallet_connect.list.pending_requests" = "待处理请求";
+"wallet_connect.list.pairings" = "Pairings";
 "wallet_connect.list.version_text" = "版本%@";
 "wallet_connect.list.v1_bottom_text" = "在WalletConnect的第一个版本中，您必须进入会话以查看和确认请求";
 "wallet_connect_list.new_connection" = "新连接";
@@ -1103,6 +1108,9 @@
 "wallet_connect.non_supported_account.switch" = "切换";
 
 "wallet_connect.pending_requests_title" = "待处理请求";
+"wallet_connect.paired_dapps.title" = "Paired dApps";
+"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
+"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
 "wallet_connect.pending_requests.nonactive_footer" = "若要打开请求，您必须激活所需钱包";
 
 // App Status
@@ -1193,6 +1201,8 @@
 "fee_settings.errors.insufficient_balance.info" = "当前%@余额低于此交易所需金额，包括交易费用。";
 "fee_settings.errors.low_max_fee" = "低费用";
 "fee_settings.errors.low_max_fee.info" = "当前设置的交易费用金额不足以处理此交易。";
+"fee_settings.errors.nonce_already_in_block" = "Can't replace transaction.";
+"fee_settings.errors.replacement_transaction_underpriced" = "Low Fee for replacement transaction";
 "fee_settings.warning.risk_of_getting_stuck" = "有风险";
 "fee_settings.warning.risk_of_getting_stuck.info" = "交易可能会在一段时间内仍然处于待处理状态或完全失败。";
 "fee_settings.warning.overpricing" = "费用太高";
