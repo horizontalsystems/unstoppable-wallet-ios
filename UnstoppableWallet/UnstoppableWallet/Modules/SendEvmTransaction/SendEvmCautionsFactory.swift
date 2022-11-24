@@ -65,6 +65,12 @@ class SendEvmCautionsFactory {
             case .lowerThanBaseGasLimit:
                 title = "fee_settings.errors.low_max_fee".localized
                 text = "fee_settings.errors.low_max_fee.info".localized
+            case .nonceAlreadyInBlock:
+                title = "fee_settings.errors.nonce_already_in_block".localized
+                text = "ethereum_transaction.error.nonce_already_in_block".localized
+            case .replacementTransactionUnderpriced:
+                title = "fee_settings.errors.replacement_transaction_underpriced".localized
+                text = "ethereum_transaction.error.replacement_transaction_underpriced".localized
             }
         }
 

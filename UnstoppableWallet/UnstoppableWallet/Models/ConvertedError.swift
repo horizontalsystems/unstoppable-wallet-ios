@@ -138,6 +138,14 @@ extension EvmKit.JsonRpcResponse.ResponseError: ConvertibleError {
                 return AppError.ethereum(reason: .lowerThanBaseGasLimit)
             }
 
+            if rpcError.message.contains("nonce too low") {
+                return AppError.ethereum(reason: .nonceAlreadyInBlock)
+            }
+
+            if rpcError.message.contains("replacement transaction underpriced") {
+                return AppError.ethereum(reason: .replacementTransactionUnderpriced)
+            }
+
             return self
         default: return self
         }

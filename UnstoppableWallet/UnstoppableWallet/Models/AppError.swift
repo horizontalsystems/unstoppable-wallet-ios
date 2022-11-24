@@ -28,6 +28,8 @@ enum AppError: Error {
         case insufficientBalanceWithFee
         case executionReverted(message: String)
         case lowerThanBaseGasLimit
+        case nonceAlreadyInBlock
+        case replacementTransactionUnderpriced
     }
 
     enum OneInchError: Error {
@@ -60,6 +62,8 @@ extension AppError: LocalizedError {
             case .insufficientBalanceWithFee: return "" // localized in modules
             case .executionReverted(let message): return "ethereum_transaction.error.reverted".localized(message)
             case .lowerThanBaseGasLimit: return "ethereum_transaction.error.lower_than_base_gas_limit".localized
+            case .nonceAlreadyInBlock: return "ethereum_transaction.error.nonce_already_in_block".localized
+            case .replacementTransactionUnderpriced: return "ethereum_transaction.error.replacement_transaction_underpriced".localized
             }
         case .oneInch(let reason):
             switch reason {
