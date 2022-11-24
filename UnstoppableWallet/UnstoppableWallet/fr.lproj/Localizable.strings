@@ -38,7 +38,7 @@
 "alert.added_to_wallet" = "Ajouté au portefeuille";
 "alert.already_added_to_wallet" = "Déjà ajouté au portefeuille";
 "alert.not_supported_yet" = "Pas pris en charge pour le moment";
-"alert.copied" = "Copied";
+"alert.copied" = "Copié";
 "alert.created" = "Établi";
 "alert.restored" = "Restauré ";
 "alert.address_added" = "Adresse ajoutée";
@@ -344,6 +344,7 @@
 "swap.revoke_warning" = "Vous pouvez échanger %@, ou vous devez révoquer et approuver le nouveau montant";
 "swap.revoking_button" = "Révocation en cours...";
 "swap.trade_error.not_found" = "Impossible d'échanger ces tokens";
+"swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
 "swap.button_error.insufficient_balance" = "Solde insuffisant";
 "swap.switch_provider.title" = "Service de Swap";
 
