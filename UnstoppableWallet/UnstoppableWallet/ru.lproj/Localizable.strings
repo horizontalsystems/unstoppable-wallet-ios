@@ -38,11 +38,13 @@
 "alert.added_to_wallet" = "Добавлено в Кошелек";
 "alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Ещё не поддерживается";
-"alert.copied" = "Скопировано";
+"alert.copied" = "Copied";
 "alert.created" = "Создан";
 "alert.restored" = "Восстановлен";
 "alert.address_added" = "Адрес Добавлен";
 "alert.deleted" = "Удалено";
+"alert.waiting_for_session" = "Waiting for Session";
+"alert.try_again" = "Try Again";
 "alert.disconnecting" = "Отсоединение";
 "alert.disconnected" = "Отсоединено";
 "alert.enabling" = "Идет активация";
@@ -1067,6 +1069,7 @@
 "wallet_connect.network" = "Сеть";
 "wallet_connect.address" = "Address";
 "wallet_connect.network" = "Network";
+"wallet_connect.list.pending_requests" = "Отложенные Запросы";
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
 "wallet_connect.main.unsupported_chains" = "Некоторые блокчейны не поддерживаются!";
 "wallet_connect.connect_description" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
@@ -1078,6 +1081,8 @@
 "ethereum_transaction.error.insufficient_balance" = "Для отправки транзакции требуется %@.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "Выбранное значение комиссии слишком низкое и будет отклонено!";
+"ethereum_transaction.error.nonce_already_in_block" = "The transaction is already in block!";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
 "ethereum_transaction.error.reverted" = "Транзакция не может быть выполнена: %@";
 "wallet_connect.request_title" = "Запрос";
 "wallet_connect.button.confirm" = "Подтвердить";
@@ -1090,7 +1095,7 @@
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Нет активных сессий";
 
-"wallet_connect.list.pending_requests" = "Отложенные Запросы";
+"wallet_connect.list.pairings" = "Pairings";
 "wallet_connect.list.version_text" = "Версия %@";
 "wallet_connect.list.v1_bottom_text" = "В первой версии WalletConnect вы должны войти в сессии, чтобы увидеть и подтвердить запрос.";
 "wallet_connect_list.new_connection" = "Новое Подключение";
@@ -1103,6 +1108,9 @@
 "wallet_connect.non_supported_account.switch" = "Перекл.";
 
 "wallet_connect.pending_requests_title" = "Отложенные Запросы";
+"wallet_connect.paired_dapps.title" = "Paired dApps";
+"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
+"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
 "wallet_connect.pending_requests.nonactive_footer" = "Чтобы открыть запрос, необходимо активировать желаемый кошелек";
 
 // App Status
@@ -1193,6 +1201,8 @@
 "fee_settings.errors.insufficient_balance.info" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
 "fee_settings.errors.low_max_fee" = "Низкая Комиссия";
 "fee_settings.errors.low_max_fee.info" = "Установленная сумма комиссии недостаточно для обработки этой транзакции.";
+"fee_settings.errors.nonce_already_in_block" = "Can't replace transaction.";
+"fee_settings.errors.replacement_transaction_underpriced" = "Low Fee for replacement transaction";
 "fee_settings.warning.risk_of_getting_stuck" = "Риски";
 "fee_settings.warning.risk_of_getting_stuck.info" = "Обработка транзакции может отложиться на некоторое время, или транзакцию могут полностью отклонить.";
 "fee_settings.warning.overpricing" = "Слишком Высокая Комиссия";
