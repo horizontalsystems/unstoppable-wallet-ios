@@ -38,11 +38,13 @@
 "alert.added_to_wallet" = "Zum Wallet hinzugefügt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
-"alert.copied" = "Kopiert";
+"alert.copied" = "Copied";
 "alert.created" = "Erstellt";
 "alert.restored" = "Wiederherstellen";
 "alert.address_added" = "Adresse hinzugefügt";
 "alert.deleted" = "Gelöscht";
+"alert.waiting_for_session" = "Waiting for Session";
+"alert.try_again" = "Try Again";
 "alert.disconnecting" = "Verbindung wird getrennt";
 "alert.disconnected" = "Verbindung getrennt";
 "alert.enabling" = "Aktivieren";
@@ -1065,6 +1067,7 @@
 "wallet_connect.network" = "Netzwerk";
 "wallet_connect.address" = "Address";
 "wallet_connect.network" = "Network";
+"wallet_connect.list.pending_requests" = "Ausstehende Anfragen";
 "wallet_connect.main.no_any_supported_chains" = "Keine unterstützten Ketten!";
 "wallet_connect.main.unsupported_chains" = "Einige Ketten werden nicht unterstützt!";
 "wallet_connect.connect_description" = "Indem Sie auf \"Genehmigen\" klicken, erlauben Sie dieser App, Ihre öffentliche Adresse anzuzeigen. Dies ist ein wichtiger Sicherheitsschritt, um Ihre Daten vor potenziellen Phishing-Risiken zu schützen.";
@@ -1076,6 +1079,8 @@
 "ethereum_transaction.error.insufficient_balance" = "Die Transaktion erfordert %@ zum Senden.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Das aktuelle %@-Guthaben liegt unter dem für die Abwicklung dieser Transaktion erforderlichen Betrag einschließlich der Transaktionsgebühr.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "Der gewählte Gebührenwert ist zu niedrig und wird abgelehnt!";
+"ethereum_transaction.error.nonce_already_in_block" = "The transaction is already in block!";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
 "ethereum_transaction.error.reverted" = "Die Transaktion kann nicht ausgeführt werden: %@";
 "wallet_connect.request_title" = "Anforderung";
 "wallet_connect.button.confirm" = "Bestätigen";
@@ -1088,7 +1093,7 @@
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "Keine aktiven Sitzungen";
 
-"wallet_connect.list.pending_requests" = "Ausstehende Anfragen";
+"wallet_connect.list.pairings" = "Pairings";
 "wallet_connect.list.version_text" = "Version %@";
 "wallet_connect.list.v1_bottom_text" = "In der ersten Version von WalletConnect müssen Sie die Sitzungen aufrufen, um die Anfrage zu sehen und zu bestätigen";
 "wallet_connect_list.new_connection" = "Neue Verbindung";
@@ -1101,6 +1106,9 @@
 "wallet_connect.non_supported_account.switch" = "Wechseln";
 
 "wallet_connect.pending_requests_title" = "Ausstehende Anfragen";
+"wallet_connect.paired_dapps.title" = "Paired dApps";
+"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
+"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
 "wallet_connect.pending_requests.nonactive_footer" = "Um eine Anfrage zu öffnen, müssen Sie die gewünschte Wallet aktivieren";
 
 // App Status
@@ -1191,6 +1199,8 @@
 "fee_settings.errors.insufficient_balance.info" = "Das aktuelle %@-Guthaben liegt unter dem Betrag, der für die Bearbeitung dieser Transaktion erforderlich ist, einschließlich der Transaktionsgebühr.";
 "fee_settings.errors.low_max_fee" = "Niedrige Gebühr";
 "fee_settings.errors.low_max_fee.info" = "Der eingestellte Betrag der Transaktionsgebühr reicht nicht aus, um diese Transaktion jetzt zu bearbeiten.";
+"fee_settings.errors.nonce_already_in_block" = "Can't replace transaction.";
+"fee_settings.errors.replacement_transaction_underpriced" = "Low Fee for replacement transaction";
 "fee_settings.warning.risk_of_getting_stuck" = "Riskant";
 "fee_settings.warning.risk_of_getting_stuck.info" = "Die Transaktion kann eine Zeit lang ausstehend bleiben oder ganz fehlschlagen.";
 "fee_settings.warning.overpricing" = "Gebühr zu hoch";
