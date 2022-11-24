@@ -38,11 +38,13 @@
 "alert.added_to_wallet" = "Ajouté au portefeuille";
 "alert.already_added_to_wallet" = "Déjà ajouté au portefeuille";
 "alert.not_supported_yet" = "Pas pris en charge pour le moment";
-"alert.copied" = "Copié";
+"alert.copied" = "Copied";
 "alert.created" = "Établi";
 "alert.restored" = "Restauré ";
 "alert.address_added" = "Adresse ajoutée";
 "alert.deleted" = "Supprimer";
+"alert.waiting_for_session" = "Waiting for Session";
+"alert.try_again" = "Try Again";
 "alert.disconnecting" = "Déconnexion";
 "alert.disconnected" = "Déconnecté";
 "alert.enabling" = "Activation";
@@ -1065,6 +1067,7 @@
 "wallet_connect.network" = "Réseau";
 "wallet_connect.address" = "Address";
 "wallet_connect.network" = "Network";
+"wallet_connect.list.pending_requests" = "Demandes en attente";
 "wallet_connect.main.no_any_supported_chains" = "Aucune chaîne prise en charge !";
 "wallet_connect.main.unsupported_chains" = "Certaines chaînes ne sont pas prises en charge !";
 "wallet_connect.connect_description" = "En cliquant sur accepter, vous autorisez cette application à afficher votre adresse publique. Il s'agit d'une étape importante de sécurité pour protéger vos données contre les risques potentiels d'hameçonnage.";
@@ -1076,6 +1079,8 @@
 "ethereum_transaction.error.insufficient_balance" = "La transaction nécessite %@ pour l'envoi.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Le solde actuel des ETH est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "La valeur de frais sélectionnée est trop faible et sera rejetée !";
+"ethereum_transaction.error.nonce_already_in_block" = "The transaction is already in block!";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
 "ethereum_transaction.error.reverted" = "La transaction ne peut être exécutée : %@";
 "wallet_connect.request_title" = "Requête";
 "wallet_connect.button.confirm" = "Confirmer";
@@ -1088,7 +1093,7 @@
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "Aucune session active";
 
-"wallet_connect.list.pending_requests" = "Demandes en attente";
+"wallet_connect.list.pairings" = "Pairings";
 "wallet_connect.list.version_text" = "Version %@";
 "wallet_connect.list.v1_bottom_text" = "Dans la première version de WalletConnect, vous devez vous rendre dans les sessions pour voir et confirmer la demande.";
 "wallet_connect_list.new_connection" = "Nouvelle connexion";
@@ -1101,6 +1106,9 @@
 "wallet_connect.non_supported_account.switch" = "Basculer";
 
 "wallet_connect.pending_requests_title" = "Demandes en attente";
+"wallet_connect.paired_dapps.title" = "Paired dApps";
+"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
+"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
 "wallet_connect.pending_requests.nonactive_footer" = "Pour ouvrir une demande, vous devez activer le portefeuille désiré";
 
 // App Status
@@ -1191,6 +1199,8 @@
 "fee_settings.errors.insufficient_balance.info" = "Le solde actuel des %@ est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
 "fee_settings.errors.low_max_fee" = "Frais faibles";
 "fee_settings.errors.low_max_fee.info" = "Le montant des frais de transaction défini est insuffisant pour traiter cette transaction immédiatement.";
+"fee_settings.errors.nonce_already_in_block" = "Can't replace transaction.";
+"fee_settings.errors.replacement_transaction_underpriced" = "Low Fee for replacement transaction";
 "fee_settings.warning.risk_of_getting_stuck" = "Risqué";
 "fee_settings.warning.risk_of_getting_stuck.info" = "La transaction risque de rester en attente pendant un certain temps ou d'échouer complètement.";
 "fee_settings.warning.overpricing" = "Frais trop élevés";
