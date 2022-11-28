@@ -4225,6 +4225,8 @@
 		D02A67BA272A7460009B2C1C /* CoinTweetsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTweetsService.swift; sourceTree = "<group>"; };
 		D02A67BB272A7460009B2C1C /* CoinTweetsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTweetsModule.swift; sourceTree = "<group>"; };
 		D04D98E9268055A2001A3135 /* TransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecord.swift; sourceTree = "<group>"; };
+		D0EE557D2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		D0EE557E2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D31C4759238BF175008CB818 /* MnemonicDerivation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicDerivation.swift; sourceTree = "<group>"; };
 		D31C475A238BF175008CB818 /* FeeRateState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateState.swift; sourceTree = "<group>"; };
 		D3285F4220BD158E00644076 /* Unstoppable DT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unstoppable DT.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -7466,6 +7468,7 @@
 				es,
 				zh,
 				ko,
+				"pt-BR",
 			);
 			mainGroup = D3285F3920BD158E00644076;
 			packageReferences = (
@@ -10659,6 +10662,7 @@
 				D3B476A321D0D64E008B0C3E /* es */,
 				D3B476A521D0D659008B0C3E /* zh */,
 				D34E941B21F86C3500AD8E90 /* ko */,
+				D0EE557D2934B0D60027AAD3 /* pt-BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -10674,6 +10678,7 @@
 				D3B476A421D0D64E008B0C3E /* es */,
 				D3B476A621D0D659008B0C3E /* zh */,
 				D34E941C21F86C3500AD8E90 /* ko */,
+				D0EE557E2934B0D60027AAD3 /* pt-BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -11124,7 +11129,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ModuleKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.0;
+				version = 1.0.1;
 			};
 		};
 		D3604E7A28F03BD20066C366 /* XCRemoteSwiftPackageReference "CurrencyKit" */ = {
