@@ -301,7 +301,7 @@ extension WalletConnectV2Service {
     public func reject(request: WalletConnectSign.Request) {
         Task {
             do {
-                try await Sign.instance.respond(topic: request.topic, requestId: request.id, response: .error(.init(code: 0, message: "Reject by User")))
+                try await Sign.instance.respond(topic: request.topic, requestId: request.id, response: .error(.init(code: 5000, message: "Reject by User")))
                 pendingRequestsUpdatedRelay.accept(())
             }
         }
