@@ -266,10 +266,10 @@ class App {
         let walletClientInfo = WalletConnectClientInfo(
                 projectId: appConfigProvider.walletConnectV2ProjectKey ?? "c4f79cc821944d9680842e34466bfb",
                 relayHost: "relay.walletconnect.com",
-                name: "Unstoppable Wallet",
-                description: "Wallet App",
-                url: appConfigProvider.companyWebPageLink,
-                icons: []
+                name: "Unstoppable",
+                description: "",
+                url: appConfigProvider.appWebPageLink,
+                icons: ["https://raw.githubusercontent.com/horizontalsystems/HS-Design/master/PressKit/UW-AppIcon-on-light.png"]
         )
 
         walletConnectV2SocketConnectionService = WalletConnectV2SocketConnectionService(reachabilityManager: reachabilityManager, logger: logger)
