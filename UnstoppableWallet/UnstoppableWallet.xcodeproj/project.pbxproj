@@ -11033,7 +11033,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/HsCryptoKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.1;
+				version = 1.0.2;
 			};
 		};
 		D3604E4128F02A020066C366 /* XCRemoteSwiftPackageReference "EvmKit" */ = {
@@ -11129,7 +11129,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ModuleKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.1;
+				version = 1.0.2;
 			};
 		};
 		D3604E7A28F03BD20066C366 /* XCRemoteSwiftPackageReference "CurrencyKit" */ = {
