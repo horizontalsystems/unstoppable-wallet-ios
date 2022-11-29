@@ -38,7 +38,7 @@
 "alert.added_to_wallet" = "Adicionado à Carteira";
 "alert.already_added_to_wallet" = "Já adicionado à carteira";
 "alert.not_supported_yet" = "Não suportado ainda";
-"alert.copied" = "Copied";
+"alert.copied" = "Copiado";
 "alert.created" = "Criado";
 "alert.restored" = "Restaurado";
 "alert.address_added" = "Endereço Adicionado";
@@ -1110,7 +1110,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "wallet_connect.pending_requests_title" = "Solicitações Pendentes";
 "wallet_connect.paired_dapps.title" = "Paired dApps";
 "wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
-"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
+"wallet_connect.paired_dapps.disconnect_all" = "Excluir Tudo";
 "wallet_connect.pending_requests.nonactive_footer" = "Para abrir um pedido você deve ativar a carteira desejada";
 
 // App Status
