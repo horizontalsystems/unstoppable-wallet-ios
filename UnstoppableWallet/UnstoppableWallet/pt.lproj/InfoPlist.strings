@@ -1,0 +1,3 @@
+"NSCameraUsageDescription" = "O aplicativo precisa acessar a câmera para escanear os QR Codes.";
+"NSFaceIDUsageDescription" = "O FaceID será usado para desbloquear a carteira.";
+"NSPhotoLibraryAddUsageDescription" = "Precisamos de acesso à biblioteca de fotos para salvar imagens NFT";
