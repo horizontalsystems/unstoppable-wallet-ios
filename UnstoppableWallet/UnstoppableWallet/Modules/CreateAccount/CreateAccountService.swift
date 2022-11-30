@@ -67,21 +67,6 @@ class CreateAccountService {
         walletManager.save(wallets: wallets)
     }
 
-    private func language(wordList: Mnemonic.Language) -> String {
-        switch wordList {
-        case .english: return "en"
-        case .japanese: return "ja"
-        case .korean: return "ko"
-        case .spanish: return "es"
-        case .simplifiedChinese: return "zh-Hans"
-        case .traditionalChinese: return "zh-Hant"
-        case .french: return "fr"
-        case .italian: return "it"
-        case .czech: return "cs"
-        case .portuguese: return "pt"
-        }
-    }
-
 }
 
 extension CreateAccountService {
@@ -103,7 +88,7 @@ extension CreateAccountService {
     }
 
     func displayName(wordList: Mnemonic.Language) -> String {
-        languageManager.displayName(language: language(wordList: wordList)) ?? "\(wordList)"
+        languageManager.displayName(language: wordList.language) ?? "\(wordList)"
     }
 
     func set(wordCount: Mnemonic.WordCount) {

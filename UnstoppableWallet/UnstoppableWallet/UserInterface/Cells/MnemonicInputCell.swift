@@ -3,7 +3,7 @@ import ThemeKit
 import SnapKit
 
 class MnemonicInputCell: TextInputCell {
-    var onChangeMnemonicText: ((String, Int, String?) -> ())?
+    var onChangeMnemonicText: ((String, Int) -> ())?
     var onChangeEntering: (() -> ())?
 
     private(set) var entering = false {
@@ -20,7 +20,7 @@ class MnemonicInputCell: TextInputCell {
         }
 
         let cursorOffset = textView.offset(from: textView.beginningOfDocument, to: selectedTextRange.start)
-        onChangeMnemonicText?(textView.text, cursorOffset, textView.textInputMode?.primaryLanguage)
+        onChangeMnemonicText?(textView.text, cursorOffset)
     }
 
     override func textViewDidBeginEditing(_ textView: UITextView) {
@@ -37,7 +37,7 @@ class MnemonicInputCell: TextInputCell {
 
     override func set(text: String) {
         super.set(text: text)
-        onChangeMnemonicText?(text, text.count, textView.textInputMode?.primaryLanguage)
+        onChangeMnemonicText?(text, text.count)
     }
 
 }
@@ -76,7 +76,7 @@ extension MnemonicInputCell {
             textView.selectedTextRange = textView.textRange(from: newPosition, to: newPosition)
         }
 
-        onChangeMnemonicText?(text, cursorOffset, textView.textInputMode?.primaryLanguage)
+        onChangeMnemonicText?(text, cursorOffset)
     }
 
 }

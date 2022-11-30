@@ -2,18 +2,36 @@ import Foundation
 import HdWalletKit
 import RxSwift
 import RxRelay
+import LanguageKit
 
 class RestoreMnemonicService {
+    private let languageManager: LanguageManager
     private var wordList: [String] = Mnemonic.wordList(for: .english).map(String.init)
     private let passphraseEnabledRelay = BehaviorRelay<Bool>(value: false)
 
     private let regex = try! NSRegularExpression(pattern: "\\S+")
     private(set) var items: [WordItem] = []
 
+    private let wordListLanguageRelay = PublishRelay<Mnemonic.Language>()
+    private(set) var wordListLanguage: Mnemonic.Language = .english {
+        didSet {
+            wordListLanguageRelay.accept(wordListLanguage)
+        }
+    }
+
     var passphrase: String = ""
+
+    init(languageManager: LanguageManager) {
+        self.languageManager = languageManager
+    }
+
 }
 
 extension RestoreMnemonicService {
+
+    var wordListLanguageObservable: Observable<Mnemonic.Language> {
+        wordListLanguageRelay.asObservable()
+    }
 
     var passphraseEnabled: Bool {
         passphraseEnabledRelay.value
@@ -23,22 +41,13 @@ extension RestoreMnemonicService {
         passphraseEnabledRelay.asObservable()
     }
 
-    func set(language: String?) {
-        var mnemonicLanguage: Mnemonic.Language = .english
+    func displayName(wordList: Mnemonic.Language) -> String {
+        languageManager.displayName(language: wordList.language) ?? "\(wordList)"
+    }
 
-        if let language = language {
-            if language.hasPrefix("ja-") { mnemonicLanguage = .japanese }
-            else if language.hasPrefix("ko-") { mnemonicLanguage = .korean }
-            else if language.hasPrefix("es-") { mnemonicLanguage = .spanish }
-            else if language == "zh-Hans" { mnemonicLanguage = .simplifiedChinese }
-            else if language == "zh-Hant" { mnemonicLanguage = .traditionalChinese }
-            else if language.hasPrefix("fr-") { mnemonicLanguage = .french }
-            else if language.hasPrefix("it-") { mnemonicLanguage = .italian }
-            else if language.hasPrefix("cs-") { mnemonicLanguage = .czech }
-            else if language.hasPrefix("pt-") { mnemonicLanguage = .portuguese }
-        }
-
-        wordList = Mnemonic.wordList(for: mnemonicLanguage).map(String.init)
+    func set(wordListLanguage: Mnemonic.Language) {
+        self.wordListLanguage = wordListLanguage
+        wordList = Mnemonic.wordList(for: wordListLanguage).map(String.init)
     }
 
     func syncItems(text: String) {
