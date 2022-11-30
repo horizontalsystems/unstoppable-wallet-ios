@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
+import HdWalletKit
 
 class RestoreMnemonicViewModel {
     private let service: RestoreMnemonicService
@@ -12,6 +13,7 @@ class RestoreMnemonicViewModel {
     private let replaceWordRelay = PublishRelay<(NSRange, String)>()
 
     private let mnemonicCautionRelay = BehaviorRelay<Caution?>(value: nil)
+    private let wordListLanguageRelay = BehaviorRelay<String>(value: "")
     private let passphraseCautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let clearInputsRelay = PublishRelay<Void>()
 
@@ -19,6 +21,13 @@ class RestoreMnemonicViewModel {
 
     init(service: RestoreMnemonicService) {
         self.service = service
+
+        subscribe(disposeBag, service.wordListLanguageObservable) { [weak self] in self?.sync(wordListLanguage: $0) }
+        sync(wordListLanguage: service.wordListLanguage)
+    }
+
+    private func sync(wordListLanguage: Mnemonic.Language) {
+        wordListLanguageRelay.accept(service.displayName(wordList: wordListLanguage))
     }
 
     private func clearInputs() {
@@ -74,9 +83,22 @@ extension RestoreMnemonicViewModel {
         clearInputsRelay.asSignal()
     }
 
-    func onChange(text: String, cursorOffset: Int, language: String?) {
+    var wordListViewItems: [AlertViewItem] {
+        Mnemonic.Language.allCases.map { wordList in
+            AlertViewItem(text: service.displayName(wordList: wordList), selected: wordList == service.wordListLanguage)
+        }
+    }
+
+    var wordListLanguageDriver: Driver<String> {
+        wordListLanguageRelay.asDriver()
+    }
+
+    func onSelectWordList(index: Int) {
+        service.set(wordListLanguage: Mnemonic.Language.allCases[index])
+    }
+
+    func onChange(text: String, cursorOffset: Int) {
         self.cursorOffset = cursorOffset
-        service.set(language: language)
         service.syncItems(text: text)
 
         mnemonicCautionRelay.accept(nil)

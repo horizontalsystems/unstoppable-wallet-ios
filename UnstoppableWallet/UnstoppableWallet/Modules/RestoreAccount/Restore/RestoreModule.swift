@@ -1,10 +1,11 @@
 import UIKit
 import ThemeKit
+import LanguageKit
 
 struct RestoreModule {
 
     static func viewController(sourceViewController: UIViewController?, returnViewController: UIViewController? = nil) -> UIViewController {
-        let mnemonicService = RestoreMnemonicService()
+        let mnemonicService = RestoreMnemonicService(languageManager: LanguageManager.shared)
         let mnemonicViewModel = RestoreMnemonicViewModel(service: mnemonicService)
 
         let privateKeyService = RestorePrivateKeyService()

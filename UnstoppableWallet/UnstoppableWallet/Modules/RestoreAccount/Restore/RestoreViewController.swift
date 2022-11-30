@@ -23,6 +23,7 @@ class RestoreViewController: KeyboardAwareViewController {
 
     private let mnemonicInputCell = MnemonicInputCell()
     private let mnemonicCautionCell = FormCautionCell()
+    private let wordListCell = BaseSelectableThemeCell()
 
     private let passphraseToggleCell = BaseThemeCell()
     private let passphraseCell = TextFieldCell()
@@ -91,14 +92,16 @@ class RestoreViewController: KeyboardAwareViewController {
 
         mnemonicInputCell.set(placeholderText: "restore.mnemonic.placeholder".localized)
         mnemonicInputCell.onChangeHeight = { [weak self] in self?.reloadTable() }
-        mnemonicInputCell.onChangeMnemonicText = { [weak self] in self?.mnemonicViewModel.onChange(text: $0, cursorOffset: $1, language: $2) }
+        mnemonicInputCell.onChangeMnemonicText = { [weak self] in self?.mnemonicViewModel.onChange(text: $0, cursorOffset: $1) }
         mnemonicInputCell.onChangeTextViewCaret = { [weak self] in self?.syncContentOffsetIfRequired(textView: $0) }
         mnemonicInputCell.onChangeEntering = { [weak self] in self?.syncHintView() }
         mnemonicInputCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
 
         mnemonicCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
-        passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        wordListCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
+
+        passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
         CellBuilder.build(cell: passphraseToggleCell, elements: [.image20, .text, .switch])
         passphraseToggleCell.bind(index: 0) { (component: ImageComponent) in
             component.imageView.image = UIImage(named: "key_phrase_20")
@@ -150,6 +153,7 @@ class RestoreViewController: KeyboardAwareViewController {
         subscribe(disposeBag, mnemonicViewModel.invalidRangesDriver) { [weak self] in self?.mnemonicInputCell.set(invalidRanges: $0) }
         subscribe(disposeBag, mnemonicViewModel.replaceWordSignal) { [weak self] in self?.mnemonicInputCell.replaceWord(range: $0, word: $1) }
         subscribe(disposeBag, mnemonicViewModel.inputsVisibleDriver) { [weak self] in self?.sync(inputsVisible: $0) }
+        subscribe(disposeBag, mnemonicViewModel.wordListLanguageDriver) { [weak self] in self?.syncWordListLanguageCell(wordListLanguage: $0) }
         subscribe(disposeBag, mnemonicViewModel.passphraseCautionDriver) { [weak self] caution in
             self?.passphraseCell.set(cautionType: caution?.type)
             self?.passphraseCautionCell.set(caution: caution)
@@ -198,6 +202,33 @@ class RestoreViewController: KeyboardAwareViewController {
         reloadTable()
     }
 
+    private func syncWordListLanguageCell(wordListLanguage: String) {
+        CellBuilderNew.buildStatic(
+                cell: wordListCell,
+                rootElement: .hStack([
+                    .image20 { component in
+                        component.imageView.image = UIImage(named: "globe_20")?.withTintColor(.themeGray)
+                    },
+                    .text { component in
+                        component.font = .body
+                        component.textColor = .themeLeah
+                        component.text = "create_wallet.word_list".localized
+                    },
+                    .text { component in
+                        component.font = .subhead1
+                        component.textColor = .themeLeah
+                        component.text = wordListLanguage
+                    },
+                    .margin8,
+                    .image20 { component in
+                        component.imageView.image = UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray)
+                    }
+                ])
+        )
+
+        mnemonicInputCell.set(text: mnemonicInputCell.textView.text)
+    }
+
     private func showDefaultWords() {
         let text = App.shared.appConfigProvider.defaultWords
         mnemonicInputCell.set(text: text)
@@ -206,6 +237,14 @@ class RestoreViewController: KeyboardAwareViewController {
     private func openSelectCoins(accountType: AccountType) {
         let viewController = RestoreSelectModule.viewController(accountType: accountType, returnViewController: returnViewController)
         navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    private func openWordListSelector() {
+        let alertController = AlertRouter.module(title: "create_wallet.word_list".localized, viewItems: mnemonicViewModel.wordListViewItems) { [weak self] index in
+            self?.mnemonicViewModel.onSelectWordList(index: index)
+        }
+
+        present(alertController, animated: true)
     }
 
     private func reloadTable() {
@@ -300,10 +339,19 @@ extension RestoreViewController: SectionsDataSource {
                         ]
                 ),
                 Section(
-                        id: "passphrase-toggle",
+                        id: "wordlist-passphrase-toggle",
                         headerState: .margin(height: .margin32),
                         footerState: .margin(height: .margin24),
                         rows: [
+                            StaticRow(
+                                    cell: wordListCell,
+                                    id: "word-list",
+                                    height: .heightCell48,
+                                    autoDeselect: true,
+                                    action: { [weak self] in
+                                        self?.openWordListSelector()
+                                    }
+                            ),
                             StaticRow(
                                     cell: passphraseToggleCell,
                                     id: "passphrase-toggle",
