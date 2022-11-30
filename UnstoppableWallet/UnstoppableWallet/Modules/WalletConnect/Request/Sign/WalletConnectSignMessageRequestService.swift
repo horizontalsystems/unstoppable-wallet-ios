@@ -12,8 +12,8 @@ class WalletConnectSignMessageRequestService {
         self.signer = signer
     }
 
-    private func sign(message: Data) throws -> Data {
-        try signer.signed(message: message)
+    private func sign(message: Data, isLegacy: Bool = false) throws -> Data {
+        try signer.signed(message: message, isLegacy: isLegacy)
     }
 
     private func signTypedData(message: Data) throws -> Data {
@@ -60,8 +60,9 @@ extension WalletConnectSignMessageRequestService {
         let signedMessage: Data
 
         switch request.payload {
-        case let .sign(data, _):
-            signedMessage = try sign(message: data)
+        case let .sign(data, _):    // legacy sync use already prefixed data hashed by Kessak-256 with length 32 bytes
+            let isLegacy = data.count == 32 && (String(data: data, encoding: .utf8) != nil)
+            signedMessage = try sign(message: data, isLegacy: isLegacy)
         case let .personalSign(data, _):
             signedMessage = try sign(message: data)
         case let .signTypeData(_, data, _):
