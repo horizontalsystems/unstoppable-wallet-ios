@@ -57,9 +57,12 @@ class ManageWalletsService {
             let fullCoins: [FullCoin]
 
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                let featuredFullCoins = try marketKit.fullCoins(filter: "", limit: 100).filter { fullCoin in
+                let marketFullCoins = try marketKit.fullCoins(filter: "", limit: 100).filter { fullCoin in
                     !fullCoin.eligibleTokens(accountType: account.type).isEmpty
                 }
+                let testNetFullCoins = TestNetManager.instance.nativeTokens.map { $0.fullCoin }
+
+                let featuredFullCoins = testNetFullCoins + marketFullCoins
 
                 let featuredCoins = featuredFullCoins.map { $0.coin }
                 let enabledFullCoins = try marketKit.fullCoins(coinUids: wallets.filter { !featuredCoins.contains($0.coin) }.map { $0.coin.uid })

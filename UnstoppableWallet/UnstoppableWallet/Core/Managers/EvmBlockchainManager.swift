@@ -27,7 +27,9 @@ class EvmBlockchainManager {
         self.accountManagerFactory = accountManagerFactory
 
         do {
-            allBlockchains = try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
+            let regularBlockchains = try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
+            let testNetBlockchains = TestNetManager.instance.blockchains
+            allBlockchains = regularBlockchains + testNetBlockchains
         } catch {
             allBlockchains = []
         }
@@ -70,6 +72,7 @@ extension EvmBlockchainManager {
     func chain(blockchainType: BlockchainType) -> Chain {
         switch blockchainType {
         case .ethereum: return .ethereum
+        case .ethereumGoerli: return .ethereumGoerli
         case .binanceSmartChain: return .binanceSmartChain
         case .polygon: return .polygon
         case .avalanche: return .avalanche
@@ -81,7 +84,11 @@ extension EvmBlockchainManager {
 
     func baseToken(blockchainType: BlockchainType) -> Token? {
         let query = TokenQuery(blockchainType: blockchainType, tokenType: .native)
-        return try? marketKit.token(query: query)
+        if let token = try? marketKit.token(query: query) {
+            return token
+        }
+
+        return TestNetManager.instance.nativeToken(blockchainType: blockchainType)
     }
 
     func evmKitManager(blockchainType: BlockchainType) -> EvmKitManager {

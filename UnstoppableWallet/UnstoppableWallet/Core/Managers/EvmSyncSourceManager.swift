@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import RxRelay
 import EvmKit
@@ -30,6 +31,14 @@ class EvmSyncSourceManager {
                         name: "Infura HTTP",
                         rpcSource: infuraRpcSource,
                         transactionSource: .ethereumEtherscan(apiKey: appConfigProvider.etherscanKey)
+                )
+            ]
+        case .ethereumGoerli:
+            return [
+                EvmSyncSource(
+                        name: "Ankr",
+                        rpcSource: .http(urls: [URL(string: "https://rpc.ankr.com/eth_goerli")!], auth: nil),
+                        transactionSource: .goerliEtherscan(apiKey: appConfigProvider.etherscanKey)
                 )
             ]
         case .binanceSmartChain:

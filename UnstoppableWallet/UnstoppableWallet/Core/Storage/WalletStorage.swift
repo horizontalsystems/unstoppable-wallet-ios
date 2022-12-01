@@ -29,10 +29,15 @@ extension WalletStorage {
         let enabledWallets = try storage.enabledWallets(accountId: account.id)
 
         let queries = enabledWallets.compactMap { TokenQuery(id: $0.tokenQueryId) }
-        let tokens = try marketKit.tokens(queries: queries)
+        let marketTokens = try marketKit.tokens(queries: queries)
+        let testNetTokens = TestNetManager.instance.nativeTokens
+        let tokens = marketTokens + testNetTokens
 
         let blockchainUids = queries.map { $0.blockchainType.uid }
-        let blockchains = try marketKit.blockchains(uids: blockchainUids)
+        let marketBlockchain = try marketKit.blockchains(uids: blockchainUids)
+        let testNetBlockchains = queries.map { $0.blockchainType }.compactMap { TestNetManager.instance.blockchain(blockchainType: $0) }
+
+        let blockchains = marketBlockchain + testNetBlockchains
 
         return enabledWallets.compactMap { enabledWallet in
             guard let tokenQuery = TokenQuery(id: enabledWallet.tokenQueryId) else {
