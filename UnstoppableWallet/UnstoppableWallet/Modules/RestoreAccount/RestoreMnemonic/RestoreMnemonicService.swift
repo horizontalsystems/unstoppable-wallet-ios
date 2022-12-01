@@ -6,11 +6,17 @@ import RxRelay
 class RestoreMnemonicService {
     private var wordList: [String] = Mnemonic.wordList(for: .english).map(String.init)
     private let passphraseEnabledRelay = BehaviorRelay<Bool>(value: false)
+    private let passphraseValidator: PassphraseValidator
 
     private let regex = try! NSRegularExpression(pattern: "\\S+")
     private(set) var items: [WordItem] = []
 
     var passphrase: String = ""
+
+    init(passphraseValidator: PassphraseValidator) {
+        self.passphraseValidator = passphraseValidator
+    }
+
 }
 
 extension RestoreMnemonicService {
@@ -71,6 +77,10 @@ extension RestoreMnemonicService {
 
     func set(passphraseEnabled: Bool) {
         passphraseEnabledRelay.accept(passphraseEnabled)
+    }
+
+    func validate(text: String?) -> Bool {
+        passphraseValidator.validate(text: text)
     }
 
     func accountType(words: [String]) throws -> AccountType {

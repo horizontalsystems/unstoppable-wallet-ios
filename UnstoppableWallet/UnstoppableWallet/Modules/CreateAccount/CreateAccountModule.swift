@@ -11,6 +11,7 @@ struct CreateAccountModule {
                 languageManager: LanguageManager.shared,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
+                passphraseValidator: PassphraseValidator(),
                 marketKit: App.shared.marketKit
         )
         let viewModel = CreateAccountViewModel(service: service)

@@ -10,6 +10,7 @@ class CreateAccountService {
     private let languageManager: LanguageManager
     private let accountManager: AccountManager
     private let walletManager: WalletManager
+    private let passphraseValidator: PassphraseValidator
     private let marketKit: Kit
 
     private let wordCountRelay = PublishRelay<Mnemonic.WordCount>()
@@ -31,12 +32,13 @@ class CreateAccountService {
     var passphrase: String = ""
     var passphraseConfirmation: String = ""
 
-    init(accountFactory: AccountFactory, predefinedBlockchainService: PredefinedBlockchainService, languageManager: LanguageManager, accountManager: AccountManager, walletManager: WalletManager, marketKit: Kit) {
+    init(accountFactory: AccountFactory, predefinedBlockchainService: PredefinedBlockchainService, languageManager: LanguageManager, accountManager: AccountManager, walletManager: WalletManager, passphraseValidator: PassphraseValidator, marketKit: Kit) {
         self.accountFactory = accountFactory
         self.predefinedBlockchainService = predefinedBlockchainService
         self.languageManager = languageManager
         self.accountManager = accountManager
         self.walletManager = walletManager
+        self.passphraseValidator = passphraseValidator
         self.marketKit = marketKit
     }
 
@@ -116,6 +118,10 @@ extension CreateAccountService {
 
     func set(passphraseEnabled: Bool) {
         passphraseEnabledRelay.accept(passphraseEnabled)
+    }
+
+    func validate(text: String?) -> Bool {
+        passphraseValidator.validate(text: text)
     }
 
     func createAccount() throws {
