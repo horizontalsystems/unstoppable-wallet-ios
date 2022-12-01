@@ -8,6 +8,8 @@ import Alamofire
 import HsToolKit
 import MarketKit
 import BigInt
+import ZcashLightClientKit
+import HsToolKit
 
 protocol IBaseAdapter {
     var isMainNet: Bool { get }
@@ -53,7 +55,7 @@ protocol ISendBitcoinAdapter {
     func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
     func fee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
-    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void>
+    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode, logger: HsToolKit.Logger) -> Single<Void>
 }
 
 protocol ISendDashAdapter {
@@ -61,7 +63,7 @@ protocol ISendDashAdapter {
     func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String) throws
     func fee(amount: Decimal, address: String?) -> Decimal
-    func sendSingle(amount: Decimal, address: String, sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void>
+    func sendSingle(amount: Decimal, address: String, sortMode: TransactionDataSortMode, logger: HsToolKit.Logger) -> Single<Void>
 }
 
 protocol ISendEthereumAdapter {
@@ -87,7 +89,8 @@ protocol ISendZcashAdapter {
     var availableBalance: Decimal { get }
     func validate(address: String) throws -> ZcashAdapter.AddressType
     var fee: Decimal { get }
-    func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
+    func sendSingle(amount: Decimal, address: Recipient, memo: Memo?) -> Single<Void>
+    func recipient(from stringEncodedAddress: String) -> Recipient?
 }
 
 // Nft Adapters
