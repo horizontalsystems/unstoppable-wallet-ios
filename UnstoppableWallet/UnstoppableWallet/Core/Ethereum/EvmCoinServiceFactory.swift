@@ -17,7 +17,7 @@ class EvmCoinServiceFactory {
 
         let query = TokenQuery(blockchainType: blockchainType, tokenType: .native)
 
-        guard let baseToken = try? marketKit.token(query: query) else {
+        guard let baseToken = (try? marketKit.token(query: query)) ?? TestNetManager.instance.nativeToken(blockchainType: blockchainType) else {
             return nil
         }
 
@@ -27,7 +27,7 @@ class EvmCoinServiceFactory {
     func coinService(contractAddress: EvmKit.Address) -> CoinService? {
         let query = TokenQuery(blockchainType: blockchainType, tokenType: .eip20(address: contractAddress.hex))
 
-        guard let token = try? marketKit.token(query: query) else {
+        guard let token = (try? marketKit.token(query: query)) ?? TestNetManager.instance.nativeToken(blockchainType: blockchainType) else {
             return nil
         }
 
