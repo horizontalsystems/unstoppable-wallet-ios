@@ -4,7 +4,7 @@ import ThemeKit
 struct RestoreModule {
 
     static func viewController(sourceViewController: UIViewController?, returnViewController: UIViewController? = nil) -> UIViewController {
-        let mnemonicService = RestoreMnemonicService()
+        let mnemonicService = RestoreMnemonicService(passphraseValidator: PassphraseValidator())
         let mnemonicViewModel = RestoreMnemonicViewModel(service: mnemonicService)
 
         let privateKeyService = RestorePrivateKeyService()
