@@ -3,6 +3,7 @@ import MarketKit
 import RxSwift
 import RxRelay
 import HsToolKit
+import ZcashLightClientKit
 
 class SendZcashService {
     private let disposeBag = DisposeBag()
@@ -85,7 +86,7 @@ extension SendZcashService: ISendBaseService {
 
 extension SendZcashService: ISendService {
 
-    func sendSingle(logger: Logger) -> Single<Void> {
+    func sendSingle(logger: HsToolKit.Logger) -> Single<Void> {
         let address: Address
         switch addressService.state {
         case .success(let sendAddress): address = sendAddress
@@ -97,10 +98,14 @@ extension SendZcashService: ISendService {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
+        guard let recipient = adapter.recipient(from: address.raw) else {
+            return Single.error(SendTransactionError.invalidAddress)
+        }
+
         return adapter.sendSingle(
                 amount: amountService.amount,
-                address: address.raw,
-                memo: memoService.isAvailable ? memoService.memo : nil
+                address: recipient,
+                memo: memoService.memo.flatMap({ try? Memo(string: $0) })
         )
     }
 
