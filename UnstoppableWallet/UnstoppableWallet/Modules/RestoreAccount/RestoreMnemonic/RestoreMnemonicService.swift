@@ -22,24 +22,24 @@ extension RestoreMnemonicService {
     var passphraseEnabledObservable: Observable<Bool> {
         passphraseEnabledRelay.asObservable()
     }
-
-    func set(language: String?) {
-        var mnemonicLanguage: Mnemonic.Language = .english
-
-        if let language = language {
-            if language.hasPrefix("ja-") { mnemonicLanguage = .japanese }
-            else if language.hasPrefix("ko-") { mnemonicLanguage = .korean }
-            else if language.hasPrefix("es-") { mnemonicLanguage = .spanish }
-            else if language == "zh-Hans" { mnemonicLanguage = .simplifiedChinese }
-            else if language == "zh-Hant" { mnemonicLanguage = .traditionalChinese }
-            else if language.hasPrefix("fr-") { mnemonicLanguage = .french }
-            else if language.hasPrefix("it-") { mnemonicLanguage = .italian }
-            else if language.hasPrefix("cs-") { mnemonicLanguage = .czech }
-            else if language.hasPrefix("pt-") { mnemonicLanguage = .portuguese }
-        }
-
-        wordList = Mnemonic.wordList(for: mnemonicLanguage).map(String.init)
-    }
+//
+//    func set(language: String?) {
+//        var mnemonicLanguage: Mnemonic.Language = .english
+//
+//        if let language = language {
+//            if language.hasPrefix("ja-") { mnemonicLanguage = .japanese }
+//            else if language.hasPrefix("ko-") { mnemonicLanguage = .korean }
+//            else if language.hasPrefix("es-") { mnemonicLanguage = .spanish }
+//            else if language == "zh-Hans" { mnemonicLanguage = .simplifiedChinese }
+//            else if language == "zh-Hant" { mnemonicLanguage = .traditionalChinese }
+//            else if language.hasPrefix("fr-") { mnemonicLanguage = .french }
+//            else if language.hasPrefix("it-") { mnemonicLanguage = .italian }
+//            else if language.hasPrefix("cs-") { mnemonicLanguage = .czech }
+//            else if language.hasPrefix("pt-") { mnemonicLanguage = .portuguese }
+//        }
+//
+//        wordList = Mnemonic.wordList(for: mnemonicLanguage).map(String.init)
+//    }
 
     func syncItems(text: String) {
         let matches = regex.matches(in: text, range: NSRange(location: 0, length: (text as NSString).length))

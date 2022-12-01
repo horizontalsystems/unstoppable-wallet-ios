@@ -76,7 +76,7 @@ extension RestoreMnemonicViewModel {
 
     func onChange(text: String, cursorOffset: Int, language: String?) {
         self.cursorOffset = cursorOffset
-        service.set(language: language)
+//        service.set(language: language)
         service.syncItems(text: text)
 
         mnemonicCautionRelay.accept(nil)
