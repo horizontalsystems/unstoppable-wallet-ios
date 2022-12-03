@@ -60,9 +60,9 @@ class ManageWalletsService {
                 let marketFullCoins = try marketKit.fullCoins(filter: "", limit: 100).filter { fullCoin in
                     !fullCoin.eligibleTokens(accountType: account.type).isEmpty
                 }
-                let testNetFullCoins = TestNetManager.instance.nativeTokens.map { $0.fullCoin }
+                let testNetFullCoins = TestNetManager.instance.nativeTokens().map { $0.fullCoin }
 
-                let featuredFullCoins = testNetFullCoins + marketFullCoins
+                let featuredFullCoins = marketFullCoins + testNetFullCoins
 
                 let featuredCoins = featuredFullCoins.map { $0.coin }
                 let enabledFullCoins = try marketKit.fullCoins(coinUids: wallets.filter { !featuredCoins.contains($0.coin) }.map { $0.coin.uid })
@@ -86,6 +86,18 @@ class ManageWalletsService {
         } catch {
             return []
         }
+    }
+
+    private func merge(fullCoins: [FullCoin]) -> [FullCoin] {
+        var dictionary = [Coin: [Token]]()
+        for coin in fullCoins {
+            if dictionary[coin.coin] == nil {
+                dictionary[coin.coin] = coin.tokens
+            } else {
+                dictionary[coin.coin]?.append(contentsOf: coin.tokens)
+            }
+        }
+        return dictionary.map { coin, tokens in FullCoin(coin: coin, tokens: tokens) }
     }
 
     private func syncFullCoins() {

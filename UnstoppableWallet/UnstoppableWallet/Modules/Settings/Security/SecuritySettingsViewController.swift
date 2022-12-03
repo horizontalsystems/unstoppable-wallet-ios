@@ -14,6 +14,7 @@ class SecuritySettingsViewController: ThemeViewController {
 
     private var pinViewItem = SecuritySettingsViewModel.PinViewItem(enabled: false, editVisible: false, biometryViewItem: nil)
     private var blockchainViewItems = [SecuritySettingsViewModel.BlockchainViewItem]()
+    private var testNetMode = false
     private var loaded = false
 
     init(viewModel: SecuritySettingsViewModel) {
@@ -46,6 +47,7 @@ class SecuritySettingsViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.pinViewItemDriver) { [weak self] in self?.sync(pinViewItem: $0) }
         subscribe(disposeBag, viewModel.blockchainViewItemsDriver) { [weak self] in self?.sync(blockchainViewItems: $0) }
+        subscribe(disposeBag, viewModel.testNetModeDriver) { [weak self] in self?.sync(testNetMode: $0) }
         subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.show(error: $0) }
         subscribe(disposeBag, viewModel.openSetPinSignal) { [weak self] in self?.openSetPin() }
         subscribe(disposeBag, viewModel.openUnlockSignal) { [weak self] in self?.openUnlock() }
@@ -62,6 +64,11 @@ class SecuritySettingsViewController: ThemeViewController {
 
     private func sync(blockchainViewItems: [SecuritySettingsViewModel.BlockchainViewItem]) {
         self.blockchainViewItems = blockchainViewItems
+        reloadTable()
+    }
+
+    private func sync(testNetMode: Bool) {
+        self.testNetMode = testNetMode
         reloadTable()
     }
 
@@ -203,7 +210,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
                 elements: [.image32, .multiText, .image20],
                 tableView: tableView,
                 id: "blockchain-\(index)",
-                hash: "\(viewItem.value)",
+                hash: "\(viewItem.value)-\(isFirst)-\(isLast)",
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { cell in
@@ -230,6 +237,36 @@ extension SecuritySettingsViewController: SectionsDataSource {
                 },
                 action: { [weak self] in
                     self?.viewModel.onTapBlockchain(index: index)
+                }
+        )
+    }
+
+    private func testNetModeRow(mode: Bool) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.image24, .text, .switch],
+                tableView: tableView,
+                id: "test-net-mode",
+                hash: "\(mode)",
+                height: .heightCell48,
+                bind: { [weak self] cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+
+                    cell.bind(index: 0, block: { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: "testnet_24")?.withTintColor(.themeLucian)
+                    })
+
+                    cell.bind(index: 1, block: { (component: TextComponent) in
+                        component.font = .body
+                        component.textColor = .themeLeah
+                        component.text = "settings_security.show_test_net_blockchains".localized
+                    })
+
+                    cell.bind(index: 2, block: { (component: SwitchComponent) in
+                        component.switchView.isOn = mode
+                        component.onSwitch = { isOn in
+                            self?.viewModel.onToggleTestNetMode(isOn: isOn)
+                        }
+                    })
                 }
         )
     }
@@ -265,6 +302,16 @@ extension SecuritySettingsViewController: SectionsDataSource {
                 }
         )
         sections.append(blockchainSection)
+
+        let testNetModeSection = Section(
+                id: "test-net-mode",
+                headerState: tableView.sectionHeader(text: "settings_security.test_net_settings".localized),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    testNetModeRow(mode: testNetMode)
+                ]
+        )
+        sections.append(testNetModeSection)
 
         return sections
     }

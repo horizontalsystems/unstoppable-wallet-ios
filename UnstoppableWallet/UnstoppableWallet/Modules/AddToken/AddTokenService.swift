@@ -37,7 +37,7 @@ class AddTokenService {
     private func joinedTokensSingle(services: [IAddTokenBlockchainService], reference: String) -> Single<[Token]> {
         let singles: [Single<Token?>] = services.map { service in
             service.tokenSingle(reference: reference)
-                    .map { token -> Token? in token}
+                    .map { token -> Token? in token }
                     .catchErrorJustReturn(nil)
         }
 

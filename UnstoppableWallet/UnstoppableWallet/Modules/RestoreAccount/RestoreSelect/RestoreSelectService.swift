@@ -70,7 +70,7 @@ class RestoreSelectService {
             let allowedBlockchainTypes = blockchainTypes.filter { $0.supports(accountType: self.accountType)}
             let tokens = try marketKit.tokens(queries: allowedBlockchainTypes.map { TokenQuery(blockchainType: $0, tokenType: .native) })
 
-            let allTestNetTokens = TestNetManager.instance.nativeTokens
+            let allTestNetTokens = TestNetManager.instance.nativeTokens()
             let testNetTokens = allTestNetTokens.filter { $0.blockchainType.supports(accountType: self.accountType)}
 
             self.tokens = allowedBlockchainTypes.sorted { $0.order < $1.order }.compactMap { type in
@@ -231,49 +231,6 @@ extension RestoreSelectService {
         let blockchain: Blockchain
         let enabled: Bool
         let hasSettings: Bool
-    }
-
-}
-
-class TestNetManager { // todo: extract to separate file
-    static let instance = TestNetManager()
-
-    private var blockchainTypes: [BlockchainType] {
-        [.ethereumGoerli]
-    }
-
-    var blockchains: [Blockchain] {
-        // todo: return empty list if TestNet mode is OFF
-        blockchainTypes.compactMap { blockchain(blockchainType: $0) }
-    }
-
-    var nativeTokens: [Token] {
-        // todo: return empty list if TestNet mode is OFF
-        blockchainTypes.compactMap { nativeToken(blockchainType: $0) }
-    }
-
-    func blockchain(blockchainType: BlockchainType) -> Blockchain? {
-        switch blockchainType {
-        case .ethereumGoerli: return Blockchain(type: .ethereumGoerli, name: "Ethereum Goerli", explorerUrl: nil)
-        default: return nil
-        }
-    }
-
-    func nativeToken(blockchainType: BlockchainType) -> Token? {
-        guard let blockchain = blockchain(blockchainType: blockchainType) else {
-            return nil
-        }
-
-        switch blockchainType {
-        case .ethereumGoerli:
-            return Token(
-                    coin: Coin(uid: "goerli-ethereum", name: "Goerli Ethereum", code: "GoerliETH"),
-                    blockchain: blockchain,
-                    type: .native,
-                    decimals: 18
-            )
-        default: return nil
-        }
     }
 
 }
