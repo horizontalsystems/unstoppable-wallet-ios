@@ -19,20 +19,20 @@ class EvmBlockchainManager {
     private var evmKitManagerMap = [BlockchainType: EvmKitManager]()
     private var evmAccountManagerMap = [BlockchainType: EvmAccountManager]()
 
-    let allBlockchains: [Blockchain]
+    var allBlockchains: [Blockchain] {
+        do {
+            let regularBlockchains = try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
+            let testNetBlockchains = TestNetManager.instance.blockchains
+            return regularBlockchains + testNetBlockchains
+        } catch {
+            return []
+        }
+    }
 
     init(syncSourceManager: EvmSyncSourceManager, marketKit: MarketKit.Kit, accountManagerFactory: EvmAccountManagerFactory) {
         self.syncSourceManager = syncSourceManager
         self.marketKit = marketKit
         self.accountManagerFactory = accountManagerFactory
-
-        do {
-            let regularBlockchains = try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
-            let testNetBlockchains = TestNetManager.instance.blockchains
-            allBlockchains = regularBlockchains + testNetBlockchains
-        } catch {
-            allBlockchains = []
-        }
     }
 
     private func evmManagers(blockchainType: BlockchainType) -> (EvmKitManager, EvmAccountManager) {
