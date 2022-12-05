@@ -57,7 +57,7 @@ class TitledHighlightedDescriptionView: HighlightedDescriptionBaseView {
 
 extension TitledHighlightedDescriptionView {
 
-    public static func height(containerWidth: CGFloat, text: String) -> CGFloat {
+    @objc public class func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let textHeight = text.height(forContainerWidth: containerWidth - 2 * sidePadding, font: font)
         return verticalPadding + 20 + textHeight + 2 * verticalPadding
     }

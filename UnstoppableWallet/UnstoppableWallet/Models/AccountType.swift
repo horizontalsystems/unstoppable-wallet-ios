@@ -82,6 +82,10 @@ enum AccountType {
         }
     }
 
+    var nonStandardWalletPhrase: Bool {
+        true
+    }
+
 }
 
 extension AccountType: Hashable {

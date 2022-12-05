@@ -22,6 +22,12 @@ class WalletViewController: ThemeViewController {
 
     private var viewItems = [BalanceViewItem]()
     private var headerViewItem: WalletViewModel.HeaderViewItem?
+
+    private var showNonStandardAccount: Bool = false
+    private var viewItemsOffset: Int {
+        showNonStandardAccount ? 1 : 0
+    }
+
     private var sortBy: String?
     private var isLoaded = false
 
@@ -67,6 +73,7 @@ class WalletViewController: ThemeViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.registerCell(forClass: BalanceCell.self)
+        tableView.registerCell(forClass: NonStandardPhraseCell.self)
         tableView.registerHeaderFooter(forClass: WalletHeaderView.self)
         tableView.registerHeaderFooter(forClass: SectionColorHeader.self)
 
@@ -96,6 +103,7 @@ class WalletViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.displayModeDriver) { [weak self] in self?.sync(displayMode: $0) }
         subscribe(disposeBag, viewModel.headerViewItemDriver) { [weak self] in self?.sync(headerViewItem: $0) }
         subscribe(disposeBag, viewModel.sortByDriver) { [weak self] in self?.sync(sortBy: $0) }
+        subscribe(disposeBag, viewModel.showNonStandardAccountDriver) { [weak self] in self?.sync(nonStandardAccount: $0) }
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.openReceiveSignal) { [weak self] in self?.openReceive(wallet: $0) }
         subscribe(disposeBag, viewModel.openBackupRequiredSignal) { [weak self] in self?.openBackupRequired(wallet: $0) }
@@ -168,6 +176,12 @@ class WalletViewController: ThemeViewController {
 
         if isLoaded, let headerView = tableView.headerView(forSection: 0) as? WalletHeaderView {
             bind(headerView: headerView)
+        }
+    }
+    private func sync(nonStandardAccount: Bool) {
+        showNonStandardAccount = nonStandardAccount
+        if isLoaded {
+                tableView.reloadData()
         }
     }
 
@@ -341,7 +355,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func handleRemove(indexPath: IndexPath) {
-        let index = indexPath.row
+        let index = indexPath.row - viewItemsOffset
 
         guard index < viewItems.count else {
             return
@@ -382,11 +396,14 @@ class WalletViewController: ThemeViewController {
 extension WalletViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewItems.count
+        (showNonStandardAccount ? 1 : 0) + viewItems.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self), for: indexPath)
+        if showNonStandardAccount, indexPath.row == 0 {
+            return tableView.dequeueReusableCell(withIdentifier: String(describing: NonStandardPhraseCell.self), for: indexPath)
+        }
+        return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self), for: indexPath)
     }
 
 }
@@ -394,8 +411,12 @@ extension WalletViewController: UITableViewDataSource {
 extension WalletViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? NonStandardPhraseCell {
+            cell.topOffset = .margin12
+        }
+
         if let cell = cell as? BalanceCell {
-            bind(cell: cell, viewItem: viewItems[indexPath.item])
+            bind(cell: cell, viewItem: viewItems[indexPath.item - viewItemsOffset])
         }
     }
 
@@ -406,7 +427,10 @@ extension WalletViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        BalanceCell.height(viewItem: viewItems[indexPath.row])
+        if showNonStandardAccount, indexPath.row == 0 {
+            return NonStandardPhraseCell.height(containerWidth: tableView.width) + .margin32
+        }
+        return BalanceCell.height(viewItem: viewItems[indexPath.row - viewItemsOffset])
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -426,10 +450,18 @@ extension WalletViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.onTap(wallet: viewItems[indexPath.item].wallet)
+        if showNonStandardAccount, indexPath.row == 0 {
+            print("Did Tap Cell")
+            return
+        }
+        viewModel.onTap(wallet: viewItems[indexPath.item - viewItemsOffset].wallet)
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if showNonStandardAccount, indexPath.row == 0 {
+            return nil
+        }
+
         guard viewModel.swipeActionsEnabled else {
             return nil
         }
