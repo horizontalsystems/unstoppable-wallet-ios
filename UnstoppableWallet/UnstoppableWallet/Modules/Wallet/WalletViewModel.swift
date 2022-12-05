@@ -12,7 +12,7 @@ class WalletViewModel {
     private let titleRelay = BehaviorRelay<String?>(value: nil)
     private let displayModeRelay = BehaviorRelay<DisplayMode>(value: .list)
     private let headerViewItemRelay = BehaviorRelay<HeaderViewItem?>(value: nil)
-    private let showNonStandardAccountRelay = BehaviorRelay<Bool>(value: false)
+    private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
     private let sortByRelay = BehaviorRelay<String?>(value: nil)
     private let viewItemsRelay = BehaviorRelay<[BalanceViewItem]>(value: [])
     private let openReceiveRelay = PublishRelay<Wallet>()
@@ -35,7 +35,7 @@ class WalletViewModel {
         subscribe(disposeBag, service.activeAccountObservable) { [weak self] in self?.sync(activeAccount: $0) }
         subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.onUpdateBalanceHidden() }
         subscribe(disposeBag, service.totalItemObservable) { [weak self] in self?.sync(totalItem: $0) }
-        subscribe(disposeBag, service.nonStandardAccountObservable) { [weak self] in self?.sync(nonStandardAccount: $0) }
+        subscribe(disposeBag, service.bip39ComplianceObservable) { [weak self] in self?.sync(bip39Compliance: $0) }
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
         subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
         subscribe(disposeBag, service.sortTypeObservable) { [weak self] in self?.sync(sortType: $0, scrollToTop: true) }
@@ -43,7 +43,7 @@ class WalletViewModel {
 
         sync(activeAccount: service.activeAccount)
         sync(totalItem: service.totalItem)
-        sync(nonStandardAccount: service.nonStandardAccount)
+        sync(bip39Compliance: service.bip39Compliance)
         sync(items: service.items)
         sync(sortType: service.sortType, scrollToTop: false)
     }
@@ -66,8 +66,16 @@ class WalletViewModel {
         headerViewItemRelay.accept(headerViewItem)
     }
 
-    private func sync(nonStandardAccount: Bool) {
-        showNonStandardAccountRelay.accept(nonStandardAccount)
+    private func sync(bip39Compliance: AccountType.Bip39Compliance) {
+        switch bip39Compliance {
+        case .compliance: showWarningRelay.accept(nil)
+        case .nonRecommended:
+            let caution = CancellableTitledCaution(title: "note".localized, text:  "restore.warning.bip32_compliance.description".localized, type: .warning, cancellable: true)
+            showWarningRelay.accept(caution)
+        case .migrationRequired:
+            let caution = CancellableTitledCaution(title: "note".localized, text: "restore.warning.bip32_compliance.description".localized, type: .error, cancellable: false)
+            showWarningRelay.accept(caution)
+        }
     }
 
     private func sync(sortType: WalletModule.SortType, scrollToTop: Bool) {
@@ -138,8 +146,8 @@ extension WalletViewModel {
         sortByRelay.asDriver()
     }
 
-    var showNonStandardAccountDriver: Driver<Bool> {
-        showNonStandardAccountRelay.asDriver()
+    var showWarningDriver: Driver<CancellableTitledCaution?> {
+        showWarningRelay.asDriver()
     }
 
     var viewItemsDriver: Driver<[BalanceViewItem]> {
