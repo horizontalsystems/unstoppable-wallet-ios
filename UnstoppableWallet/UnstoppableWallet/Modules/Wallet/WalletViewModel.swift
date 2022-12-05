@@ -12,6 +12,7 @@ class WalletViewModel {
     private let titleRelay = BehaviorRelay<String?>(value: nil)
     private let displayModeRelay = BehaviorRelay<DisplayMode>(value: .list)
     private let headerViewItemRelay = BehaviorRelay<HeaderViewItem?>(value: nil)
+    private let showNonStandardAccountRelay = BehaviorRelay<Bool>(value: false)
     private let sortByRelay = BehaviorRelay<String?>(value: nil)
     private let viewItemsRelay = BehaviorRelay<[BalanceViewItem]>(value: [])
     private let openReceiveRelay = PublishRelay<Wallet>()
@@ -34,6 +35,7 @@ class WalletViewModel {
         subscribe(disposeBag, service.activeAccountObservable) { [weak self] in self?.sync(activeAccount: $0) }
         subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.onUpdateBalanceHidden() }
         subscribe(disposeBag, service.totalItemObservable) { [weak self] in self?.sync(totalItem: $0) }
+        subscribe(disposeBag, service.nonStandardAccountObservable) { [weak self] in self?.sync(nonStandardAccount: $0) }
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
         subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
         subscribe(disposeBag, service.sortTypeObservable) { [weak self] in self?.sync(sortType: $0, scrollToTop: true) }
@@ -41,6 +43,7 @@ class WalletViewModel {
 
         sync(activeAccount: service.activeAccount)
         sync(totalItem: service.totalItem)
+        sync(nonStandardAccount: service.nonStandardAccount)
         sync(items: service.items)
         sync(sortType: service.sortType, scrollToTop: false)
     }
@@ -61,6 +64,10 @@ class WalletViewModel {
     private func sync(totalItem: WalletService.TotalItem?) {
         let headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, watchAccount: service.watchAccount) }
         headerViewItemRelay.accept(headerViewItem)
+    }
+
+    private func sync(nonStandardAccount: Bool) {
+        showNonStandardAccountRelay.accept(nonStandardAccount)
     }
 
     private func sync(sortType: WalletModule.SortType, scrollToTop: Bool) {
@@ -129,6 +136,10 @@ extension WalletViewModel {
 
     var sortByDriver: Driver<String?> {
         sortByRelay.asDriver()
+    }
+
+    var showNonStandardAccountDriver: Driver<Bool> {
+        showNonStandardAccountRelay.asDriver()
     }
 
     var viewItemsDriver: Driver<[BalanceViewItem]> {

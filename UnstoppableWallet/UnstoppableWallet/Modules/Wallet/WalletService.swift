@@ -67,6 +67,15 @@ class WalletService {
         }
     }
 
+    private let nonStandardAccountRelay = PublishRelay<Bool>()
+    var nonStandardAccount: Bool = false {
+        didSet {
+            if nonStandardAccount != oldValue {
+                nonStandardAccountRelay.accept(nonStandardAccount)
+            }
+        }
+    }
+
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
     init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, localStorage: StorageKit.ILocalStorage, rateAppManager: RateAppManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider, reachabilityManager: IReachabilityManager) {
@@ -94,6 +103,7 @@ class WalletService {
         }
 
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] in
+            self?.nonStandardAccount = $0?.type.nonStandardWalletPhrase ?? false
             self?.activeAccountRelay.accept($0)
         }
         subscribe(disposeBag, accountManager.accountUpdatedObservable) { [weak self] in
@@ -115,9 +125,11 @@ class WalletService {
         }
 
         _sync(wallets: walletManager.activeWallets)
+        nonStandardAccount = accountManager.activeAccount?.type.nonStandardWalletPhrase ?? false
     }
 
     private func handleUpdated(account: Account) {
+        nonStandardAccount = account.type.nonStandardWalletPhrase
         if account.id == accountManager.activeAccount?.id {
             activeAccountRelay.accept(account)
         }
@@ -336,6 +348,10 @@ extension WalletService {
 
     var totalItemObservable: Observable<TotalItem?> {
         totalItemRelay.asObservable()
+    }
+
+    var nonStandardAccountObservable: Observable<Bool> {
+        nonStandardAccountRelay.asObservable()
     }
 
     var itemUpdatedObservable: Observable<Item> {
