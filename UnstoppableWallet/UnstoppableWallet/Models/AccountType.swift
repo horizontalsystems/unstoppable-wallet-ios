@@ -82,8 +82,8 @@ enum AccountType {
         }
     }
 
-    var nonStandardWalletPhrase: Bool {
-        true
+    var bip39Compliance: Bip39Compliance {
+        .nonRecommended
     }
 
 }
@@ -120,6 +120,16 @@ extension AccountType: Hashable {
             hasher.combine("hdExtendedKey")
             hasher.combine(key)
         }
+    }
+
+}
+
+extension AccountType {
+
+    enum Bip39Compliance {
+        case compliance
+        case migrationRequired
+        case nonRecommended
     }
 
 }

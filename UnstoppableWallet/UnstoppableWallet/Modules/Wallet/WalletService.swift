@@ -67,11 +67,11 @@ class WalletService {
         }
     }
 
-    private let nonStandardAccountRelay = PublishRelay<Bool>()
-    var nonStandardAccount: Bool = false {
+    private let bip39ComplianceRelay = PublishRelay<AccountType.Bip39Compliance>()
+    var bip39Compliance: AccountType.Bip39Compliance = .compliance {
         didSet {
-            if nonStandardAccount != oldValue {
-                nonStandardAccountRelay.accept(nonStandardAccount)
+            if bip39Compliance != oldValue {
+                bip39ComplianceRelay.accept(bip39Compliance)
             }
         }
     }
@@ -103,7 +103,7 @@ class WalletService {
         }
 
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] in
-            self?.nonStandardAccount = $0?.type.nonStandardWalletPhrase ?? false
+            self?.bip39Compliance = $0?.type.bip39Compliance ?? .compliance
             self?.activeAccountRelay.accept($0)
         }
         subscribe(disposeBag, accountManager.accountUpdatedObservable) { [weak self] in
@@ -125,11 +125,11 @@ class WalletService {
         }
 
         _sync(wallets: walletManager.activeWallets)
-        nonStandardAccount = accountManager.activeAccount?.type.nonStandardWalletPhrase ?? false
+        bip39Compliance = accountManager.activeAccount?.type.bip39Compliance ?? .compliance
     }
 
     private func handleUpdated(account: Account) {
-        nonStandardAccount = account.type.nonStandardWalletPhrase
+        bip39Compliance = account.type.bip39Compliance
         if account.id == accountManager.activeAccount?.id {
             activeAccountRelay.accept(account)
         }
@@ -350,8 +350,8 @@ extension WalletService {
         totalItemRelay.asObservable()
     }
 
-    var nonStandardAccountObservable: Observable<Bool> {
-        nonStandardAccountRelay.asObservable()
+    var bip39ComplianceObservable: Observable<AccountType.Bip39Compliance> {
+        bip39ComplianceRelay.asObservable()
     }
 
     var itemUpdatedObservable: Observable<Item> {

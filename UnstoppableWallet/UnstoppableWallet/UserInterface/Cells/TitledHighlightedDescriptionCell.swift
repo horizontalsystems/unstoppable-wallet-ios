@@ -8,6 +8,15 @@ class TitledHighlightedDescriptionCell: BaseThemeCell {
 
     private let descriptionView = TitledHighlightedDescriptionView()
 
+    var topOffset: CGFloat = 0 {
+        didSet {
+            descriptionView.snp.updateConstraints { maker in
+                maker.top.equalToSuperview().offset(topOffset)
+            }
+            contentView.setNeedsUpdateConstraints()
+        }
+    }
+
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -17,7 +26,7 @@ class TitledHighlightedDescriptionCell: BaseThemeCell {
         contentView.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(Self.horizontalMargin)
-            maker.top.equalToSuperview()
+            maker.top.equalToSuperview().offset(topOffset)
         }
     }
 
@@ -53,6 +62,19 @@ class TitledHighlightedDescriptionCell: BaseThemeCell {
     var titleColor: UIColor? {
         get { descriptionView.titleColor }
         set { descriptionView.titleColor = newValue }
+    }
+
+    var onBackgroundButton: (() -> ())? {
+        get { descriptionView.onTapBackground }
+        set { descriptionView.onTapBackground = newValue }
+    }
+
+    var onCloseButton: (() -> ())? {
+        didSet {
+            descriptionView.onTapClose = onCloseButton
+            descriptionView.closeButtonHidden = onCloseButton == nil
+            selectionStyle = onCloseButton == nil ? .none : .default
+        }
     }
 
     func bind(caution: TitledCaution) {
