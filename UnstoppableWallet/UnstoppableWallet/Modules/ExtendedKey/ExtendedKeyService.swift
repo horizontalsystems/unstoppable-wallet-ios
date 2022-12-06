@@ -95,8 +95,8 @@ class ExtendedKeyService {
 
     private var resolvedKey: String? {
         switch accountType {
-        case let .mnemonic(words, salt):
-            guard let rootKey = rootKey(words: words, salt: salt) else {
+        case .mnemonic:
+            guard let rootKey = rootKey(seed: accountType.mnemonicSeed) else {
                 return nil
             }
 
@@ -164,8 +164,8 @@ class ExtendedKeyService {
         }
     }
 
-    private func rootKey(words: [String], salt: String) -> HDPrivateKey? {
-        guard let seed = Mnemonic.seed(mnemonic: words, passphrase: salt) else {
+    private func rootKey(seed: Data?) -> HDPrivateKey? {
+        guard let seed = seed else {
             return nil
         }
 

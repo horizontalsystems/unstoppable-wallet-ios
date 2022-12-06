@@ -16,8 +16,8 @@ class DashAdapter: BitcoinBaseAdapter {
         let logger = App.shared.logger.scoped(with: "DashKit")
 
         switch wallet.account.type {
-        case let .mnemonic(words, salt):
-            guard let seed = Mnemonic.seed(mnemonic: words, passphrase: salt) else {
+        case .mnemonic:
+            guard let seed = wallet.account.type.mnemonicSeed else {
                 throw AdapterError.unsupportedAccount
             }
 

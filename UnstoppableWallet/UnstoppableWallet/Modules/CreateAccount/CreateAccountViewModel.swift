@@ -8,7 +8,6 @@ class CreateAccountViewModel {
     private let disposeBag = DisposeBag()
 
     private let wordCountRelay = BehaviorRelay<String>(value: "")
-    private let wordListRelay = BehaviorRelay<String>(value: "")
     private let passphraseCautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let passphraseConfirmationCautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let clearInputsRelay = PublishRelay<Void>()
@@ -19,18 +18,12 @@ class CreateAccountViewModel {
         self.service = service
 
         subscribe(disposeBag, service.wordCountObservable) { [weak self] in self?.sync(wordCount: $0) }
-        subscribe(disposeBag, service.wordListObservable) { [weak self] in self?.sync(wordList: $0) }
 
         sync(wordCount: service.wordCount)
-        sync(wordList: service.wordList)
     }
 
     private func sync(wordCount: Mnemonic.WordCount) {
         wordCountRelay.accept(title(wordCount: wordCount))
-    }
-
-    private func sync(wordList: Mnemonic.Language) {
-        wordListRelay.accept(service.displayName(wordList: wordList))
     }
 
     private func clearInputs() {
@@ -63,10 +56,6 @@ extension CreateAccountViewModel {
         wordCountRelay.asDriver()
     }
 
-    var wordListDriver: Driver<String> {
-        wordListRelay.asDriver()
-    }
-
     var inputsVisibleDriver: Driver<Bool> {
         service.passphraseEnabledObservable.asDriver(onErrorJustReturn: false)
     }
@@ -97,18 +86,8 @@ extension CreateAccountViewModel {
         }
     }
 
-    var wordListViewItems: [AlertViewItem] {
-        Mnemonic.Language.allCases.map { wordList in
-            AlertViewItem(text: service.displayName(wordList: wordList), selected: wordList == service.wordList)
-        }
-    }
-
     func onSelectWordCount(index: Int) {
         service.set(wordCount: Mnemonic.WordCount.allCases[index])
-    }
-
-    func onSelectWordList(index: Int) {
-        service.set(wordList: Mnemonic.Language.allCases[index])
     }
 
     func onTogglePassphrase(isOn: Bool) {

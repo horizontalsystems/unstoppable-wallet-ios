@@ -3,7 +3,7 @@ import Foundation
 class PassphraseValidator {
     static private let forbiddenSymbols = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 '\"`&/?!:;.,~*$=+-[](){}<>\\_#@|%").inverted
 
-    func validate(text: String?) -> Bool {
+    static func validate(text: String?) -> Bool {
         if text?.rangeOfCharacter(from: Self.forbiddenSymbols) != nil {
             return false
         }

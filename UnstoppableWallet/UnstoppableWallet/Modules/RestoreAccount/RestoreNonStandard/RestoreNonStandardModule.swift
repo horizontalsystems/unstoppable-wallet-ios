@@ -2,21 +2,17 @@ import UIKit
 import ThemeKit
 import LanguageKit
 
-struct RestoreModule {
+struct RestoreNonStandardModule {
 
     static func viewController(sourceViewController: UIViewController?, returnViewController: UIViewController? = nil) -> UIViewController {
-        let mnemonicService = RestoreMnemonicService(languageManager: LanguageManager.shared)
-        let mnemonicViewModel = RestoreMnemonicViewModel(service: mnemonicService)
+        let mnemonicService = RestoreMnemonicNonStandardService(languageManager: LanguageManager.shared)
+        let mnemonicViewModel = RestoreMnemonicNonStandardViewModel(service: mnemonicService)
 
-        let privateKeyService = RestorePrivateKeyService()
-        let privateKeyViewModel = RestorePrivateKeyViewModel(service: privateKeyService)
+        let viewModel = RestoreNonStandardViewModel(mnemonicViewModel: mnemonicViewModel)
 
-        let viewModel = RestoreViewModel(mnemonicViewModel: mnemonicViewModel, privateKeyViewModel: privateKeyViewModel)
-
-        let viewController = RestoreViewController(
+        let viewController = RestoreNonStandardViewController(
                 viewModel: viewModel,
                 mnemonicViewModel: mnemonicViewModel,
-                privateKeyViewModel: privateKeyViewModel,
                 returnViewController: returnViewController
         )
 

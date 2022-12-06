@@ -33,7 +33,11 @@ class AccountStorage {
                 return nil
             }
 
-            type = .mnemonic(words: words, salt: salt)
+            let compliant = record.bip39Compliant ?? (
+                    Mnemonic.seed(mnemonic: words, passphrase: salt) == Mnemonic.seedNonStandard(mnemonic: words, passphrase: salt)
+            )
+
+            type = .mnemonic(words: words, salt: salt, bip39Compliant: compliant)
         case .evmPrivateKey:
             guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
                 return nil
@@ -74,12 +78,14 @@ class AccountStorage {
         var wordsKey: String?
         var saltKey: String?
         var dataKey: String?
+        var bip39Compliant: Bool?
 
         switch account.type {
-        case .mnemonic(let words, let salt):
+        case .mnemonic(let words, let salt, let compliant):
             typeName = .mnemonic
             wordsKey = try store(stringArray: words, id: id, typeName: typeName, keyName: .words)
             saltKey = try store(salt, id: id, typeName: typeName, keyName: .salt)
+            bip39Compliant = compliant
         case .evmPrivateKey(let data):
             typeName = .evmPrivateKey
             dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
@@ -99,7 +105,8 @@ class AccountStorage {
                 backedUp: account.backedUp,
                 wordsKey: wordsKey,
                 saltKey: saltKey,
-                dataKey: dataKey
+                dataKey: dataKey,
+                bip39Compliant: bip39Compliant
         )
     }
 
