@@ -113,7 +113,11 @@ extension RestoreMnemonicService {
             throw ErrorList.errors(errors)
         }
 
-        return .mnemonic(words: words, salt: passphrase, bip39Compliant: true)
+        return .mnemonic(
+                words: words.map { $0.decomposedStringWithCompatibilityMapping },
+                salt: passphrase.decomposedStringWithCompatibilityMapping,
+                bip39Compliant: true
+        )
     }
 
 }
