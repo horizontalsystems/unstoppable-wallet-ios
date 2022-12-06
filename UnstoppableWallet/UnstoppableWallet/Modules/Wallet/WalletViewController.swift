@@ -180,9 +180,16 @@ class WalletViewController: ThemeViewController {
     }
 
     private func sync(warning: CancellableTitledCaution?) {
+        let needToRemove = warning == nil && warningViewItem != nil
         warningViewItem = warning
         if isLoaded {
-            tableView.reloadData()
+            if needToRemove {
+                tableView.beginUpdates()
+                tableView.deleteRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+                tableView.endUpdates()
+            } else {
+                tableView.reloadData()
+            }
         }
     }
 
@@ -191,7 +198,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func onCloseWarning() {
-        print("On Tap Close!!!")
+        viewModel.onCloseWarning()
     }
 
     private func sync(viewItems: [BalanceViewItem]) {

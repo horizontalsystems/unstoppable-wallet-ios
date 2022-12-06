@@ -8,6 +8,7 @@ import EvmKit
 import HsToolKit
 
 class WalletService {
+    static let keyAccountWarningPrefix = "wallet-ignore-bip39-compliance"
     private let keySortType = "wallet-sort-type"
 
     private let adapterService: WalletAdapterService
@@ -70,9 +71,7 @@ class WalletService {
     private let bip39ComplianceRelay = PublishRelay<AccountType.Bip39Compliance>()
     var bip39Compliance: AccountType.Bip39Compliance = .compliance {
         didSet {
-            if bip39Compliance != oldValue {
-                bip39ComplianceRelay.accept(bip39Compliance)
-            }
+            bip39ComplianceRelay.accept(bip39Compliance)
         }
     }
 
@@ -109,6 +108,9 @@ class WalletService {
         subscribe(disposeBag, accountManager.accountUpdatedObservable) { [weak self] in
             self?.handleUpdated(account: $0)
         }
+        subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in
+            self?.handleDeleted(account: $0)
+        }
         subscribe(disposeBag, accountManager.accountsLostObservable) { [weak self] isAccountsLost in
             if isAccountsLost {
                 self?.accountsLostRelay.accept(())
@@ -133,6 +135,10 @@ class WalletService {
         if account.id == accountManager.activeAccount?.id {
             activeAccountRelay.accept(account)
         }
+    }
+
+    private func handleDeleted(account: Account) {
+        localStorage.set(value: nil as Bool?, for: Self.keyAccountWarningPrefix + account.id)
     }
 
     private func handleUpdateSortType() {
@@ -305,6 +311,15 @@ extension WalletService: IWalletAdapterServiceDelegate {
         }
     }
 
+    func didIgnoreAccountWarning() {
+        guard let account = accountManager.activeAccount, account.type.bip39Compliance == .nonRecommended else {
+            return
+        }
+
+        localStorage.set(value: true, for: Self.keyAccountWarningPrefix + account.id)
+        bip39Compliance = account.type.bip39Compliance
+    }
+
 }
 
 extension WalletService: IWalletCoinPriceServiceDelegate {
@@ -352,6 +367,14 @@ extension WalletService {
 
     var bip39ComplianceObservable: Observable<AccountType.Bip39Compliance> {
         bip39ComplianceRelay.asObservable()
+    }
+
+    var ignoreActiveAccountWarning: Bool {
+        guard let id = activeAccount?.id else {
+            return false
+        }
+
+        return localStorage.value(for: Self.keyAccountWarningPrefix + id) ?? false
     }
 
     var itemUpdatedObservable: Observable<Item> {
