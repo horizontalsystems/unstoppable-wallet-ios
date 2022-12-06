@@ -32,7 +32,7 @@ class ManageAccountsViewModel {
 
     private func viewItem(item: ManageAccountsService.Item) -> ViewItem {
         var alertSubtitle: String?
-        if item.account.type.bip39Compliance == .migrationRequired {
+        if item.account.nonStandard {
             alertSubtitle = "manage_accounts.migration_required".localized
         } else if !item.account.backedUp {
             alertSubtitle = "manage_accounts.backup_required".localized

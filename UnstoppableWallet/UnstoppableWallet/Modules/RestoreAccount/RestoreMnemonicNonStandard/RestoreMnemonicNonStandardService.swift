@@ -4,7 +4,7 @@ import RxSwift
 import RxRelay
 import LanguageKit
 
-class RestoreMnemonicService {
+class RestoreMnemonicNonStandardService {
     private let languageManager: LanguageManager
     private var wordList: [String] = Mnemonic.wordList(for: .english).map(String.init)
     private let passphraseEnabledRelay = BehaviorRelay<Bool>(value: false)
@@ -42,7 +42,7 @@ class RestoreMnemonicService {
 
 }
 
-extension RestoreMnemonicService {
+extension RestoreMnemonicNonStandardService {
 
     var wordListLanguageObservable: Observable<Mnemonic.Language> {
         wordListLanguageRelay.asObservable()
@@ -113,12 +113,12 @@ extension RestoreMnemonicService {
             throw ErrorList.errors(errors)
         }
 
-        return .mnemonic(words: words, salt: passphrase, bip39Compliant: true)
+        return .mnemonic(words: words, salt: passphrase, bip39Compliant: false)
     }
 
 }
 
-extension RestoreMnemonicService {
+extension RestoreMnemonicNonStandardService {
 
     enum WordItemType {
         case correct

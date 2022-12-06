@@ -66,7 +66,7 @@ class ManageAccountViewModel {
     }
 
     private func sync(account: Account) {
-        showMigrationRequiredRelay.accept(account.type.bip39Compliance == .migrationRequired)
+        showMigrationRequiredRelay.accept(account.nonStandard)
         keyActionGroupsRelay.accept(keyActionGroups(account: account))
     }
 

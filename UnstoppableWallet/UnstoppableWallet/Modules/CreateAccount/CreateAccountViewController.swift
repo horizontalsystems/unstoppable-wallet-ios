@@ -19,7 +19,6 @@ class CreateAccountViewController: KeyboardAwareViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
     private let mnemonicCell = BaseSelectableThemeCell()
-//    private let wordListCell = BaseSelectableThemeCell()
     private let passphraseToggleCell = BaseThemeCell()
     private let passphraseCell = TextFieldCell()
     private let passphraseCautionCell = FormCautionCell()
@@ -80,7 +79,6 @@ class CreateAccountViewController: KeyboardAwareViewController {
         createButton.addTarget(self, action: #selector(onTapCreate), for: .touchUpInside)
 
         mnemonicCell.set(backgroundStyle: .lawrence, isFirst: true)
-//        wordListCell.set(backgroundStyle: .lawrence, isLast: true)
 
         passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         CellBuilderNew.buildStatic(
@@ -117,7 +115,6 @@ class CreateAccountViewController: KeyboardAwareViewController {
         passphraseConfirmationCautionCell.onChangeHeight = { [weak self] in self?.syncCellHeights() }
 
         subscribe(disposeBag, viewModel.wordCountDriver) { [weak self] in self?.syncMnemonicCell(wordCount: $0) }
-//        subscribe(disposeBag, viewModel.wordListDriver) { [weak self] in self?.syncWordListCell(wordList: $0) }
         subscribe(disposeBag, viewModel.inputsVisibleDriver) { [weak self] in self?.sync(inputsVisible: $0) }
         subscribe(disposeBag, viewModel.passphraseCautionDriver) { [weak self] caution in
             self?.passphraseCell.set(cautionType: caution?.type)
@@ -162,14 +159,6 @@ class CreateAccountViewController: KeyboardAwareViewController {
 
         present(alertController, animated: true)
     }
-
-//    private func openWordListSelector() {
-//        let alertController = AlertRouter.module(title: "create_wallet.word_list".localized, viewItems: viewModel.wordListViewItems) { [weak self] index in
-//            self?.viewModel.onSelectWordList(index: index)
-//        }
-//
-//        present(alertController, animated: true)
-//    }
 
     private func show(error: String) {
         HudHelper.instance.show(banner: .error(string: error))
@@ -241,15 +230,6 @@ extension CreateAccountViewController: SectionsDataSource {
         )
     }
 
-//    private func syncWordListCell(wordList: String) {
-//        sync(
-//                cell: wordListCell,
-//                image: UIImage(named: "globe_20"),
-//                title: "create_wallet.word_list".localized,
-//                value: wordList
-//        )
-//    }
-
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
             Section(
@@ -265,15 +245,6 @@ extension CreateAccountViewController: SectionsDataSource {
                                 action: { [weak self] in
                                     self?.openWordCountSelector()
                                 }
-//                        ),
-//                        StaticRow(
-//                                cell: wordListCell,
-//                                id: "word-list",
-//                                height: .heightCell48,
-//                                autoDeselect: true,
-//                                action: { [weak self] in
-//                                    self?.openWordListSelector()
-//                                }
                         )
                     ]
             ),

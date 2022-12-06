@@ -35,7 +35,6 @@ class WalletViewModel {
         subscribe(disposeBag, service.activeAccountObservable) { [weak self] in self?.sync(activeAccount: $0) }
         subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.onUpdateBalanceHidden() }
         subscribe(disposeBag, service.totalItemObservable) { [weak self] in self?.sync(totalItem: $0) }
-        subscribe(disposeBag, service.bip39ComplianceObservable) { [weak self] in self?.sync(bip39Compliance: $0) }
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
         subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
         subscribe(disposeBag, service.sortTypeObservable) { [weak self] in self?.sync(sortType: $0, scrollToTop: true) }
@@ -43,13 +42,29 @@ class WalletViewModel {
 
         sync(activeAccount: service.activeAccount)
         sync(totalItem: service.totalItem)
-        sync(bip39Compliance: service.bip39Compliance)
         sync(items: service.items)
         sync(sortType: service.sortType, scrollToTop: false)
     }
 
     private func sync(activeAccount: Account?) {
         titleRelay.accept(activeAccount?.name)
+
+        if let account = activeAccount {
+            if account.nonStandard {
+                let caution = CancellableTitledCaution(title: "note".localized, text: "restore.warning.bip32_compliance.description".localized, type: .error, cancellable: false)
+                showWarningRelay.accept(caution)
+            } else if account.nonRecommended {
+                guard !service.ignoreActiveAccountWarning else {
+                    showWarningRelay.accept(nil)
+                    return
+                }
+
+                let caution = CancellableTitledCaution(title: "note".localized, text:  "restore.warning.bip32_compliance.description".localized, type: .warning, cancellable: true)
+                showWarningRelay.accept(caution)
+            } else {
+                showWarningRelay.accept(nil)
+            }
+        }
     }
 
     private func onUpdateBalanceHidden() {
@@ -64,23 +79,6 @@ class WalletViewModel {
     private func sync(totalItem: WalletService.TotalItem?) {
         let headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, watchAccount: service.watchAccount) }
         headerViewItemRelay.accept(headerViewItem)
-    }
-
-    private func sync(bip39Compliance: AccountType.Bip39Compliance) {
-        switch bip39Compliance {
-        case .compliance: showWarningRelay.accept(nil)
-        case .nonRecommended:
-            guard !service.ignoreActiveAccountWarning else {
-                showWarningRelay.accept(nil)
-                return
-            }
-
-            let caution = CancellableTitledCaution(title: "note".localized, text:  "restore.warning.bip32_compliance.description".localized, type: .warning, cancellable: true)
-            showWarningRelay.accept(caution)
-        case .migrationRequired:
-            let caution = CancellableTitledCaution(title: "note".localized, text: "restore.warning.bip32_compliance.description".localized, type: .error, cancellable: false)
-            showWarningRelay.accept(caution)
-        }
     }
 
     private func sync(sortType: WalletModule.SortType, scrollToTop: Bool) {

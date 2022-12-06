@@ -4,7 +4,7 @@ class BackupService {
     let salt: String
 
     init?(account: Account) {
-        guard case let .mnemonic(words, salt) = account.type else {
+        guard case let .mnemonic(words, salt, _) = account.type else {
             return nil
         }
 

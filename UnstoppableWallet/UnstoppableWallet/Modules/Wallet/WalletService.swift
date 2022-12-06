@@ -8,7 +8,7 @@ import EvmKit
 import HsToolKit
 
 class WalletService {
-    static let keyAccountWarningPrefix = "wallet-ignore-bip39-compliance"
+    static let keyAccountWarningPrefix = "wallet-ignore-non-recommended"
     private let keySortType = "wallet-sort-type"
 
     private let adapterService: WalletAdapterService
@@ -68,13 +68,6 @@ class WalletService {
         }
     }
 
-    private let bip39ComplianceRelay = PublishRelay<AccountType.Bip39Compliance>()
-    var bip39Compliance: AccountType.Bip39Compliance = .compliance {
-        didSet {
-            bip39ComplianceRelay.accept(bip39Compliance)
-        }
-    }
-
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
     init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, localStorage: StorageKit.ILocalStorage, rateAppManager: RateAppManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider, reachabilityManager: IReachabilityManager) {
@@ -102,7 +95,6 @@ class WalletService {
         }
 
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] in
-            self?.bip39Compliance = $0?.type.bip39Compliance ?? .compliance
             self?.activeAccountRelay.accept($0)
         }
         subscribe(disposeBag, accountManager.accountUpdatedObservable) { [weak self] in
@@ -127,11 +119,9 @@ class WalletService {
         }
 
         _sync(wallets: walletManager.activeWallets)
-        bip39Compliance = accountManager.activeAccount?.type.bip39Compliance ?? .compliance
     }
 
     private func handleUpdated(account: Account) {
-        bip39Compliance = account.type.bip39Compliance
         if account.id == accountManager.activeAccount?.id {
             activeAccountRelay.accept(account)
         }
@@ -312,12 +302,11 @@ extension WalletService: IWalletAdapterServiceDelegate {
     }
 
     func didIgnoreAccountWarning() {
-        guard let account = accountManager.activeAccount, account.type.bip39Compliance == .nonRecommended else {
+        guard let account = accountManager.activeAccount, account.nonRecommended else {
             return
         }
 
         localStorage.set(value: true, for: Self.keyAccountWarningPrefix + account.id)
-        bip39Compliance = account.type.bip39Compliance
     }
 
 }
@@ -363,10 +352,6 @@ extension WalletService {
 
     var totalItemObservable: Observable<TotalItem?> {
         totalItemRelay.asObservable()
-    }
-
-    var bip39ComplianceObservable: Observable<AccountType.Bip39Compliance> {
-        bip39ComplianceRelay.asObservable()
     }
 
     var ignoreActiveAccountWarning: Bool {
