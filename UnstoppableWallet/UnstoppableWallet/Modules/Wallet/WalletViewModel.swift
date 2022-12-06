@@ -70,6 +70,11 @@ class WalletViewModel {
         switch bip39Compliance {
         case .compliance: showWarningRelay.accept(nil)
         case .nonRecommended:
+            guard !service.ignoreActiveAccountWarning else {
+                showWarningRelay.accept(nil)
+                return
+            }
+
             let caution = CancellableTitledCaution(title: "note".localized, text:  "restore.warning.bip32_compliance.description".localized, type: .warning, cancellable: true)
             showWarningRelay.accept(caution)
         case .migrationRequired:
@@ -287,6 +292,10 @@ extension WalletViewModel {
         }
 
         service.disable(wallet: wallet)
+    }
+
+    func onCloseWarning() {
+        service.didIgnoreAccountWarning()
     }
 
 }
