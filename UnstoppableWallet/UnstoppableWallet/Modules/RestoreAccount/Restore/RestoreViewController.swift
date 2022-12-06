@@ -273,6 +273,12 @@ class RestoreViewController: KeyboardAwareViewController {
         present(alertController, animated: true)
     }
 
+    private func onTapNonStandardRestore() {
+        let viewController = RestoreNonStandardModule.viewController(sourceViewController: self, returnViewController: returnViewController)
+
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
 }
 
 extension RestoreViewController: SectionsDataSource {
@@ -373,6 +379,33 @@ extension RestoreViewController: SectionsDataSource {
                                     id: "passphrase-caution",
                                     dynamicHeight: { [weak self] width in
                                         self?.passphraseCautionCell.height(containerWidth: width) ?? 0
+                                    }
+                            )
+                        ]
+                ),
+                Section(
+                        id: "non-standard-restore",
+                        footerState: inputsVisible ? tableView.sectionFooter(text: "restore.passphrase_description".localized) : .margin(height: 0),
+                        rows: [
+                            CellBuilderNew.row(
+                                    rootElement: .hStack([
+                                        .text { component in
+                                            component.font = .body
+                                            component.textColor = .themeLeah
+                                            component.text = "restore.non_standard_restore".localized
+                                        },
+                                        .image20 { component in
+                                            component.imageView.image = UIImage(named: "arrow_small_forward_20")?.withTintColor(.themeGray)
+                                        }
+                                    ]),
+                                    tableView: tableView,
+                                    id: "non-standard_restore",
+                                    autoDeselect: true,
+                                    bind: { cell in
+                                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                                    },
+                                    action: { [weak self] in
+                                        self?.onTapNonStandardRestore()
                                     }
                             )
                         ]

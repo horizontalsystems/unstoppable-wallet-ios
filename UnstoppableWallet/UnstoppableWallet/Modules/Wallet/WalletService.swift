@@ -307,6 +307,7 @@ extension WalletService: IWalletAdapterServiceDelegate {
         }
 
         localStorage.set(value: true, for: Self.keyAccountWarningPrefix + account.id)
+        activeAccountRelay.accept(account)
     }
 
 }
