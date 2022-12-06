@@ -83,7 +83,7 @@ enum AccountType {
     }
 
     var bip39Compliance: Bip39Compliance {
-        .nonRecommended
+        .migrationRequired
     }
 
 }

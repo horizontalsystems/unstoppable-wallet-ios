@@ -7,6 +7,7 @@ class ManageAccountViewModel {
     private let disposeBag = DisposeBag()
 
     private let keyActionGroupsRelay = BehaviorRelay<[[KeyAction]]>(value: [])
+    private let showMigrationRequiredRelay = BehaviorRelay<Bool>(value: false)
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let openUnlockRelay = PublishRelay<()>()
     private let openRecoveryPhraseRelay = PublishRelay<Account>()
@@ -65,6 +66,7 @@ class ManageAccountViewModel {
     }
 
     private func sync(account: Account) {
+        showMigrationRequiredRelay.accept(account.type.bip39Compliance == .migrationRequired)
         keyActionGroupsRelay.accept(keyActionGroups(account: account))
     }
 
@@ -88,6 +90,10 @@ extension ManageAccountViewModel {
 
     var keyActionGroupsDriver: Driver<[[KeyAction]]> {
         keyActionGroupsRelay.asDriver()
+    }
+
+    var showMigrationRequiredDriver: Driver<Bool> {
+        showMigrationRequiredRelay.asDriver()
     }
 
     var openUnlockSignal: Signal<()> {

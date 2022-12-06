@@ -14,7 +14,9 @@ class ManageAccountViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let nameCell = TextFieldCell()
+    private let migrationRequiredCell = TitledHighlightedDescriptionCell()
 
+    private var showMigrationRequired = false
     private var keyActionGroups = [[ManageAccountViewModel.KeyAction]]()
     private var isLoaded = false
 
@@ -59,6 +61,10 @@ class ManageAccountViewController: ThemeViewController {
             self?.keyActionGroups = $0
             self?.reloadTable()
         }
+        subscribe(disposeBag, viewModel.showMigrationRequiredDriver) { [weak self] in
+            self?.showMigrationRequired = $0
+            self?.reloadTable()
+        }
         subscribe(disposeBag, viewModel.openUnlockSignal) { [weak self] in self?.openUnlock() }
         subscribe(disposeBag, viewModel.openRecoveryPhraseSignal) { [weak self] in self?.openRecoveryPhrase(account: $0) }
         subscribe(disposeBag, viewModel.openEvmPrivateKeySignal) { [weak self] in self?.openEvmPrivateKey(account: $0) }
@@ -72,6 +78,9 @@ class ManageAccountViewController: ThemeViewController {
                 self?.sourceViewController?.handleDismiss()
             }
         }
+
+        migrationRequiredCell.set(backgroundStyle: .transparent, isFirst: true)
+        migrationRequiredCell.bind(caution: TitledCaution(title: "note".localized, text: "restore.warning.bip32_compliance.description".localized, type: .error))
 
         tableView.buildSections()
 
@@ -155,6 +164,16 @@ class ManageAccountViewController: ThemeViewController {
 }
 
 extension ManageAccountViewController: SectionsDataSource {
+
+    private var migrationRequiredRow: RowProtocol {
+        StaticRow(
+                cell: migrationRequiredCell,
+                id: "migration-cell",
+                dynamicHeight: { containerWidth in
+                    TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: "restore.warning.bip32_compliance.description".localized)
+                }
+        )
+    }
 
     private func row(keyAction: ManageAccountViewModel.KeyAction, isFirst: Bool, isLast: Bool) -> RowProtocol {
         switch keyAction {
@@ -308,6 +327,16 @@ extension ManageAccountViewController: SectionsDataSource {
                     ]
             )
         ]
+
+        if showMigrationRequired {
+            sections.append(
+                    Section(
+                        id: "migration-required",
+                        footerState: .margin(height: .margin32),
+                        rows: [migrationRequiredRow]
+                    )
+            )
+        }
 
         sections.append(contentsOf: keyActionSections())
 

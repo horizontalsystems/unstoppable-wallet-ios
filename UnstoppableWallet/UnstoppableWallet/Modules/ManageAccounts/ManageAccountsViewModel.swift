@@ -31,12 +31,19 @@ class ManageAccountsViewModel {
     }
 
     private func viewItem(item: ManageAccountsService.Item) -> ViewItem {
-        ViewItem(
+        var alertSubtitle: String?
+        if item.account.type.bip39Compliance == .migrationRequired {
+            alertSubtitle = "manage_accounts.migration_required".localized
+        } else if !item.account.backedUp {
+            alertSubtitle = "manage_accounts.backup_required".localized
+        }
+
+        return ViewItem(
                 accountId: item.account.id,
                 title: item.account.name,
-                subtitle: item.account.type.detailedDescription,
+                subtitle: alertSubtitle ?? item.account.type.detailedDescription,
                 selected: item.isActive,
-                alert: !item.account.backedUp,
+                alert: alertSubtitle != nil,
                 watchAccount: item.account.watchAccount
         )
     }
