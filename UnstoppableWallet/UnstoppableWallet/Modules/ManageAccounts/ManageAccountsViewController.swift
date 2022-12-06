@@ -194,7 +194,7 @@ extension ManageAccountsViewController: SectionsDataSource {
                         .text { component in
                             component.font = .subhead2
                             component.textColor = viewItem.alert ? .themeLucian : .themeGray
-                            component.text = viewItem.alert ? "manage_accounts.backup_required".localized : viewItem.subtitle
+                            component.text = viewItem.subtitle
                         }
                     ]),
                     .image20 { component in

@@ -24,6 +24,7 @@ class TitledHighlightedDescriptionView: HighlightedDescriptionBaseView {
         titleIconImageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(HighlightedDescriptionBaseView.sidePadding)
             maker.top.equalToSuperview().inset(HighlightedDescriptionBaseView.verticalPadding)
+            maker.size.equalTo(CGFloat.iconSize20)
         }
 
         addSubview(titleLabel)
@@ -96,7 +97,7 @@ extension TitledHighlightedDescriptionView {
 
     @objc public class func height(containerWidth: CGFloat, text: String) -> CGFloat {
         let textHeight = text.height(forContainerWidth: containerWidth - 2 * sidePadding, font: font)
-        return verticalPadding + 20 + textHeight + 2 * verticalPadding
+        return verticalPadding + .iconSize20 + textHeight + 2 * verticalPadding
     }
 
 }

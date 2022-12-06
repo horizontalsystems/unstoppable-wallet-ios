@@ -885,6 +885,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Manage Accounts
 
+"manage_accounts.migration_required" = "Migration required";
 "manage_accounts.backup_required" = "Backup required";
 
 // Manage Keys

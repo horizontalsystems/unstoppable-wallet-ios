@@ -428,6 +428,7 @@ extension WalletViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? TitledHighlightedDescriptionCell, let warningViewItem = warningViewItem {
+            cell.set(backgroundStyle: .transparent, isFirst: true)
             cell.topOffset = .margin12
             cell.bind(caution: warningViewItem)
             cell.onBackgroundButton = warningViewItem.cancellable ? { [weak self] in self?.onOpenWarning() } : nil
