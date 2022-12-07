@@ -38,7 +38,7 @@
 "alert.added_to_wallet" = "Agregar a Wallet";
 "alert.already_added_to_wallet" = "Ya se ha añadido a Wallet";
 "alert.not_supported_yet" = "Aún no compatible";
-"alert.copied" = "Copied";
+"alert.copied" = "Copiado";
 "alert.created" = "Creado";
 "alert.restored" = "Restaurado ";
 "alert.address_added" = "Dirección añadida";
@@ -105,6 +105,9 @@
 "restore.input.passphrase" = "Frase de contraseña";
 "restore.passphrase_description" = "Introduzca su frase de contraseña que utilizó al crear esta frase mnemotécnica";
 "restore.error.empty_passphrase" = "La frase no puede estar vacía";
+"restore.non_standard_restore" = "Non-Standard Restore";
+"restore.non_standard_restore.description" = "If you created a wallet with Unstoppable Wallet with a non-English wordlist or with non-English passphrase, this wallet is not standard.\n\nProblem\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet";
+"restore.warning.bip39_compliance.description" = "It looks like this wallet was created with a non-English wordlist or non-English passphrase, so the wallet is not standard.\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet.\n\nCLICK TO GET MORE INFO";
 
 // Coin Settings
 
@@ -884,6 +887,8 @@
 
 // Manage Accounts
 
+"manage_accounts.migration_required" = "Migration required";
+"manage_accounts.migration_recommended" = "Migration recommended";
 "manage_accounts.backup_required" = "Copia de seguridad requerida";
 
 // Manage Keys
@@ -1006,6 +1011,7 @@
 "create_wallet.input.confirm" = "Confirmar";
 "create_wallet.passphrase_description" = "La frase de contraseña añade una capa de seguridad adicional a los monederos permitiendo a los usuarios crear múltiples monederos multi-monedas independientes usando una sola frase de recuperación mnemotécnica pero asociada con diferentes contraseñas.\n\nPara restaurar estos monederos un usuario necesitará una frase de recuperación mnemotécnica, así como una contraseña para cada monedero restaurado.";
 "create_wallet.error.empty_passphrase" = "La frase de contraseña no puede estar vacía";
+"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
 "create_wallet.error.invalid_confirmation" = "La confirmación de la frase de contraseña no coincide";
 
 // Restore Select
