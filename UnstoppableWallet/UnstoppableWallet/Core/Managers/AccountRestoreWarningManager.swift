@@ -72,9 +72,9 @@ class AccountRestoreWarningFactory {
         var fileUrl = "faq/\(languageManager.currentLanguage)/"
 
         if account.nonStandard {
-            fileUrl += "management/migration_recommended.md"
-        } else if account.nonRecommended {
             fileUrl += "management/migration_required.md"
+        } else if account.nonRecommended {
+            fileUrl += "management/migration_recommended.md"
         }
 
         return URL(string: fileUrl, relativeTo: faqIndexUrl)

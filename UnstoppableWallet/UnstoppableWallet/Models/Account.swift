@@ -38,7 +38,6 @@ class Account {
     }
 
     var nonRecommended: Bool {
-        return true
         guard case .mnemonic(let words, let salt, let bip39Compliant) = type, bip39Compliant else {
             return false
         }
