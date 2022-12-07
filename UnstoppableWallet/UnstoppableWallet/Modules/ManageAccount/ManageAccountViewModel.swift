@@ -69,7 +69,7 @@ class ManageAccountViewModel {
     }
 
     private func sync(account: Account) {
-        showWarningRelay.accept(accountRestoreWarningFactory.caution(account: account, canIgnoreActiveAccountWarning: true))
+        showWarningRelay.accept(accountRestoreWarningFactory.caution(account: account, canIgnoreActiveAccountWarning: false))
         keyActionGroupsRelay.accept(keyActionGroups(account: account))
     }
 

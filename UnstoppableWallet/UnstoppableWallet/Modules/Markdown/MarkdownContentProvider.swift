@@ -24,7 +24,6 @@ class MarkdownPlainContentProvider: IMarkdownContentProvider {
             let requestReference = request.responseString(queue: DispatchQueue.global(qos: .background)) { response in
                 switch response.result {
                 case .success(let result):
-                    print(result)
                     observer(.success(result))
                 case .failure(let error):
                     observer(.error(NetworkManager.unwrap(error: error)))
