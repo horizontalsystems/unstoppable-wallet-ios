@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Cüzdana Eklendi";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
-"alert.copied" = "Copied";
+"alert.copied" = "Kopyalandı";
 "alert.created" = "Oluşturuldu";
 "alert.restored" = "Geri yüklendi ";
 "alert.address_added" = "Adres eklendi";
@@ -108,6 +108,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "restore.input.passphrase" = "Parola";
 "restore.passphrase_description" = "Bu anımsatıcı ifadeyi oluştururken kullandığınız şifreyi girin";
 "restore.error.empty_passphrase" = "Şifre boş bırakılamaz";
+"restore.non_standard_restore" = "Non-Standard Restore";
+"restore.non_standard_restore.description" = "If you created a wallet with Unstoppable Wallet with a non-English wordlist or with non-English passphrase, this wallet is not standard.\n\nProblem\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet";
+"restore.warning.bip39_compliance.description" = "It looks like this wallet was created with a non-English wordlist or non-English passphrase, so the wallet is not standard.\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet.\n\nCLICK TO GET MORE INFO";
 
 // Coin Settings
 
@@ -887,6 +890,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Manage Accounts
 
+"manage_accounts.migration_required" = "Migration required";
+"manage_accounts.migration_recommended" = "Migration recommended";
 "manage_accounts.backup_required" = "Yedekleme Gerekli";
 
 // Manage Keys
@@ -1009,6 +1014,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "create_wallet.input.confirm" = "Onayla";
 "create_wallet.passphrase_description" = "Parolalar cüzdanlara ek güvenlik katmanı ekleyerek kullanıcıların tek bir anımsatıcı kurtarma ifadesi kullanarak ancak farklı parolalarla ilişkilendirilmiş birden çok bağımsız çoklu para cüzdanı oluşturmasına olanak tanır. \n\nBu cüzdanları geri yüklemek için bir kullanıcı mnemonic kurtarma ifadesinin yanı sıra bir parola gerektirecektir. her biri geri yüklenecek cüzdan.";
 "create_wallet.error.empty_passphrase" = "Parola boş olamaz";
+"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
 "create_wallet.error.invalid_confirmation" = "Parola onayı eşleşmiyor";
 
 // Restore Select
