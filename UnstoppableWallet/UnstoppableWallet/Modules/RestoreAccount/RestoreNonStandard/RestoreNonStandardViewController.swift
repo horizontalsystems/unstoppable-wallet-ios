@@ -50,12 +50,10 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "restore.title".localized
+        title = "restore.non_standard_restore".localized
 
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .done, target: self, action: #selector(onTapNext))
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -66,6 +64,7 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
+        tableView.registerCell(forClass: DescriptionCell.self)
 
         view.addSubview(gradientWrapperView)
         gradientWrapperView.snp.makeConstraints { maker in
@@ -157,10 +156,6 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
         hintView.alpha = keyboardVisibility
     }
 
-    @objc private func onTapCancel() {
-        dismiss(animated: true)
-    }
-
     @objc private func onTapNext() {
         viewModel.onTapProceed()
     }
@@ -240,7 +235,26 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
 extension RestoreNonStandardViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        var sections = [SectionProtocol]()
+        let descriptionText = "restore.non_standard_restore.description".localized
+        var sections: [SectionProtocol] = [
+            Section(id: "description",
+                    headerState: .margin(height: 3),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        Row<DescriptionCell>(
+                                id: "description",
+                                dynamicHeight: { containerWidth in
+                                    DescriptionCell.height(containerWidth: containerWidth, text: descriptionText, font: .subhead2, ignoreBottomMargin: true)
+                                },
+                                bind: { cell, _ in
+                                    cell.label.text = descriptionText
+                                    cell.label.font = .subhead2
+                                    cell.label.textColor = .themeGray
+                                }
+                        )
+                    ]
+            )
+        ]
 
         let mnemonicSections: [SectionProtocol] = [
             Section(

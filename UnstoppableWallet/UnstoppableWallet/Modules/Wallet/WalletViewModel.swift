@@ -7,6 +7,7 @@ import MarketKit
 class WalletViewModel {
     private let service: WalletService
     private let factory: WalletViewItemFactory
+    private let accountRestoreWarningFactory: AccountRestoreWarningFactory
     private let disposeBag = DisposeBag()
 
     private let titleRelay = BehaviorRelay<String?>(value: nil)
@@ -28,9 +29,10 @@ class WalletViewModel {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-view-model", qos: .userInitiated)
 
-    init(service: WalletService, factory: WalletViewItemFactory) {
+    init(service: WalletService, factory: WalletViewItemFactory, accountRestoreWarningFactory: AccountRestoreWarningFactory) {
         self.service = service
         self.factory = factory
+        self.accountRestoreWarningFactory = accountRestoreWarningFactory
 
         subscribe(disposeBag, service.activeAccountObservable) { [weak self] in self?.sync(activeAccount: $0) }
         subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.onUpdateBalanceHidden() }
@@ -50,20 +52,7 @@ class WalletViewModel {
         titleRelay.accept(activeAccount?.name)
 
         if let account = activeAccount {
-            if account.nonStandard {
-                let caution = CancellableTitledCaution(title: "note".localized, text: "restore.warning.bip32_compliance.description".localized, type: .error, cancellable: false)
-                showWarningRelay.accept(caution)
-            } else if account.nonRecommended {
-                guard !service.ignoreActiveAccountWarning else {
-                    showWarningRelay.accept(nil)
-                    return
-                }
-
-                let caution = CancellableTitledCaution(title: "note".localized, text:  "restore.warning.bip32_compliance.description".localized, type: .warning, cancellable: true)
-                showWarningRelay.accept(caution)
-            } else {
-                showWarningRelay.accept(nil)
-            }
+            showWarningRelay.accept(accountRestoreWarningFactory.caution(account: account, canIgnoreActiveAccountWarning: true))
         }
     }
 
@@ -204,6 +193,14 @@ extension WalletViewModel {
 
     var lastCreatedAccount: Account? {
         service.lastCreatedAccount
+    }
+
+    var warningUrl: URL? {
+        guard let account = service.activeAccount else {
+            return nil
+        }
+
+        return accountRestoreWarningFactory.warningUrl(account: account)
     }
 
     func onSelectSortType(index: Int) {

@@ -387,23 +387,12 @@ extension RestoreViewController: SectionsDataSource {
                         id: "non-standard-restore",
                         footerState: inputsVisible ? tableView.sectionFooter(text: "restore.passphrase_description".localized) : .margin(height: 0),
                         rows: [
-                            CellBuilderNew.row(
-                                    rootElement: .hStack([
-                                        .text { component in
-                                            component.font = .body
-                                            component.textColor = .themeLeah
-                                            component.text = "restore.non_standard_restore".localized
-                                        },
-                                        .image20 { component in
-                                            component.imageView.image = UIImage(named: "arrow_small_forward_20")?.withTintColor(.themeGray)
-                                        }
-                                    ]),
-                                    tableView: tableView,
+                            tableView.titleArrowRow(
                                     id: "non-standard_restore",
+                                    title: "restore.non_standard_restore".localized,
                                     autoDeselect: true,
-                                    bind: { cell in
-                                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                                    },
+                                    isFirst: true,
+                                    isLast: true,
                                     action: { [weak self] in
                                         self?.onTapNonStandardRestore()
                                     }

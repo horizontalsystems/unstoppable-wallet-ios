@@ -193,7 +193,7 @@ extension ManageAccountsViewController: SectionsDataSource {
                         .margin(3),
                         .text { component in
                             component.font = .subhead2
-                            component.textColor = viewItem.alert ? .themeLucian : .themeGray
+                            component.textColor = viewItem.isSubtitleWarning ? .themeLucian : .themeGray
                             component.text = viewItem.subtitle
                         }
                     ]),

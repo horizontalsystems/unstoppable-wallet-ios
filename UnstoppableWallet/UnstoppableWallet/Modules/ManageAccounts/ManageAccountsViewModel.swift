@@ -38,12 +38,14 @@ class ManageAccountsViewModel {
             alertSubtitle = "manage_accounts.backup_required".localized
         }
 
+        let showAlert = item.account.nonStandard || item.account.nonRecommended || !item.account.backedUp
         return ViewItem(
                 accountId: item.account.id,
                 title: item.account.name,
                 subtitle: alertSubtitle ?? item.account.type.detailedDescription,
+                isSubtitleWarning: alertSubtitle != nil,
                 selected: item.isActive,
-                alert: alertSubtitle != nil,
+                alert: showAlert,
                 watchAccount: item.account.watchAccount
         )
     }
@@ -97,6 +99,7 @@ extension ManageAccountsViewModel {
         let accountId: String
         let title: String
         let subtitle: String
+        let isSubtitleWarning: Bool
         let selected: Bool
         let alert: Bool
         let watchAccount: Bool

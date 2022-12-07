@@ -2,6 +2,7 @@ import UIKit
 import ThemeKit
 import RxSwift
 import StorageKit
+import LanguageKit
 
 struct WalletModule {
 
@@ -18,6 +19,7 @@ struct WalletModule {
                 coinPriceService: coinPriceService,
                 cacheManager: App.shared.enabledWalletCacheManager,
                 accountManager: App.shared.accountManager,
+                accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
                 walletManager: App.shared.walletManager,
                 marketKit: App.shared.marketKit,
                 localStorage: StorageKit.LocalStorage.default,
@@ -33,9 +35,14 @@ struct WalletModule {
         adapterService.delegate = service
         coinPriceService.delegate = service
 
+        let accountRestoreWarningFactory = AccountRestoreWarningFactory(
+                appConfigProvider: App.shared.appConfigProvider,
+                localStorage: StorageKit.LocalStorage.default,
+                languageManager: LanguageManager.shared)
         let viewModel = WalletViewModel(
                 service: service,
-                factory: WalletViewItemFactory()
+                factory: WalletViewItemFactory(),
+                accountRestoreWarningFactory: accountRestoreWarningFactory
         )
 
         return WalletViewController(viewModel: viewModel)

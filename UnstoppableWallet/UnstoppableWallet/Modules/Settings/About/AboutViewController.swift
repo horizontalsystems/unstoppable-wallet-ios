@@ -150,7 +150,7 @@ extension AboutViewController: SectionsDataSource {
                                     DescriptionCell.height(containerWidth: containerWidth, text: descriptionText)
                                 },
                                 bind: { cell, _ in
-                                    cell.bind(text: descriptionText)
+                                    cell.label.text = descriptionText
                                 }
                         )
                     ]
