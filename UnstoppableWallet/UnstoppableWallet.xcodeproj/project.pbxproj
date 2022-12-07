@@ -10718,7 +10718,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.28.2;
+				MARKETING_VERSION = 0.28.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OfficeMode = "";
@@ -10792,7 +10792,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.28.2;
+				MARKETING_VERSION = 0.28.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OfficeMode = "";
 				Production = YES;
