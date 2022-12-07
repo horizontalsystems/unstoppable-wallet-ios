@@ -38,7 +38,7 @@
 "alert.added_to_wallet" = "添加到钱包";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
-"alert.copied" = "Copied";
+"alert.copied" = "已复制";
 "alert.created" = "已创建";
 "alert.restored" = "已恢复";
 "alert.address_added" = "地址已添加";
@@ -107,6 +107,9 @@
 "restore.input.passphrase" = "密码";
 "restore.passphrase_description" = "输入您在创建此助记词时使用的密码";
 "restore.error.empty_passphrase" = "密码不能为空白";
+"restore.non_standard_restore" = "Non-Standard Restore";
+"restore.non_standard_restore.description" = "If you created a wallet with Unstoppable Wallet with a non-English wordlist or with non-English passphrase, this wallet is not standard.\n\nProblem\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet";
+"restore.warning.bip39_compliance.description" = "It looks like this wallet was created with a non-English wordlist or non-English passphrase, so the wallet is not standard.\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet.\n\nCLICK TO GET MORE INFO";
 
 // Coin Settings
 
@@ -886,6 +889,8 @@
 
 // Manage Accounts
 
+"manage_accounts.migration_required" = "Migration required";
+"manage_accounts.migration_recommended" = "Migration recommended";
 "manage_accounts.backup_required" = "必须备份";
 
 // Manage Keys
@@ -1008,6 +1013,7 @@
 "create_wallet.input.confirm" = "确认";
 "create_wallet.passphrase_description" = "密码为钱包增加了一个额外的保安层，让用户可以使用可关联不同密码的单一个助记词恢复码来创建多个独立的多代币钱包。\n\n要恢复这些钱包，用户必须具备助记词恢复码以及每一个待恢复钱包的密码。";
 "create_wallet.error.empty_passphrase" = "密码不能为空";
+"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
 "create_wallet.error.invalid_confirmation" = "确认密码不匹配";
 
 // Restore Select
