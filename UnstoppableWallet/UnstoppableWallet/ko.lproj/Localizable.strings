@@ -38,7 +38,7 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "Copied";
+"alert.copied" = "복사됨";
 "alert.created" = "생성됨";
 "alert.restored" = "복구됨";
 "alert.address_added" = "주소 추가됨";
@@ -105,6 +105,9 @@
 "restore.input.passphrase" = "암호문구";
 "restore.passphrase_description" = "이 연상 부호를 만들 때 사용한 암호 문구 입력";
 "restore.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
+"restore.non_standard_restore" = "Non-Standard Restore";
+"restore.non_standard_restore.description" = "If you created a wallet with Unstoppable Wallet with a non-English wordlist or with non-English passphrase, this wallet is not standard.\n\nProblem\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet";
+"restore.warning.bip39_compliance.description" = "It looks like this wallet was created with a non-English wordlist or non-English passphrase, so the wallet is not standard.\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet.\n\nCLICK TO GET MORE INFO";
 
 // Coin Settings
 
@@ -884,6 +887,8 @@
 
 // Manage Accounts
 
+"manage_accounts.migration_required" = "Migration required";
+"manage_accounts.migration_recommended" = "Migration recommended";
 "manage_accounts.backup_required" = "백업이 필요합니다";
 
 // Manage Keys
@@ -1006,6 +1011,7 @@
 "create_wallet.input.confirm" = "확인";
 "create_wallet.passphrase_description" = "암호 문구는 사용자가 하나의 연상 기호 복구 문구를 사용하여 여러 개의 독립적인 멀티코인 지갑을 만들 수 있도록 지갑에 보안 계층을 추가합니다.\n\n이러한 지갑을 복원하려면 사용자가 복원하기 위해 각 지갑에 대한 비밀번호와 연상 기호 복구 문구가 필요합니다.";
 "create_wallet.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
+"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
 "create_wallet.error.invalid_confirmation" = "암호 확인이 일치하지 않습니다";
 
 // Restore Select
