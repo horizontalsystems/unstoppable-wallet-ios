@@ -5,7 +5,7 @@ class DescriptionCell: UITableViewCell {
     private static let verticalPadding: CGFloat = .margin12
     private static let font: UIFont = .body
 
-    private let label = UILabel()
+    let label = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,16 +28,12 @@ class DescriptionCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(text: String?) {
-        label.text = text
-    }
-
 }
 
 extension DescriptionCell {
 
-    static func height(containerWidth: CGFloat, text: String, ignoreBottomMargin: Bool = false) -> CGFloat {
-        let textHeight = text.height(forContainerWidth: containerWidth - 2 * horizontalPadding, font: font)
+    static func height(containerWidth: CGFloat, text: String, font: UIFont? = nil, ignoreBottomMargin: Bool = false) -> CGFloat {
+        let textHeight = text.height(forContainerWidth: containerWidth - 2 * horizontalPadding, font: font ?? Self.font)
         return textHeight + (ignoreBottomMargin ? 1 : 2) * verticalPadding
     }
 

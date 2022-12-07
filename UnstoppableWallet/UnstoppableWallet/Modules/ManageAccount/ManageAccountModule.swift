@@ -1,5 +1,7 @@
 import UIKit
 import ThemeKit
+import StorageKit
+import LanguageKit
 
 struct ManageAccountModule {
 
@@ -14,7 +16,11 @@ struct ManageAccountModule {
             return nil
         }
 
-        let viewModel = ManageAccountViewModel(service: service)
+        let accountRestoreWarningFactory = AccountRestoreWarningFactory(
+                appConfigProvider: App.shared.appConfigProvider,
+                localStorage: StorageKit.LocalStorage.default,
+                languageManager: LanguageManager.shared)
+        let viewModel = ManageAccountViewModel(service: service, accountRestoreWarningFactory: accountRestoreWarningFactory)
         let viewController = ManageAccountViewController(viewModel: viewModel, sourceViewController: sourceViewController)
 
         return ThemeNavigationController(rootViewController: viewController)

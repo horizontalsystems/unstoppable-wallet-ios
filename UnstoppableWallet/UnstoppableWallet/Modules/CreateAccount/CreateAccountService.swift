@@ -19,13 +19,6 @@ class CreateAccountService {
         }
     }
 
-    private let wordListRelay = PublishRelay<Mnemonic.Language>()
-    private(set) var wordList: Mnemonic.Language = .english {
-        didSet {
-            wordListRelay.accept(wordList)
-        }
-    }
-
     private let passphraseEnabledRelay = BehaviorRelay<Bool>(value: false)
 
     var passphrase: String = ""
@@ -75,10 +68,6 @@ extension CreateAccountService {
         wordCountRelay.asObservable()
     }
 
-    var wordListObservable: Observable<Mnemonic.Language> {
-        wordListRelay.asObservable()
-    }
-
     var passphraseEnabled: Bool {
         passphraseEnabledRelay.value
     }
@@ -87,20 +76,16 @@ extension CreateAccountService {
         passphraseEnabledRelay.asObservable()
     }
 
-    func displayName(wordList: Mnemonic.Language) -> String {
-        languageManager.displayName(language: wordList.language) ?? "\(wordList)"
-    }
-
     func set(wordCount: Mnemonic.WordCount) {
         self.wordCount = wordCount
     }
 
-    func set(wordList: Mnemonic.Language) {
-        self.wordList = wordList
-    }
-
     func set(passphraseEnabled: Bool) {
         passphraseEnabledRelay.accept(passphraseEnabled)
+    }
+
+    func validate(text: String?) -> Bool {
+        PassphraseValidator.validate(text: text)
     }
 
     func createAccount() throws {
@@ -114,8 +99,8 @@ extension CreateAccountService {
             }
         }
 
-        let words = try Mnemonic.generate(wordCount: wordCount, language: wordList)
-        let accountType: AccountType = .mnemonic(words: words, salt: passphrase)
+        let words = try Mnemonic.generate(wordCount: wordCount, language: .english)
+        let accountType: AccountType = .mnemonic(words: words, salt: passphrase, bip39Compliant: true)
         let account = accountFactory.account(type: accountType, origin: .created)
 
         accountManager.save(account: account)

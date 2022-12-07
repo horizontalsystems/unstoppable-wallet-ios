@@ -4,14 +4,18 @@ import EvmKit
 import BitcoinCore
 
 enum AccountType {
-    case mnemonic(words: [String], salt: String)
+    case mnemonic(words: [String], salt: String, bip39Compliant: Bool)
     case evmPrivateKey(data: Data)
     case evmAddress(address: EvmKit.Address)
     case hdExtendedKey(key: HDExtendedKey)
 
     var mnemonicSeed: Data? {
         switch self {
-        case let .mnemonic(words, salt): return Mnemonic.seed(mnemonic: words, passphrase: salt)
+        case let .mnemonic(words, salt, bip39Compliant):
+            return bip39Compliant
+                    ? Mnemonic.seed(mnemonic: words, passphrase: salt)
+                    : Mnemonic.seedNonStandard(mnemonic: words, passphrase: salt)
+
         default: return nil
         }
     }
@@ -50,7 +54,7 @@ enum AccountType {
 
     var description: String {
         switch self {
-        case .mnemonic(let words, let salt):
+        case .mnemonic(let words, let salt, _):
             let count = "\(words.count)"
             return salt.isEmpty ? "manage_accounts.n_words".localized(count) : "manage_accounts.n_words_with_passphrase".localized(count)
         case .evmPrivateKey:
@@ -88,8 +92,8 @@ extension AccountType: Hashable {
 
     public static func ==(lhs: AccountType, rhs: AccountType) -> Bool {
         switch (lhs, rhs) {
-        case (let .mnemonic(lhsWords, lhsSalt), let .mnemonic(rhsWords, rhsSalt)):
-            return lhsWords == rhsWords && lhsSalt == rhsSalt
+        case (let .mnemonic(lhsWords, lhsSalt, lhsBip39Compliant), let .mnemonic(rhsWords, rhsSalt, rhsBip39Compliant)):
+            return lhsWords == rhsWords && lhsSalt == rhsSalt && lhsBip39Compliant == rhsBip39Compliant
         case (let .evmPrivateKey(lhsData), let .evmPrivateKey(rhsData)):
             return lhsData == rhsData
         case (let .evmAddress(lhsAddress), let .evmAddress(rhsAddress)):
@@ -102,10 +106,11 @@ extension AccountType: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         switch self {
-        case let .mnemonic(words, salt):
+        case let .mnemonic(words, salt, bip39Compliant):
             hasher.combine("mnemonic")
             hasher.combine(words)
             hasher.combine(salt)
+            hasher.combine(bip39Compliant)
         case let .evmPrivateKey(data):
             hasher.combine("evmPrivateKey")
             hasher.combine(data)

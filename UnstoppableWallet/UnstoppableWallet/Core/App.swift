@@ -29,6 +29,7 @@ class App {
     let networkManager: NetworkManager
 
     let accountManager: AccountManager
+    let accountRestoreWarningManager: AccountRestoreWarningManager
     let accountFactory: AccountFactory
     let backupManager: BackupManager
 
@@ -145,6 +146,7 @@ class App {
         let activeAccountStorage = ActiveAccountStorage(dbPool: dbPool)
         let accountCachedStorage = AccountCachedStorage(accountStorage: accountStorage, activeAccountStorage: activeAccountStorage)
         accountManager = AccountManager(storage: accountCachedStorage)
+        accountRestoreWarningManager = AccountRestoreWarningManager(accountManager: accountManager, localStorage: StorageKit.LocalStorage.default)
         accountFactory = AccountFactory(accountManager: accountManager)
         backupManager = BackupManager(accountManager: accountManager)
 

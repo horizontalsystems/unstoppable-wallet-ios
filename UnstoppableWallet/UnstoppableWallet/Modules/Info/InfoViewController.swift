@@ -91,7 +91,7 @@ class InfoViewController: ThemeViewController {
                     DescriptionCell.height(containerWidth: width, text: text)
                 },
                 bind: { cell, _ in
-                    cell.bind(text: text)
+                    cell.label.text = text
                 }
         )
     }

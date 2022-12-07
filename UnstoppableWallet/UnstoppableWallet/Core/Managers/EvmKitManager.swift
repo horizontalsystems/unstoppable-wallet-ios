@@ -57,8 +57,8 @@ class EvmKitManager {
         var signer: Signer?
 
         switch account.type {
-        case let .mnemonic(words, salt):
-            guard let seed = Mnemonic.seed(mnemonic: words, passphrase: salt) else {
+        case .mnemonic:
+            guard let seed = account.type.mnemonicSeed else {
                 throw KitWrapperError.mnemonicNoSeed
             }
             address = try Signer.address(seed: seed, chain: chain)

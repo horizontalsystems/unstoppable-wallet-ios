@@ -8,6 +8,7 @@ import ThemeKit
 
 class MainSettingsService {
     private let backupManager: BackupManager
+    private let accountRestoreWarningManager: AccountRestoreWarningManager
     private let accountManager: AccountManager
     private let pinKit: IPinKit
     private let termsManager: TermsManager
@@ -17,10 +18,11 @@ class MainSettingsService {
     private let walletConnectSessionManager: WalletConnectSessionManager
     private let walletConnectV2SessionManager: WalletConnectV2SessionManager
 
-    init(backupManager: BackupManager, accountManager: AccountManager, pinKit: IPinKit, termsManager: TermsManager,
+    init(backupManager: BackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, pinKit: IPinKit, termsManager: TermsManager,
          systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit, appConfigProvider: AppConfigProvider,
          walletConnectSessionManager: WalletConnectSessionManager, walletConnectV2SessionManager: WalletConnectV2SessionManager) {
         self.backupManager = backupManager
+        self.accountRestoreWarningManager = accountRestoreWarningManager
         self.accountManager = accountManager
         self.pinKit = pinKit
         self.termsManager = termsManager
@@ -39,12 +41,14 @@ extension MainSettingsService {
         appConfigProvider.companyWebPageLink
     }
 
-    var allBackedUp: Bool {
-        backupManager.allBackedUp
+    var noWalletRequiredActions: Bool {
+        backupManager.allBackedUp && !accountRestoreWarningManager.hasNonStandard
     }
 
-    var allBackedUpObservable: Observable<Bool> {
-        backupManager.allBackedUpObservable
+    var noWalletRequiredActionsObservable: Observable<Bool> {
+        Observable.combineLatest(backupManager.allBackedUpObservable, accountRestoreWarningManager.hasNonStandardObservable) { allBackedUp, hasNonStandard in
+            allBackedUp && !hasNonStandard
+        }
     }
 
     var isPinSet: Bool {

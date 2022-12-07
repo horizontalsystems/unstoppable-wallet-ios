@@ -8,12 +8,11 @@ import SnapKit
 import ComponentKit
 import UIExtensions
 
-class RestoreViewController: KeyboardAwareViewController {
+class RestoreNonStandardViewController: KeyboardAwareViewController {
     private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
 
-    private let viewModel: RestoreViewModel
-    private let mnemonicViewModel: RestoreMnemonicViewModel
-    private let privateKeyViewModel: RestorePrivateKeyViewModel
+    private let viewModel: RestoreNonStandardViewModel
+    private let mnemonicViewModel: RestoreMnemonicNonStandardViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -31,19 +30,14 @@ class RestoreViewController: KeyboardAwareViewController {
 
     private let hintView = RestoreMnemonicHintView()
 
-    private let privateKeyInputCell = TextInputCell()
-    private let privateKeyCautionCell = FormCautionCell()
-
-    private var restoreType: RestoreViewModel.RestoreType = .mnemonic
     private var inputsVisible = false
     private var isLoaded = false
 
     private weak var returnViewController: UIViewController?
 
-    init(viewModel: RestoreViewModel, mnemonicViewModel: RestoreMnemonicViewModel, privateKeyViewModel: RestorePrivateKeyViewModel, returnViewController: UIViewController?) {
+    init(viewModel: RestoreNonStandardViewModel, mnemonicViewModel: RestoreMnemonicNonStandardViewModel, returnViewController: UIViewController?) {
         self.viewModel = viewModel
         self.mnemonicViewModel = mnemonicViewModel
-        self.privateKeyViewModel = privateKeyViewModel
         self.returnViewController = returnViewController
 
         super.init(scrollViews: [tableView], accessoryView: hintView)
@@ -56,12 +50,10 @@ class RestoreViewController: KeyboardAwareViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "restore.title".localized
+        title = "restore.non_standard_restore".localized
 
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .done, target: self, action: #selector(onTapNext))
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -72,6 +64,7 @@ class RestoreViewController: KeyboardAwareViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
+        tableView.registerCell(forClass: DescriptionCell.self)
 
         view.addSubview(gradientWrapperView)
         gradientWrapperView.snp.makeConstraints { maker in
@@ -133,18 +126,6 @@ class RestoreViewController: KeyboardAwareViewController {
             self?.mnemonicViewModel.onSelect(word: word)
         }
 
-        privateKeyInputCell.set(placeholderText: "restore.private_key.placeholder".localized)
-        privateKeyInputCell.onChangeHeight = { [weak self] in self?.reloadTable() }
-        privateKeyInputCell.onChangeText = { [weak self] in self?.privateKeyViewModel.onChange(text: $0) }
-        privateKeyInputCell.onChangeTextViewCaret = { [weak self] in self?.syncContentOffsetIfRequired(textView: $0) }
-        privateKeyInputCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
-
-        privateKeyCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
-
-        subscribe(disposeBag, viewModel.restoreTypeDriver) { [weak self] restoreType in
-            self?.restoreType = restoreType
-            self?.tableView.reload()
-        }
         subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openSelectCoins(accountType: $0) }
         subscribe(disposeBag, mnemonicViewModel.possibleWordsDriver) { [weak self] in
             self?.hintView.set(words: $0)
@@ -163,10 +144,6 @@ class RestoreViewController: KeyboardAwareViewController {
             self?.mnemonicCautionCell.set(caution: caution)
         }
         subscribe(disposeBag, mnemonicViewModel.clearInputsSignal) { [weak self] in self?.passphraseCell.inputText = nil }
-        subscribe(disposeBag, privateKeyViewModel.cautionDriver) { [weak self] caution in
-            self?.privateKeyInputCell.set(cautionType: caution?.type)
-            self?.privateKeyCautionCell.set(caution: caution)
-        }
         subscribe(disposeBag, keyboardVisibilityDriver) { [weak self] in self?.update(keyboardVisibility: $0) }
 
         showDefaultWords()
@@ -177,10 +154,6 @@ class RestoreViewController: KeyboardAwareViewController {
 
     private func update(keyboardVisibility: CGFloat) {
         hintView.alpha = keyboardVisibility
-    }
-
-    @objc private func onTapCancel() {
-        dismiss(animated: true)
     }
 
     @objc private func onTapNext() {
@@ -257,174 +230,94 @@ class RestoreViewController: KeyboardAwareViewController {
         tableView.endUpdates()
     }
 
-    private func onTapRestoreType() {
-        let alertController = AlertRouter.module(
-                title: "restore.restore_by".localized,
-                viewItems: RestoreViewModel.RestoreType.allCases.enumerated().map { index, restoreType in
-                    AlertViewItem(
-                            text: restoreType.title,
-                            selected: self.restoreType == restoreType
-                    )
-                }
-        ) { [weak self] index in
-            self?.viewModel.onSelect(restoreType: RestoreViewModel.RestoreType.allCases[index])
-        }
-
-        present(alertController, animated: true)
-    }
-
-    private func onTapNonStandardRestore() {
-        let viewController = RestoreNonStandardModule.viewController(sourceViewController: self, returnViewController: returnViewController)
-
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-
 }
 
-extension RestoreViewController: SectionsDataSource {
+extension RestoreNonStandardViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        var sections = [SectionProtocol]()
-
-        sections.append(
-                Section(
-                        id: "restore-type",
-                        headerState: .margin(height: .margin12),
-                        footerState: .margin(height: .margin32),
-                        rows: [
-                            CellBuilderNew.row(
-                                    rootElement: .hStack([
-                                        .text { component in
-                                            component.font = .body
-                                            component.textColor = .themeLeah
-                                            component.text = "restore.by".localized
-                                        },
-                                        .text { [weak self] component in
-                                            component.font = .subhead1
-                                            component.textColor = .gray
-                                            component.text = self?.restoreType.title
-                                        },
-                                        .image20 { component in
-                                            component.imageView.image = UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray)
-                                        }
-                                    ]),
-                                    tableView: tableView,
-                                    id: "restore_type",
-                                    autoDeselect: true,
-                                    bind: { cell in
-                                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                                    },
-                                    action: { [weak self] in
-                                        self?.onTapRestoreType()
-                                    }
-                            )
-                        ]
-                )
-        )
-
-        switch restoreType {
-        case .mnemonic:
-            let mnemonicSections: [SectionProtocol] = [
-                Section(
-                        id: "mnemonic-input",
-                        rows: [
-                            StaticRow(
-                                    cell: mnemonicInputCell,
-                                    id: "mnemonic-input",
-                                    dynamicHeight: { [weak self] width in
-                                        self?.mnemonicInputCell.cellHeight(containerWidth: width) ?? 0
-                                    }
-                            ),
-                            StaticRow(
-                                    cell: mnemonicCautionCell,
-                                    id: "mnemonic-caution",
-                                    dynamicHeight: { [weak self] width in
-                                        self?.mnemonicCautionCell.height(containerWidth: width) ?? 0
-                                    }
-                            )
-                        ]
-                ),
-                Section(
-                        id: "wordlist-passphrase-toggle",
-                        headerState: .margin(height: .margin32),
-                        footerState: .margin(height: .margin24),
-                        rows: [
-                            StaticRow(
-                                    cell: wordListCell,
-                                    id: "word-list",
-                                    height: .heightCell48,
-                                    autoDeselect: true,
-                                    action: { [weak self] in
-                                        self?.openWordListSelector()
-                                    }
-                            ),
-                            StaticRow(
-                                    cell: passphraseToggleCell,
-                                    id: "passphrase-toggle",
-                                    height: .heightCell48
-                            )
-                        ]
-                ),
-                Section(
-                        id: "passphrase",
-                        footerState: inputsVisible ? tableView.sectionFooter(text: "restore.passphrase_description".localized) : .margin(height: 0),
-                        rows: [
-                            StaticRow(
-                                    cell: passphraseCell,
-                                    id: "passphrase",
-                                    height: inputsVisible ? .heightSingleLineCell : 0
-                            ),
-                            StaticRow(
-                                    cell: passphraseCautionCell,
-                                    id: "passphrase-caution",
-                                    dynamicHeight: { [weak self] width in
-                                        self?.passphraseCautionCell.height(containerWidth: width) ?? 0
-                                    }
-                            )
-                        ]
-                ),
-                Section(
-                        id: "non-standard-restore",
-                        footerState: inputsVisible ? tableView.sectionFooter(text: "restore.passphrase_description".localized) : .margin(height: 0),
-                        rows: [
-                            tableView.titleArrowRow(
-                                    id: "non-standard_restore",
-                                    title: "restore.non_standard_restore".localized,
-                                    autoDeselect: true,
-                                    isFirst: true,
-                                    isLast: true,
-                                    action: { [weak self] in
-                                        self?.onTapNonStandardRestore()
-                                    }
-                            )
-                        ]
-                )
-            ]
-
-            sections.append(contentsOf: mnemonicSections)
-        case .privateKey:
-            let privateKeySection: SectionProtocol = Section(
-                    id: "private-key-input",
+        let descriptionText = "restore.non_standard_restore.description".localized
+        var sections: [SectionProtocol] = [
+            Section(id: "description",
+                    headerState: .margin(height: 3),
+                    footerState: .margin(height: .margin32),
                     rows: [
-                        StaticRow(
-                                cell: privateKeyInputCell,
-                                id: "private-key-input",
-                                dynamicHeight: { [weak self] width in
-                                    self?.privateKeyInputCell.cellHeight(containerWidth: width) ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: privateKeyCautionCell,
-                                id: "private-key-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.privateKeyCautionCell.height(containerWidth: width) ?? 0
+                        Row<DescriptionCell>(
+                                id: "description",
+                                dynamicHeight: { containerWidth in
+                                    DescriptionCell.height(containerWidth: containerWidth, text: descriptionText, font: .subhead2, ignoreBottomMargin: true)
+                                },
+                                bind: { cell, _ in
+                                    cell.label.text = descriptionText
+                                    cell.label.font = .subhead2
+                                    cell.label.textColor = .themeGray
                                 }
                         )
                     ]
             )
+        ]
 
-            sections.append(privateKeySection)
-        }
+        let mnemonicSections: [SectionProtocol] = [
+            Section(
+                    id: "mnemonic-input",
+                    rows: [
+                        StaticRow(
+                                cell: mnemonicInputCell,
+                                id: "mnemonic-input",
+                                dynamicHeight: { [weak self] width in
+                                    self?.mnemonicInputCell.cellHeight(containerWidth: width) ?? 0
+                                }
+                        ),
+                        StaticRow(
+                                cell: mnemonicCautionCell,
+                                id: "mnemonic-caution",
+                                dynamicHeight: { [weak self] width in
+                                    self?.mnemonicCautionCell.height(containerWidth: width) ?? 0
+                                }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "wordlist-passphrase-toggle",
+                    headerState: .margin(height: .margin32),
+                    footerState: .margin(height: .margin24),
+                    rows: [
+                        StaticRow(
+                                cell: wordListCell,
+                                id: "word-list",
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.openWordListSelector()
+                                }
+                        ),
+                        StaticRow(
+                                cell: passphraseToggleCell,
+                                id: "passphrase-toggle",
+                                height: .heightCell48
+                        )
+                    ]
+            ),
+            Section(
+                    id: "passphrase",
+                    footerState: inputsVisible ? tableView.sectionFooter(text: "restore.passphrase_description".localized) : .margin(height: 0),
+                    rows: [
+                        StaticRow(
+                                cell: passphraseCell,
+                                id: "passphrase",
+                                height: inputsVisible ? .heightSingleLineCell : 0
+                        ),
+                        StaticRow(
+                                cell: passphraseCautionCell,
+                                id: "passphrase-caution",
+                                dynamicHeight: { [weak self] width in
+                                    self?.passphraseCautionCell.height(containerWidth: width) ?? 0
+                                }
+                        )
+                    ]
+            )
+        ]
+
+        sections.append(contentsOf: mnemonicSections)
 
         return sections
     }

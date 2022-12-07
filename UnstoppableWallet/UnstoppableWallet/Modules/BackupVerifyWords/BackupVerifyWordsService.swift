@@ -21,7 +21,7 @@ class BackupVerifyWordsService {
     private var validatedWordCount = 0
 
     init?(account: Account, accountManager: AccountManager, appManager: IAppManager) {
-        guard case let .mnemonic(words, salt) = account.type else {
+        guard case let .mnemonic(words, salt, _) = account.type else {
             return nil
         }
 

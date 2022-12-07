@@ -15,6 +15,7 @@ class ManageAccountViewController: ThemeViewController {
 
     private let nameCell = TextFieldCell()
 
+    private var warningViewItem: CancellableTitledCaution?
     private var keyActionGroups = [[ManageAccountViewModel.KeyAction]]()
     private var isLoaded = false
 
@@ -49,6 +50,7 @@ class ManageAccountViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
+        tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
 
         nameCell.inputText = viewModel.accountName
         nameCell.autocapitalizationType = .words
@@ -59,6 +61,7 @@ class ManageAccountViewController: ThemeViewController {
             self?.keyActionGroups = $0
             self?.reloadTable()
         }
+        subscribe(disposeBag, viewModel.showWarningDriver) { [weak self] in self?.sync(warning: $0) }
         subscribe(disposeBag, viewModel.openUnlockSignal) { [weak self] in self?.openUnlock() }
         subscribe(disposeBag, viewModel.openRecoveryPhraseSignal) { [weak self] in self?.openRecoveryPhrase(account: $0) }
         subscribe(disposeBag, viewModel.openEvmPrivateKeySignal) { [weak self] in self?.openEvmPrivateKey(account: $0) }
@@ -150,6 +153,22 @@ class ManageAccountViewController: ThemeViewController {
         }
 
         tableView.reload()
+    }
+
+    private func sync(warning: CancellableTitledCaution?) {
+        warningViewItem = warning
+        tableView.reloadData()
+    }
+
+    private func onOpenWarning() {
+        guard let url = viewModel.warningUrl else {
+            return
+        }
+        let module = MarkdownModule.viewController(url: url)
+        DispatchQueue.main.async {
+            let controller = ThemeNavigationController(rootViewController: module)
+            return self.present(controller, animated: true)
+        }
     }
 
 }
@@ -308,6 +327,29 @@ extension ManageAccountViewController: SectionsDataSource {
                     ]
             )
         ]
+
+        if let warningViewItem = warningViewItem {
+            sections.append(
+                    Section(
+                        id: "migration-warning",
+                        footerState: .margin(height: .margin32),
+                        rows: [
+                            Row<TitledHighlightedDescriptionCell>(
+                                    id: "migration-cell",
+                                    dynamicHeight: { [weak self] containerWidth in
+                                        let text = self?.warningViewItem?.text ?? ""
+                                        return TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: text)
+                                    },
+                                    bind: { [weak self] cell, _ in
+                                        cell.set(backgroundStyle: .transparent, isFirst: true)
+                                        cell.bind(caution: warningViewItem)
+                                        cell.onBackgroundButton = { self?.onOpenWarning() }
+                                    }
+                            )
+                        ]
+                    )
+            )
+        }
 
         sections.append(contentsOf: keyActionSections())
 

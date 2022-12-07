@@ -12,7 +12,7 @@ extension SendTransactionError: LocalizedError {
         switch self {
         case .wrongAmount: return "alert.wrong_amount".localized
         case .noFee: return "alert.no_fee".localized
-        case .invalidAddress: return "invalid address"  // FIXME: localize or find the way to avoid this 
+        case .invalidAddress: return "invalid address"  // FIXME: localize or find the way to avoid this
         }
     }
 

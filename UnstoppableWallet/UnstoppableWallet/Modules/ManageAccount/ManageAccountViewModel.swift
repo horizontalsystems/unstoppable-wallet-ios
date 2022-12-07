@@ -1,12 +1,15 @@
+import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
 
 class ManageAccountViewModel {
     private let service: ManageAccountService
+    private let accountRestoreWarningFactory: AccountRestoreWarningFactory
     private let disposeBag = DisposeBag()
 
     private let keyActionGroupsRelay = BehaviorRelay<[[KeyAction]]>(value: [])
+    private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let openUnlockRelay = PublishRelay<()>()
     private let openRecoveryPhraseRelay = PublishRelay<Account>()
@@ -22,8 +25,9 @@ class ManageAccountViewModel {
 
     private var unlockRequest: UnlockRequest = .recoveryPhrase
 
-    init(service: ManageAccountService) {
+    init(service: ManageAccountService, accountRestoreWarningFactory: AccountRestoreWarningFactory) {
         self.service = service
+        self.accountRestoreWarningFactory = accountRestoreWarningFactory
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(disposeBag, service.accountObservable) { [weak self] in self?.sync(account: $0) }
@@ -65,6 +69,7 @@ class ManageAccountViewModel {
     }
 
     private func sync(account: Account) {
+        showWarningRelay.accept(accountRestoreWarningFactory.caution(account: account, canIgnoreActiveAccountWarning: false))
         keyActionGroupsRelay.accept(keyActionGroups(account: account))
     }
 
@@ -88,6 +93,14 @@ extension ManageAccountViewModel {
 
     var keyActionGroupsDriver: Driver<[[KeyAction]]> {
         keyActionGroupsRelay.asDriver()
+    }
+
+    var showWarningDriver: Driver<CancellableTitledCaution?> {
+        showWarningRelay.asDriver()
+    }
+
+    var warningUrl: URL? {
+        accountRestoreWarningFactory.warningUrl(account: service.account)
     }
 
     var openUnlockSignal: Signal<()> {

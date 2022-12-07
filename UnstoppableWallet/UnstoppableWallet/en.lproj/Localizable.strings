@@ -107,6 +107,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "restore.input.passphrase" = "Passphrase";
 "restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase";
 "restore.error.empty_passphrase" = "The passphrase cannot be empty";
+"restore.non_standard_restore" = "Non-Standard Restore";
+"restore.non_standard_restore.description" = "If you created a wallet with Unstoppable Wallet with a non-English wordlist or with non-English passphrase, this wallet is not standard.\n\nProblem\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet";
+"restore.warning.bip39_compliance.description" = "It looks like this wallet was created with a non-English wordlist or non-English passphrase, so the wallet is not standard.\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet.\n\nCLICK TO GET MORE INFO";
 
 // Coin Settings
 
@@ -886,6 +889,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Manage Accounts
 
+"manage_accounts.migration_required" = "Migration required";
+"manage_accounts.migration_recommended" = "Migration recommended";
 "manage_accounts.backup_required" = "Backup required";
 
 // Manage Keys
@@ -1008,6 +1013,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "create_wallet.input.confirm" = "Confirm";
 "create_wallet.passphrase_description" = "Passphrases add an additional security layer to the wallets, enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase, but associated with different passwords. \n\nTo restore these wallets, a user will require a mnemonic recovery phrase as well as a password for each to be restored wallet.";
 "create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
+"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
 "create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
 
 // Restore Select

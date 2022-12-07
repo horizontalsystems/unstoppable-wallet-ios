@@ -7,11 +7,13 @@ import MarketKit
 class WalletViewModel {
     private let service: WalletService
     private let factory: WalletViewItemFactory
+    private let accountRestoreWarningFactory: AccountRestoreWarningFactory
     private let disposeBag = DisposeBag()
 
     private let titleRelay = BehaviorRelay<String?>(value: nil)
     private let displayModeRelay = BehaviorRelay<DisplayMode>(value: .list)
     private let headerViewItemRelay = BehaviorRelay<HeaderViewItem?>(value: nil)
+    private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
     private let sortByRelay = BehaviorRelay<String?>(value: nil)
     private let viewItemsRelay = BehaviorRelay<[BalanceViewItem]>(value: [])
     private let openReceiveRelay = PublishRelay<Wallet>()
@@ -27,9 +29,10 @@ class WalletViewModel {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-view-model", qos: .userInitiated)
 
-    init(service: WalletService, factory: WalletViewItemFactory) {
+    init(service: WalletService, factory: WalletViewItemFactory, accountRestoreWarningFactory: AccountRestoreWarningFactory) {
         self.service = service
         self.factory = factory
+        self.accountRestoreWarningFactory = accountRestoreWarningFactory
 
         subscribe(disposeBag, service.activeAccountObservable) { [weak self] in self?.sync(activeAccount: $0) }
         subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.onUpdateBalanceHidden() }
@@ -47,6 +50,10 @@ class WalletViewModel {
 
     private func sync(activeAccount: Account?) {
         titleRelay.accept(activeAccount?.name)
+
+        if let account = activeAccount {
+            showWarningRelay.accept(accountRestoreWarningFactory.caution(account: account, canIgnoreActiveAccountWarning: true))
+        }
     }
 
     private func onUpdateBalanceHidden() {
@@ -131,6 +138,10 @@ extension WalletViewModel {
         sortByRelay.asDriver()
     }
 
+    var showWarningDriver: Driver<CancellableTitledCaution?> {
+        showWarningRelay.asDriver()
+    }
+
     var viewItemsDriver: Driver<[BalanceViewItem]> {
         viewItemsRelay.asDriver()
     }
@@ -182,6 +193,14 @@ extension WalletViewModel {
 
     var lastCreatedAccount: Account? {
         service.lastCreatedAccount
+    }
+
+    var warningUrl: URL? {
+        guard let account = service.activeAccount else {
+            return nil
+        }
+
+        return accountRestoreWarningFactory.warningUrl(account: account)
     }
 
     func onSelectSortType(index: Int) {
@@ -268,6 +287,10 @@ extension WalletViewModel {
         }
 
         service.disable(wallet: wallet)
+    }
+
+    func onCloseWarning() {
+        service.didIgnoreAccountWarning()
     }
 
 }

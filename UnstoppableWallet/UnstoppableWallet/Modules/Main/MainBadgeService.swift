@@ -6,17 +6,28 @@ class MainBadgeService {
     private let disposeBag = DisposeBag()
 
     private let backupManager: BackupManager
+    private let accountRestoreWarningManager: AccountRestoreWarningManager
+
     private let pinKit: IPinKit
     private let termsManager: TermsManager
     private let walletConnectV2SessionManager: WalletConnectV2SessionManager
 
     private let settingsBadgeRelay = BehaviorRelay<(Bool, Int)>(value: (false, 0))
 
-    init(backupManager: BackupManager, pinKit: IPinKit, termsManager: TermsManager, walletConnectV2SessionManager: WalletConnectV2SessionManager) {
+    init(backupManager: BackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, pinKit: IPinKit, termsManager: TermsManager, walletConnectV2SessionManager: WalletConnectV2SessionManager) {
         self.backupManager = backupManager
+        self.accountRestoreWarningManager = accountRestoreWarningManager
         self.pinKit = pinKit
         self.termsManager = termsManager
         self.walletConnectV2SessionManager = walletConnectV2SessionManager
+
+        accountRestoreWarningManager.hasNonStandardObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(onNext: { [weak self] _ in
+                    self?.syncSettingsBadge()
+                })
+                .disposed(by: disposeBag)
 
         backupManager.allBackedUpObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -59,7 +70,7 @@ class MainBadgeService {
 
     private func syncSettingsBadge() {
         let count = walletConnectV2SessionManager.activePendingRequests.count
-        let visible = !backupManager.allBackedUp || !pinKit.isPinSet || !termsManager.termsAccepted || count != 0
+        let visible = accountRestoreWarningManager.hasNonStandard || !backupManager.allBackedUp || !pinKit.isPinSet || !termsManager.termsAccepted || count != 0
         settingsBadgeRelay.accept((visible, count))
     }
 

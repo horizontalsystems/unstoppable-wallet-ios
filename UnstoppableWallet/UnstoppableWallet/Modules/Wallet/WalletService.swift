@@ -14,6 +14,7 @@ class WalletService {
     private let coinPriceService: WalletCoinPriceService
     private let cacheManager: EnabledWalletCacheManager
     private let accountManager: AccountManager
+    private let accountRestoreWarningManager: AccountRestoreWarningManager
     private let walletManager: WalletManager
     private let marketKit: MarketKit.Kit
     private let localStorage: StorageKit.ILocalStorage
@@ -69,11 +70,12 @@ class WalletService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
-    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, localStorage: StorageKit.ILocalStorage, rateAppManager: RateAppManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider, reachabilityManager: IReachabilityManager) {
+    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: AccountManager, accountRestoreWarningManager: AccountRestoreWarningManager, walletManager: WalletManager, marketKit: MarketKit.Kit, localStorage: StorageKit.ILocalStorage, rateAppManager: RateAppManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider, reachabilityManager: IReachabilityManager) {
         self.adapterService = adapterService
         self.coinPriceService = coinPriceService
         self.cacheManager = cacheManager
         self.accountManager = accountManager
+        self.accountRestoreWarningManager = accountRestoreWarningManager
         self.walletManager = walletManager
         self.marketKit = marketKit
         self.localStorage = localStorage
@@ -99,6 +101,9 @@ class WalletService {
         subscribe(disposeBag, accountManager.accountUpdatedObservable) { [weak self] in
             self?.handleUpdated(account: $0)
         }
+        subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in
+            self?.handleDeleted(account: $0)
+        }
         subscribe(disposeBag, accountManager.accountsLostObservable) { [weak self] isAccountsLost in
             if isAccountsLost {
                 self?.accountsLostRelay.accept(())
@@ -121,6 +126,10 @@ class WalletService {
         if account.id == accountManager.activeAccount?.id {
             activeAccountRelay.accept(account)
         }
+    }
+
+    private func handleDeleted(account: Account) {
+        accountRestoreWarningManager.removeIgnoreWarning(account: account)
     }
 
     private func handleUpdateSortType() {
@@ -291,6 +300,15 @@ extension WalletService: IWalletAdapterServiceDelegate {
                 self.syncTotalItem()
             }
         }
+    }
+
+    func didIgnoreAccountWarning() {
+        guard let account = accountManager.activeAccount, account.nonRecommended else {
+            return
+        }
+
+        accountRestoreWarningManager.setIgnoreWarning(account: account)
+        activeAccountRelay.accept(account)
     }
 
 }

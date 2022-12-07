@@ -422,7 +422,8 @@ class StorageMigrator {
                         backedUp: oldAccount.backedUp,
                         wordsKey: oldAccount.wordsKey,
                         saltKey: oldAccount.saltKey,
-                        dataKey: oldAccount.dataKey
+                        dataKey: oldAccount.dataKey,
+                        bip39Compliant: nil
                 )
 
                 try newAccount.insert(db)
@@ -705,6 +706,12 @@ class StorageMigrator {
                 t.column(EvmAccountRestoreState.Columns.restored.name, .boolean).notNull()
 
                 t.primaryKey([EvmAccountRestoreState.Columns.accountId.name, EvmAccountRestoreState.Columns.blockchainUid.name], onConflict: .replace)
+            }
+        }
+
+        migrator.registerMigration("checkBIP39Compliance") { db in
+            try db.alter(table: AccountRecord.databaseTableName) { t in
+                t.add(column: AccountRecord.Columns.bip39Compliant.name, .boolean)
             }
         }
 

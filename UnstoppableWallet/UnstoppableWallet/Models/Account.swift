@@ -1,3 +1,5 @@
+import HdWalletKit
+
 class Account {
     let id: String
     var name: String
@@ -25,6 +27,22 @@ class Account {
         default:
             return false
         }
+    }
+
+    var nonStandard: Bool {
+        guard case .mnemonic(_, _, let bip39Compliant) = type else {
+            return false
+        }
+
+        return !bip39Compliant
+    }
+
+    var nonRecommended: Bool {
+        guard case .mnemonic(let words, let salt, let bip39Compliant) = type, bip39Compliant else {
+            return false
+        }
+
+        return !(Mnemonic.language(words: words) == Mnemonic.Language.english && PassphraseValidator.validate(text: salt))
     }
 
 }

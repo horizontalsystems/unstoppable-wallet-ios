@@ -31,12 +31,21 @@ class ManageAccountsViewModel {
     }
 
     private func viewItem(item: ManageAccountsService.Item) -> ViewItem {
-        ViewItem(
+        var alertSubtitle: String?
+        if item.account.nonStandard {
+            alertSubtitle = "manage_accounts.migration_required".localized
+        } else if !item.account.backedUp {
+            alertSubtitle = "manage_accounts.backup_required".localized
+        }
+
+        let showAlert = item.account.nonStandard || item.account.nonRecommended || !item.account.backedUp
+        return ViewItem(
                 accountId: item.account.id,
                 title: item.account.name,
-                subtitle: item.account.type.detailedDescription,
+                subtitle: alertSubtitle ?? item.account.type.detailedDescription,
+                isSubtitleWarning: alertSubtitle != nil,
                 selected: item.isActive,
-                alert: !item.account.backedUp,
+                alert: showAlert,
                 watchAccount: item.account.watchAccount
         )
     }
@@ -90,6 +99,7 @@ extension ManageAccountsViewModel {
         let accountId: String
         let title: String
         let subtitle: String
+        let isSubtitleWarning: Bool
         let selected: Bool
         let alert: Bool
         let watchAccount: Bool

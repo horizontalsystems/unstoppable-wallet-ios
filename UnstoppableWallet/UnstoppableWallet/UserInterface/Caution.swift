@@ -33,8 +33,32 @@ enum CautionType: Equatable {
 
 }
 
-struct TitledCaution: Equatable {
+class TitledCaution: Equatable {
     let title: String
     let text: String
     let type: CautionType
+
+    init(title: String, text: String, type: CautionType) {
+        self.title = title
+        self.text = text
+        self.type = type
+    }
+
+    static func ==(lhs: TitledCaution, rhs: TitledCaution) -> Bool {
+        lhs.title == rhs.title &&
+        lhs.text == rhs.text &&
+        lhs.type == rhs.type
+    }
+
+}
+
+class CancellableTitledCaution: TitledCaution {
+    let cancellable: Bool
+
+    init(title: String, text: String, type: CautionType, cancellable: Bool) {
+        self.cancellable = cancellable
+
+        super.init(title: title, text: text, type: type)
+    }
+
 }

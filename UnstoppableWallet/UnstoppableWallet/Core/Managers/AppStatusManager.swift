@@ -44,7 +44,7 @@ class AppStatusManager {
 
             status.append(("origin", "\(account.origin)"))
 
-            if case let .mnemonic(words, salt) = account.type {
+            if case let .mnemonic(words, salt, _) = account.type {
                 status.append(("type", "mnemonic (\(words.count) words\(salt.isEmpty ? "" : " with passphrase"))"))
             }
 
