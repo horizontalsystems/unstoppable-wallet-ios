@@ -14,9 +14,8 @@ class ManageAccountViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let nameCell = TextFieldCell()
-    private let migrationRequiredCell = TitledHighlightedDescriptionCell()
 
-    private var showMigrationRequired = false
+    private var warningViewItem: CancellableTitledCaution?
     private var keyActionGroups = [[ManageAccountViewModel.KeyAction]]()
     private var isLoaded = false
 
@@ -51,6 +50,7 @@ class ManageAccountViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
+        tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
 
         nameCell.inputText = viewModel.accountName
         nameCell.autocapitalizationType = .words
@@ -61,10 +61,7 @@ class ManageAccountViewController: ThemeViewController {
             self?.keyActionGroups = $0
             self?.reloadTable()
         }
-        subscribe(disposeBag, viewModel.showMigrationRequiredDriver) { [weak self] in
-            self?.showMigrationRequired = $0
-            self?.reloadTable()
-        }
+        subscribe(disposeBag, viewModel.showWarningDriver) { [weak self] in self?.sync(warning: $0) }
         subscribe(disposeBag, viewModel.openUnlockSignal) { [weak self] in self?.openUnlock() }
         subscribe(disposeBag, viewModel.openRecoveryPhraseSignal) { [weak self] in self?.openRecoveryPhrase(account: $0) }
         subscribe(disposeBag, viewModel.openEvmPrivateKeySignal) { [weak self] in self?.openEvmPrivateKey(account: $0) }
@@ -78,9 +75,6 @@ class ManageAccountViewController: ThemeViewController {
                 self?.sourceViewController?.handleDismiss()
             }
         }
-
-        migrationRequiredCell.set(backgroundStyle: .transparent, isFirst: true)
-        migrationRequiredCell.bind(caution: TitledCaution(title: "note".localized, text: "restore.warning.bip32_compliance.description".localized, type: .error))
 
         tableView.buildSections()
 
@@ -161,19 +155,25 @@ class ManageAccountViewController: ThemeViewController {
         tableView.reload()
     }
 
+    private func sync(warning: CancellableTitledCaution?) {
+        warningViewItem = warning
+        tableView.reloadData()
+    }
+
+    private func onOpenWarning() {
+        guard let url = viewModel.warningUrl else {
+            return
+        }
+        let module = MarkdownModule.viewController(url: url)
+        DispatchQueue.main.async {
+            let controller = ThemeNavigationController(rootViewController: module)
+            return self.present(controller, animated: true)
+        }
+    }
+
 }
 
 extension ManageAccountViewController: SectionsDataSource {
-
-    private var migrationRequiredRow: RowProtocol {
-        StaticRow(
-                cell: migrationRequiredCell,
-                id: "migration-cell",
-                dynamicHeight: { containerWidth in
-                    TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: "restore.warning.bip32_compliance.description".localized)
-                }
-        )
-    }
 
     private func row(keyAction: ManageAccountViewModel.KeyAction, isFirst: Bool, isLast: Bool) -> RowProtocol {
         switch keyAction {
@@ -328,12 +328,25 @@ extension ManageAccountViewController: SectionsDataSource {
             )
         ]
 
-        if showMigrationRequired {
+        if let warningViewItem = warningViewItem {
             sections.append(
                     Section(
-                        id: "migration-required",
+                        id: "migration-warning",
                         footerState: .margin(height: .margin32),
-                        rows: [migrationRequiredRow]
+                        rows: [
+                            Row<TitledHighlightedDescriptionCell>(
+                                    id: "migration-cell",
+                                    dynamicHeight: { [weak self] containerWidth in
+                                        let text = self?.warningViewItem?.text ?? ""
+                                        return TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: text)
+                                    },
+                                    bind: { [weak self] cell, _ in
+                                        cell.set(backgroundStyle: .transparent, isFirst: true)
+                                        cell.bind(caution: warningViewItem)
+                                        cell.onBackgroundButton = { self?.onOpenWarning() }
+                                    }
+                            )
+                        ]
                     )
             )
         }

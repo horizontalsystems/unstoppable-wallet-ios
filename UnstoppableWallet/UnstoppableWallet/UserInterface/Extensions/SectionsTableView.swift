@@ -48,7 +48,7 @@ extension SectionsTableView {
                     DescriptionCell.height(containerWidth: width, text: text, ignoreBottomMargin: ignoreBottomMargin)
                 },
                 bind: { cell, _ in
-                    cell.bind(text: text)
+                    cell.label.text = text
                 }
         )
     }

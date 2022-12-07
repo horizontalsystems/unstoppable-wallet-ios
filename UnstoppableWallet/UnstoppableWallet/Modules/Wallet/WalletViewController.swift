@@ -194,7 +194,17 @@ class WalletViewController: ThemeViewController {
     }
 
     private func onOpenWarning() {
-        print("On Tap Open!!!")
+        guard let url = viewModel.warningUrl else {
+            return
+        }
+        let module = MarkdownModule.viewController(url: url)
+        DispatchQueue.main.async {
+            let controller = ThemeNavigationController(rootViewController: module)
+            if let delegate = module as? UIAdaptivePresentationControllerDelegate {
+                controller.presentationController?.delegate = delegate
+            }
+            return self.present(controller, animated: true)
+        }
     }
 
     private func onCloseWarning() {
@@ -431,7 +441,7 @@ extension WalletViewController: UITableViewDelegate {
             cell.set(backgroundStyle: .transparent, isFirst: true)
             cell.topOffset = .margin12
             cell.bind(caution: warningViewItem)
-            cell.onBackgroundButton = warningViewItem.cancellable ? { [weak self] in self?.onOpenWarning() } : nil
+            cell.onBackgroundButton = { [weak self] in self?.onOpenWarning() }
             cell.onCloseButton = warningViewItem.cancellable ? { [weak self] in self?.onCloseWarning() } : nil
         }
 

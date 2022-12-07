@@ -19,16 +19,16 @@ class MainSettingsViewModel {
     init(service: MainSettingsService) {
         self.service = service
 
-        manageWalletsAlertRelay = BehaviorRelay(value: !service.allBackedUp)
+        manageWalletsAlertRelay = BehaviorRelay(value: !service.noWalletRequiredActions)
         securityCenterAlertRelay = BehaviorRelay(value: !service.isPinSet)
         walletConnectSessionCountRelay = BehaviorRelay(value: Self.convert(walletConnectSessionCount: service.walletConnectSessionCount))
         baseCurrencyRelay = BehaviorRelay(value: service.baseCurrency.code)
         aboutAlertRelay = BehaviorRelay(value: !service.termsAccepted)
 
-        service.allBackedUpObservable
+        service.noWalletRequiredActionsObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] allBackedUp in
-                    self?.manageWalletsAlertRelay.accept(!allBackedUp)
+                .subscribe(onNext: { [weak self] noWalletRequiredActions in
+                    self?.manageWalletsAlertRelay.accept(!noWalletRequiredActions)
                 })
                 .disposed(by: disposeBag)
 
