@@ -11121,7 +11121,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/EvmKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.1.0;
+				version = 1.1.1;
 			};
 		};
 		D3604E4828F02A8B0066C366 /* XCRemoteSwiftPackageReference "Eip20Kit.Swift" */ = {
@@ -11153,7 +11153,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/OneInchKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.0;
+				version = 1.0.1;
 			};
 		};
 		D3604E6428F02D9A0066C366 /* XCRemoteSwiftPackageReference "BitcoinKit.Swift" */ = {
