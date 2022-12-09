@@ -67,7 +67,14 @@ class AddTokenService {
             state = .failed(error: TokenError.notFound)
         } else {
             let (addedItems, items) = initialItems(tokens: tokens)
-            state = .fetched(addedItems: addedItems, items: items)
+
+            if items.count == 1, let item = items.first,
+               item.token.blockchainType == .binanceChain,
+               !BlockchainType.binanceChain.supports(accountType: account.type) {
+                state = .bep2NotSupported(token: item.token)
+            } else {
+                state = .fetched(addedItems: addedItems, items: items)
+            }
         }
     }
 
@@ -160,6 +167,7 @@ extension AddTokenService {
         case loading
         case fetched(addedItems: [Item], items: [Item])
         case failed(error: Error)
+        case bep2NotSupported(token: Token)
     }
 
     class Item {

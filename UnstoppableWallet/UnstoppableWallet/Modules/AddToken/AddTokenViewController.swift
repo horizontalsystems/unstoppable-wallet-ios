@@ -243,7 +243,8 @@ extension AddTokenViewController: SectionsDataSource {
                     id: "coin-info",
                     footerState: .margin(height: .margin24),
                     rows: [
-                        infoRow(id: "coin-name", title: "add_token.coin_name".localized, value: viewItem?.coinName, isFirst: true),
+                        infoRow(id: "coin-type", title: "add_token.coin_type".localized, value: viewItem?.coinType, isFirst: true),
+                        infoRow(id: "coin-name", title: "add_token.coin_name".localized, value: viewItem?.coinName),
                         infoRow(id: "coin-code", title: "add_token.coin_code".localized, value: viewItem?.coinCode),
                         infoRow(id: "decimals", title: "add_token.decimals".localized, value: viewItem?.decimals, isLast: true)
                     ]

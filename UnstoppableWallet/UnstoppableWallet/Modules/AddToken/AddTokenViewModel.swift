@@ -45,15 +45,30 @@ class AddTokenViewModel {
                 buttonTitleRelay.accept(hasEnabledItem ? "button.add".localized : "add_token.choose_type".localized)
                 buttonEnabledRelay.accept(hasEnabledItem)
             }
+        case .bep2NotSupported(let token):
+            let viewItem = ViewItem(
+                    coinType: token.protocolInfo,
+                    coinName: token.coin.name,
+                    coinCode: token.coin.code,
+                    decimals: String(token.decimals),
+                    addedTokenViewItems: [], tokenViewItems: []
+            )
+            viewItemRelay.accept(viewItem)
+            buttonTitleRelay.accept("button.add".localized)
+            buttonEnabledRelay.accept(false)
+
         default:
             viewItemRelay.accept(nil)
             buttonTitleRelay.accept("button.add".localized)
             buttonEnabledRelay.accept(false)
         }
 
-        if case .failed(let error) = state {
+        switch state {
+        case .failed(let error):
             cautionRelay.accept(Caution(text: error.convertedError.localizedDescription, type: .error))
-        } else {
+        case .bep2NotSupported:
+            cautionRelay.accept(Caution(text: "add_token.bep2_not_supported".localized, type: .warning))
+        default:
             cautionRelay.accept(nil)
         }
     }
@@ -62,6 +77,7 @@ class AddTokenViewModel {
         let item = addedItems.first ?? items.first
 
         return ViewItem(
+                coinType: item?.token.protocolInfo,
                 coinName: item?.token.coin.name,
                 coinCode: item?.token.coin.code,
                 decimals: item.map { String($0.token.decimals) },
@@ -128,6 +144,7 @@ extension AddTokenViewModel {
 extension AddTokenViewModel {
 
     struct ViewItem {
+        let coinType: String?
         let coinName: String?
         let coinCode: String?
         let decimals: String?
