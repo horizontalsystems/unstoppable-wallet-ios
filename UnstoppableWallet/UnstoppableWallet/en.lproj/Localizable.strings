@@ -1055,6 +1055,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Add Token
 
 "add_token.title" = "Add Token";
+"add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "Coin Name";
 "add_token.coin_code" = "Coin Code";
 "add_token.decimals" = "Decimals";
@@ -1064,6 +1065,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
 "add_token.token_not_found" = "Token not found";
 "add_token.input_placeholder" = "Contract Address";
+"add_token.bep2_not_supported" = "You current wallet EVM private key does not support BEP2 tokens";
 
 // Wallet Connect
 
