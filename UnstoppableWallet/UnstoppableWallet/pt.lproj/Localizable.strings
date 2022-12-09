@@ -38,7 +38,7 @@
 "alert.added_to_wallet" = "Adicionado à Carteira";
 "alert.already_added_to_wallet" = "Já adicionado à carteira";
 "alert.not_supported_yet" = "Não suportado ainda";
-"alert.copied" = "Copiado";
+"alert.copied" = "Copied";
 "alert.created" = "Criado";
 "alert.restored" = "Restaurado";
 "alert.address_added" = "Endereço Adicionado";
@@ -1055,6 +1055,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Add Token
 
 "add_token.title" = "Adicionar token";
+"add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "Nome da Moeda";
 "add_token.coin_code" = "Código da Moeda";
 "add_token.decimals" = "Decimais";
@@ -1064,6 +1065,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Endereço do contrato ou símbolo BEP2 inválido";
 "add_token.token_not_found" = "Token não encontrado";
 "add_token.input_placeholder" = "Endereço do Contrato";
+"add_token.bep2_not_supported" = "You current wallet EVM private key does not support BEP2 tokens";
 
 // Wallet Connect
 
