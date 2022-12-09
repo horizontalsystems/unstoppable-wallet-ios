@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Cüzdana Eklendi";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
-"alert.copied" = "Kopyalandı";
+"alert.copied" = "Copied";
 "alert.created" = "Oluşturuldu";
 "alert.restored" = "Geri yüklendi ";
 "alert.address_added" = "Adres eklendi";
@@ -1056,6 +1056,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Add Token
 
 "add_token.title" = "Token Ekle";
+"add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "Kripto Para Adı";
 "add_token.coin_code" = "Coin Kodu";
 "add_token.decimals" = "Ondalıklar";
@@ -1065,6 +1066,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Geçersiz sözleşme adresi veya BEP2 sembolü";
 "add_token.token_not_found" = "Token bulunamadı";
 "add_token.input_placeholder" = "Sözleşme Adresi";
+"add_token.bep2_not_supported" = "You current wallet EVM private key does not support BEP2 tokens";
 
 // Wallet Connect
 
