@@ -38,7 +38,7 @@
 "alert.added_to_wallet" = "Zum Wallet hinzugefügt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
-"alert.copied" = "Kopiert";
+"alert.copied" = "Copied";
 "alert.created" = "Erstellt";
 "alert.restored" = "Wiederherstellen";
 "alert.address_added" = "Adresse hinzugefügt";
@@ -1053,6 +1053,7 @@
 // Add Token
 
 "add_token.title" = "Token hinzufügen";
+"add_token.coin_type" = "Coin Type";
 "add_token.coin_name" = "Name der Coin";
 "add_token.coin_code" = "Münzcode";
 "add_token.decimals" = "Dezimalen";
@@ -1062,6 +1063,7 @@
 "add_token.invalid_contract_address_or_bep2_symbol" = "Ungültige Vertragsadresse oder BEP2-Symbol";
 "add_token.token_not_found" = "Token nicht gefunden";
 "add_token.input_placeholder" = "Vertragsadresse";
+"add_token.bep2_not_supported" = "You current wallet EVM private key does not support BEP2 tokens";
 
 // Wallet Connect
 
