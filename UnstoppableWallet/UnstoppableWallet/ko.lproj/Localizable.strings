@@ -103,6 +103,11 @@
 "restore.input.passphrase" = "암호문구";
 "restore.passphrase_description" = "이 연상 부호를 만들 때 사용한 암호 문구 입력";
 "restore.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
+"restore.non_standard_restore" = "비표준 복원";
+"restore.non_standard_restore.description" = "이 페이지는 비표준 지갑을 가지고 있는 Unstoppable 사용자를 위한 특별한 지갑 복원 메커니즘을 제공합니다. 일반적으로 이러한 지갑은 Unstoppable 버전 0.27 - 0.28에서 영어가 아닌 니모닉 단어 목록 및/또는 지갑 암호의 특수 문자(예: 분음 부호)를 사용하여 생성되었을 수 있습니다.\n\n영향을 받는 사용자인 경우 버전 0.29로 업데이트하면 지갑 잔액이 0으로 표시됩니다. 이 페이지에서는 비표준 지갑에 대한 액세스를 복원할 수 있습니다. 복원되면 새 지갑(표준 준수)을 만들고 그곳으로 자금을 옮기는 것이 좋습니다.";
+"restore.error.non_standard.description" = "이 지갑은 비밀 단어 목록 및/또는 암호 문구에 비표준 문자를 사용하는 것 같습니다. 잔액이나 거래 내역이 보이지 않으면 아래에서 자세한 내용을 읽어보세요.  \n\n더 많은 정보를 얻으려면 클릭하십시오";
+"restore.warning.non_recommended.description" = "비표준 호환 지갑입니다. 자세한 내용은 아래를 참조하십시오.\n\n더 많은 정보를 얻으려면 클릭하십시오";
+
 
 // Coin Settings
 
@@ -178,6 +183,8 @@
 // Backup Required
 
 "backup_required.title" = "백업이 필요합니다";
+"manage_accounts.migration_required" = "마이그레이션 필요";
+
 
 // Backup Prompt
 

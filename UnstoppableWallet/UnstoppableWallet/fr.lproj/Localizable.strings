@@ -103,6 +103,11 @@
 "restore.input.passphrase" = "Phrase d'authentification";
 "restore.passphrase_description" = "Entrez la phrase d'authentification que vous avez utilisée pour créer cette phrase mnémonique";
 "restore.error.empty_passphrase" = "La phrase d'authentification ne peut pas être une valeur vide";
+"restore.non_standard_restore" = "Restauration non-standard";
+"restore.non_standard_restore.description" = "Sur cette page, vous trouverez un mécanisme spécial de restauration de portefeuille pour les utilisateurs d'Unstoppable dont le portefeuille n'est pas standard. En général, de tels portefeuilles ont été créés dans la version 0.27 - 0.28 d'Unstoppable en utilisant une liste de mots mnémoniques non-anglais et/ou un caractère spécial dans la phrase de passe du portefeuille (c'est-à-dire un symbole diacritique).\n\nSi vous êtes un des utilisateurs concernés, le solde affiché de votre portefeuille indiquera 0 après la mise à jour 0.29. Grâce à cette page, vous pourrez restaurer l'accès à votre portefeuille non-standard. Une fois la restauration effectuée, il est conseillé de créer un nouveau portefeuille (qui sera conforme aux normes) et d'y transférer vos fonds.";
+"restore.error.non_standard.description" = "Ce portefeuille semble utiliser un caractère non-standard dans sa liste de mots secrets et/ou dans une phrase de passe. Si vous ne voyez pas de solde ou de transactions, veuillez vous reporter aux informations ci-dessous.   \n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
+"restore.warning.non_recommended.description" = "Ce portefeuille n'est pas conforme aux normes. Veuillez vous reporter aux informations ci-dessous pour plus de détails. \n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
+
 
 // Coin Settings
 
@@ -177,6 +182,7 @@
 
 // Backup Required
 
+"manage_accounts.migration_required" = "Migration Requise";
 "backup_required.title" = "Sauvegarde requise";
 
 // Backup Prompt
@@ -819,6 +825,7 @@
 "manage_coins.add_coin.text.tokens" = "Vous pourrez utiliser ce portefeuille pour: %@.";
 "manage_coins.add_coin.create" = "Créer";
 "manage_coins.add_coin.restore" = "Restaurer";
+
 
 // Settings -> Experimental Features
 
