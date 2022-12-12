@@ -108,6 +108,11 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "restore.input.passphrase" = "Parola";
 "restore.passphrase_description" = "Bu anımsatıcı ifadeyi oluştururken kullandığınız şifreyi girin";
 "restore.error.empty_passphrase" = "Şifre boş bırakılamaz";
+"restore.non_standard_restore" = "Standart Olmayan Geri Yükleme";
+"restore.non_standard_restore.description" = "Bu sayfa, standart olmayan bir cüzdanı olan Unstoppable kullanıcıları için özel bir cüzdan geri yükleme mekanizması sağlar. Genel olarak, bu tür cüzdanlar, İngilizce olmayan bir anımsatma kelimeleri listesi ve/veya cüzdan şifresinde özel bir karakter (yani aksan simgesi) kullanılarak Unstoppable 0.27 - 0.28 sürümünde oluşturulmuş olabilir.\n\nBu durumdan etkilenen bir kullanıcıysanız, 0.29 sürümüne güncelledikten sonra cüzdan bakiyeniz 0 olarak görüntülenir. Bu sayfa, standart olmayan cüzdanınıza erişimi geri yüklemenizi sağlayacaktır. Geri yüklendikten sonra, yeni bir cüzdan oluşturmanız (standartlarla uyumlu) ve paranızı oraya taşımanız önerilir.";
+"restore.error.non_standard.description" = "Bu cüzdan, gizli sözcükler listesinde ve/veya bir şifrede standart olmayan bir karakter kullanıyor gibi görünüyor. Bir bakiye veya işlem göremiyorsanız lütfen bilgi için aşağıya bakınız.  \n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYINIZ";
+"restore.warning.non_recommended.description" = "Bu standart dışı uyumlu bir cüzdandır. Bilgi için lütfen aşağıyı okuyunuz.\n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYINIZ";
+
 
 // Coin Settings
 
@@ -183,6 +188,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Backup Required
 
 "backup_required.title" = "Yedekleme Gerekli";
+"manage_accounts.migration_required" = "Taşıma Gerekli ";
+
 
 // Backup Prompt
 

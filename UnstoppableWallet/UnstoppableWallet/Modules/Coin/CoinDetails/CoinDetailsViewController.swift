@@ -378,7 +378,8 @@ extension CoinDetailsViewController: SectionsDataSource {
     }
 
     private func distributionSections(viewItem: CoinDetailsViewModel.ViewItem, isFirst: Bool) -> [SectionProtocol]? {
-        var sections = distributionCharts(viewItem: viewItem, isLast: !viewItem.hasMajorHolders)
+//        var sections = distributionCharts(viewItem: viewItem, isLast: !viewItem.hasMajorHolders)
+        var sections = [SectionProtocol]()
 
         if viewItem.hasMajorHolders {
             let majorHoldersRow = tableView.grayTitleWithArrowRow(
@@ -657,13 +658,13 @@ extension CoinDetailsViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let viewItem = viewItem {
-            if let proFeaturesSection = proFeaturesPassesSection(viewItem: viewItem) {
-                sections.append(proFeaturesSection)
-            }
-
-            if let liquiditySections = liquiditySections(viewItem: viewItem, isFirst: sections.isEmpty) {
-                sections.append(contentsOf: liquiditySections)
-            }
+//            if let proFeaturesSection = proFeaturesPassesSection(viewItem: viewItem) {
+//                sections.append(proFeaturesSection)
+//            }
+//
+//            if let liquiditySections = liquiditySections(viewItem: viewItem, isFirst: sections.isEmpty) {
+//                sections.append(contentsOf: liquiditySections)
+//            }
 
             if let distributionSections = distributionSections(viewItem: viewItem, isFirst: sections.isEmpty) {
                 sections.append(contentsOf: distributionSections)
