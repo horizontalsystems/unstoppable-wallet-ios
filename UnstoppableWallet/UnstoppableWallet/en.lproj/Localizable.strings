@@ -107,7 +107,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "restore.error.empty_passphrase" = "The passphrase cannot be empty";
 "restore.non_standard_restore" = "Non-Standard Restore";
 "restore.non_standard_restore.description" = "If you created a wallet with Unstoppable Wallet with a non-English wordlist or with non-English passphrase, this wallet is not standard.\n\nProblem\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet";
-"restore.warning.bip39_compliance.description" = "It looks like this wallet was created with a non-English wordlist or non-English passphrase, so the wallet is not standard.\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet.\n\nCLICK TO GET MORE INFO";
+"restore.error.non_standard.description" = "It looks like this wallet was created with a non-English wordlist or non-English passphrase, so the wallet is not standard.\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet.\n\nCLICK TO GET MORE INFO";
+"restore.warning.non_recommended.description" = "It looks like this wallet was created with a non-English wordlist or non-English passphrase, so the wallet is not standard.\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet.\n\nCLICK TO GET MORE INFO";
 
 // Coin Settings
 
