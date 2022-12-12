@@ -56,13 +56,13 @@ class AccountRestoreWarningFactory {
 
     func caution(account: Account, canIgnoreActiveAccountWarning: Bool) -> CancellableTitledCaution? {
         if account.nonStandard {
-            return CancellableTitledCaution(title: "note".localized, text: "restore.warning.bip39_compliance.description".localized, type: .error, cancellable: false)
+            return CancellableTitledCaution(title: "note".localized, text: "restore.error.non_standard.description".localized, type: .error, cancellable: false)
         } else if account.nonRecommended {
             if canIgnoreActiveAccountWarning, localStorage.value(for: Self.keyAccountWarningPrefix + account.id) ?? false {
                 return nil
             }
 
-            return CancellableTitledCaution(title: "note".localized, text:  "restore.warning.bip39_compliance.description".localized, type: .warning, cancellable: canIgnoreActiveAccountWarning)
+            return CancellableTitledCaution(title: "note".localized, text:  "restore.warning.non_recommended.description".localized, type: .warning, cancellable: canIgnoreActiveAccountWarning)
         }
         return nil
     }
