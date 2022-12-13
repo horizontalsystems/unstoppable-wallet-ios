@@ -43,11 +43,6 @@ class EvmSyncSourceManager {
                         name: "BSC-RPC HTTP",
                         rpcSource: .bscRpcHttp(),
                         transactionSource: .bscscan(apiKey: appConfigProvider.bscscanKey)
-                ),
-                EvmSyncSource(
-                        name: "Default WebSocket",
-                        rpcSource: .binanceSmartChainWebSocket(),
-                        transactionSource: .bscscan(apiKey: appConfigProvider.bscscanKey)
                 )
             ]
         case .polygon:
