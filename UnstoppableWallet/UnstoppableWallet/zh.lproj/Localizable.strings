@@ -107,9 +107,8 @@
 "restore.error.empty_passphrase" = "密码不能为空白";
 "restore.non_standard_restore" = "非标准还原";
 "restore.non_standard_restore.description" = "此页面为拥有非标准钱包的 Unstoppable 用户提供了一种特殊的钱包恢复机制。 通常，此类钱包可以在 Unstoppable 版本 0.27 - 0.28 中使用非英语助记词列表和/或钱包密码短语中的特殊字符（即变音符号）创建。\n\n如果您是受影响的用户，那么在更新到 0.29 版本后，您的钱包余额将显示为 0。 此页面将使您能够恢复对非标准钱包的访问。 恢复后，建议您创建一个新钱包（符合标准）并将资金转移到那里。";
-"restore.error.non_standard.description" = "这个钱包似乎在其密码列表和/或密码短语中使用了非标准字符。 如果您没有看到余额或交易，请阅读下面的详细信息。  \n\n点击获取更多信息";
-"restore.warning.non_recommended.description" = "这是一个不符合标准的钱包。 详情请阅读下文。\n\n点击获取更多信息";
-
+"restore.warning.non_recommended.description" = "这个钱包似乎在其密码列表和/或密码短语中使用了非标准字符。 如果您没有看到余额或交易，请阅读下面的详细信息。  \n\n点击获取更多信息";
+"restore.error.non_standard.description" = "这是一个不符合标准的钱包。 详情请阅读下文。\n\n点击获取更多信息";
 
 
 // Coin Settings
