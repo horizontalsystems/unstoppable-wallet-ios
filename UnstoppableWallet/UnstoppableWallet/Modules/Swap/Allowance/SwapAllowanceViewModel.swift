@@ -23,8 +23,8 @@ class SwapAllowanceViewModel {
 
         syncVisible()
 
-        subscribe(disposeBag, allowanceService.stateObservable) { [weak self] in self?.handle(allowanceState: $0) }
-        subscribe(disposeBag, errorProvider.errorsObservable) { [weak self] in self?.handle(errors: $0) }
+        subscribe(disposeBag, Observable.combineLatest(allowanceService.stateObservable, errorProvider.errorsObservable)) { [weak self] in self?.handle(allowanceState: $0, errors: $1) }
+//        subscribe(disposeBag, errorProvider.errorsObservable) { [weak self] in self?.handle(errors: $0) }
     }
 
     private func syncVisible(allowanceState: SwapAllowanceService.State? = nil) {
@@ -46,11 +46,13 @@ class SwapAllowanceViewModel {
         }
     }
 
-    private func handle(allowanceState: SwapAllowanceService.State?) {
-        syncVisible(allowanceState: allowanceState)
+    private func handle(allowanceState: SwapAllowanceService.State?, errors: [Error]) {
+//        syncVisible(allowanceState: allowanceState)
 
         if let state = allowanceState {
-            allowanceRelay.accept(allowance(state: state))
+            allowanceRelay.accept(allowance(state: state, errors: errors))
+        } else {
+            allowanceRelay.accept(nil)
         }
     }
 
@@ -61,14 +63,13 @@ class SwapAllowanceViewModel {
         syncVisible()
     }
 
-    private func allowance(state: SwapAllowanceService.State) -> String? {
+    private func allowance(state: SwapAllowanceService.State, errors: [Error]) -> String? {
+        let isInsufficientAllowance = errors.first(where: { .insufficientAllowance == $0 as? SwapModule.SwapError }) != nil
+
         switch state {
-        case .loading:
-            return "action.loading".localized
-        case .notReady:
-            return "n/a".localized
         case .ready(let allowance):
-            return ValueFormatter.instance.formatFull(coinValue: allowance)
+            return isInsufficientAllowance ? ValueFormatter.instance.formatFull(coinValue: allowance) : nil
+        default: return nil
         }
     }
 

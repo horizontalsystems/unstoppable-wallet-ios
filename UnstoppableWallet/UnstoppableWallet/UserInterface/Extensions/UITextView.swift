@@ -15,3 +15,23 @@ extension UITextView {
     }
 
 }
+
+extension UITextField {
+
+    func textRange(range: NSRange) -> UITextRange? {
+        let beginning = beginningOfDocument
+        guard let start = position(from: beginning, offset: range.location),
+              let end = position(from: start, offset: range.length) else {
+            return nil
+        }
+
+        return textRange(from: start, to: end)
+    }
+
+    func range(textRange: UITextRange) -> NSRange {
+        let location = offset(from: beginningOfDocument, to: textRange.start)
+        let length = offset(from: textRange.start, to: textRange.end)
+        return NSRange(location: location, length: length)
+    }
+
+}

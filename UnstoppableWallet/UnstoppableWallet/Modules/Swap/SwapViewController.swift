@@ -36,6 +36,7 @@ class SwapViewController: ThemeViewController {
 
         title = "swap.title".localized
 
+        navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onClose))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
@@ -69,6 +70,7 @@ class SwapViewController: ThemeViewController {
 
     private func updateDataSource() {
         dataSource = dataSourceManager.dataSource
+        dataSource?.tableView = tableView
 
         dataSource?.onReload = { [weak self] in self?.reloadTable() }
         dataSource?.onClose = { [weak self] in self?.onClose() }
@@ -119,9 +121,9 @@ class SwapViewController: ThemeViewController {
             return
         }
 
-        UIView.animate(withDuration: animationDuration) {
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
+        UIView.performWithoutAnimation {
+            tableView.beginUpdates()
+            tableView.endUpdates()
         }
     }
 
@@ -133,7 +135,7 @@ extension SwapViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let dataSource = dataSource {
-            sections.append(contentsOf: dataSource.buildSections())
+            sections.append(contentsOf: dataSource.buildSections)
         }
 
         return sections

@@ -30,6 +30,7 @@
 "alert.wrong_amount" = "Wrong Amount";
 "alert.no_fee" = "Wrong Fee";
 "alert.warning" = "Warning";
+"alert.error" = "Error";
 "alert.unknown_error" = "Unknown Error";
 "alert.success_action" = "Done";
 

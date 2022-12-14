@@ -42,6 +42,8 @@ class UniswapDataSource {
     var onClose: (() -> ())? = nil
     var onReload: (() -> ())? = nil
 
+    weak var tableView: UITableView?
+
     init(viewModel: UniswapViewModel, allowanceViewModel: SwapAllowanceViewModel) {
         self.viewModel = viewModel
 
@@ -62,6 +64,10 @@ class UniswapDataSource {
         settingsHeaderView.onTapSettings = { [weak self] in self?.onOpenSettings?() }
 
         initCells()
+    }
+
+    func viewDidLoad() {
+
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -283,7 +289,7 @@ extension UniswapDataSource: ISwapDataSource {
                 exactFrom: exactIn)
     }
 
-    func buildSections() -> [SectionProtocol] {
+    var buildSections: [SectionProtocol] {
         var sections = [SectionProtocol]()
 
         sections.append(Section(

@@ -212,6 +212,13 @@ extension OneInchService {
         case ready(parameters: OneInchSwapParameters)
         case notReady
 
+        var parameters: OneInchSwapParameters? {
+            switch self {
+            case .ready(let parameters): return parameters
+            default: return nil
+            }
+        }
+
         static func ==(lhs: State, rhs: State) -> Bool {
             switch (lhs, rhs) {
             case (.loading, .loading): return true

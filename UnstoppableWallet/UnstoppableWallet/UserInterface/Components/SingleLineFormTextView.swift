@@ -6,7 +6,7 @@ class SingleLineFormTextView: UIView, IFormTextView {
     private var textViewFont: UIFont = .body
 
     private let wrapperView = UIView()
-    private let textField = UITextField()
+    let textField = UITextField()
     private let placeholderLabel = UILabel()
 
     var onChangeHeight: (() -> ())?
@@ -15,6 +15,20 @@ class SingleLineFormTextView: UIView, IFormTextView {
     var isValidText: ((String) -> Bool)?
 
     var textFieldInset: UIEdgeInsets = .zero
+    var prefix: String? {
+        didSet {
+            let text = textField.text ?? ""
+            if let prefix = prefix {
+                if !text.hasPrefix(prefix) {
+                    textField.text = prefix + (textField.text ?? "")
+                    syncPlaceholder()
+                }
+            } else if let oldValue = oldValue, text.hasPrefix(oldValue) {
+                textField.text = text.stripping(prefix: oldValue)
+                syncPlaceholder()
+            }
+        }
+    }
 
     init() {
         super.init(frame: .zero)
@@ -66,7 +80,7 @@ class SingleLineFormTextView: UIView, IFormTextView {
     }
 
     @objc private func textFieldDidChange() {
-        onChangeText?(textField.text)
+        onChangeText?(textField.text?.stripping(prefix: prefix))
         syncPlaceholder()
     }
 
@@ -76,10 +90,10 @@ extension SingleLineFormTextView {
 
     var text: String? {
         get {
-            textField.text
+            textField.text?.stripping(prefix: prefix)
         }
         set {
-            textField.text = newValue
+            textField.text = [prefix, newValue].compactMap { $0 }.joined()
             syncPlaceholder()
         }
     }
@@ -101,6 +115,14 @@ extension SingleLineFormTextView {
     var placeholder: String? {
         get { placeholderLabel.text }
         set { placeholderLabel.text = newValue }
+    }
+
+    var textAlignment: NSTextAlignment {
+        get { textField.textAlignment }
+        set {
+            textField.textAlignment = newValue
+            placeholderLabel.textAlignment = newValue
+        }
     }
 
     var isEditable: Bool {
@@ -143,14 +165,32 @@ extension SingleLineFormTextView {
 
 extension SingleLineFormTextView: UITextFieldDelegate {
 
+    public func textFieldDidChangeSelection(_ textField: UITextField) {
+        if let prefix = prefix, let selectedTextRange = textField.selectedTextRange {
+            let selectedRange = textField.range(textRange: selectedTextRange)
+            if selectedRange.location < prefix.count {
+                let length = max(0, selectedRange.length - prefix.count)
+                DispatchQueue.main.async {
+                    textField.selectedTextRange = textField.textRange(range: NSRange(location: prefix.count, length: length))
+                }
+            }
+        }
+    }
+
     public func textField(_ textView: UITextField, shouldChangeCharactersIn range: NSRange, replacementString text: String) -> Bool {
         let newText = ((textView.text ?? "") as NSString).replacingCharacters(in: range, with: text)
+
+        if let prefix = prefix {    //avoid delete prefix if it was set
+            if !newText.hasPrefix(prefix) {
+                return false
+            }
+        }
 
         if text.isEmpty || newText.isEmpty {       // allow backspacing in inputView
             return true
         }
 
-        let isValid = isValidText?(newText) ?? true
+        let isValid = isValidText?(newText.stripping(prefix: prefix)) ?? true
 
         if !isValid {
             textView.shakeView()
