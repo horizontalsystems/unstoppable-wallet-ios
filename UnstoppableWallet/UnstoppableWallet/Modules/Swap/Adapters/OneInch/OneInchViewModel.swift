@@ -17,6 +17,9 @@ class OneInchViewModel {
 
     private let viewItemHelper: SwapViewItemHelper
 
+    private var availableBalanceRelay = BehaviorRelay<String?>(value: nil)
+    private var buyPriceRelay = BehaviorRelay<SwapPriceCell.PriceViewItem?>(value: nil)
+    private var countdownTimerRelay = BehaviorRelay<Float>(value: 1)
     private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private var swapErrorRelay = BehaviorRelay<String?>(value: nil)
     private var proceedActionRelay = BehaviorRelay<ActionState>(value: .hidden)
@@ -28,6 +31,8 @@ class OneInchViewModel {
 
     private var openRevokeRelay = PublishRelay<SwapAllowanceService.ApproveData>()
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
+
+    private var lastBuyPrice: String?
 
     init(service: OneInchService, tradeService: OneInchTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, viewItemHelper: SwapViewItemHelper) {
         self.service = service
@@ -43,9 +48,14 @@ class OneInchViewModel {
     }
 
     private func subscribeToService() {
+        subscribe(disposeBag, tradeService.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(disposeBag, service.stateObservable) { [weak self] _ in self?.handleObservable() }
+        subscribe(disposeBag, tradeService.countdownTimerObservable) { [weak self] in self?.handle(countdownValue: $0) }
         subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.handleObservable(errors: $0) }
+        subscribe(disposeBag, service.balanceInObservable) { [weak self] in self?.sync(fromBalance: $0) }
         subscribe(disposeBag, pendingAllowanceService.stateObservable) { [weak self] _ in self?.handleObservable() }
+
+        sync(fromBalance: service.balanceIn)
     }
 
     private func handleObservable(errors: [Error]? = nil) {
@@ -59,11 +69,55 @@ class OneInchViewModel {
         }
     }
 
-    private func sync(state: OneInchService.State? = nil) {
-        let state = state ?? service.state
+    private func handle(countdownValue: Float) {
+        countdownTimerRelay.accept(countdownValue)
+    }
 
-        isLoadingRelay.accept(state == .loading)
-        syncProceedAction()
+    private func sync(fromBalance: Decimal?) {
+        guard let token = tradeService.tokenIn, let balance = fromBalance else {
+            availableBalanceRelay.accept(nil)
+            return
+        }
+
+        let coinValue = CoinValue(kind: .token(token: token), value: balance)
+        availableBalanceRelay.accept(ValueFormatter.instance.formatFull(coinValue: coinValue))
+    }
+
+    private func sync(state: OneInchTradeService.State) {
+        var loading = false
+        switch state {
+        case .loading:
+            loading = true
+            if lastBuyPrice == nil {
+                buyPriceRelay.accept(nil)
+            }
+        case .ready(let parameters):
+            if !parameters.amountFrom.isZero, !parameters.amountTo.isZero {
+                let executionPrice = parameters.amountTo / parameters.amountFrom
+
+                let priceCoinValue = viewItemHelper.priceValue(
+                        executionPrice: executionPrice,
+                        tokenIn: parameters.tokenFrom,
+                        tokenOut: parameters.tokenTo
+                )
+
+                let revertedPriceCoinValue = viewItemHelper.priceValue(
+                        executionPrice: 1 / executionPrice,
+                        tokenIn: parameters.tokenTo,
+                        tokenOut: parameters.tokenFrom
+                )
+                lastBuyPrice = priceCoinValue?.formattedFull
+                buyPriceRelay.accept(SwapPriceCell.PriceViewItem(price: priceCoinValue?.formattedFull, revertedPrice: revertedPriceCoinValue?.formattedFull))
+            } else {
+                lastBuyPrice = nil
+                buyPriceRelay.accept(nil)
+            }
+        case .notReady:
+            lastBuyPrice = nil
+            buyPriceRelay.accept(nil)
+        }
+
+        isLoadingRelay.accept(loading)
     }
 
     private func sync(errors: [Error]? = nil) {
@@ -116,7 +170,7 @@ class OneInchViewModel {
         }
         if case .pending = pendingAllowanceService.state {
             revokeWarning = nil
-            approveAction = .disabled(title: "swap.approving_button".localized)
+            approveAction = .disabled(title: "")    // UI will show custom approvingView
             approveStep = .approving
         } else if case .revoking = pendingAllowanceService.state {
             revokeWarning = nil
@@ -150,6 +204,22 @@ class OneInchViewModel {
 }
 
 extension OneInchViewModel {
+
+    var availableBalanceDriver: Driver<String?> {
+        availableBalanceRelay.asDriver()
+    }
+
+    var buyPriceDriver: Driver<SwapPriceCell.PriceViewItem?> {
+        buyPriceRelay.asDriver()
+    }
+
+    var countdownTimerDriver: Driver<Float> {
+        countdownTimerRelay.asDriver()
+    }
+
+    var amountInDriver: Driver<Decimal> {
+        tradeService.amountInObservable.asDriver(onErrorJustReturn: 0)
+    }
 
     var isLoadingDriver: Driver<Bool> {
         isLoadingRelay.asDriver()

@@ -16,6 +16,8 @@ class SwapCoinCardViewModel {
     private var balanceErrorRelay = BehaviorRelay<Bool>(value: false)
     private var tokenViewItemRelay = BehaviorRelay<TokenViewItem?>(value: nil)
 
+    private(set) var balance: Decimal?
+
     init(coinCardService: ISwapCoinCardService, fiatService: FiatService) {
         self.coinCardService = coinCardService
         self.fiatService = fiatService
@@ -47,6 +49,8 @@ class SwapCoinCardViewModel {
     }
 
     private func sync(balance: Decimal?) {
+        self.balance = balance
+
         guard let token = coinCardService.token else {
             balanceRelay.accept(nil)
             return

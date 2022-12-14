@@ -6,10 +6,15 @@ import RxRelay
 import MarketKit
 
 class OneInchTradeService {
-    private var disposeBag = DisposeBag()
+    private static let timerFramePerSecond = 30
+
+    private let disposeBag = DisposeBag()
+    private var refreshTimerDisposeBag = DisposeBag()
     private var quoteDisposeBag = DisposeBag()
 
     private let oneInchProvider: OneInchProvider
+    let syncInterval: TimeInterval
+
     private var quote: OneInchKit.Quote?
 
     private(set) var tokenIn: MarketKit.Token? {
@@ -57,6 +62,8 @@ class OneInchTradeService {
         }
     }
 
+    private let countdownTimerRelay = PublishRelay<Float>()
+
     private let settingsRelay = PublishRelay<OneInchSettings>()
     var settings = OneInchSettings() {
         didSet {
@@ -67,6 +74,8 @@ class OneInchTradeService {
 
     init(oneInchProvider: OneInchProvider, state: SwapModule.DataSourceState, evmKit: EvmKit.Kit) {
         self.oneInchProvider = oneInchProvider
+        syncInterval = evmKit.chain.syncInterval
+
         tokenIn = state.tokenFrom
         tokenOut = state.tokenTo
         amountIn = state.amountFrom ?? 0
@@ -81,6 +90,24 @@ class OneInchTradeService {
         syncQuote()
     }
 
+    private func syncTimer() {
+        refreshTimerDisposeBag = DisposeBag()
+        let countdownValue = Int(syncInterval) * Self.timerFramePerSecond
+
+        Observable<Int>
+                .interval(.milliseconds(1000 / Self.timerFramePerSecond), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .map {
+                    countdownValue - $0
+                }
+                .takeUntil(.inclusive, predicate: { $0 == 0 })
+                .subscribe(onNext: { [weak self] value in
+                    self?.countdownTimerRelay.accept(Float(value) / Float(countdownValue))
+                }, onCompleted: { [weak self] in
+                    self?.syncQuote()
+                })
+                .disposed(by: refreshTimerDisposeBag)
+    }
+
     @discardableResult private func syncQuote() -> Bool {
         guard let tokenIn = tokenIn, let tokenOut = tokenOut else {
             state = .notReady(errors: [])
@@ -88,7 +115,7 @@ class OneInchTradeService {
         }
 
         quoteDisposeBag = DisposeBag()
-
+        syncTimer()
 //        if quote == nil {
         state = .loading
 //        }
@@ -133,6 +160,10 @@ extension OneInchTradeService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
+    }
+
+    var countdownTimerObservable: Observable<Float> {
+        countdownTimerRelay.asObservable()
     }
 
     var tokenInObservable: Observable<MarketKit.Token?> {
@@ -192,7 +223,6 @@ extension OneInchTradeService {
         guard self.amountIn != amountIn else {
             return
         }
-
         self.amountIn = amountIn
 
         if !syncQuote() {

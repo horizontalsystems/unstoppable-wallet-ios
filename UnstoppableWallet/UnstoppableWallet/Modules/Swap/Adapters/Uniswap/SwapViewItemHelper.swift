@@ -65,7 +65,7 @@ extension SwapViewItemHelper {
         let quoteCoinValue: CoinValue
 
         var formattedFull: String {
-            ValueFormatter.instance.formatFull(coinValue: quoteCoinValue).map { [baseCoin.code, $0].joined(separator: " = ") } ?? ""
+            ValueFormatter.instance.formatFull(coinValue: quoteCoinValue).map { "1 " + [baseCoin.code, $0].joined(separator: " = ") } ?? ""
         }
 
     }
