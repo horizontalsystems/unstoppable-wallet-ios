@@ -38,7 +38,7 @@
 "alert.added_to_wallet" = "Ajouté au portefeuille";
 "alert.already_added_to_wallet" = "Déjà ajouté au portefeuille";
 "alert.not_supported_yet" = "Pas pris en charge pour le moment";
-"alert.copied" = "Copied";
+"alert.copied" = "Copié";
 "alert.created" = "Établi";
 "alert.restored" = "Restauré ";
 "alert.address_added" = "Adresse ajoutée";
@@ -106,8 +106,9 @@
 "restore.passphrase_description" = "Entrez la phrase d'authentification que vous avez utilisée pour créer cette phrase mnémonique";
 "restore.error.empty_passphrase" = "La phrase d'authentification ne peut pas être une valeur vide";
 "restore.non_standard_restore" = "Non-Standard Restore";
-"restore.non_standard_restore.description" = "If you created a wallet with Unstoppable Wallet with a non-English wordlist or with non-English passphrase, this wallet is not standard.\n\nProblem\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet";
-"restore.warning.bip39_compliance.description" = "It looks like this wallet was created with a non-English wordlist or non-English passphrase, so the wallet is not standard.\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet.\n\nCLICK TO GET MORE INFO";
+"restore.non_standard_restore.description" = "This page provides a special wallet restore mechanism for Unstoppable users who have a non-standard wallet. Generally, such wallets could have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after updating to version 0.29. This page will enable you to restore access to your non-standard wallet. Once restored you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
+"restore.error.non_standard.description" = "This wallet seems to use a non-standard character in its secret word list and/or a passphrase. If you do not see a balance or transactions please read below for details.  \n\nCLICK TO GET MORE INFO";
+"restore.warning.non_recommended.description" = "This is a non-standard compliant wallet. Please read below for details.\n\nCLICK TO GET MORE INFO";
 
 // Coin Settings
 
@@ -549,9 +550,9 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominance Bitcoin";
-"market.global.volume_24h.title" = "Volume 24h";
-"market.global.defi_cap.title" = "Cap DeFi";
-"market.global.tvl_in_defi.title" = "TVL en DeFi";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
 "market.global.volume_24h.description" = "La variation historique du volume global quotidien du marché des transactions pour toutes les cryptomonnaies.";
 "market.global.defi_cap.description" = "L'évolution historique de la valeur de marché cumulée des tokens dans le secteur de la finance décentralisée.";
@@ -887,7 +888,7 @@
 
 // Manage Accounts
 
-"manage_accounts.migration_required" = "Migration required";
+"manage_accounts.migration_required" = "Migration Required";
 "manage_accounts.migration_recommended" = "Migration recommended";
 "manage_accounts.backup_required" = "Sauvegarde requise";
 
@@ -1004,6 +1005,7 @@
 "create_wallet.title" = "Nouveau porte-monnaie";
 "create_wallet.create_button" = "Créer";
 "create_wallet.mnemonic" = "Mnémonique";
+"create_wallet.12_words" = "12 words (recommended)";
 "create_wallet.n_words" = "%@ mots";
 "create_wallet.word_list" = "Listes de mots";
 "create_wallet.passphrase" = "Phrase d'authentification";
