@@ -399,6 +399,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "swap.confirmation.swap_button" = "Swap";
 "swap.confirmation.impact_too_high" = "The difference between the market price and expected settlement price is too high.";
+"swap.confirmation.minimum_received" = "Minimum Received";
+"swap.confirmation.maximum_sent" = "Maximum Sent";
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
 
