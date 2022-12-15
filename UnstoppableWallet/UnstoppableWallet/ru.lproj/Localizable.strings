@@ -38,7 +38,7 @@
 "alert.added_to_wallet" = "Добавлено в Кошелек";
 "alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Ещё не поддерживается";
-"alert.copied" = "Copied";
+"alert.copied" = "Скопировано";
 "alert.created" = "Создан";
 "alert.restored" = "Восстановлен";
 "alert.address_added" = "Адрес Добавлен";
@@ -108,8 +108,9 @@
 "restore.passphrase_description" = "Введите свою кодовую фразу, которую вы использовали при создании этой мнемонической фразы";
 "restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "restore.non_standard_restore" = "Non-Standard Restore";
-"restore.non_standard_restore.description" = "If you created a wallet with Unstoppable Wallet with a non-English wordlist or with non-English passphrase, this wallet is not standard.\n\nProblem\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet";
-"restore.warning.bip39_compliance.description" = "It looks like this wallet was created with a non-English wordlist or non-English passphrase, so the wallet is not standard.\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet.\n\nCLICK TO GET MORE INFO";
+"restore.non_standard_restore.description" = "This page provides a special wallet restore mechanism for Unstoppable users who have a non-standard wallet. Generally, such wallets could have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after updating to version 0.29. This page will enable you to restore access to your non-standard wallet. Once restored you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
+"restore.error.non_standard.description" = "This wallet seems to use a non-standard character in its secret word list and/or a passphrase. If you do not see a balance or transactions please read below for details.  \n\nCLICK TO GET MORE INFO";
+"restore.warning.non_recommended.description" = "This is a non-standard compliant wallet. Please read below for details.\n\nCLICK TO GET MORE INFO";
 
 // Coin Settings
 
@@ -551,9 +552,9 @@
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 
 "market.global.btc_dominance.title" = "Доминирование Bitcoin";
-"market.global.volume_24h.title" = "Объем Торгов (24ч)";
-"market.global.defi_cap.title" = "Капитализация DeFi";
-"market.global.tvl_in_defi.title" = "TVL в DeFi";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка и наоборот.";
 "market.global.volume_24h.description" = "Историческое изменение в ежедневном совокупном объеме торговли для всех криптовалют.";
 "market.global.defi_cap.description" = "Историческое изменение в совокупной рыночной стоимости токенов в Децентрализованном Финансовом Секторе.";
@@ -889,7 +890,7 @@
 
 // Manage Accounts
 
-"manage_accounts.migration_required" = "Migration required";
+"manage_accounts.migration_required" = "Migration Required";
 "manage_accounts.migration_recommended" = "Migration recommended";
 "manage_accounts.backup_required" = "Необходима Резерв.Копия";
 
@@ -1006,6 +1007,7 @@
 "create_wallet.title" = "Создать Кошелек";
 "create_wallet.create_button" = "Создать";
 "create_wallet.mnemonic" = "Мнемоническая Фраза";
+"create_wallet.12_words" = "12 words (recommended)";
 "create_wallet.n_words" = "%@ слов";
 "create_wallet.word_list" = "Список Слов";
 "create_wallet.passphrase" = "Кодовая Фраза";
