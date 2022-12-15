@@ -6,13 +6,17 @@ import RxRelay
 import MarketKit
 
 class UniswapTradeService {
+    private static let timerFramePerSecond = 30
+
     private var disposeBag = DisposeBag()
+    private var refreshTimerDisposeBag = DisposeBag()
+    private var swapDataDisposeBag = DisposeBag()
+
     private static let warningPriceImpact: Decimal = 1
     private static let forbiddenPriceImpact: Decimal = 5
 
     private let uniswapProvider: UniswapProvider
-
-    private var swapDataDisposeBag = DisposeBag()
+    let syncInterval: TimeInterval
 
     private var swapData: SwapData?
 
@@ -70,6 +74,8 @@ class UniswapTradeService {
         }
     }
 
+    private let countdownTimerRelay = PublishRelay<Float>()
+
     private let settingsRelay = PublishRelay<UniswapSettings>()
     var settings = UniswapSettings() {
         didSet {
@@ -80,6 +86,8 @@ class UniswapTradeService {
 
     init(uniswapProvider: UniswapProvider, state: SwapModule.DataSourceState, evmKit: EvmKit.Kit) {
         self.uniswapProvider = uniswapProvider
+        syncInterval = evmKit.chain.syncInterval
+
         tokenIn = state.tokenFrom
         tokenOut = state.tokenTo
         if state.exactFrom {
@@ -88,14 +96,32 @@ class UniswapTradeService {
             amountOut = state.amountTo ?? 0
         }
 
-        syncSwapData()
-
         evmKit.lastBlockHeightObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] blockNumber in
                     self?.syncSwapData()
                 })
                 .disposed(by: disposeBag)
+
+        syncSwapData()
+    }
+
+    private func syncTimer() {
+        refreshTimerDisposeBag = DisposeBag()
+        let countdownValue = Int(syncInterval) * Self.timerFramePerSecond
+
+        Observable<Int>
+                .interval(.milliseconds(1000 / Self.timerFramePerSecond), scheduler: ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .map {
+                    countdownValue - $0
+                }
+                .takeUntil(.inclusive, predicate: { $0 == 0 })
+                .subscribe(onNext: { [weak self] value in
+                    self?.countdownTimerRelay.accept(Float(value) / Float(countdownValue))
+                }, onCompleted: { [weak self] in
+                    self?.syncSwapData()
+                })
+                .disposed(by: refreshTimerDisposeBag)
     }
 
     private func syncSwapData() {
@@ -105,10 +131,11 @@ class UniswapTradeService {
         }
 
         swapDataDisposeBag = DisposeBag()
+        syncTimer()
 
-        if swapData == nil {
+//        if swapData == nil {
             state = .loading
-        }
+//        }
 
         uniswapProvider
                 .swapDataSingle(tokenIn: tokenIn, tokenOut: tokenOut)
@@ -177,6 +204,10 @@ extension UniswapTradeService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
+    }
+
+    var countdownTimerObservable: Observable<Float> {
+        countdownTimerRelay.asObservable()
     }
 
     var tradeTypeObservable: Observable<TradeType> {
