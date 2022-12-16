@@ -28,6 +28,8 @@ class App {
     let reachabilityManager: IReachabilityManager
     let networkManager: NetworkManager
 
+    let testNetManager: TestNetManager
+
     let accountManager: AccountManager
     let accountRestoreWarningManager: AccountRestoreWarningManager
     let accountFactory: AccountFactory
@@ -141,6 +143,8 @@ class App {
         pasteboardManager = PasteboardManager()
         reachabilityManager = ReachabilityManager()
 
+        testNetManager = TestNetManager(localStorage: StorageKit.LocalStorage.default)
+
         let accountRecordStorage = AccountRecordStorage(dbPool: dbPool)
         let accountStorage = AccountStorage(secureStorage: keychainKit.secureStorage, storage: accountRecordStorage)
         let activeAccountStorage = ActiveAccountStorage(dbPool: dbPool)
@@ -153,8 +157,8 @@ class App {
         kitCleaner = KitCleaner(accountManager: accountManager)
 
         let enabledWalletStorage = EnabledWalletStorage(dbPool: dbPool)
-        let walletStorage = WalletStorage(marketKit: marketKit, storage: enabledWalletStorage)
-        walletManager = WalletManager(accountManager: accountManager, storage: walletStorage)
+        let walletStorage = WalletStorage(marketKit: marketKit, testNetManager: testNetManager, storage: enabledWalletStorage)
+        walletManager = WalletManager(accountManager: accountManager, testNetManager: testNetManager, storage: walletStorage)
 
         coinManager = CoinManager(marketKit: marketKit, walletManager: walletManager)
 
@@ -168,7 +172,7 @@ class App {
         evmAccountRestoreStateManager = EvmAccountRestoreStateManager(storage: evmAccountRestoreStateStorage)
 
         let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, evmAccountRestoreStateManager: evmAccountRestoreStateManager, marketKit: marketKit)
-        evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
+        evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, testNetManager: testNetManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
 
         let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
 

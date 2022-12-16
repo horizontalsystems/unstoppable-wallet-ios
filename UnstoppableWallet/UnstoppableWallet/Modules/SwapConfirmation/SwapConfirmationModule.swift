@@ -10,7 +10,12 @@ struct SwapConfirmationModule {
             return nil
         }
 
-        guard let coinServiceFactory = EvmCoinServiceFactory(blockchainType: dex.blockchainType, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit) else {
+        guard let coinServiceFactory = EvmCoinServiceFactory(
+                blockchainType: dex.blockchainType,
+                marketKit: App.shared.marketKit,
+                currencyKit: App.shared.currencyKit,
+                evmBlockchainManager: App.shared.evmBlockchainManager
+        ) else {
             return nil
         }
 
@@ -36,7 +41,12 @@ struct SwapConfirmationModule {
 
         let oneInchProvider = OneInchProvider(swapKit: swapKit)
 
-        guard let coinServiceFactory = EvmCoinServiceFactory(blockchainType: dex.blockchainType, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit) else {
+        guard let coinServiceFactory = EvmCoinServiceFactory(
+                blockchainType: dex.blockchainType,
+                marketKit: App.shared.marketKit,
+                currencyKit: App.shared.currencyKit,
+                evmBlockchainManager: App.shared.evmBlockchainManager
+        ) else {
             return nil
         }
 

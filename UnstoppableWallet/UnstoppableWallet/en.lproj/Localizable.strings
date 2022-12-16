@@ -838,6 +838,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
+"settings.experimental_features.test_net_enabled" = "Enable TestNet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
@@ -866,11 +867,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings_security.title" = "Security Center";
 "settings_security.passcode" = "Passcode";
 "settings_security.change_pin" = "Edit Passcode";
-"settings_security.show_test_net_blockchains" = "Show TestNet Blockchains";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
 "settings_security.blockchain_settings" = "Blockchain Settings";
-"settings_security.test_net_settings" = "TestNet Settings";
 "security_settings.delete_alert_button" = "Delete from Phone";
 
 "btc_blockchain_settings.restore_source" = "Restore Source";

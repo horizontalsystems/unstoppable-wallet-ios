@@ -36,8 +36,13 @@ class EvmSyncSourceManager {
         case .ethereumGoerli:
             return [
                 EvmSyncSource(
-                        name: "Ankr",
-                        rpcSource: .http(urls: [URL(string: "https://rpc.ankr.com/eth_goerli")!], auth: nil),
+                        name: "Infura WebSocket",
+                        rpcSource: .goerliInfuraWebsocket(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
+                        transactionSource: .goerliEtherscan(apiKey: appConfigProvider.etherscanKey)
+                ),
+                EvmSyncSource(
+                        name: "Infura HTTP",
+                        rpcSource: .goerliInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
                         transactionSource: .goerliEtherscan(apiKey: appConfigProvider.etherscanKey)
                 )
             ]

@@ -5,15 +5,28 @@ import RxSwift
 import StorageKit
 
 class TestNetManager {
-    static let instance = TestNetManager()
+    private let keyTestNetEnabled = "test-net-enabled"
 
-    let localStorage: LocalStorage
+    private let localStorage: ILocalStorage
     private let disposeBag = DisposeBag()
 
-    private let testNetModeUpdatedRelay = PublishRelay<Bool>()
+    private let testNetEnabledRelay = PublishRelay<Bool>()
 
-    init() {
-        localStorage = LocalStorage(storage: StorageKit.LocalStorage.default) // avoid create instance through App.shared
+    var testNetEnabled: Bool {
+        didSet {
+            guard oldValue != testNetEnabled else {
+                return
+            }
+
+            localStorage.set(value: testNetEnabled, for: keyTestNetEnabled)
+            testNetEnabledRelay.accept(testNetEnabled)
+        }
+    }
+
+    init(localStorage: ILocalStorage) {
+        self.localStorage = localStorage
+
+        testNetEnabled = localStorage.value(for: keyTestNetEnabled) ?? false
     }
 
     private var blockchainTypes: [BlockchainType] {
@@ -21,23 +34,19 @@ class TestNetManager {
     }
 
     var blockchains: [Blockchain] {
-        guard localStorage.testNetMode else {
-            return []
+        blockchainTypes.compactMap {
+            blockchain(blockchainType: $0)
         }
-        return blockchainTypes.compactMap { blockchain(blockchainType: $0) }
     }
 
-    func nativeTokens(filter: String? = nil) -> [Token] {
-        guard localStorage.testNetMode else {
-            return []
+    var baseTokens: [Token] {
+        blockchainTypes.compactMap { baseToken(blockchainType: $0) }
+    }
+
+    func baseTokens(filter: String) -> [Token] {
+        baseTokens.filter { token in
+            token.coin.name.lowercased().contains(filter.lowercased()) || token.coin.code.lowercased().contains(filter.lowercased())
         }
-        let tokens = blockchainTypes.compactMap { nativeToken(blockchainType: $0) }
-        if let filter = filter?.lowercased() {
-            return tokens.filter { token in
-                token.coin.name.lowercased().contains(filter) || token.coin.code.lowercased().contains(filter)
-            }
-        }
-        return tokens
     }
 
     func blockchain(blockchainType: BlockchainType) -> Blockchain? {
@@ -47,7 +56,7 @@ class TestNetManager {
         }
     }
 
-    func nativeToken(blockchainType: BlockchainType) -> Token? {
+    func baseToken(blockchainType: BlockchainType) -> Token? {
         guard let blockchain = blockchain(blockchainType: blockchainType) else {
             return nil
         }
@@ -55,7 +64,7 @@ class TestNetManager {
         switch blockchainType {
         case .ethereumGoerli:
             return Token(
-                    coin: Coin(uid: "ethereum", name: "Ethereum", code: "ETH"),
+                    coin: Coin(uid: "ethereum-goerli", name: "Ethereum Goerli", code: "gETH"),
                     blockchain: blockchain,
                     type: .native,
                     decimals: 18
@@ -64,37 +73,12 @@ class TestNetManager {
         }
     }
 
-    // Analog MarketKit methods for Tokens and blockchains
-
-    // get testNet hardcoded tokens
-    func tokens(queries: [TokenQuery]) throws -> [Token] {
-        queries.compactMap { query in
-            // For now can return only native tokens
-            guard query.tokenType == .native else {
-                return nil
-            }
-
-            return nativeToken(blockchainType: query.blockchainType)
-        }
-    }
-
 }
 
 extension TestNetManager {
 
-    var testNetMode: Bool {
-        get { localStorage.testNetMode }
-        set {
-            guard localStorage.testNetMode != newValue else {
-                return
-            }
-            localStorage.testNetMode = newValue
-            testNetModeUpdatedRelay.accept(newValue)
-        }
-    }
-    
-    var testNetModeUpdatedObservable: Observable<Bool> {
-        testNetModeUpdatedRelay.asObservable()
+    var testNetEnabledObservable: Observable<Bool> {
+        testNetEnabledRelay.asObservable()
     }
 
 }
