@@ -18,7 +18,12 @@ struct WalletConnectSendEthereumTransactionRequestModule {
             return nil
         }
 
-        guard let coinServiceFactory = EvmCoinServiceFactory(blockchainType: evmKitWrapper.blockchainType, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit) else {
+        guard let coinServiceFactory = EvmCoinServiceFactory(
+                blockchainType: evmKitWrapper.blockchainType,
+                marketKit: App.shared.marketKit,
+                currencyKit: App.shared.currencyKit,
+                evmBlockchainManager: App.shared.evmBlockchainManager
+        ) else {
             return nil
         }
 

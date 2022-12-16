@@ -245,7 +245,7 @@ class MainSettingsViewController: ThemeViewController {
                     title: "settings.experimental_features".localized,
                     isLast: true,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(ExperimentalFeaturesRouter.module(), animated: true)
+                        self?.navigationController?.pushViewController(ExperimentalFeaturesModule.viewController(), animated: true)
                     }
             )
         ]

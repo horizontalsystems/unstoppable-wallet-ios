@@ -9,7 +9,6 @@ class SecuritySettingsViewModel {
 
     private let pinViewItemRelay = BehaviorRelay<PinViewItem>(value: PinViewItem(enabled: false, editVisible: false, biometryViewItem: nil))
     private let blockchainViewItemsRelay = BehaviorRelay<[BlockchainViewItem]>(value: [])
-    private let testNetModeRelay = BehaviorRelay<Bool>(value: false)
     private let showErrorRelay = PublishRelay<String>()
     private let openSetPinRelay = PublishRelay<()>()
     private let openUnlockRelay = PublishRelay<()>()
@@ -21,11 +20,9 @@ class SecuritySettingsViewModel {
 
         subscribe(disposeBag, service.pinItemObservable) { [weak self] in self?.sync(pinItem: $0) }
         subscribe(disposeBag, service.blockchainItemsObservable) { [weak self] in self?.sync(blockchainItems: $0) }
-        subscribe(disposeBag, service.testNetModeObservable) { [weak self] in self?.testNetModeRelay.accept($0) }
 
         sync(pinItem: service.pinItem)
         sync(blockchainItems: service.blockchainItems)
-        testNetModeRelay.accept(service.testNetMode)
     }
 
     private func sync(pinItem: SecuritySettingsService.PinItem) {
@@ -87,10 +84,6 @@ extension SecuritySettingsViewModel {
         blockchainViewItemsRelay.asDriver()
     }
 
-    var testNetModeDriver: Driver<Bool> {
-        testNetModeRelay.asDriver()
-    }
-
     var showErrorSignal: Signal<String> {
         showErrorRelay.asSignal()
     }
@@ -121,10 +114,6 @@ extension SecuritySettingsViewModel {
 
     func onToggleBiometry(isOn: Bool) {
         service.toggleBiometry(isOn: isOn)
-    }
-
-    func onToggleTestNetMode(isOn: Bool) {
-        service.testNetMode = isOn
     }
 
     func onUnlock() -> Bool {

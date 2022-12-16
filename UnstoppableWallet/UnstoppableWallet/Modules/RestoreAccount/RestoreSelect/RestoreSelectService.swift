@@ -22,6 +22,7 @@ class RestoreSelectService {
     private let accountFactory: AccountFactory
     private let accountManager: AccountManager
     private let walletManager: WalletManager
+    private let testNetManager: TestNetManager
     private let evmAccountRestoreStateManager: EvmAccountRestoreStateManager
     private let marketKit: MarketKit.Kit
     private let enableCoinService: EnableCoinService
@@ -42,11 +43,12 @@ class RestoreSelectService {
         }
     }
 
-    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, evmAccountRestoreStateManager: EvmAccountRestoreStateManager, marketKit: MarketKit.Kit, enableCoinService: EnableCoinService) {
+    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, testNetManager: TestNetManager, evmAccountRestoreStateManager: EvmAccountRestoreStateManager, marketKit: MarketKit.Kit, enableCoinService: EnableCoinService) {
         self.accountType = accountType
         self.accountFactory = accountFactory
         self.accountManager = accountManager
         self.walletManager = walletManager
+        self.testNetManager = testNetManager
         self.evmAccountRestoreStateManager = evmAccountRestoreStateManager
         self.marketKit = marketKit
         self.enableCoinService = enableCoinService
@@ -67,15 +69,18 @@ class RestoreSelectService {
 
     private func syncInternalItems() {
         do {
-            let allowedBlockchainTypes = blockchainTypes.filter { $0.supports(accountType: self.accountType)}
-            let tokens = try marketKit.tokens(queries: allowedBlockchainTypes.map { TokenQuery(blockchainType: $0, tokenType: .native) })
+            let allowedBlockchainTypes = blockchainTypes.filter { $0.supports(accountType: accountType)}
+            let marketTokens = try marketKit.tokens(queries: allowedBlockchainTypes.map { TokenQuery(blockchainType: $0, tokenType: .native) })
 
-            let allTestNetTokens = TestNetManager.instance.nativeTokens()
-            let testNetTokens = allTestNetTokens.filter { $0.blockchainType.supports(accountType: self.accountType)}
+            var allTokens = allowedBlockchainTypes.sorted { $0.order < $1.order }.compactMap { type in
+                marketTokens.first { $0.blockchainType == type }
+            }
 
-            self.tokens = allowedBlockchainTypes.sorted { $0.order < $1.order }.compactMap { type in
-                tokens.first { $0.blockchainType == type }
-            } + testNetTokens
+            if testNetManager.testNetEnabled {
+                allTokens += testNetManager.baseTokens.filter { $0.blockchainType.supports(accountType: accountType)}
+            }
+
+            tokens = allTokens
         } catch {
             // todo
         }

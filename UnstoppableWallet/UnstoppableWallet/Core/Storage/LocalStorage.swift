@@ -16,7 +16,6 @@ class LocalStorage {
     private let keyRateAppLastRequestDate = "rate_app_last_request_date"
     private let keyZCashRewind = "z_cash_always_pending_rewind"
     private let keyDefaultProvider = "swap_provider"
-    private let keyTestNetMode = "test-net-mode"
 
     private let storage: StorageKit.ILocalStorage
 
@@ -66,11 +65,6 @@ extension LocalStorage {
     var zcashAlwaysPendingRewind: Bool {
         get { storage.value(for: keyZCashRewind) ?? false }
         set { storage.set(value: newValue, for: keyZCashRewind) }
-    }
-
-    var testNetMode: Bool {
-        get { storage.value(for: keyTestNetMode) ?? false }
-        set { storage.set(value: newValue, for: keyTestNetMode) }
     }
 
     func defaultProvider(blockchainType: BlockchainType) -> SwapModule.Dex.Provider {

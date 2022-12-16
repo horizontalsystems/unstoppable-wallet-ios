@@ -24,8 +24,6 @@ class SecuritySettingsService {
         }
     }
 
-    private let testNetModeRelay = PublishRelay<Bool>()
-
     init(pinKit: IPinKit, btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager) {
         self.pinKit = pinKit
         self.btcBlockchainManager = btcBlockchainManager
@@ -37,7 +35,6 @@ class SecuritySettingsService {
         subscribe(disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] _ in self?.syncBlockchainItems() }
         subscribe(disposeBag, btcBlockchainManager.transactionSortModeUpdatedObservable) { [weak self] _ in self?.syncBlockchainItems() }
         subscribe(disposeBag, evmSyncSourceManager.syncSourceObservable) { [weak self] _ in self?.syncBlockchainItems() }
-        subscribe(disposeBag, TestNetManager.instance.testNetModeUpdatedObservable) { [weak self] _ in self?.syncTestNetMode() }
 
         syncPinItem()
         syncBlockchainItems()
@@ -62,11 +59,6 @@ class SecuritySettingsService {
         blockchainItems = (btcBlockchainItems + evmBlockchainItems).sorted { $0.blockchainType.order < $1.blockchainType.order }
     }
 
-    private func syncTestNetMode() {
-        testNetModeRelay.accept(testNetMode)
-        syncBlockchainItems()
-    }
-
 }
 
 extension SecuritySettingsService {
@@ -77,15 +69,6 @@ extension SecuritySettingsService {
 
     var blockchainItemsObservable: Observable<[BlockchainItem]> {
         blockchainItemsRelay.asObservable()
-    }
-
-    var testNetModeObservable: Observable<Bool> {
-        testNetModeRelay.asObservable()
-    }
-
-    var testNetMode: Bool {
-        get { TestNetManager.instance.testNetMode }
-        set { TestNetManager.instance.testNetMode = newValue }
     }
 
     func toggleBiometry(isOn: Bool) {

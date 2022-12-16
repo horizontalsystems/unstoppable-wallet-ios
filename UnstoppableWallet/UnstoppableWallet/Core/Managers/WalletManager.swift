@@ -5,6 +5,7 @@ import MarketKit
 
 class WalletManager {
     private let accountManager: AccountManager
+    private let testNetManager: TestNetManager
     private let storage: WalletStorage
     private let disposeBag = DisposeBag()
 
@@ -14,13 +15,14 @@ class WalletManager {
 
     private var cachedActiveWallets = [Wallet]()
 
-    init(accountManager: AccountManager, storage: WalletStorage) {
+    init(accountManager: AccountManager, testNetManager: TestNetManager, storage: WalletStorage) {
         self.accountManager = accountManager
+        self.testNetManager = testNetManager
         self.storage = storage
 
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] _ in self?.reloadWallets() }
         subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.handleDelete(account: $0) }
-        subscribe(disposeBag, TestNetManager.instance.testNetModeUpdatedObservable) { [weak self] in self?.handleDisableTestNet(mode: $0) }
+        subscribe(disposeBag, testNetManager.testNetEnabledObservable) { [weak self] _ in self?.reloadWallets() }
     }
 
     private func handleDelete(account: Account) {
@@ -30,21 +32,6 @@ class WalletManager {
         } catch {
             // todo
         }
-    }
-
-    private func handleDisableTestNet(mode: Bool) {
-        // If testNet was disabled, we need remove all testNet wallets
-        guard !mode else {
-            return
-        }
-
-        let allTestNetWallets = accountManager
-                .accounts
-                .map { account in
-                    wallets(account: account)
-                        .filter { wallet in wallet.token.blockchainType.isTestNet }
-        }
-        handle(newWallets: [], deletedWallets: allTestNetWallets.flatMap { $0 })
     }
 
     private var activeAccountWallets: [Wallet] {

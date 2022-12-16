@@ -1891,7 +1891,7 @@
 		2FA5D4248B5AA0F0EDF131F4 /* EvmTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D682FBA971A9D1A09B2D /* EvmTransactionRecord.swift */; };
 		2FA5D4353952CBFF0538EB74 /* Eip1559GasPriceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB7EF0F3DCEF76C02201 /* Eip1559GasPriceService.swift */; };
 		2FA5D47663BD8C2F6E4DE912 /* PassphraseValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D8B800E26DE7DE21FC60 /* PassphraseValidator.swift */; };
-		2FA5D4911967E0DC4E7477C1 /* ExperimentalFeaturesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesRouter.swift */; };
+		2FA5D4911967E0DC4E7477C1 /* ExperimentalFeaturesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesService.swift */; };
 		2FA5D4BE55E8AB193EA61411 /* BinanceChainIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE7E78C640A9EA13C1DA /* BinanceChainIncomingTransactionRecord.swift */; };
 		2FA5D4C4D13E610DA6009C48 /* CoinOverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D4E16E60866549E0CD48 /* CoinOverviewViewModel.swift */; };
 		2FA5D4EB5405131B9635E958 /* FeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D5B2E57E92B6EF057356 /* FeeCell.swift */; };
@@ -1939,14 +1939,14 @@
 		2FA5D9CF403868B54CD4008A /* Eip1559EvmFeeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDF215D171796AA34FE /* Eip1559EvmFeeViewModel.swift */; };
 		2FA5D9E03826EE05AA6A83C3 /* PassphraseValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D8B800E26DE7DE21FC60 /* PassphraseValidator.swift */; };
 		2FA5DA0DBBA1904CEF51F5F2 /* ContractCallTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D008CA69267C8E5E00001E0A /* ContractCallTransactionRecord.swift */; };
-		2FA5DA1EA4F381B056AA6BF5 /* ExperimentalFeaturesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesRouter.swift */; };
+		2FA5DA1EA4F381B056AA6BF5 /* ExperimentalFeaturesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesService.swift */; };
 		2FA5DA30F665BF2C170210C8 /* Eip1559EvmFeeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D5BC7249DDB680769ADD /* Eip1559EvmFeeViewController.swift */; };
 		2FA5DA5C9188AA17B01953E7 /* SelectableValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE415A04A29B90C59105 /* SelectableValueView.swift */; };
 		2FA5DA8B816A4B089A4F01AF /* BitcoinOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB4238F9CFEA3A2727F5 /* BitcoinOutgoingTransactionRecord.swift */; };
 		2FA5DA94DBD9352B220C99F8 /* ReferencedTweetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D3702C6DB42E31313C68 /* ReferencedTweetView.swift */; };
 		2FA5DAE5B2B8F5176ACC5345 /* EditableFeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D56B8464B569D51C9176 /* EditableFeeCell.swift */; };
 		2FA5DAFBFC02E2E70EA0D971 /* HdWalletExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DA265C9608D0BCF88F17 /* HdWalletExtensions.swift */; };
-		2FA5DB038770943B8248FCAA /* ExperimentalFeaturesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDE33019B5FEA33994A /* ExperimentalFeaturesPresenter.swift */; };
+		2FA5DB038770943B8248FCAA /* ExperimentalFeaturesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDE33019B5FEA33994A /* ExperimentalFeaturesViewModel.swift */; };
 		2FA5DB27EB552BF53BC3E829 /* EvmTransactionsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD0A8C1E757651F3CA3B /* EvmTransactionsAdapter.swift */; };
 		2FA5DB37109D2D004B8946CF /* FeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D5B2E57E92B6EF057356 /* FeeCell.swift */; };
 		2FA5DB3B49EF898B63DD0F94 /* KitCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */; };
@@ -1961,7 +1961,7 @@
 		2FA5DBE42827FF3D114DBF4B /* CoinOverviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D85022014B00241B6913 /* CoinOverviewService.swift */; };
 		2FA5DC0554CE24AE27663585 /* EvmTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D682FBA971A9D1A09B2D /* EvmTransactionRecord.swift */; };
 		2FA5DC0EF03C92C2125D433E /* BinanceChainOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF5B8B69876A526CCDDD /* BinanceChainOutgoingTransactionRecord.swift */; };
-		2FA5DC1810B0E8149926622A /* ExperimentalFeaturesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDE33019B5FEA33994A /* ExperimentalFeaturesPresenter.swift */; };
+		2FA5DC1810B0E8149926622A /* ExperimentalFeaturesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDE33019B5FEA33994A /* ExperimentalFeaturesViewModel.swift */; };
 		2FA5DC3DD21A29F4370DFDC4 /* BitcoinTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D2B93C053ABB9445C148 /* BitcoinTransactionRecord.swift */; };
 		2FA5DC4BBDF469873662BDEE /* Eip1559EvmFeeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDF215D171796AA34FE /* Eip1559EvmFeeViewModel.swift */; };
 		2FA5DC6DC976D88C1E578403 /* UnknownSwapTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF48D44BB409FB94CED9 /* UnknownSwapTransactionRecord.swift */; };
@@ -1975,7 +1975,7 @@
 		2FA5DD18B3869199E0BEF72A /* KitCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */; };
 		2FA5DD548E613061C92568E2 /* FeeSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D7B23083DC896CC58A44 /* FeeSliderCell.swift */; };
 		2FA5DD5B94905A977FEC3BE4 /* LogRecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D690E78A4568F9FD9554 /* LogRecordManager.swift */; };
-		2FA5DD621ABED0867ABBA8D4 /* ExperimentalFeaturesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDE33019B5FEA33994A /* ExperimentalFeaturesPresenter.swift */; };
+		2FA5DD621ABED0867ABBA8D4 /* ExperimentalFeaturesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDE33019B5FEA33994A /* ExperimentalFeaturesViewModel.swift */; };
 		2FA5DD8CA454D10CB81000F8 /* BitcoinOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB4238F9CFEA3A2727F5 /* BitcoinOutgoingTransactionRecord.swift */; };
 		2FA5DD9118E6B66D13EE0D1E /* EvmFeeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D5C517642B0D41C31032 /* EvmFeeService.swift */; };
 		2FA5DDA1D6BCD69D9A1E00A6 /* TransactionInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D657FD86FE9B675B475D /* TransactionInfoViewModel.swift */; };
@@ -1997,7 +1997,7 @@
 		2FA5DEC4C3A9705DA2A1B6C5 /* BitcoinIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE3FC4EA4B42BC982C9A /* BitcoinIncomingTransactionRecord.swift */; };
 		2FA5DEDEAF3C1D6251B47CB4 /* TransactionInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D522776FF4B8C5AE472F /* TransactionInfoModule.swift */; };
 		2FA5DEFAABB33E826E2DA4B9 /* UnknownSwapTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF48D44BB409FB94CED9 /* UnknownSwapTransactionRecord.swift */; };
-		2FA5DF0F2378EB4850BAE9AF /* ExperimentalFeaturesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesRouter.swift */; };
+		2FA5DF0F2378EB4850BAE9AF /* ExperimentalFeaturesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesService.swift */; };
 		2FA5DF327EC188AC29719179 /* CoinOverviewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D306FC6B912AE5494926 /* CoinOverviewModule.swift */; };
 		2FA5DF4BB73C12C8DDF42599 /* CoinOverviewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D306FC6B912AE5494926 /* CoinOverviewModule.swift */; };
 		2FA5DF596B5EE00090E050D9 /* CoinOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DA1F5A41E633A244DAD1 /* CoinOverviewViewController.swift */; };
@@ -3933,7 +3933,7 @@
 		2FA5DB7EF0F3DCEF76C02201 /* Eip1559GasPriceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Eip1559GasPriceService.swift; sourceTree = "<group>"; };
 		2FA5DBA901685468016F595A /* EvmFeeModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmFeeModule.swift; sourceTree = "<group>"; };
 		2FA5DC1396F20FC90B033146 /* ExperimentalFeaturesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentalFeaturesViewController.swift; sourceTree = "<group>"; };
-		2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentalFeaturesRouter.swift; sourceTree = "<group>"; };
+		2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentalFeaturesService.swift; sourceTree = "<group>"; };
 		2FA5DCFA4D46BD41B6EB020B /* TweetPollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetPollView.swift; sourceTree = "<group>"; };
 		2FA5DD0A8C1E757651F3CA3B /* EvmTransactionsAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmTransactionsAdapter.swift; sourceTree = "<group>"; };
 		2FA5DD13ED115F4177BE09AB /* ContractCreationTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractCreationTransactionRecord.swift; sourceTree = "<group>"; };
@@ -3945,7 +3945,7 @@
 		2FA5DE3FC4EA4B42BC982C9A /* BitcoinIncomingTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinIncomingTransactionRecord.swift; sourceTree = "<group>"; };
 		2FA5DE415A04A29B90C59105 /* SelectableValueView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectableValueView.swift; sourceTree = "<group>"; };
 		2FA5DE7E78C640A9EA13C1DA /* BinanceChainIncomingTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinanceChainIncomingTransactionRecord.swift; sourceTree = "<group>"; };
-		2FA5DEDE33019B5FEA33994A /* ExperimentalFeaturesPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentalFeaturesPresenter.swift; sourceTree = "<group>"; };
+		2FA5DEDE33019B5FEA33994A /* ExperimentalFeaturesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentalFeaturesViewModel.swift; sourceTree = "<group>"; };
 		2FA5DEDF215D171796AA34FE /* Eip1559EvmFeeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Eip1559EvmFeeViewModel.swift; sourceTree = "<group>"; };
 		2FA5DEEA5C3A80D310255459 /* BinanceChainTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinanceChainTransactionRecord.swift; sourceTree = "<group>"; };
 		2FA5DF48D44BB409FB94CED9 /* UnknownSwapTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownSwapTransactionRecord.swift; sourceTree = "<group>"; };
@@ -7254,8 +7254,8 @@
 			children = (
 				11B354C7DAF66152BB8BADAC /* BitcoinHodling */,
 				2FA5D106113680415EF6A168 /* ExperimentalFeaturesModule.swift */,
-				2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesRouter.swift */,
-				2FA5DEDE33019B5FEA33994A /* ExperimentalFeaturesPresenter.swift */,
+				2FA5DC34FD081A36371936F2 /* ExperimentalFeaturesService.swift */,
+				2FA5DEDE33019B5FEA33994A /* ExperimentalFeaturesViewModel.swift */,
 				2FA5DC1396F20FC90B033146 /* ExperimentalFeaturesViewController.swift */,
 			);
 			path = ExperimentalFeatures;
@@ -7817,9 +7817,9 @@
 				2FA5D73715BE820783EEFF24 /* BitcoinCore+Hodler.swift in Sources */,
 				3A73FC6F258B1AD200FE4D34 /* MarketModule.swift in Sources */,
 				2FA5D5D15AE4070651ADF157 /* SelectableValueView.swift in Sources */,
-				2FA5DA1EA4F381B056AA6BF5 /* ExperimentalFeaturesRouter.swift in Sources */,
+				2FA5DA1EA4F381B056AA6BF5 /* ExperimentalFeaturesService.swift in Sources */,
 				2FA5D0F5743677018C56979D /* ExperimentalFeaturesModule.swift in Sources */,
-				2FA5DD621ABED0867ABBA8D4 /* ExperimentalFeaturesPresenter.swift in Sources */,
+				2FA5DD621ABED0867ABBA8D4 /* ExperimentalFeaturesViewModel.swift in Sources */,
 				2FA5D1BF52B8C0F392BDBF7C /* ExperimentalFeaturesViewController.swift in Sources */,
 				11B35DCBA7142ACFE401FA4A /* BitcoinHodlingRouter.swift in Sources */,
 				11B352B132162C8B4DC8268F /* BitcoinHodlingViewController.swift in Sources */,
@@ -8860,9 +8860,9 @@
 				2FA5D2FE81DA1FB5A63C2D7C /* BitcoinCore+Hodler.swift in Sources */,
 				3A73FC6A258B1AD200FE4D34 /* MarketModule.swift in Sources */,
 				2FA5DA5C9188AA17B01953E7 /* SelectableValueView.swift in Sources */,
-				2FA5D4911967E0DC4E7477C1 /* ExperimentalFeaturesRouter.swift in Sources */,
+				2FA5D4911967E0DC4E7477C1 /* ExperimentalFeaturesService.swift in Sources */,
 				2FA5D17AB937C5C15BA3BAE0 /* ExperimentalFeaturesModule.swift in Sources */,
-				2FA5DC1810B0E8149926622A /* ExperimentalFeaturesPresenter.swift in Sources */,
+				2FA5DC1810B0E8149926622A /* ExperimentalFeaturesViewModel.swift in Sources */,
 				2FA5DB996067F4B2961DCB04 /* ExperimentalFeaturesViewController.swift in Sources */,
 				11B35A3A813D031480F98A23 /* BitcoinHodlingRouter.swift in Sources */,
 				11B3560FB798144F1D8FD300 /* BitcoinHodlingViewController.swift in Sources */,
@@ -9901,9 +9901,9 @@
 				D36DE0E1272FD887000BC916 /* OneInchProvider.swift in Sources */,
 				2FA5DCD660736071655E8059 /* SelectableValueView.swift in Sources */,
 				3A73FC69258B1AD100FE4D34 /* MarketModule.swift in Sources */,
-				2FA5DF0F2378EB4850BAE9AF /* ExperimentalFeaturesRouter.swift in Sources */,
+				2FA5DF0F2378EB4850BAE9AF /* ExperimentalFeaturesService.swift in Sources */,
 				2FA5D914A678911785854772 /* ExperimentalFeaturesModule.swift in Sources */,
-				2FA5DB038770943B8248FCAA /* ExperimentalFeaturesPresenter.swift in Sources */,
+				2FA5DB038770943B8248FCAA /* ExperimentalFeaturesViewModel.swift in Sources */,
 				2FA5D74C17DF76E56FA0A96E /* ExperimentalFeaturesViewController.swift in Sources */,
 				11B353960FC8EFB25B362F30 /* BitcoinHodlingRouter.swift in Sources */,
 				11B35E634E0B3176F3CF56E0 /* BitcoinHodlingViewController.swift in Sources */,
