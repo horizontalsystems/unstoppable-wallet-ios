@@ -30,6 +30,7 @@
 "alert.wrong_amount" = "Cantidad Incorrecta";
 "alert.no_fee" = "Tarifa Incorrecta";
 "alert.warning" = "Aviso";
+"alert.error" = "Error";
 "alert.unknown_error" = "Error Desconocido";
 "alert.success_action" = "Listo";
 
@@ -38,7 +39,7 @@
 "alert.added_to_wallet" = "Agregar a Wallet";
 "alert.already_added_to_wallet" = "Ya se ha añadido a Wallet";
 "alert.not_supported_yet" = "Aún no compatible";
-"alert.copied" = "Copiado";
+"alert.copied" = "Copied";
 "alert.created" = "Creado";
 "alert.restored" = "Restaurado ";
 "alert.address_added" = "Dirección añadida";
@@ -374,6 +375,7 @@
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Dirección del destinatario";
 "swap.advanced_settings.warning.unusual_slippage" = "Su transacción puede ser anticipada";
+"swap.advanced_settings.service_fee_description" = "A service fee for the swap action on the platform typicaly either 0.3% or 0.6%";
 "swap.advanced_settings.error.lower_slippage" = "Es probable que su transacción falle.";
 "swap.advanced_settings.error.higher_slippage" = "Tolerancia de deslizamiento no puede ser más de %@%%";
 "swap.advanced_settings.error.invalid_address" = "Dirección inválida";
@@ -396,6 +398,8 @@
 
 "swap.confirmation.swap_button" = "Permutar";
 "swap.confirmation.impact_too_high" = "La diferencia entre el precio de mercado y el precio esperado de liquidación es demasiado alta.";
+"swap.confirmation.minimum_received" = "Minimum Received";
+"swap.confirmation.maximum_sent" = "Maximum Sent";
 
 "swap.dex_info.description" = "Este servicio de intercambio está impulsado por %@, un intercambio de token descentralizado construido en %@ blockchain.\n\n%@ está completamente automatizado y administrado por contratos inteligentes que facilitan los intercambios de token de una manera conflaible y sin ninguna intención para hacer estafas.";
 
