@@ -30,6 +30,7 @@
 "alert.wrong_amount" = "잘못된 금액";
 "alert.no_fee" = "잘못된 요금";
 "alert.warning" = "경고";
+"alert.error" = "Error";
 "alert.unknown_error" = "알수없는 오류";
 "alert.success_action" = "완료";
 
@@ -38,7 +39,7 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "복사됨";
+"alert.copied" = "Copied";
 "alert.created" = "생성됨";
 "alert.restored" = "복구됨";
 "alert.address_added" = "주소 추가됨";
@@ -374,6 +375,7 @@
 "swap.advanced_settings.deadline_minute" = "최소 %@";
 "swap.advanced_settings.recipient_address" = "수취인 주소";
 "swap.advanced_settings.warning.unusual_slippage" = "거래가 프론트런 당할 수 있습니다";
+"swap.advanced_settings.service_fee_description" = "A service fee for the swap action on the platform typicaly either 0.3% or 0.6%";
 "swap.advanced_settings.error.lower_slippage" = "귀하의 거래가 실패할 것 같습니다.";
 "swap.advanced_settings.error.higher_slippage" = "슬리피지 허용 오차는 %@%%를 초과할 수 없습니다.";
 "swap.advanced_settings.error.invalid_address" = "잘못된 주소";
@@ -396,6 +398,8 @@
 
 "swap.confirmation.swap_button" = "스왑";
 "swap.confirmation.impact_too_high" = "시장 가격과 예상 결제 가격의 차이가 너무 큽니다.";
+"swap.confirmation.minimum_received" = "Minimum Received";
+"swap.confirmation.maximum_sent" = "Maximum Sent";
 
 "swap.dex_info.description" = "이 거래소 서비스는 %@ 블록체인에 구축된 분산형 토큰 교환 프로토콜인 %@에 의해 구동됩니다.\n\n%@는 스마트 계약에 의해 완전 자동화되고 관리되므로 부정 행위 없이 토큰 교환을 안정적으로 수행할 수 있습니다.";
 
