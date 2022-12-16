@@ -30,6 +30,7 @@
 "alert.wrong_amount" = "Неверная Сумма";
 "alert.no_fee" = "Неверная Комиссия";
 "alert.warning" = "Внимание";
+"alert.error" = "Error";
 "alert.unknown_error" = "Неизвестная Ошибка";
 "alert.success_action" = "Готово!";
 
@@ -38,7 +39,7 @@
 "alert.added_to_wallet" = "Добавлено в Кошелек";
 "alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Ещё не поддерживается";
-"alert.copied" = "Скопировано";
+"alert.copied" = "Copied";
 "alert.created" = "Создан";
 "alert.restored" = "Восстановлен";
 "alert.address_added" = "Адрес Добавлен";
@@ -376,6 +377,7 @@
 "swap.advanced_settings.deadline_minute" = "%@ мин";
 "swap.advanced_settings.recipient_address" = "Адрес Получателя";
 "swap.advanced_settings.warning.unusual_slippage" = "Ваша транзакция может быть подвержена фронтраннингу.";
+"swap.advanced_settings.service_fee_description" = "A service fee for the swap action on the platform typicaly either 0.3% or 0.6%";
 "swap.advanced_settings.error.lower_slippage" = "Ваша транзакция, скорее всего, не удастся.";
 "swap.advanced_settings.error.higher_slippage" = "Сопротивление скольжению не может превышать %@%%";
 "swap.advanced_settings.error.invalid_address" = "Неверный Адрес";
@@ -398,6 +400,8 @@
 
 "swap.confirmation.swap_button" = "Обменять";
 "swap.confirmation.impact_too_high" = "Разница между рыночной ценой и ожидаемой расчетной ценой слишком высока.";
+"swap.confirmation.minimum_received" = "Minimum Received";
+"swap.confirmation.maximum_sent" = "Maximum Sent";
 
 "swap.dex_info.description" = "Этот обменный сервис работает при поддержке %@ - децентрализованного протокола обмена токенов, созданного в блокчейне %@.\n\n%@ полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без осуществления каких-либо махинаций.";
 
