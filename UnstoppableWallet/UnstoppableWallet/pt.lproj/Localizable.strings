@@ -30,6 +30,7 @@
 "alert.wrong_amount" = "Quantia Errada";
 "alert.no_fee" = "Taxa Errada";
 "alert.warning" = "Aviso";
+"alert.error" = "Error";
 "alert.unknown_error" = "Erro Desconhecido";
 "alert.success_action" = "Concluído";
 
@@ -38,7 +39,7 @@
 "alert.added_to_wallet" = "Adicionado à Carteira";
 "alert.already_added_to_wallet" = "Já adicionado à carteira";
 "alert.not_supported_yet" = "Não suportado ainda";
-"alert.copied" = "Copiado";
+"alert.copied" = "Copied";
 "alert.created" = "Criado";
 "alert.restored" = "Restaurado";
 "alert.address_added" = "Endereço Adicionado";
@@ -376,6 +377,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Endereço do Destinatário";
 "swap.advanced_settings.warning.unusual_slippage" = "Sua operação pode ser de front-running";
+"swap.advanced_settings.service_fee_description" = "A service fee for the swap action on the platform typicaly either 0.3% or 0.6%";
 "swap.advanced_settings.error.lower_slippage" = "É provável que sua transação falhe.";
 "swap.advanced_settings.error.higher_slippage" = "Tolerância do Slippage não pode ser maior que %@%%";
 "swap.advanced_settings.error.invalid_address" = "Endereço Inválido";
@@ -398,6 +400,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "swap.confirmation.swap_button" = "Trocar";
 "swap.confirmation.impact_too_high" = "A diferença entre o preço de mercado e o preço de liquidação esperado é bastante elevada.";
+"swap.confirmation.minimum_received" = "Minimum Received";
+"swap.confirmation.maximum_sent" = "Maximum Sent";
 
 "swap.dex_info.description" = "Este serviço de troca é fornecido por %@, um protocolo descentralizado de troca de tokens construído na blockchain %@. \n\n%@ É totalmente automatizado e gerenciado por contratos inteligentes que facilitam a troca de tokens de uma forma confiável sem qualquer meio de trapaça.";
 
