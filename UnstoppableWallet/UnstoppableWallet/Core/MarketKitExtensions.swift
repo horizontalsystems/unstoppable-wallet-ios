@@ -299,7 +299,7 @@ extension MarketKit.BlockchainType {
             }
         case .evmPrivateKey, .evmAddress:
             switch self {
-            case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .ethereumGoerli: return true
+            case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne: return true
             default: return false
             }
         }
