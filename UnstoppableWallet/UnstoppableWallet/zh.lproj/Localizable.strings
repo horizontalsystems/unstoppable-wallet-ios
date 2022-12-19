@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "添加到钱包";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
-"alert.copied" = "Copied";
+"alert.copied" = "已复制";
 "alert.created" = "已创建";
 "alert.restored" = "已恢复";
 "alert.address_added" = "地址已添加";
@@ -556,9 +556,9 @@
 "market.global.tvl_in_defi.title" = "DeFi锁定";
 
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "24h成交量";
+"market.global.defi_cap.title" = "DeFi市值";
+"market.global.tvl_in_defi.title" = "DeFi锁定";
 "market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
 "market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
 "market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
@@ -838,6 +838,7 @@
 "settings.experimental_features.title" = "实验性";
 "settings.experimental_features.description" = "以下功能为实验性，应谨慎使用。虽然我们已使用自己的加密货币资金对这些功能进行了彻底测试，但是我们不保证它们在所有情况下都能如常工作。";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
+"settings.experimental_features.test_net_enabled" = "Enable TestNet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
