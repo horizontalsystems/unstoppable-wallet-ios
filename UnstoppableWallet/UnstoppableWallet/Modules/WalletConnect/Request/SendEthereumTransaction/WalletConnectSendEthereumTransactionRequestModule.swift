@@ -22,7 +22,8 @@ struct WalletConnectSendEthereumTransactionRequestModule {
                 blockchainType: evmKitWrapper.blockchainType,
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
-                evmBlockchainManager: App.shared.evmBlockchainManager
+                evmBlockchainManager: App.shared.evmBlockchainManager,
+                walletManager: App.shared.walletManager
         ) else {
             return nil
         }
