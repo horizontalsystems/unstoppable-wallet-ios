@@ -285,7 +285,7 @@ class App {
                 logger: logger
         )
         let walletConnectV2SessionStorage = WalletConnectV2SessionStorage(dbPool: dbPool)
-        walletConnectV2SessionManager = WalletConnectV2SessionManager(service: walletConnectV2Service, storage: walletConnectV2SessionStorage, accountManager: accountManager, currentDateProvider: CurrentDateProvider())
+        walletConnectV2SessionManager = WalletConnectV2SessionManager(service: walletConnectV2Service, storage: walletConnectV2SessionStorage, accountManager: accountManager, evmBlockchainManager: evmBlockchainManager, currentDateProvider: CurrentDateProvider(), testNetManager: testNetManager)
 
         deepLinkManager = DeepLinkManager()
         launchScreenManager = LaunchScreenManager(storage: StorageKit.LocalStorage.default)
