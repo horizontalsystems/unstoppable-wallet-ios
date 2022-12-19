@@ -64,7 +64,7 @@ class TestNetManager {
         switch blockchainType {
         case .ethereumGoerli:
             return Token(
-                    coin: Coin(uid: "ethereum-goerli", name: "Ethereum Goerli", code: "gETH"),
+                    coin: Coin(uid: "ethereum-goerli", name: "Ethereum Goerli", code: "GoerliETH"),
                     blockchain: blockchain,
                     type: .native,
                     decimals: 18
