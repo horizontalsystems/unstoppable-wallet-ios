@@ -3,6 +3,7 @@ import RxSwift
 import RxCocoa
 import WalletConnectSign
 import WalletConnectPairing
+import MarketKit
 
 class WalletConnectV2SessionManager {
     private let disposeBag = DisposeBag()
@@ -11,17 +12,21 @@ class WalletConnectV2SessionManager {
     private let storage: WalletConnectV2SessionStorage
     private let accountManager: AccountManager
     private let currentDateProvider: CurrentDateProvider
+    private let testNetManager: TestNetManager
+    private let evmBlockchainManager: EvmBlockchainManager
 
     private let sessionsRelay = BehaviorRelay<[WalletConnectSign.Session]>(value: [])
     private let activePendingRequestsRelay = BehaviorRelay<[WalletConnectSign.Request]>(value: [])
     private let pairingsRelay = BehaviorRelay<[WalletConnectPairing.Pairing]>(value: [])
     private let sessionRequestReceivedRelay = PublishRelay<WalletConnectRequest>()
 
-    init(service: WalletConnectV2Service, storage: WalletConnectV2SessionStorage, accountManager: AccountManager, currentDateProvider: CurrentDateProvider) {
+    init(service: WalletConnectV2Service, storage: WalletConnectV2SessionStorage, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, currentDateProvider: CurrentDateProvider, testNetManager: TestNetManager) {
         self.service = service
         self.storage = storage
         self.accountManager = accountManager
+        self.evmBlockchainManager = evmBlockchainManager
         self.currentDateProvider = currentDateProvider
+        self.testNetManager = testNetManager
 
         subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in
             self?.handleDeleted(account: $0)
@@ -40,6 +45,9 @@ class WalletConnectV2SessionManager {
         }
         subscribe(disposeBag, service.pairingUpdatedObservable) { [weak self] in
             self?.syncPairings()
+        }
+        subscribe(disposeBag, testNetManager.testNetEnabledObservable) { [weak self] in
+            self?.syncTestNetVisible(enabled: $0)
         }
 
         syncSessions()
@@ -62,7 +70,7 @@ class WalletConnectV2SessionManager {
             return
         }
 
-        let currentSessions = service.activeSessions
+        let currentSessions = allSessions
         let allDbSessions = storage.sessionsV2(accountId: nil)
         let dbTopics = allDbSessions.map {
             $0.topic
@@ -102,7 +110,7 @@ class WalletConnectV2SessionManager {
     }
 
     private func sessions(accountId: String, sessions: [WalletConnectSign.Session]?) -> [WalletConnectSign.Session] {
-        let sessions = sessions ?? service.activeSessions
+        let sessions = sessions ?? allSessions
         let dbSessions = storage.sessionsV2(accountId: accountId)
 
         let accountSessions = sessions.filter { session in
@@ -120,6 +128,19 @@ class WalletConnectV2SessionManager {
 
     private func syncPairings() {
         pairingsRelay.accept(service.pairings)
+    }
+
+    private func syncTestNetVisible(enabled: Bool) {
+        syncSessions()
+    }
+
+    private func isChainIdsEnabled(chainIds: [Int]) -> Bool {
+        chainIds.allSatisfy { id in
+            guard let blockchain = evmBlockchainManager.blockchain(chainId: id) else {
+                return false
+            }
+            return (testNetManager.testNetEnabled || !blockchain.type.isTestNet)
+        }
     }
 
     public func disconnectPairing(topic: String) -> Single<()> {
@@ -150,7 +171,9 @@ extension WalletConnectV2SessionManager {
     }
 
     public var allSessions: [WalletConnectSign.Session] {
-        service.activeSessions
+        service.activeSessions.filter { session in
+            isChainIdsEnabled(chainIds: session.chainIds)
+        }
     }
 
     public var sessionsObservable: Observable<[WalletConnectSign.Session]> {
