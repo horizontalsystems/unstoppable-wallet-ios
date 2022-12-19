@@ -40,7 +40,7 @@
 "alert.added_to_wallet" = "Cüzdana Eklendi";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
-"alert.copied" = "Copied";
+"alert.copied" = "Kopyalandı";
 "alert.created" = "Oluşturuldu";
 "alert.restored" = "Geri yüklendi ";
 "alert.address_added" = "Adres eklendi";
@@ -839,6 +839,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "settings.experimental_features.title" = "Deneysel";
 "settings.experimental_features.description" = "Aşağıdaki özellikler deneyseldir ve dikkatli kullanılmalıdır. Bu özellikleri kendi kripto fonlarımızı kullanarak baştan sona test etmemize rağmen, olası tüm durumlarda beklendiği gibi çalışmalarını garanti edemeyiz.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
+"settings.experimental_features.test_net_enabled" = "Enable TestNet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
