@@ -13,7 +13,7 @@ class SwapViewItemHelper {
         return PriceCoinValue(baseCoin: tokenOut.coin, quoteCoinValue: CoinValue(kind: .token(token: tokenIn), value: value))
     }
 
-    func priceImpactViewItem(trade: UniswapTradeService.Trade, minLevel: UniswapTradeService.PriceImpactLevel = .normal) -> UniswapModule.PriceImpactViewItem? {
+    func priceImpactViewItem(trade: UniswapTradeService.Trade, minLevel: UniswapTradeService.PriceImpactLevel = .warning) -> UniswapModule.PriceImpactViewItem? {
         guard let priceImpact = trade.tradeData.priceImpact, let impactLevel = trade.impactLevel, impactLevel.rawValue >= minLevel.rawValue else {
             return nil
         }
