@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "添加到钱包";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
-"alert.copied" = "已复制";
+"alert.copied" = "Copied";
 "alert.created" = "已创建";
 "alert.restored" = "已恢复";
 "alert.address_added" = "地址已添加";
@@ -407,7 +407,7 @@
 
 "swap.dex_info.header_dex_related" = "%@关联";
 "swap.dex_info.header_allowance" = "补贴";
-"swap.dex_info.content_allowance" = "当执行令牌交换时，交易所可以代表用户花费的金额。 在进行实际互换交易之前，需要先确定足够的备抵。";
+"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
 "swap.dex_info.header_price_impact" = "价格影响";
 "swap.dex_info.content_price_impact" = "预期价格和显示价格的偏差通常会增加互兑金额。";
 "swap.dex_info.header_swap_fee" = "掉期交易费用";
@@ -556,9 +556,9 @@
 "market.global.tvl_in_defi.title" = "DeFi锁定";
 
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
-"market.global.volume_24h.title" = "24h成交量";
-"market.global.defi_cap.title" = "DeFi市值";
-"market.global.tvl_in_defi.title" = "DeFi锁定";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
 "market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
 "market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
@@ -1020,7 +1020,7 @@
 "create_wallet.input.confirm" = "确认";
 "create_wallet.passphrase_description" = "密码为钱包增加了一个额外的保安层，让用户可以使用可关联不同密码的单一个助记词恢复码来创建多个独立的多代币钱包。\n\n要恢复这些钱包，用户必须具备助记词恢复码以及每一个待恢复钱包的密码。";
 "create_wallet.error.empty_passphrase" = "密码不能为空";
-"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
+"create_wallet.error.forbidden_symbols" = "Please use only supported symbols:A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "确认密码不匹配";
 
 // Restore Select
@@ -1077,8 +1077,8 @@
 "wallet_connect.active_account" = "激活钱包";
 "wallet_connect.address" = "地址";
 "wallet_connect.network" = "网络";
-"wallet_connect.address" = "地址";
-"wallet_connect.network" = "网络";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "待处理请求";
 "wallet_connect.main.no_any_supported_chains" = "没有任何支持的链！";
 "wallet_connect.main.unsupported_chains" = "一些链是不支持的！";
