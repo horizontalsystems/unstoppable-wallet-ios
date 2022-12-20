@@ -30,7 +30,7 @@
 "alert.wrong_amount" = "잘못된 금액";
 "alert.no_fee" = "잘못된 요금";
 "alert.warning" = "경고";
-"alert.error" = "Error";
+"alert.error" = "오류";
 "alert.unknown_error" = "알수없는 오류";
 "alert.success_action" = "완료";
 
@@ -1060,13 +1060,8 @@
 // Add Token
 
 "add_token.title" = "토큰 추가";
-"add_token.coin_type" = "Coin Type";
-"add_token.coin_name" = "코인 이름";
-"add_token.coin_code" = "코인 코드";
-"add_token.decimals" = "소수점";
 "add_token.already_added" = "이미 추가됨";
-"add_token.coin_types" = "코인 유형";
-"add_token.choose_type" = "유형 선택";
+"add_token.choose_token" = "Choose Token";
 "add_token.invalid_contract_address_or_bep2_symbol" = "잘못된 계약 주소 또는 BEP2 기호";
 "add_token.token_not_found" = "토큰 찾을 수 없음";
 "add_token.input_placeholder" = "계약 주소";
@@ -1080,8 +1075,8 @@
 "wallet_connect.active_account" = "지갑 활성화";
 "wallet_connect.address" = "주소";
 "wallet_connect.network" = "네트워크";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "주소";
+"wallet_connect.network" = "네트워크";
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
 "wallet_connect.main.unsupported_chains" = "일부 체인은 지원되지 않습니다!";
@@ -1108,7 +1103,7 @@
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "활성 세션 없음";
 
-"wallet_connect.list.pairings" = "Pairings";
+"wallet_connect.list.pairings" = "동기화";
 "wallet_connect.list.version_text" = "버전 %@";
 "wallet_connect.list.v1_bottom_text" = "WalletConnect의 첫 번째 버전에서는 요청을 보고 확인하기 위해 세션으로 이동해야 합니다.";
 "wallet_connect_list.new_connection" = "새로운 연결";
@@ -1121,9 +1116,9 @@
 "wallet_connect.non_supported_account.switch" = "전환";
 
 "wallet_connect.pending_requests_title" = "보류 중인 요청";
-"wallet_connect.paired_dapps.title" = "Paired dApps";
+"wallet_connect.paired_dapps.title" = "페어링된 dApp";
 "wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
-"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
+"wallet_connect.paired_dapps.disconnect_all" = "모두 삭제";
 "wallet_connect.pending_requests.nonactive_footer" = "요청을 열려면 원하는 지갑을 활성화해야 합니다";
 
 // App Status
