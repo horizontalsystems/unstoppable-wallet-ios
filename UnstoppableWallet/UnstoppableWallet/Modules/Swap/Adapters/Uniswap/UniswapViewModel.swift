@@ -36,9 +36,6 @@ class UniswapViewModel {
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.swap_view_model")
 
-    private var lastBuyPrice: String?
-    private var lastPriceImpact: String?
-
     init(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
@@ -127,18 +124,15 @@ class UniswapViewModel {
 
                 let revertedPriceCoinValue = viewItemHelper.priceValue(
                         executionPrice: trade.tradeData.executionPriceInverted ?? (1 / executionPrice),
-                        tokenIn: tradeService.tokenIn,
-                        tokenOut: tradeService.tokenOut
+                        tokenIn: tradeService.tokenOut,
+                        tokenOut: tradeService.tokenIn
                 )
-                lastBuyPrice = priceCoinValue?.formattedFull
                 buyPriceRelay.accept(SwapPriceCell.PriceViewItem(price: priceCoinValue?.formattedFull, revertedPrice: revertedPriceCoinValue?.formattedFull))
             } else {
-                lastBuyPrice = nil
                 buyPriceRelay.accept(nil)
             }
             priceImpactRelay.accept(viewItemHelper.priceImpactViewItem(trade: trade))
         case .notReady:
-            lastBuyPrice = nil
             buyPriceRelay.accept(nil)
             priceImpactRelay.accept(nil)
         }
