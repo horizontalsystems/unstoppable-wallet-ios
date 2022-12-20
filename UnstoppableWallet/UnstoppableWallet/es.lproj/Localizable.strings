@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Agregar a Wallet";
 "alert.already_added_to_wallet" = "Ya se ha añadido a Wallet";
 "alert.not_supported_yet" = "Aún no compatible";
-"alert.copied" = "Copied";
+"alert.copied" = "Copiado";
 "alert.created" = "Creado";
 "alert.restored" = "Restaurado ";
 "alert.address_added" = "Dirección añadida";
@@ -405,7 +405,7 @@
 
 "swap.dex_info.header_dex_related" = "%@ Relacionado";
 "swap.dex_info.header_allowance" = "Permiso de acceso";
-"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.dex_info.content_allowance" = "La cantidad que un intercambio puede gastar en nombre del usuario al ejecutar swaps de token. Se requiere un permiso suficiente para establecer una transacción anterior antes de que pueda tener lugar una transacción de intercambio real.";
 "swap.dex_info.header_price_impact" = "Impacto en el precio";
 "swap.dex_info.content_price_impact" = "Desviación de precio esperada de un valor mostrado, normalmente aumenta con la cantidad de swap.";
 "swap.dex_info.header_swap_fee" = "Tarifa por intercambio";
@@ -554,9 +554,9 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominio Bitcoin";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "Volumen de 24 horas";
+"market.global.defi_cap.title" = "Cap. DeFi";
+"market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.btc_dominance.description" = "El cambio histórico en la relación entre el límite de mercado de Bitcoin y el resto de los mercados de criptomonedas. \n\nPor lo general, cuando el dominio de Bitcoin tiende a ser más alto, el resto de las tendencias del mercado de criptomonedas disminuye y viceversa.";
 "market.global.volume_24h.description" = "El cambio histórico en el volumen diario del mercado de operaciones agregadas para todas las criptomonedas.";
 "market.global.defi_cap.description" = "El cambio histórico en el valor acumulado del mercado de los tokens en el sector de las finanzas descentralizadas.";
@@ -1018,7 +1018,7 @@
 "create_wallet.input.confirm" = "Confirmar";
 "create_wallet.passphrase_description" = "La frase de contraseña añade una capa de seguridad adicional a los monederos permitiendo a los usuarios crear múltiples monederos multi-monedas independientes usando una sola frase de recuperación mnemotécnica pero asociada con diferentes contraseñas.\n\nPara restaurar estos monederos un usuario necesitará una frase de recuperación mnemotécnica, así como una contraseña para cada monedero restaurado.";
 "create_wallet.error.empty_passphrase" = "La frase de contraseña no puede estar vacía";
-"create_wallet.error.forbidden_symbols" = "Please use only supported symbols:A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"create_wallet.error.forbidden_symbols" = "Utilice solo símbolos admitidos: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "La confirmación de la frase de contraseña no coincide";
 
 // Restore Select
@@ -1061,7 +1061,7 @@
 
 "add_token.title" = "Añadir Token";
 "add_token.already_added" = "Ya añadido";
-"add_token.choose_token" = "Choose Token";
+"add_token.choose_token" = "Elegir token";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Dirección de contrato inválida o símbolo BEP2";
 "add_token.token_not_found" = "Token no encontrado";
 "add_token.input_placeholder" = "Dirección del contrato";
@@ -1075,8 +1075,8 @@
 "wallet_connect.active_account" = "Active su cartera";
 "wallet_connect.address" = "Dirección";
 "wallet_connect.network" = "Red";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Dirección";
+"wallet_connect.network" = "Red";
 "wallet_connect.list.pending_requests" = "Solicitudes Pendientes";
 "wallet_connect.main.no_any_supported_chains" = "¡No hay cadenas compatibles!";
 "wallet_connect.main.unsupported_chains" = "¡Algunas cadenas no son soportadas!";
