@@ -30,7 +30,7 @@
 "alert.wrong_amount" = "金额有误";
 "alert.no_fee" = "错误费用";
 "alert.warning" = "警告";
-"alert.error" = "Error";
+"alert.error" = "出错";
 "alert.unknown_error" = "未知错误";
 "alert.success_action" = "完成";
 
@@ -39,13 +39,13 @@
 "alert.added_to_wallet" = "添加到钱包";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
-"alert.copied" = "Copied";
+"alert.copied" = "已复制";
 "alert.created" = "已创建";
 "alert.restored" = "已恢复";
 "alert.address_added" = "地址已添加";
 "alert.deleted" = "已删除";
-"alert.waiting_for_session" = "Waiting for Session";
-"alert.try_again" = "Try Again";
+"alert.waiting_for_session" = "等待会话";
+"alert.try_again" = "再试一次";
 "alert.disconnecting" = "正在断开连接";
 "alert.disconnected" = "已断开连接";
 "alert.enabling" = "正在启用";
@@ -108,7 +108,7 @@
 "restore.input.passphrase" = "密码";
 "restore.passphrase_description" = "输入您在创建此助记词时使用的密码";
 "restore.error.empty_passphrase" = "密码不能为空白";
-"restore.non_standard_restore" = "Non-Standard Restore";
+"restore.non_standard_restore" = "非标准还原";
 "restore.non_standard_restore.description" = "This page provides a special wallet restore mechanism for Unstoppable users who have a non-standard wallet. Generally, such wallets could have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after updating to version 0.29. This page will enable you to restore access to your non-standard wallet. Once restored you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
 "restore.error.non_standard.description" = "This wallet seems to use a non-standard character in its secret word list and/or a passphrase. If you do not see a balance or transactions please read below for details.  \n\nCLICK TO GET MORE INFO";
 "restore.warning.non_recommended.description" = "This is a non-standard compliant wallet. Please read below for details.\n\nCLICK TO GET MORE INFO";
@@ -353,7 +353,7 @@
 "swap.revoke_warning" = "您可以交换 %@，或者您需要撤销并批准新的金额";
 "swap.revoking_button" = "正在取消...";
 "swap.trade_error.not_found" = "无法交换代币";
-"swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
+"swap.trade_error.wrap_unwrap_not_allowed" = "此服务不允许包装/拆包。请尝试另一个交换服务。推荐1英寸。";
 "swap.button_error.insufficient_balance" = "余额不足";
 "swap.switch_provider.title" = "互兑供应商";
 
@@ -377,7 +377,7 @@
 "swap.advanced_settings.deadline_minute" = "%@分钟。";
 "swap.advanced_settings.recipient_address" = "接收人地址";
 "swap.advanced_settings.warning.unusual_slippage" = "您的交易可能提前完成";
-"swap.advanced_settings.service_fee_description" = "A service fee for the swap action on the platform typicaly either 0.3% or 0.6%";
+"swap.advanced_settings.service_fee_description" = "典型平台上交换动作的服务费：0.3% 或 0.6%";
 "swap.advanced_settings.error.lower_slippage" = "您的交易可能失败。";
 "swap.advanced_settings.error.higher_slippage" = "下跌容忍不得高于%@%%";
 "swap.advanced_settings.error.invalid_address" = "无效地址";
@@ -400,14 +400,14 @@
 
 "swap.confirmation.swap_button" = "掉期交易";
 "swap.confirmation.impact_too_high" = "市场价格与预期结算价格之间的差额太高。";
-"swap.confirmation.minimum_received" = "Minimum Received";
-"swap.confirmation.maximum_sent" = "Maximum Sent";
+"swap.confirmation.minimum_received" = "收到的最小金额";
+"swap.confirmation.maximum_sent" = "最大支出";
 
 "swap.dex_info.description" = "此兑换服务由基于%@区块链的分散式代币兑换协议%@提供。\n\n%@由不存在任何欺诈手段、以可靠方式推动代币兑换的智能合约来实现完全自动化并管理。";
 
 "swap.dex_info.header_dex_related" = "%@关联";
 "swap.dex_info.header_allowance" = "补贴";
-"swap.dex_info.content_allowance" = "The amount an exchange can spend on user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.dex_info.content_allowance" = "当执行令牌交换时，交易所可以代表用户花费的金额。 在进行实际互换交易之前，需要先确定足够的备抵。";
 "swap.dex_info.header_price_impact" = "价格影响";
 "swap.dex_info.content_price_impact" = "预期价格和显示价格的偏差通常会增加互兑金额。";
 "swap.dex_info.header_swap_fee" = "掉期交易费用";
@@ -437,7 +437,7 @@
 "market.defi_cap" = "DeFi市场价值";
 "market.defi_tvl" = "DeFi中的TVL";
 
-"market.project_has_no_coin" = "This project doesn’t have a coin";
+"market.project_has_no_coin" = "此项目没有硬币";
 
 "market.top.section.header.see_all" = "查看全部";
 "market.top.section.header.top_gainers" = "涨幅榜";
@@ -556,9 +556,9 @@
 "market.global.tvl_in_defi.title" = "DeFi锁定";
 
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "24h成交量";
+"market.global.defi_cap.title" = "DeFi市值";
+"market.global.tvl_in_defi.title" = "DeFi锁定";
 "market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
 "market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
 "market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
@@ -838,7 +838,7 @@
 "settings.experimental_features.title" = "实验性";
 "settings.experimental_features.description" = "以下功能为实验性，应谨慎使用。虽然我们已使用自己的加密货币资金对这些功能进行了彻底测试，但是我们不保证它们在所有情况下都能如常工作。";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
-"settings.experimental_features.test_net_enabled" = "Enable TestNet";
+"settings.experimental_features.test_net_enabled" = "启用测试网";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
@@ -895,7 +895,7 @@
 
 // Manage Accounts
 
-"manage_accounts.migration_required" = "Migration Required";
+"manage_accounts.migration_required" = "需要迁移";
 "manage_accounts.migration_recommended" = "Migration recommended";
 "manage_accounts.backup_required" = "必须备份";
 
@@ -1012,7 +1012,7 @@
 "create_wallet.title" = "新钱包";
 "create_wallet.create_button" = "创建";
 "create_wallet.mnemonic" = "助记词";
-"create_wallet.12_words" = "12 words (recommended)";
+"create_wallet.12_words" = "12 个单词(推荐)";
 "create_wallet.n_words" = "%@ 个单词";
 "create_wallet.word_list" = "字符列表";
 "create_wallet.passphrase" = "密码";
@@ -1062,7 +1062,7 @@
 // Add Token
 
 "add_token.title" = "添加代币";
-"add_token.coin_type" = "Coin Type";
+"add_token.coin_type" = "代币类型";
 "add_token.coin_name" = "代币图片";
 "add_token.coin_code" = "代币代码";
 "add_token.decimals" = "小数";
@@ -1072,7 +1072,7 @@
 "add_token.invalid_contract_address_or_bep2_symbol" = "无效的合约地址或BEP2符号";
 "add_token.token_not_found" = "找不到代币";
 "add_token.input_placeholder" = "智能合约地址";
-"add_token.bep2_not_supported" = "You current wallet EVM private key does not support BEP2 tokens";
+"add_token.bep2_not_supported" = "您当前的钱包 EVM 私钥不支持 BEP2 代币";
 
 // Wallet Connect
 
@@ -1096,8 +1096,8 @@
 "ethereum_transaction.error.insufficient_balance" = "交易需要%@才能发送。";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "當前%@餘額低於處理此交易所需的金額，包括交易費用。";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "选定的费用值太低，将被拒绝！";
-"ethereum_transaction.error.nonce_already_in_block" = "The transaction is already in block!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
+"ethereum_transaction.error.nonce_already_in_block" = "交易已在区块中!";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "费用不足以替换交易";
 "ethereum_transaction.error.reverted" = "无法执行交易： %@";
 "wallet_connect.request_title" = "请求";
 "wallet_connect.button.confirm" = "确认";
@@ -1124,8 +1124,8 @@
 
 "wallet_connect.pending_requests_title" = "待处理请求";
 "wallet_connect.paired_dapps.title" = "Paired dApps";
-"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
-"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
+"wallet_connect.paired_dapps.cant_disconnect" = "无法断开连接";
+"wallet_connect.paired_dapps.disconnect_all" = "全部刪除";
 "wallet_connect.pending_requests.nonactive_footer" = "若要打开请求，您必须激活所需钱包";
 
 // App Status
@@ -1216,8 +1216,8 @@
 "fee_settings.errors.insufficient_balance.info" = "当前%@余额低于此交易所需金额，包括交易费用。";
 "fee_settings.errors.low_max_fee" = "低费用";
 "fee_settings.errors.low_max_fee.info" = "当前设置的交易费用金额不足以处理此交易。";
-"fee_settings.errors.nonce_already_in_block" = "Can't replace transaction.";
-"fee_settings.errors.replacement_transaction_underpriced" = "Low Fee for replacement transaction";
+"fee_settings.errors.nonce_already_in_block" = "无法替换交易。";
+"fee_settings.errors.replacement_transaction_underpriced" = "替换交易的低费用";
 "fee_settings.warning.risk_of_getting_stuck" = "有风险";
 "fee_settings.warning.risk_of_getting_stuck.info" = "交易可能会在一段时间内仍然处于待处理状态或完全失败。";
 "fee_settings.warning.overpricing" = "费用太高";
