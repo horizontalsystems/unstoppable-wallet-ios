@@ -15,7 +15,7 @@ struct SwapConfirmationModule {
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
                 evmBlockchainManager: App.shared.evmBlockchainManager,
-                walletManager: App.shared.walletManager
+                coinManager: App.shared.coinManager
         ) else {
             return nil
         }
@@ -47,7 +47,7 @@ struct SwapConfirmationModule {
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
                 evmBlockchainManager: App.shared.evmBlockchainManager,
-                walletManager: App.shared.walletManager
+                coinManager: App.shared.coinManager
         ) else {
             return nil
         }
