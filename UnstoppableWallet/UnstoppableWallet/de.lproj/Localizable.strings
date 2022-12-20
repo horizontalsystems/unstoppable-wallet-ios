@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Zum Wallet hinzugefügt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
-"alert.copied" = "Kopiert";
+"alert.copied" = "Copied";
 "alert.created" = "Erstellt";
 "alert.restored" = "Wiederherstellen";
 "alert.address_added" = "Adresse hinzugefügt";
@@ -405,7 +405,7 @@
 
 "swap.dex_info.header_dex_related" = "%@ zugehörige";
 "swap.dex_info.header_allowance" = "Vergütung";
-"swap.dex_info.content_allowance" = "Der Betrag einer Währung, den der Dienst in Ihrem Namen ausgeben kann, wenn er Token-Täusche ausführt. Ein ausreichender Betrag ist erforderlich, bevor eine Tauschaktion stattfinden kann.";
+"swap.dex_info.content_allowance" = "The amount an exchange can spend on user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
 "swap.dex_info.header_price_impact" = "Preisauswirkungen";
 "swap.dex_info.content_price_impact" = "Erwartete Preisabweichung von einem angezeigten Preis, steigt normalerweise mit dem Tauschbetrag.";
 "swap.dex_info.header_swap_fee" = "Swap-Gebühr";
@@ -1080,8 +1080,8 @@
 "wallet_connect.active_account" = "Aktive Wallet";
 "wallet_connect.address" = "Adresse";
 "wallet_connect.network" = "Netzwerk";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Adresse";
+"wallet_connect.network" = "Netzwerk";
 "wallet_connect.list.pending_requests" = "Ausstehende Anfragen";
 "wallet_connect.main.no_any_supported_chains" = "Keine unterstützten Ketten!";
 "wallet_connect.main.unsupported_chains" = "Einige Ketten werden nicht unterstützt!";
