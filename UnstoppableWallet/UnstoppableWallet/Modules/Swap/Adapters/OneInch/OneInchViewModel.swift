@@ -32,8 +32,6 @@ class OneInchViewModel {
     private var openRevokeRelay = PublishRelay<SwapAllowanceService.ApproveData>()
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
-    private var lastBuyPrice: String?
-
     init(service: OneInchService, tradeService: OneInchTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
@@ -88,9 +86,6 @@ class OneInchViewModel {
         switch state {
         case .loading:
             loading = true
-            if lastBuyPrice == nil {
-                buyPriceRelay.accept(nil)
-            }
         case .ready(let parameters):
             if !parameters.amountFrom.isZero, !parameters.amountTo.isZero {
                 let executionPrice = parameters.amountTo / parameters.amountFrom
@@ -106,14 +101,11 @@ class OneInchViewModel {
                         tokenIn: parameters.tokenTo,
                         tokenOut: parameters.tokenFrom
                 )
-                lastBuyPrice = priceCoinValue?.formattedFull
                 buyPriceRelay.accept(SwapPriceCell.PriceViewItem(price: priceCoinValue?.formattedFull, revertedPrice: revertedPriceCoinValue?.formattedFull))
             } else {
-                lastBuyPrice = nil
                 buyPriceRelay.accept(nil)
             }
         case .notReady:
-            lastBuyPrice = nil
             buyPriceRelay.accept(nil)
         }
 
