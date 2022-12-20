@@ -266,7 +266,7 @@ class App {
         termsManager = TermsManager(storage: StorageKit.LocalStorage.default)
 
         let walletConnectSessionStorage = WalletConnectSessionStorage(dbPool: dbPool)
-        walletConnectSessionManager = WalletConnectSessionManager(storage: walletConnectSessionStorage, accountManager: accountManager)
+        walletConnectSessionManager = WalletConnectSessionManager(storage: walletConnectSessionStorage, accountManager: accountManager, evmBlockchainManager: evmBlockchainManager, testNetManager: testNetManager)
         walletConnectManager = WalletConnectManager(accountManager: accountManager, evmBlockchainManager: evmBlockchainManager)
 
         let walletClientInfo = WalletConnectClientInfo(

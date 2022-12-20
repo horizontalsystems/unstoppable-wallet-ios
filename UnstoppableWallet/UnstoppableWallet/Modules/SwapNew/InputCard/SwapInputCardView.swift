@@ -177,6 +177,7 @@ extension SwapInputCardView {
 
     private func setBalance(multi: Decimal) {
         amountInputViewModel.setBalance(multi: multi)
+        amountTextView.endEditing(true)
     }
 
     private func set(secondaryText: String?) {

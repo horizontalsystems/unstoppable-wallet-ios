@@ -276,13 +276,13 @@ extension MarketDiscoveryViewController: SectionsDataSource {
                                         .text { component in
                                             component.font = .body
                                             component.textColor = .themeLeah
-                                            component.text = viewItem.name
+                                            component.text = viewItem.code
                                         },
                                         .margin(3),
                                         .text { component in
                                             component.font = .subhead2
                                             component.textColor = .themeGray
-                                            component.text = viewItem.code
+                                            component.text = viewItem.name
                                         }
                                     ])
                                 ]),

@@ -61,7 +61,7 @@ class WalletConnectV1ListView {
                     return CellBuilderNew.row(
                             rootElement: .hStack([
                                 .image24 { component in
-                                    component.imageView.cornerRadius = .cornerRadius4
+                                    component.imageView.cornerRadius = .cornerRadius8
                                     component.imageView.layer.cornerCurve = .continuous
                                     component.setImage(urlString: viewItem.imageUrl, placeholder: nil)
                                 },
