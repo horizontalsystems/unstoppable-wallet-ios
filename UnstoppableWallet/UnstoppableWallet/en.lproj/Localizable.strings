@@ -407,7 +407,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "swap.dex_info.header_dex_related" = "%@ Related";
 "swap.dex_info.header_allowance" = "Allowance";
-"swap.dex_info.content_allowance" = "The amount an exchange can spend on user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
 "swap.dex_info.header_price_impact" = "Price Impact";
 "swap.dex_info.content_price_impact" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.dex_info.header_swap_fee" = "Swap Fee";
@@ -1020,7 +1020,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "create_wallet.input.confirm" = "Confirm";
 "create_wallet.passphrase_description" = "Passphrases add an additional security layer to the wallets, enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase, but associated with different passwords. \n\nTo restore these wallets, a user will require a mnemonic recovery phrase as well as a password for each to be restored wallet.";
 "create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
-"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
+"create_wallet.error.forbidden_symbols" = "Please use only supported symbols:A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
 
 // Restore Select
