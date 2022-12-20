@@ -45,7 +45,7 @@
 "alert.address_added" = "Адрес Добавлен";
 "alert.deleted" = "Удалено";
 "alert.waiting_for_session" = "Waiting for Session";
-"alert.try_again" = "Try Again";
+"alert.try_again" = "Попробовать ещё раз";
 "alert.disconnecting" = "Отсоединение";
 "alert.disconnected" = "Отсоединено";
 "alert.enabling" = "Идет активация";
@@ -108,10 +108,12 @@
 "restore.input.passphrase" = "Кодовая Фраза";
 "restore.passphrase_description" = "Введите свою кодовую фразу, которую вы использовали при создании этой мнемонической фразы";
 "restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
-"restore.non_standard_restore" = "Non-Standard Restore";
-"restore.non_standard_restore.description" = "This page provides a special wallet restore mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after restoring such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once restored you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
-"restore.warning.non_recommended.description" = "This wallet seems to use a non-standard character in its secret word list and/or a passphrase. If you do not see a balance or transactions please read below for details.  \n\nCLICK TO GET MORE INFO";
-"restore.error.non_standard.description" = "This is a non-standard wallet.\n\nCLICK TO GET MORE INFO";
+"restore.non_standard_restore" = "Нестандартное Восстановление";
+"restore.non_standard_restore.description" = "На этой странице представлен специальный механизм восстановления кошелька для пользователей Unstoppable с нестандартным кошельком. Как правило, такие кошельки могли быть созданы в версиях Unstoppable 0.27–0.28 с использованием неанглоязычного списка мнемонических слов и/или специального символа в парольной фразе кошелька (например, диакритического знака).
+\n\nЕсли вы являетесь затронутым пользователем, то баланс вашего кошелька будет отображаться как 0 после восстановления такого кошелька в версии 0.29 или выше.Эта страница позволит вам восстановить доступ к вашему нестандартному кошельку. После восстановления рекомендуется создать новый кошелек (который будет соответствовать стандарту) и перевести туда средства.";
+"restore.warning.non_recommended.description" = "Похоже, этот кошелек использует нестандартный символ в списке мнемонических слов и/или парольной фразе. Если вы не видите баланс или транзакции, пожалуйста, прочтите подробности ниже.
+\n\nПОЖАЛУЙСТА НАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ.";
+"restore.error.non_standard.description" = "Это нестандартный кошелек.\n\nНАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ";
 
 // Coin Settings
 
@@ -1012,7 +1014,7 @@
 "create_wallet.title" = "Создать Кошелек";
 "create_wallet.create_button" = "Создать";
 "create_wallet.mnemonic" = "Мнемоническая Фраза";
-"create_wallet.12_words" = "12 words (recommended)";
+"create_wallet.12_words" = "12 слов (рекомендуется)";
 "create_wallet.n_words" = "%@ слов";
 "create_wallet.word_list" = "Список Слов";
 "create_wallet.passphrase" = "Кодовая Фраза";
@@ -1062,17 +1064,12 @@
 // Add Token
 
 "add_token.title" = "Добавить Токен";
-"add_token.coin_type" = "Coin Type";
-"add_token.coin_name" = "Название Токена";
-"add_token.coin_code" = "Код Монеты";
-"add_token.decimals" = "Десятичные знаки";
 "add_token.already_added" = "Уже Добавлено";
-"add_token.coin_types" = "Типы Токенов";
-"add_token.choose_type" = "Выберите Тип";
+"add_token.choose_token" = "Choose Token";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Неверный адрес контракта или символ BEP2";
 "add_token.token_not_found" = "Токен не найден";
 "add_token.input_placeholder" = "Адрес Контракта";
-"add_token.bep2_not_supported" = "You current wallet EVM private key does not support BEP2 tokens";
+"add_token.bep2_not_supported" = "Ваш текущий приватный ключ EVM не поддерживает токены BEP2";
 
 // Wallet Connect
 
@@ -1082,8 +1079,8 @@
 "wallet_connect.active_account" = "Активный Кошелек";
 "wallet_connect.address" = "Адрес";
 "wallet_connect.network" = "Сеть";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Адрес";
+"wallet_connect.network" = "Сеть";
 "wallet_connect.list.pending_requests" = "Отложенные Запросы";
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
 "wallet_connect.main.unsupported_chains" = "Некоторые блокчейны не поддерживаются!";
@@ -1096,7 +1093,7 @@
 "ethereum_transaction.error.insufficient_balance" = "Для отправки транзакции требуется %@.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "Выбранное значение комиссии слишком низкое и будет отклонено!";
-"ethereum_transaction.error.nonce_already_in_block" = "The transaction is already in block!";
+"ethereum_transaction.error.nonce_already_in_block" = "Транзакция уже в блоке!";
 "ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
 "ethereum_transaction.error.reverted" = "Транзакция не может быть выполнена: %@";
 "wallet_connect.request_title" = "Запрос";
