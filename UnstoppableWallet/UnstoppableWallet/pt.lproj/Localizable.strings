@@ -30,7 +30,7 @@
 "alert.wrong_amount" = "Quantia Errada";
 "alert.no_fee" = "Taxa Errada";
 "alert.warning" = "Aviso";
-"alert.error" = "Error";
+"alert.error" = "Erro";
 "alert.unknown_error" = "Erro Desconhecido";
 "alert.success_action" = "Concluído";
 
@@ -39,13 +39,13 @@
 "alert.added_to_wallet" = "Adicionado à Carteira";
 "alert.already_added_to_wallet" = "Já adicionado à carteira";
 "alert.not_supported_yet" = "Não suportado ainda";
-"alert.copied" = "Copied";
+"alert.copied" = "Copiado";
 "alert.created" = "Criado";
 "alert.restored" = "Restaurado";
 "alert.address_added" = "Endereço Adicionado";
 "alert.deleted" = "Excluído";
-"alert.waiting_for_session" = "Waiting for Session";
-"alert.try_again" = "Try Again";
+"alert.waiting_for_session" = "Aguardando sessão";
+"alert.try_again" = "Tentar Novamente";
 "alert.disconnecting" = "Desconectando";
 "alert.disconnected" = "Desconectado";
 "alert.enabling" = "Ativando";
@@ -108,10 +108,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "restore.input.passphrase" = "Senha";
 "restore.passphrase_description" = "Digite a senha que você usou ao criar esta frase mnemônica";
 "restore.error.empty_passphrase" = "O senha não pode estar em branco";
-"restore.non_standard_restore" = "Non-Standard Restore";
-"restore.non_standard_restore.description" = "This page provides a special wallet restore mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after restoring such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once restored you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
-"restore.warning.non_recommended.description" = "This wallet seems to use a non-standard character in its secret word list and/or a passphrase. If you do not see a balance or transactions please read below for details.  \n\nCLICK TO GET MORE INFO";
-"restore.error.non_standard.description" = "This is a non-standard wallet.\n\nCLICK TO GET MORE INFO";
+"restore.non_standard_restore" = "Restauração Não-Padrão";
+"restore.non_standard_restore.description" = "Esta página fornece um mecanismo especial de recuperação de carteira para usuários da Unstoppable que possuem uma carteira Não Padrão.  Geralmente, essas carteiras podem ter sido criadas na versão Unstoppable 0.27 - 0.28 usando uma lista de palavras mnemônicas não inglesas e/ou um caractere especial na senha da carteira (ou seja, símbolo diacrítico).\n\nSe você for um usuário afetado, o saldo da sua carteira será mostrado como 0 após a atualização para a versão 0.29.  Esta página permitirá que você restaure o acesso à sua carteira não padrão.  Uma vez restaurado, é recomendável criar uma nova carteira (que será compatível com o padrão) e mover fundos para lá.
+";
+"restore.warning.non_recommended.description" = "Esta carteira parece usar um caractere não padrão em sua lista de palavras secretas e/ou uma frase secreta.  Se você não ver um saldo ou transações, leia abaixo para obter detalhes.\n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
+"restore.error.non_standard.description" = "Esta é uma carteira não padrão. \n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
 
 // Coin Settings
 
@@ -353,7 +354,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "swap.revoke_warning" = "Você pode trocar %@, ou você precisa revogar e aprovar o novo valor";
 "swap.revoking_button" = "Revogando...";
 "swap.trade_error.not_found" = "Não é possível trocar esses tokens";
-"swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
+"swap.trade_error.wrap_unwrap_not_allowed" = "Este serviço não permite embalagem/desagregação. Por favor, tente outro serviço de troca. 1Inch recomendado";
 "swap.button_error.insufficient_balance" = "Saldo insuficiente";
 "swap.switch_provider.title" = "Serviço de Troca";
 
@@ -377,7 +378,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Endereço do Destinatário";
 "swap.advanced_settings.warning.unusual_slippage" = "Sua operação pode ser de front-running";
-"swap.advanced_settings.service_fee_description" = "A service fee for the swap action on the platform typicaly either 0.3% or 0.6%";
+"swap.advanced_settings.service_fee_description" = "Uma taxa de serviço para a ação de troca na plataforma normalmente 0,3% ou 0,6%";
 "swap.advanced_settings.error.lower_slippage" = "É provável que sua transação falhe.";
 "swap.advanced_settings.error.higher_slippage" = "Tolerância do Slippage não pode ser maior que %@%%";
 "swap.advanced_settings.error.invalid_address" = "Endereço Inválido";
@@ -400,14 +401,14 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "swap.confirmation.swap_button" = "Trocar";
 "swap.confirmation.impact_too_high" = "A diferença entre o preço de mercado e o preço de liquidação esperado é bastante elevada.";
-"swap.confirmation.minimum_received" = "Minimum Received";
-"swap.confirmation.maximum_sent" = "Maximum Sent";
+"swap.confirmation.minimum_received" = "Mínimo recebido";
+"swap.confirmation.maximum_sent" = "Gastos máximos";
 
 "swap.dex_info.description" = "Este serviço de troca é fornecido por %@, um protocolo descentralizado de troca de tokens construído na blockchain %@. \n\n%@ É totalmente automatizado e gerenciado por contratos inteligentes que facilitam a troca de tokens de uma forma confiável sem qualquer meio de trapaça.";
 
 "swap.dex_info.header_dex_related" = "%@ Relacionado";
 "swap.dex_info.header_allowance" = "Preço";
-"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.dex_info.content_allowance" = "O montante que uma exchange pode gastar em nome do usuário na execução de trocas simbólicas. É necessária uma margem suficiente para que uma transação de troca efetiva possa ocorrer.";
 "swap.dex_info.header_price_impact" = "Impacto de preço";
 "swap.dex_info.content_price_impact" = "O desvio de preço esperado de um preço mostrado, tipicamente aumenta com a quantidade de troca.";
 "swap.dex_info.header_swap_fee" = "Tarifas de troca";
@@ -556,9 +557,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.global.tvl_in_defi.title" = "TVL no DeFi";
 
 "market.global.btc_dominance.title" = "Dominação Bitcoin";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "Volume em 24h";
+"market.global.defi_cap.title" = "Mercado de DeFi";
+"market.global.tvl_in_defi.title" = "TVL no DeFi";
 "market.global.btc_dominance.description" = "A mudança histórica na relação entre o capital de mercado do Bitcoin e o resto dos mercados de criptomoedas. \n\nNormalmente, quando o domínio do Bitcoin está tendendo à alta, o resto das tendências do mercado cripto para baixo e vice-versa.";
 "market.global.volume_24h.description" = "A mudança histórica no volume diário do mercado de trading agregado para todas as criptomoedas.";
 "market.global.defi_cap.description" = "A mudança histórica no valor cumulativo do mercado dos tokens no setor DeFi.";
@@ -838,7 +839,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "Os recursos abaixo são experimentais e devem ser usados com cautela. Enquanto nós testamos minuciosamente esses recursos usando nossos próprios fundos cripto, nós não podemos garantir que eles funcionarão como esperado em todos os casos possíveis.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
-"settings.experimental_features.test_net_enabled" = "Enable TestNet";
+"settings.experimental_features.test_net_enabled" = "Ativar Testnet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
@@ -895,8 +896,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Manage Accounts
 
-"manage_accounts.migration_required" = "Migration Required";
-"manage_accounts.migration_recommended" = "Migration recommended";
+"manage_accounts.migration_required" = "Migração Necessária";
+"manage_accounts.migration_recommended" = "Migração Recomendada";
 "manage_accounts.backup_required" = "Backup necessário";
 
 // Manage Keys
@@ -1012,7 +1013,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "create_wallet.title" = "Nova Carteira";
 "create_wallet.create_button" = "Criar";
 "create_wallet.mnemonic" = "Mnemônico";
-"create_wallet.12_words" = "12 words (recommended)";
+"create_wallet.12_words" = "12 palavras (recomendado)";
 "create_wallet.n_words" = "%@ palavras";
 "create_wallet.word_list" = "Listas de palavras";
 "create_wallet.passphrase" = "Senha";
@@ -1020,7 +1021,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "create_wallet.input.confirm" = "Confirmar";
 "create_wallet.passphrase_description" = "Senhas agregam uma camada de segurança adicional às carteiras, permitindo que os usuários criem várias carteiras multimoedas independentes, usando uma única frase mnemônica de recuperação, mas associada à senhas diferentes. \n\nPara restaurar estas carteiras, o usuário precisará de uma frase de recuperação mnemônica, bem como de uma senha para cada carteira a ser restaurada.";
 "create_wallet.error.empty_passphrase" = "A senha não pode estar vazia";
-"create_wallet.error.forbidden_symbols" = "Please use only supported symbols:A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"create_wallet.error.forbidden_symbols" = "Por favor, use apenas símbolos suportados: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Confirmação da senha não coincide";
 
 // Restore Select
@@ -1063,11 +1064,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "add_token.title" = "Adicionar token";
 "add_token.already_added" = "Já adicionado";
-"add_token.choose_token" = "Choose Token";
+"add_token.choose_token" = "Escolha os tokens";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Endereço do contrato ou símbolo BEP2 inválido";
 "add_token.token_not_found" = "Token não encontrado";
 "add_token.input_placeholder" = "Endereço do Contrato";
-"add_token.bep2_not_supported" = "You current wallet EVM private key does not support BEP2 tokens";
+"add_token.bep2_not_supported" = "Sua chave privada EVM de carteira atual não suporta tokens BEP2";
 
 // Wallet Connect
 
@@ -1077,8 +1078,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "wallet_connect.active_account" = "Carteira ativa";
 "wallet_connect.address" = "Endereço";
 "wallet_connect.network" = "Rede";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Endereço";
+"wallet_connect.network" = "Rede";
 "wallet_connect.list.pending_requests" = "Solicitações Pendentes";
 "wallet_connect.main.no_any_supported_chains" = "Nenhuma cadeia suportada!";
 "wallet_connect.main.unsupported_chains" = "Algumas cadeias não são suportadas!";
@@ -1091,8 +1092,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "ethereum_transaction.error.insufficient_balance" = "A transação requer %@ para enviar.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "O saldo atual de %@ está abaixo do valor necessário para processar a transação, incluindo taxa de transação.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "O valor da taxa selecionada é muito baixo e será rejeitado!";
-"ethereum_transaction.error.nonce_already_in_block" = "The transaction is already in block!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
+"ethereum_transaction.error.nonce_already_in_block" = "A transação já foi confirmada!";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Taxa insuficiente para substituir a transação";
 "ethereum_transaction.error.reverted" = "A transação não pode ser executada: %@";
 "wallet_connect.request_title" = "Chamada de Contrato";
 "wallet_connect.button.confirm" = "Confirmar";
@@ -1105,7 +1106,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "Nenhuma sessão ativa";
 
-"wallet_connect.list.pairings" = "Pairings";
+"wallet_connect.list.pairings" = "Pareamento";
 "wallet_connect.list.version_text" = "Versão %@";
 "wallet_connect.list.v1_bottom_text" = "Na primeira versão do WalletConnect, você deve ir às sessões para ver e confirmar o pedido";
 "wallet_connect_list.new_connection" = "Nova Conexão";
@@ -1118,8 +1119,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "wallet_connect.non_supported_account.switch" = "Alternar";
 
 "wallet_connect.pending_requests_title" = "Solicitações Pendentes";
-"wallet_connect.paired_dapps.title" = "Paired dApps";
-"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
+"wallet_connect.paired_dapps.title" = "dApps pareados";
+"wallet_connect.paired_dapps.cant_disconnect" = "Não foi possível desconectar";
 "wallet_connect.paired_dapps.disconnect_all" = "Excluir Tudo";
 "wallet_connect.pending_requests.nonactive_footer" = "Para abrir um pedido você deve ativar a carteira desejada";
 
@@ -1175,7 +1176,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Birthday Input
 
 "birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "For quick synchronization you can enter the wallet's birthday height.";
+"birthday_input.description" = "Se você souber a altura do aniversário da carteira, insira-a para sincronização rápida.";
 "birthday_input.new_wallet" = "Nova Carteira";
 "birthday_input.new_wallet.description" = "Não tenha nenhuma transação antes";
 "birthday_input.old_wallet" = "Carteira antiga";
@@ -1211,8 +1212,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "fee_settings.errors.insufficient_balance.info" = "O saldo atual de %@ está abaixo do valor necessário para processar a transação, incluindo taxa de transação.";
 "fee_settings.errors.low_max_fee" = "Taxa baixa";
 "fee_settings.errors.low_max_fee.info" = "A taxa de transação definida é insuficiente para processar esta transação agora.";
-"fee_settings.errors.nonce_already_in_block" = "Can't replace transaction.";
-"fee_settings.errors.replacement_transaction_underpriced" = "Low Fee for replacement transaction";
+"fee_settings.errors.nonce_already_in_block" = "Não é possível substituir a transação.";
+"fee_settings.errors.replacement_transaction_underpriced" = "Taxa baixa para transação substituída";
 "fee_settings.warning.risk_of_getting_stuck" = "Arriscado";
 "fee_settings.warning.risk_of_getting_stuck.info" = "A transação pode permanecer pendente por um tempo ou falhar completamente.";
 "fee_settings.warning.overpricing" = "Taxa Muito Alta";
