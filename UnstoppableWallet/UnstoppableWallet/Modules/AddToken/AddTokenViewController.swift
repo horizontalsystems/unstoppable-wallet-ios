@@ -168,7 +168,7 @@ extension AddTokenViewController: SectionsDataSource {
                                 ]),
                                 .image24 { component in
                                     component.imageView.image = UIImage(named: viewItem.isOn ? "checkbox_active_24" : "checkbox_diactive_24")
-                                },
+                                }
                             ]),
                             tableView: tableView,
                             id: "token-\(index)",
@@ -219,7 +219,10 @@ extension AddTokenViewController: SectionsDataSource {
                                         component.textColor = .themeGray
                                         component.text = viewItem.coinName
                                     }
-                                ])
+                                ]),
+                                .image20 { component in
+                                    component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeGray)
+                                }
                             ]),
                             tableView: tableView,
                             id: "added-token-\(index)",
