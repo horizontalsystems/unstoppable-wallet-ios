@@ -1062,13 +1062,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Add Token
 
 "add_token.title" = "Adicionar token";
-"add_token.coin_type" = "Coin Type";
-"add_token.coin_name" = "Nome da Moeda";
-"add_token.coin_code" = "Código da Moeda";
-"add_token.decimals" = "Decimais";
 "add_token.already_added" = "Já adicionado";
-"add_token.coin_types" = "Tipos de moeda";
-"add_token.choose_type" = "Escolha o tipo";
+"add_token.choose_token" = "Choose Token";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Endereço do contrato ou símbolo BEP2 inválido";
 "add_token.token_not_found" = "Token não encontrado";
 "add_token.input_placeholder" = "Endereço do Contrato";
@@ -1082,8 +1077,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "wallet_connect.active_account" = "Carteira ativa";
 "wallet_connect.address" = "Endereço";
 "wallet_connect.network" = "Rede";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Endereço";
+"wallet_connect.network" = "Rede";
 "wallet_connect.list.pending_requests" = "Solicitações Pendentes";
 "wallet_connect.main.no_any_supported_chains" = "Nenhuma cadeia suportada!";
 "wallet_connect.main.unsupported_chains" = "Algumas cadeias não são suportadas!";
