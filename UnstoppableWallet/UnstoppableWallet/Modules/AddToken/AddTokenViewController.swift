@@ -133,85 +133,102 @@ class AddTokenViewController: ThemeViewController {
 
 extension AddTokenViewController: SectionsDataSource {
 
-    private func infoRow(id: String, title: String, value: String?, isFirst: Bool = false, isLast: Bool = false) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text, .text],
-                tableView: tableView,
-                id: id,
-                hash: value,
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.font = .subhead2
-                        component.textColor = .themeGray
-                        component.text = title
-                    }
-
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        component.font = .subhead1
-                        component.textColor = .themeLeah
-                        component.text = value ?? "---"
-                    }
-                }
-        )
-    }
-
-    private func addedTokenRow(viewItem: AddTokenViewModel.TokenViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.image24, .text, .image20],
-                tableView: tableView,
-                id: "added-token-\(index)",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.setImage(urlString: viewItem.imageUrl, placeholder: nil)
-                    }
-
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = viewItem.title
-                    }
-
-                    cell.bind(index: 2) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "check_1_20")
-                    }
-                }
-        )
-    }
-
-    private func tokenRow(viewItem: AddTokenViewModel.TokenViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image24, .text, .image24],
-                tableView: tableView,
+    private func tokenSection(viewItem: AddTokenViewModel.TokenViewItem, index: Int, bottomMargin: CGFloat) -> SectionProtocol {
+        Section(
                 id: "token-\(index)",
-                hash: "\(viewItem.isOn)",
-                height: .heightCell48,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                footerState: .margin(height: bottomMargin),
+                rows: [
+                    CellBuilderNew.row(
+                            rootElement: .hStack([
+                                .image32 { component in
+                                    component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.placeholderImageName))
+                                },
+                                .vStackCentered([
+                                    .hStack([
+                                        .text { component in
+                                            component.font = .body
+                                            component.textColor = .themeLeah
+                                            component.text = viewItem.coinCode
+                                            component.setContentHuggingPriority(.required, for: .horizontal)
+                                        },
+                                        .margin8,
+                                        .badge { component in
+                                            component.badgeView.set(style: .small)
+                                            component.badgeView.text = viewItem.protocolInfo
+                                        },
+                                        .margin0,
+                                        .text { _ in }
+                                    ]),
+                                    .margin(1),
+                                    .text { component in
+                                        component.font = .subhead2
+                                        component.textColor = .themeGray
+                                        component.text = viewItem.coinName
+                                    }
+                                ]),
+                                .image24 { component in
+                                    component.imageView.image = UIImage(named: viewItem.isOn ? "checkbox_active_24" : "checkbox_diactive_24")
+                                },
+                            ]),
+                            tableView: tableView,
+                            id: "token-\(index)",
+                            hash: "\(viewItem.isOn)",
+                            height: .heightDoubleLineCell,
+                            autoDeselect: true,
+                            bind: { cell in
+                                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                            },
+                            action: { [weak self] in
+                                self?.viewModel.onToggleToken(index: index)
+                            }
+                    )
+                ]
+        )
+    }
 
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.setImage(urlString: viewItem.imageUrl, placeholder: nil)
-                    }
-
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = viewItem.title
-                    }
-
-                    cell.bind(index: 2) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: viewItem.isOn ? "checkbox_active_24" : "checkbox_diactive_24")
-                    }
-                },
-                action: { [weak self] in
-                    self?.viewModel.onToggleToken(index: index)
-                }
+    private func addedTokenSection(viewItem: AddTokenViewModel.TokenViewItem, index: Int, isFirst: Bool, isLast: Bool) -> SectionProtocol {
+        Section(
+                id: "added-token-\(index)",
+                headerState: isFirst ? tableView.sectionHeader(text: "add_token.already_added".localized) : .margin(height: 0),
+                footerState: .margin(height: isLast ? .margin32 : .margin12),
+                rows: [
+                    CellBuilderNew.row(
+                            rootElement: .hStack([
+                                .image32 { component in
+                                    component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.placeholderImageName))
+                                },
+                                .vStackCentered([
+                                    .hStack([
+                                        .text { component in
+                                            component.font = .body
+                                            component.textColor = .themeLeah
+                                            component.text = viewItem.coinCode
+                                            component.setContentHuggingPriority(.required, for: .horizontal)
+                                        },
+                                        .margin8,
+                                        .badge { component in
+                                            component.badgeView.set(style: .small)
+                                            component.badgeView.text = viewItem.protocolInfo
+                                        },
+                                        .margin0,
+                                        .text { _ in }
+                                    ]),
+                                    .margin(1),
+                                    .text { component in
+                                        component.font = .subhead2
+                                        component.textColor = .themeGray
+                                        component.text = viewItem.coinName
+                                    }
+                                ])
+                            ]),
+                            tableView: tableView,
+                            id: "added-token-\(index)",
+                            height: .heightDoubleLineCell,
+                            bind: { cell in
+                                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                            }
+                    )
+                ]
         )
     }
 
@@ -220,7 +237,7 @@ extension AddTokenViewController: SectionsDataSource {
             Section(
                     id: "input",
                     headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin12),
+                    footerState: .margin(height: .margin24),
                     rows: [
                         StaticRow(
                                 cell: inputCell,
@@ -237,54 +254,28 @@ extension AddTokenViewController: SectionsDataSource {
                                 }
                         )
                     ]
-            ),
-
-            Section(
-                    id: "coin-info",
-                    footerState: .margin(height: .margin24),
-                    rows: [
-                        infoRow(id: "coin-type", title: "add_token.coin_type".localized, value: viewItem?.coinType, isFirst: true),
-                        infoRow(id: "coin-name", title: "add_token.coin_name".localized, value: viewItem?.coinName),
-                        infoRow(id: "coin-code", title: "add_token.coin_code".localized, value: viewItem?.coinCode),
-                        infoRow(id: "decimals", title: "add_token.decimals".localized, value: viewItem?.decimals, isLast: true)
-                    ]
             )
         ]
 
-        if let tokenViewItems = viewItem?.addedTokenViewItems, !tokenViewItems.isEmpty {
-            let section = Section(
-                    id: "added-tokens",
-                    headerState: tableView.sectionHeader(text: "add_token.already_added".localized),
-                    footerState: .margin(height: .margin24),
-                    rows: tokenViewItems.enumerated().map { index, tokenViewItem in
-                        addedTokenRow(
-                                viewItem: tokenViewItem,
-                                index: index,
-                                isFirst: index == 0,
-                                isLast: index == tokenViewItems.count - 1
-                        )
-                    }
-            )
-
-            sections.append(section)
+        if let tokenViewItems = viewItem?.tokenViewItems, !tokenViewItems.isEmpty {
+            sections.append(contentsOf: tokenViewItems.enumerated().map { index, viewItem in
+                tokenSection(
+                        viewItem: viewItem,
+                        index: index,
+                        bottomMargin: index == tokenViewItems.count - 1 ? ((self.viewItem?.addedTokenViewItems ?? []).isEmpty ? .margin32 : .margin24) : .margin12
+                )
+            })
         }
 
-        if let tokenViewItems = viewItem?.tokenViewItems, !tokenViewItems.isEmpty {
-            let section = Section(
-                    id: "tokens",
-                    headerState: tableView.sectionHeader(text: "add_token.coin_types".localized),
-                    footerState: .margin(height: .margin32),
-                    rows: tokenViewItems.enumerated().map { index, tokenViewItem in
-                        tokenRow(
-                                viewItem: tokenViewItem,
-                                index: index,
-                                isFirst: index == 0,
-                                isLast: index == tokenViewItems.count - 1
-                        )
-                    }
-            )
-
-            sections.append(section)
+        if let tokenViewItems = viewItem?.addedTokenViewItems, !tokenViewItems.isEmpty {
+            sections.append(contentsOf: tokenViewItems.enumerated().map { index, viewItem in
+                addedTokenSection(
+                        viewItem: viewItem,
+                        index: index,
+                        isFirst: index == 0,
+                        isLast: index == tokenViewItems.count - 1
+                )
+            })
         }
 
         return sections

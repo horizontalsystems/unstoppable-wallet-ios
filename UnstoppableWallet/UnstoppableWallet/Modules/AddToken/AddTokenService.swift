@@ -71,9 +71,9 @@ class AddTokenService {
             if items.count == 1, let item = items.first,
                item.token.blockchainType == .binanceChain,
                !BlockchainType.binanceChain.supports(accountType: account.type) {
-                state = .bep2NotSupported(token: item.token)
+                state = .bep2NotSupported
             } else {
-                state = .fetched(addedItems: addedItems, items: items)
+                state = .fetched(items: items, addedItems: addedItems)
             }
         }
     }
@@ -130,7 +130,7 @@ extension AddTokenService {
     }
 
     func toggleToken(index: Int) {
-        guard case .fetched(let addedItems, let items) = state else {
+        guard case .fetched(let items, let addedItems) = state else {
             return
         }
 
@@ -140,11 +140,11 @@ extension AddTokenService {
 
         items[index].enabled = !items[index].enabled
 
-        state = .fetched(addedItems: addedItems, items: items)
+        state = .fetched(items: items, addedItems: addedItems)
     }
 
     func save() throws {
-        guard case .fetched(_, let items) = state else {
+        guard case .fetched(let items, _) = state else {
             return
         }
 
@@ -165,9 +165,9 @@ extension AddTokenService {
     enum State {
         case idle
         case loading
-        case fetched(addedItems: [Item], items: [Item])
+        case fetched(items: [Item], addedItems: [Item])
         case failed(error: Error)
-        case bep2NotSupported(token: Token)
+        case bep2NotSupported
     }
 
     class Item {
