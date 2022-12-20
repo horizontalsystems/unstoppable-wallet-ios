@@ -30,7 +30,7 @@
 "alert.wrong_amount" = "Falscher Betrag";
 "alert.no_fee" = "Falsche Gebühr";
 "alert.warning" = "Warnung";
-"alert.error" = "Error";
+"alert.error" = "Fehler";
 "alert.unknown_error" = "Unbekannter Fehler";
 "alert.success_action" = "Fertig";
 
@@ -39,12 +39,12 @@
 "alert.added_to_wallet" = "Zum Wallet hinzugefügt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
-"alert.copied" = "Copied";
+"alert.copied" = "Kopiert";
 "alert.created" = "Erstellt";
 "alert.restored" = "Wiederherstellen";
 "alert.address_added" = "Adresse hinzugefügt";
 "alert.deleted" = "Gelöscht";
-"alert.waiting_for_session" = "Waiting for Session";
+"alert.waiting_for_session" = "Warte auf Sitzung";
 "alert.try_again" = "Try Again";
 "alert.disconnecting" = "Verbindung wird getrennt";
 "alert.disconnected" = "Verbindung getrennt";
@@ -106,10 +106,10 @@
 "restore.input.passphrase" = "Passphrase";
 "restore.passphrase_description" = "Geben Sie Ihre Passphrase ein, die Sie beim Erstellen dieser Eselsbrücke verwendet haben";
 "restore.error.empty_passphrase" = "Die Passphrase darf nicht leer sein";
-"restore.non_standard_restore" = "Non-Standard Restore";
-"restore.non_standard_restore.description" = "This page provides a special wallet restore mechanism for Unstoppable users who have a non-standard wallet. Generally, such wallets could have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after updating to version 0.29. This page will enable you to restore access to your non-standard wallet. Once restored you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
-"restore.error.non_standard.description" = "This wallet seems to use a non-standard character in its secret word list and/or a passphrase. If you do not see a balance or transactions please read below for details.  \n\nCLICK TO GET MORE INFO";
-"restore.warning.non_recommended.description" = "This is a non-standard compliant wallet. Please read below for details.\n\nCLICK TO GET MORE INFO";
+"restore.non_standard_restore" = "Nicht standardmäßige Wiederherstellung";
+"restore.non_standard_restore.description" = "This page provides a special wallet restore mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after restoring such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once restored you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
+"restore.warning.non_recommended.description" = "This wallet seems to use a non-standard character in its secret word list and/or a passphrase. If you do not see a balance or transactions please read below for details.  \n\nCLICK TO GET MORE INFO";
+"restore.error.non_standard.description" = "This is a non-standard wallet.\n\nCLICK TO GET MORE INFO";
 
 // Coin Settings
 
@@ -614,7 +614,7 @@
 "coin_page.tvl_rank.description" = "The ranking among other protocols is based on the TVL value in USD terms.";
 "coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
 "coin_page.market_cap_tvl_ratio.description" = "The ratio of the project token's market cap over its TVL.";
-"coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
+"coin_page.tvl.description" = "Capital is deposited into the platform in the form of loan collateral or a liquidity pool.";
 
 "coin_page.investor_data" = "Investor Data";
 
@@ -836,7 +836,7 @@
 "settings.experimental_features.title" = "Experimentell";
 "settings.experimental_features.description" = "Die unten aufgeführten Funktionen sind experimentell und sollten mit Vorsicht eingesetzt werden. Wir haben sie zwar ausführlich mit unserem eigenen Kryptoguthaben getestet, aber wir können noch nicht garantieren, dass sie in allen denkbaren Fällen funktionieren.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
-"settings.experimental_features.test_net_enabled" = "Enable TestNet";
+"settings.experimental_features.test_net_enabled" = "Testnet aktivieren";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
@@ -893,7 +893,7 @@
 
 // Manage Accounts
 
-"manage_accounts.migration_required" = "Migration Required";
+"manage_accounts.migration_required" = "Migration erforderlich";
 "manage_accounts.migration_recommended" = "Migration recommended";
 "manage_accounts.backup_required" = "Sicherung erforderlich";
 
@@ -1010,7 +1010,7 @@
 "create_wallet.title" = "Neues Wallet";
 "create_wallet.create_button" = "Erstellen";
 "create_wallet.mnemonic" = "Eselsbrücke";
-"create_wallet.12_words" = "12 words (recommended)";
+"create_wallet.12_words" = "12 Wörter (empfohlen)";
 "create_wallet.n_words" = "%@ Wörter";
 "create_wallet.word_list" = "Wortliste";
 "create_wallet.passphrase" = "Passphrase";
@@ -1018,7 +1018,7 @@
 "create_wallet.input.confirm" = "Bestätigen";
 "create_wallet.passphrase_description" = "Passphrasen fügen den Wallets eine zusätzliche Sicherheitsebene hinzu, wodurch Benutzer mehrere unabhängige Multi-Coin-Wallets mit einer einzigen mnemonischen Wiederherstellungsphrase erstellen können, die jedoch mit unterschiedlichen Passwörtern verbunden sind. \n\nUm diese Wallets wiederherzustellen, benötigt der Benutzer eine mnemonische Wiederherstellungsphrase sowie ein Passwort für jedes wiederherzustellende Wallet.";
 "create_wallet.error.empty_passphrase" = "Passphrase darf nicht leer sein";
-"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
+"create_wallet.error.forbidden_symbols" = "Bitte verwenden Sie nur lateinische Buchstaben und Zahlen für die Passphrase";
 "create_wallet.error.invalid_confirmation" = "Passphrase-Bestätigung stimmt nicht überein";
 
 // Restore Select
@@ -1060,7 +1060,7 @@
 // Add Token
 
 "add_token.title" = "Token hinzufügen";
-"add_token.coin_type" = "Coin Type";
+"add_token.coin_type" = "Münztyp";
 "add_token.coin_name" = "Name der Coin";
 "add_token.coin_code" = "Münzcode";
 "add_token.decimals" = "Dezimalen";
@@ -1070,7 +1070,7 @@
 "add_token.invalid_contract_address_or_bep2_symbol" = "Ungültige Vertragsadresse oder BEP2-Symbol";
 "add_token.token_not_found" = "Token nicht gefunden";
 "add_token.input_placeholder" = "Vertragsadresse";
-"add_token.bep2_not_supported" = "You current wallet EVM private key does not support BEP2 tokens";
+"add_token.bep2_not_supported" = "Ihr aktueller EVM privater Schlüssel unterstützt keine BEP2 Token";
 
 // Wallet Connect
 
@@ -1080,8 +1080,8 @@
 "wallet_connect.active_account" = "Aktive Wallet";
 "wallet_connect.address" = "Adresse";
 "wallet_connect.network" = "Netzwerk";
-"wallet_connect.address" = "Adresse";
-"wallet_connect.network" = "Netzwerk";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Ausstehende Anfragen";
 "wallet_connect.main.no_any_supported_chains" = "Keine unterstützten Ketten!";
 "wallet_connect.main.unsupported_chains" = "Einige Ketten werden nicht unterstützt!";
