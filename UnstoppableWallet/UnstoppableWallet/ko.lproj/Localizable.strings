@@ -44,7 +44,7 @@
 "alert.restored" = "복구됨";
 "alert.address_added" = "주소 추가됨";
 "alert.deleted" = "삭제";
-"alert.waiting_for_session" = "Waiting for Session";
+"alert.waiting_for_session" = "세션을 기다리는 중";
 "alert.try_again" = "다시 시도하십시오.";
 "alert.disconnecting" = "연결을 끊는 중...";
 "alert.disconnected" = "연결 해제";
@@ -351,7 +351,7 @@
 "swap.revoke_warning" = "%@을(를) 교환하거나 새 금액을 취소하고 승인해야 합니다.";
 "swap.revoking_button" = "철회...";
 "swap.trade_error.not_found" = "이 토큰을 스왑할 수 없습니다";
-"swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
+"swap.trade_error.wrap_unwrap_not_allowed" = "이 서비스는 래핑/언래핑을 허용하지 않습니다. 다른 스왑 서비스를 사용해 보십시오. 1inch 권장";
 "swap.button_error.insufficient_balance" = "잔액이 부족합니다";
 "swap.switch_provider.title" = "스왑 서비스";
 
@@ -894,7 +894,7 @@
 // Manage Accounts
 
 "manage_accounts.migration_required" = "마이그레이션 필요함";
-"manage_accounts.migration_recommended" = "Migration recommended";
+"manage_accounts.migration_recommended" = "마이그레이션 권장";
 "manage_accounts.backup_required" = "백업이 필요합니다";
 
 // Manage Keys
@@ -1010,7 +1010,7 @@
 "create_wallet.title" = "새 지갑";
 "create_wallet.create_button" = "만들기";
 "create_wallet.mnemonic" = "연상 기호";
-"create_wallet.12_words" = "12 words (recommended)";
+"create_wallet.12_words" = "12 단어 (권장)";
 "create_wallet.n_words" = "%@ 단어";
 "create_wallet.word_list" = "단어 목록";
 "create_wallet.passphrase" = "암호 문구";
@@ -1018,7 +1018,7 @@
 "create_wallet.input.confirm" = "확인";
 "create_wallet.passphrase_description" = "암호 문구는 사용자가 하나의 연상 기호 복구 문구를 사용하여 여러 개의 독립적인 멀티코인 지갑을 만들 수 있도록 지갑에 보안 계층을 추가합니다.\n\n이러한 지갑을 복원하려면 사용자가 복원하기 위해 각 지갑에 대한 비밀번호와 연상 기호 복구 문구가 필요합니다.";
 "create_wallet.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
-"create_wallet.error.forbidden_symbols" = "Please use only supported symbols:A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"create_wallet.error.forbidden_symbols" = "지원되는 기호만 사용하세요: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "암호 확인이 일치하지 않습니다";
 
 // Restore Select
@@ -1065,7 +1065,7 @@
 "add_token.invalid_contract_address_or_bep2_symbol" = "잘못된 계약 주소 또는 BEP2 기호";
 "add_token.token_not_found" = "토큰 찾을 수 없음";
 "add_token.input_placeholder" = "계약 주소";
-"add_token.bep2_not_supported" = "You current wallet EVM private key does not support BEP2 tokens";
+"add_token.bep2_not_supported" = "현재 지갑 EVM 개인 키는 BEP2 토큰을 지원하지 않습니다.";
 
 // Wallet Connect
 
@@ -1090,7 +1090,7 @@
 "ethereum_transaction.error.insufficient_balance_with_fee" = "현재 %@ 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "선택한 수수료 값이 너무 낮아 거부됩니다!";
 "ethereum_transaction.error.nonce_already_in_block" = "이미 차단된 거래!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "거래를 대체하기에 충분하지 않은 수수료";
 "ethereum_transaction.error.reverted" = "거래를 실행할 수 없습니다: %@";
 "wallet_connect.request_title" = "요청";
 "wallet_connect.button.confirm" = "확인";
@@ -1117,7 +1117,7 @@
 
 "wallet_connect.pending_requests_title" = "보류 중인 요청";
 "wallet_connect.paired_dapps.title" = "페어링된 dApp";
-"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
+"wallet_connect.paired_dapps.cant_disconnect" = "연결을 끊을 수 없습니다";
 "wallet_connect.paired_dapps.disconnect_all" = "모두 삭제";
 "wallet_connect.pending_requests.nonactive_footer" = "요청을 열려면 원하는 지갑을 활성화해야 합니다";
 
@@ -1209,8 +1209,8 @@
 "fee_settings.errors.insufficient_balance.info" = "현재 %@ 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
 "fee_settings.errors.low_max_fee" = "적은 수수료";
 "fee_settings.errors.low_max_fee.info" = "설정된 거래 수수료 금액이 현재 이 거래를 처리하기에 충분하지 않습니다.";
-"fee_settings.errors.nonce_already_in_block" = "Can't replace transaction.";
-"fee_settings.errors.replacement_transaction_underpriced" = "Low Fee for replacement transaction";
+"fee_settings.errors.nonce_already_in_block" = "트랜잭션을 대체할 수 없습니다.";
+"fee_settings.errors.replacement_transaction_underpriced" = "교체 거래에 대한 낮은 수수료";
 "fee_settings.warning.risk_of_getting_stuck" = "위험";
 "fee_settings.warning.risk_of_getting_stuck.info" = "트랜잭션이 잠시 동안 보류 상태로 유지되거나 완전히 실패할 수 있습니다.";
 "fee_settings.warning.overpricing" = "수수료가 너무 높음";
