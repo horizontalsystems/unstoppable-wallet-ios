@@ -1063,13 +1063,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Add Token
 
 "add_token.title" = "Token Ekle";
-"add_token.coin_type" = "Coin Type";
-"add_token.coin_name" = "Kripto Para Adı";
-"add_token.coin_code" = "Coin Kodu";
-"add_token.decimals" = "Ondalıklar";
 "add_token.already_added" = "Zaten ekli";
-"add_token.coin_types" = "Coin Tipi";
-"add_token.choose_type" = "Türü Seç";
+"add_token.choose_token" = "Choose Token";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Geçersiz sözleşme adresi veya BEP2 sembolü";
 "add_token.token_not_found" = "Token bulunamadı";
 "add_token.input_placeholder" = "Sözleşme Adresi";
@@ -1083,8 +1078,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.active_account" = "Aktif Cüzdan";
 "wallet_connect.address" = "Adres";
 "wallet_connect.network" = "Ağ";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Adres";
+"wallet_connect.network" = "Ağ";
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
 "wallet_connect.main.no_any_supported_chains" = "Desteklenen zincir yok!";
 "wallet_connect.main.unsupported_chains" = "Bazı zincirler desteklenmiyor!";
