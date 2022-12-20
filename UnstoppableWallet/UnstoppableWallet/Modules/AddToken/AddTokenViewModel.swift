@@ -43,7 +43,7 @@ class AddTokenViewModel {
                 buttonEnabledRelay.accept(false)
             } else {
                 let hasEnabledItem = items.contains { $0.enabled }
-                buttonTitleRelay.accept(hasEnabledItem ? "button.add".localized : "add_token.choose_type".localized)
+                buttonTitleRelay.accept(hasEnabledItem ? "button.add".localized : "add_token.choose_token".localized)
                 buttonEnabledRelay.accept(hasEnabledItem)
             }
         default:

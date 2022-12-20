@@ -1063,7 +1063,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "add_token.title" = "Add Token";
 "add_token.already_added" = "Already Added";
-"add_token.choose_type" = "Choose Type";
+"add_token.choose_token" = "Choose Token";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
 "add_token.token_not_found" = "Token not found";
 "add_token.input_placeholder" = "Contract Address";
