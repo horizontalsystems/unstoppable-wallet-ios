@@ -45,8 +45,8 @@
 "alert.restored" = "Geri yüklendi ";
 "alert.address_added" = "Adres eklendi";
 "alert.deleted" = "Sil";
-"alert.waiting_for_session" = "Waiting for Session";
-"alert.try_again" = "Try Again";
+"alert.waiting_for_session" = "Oturum bekleniyor";
+"alert.try_again" = "Tekrar deneyin";
 "alert.disconnecting" = "Bağlantı kesiliyor";
 "alert.disconnected" = "Bağlantı kesildi";
 "alert.enabling" = "Etkinleştiriliyor";
@@ -354,7 +354,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "swap.revoke_warning" = "%@ alışverişi yapabilir veya yeni tutarı iptal edip onaylamanız gerekir";
 "swap.revoking_button" = "İptal ediliyor...";
 "swap.trade_error.not_found" = "Bu token swap edilemez";
-"swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
+"swap.trade_error.wrap_unwrap_not_allowed" = "Bu hizmet sarmaya/paketlemeye izin vermiyor. Lütfen başka bir takas hizmetini deneyin. 1inch önerilir";
 "swap.button_error.insufficient_balance" = "Yetersiz bakiye";
 "swap.switch_provider.title" = "Swap Hizmeti";
 
@@ -378,7 +378,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "swap.advanced_settings.deadline_minute" = "%@ dk";
 "swap.advanced_settings.recipient_address" = "Alıcı Adresi";
 "swap.advanced_settings.warning.unusual_slippage" = "İşleminiz varlık fiyatını etkileyebilir";
-"swap.advanced_settings.service_fee_description" = "A service fee for the swap action on the platform typicaly either 0.3% or 0.6%";
+"swap.advanced_settings.service_fee_description" = "Platformdaki takas işlemi için bir hizmet ücreti genellikle %0,3 veya %0,6'dır";
 "swap.advanced_settings.error.lower_slippage" = "İşleminizin başarısız olması muhtemeldir.";
 "swap.advanced_settings.error.higher_slippage" = "Slipaj Toleransı %@%% üzerinde olamaz";
 "swap.advanced_settings.error.invalid_address" = "Geçersiz adres";
@@ -401,14 +401,14 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "swap.confirmation.swap_button" = "Takas";
 "swap.confirmation.impact_too_high" = "Rayiç fiyat ile beklenen uzlaşma fiyatı arasındaki fark çok yüksek.";
-"swap.confirmation.minimum_received" = "Minimum Received";
-"swap.confirmation.maximum_sent" = "Maximum Sent";
+"swap.confirmation.minimum_received" = "Minimum Alınan";
+"swap.confirmation.maximum_sent" = "Maksimum Harcama";
 
 "swap.dex_info.description" = "Bu takas etme hizmeti, %@ blok zinciri üzerine inşa edilmiş ve merkezi olmayan jeton takas etme protokolü olan %@ tarafından desteklenmektedir.\n\n%@, tamamen otomatiktir ve hile yapmadan jeton takaslarını güvenilir bir şekilde kolaylaştıran akıllı sözleşmelerle yönetilir.";
 
 "swap.dex_info.header_dex_related" = "%@";
 "swap.dex_info.header_allowance" = "Ödenek";
-"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.dex_info.content_allowance" = "Bir borsanın, token takaslarını yürütürken kullanıcının adına harcayabileceği ödenek miktarı. Fiili bir takas işleminin gerçekleşmesinde yeterli ödenek gereklidir.";
 "swap.dex_info.header_price_impact" = "Fiyat Etkisi";
 "swap.dex_info.content_price_impact" = "Gösterilen bir fiyattan beklenen fiyat sapması, tipik olarak swap tutarı ile artar.";
 "swap.dex_info.header_swap_fee" = "Takas Ücreti";
@@ -897,7 +897,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Manage Accounts
 
 "manage_accounts.migration_required" = "Taşıma Gerekli";
-"manage_accounts.migration_recommended" = "Migration recommended";
+"manage_accounts.migration_recommended" = "Değiştirme işlemi için Düşük Ücret";
 "manage_accounts.backup_required" = "Yedekleme Gerekli";
 
 // Manage Keys
@@ -1021,7 +1021,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "create_wallet.input.confirm" = "Onayla";
 "create_wallet.passphrase_description" = "Parolalar cüzdanlara ek güvenlik katmanı ekleyerek kullanıcıların tek bir anımsatıcı kurtarma ifadesi kullanarak ancak farklı parolalarla ilişkilendirilmiş birden çok bağımsız çoklu para cüzdanı oluşturmasına olanak tanır. \n\nBu cüzdanları geri yüklemek için bir kullanıcı mnemonic kurtarma ifadesinin yanı sıra bir parola gerektirecektir. her biri geri yüklenecek cüzdan.";
 "create_wallet.error.empty_passphrase" = "Parola boş olamaz";
-"create_wallet.error.forbidden_symbols" = "Please use only supported symbols:A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"create_wallet.error.forbidden_symbols" = "Lütfen yalnızca desteklenen sembolleri kullanın:  A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Parola onayı eşleşmiyor";
 
 // Restore Select
@@ -1064,11 +1064,11 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "add_token.title" = "Token Ekle";
 "add_token.already_added" = "Zaten ekli";
-"add_token.choose_token" = "Choose Token";
+"add_token.choose_token" = "Tokenleri seç";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Geçersiz sözleşme adresi veya BEP2 sembolü";
 "add_token.token_not_found" = "Token bulunamadı";
 "add_token.input_placeholder" = "Sözleşme Adresi";
-"add_token.bep2_not_supported" = "You current wallet EVM private key does not support BEP2 tokens";
+"add_token.bep2_not_supported" = "Mevcut cüzdanınız EVM özel anahtarı, BEP2 belirteçlerini desteklemiyor";
 
 // Wallet Connect
 
@@ -1093,7 +1093,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Mevcut %@ bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "Seçilen ücret tutarı çok düşüktür ve reddedilecektir!";
 "ethereum_transaction.error.nonce_already_in_block" = "İşlem zaten blokta!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "İşlemi değiştirmek için yeterli ücret yok";
 "ethereum_transaction.error.reverted" = "İşlem gerçekleştirilemiyor: %@";
 "wallet_connect.request_title" = "İstek";
 "wallet_connect.button.confirm" = "Onayla";
@@ -1120,7 +1120,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "wallet_connect.pending_requests_title" = "Bekleyen Talepler";
 "wallet_connect.paired_dapps.title" = "Paired dApps";
-"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
+"wallet_connect.paired_dapps.cant_disconnect" = "Bağlantı Kesilemiyor";
 "wallet_connect.paired_dapps.disconnect_all" = "Hepsini Sil";
 "wallet_connect.pending_requests.nonactive_footer" = "Bir istek açmak için istenen cüzdanı etkinleştirmelisiniz";
 
@@ -1212,8 +1212,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "fee_settings.errors.insufficient_balance.info" = "Mevcut %@ bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
 "fee_settings.errors.low_max_fee" = "Düşük Ücret";
 "fee_settings.errors.low_max_fee.info" = "Belirlenen işlem ücreti, bu işlemin şimdi işlenmesi için yetersiz.";
-"fee_settings.errors.nonce_already_in_block" = "Can't replace transaction.";
-"fee_settings.errors.replacement_transaction_underpriced" = "Low Fee for replacement transaction";
+"fee_settings.errors.nonce_already_in_block" = "İşlem değiştirilemiyor";
+"fee_settings.errors.replacement_transaction_underpriced" = "Değiştirme işlemi için Düşük Ücret";
 "fee_settings.warning.risk_of_getting_stuck" = "Riskli";
 "fee_settings.warning.risk_of_getting_stuck.info" = "İşlem bir süre beklemede kalabilir veya tamamen başarısız olabilir.";
 "fee_settings.warning.overpricing" = "Ücret Çok Yüksek";
