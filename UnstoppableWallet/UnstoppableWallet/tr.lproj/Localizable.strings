@@ -40,7 +40,7 @@
 "alert.added_to_wallet" = "Cüzdana Eklendi";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
-"alert.copied" = "Kopyalandı";
+"alert.copied" = "Copied";
 "alert.created" = "Oluşturuldu";
 "alert.restored" = "Geri yüklendi ";
 "alert.address_added" = "Adres eklendi";
@@ -408,7 +408,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "swap.dex_info.header_dex_related" = "%@";
 "swap.dex_info.header_allowance" = "Ödenek";
-"swap.dex_info.content_allowance" = "Uniswap'ın jeton swaplarını gerçekleştirirken sizin adınıza harcayabileceği bazı para birimlerindeki tutar. Swap işleminin gerçekleşebilmesi için yeterli ödeme miktarı gereklidir.";
+"swap.dex_info.content_allowance" = "The amount an exchange can spend on user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
 "swap.dex_info.header_price_impact" = "Fiyat Etkisi";
 "swap.dex_info.content_price_impact" = "Gösterilen bir fiyattan beklenen fiyat sapması, tipik olarak swap tutarı ile artar.";
 "swap.dex_info.header_swap_fee" = "Takas Ücreti";
@@ -1083,8 +1083,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.active_account" = "Aktif Cüzdan";
 "wallet_connect.address" = "Adres";
 "wallet_connect.network" = "Ağ";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Adres";
+"wallet_connect.network" = "Ağ";
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
 "wallet_connect.main.no_any_supported_chains" = "Desteklenen zincir yok!";
 "wallet_connect.main.unsupported_chains" = "Bazı zincirler desteklenmiyor!";
