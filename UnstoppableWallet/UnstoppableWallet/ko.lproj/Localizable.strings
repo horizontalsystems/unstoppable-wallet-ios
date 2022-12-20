@@ -39,13 +39,13 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "Copied";
+"alert.copied" = "복사됨";
 "alert.created" = "생성됨";
 "alert.restored" = "복구됨";
 "alert.address_added" = "주소 추가됨";
 "alert.deleted" = "삭제";
 "alert.waiting_for_session" = "Waiting for Session";
-"alert.try_again" = "Try Again";
+"alert.try_again" = "다시 시도하십시오.";
 "alert.disconnecting" = "연결을 끊는 중...";
 "alert.disconnected" = "연결 해제";
 "alert.enabling" = "활성화 중";
@@ -106,10 +106,10 @@
 "restore.input.passphrase" = "암호문구";
 "restore.passphrase_description" = "이 연상 부호를 만들 때 사용한 암호 문구 입력";
 "restore.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
-"restore.non_standard_restore" = "Non-Standard Restore";
-"restore.non_standard_restore.description" = "This page provides a special wallet restore mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after restoring such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once restored you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
-"restore.warning.non_recommended.description" = "This wallet seems to use a non-standard character in its secret word list and/or a passphrase. If you do not see a balance or transactions please read below for details.  \n\nCLICK TO GET MORE INFO";
-"restore.error.non_standard.description" = "This is a non-standard wallet.\n\nCLICK TO GET MORE INFO";
+"restore.non_standard_restore" = "비표준 복원";
+"restore.non_standard_restore.description" = "이 페이지는 비표준 지갑을 가지고 있는 Unstoppable 사용자를 위한 특별한 지갑 복원 메커니즘을 제공합니다. 일반적으로 이러한 지갑은 Unstoppable 버전 0.27 - 0.28에서 영어가 아닌 니모닉 단어 목록 및/또는 지갑 암호의 특수 문자(예: 분음 부호)를 사용하여 생성되었을 수 있습니다.\n\n영향을 받는 사용자인 경우 버전 0.29로 업데이트하면 지갑 잔액이 0으로 표시됩니다. 이 페이지에서는 비표준 지갑에 대한 액세스를 복원할 수 있습니다. 복원되면 새 지갑(표준 준수)을 만들고 그곳으로 자금을 옮기는 것이 좋습니다.";
+"restore.warning.non_recommended.description" = "이 지갑은 비밀 단어 목록 및/또는 암호 문구에 비표준 문자를 사용하는 것 같습니다. 잔액이나 거래 내역이 보이지 않으면 아래에서 자세한 내용을 읽어보세요.\n\n더 많은 정보를 얻으려면 클릭하십시오";
+"restore.error.non_standard.description" = "비표준 호환 지갑입니다. 자세한 내용은 아래를 참조하십시오.\n\n더 많은 정보를 얻으려면 클릭하십시오";
 
 // Coin Settings
 
@@ -300,7 +300,7 @@
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "합계";
 "send.confirmation.fee" = "수수료";
-"send.confirmation.time_lock" = "Time Lock";
+"send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.send_button" = "전송";
 "send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
 "send.confirmation.resend_button" = "재전송";
@@ -375,7 +375,7 @@
 "swap.advanced_settings.deadline_minute" = "최소 %@";
 "swap.advanced_settings.recipient_address" = "수취인 주소";
 "swap.advanced_settings.warning.unusual_slippage" = "거래가 프론트런 당할 수 있습니다";
-"swap.advanced_settings.service_fee_description" = "A service fee for the swap action on the platform typicaly either 0.3% or 0.6%";
+"swap.advanced_settings.service_fee_description" = "플랫폼에서 스왑 작업에 대한 서비스 수수료는 일반적으로 0.3% 또는 0.6%입니다.";
 "swap.advanced_settings.error.lower_slippage" = "귀하의 거래가 실패할 것 같습니다.";
 "swap.advanced_settings.error.higher_slippage" = "슬리피지 허용 오차는 %@%%를 초과할 수 없습니다.";
 "swap.advanced_settings.error.invalid_address" = "잘못된 주소";
@@ -398,14 +398,14 @@
 
 "swap.confirmation.swap_button" = "스왑";
 "swap.confirmation.impact_too_high" = "시장 가격과 예상 결제 가격의 차이가 너무 큽니다.";
-"swap.confirmation.minimum_received" = "Minimum Received";
-"swap.confirmation.maximum_sent" = "Maximum Sent";
+"swap.confirmation.minimum_received" = "최소 지급액";
+"swap.confirmation.maximum_sent" = "최대 속도";
 
 "swap.dex_info.description" = "이 거래소 서비스는 %@ 블록체인에 구축된 분산형 토큰 교환 프로토콜인 %@에 의해 구동됩니다.\n\n%@는 스마트 계약에 의해 완전 자동화되고 관리되므로 부정 행위 없이 토큰 교환을 안정적으로 수행할 수 있습니다.";
 
 "swap.dex_info.header_dex_related" = "%@ 관련됨";
 "swap.dex_info.header_allowance" = "허용량";
-"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.dex_info.content_allowance" = "토큰 스왑을 실행할 때 거래소가 사용자를 대신하여 지출할 수 있는 금액. 실제 스왑 거래가 발생하기 전에 선행 거래 설정 충분한 여유가 필요합니다.";
 "swap.dex_info.header_price_impact" = "가격 영향";
 "swap.dex_info.content_price_impact" = "표시된 가격과의 예상 가격 편차는 일반적으로 스왑 금액에 따라 증가합니다.";
 "swap.dex_info.header_swap_fee" = "스왑 비용";
@@ -836,7 +836,7 @@
 "settings.experimental_features.title" = "실험적인";
 "settings.experimental_features.description" = "아래 기능은 실험용이므로 주의해서 사용해 주세요. 자체 암호화된 자금을 사용하여 이러한 기능을 철저히 실험하였지만 가능한 모든 경우에 예상대로 작독한다고 보장 드릴 수는 없습니다.";
 "settings.experimental_features.bitcoin_hodling" = "시간 자물쇠";
-"settings.experimental_features.test_net_enabled" = "Enable TestNet";
+"settings.experimental_features.test_net_enabled" = "테스트넷 활성화";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
@@ -893,7 +893,7 @@
 
 // Manage Accounts
 
-"manage_accounts.migration_required" = "Migration Required";
+"manage_accounts.migration_required" = "마이그레이션 필요함";
 "manage_accounts.migration_recommended" = "Migration recommended";
 "manage_accounts.backup_required" = "백업이 필요합니다";
 
@@ -1061,7 +1061,7 @@
 
 "add_token.title" = "토큰 추가";
 "add_token.already_added" = "이미 추가됨";
-"add_token.choose_token" = "Choose Token";
+"add_token.choose_token" = "토큰 선택";
 "add_token.invalid_contract_address_or_bep2_symbol" = "잘못된 계약 주소 또는 BEP2 기호";
 "add_token.token_not_found" = "토큰 찾을 수 없음";
 "add_token.input_placeholder" = "계약 주소";
@@ -1075,8 +1075,8 @@
 "wallet_connect.active_account" = "지갑 활성화";
 "wallet_connect.address" = "주소";
 "wallet_connect.network" = "네트워크";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "주소";
+"wallet_connect.network" = "네트워크";
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
 "wallet_connect.main.unsupported_chains" = "일부 체인은 지원되지 않습니다!";
@@ -1089,7 +1089,7 @@
 "ethereum_transaction.error.insufficient_balance" = "거래에서 전송하려면 %@가 필요합니다.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "현재 %@ 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "선택한 수수료 값이 너무 낮아 거부됩니다!";
-"ethereum_transaction.error.nonce_already_in_block" = "The transaction is already in block!";
+"ethereum_transaction.error.nonce_already_in_block" = "이미 차단된 거래!";
 "ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
 "ethereum_transaction.error.reverted" = "거래를 실행할 수 없습니다: %@";
 "wallet_connect.request_title" = "요청";
