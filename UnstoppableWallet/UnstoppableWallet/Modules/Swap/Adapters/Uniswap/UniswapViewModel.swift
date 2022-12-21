@@ -115,19 +115,12 @@ class UniswapViewModel {
         case .loading:
             loading = true
         case .ready(let trade):
-            if let executionPrice = trade.tradeData.executionPrice {
-                let priceCoinValue = viewItemHelper.priceValue(
+            if let executionPrice = trade.tradeData.executionPrice, !executionPrice.isZero {
+                let prices = viewItemHelper.sortedPrices(
                         executionPrice: executionPrice,
-                        tokenIn: tradeService.tokenIn,
-                        tokenOut: tradeService.tokenOut
-                )
-
-                let revertedPriceCoinValue = viewItemHelper.priceValue(
-                        executionPrice: trade.tradeData.executionPriceInverted ?? (1 / executionPrice),
-                        tokenIn: tradeService.tokenOut,
-                        tokenOut: tradeService.tokenIn
-                )
-                buyPriceRelay.accept(SwapPriceCell.PriceViewItem(price: priceCoinValue?.formattedFull, revertedPrice: revertedPriceCoinValue?.formattedFull))
+                        invertedPrice: trade.tradeData.executionPriceInverted ?? (1 / executionPrice),
+                        tokenIn: tradeService.tokenIn, tokenOut: tradeService.tokenOut)
+                buyPriceRelay.accept(SwapPriceCell.PriceViewItem(price: prices?.0, revertedPrice: prices?.1))
             } else {
                 buyPriceRelay.accept(nil)
             }
@@ -328,7 +321,11 @@ extension UniswapViewModel {
                 slippage: viewItemHelper.slippage(tradeService.settings.allowedSlippage),
                 deadline: viewItemHelper.deadline(tradeService.settings.ttl),
                 recipientDomain: tradeService.settings.recipient?.domain,
-                price: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, tokenIn: tradeService.tokenIn, tokenOut: tradeService.tokenOut)?.formattedFull,
+                price: viewItemHelper.sortedPrices(
+                        executionPrice: trade.tradeData.executionPrice,
+                        invertedPrice: trade.tradeData.executionPriceInverted,
+                        tokenIn: tradeService.tokenIn,
+                        tokenOut: tradeService.tokenOut)?.0,
                 priceImpact: viewItemHelper.priceImpactViewItem(trade: trade)
         )
 

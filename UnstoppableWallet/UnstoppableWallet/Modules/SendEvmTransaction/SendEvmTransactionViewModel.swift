@@ -466,6 +466,14 @@ class SendEvmTransactionViewModel {
         sections.append(SectionViewItem(viewItems: outViewItems))
 
         var additionalInfoItems = additionalSectionViewItem(oneInchSwapInfo: oneInchSwapInfo, recipient: recipient)
+        if let oneInchSwapInfo = oneInchSwapInfo, let item = swapPriceViewItem(
+                amountFrom: oneInchSwapInfo.amountFrom,
+                amountTo: oneInchSwapInfo.estimatedAmountTo,
+                tokenFrom: oneInchSwapInfo.tokenFrom,
+                tokenTo: oneInchSwapInfo.tokenTo) {
+            additionalInfoItems.append(item)
+        }
+
         if case .extremum(let value) = amountOut {
             additionalInfoItems.append(doubleAmountViewItem(coinService: coinServiceOut, title: "swap.confirmation.minimum_received".localized, value: value))
         }
@@ -495,11 +503,27 @@ class SendEvmTransactionViewModel {
         ]))
 
         var additionalInfoItems = additionalSectionViewItem(oneInchSwapInfo: oneInchSwapInfo, recipient: oneInchSwapInfo.recipient.flatMap { try? EvmKit.Address(hex: $0.raw) })
+        if let item = swapPriceViewItem(amountFrom: oneInchSwapInfo.amountFrom, amountTo: oneInchSwapInfo.estimatedAmountTo, tokenFrom: oneInchSwapInfo.tokenFrom, tokenTo: oneInchSwapInfo.tokenTo) {
+            additionalInfoItems.append(item)
+        }
         additionalInfoItems.append(doubleAmountViewItem(coinService: coinServiceOut, title: "swap.confirmation.minimum_received".localized, value: toAmountMin))
 
         sections.append(SectionViewItem(viewItems: additionalInfoItems))
 
         return sections
+    }
+
+    private func swapPriceViewItem(amountFrom: Decimal, amountTo: Decimal, tokenFrom: MarketKit.Token, tokenTo: MarketKit.Token) -> ViewItem? {
+        if !amountFrom.isZero && !amountTo.isZero {
+            let executionPrice = amountTo / amountFrom
+            let reverted = amountTo < amountFrom
+
+            let coinValue = CoinValue(kind: .token(token: reverted ? tokenFrom : tokenTo), value: reverted ? 1 / executionPrice : executionPrice)
+            let fullValue = ValueFormatter.instance.formatFull(coinValue: coinValue).map { "1 " + [(reverted ? tokenTo : tokenFrom).coin.code, $0].joined(separator: " = ") } ?? ""
+            return .value(title: "swap.price".localized, value: fullValue, type: .regular)
+        }
+        return nil
+
     }
 
     private func additionalSectionViewItem(oneInchSwapInfo: SendEvmData.OneInchSwapInfo?, recipient: EvmKit.Address?) -> [ViewItem] {

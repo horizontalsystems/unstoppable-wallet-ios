@@ -89,19 +89,12 @@ class OneInchViewModel {
         case .ready(let parameters):
             if !parameters.amountFrom.isZero, !parameters.amountTo.isZero {
                 let executionPrice = parameters.amountTo / parameters.amountFrom
-
-                let priceCoinValue = viewItemHelper.priceValue(
+                let invertedPrice = 1 / executionPrice
+                let prices = viewItemHelper.sortedPrices(
                         executionPrice: executionPrice,
-                        tokenIn: parameters.tokenFrom,
-                        tokenOut: parameters.tokenTo
-                )
-
-                let revertedPriceCoinValue = viewItemHelper.priceValue(
-                        executionPrice: 1 / executionPrice,
-                        tokenIn: parameters.tokenTo,
-                        tokenOut: parameters.tokenFrom
-                )
-                buyPriceRelay.accept(SwapPriceCell.PriceViewItem(price: priceCoinValue?.formattedFull, revertedPrice: revertedPriceCoinValue?.formattedFull))
+                        invertedPrice: invertedPrice,
+                        tokenIn: tradeService.tokenIn, tokenOut: tradeService.tokenOut)
+                buyPriceRelay.accept(SwapPriceCell.PriceViewItem(price: prices?.0, revertedPrice: prices?.1))
             } else {
                 buyPriceRelay.accept(nil)
             }
