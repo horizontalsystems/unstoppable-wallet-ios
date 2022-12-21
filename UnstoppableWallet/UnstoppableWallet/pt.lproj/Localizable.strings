@@ -840,6 +840,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "settings.experimental_features.description" = "Os recursos abaixo são experimentais e devem ser usados com cautela. Enquanto nós testamos minuciosamente esses recursos usando nossos próprios fundos cripto, nós não podemos garantir que eles funcionarão como esperado em todos os casos possíveis.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 "settings.experimental_features.test_net_enabled" = "Ativar Testnet";
+"settings.experimental_features.test_net.description" = "Enabling TestNet gives you the ability to add Goerli Chain";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
