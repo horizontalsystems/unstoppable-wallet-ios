@@ -125,7 +125,7 @@ class OneInchViewModel {
 
         if case .ready = service.state {
             actionState = .enabled(title: "swap.proceed_button".localized)
-        } else if let error = service.errors.compactMap({ $0 as? SwapModule.SwapError}).first {
+        } else if let error = service.errors.compactMap({ $0 as? SwapModule.SwapError }).first {
             switch error {
             case .insufficientBalanceIn: actionState = .disabled(title: "swap.button_error.insufficient_balance".localized)
             case .needRevokeAllowance:

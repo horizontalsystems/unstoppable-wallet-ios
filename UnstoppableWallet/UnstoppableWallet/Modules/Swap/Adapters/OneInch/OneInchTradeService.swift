@@ -130,7 +130,17 @@ class OneInchTradeService {
                 .subscribe(onSuccess: { [weak self] quote in
                     self?.handle(quote: quote, tokenFrom: tokenIn, tokenTo: tokenOut, amountFrom: amountIn)
                 }, onError: { [weak self] error in
-                    self?.state = .notReady(errors: [error.convertedError])
+                    var identifiedError = error.convertedError
+
+                    if let error = identifiedError as? AppError,
+                        case .invalidResponse(let reason) = error {
+
+                        if reason.contains("liquidity") {
+                            identifiedError = AppError.oneInch(reason: .insufficientLiquidity)
+                        }
+                    }
+
+                    self?.state = .notReady(errors: [identifiedError])
                 })
                 .disposed(by: quoteDisposeBag)
 

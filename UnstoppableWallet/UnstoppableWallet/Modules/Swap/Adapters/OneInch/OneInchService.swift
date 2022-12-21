@@ -159,7 +159,9 @@ class OneInchService {
             loading = true
         }
 
-        errors = allErrors
+        if !loading {
+            errors = allErrors
+        }
 
         if loading {
             state = .loading
