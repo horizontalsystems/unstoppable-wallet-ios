@@ -112,7 +112,6 @@
 "restore.warning.non_recommended.description" = "Diese Brieftasche scheint ein nicht standardmäßiges Zeichen in ihrer geheimen Wortliste und/oder einer Passphrase zu verwenden. Wenn Sie kein Guthaben oder Transaktionen sehen, lesen Sie bitte unten für Details.\n\nKLICKEN, UM WEITERE INFORMATIONEN ZU ERHALTEN";
 "restore.error.non_standard.description" = "Dies ist eine nicht standardmäßige Wallet. \n\nKLICKEN SIE MEHR INFO";
 
-
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "Legacy";
@@ -839,6 +838,7 @@
 "settings.experimental_features.description" = "Die unten aufgeführten Funktionen sind experimentell und sollten mit Vorsicht eingesetzt werden. Wir haben sie zwar ausführlich mit unserem eigenen Kryptoguthaben getestet, aber wir können noch nicht garantieren, dass sie in allen denkbaren Fällen funktionieren.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 "settings.experimental_features.test_net_enabled" = "Testnet aktivieren";
+"settings.experimental_features.test_net.description" = "Enabling TestNet gives you the ability to add Goerli Chain";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
@@ -896,6 +896,7 @@
 // Manage Accounts
 
 "manage_accounts.migration_required" = "Migration erforderlich";
+"manage_accounts.migration_recommended" = "Migration empfohlen";
 "manage_accounts.backup_required" = "Sicherung erforderlich";
 
 // Manage Keys
