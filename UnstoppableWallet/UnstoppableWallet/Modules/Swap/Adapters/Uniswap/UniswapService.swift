@@ -159,7 +159,9 @@ class UniswapService {
             loading = true
         }
 
-        errors = allErrors
+        if !loading {
+            errors = allErrors
+        }
 
         if loading {
             state = .loading

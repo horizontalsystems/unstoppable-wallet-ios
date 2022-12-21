@@ -46,6 +46,7 @@ class OneInchDataSource {
     private var lastAllowance: String?
     private var lastAvailableBalance: String?
     private var lastPriceImpact: String?
+    private var error: String?
 
     init(viewModel: OneInchViewModel, allowanceViewModel: SwapAllowanceViewModel) {
         self.viewModel = viewModel
@@ -152,6 +153,8 @@ class OneInchDataSource {
     }
 
     private func handle(error: String?) {
+        self.error = error
+
         if let error = error {
             errorCell.isVisible = true
             errorCell.bind(caution: TitledCaution(title: "alert.error".localized, text: error, type: .error))
@@ -284,21 +287,21 @@ class OneInchDataSource {
             InfoCellViewItem(
                     id: "buy-price",
                     cell: buyPriceCell,
-                    isVisible: lastBuyPrice != nil),
+                    isVisible: error == nil && lastBuyPrice != nil),
             InfoCellViewItem(
                     id: "allowance",
                     cell: allowanceCell,
                     descriptionTitle: "swap.allowance".localized,
                     description: "swap.dex_info.content_allowance".localized,
-                    isVisible: lastAllowance != nil),
+                    isVisible: error == nil && lastAllowance != nil),
             InfoCellViewItem(
                     id: "available-balance",
                     cell: availableBalanceCell,
-                    isVisible: lastAvailableBalance != nil && lastBuyPrice == nil && lastAllowance == nil),
+                    isVisible: error == nil && lastAvailableBalance != nil && lastBuyPrice == nil && lastAllowance == nil),
             InfoCellViewItem(
                     id: "price-impact",
                     cell: priceImpactCell,
-                    isVisible: lastPriceImpact != nil && lastAllowance == nil),
+                    isVisible: error == nil && lastPriceImpact != nil && lastAllowance == nil),
         ]
 
         let firstIndex = cellViewItems.firstIndex(where: { $0.isVisible }) ?? -1
@@ -368,7 +371,10 @@ extension OneInchDataSource: ISwapDataSource {
                             cell: warningCell,
                             id: "warning",
                             dynamicHeight: { [weak self] width in
-                                self?.warningCell.height(containerWidth: width) ?? 0
+                                if self?.error != nil {
+                                    return 0
+                                }
+                                return self?.warningCell.height(containerWidth: width) ?? 0
                             }
                     ),
                     StaticRow(

@@ -69,7 +69,7 @@ extension AppError: LocalizedError {
             switch reason {
             case .insufficientBalanceWithFee: return "" // localized in modules
             case .cannotEstimate: return "" // localized in modules
-            case .insufficientLiquidity: return "swap.one_inch.error.insufficient_liquidity".localized
+            case .insufficientLiquidity: return "swap.one_inch.error.insufficient_liquidity.info".localized
             }
         case .invalidWords(let count):
             return "restore_error.mnemonic_word_count".localized("\(count)")
