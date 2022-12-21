@@ -78,7 +78,7 @@ extension ExperimentalFeaturesViewController: SectionsDataSource {
             Section(
                     id: "test-net",
                     headerState: .margin(height: .margin32),
-                    footerState: .margin(height: .margin32),
+                    footerState: tableView.sectionFooter(text: "settings.experimental_features.test_net.description".localized),
                     rows: [
                         CellBuilderNew.row(
                                 rootElement: .hStack([
