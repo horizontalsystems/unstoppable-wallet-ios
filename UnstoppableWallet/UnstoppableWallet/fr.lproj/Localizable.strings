@@ -184,7 +184,6 @@
 
 // Backup Required
 
-"manage_accounts.migration_required" = "Migration Requise";
 "backup_required.title" = "Sauvegarde requise";
 
 // Backup Prompt
@@ -832,13 +831,13 @@
 "manage_coins.add_coin.create" = "Créer";
 "manage_coins.add_coin.restore" = "Restaurer";
 
-
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Expérimental";
 "settings.experimental_features.description" = "Les fonctionnalités ci-dessous sont expérimentales et doivent être utilisées avec prudence. Bien que nous ayons entièrement testé ces fonctionnalités en utilisant nos propres fonds crypto, nous ne pouvons pas garantir qu'elles fonctionnent comme prévu dans tous les cas de figure possible.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 "settings.experimental_features.test_net_enabled" = "Activer le Testnet";
+"settings.experimental_features.test_net.description" = "Enabling TestNet gives you the ability to add Goerli Chain";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
