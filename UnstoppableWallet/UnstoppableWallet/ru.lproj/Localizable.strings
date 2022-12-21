@@ -115,7 +115,6 @@
 \n\nПОЖАЛУЙСТА НАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ.";
 "restore.error.non_standard.description" = "Это нестандартный кошелек.\n\nНАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ";
 
-
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "Legacy";
@@ -190,8 +189,6 @@
 // Backup Required
 
 "backup_required.title" = "Требуется резервная копия";
-"manage_accounts.migration_required" = "Требуется Миграция";
-
 
 // Backup Prompt
 
@@ -844,6 +841,7 @@
 "settings.experimental_features.description" = "Функции ниже являются экспериментальными. Несмотря на то, что мы детально их протестировали, используя наши собственные криптосредства, мы не можем гарантировать, что они всегда будут работать так, как предусмотрено.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 "settings.experimental_features.test_net_enabled" = "Включить Testnet";
+"settings.experimental_features.test_net.description" = "Enabling TestNet gives you the ability to add Goerli Chain";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
