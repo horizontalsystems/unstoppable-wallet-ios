@@ -4,13 +4,20 @@ import MarketKit
 
 class SwapViewItemHelper {
 
-    func priceValue(executionPrice: Decimal?, tokenIn: MarketKit.Token?, tokenOut: MarketKit.Token?) -> PriceCoinValue? {
-        guard let price = executionPrice, let tokenOut = tokenOut, let tokenIn = tokenIn else {
+    func sortedPrices(executionPrice: Decimal?, invertedPrice: Decimal?, tokenIn: MarketKit.Token?, tokenOut: MarketKit.Token?) -> (String, String)? {
+        guard let price = executionPrice, let inverted = invertedPrice, let tokenOut = tokenOut, let tokenIn = tokenIn else {
             return nil
         }
 
-        let value = price.isZero ? 0 : 1 / price
-        return PriceCoinValue(baseCoin: tokenOut.coin, quoteCoinValue: CoinValue(kind: .token(token: tokenIn), value: value))
+        let needToInvert = inverted > price
+        let prices = needToInvert ? (inverted, price) : (price, inverted)
+        let baseCoins = needToInvert ? (tokenOut, tokenIn) : (tokenIn, tokenOut)
+        let quoteCoins = needToInvert ? (tokenIn, tokenOut) : (tokenOut, tokenIn)
+
+        let first = PriceCoinValue(baseCoin: baseCoins.0.coin, quoteCoinValue: CoinValue(kind: .token(token: quoteCoins.0), value: prices.0))
+        let second = PriceCoinValue(baseCoin: baseCoins.1.coin, quoteCoinValue: CoinValue(kind: .token(token: quoteCoins.1), value: prices.1))
+
+        return (first.formattedFull, second.formattedFull)
     }
 
     func priceImpactViewItem(trade: UniswapTradeService.Trade, minLevel: UniswapTradeService.PriceImpactLevel = .warning) -> UniswapModule.PriceImpactViewItem? {
