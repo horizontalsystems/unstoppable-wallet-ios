@@ -113,7 +113,6 @@
 "restore.warning.non_recommended.description" = "这个钱包似乎在其密码列表和/或密码短语中使用了非标准字符。 如果您没有看到余额或交易，请阅读下面的详细信息。\n\n点击获取更多信息";
 "restore.error.non_standard.description" = "这是一个不符合标准的钱包。 详情请阅读下文。\n\n点击获取更多信息";
 
-
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "遗留问题";
@@ -188,8 +187,6 @@
 // Backup Required
 
 "backup_required.title" = "需要备份";
-"manage_accounts.migration_required" = "需要迁移";
-
 
 // Backup Prompt
 
@@ -842,6 +839,7 @@
 "settings.experimental_features.description" = "以下功能为实验性，应谨慎使用。虽然我们已使用自己的加密货币资金对这些功能进行了彻底测试，但是我们不保证它们在所有情况下都能如常工作。";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 "settings.experimental_features.test_net_enabled" = "启用测试网";
+"settings.experimental_features.test_net.description" = "Enabling TestNet gives you the ability to add Goerli Chain";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
