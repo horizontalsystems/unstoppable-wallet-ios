@@ -409,7 +409,7 @@
 
 "swap.dex_info.header_dex_related" = "o %@";
 "swap.dex_info.header_allowance" = "Разрешение";
-"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.dex_info.content_allowance" = "Сумма, которую exchange может потратить от имени пользователя при выполнении обмена токенов. Действующая транзакция, устанавливающая достаточный уровень допустимости, необходима для того, чтобы транзакция обмена была осуществлена.";
 "swap.dex_info.header_price_impact" = "Отклонение от рын. цены";
 "swap.dex_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
 "swap.dex_info.header_swap_fee" = "Комиссия за обмен";
