@@ -30,6 +30,7 @@
 "alert.wrong_amount" = "Cantidad Incorrecta";
 "alert.no_fee" = "Tarifa Incorrecta";
 "alert.warning" = "Aviso";
+"alert.error" = "Erreur";
 "alert.unknown_error" = "Error Desconocido";
 "alert.success_action" = "Listo";
 
@@ -38,13 +39,13 @@
 "alert.added_to_wallet" = "Agregar a Wallet";
 "alert.already_added_to_wallet" = "Ya se ha añadido a Wallet";
 "alert.not_supported_yet" = "Aún no compatible";
-"alert.copied" = "Copied";
+"alert.copied" = "Copiado";
 "alert.created" = "Creado";
 "alert.restored" = "Restaurado ";
 "alert.address_added" = "Dirección añadida";
 "alert.deleted" = "Eliminado";
-"alert.waiting_for_session" = "Waiting for Session";
-"alert.try_again" = "Try Again";
+"alert.waiting_for_session" = "Esperando a la sesión";
+"alert.try_again" = "Inténtalo de nuevo";
 "alert.disconnecting" = "Desconectando";
 "alert.disconnected" = "Desconectado";
 "alert.enabling" = "Activando";
@@ -106,10 +107,9 @@
 "restore.passphrase_description" = "Introduzca su frase de contraseña que utilizó al crear esta frase mnemotécnica";
 "restore.error.empty_passphrase" = "La frase no puede estar vacía";
 "restore.non_standard_restore" = "Restauración no estándar";
-"restore.non_standard_restore.description" = "Esta página proporciona un mecanismo especial de restauración de billetera para los usuarios de Unstoppable que tienen una billetera no estándar. Dichos monederos podrían haber sido creados en Unstoppable versión 0.27 - 0.28 utilizando una lista de palabras mnemotécnicas que no están en inglés y/o un carácter especial en la frase de contraseña del monedero (es decir, un símbolo diacrítico).\n\nSi es un usuario afectado, el saldo de su billetera se mostrará en 0 después de restaurar dicha billetera en la versión 0.29 o superior. Esta página le permitirá restaurar el acceso a su billetera no estándar. Una vez restaurada, se recomienda crear una nueva billetera (que cumplirá con los estándares) y mover los fondos allí.";
-"restore.warning.non_recommended.description" = "Este monedero parece usar un carácter no estándar en tu lista de palabras secretas y/o una frase de contraseña. Si no logras ver un saldo o transacciones, continua leyenda para obtener más detalles. \n\nHAGA CLIC PARA OBTENER MÁS INFORMACIÓN";
-"restore.error.non_standard.description" = "Este es un monedero que no cumple con los estándares.\n\nHAGA CLIC PARA OBTENER MÁS INFORMACIÓN";
-
+"restore.non_standard_restore.description" = "Esta página proporciona un mecanismo especial de restauración de monedero para usuarios de Unstoppable que tienen un monedero no estándar. Por lo general, dichos monederos se podrían haber creado en la versión 0.27 - 0.28 de Unstoppable utilizando una lista de palabras mnemotécnicas que no están en inglés y/o un carácter especial en la frase de contraseña del monedero (es decir, un símbolo diacrítico).\n\nSi es un usuario afectado, el saldo de su billetera se mostrará en 0 después de restaurar dicha billetera en la versión 0.29 o superior. Esta página te permitirá restaurar el acceso a tu monedero no estándar. Una vez restaurado, se recomienda crear un nuevo monedero (que cumplirá con los estándares) y mover todos los fondos allí.";
+"restore.warning.non_recommended.description" = "Este monedero parece usar un carácter no estándar en tu lista de palabras secretas y/o una frase de contraseña. Si no logras ver un saldo o transacciones, continua leyenda para obtener más detalles.\n\nHAGA CLIC PARA OBTENER MÁS INFORMACIÓN";
+"restore.error.non_standard.description" = "Esta es una cartera no estándar. \n\nCLICK PARA CONTRAR MÁS INFO";
 
 
 // Coin Settings
@@ -353,7 +353,7 @@
 "swap.revoke_warning" = "Puedes cambiar %@o necesitas revocar y aprobar la nueva cantidad";
 "swap.revoking_button" = "Revocando...";
 "swap.trade_error.not_found" = "No se pueden permutar estos tokens";
-"swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
+"swap.trade_error.wrap_unwrap_not_allowed" = "Este servicio no permite envolver/desenvolver. Por favor, prueba con otro servicio de intercambio. 1Inch recomendado";
 "swap.button_error.insufficient_balance" = "Saldo insuficiente";
 "swap.switch_provider.title" = "Servicio de Intercambio";
 
@@ -377,6 +377,7 @@
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Dirección del destinatario";
 "swap.advanced_settings.warning.unusual_slippage" = "Su transacción puede ser anticipada";
+"swap.advanced_settings.service_fee_description" = "Tasa de servicio para la acción de intercambio en la plataforma típicamente de 0,3% o 0,6%";
 "swap.advanced_settings.error.lower_slippage" = "Es probable que su transacción falle.";
 "swap.advanced_settings.error.higher_slippage" = "Tolerancia de deslizamiento no puede ser más de %@%%";
 "swap.advanced_settings.error.invalid_address" = "Dirección inválida";
@@ -399,12 +400,14 @@
 
 "swap.confirmation.swap_button" = "Permutar";
 "swap.confirmation.impact_too_high" = "La diferencia entre el precio de mercado y el precio esperado de liquidación es demasiado alta.";
+"swap.confirmation.minimum_received" = "Mínimo Recibido";
+"swap.confirmation.maximum_sent" = "Gasto máximo";
 
 "swap.dex_info.description" = "Este servicio de intercambio está impulsado por %@, un intercambio de token descentralizado construido en %@ blockchain.\n\n%@ está completamente automatizado y administrado por contratos inteligentes que facilitan los intercambios de token de una manera conflaible y sin ninguna intención para hacer estafas.";
 
 "swap.dex_info.header_dex_related" = "%@ Relacionado";
 "swap.dex_info.header_allowance" = "Permiso de acceso";
-"swap.dex_info.content_allowance" = "La cantidad de alguna moneda que el servicio puede gastar en su nombre cuando al ejecutar un intercambio de token. Se requiere una asignación suficiente antes de que se pueda realizar la acción de intercambio.";
+"swap.dex_info.content_allowance" = "La cantidad que un intercambio puede gastar en nombre del usuario al ejecutar swaps de token. Se requiere un permiso suficiente para establecer una transacción anterior antes de que pueda tener lugar una transacción de intercambio real.";
 "swap.dex_info.header_price_impact" = "Impacto en el precio";
 "swap.dex_info.content_price_impact" = "Desviación de precio esperada de un valor mostrado, normalmente aumenta con la cantidad de swap.";
 "swap.dex_info.header_swap_fee" = "Tarifa por intercambio";
@@ -553,9 +556,9 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominio Bitcoin";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "Volumen de 24 horas";
+"market.global.defi_cap.title" = "Cap. DeFi";
+"market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.btc_dominance.description" = "El cambio histórico en la relación entre el límite de mercado de Bitcoin y el resto de los mercados de criptomonedas. \n\nPor lo general, cuando el dominio de Bitcoin tiende a ser más alto, el resto de las tendencias del mercado de criptomonedas disminuye y viceversa.";
 "market.global.volume_24h.description" = "El cambio histórico en el volumen diario del mercado de operaciones agregadas para todas las criptomonedas.";
 "market.global.defi_cap.description" = "El cambio histórico en el valor acumulado del mercado de los tokens en el sector de las finanzas descentralizadas.";
@@ -835,6 +838,7 @@
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "Las siguientes características son experimentales y deben utilizarse con precaución. Aunque hemos probado a fondo estas características usando nuestros propios fondos criptográficos, no podemos garantizar que funcionen como se espera en todos los casos posibles.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
+"settings.experimental_features.test_net_enabled" = "Activar Testnet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
@@ -891,6 +895,8 @@
 
 // Manage Accounts
 
+"manage_accounts.migration_required" = "Migración Requerida";
+"manage_accounts.migration_recommended" = "Migración Recomendada";
 "manage_accounts.backup_required" = "Copia de seguridad requerida";
 
 // Manage Keys
@@ -1006,6 +1012,7 @@
 "create_wallet.title" = "Nuevo Monedero";
 "create_wallet.create_button" = "Crear";
 "create_wallet.mnemonic" = "Mnemotécnica";
+"create_wallet.12_words" = "12 palabras (recomendado)";
 "create_wallet.n_words" = "%@ palabras";
 "create_wallet.word_list" = "Lista de palabras";
 "create_wallet.passphrase" = "Frase de contraseña";
@@ -1013,6 +1020,7 @@
 "create_wallet.input.confirm" = "Confirmar";
 "create_wallet.passphrase_description" = "La frase de contraseña añade una capa de seguridad adicional a los monederos permitiendo a los usuarios crear múltiples monederos multi-monedas independientes usando una sola frase de recuperación mnemotécnica pero asociada con diferentes contraseñas.\n\nPara restaurar estos monederos un usuario necesitará una frase de recuperación mnemotécnica, así como una contraseña para cada monedero restaurado.";
 "create_wallet.error.empty_passphrase" = "La frase de contraseña no puede estar vacía";
+"create_wallet.error.forbidden_symbols" = "Utilice solo símbolos admitidos: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "La confirmación de la frase de contraseña no coincide";
 
 // Restore Select
@@ -1054,15 +1062,12 @@
 // Add Token
 
 "add_token.title" = "Añadir Token";
-"add_token.coin_name" = "Nombre de moneda";
-"add_token.coin_code" = "Código de moneda";
-"add_token.decimals" = "Decimales";
 "add_token.already_added" = "Ya añadido";
-"add_token.coin_types" = "Tipo de moneda";
-"add_token.choose_type" = "Elegir tipo";
+"add_token.choose_token" = "Elegir token";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Dirección de contrato inválida o símbolo BEP2";
 "add_token.token_not_found" = "Token no encontrado";
 "add_token.input_placeholder" = "Dirección del contrato";
+"add_token.bep2_not_supported" = "Su clave privada EVM de cartera actual no soporta tokens BEP2";
 
 // Wallet Connect
 
@@ -1072,8 +1077,8 @@
 "wallet_connect.active_account" = "Active su cartera";
 "wallet_connect.address" = "Dirección";
 "wallet_connect.network" = "Red";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Dirección";
+"wallet_connect.network" = "Red";
 "wallet_connect.list.pending_requests" = "Solicitudes Pendientes";
 "wallet_connect.main.no_any_supported_chains" = "¡No hay cadenas compatibles!";
 "wallet_connect.main.unsupported_chains" = "¡Algunas cadenas no son soportadas!";
@@ -1086,8 +1091,8 @@
 "ethereum_transaction.error.insufficient_balance" = "La transacción requiere %@ para enviar.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "El saldo actual de %@ es inferior al monto requerido para procesar esta transacción, incluida la tarifa de transacción.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "El valor de la comisión seleccionada es demasiado bajo y será rechazado!";
-"ethereum_transaction.error.nonce_already_in_block" = "The transaction is already in block!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
+"ethereum_transaction.error.nonce_already_in_block" = "La transacción ya está en bloque!";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Cuota no suficiente para reemplazar la transacción";
 "ethereum_transaction.error.reverted" = "La transacción no pudo ser ejecutada: %@";
 "wallet_connect.request_title" = "Pedido";
 "wallet_connect.button.confirm" = "Confirmar";
@@ -1114,8 +1119,8 @@
 
 "wallet_connect.pending_requests_title" = "Solicitudes Pendientes";
 "wallet_connect.paired_dapps.title" = "Paired dApps";
-"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
-"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
+"wallet_connect.paired_dapps.cant_disconnect" = "No se puede desconectar";
+"wallet_connect.paired_dapps.disconnect_all" = "Borrar todo";
 "wallet_connect.pending_requests.nonactive_footer" = "Para abrir una solicitud debe activar la cartera deseada";
 
 // App Status
@@ -1206,8 +1211,8 @@
 "fee_settings.errors.insufficient_balance.info" = "El saldo actual de %@ es inferior al monto requerido para procesar esta transacción, incluida la tarifa de transacción.";
 "fee_settings.errors.low_max_fee" = "Tarifa baja";
 "fee_settings.errors.low_max_fee.info" = "El monto de comisión de transacción establecido no es suficiente para procesar esta transacción ahora.";
-"fee_settings.errors.nonce_already_in_block" = "Can't replace transaction.";
-"fee_settings.errors.replacement_transaction_underpriced" = "Low Fee for replacement transaction";
+"fee_settings.errors.nonce_already_in_block" = "No se puede reemplazar la transacción.";
+"fee_settings.errors.replacement_transaction_underpriced" = "Tarifa baja para la transacción de reemplazo";
 "fee_settings.warning.risk_of_getting_stuck" = "Arriesgado";
 "fee_settings.warning.risk_of_getting_stuck.info" = "La transacción puede permanecer pendiente por un tiempo o fallar por completo.";
 "fee_settings.warning.overpricing" = "Cuota demasiado alta";

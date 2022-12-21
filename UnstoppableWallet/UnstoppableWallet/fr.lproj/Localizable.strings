@@ -30,6 +30,7 @@
 "alert.wrong_amount" = "Montant incorrect";
 "alert.no_fee" = "Commission incorrecte";
 "alert.warning" = "Attention";
+"alert.error" = "Erreur";
 "alert.unknown_error" = "Erreur inconnue";
 "alert.success_action" = "Terminé";
 
@@ -38,13 +39,13 @@
 "alert.added_to_wallet" = "Ajouté au portefeuille";
 "alert.already_added_to_wallet" = "Déjà ajouté au portefeuille";
 "alert.not_supported_yet" = "Pas pris en charge pour le moment";
-"alert.copied" = "Copied";
+"alert.copied" = "Copié";
 "alert.created" = "Établi";
 "alert.restored" = "Restauré ";
 "alert.address_added" = "Adresse ajoutée";
 "alert.deleted" = "Supprimer";
-"alert.waiting_for_session" = "Waiting for Session";
-"alert.try_again" = "Try Again";
+"alert.waiting_for_session" = "En attente de session";
+"alert.try_again" = "Réessayez";
 "alert.disconnecting" = "Déconnexion";
 "alert.disconnected" = "Déconnecté";
 "alert.enabling" = "Activation";
@@ -106,9 +107,9 @@
 "restore.passphrase_description" = "Entrez la phrase d'authentification que vous avez utilisée pour créer cette phrase mnémonique";
 "restore.error.empty_passphrase" = "La phrase d'authentification ne peut pas être une valeur vide";
 "restore.non_standard_restore" = "Restauration non-standard";
-"restore.non_standard_restore.description" = "Cette page fournit un mécanisme spécial de restauration de portefeuille aux utilisateurs Unstoppable qui ont un portefeuille non standard. De tels portefeuilles peuvent avoir été créés dans la version 0.27 - 0.28 d'Unstoppable en utilisant une liste de mots mnémotechniques non anglais et/ou un caractère spécial dans la phrase secrète du portefeuille (c'est-à-dire un symbole diacritique).\n\nSi vous êtes un des utilisateurs concernés, le solde affiché de votre portefeuille indiquera 0 après la mise à jour 0.29. Grâce à cette page, vous pourrez restaurer l'accès à votre portefeuille non-standard. Une fois la restauration effectuée, il est conseillé de créer un nouveau portefeuille (qui sera conforme aux normes) et d'y transférer vos fonds.";
-"restore.warning.non_recommended.description" = "Ce portefeuille semble utiliser un caractère non-standard dans sa liste de mots secrets et/ou dans une phrase de passe. Si vous ne voyez pas de solde ou de transactions, veuillez vous reporter aux informations ci-dessous.   \n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
-"restore.error.non_standard.description" = "Ce portefeuille n'est pas conforme aux normes. \n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
+"restore.non_standard_restore.description" = "Sur cette page, vous trouverez un mécanisme spécial de restauration de portefeuille pour les utilisateurs d'Unstoppable dont le portefeuille n'est pas standard. En général, de tels portefeuilles ont été créés dans la version 0.27 - 0.28 d'Unstoppable en utilisant une liste de mots mnémoniques non-anglais et/ou un caractère spécial dans la phrase de passe du portefeuille (c'est-à-dire un symbole diacritique).\n\nSi vous êtes un utilisateur concerné, le solde de votre portefeuille sera affiché à 0 après la restauration de ce portefeuille dans la version 0.29 ou supérieure. Grâce à cette page, vous pourrez restaurer l'accès à votre portefeuille non-standard. Une fois la restauration effectuée, il est conseillé de créer un nouveau portefeuille (qui sera conforme aux normes) et d'y transférer vos fonds.";
+"restore.warning.non_recommended.description" = "Ce portefeuille semble utiliser un caractère non-standard dans sa liste de mots secrets et/ou dans une phrase de passe. Si vous ne voyez pas de solde ou de transactions, veuillez vous reporter aux informations ci-dessous. \n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
+"restore.error.non_standard.description" = "Ce portefeuille n'est pas conforme aux normes.\n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
 
 // Coin Settings
 
@@ -351,7 +352,7 @@
 "swap.revoke_warning" = "Vous pouvez échanger %@, ou vous devez révoquer et approuver le nouveau montant";
 "swap.revoking_button" = "Révocation en cours...";
 "swap.trade_error.not_found" = "Impossible d'échanger ces tokens";
-"swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
+"swap.trade_error.wrap_unwrap_not_allowed" = "Ce service n'autorise pas l'emballage/décompression. S'il vous plaît, essayez un autre service de swap. 1Inch recommandé";
 "swap.button_error.insufficient_balance" = "Solde insuffisant";
 "swap.switch_provider.title" = "Service de Swap";
 
@@ -375,6 +376,7 @@
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Adresse du destinataire";
 "swap.advanced_settings.warning.unusual_slippage" = "Votre transaction peut être frontrun";
+"swap.advanced_settings.service_fee_description" = "Des frais de service pour l'action de swap sur la plateforme sont typiques de 0,3% ou 0,6%";
 "swap.advanced_settings.error.lower_slippage" = "Votre transaction est susceptible de ne pas aboutir.";
 "swap.advanced_settings.error.higher_slippage" = "La tolérance de glissement ne peut pas être supérieure à %@%%";
 "swap.advanced_settings.error.invalid_address" = "Addresse invalide";
@@ -397,12 +399,14 @@
 
 "swap.confirmation.swap_button" = "Échanger";
 "swap.confirmation.impact_too_high" = "La différence entre le prix du marché et le prix de règlement prévu est trop élevée.";
+"swap.confirmation.minimum_received" = "Minimum reçu";
+"swap.confirmation.maximum_sent" = "Dépense maximale";
 
 "swap.dex_info.description" = "Ce service d'échange est assuré par %@, un protocole d'échange de tokens décentralisé construit sur la blockchain %@.\n\n%@ est entièrement automatisé et géré par des contrats intelligents qui facilitent les échanges de tokens de manière fiable sans aucune possibilité de tricher.";
 
 "swap.dex_info.header_dex_related" = "Relatif à %@";
 "swap.dex_info.header_allowance" = "Allocation";
-"swap.dex_info.content_allowance" = "Le montant de la devise que le service peut débourser en votre nom lors de l'exécution du token swap. Une provision suffisante est requise avant qu'une action de swap puisse avoir lieu.";
+"swap.dex_info.content_allowance" = "Le montant qu\'un échange peut dépenser pour le compte de l\'utilisateur lors de l\'exécution de swaps de jetons. Une provision suffisante est requise avant de pouvoir effectuer une opération d\'échange réelle.";
 "swap.dex_info.header_price_impact" = "Impact prix";
 "swap.dex_info.content_price_impact" = "L'écart de prix attendu par rapport à un prix affiché, augmente généralement avec le montant de l'échange.";
 "swap.dex_info.header_swap_fee" = "Frais d'échange";
@@ -551,9 +555,9 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominance Bitcoin";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "Volume 24h";
+"market.global.defi_cap.title" = "Cap DeFi";
+"market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
 "market.global.volume_24h.description" = "La variation historique du volume global quotidien du marché des transactions pour toutes les cryptomonnaies.";
 "market.global.defi_cap.description" = "L'évolution historique de la valeur de marché cumulée des tokens dans le secteur de la finance décentralisée.";
@@ -834,6 +838,7 @@
 "settings.experimental_features.title" = "Expérimental";
 "settings.experimental_features.description" = "Les fonctionnalités ci-dessous sont expérimentales et doivent être utilisées avec prudence. Bien que nous ayons entièrement testé ces fonctionnalités en utilisant nos propres fonds crypto, nous ne pouvons pas garantir qu'elles fonctionnent comme prévu dans tous les cas de figure possible.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
+"settings.experimental_features.test_net_enabled" = "Activer le Testnet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
@@ -890,6 +895,8 @@
 
 // Manage Accounts
 
+"manage_accounts.migration_required" = "Migration Requise";
+"manage_accounts.migration_recommended" = "Migration Recommandée";
 "manage_accounts.backup_required" = "Sauvegarde requise";
 
 // Manage Keys
@@ -1005,6 +1012,7 @@
 "create_wallet.title" = "Nouveau porte-monnaie";
 "create_wallet.create_button" = "Créer";
 "create_wallet.mnemonic" = "Mnémonique";
+"create_wallet.12_words" = "12 mots (recommandé)";
 "create_wallet.n_words" = "%@ mots";
 "create_wallet.word_list" = "Listes de mots";
 "create_wallet.passphrase" = "Phrase d'authentification";
@@ -1012,6 +1020,7 @@
 "create_wallet.input.confirm" = "Confirmer";
 "create_wallet.passphrase_description" = "Les phrases d'authentification ajoutent une strate de sécurité supplémentaire aux portefeuilles. Les utilisateurs peuvent ainsi créer plusieurs portefeuilles indépendants à pièces multiples à l'aide d'une seule phrase de réinitialisation mnémonique, mais associée à des mots de passe différents. \n\nPour restaurer ces portefeuilles, l'utilisateur doit disposer d'une phrase de réinitialisation mnémonique et d'un mot de passe pour chaque portefeuille à restaurer.";
 "create_wallet.error.empty_passphrase" = "La phrase d'authentification ne peut pas être laissée en blanc";
+"create_wallet.error.forbidden_symbols" = "Veuillez utiliser uniquement les symboles pris en charge : A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "La confirmation de la phrase d'authentification ne correspond pas";
 
 // Restore Select
@@ -1053,15 +1062,12 @@
 // Add Token
 
 "add_token.title" = "Ajouter le token";
-"add_token.coin_name" = "Nom de la pièce";
-"add_token.coin_code" = "Code de la pièce";
-"add_token.decimals" = "Decimales";
 "add_token.already_added" = "Déjà ajouté";
-"add_token.coin_types" = "Types de pièces";
-"add_token.choose_type" = "Choisir le type";
+"add_token.choose_token" = "Choisir les jetons";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Adresse du contrat ou symbole BEP2 non valide";
 "add_token.token_not_found" = "Token non trouvé";
 "add_token.input_placeholder" = "Adresse du contrat";
+"add_token.bep2_not_supported" = "La clé privée EVM de votre portefeuille actuel ne supporte pas les jetons BEP2";
 
 // Wallet Connect
 
@@ -1071,8 +1077,8 @@
 "wallet_connect.active_account" = "Activer le portefeuille";
 "wallet_connect.address" = "Adresse";
 "wallet_connect.network" = "Réseau";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Adresse";
+"wallet_connect.network" = "Réseau";
 "wallet_connect.list.pending_requests" = "Demandes en attente";
 "wallet_connect.main.no_any_supported_chains" = "Aucune chaîne prise en charge !";
 "wallet_connect.main.unsupported_chains" = "Certaines chaînes ne sont pas prises en charge !";
@@ -1085,8 +1091,8 @@
 "ethereum_transaction.error.insufficient_balance" = "La transaction nécessite %@ pour l'envoi.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Le solde actuel des ETH est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "La valeur de frais sélectionnée est trop faible et sera rejetée !";
-"ethereum_transaction.error.nonce_already_in_block" = "The transaction is already in block!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
+"ethereum_transaction.error.nonce_already_in_block" = "Transaction déjà dans le block!";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Frais insuffisants pour remplacer la transaction";
 "ethereum_transaction.error.reverted" = "La transaction ne peut être exécutée : %@";
 "wallet_connect.request_title" = "Requête";
 "wallet_connect.button.confirm" = "Confirmer";
@@ -1113,8 +1119,8 @@
 
 "wallet_connect.pending_requests_title" = "Demandes en attente";
 "wallet_connect.paired_dapps.title" = "Paired dApps";
-"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
-"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
+"wallet_connect.paired_dapps.cant_disconnect" = "Impossible de se déconnecter";
+"wallet_connect.paired_dapps.disconnect_all" = "Tout Supprimer";
 "wallet_connect.pending_requests.nonactive_footer" = "Pour ouvrir une demande, vous devez activer le portefeuille désiré";
 
 // App Status
@@ -1205,8 +1211,8 @@
 "fee_settings.errors.insufficient_balance.info" = "Le solde actuel des %@ est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
 "fee_settings.errors.low_max_fee" = "Frais faibles";
 "fee_settings.errors.low_max_fee.info" = "Le montant des frais de transaction défini est insuffisant pour traiter cette transaction immédiatement.";
-"fee_settings.errors.nonce_already_in_block" = "Can't replace transaction.";
-"fee_settings.errors.replacement_transaction_underpriced" = "Low Fee for replacement transaction";
+"fee_settings.errors.nonce_already_in_block" = "Impossible de remplacer la transaction.";
+"fee_settings.errors.replacement_transaction_underpriced" = "Frais bas pour la transaction de remplacement";
 "fee_settings.warning.risk_of_getting_stuck" = "Risqué";
 "fee_settings.warning.risk_of_getting_stuck.info" = "La transaction risque de rester en attente pendant un certain temps ou d'échouer complètement.";
 "fee_settings.warning.overpricing" = "Frais trop élevés";

@@ -30,6 +30,7 @@
 "alert.wrong_amount" = "Yanlış Tutar";
 "alert.no_fee" = "Yanlış Masraf";
 "alert.warning" = "Uyarı";
+"alert.error" = "Hata";
 "alert.unknown_error" = "Bilinmeyen Hata";
 "alert.success_action" = "tamamlandı
 ";
@@ -39,13 +40,13 @@
 "alert.added_to_wallet" = "Cüzdana Eklendi";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
-"alert.copied" = "Copied";
+"alert.copied" = "Kopyalandı";
 "alert.created" = "Oluşturuldu";
 "alert.restored" = "Geri yüklendi ";
 "alert.address_added" = "Adres eklendi";
 "alert.deleted" = "Sil";
-"alert.waiting_for_session" = "Waiting for Session";
-"alert.try_again" = "Try Again";
+"alert.waiting_for_session" = "Oturum bekleniyor";
+"alert.try_again" = "Tekrar deneyin";
 "alert.disconnecting" = "Bağlantı kesiliyor";
 "alert.disconnected" = "Bağlantı kesildi";
 "alert.enabling" = "Etkinleştiriliyor";
@@ -109,9 +110,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "restore.passphrase_description" = "Bu anımsatıcı ifadeyi oluştururken kullandığınız şifreyi girin";
 "restore.error.empty_passphrase" = "Şifre boş bırakılamaz";
 "restore.non_standard_restore" = "Standart Olmayan Geri Yükleme";
-"restore.non_standard_restore.description" = "Bu sayfa, standart olmayan bir cüzdanı olan Unstoppable kullanıcıları için özel bir cüzdan geri yükleme mekanizması sağlar. Genel olarak, bu tür cüzdanlar, İngilizce olmayan bir anımsatma kelimeleri listesi ve/veya cüzdan şifresinde özel bir karakter (yani aksan simgesi) kullanılarak Unstoppable 0.27 - 0.28 sürümünde oluşturulmuş olabilir.\n\nBu durumdan etkilenen bir kullanıcıysanız, 0.29 sürümüne güncelledikten sonra cüzdan bakiyeniz 0 olarak görüntülenir. Bu sayfa, standart olmayan cüzdanınıza erişimi geri yüklemenizi sağlayacaktır. Geri yüklendikten sonra, yeni bir cüzdan oluşturmanız (standartlarla uyumlu) ve paranızı oraya taşımanız önerilir.";
-"restore.warning.non_recommended.description" = "Bu cüzdan, gizli sözcükler listesinde ve/veya bir şifrede standart olmayan bir karakter kullanıyor gibi görünüyor. Bir bakiye veya işlem göremiyorsanız lütfen bilgi için aşağıya bakınız.  \n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYINIZ";
-"restore.error.non_standard.description" = "Bu standart dışı uyumlu bir cüzdandır. Bilgi için lütfen aşağıyı okuyunuz.\n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYINIZ";
+"restore.non_standard_restore.description" = "Bu sayfa, standart olmayan bir cüzdanı olan Unstoppable kullanıcıları için özel geri yükleme mekanizması sağlar. Genel olarak, bu tür cüzdanlar, İngilizce olmayan bir anımsatma kelimeleri listesi ve/veya cüzdan şifresinde özel bir karakter (yani aksan simgesi) kullanılarak Unstoppable 0.27 - 0.28 sürümünde oluşturulmuş olabilir.\n\n Bu durumdan etkilenen bir kullanıcıysanız, 0.29 sürümüne güncelledikten sonra cüzdan bakiyeniz 0 olarak görüntülenir. Bu sayfa, standart olmayan cüzdanınıza erişimi geri yüklemenizi sağlayacaktır. Geri yüklendikten sonra, yeni bir cüzdan oluşturmanız (standartlarla uyumlu) ve paranızı oraya taşımanız önerilir.";
+"restore.warning.non_recommended.description" = "Bu cüzdan, gizli sözcükler listesinde ve/veya bir şifrede standart olmayan bir karakter kullanıyor gibi görünüyor. Bir bakiye veya işlem göremiyorsanız lütfen bilgi için aşağıya bakınız.\n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYINIZ";
+"restore.error.non_standard.description" = "Bu standart olmayan bir cüzdandır. \n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYIN";
 
 
 // Coin Settings
@@ -356,7 +357,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "swap.revoke_warning" = "%@ alışverişi yapabilir veya yeni tutarı iptal edip onaylamanız gerekir";
 "swap.revoking_button" = "İptal ediliyor...";
 "swap.trade_error.not_found" = "Bu token swap edilemez";
-"swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
+"swap.trade_error.wrap_unwrap_not_allowed" = "Bu hizmet sarmaya/paketlemeye izin vermiyor. Lütfen başka bir takas hizmetini deneyin. 1inch önerilir";
 "swap.button_error.insufficient_balance" = "Yetersiz bakiye";
 "swap.switch_provider.title" = "Swap Hizmeti";
 
@@ -380,6 +381,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "swap.advanced_settings.deadline_minute" = "%@ dk";
 "swap.advanced_settings.recipient_address" = "Alıcı Adresi";
 "swap.advanced_settings.warning.unusual_slippage" = "İşleminiz varlık fiyatını etkileyebilir";
+"swap.advanced_settings.service_fee_description" = "Platformdaki takas işlemi için bir hizmet ücreti genellikle %0,3 veya %0,6'dır";
 "swap.advanced_settings.error.lower_slippage" = "İşleminizin başarısız olması muhtemeldir.";
 "swap.advanced_settings.error.higher_slippage" = "Slipaj Toleransı %@%% üzerinde olamaz";
 "swap.advanced_settings.error.invalid_address" = "Geçersiz adres";
@@ -402,12 +404,14 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "swap.confirmation.swap_button" = "Takas";
 "swap.confirmation.impact_too_high" = "Rayiç fiyat ile beklenen uzlaşma fiyatı arasındaki fark çok yüksek.";
+"swap.confirmation.minimum_received" = "Minimum Alınan";
+"swap.confirmation.maximum_sent" = "Maksimum Harcama";
 
 "swap.dex_info.description" = "Bu takas etme hizmeti, %@ blok zinciri üzerine inşa edilmiş ve merkezi olmayan jeton takas etme protokolü olan %@ tarafından desteklenmektedir.\n\n%@, tamamen otomatiktir ve hile yapmadan jeton takaslarını güvenilir bir şekilde kolaylaştıran akıllı sözleşmelerle yönetilir.";
 
 "swap.dex_info.header_dex_related" = "%@";
 "swap.dex_info.header_allowance" = "Ödenek";
-"swap.dex_info.content_allowance" = "Uniswap'ın jeton swaplarını gerçekleştirirken sizin adınıza harcayabileceği bazı para birimlerindeki tutar. Swap işleminin gerçekleşebilmesi için yeterli ödeme miktarı gereklidir.";
+"swap.dex_info.content_allowance" = "Bir borsanın, token takaslarını yürütürken kullanıcının adına harcayabileceği ödenek miktarı. Fiili bir takas işleminin gerçekleşmesinde yeterli ödenek gereklidir.";
 "swap.dex_info.header_price_impact" = "Fiyat Etkisi";
 "swap.dex_info.content_price_impact" = "Gösterilen bir fiyattan beklenen fiyat sapması, tipik olarak swap tutarı ile artar.";
 "swap.dex_info.header_swap_fee" = "Takas Ücreti";
@@ -431,7 +435,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "market.title" = "Markets";
 "market.category.overview" = "Overview";
 "market.category.posts" = "News";
-"market.category.watchlist" = "Watchlist";
+"market.category.watchlist" = "İzleme Listesi";
 "market.total_market_cap" = "Total Cap";
 "market.24h_volume" = "24h Volume";
 "market.defi_cap" = "DeFi Cap";
@@ -838,6 +842,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "settings.experimental_features.title" = "Deneysel";
 "settings.experimental_features.description" = "Aşağıdaki özellikler deneyseldir ve dikkatli kullanılmalıdır. Bu özellikleri kendi kripto fonlarımızı kullanarak baştan sona test etmemize rağmen, olası tüm durumlarda beklendiği gibi çalışmalarını garanti edemeyiz.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
+"settings.experimental_features.test_net_enabled" = "Testnet'i etkinleştir";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
@@ -894,6 +899,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Manage Accounts
 
+"manage_accounts.migration_required" = "Taşıma Gerekli";
+"manage_accounts.migration_recommended" = "Değiştirme işlemi için Düşük Ücret";
 "manage_accounts.backup_required" = "Yedekleme Gerekli";
 
 // Manage Keys
@@ -922,11 +929,11 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Settings -> Privacy
 
-"settings.privacy.description" = "Unstoppable doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
-"settings.privacy.statement.user_data_storage" = "User data always remains on the user's device.";
-"settings.privacy.statement.data_usage" = "The wallet doesn't collect any data about users.";
-"settings.privacy.statement.data_privacy" = "The wallet doesn't share any data about users.";
-"settings.privacy.statement.user_account" = "There are no user accounts or databases keeping user data elsewhere.";
+"settings.privacy.description" = "Unstoppable herhangi bir veri toplamaz veya kullanıcıları hakkında herhangi bir veriyi ifşa edebilecek analiz araçları kullanmaz. Unstoppable cüzdanı kullanıcıları için yüksek düzeyde gizlilik sağlamak üzere tasarlanmıştır.";
+"settings.privacy.statement.user_data_storage" = "Kullanıcı verileri her zaman kullanıcının cihazında kalır.";
+"settings.privacy.statement.data_usage" = "Bu cüzdan, kullanıcılar hakkında herhangi bir veri toplamaz.";
+"settings.privacy.statement.data_privacy" = "Bu cüzdan, kullanıcılar hakkında herhangi bir veri paylaşmaz.";
+"settings.privacy.statement.user_account" = "Kullanıcı verilerini herhangi bir yerde kaida alan hesaplar veya veritabanları yoktur.";
 
 // Settings -> Appearance
 
@@ -1009,6 +1016,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "create_wallet.title" = "Yeni Cüzdan";
 "create_wallet.create_button" = "Oluştur";
 "create_wallet.mnemonic" = "Mnemonic";
+"create_wallet.12_words" = "12 kelimeler (Tavsiye edilen)";
 "create_wallet.n_words" = "%@ kelime";
 "create_wallet.word_list" = "Kelime Listesi";
 "create_wallet.passphrase" = "Parola";
@@ -1016,6 +1024,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "create_wallet.input.confirm" = "Onayla";
 "create_wallet.passphrase_description" = "Parolalar cüzdanlara ek güvenlik katmanı ekleyerek kullanıcıların tek bir anımsatıcı kurtarma ifadesi kullanarak ancak farklı parolalarla ilişkilendirilmiş birden çok bağımsız çoklu para cüzdanı oluşturmasına olanak tanır. \n\nBu cüzdanları geri yüklemek için bir kullanıcı mnemonic kurtarma ifadesinin yanı sıra bir parola gerektirecektir. her biri geri yüklenecek cüzdan.";
 "create_wallet.error.empty_passphrase" = "Parola boş olamaz";
+"create_wallet.error.forbidden_symbols" = "Lütfen yalnızca desteklenen sembolleri kullanın:  A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Parola onayı eşleşmiyor";
 
 // Restore Select
@@ -1057,15 +1066,12 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Add Token
 
 "add_token.title" = "Token Ekle";
-"add_token.coin_name" = "Kripto Para Adı";
-"add_token.coin_code" = "Coin Kodu";
-"add_token.decimals" = "Ondalıklar";
 "add_token.already_added" = "Zaten ekli";
-"add_token.coin_types" = "Coin Tipi";
-"add_token.choose_type" = "Türü Seç";
+"add_token.choose_token" = "Tokenleri seç";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Geçersiz sözleşme adresi veya BEP2 sembolü";
 "add_token.token_not_found" = "Token bulunamadı";
 "add_token.input_placeholder" = "Sözleşme Adresi";
+"add_token.bep2_not_supported" = "Mevcut cüzdanınız EVM özel anahtarı, BEP2 belirteçlerini desteklemiyor";
 
 // Wallet Connect
 
@@ -1075,8 +1081,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.active_account" = "Aktif Cüzdan";
 "wallet_connect.address" = "Adres";
 "wallet_connect.network" = "Ağ";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Adres";
+"wallet_connect.network" = "Ağ";
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
 "wallet_connect.main.no_any_supported_chains" = "Desteklenen zincir yok!";
 "wallet_connect.main.unsupported_chains" = "Bazı zincirler desteklenmiyor!";
@@ -1089,8 +1095,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "ethereum_transaction.error.insufficient_balance" = "İşlem, göndermek için %@ gerektirir.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Mevcut %@ bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "Seçilen ücret tutarı çok düşüktür ve reddedilecektir!";
-"ethereum_transaction.error.nonce_already_in_block" = "The transaction is already in block!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
+"ethereum_transaction.error.nonce_already_in_block" = "İşlem zaten blokta!";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "İşlemi değiştirmek için yeterli ücret yok";
 "ethereum_transaction.error.reverted" = "İşlem gerçekleştirilemiyor: %@";
 "wallet_connect.request_title" = "İstek";
 "wallet_connect.button.confirm" = "Onayla";
@@ -1117,8 +1123,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "wallet_connect.pending_requests_title" = "Bekleyen Talepler";
 "wallet_connect.paired_dapps.title" = "Paired dApps";
-"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
-"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
+"wallet_connect.paired_dapps.cant_disconnect" = "Bağlantı Kesilemiyor";
+"wallet_connect.paired_dapps.disconnect_all" = "Hepsini Sil";
 "wallet_connect.pending_requests.nonactive_footer" = "Bir istek açmak için istenen cüzdanı etkinleştirmelisiniz";
 
 // App Status
@@ -1209,8 +1215,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "fee_settings.errors.insufficient_balance.info" = "Mevcut %@ bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
 "fee_settings.errors.low_max_fee" = "Düşük Ücret";
 "fee_settings.errors.low_max_fee.info" = "Belirlenen işlem ücreti, bu işlemin şimdi işlenmesi için yetersiz.";
-"fee_settings.errors.nonce_already_in_block" = "Can't replace transaction.";
-"fee_settings.errors.replacement_transaction_underpriced" = "Low Fee for replacement transaction";
+"fee_settings.errors.nonce_already_in_block" = "İşlem değiştirilemiyor";
+"fee_settings.errors.replacement_transaction_underpriced" = "Değiştirme işlemi için Düşük Ücret";
 "fee_settings.warning.risk_of_getting_stuck" = "Riskli";
 "fee_settings.warning.risk_of_getting_stuck.info" = "İşlem bir süre beklemede kalabilir veya tamamen başarısız olabilir.";
 "fee_settings.warning.overpricing" = "Ücret Çok Yüksek";
