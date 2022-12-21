@@ -112,6 +112,7 @@
 "restore.warning.non_recommended.description" = "Diese Brieftasche scheint ein nicht standardmäßiges Zeichen in ihrer geheimen Wortliste und/oder einer Passphrase zu verwenden. Wenn Sie kein Guthaben oder Transaktionen sehen, lesen Sie bitte unten für Details.\n\nKLICKEN, UM WEITERE INFORMATIONEN ZU ERHALTEN";
 "restore.error.non_standard.description" = "Dies ist eine nicht standardmäßige Wallet. \n\nKLICKEN SIE MEHR INFO";
 
+
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "Legacy";
@@ -895,7 +896,6 @@
 // Manage Accounts
 
 "manage_accounts.migration_required" = "Migration erforderlich";
-"manage_accounts.migration_recommended" = "Migration empfohlen";
 "manage_accounts.backup_required" = "Sicherung erforderlich";
 
 // Manage Keys

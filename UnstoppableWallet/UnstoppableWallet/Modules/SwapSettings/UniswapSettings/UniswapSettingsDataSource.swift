@@ -20,6 +20,8 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
 
     private let deadlineCell = ShortcutInputCell()
 
+    private let serviceFeeNoteCell = HighlightedDescriptionCell(showVerticalMargin: false)
+
     var onOpen: ((UIViewController) -> ())?
     var onClose: (() -> ())?
     var onReload: (() -> ())?
@@ -61,6 +63,8 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
         deadlineCell.isValidText = { [weak self] text in self?.deadlineViewModel.isValid(text: text) ?? true }
         deadlineCell.onChangeHeight = { [weak self] in self?.onReload?() }
         deadlineCell.onChangeText = { [weak self] text in self?.deadlineViewModel.onChange(text: text) }
+
+        serviceFeeNoteCell.descriptionText = "swap.advanced_settings.service_fee_description".localized
 
         subscribe(disposeBag, slippageViewModel.cautionDriver) { [weak self] in
             self?.slippageCell.set(cautionType: $0?.type)
@@ -154,6 +158,19 @@ extension UniswapSettingsDataSource {
                         )
                     ]
             ),
+
+            Section(
+                    id: "service-fee",
+                    rows: [
+                        StaticRow(
+                                cell: serviceFeeNoteCell,
+                                id: "service-fee-cell",
+                                dynamicHeight: { [weak self] width in
+                                    self?.serviceFeeNoteCell.height(containerWidth: width) ?? 0
+                                }
+                        )
+                    ]
+            )
         ]
     }
 

@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import RxRelay
 import EvmKit
@@ -32,6 +33,19 @@ class EvmSyncSourceManager {
                         transactionSource: .ethereumEtherscan(apiKey: appConfigProvider.etherscanKey)
                 )
             ]
+        case .ethereumGoerli:
+            return [
+                EvmSyncSource(
+                        name: "Infura WebSocket",
+                        rpcSource: .goerliInfuraWebsocket(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
+                        transactionSource: .goerliEtherscan(apiKey: appConfigProvider.etherscanKey)
+                ),
+                EvmSyncSource(
+                        name: "Infura HTTP",
+                        rpcSource: .goerliInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
+                        transactionSource: .goerliEtherscan(apiKey: appConfigProvider.etherscanKey)
+                )
+            ]
         case .binanceSmartChain:
             return [
                 EvmSyncSource(
@@ -42,11 +56,6 @@ class EvmSyncSourceManager {
                 EvmSyncSource(
                         name: "BSC-RPC HTTP",
                         rpcSource: .bscRpcHttp(),
-                        transactionSource: .bscscan(apiKey: appConfigProvider.bscscanKey)
-                ),
-                EvmSyncSource(
-                        name: "Default WebSocket",
-                        rpcSource: .binanceSmartChainWebSocket(),
                         transactionSource: .bscscan(apiKey: appConfigProvider.bscscanKey)
                 )
             ]

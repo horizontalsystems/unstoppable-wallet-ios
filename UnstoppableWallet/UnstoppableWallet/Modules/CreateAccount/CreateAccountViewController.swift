@@ -78,7 +78,7 @@ class CreateAccountViewController: KeyboardAwareViewController {
         createButton.setTitle("create_wallet.create_button".localized, for: .normal)
         createButton.addTarget(self, action: #selector(onTapCreate), for: .touchUpInside)
 
-        mnemonicCell.set(backgroundStyle: .lawrence, isFirst: true)
+        mnemonicCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
         passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         CellBuilderNew.buildStatic(

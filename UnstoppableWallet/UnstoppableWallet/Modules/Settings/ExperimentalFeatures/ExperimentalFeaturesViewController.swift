@@ -4,12 +4,12 @@ import ThemeKit
 import ComponentKit
 
 class ExperimentalFeaturesViewController: ThemeViewController {
-    private let delegate: IExperimentalFeaturesViewDelegate
+    private let viewModel: ExperimentalFeaturesViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    init(delegate: IExperimentalFeaturesViewDelegate) {
-        self.delegate = delegate
+    init(viewModel: ExperimentalFeaturesViewModel) {
+        self.viewModel = viewModel
 
         super.init()
 
@@ -42,12 +42,18 @@ class ExperimentalFeaturesViewController: ThemeViewController {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
+    private func openBitcoinHodling() {
+        navigationController?.pushViewController(BitcoinHodlingRouter.module(), animated: true)
+    }
+
 }
 
 extension ExperimentalFeaturesViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [
+        let testNetEnabled = viewModel.testNetEnabled
+
+        return [
             Section(
                     id: "alert",
                     rows: [
@@ -64,7 +70,35 @@ extension ExperimentalFeaturesViewController: SectionsDataSource {
                                 isFirst: true,
                                 isLast: true,
                                 action: { [weak self] in
-                                    self?.delegate.didTapBitcoinHodling()
+                                    self?.openBitcoinHodling()
+                                }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "test-net",
+                    headerState: .margin(height: .margin32),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        CellBuilderNew.row(
+                                rootElement: .hStack([
+                                    .text { component in
+                                        component.font = .body
+                                        component.textColor = .themeLeah
+                                        component.text = "settings.experimental_features.test_net_enabled".localized
+                                    },
+                                    .switch { component in
+                                        component.switchView.isOn = testNetEnabled
+                                        component.onSwitch = { [weak self] in
+                                            self?.viewModel.onToggleTestNet(enabled: $0)
+                                        }
+                                    }
+                                ]),
+                                tableView: tableView,
+                                id: "enable-test-net",
+                                height: .heightCell48,
+                                bind: { cell in
+                                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
                                 }
                         )
                     ]

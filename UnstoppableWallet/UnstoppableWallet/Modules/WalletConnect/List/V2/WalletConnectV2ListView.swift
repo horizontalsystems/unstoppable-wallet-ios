@@ -68,6 +68,8 @@ class WalletConnectV2ListView {
 
         let elements: [CellBuilderNew.CellElement] = [
             .image24 { component in
+                component.imageView.cornerRadius = .cornerRadius8
+                component.imageView.layer.cornerCurve = .continuous
                 component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_24"))
             },
             .vStackCentered([

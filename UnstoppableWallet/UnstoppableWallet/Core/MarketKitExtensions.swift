@@ -123,6 +123,7 @@ extension MarketKit.TokenQuery {
         case (.dash, .native): return true
         case (.zcash, .native): return true
         case (.ethereum, .native), (.ethereum, .eip20): return true
+        case (.ethereumGoerli, .native), (.ethereumGoerli, .eip20): return true
         case (.optimism, .native), (.optimism, .eip20): return true
         case (.arbitrumOne, .native), (.arbitrumOne, .eip20): return true
         case (.binanceSmartChain, .native), (.binanceSmartChain, .eip20): return true
@@ -160,6 +161,7 @@ extension MarketKit.BlockchainType {
         case .eip20:
             switch self {
             case .ethereum: return "ERC20"
+            case .ethereumGoerli: return "ERC20"
             case .binanceSmartChain: return "BEP20"
             case .polygon: return "Polygon"
             case .avalanche: return "Avalanche"
@@ -236,6 +238,7 @@ extension MarketKit.BlockchainType {
         case .binanceChain: return 10
         case .arbitrumOne: return 11
         case .optimism: return 12
+        case .ethereumGoerli: return 13
         default: return Int.max
         }
     }

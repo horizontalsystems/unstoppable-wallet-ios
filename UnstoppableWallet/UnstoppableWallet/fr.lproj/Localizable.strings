@@ -184,6 +184,7 @@
 
 // Backup Required
 
+"manage_accounts.migration_required" = "Migration Requise";
 "backup_required.title" = "Sauvegarde requise";
 
 // Backup Prompt
@@ -830,6 +831,7 @@
 "manage_coins.add_coin.text.tokens" = "Vous pourrez utiliser ce portefeuille pour: %@.";
 "manage_coins.add_coin.create" = "Créer";
 "manage_coins.add_coin.restore" = "Restaurer";
+
 
 // Settings -> Experimental Features
 

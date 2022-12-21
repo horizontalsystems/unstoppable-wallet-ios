@@ -115,6 +115,7 @@
 \n\nПОЖАЛУЙСТА НАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ.";
 "restore.error.non_standard.description" = "Это нестандартный кошелек.\n\nНАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ";
 
+
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "Legacy";
@@ -189,6 +190,8 @@
 // Backup Required
 
 "backup_required.title" = "Требуется резервная копия";
+"manage_accounts.migration_required" = "Требуется Миграция";
+
 
 // Backup Prompt
 

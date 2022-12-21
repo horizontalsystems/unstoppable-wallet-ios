@@ -102,42 +102,35 @@ struct CellComponent {
         )
     }
 
-    static func doubleAmountRow(tableView: UITableView, rowInfo: RowInfo, iconUrl: String?, iconPlaceholderImageName: String, primaryCoinAmount: String, primaryCurrencyAmount: String?, primaryType: AmountType, secondaryCoinAmount: String, secondaryCurrencyAmount: String?, secondaryType: AmountType) -> RowProtocol {
+    static func doubleAmountRow(tableView: UITableView, rowInfo: RowInfo, title: String, coinValue: String, currencyValue: String?) -> RowProtocol {
         CellBuilder.row(
-                elements: [.image24, .multiText, .multiText],
+                elements: [.text, .multiText],
                 tableView: tableView,
                 id: "double-amount-\(rowInfo.index)",
-                hash: "double-amount-\(primaryCoinAmount)-\(primaryCurrencyAmount ?? "")-\(secondaryCoinAmount)-\(secondaryCurrencyAmount ?? "")",
+                hash: "double-amount-\(coinValue)-\(currencyValue ?? "-")",
                 height: .heightDoubleLineCell,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
 
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.setImage(urlString: iconUrl, placeholder: UIImage(named: iconPlaceholderImageName))
+                    cell.bind(index: 0) { (component: TextComponent) in
+                        component.font = .subhead2
+                        component.textColor = .themeGray
+                        component.text = title
                     }
-                    cell.bind(index: 1) { (component: MultiTextComponent) in
-                        component.set(style: .m1)
-                        component.title.font = primaryType.textFont
-                        component.title.textColor = primaryType.textColor
-                        component.subtitle.font = secondaryType.textFont
-                        component.subtitle.textColor = secondaryType.textColor
 
-                        component.title.text = primaryCoinAmount
-                        component.subtitle.text = secondaryCoinAmount
-                    }
-                    cell.bind(index: 2) { (component: MultiTextComponent) in
+                    cell.bind(index: 1) { (component: MultiTextComponent) in
                         component.titleSpacingView.isHidden = true
                         component.set(style: .m1)
                         component.title.font = .subhead2
-                        component.title.textColor = .themeGray
+                        component.title.textColor = .themeLeah
                         component.subtitle.font = .caption
                         component.subtitle.textColor = .themeGray
 
                         component.title.textAlignment = .right
-                        component.title.text = primaryCurrencyAmount
+                        component.title.text = coinValue
 
                         component.subtitle.textAlignment = .right
-                        component.subtitle.text = secondaryCurrencyAmount
+                        component.subtitle.text = currencyValue
                     }
                 }
         )

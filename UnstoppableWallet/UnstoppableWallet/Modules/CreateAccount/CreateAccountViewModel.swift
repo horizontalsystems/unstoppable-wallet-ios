@@ -23,7 +23,7 @@ class CreateAccountViewModel {
     }
 
     private func sync(wordCount: Mnemonic.WordCount) {
-        wordCountRelay.accept(title(wordCount: wordCount))
+        wordCountRelay.accept("create_wallet.n_words".localized("\(wordCount.rawValue)"))
     }
 
     private func clearInputs() {
@@ -42,10 +42,6 @@ class CreateAccountViewModel {
         if passphraseConfirmationCautionRelay.value != nil {
             passphraseConfirmationCautionRelay.accept(nil)
         }
-    }
-
-    private func title(wordCount: Mnemonic.WordCount) -> String {
-        "create_wallet.n_words".localized("\(wordCount.rawValue)")
     }
 
 }
@@ -82,7 +78,13 @@ extension CreateAccountViewModel {
 
     var wordCountViewItems: [AlertViewItem] {
         Mnemonic.WordCount.allCases.map { wordCount in
-            AlertViewItem(text: title(wordCount: wordCount), selected: wordCount == service.wordCount)
+            let title: String
+            switch wordCount {
+            case .twelve: title = "create_wallet.12_words".localized
+            default: title = "create_wallet.n_words".localized("\(wordCount.rawValue)")
+            }
+
+            return AlertViewItem(text: title, selected: wordCount == service.wordCount)
         }
     }
 

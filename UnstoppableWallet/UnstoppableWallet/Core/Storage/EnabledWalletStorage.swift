@@ -11,6 +11,12 @@ class EnabledWalletStorage {
 
 extension EnabledWalletStorage {
 
+    func allWallets() throws -> [EnabledWallet] {
+        try dbPool.read { db in
+            try EnabledWallet.fetchAll(db)
+        }
+    }
+
     func enabledWallets() throws -> [EnabledWallet] {
         try dbPool.read { db in
             try EnabledWallet.fetchAll(db)

@@ -74,7 +74,13 @@ struct SendEvmConfirmationModule {
     static func viewController(evmKitWrapper: EvmKitWrapper, sendData: SendEvmData) -> UIViewController? {
         let evmKit = evmKitWrapper.evmKit
 
-        guard let coinServiceFactory = EvmCoinServiceFactory(blockchainType: evmKitWrapper.blockchainType, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit) else {
+        guard let coinServiceFactory = EvmCoinServiceFactory(
+                blockchainType: evmKitWrapper.blockchainType,
+                marketKit: App.shared.marketKit,
+                currencyKit: App.shared.currencyKit,
+                evmBlockchainManager: App.shared.evmBlockchainManager,
+                coinManager: App.shared.coinManager
+        ) else {
             return nil
         }
 
@@ -107,7 +113,13 @@ struct SendEvmConfirmationModule {
         }
 
         let evmKitWrapper = adapter.evmKitWrapper
-        guard let coinServiceFactory = EvmCoinServiceFactory(blockchainType: evmKitWrapper.blockchainType, marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit) else {
+        guard let coinServiceFactory = EvmCoinServiceFactory(
+                blockchainType: evmKitWrapper.blockchainType,
+                marketKit: App.shared.marketKit,
+                currencyKit: App.shared.currencyKit,
+                evmBlockchainManager: App.shared.evmBlockchainManager,
+                coinManager: App.shared.coinManager
+        ) else {
             throw CreateModuleError.cantCreateFeeRateProvider
         }
 

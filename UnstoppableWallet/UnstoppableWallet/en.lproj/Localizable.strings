@@ -30,6 +30,7 @@
 "alert.wrong_amount" = "Wrong Amount";
 "alert.no_fee" = "Wrong Fee";
 "alert.warning" = "Warning";
+"alert.error" = "Error";
 "alert.unknown_error" = "Unknown Error";
 "alert.success_action" = "Done";
 
@@ -108,8 +109,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase";
 "restore.error.empty_passphrase" = "The passphrase cannot be empty";
 "restore.non_standard_restore" = "Non-Standard Restore";
-"restore.non_standard_restore.description" = "If you created a wallet with Unstoppable Wallet with a non-English wordlist or with non-English passphrase, this wallet is not standard.\n\nProblem\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet";
-"restore.warning.bip39_compliance.description" = "It looks like this wallet was created with a non-English wordlist or non-English passphrase, so the wallet is not standard.\n\nWe recommend creating a new one with an English wordlist and transfer all your funds to the new wallet.\n\nCLICK TO GET MORE INFO";
+"restore.non_standard_restore.description" = "This page provides a special wallet restore mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after restoring such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once restored you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
+"restore.warning.non_recommended.description" = "This wallet seems to use a non-standard character in its secret word list and/or a passphrase. If you do not see a balance or transactions please read below for details.  \n\nCLICK TO GET MORE INFO";
+"restore.error.non_standard.description"  = "This is a non-standard wallet.\n\nCLICK TO GET MORE INFO";
 
 // Coin Settings
 
@@ -375,6 +377,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Recipient Address";
 "swap.advanced_settings.warning.unusual_slippage" = "Your transaction may be frontrun";
+"swap.advanced_settings.service_fee_description" = "A service fee for the swap action on the platform typicaly either 0.3% or 0.6%";
 "swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";
 "swap.advanced_settings.error.higher_slippage" = "Slippage Tolerance can’t be more than %@%%";
 "swap.advanced_settings.error.invalid_address" = "Invalid Address";
@@ -397,12 +400,14 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "swap.confirmation.swap_button" = "Swap";
 "swap.confirmation.impact_too_high" = "The difference between the market price and expected settlement price is too high.";
+"swap.confirmation.minimum_received" = "Minimum Received";
+"swap.confirmation.maximum_sent" = "Maximum Sent";
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
 
 "swap.dex_info.header_dex_related" = "%@ Related";
 "swap.dex_info.header_allowance" = "Allowance";
-"swap.dex_info.content_allowance" = "The amount of currency that the service can spend on your behalf when executing token swaps. A sufficient allowance is required before a swap action can take place.";
+"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
 "swap.dex_info.header_price_impact" = "Price Impact";
 "swap.dex_info.content_price_impact" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.dex_info.header_swap_fee" = "Swap Fee";
@@ -833,6 +838,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
+"settings.experimental_features.test_net_enabled" = "Enable TestNet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
@@ -889,7 +895,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Manage Accounts
 
-"manage_accounts.migration_required" = "Migration required";
+"manage_accounts.migration_required" = "Migration Required";
 "manage_accounts.migration_recommended" = "Migration recommended";
 "manage_accounts.backup_required" = "Backup required";
 
@@ -1006,6 +1012,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "create_wallet.title" = "New Wallet";
 "create_wallet.create_button" = "Create";
 "create_wallet.mnemonic" = "Mnemonic";
+"create_wallet.12_words" = "12 words (recommended)";
 "create_wallet.n_words" = "%@ words";
 "create_wallet.word_list" = "Word List";
 "create_wallet.passphrase" = "Passphrase";
@@ -1013,7 +1020,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "create_wallet.input.confirm" = "Confirm";
 "create_wallet.passphrase_description" = "Passphrases add an additional security layer to the wallets, enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase, but associated with different passwords. \n\nTo restore these wallets, a user will require a mnemonic recovery phrase as well as a password for each to be restored wallet.";
 "create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
-"create_wallet.error.forbidden_symbols" = "Please use only latin letters and numbers for the passphrase";
+"create_wallet.error.forbidden_symbols" = "Please use only supported symbols:A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
 
 // Restore Select
@@ -1055,15 +1062,12 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Add Token
 
 "add_token.title" = "Add Token";
-"add_token.coin_name" = "Coin Name";
-"add_token.coin_code" = "Coin Code";
-"add_token.decimals" = "Decimals";
 "add_token.already_added" = "Already Added";
-"add_token.coin_types" = "Coin Types";
-"add_token.choose_type" = "Choose Type";
+"add_token.choose_token" = "Choose Token";
 "add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
 "add_token.token_not_found" = "Token not found";
 "add_token.input_placeholder" = "Contract Address";
+"add_token.bep2_not_supported" = "You current wallet EVM private key does not support BEP2 tokens";
 
 // Wallet Connect
 

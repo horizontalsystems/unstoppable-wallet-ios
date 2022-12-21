@@ -30,12 +30,14 @@ class BottomSheetItem {
 
     struct SimpleViewItem {
         let imageUrl: String?
+        let localImage: Bool
         let title: String
         let titleColor: UIColor
         let selected: Bool
 
-        init(imageUrl: String? = nil, title: String, titleColor: UIColor = .themeLeah, selected: Bool) {
+        init(imageUrl: String? = nil, localImage: Bool = false, title: String, titleColor: UIColor = .themeLeah, selected: Bool) {
             self.imageUrl = imageUrl
+            self.localImage = localImage
             self.title = title
             self.titleColor = titleColor
             self.selected = selected
@@ -64,7 +66,11 @@ class BottomSheetItem {
                 .image24 { component in
                     if let imageUrl = viewItem.imageUrl {
                         component.isHidden = false
-                        component.setImage(urlString: imageUrl, placeholder: nil)
+                        if viewItem.localImage {
+                            component.imageView.image = UIImage(named: imageUrl)
+                        } else {
+                            component.setImage(urlString: imageUrl, placeholder: nil)
+                        }
                     } else {
                         component.isHidden = true
                     }

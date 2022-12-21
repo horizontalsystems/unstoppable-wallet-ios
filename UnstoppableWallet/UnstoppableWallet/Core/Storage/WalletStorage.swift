@@ -3,10 +3,12 @@ import MarketKit
 
 class WalletStorage {
     private let marketKit: MarketKit.Kit
+    private let testNetManager: TestNetManager
     private let storage: EnabledWalletStorage
 
-    init(marketKit: MarketKit.Kit, storage: EnabledWalletStorage) {
+    init(marketKit: MarketKit.Kit, testNetManager: TestNetManager, storage: EnabledWalletStorage) {
         self.marketKit = marketKit
+        self.testNetManager = testNetManager
         self.storage = storage
     }
 
@@ -29,10 +31,15 @@ extension WalletStorage {
         let enabledWallets = try storage.enabledWallets(accountId: account.id)
 
         let queries = enabledWallets.compactMap { TokenQuery(id: $0.tokenQueryId) }
-        let tokens = try marketKit.tokens(queries: queries)
+        var tokens = try marketKit.tokens(queries: queries)
 
         let blockchainUids = queries.map { $0.blockchainType.uid }
-        let blockchains = try marketKit.blockchains(uids: blockchainUids)
+        var blockchains = try marketKit.blockchains(uids: blockchainUids)
+
+        if testNetManager.testNetEnabled {
+            tokens += testNetManager.baseTokens
+            blockchains += queries.map { $0.blockchainType }.compactMap { testNetManager.blockchain(blockchainType: $0) }
+        }
 
         return enabledWallets.compactMap { enabledWallet in
             guard let tokenQuery = TokenQuery(id: enabledWallet.tokenQueryId) else {

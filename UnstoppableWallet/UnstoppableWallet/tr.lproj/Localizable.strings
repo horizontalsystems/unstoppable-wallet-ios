@@ -114,6 +114,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "restore.warning.non_recommended.description" = "Bu cüzdan, gizli sözcükler listesinde ve/veya bir şifrede standart olmayan bir karakter kullanıyor gibi görünüyor. Bir bakiye veya işlem göremiyorsanız lütfen bilgi için aşağıya bakınız.\n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYINIZ";
 "restore.error.non_standard.description" = "Bu standart olmayan bir cüzdandır. \n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYIN";
 
+
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "Legacy";
@@ -188,6 +189,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Backup Required
 
 "backup_required.title" = "Yedekleme Gerekli";
+"manage_accounts.migration_required" = "Taşıma Gerekli ";
+
 
 // Backup Prompt
 

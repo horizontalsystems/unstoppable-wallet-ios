@@ -120,7 +120,6 @@ extension UniswapModule.TradeError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .wrapUnwrapNotAllowed: return "swap.trade_error.wrap_unwrap_not_allowed".localized
-        default: return nil
         }
     }
 

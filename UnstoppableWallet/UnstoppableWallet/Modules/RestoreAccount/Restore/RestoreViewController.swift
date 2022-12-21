@@ -385,7 +385,7 @@ extension RestoreViewController: SectionsDataSource {
                 ),
                 Section(
                         id: "non-standard-restore",
-                        footerState: inputsVisible ? tableView.sectionFooter(text: "restore.passphrase_description".localized) : .margin(height: 0),
+                        footerState: .margin(height: .margin32),
                         rows: [
                             tableView.titleArrowRow(
                                     id: "non-standard_restore",

@@ -26,6 +26,7 @@ class FilterHeaderView: UITableViewHeaderFooterView {
     private let selectedView = UIView()
     private let animationDuration: TimeInterval
 
+    var autoDeselect: Bool = false
     var onSelect: ((Int) -> ())?
 
     var headerHeight: CGFloat {
@@ -197,7 +198,7 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? FilterHeaderCell {
             let selected = collectionView.indexPathsForSelectedItems?.contains(indexPath) ?? false
-            cell.bind(title: title(index: indexPath.item), selected: selected, buttonStyle: buttonStyle)
+            cell.bind(title: title(index: indexPath.item), selected: autoDeselect ? false : selected, buttonStyle: buttonStyle)
         }
     }
 
@@ -211,7 +212,7 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first, selectedIndexPath == indexPath {
+        if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first, (!autoDeselect && selectedIndexPath == indexPath) {
             return false
         }
         return true
@@ -233,6 +234,10 @@ extension FilterHeaderView: UICollectionViewDelegateFlowLayout, UICollectionView
             self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
             self.collectionView.layoutSubviews()
         })
+
+        if autoDeselect {
+            collectionView.deselectItem(at: indexPath, animated: true)
+        }
     }
 
     private func layoutSelectedView(indexPath: IndexPath) {

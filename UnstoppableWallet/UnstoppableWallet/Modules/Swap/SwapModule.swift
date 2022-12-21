@@ -28,7 +28,8 @@ protocol ISwapProvider: AnyObject {
 }
 
 protocol ISwapDataSource: AnyObject {
-    func buildSections() -> [SectionProtocol]
+    var tableView: UITableView? { get set }
+    var buildSections: [SectionProtocol] { get }
 
     var state: SwapModule.DataSourceState { get }
 

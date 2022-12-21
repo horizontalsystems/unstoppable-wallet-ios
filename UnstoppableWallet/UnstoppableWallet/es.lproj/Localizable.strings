@@ -111,6 +111,7 @@
 "restore.warning.non_recommended.description" = "Este monedero parece usar un carácter no estándar en tu lista de palabras secretas y/o una frase de contraseña. Si no logras ver un saldo o transacciones, continua leyenda para obtener más detalles.\n\nHAGA CLIC PARA OBTENER MÁS INFORMACIÓN";
 "restore.error.non_standard.description" = "Esta es una cartera no estándar. \n\nCLICK PARA CONTRAR MÁS INFO";
 
+
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "Legacy";
@@ -184,6 +185,7 @@
 
 // Backup Required
 
+"manage_accounts.migration_required" = "Migración Requerida";
 "backup_required.title" = "Se requiere una copia de seg";
 
 // Backup Prompt

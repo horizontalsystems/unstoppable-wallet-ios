@@ -7,6 +7,7 @@ class ManageWalletsService {
     private let account: Account
     private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
+    private let testNetManager: TestNetManager
     private let enableCoinService: EnableCoinService
     private let disposeBag = DisposeBag()
 
@@ -23,7 +24,7 @@ class ManageWalletsService {
         }
     }
 
-    init?(marketKit: MarketKit.Kit, walletManager: WalletManager, accountManager: AccountManager, enableCoinService: EnableCoinService) {
+    init?(marketKit: MarketKit.Kit, walletManager: WalletManager, testNetManager: TestNetManager, accountManager: AccountManager, enableCoinService: EnableCoinService) {
         guard let account = accountManager.activeAccount else {
             return nil
         }
@@ -31,6 +32,7 @@ class ManageWalletsService {
         self.account = account
         self.marketKit = marketKit
         self.walletManager = walletManager
+        self.testNetManager = testNetManager
         self.enableCoinService = enableCoinService
 
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
@@ -54,9 +56,15 @@ class ManageWalletsService {
 
     private func fetchFullCoins() -> [FullCoin] {
         do {
+            let fullCoins: [FullCoin]
+
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                let featuredFullCoins = try marketKit.fullCoins(filter: "", limit: 100).filter { fullCoin in
+                var featuredFullCoins = try marketKit.fullCoins(filter: "", limit: 100).filter { fullCoin in
                     !fullCoin.eligibleTokens(accountType: account.type).isEmpty
+                }
+
+                if testNetManager.testNetEnabled {
+                    featuredFullCoins += testNetManager.baseTokens.map { $0.fullCoin }
                 }
 
                 let featuredCoins = featuredFullCoins.map { $0.coin }
@@ -64,14 +72,25 @@ class ManageWalletsService {
 
                 let customFullCoins = wallets.map { $0.token }.filter { $0.isCustom }.map { $0.fullCoin }
 
-                return featuredFullCoins + enabledFullCoins + customFullCoins
+                fullCoins = featuredFullCoins + enabledFullCoins + customFullCoins
             } else if let ethAddress = try? EvmKit.Address(hex: filter) {
                 let address = ethAddress.hex
                 let tokens = try marketKit.tokens(reference: address)
                 let coinUids = Array(Set(tokens.map { $0.coin.uid }))
-                return try marketKit.fullCoins(coinUids: coinUids)
+                fullCoins = try marketKit.fullCoins(coinUids: coinUids)
             } else {
-                return try marketKit.fullCoins(filter: filter, limit: 20)
+                var allFullCoins = try marketKit.fullCoins(filter: filter, limit: 20)
+
+                if testNetManager.testNetEnabled {
+                    allFullCoins += testNetManager.baseTokens(filter: filter).map { $0.fullCoin }
+                }
+
+                fullCoins = allFullCoins
+            }
+
+            return fullCoins.map { fullCoin in
+                let eligibleTokens = fullCoin.eligibleTokens(accountType: account.type)
+                return FullCoin(coin: fullCoin.coin, tokens: eligibleTokens)
             }
         } catch {
             return []
@@ -106,14 +125,11 @@ class ManageWalletsService {
     private func item(fullCoin: FullCoin) -> Item {
         let itemState: ItemState
 
-        let eligibleTokens = fullCoin.eligibleTokens(accountType: account.type)
-        let fullCoin = FullCoin(coin: fullCoin.coin, tokens: eligibleTokens)
-
-        if eligibleTokens.isEmpty {
+        if fullCoin.tokens.isEmpty {
             itemState = .unsupported
         } else {
             let enabled = isEnabled(coin: fullCoin.coin)
-            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrTokens(tokens: eligibleTokens))
+            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrTokens(tokens: fullCoin.tokens))
         }
 
         return Item(fullCoin: fullCoin, state: itemState)

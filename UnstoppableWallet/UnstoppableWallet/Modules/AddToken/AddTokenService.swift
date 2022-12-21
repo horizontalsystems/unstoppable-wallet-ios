@@ -37,7 +37,7 @@ class AddTokenService {
     private func joinedTokensSingle(services: [IAddTokenBlockchainService], reference: String) -> Single<[Token]> {
         let singles: [Single<Token?>] = services.map { service in
             service.tokenSingle(reference: reference)
-                    .map { token -> Token? in token}
+                    .map { token -> Token? in token }
                     .catchErrorJustReturn(nil)
         }
 
@@ -67,7 +67,14 @@ class AddTokenService {
             state = .failed(error: TokenError.notFound)
         } else {
             let (addedItems, items) = initialItems(tokens: tokens)
-            state = .fetched(addedItems: addedItems, items: items)
+
+            if items.count == 1, let item = items.first,
+               item.token.blockchainType == .binanceChain,
+               !BlockchainType.binanceChain.supports(accountType: account.type) {
+                state = .bep2NotSupported
+            } else {
+                state = .fetched(items: items, addedItems: addedItems)
+            }
         }
     }
 
@@ -123,7 +130,7 @@ extension AddTokenService {
     }
 
     func toggleToken(index: Int) {
-        guard case .fetched(let addedItems, let items) = state else {
+        guard case .fetched(let items, let addedItems) = state else {
             return
         }
 
@@ -133,11 +140,11 @@ extension AddTokenService {
 
         items[index].enabled = !items[index].enabled
 
-        state = .fetched(addedItems: addedItems, items: items)
+        state = .fetched(items: items, addedItems: addedItems)
     }
 
     func save() throws {
-        guard case .fetched(_, let items) = state else {
+        guard case .fetched(let items, _) = state else {
             return
         }
 
@@ -158,8 +165,9 @@ extension AddTokenService {
     enum State {
         case idle
         case loading
-        case fetched(addedItems: [Item], items: [Item])
+        case fetched(items: [Item], addedItems: [Item])
         case failed(error: Error)
+        case bep2NotSupported
     }
 
     class Item {

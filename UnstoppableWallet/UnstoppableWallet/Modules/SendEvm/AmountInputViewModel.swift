@@ -187,6 +187,10 @@ class AmountInputViewModel {
 
 extension AmountInputViewModel {
 
+    var amount: Decimal {
+        service.amount
+    }
+
     func isValid(amount: String?) -> Bool {
         guard let amount = decimalParser.parseAnyDecimal(from: amount) else {
             return false
@@ -245,6 +249,15 @@ extension AmountInputViewModel {
         let amount = decimalParser.parseAnyDecimal(from: amount) ?? 0
 
         fiatService.set(amount: amount)
+    }
+
+    func setBalance(multi: Decimal) {
+        guard let balance = service.balance else {
+            return
+        }
+
+        let newAmount = balance * multi
+        fiatService.set(coinAmount: newAmount, notify: true)
     }
 
     func onTapMax() {

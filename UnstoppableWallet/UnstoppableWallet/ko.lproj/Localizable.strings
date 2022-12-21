@@ -111,6 +111,7 @@
 "restore.warning.non_recommended.description" = "이 지갑은 비밀 단어 목록 및/또는 암호 문구에 비표준 문자를 사용하는 것 같습니다. 잔액이나 거래 내역이 보이지 않으면 아래에서 자세한 내용을 읽어보세요.\n\n더 많은 정보를 얻으려면 클릭하십시오";
 "restore.error.non_standard.description" = "비표준 호환 지갑입니다. 자세한 내용은 아래를 참조하십시오.\n\n더 많은 정보를 얻으려면 클릭하십시오";
 
+
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "Legacy";
@@ -185,6 +186,8 @@
 // Backup Required
 
 "backup_required.title" = "백업이 필요합니다";
+"manage_accounts.migration_required" = "마이그레이션 필요";
+
 
 // Backup Prompt
 

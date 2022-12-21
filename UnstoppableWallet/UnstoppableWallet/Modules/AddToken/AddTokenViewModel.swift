@@ -17,7 +17,8 @@ class AddTokenViewModel {
     init(service: AddTokenService) {
         self.service = service
 
-        service.stateObservable.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+        service.stateObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] state in
                     self?.sync(state: state)
                 })
@@ -34,15 +35,15 @@ class AddTokenViewModel {
         }
 
         switch state {
-        case .fetched(let addedItems, let items):
-            viewItemRelay.accept(viewItem(addedItems: addedItems, items: items))
+        case .fetched(let items, let addedItems):
+            viewItemRelay.accept(viewItem(items: items, addedItems: addedItems))
 
             if items.isEmpty {
                 buttonTitleRelay.accept("add_token.already_added".localized)
                 buttonEnabledRelay.accept(false)
             } else {
                 let hasEnabledItem = items.contains { $0.enabled }
-                buttonTitleRelay.accept(hasEnabledItem ? "button.add".localized : "add_token.choose_type".localized)
+                buttonTitleRelay.accept(hasEnabledItem ? "button.add".localized : "add_token.choose_token".localized)
                 buttonEnabledRelay.accept(hasEnabledItem)
             }
         default:
@@ -51,29 +52,34 @@ class AddTokenViewModel {
             buttonEnabledRelay.accept(false)
         }
 
-        if case .failed(let error) = state {
+        switch state {
+        case .failed(let error):
             cautionRelay.accept(Caution(text: error.convertedError.localizedDescription, type: .error))
-        } else {
+        case .bep2NotSupported:
+            cautionRelay.accept(Caution(text: "add_token.bep2_not_supported".localized, type: .warning))
+        default:
             cautionRelay.accept(nil)
         }
     }
 
-    private func viewItem(addedItems: [AddTokenService.Item], items: [AddTokenService.Item]) -> ViewItem {
-        let item = addedItems.first ?? items.first
-
-        return ViewItem(
-                coinName: item?.token.coin.name,
-                coinCode: item?.token.coin.code,
-                decimals: item.map { String($0.token.decimals) },
-                addedTokenViewItems: addedItems.map { tokenViewItem(item: $0) },
-                tokenViewItems: items.map { tokenViewItem(item: $0) }
+    private func viewItem(items: [AddTokenService.Item], addedItems: [AddTokenService.Item]) -> ViewItem {
+        ViewItem(
+                tokenViewItems: items.map {
+                    tokenViewItem(item: $0)
+                },
+                addedTokenViewItems: addedItems.map {
+                    tokenViewItem(item: $0)
+                }
         )
     }
 
     private func tokenViewItem(item: AddTokenService.Item) -> TokenViewItem {
         TokenViewItem(
-                imageUrl: item.token.blockchain.type.imageUrl,
-                title: item.token.protocolName,
+                imageUrl: item.token.coin.imageUrl,
+                placeholderImageName: item.token.placeholderImageName,
+                coinCode: item.token.coin.code,
+                coinName: item.token.coin.name,
+                protocolInfo: item.token.protocolInfo.uppercased(),
                 isOn: item.enabled
         )
     }
@@ -128,16 +134,16 @@ extension AddTokenViewModel {
 extension AddTokenViewModel {
 
     struct ViewItem {
-        let coinName: String?
-        let coinCode: String?
-        let decimals: String?
-        let addedTokenViewItems: [TokenViewItem]
         let tokenViewItems: [TokenViewItem]
+        let addedTokenViewItems: [TokenViewItem]
     }
 
     struct TokenViewItem {
         let imageUrl: String
-        let title: String?
+        let placeholderImageName: String
+        let coinCode: String
+        let coinName: String
+        let protocolInfo: String
         let isOn: Bool
     }
 

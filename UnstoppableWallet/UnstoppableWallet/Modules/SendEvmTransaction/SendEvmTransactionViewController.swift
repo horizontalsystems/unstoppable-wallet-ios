@@ -131,8 +131,8 @@ class SendEvmTransactionViewController: ThemeViewController {
             return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
         case let .nftAmount(iconUrl, iconPlaceholderImageName, nftAmount, type):
             return CellComponent.nftAmountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, nftAmount: nftAmount, type: type, onTapOpenNft: nil)
-        case let .doubleAmount(iconUrl, iconPlaceholderImageName, primaryCoinAmount, primaryCurrencyAmount, primaryType, secondaryCoinAmount, secondaryCurrencyAmount, secondaryType):
-            return CellComponent.doubleAmountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, primaryCoinAmount: primaryCoinAmount, primaryCurrencyAmount: primaryCurrencyAmount, primaryType: primaryType, secondaryCoinAmount: secondaryCoinAmount, secondaryCurrencyAmount: secondaryCurrencyAmount, secondaryType: secondaryType)
+        case let .doubleAmount(title, coinValue, currencyValue):
+            return CellComponent.doubleAmountRow(tableView: tableView, rowInfo: rowInfo, title: title, coinValue: coinValue, currencyValue: currencyValue)
         case let .address(title, value, valueTitle):
             return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: title, value: value, valueTitle: valueTitle)
         case let .value(title, value, type):

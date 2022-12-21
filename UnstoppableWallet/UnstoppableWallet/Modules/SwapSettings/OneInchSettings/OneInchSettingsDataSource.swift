@@ -17,6 +17,8 @@ class OneInchSettingsDataSource: ISwapSettingsDataSource {
     private let slippageCell = ShortcutInputCell()
     private let slippageCautionCell = FormCautionCell()
 
+    private let serviceFeeNoteCell = HighlightedDescriptionCell(showVerticalMargin: false)
+
     var onOpen: ((UIViewController) -> ())?
     var onClose: (() -> ())?
     var onReload: (() -> ())?
@@ -49,6 +51,8 @@ class OneInchSettingsDataSource: ISwapSettingsDataSource {
         slippageCell.onChangeText = { [weak self] text in self?.slippageViewModel.onChange(text: text) }
 
         slippageCautionCell.onChangeHeight = { [weak self] in self?.onReload?() }
+
+        serviceFeeNoteCell.descriptionText = "swap.advanced_settings.service_fee_description".localized
 
         subscribe(disposeBag, slippageViewModel.cautionDriver) { [weak self] in
             self?.slippageCell.set(cautionType: $0?.type)
@@ -127,6 +131,19 @@ extension OneInchSettingsDataSource {
                         )
                     ]
             ),
+
+            Section(
+                    id: "service-fee",
+                    rows: [
+                        StaticRow(
+                                cell: serviceFeeNoteCell,
+                                id: "service-fee-cell",
+                                dynamicHeight: { [weak self] width in
+                                    self?.serviceFeeNoteCell.height(containerWidth: width) ?? 0
+                                }
+                        )
+                    ]
+            )
         ]
     }
 

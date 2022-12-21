@@ -13,24 +13,32 @@ class EvmBlockchainManager {
     ]
 
     private let syncSourceManager: EvmSyncSourceManager
+    private let testNetManager: TestNetManager
     private let marketKit: MarketKit.Kit
     private let accountManagerFactory: EvmAccountManagerFactory
 
     private var evmKitManagerMap = [BlockchainType: EvmKitManager]()
     private var evmAccountManagerMap = [BlockchainType: EvmAccountManager]()
 
-    let allBlockchains: [Blockchain]
+    var allBlockchains: [Blockchain] {
+        do {
+            var allBlockchains = try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
 
-    init(syncSourceManager: EvmSyncSourceManager, marketKit: MarketKit.Kit, accountManagerFactory: EvmAccountManagerFactory) {
+            if testNetManager.testNetEnabled {
+                allBlockchains += testNetManager.blockchains
+            }
+
+            return allBlockchains
+        } catch {
+            return []
+        }
+    }
+
+    init(syncSourceManager: EvmSyncSourceManager, testNetManager: TestNetManager, marketKit: MarketKit.Kit, accountManagerFactory: EvmAccountManagerFactory) {
         self.syncSourceManager = syncSourceManager
+        self.testNetManager = testNetManager
         self.marketKit = marketKit
         self.accountManagerFactory = accountManagerFactory
-
-        do {
-            allBlockchains = try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
-        } catch {
-            allBlockchains = []
-        }
     }
 
     private func evmManagers(blockchainType: BlockchainType) -> (EvmKitManager, EvmAccountManager) {
@@ -70,6 +78,7 @@ extension EvmBlockchainManager {
     func chain(blockchainType: BlockchainType) -> Chain {
         switch blockchainType {
         case .ethereum: return .ethereum
+        case .ethereumGoerli: return .ethereumGoerli
         case .binanceSmartChain: return .binanceSmartChain
         case .polygon: return .polygon
         case .avalanche: return .avalanche
@@ -81,7 +90,11 @@ extension EvmBlockchainManager {
 
     func baseToken(blockchainType: BlockchainType) -> Token? {
         let query = TokenQuery(blockchainType: blockchainType, tokenType: .native)
-        return try? marketKit.token(query: query)
+        if let token = try? marketKit.token(query: query) {
+            return token
+        }
+
+        return testNetManager.baseToken(blockchainType: blockchainType)
     }
 
     func evmKitManager(blockchainType: BlockchainType) -> EvmKitManager {

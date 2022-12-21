@@ -203,7 +203,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
                 elements: [.image32, .multiText, .image20],
                 tableView: tableView,
                 id: "blockchain-\(index)",
-                hash: "\(viewItem.value)",
+                hash: "\(viewItem.value)-\(isFirst)-\(isLast)",
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { cell in

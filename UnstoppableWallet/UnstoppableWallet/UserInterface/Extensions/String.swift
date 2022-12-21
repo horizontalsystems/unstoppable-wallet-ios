@@ -1,7 +1,7 @@
 extension String {
 
-    func stripping(prefix: String) -> String {
-        if hasPrefix(prefix) {
+    func stripping(prefix: String?) -> String {
+        if let prefix = prefix, hasPrefix(prefix) {
             return String(dropFirst(prefix.count))
         }
 

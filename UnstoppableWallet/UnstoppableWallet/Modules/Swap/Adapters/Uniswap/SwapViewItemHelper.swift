@@ -13,13 +13,12 @@ class SwapViewItemHelper {
         return PriceCoinValue(baseCoin: tokenOut.coin, quoteCoinValue: CoinValue(kind: .token(token: tokenIn), value: value))
     }
 
-    func priceImpactViewItem(trade: UniswapTradeService.Trade, minLevel: UniswapTradeService.PriceImpactLevel = .normal) -> UniswapModule.PriceImpactViewItem? {
+    func priceImpactViewItem(trade: UniswapTradeService.Trade, minLevel: UniswapTradeService.PriceImpactLevel = .warning) -> UniswapModule.PriceImpactViewItem? {
         guard let priceImpact = trade.tradeData.priceImpact, let impactLevel = trade.impactLevel, impactLevel.rawValue >= minLevel.rawValue else {
             return nil
         }
-
         return UniswapModule.PriceImpactViewItem(
-                value: priceImpact.description + "%",
+                value: "-" + priceImpact.description + "%",
                 level: impactLevel
         )
     }
@@ -65,7 +64,7 @@ extension SwapViewItemHelper {
         let quoteCoinValue: CoinValue
 
         var formattedFull: String {
-            ValueFormatter.instance.formatFull(coinValue: quoteCoinValue).map { [baseCoin.code, $0].joined(separator: " = ") } ?? ""
+            ValueFormatter.instance.formatFull(coinValue: quoteCoinValue).map { "1 " + [baseCoin.code, $0].joined(separator: " = ") } ?? ""
         }
 
     }

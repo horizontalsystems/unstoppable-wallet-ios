@@ -16,6 +16,10 @@ class UniswapViewModel {
 
     private let viewItemHelper: SwapViewItemHelper
 
+    private var availableBalanceRelay = BehaviorRelay<String?>(value: nil)
+    private var priceImpactRelay = BehaviorRelay<UniswapModule.PriceImpactViewItem?>(value: nil)
+    private var buyPriceRelay = BehaviorRelay<SwapPriceCell.PriceViewItem?>(value: nil)
+    private var countdownTimerRelay = BehaviorRelay<Float>(value: 1)
     private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private var swapErrorRelay = BehaviorRelay<String?>(value: nil)
     private var tradeViewItemRelay = BehaviorRelay<TradeViewItem?>(value: nil)
@@ -48,11 +52,16 @@ class UniswapViewModel {
     }
 
     private func subscribeToService() {
+        subscribe(disposeBag, tradeService.stateObservable) { [weak self] in self?.sync(tradeState: $0) }
         subscribe(scheduler, disposeBag, service.stateObservable) { [weak self] _ in self?.handleObservable() }
+        subscribe(disposeBag, tradeService.countdownTimerObservable) { [weak self] in self?.handle(countdownValue: $0) }
         subscribe(scheduler, disposeBag, service.errorsObservable) { [weak self] in self?.handleObservable(errors: $0) }
+        subscribe(disposeBag, service.balanceInObservable) { [weak self] in self?.sync(fromBalance: $0) }
         subscribe(scheduler, disposeBag, tradeService.stateObservable) { [weak self] in self?.sync(tradeState: $0) }
         subscribe(scheduler, disposeBag, tradeService.settingsObservable) { [weak self] in self?.sync(swapSettings: $0) }
         subscribe(scheduler, disposeBag, pendingAllowanceService.stateObservable) { [weak self] _ in self?.handleObservable() }
+
+        sync(fromBalance: service.balanceIn)
     }
 
     private func sync(state: UniswapService.State? = nil) {
@@ -71,6 +80,19 @@ class UniswapViewModel {
         syncApproveAction()
     }
 
+    private func handle(countdownValue: Float) {
+        countdownTimerRelay.accept(countdownValue)
+    }
+
+    private func sync(fromBalance: Decimal?) {
+        guard let token = tradeService.tokenIn, let balance = fromBalance else {
+            availableBalanceRelay.accept(nil)
+            return
+        }
+
+        let coinValue = CoinValue(kind: .token(token: token), value: balance)
+        availableBalanceRelay.accept(ValueFormatter.instance.formatFull(coinValue: coinValue))
+    }
 
     private func sync(errors: [Error]? = nil) {
         let errors = errors ?? service.errors
@@ -88,13 +110,34 @@ class UniswapViewModel {
     }
 
     private func sync(tradeState: UniswapTradeService.State) {
+        var loading = false
         switch tradeState {
+        case .loading:
+            loading = true
         case .ready(let trade):
-            tradeViewItemRelay.accept(tradeViewItem(trade: trade))
-        default:
-            tradeViewItemRelay.accept(nil)
+            if let executionPrice = trade.tradeData.executionPrice {
+                let priceCoinValue = viewItemHelper.priceValue(
+                        executionPrice: executionPrice,
+                        tokenIn: tradeService.tokenIn,
+                        tokenOut: tradeService.tokenOut
+                )
+
+                let revertedPriceCoinValue = viewItemHelper.priceValue(
+                        executionPrice: trade.tradeData.executionPriceInverted ?? (1 / executionPrice),
+                        tokenIn: tradeService.tokenOut,
+                        tokenOut: tradeService.tokenIn
+                )
+                buyPriceRelay.accept(SwapPriceCell.PriceViewItem(price: priceCoinValue?.formattedFull, revertedPrice: revertedPriceCoinValue?.formattedFull))
+            } else {
+                buyPriceRelay.accept(nil)
+            }
+            priceImpactRelay.accept(viewItemHelper.priceImpactViewItem(trade: trade))
+        case .notReady:
+            buyPriceRelay.accept(nil)
+            priceImpactRelay.accept(nil)
         }
 
+        isLoadingRelay.accept(loading)
         handleObservable()
     }
 
@@ -137,7 +180,7 @@ class UniswapViewModel {
         }
         if case .pending = pendingAllowanceService.state {
             revokeWarning = nil
-            approveAction = .disabled(title: "swap.approving_button".localized)
+            approveAction = .disabled(title: "")    // UI will show custom approvingView
             approveStep = .approving
         } else if case .revoking = pendingAllowanceService.state {
             revokeWarning = nil
@@ -168,15 +211,6 @@ class UniswapViewModel {
         approveStepRelay.accept(approveStep)
     }
 
-    private func tradeViewItem(trade: UniswapTradeService.Trade) -> TradeViewItem {
-        TradeViewItem(
-                executionPrice: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPrice, tokenIn: tradeService.tokenIn, tokenOut: tradeService.tokenOut)?.formattedFull,
-                executionPriceInverted: viewItemHelper.priceValue(executionPrice: trade.tradeData.executionPriceInverted, tokenIn: tradeService.tokenOut, tokenOut: tradeService.tokenIn)?.formattedFull,
-                priceImpact: viewItemHelper.priceImpactViewItem(trade: trade, minLevel: .warning),
-                guaranteedAmount: viewItemHelper.guaranteedAmountViewItem(tradeData: trade.tradeData, tokenIn: tradeService.tokenIn, tokenOut: tradeService.tokenOut)
-        )
-    }
-
     private func settingsViewItem(settings: UniswapSettings) -> SettingsViewItem {
         SettingsViewItem(slippage: viewItemHelper.slippage(settings.allowedSlippage),
             deadline: viewItemHelper.deadline(settings.ttl),
@@ -187,6 +221,22 @@ class UniswapViewModel {
 
 extension UniswapViewModel {
 
+    var availableBalanceDriver: Driver<String?> {
+        availableBalanceRelay.asDriver()
+    }
+
+    var buyPriceDriver: Driver<SwapPriceCell.PriceViewItem?> {
+        buyPriceRelay.asDriver()
+    }
+
+    var countdownTimerDriver: Driver<Float> {
+        countdownTimerRelay.asDriver()
+    }
+
+    var amountInDriver: Driver<Decimal> {
+        tradeService.amountInObservable.asDriver(onErrorJustReturn: 0)
+    }
+
     var isLoadingDriver: Driver<Bool> {
         isLoadingRelay.asDriver()
     }
@@ -195,8 +245,8 @@ extension UniswapViewModel {
         swapErrorRelay.asDriver()
     }
 
-    var tradeViewItemDriver: Driver<TradeViewItem?> {
-        tradeViewItemRelay.asDriver()
+    var priceImpactDriver: Driver<UniswapModule.PriceImpactViewItem?> {
+        priceImpactRelay.asDriver()
     }
 
     var settingsViewItemDriver: Driver<SettingsViewItem?> {
