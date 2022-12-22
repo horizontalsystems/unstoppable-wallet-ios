@@ -161,7 +161,7 @@ extension MarketKit.BlockchainType {
         case .eip20:
             switch self {
             case .ethereum: return "ERC20"
-            case .ethereumGoerli: return "ERC20"
+            case .ethereumGoerli: return "Goerli ERC20"
             case .binanceSmartChain: return "BEP20"
             case .polygon: return "Polygon"
             case .avalanche: return "Avalanche"
