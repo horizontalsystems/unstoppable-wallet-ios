@@ -38,6 +38,8 @@ protocol ISwapDataSource: AnyObject {
     var onOpenSettings: (() -> ())? { get set }
     var onClose: (() -> ())? { get set }
     var onReload: (() -> ())? { get set }
+
+    func viewDidAppear()
 }
 
 class SwapModule {

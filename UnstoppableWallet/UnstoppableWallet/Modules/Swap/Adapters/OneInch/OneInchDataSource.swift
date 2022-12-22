@@ -91,6 +91,7 @@ class OneInchDataSource {
         }
         approvingView.isHidden = true
 
+        errorCell.set(backgroundStyle: .transparent, isFirst: true)
         buttonStackCell.add(view: approveButton)
 
         proceedButton.set(style: .yellow)
@@ -120,6 +121,10 @@ class OneInchDataSource {
         subscribe(disposeBag, viewModel.isAmountTypeAvailableDriver) { [weak self] in self?.settingsHeaderView.setSelector(isEnabled: $0) }
 
         subscribe(disposeBag, allowanceViewModel.allowanceDriver) { [weak self] in self?.handle(allowance: $0)  }
+    }
+
+    func viewDidAppear() {
+        inputCell.becomeFirstResponder()
     }
 
     private func handle(balance: String?) {
@@ -292,25 +297,27 @@ class OneInchDataSource {
     }
 
     private var infoSection: SectionProtocol {
+        let noAlerts = warningCell.descriptionText == nil && error == nil
+
         let cellViewItems = [
             InfoCellViewItem(
                     id: "buy-price",
                     cell: buyPriceCell,
-                    isVisible: error == nil && lastBuyPrice != nil),
+                    isVisible: noAlerts && lastBuyPrice != nil),
             InfoCellViewItem(
                     id: "allowance",
                     cell: allowanceCell,
                     descriptionTitle: "swap.allowance".localized,
                     description: "swap.dex_info.content_allowance".localized,
-                    isVisible: error == nil && lastAllowance != nil),
+                    isVisible: noAlerts && lastAllowance != nil),
             InfoCellViewItem(
                     id: "available-balance",
                     cell: availableBalanceCell,
-                    isVisible: error == nil && lastAvailableBalance != nil && lastBuyPrice == nil && lastAllowance == nil),
+                    isVisible: noAlerts && lastAvailableBalance != nil && lastBuyPrice == nil && lastAllowance == nil),
             InfoCellViewItem(
                     id: "price-impact",
                     cell: priceImpactCell,
-                    isVisible: error == nil && lastPriceImpact != nil && lastAllowance == nil),
+                    isVisible: noAlerts && lastPriceImpact != nil && lastAllowance == nil),
         ]
 
         let firstIndex = cellViewItems.firstIndex(where: { $0.isVisible }) ?? -1
@@ -331,7 +338,7 @@ class OneInchDataSource {
 
         return Section(
                 id: "info",
-                headerState: .margin(height: .margin12),
+                headerState: .margin(height: noAlerts ? .margin12 : 0),
                 rows: rows
         )
     }
@@ -380,8 +387,10 @@ extension OneInchDataSource: ISwapDataSource {
         ))
 
         sections.append(infoSection)
+
+        let hasAlert = warningCell.descriptionText != nil || error != nil
         sections.append(Section(id: "error",
-                headerState: .margin(height: .margin12),
+                headerState: .margin(height: hasAlert ? .margin12 : 0),
                 rows: [
                     StaticRow(
                             cell: warningCell,
@@ -404,7 +413,7 @@ extension OneInchDataSource: ISwapDataSource {
         ))
         sections.append(Section(
                 id: "buttons",
-                headerState: .margin(height: .margin24),
+                headerState: .margin(height: .margin16),
                 footerState: .margin(height: .margin32),
                 rows: [
                     StaticRow(
