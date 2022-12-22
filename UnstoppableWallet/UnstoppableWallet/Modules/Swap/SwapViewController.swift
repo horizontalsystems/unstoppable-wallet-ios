@@ -58,6 +58,9 @@ class SwapViewController: ThemeViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if !isLoaded {
+            dataSource?.viewDidAppear()
+        }
         isLoaded = true
     }
 
