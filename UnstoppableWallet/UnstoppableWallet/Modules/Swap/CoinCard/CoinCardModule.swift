@@ -17,6 +17,7 @@ protocol ISwapCoinCardService: AnyObject {
     var balanceObservable: Observable<Decimal?> { get }
     var errorObservable: Observable<Error?> { get }
     var amountObservable: Observable<Decimal> { get }
+    var isLoading: Observable<Bool> { get }
 
     func onChange(token: MarketKit.Token)
 }
@@ -131,6 +132,14 @@ class SwapFromCoinCardService: ISwapCoinCardService, IAmountInputService {
             $0.first(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError })
         }
     }
+    var isLoading: Observable<Bool> {
+        tradeService.stateObservable.map { state in
+            switch state {
+            case .loading: return true
+            default: return false
+            }
+        }
+    }
 
     func onChange(amount: Decimal) {
         tradeService.set(amountIn: amount)
@@ -163,6 +172,14 @@ class SwapToCoinCardService: ISwapCoinCardService, IAmountInputService {
     var balanceObservable: Observable<Decimal?> { service.balanceOutObservable }
     var errorObservable: Observable<Error?> {
         Observable<Error?>.just(nil)
+    }
+    var isLoading: Observable<Bool> {
+        tradeService.stateObservable.map { state in
+            switch state {
+            case .loading: return true
+            default: return false
+            }
+        }
     }
 
     var amountWarningObservable: Observable<AmountInputViewModel.AmountWarning?> {
@@ -212,6 +229,9 @@ class SwapFromCoinCardOneInchService: ISwapCoinCardService, IAmountInputService 
             $0.first(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError })
         }
     }
+    var isLoading: Observable<Bool> {
+        .just(false)
+    }
 
     func onChange(amount: Decimal) {
         tradeService.set(amountIn: amount)
@@ -246,6 +266,14 @@ class SwapToCoinCardOneInchService: ISwapCoinCardService, IAmountInputService {
     var balanceObservable: Observable<Decimal?> { service.balanceOutObservable }
     var errorObservable: Observable<Error?> {
         Observable<Error?>.just(nil)
+    }
+    var isLoading: Observable<Bool> {
+        tradeService.stateObservable.map { state in
+            switch state {
+            case .loading: return true
+            default: return false
+            }
+        }
     }
 
     func onChange(amount: Decimal) {

@@ -49,6 +49,7 @@ class SelectorButton: SecondaryButton {
 
         setTitle(items[index], for: .normal)
         setImage(UIImage(named: imageName(count: items.count, index: index)), for: .normal)
+        setImage(UIImage(named: imageName(count: items.count, index: index))?.withTintColor(.themeGray50), for: .disabled)
         syncInsets()
 
         currentIndex = index
