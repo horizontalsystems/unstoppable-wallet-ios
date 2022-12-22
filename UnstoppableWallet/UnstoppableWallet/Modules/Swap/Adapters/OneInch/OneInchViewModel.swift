@@ -12,6 +12,7 @@ class OneInchViewModel {
     public let service: OneInchService
     public let tradeService: OneInchTradeService
     public let switchService: AmountTypeSwitchService
+    private let currencyKit: CurrencyKit.Kit
     private let allowanceService: SwapAllowanceService
     private let pendingAllowanceService: SwapPendingAllowanceService
 
@@ -28,16 +29,19 @@ class OneInchViewModel {
     private var approveActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var approveStepRelay = BehaviorRelay<SwapModule.ApproveStepState>(value: .notApproved)
     private var openConfirmRelay = PublishRelay<OneInchSwapParameters>()
+    private var amountTypeIndexRelay = BehaviorRelay<Int>(value: 0)
+    private var isAmountToggleAvailableRelay = BehaviorRelay<Bool>(value: false)
 
     private var openRevokeRelay = PublishRelay<SwapAllowanceService.ApproveData>()
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
-    init(service: OneInchService, tradeService: OneInchTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, viewItemHelper: SwapViewItemHelper) {
+    init(service: OneInchService, tradeService: OneInchTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, currencyKit: CurrencyKit.Kit, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
         self.switchService = switchService
         self.allowanceService = allowanceService
         self.pendingAllowanceService = pendingAllowanceService
+        self.currencyKit = currencyKit
         self.viewItemHelper = viewItemHelper
 
         subscribeToService()
@@ -52,8 +56,12 @@ class OneInchViewModel {
         subscribe(disposeBag, service.errorsObservable) { [weak self] in self?.handleObservable(errors: $0) }
         subscribe(disposeBag, service.balanceInObservable) { [weak self] in self?.sync(fromBalance: $0) }
         subscribe(disposeBag, pendingAllowanceService.stateObservable) { [weak self] _ in self?.handleObservable() }
+        subscribe(disposeBag, switchService.amountTypeObservable) { [weak self] in self?.sync(amountType: $0) }
+        subscribe(disposeBag, switchService.toggleAvailableObservable) { [weak self] in self?.sync(toggleAvailable: $0) }
 
         sync(fromBalance: service.balanceIn)
+        sync(amountType: switchService.amountType)
+        sync(toggleAvailable: switchService.toggleAvailable)
     }
 
     private func handleObservable(errors: [Error]? = nil) {
@@ -186,9 +194,32 @@ class OneInchViewModel {
         approveStepRelay.accept(approveStep)
     }
 
+    private func sync(amountType: AmountTypeSwitchService.AmountType) {
+        switch amountType {
+        case .coin: amountTypeIndexRelay.accept(0)
+        case .currency: amountTypeIndexRelay.accept(1)
+        }
+    }
+
+    private func sync(toggleAvailable: Bool) {
+        isAmountToggleAvailableRelay.accept(toggleAvailable)
+    }
+
 }
 
 extension OneInchViewModel {
+
+    var amountTypeSelectorItems: [String] {
+        ["swap.amount_type.coin".localized, currencyKit.baseCurrency.code]
+    }
+
+    var amountTypeIndexDriver: Driver<Int> {
+        amountTypeIndexRelay.asDriver()
+    }
+
+    var isAmountTypeAvailableDriver: Driver<Bool> {
+        isAmountToggleAvailableRelay.asDriver()
+    }
 
     var availableBalanceDriver: Driver<String?> {
         availableBalanceRelay.asDriver()
@@ -252,6 +283,10 @@ extension OneInchViewModel {
 
     func onTapSwitch() {
         tradeService.switchCoins()
+    }
+
+    func onChangeAmountType(index: Int) {
+        switchService.toggle()
     }
 
     func onTapRevoke() {

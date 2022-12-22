@@ -6,13 +6,13 @@ import ThemeKit
 import ComponentKit
 
 class SwapInputCell: UITableViewCell {
-    static let cellHeight: CGFloat = 148
+    static let cellHeight: CGFloat = 180
 
     private let disposeBag = DisposeBag()
 
     private let cardView = CardView(insets: .zero)
 
-    let fromInputCard: SwapInputCardView
+    private let fromInputCard: SwapInputCardView
 
     private let leftSeparatorView = UIView()
     private let rightSeparatorView = UIView()
@@ -63,7 +63,7 @@ class SwapInputCell: UITableViewCell {
         leftSeparatorView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
             maker.trailing.equalTo(switchButton.snp.leading)
-            maker.top.equalTo(fromInputCard.snp.bottom)
+            maker.bottom.equalTo(fromInputCard.snp.bottom).offset(0.5)
             maker.height.equalTo(CGFloat.heightOneDp)
         }
 
@@ -71,7 +71,7 @@ class SwapInputCell: UITableViewCell {
         rightSeparatorView.snp.makeConstraints { maker in
             maker.leading.equalTo(switchButton.snp.trailing)
             maker.trailing.equalToSuperview()
-            maker.top.equalTo(fromInputCard.snp.bottom)
+            maker.bottom.equalTo(fromInputCard.snp.bottom).offset(0.5)
             maker.height.equalTo(CGFloat.heightOneDp)
         }
 

@@ -7,9 +7,9 @@ import ComponentKit
 import MarketKit
 
 class SwapInputCardView: UIView {
-    static let lineHeight: CGFloat = 73.5
+    static let lineHeight: CGFloat = 90
     private let amountInputHeight: CGFloat = 26
-    private let descriptionHeight: CGFloat = 17
+    private let descriptionHeight: CGFloat = 14
 
     private let disposeBag = DisposeBag()
 
@@ -21,7 +21,6 @@ class SwapInputCardView: UIView {
     private let tokenSelectView = TokenSelectView()
     private let amountTextView = SingleLineFormTextView()
     private let secondaryView = UILabel()
-    private let secondaryButton = UIButton()
 
     private var autocompleteView: SwapInputAccessoryView?
 
@@ -46,47 +45,37 @@ class SwapInputCardView: UIView {
             autocompleteView?.onSelect = { [weak self] multi in self?.setBalance(multi: multi)  }
         }
 
-        addSubview(tokenSelectView)
-        tokenSelectView.snp.makeConstraints { maker in
-            maker.leading.top.equalToSuperview()
-            maker.height.equalTo(Self.lineHeight)
-        }
-
         addSubview(amountTextView)
         amountTextView.snp.makeConstraints { maker in
-            maker.leading.equalTo(tokenSelectView.snp.trailing)
-            maker.top.equalToSuperview().inset(isTopView ? CGFloat.margin12: CGFloat.margin16)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.leading.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalToSuperview().inset(25)
             maker.height.equalTo(amountInputHeight)
         }
 
         amountTextView.font = .headline1
         amountTextView.textColor = .themeLeah
         amountTextView.placeholder = "0.0"
-        amountTextView.textAlignment = .right
         amountTextView.keyboardType = .decimalPad
-        amountTextView.setContentHuggingPriority(.required, for: .horizontal)
+        amountTextView.onChangeEditing = { [weak self] in self?.sync(editing: $0)  }
 
         addSubview(secondaryView)
         secondaryView.snp.makeConstraints { maker in
-            maker.leading.equalTo(tokenSelectView.snp.trailing)
+            maker.leading.trailing.equalTo(amountTextView)
             maker.top.equalTo(amountTextView.snp.bottom).offset(3)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
             maker.height.equalTo(descriptionHeight)
         }
 
-        secondaryView.font = .subhead2
-        secondaryView.textColor = .themeGray
-        secondaryView.textAlignment = .right
+        secondaryView.font = .caption
+        secondaryView.textColor = .themeGray50
 
-        addSubview(secondaryButton)
-        secondaryButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(tokenSelectView.snp.trailing)
-            maker.top.equalTo(amountTextView.snp.bottom).offset(3)
-            maker.trailing.equalToSuperview()
-            maker.bottom.equalTo(tokenSelectView.snp.bottom)
+        addSubview(tokenSelectView)
+        tokenSelectView.snp.makeConstraints { maker in
+            maker.leading.equalTo(amountTextView.snp.trailing).offset(CGFloat.margin8)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalToSuperview().inset(22)
         }
 
+        tokenSelectView.setContentHuggingPriority(.required, for: .horizontal)
         tokenSelectView.onTap = { [weak self] in self?.onTapTokenSelect() }
 
         subscribeToViewModel()
@@ -103,17 +92,15 @@ class SwapInputCardView: UIView {
     private func subscribeToViewModel() {
         subscribe(disposeBag, viewModel.readOnlyDriver) { [weak self] in self?.set(readOnly: $0) }
         subscribe(disposeBag, viewModel.tokenViewItemDriver) { [weak self] in self?.set(tokenViewItem: $0) }
+        subscribe(disposeBag, viewModel.isDimmedDriver) { [weak self] in self?.set(dimmed: $0) }
 
         subscribe(disposeBag, viewModel.balanceDriver) { [weak self] in self?.sync(balance: $0) }
 
         amountTextView.isValidText = { [weak self] in self?.amountInputViewModel.isValid(amount: $0) ?? true }
         amountTextView.onChangeText = { [weak self] in self?.amountInputViewModel.onChange(amount: $0) }
 
-        secondaryButton.addTarget(self, action: #selector(onTapSecondary), for: .touchUpInside)
-
         subscribe(disposeBag, amountInputViewModel.prefixDriver) { [weak self] in self?.set(prefix: $0) }
         subscribe(disposeBag, amountInputViewModel.amountDriver) { [weak self] in self?.set(amount: $0) }
-        subscribe(disposeBag, amountInputViewModel.switchEnabledDriver) { [weak self] in self?.secondaryButton.isEnabled = $0 }
         subscribe(disposeBag, amountInputViewModel.secondaryTextDriver) { [weak self] in self?.set(secondaryText: $0) }
     }
 
@@ -130,8 +117,8 @@ class SwapInputCardView: UIView {
         presentDelegate?.present(viewController: ThemeNavigationController(rootViewController: viewController))
     }
 
-    @objc private func onTapSecondary() {
-        amountInputViewModel.onSwitch()
+    private func sync(editing: Bool) {
+        viewModel.viewIsEditing = editing
     }
 
 }
@@ -140,6 +127,10 @@ extension SwapInputCardView {
 
     private func set(readOnly: Bool) {
         amountTextView.isEditable = !readOnly
+    }
+
+    private func set(dimmed: Bool) {
+        amountTextView.textColor = dimmed ? .themeGray : .themeLeah
     }
 
     private func set(tokenViewItem: SwapCoinCardViewModel.TokenViewItem?) {

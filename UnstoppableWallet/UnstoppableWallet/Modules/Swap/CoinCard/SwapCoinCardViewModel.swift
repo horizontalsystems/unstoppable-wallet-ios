@@ -15,8 +15,10 @@ class SwapCoinCardViewModel {
     private var balanceRelay = BehaviorRelay<String?>(value: nil)
     private var balanceErrorRelay = BehaviorRelay<Bool>(value: false)
     private var tokenViewItemRelay = BehaviorRelay<TokenViewItem?>(value: nil)
+    private var isDimmedRelay = BehaviorRelay<Bool>(value: false)
 
     private(set) var balance: Decimal?
+    var viewIsEditing = false
 
     init(coinCardService: ISwapCoinCardService, fiatService: FiatService) {
         self.coinCardService = coinCardService
@@ -28,6 +30,7 @@ class SwapCoinCardViewModel {
         subscribe(disposeBag, coinCardService.tokenObservable) { [weak self] in self?.sync(token: $0) }
         subscribe(disposeBag, coinCardService.balanceObservable) { [weak self] in self?.sync(balance: $0) }
         subscribe(disposeBag, coinCardService.errorObservable) { [weak self] in self?.sync(error: $0) }
+        subscribe(disposeBag, coinCardService.isLoading) { [weak self] in self?.sync(isLoading: $0) }
 
         sync(readOnly: coinCardService.readOnly)
         syncEstimated()
@@ -42,6 +45,10 @@ class SwapCoinCardViewModel {
     private func syncEstimated() {
         fiatService.coinAmountLocked = coinCardService.isEstimated
         isEstimatedRelay.accept(coinCardService.isEstimated && coinCardService.amount != 0)
+    }
+
+    private func sync(isLoading: Bool) {
+        isDimmedRelay.accept(!viewIsEditing && (coinCardService.isEstimated && isLoading))
     }
 
     private func sync(token: MarketKit.Token?) {
@@ -83,6 +90,10 @@ extension SwapCoinCardViewModel {
 
     var isEstimatedDriver: Driver<Bool> {
         isEstimatedRelay.asDriver()
+    }
+
+    var isDimmedDriver: Driver<Bool> {
+        isDimmedRelay.asDriver()
     }
 
     var balanceDriver: Driver<String?> {

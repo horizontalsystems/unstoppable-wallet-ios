@@ -11,6 +11,7 @@ class UniswapViewModel {
     public let service: UniswapService
     public let tradeService: UniswapTradeService
     public let switchService: AmountTypeSwitchService
+    private let currencyKit: CurrencyKit.Kit
     private let allowanceService: SwapAllowanceService
     private let pendingAllowanceService: SwapPendingAllowanceService
 
@@ -30,18 +31,21 @@ class UniswapViewModel {
     private var approveActionRelay = BehaviorRelay<ActionState>(value: .hidden)
     private var approveStepRelay = BehaviorRelay<SwapModule.ApproveStepState>(value: .notApproved)
     private var openConfirmRelay = PublishRelay<SendEvmData>()
+    private var amountTypeIndexRelay = BehaviorRelay<Int>(value: 0)
+    private var isAmountToggleAvailableRelay = BehaviorRelay<Bool>(value: false)
 
     private var openRevokeRelay = PublishRelay<SwapAllowanceService.ApproveData>()
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.swap_view_model")
 
-    init(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, viewItemHelper: SwapViewItemHelper) {
+    init(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, currencyKit: CurrencyKit.Kit, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
         self.switchService = switchService
         self.allowanceService = allowanceService
         self.pendingAllowanceService = pendingAllowanceService
+        self.currencyKit = currencyKit
         self.viewItemHelper = viewItemHelper
 
         subscribeToService()
@@ -60,8 +64,12 @@ class UniswapViewModel {
         subscribe(scheduler, disposeBag, tradeService.stateObservable) { [weak self] in self?.sync(tradeState: $0) }
         subscribe(scheduler, disposeBag, tradeService.settingsObservable) { [weak self] in self?.sync(swapSettings: $0) }
         subscribe(scheduler, disposeBag, pendingAllowanceService.stateObservable) { [weak self] _ in self?.handleObservable() }
+        subscribe(disposeBag, switchService.amountTypeObservable) { [weak self] in self?.sync(amountType: $0) }
+        subscribe(disposeBag, switchService.toggleAvailableObservable) { [weak self] in self?.sync(toggleAvailable: $0) }
 
         sync(fromBalance: service.balanceIn)
+        sync(amountType: switchService.amountType)
+        sync(toggleAvailable: switchService.toggleAvailable)
     }
 
     private func sync(state: UniswapService.State? = nil) {
@@ -210,9 +218,32 @@ class UniswapViewModel {
             recipient: settings.recipient?.title)
     }
 
+    private func sync(amountType: AmountTypeSwitchService.AmountType) {
+        switch amountType {
+        case .coin: amountTypeIndexRelay.accept(0)
+        case .currency: amountTypeIndexRelay.accept(1)
+        }
+    }
+
+    private func sync(toggleAvailable: Bool) {
+        isAmountToggleAvailableRelay.accept(toggleAvailable)
+    }
+
 }
 
 extension UniswapViewModel {
+
+    var amountTypeSelectorItems: [String] {
+        ["swap.amount_type.coin".localized, currencyKit.baseCurrency.code]
+    }
+
+    var amountTypeIndexDriver: Driver<Int> {
+        amountTypeIndexRelay.asDriver()
+    }
+
+    var isAmountTypeAvailableDriver: Driver<Bool> {
+        isAmountToggleAvailableRelay.asDriver()
+    }
 
     var availableBalanceDriver: Driver<String?> {
         availableBalanceRelay.asDriver()
@@ -284,6 +315,10 @@ extension UniswapViewModel {
 
     func onTapSwitch() {
         tradeService.switchCoins()
+    }
+
+    func onChangeAmountType(index: Int) {
+        switchService.toggle()
     }
 
     func onTapRevoke() {

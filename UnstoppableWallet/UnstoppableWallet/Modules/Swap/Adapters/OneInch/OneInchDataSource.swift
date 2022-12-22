@@ -62,6 +62,9 @@ class OneInchDataSource {
         settingsHeaderView.onTapDropDown = { [weak self] in self?.onOpenSelectProvider?() }
         settingsHeaderView.onTapSettings = { [weak self] in self?.onOpenSettings?() }
 
+        settingsHeaderView.onTapSelector = { [weak self] in self?.onChangeAmountType(index: $0) }
+        settingsHeaderView.setSelector(items: viewModel.amountTypeSelectorItems)
+
         initCells()
     }
 
@@ -113,6 +116,8 @@ class OneInchDataSource {
         subscribe(disposeBag, viewModel.openRevokeSignal) { [weak self] in self?.openRevoke(approveData: $0) }
         subscribe(disposeBag, viewModel.openApproveSignal) { [weak self] in self?.openApprove(approveData: $0) }
         subscribe(disposeBag, viewModel.openConfirmSignal) { [weak self] in self?.openConfirm(parameters: $0) }
+        subscribe(disposeBag, viewModel.amountTypeIndexDriver) { [weak self] in self?.settingsHeaderView.setSelector(index: $0) }
+        subscribe(disposeBag, viewModel.isAmountTypeAvailableDriver) { [weak self] in self?.settingsHeaderView.setSelector(isEnabled: $0) }
 
         subscribe(disposeBag, allowanceViewModel.allowanceDriver) { [weak self] in self?.handle(allowance: $0)  }
     }
@@ -257,6 +262,10 @@ class OneInchDataSource {
         onOpen?(viewController, true)
     }
 
+    private func onChangeAmountType(index: Int) {
+        viewModel.onChangeAmountType(index: index)
+    }
+
     private func build(staticCell: BaseThemeCell, id: String, title: String, showInfo: Bool = false, value: String?, valueColor: UIColor, progress: CGFloat? = nil) {
         var cellElements = [CellBuilderNew.CellElement]()
         if showInfo {
@@ -352,8 +361,15 @@ extension OneInchDataSource: ISwapDataSource {
         var sections = [SectionProtocol]()
 
         sections.append(Section(
-                id: "main",
+                id: "header",
                 headerState: .static(view: settingsHeaderView, height: TextDropDownAndSettingsView.height),
+                rows: [
+                ]
+        ))
+
+        sections.append(Section(
+                id: "main",
+                headerState: .margin(height: .margin8),
                 rows: [
                     StaticRow(
                             cell: inputCell,

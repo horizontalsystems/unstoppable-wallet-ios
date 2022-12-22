@@ -60,7 +60,7 @@ class SingleLineFormTextView: UIView, IFormTextView {
         }
 
         placeholderLabel.font = textViewFont
-        placeholderLabel.textColor = .themeGray50
+        placeholderLabel.textColor = .themeGray
     }
 
     required init?(coder aDecoder: NSCoder) {

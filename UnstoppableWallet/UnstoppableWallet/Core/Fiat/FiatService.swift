@@ -96,7 +96,7 @@ class FiatService {
                 }
             } else {
                 self.primaryInfo = .amount(amount: self.coinAmount)
-                self.secondaryAmountInfo = .currencyValue(currencyValue: .init(currency: self.currency, value: 0))
+                self.secondaryAmountInfo = nil
             }
         }
     }

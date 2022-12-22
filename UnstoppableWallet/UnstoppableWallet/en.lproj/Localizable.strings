@@ -356,6 +356,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
 "swap.button_error.insufficient_balance" = "Insufficient balance";
 "swap.switch_provider.title" = "Swap Service";
+"swap.amount_type.coin" = "Coin";
 
 "swap.price" = "Price";
 "swap.buy_price" = "Buy Price";
