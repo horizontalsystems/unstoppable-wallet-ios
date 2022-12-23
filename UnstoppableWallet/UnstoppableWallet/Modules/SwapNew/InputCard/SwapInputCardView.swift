@@ -93,6 +93,7 @@ class SwapInputCardView: UIView {
         subscribe(disposeBag, viewModel.readOnlyDriver) { [weak self] in self?.set(readOnly: $0) }
         subscribe(disposeBag, viewModel.tokenViewItemDriver) { [weak self] in self?.set(tokenViewItem: $0) }
         subscribe(disposeBag, viewModel.isDimmedDriver) { [weak self] in self?.set(dimmed: $0) }
+        subscribe(disposeBag, viewModel.isLoadingDriver) { [weak self] in self?.set(loading: $0) }
 
         subscribe(disposeBag, viewModel.balanceDriver) { [weak self] in self?.sync(balance: $0) }
 
@@ -131,6 +132,10 @@ extension SwapInputCardView {
 
     private func set(dimmed: Bool) {
         amountTextView.textColor = dimmed ? .themeGray : .themeLeah
+    }
+
+    private func set(loading: Bool) {
+        secondaryView.textColor = loading ? .themeGray50 : .themeGray
     }
 
     private func set(tokenViewItem: SwapCoinCardViewModel.TokenViewItem?) {
