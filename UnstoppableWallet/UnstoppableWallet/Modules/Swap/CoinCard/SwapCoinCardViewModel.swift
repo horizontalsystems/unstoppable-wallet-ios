@@ -16,6 +16,7 @@ class SwapCoinCardViewModel {
     private var balanceErrorRelay = BehaviorRelay<Bool>(value: false)
     private var tokenViewItemRelay = BehaviorRelay<TokenViewItem?>(value: nil)
     private var isDimmedRelay = BehaviorRelay<Bool>(value: false)
+    private var isLoadingRelay = BehaviorRelay<Bool>(value: false)
 
     private(set) var balance: Decimal?
     var viewIsEditing = false
@@ -48,6 +49,7 @@ class SwapCoinCardViewModel {
     }
 
     private func sync(isLoading: Bool) {
+        isLoadingRelay.accept(isLoading)
         isDimmedRelay.accept(!viewIsEditing && (coinCardService.isEstimated && isLoading))
     }
 
@@ -94,6 +96,10 @@ extension SwapCoinCardViewModel {
 
     var isDimmedDriver: Driver<Bool> {
         isDimmedRelay.asDriver()
+    }
+
+    var isLoadingDriver: Driver<Bool> {
+        isLoadingRelay.asDriver()
     }
 
     var balanceDriver: Driver<String?> {

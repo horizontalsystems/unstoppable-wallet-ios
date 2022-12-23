@@ -89,7 +89,7 @@ class WalletConnectV2PairingViewController: ThemeViewController {
                 .text { component in
                     component.font = .subhead2
                     component.textColor = .themeGray
-                    component.text = viewItem.description
+                    component.text = viewItem.description ?? "---"
                 }
             ]),
             .secondaryCircleButton { [weak self] component in

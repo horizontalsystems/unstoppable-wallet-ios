@@ -5,6 +5,7 @@ import StorageKit
 class AmountTypeSwitchService {
     private let amountTypeKey = "amount-type-switch-service-amount-type"
     private let localStorage: StorageKit.ILocalStorage
+    private let useLocalStorage: Bool
 
     private var toggleAvailableObservables = [Observable<Bool>]()
     private var disposeBag = DisposeBag()
@@ -25,9 +26,15 @@ class AmountTypeSwitchService {
         }
     }
 
-    init(localStorage: StorageKit.ILocalStorage) {
-        amountType = localStorage.value(for: amountTypeKey).flatMap { AmountType(rawValue: $0) } ?? .coin
+    init(localStorage: StorageKit.ILocalStorage, useLocalStorage: Bool = true) {
+        let localStorageValue = localStorage.value(for: amountTypeKey).flatMap { AmountType(rawValue: $0) } ?? .coin
+        if useLocalStorage {
+            amountType = localStorageValue
+        } else {
+            amountType = .coin
+        }
         self.localStorage = localStorage
+        self.useLocalStorage = useLocalStorage
     }
 
     private func subscribeToObservables() {
@@ -46,7 +53,7 @@ class AmountTypeSwitchService {
 
         if !toggleAvailable && amountType == .currency { // reset input type if it was set to currency
             amountType = .coin
-        } else if toggleAvailable,
+        } else if toggleAvailable, useLocalStorage,
                   let savedAmountType = localStorage.value(for: amountTypeKey).flatMap({ AmountType(rawValue: $0) }),
                   savedAmountType == .currency && amountType == .coin {
             amountType = .currency
@@ -60,7 +67,9 @@ extension AmountTypeSwitchService {
     func toggle() {
         if toggleAvailable {
             amountType = !amountType
-            localStorage.set(value: amountType.rawValue, for: amountTypeKey)
+            if useLocalStorage {
+                localStorage.set(value: amountType.rawValue, for: amountTypeKey)
+            }
         }
     }
 

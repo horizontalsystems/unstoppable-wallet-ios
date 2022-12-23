@@ -86,7 +86,7 @@ class OneInchDataSource {
 
         approveButton.addSubview(approvingView)
         approvingView.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview().offset(-CGFloat.margin8)
+            maker.centerX.equalToSuperview()
             maker.centerY.equalToSuperview()
         }
         approvingView.isHidden = true
