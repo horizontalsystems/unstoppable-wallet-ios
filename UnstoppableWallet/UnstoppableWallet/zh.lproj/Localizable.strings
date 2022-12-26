@@ -839,17 +839,15 @@
 "settings.experimental_features.title" = "实验性";
 "settings.experimental_features.description" = "以下功能为实验性，应谨慎使用。虽然我们已使用自己的加密货币资金对这些功能进行了彻底测试，但是我们不保证它们在所有情况下都能如常工作。";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
-"settings.experimental_features.evm_testnet" = "EVM Testnet";
-"settings.experimental_features.test_net_enabled" = "启用测试网";
-"settings.experimental_features.test_net.description" = "启用TestNet使您能够添加 Goerli Chain";
+"settings.experimental_features.evm_testnet" = "Testnet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "激活";
 "settings.bitcoin_hodling.description" = "让您汇出在指定日期前无法消费的比特币。\n\n此交易的收款人应使用Unstoppable钱包。\n\n只有Unstoppable钱包能够正确识别此类在比特币网络上的交易并让收款人在锁定期限结束后消费那些比特币。\n\n如果您是持有人，您可以使用此功能通过向自己发送此类交易的方式来强制自己持有比特币。\n\n作为实验性功能，每次交易的最大金额限制为0.5 BTC。";
-"settings.evm_testnet.title" = "EVM Testnet";
-"settings.evm_testnet.enable" = "启用";
+"settings.evm_testnet.title" = "Testnet";
+"settings.evm_testnet.enable" = "Activate";
 "settings.evm_testnet.description" = "此选项仅对 GoerliETH 令牌激活Etherum的 Goerli 测试网，并将其添加到硬币管理器。\n\n它只影响GoerliETH 令牌，而所有其他 EVM 和 Etherum 令牌都在主网上运行。 换言之，只有GoerliETH中的交易通过Goerli testnet，而所有其他EVM令牌转账，包括ETH，都通过主网。";
 
 // Settings -> Terms
