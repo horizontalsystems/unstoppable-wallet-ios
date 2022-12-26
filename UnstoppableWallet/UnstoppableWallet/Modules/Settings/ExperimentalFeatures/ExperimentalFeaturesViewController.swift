@@ -43,7 +43,11 @@ class ExperimentalFeaturesViewController: ThemeViewController {
     }
 
     private func openBitcoinHodling() {
-        navigationController?.pushViewController(BitcoinHodlingRouter.module(), animated: true)
+        navigationController?.pushViewController(SimpleActivateModule.bitcoinHodlingViewController, animated: true)
+    }
+
+    private func openEvmTestnet() {
+        navigationController?.pushViewController(SimpleActivateModule.evmTestnetViewController, animated: true)
     }
 
 }
@@ -51,9 +55,7 @@ class ExperimentalFeaturesViewController: ThemeViewController {
 extension ExperimentalFeaturesViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let testNetEnabled = viewModel.testNetEnabled
-
-        return [
+        [
             Section(
                     id: "alert",
                     rows: [
@@ -68,41 +70,20 @@ extension ExperimentalFeaturesViewController: SectionsDataSource {
                                 id: "bitcoin_hodling",
                                 title: "settings.experimental_features.bitcoin_hodling".localized,
                                 isFirst: true,
-                                isLast: true,
                                 action: { [weak self] in
                                     self?.openBitcoinHodling()
+                                }
+                        ),
+                        tableView.titleArrowRow(
+                                id: "evm_testnet",
+                                title: "settings.experimental_features.evm_testnet".localized,
+                                isLast: true,
+                                action: { [weak self] in
+                                    self?.openEvmTestnet()
                                 }
                         )
                     ]
             ),
-            Section(
-                    id: "test-net",
-                    headerState: .margin(height: .margin32),
-                    footerState: tableView.sectionFooter(text: "settings.experimental_features.test_net.description".localized),
-                    rows: [
-                        CellBuilderNew.row(
-                                rootElement: .hStack([
-                                    .text { component in
-                                        component.font = .body
-                                        component.textColor = .themeLeah
-                                        component.text = "settings.experimental_features.test_net_enabled".localized
-                                    },
-                                    .switch { component in
-                                        component.switchView.isOn = testNetEnabled
-                                        component.onSwitch = { [weak self] in
-                                            self?.viewModel.onToggleTestNet(enabled: $0)
-                                        }
-                                    }
-                                ]),
-                                tableView: tableView,
-                                id: "enable-test-net",
-                                height: .heightCell48,
-                                bind: { cell in
-                                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                                }
-                        )
-                    ]
-            )
         ]
     }
 
