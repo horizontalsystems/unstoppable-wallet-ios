@@ -245,4 +245,27 @@ extension SectionsTableView {
         )
     }
 
+    func switchCell(id: String, title: String, isOn: Bool, isFirst: Bool = false, isLast: Bool = false, onSwitch: @escaping (Bool) -> (), onTap: (() -> ())? = nil) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .text { component in
+                        component.font = .body
+                        component.textColor = .themeLeah
+                        component.text = title
+                    },
+                    .switch { component in
+                        component.switchView.isOn = isOn
+                        component.onSwitch = onSwitch
+                    }
+                ]),
+                tableView: self,
+                id: id,
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                },
+                action: onTap
+        )
+    }
+
 }
