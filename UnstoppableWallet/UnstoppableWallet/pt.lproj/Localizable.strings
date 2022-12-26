@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Adicionado à Carteira";
 "alert.already_added_to_wallet" = "Já adicionado à carteira";
 "alert.not_supported_yet" = "Não suportado ainda";
-"alert.copied" = "Copied";
+"alert.copied" = "Copiado";
 "alert.created" = "Criado";
 "alert.restored" = "Restaurado";
 "alert.address_added" = "Endereço Adicionado";
@@ -558,9 +558,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.global.tvl_in_defi.title" = "TVL no DeFi";
 
 "market.global.btc_dominance.title" = "Dominação Bitcoin";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "Volume em 24h";
+"market.global.defi_cap.title" = "Mercado de DeFi";
+"market.global.tvl_in_defi.title" = "TVL no DeFi";
 "market.global.btc_dominance.description" = "A mudança histórica na relação entre o capital de mercado do Bitcoin e o resto dos mercados de criptomoedas. \n\nNormalmente, quando o domínio do Bitcoin está tendendo à alta, o resto das tendências do mercado cripto para baixo e vice-versa.";
 "market.global.volume_24h.description" = "A mudança histórica no volume diário do mercado de trading agregado para todas as criptomoedas.";
 "market.global.defi_cap.description" = "A mudança histórica no valor cumulativo do mercado dos tokens no setor DeFi.";
@@ -840,18 +840,16 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "Os recursos abaixo são experimentais e devem ser usados com cautela. Enquanto nós testamos minuciosamente esses recursos usando nossos próprios fundos cripto, nós não podemos garantir que eles funcionarão como esperado em todos os casos possíveis.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
-"settings.experimental_features.evm_testnet" = "EVM Testnet";
-"settings.experimental_features.test_net_enabled" = "Ativar Testnet";
-"settings.experimental_features.test_net.description" = "Enabling TestNet gives you the ability to add Goerli Chain";
+"settings.experimental_features.evm_testnet" = "Testnet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "Ativar";
 "settings.bitcoin_hodling.description" = "Isso permite que você envie Bitcoins que não podem ser gastos até uma data especificada. \n\nO destinatário de tais transações deve usar o aplicativo de carteira Unstoppable versão 0.10 ou mais recente, com o formato de endereço BIP44 para Bitcoin. \n\nSomente a carteira Unstoppable pode identificar corretamente tais transações na rede Bitcoin, bem como permitir que o receptor gaste esses Bitcoins após o período de bloqueio expirar. \n\nSe você é um HOLDER, você pode usar este recurso para se forçar a manter seus Bitcoins enviando tais transações para si mesmo. \n\nSendo um recurso experimental, o valor máximo por transação é limitado a 0,5 BTC.";
-"settings.evm_testnet.title" = "EVM Testnet";
-"settings.evm_testnet.enable" = "Enable";
-"settings.evm_testnet.description" = "This option activates Ethereum's Goerli testnet only for GoerliETH token and adds it to the coin manager. \n\nIt only affects GoerliETH token while all other EVM and Ethereum tokens operate over mainnet. In other words, only transactions in GoerliETH go through Goerli testnet, while all other EVM token transfers including ETH go through mainnet.";
+"settings.evm_testnet.title" = "Testnet";
+"settings.evm_testnet.enable" = "Activate";
+"settings.evm_testnet.description" = "Esta opção ativa a rede de testes Goerli da Ethereum apenas para o token GoerliETH e adiciona-a ao gerenciador de moedas.\n\nApenas afeta o token GoerliETH enquanto todos os outros tokens EVM e Ethereum operam sobre o mainnet. Em outras palavras, apenas as transações em GoerliETH passam pelo teste Goerli, enquanto todas as outras transferências token, incluindo ETH passam pelo mainnet.";
 
 // Settings -> Terms
 
