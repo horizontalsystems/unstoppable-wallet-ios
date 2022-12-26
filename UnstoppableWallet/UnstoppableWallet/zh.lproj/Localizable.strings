@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "添加到钱包";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
-"alert.copied" = "Copied";
+"alert.copied" = "已复制";
 "alert.created" = "已创建";
 "alert.restored" = "已恢复";
 "alert.address_added" = "地址已添加";
@@ -356,7 +356,7 @@
 "swap.trade_error.wrap_unwrap_not_allowed" = "此服务不允许包装/拆包。请尝试另一个交换服务。推荐1英寸。";
 "swap.button_error.insufficient_balance" = "余额不足";
 "swap.switch_provider.title" = "互兑供应商";
-"swap.amount_type.coin" = "Coin";
+"swap.amount_type.coin" = "硬币";
 
 "swap.price" = "价格";
 "swap.buy_price" = "买入价";
@@ -557,9 +557,9 @@
 "market.global.tvl_in_defi.title" = "DeFi锁定";
 
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "24h成交量";
+"market.global.defi_cap.title" = "DeFi市值";
+"market.global.tvl_in_defi.title" = "DeFi锁定";
 "market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
 "market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
 "market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
@@ -841,7 +841,7 @@
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 "settings.experimental_features.evm_testnet" = "EVM Testnet";
 "settings.experimental_features.test_net_enabled" = "启用测试网";
-"settings.experimental_features.test_net.description" = "Enabling TestNet gives you the ability to add Goerli Chain";
+"settings.experimental_features.test_net.description" = "启用TestNet使您能够添加 Goerli Chain";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
@@ -849,8 +849,8 @@
 "settings.bitcoin_hodling.lock_time" = "激活";
 "settings.bitcoin_hodling.description" = "让您汇出在指定日期前无法消费的比特币。\n\n此交易的收款人应使用Unstoppable钱包。\n\n只有Unstoppable钱包能够正确识别此类在比特币网络上的交易并让收款人在锁定期限结束后消费那些比特币。\n\n如果您是持有人，您可以使用此功能通过向自己发送此类交易的方式来强制自己持有比特币。\n\n作为实验性功能，每次交易的最大金额限制为0.5 BTC。";
 "settings.evm_testnet.title" = "EVM Testnet";
-"settings.evm_testnet.enable" = "Enable";
-"settings.evm_testnet.description" = "This option activates Ethereum's Goerli testnet only for GoerliETH token and adds it to the coin manager. \n\nIt only affects GoerliETH token while all other EVM and Ethereum tokens operate over mainnet. In other words, only transactions in GoerliETH go through Goerli testnet, while all other EVM token transfers including ETH go through mainnet.";
+"settings.evm_testnet.enable" = "启用";
+"settings.evm_testnet.description" = "此选项仅对 GoerliETH 令牌激活Etherum的 Goerli 测试网，并将其添加到硬币管理器。\n\n它只影响GoerliETH 令牌，而所有其他 EVM 和 Etherum 令牌都在主网上运行。 换言之，只有GoerliETH中的交易通过Goerli testnet，而所有其他EVM令牌转账，包括ETH，都通过主网。";
 
 // Settings -> Terms
 
