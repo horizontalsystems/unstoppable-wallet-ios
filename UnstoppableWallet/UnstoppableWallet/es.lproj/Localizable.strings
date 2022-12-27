@@ -111,7 +111,6 @@
 "restore.warning.non_recommended.description" = "Este monedero parece usar un carácter no estándar en tu lista de palabras secretas y/o una frase de contraseña. Si no logras ver un saldo o transacciones, continua leyenda para obtener más detalles.\n\nHAGA CLIC PARA OBTENER MÁS INFORMACIÓN";
 "restore.error.non_standard.description" = "Esta es una cartera no estándar. \n\nCLICK PARA CONTRAR MÁS INFO";
 
-
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "Legacy";
@@ -185,7 +184,6 @@
 
 // Backup Required
 
-"manage_accounts.migration_required" = "Migración Requerida";
 "backup_required.title" = "Se requiere una copia de seg";
 
 // Backup Prompt
@@ -356,6 +354,7 @@
 "swap.trade_error.wrap_unwrap_not_allowed" = "Este servicio no permite envolver/desenvolver. Por favor, prueba con otro servicio de intercambio. 1Inch recomendado";
 "swap.button_error.insufficient_balance" = "Saldo insuficiente";
 "swap.switch_provider.title" = "Servicio de Intercambio";
+"swap.amount_type.coin" = "Moneda";
 
 "swap.price" = "Precio";
 "swap.buy_price" = "Precio de Compra";
@@ -838,13 +837,16 @@
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "Las siguientes características son experimentales y deben utilizarse con precaución. Aunque hemos probado a fondo estas características usando nuestros propios fondos criptográficos, no podemos garantizar que funcionen como se espera en todos los casos posibles.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
-"settings.experimental_features.test_net_enabled" = "Activar Testnet";
+"settings.experimental_features.evm_testnet" = "Testnet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "Activar";
 "settings.bitcoin_hodling.description" = "Permite enviar Bitcoins que no se pueden gastar hasta la fecha establecida.\n\nEl receptor de dicha transacción debe utilizar el monedero Unstoppable.\n\nSólo el monedero Unstoppable puede identificar correctamente tales transacciones en la red Bitcoin, así como permitir que el receptor gaste esos Bitcoins después de que expire el período de bloqueo.\n\nSi eres un HODLer, puedes usar esta función para obligarte a retener tus Bitcoins enviándote dicha transacción a ti mismo.\n\nPor ser característica experimental, la cantidad máxima por transacción está limitada a 0.5 BTC.";
+"settings.evm_testnet.title" = "Testnet";
+"settings.evm_testnet.enable" = "Activar";
+"settings.evm_testnet.description" = "Esta opción activa la red de pruebas Goerli de Ethereum sólo para token GoerliETH y la añade al administrador de monedas.\n\nSólo afecta al token GoerliETH mientras todos los demás tokens EVM y Ethereum operan sobre mainnet. En otras palabras, sólo las transacciones en GoerliETH pasan por Goerli testnet, mientras que todas las demás transferencias de token EVM incluyendo ETH pasan por mainnet.";
 
 // Settings -> Terms
 

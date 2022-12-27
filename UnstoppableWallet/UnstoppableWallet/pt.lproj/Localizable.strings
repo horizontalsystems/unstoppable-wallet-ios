@@ -357,6 +357,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Este serviço não permite embalagem/desagregação. Por favor, tente outro serviço de troca. 1Inch recomendado";
 "swap.button_error.insufficient_balance" = "Saldo insuficiente";
 "swap.switch_provider.title" = "Serviço de Troca";
+"swap.amount_type.coin" = "Coin";
 
 "swap.price" = "Preço";
 "swap.buy_price" = "Preço de Compra";
@@ -839,13 +840,16 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "Os recursos abaixo são experimentais e devem ser usados com cautela. Enquanto nós testamos minuciosamente esses recursos usando nossos próprios fundos cripto, nós não podemos garantir que eles funcionarão como esperado em todos os casos possíveis.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
-"settings.experimental_features.test_net_enabled" = "Ativar Testnet";
+"settings.experimental_features.evm_testnet" = "Testnet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "Ativar";
 "settings.bitcoin_hodling.description" = "Isso permite que você envie Bitcoins que não podem ser gastos até uma data especificada. \n\nO destinatário de tais transações deve usar o aplicativo de carteira Unstoppable versão 0.10 ou mais recente, com o formato de endereço BIP44 para Bitcoin. \n\nSomente a carteira Unstoppable pode identificar corretamente tais transações na rede Bitcoin, bem como permitir que o receptor gaste esses Bitcoins após o período de bloqueio expirar. \n\nSe você é um HOLDER, você pode usar este recurso para se forçar a manter seus Bitcoins enviando tais transações para si mesmo. \n\nSendo um recurso experimental, o valor máximo por transação é limitado a 0,5 BTC.";
+"settings.evm_testnet.title" = "Testnet";
+"settings.evm_testnet.enable" = "Ativar";
+"settings.evm_testnet.description" = "Esta opção ativa a rede de testes Goerli da Ethereum apenas para o token GoerliETH e adiciona-a ao gerenciador de moedas.\n\nApenas afeta o token GoerliETH enquanto todos os outros tokens EVM e Ethereum operam sobre o mainnet. Em outras palavras, apenas as transações em GoerliETH passam pelo teste Goerli, enquanto todas as outras transferências token, incluindo ETH passam pelo mainnet.";
 
 // Settings -> Terms
 

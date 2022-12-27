@@ -112,7 +112,6 @@
 "restore.warning.non_recommended.description" = "Diese Brieftasche scheint ein nicht standardmäßiges Zeichen in ihrer geheimen Wortliste und/oder einer Passphrase zu verwenden. Wenn Sie kein Guthaben oder Transaktionen sehen, lesen Sie bitte unten für Details.\n\nKLICKEN, UM WEITERE INFORMATIONEN ZU ERHALTEN";
 "restore.error.non_standard.description" = "Dies ist eine nicht standardmäßige Wallet. \n\nKLICKEN SIE MEHR INFO";
 
-
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "Legacy";
@@ -356,6 +355,7 @@
 "swap.trade_error.wrap_unwrap_not_allowed" = "Dieser Service erlaubt keine Verpackung/Auspackung. Bitte versuchen Sie einen anderen Swap-Service. 1Inch empfohlen";
 "swap.button_error.insufficient_balance" = "Unzureichendes Guthaben";
 "swap.switch_provider.title" = "Dienst wechseln";
+"swap.amount_type.coin" = "Coin";
 
 "swap.price" = "Preis";
 "swap.buy_price" = "Kaufpreis";
@@ -838,13 +838,16 @@
 "settings.experimental_features.title" = "Experimentell";
 "settings.experimental_features.description" = "Die unten aufgeführten Funktionen sind experimentell und sollten mit Vorsicht eingesetzt werden. Wir haben sie zwar ausführlich mit unserem eigenen Kryptoguthaben getestet, aber wir können noch nicht garantieren, dass sie in allen denkbaren Fällen funktionieren.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
-"settings.experimental_features.test_net_enabled" = "Testnet aktivieren";
+"settings.experimental_features.evm_testnet" = "Testnet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "Aktivieren";
 "settings.bitcoin_hodling.description" = "Damit können Sie gesendete Bitcoins sperren, sodass sie bis zu dem festgesetzten Datum nicht ausgegeben werden können.\n\nDer Empfänger einer solchen Transaktion sollte das Unstoppable-Wallet in der Version 0.10 (oder neuer) sowie das Bitcoin-Adressformat BIP44 verwenden.\n\nNur das Unstoppable-Wallet erkennt solche Transaktionen im Bitcoin-Netzwerk korrekt und ermöglicht es dem Empfänger, die Bitcoins nach der Sperrzeit zu auszugeben.\n\nWenn Sie ein HODLer* sind, können Sie diese Funktion auch für sich selbst nutzen, indem Sie sich selbst eine solche Transaktion schicken und so ihre Bitcoin für sich selbst zeitlich sperren.\n\nDa es sich noch um eine experimentelle Funktion handelt, liegt der maximale Betrag bei 0,5 BTC.";
+"settings.evm_testnet.title" = "Testnet";
+"settings.evm_testnet.enable" = "Aktivieren";
+"settings.evm_testnet.description" = "Diese Option aktiviert Ethereums Goerli testnet nur für GoerliETH Token und fügt es dem Münzmanager hinzu.\n\nEs wirkt sich nur auf das GoerliETH Token aus, während alle anderen EVM und Ethereum Token über das Main laufen. Mit anderen Worten: Nur Transaktionen in GoerliETH gehen durch Goerli testnet, während alle anderen EVM-Token-Transfers einschließlich ETH über Mainnet gehen.";
 
 // Settings -> Terms
 
@@ -896,6 +899,7 @@
 // Manage Accounts
 
 "manage_accounts.migration_required" = "Migration erforderlich";
+"manage_accounts.migration_recommended" = "Migration empfohlen";
 "manage_accounts.backup_required" = "Sicherung erforderlich";
 
 // Manage Keys
