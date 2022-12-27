@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Ajouté au portefeuille";
 "alert.already_added_to_wallet" = "Déjà ajouté au portefeuille";
 "alert.not_supported_yet" = "Pas pris en charge pour le moment";
-"alert.copied" = "Copié";
+"alert.copied" = "Copied";
 "alert.created" = "Établi";
 "alert.restored" = "Restauré ";
 "alert.address_added" = "Adresse ajoutée";
@@ -350,6 +350,7 @@
 "swap.approving_button" = "En cours d'approbation...";
 "swap.revoke_warning" = "Vous pouvez échanger %@, ou vous devez révoquer et approuver le nouveau montant";
 "swap.revoking_button" = "Révocation en cours...";
+"swap.not_available_button" = "Not Available";
 "swap.trade_error.not_found" = "Impossible d'échanger ces tokens";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Ce service n'autorise pas l'emballage/décompression. S'il vous plaît, essayez un autre service de swap. 1Inch recommandé";
 "swap.button_error.insufficient_balance" = "Solde insuffisant";
@@ -555,9 +556,9 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominance Bitcoin";
-"market.global.volume_24h.title" = "Volume 24h";
-"market.global.defi_cap.title" = "Cap DeFi";
-"market.global.tvl_in_defi.title" = "TVL en DeFi";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
 "market.global.volume_24h.description" = "La variation historique du volume global quotidien du marché des transactions pour toutes les cryptomonnaies.";
 "market.global.defi_cap.description" = "L'évolution historique de la valeur de marché cumulée des tokens dans le secteur de la finance décentralisée.";
