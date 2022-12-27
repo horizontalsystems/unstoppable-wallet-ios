@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "添加到钱包";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
-"alert.copied" = "已复制";
+"alert.copied" = "Copied";
 "alert.created" = "已创建";
 "alert.restored" = "已恢复";
 "alert.address_added" = "地址已添加";
@@ -352,6 +352,7 @@
 "swap.approving_button" = "审批中...";
 "swap.revoke_warning" = "您可以交换 %@，或者您需要撤销并批准新的金额";
 "swap.revoking_button" = "正在取消...";
+"swap.not_available_button" = "Not Available";
 "swap.trade_error.not_found" = "无法交换代币";
 "swap.trade_error.wrap_unwrap_not_allowed" = "此服务不允许包装/拆包。请尝试另一个交换服务。推荐1英寸。";
 "swap.button_error.insufficient_balance" = "余额不足";
@@ -557,9 +558,9 @@
 "market.global.tvl_in_defi.title" = "DeFi锁定";
 
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
-"market.global.volume_24h.title" = "24h成交量";
-"market.global.defi_cap.title" = "DeFi市值";
-"market.global.tvl_in_defi.title" = "DeFi锁定";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
 "market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
 "market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
