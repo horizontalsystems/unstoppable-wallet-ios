@@ -40,7 +40,7 @@
 "alert.added_to_wallet" = "Cüzdana Eklendi";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
-"alert.copied" = "Kopyalandı";
+"alert.copied" = "Copied";
 "alert.created" = "Oluşturuldu";
 "alert.restored" = "Geri yüklendi ";
 "alert.address_added" = "Adres eklendi";
@@ -353,6 +353,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "swap.approving_button" = "Onaylanıyor...";
 "swap.revoke_warning" = "%@ alışverişi yapabilir veya yeni tutarı iptal edip onaylamanız gerekir";
 "swap.revoking_button" = "İptal ediliyor...";
+"swap.not_available_button" = "Not Available";
 "swap.trade_error.not_found" = "Bu token swap edilemez";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Bu hizmet sarmaya/paketlemeye izin vermiyor. Lütfen başka bir takas hizmetini deneyin. 1inch önerilir";
 "swap.button_error.insufficient_balance" = "Yetersiz bakiye";
