@@ -352,7 +352,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "swap.approving_button" = "Approving...";
 "swap.revoke_warning" = "You can exchange %@, or you need to revoke and approve the new amount";
 "swap.revoking_button" = "Revoking...";
-"swap.not_available_button" = "Not Available";
+"swap.not_available_button" = "Balance N/A";
 "swap.trade_error.not_found" = "Can't swap these tokens";
 "swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
 "swap.button_error.insufficient_balance" = "Insufficient balance";
