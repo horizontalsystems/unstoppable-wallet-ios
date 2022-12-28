@@ -17,11 +17,6 @@ class MarketAdvancedSearchViewModel {
     private let blockchainsViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let priceChangeTypeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
     private let priceChangeViewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(value: "", valueStyle: .none))
-    private let outperformedBtcRelay = BehaviorRelay<Bool>(value: false)
-    private let outperformedEthRelay = BehaviorRelay<Bool>(value: false)
-    private let outperformedBnbRelay = BehaviorRelay<Bool>(value: false)
-    private let priceCloseToAthRelay = BehaviorRelay<Bool>(value: false)
-    private let priceCloseToAtlRelay = BehaviorRelay<Bool>(value: false)
 
     private var valueFilters: [MarketAdvancedSearchService.ValueFilter] {
         MarketAdvancedSearchService.ValueFilter.valuesByCurrencyCode[service.currencyCode] ?? []
@@ -38,11 +33,6 @@ class MarketAdvancedSearchViewModel {
         subscribe(disposeBag, service.blockchainsObservable) { [weak self] in self?.sync(blockchains: $0) }
         subscribe(disposeBag, service.priceChangeTypeObservable) { [weak self] in self?.sync(priceChangeType: $0) }
         subscribe(disposeBag, service.priceChangeObservable) { [weak self] in self?.sync(priceChange: $0) }
-        subscribe(disposeBag, service.outperformedBtcObservable) { [weak self] in self?.sync(outperformedBtc: $0) }
-        subscribe(disposeBag, service.outperformedEthObservable) { [weak self] in self?.sync(outperformedEth: $0) }
-        subscribe(disposeBag, service.outperformedBnbObservable) { [weak self] in self?.sync(outperformedBnb: $0) }
-        subscribe(disposeBag, service.priceCloseToAthObservable) { [weak self] in self?.sync(priceCloseToAth: $0) }
-        subscribe(disposeBag, service.priceCloseToAtlObservable) { [weak self] in self?.sync(priceCloseToAtl: $0) }
 
         sync(coinList: service.coinListCount)
         sync(marketCap: service.marketCap)
@@ -107,26 +97,6 @@ class MarketAdvancedSearchViewModel {
         priceChangeViewItemRelay.accept(ViewItem(value: service.priceChange.title, valueStyle: service.priceChange.valueStyle))
     }
 
-    private func sync(outperformedBtc: Bool) {
-        outperformedBtcRelay.accept(outperformedBtc)
-    }
-
-    private func sync(outperformedEth: Bool) {
-        outperformedEthRelay.accept(outperformedEth)
-    }
-
-    private func sync(outperformedBnb: Bool) {
-        outperformedBnbRelay.accept(outperformedBnb)
-    }
-
-    private func sync(priceCloseToAth: Bool) {
-        priceCloseToAthRelay.accept(priceCloseToAth)
-    }
-
-    private func sync(priceCloseToAtl: Bool) {
-        priceCloseToAtlRelay.accept(priceCloseToAtl)
-    }
-
 }
 
 extension MarketAdvancedSearchViewModel {
@@ -157,26 +127,6 @@ extension MarketAdvancedSearchViewModel {
 
     var priceChangeViewItemDriver: Driver<ViewItem> {
         priceChangeViewItemRelay.asDriver()
-    }
-
-    var outperformedBtcDriver: Driver<Bool> {
-        outperformedBtcRelay.asDriver()
-    }
-
-    var outperformedEthDriver: Driver<Bool> {
-        outperformedEthRelay.asDriver()
-    }
-
-    var outperformedBnbDriver: Driver<Bool> {
-        outperformedBnbRelay.asDriver()
-    }
-
-    var priceCloseToATHDriver: Driver<Bool> {
-        priceCloseToAthRelay.asDriver()
-    }
-
-    var priceCloseToATLDriver: Driver<Bool> {
-        priceCloseToAtlRelay.asDriver()
     }
 
     var coinListViewItems: [FilterViewItem] {

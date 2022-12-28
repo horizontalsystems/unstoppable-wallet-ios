@@ -10,7 +10,7 @@ class MarketOverviewTopPlatformsDataSource: BaseMarketOverviewTopListDataSource 
                 topListViewModel: viewModel,
                 presentDelegate: presentDelegate,
                 rightSelectorMode: .selector,
-                imageName: "blocks_20",
+                imageName: "blocks_24",
                 title: "market.top.top_platforms".localized
         )
     }

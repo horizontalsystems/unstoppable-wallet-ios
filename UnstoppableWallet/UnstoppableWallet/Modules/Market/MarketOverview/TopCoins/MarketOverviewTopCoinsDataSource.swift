@@ -11,10 +11,10 @@ class MarketOverviewTopCoinsDataSource: BaseMarketOverviewTopListDataSource {
 
         switch viewModel.listType {
         case .topGainers:
-            imageName = "circle_up_20"
+            imageName = "circle_up_24"
             title = "market.top.section.header.top_gainers".localized
         case .topLosers:
-            imageName = "circle_down_20"
+            imageName = "circle_down_24"
             title = "market.top.section.header.top_losers".localized
         }
 

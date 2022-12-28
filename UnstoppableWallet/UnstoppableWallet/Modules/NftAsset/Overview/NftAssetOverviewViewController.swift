@@ -259,21 +259,7 @@ class NftAssetOverviewViewController: ThemeViewController {
 extension NftAssetOverviewViewController: SectionsDataSource {
 
     private func headerRow(title: String) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text],
-                tableView: tableView,
-                id: "header-\(title)",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .transparent)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    }
-                }
-        )
+        tableView.headerInfoRow(id: "header-\(title)", title: title, showInfo: false)
     }
 
     private func imageSection(ratio: CGFloat) -> SectionProtocol {
@@ -308,25 +294,11 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                                 cell.text = assetName
                             }
                     ),
-                    CellBuilder.selectableRow(
-                            elements: [.text, .image20],
-                            tableView: tableView,
+                    tableView.titleValueArrowRow(
                             id: "collection",
-                            height: .heightCell48,
-                            autoDeselect: true,
-                            bind: { cell in
-                                cell.set(backgroundStyle: .transparent, isFirst: true)
-
-                                cell.bind(index: 0) { (component: TextComponent) in
-                                    component.font = .subhead1
-                                    component.textColor = .themeJacob
-                                    component.text = collectionName
-                                }
-
-                                cell.bind(index: 1) { (component: ImageComponent) in
-                                    component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                                }
-                            },
+                            title: .custom(collectionName, .body, .themeJacob),
+                            backgroundStyle: .transparent,
+                            isFirst: true,
                             action: { [weak self] in
                                 self?.openCollection(providerUid: providerCollectionUid)
                             }
@@ -365,36 +337,37 @@ extension NftAssetOverviewViewController: SectionsDataSource {
     }
 
     private func priceRow(title: String, viewItem: NftAssetOverviewViewModel.PriceViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text, .multiText],
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .text { (component: TextComponent) in
+                        component.font = .body
+                        component.textColor = .themeLeah
+                        component.text = title
+                    },
+                    .vStackCentered([
+                        .text { (component: TextComponent) in
+                            component.font = .body
+                            component.textColor = .themeJacob
+                            component.text = viewItem.coinValue
+                            component.textAlignment = .right
+                            component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                        },
+                        .margin(1),
+                        .text { (component: TextComponent) in
+                            component.font = .subhead2
+                            component.textColor = .themeGray
+                            component.text = viewItem.fiatValue
+                            component.textAlignment = .right
+                            component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                        }
+                    ])
+                ]),
                 tableView: tableView,
                 id: "price-\(title)",
                 hash: "\(viewItem.coinValue)-\(viewItem.fiatValue)-\(isLast)",
                 height: .heightDoubleLineCell,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    }
-                    cell.bind(index: 1) { (component: MultiTextComponent) in
-                        component.titleSpacingView.isHidden = true
-                        component.set(style: .m1)
-                        component.title.font = .body
-                        component.title.textColor = .themeJacob
-                        component.subtitle.font = .subhead2
-                        component.subtitle.textColor = .themeGray
-
-                        component.title.text = viewItem.coinValue
-                        component.title.textAlignment = .right
-                        component.title.setContentCompressionResistancePriority(.required, for: .horizontal)
-
-                        component.subtitle.text = viewItem.fiatValue
-                        component.subtitle.textAlignment = .right
-                        component.subtitle.setContentCompressionResistancePriority(.required, for: .horizontal)
-                    }
                 }
         )
     }
@@ -434,25 +407,26 @@ extension NftAssetOverviewViewController: SectionsDataSource {
     }
 
     private func saleRow(title: String, untilDate: String) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.multiText],
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .text { (component: TextComponent) -> () in
+                        component.font = .body
+                        component.textColor = .themeLeah
+                        component.text = title
+                    },
+                    .margin(1),
+                    .text { (component: TextComponent) -> () in
+                        component.font = .subhead2
+                        component.textColor = .themeGray
+                        component.text = untilDate
+                    }
+                ]),
                 tableView: tableView,
                 id: "sale-until",
                 hash: untilDate,
                 height: .heightDoubleLineCell,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: true)
-
-                    cell.bind(index: 0) { (component: MultiTextComponent) in
-                        component.set(style: .m1)
-                        component.title.font = .body
-                        component.title.textColor = .themeLeah
-                        component.subtitle.font = .subhead2
-                        component.subtitle.textColor = .themeGray
-
-                        component.title.text = title
-                        component.subtitle.text = untilDate
-                    }
                 }
         )
     }
@@ -579,58 +553,42 @@ extension NftAssetOverviewViewController: SectionsDataSource {
     }
 
     private func contractAddressRow(value: String) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text, .secondaryCircleButton, .secondaryCircleButton],
-                tableView: tableView,
-                id: "contract-address",
-                height: .heightCell48,
-                bind: { [weak self] cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .text { (component: TextComponent) -> () in
                         component.font = .body
                         component.textColor = .themeLeah
                         component.text = "nft_asset.details.contract_address".localized
-                    }
-                    cell.bind(index: 1) { (component: SecondaryCircleButtonComponent) in
+                    },
+                    .secondaryCircleButton { (component: SecondaryCircleButtonComponent) -> () in
                         component.button.set(image: UIImage(named: "copy_20"))
                         component.onTap = {
                             CopyHelper.copyAndNotify(value: value)
                         }
-                    }
-                    cell.bind(index: 2) { (component: SecondaryCircleButtonComponent) in
+                    },
+                    .secondaryCircleButton { [weak self] (component: SecondaryCircleButtonComponent) -> () in
                         component.button.set(image: UIImage(named: "share_1_20"))
                         component.onTap = {
                             self?.openShare(text: value)
                         }
-                    }
+                    },
+                ]),
+                tableView: tableView,
+                id: "contract-address",
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true)
                 }
         )
     }
 
     private func detailRow(title: String, value: String, isLast: Bool = false) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text, .text],
-                tableView: tableView,
+        tableView.titleValueArrowRow(
                 id: "detail-\(title)",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                    }
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        component.font = .subhead1
-                        component.textColor = .themeGray
-                        component.text = value
-                        component.setContentHuggingPriority(.required, for: .horizontal)
-                        component.lineBreakMode = .byTruncatingMiddle
-                    }
-                }
+                title: .body(title),
+                value: .subhead1(value, gray: true),
+                showArrow: false,
+                isLast: isLast
         )
     }
 

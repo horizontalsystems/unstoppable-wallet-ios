@@ -103,7 +103,7 @@ extension CoinTreasuriesViewController: SectionsDataSource {
     private func row(viewItem: CoinTreasuriesViewModel.ViewItem, index: Int, isLast: Bool) -> RowProtocol {
         CellBuilderNew.row(
                 rootElement: .hStack([
-                    .image24 { component in
+                    .image32 { component in
                         component.setImage(urlString: viewItem.logoUrl, placeholder: UIImage(named: "placeholder_circle_32"))
                     },
                     .vStackCentered([
@@ -121,7 +121,7 @@ extension CoinTreasuriesViewController: SectionsDataSource {
                                 component.text = viewItem.amount
                             }
                         ]),
-                        .margin(3),
+                        .margin(1),
                         .hStack([
                             .text { component in
                                 component.font = .subhead2
@@ -173,7 +173,7 @@ extension CoinTreasuriesViewController: SectionsDataSource {
         return [
             Section(
                     id: "treasuries",
-                    headerState: .static(view: headerView, height: .heightSingleLineCell),
+                    headerState: .static(view: headerView, height: .headerSingleLineCell),
                     footerState: .marginColor(height: .margin32, color: .clear),
                     rows: viewItems.enumerated().map { row(viewItem: $1, index: $0, isLast: $0 == viewItems.count - 1) }
             ),

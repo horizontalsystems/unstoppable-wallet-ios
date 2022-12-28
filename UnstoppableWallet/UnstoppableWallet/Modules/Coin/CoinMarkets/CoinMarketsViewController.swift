@@ -121,8 +121,54 @@ class CoinMarketsViewController: ThemeViewController {
 extension CoinMarketsViewController: SectionsDataSource {
 
     private func row(viewItem: CoinMarketsViewModel.ViewItem, index: Int, isLast: Bool) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image24, .multiText, .multiText],
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image32 { (component: ImageComponent) -> () in
+                        component.setImage(urlString: viewItem.marketImageUrl, placeholder: UIImage(named: "placeholder_rectangle_32"))
+                        component.imageView.cornerRadius = .cornerRadius8
+                        component.imageView.layer.cornerCurve = .continuous
+                    },
+                    .vStackCentered([
+                        .text { (component: TextComponent) -> () in
+                            component.font = .body
+                            component.textColor = .themeLeah
+                            component.text = viewItem.market
+                        },
+                        .margin(1),
+                        .text { (component: TextComponent) -> () in
+                            component.font = .subhead2
+                            component.textColor = .themeGray
+                            component.text = viewItem.pair
+                        }
+                    ]),
+                    .vStackCentered([
+                        .text { (component: TextComponent) -> () in
+                            component.font = .body
+                            component.textColor = .themeLeah
+                            component.textAlignment = .right
+                            component.text = viewItem.rate
+                        },
+                        .margin(1),
+                        .hStack([
+                            .text { (component: TextComponent) -> () in
+                                component.font = .subhead2
+                                component.textColor = .themeJacob
+                                component.setContentHuggingPriority(.defaultLow, for: .horizontal)
+                                component.textAlignment = .right
+                                component.text = "market.market_field.vol".localized
+                            },
+                            .margin4,
+                            .text { (component: TextComponent) -> () in
+                                component.font = .subhead2
+                                component.textColor = .themeGray
+                                component.setContentHuggingPriority(.required, for: .horizontal)
+                                component.textAlignment = .right
+                                component.text = viewItem.volume
+                            }
+                        ])
+                    ])
+
+                ]),
                 tableView: tableView,
                 id: "row-\(index)",
                 height: .heightDoubleLineCell,
@@ -130,43 +176,6 @@ extension CoinMarketsViewController: SectionsDataSource {
                 bind: { cell in
                     cell.set(backgroundStyle: .transparent, isLast: isLast)
                     cell.selectionStyle = viewItem.tradeUrl == nil ? .none : .default
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.setImage(urlString: viewItem.marketImageUrl, placeholder: UIImage(named: "placeholder_rectangle_32"))
-                        component.imageView.cornerRadius = .cornerRadius4
-                        component.imageView.layer.cornerCurve = .continuous
-                    }
-                    cell.bind(index: 1) { (component: MultiTextComponent) in
-                        component.set(style: .m1)
-                        component.title.font = .body
-                        component.title.textColor = .themeLeah
-                        component.subtitle.font = .subhead2
-                        component.subtitle.textColor = .themeGray
-
-                        component.title.text = viewItem.market
-                        component.subtitle.text = viewItem.pair
-                    }
-                    cell.bind(index: 2) { (component: MultiTextComponent) in
-                        component.titleSpacingView.isHidden = true
-                        component.set(style: .m2)
-                        component.title.font = .body
-                        component.title.textColor = .themeLeah
-                        component.subtitleLeft.font = .subhead2
-                        component.subtitleLeft.textColor = .themeJacob
-                        component.subtitle.font = .subhead2
-                        component.subtitle.textColor = .themeGray
-
-                        component.title.textAlignment = .right
-                        component.title.text = viewItem.rate
-
-                        component.subtitleLeft.setContentHuggingPriority(.defaultLow, for: .horizontal)
-                        component.subtitleLeft.textAlignment = .right
-                        component.subtitleLeft.text = "market.market_field.vol".localized
-
-                        component.subtitleRight.setContentHuggingPriority(.required, for: .horizontal)
-                        component.subtitleRight.textAlignment = .right
-                        component.subtitleRight.text = viewItem.volume
-                    }
                 },
                 action: { [weak self] in
                     if let url = viewItem.tradeUrl {
@@ -180,7 +189,7 @@ extension CoinMarketsViewController: SectionsDataSource {
         let headerState: ViewState<UITableViewHeaderFooterView>
 
         if let viewItems = viewItems, !viewItems.isEmpty {
-            headerState = .static(view: headerView, height: .heightSingleLineCell)
+            headerState = .static(view: headerView, height: .headerSingleLineCell)
         } else {
             headerState = .margin(height: 0)
         }

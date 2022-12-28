@@ -60,7 +60,9 @@ class CoinMajorHoldersViewController: ThemeViewController {
 
         errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
-        subscribe(disposeBag, viewModel.stateViewItemDriver) { [weak self] in self?.sync(stateViewItem: $0) }
+        subscribe(disposeBag, viewModel.stateViewItemDriver) { [weak self] in
+            self?.sync(stateViewItem: $0)
+        }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
             self?.spinner.isHidden = !loading
         }
@@ -133,7 +135,7 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
                 ]),
                 tableView: tableView,
                 id: viewItem.order,
-                height: .heightCell48,
+                height: 52,
                 bind: { cell in
                     cell.set(backgroundStyle: .transparent, isLast: isLast)
                 }
@@ -141,30 +143,37 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-        guard let stateViewItem = stateViewItem else {
-            return []
-        }
-
-        return [
-            Section(
-                    id: "chart",
-                    rows: [
-                        StaticRow(
-                                cell: chartCell,
-                                id: "chart",
-                                dynamicHeight: { width in
-                                    CoinMajorHolderChartCell.height(containerWidth: width)
-                                }
-                        )
-                    ]
-            ),
-            Section(
-                    id: "holders",
-                    footerState: .margin(height: .margin32),
-                    rows: [tableView.subtitleRow(text: "coin_page.major_holders.top_ethereum_wallets".localized)]
-                            + stateViewItem.viewItems.enumerated().map { row(viewItem: $1, isLast: $0 == stateViewItem.viewItems.count - 1) }
-            )
-        ]
+//        guard let stateViewItem = stateViewItem else {
+//            return []
+//        }
+        stateViewItem.map { stateViewItem in
+            [
+                Section(
+                        id: "chart",
+                        rows: [
+                            StaticRow(
+                                    cell: chartCell,
+                                    id: "chart",
+                                    dynamicHeight: { width in
+                                        CoinMajorHolderChartCell.height(containerWidth: width)
+                                    }
+                            )
+                        ]
+                ),
+                Section(
+                        id: "holders",
+                        footerState: .margin(height: .margin32),
+                        rows: [tableView.titleValueArrowRow(
+                                id: "top_ethereum_wallets",
+                                title: .body("coin_page.major_holders.top_ethereum_wallets".localized),
+                                showArrow: false,
+                                backgroundStyle: .transparent
+                        )] + stateViewItem.viewItems.enumerated().map { index, viewItem in
+                            row(viewItem: viewItem, isLast: index == stateViewItem.viewItems.count - 1)
+                        }
+                ),
+            ]
+        } ?? []
     }
 
 }

@@ -11,7 +11,7 @@ class MarketOverviewNftCollectionsDataSource: BaseMarketOverviewTopListDataSourc
                 topListViewModel: viewModel,
                 presentDelegate: presentDelegate,
                 rightSelectorMode: .selector,
-                imageName: "image_2_20",
+                imageName: "image_2_24",
                 title: "market.top.top_collections".localized
         )
     }

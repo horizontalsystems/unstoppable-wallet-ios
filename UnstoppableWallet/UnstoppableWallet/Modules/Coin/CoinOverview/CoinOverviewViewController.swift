@@ -145,27 +145,13 @@ class CoinOverviewViewController: ThemeViewController {
 extension CoinOverviewViewController {
 
     private func linkRow(id: String, image: String, title: String, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image20, .text, .image20],
-                tableView: tableView,
+        tableView.imageTitleArrowRow(
                 id: id,
-                height: .heightCell48,
+                image: UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray),
+                title: .body(title),
                 autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: image)?.withTintColor(.themeGray)
-                    }
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    }
-                    cell.bind(index: 2) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                    }
-                },
+                isFirst: isFirst,
+                isLast: isLast,
                 action: action
         )
     }
@@ -174,28 +160,28 @@ extension CoinOverviewViewController {
         Section(
                 id: "coin-info",
                 rows: [
-                    CellBuilder.row(
-                            elements: [.image24, .text, .text],
-                            tableView: tableView,
-                            id: "coin-info",
-                            height: .heightCell48,
-                            bind: { cell in
-                                cell.set(backgroundStyle: .transparent, isFirst: true, isLast: false)
-                                cell.selectionStyle = .none
-
-                                cell.bind(index: 0) { (component: ImageComponent) in
+                    CellBuilderNew.row(
+                            rootElement: .hStack([
+                                .image32 { (component: ImageComponent) -> () in
                                     component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.imagePlaceholderName))
-                                }
-                                cell.bind(index: 1) { (component: TextComponent) in
+                                },
+                                .text { (component: TextComponent) -> () in
                                     component.font = .body
                                     component.textColor = .themeGray
                                     component.text = viewItem.name
-                                }
-                                cell.bind(index: 2) { (component: TextComponent) in
+                                },
+                                .text { (component: TextComponent) -> () in
                                     component.font = .subhead1
                                     component.textColor = .themeGray
                                     component.text = viewItem.marketCapRank
                                 }
+                            ]),
+                            tableView: tableView,
+                            id: "coin-info",
+                            height: .heightCell56,
+                            bind: { cell in
+                                cell.set(backgroundStyle: .transparent, isFirst: true, isLast: false)
+                                cell.selectionStyle = .none
                             }
                     )
                 ]
@@ -239,7 +225,7 @@ extension CoinOverviewViewController {
 
             let guideRow = linkRow(
                     id: "guide",
-                    image: "academy_1_20",
+                    image: "academy_1_24",
                     title: "coin_page.guide".localized,
                     isFirst: true,
                     isLast: isLast,
@@ -341,43 +327,40 @@ extension CoinOverviewViewController {
     }
 
     private func contractRow(viewItem: CoinOverviewViewModel.ContractViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.image24, .text, .secondaryCircleButton, .secondaryCircleButton],
-                tableView: tableView,
-                id: "contract-\(index)",
-                height: .heightCell48,
-                bind: { [weak self] cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image32 { (component: ImageComponent) -> () in
                         component.setImage(urlString: viewItem.iconUrl, placeholder: nil)
-                    }
-
-                    cell.bind(index: 1) { (component: TextComponent) in
+                    },
+                    .text { (component: TextComponent) -> () in
                         component.font = .subhead2
                         component.textColor = .themeGray
                         component.lineBreakMode = .byTruncatingMiddle
                         component.text = viewItem.title
-                    }
-
-                    cell.bind(index: 2) { (component: SecondaryCircleButtonComponent) in
+                    },
+                    .secondaryCircleButton { (component: SecondaryCircleButtonComponent) -> () in
                         component.button.set(image: UIImage(named: "copy_20"))
                         component.onTap = {
                             CopyHelper.copyAndNotify(value: viewItem.reference)
                         }
-                    }
-
-                    cell.bind(index: 3) { (component: SecondaryCircleButtonComponent) in
+                    },
+                    .secondaryCircleButton { [weak self] (component: SecondaryCircleButtonComponent) -> () in
                         if let explorerUrl = viewItem.explorerUrl {
                             component.isHidden = false
                             component.button.set(image: UIImage(named: "globe_20"))
-                            component.onTap = { [weak self] in
+                            component.onTap = {
                                 self?.urlManager.open(url: explorerUrl, from: self?.parentNavigationController)
                             }
                         } else {
                             component.isHidden = true
                         }
                     }
+                ]),
+                tableView: tableView,
+                id: "contract-\(index)",
+                height: .heightCell56,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                 }
         )
     }

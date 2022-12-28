@@ -39,6 +39,36 @@ extension SectionsTableView {
         )
     }
 
+    func headerInfoRow(id: String, title: String, showInfo: Bool = false, topSeparator: Bool = true, action: (() -> ())? = nil) -> RowProtocol {
+        var elements = [CellBuilderNew.CellElement]()
+        elements.append(
+                .text { (component: TextComponent) -> () in
+                    component.font = .body
+                    component.textColor = .themeLeah
+                    component.text = title
+                }
+        )
+        if showInfo {
+            elements.append(.margin8)
+            elements.append(
+                    .image20 { (component: ImageComponent) -> () in
+                        component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
+                    }
+            )
+        }
+        return CellBuilderNew.row(
+                rootElement: .hStack(elements),
+                tableView: self,
+                id: id,
+                height: .heightCell48,
+                autoDeselect: true,
+                bind: { cell in
+                    cell.set(backgroundStyle: .transparent, isFirst: !topSeparator)
+                },
+                action: action
+        )
+    }
+
     func descriptionRow(id: String, text: String, ignoreBottomMargin: Bool = false) -> RowProtocol {
         registerCell(forClass: DescriptionCell.self)
 
@@ -54,8 +84,14 @@ extension SectionsTableView {
     }
 
     func subtitleRow(text: String) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text],
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .text { (component: TextComponent) -> () in
+                        component.font = .body
+                        component.textColor = .themeLeah
+                        component.text = text
+                    }
+                ]),
                 tableView: self,
                 id: "subtitle_\(text)",
                 hash: text,
@@ -70,6 +106,45 @@ extension SectionsTableView {
                         component.text = text
                     }
                 }
+        )
+    }
+
+    func titleValueArrowRow(id: String, title: Text?, value: Text? = nil, showArrow: Bool = true, hash: String? = nil, backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: (() -> ())? = nil) -> RowProtocol {
+        var elements = [CellBuilderNew.CellElement]()
+        if let title = title {
+            elements.append(.text { (component: TextComponent) -> () in
+                component.font = title.font
+                component.textColor = title.textColor
+                component.text = title.text
+            })
+        }
+        if let value = value {
+            elements.append(.text { (component: TextComponent) -> () in
+                component.font = value.font
+                component.textColor = value.textColor
+                component.text = value.text
+                component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                component.setContentHuggingPriority(.required, for: .horizontal)
+            })
+        }
+        if showArrow {
+            elements.append(.margin8)
+            elements.append(.image20 { (component: ImageComponent) -> () in
+                component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+            })
+        }
+
+        return CellBuilderNew.row(
+                rootElement: .hStack(elements),
+                tableView: self,
+                id: id,
+                hash: hash,
+                height: .heightCell48,
+                autoDeselect: autoDeselect,
+                bind: { cell in
+                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
+                },
+                action: action
         )
     }
 
@@ -119,27 +194,64 @@ extension SectionsTableView {
         )
     }
 
-    func imageTitleArrowRow(id: String, image: UIImage?, title: String, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: @escaping () -> ()) -> RowProtocol {
-        CellBuilderNew.row(
-                rootElement: .hStack([
-                    .image20 { component in
-                        component.imageView.image = image?.withTintColor(.themeGray)
-                    },
-                    .text { component in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    },
-                    .image20 { component in
-                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                    }
-                ]),
+    func imageTitleArrowRow(id: String, image: UIImage?, title: Text?, showArrow: Bool = true, hash: String? = nil, backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: (() -> ())? = nil) -> RowProtocol {
+        var elements = [CellBuilderNew.CellElement]()
+        elements.append(.image24 { (component: ImageComponent) -> () in
+            component.imageView.image = image?.withTintColor(.themeGray)
+        })
+        if let title = title {
+            elements.append(.text { (component: TextComponent) -> () in
+                component.font = title.font
+                component.textColor = title.textColor
+                component.text = title.text
+            })
+        }
+        if showArrow {
+            elements.append(.margin8)
+            elements.append(.image20 { (component: ImageComponent) -> () in
+                component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+            })
+        }
+        return CellBuilderNew.row(
+                rootElement: .hStack(elements),
                 tableView: self,
                 id: id,
+                hash: hash,
                 height: .heightCell48,
                 autoDeselect: autoDeselect,
                 bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
+                },
+                action: action
+        )
+    }
+
+    func imageTitleCheckRow(id: String, image: UIImage?, title: Text, selected: Bool = true, hash: String? = nil, backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: (() -> ())? = nil) -> RowProtocol {
+        var elements: [CellBuilderNew.CellElement] = [
+            .image24 { (component: ImageComponent) -> () in
+                component.imageView.image = image
+            },
+            .text { (component: TextComponent) -> () in
+                component.font = title.font
+                component.textColor = title.textColor
+                component.text = title.text
+            }
+        ]
+        if selected {
+            elements.append(.margin8)
+            elements.append(.image20 { (component: ImageComponent) -> () in
+                component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
+            })
+        }
+        return CellBuilderNew.row(
+                rootElement: .hStack(elements),
+                tableView: self,
+                id: id,
+                hash: hash,
+                height: .heightCell48,
+                autoDeselect: autoDeselect,
+                bind: { cell in
+                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
                 },
                 action: action
         )
@@ -245,7 +357,7 @@ extension SectionsTableView {
         )
     }
 
-    func switchCell(id: String, title: String, isOn: Bool, isFirst: Bool = false, isLast: Bool = false, onSwitch: @escaping (Bool) -> (), onTap: (() -> ())? = nil) -> RowProtocol {
+    func switchRow(id: String, title: String, isOn: Bool, isFirst: Bool = false, isLast: Bool = false, onSwitch: @escaping (Bool) -> (), onTap: (() -> ())? = nil) -> RowProtocol {
         CellBuilderNew.row(
                 rootElement: .hStack([
                     .text { component in
@@ -269,3 +381,38 @@ extension SectionsTableView {
     }
 
 }
+
+extension SectionsTableView {
+
+    struct Text {
+        static func custom(_ text: String, _ font: UIFont, _ color: UIColor) -> Self { Text(text: text, font: font, textColor: color) }
+        static func body(_ text: String, gray: Bool = false) -> Self { Text(text: text, font: .body, textColor: gray ? .themeGray: .themeLeah) }
+        static func subhead1(_ text: String, gray: Bool = false) -> Self { Text(text: text, font: .subhead2, textColor: gray ? .themeGray: .themeLeah) }
+        static func subhead2(_ text: String, gray: Bool = true) -> Self { Text(text: text, font: .subhead2, textColor: gray ? .themeGray: .themeLeah) }
+
+        let text: String
+        let font: UIFont
+        let textColor: UIColor
+    }
+
+}
+
+
+//CellBuilderNew.row(
+//        rootElement: .hStack([
+//            .image32 { (component: ImageComponent) in
+//                component.setImage(urlString: logoUrl, placeholder: UIImage(named: "placeholder_circle_32"))
+//            },
+//            .text { (component: TextComponent) in
+//                component.font = .body
+//                component.textColor = .themeLeah
+//                component.text = name
+//            }
+//        ]),
+//        tableView: tableView,
+//        id: "header-\(name)",
+//        height: .heightCell48,
+//        bind: { cell in
+//            cell.set(backgroundStyle: .transparent)
+//        }
+//)

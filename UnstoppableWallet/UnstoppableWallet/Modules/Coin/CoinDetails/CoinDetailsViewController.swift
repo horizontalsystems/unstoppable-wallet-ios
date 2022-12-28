@@ -164,76 +164,6 @@ class CoinDetailsViewController: ThemeViewController {
 
 extension CoinDetailsViewController: SectionsDataSource {
 
-    private func titleValueRow(id: String, title: String, value: String, isFirst: Bool = true, isLast: Bool = true, onTap: @escaping () -> ()) -> RowProtocol {
-        CellBuilderNew.row(
-                rootElement: .hStack([
-                    .text { component in
-                        component.font = .subhead2
-                        component.textColor = .themeGray
-                        component.text = title
-                    },
-                    .text { component in
-                        component.font = .subhead1
-                        component.textColor = .themeLeah
-                        component.text = value
-                    },
-                    .margin8,
-                    .image20 { component in
-                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                    }
-                ]),
-                tableView: tableView,
-                id: id,
-                height: .heightCell48,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                },
-                action: onTap
-        )
-    }
-
-    private func infoHeaderRow(id: String, title: String, topSeparator: Bool = true, onTap: @escaping () -> ()) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.text, .image20],
-                tableView: tableView,
-                id: id,
-                height: .heightCell48,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .transparent, isFirst: !topSeparator)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    }
-                    cell.bind(index: 1) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
-                    }
-                },
-                action: onTap
-        )
-    }
-
-    private func headerRow(id: String, title: String, topSeparator: Bool = true) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text],
-                tableView: tableView,
-                id: id,
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .transparent, isFirst: !topSeparator)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    }
-                }
-        )
-    }
-
     private func proFeaturesPassesSection(viewItem: CoinDetailsViewModel.ViewItem) -> SectionProtocol? {
         guard !viewItem.proFeaturesActivated else {
             return nil
@@ -286,7 +216,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                     id: "liquidity-header",
                     footerState: .margin(height: .margin12),
                     rows: [
-                        infoHeaderRow(id: "header-liquidity", title: "coin_page.token_liquidity".localized, topSeparator: !isFirst) { [weak self] in
+                        tableView.headerInfoRow(id: "header-liquidity", title: "coin_page.token_liquidity".localized, showInfo: true, topSeparator: !isFirst) { [weak self] in
                             self?.parentNavigationController?.present(InfoModule.tokenLiquidityInfo, animated: true)
                         }
                     ]
@@ -382,9 +312,9 @@ extension CoinDetailsViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if viewItem.hasMajorHolders {
-            let majorHoldersRow = tableView.grayTitleWithArrowRow(
+            let majorHoldersRow = tableView.titleValueArrowRow(
                     id: "major-holders",
-                    title: "coin_page.major_holders".localized,
+                    title: .subhead2("coin_page.major_holders".localized),
                     isFirst: true,
                     isLast: true
             ) { [weak self] in
@@ -409,7 +339,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                         id: "distribution-header",
                         footerState: .margin(height: .margin12),
                         rows: [
-                            infoHeaderRow(id: "header-distribution", title: "coin_page.token_distribution".localized, topSeparator: !isFirst) { [weak self] in
+                            tableView.headerInfoRow(id: "header-distribution", title: "coin_page.token_distribution".localized, showInfo: true, topSeparator: !isFirst) { [weak self] in
                                 self?.parentNavigationController?.present(InfoModule.tokenDistributionInfo, animated: true)
                             }
                         ]
@@ -445,7 +375,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                     id: "tvl-header",
                     footerState: .margin(height: .margin12),
                     rows: [
-                        infoHeaderRow(id: "header-tvl", title: "coin_page.token_tvl".localized) { [weak self] in
+                        tableView.headerInfoRow(id: "header-tvl", title: "coin_page.token_tvl".localized, showInfo: true) { [weak self] in
                             self?.parentNavigationController?.present(InfoModule.tokenTvlInfo, animated: true)
                         }
                     ]
@@ -465,39 +395,27 @@ extension CoinDetailsViewController: SectionsDataSource {
         let hasRatio = viewItem.tvlRatio != nil
 
         if let tvlRank = viewItem.tvlRank {
-            let tvlRankRow = titleValueRow(
+            let tvlRankRow = tableView.titleValueArrowRow(
                     id: "market-cap-tvl-rank",
-                    title: "coin_page.tvl_rank".localized,
-                    value: tvlRank,
-                    isLast: !hasRatio
-            ) { [weak self] in
-                self?.openTvlRank()
-            }
+                    title: .subhead2("coin_page.tvl_rank".localized),
+                    value: .subhead1(tvlRank),
+                    isLast: !hasRatio,
+                    action: { [weak self] in
+                        self?.openTvlRank()
+                    }
+            )
 
             rows.append(tvlRankRow)
         }
 
         if let tvlRatio = viewItem.tvlRatio {
-            let tvlRatioRow = CellBuilderNew.row(
-                    rootElement: .hStack([
-                        .text { component in
-                            component.font = .subhead2
-                            component.textColor = .themeGray
-                            component.text = "coin_page.market_cap_tvl_ratio".localized
-                        },
-                        .text { component in
-                            component.font = .subhead2
-                            component.textColor = .themeLeah
-                            component.text = tvlRatio
-                        }
-                    ]),
-                    tableView: tableView,
+            let tvlRatioRow = tableView.titleValueArrowRow(
                     id: "market-cap-tvl-ratio",
-                    height: .heightCell48,
-                    autoDeselect: true,
-                    bind: { cell in
-                        cell.set(backgroundStyle: .lawrence, isFirst: !hasRank, isLast: true)
-                    }
+                    title: .subhead2("coin_page.market_cap_tvl_ratio".localized),
+                    value: .subhead1(tvlRatio),
+                    showArrow: false,
+                    isFirst: !hasRank,
+                    isLast: true
             )
 
             rows.append(tvlRatioRow)
@@ -524,10 +442,11 @@ extension CoinDetailsViewController: SectionsDataSource {
         let hasReports = reportsCount != nil
 
         if let treasuries = treasuries {
-            let row = titleValueRow(
+            let row = tableView.titleValueArrowRow(
                     id: "treasuries",
-                    title: "coin_page.treasuries".localized,
-                    value: treasuries,
+                    title: .subhead2("coin_page.treasuries".localized),
+                    value: .subhead1(treasuries),
+                    isFirst: true,
                     isLast: !hasFundsInvested && !hasReports
             ) { [weak self] in
                 self?.openTreasuries()
@@ -537,10 +456,10 @@ extension CoinDetailsViewController: SectionsDataSource {
         }
 
         if let fundsInvested = fundsInvested {
-            let row = titleValueRow(
+            let row = tableView.titleValueArrowRow(
                     id: "funds-invested",
-                    title: "coin_page.funds_invested".localized,
-                    value: fundsInvested,
+                    title: .subhead2("coin_page.funds_invested".localized),
+                    value: .subhead1(fundsInvested),
                     isFirst: !hasTreasuries,
                     isLast: !hasReports
             ) { [weak self] in
@@ -551,11 +470,12 @@ extension CoinDetailsViewController: SectionsDataSource {
         }
 
         if let reportsCount = reportsCount {
-            let row = titleValueRow(
+            let row = tableView.titleValueArrowRow(
                     id: "reports",
-                    title: "coin_page.reports".localized,
-                    value: reportsCount,
-                    isFirst: !hasTreasuries && !hasFundsInvested
+                    title: .subhead2("coin_page.reports".localized),
+                    value: .subhead1(reportsCount),
+                    isFirst: !hasTreasuries && !hasFundsInvested,
+                    isLast: true
             ) { [weak self] in
                 self?.openReports()
             }
@@ -571,7 +491,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                         id: "investor-data-header",
                         footerState: .margin(height: .margin12),
                         rows: [
-                            headerRow(id: "header-investor-data", title: "coin_page.investor_data".localized)
+                            tableView.headerInfoRow(id: "header-investor-data", title: "coin_page.investor_data".localized)
                         ]
                 ),
                 Section(
@@ -593,38 +513,24 @@ extension CoinDetailsViewController: SectionsDataSource {
         let hasAudits = !auditAddresses.isEmpty
 
         for (index, viewItem) in securityViewItems.enumerated() {
-            let row = CellBuilder.row(
-                    elements: [.text, .text],
-                    tableView: tableView,
-                    id: "security-\(viewItem.type)",
-                    height: .heightCell48,
-                    bind: { cell in
-                        cell.set(backgroundStyle: .lawrence, isFirst: index == 0, isLast: index == securityViewItems.count - 1 && !hasAudits)
-
-                        cell.bind(index: 0) { (component: TextComponent) in
-                            component.font = .subhead2
-                            component.textColor = .themeGray
-                            component.text = viewItem.type.title
-                        }
-                        cell.bind(index: 1) { (component: TextComponent) in
-                            component.font = .subhead1
-                            component.textColor = viewItem.valueGrade.textColor
-                            component.text = viewItem.value
-                            component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                            component.setContentHuggingPriority(.required, for: .horizontal)
-                        }
-                    }
+            let row = tableView.titleValueArrowRow(
+                id: "security-\(viewItem.type)",
+                title: .subhead2(viewItem.type.title),
+                value: SectionsTableView.Text(text: viewItem.value, font: .subhead1, textColor: viewItem.valueGrade.textColor),
+                showArrow: false,
+                isFirst: index == 0,
+                isLast: index == securityViewItems.count - 1 && !hasAudits
             )
 
             rows.append(row)
         }
 
         if !auditAddresses.isEmpty {
-            let row = tableView.grayTitleWithArrowRow(
-                    id: "audits",
-                    title: "coin_page.audits".localized,
-                    isFirst: !hasSecurity,
-                    isLast: true
+            let row = tableView.titleValueArrowRow(
+                id: "audits",
+                title: .subhead2("coin_page.audits".localized),
+                isFirst: !hasSecurity,
+                isLast: true
             ) { [weak self] in
                 self?.openAudits(addresses: auditAddresses)
             }
@@ -640,7 +546,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                         id: "security-parameters-header",
                         footerState: .margin(height: .margin12),
                         rows: [
-                            infoHeaderRow(id: "header-security-parameters", title: "coin_page.security_parameters".localized) { [weak self] in
+                            tableView.headerInfoRow(id: "header-security-parameters", title: "coin_page.security_parameters".localized, showInfo: true) { [weak self] in
                                 self?.parentNavigationController?.present(InfoModule.securityParametersInfo, animated: true)
                             }
                         ]

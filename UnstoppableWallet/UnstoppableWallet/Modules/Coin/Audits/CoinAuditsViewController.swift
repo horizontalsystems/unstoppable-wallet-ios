@@ -69,7 +69,9 @@ class CoinAuditsViewController: ThemeViewController {
 
         errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
-        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
+        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in
+            self?.sync(viewItems: $0)
+        }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
             self?.spinner.isHidden = !loading
         }
@@ -105,79 +107,72 @@ class CoinAuditsViewController: ThemeViewController {
 extension CoinAuditsViewController: SectionsDataSource {
 
     private func headerRow(logoUrl: String?, name: String) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.image24, .text],
-                tableView: tableView,
-                id: "header-\(name)",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .transparent)
-
-                    cell.bind(index: 0, block: { (component: ImageComponent) in
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image32 { (component: ImageComponent) in
                         component.setImage(urlString: logoUrl, placeholder: UIImage(named: "placeholder_circle_32"))
-                    })
-
-                    cell.bind(index: 1, block: { (component: TextComponent) in
+                    },
+                    .text { (component: TextComponent) in
                         component.font = .body
                         component.textColor = .themeLeah
                         component.text = name
-                    })
+                    }
+                ]),
+                tableView: tableView,
+                id: "header-\(name)",
+                height: .heightCell56,
+                bind: { cell in
+                    cell.set(backgroundStyle: .transparent)
                 }
         )
     }
 
     private func row(auditViewItem: CoinAuditsViewModel.AuditViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        let bindBlock = { (cell: BaseThemeCell) in
-            cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-            cell.bind(index: 0, block: { (component: MultiTextComponent) in
-                component.set(style: .m1)
-                component.title.font = .body
-                component.title.textColor = .themeLeah
-                component.subtitle.font = .subhead2
-                component.subtitle.textColor = .themeGray
-
-                component.title.text = auditViewItem.date
-                component.subtitle.text = auditViewItem.name
-            })
-
-            cell.bind(index: 1, block: { (component: TextComponent) in
-                component.setContentHuggingPriority(.required, for: .horizontal)
-                component.font = .subhead1
+        var elements = [CellBuilderNew.CellElement]()
+        elements.append(.vStackCentered([
+            .text { (component: TextComponent) -> () in
+                component.font = .body
+                component.textColor = .themeLeah
+                component.text = auditViewItem.date
+            },
+            .margin(1),
+            .text { (component: TextComponent) -> () in
+                component.font = .subhead2
                 component.textColor = .themeGray
-                component.text = auditViewItem.issues
-            })
+                component.text = auditViewItem.name
+            }
+        ]))
+        elements.append(.text { (component: TextComponent) -> () in
+            component.setContentHuggingPriority(.required, for: .horizontal)
+            component.font = .subhead1
+            component.textColor = .themeGray
+            component.text = auditViewItem.issues
+        })
+
+        var action: (() -> ())?
+        if let url = auditViewItem.reportUrl {
+            elements.append(contentsOf: [
+                .margin8,
+                .image20 { (component: ImageComponent) in
+                    component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+                }
+            ])
+            action = { [weak self] in
+                self?.open(url: url)
+            }
         }
 
-        if let reportUrl = auditViewItem.reportUrl {
-            return CellBuilder.selectableRow(
-                    elements: [.multiText, .text, .margin8, .image20],
-                    tableView: tableView,
-                    id: reportUrl,
-                    height: .heightDoubleLineCell,
-                    autoDeselect: true,
-                    bind: { cell in
-                        bindBlock(cell)
-
-                        cell.bind(index: 2, block: { (component: ImageComponent) in
-                            component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                        })
-                    },
-                    action: { [weak self] in
-                        self?.open(url: reportUrl)
-                    }
-            )
-        } else {
-            return CellBuilder.row(
-                    elements: [.multiText, .text],
-                    tableView: tableView,
-                    id: auditViewItem.name,
-                    height: .heightDoubleLineCell,
-                    bind: { cell in
-                        bindBlock(cell)
-                    }
-            )
-        }
+        return CellBuilderNew.row(
+                rootElement: .hStack(elements),
+                tableView: tableView,
+                id: auditViewItem.name + (auditViewItem.reportUrl ?? ""),
+                height: .heightDoubleLineCell,
+                autoDeselect: true,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                },
+                action: action
+        )
     }
 
     private func poweredBySection(text: String) -> SectionProtocol {

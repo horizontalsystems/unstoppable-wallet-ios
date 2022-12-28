@@ -60,7 +60,7 @@ extension MarketOverviewCategoryDataSource: IMarketOverviewDataSource {
         return [
             Section(
                     id: "categories_header",
-                    footerState: .margin(height: .margin12),
+                    footerState: .margin(height: .margin8),
                     rows: [
                         Row<MarketOverviewHeaderCell>(
                                 id: "categories_header_cell",

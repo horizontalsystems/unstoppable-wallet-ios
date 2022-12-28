@@ -85,7 +85,7 @@ class CreateAccountViewController: KeyboardAwareViewController {
                 cell: passphraseToggleCell,
                 rootElement: .hStack([
                     .image20 { component in
-                        component.imageView.image = UIImage(named: "key_phrase_20")?.withTintColor(.themeGray)
+                        component.imageView.image = UIImage(named: "key_phrase_24")?.withTintColor(.themeGray)
                     },
                     .text { component in
                         component.font = .body

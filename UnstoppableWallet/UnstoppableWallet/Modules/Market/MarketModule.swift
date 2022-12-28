@@ -64,7 +64,7 @@ struct MarketModule {
                                 component.text = listViewItem.rightPrimaryValue
                             }
                         ]),
-                        .margin(3),
+                        .margin(1),
                         .hStack([
                             .badge { component in
                                 if let badge = listViewItem.badge {
@@ -76,7 +76,7 @@ struct MarketModule {
                                     component.isHidden = true
                                 }
                             },
-                            .margin8,
+                            .margin4,
                             .text { component in
                                 component.font = .subhead2
                                 component.textColor = .themeGray
