@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Добавлено в Кошелек";
 "alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Ещё не поддерживается";
-"alert.copied" = "Copied";
+"alert.copied" = "Скопировано";
 "alert.created" = "Создан";
 "alert.restored" = "Восстановлен";
 "alert.address_added" = "Адрес Добавлен";
@@ -354,7 +354,7 @@
 "swap.approving_button" = "Разрешение...";
 "swap.revoke_warning" = "Вы можете обменять %@, или вы должны отменить и одобрить новую сумму";
 "swap.revoking_button" = "Отмена...";
-"swap.not_available_button" = "Not Available";
+"swap.not_available_button" = "Баланс N/А";
 "swap.trade_error.not_found" = "Невозможно обменять эти токены";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Эта служба не позволяет wrapping/unwrapping. Пожалуйста, попробуйте другой сервис обмена. Рекомендуется 1inch";
 "swap.button_error.insufficient_balance" = "Недостаточный баланс";
@@ -560,9 +560,9 @@
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 
 "market.global.btc_dominance.title" = "Доминирование Bitcoin";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "Объем Торгов (24ч)";
+"market.global.defi_cap.title" = "Капитализация DeFi";
+"market.global.tvl_in_defi.title" = "TVL в DeFi";
 "market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка и наоборот.";
 "market.global.volume_24h.description" = "Историческое изменение в ежедневном совокупном объеме торговли для всех криптовалют.";
 "market.global.defi_cap.description" = "Историческое изменение в совокупной рыночной стоимости токенов в Децентрализованном Финансовом Секторе.";
