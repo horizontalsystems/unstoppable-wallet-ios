@@ -351,6 +351,7 @@
 "swap.approving_button" = "Wird bestätigt...";
 "swap.revoke_warning" = "Sie können %@tauschen, oder Sie müssen den neuen Betrag widerrufen und genehmigen";
 "swap.revoking_button" = "Widerrufen...";
+"swap.not_available_button" = "Saldo N/A";
 "swap.trade_error.not_found" = "Diese Token sind nicht tauschbar";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Dieser Service erlaubt keine Verpackung/Auspackung. Bitte versuchen Sie einen anderen Swap-Service. 1Inch empfohlen";
 "swap.button_error.insufficient_balance" = "Unzureichendes Guthaben";

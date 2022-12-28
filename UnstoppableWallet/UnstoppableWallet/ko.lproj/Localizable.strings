@@ -350,6 +350,7 @@
 "swap.approving_button" = "승인 중...";
 "swap.revoke_warning" = "%@을(를) 교환하거나 새 금액을 취소하고 승인해야 합니다.";
 "swap.revoking_button" = "철회...";
+"swap.not_available_button" = "균형 N/A";
 "swap.trade_error.not_found" = "이 토큰을 스왑할 수 없습니다";
 "swap.trade_error.wrap_unwrap_not_allowed" = "이 서비스는 래핑/언래핑을 허용하지 않습니다. 다른 스왑 서비스를 사용해 보십시오. 1inch 권장";
 "swap.button_error.insufficient_balance" = "잔액이 부족합니다";

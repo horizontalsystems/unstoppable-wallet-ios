@@ -350,6 +350,7 @@
 "swap.approving_button" = "Aprobando...";
 "swap.revoke_warning" = "Puedes cambiar %@o necesitas revocar y aprobar la nueva cantidad";
 "swap.revoking_button" = "Revocando...";
+"swap.not_available_button" = "Saldo N/A";
 "swap.trade_error.not_found" = "No se pueden permutar estos tokens";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Este servicio no permite envolver/desenvolver. Por favor, prueba con otro servicio de intercambio. 1Inch recomendado";
 "swap.button_error.insufficient_balance" = "Saldo insuficiente";

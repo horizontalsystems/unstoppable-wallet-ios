@@ -352,6 +352,7 @@
 "swap.approving_button" = "审批中...";
 "swap.revoke_warning" = "您可以交换 %@，或者您需要撤销并批准新的金额";
 "swap.revoking_button" = "正在取消...";
+"swap.not_available_button" = "余额 N/A";
 "swap.trade_error.not_found" = "无法交换代币";
 "swap.trade_error.wrap_unwrap_not_allowed" = "此服务不允许包装/拆包。请尝试另一个交换服务。推荐1英寸。";
 "swap.button_error.insufficient_balance" = "余额不足";
