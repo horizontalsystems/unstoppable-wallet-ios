@@ -116,7 +116,7 @@ extension BaseMarketOverviewTopListDataSource: IMarketOverviewDataSource {
 
         let headerSection = Section(
                 id: "header_\(title)",
-                footerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin8),
                 rows: [
                     Row<MarketOverviewHeaderCell>(
                             id: "header_\(title)",

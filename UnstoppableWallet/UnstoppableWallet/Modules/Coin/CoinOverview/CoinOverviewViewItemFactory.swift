@@ -113,12 +113,12 @@ class CoinOverviewViewItemFactory {
 
     private func linkIconName(type: LinkType) -> String {
         switch type {
-        case .website: return "globe_20"
-        case .whitepaper: return "clipboard_20"
-        case .reddit: return "reddit_20"
-        case .twitter: return "twitter_20"
-        case .telegram: return "telegram_20"
-        case .github: return "github_20"
+        case .website: return "globe_24"
+        case .whitepaper: return "clipboard_24"
+        case .reddit: return "reddit_24"
+        case .twitter: return "twitter_24"
+        case .telegram: return "telegram_24"
+        case .github: return "github_24"
         default: return ""
         }
     }

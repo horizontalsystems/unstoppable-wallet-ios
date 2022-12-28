@@ -128,50 +128,42 @@ class MarketAdvancedSearchService {
         }
     }
 
-    private var outperformedEthRelay = PublishRelay<Bool>()
     var outperformedEth: Bool = false {
         didSet {
             guard outperformedEth != oldValue else {
                 return
             }
 
-            outperformedEthRelay.accept(outperformedEth)
             syncState()
         }
     }
 
-    private var outperformedBnbRelay = PublishRelay<Bool>()
     var outperformedBnb: Bool = false {
         didSet {
             guard outperformedBnb != oldValue else {
                 return
             }
 
-            outperformedBnbRelay.accept(outperformedBnb)
             syncState()
         }
     }
 
-    private var priceCloseToAthRelay = PublishRelay<Bool>()
     var priceCloseToAth: Bool = false {
         didSet {
             guard priceCloseToAth != oldValue else {
                 return
             }
 
-            priceCloseToAthRelay.accept(priceCloseToAth)
             syncState()
         }
     }
 
-    private var priceCloseToAtlRelay = PublishRelay<Bool>()
     var priceCloseToAtl: Bool = false {
         didSet {
             guard priceCloseToAtl != oldValue else {
                 return
             }
 
-            priceCloseToAtlRelay.accept(priceCloseToAtl)
             syncState()
         }
     }
@@ -324,22 +316,6 @@ extension MarketAdvancedSearchService {
 
     var outperformedBtcObservable: Observable<Bool> {
         outperformedBtcRelay.asObservable()
-    }
-
-    var outperformedEthObservable: Observable<Bool> {
-        outperformedEthRelay.asObservable()
-    }
-
-    var outperformedBnbObservable: Observable<Bool> {
-        outperformedBnbRelay.asObservable()
-    }
-
-    var priceCloseToAthObservable: Observable<Bool> {
-        priceCloseToAthRelay.asObservable()
-    }
-
-    var priceCloseToAtlObservable: Observable<Bool> {
-        priceCloseToAtlRelay.asObservable()
     }
 
     func reset() {

@@ -60,22 +60,11 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "market.advanced_search.reset_all".localized, style: .plain, target: self, action: #selector(onTapReset))
 
         coinListCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        buildSelector(cell: coinListCell, title: "market.advanced_search.choose_set".localized)
-
         marketCapCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
-        buildSelector(cell: marketCapCell, title: "market.advanced_search.market_cap".localized)
-
         volumeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
-        buildSelector(cell: volumeCell, title: "market.advanced_search.volume".localized)
-
         blockchainsCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        buildSelector(cell: blockchainsCell, title: "market.advanced_search.blockchains".localized)
-
         priceChangeCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
-        buildSelector(cell: priceChangeCell, title: "market.advanced_search.price_change".localized)
-
         periodCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
-        buildSelector(cell: periodCell, title: "market.advanced_search.price_period".localized)
 
         outperformedBtcCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
         buildToggle(cell: outperformedBtcCell, title: "market.advanced_search.outperformed_btc".localized) { [weak self] in
@@ -123,44 +112,65 @@ class MarketAdvancedSearchViewController: ThemeViewController {
 
         tableView.buildSections()
 
-        subscribe(disposeBag, viewModel.coinListViewItemDriver) { [weak self] in self?.syncCoinList(viewItem: $0) }
-        subscribe(disposeBag, viewModel.marketCapViewItemDriver) { [weak self] in self?.syncMarketCap(viewItem: $0) }
-        subscribe(disposeBag, viewModel.volumeViewItemDriver) { [weak self] in self?.syncVolume(viewItem: $0) }
-        subscribe(disposeBag, viewModel.blockchainsViewItemDriver) { [weak self] in self?.syncBlockchains(viewItem: $0) }
-        subscribe(disposeBag, viewModel.priceChangeTypeViewItemDriver) { [weak self] in self?.syncPeriod(viewItem: $0) }
-        subscribe(disposeBag, viewModel.priceChangeViewItemDriver) { [weak self] in self?.syncPriceChange(viewItem: $0) }
-
-        subscribe(disposeBag, viewModel.outperformedBtcDriver) { [weak self] in self?.syncOutperformedBtc(isOn: $0) }
-        subscribe(disposeBag, viewModel.outperformedEthDriver) { [weak self] in self?.syncOutperformedEth(isOn: $0) }
-        subscribe(disposeBag, viewModel.outperformedBnbDriver) { [weak self] in self?.syncOutperformedBnb(isOn: $0) }
-        subscribe(disposeBag, viewModel.priceCloseToATHDriver) { [weak self] in self?.syncPriceCloseToATH(isOn: $0) }
-        subscribe(disposeBag, viewModel.priceCloseToATLDriver) { [weak self] in self?.syncPriceCloseToATL(isOn: $0) }
-
-        subscribe(disposeBag, viewModel.buttonStateDriver) { [weak self] in self?.sync(buttonState: $0) }
-    }
-
-    private func buildSelector(cell: BaseThemeCell, title: String) {
-        CellBuilder.build(cell: cell, elements: [.text, .text, .margin8, .image20])
-        cell.bind(index: 0) { (component: TextComponent) in
-            component.font = .body
-            component.textColor = .themeLeah
-            component.text = title
+        subscribe(disposeBag, viewModel.coinListViewItemDriver) { [weak self] in
+            self?.syncCoinList(viewItem: $0)
         }
-        cell.bind(index: 2) { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "arrow_small_down_20")
+        subscribe(disposeBag, viewModel.marketCapViewItemDriver) { [weak self] in
+            self?.syncMarketCap(viewItem: $0)
+        }
+        subscribe(disposeBag, viewModel.volumeViewItemDriver) { [weak self] in
+            self?.syncVolume(viewItem: $0)
+        }
+        subscribe(disposeBag, viewModel.blockchainsViewItemDriver) { [weak self] in
+            self?.syncBlockchains(viewItem: $0)
+        }
+        subscribe(disposeBag, viewModel.priceChangeTypeViewItemDriver) { [weak self] in
+            self?.syncPeriod(viewItem: $0)
+        }
+        subscribe(disposeBag, viewModel.priceChangeViewItemDriver) { [weak self] in
+            self?.syncPriceChange(viewItem: $0)
+        }
+
+        subscribe(disposeBag, viewModel.buttonStateDriver) { [weak self] in
+            self?.sync(buttonState: $0)
         }
     }
 
-    private func buildToggle(cell: BaseThemeCell, title: String, onToggle: @escaping (Bool) -> ()) {
-        CellBuilder.build(cell: cell, elements: [.text, .switch])
-        cell.bind(index: 0) { (component: TextComponent) in
-            component.font = .body
-            component.textColor = .themeLeah
-            component.text = title
-        }
-        cell.bind(index: 1) { (component: SwitchComponent) in
-            component.onSwitch = onToggle
-        }
+    private func buildSelector(cell: BaseThemeCell, title: String? = nil, viewItem: MarketAdvancedSearchViewModel.ViewItem? = nil) {
+        CellBuilderNew.buildStatic(cell: cell,
+                rootElement: .hStack([
+                    .text { (component: TextComponent) -> () in
+                        component.font = .body
+                        component.textColor = .themeLeah
+                        component.text = title
+                    },
+                    .text { (component: TextComponent) -> () in
+                        component.font = .subhead1
+                        if let viewItem = viewItem {
+                            component.textColor = viewItem.valueStyle.valueTextColor
+                            component.text = viewItem.value
+                        }
+                    },
+                    .margin8,
+                    .image20 { (component: ImageComponent) -> () in
+                        component.imageView.image = UIImage(named: "arrow_small_down_20")
+                    }
+                ]
+                )
+        )
+    }
+
+    private func buildToggle(cell: BaseThemeCell, title: String? = nil, onToggle: @escaping (Bool) -> ()) {
+        CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack([
+            .text { (component: TextComponent) -> () in
+                component.font = .body
+                component.textColor = .themeLeah
+                component.text = title
+            },
+            .switch({ (component: SwitchComponent) -> () in
+                component.onSwitch = onToggle
+            })
+        ]))
     }
 
     private func selectorItems(viewItems: [MarketAdvancedSearchViewModel.FilterViewItem]) -> [ItemSelectorModule.Item] {
@@ -276,62 +286,34 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func set(viewItem: MarketAdvancedSearchViewModel.ViewItem, cell: BaseThemeCell) {
-        cell.bind(index: 1) { (component: TextComponent) in
-            component.font = .subhead1
-            component.textColor = viewItem.valueStyle.valueTextColor
-            component.text = viewItem.value
-        }
-    }
-
     private func set(isOn: Bool, cell: BaseThemeCell) {
-        cell.bind(index: 1) { (component: SwitchComponent) in
-            component.switchView.isOn = isOn
-        }
+//        cell.bind(index: 1) { (component: SwitchComponent) in
+//            component.switchView.isOn = isOn
+//        }
     }
 
     private func syncCoinList(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
-        set(viewItem: viewItem, cell: coinListCell)
+        buildSelector(cell: coinListCell, title: "market.advanced_search.choose_set".localized, viewItem: viewItem)
     }
 
     private func syncMarketCap(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
-        set(viewItem: viewItem, cell: marketCapCell)
+        buildSelector(cell: marketCapCell, title: "market.advanced_search.market_cap".localized, viewItem: viewItem)
     }
 
     private func syncVolume(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
-        set(viewItem: viewItem, cell: volumeCell)
+        buildSelector(cell: volumeCell, title: "market.advanced_search.volume".localized, viewItem: viewItem)
     }
 
     private func syncBlockchains(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
-        set(viewItem: viewItem, cell: blockchainsCell)
+        buildSelector(cell: blockchainsCell, title: "market.advanced_search.blockchains".localized, viewItem: viewItem)
     }
 
     private func syncPeriod(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
-        set(viewItem: viewItem, cell: periodCell)
+        buildSelector(cell: periodCell, title: "market.advanced_search.price_period".localized, viewItem: viewItem)
     }
 
     private func syncPriceChange(viewItem: MarketAdvancedSearchViewModel.ViewItem) {
-        set(viewItem: viewItem, cell: priceChangeCell)
-    }
-
-    private func syncOutperformedBtc(isOn: Bool) {
-        set(isOn: isOn, cell: outperformedBtcCell)
-    }
-
-    private func syncOutperformedEth(isOn: Bool) {
-        set(isOn: isOn, cell: outperformedEthCell)
-    }
-
-    private func syncOutperformedBnb(isOn: Bool) {
-        set(isOn: isOn, cell: outperformedBnbCell)
-    }
-
-    private func syncPriceCloseToATH(isOn: Bool) {
-        set(isOn: isOn, cell: priceCloseToAthCell)
-    }
-
-    private func syncPriceCloseToATL(isOn: Bool) {
-        set(isOn: isOn, cell: priceCloseToAtlCell)
+        buildSelector(cell: priceChangeCell, title: "market.advanced_search.price_change".localized, viewItem: viewItem)
     }
 
     private func sync(buttonState: MarketAdvancedSearchViewModel.ButtonState) {
@@ -356,11 +338,11 @@ class MarketAdvancedSearchViewController: ThemeViewController {
         }
     }
 
-    private func row(cell: UITableViewCell, id: String, action: (() -> ())? = nil) -> RowProtocol {
+    private func row(cell: UITableViewCell, id: String, height: CGFloat = .heightCell48, action: (() -> ())? = nil) -> RowProtocol {
         StaticRow(
                 cell: cell,
                 id: id,
-                height: .heightCell48,
+                height: height,
                 autoDeselect: true,
                 action: action
         )
@@ -378,7 +360,9 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
                 headerState: .margin(height: .margin12),
                 footerState: .margin(height: .margin24),
                 rows: [
-                    row(cell: coinListCell, id: "coin_list") { [weak self] in self?.onTapCoinListCell() }
+                    row(cell: coinListCell, id: "coin_list") { [weak self] in
+                        self?.onTapCoinListCell()
+                    }
                 ])
         )
 
@@ -387,8 +371,12 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
                 headerState: tableView.sectionHeader(text: "market.advanced_search.market_parameters".localized.uppercased()),
                 footerState: .margin(height: .margin24),
                 rows: [
-                    row(cell: marketCapCell, id: "market_cap") { [weak self] in self?.onTapMarketCapCell() },
-                    row(cell: volumeCell, id: "volume") { [weak self] in self?.onTapVolumeCell() }
+                    row(cell: marketCapCell, id: "market_cap") { [weak self] in
+                        self?.onTapMarketCapCell()
+                    },
+                    row(cell: volumeCell, id: "volume") { [weak self] in
+                        self?.onTapVolumeCell()
+                    }
                 ])
         )
 
@@ -397,7 +385,9 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
                 headerState: tableView.sectionHeader(text: "market.advanced_search.network_parameters".localized.uppercased()),
                 footerState: .margin(height: .margin24),
                 rows: [
-                    row(cell: blockchainsCell, id: "blockchains") { [weak self] in self?.onTapBlockchainsCell() }
+                    row(cell: blockchainsCell, id: "blockchains") { [weak self] in
+                        self?.onTapBlockchainsCell()
+                    }
                 ])
         )
 
@@ -406,13 +396,17 @@ extension MarketAdvancedSearchViewController: SectionsDataSource {
                 headerState: tableView.sectionHeader(text: "market.advanced_search.price_parameters".localized.uppercased()),
                 footerState: .margin(height: .margin32),
                 rows: [
-                    row(cell: priceChangeCell, id: "price_change") { [weak self] in self?.onTapPriceChangeCell() },
-                    row(cell: periodCell, id: "price_period") { [weak self] in self?.onTapPeriodCell() },
-                    row(cell: outperformedBtcCell, id: "outperformed_btc"),
-                    row(cell: outperformedEthCell, id: "outperformed_eth"),
-                    row(cell: outperformedBnbCell, id: "outperformed_bnb"),
-                    row(cell: priceCloseToAthCell, id: "price_close_to_ath"),
-                    row(cell: priceCloseToAtlCell, id: "price_close_to_atl"),
+                    row(cell: priceChangeCell, id: "price_change") { [weak self] in
+                        self?.onTapPriceChangeCell()
+                    },
+                    row(cell: periodCell, id: "price_period") { [weak self] in
+                        self?.onTapPeriodCell()
+                    },
+                    row(cell: outperformedBtcCell, id: "outperformed_btc", height: .heightCell56),
+                    row(cell: outperformedEthCell, id: "outperformed_eth", height: .heightCell56),
+                    row(cell: outperformedBnbCell, id: "outperformed_bnb", height: .heightCell56),
+                    row(cell: priceCloseToAthCell, id: "price_close_to_ath", height: .heightCell56),
+                    row(cell: priceCloseToAtlCell, id: "price_close_to_atl", height: .heightCell56),
                 ])
         )
 

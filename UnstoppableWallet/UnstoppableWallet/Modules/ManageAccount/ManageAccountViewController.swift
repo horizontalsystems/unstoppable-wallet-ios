@@ -180,8 +180,8 @@ extension ManageAccountViewController: SectionsDataSource {
         case .showRecoveryPhrase:
             return tableView.imageTitleArrowRow(
                     id: "show-recovery-phrase",
-                    image: UIImage(named: "paper_contract_20"),
-                    title: "manage_account.recovery_phrase".localized,
+                    image: UIImage(named: "paper_contract_24"),
+                    title: .body("manage_account.recovery_phrase".localized),
                     autoDeselect: true,
                     isFirst: isFirst,
                     isLast: isLast
@@ -191,8 +191,8 @@ extension ManageAccountViewController: SectionsDataSource {
         case .showEvmPrivateKey:
             return tableView.imageTitleArrowRow(
                     id: "show-evm-private-key",
-                    image: UIImage(named: "key_20"),
-                    title: "manage_account.evm_private_key".localized,
+                    image: UIImage(named: "key_24"),
+                    title: .body("manage_account.evm_private_key".localized),
                     autoDeselect: true,
                     isFirst: isFirst,
                     isLast: isLast
@@ -202,8 +202,8 @@ extension ManageAccountViewController: SectionsDataSource {
         case .showBip32RootKey:
             return tableView.imageTitleArrowRow(
                     id: "show-bip-32-root-key",
-                    image: UIImage(named: "key_20"),
-                    title: "manage_account.bip32_root_key".localized,
+                    image: UIImage(named: "key_24"),
+                    title: .body("manage_account.bip32_root_key".localized),
                     autoDeselect: true,
                     isFirst: isFirst,
                     isLast: isLast
@@ -213,8 +213,8 @@ extension ManageAccountViewController: SectionsDataSource {
         case .showAccountExtendedPrivateKey:
             return tableView.imageTitleArrowRow(
                     id: "show-account-extended-private-key",
-                    image: UIImage(named: "key_20"),
-                    title: "manage_account.account_extended_private_key".localized,
+                    image: UIImage(named: "key_24"),
+                    title: .body("manage_account.account_extended_private_key".localized),
                     autoDeselect: true,
                     isFirst: isFirst,
                     isLast: isLast
@@ -225,7 +225,7 @@ extension ManageAccountViewController: SectionsDataSource {
             return tableView.imageTitleArrowRow(
                     id: "show-account-extended-public-key",
                     image: UIImage(named: "link_20"),
-                    title: "manage_account.account_extended_public_key".localized,
+                    title: .body("manage_account.account_extended_public_key".localized),
                     autoDeselect: true,
                     isFirst: isFirst,
                     isLast: isLast
@@ -233,11 +233,11 @@ extension ManageAccountViewController: SectionsDataSource {
                 self?.viewModel.onTapAccountExtendedPublicKey()
             }
         case .backupRecoveryPhrase:
-            return tableView.imageTitleRow(
+            return tableView.imageTitleArrowRow(
                     id: "backup-recovery-phrase",
                     image: UIImage(named: "warning_2_20"),
-                    title: "manage_account.backup_recovery_phrase".localized,
-                    color: .themeLucian,
+                    title: .custom("manage_account.backup_recovery_phrase".localized, .body, .themeLucian),
+                    showArrow: false,
                     autoDeselect: true,
                     isFirst: isFirst,
                     isLast: isLast

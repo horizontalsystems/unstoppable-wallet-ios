@@ -49,7 +49,7 @@ extension SimpleActivateViewController: SectionsDataSource {
                 headerState: .margin(height: .margin12),
                 footerState: tableView.sectionFooter(text: viewModel.viewItem.activateDescription),
                 rows: [
-                    tableView.switchCell(
+                    tableView.switchRow(
                             id: "activate-cell",
                             title: viewModel.viewItem.activateTitle,
                             isOn: viewModel.featureEnabled,

@@ -69,29 +69,13 @@ class TransactionsCoinSelectViewController: ThemeSearchViewController {
 extension TransactionsCoinSelectViewController: SectionsDataSource {
 
     private func allRow(selected: Bool, index: Int, isLast: Bool) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image24, .text, .image20],
-                tableView: tableView,
+        tableView.imageTitleCheckRow(
                 id: "all-row",
-                height: .heightDoubleLineCell,
-                bind: { cell in
-                    cell.set(backgroundStyle: .transparent, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "circle_coin_24")?.withTintColor(.themeGray)
-                    }
-
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = "transactions.all_coins".localized
-                    }
-
-                    cell.bind(index: 2) { (component: ImageComponent) in
-                        component.isHidden = !selected
-                        component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
-                    }
-                },
+                image: UIImage(named: "circle_coin_24")?.withTintColor(.themeGray),
+                title: .body("transactions.all_coins".localized),
+                selected: selected,
+                backgroundStyle: .transparent,
+                isLast: isLast,
                 action: { [weak self] in
                     self?.onSelect(index: index)
                 }

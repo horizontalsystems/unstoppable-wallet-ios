@@ -104,7 +104,7 @@ class RestoreViewController: KeyboardAwareViewController {
 
         CellBuilder.build(cell: passphraseToggleCell, elements: [.image20, .text, .switch])
         passphraseToggleCell.bind(index: 0) { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "key_phrase_20")
+            component.imageView.image = UIImage(named: "key_phrase_24")
         }
         passphraseToggleCell.bind(index: 1) { (component: TextComponent) in
             component.font = .body

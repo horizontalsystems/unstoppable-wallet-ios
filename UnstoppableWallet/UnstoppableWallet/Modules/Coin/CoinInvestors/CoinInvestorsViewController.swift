@@ -94,82 +94,53 @@ extension CoinInvestorsViewController: SectionsDataSource {
                 headerState: .margin(height: .margin12),
                 footerState: .margin(height: .margin12),
                 rows: [
-                    CellBuilder.row(
-                            elements: [.text, .text],
-                            tableView: tableView,
+                    tableView.titleValueArrowRow(
                             id: "header-\(index)",
-                            height: .heightSingleLineCell,
-                            bind: { cell in
-                                cell.set(backgroundStyle: .transparent)
-
-                                cell.bind(index: 0) { (component: TextComponent) in
-                                    component.font = .body
-                                    component.textColor = .themeJacob
-                                    component.text = title
-                                }
-
-                                cell.bind(index: 1) { (component: TextComponent) in
-                                    component.font = .subhead2
-                                    component.textColor = .themeGray
-                                    component.text = value
-                                }
-                            }
+                            title: SectionsTableView.Text(text: title, font: .body, textColor: .themeJacob),
+                            value: .body(value),
+                            showArrow: false,
+                            backgroundStyle: .transparent
                     )
                 ]
         )
     }
 
-    private func bind(cell: BaseThemeCell, fundViewItem: CoinInvestorsViewModel.FundViewItem) {
-        cell.bind(index: 0) { (component: ImageComponent) in
+    private func row(fundViewItem: CoinInvestorsViewModel.FundViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        var elements = [CellBuilderNew.CellElement]()
+        elements.append(.image32 { (component: ImageComponent) -> () in
             component.setImage(urlString: fundViewItem.logoUrl, placeholder: UIImage(named: "placeholder_circle_32"))
-        }
-
-        cell.bind(index: 1) { (component: TextComponent) in
+        })
+        elements.append(.text { (component: TextComponent) -> () in
             component.font = .body
             component.textColor = .themeLeah
             component.text = fundViewItem.name
-        }
-
-        cell.bind(index: 2) { (component: TextComponent) in
+        })
+        elements.append(.text { (component: TextComponent) -> () in
             component.isHidden = !fundViewItem.isLead
             component.font = .subhead1
             component.textColor = .themeRemus
             component.text = "coin_page.funds_invested.lead".localized
-        }
-    }
+        })
 
-    private func row(fundViewItem: CoinInvestorsViewModel.FundViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        if fundViewItem.url.isEmpty {
-            return CellBuilder.row(
-                    elements: [.image24, .text, .text],
-                    tableView: tableView,
-                    id: fundViewItem.uid,
-                    height: .heightCell48,
-                    bind: { [weak self] cell in
-                        cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                        self?.bind(cell: cell, fundViewItem: fundViewItem)
-                    }
-            )
-        } else {
-            return CellBuilder.selectableRow(
-                    elements: [.image24, .text, .text, .margin8, .image20],
-                    tableView: tableView,
-                    id: fundViewItem.uid,
-                    height: .heightCell48,
-                    autoDeselect: true,
-                    bind: { [weak self] cell in
-                        cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                        self?.bind(cell: cell, fundViewItem: fundViewItem)
-
-                        cell.bind(index: 3) { (component: ImageComponent) in
-                            component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                        }
-                    },
-                    action: { [weak self] in
-                        self?.urlManager.open(url: fundViewItem.url, from: self)
-                    }
-            )
+        if !fundViewItem.url.isEmpty {
+            elements.append(.margin8)
+            elements.append(.image20 { (component: ImageComponent) -> () in
+                component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
+            })
         }
+        return CellBuilderNew.row(
+                rootElement: .hStack(elements),
+                tableView: tableView,
+                id: fundViewItem.uid,
+                height: .heightCell56,
+                autoDeselect: true,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                },
+                action: { [weak self] in
+                    self?.urlManager.open(url: fundViewItem.url, from: self)
+                }
+        )
     }
 
     private func section(index: Int, fundViewItems: [CoinInvestorsViewModel.FundViewItem], isLast: Bool) -> SectionProtocol {

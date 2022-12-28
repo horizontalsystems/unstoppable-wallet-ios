@@ -3,7 +3,7 @@ import SnapKit
 import ComponentKit
 
 class MarketOverviewHeaderCell: BaseThemeCell {
-    private let leftImage = ImageComponent(size: .iconSize20)
+    private let leftImage = ImageComponent(size: .iconSize24)
     private let titleText = TextComponent()
     private let buttonWrapper = UIView()
     private let rightButton = SelectorButton()
@@ -31,6 +31,9 @@ class MarketOverviewHeaderCell: BaseThemeCell {
             maker.leading.equalTo(leftImage.snp.trailing).offset(CGFloat.margin16)
             maker.centerY.equalToSuperview()
         }
+
+        titleText.font = .body
+        titleText.textColor = .themeLeah
 
         wrapperView.addSubview(buttonWrapper)
         buttonWrapper.snp.makeConstraints { maker in
@@ -77,7 +80,9 @@ class MarketOverviewHeaderCell: BaseThemeCell {
 
     var title: String? {
         get { titleText.text }
-        set { titleText.text = newValue }
+        set {
+            titleText.text = newValue
+        }
     }
 
     var titleImage: UIImage? {

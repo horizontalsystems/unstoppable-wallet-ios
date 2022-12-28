@@ -186,28 +186,30 @@ extension AppearanceViewController: SectionsDataSource {
                     let isFirst = index == 0
                     let isLast = index == viewItems.count - 1
 
-                    return CellBuilder.selectableRow(
-                            elements: [.image24, .text, .image20],
+                    var elements: [CellBuilderNew.CellElement] = [
+                        .image24 { (component: ImageComponent) -> () in
+                            component.setImage(urlString: viewItem.urlString, placeholder: nil)
+                        },
+                        .text { (component: TextComponent) -> () in
+                            component.font = .body
+                            component.textColor = .themeLeah
+                            component.text = viewItem.title
+                        }
+                    ]
+                    if viewItem.selected {
+                        elements.append(.image20 { (component: ImageComponent) -> () in
+                            component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
+                        })
+                    }
+                    return CellBuilderNew.row(
+                            rootElement: .hStack(elements),
                             tableView: tableView,
-                            id: "balance-conversion-\(index)",
+                            id: "balance-conversizon-\(index)",
                             hash: "\(viewItem.selected)",
                             height: .heightCell48,
                             autoDeselect: true,
                             bind: { cell in
                                 cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                                cell.bind(index: 0) { (component: ImageComponent) in
-                                    component.setImage(urlString: viewItem.urlString, placeholder: nil)
-                                }
-                                cell.bind(index: 1) { (component: TextComponent) in
-                                    component.font = .body
-                                    component.textColor = .themeLeah
-                                    component.text = viewItem.title
-                                }
-                                cell.bind(index: 2) { (component: ImageComponent) in
-                                    component.isHidden = !viewItem.selected
-                                    component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
-                                }
                             },
                             action: { [weak self] in
                                 self?.viewModel.onSelectConversionCoin(index: index)
