@@ -47,6 +47,8 @@ class AddTokenService {
     }
 
     private func initialItems(tokens: [Token]) -> ([Item], [Item]) {
+        let enabled = tokens.count == 1
+
         let activeTokens = walletManager.activeWallets.map { $0.token }
 
         let sortedTokens = tokens.sorted { lhsToken, rhsToken in
@@ -57,7 +59,7 @@ class AddTokenService {
         let tokens = sortedTokens.filter { !activeTokens.contains($0) }
 
         let addedItems = addedTokens.map { Item(token: $0, enabled: true) }
-        let items = tokens.map { Item(token: $0, enabled: true) }
+        let items = tokens.map { Item(token: $0, enabled: enabled) }
 
         return (addedItems, items)
     }
