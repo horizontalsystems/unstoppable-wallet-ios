@@ -1,6 +1,9 @@
 public enum CoinSettingType: String, CaseIterable {
     case derivation
     case bitcoinCashCoinType
+    case restoreSource
+    case zcashRestoreType
+    case zcashBirthdayHeight
 }
 
 typealias CoinSettings = [CoinSettingType: String]
@@ -52,6 +55,18 @@ extension CoinSettings {
 
     var bitcoinCashCoinType: BitcoinCashCoinType? {
         self[.bitcoinCashCoinType].flatMap { BitcoinCashCoinType(rawValue: $0) }
+    }
+
+    var restoreSource: RestoreSource? {
+        self[.restoreSource].flatMap { RestoreSource(rawValue: $0) }
+    }
+
+    var zcashRestoreType: ZcashRestoreType? {
+        self[.zcashRestoreType].flatMap { ZcashRestoreType(rawValue: $0) }
+    }
+
+    var zcashBirthdayHeight: Int? {
+        self[.zcashBirthdayHeight].flatMap { Int($0) }
     }
 
 }

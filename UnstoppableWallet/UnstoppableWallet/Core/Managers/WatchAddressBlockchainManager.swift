@@ -43,8 +43,7 @@ class WatchAddressBlockchainManager {
     }
 
     private func enableBtcBlockchains(account: Account, mnemonicDerivation: MnemonicDerivation) {
-        let blockchainTypes: [BlockchainType] = [.bitcoin, .bitcoinCash, .litecoin, .dash]
-        let supportedBlockchainTypes = blockchainTypes.filter { $0.supports(accountType: account.type) }
+        let supportedBlockchainTypes = BlockchainType.btcTypes.filter { $0.supports(accountType: account.type) }
 
         let wallets = walletManager.wallets(account: account)
         let disabledBlockchainTypes = supportedBlockchainTypes
@@ -60,19 +59,22 @@ class WatchAddressBlockchainManager {
             var wallets = [Wallet]()
 
             for token in tokens {
-                if token.blockchainType.coinSettingType == .derivation {
-                    let configuredToken = ConfiguredToken(token: token, coinSettings: [.derivation: mnemonicDerivation.rawValue])
+                let coinSettingTypes = token.blockchainType.coinSettingTypes(accountOrigin: account.origin)
+
+                if coinSettingTypes.contains(.derivation) {
+                    let configuredToken = ConfiguredToken(token: token, coinSettings: [.derivation: mnemonicDerivation.rawValue, .restoreSource: RestoreSource.default.rawValue])
                     let wallet = Wallet(configuredToken: configuredToken, account: account)
                     wallets.append(wallet)
-                } else if token.blockchainType.coinSettingType == .bitcoinCashCoinType {
+                } else if coinSettingTypes.contains(.bitcoinCashCoinType) {
                     let _wallets = BitcoinCashCoinType.allCases.map { coinType -> Wallet in
-                        let configuredToken = ConfiguredToken(token: token, coinSettings: [.bitcoinCashCoinType: coinType.rawValue])
+                        let configuredToken = ConfiguredToken(token: token, coinSettings: [.bitcoinCashCoinType: coinType.rawValue, .restoreSource: RestoreSource.default.rawValue])
                         return Wallet(configuredToken: configuredToken, account: account)
                     }
 
                     wallets.append(contentsOf: _wallets)
                 } else {
-                    let wallet = Wallet(token: token, account: account)
+                    let configuredToken = ConfiguredToken(token: token, coinSettings: [.restoreSource: RestoreSource.default.rawValue])
+                    let wallet = Wallet(configuredToken: configuredToken, account: account)
                     wallets.append(wallet)
                 }
             }

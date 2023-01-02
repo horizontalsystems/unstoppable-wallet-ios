@@ -124,7 +124,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
 "sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -800,9 +799,10 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "settings.title" = "Settings";
 "settings.tab_bar_item" = "Settings";
-"settings.security_center" = "Security Center";
 "settings.manage_accounts" = "Manage Wallets";
-"settings.experimental_features" = "Experimental";
+"settings.evm_settings" = "EVM Settings";
+"settings.security" = "Security";
+"settings.experimental_features" = "Experimental Features";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
 "settings.faq" = "FAQ";
@@ -835,6 +835,10 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
 "manage_coins.add_coin.create" = "Create";
 "manage_coins.add_coin.restore" = "Restore";
+
+// Settings -> Evm Settings
+
+"settings.evm.title" = "EVM Settings";
 
 // Settings -> Experimental Features
 
@@ -870,7 +874,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Settings -> Security
 
-"settings_security.title" = "Security Center";
+"settings_security.title" = "Security";
 "settings_security.passcode" = "Passcode";
 "settings_security.change_pin" = "Edit Passcode";
 "settings_security.touch_id" = "Touch ID";
@@ -879,7 +883,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "security_settings.delete_alert_button" = "Delete from Phone";
 
 "btc_blockchain_settings.restore_source" = "Restore Source";
-"btc_blockchain_settings.restore_source.description" = "Select a data source for restoring a wallet with transactions.";
+"btc_blockchain_settings.address_format.description" = "Select address format(s) or proceed with recommended if not sure. Choose same format when restoring a wallet with balance.";
+"btc_blockchain_settings.restore_source.title" = "Resync";
 "btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
 "btc_blockchain_settings.transaction_inputs_outputs" = "Transaction Inputs / Outputs";
 "btc_blockchain_settings.transaction_inputs_outputs.description" = "Make your %@ transactions harder to trace by changing the way transactions are structured.";

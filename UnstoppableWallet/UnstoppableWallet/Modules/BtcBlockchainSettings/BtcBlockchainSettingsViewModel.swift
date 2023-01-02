@@ -6,72 +6,121 @@ class BtcBlockchainSettingsViewModel {
     private let service: BtcBlockchainSettingsService
     private let disposeBag = DisposeBag()
 
-    private let restoreModeViewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
-    private let transactionModeViewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
+    private let viewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(addressFormatViewItems: nil, restoreSourceViewItems: nil, applyEnabled: false))
+    private let approveApplyRelay = PublishRelay<()>()
+    private let approveRelay = PublishRelay<[CoinSettings]>()
     private let finishRelay = PublishRelay<()>()
 
     init(service: BtcBlockchainSettingsService) {
         self.service = service
 
-        syncRestoreModeState()
-        syncTransactionModeState()
+        subscribe(disposeBag, service.itemObservable) { [weak self] in self?.sync(item: $0) }
+
+        sync(item: service.item)
     }
 
-    private func syncRestoreModeState() {
-        let viewItems = BtcRestoreMode.allCases.map { mode in
-            ViewItem(name: mode.title, description: mode.description, selected: mode == service.restoreMode)
+    private func sync(item: BtcBlockchainSettingsService.Item) {
+        var addressFormatViewItems: [RowViewItem]?
+
+        if !service.addressFormatHidden {
+            switch item.addressFormat {
+            case let .derivation(items):
+                addressFormatViewItems = items.map { item in
+                    RowViewItem(
+                            title: item.derivation.title,
+                            subtitle: item.derivation.description,
+                            selected: item.selected
+                    )
+                }
+            case let .bitcoinCashCoinType(items):
+                addressFormatViewItems = items.map { item in
+                    RowViewItem(
+                            title: item.bitcoinCashCoinType.title,
+                            subtitle: item.bitcoinCashCoinType.description,
+                            selected: item.selected
+                    )
+                }
+            default: ()
+            }
         }
-        restoreModeViewItemsRelay.accept(viewItems)
+
+        var restoreSourceViewItems: [RowViewItem]?
+
+        if let restoreSource = item.restoreSource {
+            restoreSourceViewItems = RestoreSource.allCases.map {
+                RowViewItem(
+                        title: $0.title,
+                        subtitle: $0.description,
+                        selected: $0 == restoreSource
+                )
+            }
+        }
+
+        let viewItem = ViewItem(
+                addressFormatViewItems: addressFormatViewItems,
+                restoreSourceViewItems: restoreSourceViewItems,
+                applyEnabled: item.applyEnabled
+        )
+
+        viewItemRelay.accept(viewItem)
     }
 
-    private func syncTransactionModeState() {
-        let viewItems = TransactionDataSortMode.allCases.map { mode in
-            ViewItem(name: mode.title, description: mode.description, selected: mode == service.transactionMode)
+    private func apply() {
+        if service.autoSave {
+            service.saveSettings()
+            finishRelay.accept(())
+        } else {
+            approveRelay.accept(service.resolveCoinSettingsArray())
         }
-        transactionModeViewItemsRelay.accept(viewItems)
     }
 
 }
 
 extension BtcBlockchainSettingsViewModel {
 
-    var restoreModeViewItemsDriver: Driver<[ViewItem]> {
-        restoreModeViewItemsRelay.asDriver()
+    var viewItemDriver: Driver<ViewItem> {
+        viewItemRelay.asDriver()
     }
 
-    var transactionModeViewItemsDriver: Driver<[ViewItem]> {
-        transactionModeViewItemsRelay.asDriver()
+    var approveApplySignal: Signal<()> {
+        approveApplyRelay.asSignal()
     }
 
-    var canSaveDriver: Driver<Bool> {
-        service.hasChangesObservable.asDriver(onErrorJustReturn: false)
+    var approveSignal: Signal<[CoinSettings]> {
+        approveRelay.asSignal()
     }
 
     var finishSignal: Signal<()> {
         finishRelay.asSignal()
     }
 
-    var title: String {
-        service.blockchain.name
-    }
-
-    var iconUrl: String {
+    var blockchainIconUrl: String {
         service.blockchain.type.imageUrl
     }
 
-    func onSelectRestoreMode(index: Int) {
-        service.restoreMode = BtcRestoreMode.allCases[index]
-        syncRestoreModeState()
+    var blockchainName: String {
+        service.blockchain.name
     }
 
-    func onSelectTransactionMode(index: Int) {
-        service.transactionMode = TransactionDataSortMode.allCases[index]
-        syncTransactionModeState()
+    func onToggleAddressFormat(index: Int, selected: Bool) {
+        service.toggleAddressFormat(index: index, selected: selected)
     }
 
-    func onTapSave() {
-        service.save()
-        finishRelay.accept(())
+    func onSelectRestoreSource(index: Int) {
+        let restoreSource = RestoreSource.allCases[index]
+        service.set(restoreSource: restoreSource)
+    }
+
+    func onTapApply() {
+        if service.approveApplyRequired {
+            approveApplyRelay.accept(())
+        } else {
+            apply()
+        }
+    }
+
+    func onApproveApply() {
+        apply()
     }
 
 }
@@ -79,8 +128,14 @@ extension BtcBlockchainSettingsViewModel {
 extension BtcBlockchainSettingsViewModel {
 
     struct ViewItem {
-        let name: String
-        let description: String
+        let addressFormatViewItems: [RowViewItem]?
+        let restoreSourceViewItems: [RowViewItem]?
+        let applyEnabled: Bool
+    }
+
+    struct RowViewItem {
+        let title: String
+        let subtitle: String
         let selected: Bool
     }
 

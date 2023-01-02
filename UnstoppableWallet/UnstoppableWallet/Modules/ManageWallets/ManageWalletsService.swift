@@ -38,8 +38,8 @@ class ManageWalletsService {
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
             self?.handleUpdated(wallets: wallets)
         }
-        subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredTokens, restoreSettings in
-            self?.handleEnableCoin(configuredTokens: configuredTokens, restoreSettings: restoreSettings)
+        subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredTokens in
+            self?.handleEnableCoin(configuredTokens: configuredTokens)
         }
         subscribe(disposeBag, enableCoinService.disableCoinObservable) { [weak self] coin in
             self?.handleDisable(coin: coin)
@@ -113,7 +113,7 @@ class ManageWalletsService {
     private func hasSettingsOrTokens(tokens: [Token]) -> Bool {
         if tokens.count == 1 {
             let token = tokens[0]
-            return token.blockchainType.coinSettingType != nil || token.type != .native
+            return !token.blockchainType.coinSettingTypes(accountOrigin: account.origin).isEmpty || token.type != .native
         } else {
             return true
         }
@@ -156,13 +156,9 @@ class ManageWalletsService {
         syncState()
     }
 
-    private func handleEnableCoin(configuredTokens: [ConfiguredToken], restoreSettings: RestoreSettings) {
+    private func handleEnableCoin(configuredTokens: [ConfiguredToken]) {
         guard let coin = configuredTokens.first?.token.coin else {
             return
-        }
-
-        if !restoreSettings.isEmpty && configuredTokens.count == 1 {
-            enableCoinService.save(restoreSettings: restoreSettings, account: account, blockchainType: configuredTokens[0].token.blockchainType)
         }
 
         let existingWallets = wallets.filter { $0.coin == coin }
@@ -220,7 +216,7 @@ extension ManageWalletsService {
             return
         }
 
-        enableCoinService.enable(fullCoin: fullCoin, accountType: account.type, account: account)
+        enableCoinService.enable(fullCoin: fullCoin, accountType: account.type, accountOrigin: account.origin)
     }
 
     func disable(uid: String) {
@@ -234,7 +230,7 @@ extension ManageWalletsService {
         }
 
         let coinWallets = wallets.filter { $0.coin.uid == uid }
-        enableCoinService.configure(fullCoin: fullCoin, accountType: account.type, configuredTokens: coinWallets.map { $0.configuredToken })
+        enableCoinService.configure(fullCoin: fullCoin, accountType: account.type, accountOrigin: account.origin, configuredTokens: coinWallets.map { $0.configuredToken })
     }
 
 }

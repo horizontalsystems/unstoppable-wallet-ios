@@ -36,8 +36,8 @@ class CoinPageService {
 
         subscribe(disposeBag, favoritesManager.coinUidsUpdatedObservable) { [weak self] in self?.syncFavorite() }
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] _ in self?.syncWalletState() }
-        subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredTokens, restoreSettings in
-            self?.handleEnableCoin(configuredTokens: configuredTokens, restoreSettings: restoreSettings)
+        subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredTokens in
+            self?.handleEnableCoin(configuredTokens: configuredTokens)
         }
 
         syncFavorite()
@@ -68,13 +68,9 @@ class CoinPageService {
         }
     }
 
-    private func handleEnableCoin(configuredTokens: [ConfiguredToken], restoreSettings: RestoreSettings) {
+    private func handleEnableCoin(configuredTokens: [ConfiguredToken]) {
         guard let account = accountManager.activeAccount else {
             return
-        }
-
-        if !restoreSettings.isEmpty && configuredTokens.count == 1 {
-            enableCoinService.save(restoreSettings: restoreSettings, account: account, blockchainType: configuredTokens[0].token.blockchainType)
         }
 
         let wallets = configuredTokens.map { Wallet(configuredToken: $0, account: account) }
@@ -110,7 +106,7 @@ extension CoinPageService {
             return
         }
 
-        enableCoinService.enable(fullCoin: fullCoin, accountType: account.type, account: account)
+        enableCoinService.enable(fullCoin: fullCoin, accountType: account.type, accountOrigin: account.origin)
     }
 
 }

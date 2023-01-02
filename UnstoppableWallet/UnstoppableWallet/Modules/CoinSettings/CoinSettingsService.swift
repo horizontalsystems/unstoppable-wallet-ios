@@ -3,10 +3,16 @@ import RxRelay
 import MarketKit
 
 class CoinSettingsService {
+    private let isRestore: Bool
+
     private let approveSettingsRelay = PublishRelay<TokenWithSettings>()
     private let rejectApproveSettingsRelay = PublishRelay<Token>()
-
     private let requestRelay = PublishRelay<Request>()
+
+    init(isRestore: Bool) {
+        self.isRestore = isRestore
+    }
+
 }
 
 extension CoinSettingsService {
@@ -23,29 +29,19 @@ extension CoinSettingsService {
         requestRelay.asObservable()
     }
 
-    func approveSettings(token: Token, accountType: AccountType, settingsArray: [CoinSettings], allowEmpty: Bool = false) {
+    func approveSettings(token: Token, accountType: AccountType, accountOrigin: AccountOrigin, settingsArray: [CoinSettings], initial: Bool) {
         let blockchainType = token.blockchainType
 
-        if blockchainType.coinSettingType == .derivation {
-            let currentDerivations = settingsArray.compactMap { $0[.derivation].flatMap { MnemonicDerivation(rawValue: $0) } }
-
+        if BlockchainType.btcTypes.contains(blockchainType) {
             let request = Request(
                     token: token,
-                    type: .derivation(allDerivations: accountType.supportedDerivations, current: currentDerivations),
-                    allowEmpty: allowEmpty
-            )
-
-            requestRelay.accept(request)
-            return
-        }
-
-        if blockchainType.coinSettingType == .bitcoinCashCoinType {
-            let currentTypes = settingsArray.compactMap { $0[.bitcoinCashCoinType].flatMap { BitcoinCashCoinType(rawValue: $0) } }
-
-            let request = Request(
-                    token: token,
-                    type: .bitcoinCashCoinType(allTypes: BitcoinCashCoinType.allCases, current: currentTypes),
-                    allowEmpty: allowEmpty
+                    type: .btc,
+                    blockchain: token.blockchain,
+                    accountType: accountType,
+                    accountOrigin: accountOrigin,
+                    coinSettingsArray: settingsArray,
+                    initial: initial,
+                    isRestore: isRestore
             )
 
             requestRelay.accept(request)
@@ -55,15 +51,8 @@ extension CoinSettingsService {
         approveSettingsRelay.accept(TokenWithSettings(token: token))
     }
 
-    func select(derivations: [MnemonicDerivation], token: Token) {
-        let settingsArray: [CoinSettings] = derivations.map { [.derivation: $0.rawValue] }
-        let tokenWithSettings = TokenWithSettings(token: token, settingsArray: settingsArray)
-        approveSettingsRelay.accept(tokenWithSettings)
-    }
-
-    func select(bitcoinCashCoinTypes: [BitcoinCashCoinType], token: Token) {
-        let settingsArray: [CoinSettings] = bitcoinCashCoinTypes.map { [.bitcoinCashCoinType: $0.rawValue] }
-        let tokenWithSettings = TokenWithSettings(token: token, settingsArray: settingsArray)
+    func approve(coinSettingsArray: [CoinSettings], token: Token) {
+        let tokenWithSettings = TokenWithSettings(token: token, settingsArray: coinSettingsArray)
         approveSettingsRelay.accept(tokenWithSettings)
     }
 
@@ -88,12 +77,17 @@ extension CoinSettingsService {
     struct Request {
         let token: Token
         let type: RequestType
-        let allowEmpty: Bool
+        let blockchain: Blockchain
+        let accountType: AccountType
+        let accountOrigin: AccountOrigin
+        let coinSettingsArray: [CoinSettings]
+        let initial: Bool
+        let isRestore: Bool
     }
 
     enum RequestType {
-        case derivation(allDerivations: [MnemonicDerivation], current: [MnemonicDerivation])
-        case bitcoinCashCoinType(allTypes: [BitcoinCashCoinType], current: [BitcoinCashCoinType])
+        case btc
+        case zcash
     }
 
 }

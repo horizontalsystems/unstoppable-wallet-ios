@@ -9,7 +9,7 @@ class MainSettingsViewModel {
     private let disposeBag = DisposeBag()
 
     private let manageWalletsAlertRelay: BehaviorRelay<Bool>
-    private let securityCenterAlertRelay: BehaviorRelay<Bool>
+    private let securityAlertRelay: BehaviorRelay<Bool>
     private let walletConnectCountRelay: BehaviorRelay<(highlighted: Bool,text: String)?>
     private let baseCurrencyRelay: BehaviorRelay<String>
     private let aboutAlertRelay: BehaviorRelay<Bool>
@@ -20,7 +20,7 @@ class MainSettingsViewModel {
         self.service = service
 
         manageWalletsAlertRelay = BehaviorRelay(value: !service.noWalletRequiredActions)
-        securityCenterAlertRelay = BehaviorRelay(value: !service.isPinSet)
+        securityAlertRelay = BehaviorRelay(value: !service.isPinSet)
         walletConnectCountRelay = BehaviorRelay(value: Self.convert(walletConnectSessionCount: service.walletConnectSessionCount, walletConnectPendingRequestCount: service.walletConnectPendingRequestCount))
         baseCurrencyRelay = BehaviorRelay(value: service.baseCurrency.code)
         aboutAlertRelay = BehaviorRelay(value: !service.termsAccepted)
@@ -35,7 +35,7 @@ class MainSettingsViewModel {
         service.isPinSetObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] isPinSet in
-                    self?.securityCenterAlertRelay.accept(!isPinSet)
+                    self?.securityAlertRelay.accept(!isPinSet)
                 })
                 .disposed(by: disposeBag)
 
@@ -91,8 +91,8 @@ extension MainSettingsViewModel {
         manageWalletsAlertRelay.asDriver()
     }
 
-    var securityCenterAlertDriver: Driver<Bool> {
-        securityCenterAlertRelay.asDriver()
+    var securityAlertDriver: Driver<Bool> {
+        securityAlertRelay.asDriver()
     }
 
     var walletConnectCountDriver: Driver<(highlighted: Bool,text: String)?> {

@@ -7,9 +7,13 @@ import HdWalletKit
 class LitecoinAdapter: BitcoinBaseAdapter {
     private let litecoinKit: LitecoinKit.Kit
 
-    init(wallet: Wallet, syncMode: BitcoinCore.SyncMode, testMode: Bool) throws {
-        let networkType: LitecoinKit.Kit.NetworkType = testMode ? .testNet : .mainNet
+    init(wallet: Wallet) throws {
+        let networkType: LitecoinKit.Kit.NetworkType = .mainNet
         let logger = App.shared.logger.scoped(with: "LitecoinKit")
+
+        guard let syncMode = Self.syncMode(account: wallet.account, restoreSource: wallet.coinSettings.restoreSource) else {
+            throw AdapterError.wrongParameters
+        }
 
         switch wallet.account.type {
         case .mnemonic:
@@ -43,7 +47,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
             throw AdapterError.unsupportedAccount
         }
 
-        super.init(abstractKit: litecoinKit, wallet: wallet, testMode: testMode)
+        super.init(abstractKit: litecoinKit, wallet: wallet)
 
         litecoinKit.delegate = self
     }
@@ -53,7 +57,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
     }
 
     override func explorerUrl(transactionHash: String) -> String? {
-        testMode ? nil : "https://blockchair.com/litecoin/transaction/" + transactionHash
+        "https://blockchair.com/litecoin/transaction/" + transactionHash
     }
 
 }

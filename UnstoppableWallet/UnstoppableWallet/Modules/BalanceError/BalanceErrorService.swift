@@ -1,21 +1,28 @@
 import MarketKit
 
 class BalanceErrorService {
-    private let wallet: Wallet
+    let wallet: Wallet
     private let error: Error
     private let adapterManager: AdapterManager
     private let appConfigProvider: AppConfigProvider
 
     var item: Item?
 
-    init(wallet: Wallet, error: Error, adapterManager: AdapterManager, appConfigProvider: AppConfigProvider, btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager) {
+    init(wallet: Wallet, error: Error, walletManager: WalletManager, adapterManager: AdapterManager, appConfigProvider: AppConfigProvider, evmBlockchainManager: EvmBlockchainManager) {
         self.wallet = wallet
         self.error = error
         self.adapterManager = adapterManager
         self.appConfigProvider = appConfigProvider
 
-        if let blockchain = btcBlockchainManager.blockchain(token: wallet.token) {
-            item = .btc(blockchain: blockchain)
+        if wallet.token.blockchainType.coinSettingTypes(accountOrigin: wallet.account.origin).contains(.restoreSource) {
+            let config = BtcBlockchainSettingsModule.Config(
+                    blockchain: wallet.token.blockchain,
+                    accountType: wallet.account.type,
+                    accountOrigin: wallet.account.origin,
+                    coinSettingsArray: walletManager.activeWallets.filter { $0.token.blockchainType == wallet.token.blockchainType }.map { $0.coinSettings },
+                    mode: .changeSource(wallet: wallet)
+            )
+            item = .btc(config: config)
         } else if let blockchain = evmBlockchainManager.blockchain(token: wallet.token) {
             item = .evm(blockchain: blockchain)
         }
@@ -50,7 +57,7 @@ extension BalanceErrorService {
 extension BalanceErrorService {
 
     enum Item {
-        case btc(blockchain: Blockchain)
+        case btc(config: BtcBlockchainSettingsModule.Config)
         case evm(blockchain: Blockchain)
     }
 

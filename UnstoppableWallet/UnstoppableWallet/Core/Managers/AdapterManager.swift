@@ -15,7 +15,7 @@ class AdapterManager {
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.adapter_manager", qos: .userInitiated)
     private var _adapterMap = [Wallet: IAdapter]()
 
-    init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager, btcBlockchainManager: BtcBlockchainManager) {
+    init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager) {
         self.adapterFactory = adapterFactory
         self.walletManager = walletManager
         self.evmBlockchainManager = evmBlockchainManager
@@ -30,7 +30,6 @@ class AdapterManager {
         for blockchain in evmBlockchainManager.allBlockchains {
             subscribe(disposeBag, evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchain: blockchain) }
         }
-        subscribe(disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] in self?.handleUpdatedRestoreMode(blockchainType: $0) }
     }
 
     private func initAdapters(wallets: [Wallet]) {
@@ -71,14 +70,6 @@ class AdapterManager {
         let wallets = queue.sync { _adapterMap.keys }
         refreshAdapters(wallets: wallets.filter { wallet in
             wallet.token.blockchain == blockchain
-        })
-    }
-
-    private func handleUpdatedRestoreMode(blockchainType: BlockchainType) {
-        let wallets = queue.sync { _adapterMap.keys }
-
-        refreshAdapters(wallets: wallets.filter {
-            $0.token.blockchain.type == blockchainType && $0.account.origin == .restored
         })
     }
 

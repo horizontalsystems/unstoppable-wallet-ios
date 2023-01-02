@@ -7,7 +7,7 @@ import MarketKit
 class BalanceErrorViewModel {
     private let service: BalanceErrorService
 
-    private let openBtcBlockchainRelay = PublishRelay<Blockchain>()
+    private let openBtcBlockchainRelay = PublishRelay<BtcBlockchainSettingsModule.Config>()
     private let openEvmBlockchainRelay = PublishRelay<Blockchain>()
     private let finishRelay = PublishRelay<()>()
 
@@ -19,7 +19,7 @@ class BalanceErrorViewModel {
 
 extension BalanceErrorViewModel {
 
-    var openBtcBlockchainSignal: Signal<Blockchain> {
+    var openBtcBlockchainSignal: Signal<BtcBlockchainSettingsModule.Config> {
         openBtcBlockchainRelay.asSignal()
     }
 
@@ -47,6 +47,10 @@ extension BalanceErrorViewModel {
         service.errorString
     }
 
+    var wallet: Wallet {
+        service.wallet
+    }
+
     func onTapRetry() {
         service.refreshWallet()
         finishRelay.accept(())
@@ -59,8 +63,8 @@ extension BalanceErrorViewModel {
         }
 
         switch item {
-        case .btc(let blockchain):
-            openBtcBlockchainRelay.accept(blockchain)
+        case .btc(let config):
+            openBtcBlockchainRelay.accept(config)
         case .evm(let blockchain):
             openEvmBlockchainRelay.accept(blockchain)
         }

@@ -268,47 +268,6 @@ extension ManageAccountViewController: SectionsDataSource {
             }
         }
 
-        let additionalViewItems = viewModel.additionalViewItems
-
-        if !additionalViewItems.isEmpty {
-            sections.append(
-                    Section(
-                            id: "additional",
-                            footerState: .margin(height: .margin32),
-                            rows: additionalViewItems.enumerated().map { index, viewItem in
-                                let isFirst = index == 0
-                                let isLast = index == additionalViewItems.count - 1
-
-                                return CellBuilderNew.row(
-                                        rootElement: .hStack([
-                                            .image20 { component in
-                                                component.setImage(urlString: viewItem.imageUrl, placeholder: nil)
-                                            },
-                                            .text { component in
-                                                component.font = .body
-                                                component.textColor = .themeLeah
-                                                component.text = viewItem.title
-                                            },
-                                            .secondaryButton { component in
-                                                component.button.set(style: .default)
-                                                component.button.setTitle(viewItem.value, for: .normal)
-                                                component.onTap = {
-                                                    CopyHelper.copyAndNotify(value: viewItem.value)
-                                                }
-                                            }
-                                        ]),
-                                        tableView: tableView,
-                                        id: "additional-\(index)",
-                                        height: .heightCell48,
-                                        bind: { cell in
-                                            cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                                        }
-                                )
-                            }
-                    )
-            )
-        }
-
         return sections
     }
 

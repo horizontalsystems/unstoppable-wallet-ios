@@ -55,7 +55,7 @@ protocol ISendBitcoinAdapter {
     func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws
     func fee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData]) -> Decimal
-    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionDataSortMode, logger: HsToolKit.Logger) -> Single<Void>
+    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData], sortMode: TransactionSortType, logger: HsToolKit.Logger) -> Single<Void>
 }
 
 protocol ISendDashAdapter {
@@ -63,7 +63,7 @@ protocol ISendDashAdapter {
     func minimumSendAmount(address: String?) -> Decimal
     func validate(address: String) throws
     func fee(amount: Decimal, address: String?) -> Decimal
-    func sendSingle(amount: Decimal, address: String, sortMode: TransactionDataSortMode, logger: HsToolKit.Logger) -> Single<Void>
+    func sendSingle(amount: Decimal, address: String, sortMode: TransactionSortType, logger: HsToolKit.Logger) -> Single<Void>
 }
 
 protocol ISendEthereumAdapter {

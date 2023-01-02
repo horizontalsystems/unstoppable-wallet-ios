@@ -10,7 +10,6 @@ struct ManageAccountModule {
                 accountId: accountId,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
-                restoreSettingsManager: App.shared.restoreSettingsManager,
                 pinKit: App.shared.pinKit
         ) else {
             return nil

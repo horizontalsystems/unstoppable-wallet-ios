@@ -6,7 +6,6 @@ import LanguageKit
 
 class CreateAccountService {
     private let accountFactory: AccountFactory
-    private let predefinedBlockchainService: PredefinedBlockchainService
     private let languageManager: LanguageManager
     private let accountManager: AccountManager
     private let walletManager: WalletManager
@@ -24,9 +23,8 @@ class CreateAccountService {
     var passphrase: String = ""
     var passphraseConfirmation: String = ""
 
-    init(accountFactory: AccountFactory, predefinedBlockchainService: PredefinedBlockchainService, languageManager: LanguageManager, accountManager: AccountManager, walletManager: WalletManager, marketKit: Kit) {
+    init(accountFactory: AccountFactory, languageManager: LanguageManager, accountManager: AccountManager, walletManager: WalletManager, marketKit: Kit) {
         self.accountFactory = accountFactory
-        self.predefinedBlockchainService = predefinedBlockchainService
         self.languageManager = languageManager
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -43,9 +41,7 @@ class CreateAccountService {
                 continue
             }
 
-            predefinedBlockchainService.prepareNew(account: account, blockchainType: blockchainType)
-
-            let defaultSettingsArray = blockchainType.defaultSettingsArray(accountType: account.type)
+            let defaultSettingsArray = blockchainType.defaultSettingsArray(accountType: account.type, accountOrigin: .created)
 
             if defaultSettingsArray.isEmpty {
                 wallets.append(Wallet(token: token, account: account))

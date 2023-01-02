@@ -11,26 +11,40 @@ class CoinSettingsView {
     init(viewModel: CoinSettingsViewModel) {
         self.viewModel = viewModel
 
-        subscribe(disposeBag, viewModel.openBottomSelectorSignal) { [weak self] config in
-            self?.showBottomSelector(config: config)
-        }
+        subscribe(disposeBag, viewModel.openRequestSignal) { [weak self] in self?.open(request: $0) }
     }
 
-    private func showBottomSelector(config: BottomMultiSelectorViewController.Config) {
-        let controller = BottomMultiSelectorViewController(config: config, delegate: self).toBottomSheet
+    private func open(request: CoinSettingsService.Request) {
+        let controller: UIViewController
+
+        switch request.type {
+        case .btc:
+            let config = BtcBlockchainSettingsModule.Config(
+                    blockchain: request.blockchain,
+                    accountType: request.accountType,
+                    accountOrigin: request.accountOrigin,
+                    coinSettingsArray: request.coinSettingsArray,
+                    mode: request.isRestore ? .restore(initial: request.initial) : .manage(initial: request.initial)
+            )
+
+            controller = BtcBlockchainSettingsModule.viewController(config: config, delegate: self)
+        case .zcash:
+            fatalError() // todo
+        }
+
         onOpenController?(controller)
     }
 
 }
 
-extension CoinSettingsView: IBottomMultiSelectorDelegate {
+extension CoinSettingsView: IBtcBlockchainSettingsDelegate {
 
-    func bottomSelectorOnSelect(indexes: [Int]) {
-        viewModel.onSelect(indexes: indexes)
+    func didApprove(coinSettingsArray: [CoinSettings]) {
+        viewModel.onApprove(coinSettingsArray: coinSettingsArray)
     }
 
-    func bottomSelectorOnCancel() {
-        viewModel.onCancelSelect()
+    func didCancel() {
+        viewModel.onCancelApprove()
     }
 
 }

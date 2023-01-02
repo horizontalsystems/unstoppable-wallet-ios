@@ -10,7 +10,6 @@ class BitcoinBaseAdapter {
     static let confirmationsThreshold = 3
 
     private let abstractKit: AbstractKit
-    let testMode: Bool
     private let coinRate: Decimal = pow(10, 8)
 
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
@@ -29,9 +28,8 @@ class BitcoinBaseAdapter {
     private let token: Token
     private let transactionSource: TransactionSource
 
-    init(abstractKit: AbstractKit, wallet: Wallet, testMode: Bool) {
+    init(abstractKit: AbstractKit, wallet: Wallet) {
         self.abstractKit = abstractKit
-        self.testMode = testMode
         token = wallet.token
         transactionSource = wallet.transactionSource
 
@@ -134,7 +132,7 @@ class BitcoinBaseAdapter {
         return NSDecimalNumber(decimal: coinValue).rounding(accordingToBehavior: handler).intValue
     }
 
-    private func convertToKitSortMode(sort: TransactionDataSortMode) -> TransactionDataSortType {
+    private func convertToKitSortMode(sort: TransactionSortType) -> TransactionDataSortType {
         switch sort {
         case .shuffle: return .shuffle
         case .bip69: return .bip69
@@ -301,7 +299,7 @@ extension BitcoinBaseAdapter {
         }
     }
 
-    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData] = [:], sortMode: TransactionDataSortMode, logger: Logger) -> Single<Void> {
+    func sendSingle(amount: Decimal, address: String, feeRate: Int, pluginData: [UInt8: IBitcoinPluginData] = [:], sortMode: TransactionSortType, logger: Logger) -> Single<Void> {
         let satoshiAmount = convertToSatoshi(value: amount)
         let sortType = convertToKitSortMode(sort: sortMode)
 
@@ -379,6 +377,25 @@ extension BitcoinBaseAdapter: IDepositAdapter {
 
     var receiveAddress: String {
         abstractKit.receiveAddress()
+    }
+
+}
+
+extension BitcoinBaseAdapter {
+
+    static func syncMode(account: Account, restoreSource: RestoreSource?) -> BitcoinCore.SyncMode? {
+        if account.origin == .created {
+            return .newWallet
+        }
+
+        guard let restoreSource = restoreSource else {
+            return nil
+        }
+
+        switch restoreSource {
+        case .api: return .api
+        case .blockchain: return .full
+        }
     }
 
 }

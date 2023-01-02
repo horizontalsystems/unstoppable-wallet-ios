@@ -67,7 +67,7 @@ class ZcashAdapter {
     }
 
 
-    init(wallet: Wallet, restoreSettings: RestoreSettings, testMode: Bool) throws {
+    init(wallet: Wallet, testMode: Bool = false) throws {
         guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
@@ -81,12 +81,22 @@ class ZcashAdapter {
         transactionSource = wallet.transactionSource
         uniqueId = wallet.account.id
         switch wallet.account.origin {
-        case .created: birthday = Self.newBirthdayHeight(network: network)
+        case .created:
+            birthday = Self.newBirthdayHeight(network: network)
         case .restored:
-            if let height = restoreSettings.birthdayHeight {
-                birthday = max(height, network.constants.saplingActivationHeight)
-            } else {
-                birthday = network.constants.saplingActivationHeight
+            guard let restoreType = wallet.coinSettings.zcashRestoreType else {
+                throw AdapterError.wrongParameters
+            }
+
+            switch restoreType {
+            case .new:
+                birthday = Self.newBirthdayHeight(network: network)
+            case .old:
+                if let height = wallet.coinSettings.zcashBirthdayHeight {
+                    birthday = max(height, network.constants.saplingActivationHeight)
+                } else {
+                    birthday = network.constants.saplingActivationHeight
+                }
             }
         }
 

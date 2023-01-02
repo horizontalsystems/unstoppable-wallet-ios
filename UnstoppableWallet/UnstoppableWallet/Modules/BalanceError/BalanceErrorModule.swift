@@ -6,9 +6,9 @@ struct BalanceErrorModule {
         let service = BalanceErrorService(
                 wallet: wallet,
                 error: error,
+                walletManager: App.shared.walletManager,
                 adapterManager: App.shared.adapterManager,
                 appConfigProvider: App.shared.appConfigProvider,
-                btcBlockchainManager: App.shared.btcBlockchainManager,
                 evmBlockchainManager: App.shared.evmBlockchainManager
         )
         let viewModel = BalanceErrorViewModel(service: service)

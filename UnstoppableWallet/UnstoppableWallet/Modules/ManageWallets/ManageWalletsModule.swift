@@ -4,7 +4,7 @@ import ThemeKit
 struct ManageWalletsModule {
 
     static func viewController() -> UIViewController? {
-        let (enableCoinService, enableCoinView) = EnableCoinModule.module()
+        let (enableCoinService, enableCoinView) = EnableCoinModule.module(isRestore: false)
 
         guard let service = ManageWalletsService(
                 marketKit: App.shared.marketKit,

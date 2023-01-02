@@ -18,12 +18,11 @@ class MainSettingsViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let manageAccountsCell = BaseSelectableThemeCell()
-    private let securityCenterCell = BaseSelectableThemeCell()
     private let walletConnectCell = BaseSelectableThemeCell()
+    private let securityCell = BaseSelectableThemeCell()
     private let appearanceCell = BaseSelectableThemeCell()
     private let baseCurrencyCell = BaseSelectableThemeCell()
     private let languageCell = BaseSelectableThemeCell()
-    private let themeModeCell = BaseSelectableThemeCell()
     private let aboutCell = BaseSelectableThemeCell()
     private let footerCell = MainSettingsFooterCell()
 
@@ -59,13 +58,13 @@ class MainSettingsViewController: ThemeViewController {
         manageAccountsCell.set(backgroundStyle: .lawrence, isFirst: true)
         syncManageAccountCell()
 
-        securityCenterCell.set(backgroundStyle: .lawrence, isLast: true)
-        syncSecurityCenterCell()
-
         walletConnectCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         syncWalletConnectCell()
 
-        appearanceCell.set(backgroundStyle: .lawrence, isFirst: true)
+        securityCell.set(backgroundStyle: .lawrence, isFirst: true)
+        syncSecurityCenterCell()
+
+        appearanceCell.set(backgroundStyle: .lawrence)
         buildTitleValue(cell: appearanceCell, image: UIImage(named: "brush_24"), title: "appearance.title".localized)
 
         baseCurrencyCell.set(backgroundStyle: .lawrence)
@@ -83,7 +82,7 @@ class MainSettingsViewController: ThemeViewController {
         }
 
         subscribe(disposeBag, viewModel.manageWalletsAlertDriver) { [weak self] in self?.syncManageAccountCell(alert: $0) }
-        subscribe(disposeBag, viewModel.securityCenterAlertDriver) { [weak self] in self?.syncSecurityCenterCell(alert: $0) }
+        subscribe(disposeBag, viewModel.securityAlertDriver) { [weak self] in self?.syncSecurityCenterCell(alert: $0) }
 
         subscribe(disposeBag, viewModel.walletConnectCountDriver) { [weak self] tuple in
             self?.syncWalletConnectCell(text: tuple?.text, highlighted: tuple?.highlighted ?? false)
@@ -110,7 +109,7 @@ class MainSettingsViewController: ThemeViewController {
 
     private func syncSecurityCenterCell(alert: Bool = false) {
         let alertImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
-        buildTitleImage(cell: securityCenterCell, image: UIImage(named: "shield_24"), title: "settings.security_center".localized, alertImage: alertImage)
+        buildTitleImage(cell: securityCell, image: UIImage(named: "shield_24"), title: "settings.security".localized, alertImage: alertImage)
     }
 
     private func syncAboutCell(alert: Bool = false) {
@@ -182,7 +181,7 @@ class MainSettingsViewController: ThemeViewController {
         ]))
     }
 
-    private var securityRows: [RowProtocol] {
+    private var accountRows: [RowProtocol] {
         [
             StaticRow(
                     cell: manageAccountsCell,
@@ -192,12 +191,14 @@ class MainSettingsViewController: ThemeViewController {
                         self?.navigationController?.pushViewController(ManageAccountsModule.viewController(mode: .manage), animated: true)
                     }
             ),
-            StaticRow(
-                    cell: securityCenterCell,
-                    id: "security-center",
-                    height: .heightCell48,
+            tableView.universalRow48(
+                    id: "evm-settings",
+                    image: .local(UIImage(named: "blocks_24")),
+                    title: .body("settings.evm_settings".localized),
+                    accessoryType: .disclosure,
+                    isLast: true,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(SecuritySettingsModule.viewController(), animated: true)
+                        self?.navigationController?.pushViewController(EvmSettingsModule.viewController(), animated: true)
                     }
             )
         ]
@@ -219,6 +220,14 @@ class MainSettingsViewController: ThemeViewController {
 
     private var appearanceRows: [RowProtocol] {
         [
+            StaticRow(
+                    cell: securityCell,
+                    id: "security",
+                    height: .heightCell48,
+                    action: { [weak self] in
+                        self?.navigationController?.pushViewController(SecurityModule.viewController(), animated: true)
+                    }
+            ),
             StaticRow(
                     cell: appearanceCell,
                     id: "launch-screen",
@@ -243,12 +252,18 @@ class MainSettingsViewController: ThemeViewController {
                         let module = LanguageSettingsRouter.module { MainModule.instance(presetTab: .settings) }
                         self?.navigationController?.pushViewController(module, animated: true)
                     }
-            ),
+            )
+        ]
+    }
+
+    private var experimentalRows: [RowProtocol] {
+        [
             tableView.universalRow48(
                     id: "experimental-features",
                     image: .local(UIImage(named: "flask_24")),
                     title: .body("settings.experimental_features".localized),
                     accessoryType: .disclosure,
+                    isFirst: true,
                     isLast: true,
                     action: { [weak self] in
                         self?.navigationController?.pushViewController(ExperimentalFeaturesModule.viewController(), animated: true)
@@ -322,9 +337,10 @@ extension MainSettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         [
-            Section(id: "security_settings", headerState: .margin(height: .margin12), rows: securityRows),
+            Section(id: "account", headerState: .margin(height: .margin12), rows: accountRows),
             Section(id: "wallet_connect", headerState: .margin(height: .margin32), rows: walletConnectRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
+            Section(id: "experimental-features", headerState: .margin(height: .margin32), rows: experimentalRows),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
             Section(id: "about", headerState: .margin(height: .margin32), rows: aboutRows),
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows)

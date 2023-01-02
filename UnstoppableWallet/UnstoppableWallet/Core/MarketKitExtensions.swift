@@ -191,36 +191,47 @@ extension MarketKit.BlockchainType {
         return "https://cdn.blocksdecoded.com/blockchain-icons/32px/\(uid)@\(scale)x.png"
     }
 
-    var coinSettingType: CoinSettingType? {
-        switch self {
-        case .bitcoin, .litecoin: return .derivation
-        case .bitcoinCash: return .bitcoinCashCoinType
-        default: return nil
+    func coinSettingTypes(accountOrigin: AccountOrigin) -> [CoinSettingType] {
+        switch (self, accountOrigin) {
+        case (.bitcoin, .created), (.litecoin, .created): return [.derivation]
+        case (.bitcoin, .restored), (.litecoin, .restored): return [.derivation, .restoreSource]
+        case (.bitcoinCash, .created): return [.bitcoinCashCoinType]
+        case (.bitcoinCash, .restored): return [.bitcoinCashCoinType, .restoreSource]
+        case (.dash, .restored): return [.restoreSource]
+        case (.zcash, .created), (.zcash, .restored): return [.zcashRestoreType, .zcashBirthdayHeight]
+        default: return []
         }
     }
 
-    func defaultSettingsArray(accountType: AccountType) -> [CoinSettings] {
+    func defaultSettingsArray(accountType: AccountType, accountOrigin: AccountOrigin) -> [CoinSettings] {
         switch self {
         case .bitcoin, .litecoin:
             switch accountType {
             case .mnemonic:
-                return [[.derivation: MnemonicDerivation.bip49.rawValue]]
+                switch accountOrigin {
+                case .created: return [[.derivation: MnemonicDerivation.bip49.rawValue]]
+                case .restored: return [[.derivation: MnemonicDerivation.bip49.rawValue, .restoreSource: RestoreSource.default.rawValue]]
+                }
             case .hdExtendedKey(let key):
-                return [[.derivation: key.info.purpose.mnemonicDerivation.rawValue]]
+                switch accountOrigin {
+                case .created: return [[.derivation: key.info.purpose.mnemonicDerivation.rawValue]]
+                case .restored: return [[.derivation: key.info.purpose.mnemonicDerivation.rawValue, .restoreSource: RestoreSource.default.rawValue]]
+                }
             default:
                 return []
             }
         case .bitcoinCash:
-            return [[.bitcoinCashCoinType: BitcoinCashCoinType.type145.rawValue]]
+            switch accountOrigin {
+            case .created: return [[.bitcoinCashCoinType: BitcoinCashCoinType.type145.rawValue]]
+            case .restored: return [[.bitcoinCashCoinType: BitcoinCashCoinType.type145.rawValue, .restoreSource: RestoreSource.default.rawValue]]
+            }
+        case .dash:
+            switch accountOrigin {
+            case .created: return []
+            case .restored: return [[.restoreSource: RestoreSource.default.rawValue]]
+            }
         default:
             return []
-        }
-    }
-
-    var restoreSettingTypes: [RestoreSettingType] {
-        switch self {
-        case .zcash: return [.birthdayHeight]
-        default: return []
         }
     }
 
@@ -303,6 +314,10 @@ extension MarketKit.BlockchainType {
             default: return false
             }
         }
+    }
+
+    static var btcTypes: [BlockchainType] {
+        [.bitcoin, .bitcoinCash, .litecoin, .dash]
     }
 
     var isUnsupported: Bool {

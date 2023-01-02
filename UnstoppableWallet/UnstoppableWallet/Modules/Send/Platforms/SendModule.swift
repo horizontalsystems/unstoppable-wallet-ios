@@ -80,7 +80,6 @@ class SendModule {
                 amountInputService: amountInputService,
                 addressService: addressService,
                 timeLockService: timeLockService,
-                btcBlockchainManager: App.shared.btcBlockchainManager,
                 adapter: adapter
         )
         let service = SendBitcoinService(

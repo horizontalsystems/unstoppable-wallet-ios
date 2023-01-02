@@ -21,8 +21,6 @@ class ManageAccountViewModel {
     private let openUnlinkRelay = PublishRelay<Account>()
     private let finishRelay = PublishRelay<()>()
 
-    private(set) var additionalViewItems = [AdditionalViewItem]()
-
     private var unlockRequest: UnlockRequest = .recoveryPhrase
 
     init(service: ManageAccountService, accountRestoreWarningFactory: AccountRestoreWarningFactory) {
@@ -35,7 +33,6 @@ class ManageAccountViewModel {
 
         sync(state: service.state)
         sync(account: service.account)
-        syncAccountSettings()
     }
 
     private func sync(state: ManageAccountService.State) {
@@ -71,16 +68,6 @@ class ManageAccountViewModel {
     private func sync(account: Account) {
         showWarningRelay.accept(accountRestoreWarningFactory.caution(account: account, canIgnoreActiveAccountWarning: false))
         keyActionGroupsRelay.accept(keyActionGroups(account: account))
-    }
-
-    private func syncAccountSettings() {
-        additionalViewItems = service.accountSettingsInfo.map { coin, restoreSettingType, value in
-            AdditionalViewItem(
-                    imageUrl: coin.imageUrl,
-                    title: restoreSettingType.title(coin: coin),
-                    value: value
-            )
-        }
     }
 
 }
@@ -234,12 +221,6 @@ extension ManageAccountViewModel {
         case showAccountExtendedPrivateKey
         case showAccountExtendedPublicKey
         case backupRecoveryPhrase
-    }
-
-    struct AdditionalViewItem {
-        let imageUrl: String
-        let title: String
-        let value: String
     }
 
 }

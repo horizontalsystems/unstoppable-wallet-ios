@@ -29,7 +29,6 @@ class SendBitcoinAdapterService {
     private let amountInputService: IAmountInputService
     private let addressService: AddressService
     private let timeLockService: SendTimeLockService?
-    private let btcBlockchainManager: BtcBlockchainManager
 
     private let adapter: ISendBitcoinAdapter
 
@@ -70,12 +69,11 @@ class SendBitcoinAdapterService {
         }
     }
 
-    init(feeRateService: SendFeeRateService, amountInputService: IAmountInputService, addressService: AddressService, timeLockService: SendTimeLockService?, btcBlockchainManager: BtcBlockchainManager, adapter: ISendBitcoinAdapter) {
+    init(feeRateService: SendFeeRateService, amountInputService: IAmountInputService, addressService: AddressService, timeLockService: SendTimeLockService?, adapter: ISendBitcoinAdapter) {
         self.feeRateService = feeRateService
         self.amountInputService = amountInputService
         self.addressService = addressService
         self.timeLockService = timeLockService
-        self.btcBlockchainManager = btcBlockchainManager
         self.adapter = adapter
 
         subscribe(disposeBag, amountInputService.amountObservable) { [weak self] _ in
@@ -188,7 +186,7 @@ extension SendBitcoinAdapterService: ISendService {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
-        let sortMode = btcBlockchainManager.transactionSortMode(blockchainType: adapter.blockchainType)
+        let sortMode = TransactionSortType.shuffle // todo
         return adapter.sendSingle(
                 amount: amountInputService.amount,
                 address: address.raw,

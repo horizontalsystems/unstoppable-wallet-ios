@@ -59,9 +59,6 @@ class App {
     let evmAccountRestoreStateManager: EvmAccountRestoreStateManager
     let evmBlockchainManager: EvmBlockchainManager
 
-    let restoreSettingsManager: RestoreSettingsManager
-    let predefinedBlockchainService: PredefinedBlockchainService
-
     private let testModeIndicator: TestModeIndicator
 
     let logRecordManager: LogRecordManager
@@ -71,8 +68,6 @@ class App {
 
     let appStatusManager: AppStatusManager
     let appVersionManager: AppVersionManager
-
-    let btcBlockchainManager: BtcBlockchainManager
 
     let kitCleaner: KitCleaner
 
@@ -164,8 +159,6 @@ class App {
 
         let blockchainSettingRecordStorage = try! BlockchainSettingRecordStorage(dbPool: dbPool)
         let blockchainSettingsStorage = BlockchainSettingsStorage(storage: blockchainSettingRecordStorage)
-        btcBlockchainManager = BtcBlockchainManager(marketKit: marketKit, storage: blockchainSettingsStorage)
-
         evmSyncSourceManager = EvmSyncSourceManager(appConfigProvider: appConfigProvider, storage: blockchainSettingsStorage)
 
         let evmAccountRestoreStateStorage = EvmAccountRestoreStateStorage(dbPool: dbPool)
@@ -176,30 +169,22 @@ class App {
 
         let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
 
-        let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
-        restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)
-        predefinedBlockchainService = PredefinedBlockchainService(restoreSettingsManager: restoreSettingsManager)
-
         let hsLabelProvider = HsLabelProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
         let evmLabelStorage = EvmLabelStorage(dbPool: dbPool)
         let syncerStateStorage = SyncerStateStorage(dbPool: dbPool)
         evmLabelManager = EvmLabelManager(provider: hsLabelProvider, storage: evmLabelStorage, syncerStateStorage: syncerStateStorage)
 
         let adapterFactory = AdapterFactory(
-                appConfigProvider: appConfigProvider,
                 evmBlockchainManager: evmBlockchainManager,
                 evmSyncSourceManager: evmSyncSourceManager,
                 binanceKitManager: binanceKitManager,
-                btcBlockchainManager: btcBlockchainManager,
-                restoreSettingsManager: restoreSettingsManager,
                 coinManager: coinManager,
                 evmLabelManager: evmLabelManager
         )
         adapterManager = AdapterManager(
                 adapterFactory: adapterFactory,
                 walletManager: walletManager,
-                evmBlockchainManager: evmBlockchainManager,
-                btcBlockchainManager: btcBlockchainManager
+                evmBlockchainManager: evmBlockchainManager
         )
         transactionAdapterManager = TransactionAdapterManager(
                 adapterManager: adapterManager,
@@ -246,7 +231,6 @@ class App {
                 walletManager: walletManager,
                 adapterManager: adapterManager,
                 logRecordManager: logRecordManager,
-                restoreSettingsManager: restoreSettingsManager,
                 evmBlockchainManager: evmBlockchainManager,
                 binanceKitManager: binanceKitManager,
                 marketKit: marketKit

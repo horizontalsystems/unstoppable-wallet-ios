@@ -1,4 +1,4 @@
-enum TransactionDataSortMode: String, CaseIterable {
+enum TransactionSortType: String, CaseIterable {
     case shuffle
     case bip69
 

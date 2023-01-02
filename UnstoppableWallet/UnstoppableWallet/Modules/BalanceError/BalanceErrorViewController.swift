@@ -82,7 +82,7 @@ class BalanceErrorViewController: ThemeActionSheetController {
         reportButton.set(style: .transparent)
         reportButton.setTitle("button.report".localized, for: .normal)
 
-        subscribe(disposeBag, viewModel.openBtcBlockchainSignal) { [weak self] in self?.openBtc(blockchain: $0) }
+        subscribe(disposeBag, viewModel.openBtcBlockchainSignal) { [weak self] in self?.openBtc(config: $0) }
         subscribe(disposeBag, viewModel.openEvmBlockchainSignal) { [weak self] in self?.openEvm(blockchain: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.dismiss(animated: true) }
     }
@@ -108,9 +108,9 @@ class BalanceErrorViewController: ThemeActionSheetController {
         viewModel.onTapChangeSource()
     }
 
-    private func openBtc(blockchain: Blockchain) {
+    private func openBtc(config: BtcBlockchainSettingsModule.Config) {
         dismiss(animated: true) { [weak self] in
-            self?.sourceViewController?.present(BtcBlockchainSettingsModule.viewController(blockchain: blockchain), animated: true)
+            self?.sourceViewController?.present(BtcBlockchainSettingsModule.viewController(config: config), animated: true)
         }
     }
 

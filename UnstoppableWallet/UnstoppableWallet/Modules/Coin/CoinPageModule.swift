@@ -10,7 +10,7 @@ struct CoinPageModule {
             return nil
         }
 
-        let (enableCoinService, enableCoinView) = EnableCoinModule.module()
+        let (enableCoinService, enableCoinView) = EnableCoinModule.module(isRestore: false)
         let service = CoinPageService(
                 fullCoin: fullCoin,
                 favoritesManager: App.shared.favoritesManager,

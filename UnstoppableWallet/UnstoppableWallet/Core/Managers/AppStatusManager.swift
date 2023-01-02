@@ -8,13 +8,12 @@ class AppStatusManager {
     private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let adapterManager: AdapterManager
-    private let restoreSettingsManager: RestoreSettingsManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let binanceKitManager: BinanceKitManager
     private let marketKit: MarketKit.Kit
 
     init(systemInfoManager: SystemInfoManager, storage: AppVersionStorage, accountManager: AccountManager,
-         walletManager: WalletManager, adapterManager: AdapterManager, logRecordManager: LogRecordManager, restoreSettingsManager: RestoreSettingsManager,
+         walletManager: WalletManager, adapterManager: AdapterManager, logRecordManager: LogRecordManager,
          evmBlockchainManager: EvmBlockchainManager, binanceKitManager: BinanceKitManager, marketKit: MarketKit.Kit) {
         self.systemInfoManager = systemInfoManager
         self.storage = storage
@@ -22,7 +21,6 @@ class AppStatusManager {
         self.walletManager = walletManager
         self.adapterManager = adapterManager
         self.logRecordManager = logRecordManager
-        self.restoreSettingsManager = restoreSettingsManager
         self.evmBlockchainManager = evmBlockchainManager
         self.binanceKitManager = binanceKitManager
         self.marketKit = marketKit
@@ -48,21 +46,6 @@ class AppStatusManager {
                 status.append(("type", "mnemonic (\(words.count) words\(salt.isEmpty ? "" : " with passphrase"))"))
             }
 
-            let restoreSettingsInfo = restoreSettingsManager.accountSettingsInfo(account: account)
-
-            if !restoreSettingsInfo.isEmpty {
-                var restoreSettings = [(String, Any)]()
-
-                for info in restoreSettingsInfo {
-                    let coinType = info.0
-                    let settingType = info.1
-                    let value = info.2.isEmpty ? "not set" : info.2
-                    restoreSettings.append(("\(coinType) - \(settingType)", "\(value)"))
-                }
-
-                status.append(("Restore Settings", restoreSettings))
-            }
-
             return (account.name, status)
         }
     }
@@ -73,10 +56,15 @@ class AppStatusManager {
         for wallet in walletManager.activeWallets {
             let blockchain = wallet.token.blockchain
 
+            var settings = [(String, Any)]()
+            for (type, value) in wallet.coinSettings {
+                settings.append((type.rawValue, value))
+            }
+
             switch blockchain.type {
             case .bitcoin, .bitcoinCash, .litecoin, .dash, .zcash:
                 if let adapter = adapterManager.adapter(for: wallet) {
-                    status.append((blockchain.name, adapter.statusInfo))
+                    status.append((blockchain.name, [("Settings", settings)] + adapter.statusInfo))
                 }
             default:
                 ()

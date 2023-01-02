@@ -31,8 +31,6 @@ class RestoreSelectService {
     private var tokens = [Token]()
     private(set) var enabledConfiguredTokens = Set<ConfiguredToken>()
 
-    private var restoreSettingsMap = [Token: RestoreSettings]()
-
     private let cancelEnableBlockchainRelay = PublishRelay<BlockchainType>()
     private let canRestoreRelay = BehaviorRelay<Bool>(value: false)
 
@@ -53,8 +51,8 @@ class RestoreSelectService {
         self.marketKit = marketKit
         self.enableCoinService = enableCoinService
 
-        subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredTokens, restoreSettings in
-            self?.handleEnableCoin(configuredTokens: configuredTokens, restoreSettings: restoreSettings)
+        subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredTokens in
+            self?.handleEnableCoin(configuredTokens: configuredTokens)
         }
         subscribe(disposeBag, enableCoinService.disableCoinObservable) { [weak self] coin in
             self?.handleDisable(coin: coin)
@@ -91,7 +89,7 @@ class RestoreSelectService {
     }
 
     private func hasSettings(token: Token) -> Bool {
-        token.blockchainType.coinSettingType != nil
+        !token.blockchainType.coinSettingTypes(accountOrigin: .restored).isEmpty
     }
 
     private func item(token: Token) -> Item {
@@ -112,13 +110,9 @@ class RestoreSelectService {
         canRestoreRelay.accept(!enabledConfiguredTokens.isEmpty)
     }
 
-    private func handleEnableCoin(configuredTokens: [ConfiguredToken], restoreSettings: RestoreSettings) {
+    private func handleEnableCoin(configuredTokens: [ConfiguredToken]) {
         guard let token = configuredTokens.first?.token else {
             return
-        }
-
-        if !restoreSettings.isEmpty {
-            restoreSettingsMap[token] = restoreSettings
         }
 
         let existingConfiguredTokens = enabledConfiguredTokens.filter { $0.token == token }
@@ -139,12 +133,6 @@ class RestoreSelectService {
     }
 
     private func handleDisable(coin: Coin) {
-        for token in restoreSettingsMap.keys {
-            if token.coin == coin {
-                restoreSettingsMap.removeValue(forKey: token)
-            }
-        }
-
         for configuredToken in enabledConfiguredTokens {
             if configuredToken.token.coin == coin {
                 enabledConfiguredTokens.remove(configuredToken)
@@ -186,7 +174,7 @@ extension RestoreSelectService {
             return
         }
 
-        enableCoinService.enable(fullCoin: token.fullCoin, accountType: accountType)
+        enableCoinService.enable(fullCoin: token.fullCoin, accountType: accountType, accountOrigin: .restored)
     }
 
     func disable(blockchainUid: String) {
@@ -205,16 +193,12 @@ extension RestoreSelectService {
             return
         }
 
-        enableCoinService.configure(fullCoin: token.fullCoin, accountType: accountType, configuredTokens: enabledConfiguredTokens.filter { $0.token == token })
+        enableCoinService.configure(fullCoin: token.fullCoin, accountType: accountType, accountOrigin: .restored, configuredTokens: enabledConfiguredTokens.filter { $0.token == token })
     }
 
     func restore() {
         let account = accountFactory.account(type: accountType, origin: .restored)
         accountManager.save(account: account)
-
-        for (token, settings) in restoreSettingsMap {
-            enableCoinService.save(restoreSettings: settings, account: account, blockchainType: token.blockchainType)
-        }
 
         guard !enabledConfiguredTokens.isEmpty else {
             return
