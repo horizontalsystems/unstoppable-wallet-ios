@@ -69,6 +69,7 @@ extension ExperimentalFeaturesViewController: SectionsDataSource {
                         tableView.universalRow48(
                                 id: "bitcoin_hodling",
                                 title: .body("settings.experimental_features.bitcoin_hodling".localized),
+                                accessoryType: .disclosure,
                                 isFirst: true,
                                 action: { [weak self] in
                                     self?.openBitcoinHodling()
@@ -77,6 +78,7 @@ extension ExperimentalFeaturesViewController: SectionsDataSource {
                         tableView.universalRow48(
                                 id: "evm_testnet",
                                 title: .body("settings.experimental_features.evm_testnet".localized),
+                                accessoryType: .disclosure,
                                 isLast: true,
                                 action: { [weak self] in
                                     self?.openEvmTestnet()

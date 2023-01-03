@@ -113,7 +113,7 @@ extension BackupViewController: SectionsDataSource {
         if let passphrase = viewModel.passphrase {
             let passphraseRow = CellBuilderNew.row(
                     rootElement: .hStack([
-                        .image20 { component in
+                        .image24 { component in
                             component.imageView.image = UIImage(named: "key_phrase_24")?.withTintColor(.themeGray)
                         },
                         .text { component in

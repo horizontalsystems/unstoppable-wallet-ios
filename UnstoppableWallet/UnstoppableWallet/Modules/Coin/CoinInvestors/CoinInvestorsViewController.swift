@@ -105,37 +105,15 @@ extension CoinInvestorsViewController: SectionsDataSource {
     }
 
     private func row(fundViewItem: CoinInvestorsViewModel.FundViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        var elements = [CellBuilderNew.CellElement]()
-        elements.append(.image32 { (component: ImageComponent) -> () in
-            component.setImage(urlString: fundViewItem.logoUrl, placeholder: UIImage(named: "placeholder_circle_32"))
-        })
-        elements.append(.text { (component: TextComponent) -> () in
-            component.font = .body
-            component.textColor = .themeLeah
-            component.text = fundViewItem.name
-        })
-        elements.append(.text { (component: TextComponent) -> () in
-            component.isHidden = !fundViewItem.isLead
-            component.font = .subhead1
-            component.textColor = .themeRemus
-            component.text = "coin_page.funds_invested.lead".localized
-        })
-
-        if !fundViewItem.url.isEmpty {
-            elements.append(.margin8)
-            elements.append(.image20 { (component: ImageComponent) -> () in
-                component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-            })
-        }
-        return CellBuilderNew.row(
-                rootElement: .hStack(elements),
-                tableView: tableView,
+        tableView.universalRow56(
                 id: fundViewItem.uid,
-                height: .heightCell56,
+                image: .url(fundViewItem.logoUrl, placeholder: "placeholder_circle_32"),
+                title: .body(fundViewItem.name),
+                value: fundViewItem.isLead ? .custom("coin_page.funds_invested.lead".localized, .subhead1, .themeRemus) : nil,
+                accessoryType: fundViewItem.url.isEmpty ? .none : .disclosure,
                 autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                },
+                isFirst: isFirst,
+                isLast: isLast,
                 action: { [weak self] in
                     self?.urlManager.open(url: fundViewItem.url, from: self)
                 }

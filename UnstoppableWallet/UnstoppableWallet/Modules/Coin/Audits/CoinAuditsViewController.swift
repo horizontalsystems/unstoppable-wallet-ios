@@ -107,23 +107,11 @@ class CoinAuditsViewController: ThemeViewController {
 extension CoinAuditsViewController: SectionsDataSource {
 
     private func headerRow(logoUrl: String?, name: String) -> RowProtocol {
-        CellBuilderNew.row(
-                rootElement: .hStack([
-                    .image32 { (component: ImageComponent) in
-                        component.setImage(urlString: logoUrl, placeholder: UIImage(named: "placeholder_circle_32"))
-                    },
-                    .text { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = name
-                    }
-                ]),
-                tableView: tableView,
+        tableView.universalRow56(
                 id: "header-\(name)",
-                height: .heightCell56,
-                bind: { cell in
-                    cell.set(backgroundStyle: .transparent)
-                }
+                image: .url(logoUrl, placeholder: "placeholder_circle_32"),
+                title: .body(name),
+                backgroundStyle: .transparent
         )
     }
 
