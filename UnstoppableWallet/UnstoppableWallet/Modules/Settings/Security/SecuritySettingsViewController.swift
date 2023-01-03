@@ -112,7 +112,7 @@ extension SecuritySettingsViewController: SectionsDataSource {
                     cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !viewItem.editVisible)
 
                     cell.bind(index: 0, block: { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "dialpad_alt_2_20")?.withTintColor(.themeGray)
+                        component.imageView.image = UIImage(named: "dialpad_alt_2_24")?.withTintColor(.themeGray)
                     })
 
                     cell.bind(index: 1, block: { (component: TextComponent) in
