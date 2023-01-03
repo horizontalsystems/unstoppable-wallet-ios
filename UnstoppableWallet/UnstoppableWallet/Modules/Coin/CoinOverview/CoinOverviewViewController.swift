@@ -161,29 +161,14 @@ extension CoinOverviewViewController {
         Section(
                 id: "coin-info",
                 rows: [
-                    CellBuilderNew.row(
-                            rootElement: .hStack([
-                                .image32 { (component: ImageComponent) -> () in
-                                    component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.imagePlaceholderName))
-                                },
-                                .text { (component: TextComponent) -> () in
-                                    component.font = .body
-                                    component.textColor = .themeGray
-                                    component.text = viewItem.name
-                                },
-                                .text { (component: TextComponent) -> () in
-                                    component.font = .subhead1
-                                    component.textColor = .themeGray
-                                    component.text = viewItem.marketCapRank
-                                }
-                            ]),
-                            tableView: tableView,
+                    tableView.universalRow56(
                             id: "coin-info",
-                            height: .heightCell56,
-                            bind: { cell in
-                                cell.set(backgroundStyle: .transparent, isFirst: true, isLast: false)
-                                cell.selectionStyle = .none
-                            }
+                            image: .url(viewItem.imageUrl, placeholder: viewItem.imagePlaceholderName),
+                            title: .body(viewItem.name, gray: true),
+                            value: .subhead1(viewItem.marketCapRank, gray: true),
+                            backgroundStyle: .transparent,
+                            isFirst: true,
+                            isLast: false
                     )
                 ]
         )

@@ -248,6 +248,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "experimental-features",
                     image: .local(UIImage(named: "flask_24")),
                     title: .body("settings.experimental_features".localized),
+                    accessoryType: .disclosure,
                     isLast: true,
                     action: { [weak self] in
                         self?.navigationController?.pushViewController(ExperimentalFeaturesModule.viewController(), animated: true)
@@ -262,6 +263,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "faq",
                     image: .local(UIImage(named: "message_square_24")),
                     title: .body("settings.faq".localized),
+                    accessoryType: .disclosure,
                     isFirst: true,
                     action: { [weak self] in
                         self?.navigationController?.pushViewController(FaqModule.viewController(), animated: true)
@@ -271,6 +273,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "academy",
                     image: .local(UIImage(named: "academy_1_24")),
                     title: .body("guides.title".localized),
+                    accessoryType: .disclosure,
                     isLast: true,
                     action: { [weak self] in
                         self?.navigationController?.pushViewController(GuidesModule.instance(), animated: true)

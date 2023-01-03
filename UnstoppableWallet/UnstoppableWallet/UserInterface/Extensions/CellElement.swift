@@ -76,7 +76,7 @@ extension CellBuilderNew.CellElement {
 
     struct Image {
         static func local(_ image: UIImage?) -> Self { Image(image: image, url: nil, placeholder: nil) }
-        static func url(_ url: String, placeholder: String? = nil) -> Self { Image(image: nil, url: url, placeholder: placeholder) }
+        static func url(_ url: String?, placeholder: String? = nil) -> Self { Image(image: nil, url: url, placeholder: placeholder) }
 
         let image: UIImage?
         let url: String?

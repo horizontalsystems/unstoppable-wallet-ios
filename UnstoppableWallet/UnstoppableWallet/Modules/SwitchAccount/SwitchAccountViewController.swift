@@ -70,7 +70,7 @@ extension SwitchAccountViewController: SectionsDataSource {
                             component.textColor = .themeLeah
                             component.text = viewItem.title
                         },
-                        .margin(3),
+                        .margin(1),
                         .text { component in
                             component.font = .subhead2
                             component.textColor = .themeGray
