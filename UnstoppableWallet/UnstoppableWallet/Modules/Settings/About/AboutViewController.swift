@@ -103,30 +103,18 @@ class AboutViewController: ThemeViewController {
 extension AboutViewController: SectionsDataSource {
 
     private func row(id: String, image: String, title: String, alert: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: @escaping () -> ()) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image20, .text, .image20, .margin8, .image20],
+        var elements = tableView.universalImage24Elements(image: .local(UIImage(named: image)), title: .body(title), value: nil, accessoryType: .disclosure)
+        if alert {
+            elements.insert(.imageElement(image: .local(UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)), size: .image24), at: 2)
+        }
+        return CellBuilderNew.row(
+                rootElement: .hStack(elements),
                 tableView: tableView,
                 id: id,
                 height: .heightCell48,
                 autoDeselect: true,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: image)
-                    }
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    }
-                    cell.bind(index: 2) { (component: ImageComponent) in
-                        component.isHidden = !alert
-                        component.imageView.image = UIImage(named: "warning_2_20")?.withTintColor(.themeLucian)
-                    }
-                    cell.bind(index: 3) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                    }
                 },
                 action: action
         )
@@ -163,7 +151,7 @@ extension AboutViewController: SectionsDataSource {
                     rows: [
                         row(
                                 id: "release-notes",
-                                image: "circle_information_20",
+                                image: "circle_information_24",
                                 title: "settings.about_app.whats_new".localized,
                                 isFirst: true,
                                 isLast: true,
@@ -184,7 +172,7 @@ extension AboutViewController: SectionsDataSource {
                     rows: [
                         row(
                                 id: "app-status",
-                                image: "app_status_20",
+                                image: "app_status_24",
                                 title: "app_status.title".localized,
                                 isFirst: true,
                                 action: { [weak self] in
@@ -193,7 +181,7 @@ extension AboutViewController: SectionsDataSource {
                         ),
                         row(
                                 id: "terms",
-                                image: "unordered_20",
+                                image: "unordered_24",
                                 title: "terms.title".localized,
                                 alert: showTermsAlert,
                                 action: { [weak self] in
@@ -202,7 +190,7 @@ extension AboutViewController: SectionsDataSource {
                         ),
                         row(
                                 id: "privacy",
-                                image: "user_20",
+                                image: "user_24",
                                 title: "coin_page.security_parameters.privacy".localized,
                                 isLast: true,
                                 action: { [weak self] in
@@ -218,7 +206,7 @@ extension AboutViewController: SectionsDataSource {
                     rows: [
                         row(
                                 id: "github",
-                                image: "github_20",
+                                image: "github_24",
                                 title: "GitHub",
                                 isFirst: true,
                                 action: { [weak self] in
@@ -227,7 +215,7 @@ extension AboutViewController: SectionsDataSource {
                         ),
                         row(
                                 id: "twitter",
-                                image: "twitter_20",
+                                image: "twitter_24",
                                 title: "Twitter",
                                 action: { [weak self] in
                                     self?.openTwitter()
@@ -235,7 +223,7 @@ extension AboutViewController: SectionsDataSource {
                         ),
                         row(
                                 id: "website",
-                                image: "globe_20",
+                                image: "globe_24",
                                 title: "settings.about_app.website".localized,
                                 isLast: true,
                                 action: { [weak self] in
@@ -250,7 +238,7 @@ extension AboutViewController: SectionsDataSource {
                     rows: [
                         row(
                                 id: "rate-us",
-                                image: "rate_20",
+                                image: "rate_24",
                                 title: "settings.about_app.rate_us".localized,
                                 isFirst: true,
                                 action: { [weak self] in
@@ -259,7 +247,7 @@ extension AboutViewController: SectionsDataSource {
                         ),
                         row(
                                 id: "tell-friends",
-                                image: "share_1_20",
+                                image: "share_1_24",
                                 title: "settings.about_app.tell_friends".localized,
                                 isLast: true,
                                 action: { [weak self] in
@@ -274,7 +262,7 @@ extension AboutViewController: SectionsDataSource {
                     rows: [
                         row(
                                 id: "email",
-                                image: "at_20",
+                                image: "at_24",
                                 title: "settings.about_app.contact".localized,
                                 isFirst: true,
                                 isLast: true,

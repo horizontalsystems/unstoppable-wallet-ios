@@ -4,7 +4,7 @@ import ThemeKit
 import ComponentKit
 
 class BalanceTopView: UIView {
-    static let height: CGFloat = 68
+    static let height: CGFloat = 62
 
     private let coinIconView = BalanceCoinIconHolder()
     private let testnetImageView = UIImageView()
@@ -40,7 +40,7 @@ class BalanceTopView: UIView {
         addSubview(topStackView)
         topStackView.snp.makeConstraints { maker in
             maker.leading.equalTo(coinIconView.snp.trailing)
-            maker.top.equalToSuperview().inset(14)
+            maker.top.equalToSuperview().inset(CGFloat.margin12)
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
         }
 
@@ -54,7 +54,7 @@ class BalanceTopView: UIView {
         addSubview(bottomStackView)
         bottomStackView.snp.makeConstraints { maker in
             maker.leading.trailing.equalTo(topStackView)
-            maker.top.equalTo(topStackView.snp.bottom).offset(3)
+            maker.top.equalTo(topStackView.snp.bottom).offset(1)
         }
 
         bottomStackView.alignment = .center

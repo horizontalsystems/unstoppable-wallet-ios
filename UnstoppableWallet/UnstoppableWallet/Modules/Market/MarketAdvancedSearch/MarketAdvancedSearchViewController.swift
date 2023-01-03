@@ -137,40 +137,19 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     }
 
     private func buildSelector(cell: BaseThemeCell, title: String? = nil, viewItem: MarketAdvancedSearchViewModel.ViewItem? = nil) {
-        CellBuilderNew.buildStatic(cell: cell,
-                rootElement: .hStack([
-                    .text { (component: TextComponent) -> () in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    },
-                    .text { (component: TextComponent) -> () in
-                        component.font = .subhead1
-                        if let viewItem = viewItem {
-                            component.textColor = viewItem.valueStyle.valueTextColor
-                            component.text = viewItem.value
-                        }
-                    },
-                    .margin8,
-                    .image20 { (component: ImageComponent) -> () in
-                        component.imageView.image = UIImage(named: "arrow_small_down_20")
-                    }
-                ]
-                )
+        let elements = tableView.universalImage24Elements(
+                title: .body(title),
+                value: viewItem.map { .custom($0.value, .subhead1, $0.valueStyle.valueTextColor )},
+                accessoryType: .dropdown)
+        CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements)
         )
     }
 
     private func buildToggle(cell: BaseThemeCell, title: String? = nil, onToggle: @escaping (Bool) -> ()) {
-        CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack([
-            .text { (component: TextComponent) -> () in
-                component.font = .body
-                component.textColor = .themeLeah
-                component.text = title
-            },
-            .switch({ (component: SwitchComponent) -> () in
-                component.onSwitch = onToggle
-            })
-        ]))
+        let elements = tableView.universalImage24Elements(
+                title: .body(title),
+                accessoryType: .switch(onSwitch: onToggle))
+        CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements))
     }
 
     private func selectorItems(viewItems: [MarketAdvancedSearchViewModel.FilterViewItem]) -> [ItemSelectorModule.Item] {

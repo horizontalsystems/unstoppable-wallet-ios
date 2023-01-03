@@ -45,24 +45,21 @@ class Eip1559EvmFeeViewController: ThemeViewController {
 
     func bindSelectableCell(cell: BaseThemeCell, title: String, subscribeTo driver: Driver<String>, isFirst: Bool = false, isLast: Bool = false) {
         cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-        CellBuilder.build(cell: cell, elements: [.image20, .text, .text])
-        cell.bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "circle_information_20")
-        })
-        cell.bind(index: 1, block: { (component: TextComponent) in
-            component.font = .subhead2
-            component.textColor = .themeGray
-            component.text = title
-        })
-        cell.bind(index: 2, block: { (component: TextComponent) in
-            component.font = .subhead1
-            component.textColor = .themeLeah
-        })
-        subscribe(disposeBag, driver) { value in
-            cell.bind(index: 2, block: { (component: TextComponent) in
-                component.text = value
-            })
+
+        let image = UIImage(named: "circle_information_24")
+        subscribe(disposeBag, driver) { [weak self] value in
+            self?.sync(cell: cell, image: image, title: title, value: value)
         }
+    }
+
+    private func sync(cell: BaseThemeCell?, image: UIImage?, title: String, value: String?) {
+        guard let cell = cell else {
+            return
+        }
+
+        CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(
+                tableView.universalImage24Elements(image: .local(image), title: .subhead2(title), value: .subhead1(value))
+        ))
     }
 
     override func viewDidLoad() {
@@ -82,41 +79,17 @@ class Eip1559EvmFeeViewController: ThemeViewController {
         tableView.delaysContentTouches = false
 
         bindSelectableCell(cell: gasLimitCell, title: "fee_settings.gas_limit".localized, subscribeTo: viewModel.gasLimitDriver, isFirst: true, isLast: false)
+
         currentBaseFeeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
-        CellBuilder.build(cell: currentBaseFeeCell, elements: [.text, .text])
-        currentBaseFeeCell.bind(index: 0, block: { (component: TextComponent) in
-            component.font = .subhead2
-            component.textColor = .themeGray
-            component.text = "fee_settings.current_base_fee".localized
-        })
-        currentBaseFeeCell.bind(index: 1, block: { (component: TextComponent) in
-            component.font = .subhead1
-            component.textColor = .themeLeah
-        })
+        sync(cell: currentBaseFeeCell, image: nil, title: "fee_settings.current_base_fee".localized, value: nil)
         subscribe(disposeBag, viewModel.currentBaseFeeDriver) { [weak self] value in
-           self?.currentBaseFeeCell.bind(index: 1, block: { (component: TextComponent) in
-                component.text = value
-            })
+            self?.sync(cell: self?.currentBaseFeeCell, image: nil, title: "fee_settings.current_base_fee".localized, value: value)
         }
 
         baseFeeCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
-        CellBuilder.build(cell: baseFeeCell, elements: [.image20, .text, .text])
-        baseFeeCell.bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "circle_information_20")
-        })
-        baseFeeCell.bind(index: 1, block: { (component: TextComponent) in
-            component.font = .subhead2
-            component.textColor = .themeGray
-            component.text = "fee_settings.base_fee".localized
-        })
-        baseFeeCell.bind(index: 2, block: { (component: TextComponent) in
-            component.font = .subhead1
-            component.textColor = .themeLeah
-        })
+        sync(cell: baseFeeCell, image: UIImage(named: "circle_information_24"), title: "fee_settings.base_fee".localized, value: nil)
         subscribe(disposeBag, viewModel.baseFeeDriver) { [weak self] value in
-            self?.baseFeeCell.bind(index: 2, block: { (component: TextComponent) in
-                component.text = value
-            })
+            self?.sync(cell: self?.baseFeeCell, image: UIImage(named: "circle_information_24"), title: "fee_settings.base_fee".localized, value: value)
         }
 
         baseFeeSliderCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)

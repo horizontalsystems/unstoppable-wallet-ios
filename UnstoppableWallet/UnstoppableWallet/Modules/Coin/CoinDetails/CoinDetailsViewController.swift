@@ -312,9 +312,10 @@ extension CoinDetailsViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if viewItem.hasMajorHolders {
-            let majorHoldersRow = tableView.titleValueArrowRow(
+            let majorHoldersRow = tableView.universalRow48(
                     id: "major-holders",
                     title: .subhead2("coin_page.major_holders".localized),
+                    accessoryType: .disclosure,
                     isFirst: true,
                     isLast: true
             ) { [weak self] in
@@ -395,10 +396,11 @@ extension CoinDetailsViewController: SectionsDataSource {
         let hasRatio = viewItem.tvlRatio != nil
 
         if let tvlRank = viewItem.tvlRank {
-            let tvlRankRow = tableView.titleValueArrowRow(
+            let tvlRankRow = tableView.universalRow48(
                     id: "market-cap-tvl-rank",
                     title: .subhead2("coin_page.tvl_rank".localized),
                     value: .subhead1(tvlRank),
+                    accessoryType: .disclosure,
                     isLast: !hasRatio,
                     action: { [weak self] in
                         self?.openTvlRank()
@@ -409,11 +411,10 @@ extension CoinDetailsViewController: SectionsDataSource {
         }
 
         if let tvlRatio = viewItem.tvlRatio {
-            let tvlRatioRow = tableView.titleValueArrowRow(
+            let tvlRatioRow = tableView.universalRow48(
                     id: "market-cap-tvl-ratio",
                     title: .subhead2("coin_page.market_cap_tvl_ratio".localized),
                     value: .subhead1(tvlRatio),
-                    showArrow: false,
                     isFirst: !hasRank,
                     isLast: true
             )
@@ -442,10 +443,11 @@ extension CoinDetailsViewController: SectionsDataSource {
         let hasReports = reportsCount != nil
 
         if let treasuries = treasuries {
-            let row = tableView.titleValueArrowRow(
+            let row = tableView.universalRow48(
                     id: "treasuries",
                     title: .subhead2("coin_page.treasuries".localized),
                     value: .subhead1(treasuries),
+                    accessoryType: .disclosure,
                     isFirst: true,
                     isLast: !hasFundsInvested && !hasReports
             ) { [weak self] in
@@ -456,10 +458,11 @@ extension CoinDetailsViewController: SectionsDataSource {
         }
 
         if let fundsInvested = fundsInvested {
-            let row = tableView.titleValueArrowRow(
+            let row = tableView.universalRow48(
                     id: "funds-invested",
                     title: .subhead2("coin_page.funds_invested".localized),
                     value: .subhead1(fundsInvested),
+                    accessoryType: .disclosure,
                     isFirst: !hasTreasuries,
                     isLast: !hasReports
             ) { [weak self] in
@@ -470,10 +473,11 @@ extension CoinDetailsViewController: SectionsDataSource {
         }
 
         if let reportsCount = reportsCount {
-            let row = tableView.titleValueArrowRow(
+            let row = tableView.universalRow48(
                     id: "reports",
                     title: .subhead2("coin_page.reports".localized),
                     value: .subhead1(reportsCount),
+                    accessoryType: .disclosure,
                     isFirst: !hasTreasuries && !hasFundsInvested,
                     isLast: true
             ) { [weak self] in
@@ -513,11 +517,10 @@ extension CoinDetailsViewController: SectionsDataSource {
         let hasAudits = !auditAddresses.isEmpty
 
         for (index, viewItem) in securityViewItems.enumerated() {
-            let row = tableView.titleValueArrowRow(
+            let row = tableView.universalRow48(
                 id: "security-\(viewItem.type)",
                 title: .subhead2(viewItem.type.title),
-                value: SectionsTableView.Text(text: viewItem.value, font: .subhead1, textColor: viewItem.valueGrade.textColor),
-                showArrow: false,
+                value: .custom(viewItem.value, .subhead1, viewItem.valueGrade.textColor),
                 isFirst: index == 0,
                 isLast: index == securityViewItems.count - 1 && !hasAudits
             )
@@ -526,9 +529,10 @@ extension CoinDetailsViewController: SectionsDataSource {
         }
 
         if !auditAddresses.isEmpty {
-            let row = tableView.titleValueArrowRow(
+            let row = tableView.universalRow48(
                 id: "audits",
                 title: .subhead2("coin_page.audits".localized),
+                accessoryType: .disclosure,
                 isFirst: !hasSecurity,
                 isLast: true
             ) { [weak self] in

@@ -38,10 +38,10 @@ class FeeCell: BaseSelectableThemeCell {
         set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         selectionStyle = viewModel.hasInformation ? .default : .none
 
-        CellBuilder.build(cell: self, elements: [.image20, .text, .text, .spinner20])
+        CellBuilder.build(cell: self, elements: [.image24, .text, .text, .spinner20])
 
         bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "circle_information_20")
+            component.imageView.image = UIImage(named: "circle_information_24")
             component.isHidden = !viewModel.hasInformation
         })
 

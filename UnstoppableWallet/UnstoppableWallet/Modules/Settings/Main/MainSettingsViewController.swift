@@ -57,76 +57,39 @@ class MainSettingsViewController: ThemeViewController {
         }
 
         manageAccountsCell.set(backgroundStyle: .lawrence, isFirst: true)
-        buildTitleImage(cell: manageAccountsCell, image: UIImage(named: "wallet_20"), title: "settings.manage_accounts".localized)
+        syncManageAccountCell()
 
         securityCenterCell.set(backgroundStyle: .lawrence, isLast: true)
-        buildTitleImage(cell: securityCenterCell, image: UIImage(named: "shield_20"), title: "settings.security_center".localized)
+        syncSecurityCenterCell()
 
         walletConnectCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        buildTitleValue(cell: walletConnectCell, image: UIImage(named: "wallet_connect_20"), title: "wallet_connect.title".localized)
+        syncWalletConnectCell()
 
         appearanceCell.set(backgroundStyle: .lawrence, isFirst: true)
-        buildTitleValue(cell: appearanceCell, image: UIImage(named: "brush_20"), title: "appearance.title".localized)
+        buildTitleValue(cell: appearanceCell, image: UIImage(named: "brush_24"), title: "appearance.title".localized)
 
         baseCurrencyCell.set(backgroundStyle: .lawrence)
-        buildTitleValue(cell: baseCurrencyCell, image: UIImage(named: "usd_20"), title: "settings.base_currency".localized)
+        syncBaseCurrency()
 
         languageCell.set(backgroundStyle: .lawrence)
-        buildTitleValue(cell: languageCell, image: UIImage(named: "globe_20"), title: "settings.language".localized)
-        languageCell.bind(index: 2) { (component: TextComponent) in
-            component.text = viewModel.currentLanguage
-        }
+        buildTitleValue(cell: languageCell, image: UIImage(named: "globe_24"), title: "settings.language".localized, value: viewModel.currentLanguage)
 
         aboutCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        buildTitleImage(cell: aboutCell, image: UIImage(named: "uw_20"), title: "settings.about_app.title".localized)
+        syncAboutCell()
 
         footerCell.set(appVersion: viewModel.appVersion)
         footerCell.onTapLogo = { [weak self] in
             self?.viewModel.onTapCompanyLink()
         }
 
-        subscribe(disposeBag, viewModel.manageWalletsAlertDriver) { [weak self] alert in
-            self?.manageAccountsCell.bind(index: 2) { (component: ImageComponent) in
-                component.imageView.image = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
-                component.imageView.tintColor = .themeLucian
-            }
-        }
-        subscribe(disposeBag, viewModel.securityCenterAlertDriver) { [weak self] alert in
-            self?.securityCenterCell.bind(index: 2) { (component: ImageComponent) in
-                component.imageView.image = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
-                component.imageView.tintColor = .themeLucian
-            }
-        }
+        subscribe(disposeBag, viewModel.manageWalletsAlertDriver) { [weak self] in self?.syncManageAccountCell(alert: $0) }
+        subscribe(disposeBag, viewModel.securityCenterAlertDriver) { [weak self] in self?.syncSecurityCenterCell(alert: $0) }
+
         subscribe(disposeBag, viewModel.walletConnectCountDriver) { [weak self] tuple in
-            self?.walletConnectCell.bind(index: 2) { (component: TextComponent) in
-                if let tuple = tuple {
-                    component.isHidden = tuple.highlighted
-                    component.text = tuple.text
-                } else {
-                    component.isHidden = true
-                }
-            }
-            self?.walletConnectCell.bind(index: 3) { (component: BadgeComponent) in
-                if let tuple = tuple {
-                    component.isHidden = !tuple.highlighted
-                    component.badgeView.set(style: .medium)
-                    component.badgeView.text = tuple.text
-                } else {
-                    component.isHidden = true
-                }
-            }
+            self?.syncWalletConnectCell(text: tuple?.text, highlighted: tuple?.highlighted ?? false)
         }
-        subscribe(disposeBag, viewModel.baseCurrencyDriver) { [weak self] baseCurrency in
-            self?.baseCurrencyCell.bind(index: 2) { (component: TextComponent) in
-                component.text = baseCurrency
-            }
-        }
-        subscribe(disposeBag, viewModel.aboutAlertDriver) { [weak self] alert in
-            self?.aboutCell.bind(index: 2) { (component: ImageComponent) in
-                component.imageView.image = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
-                component.imageView.tintColor = .themeLucian
-            }
-        }
+        subscribe(disposeBag, viewModel.baseCurrencyDriver) { [weak self] in self?.syncBaseCurrency(value: $0) }
+        subscribe(disposeBag, viewModel.aboutAlertDriver) { [weak self] in self?.syncAboutCell(alert: $0) }
 
         subscribe(disposeBag, viewModel.openWalletConnectSignal) { [weak self] in self?.openWalletConnect(mode: $0) }
         subscribe(disposeBag, viewModel.openLinkSignal) { [weak self] url in
@@ -140,41 +103,83 @@ class MainSettingsViewController: ThemeViewController {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
-    private func buildTitleImage(cell: BaseThemeCell, image: UIImage?, title: String) {
-        CellBuilder.build(cell: cell, elements: [.image20, .text, .image20, .margin8, .image20])
-        cell.bind(index: 0) { (component: ImageComponent) in
-            component.imageView.image = image
-        }
-        cell.bind(index: 1) { (component: TextComponent) in
-            component.font = .body
-            component.textColor = .themeLeah
-            component.text = title
-        }
-        cell.bind(index: 3) { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "arrow_big_forward_20")
-        }
+    private func syncManageAccountCell(alert: Bool = false) {
+        let alertImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
+        buildTitleImage(cell: manageAccountsCell, image: UIImage(named: "wallet_24"), title: "settings.manage_accounts".localized, alertImage: alertImage)
     }
 
-    private func buildTitleValue(cell: BaseThemeCell, image: UIImage?, title: String) {
-        CellBuilder.build(cell: cell, elements: [.image20, .text, .text, .badge, .margin8, .image20])
-        cell.bind(index: 0) { (component: ImageComponent) in
-            component.imageView.image = image
-        }
-        cell.bind(index: 1) { (component: TextComponent) in
-            component.font = .body
-            component.textColor = .themeLeah
-            component.text = title
-        }
-        cell.bind(index: 2) { (component: TextComponent) in
-            component.font = .subhead1
-            component.textColor = .themeGray
-        }
-        cell.bind(index: 3) { (component: BadgeComponent) in
-            component.isHidden = true
-        }
-        cell.bind(index: 4) { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "arrow_big_forward_20")
-        }
+    private func syncSecurityCenterCell(alert: Bool = false) {
+        let alertImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
+        buildTitleImage(cell: securityCenterCell, image: UIImage(named: "shield_24"), title: "settings.security_center".localized, alertImage: alertImage)
+    }
+
+    private func syncAboutCell(alert: Bool = false) {
+        let alertImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
+        buildTitleImage(cell: aboutCell, image: UIImage(named: "uw_24"), title: "settings.about_app.title".localized, alertImage: alertImage)
+    }
+
+    private func buildTitleImage(cell: BaseThemeCell, image: UIImage?, title: String, alertImage: UIImage? = nil) {
+        CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack([
+            .image24 { (component: ImageComponent) -> () in
+                component.imageView.image = image
+            },
+            .text { (component: TextComponent) -> () in
+                component.font = .body
+                component.textColor = .themeLeah
+                component.text = title
+            },
+            .image20 { (component: ImageComponent) -> () in
+                component.isHidden = alertImage == nil
+                component.imageView.image = alertImage
+                component.imageView.tintColor = .themeLucian
+            },
+            .margin8,
+            .image20 { (component: ImageComponent) -> () in
+                component.imageView.image = UIImage(named: "arrow_big_forward_20")
+            }
+        ]))
+    }
+
+    private func syncWalletConnectCell(text: String? = nil, highlighted: Bool = false) {
+        buildTitleValue(
+                cell: walletConnectCell,
+                image: UIImage(named: "wallet_connect_24"),
+                title: "wallet_connect.title".localized,
+                value: !highlighted ? text : nil,
+                badge: highlighted ? text : nil
+        )
+    }
+
+    private func syncBaseCurrency(value: String? = nil) {
+        buildTitleValue(cell: baseCurrencyCell, image: UIImage(named: "usd_24"), title: "settings.base_currency".localized, value: value)
+    }
+
+    private func buildTitleValue(cell: BaseThemeCell, image: UIImage?, title: String, value: String? = nil, badge: String? = nil) {
+        CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack([
+            .image24 { (component: ImageComponent) in
+                component.imageView.image = image
+            },
+            .text { (component: TextComponent) -> () in
+                component.font = .body
+                component.textColor = .themeLeah
+                component.text = title
+            },
+            .text { (component: TextComponent) -> () in
+                component.font = .subhead1
+                component.textColor = .themeGray
+                component.text = value
+            },
+            .margin8,
+            .badge { (component: BadgeComponent) -> () in
+                component.badgeView.set(style: .medium)
+                component.isHidden = badge == nil
+                component.badgeView.text = badge
+            },
+            .margin8,
+            .image20 { (component: ImageComponent) -> () in
+                component.imageView.image = UIImage(named: "arrow_big_forward_20")
+            }
+        ]))
     }
 
     private var securityRows: [RowProtocol] {
@@ -239,9 +244,9 @@ class MainSettingsViewController: ThemeViewController {
                         self?.navigationController?.pushViewController(module, animated: true)
                     }
             ),
-            tableView.imageTitleArrowRow(
+            tableView.universalRow48(
                     id: "experimental-features",
-                    image: UIImage(named: "flask_24"),
+                    image: .local(UIImage(named: "flask_24")),
                     title: .body("settings.experimental_features".localized),
                     isLast: true,
                     action: { [weak self] in
@@ -253,18 +258,18 @@ class MainSettingsViewController: ThemeViewController {
 
     private var knowledgeRows: [RowProtocol] {
         [
-            tableView.imageTitleArrowRow(
+            tableView.universalRow48(
                     id: "faq",
-                    image: UIImage(named: "message_square_24"),
+                    image: .local(UIImage(named: "message_square_24")),
                     title: .body("settings.faq".localized),
                     isFirst: true,
                     action: { [weak self] in
                         self?.navigationController?.pushViewController(FaqModule.viewController(), animated: true)
                     }
             ),
-            tableView.imageTitleArrowRow(
+            tableView.universalRow48(
                     id: "academy",
-                    image: UIImage(named: "academy_1_24"),
+                    image: .local(UIImage(named: "academy_1_24")),
                     title: .body("guides.title".localized),
                     isLast: true,
                     action: { [weak self] in

@@ -73,16 +73,7 @@ class SendFeeSettingsViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         feeRateCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
-        CellBuilder.build(cell: feeRateCell, elements: [.text, .text])
-        feeRateCell.bind(index: 0, block: { (component: TextComponent) in
-            component.font = .subhead2
-            component.textColor = .themeGray
-            component.text = "fee_settings.fee_rate".localized
-        })
-        feeRateCell.bind(index: 1, block: { (component: TextComponent) in
-            component.font = .subhead1
-            component.textColor = .themeLeah
-        })
+        sync(feeSliderViewItem: nil)
 
         feePriorityCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         feeSliderCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
@@ -153,9 +144,9 @@ class SendFeeSettingsViewController: ThemeViewController {
     }
 
     private func sync(feeSliderViewItem: FeeViewItem?) {
-        feeRateCell.bind(index: 1, block: { (component: TextComponent) in
-            component.text = feeSliderViewItem?.description
-        })
+        CellBuilderNew.buildStatic(cell: feeRateCell, rootElement: .hStack(
+                tableView.universalImage24Elements(title: .subhead2("fee_settings.fee_rate".localized), value: .subhead1(feeSliderViewItem?.description)))
+        )
     }
 
     private func openInfo(title: String, description: String) {

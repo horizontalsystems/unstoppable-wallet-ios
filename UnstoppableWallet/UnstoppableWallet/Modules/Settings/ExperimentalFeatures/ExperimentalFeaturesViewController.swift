@@ -66,17 +66,17 @@ extension ExperimentalFeaturesViewController: SectionsDataSource {
                     id: "bitcoin_hodling_section",
                     headerState: .margin(height: .margin12),
                     rows: [
-                        tableView.titleArrowRow(
+                        tableView.universalRow48(
                                 id: "bitcoin_hodling",
-                                title: "settings.experimental_features.bitcoin_hodling".localized,
+                                title: .body("settings.experimental_features.bitcoin_hodling".localized),
                                 isFirst: true,
                                 action: { [weak self] in
                                     self?.openBitcoinHodling()
                                 }
                         ),
-                        tableView.titleArrowRow(
+                        tableView.universalRow48(
                                 id: "evm_testnet",
-                                title: "settings.experimental_features.evm_testnet".localized,
+                                title: .body("settings.experimental_features.evm_testnet".localized),
                                 isLast: true,
                                 action: { [weak self] in
                                     self?.openEvmTestnet()

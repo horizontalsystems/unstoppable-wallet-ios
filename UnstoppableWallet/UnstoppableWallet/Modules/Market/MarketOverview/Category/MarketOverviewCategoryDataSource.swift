@@ -50,7 +50,7 @@ extension MarketOverviewCategoryDataSource: IMarketOverviewDataSource {
         viewItemsRelay.map { _ in () }
     }
 
-    func sections(tableView: UITableView) -> [SectionProtocol] {
+    func sections(tableView: SectionsTableView) -> [SectionProtocol] {
         guard let viewItems = viewItemsRelay.value else {
             return []
         }

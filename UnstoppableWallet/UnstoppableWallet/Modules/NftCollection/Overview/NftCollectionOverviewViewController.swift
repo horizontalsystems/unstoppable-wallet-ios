@@ -215,7 +215,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                 id: "royalty",
                 footerState: .margin(height: .margin24),
                 rows: rowTexts.enumerated().map { index, tuple in
-                    tableView.titleValueArrowRow(
+                    tableView.universalRow48(
                             id: "text_\(index)",
                             title: .subhead2(tuple.0),
                             value: .subhead1(tuple.1, gray: false),
@@ -320,32 +320,17 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
     }
 
     private func linkRow(iconImage: UIImage?, title: String, url: String, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        CellBuilderNew.row(
-                rootElement: .hStack([
-                    .image24 { (component: ImageComponent) -> () in
-                        component.imageView.image = iconImage?.withTintColor(.themeGray)
-                    },
-                    .text { (component: TextComponent) -> () in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    },
-                    .margin8,
-                    .image20 { (component: ImageComponent) -> () in
-                        component.imageView.image = UIImage(named: "arrow_small_forward_20")?.withTintColor(.themeGray)
-                    }
-                ]),
-                tableView: tableView,
+        tableView.universalRow48(
                 id: "link-\(title)",
-                height: .heightCell48,
+                image: .local(iconImage?.withTintColor(.themeGray)),
+                title: .body(title),
+                accessoryType: .disclosure,
                 autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                },
+                isFirst: isFirst,
+                isLast: isLast,
                 action: { [weak self] in
                     self?.openLink(url: url)
-                }
-        )
+                })
     }
 
     private func poweredBySection(text: String) -> SectionProtocol {

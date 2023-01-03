@@ -60,44 +60,29 @@ class BottomSheetItem {
         }
     }
 
-    static func simpleRow(tableView: UITableView, viewItem: SimpleViewItem, rowIndex: Int, isLast: Bool, action: (() -> Void)? = nil) -> RowProtocol {
-        CellBuilderNew.row(
-            rootElement: .hStack([
-                .image24 { component in
-                    if let imageUrl = viewItem.imageUrl {
-                        component.isHidden = false
-                        if viewItem.localImage {
-                            component.imageView.image = UIImage(named: imageUrl)
-                        } else {
-                            component.setImage(urlString: imageUrl, placeholder: nil)
-                        }
-                    } else {
-                        component.isHidden = true
-                    }
-                },
-                .text { component in
-                    component.font = .body
-                    component.textColor = viewItem.titleColor
-                    component.text = viewItem.title
-                },
-                .image20 { component in
-                    component.isHidden = !viewItem.selected
-                    component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
-                },
-            ]),
-            tableView: tableView,
-            id: "row_\(rowIndex)",
-            hash: "\(viewItem.selected)",
-            height: .heightCell48,
-            autoDeselect: action != nil,
-            bind: { cell in
-                cell.set(backgroundStyle: .bordered, isFirst: rowIndex == 0, isLast: isLast)
-            },
-            action: action
-        )
+    static func simpleRow(tableView: SectionsTableView, viewItem: SimpleViewItem, rowIndex: Int, isLast: Bool, action: (() -> Void)? = nil) -> RowProtocol {
+        var image: CellBuilderNew.CellElement.Image?
+        if let name = viewItem.imageUrl {
+            if viewItem.localImage {
+                image = UIImage(named: name).map { .local($0) }
+            } else {
+                image = .url(name)
+            }
+        }
+        return tableView.universalRow48(
+                id: "row_\(rowIndex)",
+                image: image,
+                title: .custom(viewItem.title, .body, viewItem.titleColor),
+                accessoryType: .check(viewItem.selected),
+                hash: "\(viewItem.selected)",
+                backgroundStyle: .bordered,
+                autoDeselect: action != nil,
+                isFirst: rowIndex == 0,
+                isLast: isLast,
+                action: action)
     }
 
-    static func complexRow(tableView: UITableView, viewItem: ComplexViewItem, rowIndex: Int, isLast: Bool, action: (() -> Void)? = nil) -> RowProtocol {
+    static func complexRow(tableView: SectionsTableView, viewItem: ComplexViewItem, rowIndex: Int, isLast: Bool, action: (() -> Void)? = nil) -> RowProtocol {
         CellBuilderNew.row(
             rootElement: .hStack([
                 .vStack([

@@ -128,40 +128,17 @@ extension CoinAuditsViewController: SectionsDataSource {
     }
 
     private func row(auditViewItem: CoinAuditsViewModel.AuditViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        var elements = [CellBuilderNew.CellElement]()
-        elements.append(.vStackCentered([
-            .text { (component: TextComponent) -> () in
-                component.font = .body
-                component.textColor = .themeLeah
-                component.text = auditViewItem.date
-            },
-            .margin(1),
-            .text { (component: TextComponent) -> () in
-                component.font = .subhead2
-                component.textColor = .themeGray
-                component.text = auditViewItem.name
-            }
-        ]))
-        elements.append(.text { (component: TextComponent) -> () in
-            component.setContentHuggingPriority(.required, for: .horizontal)
-            component.font = .subhead1
-            component.textColor = .themeGray
-            component.text = auditViewItem.issues
-        })
-
-        var action: (() -> ())?
-        if let url = auditViewItem.reportUrl {
-            elements.append(contentsOf: [
-                .margin8,
-                .image20 { (component: ImageComponent) in
-                    component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                }
-            ])
-            action = { [weak self] in
-                self?.open(url: url)
-            }
+        var elements: [CellBuilderNew.CellElement] = [
+            .vStackCentered([
+                .textElement(text: .body(auditViewItem.date)),
+                .margin(1),
+                .textElement(text: .subhead2(auditViewItem.name))
+            ]),
+            .textElement(text: .subhead1(auditViewItem.issues, gray: true), parameters: .rightAlignment)
+        ]
+        if auditViewItem.reportUrl != nil {
+            elements.append(contentsOf: CellBuilderNew.CellElement.accessoryElements(.disclosure))
         }
-
         return CellBuilderNew.row(
                 rootElement: .hStack(elements),
                 tableView: tableView,
@@ -171,7 +148,9 @@ extension CoinAuditsViewController: SectionsDataSource {
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                 },
-                action: action
+                action: auditViewItem.reportUrl.map { url in
+                    { [weak self] in self?.open(url: url) }
+                }
         )
     }
 

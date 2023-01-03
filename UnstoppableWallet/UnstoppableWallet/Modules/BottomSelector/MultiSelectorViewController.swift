@@ -72,27 +72,14 @@ class MultiSelectorViewController: ThemeViewController {
 extension MultiSelectorViewController: SectionsDataSource {
 
     private func row(id: String, isFirst: Bool, isLast: Bool, value: String, valueColor: UIColor, selected: Bool, action: @escaping () -> ()) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.text, .image20],
-                tableView: tableView,
+        tableView.universalRow48(
                 id: id,
+                title: .custom(value, .body, valueColor),
+                accessoryType: .check(selected),
                 hash: "\(selected)",
-                height: .heightCell48,
                 autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0, block: { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = valueColor
-                        component.text = value
-                    })
-
-                    cell.bind(index: 1, block: { (component: ImageComponent) in
-                        component.isHidden = !selected
-                        component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
-                    })
-                },
+                isFirst: isFirst,
+                isLast: isLast,
                 action: action
         )
     }

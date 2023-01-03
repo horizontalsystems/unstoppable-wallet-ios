@@ -94,11 +94,10 @@ extension CoinInvestorsViewController: SectionsDataSource {
                 headerState: .margin(height: .margin12),
                 footerState: .margin(height: .margin12),
                 rows: [
-                    tableView.titleValueArrowRow(
+                    tableView.universalRow48(
                             id: "header-\(index)",
-                            title: SectionsTableView.Text(text: title, font: .body, textColor: .themeJacob),
+                            title: .custom(title, .body, .themeJacob),
                             value: .body(value),
-                            showArrow: false,
                             backgroundStyle: .transparent
                     )
                 ]

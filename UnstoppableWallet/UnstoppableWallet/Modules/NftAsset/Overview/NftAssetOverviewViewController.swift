@@ -294,10 +294,12 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                                 cell.text = assetName
                             }
                     ),
-                    tableView.titleValueArrowRow(
+                    tableView.universalRow48(
                             id: "collection",
                             title: .custom(collectionName, .body, .themeJacob),
+                            accessoryType: .disclosure,
                             backgroundStyle: .transparent,
+                            autoDeselect: true,
                             isFirst: true,
                             action: { [weak self] in
                                 self?.openCollection(providerUid: providerCollectionUid)
@@ -583,11 +585,10 @@ extension NftAssetOverviewViewController: SectionsDataSource {
     }
 
     private func detailRow(title: String, value: String, isLast: Bool = false) -> RowProtocol {
-        tableView.titleValueArrowRow(
+        tableView.universalRow48(
                 id: "detail-\(title)",
                 title: .body(title),
                 value: .subhead1(value, gray: true),
-                showArrow: false,
                 isLast: isLast
         )
     }
@@ -615,31 +616,17 @@ extension NftAssetOverviewViewController: SectionsDataSource {
     }
 
     private func linkRow(iconImage: UIImage?, title: String, url: String, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image20, .text, .image20],
-                tableView: tableView,
+        tableView.universalRow48(
                 id: "link-\(title)",
-                height: .heightCell48,
+                image: .local(iconImage?.withTintColor(.themeGray)),
+                title: .body(title),
+                accessoryType: .disclosure,
                 autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.imageView.image = iconImage?.withTintColor(.themeGray)
-                    }
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    }
-                    cell.bind(index: 2) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "arrow_small_forward_20")?.withTintColor(.themeGray)
-                    }
-                },
+                isFirst: isFirst,
+                isLast: isLast,
                 action: { [weak self] in
                     self?.openLink(url: url)
-                }
-        )
+                })
     }
 
     private func linksSections(links: [NftAssetOverviewViewModel.LinkViewItem]) -> [SectionProtocol] {

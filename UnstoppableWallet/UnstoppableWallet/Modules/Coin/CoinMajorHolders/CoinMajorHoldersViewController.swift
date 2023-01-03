@@ -163,10 +163,9 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
                 Section(
                         id: "holders",
                         footerState: .margin(height: .margin32),
-                        rows: [tableView.titleValueArrowRow(
+                        rows: [tableView.universalRow48(
                                 id: "top_ethereum_wallets",
                                 title: .body("coin_page.major_holders.top_ethereum_wallets".localized),
-                                showArrow: false,
                                 backgroundStyle: .transparent
                         )] + stateViewItem.viewItems.enumerated().map { index, viewItem in
                             row(viewItem: viewItem, isLast: index == stateViewItem.viewItems.count - 1)

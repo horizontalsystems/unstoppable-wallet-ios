@@ -140,31 +140,14 @@ class ExtendedKeyViewController: ThemeViewController {
 extension ExtendedKeyViewController: SectionsDataSource {
 
     private func controlRow(item: ControlItem, isFirst: Bool = false, isLast: Bool = false) -> RowProtocol {
-        CellBuilderNew.row(
-                rootElement: .hStack([
-                    .text { component in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = item.title
-                    },
-                    .text { component in
-                        component.font = .subhead1
-                        component.textColor = .themeGray
-                        component.text = item.value
-                    },
-                    .margin8,
-                    .image20 { component in
-                        component.isHidden = item.action == nil
-                        component.imageView.image = UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray)
-                    }
-                ]),
-                tableView: tableView,
+        tableView.universalRow48(
                 id: item.id,
-                height: .heightCell48,
+                title: .body(item.title),
+                value: .subhead1(item.value, gray: true),
+                accessoryType: item.action == nil ? .none : .dropdown,
                 autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                },
+                isFirst: isFirst,
+                isLast: isLast,
                 action: item.action
         )
     }

@@ -60,10 +60,10 @@ class WalletConnectV1ListView {
 
                     return CellBuilderNew.row(
                             rootElement: .hStack([
-                                .image24 { component in
+                                .image32 { component in
                                     component.imageView.cornerRadius = .cornerRadius8
                                     component.imageView.layer.cornerCurve = .continuous
-                                    component.setImage(urlString: viewItem.imageUrl, placeholder: nil)
+                                    component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_32"))
                                 },
                                 .vStackCentered([
                                     .text { component in
@@ -71,7 +71,7 @@ class WalletConnectV1ListView {
                                         component.textColor = .themeLeah
                                         component.text = viewItem.title
                                     },
-                                    .margin(3),
+                                    .margin(1),
                                     .text { component in
                                         component.font = .subhead2
                                         component.textColor = .themeGray

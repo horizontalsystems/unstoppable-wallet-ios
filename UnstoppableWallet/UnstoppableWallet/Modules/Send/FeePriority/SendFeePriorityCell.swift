@@ -18,20 +18,23 @@ class SendFeePriorityCell: BaseSelectableThemeCell {
         backgroundColor = .clear
         clipsToBounds = true
 
-        CellBuilder.build(cell: self, elements: [.image20, .text, .secondaryButton])
-
-        bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "circle_information_20")
-        })
-
-        bind(index: 1) { (component: TextComponent) in
-            component.font = .subhead2
-            component.textColor = .themeGray
-            component.text = "send.tx_speed".localized
-        }
-
+        sync(priority: nil)
         subscribe(disposeBag, viewModel.priorityDriver) { [weak self] priority in
-            self?.bind(index: 2) { (component: SecondaryButtonComponent) in
+            self?.sync(priority: priority)
+        }
+    }
+
+    private func sync(priority: String?) {
+        CellBuilderNew.buildStatic(cell: self, rootElement: .hStack([
+            .image24 { (component: ImageComponent) -> () in
+                component.imageView.image = UIImage(named: "circle_information_24")
+            },
+            .text { (component: TextComponent) -> () in
+                component.font = .subhead2
+                component.textColor = .themeGray
+                component.text = "send.tx_speed".localized
+            },
+            .secondaryButton { (component: SecondaryButtonComponent) -> () in
                 component.button.set(style: .default)
                 component.button.set(image: UIImage(named: "arrow_small_down_20"))
                 component.button.setTitle(priority, for: .normal)
@@ -39,7 +42,8 @@ class SendFeePriorityCell: BaseSelectableThemeCell {
                     self?.onTapPriority()
                 }
             }
-        }
+        ]))
+
     }
 
     required init?(coder aDecoder: NSCoder) {

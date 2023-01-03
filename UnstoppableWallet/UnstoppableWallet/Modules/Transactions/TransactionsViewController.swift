@@ -210,7 +210,7 @@ class TransactionsViewController: ThemeViewController {
                     component.set(image: UIImage(named: "warning_2_20")?.withTintColor(.themeLucian), contentMode: .center)
                 }
             },
-            .margin(6),
+            .margin(10),
             .vStackCentered([
                 .hStack([
                     .text { component in
@@ -246,7 +246,7 @@ class TransactionsViewController: ThemeViewController {
                         }
                     }
                 ]),
-                .margin(3),
+                .margin(1),
                 .hStack([
                     .text { component in
                         component.font = .subhead2

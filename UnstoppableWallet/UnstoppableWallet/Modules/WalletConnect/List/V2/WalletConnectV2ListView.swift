@@ -67,10 +67,10 @@ class WalletConnectV2ListView {
         let rowAction = deleteRowAction(id: viewItem.id)
 
         let elements: [CellBuilderNew.CellElement] = [
-            .image24 { component in
+            .image32 { component in
                 component.imageView.cornerRadius = .cornerRadius8
                 component.imageView.layer.cornerCurve = .continuous
-                component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_24"))
+                component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_32"))
             },
             .vStackCentered([
                 .text { component in
@@ -78,7 +78,7 @@ class WalletConnectV2ListView {
                     component.textColor = .themeLeah
                     component.text = viewItem.title
                 },
-                .margin(3),
+                .margin(1),
                 .text { component in
                     component.font = .subhead2
                     component.textColor = .themeGray
@@ -111,28 +111,14 @@ class WalletConnectV2ListView {
         )
     }
 
-    private func pairingCountCell(tableView: UITableView, pairingCount: Int) -> RowProtocol {
-        CellBuilderNew.row(
-                rootElement: .hStack([
-                    .text { component in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = "wallet_connect.list.pairings".localized
-                    },
-                    .text { component in
-                        component.font = .subhead1
-                        component.textColor = .themeGray
-                        component.text = "\(pairingCount)"
-                    },
-                    .image20 { component in
-                        component.imageView.image = UIImage(named: "arrow_big_forward_20")
-                    }
-                ]),
-                tableView: tableView,
-                id: "session-pairing",
-                height: .heightCell48,
+    private func pairingCountCell(tableView: SectionsTableView, pairingCount: Int) -> RowProtocol {
+        tableView.universalRow48(id: "session-pairing",
+                title: .body("wallet_connect.list.pairings".localized),
+                value: .subhead1("\(pairingCount)", gray: true),
+                accessoryType: .disclosure,
                 autoDeselect: true,
-                bind: { cell in cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true) },
+                isFirst: true,
+                isLast: true,
                 action: { [weak self] in self?.showPairings() }
         )
     }

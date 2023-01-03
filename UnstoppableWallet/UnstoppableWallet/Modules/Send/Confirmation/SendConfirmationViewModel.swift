@@ -83,7 +83,7 @@ class SendConfirmationViewModel {
             case let item as SendConfirmationLockUntilViewItem:
                 primaryViewItems.append(
                         .value(
-                                iconName: "lock_20",
+                                iconName: "lock_24",
                                 title: "send.confirmation.time_lock".localized,
                                 value: item.lockValue,
                                 type: .regular

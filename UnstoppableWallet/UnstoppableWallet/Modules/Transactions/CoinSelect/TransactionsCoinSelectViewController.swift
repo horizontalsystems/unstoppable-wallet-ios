@@ -69,11 +69,11 @@ class TransactionsCoinSelectViewController: ThemeSearchViewController {
 extension TransactionsCoinSelectViewController: SectionsDataSource {
 
     private func allRow(selected: Bool, index: Int, isLast: Bool) -> RowProtocol {
-        tableView.imageTitleCheckRow(
+        tableView.universalRow48(
                 id: "all-row",
-                image: UIImage(named: "circle_coin_24")?.withTintColor(.themeGray),
+                image: .local(UIImage(named: "circle_coin_24")?.withTintColor(.themeGray)),
                 title: .body("transactions.all_coins".localized),
-                selected: selected,
+                accessoryType: .check(selected),
                 backgroundStyle: .transparent,
                 isLast: isLast,
                 action: { [weak self] in
@@ -83,36 +83,34 @@ extension TransactionsCoinSelectViewController: SectionsDataSource {
     }
 
     private func row(viewItem: TransactionsCoinSelectViewModel.TokenViewItem, selected: Bool, index: Int, isLast: Bool) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image24, .multiText, .image20],
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .imageElement(image: .url(viewItem.imageUrl, placeholder: viewItem.placeholderImageName), size: .image32),
+                    .vStackCentered([
+                        .hStack([
+                            .textElement(text: .body(viewItem.code),  parameters: .highHugging),
+                            .margin(6),
+                            .badge { (component: BadgeComponent) -> () in
+                                component.badgeView.isHidden = viewItem.badge == nil
+                                component.badgeView.text = viewItem.badge
+                                component.badgeView.set(style: .small)
+                            },
+                            .margin0,
+                            .text { _ in  }
+                        ]),
+                        .margin(1),
+                        .textElement(text: .subhead2(viewItem.name))
+                    ]),
+                    .image20 { (component: ImageComponent) -> () in
+                        component.isHidden = !selected
+                        component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
+                    }
+                ]),
                 tableView: tableView,
                 id: "row-\(index)",
                 height: .heightDoubleLineCell,
                 bind: { cell in
                     cell.set(backgroundStyle: .transparent, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.placeholderImageName))
-                    }
-
-                    cell.bind(index: 1) { (component: MultiTextComponent) in
-                        component.set(style: .m7)
-                        component.title.font = .body
-                        component.title.textColor = .themeLeah
-                        component.subtitle.font = .subhead2
-                        component.subtitle.textColor = .themeGray
-
-                        component.title.text = viewItem.code
-                        component.subtitle.text = viewItem.name
-
-                        component.titleBadge.isHidden = viewItem.badge == nil
-                        component.titleBadge.text = viewItem.badge
-                    }
-
-                    cell.bind(index: 2) { (component: ImageComponent) in
-                        component.isHidden = !selected
-                        component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
-                    }
                 },
                 action: { [weak self] in
                     self?.onSelect(index: index)
