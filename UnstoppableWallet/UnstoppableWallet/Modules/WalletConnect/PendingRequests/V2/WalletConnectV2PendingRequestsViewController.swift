@@ -84,56 +84,33 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
     }
 
     private func accountCell(id: String, title: String, selected: Bool, action: @escaping () -> ()) -> RowProtocol {
-        var elements: [CellBuilder.CellElement] = [.image20, .text]
-
-        let binder: (BaseThemeCell) -> () = { cell in
-            cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
-
-            cell.bind(index: 0) { (component: ImageComponent) in
-                if selected {
-                    component.imageView.image = UIImage(named: "circle_radioon_24")?.withRenderingMode(.alwaysTemplate)
-                    component.imageView.tintColor = .themeJacob
-                } else {
-                    component.imageView.image = UIImage(named: "circle_radiooff_24")?.withRenderingMode(.alwaysTemplate)
-                    component.imageView.tintColor = .themeGray
-                }
-            }
-
-            cell.bind(index: 1) { (component: TextComponent) in
-                component.font = .body
-                component.textColor = .themeLeah
-                component.text = title
-            }
-
-            if !selected {
-                cell.bind(index: 2) { (component: SecondaryButtonComponent) in
-                    component.button.set(style: .default)
-                    component.button.setTitle("Switch", for: .normal)
-                    component.onTap = action
-                }
-            }
-        }
-
-        if !selected {
-            elements.append(.secondaryButton)
-
-            return CellBuilder.selectableRow(
-                    elements: elements,
-                    tableView: tableView,
-                    id: "account-selectable-\(title)-cell",
-                    height: .heightCell48,
-                    autoDeselect: true,
-                    bind: binder,
-                    action: { [weak self] in self?.onSelect(accountId: id) }
-            )
-        }
-
-        return CellBuilder.row(
-                elements: elements,
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image24 { (component: ImageComponent) -> () in
+                        if selected {
+                            component.imageView.image = UIImage(named: "circle_radioon_24")?.withRenderingMode(.alwaysTemplate)
+                            component.imageView.tintColor = .themeJacob
+                        } else {
+                            component.imageView.image = UIImage(named: "circle_radiooff_24")?.withRenderingMode(.alwaysTemplate)
+                            component.imageView.tintColor = .themeGray
+                        }
+                    },
+                    .textElement(text: .body(title)),
+                    .secondaryButton { (component: SecondaryButtonComponent) -> () in
+                        component.isHidden = !selected
+                        component.button.set(style: .default)
+                        component.button.setTitle("Switch", for: .normal)
+                        component.onTap = action
+                    }
+                ]),
                 tableView: tableView,
-                id: "account-\(title)-cell",
+                id: "account-\(selected)-\(title)-cell",
                 height: .heightCell48,
-                bind: binder
+                autoDeselect: true,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
+                },
+                action: !selected ? { [weak self] in self?.onSelect(accountId: id) } : nil
         )
     }
 

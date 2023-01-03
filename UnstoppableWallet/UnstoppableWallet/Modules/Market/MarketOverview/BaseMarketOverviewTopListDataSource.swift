@@ -34,7 +34,7 @@ class BaseMarketOverviewTopListDataSource {
         }
     }
 
-    private func rows(tableView: UITableView, listViewItems: [MarketModule.ListViewItem]) -> [RowProtocol] {
+    private func rows(tableView: SectionsTableView, listViewItems: [MarketModule.ListViewItem]) -> [RowProtocol] {
         listViewItems.enumerated().map { index, listViewItem in
             MarketModule.marketListCell(
                     tableView: tableView,
@@ -49,28 +49,14 @@ class BaseMarketOverviewTopListDataSource {
         }
     }
 
-    private func seeAllRow(tableView: UITableView, id: String, action: @escaping () -> ()) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.text, .image20],
-                tableView: tableView,
+    private func seeAllRow(tableView: SectionsTableView, id: String, action: @escaping () -> ()) -> RowProtocol {
+        tableView.universalRow48(
                 id: id,
-                height: .heightCell48,
+                title: .body("market.top.section.header.see_all".localized),
+                accessoryType: .disclosure,
                 autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isLast: true)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = "market.top.section.header.see_all".localized
-                    }
-                    cell.bind(index: 1) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                    }
-                },
-                action: {
-                    action()
-                }
+                isLast: true,
+                action: action
         )
     }
 
@@ -107,7 +93,7 @@ extension BaseMarketOverviewTopListDataSource: IMarketOverviewDataSource {
         cell.title = title
     }
 
-    func sections(tableView: UITableView) -> [SectionProtocol] {
+    func sections(tableView: SectionsTableView) -> [SectionProtocol] {
         guard let listViewItems = listViewItemsRelay.value else {
             return []
         }

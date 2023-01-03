@@ -162,32 +162,17 @@ extension WatchViewController: SectionsDataSource {
                         headerState: .margin(height: .margin12),
                         footerState: .margin(height: .margin32),
                         rows: [
-                            CellBuilderNew.row(
-                                    rootElement: .hStack([
-                                        .text { component in
-                                            component.font = .body
-                                            component.textColor = .themeLeah
-                                            component.text = "watch_address.by".localized
-                                        },
-                                        .text { [weak self] component in
-                                            component.font = .subhead1
-                                            component.textColor = .gray
-                                            component.text = self?.watchType.title
-                                        },
-                                        .image20 { component in
-                                            component.imageView.image = UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray)
-                                        }
-                                    ]),
-                                    tableView: tableView,
+                            tableView.universalRow48(
                                     id: "watch_type",
+                                    title: .body("watch_address.by".localized),
+                                    value: .subhead1(watchType.title, gray: true),
+                                    accessoryType: .dropdown,
                                     autoDeselect: true,
-                                    bind: { cell in
-                                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                                    },
-                                    action: { [weak self] in
-                                        self?.onTapWatchType()
-                                    }
-                            )
+                                    isFirst: true,
+                                    isLast: true
+                            ) { [weak self] in
+                                self?.onTapWatchType()
+                            }
                         ]
                 )
         )

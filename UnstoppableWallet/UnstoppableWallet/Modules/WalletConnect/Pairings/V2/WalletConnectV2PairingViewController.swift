@@ -76,8 +76,10 @@ class WalletConnectV2PairingViewController: ThemeViewController {
 
     private func cell(tableView: UITableView, viewItem: WalletConnectV2PairingViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: (() -> ())? = nil) -> RowProtocol {
         let elements: [CellBuilderNew.CellElement] = [
-            .image24 { component in
-                component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_24"))
+            .image32 { component in
+                component.imageView.layer.cornerCurve = .continuous
+                component.imageView.cornerRadius = .cornerRadius8
+                component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_32"))
             },
             .vStackCentered([
                 .text { component in
@@ -85,7 +87,7 @@ class WalletConnectV2PairingViewController: ThemeViewController {
                     component.textColor = .themeLeah
                     component.text = viewItem.title
                 },
-                .margin(3),
+                .margin(1),
                 .text { component in
                     component.font = .subhead2
                     component.textColor = .themeGray
@@ -133,25 +135,19 @@ class WalletConnectV2PairingViewController: ThemeViewController {
         Section(
                 id: "button_section",
                 footerState: .margin(height: .margin32),
-                rows: [CellBuilderNew.row(
-                            rootElement: .hStack([
-                                .image20 { component in
-                                    component.imageView.image = UIImage(named: "trash_20")?.withTintColor(.themeLucian)
-                                },
-                                .text { component in
-                                    component.font = .body
-                                    component.textColor = .themeLucian
-                                    component.text = "wallet_connect.paired_dapps.disconnect_all".localized
-                                }
-                            ]),
-                            tableView: tableView,
+                rows: [
+                    tableView.universalRow48(
                             id: "delete_all",
-                            height: .heightSingleLineCell,
-                            bind: { cell in cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true) },
+                            image: .local(UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
+                            title: .custom("wallet_connect.paired_dapps.disconnect_all".localized, .body, .themeLucian),
+                            autoDeselect: true,
+                            isFirst: true,
+                            isLast: true,
                             action: { [weak self] in
                                 self?.onTapDisconnectAll()
                             }
-                    )]
+                    )
+                ]
         )
     }
 

@@ -5,7 +5,7 @@ import ComponentKit
 
 struct CellComponent {
 
-    static func actionTitleRow(tableView: UITableView, rowInfo: RowInfo, iconName: String?, iconDimmed: Bool, title: String, value: String) -> RowProtocol {
+    static func actionTitleRow(tableView: SectionsTableView, rowInfo: RowInfo, iconName: String?, iconDimmed: Bool, title: String, value: String) -> RowProtocol {
         CellBuilderNew.row(
                 rootElement: .hStack([
                     .image24 { component in
@@ -39,42 +39,40 @@ struct CellComponent {
         )
     }
 
-    static func amountRow(tableView: UITableView, rowInfo: RowInfo, iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.image24, .text, .text],
-                tableView: tableView,
-                id: "amount-\(rowInfo.index)",
-                hash: "amount-\(coinAmount)-\(currencyAmount ?? "")",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
+    static func amountRow(tableView: SectionsTableView, rowInfo: RowInfo, iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image32 { (component: ImageComponent) -> () in
                         component.setImage(urlString: iconUrl, placeholder: UIImage(named: iconPlaceholderImageName))
-                    }
-
-                    cell.bind(index: 1) { (component: TextComponent) in
+                    },
+                    .text { (component: TextComponent) -> () in
                         component.font = type.textFont
                         component.textColor = type.textColor
                         component.lineBreakMode = .byTruncatingMiddle
                         component.text = coinAmount
-                    }
-
-                    cell.bind(index: 2) { (component: TextComponent) in
+                    },
+                    .text { (component: TextComponent) -> () in
                         component.isHidden = currencyAmount == nil
                         component.font = .subhead2
                         component.textColor = .themeGray
                         component.lineBreakMode = .byTruncatingMiddle
                         component.text = currencyAmount
                     }
+                ]),
+                tableView: tableView,
+                id: "amount-\(rowInfo.index)",
+                hash: "amount-\(coinAmount)-\(currencyAmount ?? "")",
+                height: .heightCell56,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                 }
         )
     }
 
-    static func nftAmountRow(tableView: UITableView, rowInfo: RowInfo, iconUrl: String?, iconPlaceholderImageName: String, nftAmount: String, type: AmountType, onTapOpenNft: (() -> ())?) -> RowProtocol {
+    static func nftAmountRow(tableView: SectionsTableView, rowInfo: RowInfo, iconUrl: String?, iconPlaceholderImageName: String, nftAmount: String, type: AmountType, onTapOpenNft: (() -> ())?) -> RowProtocol {
         CellBuilderNew.row(
                 rootElement: .hStack([
-                    .image24 { component in
+                    .image32 { component in
                         component.setImage(urlString: iconUrl, placeholder: UIImage(named: iconPlaceholderImageName))
                         component.imageView.cornerRadius = .cornerRadius4
                         component.imageView.contentMode = .scaleAspectFill
@@ -102,57 +100,49 @@ struct CellComponent {
         )
     }
 
-    static func doubleAmountRow(tableView: UITableView, rowInfo: RowInfo, title: String, coinValue: String, currencyValue: String?) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text, .multiText],
+    static func doubleAmountRow(tableView: SectionsTableView, rowInfo: RowInfo, title: String, coinValue: String, currencyValue: String?) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .text { (component: TextComponent) -> () in
+                        component.font = .subhead2
+                        component.textColor = .themeGray
+                        component.text = title
+                    },
+                    .vStackCentered([
+                        .text { (component: TextComponent) -> () in
+                            component.font = .subhead2
+                            component.textColor = .themeLeah
+                            component.textAlignment = .right
+                            component.text = coinValue
+                        },
+                        .margin(1),
+                        .text { (component: TextComponent) -> () in
+                            component.font = .caption
+                            component.textColor = .themeGray
+                            component.textAlignment = .right
+                            component.text = currencyValue
+                        }
+                    ])
+                ]),
                 tableView: tableView,
                 id: "double-amount-\(rowInfo.index)",
                 hash: "double-amount-\(coinValue)-\(currencyValue ?? "-")",
                 height: .heightDoubleLineCell,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.font = .subhead2
-                        component.textColor = .themeGray
-                        component.text = title
-                    }
-
-                    cell.bind(index: 1) { (component: MultiTextComponent) in
-                        component.titleSpacingView.isHidden = true
-                        component.set(style: .m1)
-                        component.title.font = .subhead2
-                        component.title.textColor = .themeLeah
-                        component.subtitle.font = .caption
-                        component.subtitle.textColor = .themeGray
-
-                        component.title.textAlignment = .right
-                        component.title.text = coinValue
-
-                        component.subtitle.textAlignment = .right
-                        component.subtitle.text = currencyValue
-                    }
                 }
         )
     }
 
-    static func fromToRow(tableView: UITableView, rowInfo: RowInfo, title: String, value: String, valueTitle: String?) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text, .secondaryButton],
-                tableView: tableView,
-                id: "from-to-\(rowInfo.index)",
-                hash: value,
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
+    static func fromToRow(tableView: SectionsTableView, rowInfo: RowInfo, title: String, value: String, valueTitle: String?) -> RowProtocol {
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .text { (component: TextComponent) -> () in
                         component.font = .subhead2
                         component.textColor = .themeGray
                         component.text = title
-                    }
-
-                    cell.bind(index: 1) { (component: SecondaryButtonComponent) in
+                    },
+                    .secondaryButton { (component: SecondaryButtonComponent) -> () in
                         component.button.set(style: .default)
                         component.button.setTitle(valueTitle ?? value.shortened, for: .normal)
                         component.button.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -160,41 +150,26 @@ struct CellComponent {
                             CopyHelper.copyAndNotify(value: value)
                         }
                     }
-                }
-        )
-    }
-
-    static func valueRow(tableView: UITableView, rowInfo: RowInfo, iconName: String?, title: String, value: String, type: ValueType = .regular) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.image20, .text, .text],
+                ]),
                 tableView: tableView,
-                id: "value-\(rowInfo.index)",
+                id: "from-to-\(rowInfo.index)",
                 hash: value,
                 height: .heightCell48,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        if let iconName = iconName {
-                            component.isHidden = false
-                            component.imageView.image = UIImage(named: iconName)?.withTintColor(.themeGray)
-                        } else {
-                            component.isHidden = true
-                        }
-                    }
-
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        component.font = .subhead2
-                        component.textColor = .themeGray
-                        component.text = title
-                    }
-
-                    cell.bind(index: 2) { (component: TextComponent) in
-                        component.font = .subhead1
-                        component.textColor = type.textColor
-                        component.text = value
-                    }
                 }
+        )
+    }
+
+    static func valueRow(tableView: SectionsTableView, rowInfo: RowInfo, iconName: String?, title: String, value: String, type: ValueType = .regular) -> RowProtocol {
+        tableView.universalRow48(
+                id: "value-\(rowInfo.index)",
+                image: iconName.flatMap { UIImage(named: $0)?.withTintColor(.themeGray) }.map { .local($0) },
+                title: .subhead2(title),
+                value: .custom(value, .subhead1, type.textColor),
+                hash: value,
+                isFirst: rowInfo.isFirst,
+                isLast: rowInfo.isLast
         )
     }
 

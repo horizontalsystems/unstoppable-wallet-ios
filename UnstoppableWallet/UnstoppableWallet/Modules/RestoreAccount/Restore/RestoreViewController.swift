@@ -101,21 +101,18 @@ class RestoreViewController: KeyboardAwareViewController {
 
         wordListCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
         passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
-
-        CellBuilder.build(cell: passphraseToggleCell, elements: [.image20, .text, .switch])
-        passphraseToggleCell.bind(index: 0) { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "key_phrase_24")
-        }
-        passphraseToggleCell.bind(index: 1) { (component: TextComponent) in
-            component.font = .body
-            component.textColor = .themeLeah
-            component.text = "restore.passphrase".localized
-        }
-        passphraseToggleCell.bind(index: 2) { (component: SwitchComponent) in
-            component.onSwitch = { [weak self] in
-                self?.mnemonicViewModel.onTogglePassphrase(isOn: $0)
-            }
-        }
+        CellBuilderNew.buildStatic(
+                cell: passphraseToggleCell,
+                rootElement: .hStack(
+                        tableView.universalImage24Elements(
+                                image: .local(UIImage(named: "key_phrase_24")?.withTintColor(.themeGray)),
+                                title: .body("restore.passphrase".localized),
+                                accessoryType: .switch { [weak self] in
+                                    self?.mnemonicViewModel.onTogglePassphrase(isOn: $0)
+                                }
+                        )
+                )
+        )
 
         passphraseCell.isSecureTextEntry = true
         passphraseCell.inputPlaceholder = "restore.input.passphrase".localized
@@ -205,25 +202,14 @@ class RestoreViewController: KeyboardAwareViewController {
     private func syncWordListLanguageCell(wordListLanguage: String) {
         CellBuilderNew.buildStatic(
                 cell: wordListCell,
-                rootElement: .hStack([
-                    .image20 { component in
-                        component.imageView.image = UIImage(named: "globe_20")?.withTintColor(.themeGray)
-                    },
-                    .text { component in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = "create_wallet.word_list".localized
-                    },
-                    .text { component in
-                        component.font = .subhead1
-                        component.textColor = .themeLeah
-                        component.text = wordListLanguage
-                    },
-                    .margin8,
-                    .image20 { component in
-                        component.imageView.image = UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray)
-                    }
-                ])
+                rootElement: .hStack(
+                        tableView.universalImage24Elements(
+                                image: .local(UIImage(named: "globe_24")?.withTintColor(.themeGray)),
+                                title: .body("create_wallet.word_list".localized),
+                                value: .subhead1(wordListLanguage, gray: true),
+                                accessoryType: .dropdown
+                        )
+                )
         )
 
         mnemonicInputCell.set(text: mnemonicInputCell.textView.text)
@@ -292,32 +278,17 @@ extension RestoreViewController: SectionsDataSource {
                         headerState: .margin(height: .margin12),
                         footerState: .margin(height: .margin32),
                         rows: [
-                            CellBuilderNew.row(
-                                    rootElement: .hStack([
-                                        .text { component in
-                                            component.font = .body
-                                            component.textColor = .themeLeah
-                                            component.text = "restore.by".localized
-                                        },
-                                        .text { [weak self] component in
-                                            component.font = .subhead1
-                                            component.textColor = .gray
-                                            component.text = self?.restoreType.title
-                                        },
-                                        .image20 { component in
-                                            component.imageView.image = UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray)
-                                        }
-                                    ]),
-                                    tableView: tableView,
+                            tableView.universalRow48(
                                     id: "restore_type",
+                                    title: .body("restore.by".localized),
+                                    value: .subhead1(restoreType.title, gray: true),
+                                    accessoryType: .dropdown,
                                     autoDeselect: true,
-                                    bind: { cell in
-                                        cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                                    },
-                                    action: { [weak self] in
-                                        self?.onTapRestoreType()
-                                    }
-                            )
+                                    isFirst: true,
+                                    isLast: true
+                            ) { [weak self] in
+                                self?.onTapRestoreType()
+                            }
                         ]
                 )
         )
@@ -387,9 +358,10 @@ extension RestoreViewController: SectionsDataSource {
                         id: "non-standard-restore",
                         footerState: .margin(height: .margin32),
                         rows: [
-                            tableView.titleArrowRow(
+                            tableView.universalRow48(
                                     id: "non-standard_restore",
-                                    title: "restore.non_standard_restore".localized,
+                                    title: .body("restore.non_standard_restore".localized),
+                                    accessoryType: .disclosure,
                                     autoDeselect: true,
                                     isFirst: true,
                                     isLast: true,

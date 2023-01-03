@@ -281,7 +281,7 @@ extension WalletConnectMainViewController: SectionsDataSource {
                     component.textColor = .themeLeah
                     component.text = viewItem.title
                 },
-                .margin(3),
+                .margin(1),
                 .text { component in
                     component.font = .subhead2
                     component.textColor = .themeGray
@@ -402,73 +402,39 @@ extension WalletConnectMainViewController: SectionsDataSource {
 
                 switch rowInfo {
                 case let .value(title, value, valueColor):
-                    rows.append(tableView.grayTitleWithValueRow(
+                    rows.append(tableView.universalRow48(
                             id: "value-\(index)",
+                            title: .subhead2(title),
+                            value: .custom(value, .subhead1, valueColor ?? .themeLeah),
                             hash: value,
-                            title: title,
-                            value: value,
-                            valueColor: valueColor ?? .themeLeah,
                             isFirst: isFirst,
                             isLast: isLast
                     ))
                 case let .network(value, editable):
-                    let row = CellBuilderNew.row(
-                            rootElement: .hStack([
-                                .text { component in
-                                    component.font = .subhead2
-                                    component.textColor = .themeGray
-                                    component.text = "wallet_connect.network".localized
-                                },
-                                .text { component in
-                                    component.font = .subhead1
-                                    component.textColor = .themeLeah
-                                    component.text = value
-                                },
-                                .margin8,
-                                .image20 { component in
-                                    component.isHidden = !editable
-                                    component.imageView.image = UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray)
-                                }
-                            ]),
-                            tableView: tableView,
+                    let row = tableView.universalRow48(
                             id: "network-\(index)",
+                            title: .subhead2("wallet_connect.network".localized),
+                            value: .subhead1(value),
+                            accessoryType: .dropdown,
                             hash: value,
-                            height: .heightCell48,
                             autoDeselect: true,
-                            bind: { cell in
-                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                            },
+                            isFirst: isFirst,
+                            isLast: isLast,
                             action: editable ? { [weak self] in
                                 self?.openSelectNetwork()
                             } : nil
                     )
-
                     rows.append(row)
                 case let .chain(title, value, selected, chainId):
-                    let row = CellBuilderNew.row(
-                            rootElement: .hStack([
-                                .image24 { component in
-                                    component.imageView.image = selected ? UIImage(named: "checkbox_active_24") : UIImage(named: "checkbox_diactive_24")
-                                },
-                                .text { component in
-                                    component.font = .subhead2
-                                    component.textColor = .themeGray
-                                    component.text = title
-                                },
-                                .text { component in
-                                    component.font = .subhead1
-                                    component.textColor = .themeLeah
-                                    component.text = value
-                                }
-                            ]),
-                            tableView: tableView,
+                    let row = tableView.universalRow48(
                             id: "chain-\(index)",
+                            image: .local(selected ? UIImage(named: "checkbox_active_24") : UIImage(named: "checkbox_diactive_24")),
+                            title: .subhead2(title),
+                            value: .subhead1(value),
                             hash: "\(selected)",
-                            height: .heightCell48,
                             autoDeselect: true,
-                            bind: { cell in
-                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                            },
+                            isFirst: isFirst,
+                            isLast: isLast,
                             action: { [weak self] in
                                 self?.viewModel.onToggle(chainId: chainId)
                             }

@@ -82,12 +82,13 @@ extension SwapSelectProviderViewController: SectionsDataSource {
             Section(
                     id: "theme",
                     rows: viewItems.enumerated().map { index, viewItem in
-                        tableView.imageTitleCheckRow(
+                        tableView.universalRow48(
                                 id: viewItem.title,
+                                image: .local(UIImage(named: viewItem.icon)),
+                                title: .body(viewItem.title),
+                                accessoryType: .check(viewItem.selected),
+                                hash: viewItem.selected.description,
                                 backgroundStyle: .bordered,
-                                image: viewItem.icon,
-                                title: viewItem.title,
-                                selected: viewItem.selected,
                                 isFirst: index == 0,
                                 isLast: index == viewItems.count - 1,
                                 action: { [weak self] in

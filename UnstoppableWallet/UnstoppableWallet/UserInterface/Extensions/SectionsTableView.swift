@@ -99,195 +99,22 @@ extension SectionsTableView {
                 bind: { cell in
                     cell.set(backgroundStyle: .transparent)
                     cell.selectionStyle = .none
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = text
-                    }
                 }
         )
     }
 
-    func titleValueArrowRow(id: String, title: Text?, value: Text? = nil, showArrow: Bool = true, hash: String? = nil, backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: (() -> ())? = nil) -> RowProtocol {
-        var elements = [CellBuilderNew.CellElement]()
-        if let title = title {
-            elements.append(.text { (component: TextComponent) -> () in
-                component.font = title.font
-                component.textColor = title.textColor
-                component.text = title.text
-            })
-        }
-        if let value = value {
-            elements.append(.text { (component: TextComponent) -> () in
-                component.font = value.font
-                component.textColor = value.textColor
-                component.text = value.text
-                component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                component.setContentHuggingPriority(.required, for: .horizontal)
-            })
-        }
-        if showArrow {
-            elements.append(.margin8)
-            elements.append(.image20 { (component: ImageComponent) -> () in
-                component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-            })
-        }
-
-        return CellBuilderNew.row(
-                rootElement: .hStack(elements),
-                tableView: self,
-                id: id,
-                hash: hash,
-                height: .heightCell48,
-                autoDeselect: autoDeselect,
-                bind: { cell in
-                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
-                },
-                action: action
-        )
-    }
-
-    func titleArrowRow(id: String, title: String, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: @escaping () -> ()) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.text, .image20],
-                tableView: self,
-                id: id,
-                height: .heightCell48,
-                autoDeselect: autoDeselect,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    }
-                    cell.bind(index: 1) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                    }
-                },
-                action: action
-        )
-    }
-
-    func imageTitleRow(id: String, image: UIImage?, title: String, color: UIColor = .themeLeah, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: @escaping () -> ()) -> RowProtocol {
+    func subtitleWithInfoButtonRow(text: String, action: @escaping () -> ()) -> RowProtocol {
         CellBuilderNew.row(
                 rootElement: .hStack([
-                    .image20 { component in
-                        component.imageView.image = image?.withTintColor(color)
+                    .text { (component: TextComponent) -> () in
+                        component.font = .subhead1
+                        component.textColor = .themeGray
+                        component.text = text.uppercased()
                     },
-                    .text { component in
-                        component.font = .body
-                        component.textColor = color
-                        component.text = title
+                    .image20 { (component: ImageComponent) -> () in
+                        component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
                     }
                 ]),
-                tableView: self,
-                id: id,
-                height: .heightCell48,
-                autoDeselect: autoDeselect,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                },
-                action: action
-        )
-    }
-
-    func imageTitleArrowRow(id: String, image: UIImage?, title: Text?, showArrow: Bool = true, hash: String? = nil, backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: (() -> ())? = nil) -> RowProtocol {
-        var elements = [CellBuilderNew.CellElement]()
-        elements.append(.image24 { (component: ImageComponent) -> () in
-            component.imageView.image = image?.withTintColor(.themeGray)
-        })
-        if let title = title {
-            elements.append(.text { (component: TextComponent) -> () in
-                component.font = title.font
-                component.textColor = title.textColor
-                component.text = title.text
-            })
-        }
-        if showArrow {
-            elements.append(.margin8)
-            elements.append(.image20 { (component: ImageComponent) -> () in
-                component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-            })
-        }
-        return CellBuilderNew.row(
-                rootElement: .hStack(elements),
-                tableView: self,
-                id: id,
-                hash: hash,
-                height: .heightCell48,
-                autoDeselect: autoDeselect,
-                bind: { cell in
-                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
-                },
-                action: action
-        )
-    }
-
-    func imageTitleCheckRow(id: String, image: UIImage?, title: Text, selected: Bool = true, hash: String? = nil, backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: (() -> ())? = nil) -> RowProtocol {
-        var elements: [CellBuilderNew.CellElement] = [
-            .image24 { (component: ImageComponent) -> () in
-                component.imageView.image = image
-            },
-            .text { (component: TextComponent) -> () in
-                component.font = title.font
-                component.textColor = title.textColor
-                component.text = title.text
-            }
-        ]
-        if selected {
-            elements.append(.margin8)
-            elements.append(.image20 { (component: ImageComponent) -> () in
-                component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
-            })
-        }
-        return CellBuilderNew.row(
-                rootElement: .hStack(elements),
-                tableView: self,
-                id: id,
-                hash: hash,
-                height: .heightCell48,
-                autoDeselect: autoDeselect,
-                bind: { cell in
-                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
-                },
-                action: action
-        )
-    }
-
-    func imageTitleCheckRow(id: String, backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence, image: String, title: String, selected: Bool, isFirst: Bool = false, isLast: Bool = false, action: @escaping () -> ()) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image20, .text, .image20],
-                tableView: self,
-                id: id,
-                hash: "\(selected)",
-                height: .heightCell48,
-                autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: image)
-                    }
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    }
-                    cell.bind(index: 2) { (component: ImageComponent) in
-                        component.isHidden = !selected
-                        component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
-                    }
-                },
-                action: action
-        )
-    }
-
-    func subtitleWithInfoButtonRow(text: String, action: @escaping () -> ()) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.text, .image20],
                 layoutMargins: UIEdgeInsets(top: 0, left: .margin32, bottom: 0, right: .margin32),
                 tableView: self,
                 id: "subtitle-\(text)",
@@ -296,123 +123,108 @@ extension SectionsTableView {
                 bind: { cell in
                     cell.set(backgroundStyle: .transparent, isFirst: true)
                     cell.selectionStyle = .none
-
-                    cell.bind(index: 0, block: { (component: TextComponent) in
-                        component.font = .subhead1
-                        component.textColor = .themeGray
-                        component.text = text.uppercased()
-                    })
-
-                    cell.bind(index: 1, block: { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
-                    })
                 },
                 action: action
-        )
-    }
-
-    func grayTitleWithArrowRow(id: String, title: String, isFirst: Bool = false, isLast: Bool = false, onTap: @escaping () -> ()) -> RowProtocol {
-        CellBuilderNew.row(
-                rootElement: .hStack([
-                    .text { component in
-                        component.font = .subhead2
-                        component.textColor = .themeGray
-                        component.text = title
-                    },
-                    .image20 { component in
-                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                    }
-                ]),
-                tableView: self,
-                id: id,
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                },
-                action: onTap
-        )
-    }
-
-    func grayTitleWithValueRow(id: String, hash: String? = nil, title: String, value: String, valueColor: UIColor = .themeLeah, isFirst: Bool = false, isLast: Bool = false) -> RowProtocol {
-        CellBuilderNew.row(
-                rootElement: .hStack([
-                    .text { component in
-                        component.font = .subhead2
-                        component.textColor = .themeGray
-                        component.text = title
-                    },
-                    .text { component in
-                        component.font = .subhead1
-                        component.textColor = valueColor
-                        component.text = value
-                    }
-                ]),
-                tableView: self,
-                id: id,
-                hash: hash,
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                }
-        )
-    }
-
-    func switchRow(id: String, title: String, isOn: Bool, isFirst: Bool = false, isLast: Bool = false, onSwitch: @escaping (Bool) -> (), onTap: (() -> ())? = nil) -> RowProtocol {
-        CellBuilderNew.row(
-                rootElement: .hStack([
-                    .text { component in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    },
-                    .switch { component in
-                        component.switchView.isOn = isOn
-                        component.onSwitch = onSwitch
-                    }
-                ]),
-                tableView: self,
-                id: id,
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                },
-                action: onTap
         )
     }
 
 }
 
 extension SectionsTableView {
+// complete layout for more frequency used layouts
 
-    struct Text {
-        static func custom(_ text: String, _ font: UIFont, _ color: UIColor) -> Self { Text(text: text, font: font, textColor: color) }
-        static func body(_ text: String, gray: Bool = false) -> Self { Text(text: text, font: .body, textColor: gray ? .themeGray: .themeLeah) }
-        static func subhead1(_ text: String, gray: Bool = false) -> Self { Text(text: text, font: .subhead2, textColor: gray ? .themeGray: .themeLeah) }
-        static func subhead2(_ text: String, gray: Bool = true) -> Self { Text(text: text, font: .subhead2, textColor: gray ? .themeGray: .themeLeah) }
+    // layout for standard cell with 24pt image
+    func universalImage24Elements(image: CellBuilderNew.CellElement.Image? = nil, title: CellBuilderNew.CellElement.Text? = nil, value: CellBuilderNew.CellElement.Text? = nil, accessoryType: CellBuilderNew.CellElement.AccessoryType = .none) -> [CellBuilderNew.CellElement] {
+        var elements = [CellBuilderNew.CellElement]()
+        elements.append(.imageElement(image: image, size: .image24))
+        if let title = title {
+            elements.append(.textElement(text: title))
+        }
+        if let value = value {
+            elements.append(.textElement(text: value, parameters: .allCompression))
+        }
+        elements.append(contentsOf: CellBuilderNew.CellElement.accessoryElements(accessoryType))
+        return elements
+    }
 
-        let text: String
-        let font: UIFont
-        let textColor: UIColor
+    // layout for standard cell with 32pt image and optional double-line text
+    func universalImage32Elements(image: CellBuilderNew.CellElement.Image? = nil, title: CellBuilderNew.CellElement.Text? = nil, description: CellBuilderNew.CellElement.Text? = nil, value: CellBuilderNew.CellElement.Text? = nil, accessoryType: CellBuilderNew.CellElement.AccessoryType = .none) -> [CellBuilderNew.CellElement] {
+        var elements = [CellBuilderNew.CellElement]()
+        elements.append(.imageElement(image: image, size: .image32))
+
+        if let title = title {
+            var verticalTexts = [CellBuilderNew.CellElement]()
+            verticalTexts.append(.textElement(text: title))
+            if let description = description {
+                verticalTexts.append(.margin(1))
+                verticalTexts.append(.textElement(text: description))
+            }
+
+            elements.append(.vStackCentered(verticalTexts))
+        }
+        if let value = value {
+            elements.append(.textElement(text: value, parameters: .allCompression))
+        }
+        elements.append(contentsOf: CellBuilderNew.CellElement.accessoryElements(accessoryType))
+        return elements
     }
 
 }
 
+extension SectionsTableView {
 
-//CellBuilderNew.row(
-//        rootElement: .hStack([
-//            .image32 { (component: ImageComponent) in
-//                component.setImage(urlString: logoUrl, placeholder: UIImage(named: "placeholder_circle_32"))
-//            },
-//            .text { (component: TextComponent) in
-//                component.font = .body
-//                component.textColor = .themeLeah
-//                component.text = name
-//            }
-//        ]),
-//        tableView: tableView,
-//        id: "header-\(name)",
-//        height: .heightCell48,
-//        bind: { cell in
-//            cell.set(backgroundStyle: .transparent)
-//        }
-//)
+    // universal cell with image24, text, value and accessory for 48 height
+    func universalRow48(id: String, image: CellBuilderNew.CellElement.Image? = nil, title: CellBuilderNew.CellElement.Text? = nil, value: CellBuilderNew.CellElement.Text? = nil, accessoryType: CellBuilderNew.CellElement.AccessoryType = .none, hash: String? = nil, backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: (() -> ())? = nil) -> RowProtocol {
+        let elements = universalImage24Elements(image: image, title: title, value: value, accessoryType: accessoryType)
+
+        return CellBuilderNew.row(
+                rootElement: .hStack(elements),
+                tableView: self,
+                id: id,
+                hash: hash,
+                height: .heightCell48,
+                autoDeselect: autoDeselect,
+                bind: { cell in
+                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
+                },
+                action: action
+        )
+    }
+
+    // universal cell with image32, text, value and accessory for 56 height
+    func universalRow56(id: String, image: CellBuilderNew.CellElement.Image? = nil, title: CellBuilderNew.CellElement.Text? = nil, value: CellBuilderNew.CellElement.Text? = nil, accessoryType: CellBuilderNew.CellElement.AccessoryType = .none, hash: String? = nil, backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: (() -> ())? = nil) -> RowProtocol {
+        let elements = universalImage32Elements(image: image, title: title, value: value, accessoryType: accessoryType)
+
+        return CellBuilderNew.row(
+                rootElement: .hStack(elements),
+                tableView: self,
+                id: id,
+                hash: hash,
+                height: .heightCell56,
+                autoDeselect: autoDeselect,
+                bind: { cell in
+                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
+                },
+                action: action
+        )
+    }
+
+    // universal cell with image32, multi-text, value and accessory for 62 height
+    func universalRow62(id: String, image: CellBuilderNew.CellElement.Image? = nil, title: CellBuilderNew.CellElement.Text? = nil, description: CellBuilderNew.CellElement.Text? = nil, value: CellBuilderNew.CellElement.Text? = nil, accessoryType: CellBuilderNew.CellElement.AccessoryType = .none, hash: String? = nil, backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: (() -> ())? = nil) -> RowProtocol {
+        let elements = universalImage32Elements(image: image, title: title, description: description, value: value, accessoryType: accessoryType)
+
+        return CellBuilderNew.row(
+                rootElement: .hStack(elements),
+                tableView: self,
+                id: id,
+                hash: hash,
+                height: .heightDoubleLineCell,
+                autoDeselect: autoDeselect,
+                bind: { cell in
+                    cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
+                },
+                action: action
+        )
+    }
+
+}

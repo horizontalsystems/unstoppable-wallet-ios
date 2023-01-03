@@ -10,7 +10,7 @@ import Chart
 protocol IMarketOverviewDataSource {
     var isReady: Bool { get }
     var updateObservable: Observable<()> { get }
-    func sections(tableView: UITableView) -> [SectionProtocol]
+    func sections(tableView: SectionsTableView) -> [SectionProtocol]
 }
 
 class MarketOverviewViewController: ThemeViewController {

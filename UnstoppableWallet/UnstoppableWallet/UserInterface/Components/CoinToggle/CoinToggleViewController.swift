@@ -56,69 +56,81 @@ class CoinToggleViewController: ThemeSearchViewController {
         }
     }
 
-    private func bind(cell: BaseThemeCell, viewItem: CoinToggleViewModel.ViewItem, isLast: Bool) {
-        cell.set(backgroundStyle: .transparent, isLast: isLast)
+    private func elements(viewItem: CoinToggleViewModel.ViewItem, forceToggleOn: Bool? = nil) -> [CellBuilderNew.CellElement] {
+        var elements = [CellBuilderNew.CellElement]()
 
-        cell.bind(index: 0, block: { (component: ImageComponent) in
+        elements.append(.image32 { (component: ImageComponent) -> () in
             component.setImage(urlString: viewItem.imageUrl, placeholder: viewItem.placeholderImageName.flatMap { UIImage(named: $0) })
         })
+        elements.append(.vStackCentered([
+            .text { (component: TextComponent) -> () in
+                component.font = .body
+                component.textColor = .themeLeah
+                component.text = viewItem.title
+            },
+            .margin(1),
+            .text { (component: TextComponent) -> () in
+                component.font = .subhead2
+                component.textColor = .themeGray
+                component.text = viewItem.subtitle
+            }
+        ]))
+        switch viewItem.state {
+        case let .toggleVisible(enabled, hasSettings):
+            elements.append(contentsOf: [
+                hasSettings ? .margin4 : .margin16,
+                .transparentIconButton { [weak self] (component: TransparentIconButtonComponent) -> () in
+                    component.isHidden = !hasSettings
+                    component.button.set(image: UIImage(named: "edit_20"))
+                    component.onTap = {
+                        self?.viewModel.onTapSettings(uid: viewItem.uid)
+                    }
+                },
+                .margin4,
+                .switch { (component: SwitchComponent) -> () in
+                    if let forceOn = forceToggleOn {
+                        component.switchView.setOn(forceOn, animated: true)
+                    } else {
+                        component.switchView.isOn = enabled
+                    }
 
-        cell.bind(index: 1, block: { (component: MultiTextComponent) in
-            component.set(style: .m1)
-            component.title.font = .body
-            component.title.textColor = .themeLeah
-            component.subtitle.font = .subhead2
-            component.subtitle.textColor = .themeGray
+                    component.onSwitch = { [weak self] enabled in
+                        self?.onToggle(viewItem: viewItem, enabled: enabled)
+                    }
+                }
+            ])
+        default: ()
+        }
 
-            component.title.text = viewItem.title
-            component.subtitle.text = viewItem.subtitle
-        })
+        return elements
     }
 
     private func row(viewItem: CoinToggleViewModel.ViewItem, isLast: Bool) -> RowProtocol {
+        let elements = elements(viewItem: viewItem)
+        var hash: String = ""
+        var action: (() -> ())?
+
         switch viewItem.state {
         case let .toggleVisible(enabled, hasSettings):
-            return CellBuilder.row(
-                    elements: [.image32, .multiText, hasSettings ? .margin4 : .margin16, .transparentIconButton, .margin4, .switch],
-                    tableView: tableView,
-                    id: "coin_\(viewItem.uid)",
-                    hash: "coin_\(enabled)_\(hasSettings)_\(isLast)",
-                    height: .heightDoubleLineCell,
-                    bind: { [weak self] cell in
-                        self?.bind(cell: cell, viewItem: viewItem, isLast: isLast)
-
-                        cell.bind(index: 2, block: { (component: TransparentIconButtonComponent) in
-                            component.isHidden = !hasSettings
-                            component.button.set(image: UIImage(named: "edit_20"))
-                            component.onTap = { [weak self] in
-                                self?.viewModel.onTapSettings(uid: viewItem.uid)
-                            }
-                        })
-
-                        cell.bind(index: 3) { (component: SwitchComponent) in
-                            component.switchView.isOn = enabled
-                            component.onSwitch = { [weak self] enabled in
-                                self?.onToggle(viewItem: viewItem, enabled: enabled)
-                            }
-                        }
-                    }
-            )
+            hash = "coin_\(enabled)_\(hasSettings)_\(isLast)"
         case .toggleHidden:
-            return CellBuilder.selectableRow(
-                    elements: [.image32, .multiText],
-                    tableView: tableView,
-                    id: "coin_\(viewItem.uid)",
-                    hash: "coin_\(isLast)",
-                    height: .heightDoubleLineCell,
-                    autoDeselect: true,
-                    bind: { [weak self] cell in
-                        self?.bind(cell: cell, viewItem: viewItem, isLast: isLast)
-                    },
-                    action: { [weak self] in
-                        self?.onTapToggleHidden(viewItem: viewItem)
-                    }
-            )
+            hash = "coin_\(isLast)"
+            action = { [weak self] in
+                self?.onTapToggleHidden(viewItem: viewItem)
+            }
         }
+        return CellBuilderNew.row(
+                rootElement: .hStack(elements),
+                tableView: tableView,
+                id: "coin_\(viewItem.uid)",
+                hash: hash,
+                height: .heightDoubleLineCell,
+                autoDeselect: true,
+                bind: { cell in
+                    cell.set(backgroundStyle: .transparent, isLast: isLast)
+                },
+                action: action
+        )
     }
 
     override func onUpdate(filter: String?) {
@@ -142,9 +154,7 @@ class CoinToggleViewController: ThemeSearchViewController {
             return
         }
 
-        cell.bind(index: 3) { (component: SwitchComponent) in
-            component.switchView.setOn(on, animated: true)
-        }
+        CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements(viewItem: viewItems[index], forceToggleOn: on)))
     }
 
     func onTapToggleHidden(viewItem: CoinToggleViewModel.ViewItem) {

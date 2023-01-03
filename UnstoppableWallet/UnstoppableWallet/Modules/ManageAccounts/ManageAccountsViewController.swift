@@ -54,37 +54,40 @@ class ManageAccountsViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         createCell.set(backgroundStyle: .lawrence, isFirst: true)
-        CellBuilder.build(cell: createCell, elements: [.image20, .text])
-        createCell.bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "plus_20")?.withTintColor(.themeJacob)
-        })
-        createCell.bind(index: 1, block: { (component: TextComponent) in
-            component.font = .body
-            component.textColor = .themeJacob
-            component.text = "onboarding.balance.create".localized
-        })
+        CellBuilderNew.buildStatic(cell: createCell, rootElement: .hStack([
+            .image24 { (component: ImageComponent) -> () in
+                component.imageView.image = UIImage(named: "plus_24")?.withTintColor(.themeJacob)
+            },
+            .text { (component: TextComponent) -> () in
+                component.font = .body
+                component.textColor = .themeJacob
+                component.text = "onboarding.balance.create".localized
+            }
+        ]))
 
         restoreCell.set(backgroundStyle: .lawrence)
-        CellBuilder.build(cell: restoreCell, elements: [.image20, .text])
-        restoreCell.bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "download_20")?.withTintColor(.themeJacob)
-        })
-        restoreCell.bind(index: 1, block: { (component: TextComponent) in
-            component.font = .body
-            component.textColor = .themeJacob
-            component.text = "onboarding.balance.restore".localized
-        })
+        CellBuilderNew.buildStatic(cell: restoreCell, rootElement: .hStack([
+            .image24 { (component: ImageComponent) -> () in
+                component.imageView.image = UIImage(named: "download_24")?.withTintColor(.themeJacob)
+            },
+            .text { (component: TextComponent) -> () in
+                component.font = .body
+                component.textColor = .themeJacob
+                component.text = "onboarding.balance.restore".localized
+            }
+        ]))
 
         watchCell.set(backgroundStyle: .lawrence, isLast: true)
-        CellBuilder.build(cell: watchCell, elements: [.image20, .text])
-        watchCell.bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "eye_20")?.withTintColor(.themeJacob)
-        })
-        watchCell.bind(index: 1, block: { (component: TextComponent) in
-            component.font = .body
-            component.textColor = .themeJacob
-            component.text = "onboarding.balance.watch".localized
-        })
+        CellBuilderNew.buildStatic(cell: watchCell, rootElement: .hStack([
+            .image24 { (component: ImageComponent) -> () in
+                component.imageView.image = UIImage(named: "binocule_24")?.withTintColor(.themeJacob)
+            },
+            .text { (component: TextComponent) -> () in
+                component.font = .body
+                component.textColor = .themeJacob
+                component.text = "onboarding.balance.watch".localized
+            }
+        ]))
 
         subscribe(disposeBag, viewModel.viewStateDriver) { [weak self] in self?.sync(viewState: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.dismiss(animated: true) }
@@ -190,7 +193,7 @@ extension ManageAccountsViewController: SectionsDataSource {
                             component.textColor = .themeLeah
                             component.text = viewItem.title
                         },
-                        .margin(3),
+                        .margin(1),
                         .text { component in
                             component.font = .subhead2
                             component.textColor = viewItem.isSubtitleWarning ? .themeLucian : .themeGray

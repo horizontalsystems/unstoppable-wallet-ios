@@ -81,31 +81,13 @@ class EvmNetworkViewController: ThemeViewController {
 extension EvmNetworkViewController: SectionsDataSource {
 
     private func row(viewItem: EvmNetworkViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.multiText, .image20],
-                tableView: tableView,
-                id: "sync-node-\(index)",
+        tableView.universalRow62(id: "sync-node-\(index)",
+                title: .body(viewItem.name),
+                description: .subhead2(viewItem.url),
+                accessoryType: .check(viewItem.selected),
                 hash: "\(viewItem.selected)",
-                height: .heightDoubleLineCell,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0, block: { (component: MultiTextComponent) in
-                        component.set(style: .m1)
-                        component.title.font = .body
-                        component.title.textColor = .themeLeah
-                        component.subtitle.font = .subhead2
-                        component.subtitle.textColor = .themeGray
-
-                        component.title.text = viewItem.name
-                        component.subtitle.text = viewItem.url
-                    })
-
-                    cell.bind(index: 1, block: { (component: ImageComponent) in
-                        component.isHidden = !viewItem.selected
-                        component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
-                    })
-                },
+                isFirst: isFirst,
+                isLast: isLast,
                 action: { [weak self] in
                     self?.viewModel.onSelectViewItem(index: index)
                 }

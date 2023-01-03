@@ -60,36 +60,16 @@ class BaseCurrencySettingsViewController: ThemeViewController {
 extension BaseCurrencySettingsViewController: SectionsDataSource {
 
     private func row(viewItem: BaseCurrencySettingsViewModel.ViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        CellBuilderNew.row(
-                rootElement: .hStack([
-                    .image24 { component in
-                        component.imageView.image = viewItem.icon
-                    },
-                    .vStackCentered([
-                        .text { component in
-                            component.font = .body
-                            component.textColor = .themeLeah
-                            component.text = viewItem.code
-                        },
-                        .margin(3),
-                        .text { component in
-                            component.font = .subhead2
-                            component.textColor = .themeGray
-                            component.text = viewItem.symbol
-                        }
-                    ]),
-                    .image20 { component in
-                        component.isHidden = !viewItem.selected
-                        component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
-                    }
-                ]),
-                tableView: tableView,
+        tableView.universalRow62(
                 id: viewItem.code,
-                height: .heightDoubleLineCell,
+                image: .local(viewItem.icon),
+                title: .body(viewItem.code),
+                description: .subhead2(viewItem.symbol),
+                accessoryType: .check(viewItem.selected),
+                hash: "\(viewItem.selected)",
                 autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                },
+                isFirst: isFirst,
+                isLast: isLast,
                 action: { [weak self] in
                     self?.viewModel.onSelect(viewItem: viewItem)
                 }

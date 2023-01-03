@@ -109,19 +109,20 @@ extension WalletConnectSignMessageRequestViewController: SectionsDataSource {
         var rows: [RowProtocol] = []
 
         if let domain = viewModel.domain {
-            let row = tableView.grayTitleWithValueRow(
+            let row = tableView.universalRow48(
                     id: "sign_domain",
-                    title: "wallet_connect.sign.domain".localized,
-                    value: domain,
+                    title: .subhead2("wallet_connect.sign.domain".localized),
+                    value: .subhead1(domain),
                     isFirst: true
             )
 
             rows.append(row)
         }
 
-        let messageRow = tableView.grayTitleWithArrowRow(
+        let messageRow = tableView.universalRow48(
                 id: "sign_message",
-                title: "wallet_connect.sign.message".localized,
+                title: .subhead2("wallet_connect.sign.message".localized),
+                accessoryType: .disclosure,
                 isFirst: viewModel.domain == nil,
                 isLast: viewModel.dAppName == nil
         ) { [weak self] in
@@ -131,10 +132,10 @@ extension WalletConnectSignMessageRequestViewController: SectionsDataSource {
         rows.append(messageRow)
 
         if let dAppName = viewModel.dAppName {
-            let row = tableView.grayTitleWithValueRow(
+            let row = tableView.universalRow48(
                     id: "dApp_name",
-                    title: "wallet_connect.sign.dapp_name".localized,
-                    value: dAppName,
+                    title: .subhead2("wallet_connect.sign.dapp_name".localized),
+                    value: .subhead1(dAppName),
                     isLast: true
             )
 

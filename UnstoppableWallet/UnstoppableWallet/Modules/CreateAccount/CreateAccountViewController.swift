@@ -83,21 +83,13 @@ class CreateAccountViewController: KeyboardAwareViewController {
         passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         CellBuilderNew.buildStatic(
                 cell: passphraseToggleCell,
-                rootElement: .hStack([
-                    .image20 { component in
-                        component.imageView.image = UIImage(named: "key_phrase_24")?.withTintColor(.themeGray)
-                    },
-                    .text { component in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = "create_wallet.passphrase".localized
-                    },
-                    .switch { [weak self] component in
-                        component.onSwitch = {
-                            self?.viewModel.onTogglePassphrase(isOn: $0)
-                        }
-                    }
-                ])
+                rootElement: .hStack(
+                    tableView.universalImage24Elements(
+                            image: .local(UIImage(named: "key_phrase_24")?.withTintColor(.themeGray)),
+                            title: .body("create_wallet.passphrase".localized),
+                            accessoryType: .switch { [weak self] in self?.viewModel.onTogglePassphrase(isOn: $0) }
+                    )
+                )
         )
 
         passphraseCell.isSecureTextEntry = true
@@ -199,32 +191,21 @@ extension CreateAccountViewController: SectionsDataSource {
     private func sync(cell: BaseThemeCell, image: UIImage?, title: String, value: String) {
         CellBuilderNew.buildStatic(
                 cell: cell,
-                rootElement: .hStack([
-                    .image20 { component in
-                        component.imageView.image = image?.withTintColor(.themeGray)
-                    },
-                    .text { component in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = title
-                    },
-                    .text { component in
-                        component.font = .subhead1
-                        component.textColor = .themeLeah
-                        component.text = value
-                    },
-                    .margin8,
-                    .image20 { component in
-                        component.imageView.image = UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray)
-                    }
-                ])
+                rootElement: .hStack(
+                        tableView.universalImage24Elements(
+                                image: .local(image?.withTintColor(.themeGray)),
+                                title: .body(title),
+                                value: .subhead1(value, gray: true),
+                                accessoryType: .dropdown
+                        )
+                )
         )
     }
 
     private func syncMnemonicCell(wordCount: String) {
         sync(
                 cell: mnemonicCell,
-                image: UIImage(named: "key_20"),
+                image: UIImage(named: "key_24"),
                 title: "create_wallet.mnemonic".localized,
                 value: wordCount
         )

@@ -133,18 +133,9 @@ extension NftViewController: SectionsDataSource {
     }
 
     private func row(viewItem: NftViewModel.ViewItem, expanded: Bool, index: Int) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image32, .text, .text, .margin8, .image20],
-                tableView: tableView,
-                id: "collection-\(viewItem.uid)",
-                hash: "\(viewItem.name)-\(viewItem.count)-\(expanded)",
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .transparent)
-                    cell.wrapperView.backgroundColor = .themeTyler
-                    cell.selectionStyle = .none
-
-                    cell.bind(index: 0, block: { (component: ImageComponent) in
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .image32 { (component: ImageComponent) -> () in
                         component.imageView.cornerRadius = .cornerRadius4
                         component.imageView.layer.cornerCurve = .continuous
                         component.imageView.backgroundColor = .themeSteel20
@@ -152,22 +143,32 @@ extension NftViewController: SectionsDataSource {
                                 with: viewItem.imageUrl.flatMap { URL(string: $0) },
                                 options: [.onlyLoadFirstFrame]
                         )
-                    })
-                    cell.bind(index: 1, block: { (component: TextComponent) in
+                    },
+                    .text { (component: TextComponent) -> () in
                         component.font = .headline2
                         component.textColor = .themeLeah
                         component.text = viewItem.name
-                    })
-                    cell.bind(index: 2, block: { (component: TextComponent) in
+                    },
+                    .text { (component: TextComponent) -> () in
                         component.font = .subhead1
                         component.textColor = .themeGray
                         component.text = viewItem.count
                         component.setContentHuggingPriority(.required, for: .horizontal)
                         component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                    })
-                    cell.bind(index: 3, block: { (component: ImageComponent) in
+                    },
+                    .margin8,
+                    .image20 { (component: ImageComponent) -> () in
                         component.imageView.image = UIImage(named: expanded ? "arrow_big_up_20" : "arrow_big_down_20")?.withTintColor(.themeGray)
-                    })
+                    }
+                ]),
+                tableView: tableView,
+                id: "collection-\(viewItem.uid)",
+                hash: "\(viewItem.name)-\(viewItem.count)-\(expanded)",
+                height: .heightCell56,
+                bind: { cell in
+                    cell.set(backgroundStyle: .transparent)
+                    cell.wrapperView.backgroundColor = .themeTyler
+                    cell.selectionStyle = .none
                 },
                 action: { [weak self] in
                     self?.viewModel.onTap(uid: viewItem.uid)

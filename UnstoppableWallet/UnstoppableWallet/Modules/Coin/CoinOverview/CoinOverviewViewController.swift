@@ -145,10 +145,11 @@ class CoinOverviewViewController: ThemeViewController {
 extension CoinOverviewViewController {
 
     private func linkRow(id: String, image: String, title: String, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol {
-        tableView.imageTitleArrowRow(
+        tableView.universalRow48(
                 id: id,
-                image: UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray),
+                image: .local(UIImage(named: image)?.withTintColor(.themeGray)),
                 title: .body(title),
+                accessoryType: .disclosure,
                 autoDeselect: true,
                 isFirst: isFirst,
                 isLast: isLast,
@@ -377,21 +378,11 @@ extension CoinOverviewViewController {
     }
 
     private func marketRow(id: String, title: String, badge: String?, text: String, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.text, .margin8, .badge, .text],
-                tableView: tableView,
-                id: id,
-                height: .heightCell48,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: TextComponent) in
-                        component.font = .subhead2
-                        component.textColor = .themeGray
-                        component.text = title
-                        component.setContentHuggingPriority(.required, for: .horizontal)
-                    }
-                    cell.bind(index: 1) { (component: BadgeComponent) in
+        CellBuilderNew.row(
+                rootElement: .hStack([
+                    .textElement(text: .subhead2(title), parameters: .highHugging),
+                    .margin8,
+                    .badge { (component: BadgeComponent) in
                         component.badgeView.set(style: .small)
 
                         if let badge = badge {
@@ -400,13 +391,14 @@ extension CoinOverviewViewController {
                         } else {
                             component.isHidden = true
                         }
-                    }
-                    cell.bind(index: 2) { (component: TextComponent) in
-                        component.font = .subhead1
-                        component.textColor = .themeLeah
-                        component.text = text
-                        component.textAlignment = .right
-                    }
+                    },
+                    .textElement(text: .subhead1(text), parameters: .rightAlignment)
+                ]),
+                tableView: tableView,
+                id: id,
+                height: .heightCell48,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                 }
         )
     }

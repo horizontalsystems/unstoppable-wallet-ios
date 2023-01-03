@@ -95,20 +95,18 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
         wordListCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
         passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
 
-        CellBuilder.build(cell: passphraseToggleCell, elements: [.image20, .text, .switch])
-        passphraseToggleCell.bind(index: 0) { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "key_phrase_24")
-        }
-        passphraseToggleCell.bind(index: 1) { (component: TextComponent) in
-            component.font = .body
-            component.textColor = .themeLeah
-            component.text = "restore.passphrase".localized
-        }
-        passphraseToggleCell.bind(index: 2) { (component: SwitchComponent) in
-            component.onSwitch = { [weak self] in
-                self?.mnemonicViewModel.onTogglePassphrase(isOn: $0)
-            }
-        }
+        CellBuilderNew.buildStatic(
+                cell: passphraseToggleCell,
+                rootElement: .hStack(
+                        tableView.universalImage24Elements(
+                                image: .local(UIImage(named: "key_phrase_24")?.withTintColor(.themeGray)),
+                                title: .body("restore.passphrase".localized),
+                                accessoryType: .switch { [weak self] in
+                                    self?.mnemonicViewModel.onTogglePassphrase(isOn: $0)
+                                }
+                        )
+                )
+        )
 
         passphraseCell.isSecureTextEntry = true
         passphraseCell.inputPlaceholder = "restore.input.passphrase".localized
@@ -178,25 +176,14 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
     private func syncWordListLanguageCell(wordListLanguage: String) {
         CellBuilderNew.buildStatic(
                 cell: wordListCell,
-                rootElement: .hStack([
-                    .image20 { component in
-                        component.imageView.image = UIImage(named: "globe_20")?.withTintColor(.themeGray)
-                    },
-                    .text { component in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = "create_wallet.word_list".localized
-                    },
-                    .text { component in
-                        component.font = .subhead1
-                        component.textColor = .themeLeah
-                        component.text = wordListLanguage
-                    },
-                    .margin8,
-                    .image20 { component in
-                        component.imageView.image = UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray)
-                    }
-                ])
+                rootElement: .hStack(
+                    tableView.universalImage24Elements(
+                            image: .local(UIImage(named: "globe_24")?.withTintColor(.themeGray)),
+                            title: .body("create_wallet.word_list".localized),
+                            value: .subhead1(wordListLanguage, gray: true),
+                            accessoryType: .dropdown
+                    )
+                )
         )
 
         mnemonicInputCell.set(text: mnemonicInputCell.textView.text)

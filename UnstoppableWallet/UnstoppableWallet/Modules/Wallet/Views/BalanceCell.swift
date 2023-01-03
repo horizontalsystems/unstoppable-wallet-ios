@@ -33,7 +33,7 @@ class BalanceCell: UITableViewCell {
         cardView.contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12)
-            maker.top.equalTo(topView.snp.bottom)
+            maker.top.equalTo(topView.snp.bottom).offset(5)
             maker.height.equalTo(CGFloat.heightOneDp)
         }
 
@@ -42,7 +42,7 @@ class BalanceCell: UITableViewCell {
         cardView.contentView.addSubview(lockedAmountView)
         lockedAmountView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(topView.snp.bottom)
+            maker.top.equalTo(separatorView.snp.bottom)
             maker.height.equalTo(BalanceLockedAmountView.height)
         }
 

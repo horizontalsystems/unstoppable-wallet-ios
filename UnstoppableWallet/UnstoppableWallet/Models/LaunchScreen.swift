@@ -15,10 +15,10 @@ enum LaunchScreen: String, CaseIterable {
 
     var iconName: String {
         switch self {
-        case .auto: return "settings_20"
-        case .balance: return "wallet_20"
+        case .auto: return "brush_24"
+        case .balance: return "wallet_24"
         case .marketOverview: return "chart_type_20"
-        case .watchlist: return "star_20"
+        case .watchlist: return "star_24"
         }
     }
 

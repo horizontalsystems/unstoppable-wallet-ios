@@ -49,15 +49,16 @@ extension SimpleActivateViewController: SectionsDataSource {
                 headerState: .margin(height: .margin12),
                 footerState: tableView.sectionFooter(text: viewModel.viewItem.activateDescription),
                 rows: [
-                    tableView.switchRow(
+                    tableView.universalRow48(
                             id: "activate-cell",
-                            title: viewModel.viewItem.activateTitle,
-                            isOn: viewModel.featureEnabled,
+                            title: .body(viewModel.viewItem.activateTitle),
+                            accessoryType: .switch(
+                                    isOn: viewModel.featureEnabled,
+                                    onSwitch: { [weak self] isOn in
+                                        self?.viewModel.onToggle()
+                                    }),
                             isFirst: true,
-                            isLast: true,
-                            onSwitch: { [weak self] isOn in
-                                self?.viewModel.onToggle()
-                            }
+                            isLast: true
                     )
                 ]
             )

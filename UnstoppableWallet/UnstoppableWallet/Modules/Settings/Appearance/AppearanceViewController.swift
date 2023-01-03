@@ -92,29 +92,15 @@ class AppearanceViewController: ThemeViewController {
 extension AppearanceViewController: SectionsDataSource {
 
     private func row(viewItem: AppearanceViewModel.ViewItem, id: String, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image20, .text, .image20],
-                tableView: tableView,
+        tableView.universalRow48(
                 id: id,
+                image: .local(UIImage(named: viewItem.iconName)?.withTintColor(.themeGray)),
+                title: .body(viewItem.title),
+                accessoryType: .check(viewItem.selected),
                 hash: "\(viewItem.selected)",
-                height: .heightCell48,
                 autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0) { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: viewItem.iconName)?.withTintColor(.themeGray)
-                    }
-                    cell.bind(index: 1) { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = viewItem.title
-                    }
-                    cell.bind(index: 2) { (component: ImageComponent) in
-                        component.isHidden = !viewItem.selected
-                        component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
-                    }
-                },
+                isFirst: isFirst,
+                isLast: isLast,
                 action: action
         )
     }
@@ -183,34 +169,15 @@ extension AppearanceViewController: SectionsDataSource {
                 headerState: tableView.sectionHeader(text: "appearance.balance_conversion".localized),
                 footerState: .margin(height: .margin24),
                 rows: viewItems.enumerated().map { index, viewItem in
-                    let isFirst = index == 0
-                    let isLast = index == viewItems.count - 1
-
-                    var elements: [CellBuilderNew.CellElement] = [
-                        .image24 { (component: ImageComponent) -> () in
-                            component.setImage(urlString: viewItem.urlString, placeholder: nil)
-                        },
-                        .text { (component: TextComponent) -> () in
-                            component.font = .body
-                            component.textColor = .themeLeah
-                            component.text = viewItem.title
-                        }
-                    ]
-                    if viewItem.selected {
-                        elements.append(.image20 { (component: ImageComponent) -> () in
-                            component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
-                        })
-                    }
-                    return CellBuilderNew.row(
-                            rootElement: .hStack(elements),
-                            tableView: tableView,
-                            id: "balance-conversizon-\(index)",
+                    tableView.universalRow56(
+                            id: "balance-conversion-\(index)",
+                            image: .url(viewItem.urlString),
+                            title: .body(viewItem.title),
+                            accessoryType: .check(viewItem.selected),
                             hash: "\(viewItem.selected)",
-                            height: .heightCell48,
                             autoDeselect: true,
-                            bind: { cell in
-                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                            },
+                            isFirst: index == 0,
+                            isLast: index == viewItems.count - 1,
                             action: { [weak self] in
                                 self?.viewModel.onSelectConversionCoin(index: index)
                             }
@@ -225,34 +192,15 @@ extension AppearanceViewController: SectionsDataSource {
                 headerState: tableView.sectionHeader(text: "appearance.balance_value".localized),
                 footerState: .margin(height: .margin32),
                 rows: viewItems.enumerated().map { index, viewItem in
-                    let isFirst = index == 0
-                    let isLast = index == viewItems.count - 1
-
-                    return CellBuilder.selectableRow(
-                            elements: [.multiText, .image20],
-                            tableView: tableView,
+                    tableView.universalRow62(
                             id: "balance-value-\(index)",
+                            title: .body(viewItem.title),
+                            description: .subhead2(viewItem.subtitle),
+                            accessoryType: .check(viewItem.selected),
                             hash: "\(viewItem.selected)",
-                            height: .heightDoubleLineCell,
                             autoDeselect: true,
-                            bind: { cell in
-                                cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                                cell.bind(index: 0) { (component: MultiTextComponent) in
-                                    component.set(style: .m1)
-                                    component.title.font = .body
-                                    component.title.textColor = .themeLeah
-                                    component.subtitle.font = .subhead2
-                                    component.subtitle.textColor = .themeGray
-
-                                    component.title.text = viewItem.title
-                                    component.subtitle.text = viewItem.subtitle
-                                }
-                                cell.bind(index: 1) { (component: ImageComponent) in
-                                    component.isHidden = !viewItem.selected
-                                    component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
-                                }
-                            },
+                            isFirst: index == 0,
+                            isLast: index == viewItems.count - 1,
                             action: { [weak self] in
                                 self?.viewModel.onSelectBalanceValue(index: index)
                             }
