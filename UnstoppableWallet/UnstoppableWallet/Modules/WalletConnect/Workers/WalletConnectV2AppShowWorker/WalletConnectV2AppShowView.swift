@@ -29,7 +29,7 @@ class WalletConnectV2AppShowView {
             case 1:
                 WalletConnectUriHandler.createServiceV1(uri: uri)
                         .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                        .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                        .observeOn(MainScheduler.instance)
                         .subscribe(onSuccess: { [weak self] service in
                             self?.processWalletConnectV1(service: service)
                         }, onError: { [weak self] error in
@@ -39,7 +39,7 @@ class WalletConnectV2AppShowView {
             case 2:
                 WalletConnectUriHandler.pairV2(uri: uri)
                         .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                        .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                        .observeOn(MainScheduler.instance)
                         .subscribe(onSuccess: { [weak self] service in
                             self?.showV2PairedSuccessful()
                         }, onError: { [weak self] error in
@@ -66,16 +66,14 @@ class WalletConnectV2AppShowView {
 
 
     private func processWalletConnectV1(service: WalletConnectV1MainService) {
-        DispatchQueue.main.async { [weak self] in
-            guard let viewController = WalletConnectMainModule.viewController(
-                    service: service,
-                    sourceViewController: self?.parentViewController?.visibleController)
-            else {
-                return
-            }
-
-            self?.parentViewController?.visibleController.present(viewController, animated: true)
+        guard let viewController = WalletConnectMainModule.viewController(
+                service: service,
+                sourceViewController: parentViewController?.visibleController)
+        else {
+            return
         }
+
+        parentViewController?.visibleController.present(viewController, animated: true)
     }
 
     private func showV2PairedSuccessful() {
