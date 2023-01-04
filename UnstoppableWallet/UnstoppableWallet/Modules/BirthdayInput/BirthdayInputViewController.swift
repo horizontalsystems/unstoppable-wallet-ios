@@ -156,37 +156,18 @@ class BirthdayInputViewController: KeyboardAwareViewController {
     }
 
     private func row(type: WalletType) -> RowProtocol {
-        CellBuilderNew.row(
-            rootElement: .hStack([
-                .vStackCentered([
-                    .text { component in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = type.title
-                    },
-                    .margin(1),
-                    .text { component in
-                        component.font = .subhead2
-                        component.textColor = .themeGray
-                        component.text = type.description
-                    },
-                ]
-                ),
-                .image20 { [weak self] component in
-                    component.isHidden = type != self?.walletType
-                    component.imageView.image = ComponentKit.image(named: "check_1_20")?.withTintColor(.themeJacob)
-                },
-            ]),
-            tableView: tableView,
-            id: "wallet_type_\(type.title)",
-            hash: "wallet_type_\(type.title)_\(type == walletType)",
-            height: .heightDoubleLineCell,
-            autoDeselect: true,
-            bind: { cell in
-                cell.set(backgroundStyle: .lawrence, isFirst: type.rawValue == 0, isLast: type.rawValue == WalletType.allCases.count - 1)
-            }, action: { [weak self] in
-                self?.didTap(type: type)
-            }
+        tableView.universalRow62(
+                id: "wallet_type_\(type.title)",
+                title: .body(type.title),
+                description: .subhead2(type.description),
+                accessoryType: .check(type == walletType),
+                hash: "wallet_type_\(type.title)_\(type == walletType)",
+                autoDeselect: true,
+                isFirst: type.rawValue == 0,
+                isLast: type.rawValue == WalletType.allCases.count - 1,
+                action: { [weak self] in
+                    self?.didTap(type: type)
+                }
         )
     }
 

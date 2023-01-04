@@ -76,48 +76,16 @@ class LegacyEvmFeeViewController: ThemeViewController {
         doneButton.addTarget(self, action: #selector(onTapDone), for: .touchUpInside)
 
         gasLimitCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
-        CellBuilder.build(cell: gasLimitCell, elements: [.image20, .text, .text])
-        gasLimitCell.bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "circle_information_20")
-        })
-        gasLimitCell.bind(index: 1, block: { (component: TextComponent) in
-            component.font = .subhead2
-            component.textColor = .themeGray
-            component.text = "fee_settings.gas_limit".localized
-        })
-        gasLimitCell.bind(index: 2, block: { (component: TextComponent) in
-            component.font = .subhead1
-            component.textColor = .themeLeah
-        })
+        syncGasLimitCell()
 
         gasPriceCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
-        CellBuilder.build(cell: gasPriceCell, elements: [.image20, .text, .text])
-        gasPriceCell.bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "circle_information_20")
-        })
-        gasPriceCell.bind(index: 1, block: { (component: TextComponent) in
-            component.font = .subhead2
-            component.textColor = .themeGray
-            component.text = "fee_settings.gas_price".localized
-        })
-        gasPriceCell.bind(index: 2, block: { (component: TextComponent) in
-            component.font = .subhead1
-            component.textColor = .themeLeah
-        })
+        syncGasPriceCell()
 
         gasPriceSliderCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
 
         subscribe(disposeBag, viewModel.cautionDriver) { [weak self] in self?.handle(caution: $0) }
-        subscribe(disposeBag, viewModel.gasLimitDriver) { [weak self] value in
-            self?.gasLimitCell.bind(index: 2, block: { (component: TextComponent) in
-                component.text = value
-            })
-        }
-        subscribe(disposeBag, viewModel.gasPriceDriver) { [weak self] value in
-            self?.gasPriceCell.bind(index: 2, block: { (component: TextComponent) in
-                component.text = value
-            })
-        }
+        subscribe(disposeBag, viewModel.gasLimitDriver) { [weak self] in self?.syncGasLimitCell(value: $0) }
+        subscribe(disposeBag, viewModel.gasPriceDriver) { [weak self] in self?.syncGasPriceCell(value: $0) }
         subscribe(disposeBag, viewModel.resetButtonActiveDriver) { [weak self] active in
             self?.navigationItem.leftBarButtonItem?.isEnabled = active
         }
@@ -125,6 +93,28 @@ class LegacyEvmFeeViewController: ThemeViewController {
         tableView.buildSections()
 
         loaded = true
+    }
+
+    private func syncGasLimitCell(value: String? = nil) {
+        CellBuilderNew.buildStatic(
+                cell: gasLimitCell,
+                rootElement: .hStack(tableView.universalImage24Elements(
+                    image: .local(UIImage(named: "circle_information_24")),
+                    title: .subhead2("fee_settings.gas_limit".localized),
+                    value: .subhead1(value)
+                ))
+            )
+    }
+
+    private func syncGasPriceCell(value: String? = nil) {
+        CellBuilderNew.buildStatic(
+                cell: gasPriceCell,
+                rootElement: .hStack(tableView.universalImage24Elements(
+                    image: .local(UIImage(named: "circle_information_24")),
+                    title: .subhead2("fee_settings.gas_price".localized),
+                    value: .subhead1(value)
+                ))
+            )
     }
 
     @objc private func onTapDone() {

@@ -14,6 +14,11 @@ class EditableFeeCell: BaseSelectableThemeCell {
 
     private let viewModel: IEditableFeeViewModel
 
+    private var value: FeeCell.Value?
+    private var imageVisible: Bool = true
+    private var imageHighlighted: Bool = false
+    private var spinnerVisible: Bool = false
+
     init(viewModel: IEditableFeeViewModel, isFirst: Bool = true, isLast: Bool = true) {
         self.viewModel = viewModel
         super.init(style: .default, reuseIdentifier: nil)
@@ -22,53 +27,61 @@ class EditableFeeCell: BaseSelectableThemeCell {
         clipsToBounds = true
         set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
 
-        CellBuilder.build(cell: self, elements: [.text, .text, .margin8, .image20, .spinner20])
-
-        bind(index: 0) { (component: TextComponent) in
-            component.font = .subhead2
-            component.textColor = .themeGray
-            component.text = "send.fee".localized
-        }
-
-        bind(index: 2) { (component: ImageComponent) in
-            component.imageView.image =  UIImage(named: "edit2_20")?.withRenderingMode(.alwaysTemplate)
-        }
-
+        sync()
         subscribe(disposeBag, viewModel.valueDriver) { [weak self] value in
-            self?.bind(index: 1) { (component: TextComponent) in
-                if let value = value {
-                    component.isHidden = false
-                    component.font = .subhead1
-                    component.textColor = value.type.textColor
-                    component.text = value.text
-                } else {
-                    component.isHidden = true
-                }
-            }
+            self?.value = value
+            self?.sync()
         }
-
         subscribe(disposeBag, viewModel.editButtonVisibleDriver) { [weak self] visible in
+            self?.imageVisible = visible
             self?.selectionStyle = visible ? .default : .none
-            self?.bind(index: 2) { (component: ImageComponent) in
-                component.isHidden = !visible
-            }
+            self?.sync()
         }
-
         subscribe(disposeBag, viewModel.editButtonHighlightedDriver) { [weak self] highlighted in
-            self?.bind(index: 2) { (component: ImageComponent) in
-                component.imageView.tintColor = highlighted ? .themeJacob : .themeGray
-            }
+            self?.imageHighlighted = highlighted
+            self?.sync()
         }
-
         subscribe(disposeBag, viewModel.spinnerVisibleDriver) { [weak self] visible in
-            self?.bind(index: 3) { (component: SpinnerComponent) in
-                component.isHidden = !visible
-            }
+            self?.spinnerVisible = visible
+            self?.sync()
         }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func sync(value: FeeCell.Value? = nil) {
+        CellBuilderNew.buildStatic(cell: self, rootElement:
+            .hStack([
+                .text { (component: TextComponent) -> () in
+                    component.font = .subhead2
+                    component.textColor = .themeGray
+                    component.text = "send.fee".localized
+                },
+                .text { [weak self] (component: TextComponent) -> () in
+                    if let value = self?.value {
+                        component.isHidden = false
+                        component.font = .subhead1
+                        component.textColor = value.type.textColor
+                        component.text = value.text
+                    } else {
+                        component.isHidden = true
+                    }
+                },
+                .margin8,
+                .image20 { [weak self] (component: ImageComponent) -> () in
+                    component.imageView.image =  UIImage(named: "edit2_20")?.withRenderingMode(.alwaysTemplate)
+
+                    component.isHidden = !(self?.imageVisible ?? false)
+                    component.imageView.tintColor = (self?.imageHighlighted ?? false) ? .themeJacob : .themeGray
+
+                },
+                .spinner20 { [weak self] (component: SpinnerComponent) -> () in
+                        component.isHidden = !(self?.spinnerVisible ?? false)
+                }
+            ])
+        )
     }
 
 }

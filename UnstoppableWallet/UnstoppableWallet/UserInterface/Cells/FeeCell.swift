@@ -28,6 +28,9 @@ class FeeCell: BaseSelectableThemeCell {
 
     private let viewModel: IFeeViewModel
 
+    private var value: FeeCell.Value?
+    private var spinnerVisible: Bool = false
+
     init(viewModel: IFeeViewModel) {
         self.viewModel = viewModel
 
@@ -37,42 +40,49 @@ class FeeCell: BaseSelectableThemeCell {
         clipsToBounds = true
         set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         selectionStyle = viewModel.hasInformation ? .default : .none
-
-        CellBuilder.build(cell: self, elements: [.image24, .text, .text, .spinner20])
-
-        bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "circle_information_24")
-            component.isHidden = !viewModel.hasInformation
-        })
-
-        bind(index: 1) { (component: TextComponent) in
-            component.font = .subhead2
-            component.textColor = .themeGray
-            component.text = viewModel.title
-        }
+        sync()
 
         subscribe(disposeBag, viewModel.valueDriver) { [weak self] value in
-            self?.bind(index: 2) { (component: TextComponent) in
-                if let value = value {
-                    component.isHidden = false
-                    component.font = .subhead1
-                    component.textColor = value.type.textColor
-                    component.text = value.text
-                } else {
-                    component.isHidden = true
-                }
-            }
+            self?.value = value
+            self?.sync()
         }
-
         subscribe(disposeBag, viewModel.spinnerVisibleDriver) { [weak self] visible in
-            self?.bind(index: 3) { (component: SpinnerComponent) in
-                component.isHidden = !visible
-            }
+            self?.spinnerVisible = visible
+            self?.sync()
         }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func sync() {
+        CellBuilderNew.buildStatic(cell: self, rootElement:
+            .hStack([
+                .image24 { [weak self] (component: ImageComponent) in
+                    component.imageView.image = UIImage(named: "circle_information_24")
+                    component.isHidden = !(self?.viewModel.hasInformation ?? false)
+                },
+                .text { [weak self] (component: TextComponent) -> () in
+                    component.font = .subhead2
+                    component.textColor = .themeGray
+                    component.text = self?.viewModel.title
+                },
+                .text { [weak self] (component: TextComponent) -> () in
+                    if let value = self?.value {
+                        component.isHidden = false
+                        component.font = .subhead1
+                        component.textColor = value.type.textColor
+                        component.text = value.text
+                    } else {
+                        component.isHidden = true
+                    }
+                },
+                .spinner20 { [weak self] (component: SpinnerComponent) -> () in
+                    component.isHidden = !(self?.spinnerVisible ?? false)
+                }
+            ])
+        )
     }
 
 }
