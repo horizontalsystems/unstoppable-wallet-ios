@@ -117,32 +117,15 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
 extension BtcBlockchainSettingsViewController: SectionsDataSource {
 
     private func row(id: String, viewItem: BtcBlockchainSettingsViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.multiText, .image20],
-                tableView: tableView,
+        tableView.universalRow62(
                 id: "\(id)-\(index)",
+                title: .body(viewItem.name),
+                description: .subhead2(viewItem.description),
+                accessoryType: .check(viewItem.selected),
                 hash: "\(viewItem.selected)",
-                height: .heightDoubleLineCell,
                 autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0, block: { (component: MultiTextComponent) in
-                        component.set(style: .m1)
-                        component.title.font = .body
-                        component.title.textColor = .themeLeah
-                        component.subtitle.font = .subhead2
-                        component.subtitle.textColor = .themeGray
-
-                        component.title.text = viewItem.name
-                        component.subtitle.text = viewItem.description
-                    })
-
-                    cell.bind(index: 1, block: { (component: ImageComponent) in
-                        component.isHidden = !viewItem.selected
-                        component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeJacob)
-                    })
-                },
+                isFirst: isFirst,
+                isLast: isLast,
                 action: action
         )
     }

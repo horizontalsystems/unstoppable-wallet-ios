@@ -11,7 +11,7 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
     private let viewModel: SendViewModel
 
     private let iconImageView = UIImageView()
-    private let tableView = SectionsTableView(style: .grouped)
+    let tableView = SectionsTableView(style: .grouped)
 
     private let confirmationFactory: ISendConfirmationFactory
 

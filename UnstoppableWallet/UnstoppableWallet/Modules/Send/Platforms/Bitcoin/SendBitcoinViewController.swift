@@ -38,18 +38,7 @@ class SendBitcoinViewController: BaseSendViewController {
         if timeLockViewModel != nil {
             let timeLockCell = BaseSelectableThemeCell()
 
-            CellBuilder.build(cell: timeLockCell, elements: [.text, .text, .margin8, .image20])
             timeLockCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
-
-            timeLockCell.bind(index: 0) { (component: TextComponent) in
-                component.font = .subhead2
-                component.textColor = .themeGray
-                component.text = "send.hodler_locktime".localized
-            }
-            timeLockCell.bind(index: 2) { (component: ImageComponent) in
-                component.imageView.image = UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray)
-            }
-
             self.timeLockCell = timeLockCell
         }
 
@@ -61,6 +50,8 @@ class SendBitcoinViewController: BaseSendViewController {
                 amountCautionViewModel: amountCautionViewModel,
                 recipientViewModel: recipientViewModel
         )
+
+        syncTimeLock()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -76,15 +67,23 @@ class SendBitcoinViewController: BaseSendViewController {
 
         if let timeLockViewModel = timeLockViewModel {
             subscribe(disposeBag, timeLockViewModel.lockTimeDriver) { [weak self] priority in
-                self?.timeLockCell?.bind(index: 1) { (component: TextComponent) in
-                    component.font = .subhead1
-                    component.textColor = .themeLeah
-                    component.text = priority
-                }
+                self?.syncTimeLock(value: priority)
             }
         }
 
         didLoad()
+    }
+
+    private func syncTimeLock(value: String? = nil) {
+        guard let cell = timeLockCell else {
+            return
+        }
+        let elements = tableView.universalImage24Elements(
+                title: .subhead2("send.hodler_locktime".localized),
+                value: .subhead1(value, gray: false),
+                accessoryType: .dropdown)
+
+        CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements))
     }
 
     private func handle(caution: TitledCaution?) {

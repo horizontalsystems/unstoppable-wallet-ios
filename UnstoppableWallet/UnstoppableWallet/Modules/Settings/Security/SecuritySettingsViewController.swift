@@ -102,61 +102,36 @@ class SecuritySettingsViewController: ThemeViewController {
 extension SecuritySettingsViewController: SectionsDataSource {
 
     private func passcodeRows(viewItem: SecuritySettingsViewModel.PinViewItem) -> [RowProtocol] {
-        let passcodeRow = CellBuilder.row(
-                elements: [.image20, .text, .image20, .switch],
+        var elements = tableView.universalImage24Elements(
+                image: .local(UIImage(named: "dialpad_alt_2_24")?.withTintColor(.themeGray)),
+                title: .body("settings_security.passcode".localized),
+                accessoryType: .switch(isOn: viewItem.enabled) { [weak self] in self?.viewModel.onTogglePin(isOn: $0) }
+        )
+        elements.insert(.image20 { (component: ImageComponent) -> () in
+            component.isHidden = viewItem.enabled
+            component.imageView.image = UIImage(named: "warning_2_20")?.withTintColor(.themeLucian)
+        }, at: 2)
+
+        let passcodeRow = CellBuilderNew.row(
+                rootElement: .hStack(elements),
                 tableView: tableView,
                 id: "passcode",
                 hash: "\(viewItem.enabled)",
                 height: .heightCell48,
-                bind: { [weak self] cell in
+                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: !viewItem.editVisible)
-
-                    cell.bind(index: 0, block: { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "dialpad_alt_2_24")?.withTintColor(.themeGray)
-                    })
-
-                    cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = "settings_security.passcode".localized
-                    })
-
-                    cell.bind(index: 2, block: { (component: ImageComponent) in
-                        component.isHidden = viewItem.enabled
-                        component.imageView.image = UIImage(named: "warning_2_20")?.withTintColor(.themeLucian)
-                    })
-
-                    cell.bind(index: 3, block: { (component: SwitchComponent) in
-                        component.switchView.isOn = viewItem.enabled
-                        component.onSwitch = { isOn in
-                            self?.viewModel.onTogglePin(isOn: isOn)
-                        }
-                    })
                 }
         )
 
         var rows: [RowProtocol] = [passcodeRow]
 
         if viewItem.editVisible {
-            let editRow = CellBuilder.selectableRow(
-                    elements: [.text, .image20],
-                    tableView: tableView,
+            let editRow = tableView.universalRow48(
                     id: "edit-passcode",
-                    height: .heightCell48,
+                    title: .body("settings_security.change_pin".localized),
+                    accessoryType: .disclosure,
                     autoDeselect: true,
-                    bind: { cell in
-                        cell.set(backgroundStyle: .lawrence, isLast: true)
-
-                        cell.bind(index: 0, block: { (component: TextComponent) in
-                            component.font = .body
-                            component.textColor = .themeLeah
-                            component.text = "settings_security.change_pin".localized
-                        })
-
-                        cell.bind(index: 1, block: { (component: ImageComponent) in
-                            component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                        })
-                    },
+                    isLast: true,
                     action: { [weak self] in
                         self?.openEditPin()
                     }
@@ -169,65 +144,32 @@ extension SecuritySettingsViewController: SectionsDataSource {
     }
 
     private func biometryRow(viewItem: SecuritySettingsViewModel.BiometryViewItem) -> RowProtocol {
-        CellBuilder.row(
-                elements: [.image20, .text, .switch],
-                tableView: tableView,
+        tableView.universalRow48(
                 id: "biometry",
-                hash: "\(viewItem.enabled)",
-                height: .heightCell48,
-                bind: { [weak self] cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-
-                    cell.bind(index: 0, block: { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: viewItem.icon)?.withTintColor(.themeGray)
-                    })
-
-                    cell.bind(index: 1, block: { (component: TextComponent) in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = viewItem.title
-                    })
-
-                    cell.bind(index: 2, block: { (component: SwitchComponent) in
-                        component.switchView.isOn = viewItem.enabled
-                        component.onSwitch = { isOn in
+                image: .local(UIImage(named: viewItem.icon)?.withTintColor(.themeGray)),
+                title: .body(viewItem.title),
+                accessoryType: .switch(
+                        isOn: viewItem.enabled,
+                        onSwitch: { [weak self] isOn in
                             self?.viewModel.onToggleBiometry(isOn: isOn)
-                        }
-                    })
-                }
+                        }),
+                hash: "\(viewItem.enabled)",
+                isFirst: true,
+                isLast: true
         )
     }
 
     private func blockchainRow(viewItem: SecuritySettingsViewModel.BlockchainViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        CellBuilder.selectableRow(
-                elements: [.image32, .multiText, .image20],
-                tableView: tableView,
+        tableView.universalRow62(
                 id: "blockchain-\(index)",
+                image: .url(viewItem.iconUrl),
+                title: .body(viewItem.name),
+                description: .subhead2(viewItem.value),
+                accessoryType: .disclosure,
                 hash: "\(viewItem.value)-\(isFirst)-\(isLast)",
-                height: .heightDoubleLineCell,
                 autoDeselect: true,
-                bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-
-                    cell.bind(index: 0, block: { (component: ImageComponent) in
-                        component.setImage(urlString: viewItem.iconUrl, placeholder: nil)
-                    })
-
-                    cell.bind(index: 1, block: { (component: MultiTextComponent) in
-                        component.set(style: .m1)
-                        component.title.font = .body
-                        component.title.textColor = .themeLeah
-                        component.subtitle.font = .subhead2
-                        component.subtitle.textColor = .themeGray
-
-                        component.title.text = viewItem.name
-                        component.subtitle.text = viewItem.value
-                    })
-
-                    cell.bind(index: 2, block: { (component: ImageComponent) in
-                        component.imageView.image = UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray)
-                    })
-                },
+                isFirst: isFirst,
+                isLast: isLast,
                 action: { [weak self] in
                     self?.viewModel.onTapBlockchain(index: index)
                 }
