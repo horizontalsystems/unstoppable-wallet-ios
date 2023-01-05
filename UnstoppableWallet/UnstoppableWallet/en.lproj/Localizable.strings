@@ -825,6 +825,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "manage_wallets.search_placeholder" = "Name, code or contract address";
 "manage_wallets.not_supported" = "Not supported";
 "manage_wallets.not_supported.description" = "Your current wallet type %@ does not support %@";
+"manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
 "manage_coins.add_coin.title" = "Add %@";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";

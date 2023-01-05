@@ -33,7 +33,7 @@ class BalanceCell: UITableViewCell {
         cardView.contentView.addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12)
-            maker.top.equalTo(topView.snp.bottom).offset(5)
+            maker.bottom.equalTo(topView).offset(BalanceTopView.expandedMargin)
             maker.height.equalTo(CGFloat.heightOneDp)
         }
 
@@ -96,6 +96,7 @@ class BalanceCell: UITableViewCell {
         }
 
         if viewItem.buttonsViewItem != nil {
+            height += BalanceTopView.expandedMargin
             height += BalanceButtonsView.height
         }
 

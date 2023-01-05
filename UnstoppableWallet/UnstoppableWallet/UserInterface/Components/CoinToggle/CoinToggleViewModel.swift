@@ -24,7 +24,7 @@ class CoinToggleViewModel {
 
     enum ViewItemState {
         case toggleVisible(enabled: Bool, hasSettings: Bool)
-        case toggleHidden
+        case toggleHidden(notSupportedReason: String)
     }
 
 }

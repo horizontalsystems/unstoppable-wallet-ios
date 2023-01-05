@@ -26,7 +26,11 @@ class ManageWalletsViewModel {
 
         switch item.state {
         case let .supported(enabled, hasSettings): viewItemState = .toggleVisible(enabled: enabled, hasSettings: hasSettings)
-        case .unsupported: viewItemState = .toggleHidden
+        case .unsupportedByApp:
+            viewItemState = .toggleHidden(notSupportedReason: "manage_wallets.not_supported.by_app.description".localized(item.fullCoin.coin.name))
+        case .unsupportedByWalletType:
+            let walletType = service.accountType.description
+            viewItemState = .toggleHidden(notSupportedReason: "manage_wallets.not_supported.description".localized(walletType, item.fullCoin.coin.name))
         }
 
         return CoinToggleViewModel.ViewItem(
