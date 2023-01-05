@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 class BalanceLockedAmountView: UIView {
-    static let height: CGFloat = 36
+    static let height: CGFloat = 37
 
     private let coinValueLabel = UILabel()
     private let currencyValueLabel = UILabel()

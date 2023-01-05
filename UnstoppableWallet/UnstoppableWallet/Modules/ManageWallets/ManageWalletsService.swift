@@ -88,10 +88,7 @@ class ManageWalletsService {
                 fullCoins = allFullCoins
             }
 
-            return fullCoins.map { fullCoin in
-                let eligibleTokens = fullCoin.eligibleTokens(accountType: account.type)
-                return FullCoin(coin: fullCoin.coin, tokens: eligibleTokens)
-            }
+            return fullCoins
         } catch {
             return []
         }
@@ -123,10 +120,17 @@ class ManageWalletsService {
     }
 
     private func item(fullCoin: FullCoin) -> Item {
+        if !fullCoin.tokens.isEmpty,
+           fullCoin.tokens.allSatisfy({ $0.blockchainType.isUnsupported }) {
+            return Item(fullCoin: fullCoin, state: .unsupportedByApp)
+        }
+
+        let eligibleTokens = fullCoin.eligibleTokens(accountType: accountType)
+
         let itemState: ItemState
 
-        if fullCoin.tokens.isEmpty {
-            itemState = .unsupported
+        if eligibleTokens.isEmpty {
+            itemState = .unsupportedByWalletType
         } else {
             let enabled = isEnabled(coin: fullCoin.coin)
             itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrTokens(tokens: fullCoin.tokens))
@@ -243,7 +247,8 @@ extension ManageWalletsService {
     }
 
     enum ItemState {
-        case unsupported
+        case unsupportedByWalletType
+        case unsupportedByApp
         case supported(enabled: Bool, hasSettings: Bool)
     }
 

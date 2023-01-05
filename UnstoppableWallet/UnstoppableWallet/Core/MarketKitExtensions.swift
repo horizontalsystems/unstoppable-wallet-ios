@@ -305,6 +305,11 @@ extension MarketKit.BlockchainType {
         }
     }
 
+    var isUnsupported: Bool {
+        if case .unsupported = self { return true }
+        return false
+    }
+
 }
 
 extension MarketKit.Coin {

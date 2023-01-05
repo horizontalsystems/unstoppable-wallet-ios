@@ -73,11 +73,11 @@ class ManageWalletsViewController: CoinToggleViewController {
         notFoundPlaceholder.isHidden = !visible
     }
 
-    override func onTapToggleHidden(viewItem: CoinToggleViewModel.ViewItem) {
+    override func onTapToggleHidden(viewItem: CoinToggleViewModel.ViewItem, notSupportedReason: String) {
         let viewController = InformationModule.simpleInfo(
                 title: "manage_wallets.not_supported".localized,
                 image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob),
-                description: "manage_wallets.not_supported.description".localized(viewModel.accountTypeDescription, viewItem.subtitle),
+                description: notSupportedReason,
                 buttonTitle: "button.close".localized,
                 onTapButton: InformationModule.afterClose())
 

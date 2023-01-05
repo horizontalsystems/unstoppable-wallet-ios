@@ -113,10 +113,10 @@ class CoinToggleViewController: ThemeSearchViewController {
         switch viewItem.state {
         case let .toggleVisible(enabled, hasSettings):
             hash = "coin_\(enabled)_\(hasSettings)_\(isLast)"
-        case .toggleHidden:
+        case .toggleHidden(let notSupportedReason):
             hash = "coin_\(isLast)"
             action = { [weak self] in
-                self?.onTapToggleHidden(viewItem: viewItem)
+                self?.onTapToggleHidden(viewItem: viewItem, notSupportedReason: notSupportedReason)
             }
         }
         return CellBuilderNew.row(
@@ -157,7 +157,7 @@ class CoinToggleViewController: ThemeSearchViewController {
         CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements(viewItem: viewItems[index], forceToggleOn: on)))
     }
 
-    func onTapToggleHidden(viewItem: CoinToggleViewModel.ViewItem) {
+    func onTapToggleHidden(viewItem: CoinToggleViewModel.ViewItem, notSupportedReason: String) {
     }
 
 }
