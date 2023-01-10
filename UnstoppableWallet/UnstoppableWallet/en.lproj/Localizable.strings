@@ -800,8 +800,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "settings.title" = "Settings";
 "settings.tab_bar_item" = "Settings";
-"settings.security_center" = "Security Center";
 "settings.manage_accounts" = "Manage Wallets";
+"settings.blockchain_settings" = "Blockchain Settings";
+"settings.security" = "Security";
 "settings.experimental_features" = "Experimental";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
@@ -868,9 +869,13 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "settings_tell_friends.text" = "Be Unstoppable";
 
+// Settings -> Blockchain Settings
+
+"blockchain_settings.title" = "Blockchain Settings";
+
 // Settings -> Security
 
-"settings_security.title" = "Security Center";
+"settings_security.title" = "Security";
 "settings_security.passcode" = "Passcode";
 "settings_security.change_pin" = "Edit Passcode";
 "settings_security.touch_id" = "Touch ID";

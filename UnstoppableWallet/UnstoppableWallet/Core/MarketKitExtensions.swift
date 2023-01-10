@@ -232,9 +232,9 @@ extension MarketKit.BlockchainType {
         case .polygon: return 4
         case .avalanche: return 5
         case .zcash: return 6
-        case .dash: return 7
-        case .bitcoinCash: return 8
-        case .litecoin: return 9
+        case .bitcoinCash: return 7
+        case .litecoin: return 8
+        case .dash: return 9
         case .binanceChain: return 10
         case .arbitrumOne: return 11
         case .optimism: return 12
