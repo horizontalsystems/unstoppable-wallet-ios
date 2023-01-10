@@ -10969,7 +10969,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.29;
+				MARKETING_VERSION = 0.29.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OfficeMode = "";
@@ -11043,7 +11043,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.29;
+				MARKETING_VERSION = 0.29.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OfficeMode = "";
 				Production = YES;
@@ -11323,7 +11323,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.3;
+				version = 1.0.4;
 			};
 		};
 		D3604E7128F03B0A0066C366 /* XCRemoteSwiftPackageReference "ScanQrKit.Swift" */ = {

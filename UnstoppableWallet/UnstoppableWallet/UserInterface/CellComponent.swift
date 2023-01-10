@@ -134,23 +134,60 @@ struct CellComponent {
         )
     }
 
-    static func fromToRow(tableView: SectionsTableView, rowInfo: RowInfo, title: String, value: String, valueTitle: String?) -> RowProtocol {
-        CellBuilderNew.row(
+    static func fromToRow(tableView: UITableView, rowInfo: RowInfo, title: String, value: String, valueTitle: String?) -> RowProtocol {
+        let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
+        let titleFont: UIFont = .subhead2
+        let valueFont: UIFont = .subhead1
+
+        return CellBuilderNew.row(
                 rootElement: .hStack([
-                    .text { (component: TextComponent) -> () in
-                        component.font = .subhead2
+                    .text { component in
+                        component.font = titleFont
                         component.textColor = .themeGray
                         component.text = title
+                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
                     },
-                    .secondaryButton { (component: SecondaryButtonComponent) -> () in
-                        component.button.set(style: .default)
-                        component.button.setTitle(valueTitle ?? value.shortened, for: .normal)
-                        component.button.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+                    .text { component in
+                        component.font = valueFont
+                        component.textColor = .themeLeah
+                        component.text = value
+                        component.textAlignment = .right
+                        component.numberOfLines = 0
+                    },
+                    .margin8,
+                    .secondaryCircleButton { component in
+                        component.button.set(image: UIImage(named: "copy_20"))
                         component.onTap = {
                             CopyHelper.copyAndNotify(value: value)
                         }
                     }
                 ]),
+                tableView: tableView,
+                id: "from-to-\(rowInfo.index)",
+                hash: value,
+                dynamicHeight: { containerWidth in
+                    CellBuilderNew.height(
+                            containerWidth: containerWidth,
+                            backgroundStyle: backgroundStyle,
+                            text: value,
+                            font: valueFont,
+                            elements: [
+                                .fixed(width: TextComponent.width(font: titleFont, text: title)),
+                                .multiline,
+                                .margin8,
+                                .fixed(width: SecondaryCircleButton.size)
+                            ]
+                    )
+                },
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+                }
+        )
+    }
+
+    static func valueRow(tableView: UITableView, rowInfo: RowInfo, iconName: String?, title: String, value: String, type: ValueType = .regular) -> RowProtocol {
+        CellBuilder.row(
+                elements: [.image20, .text, .text],
                 tableView: tableView,
                 id: "from-to-\(rowInfo.index)",
                 hash: value,
