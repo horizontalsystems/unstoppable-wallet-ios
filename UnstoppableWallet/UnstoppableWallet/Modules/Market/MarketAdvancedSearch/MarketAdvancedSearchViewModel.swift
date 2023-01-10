@@ -332,7 +332,7 @@ extension MarketAdvancedSearchService.PriceChangeFilter {
         case .minus10: return "< -10 %"
         case .minus25: return "< -25 %"
         case .minus50: return "< -50 %"
-        case .minus100: return "< -100 %"
+        case .minus75: return "< -75 %"
         }
     }
 
@@ -340,7 +340,7 @@ extension MarketAdvancedSearchService.PriceChangeFilter {
         switch self {
         case .none: return .none
         case .plus10, .plus25, .plus50, .plus100: return .positive
-        case .minus10, .minus25, .minus50, .minus100: return .negative
+        case .minus10, .minus25, .minus50, .minus75: return .negative
         }
     }
 
