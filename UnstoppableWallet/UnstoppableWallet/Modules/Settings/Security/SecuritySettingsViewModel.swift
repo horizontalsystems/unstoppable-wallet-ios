@@ -1,28 +1,22 @@
 import RxSwift
 import RxRelay
 import RxCocoa
-import MarketKit
 
 class SecuritySettingsViewModel {
     private let service: SecuritySettingsService
     private let disposeBag = DisposeBag()
 
     private let pinViewItemRelay = BehaviorRelay<PinViewItem>(value: PinViewItem(enabled: false, editVisible: false, biometryViewItem: nil))
-    private let blockchainViewItemsRelay = BehaviorRelay<[BlockchainViewItem]>(value: [])
     private let showErrorRelay = PublishRelay<String>()
     private let openSetPinRelay = PublishRelay<()>()
     private let openUnlockRelay = PublishRelay<()>()
-    private let openBtcBlockchainRelay = PublishRelay<Blockchain>()
-    private let openEvmBlockchainRelay = PublishRelay<Blockchain>()
 
     init(service: SecuritySettingsService) {
         self.service = service
 
         subscribe(disposeBag, service.pinItemObservable) { [weak self] in self?.sync(pinItem: $0) }
-        subscribe(disposeBag, service.blockchainItemsObservable) { [weak self] in self?.sync(blockchainItems: $0) }
 
         sync(pinItem: service.pinItem)
-        sync(blockchainItems: service.blockchainItems)
     }
 
     private func sync(pinItem: SecuritySettingsService.PinItem) {
@@ -51,37 +45,12 @@ class SecuritySettingsViewModel {
         }
     }
 
-    private func sync(blockchainItems: [SecuritySettingsService.BlockchainItem]) {
-        let viewItems = blockchainItems.map { item -> BlockchainViewItem in
-            switch item {
-            case .btc(let blockchain, let restoreMode, let transactionMode):
-                return BlockchainViewItem(
-                        iconUrl: blockchain.type.imageUrl,
-                        name: blockchain.name,
-                        value: "\(restoreMode.title), \(transactionMode.title)"
-                )
-            case .evm(let blockchain, let syncSource):
-                return BlockchainViewItem(
-                        iconUrl: blockchain.type.imageUrl,
-                        name: blockchain.name,
-                        value: syncSource.name
-                )
-            }
-        }
-
-        blockchainViewItemsRelay.accept(viewItems)
-    }
-
 }
 
 extension SecuritySettingsViewModel {
 
     var pinViewItemDriver: Driver<PinViewItem> {
         pinViewItemRelay.asDriver()
-    }
-
-    var blockchainViewItemsDriver: Driver<[BlockchainViewItem]> {
-        blockchainViewItemsRelay.asDriver()
     }
 
     var showErrorSignal: Signal<String> {
@@ -94,14 +63,6 @@ extension SecuritySettingsViewModel {
 
     var openUnlockSignal: Signal<()> {
         openUnlockRelay.asSignal()
-    }
-
-    var openBtcBlockchainSignal: Signal<Blockchain> {
-        openBtcBlockchainRelay.asSignal()
-    }
-
-    var openEvmBlockchainSignal: Signal<Blockchain> {
-        openEvmBlockchainRelay.asSignal()
     }
 
     func onTogglePin(isOn: Bool) {
@@ -126,17 +87,6 @@ extension SecuritySettingsViewModel {
         }
     }
 
-    func onTapBlockchain(index: Int) {
-        let item = service.blockchainItems[index]
-
-        switch item {
-        case .btc(let blockchain, _, _):
-            openBtcBlockchainRelay.accept(blockchain)
-        case .evm(let blockchain, _):
-            openEvmBlockchainRelay.accept(blockchain)
-        }
-    }
-
 }
 
 extension SecuritySettingsViewModel {
@@ -151,12 +101,6 @@ extension SecuritySettingsViewModel {
         let enabled: Bool
         let icon: String
         let title: String
-    }
-
-    struct BlockchainViewItem {
-        let iconUrl: String
-        let name: String
-        let value: String
     }
 
 }
