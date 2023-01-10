@@ -431,7 +431,7 @@ extension MarketAdvancedSearchService {
         case minus10
         case minus25
         case minus50
-        case minus100
+        case minus75
 
         var lowerBound: Decimal {
             switch self {
@@ -443,7 +443,7 @@ extension MarketAdvancedSearchService {
             case .minus10: return Decimal.leastFiniteMagnitude
             case .minus25: return Decimal.leastFiniteMagnitude
             case .minus50: return Decimal.leastFiniteMagnitude
-            case .minus100: return Decimal.leastFiniteMagnitude
+            case .minus75: return Decimal.leastFiniteMagnitude
             }
         }
 
@@ -457,7 +457,7 @@ extension MarketAdvancedSearchService {
             case .minus10: return -10
             case .minus25: return -25
             case .minus50: return -50
-            case .minus100: return -100
+            case .minus75: return -75
             }
         }
 
