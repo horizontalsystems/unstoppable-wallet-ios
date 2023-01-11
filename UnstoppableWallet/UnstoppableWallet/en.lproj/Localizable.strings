@@ -1020,9 +1020,11 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Create Wallet
 
-"create_wallet.title" = "New Wallet";
+"create_wallet.description" = "Your first step to become Unstoppable";
+"create_wallet.advanced_setup" = "Advanced Setup";
 "create_wallet.create_button" = "Create";
-"create_wallet.mnemonic" = "Mnemonic";
+"create_wallet.advanced_button" = "Advanced";
+"create_wallet.phrase_count" = "Phrase Count";
 "create_wallet.12_words" = "12 words (recommended)";
 "create_wallet.n_words" = "%@ words";
 "create_wallet.word_list" = "Word List";

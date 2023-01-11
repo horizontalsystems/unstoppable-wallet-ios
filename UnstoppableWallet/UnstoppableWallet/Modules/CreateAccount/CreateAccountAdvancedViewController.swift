@@ -12,7 +12,7 @@ protocol ICreateAccountListener: UIViewController {
     func handleCreateAccount()
 }
 
-class CreateAccountViewController: KeyboardAwareViewController {
+class CreateAccountAdvancedViewController: KeyboardAwareViewController {
     private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
     private let viewModel: CreateAccountViewModel
     private let disposeBag = DisposeBag()
@@ -47,9 +47,9 @@ class CreateAccountViewController: KeyboardAwareViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "create_wallet.title".localized
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
+        title = "create_wallet.advanced_setup".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "create_wallet.create_button".localized, style: .done, target: self, action: #selector(onTapCreate))
+        navigationItem.largeTitleDisplayMode = .never
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -129,10 +129,6 @@ class CreateAccountViewController: KeyboardAwareViewController {
         isLoaded = true
     }
 
-    @objc private func onTapCancel() {
-        dismiss(animated: true)
-    }
-
     @objc private func onTapCreate() {
         viewModel.onTapCreate()
     }
@@ -145,7 +141,7 @@ class CreateAccountViewController: KeyboardAwareViewController {
     }
 
     private func openWordCountSelector() {
-        let alertController = AlertRouter.module(title: "create_wallet.mnemonic".localized, viewItems: viewModel.wordCountViewItems) { [weak self] index in
+        let alertController = AlertRouter.module(title: "create_wallet.phrase_count".localized, viewItems: viewModel.wordCountViewItems) { [weak self] index in
             self?.viewModel.onSelectWordCount(index: index)
         }
 
@@ -186,7 +182,7 @@ class CreateAccountViewController: KeyboardAwareViewController {
 
 }
 
-extension CreateAccountViewController: SectionsDataSource {
+extension CreateAccountAdvancedViewController: SectionsDataSource {
 
     private func sync(cell: BaseThemeCell, image: UIImage?, title: String, value: String) {
         CellBuilderNew.buildStatic(
@@ -206,7 +202,7 @@ extension CreateAccountViewController: SectionsDataSource {
         sync(
                 cell: mnemonicCell,
                 image: UIImage(named: "key_24"),
-                title: "create_wallet.mnemonic".localized,
+                title: "create_wallet.phrase_count".localized,
                 value: wordCount
         )
     }
