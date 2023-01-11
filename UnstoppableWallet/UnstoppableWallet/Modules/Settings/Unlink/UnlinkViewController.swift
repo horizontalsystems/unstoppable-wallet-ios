@@ -44,7 +44,7 @@ class UnlinkViewController: ThemeActionSheetController {
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(titleView.snp.bottom)
+            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
         }
 
         tableView.registerCell(forClass: CheckboxCell.self)

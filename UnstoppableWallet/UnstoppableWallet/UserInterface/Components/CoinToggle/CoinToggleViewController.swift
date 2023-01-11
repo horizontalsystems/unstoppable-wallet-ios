@@ -76,14 +76,22 @@ class CoinToggleViewController: ThemeSearchViewController {
             }
         ]))
         switch viewItem.state {
-        case let .toggleVisible(enabled, hasSettings):
+        case let .toggleVisible(enabled, hasSettings, hasInfo):
             elements.append(contentsOf: [
-                hasSettings ? .margin4 : .margin16,
+                hasSettings || hasInfo ? .margin4 : .margin16,
                 .transparentIconButton { [weak self] (component: TransparentIconButtonComponent) -> () in
                     component.isHidden = !hasSettings
-                    component.button.set(image: UIImage(named: "edit_20"))
+                    component.button.set(image: UIImage(named: "edit2_20"))
                     component.onTap = {
                         self?.viewModel.onTapSettings(uid: viewItem.uid)
+                    }
+                },
+                .margin4,
+                .transparentIconButton { [weak self] component in
+                    component.isHidden = !hasInfo
+                    component.button.set(image: UIImage(named: "circle_information_20"))
+                    component.onTap = {
+                        self?.viewModel.onTapInfo(uid: viewItem.uid)
                     }
                 },
                 .margin4,
@@ -111,8 +119,8 @@ class CoinToggleViewController: ThemeSearchViewController {
         var action: (() -> ())?
 
         switch viewItem.state {
-        case let .toggleVisible(enabled, hasSettings):
-            hash = "coin_\(enabled)_\(hasSettings)_\(isLast)"
+        case let .toggleVisible(enabled, hasSettings, hasInfo):
+            hash = "coin_\(enabled)_\(hasSettings)_\(hasInfo)_\(isLast)"
         case .toggleHidden(let notSupportedReason):
             hash = "coin_\(isLast)"
             action = { [weak self] in

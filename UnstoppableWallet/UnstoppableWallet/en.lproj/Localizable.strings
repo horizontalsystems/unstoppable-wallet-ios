@@ -1183,6 +1183,11 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
 "manage_account.unlink" = "Unlink";
 
+// Birthday Height
+
+"birthday_height.title" = "Birthday Height";
+"birthday_height.description" = "Birthday Height Description";
+
 // Birthday Input
 
 "birthday_input.title" = "Birthday Height";

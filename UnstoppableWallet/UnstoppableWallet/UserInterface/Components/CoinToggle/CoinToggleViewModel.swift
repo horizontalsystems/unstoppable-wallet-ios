@@ -8,6 +8,7 @@ protocol ICoinToggleViewModel {
     func onEnable(uid: String)
     func onDisable(uid: String)
     func onTapSettings(uid: String)
+    func onTapInfo(uid: String)
     func onUpdate(filter: String)
 }
 
@@ -23,7 +24,7 @@ class CoinToggleViewModel {
     }
 
     enum ViewItemState {
-        case toggleVisible(enabled: Bool, hasSettings: Bool)
+        case toggleVisible(enabled: Bool, hasSettings: Bool, hasInfo: Bool)
         case toggleHidden(notSupportedReason: String)
     }
 

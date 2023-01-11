@@ -50,6 +50,7 @@ class ManageWalletsViewController: CoinToggleViewController {
 
         subscribe(disposeBag, viewModel.notFoundVisibleDriver) { [weak self] in self?.setNotFound(visible: $0) }
         subscribe(disposeBag, viewModel.disableCoinSignal) { [weak self] in self?.setToggle(on: false, uid: $0.uid) }
+        subscribe(disposeBag, viewModel.showBirthdayHeightSignal) { [weak self] in self?.showBirthdayHeight(viewItem: $0) }
     }
 
     private func open(controller: UIViewController) {
@@ -82,6 +83,16 @@ class ManageWalletsViewController: CoinToggleViewController {
                 onTapButton: InformationModule.afterClose())
 
         present(viewController, animated: true)
+    }
+
+    private func showBirthdayHeight(viewItem: ManageWalletsViewModel.BirthdayHeightViewItem) {
+        let viewController = BirthdayHeightViewController(
+                blockchainImageUrl: viewItem.blockchainImageUrl,
+                blockchainName: viewItem.blockchainName,
+                birthdayHeight: viewItem.birthdayHeight
+        )
+
+        present(viewController.toBottomSheet, animated: true)
     }
 
 }

@@ -27,7 +27,7 @@ class RestoreSelectViewModel {
                 placeholderImageName: nil,
                 title: item.blockchain.name,
                 subtitle: description(blockchainType: item.blockchain.type),
-                state: .toggleVisible(enabled: item.enabled, hasSettings: item.hasSettings)
+                state: .toggleVisible(enabled: item.enabled, hasSettings: item.hasSettings, hasInfo: false)
         )
     }
 
@@ -71,6 +71,9 @@ extension RestoreSelectViewModel: ICoinToggleViewModel {
 
     func onTapSettings(uid: String) {
         service.configure(blockchainUid: uid)
+    }
+
+    func onTapInfo(uid: String) {
     }
 
     func onUpdate(filter: String) {

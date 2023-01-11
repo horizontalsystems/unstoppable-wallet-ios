@@ -42,7 +42,7 @@ class SwapSelectProviderViewController: ThemeActionSheetController {
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
-            maker.top.equalTo(titleView.snp.bottom)
+            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
             maker.leading.trailing.equalToSuperview()
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }

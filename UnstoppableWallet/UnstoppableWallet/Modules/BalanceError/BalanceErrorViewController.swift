@@ -44,7 +44,7 @@ class BalanceErrorViewController: ThemeActionSheetController {
         view.addSubview(retryButton)
         retryButton.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
+            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin24)
         }
 
         retryButton.addTarget(self, action: #selector(onTapRetry), for: .touchUpInside)
