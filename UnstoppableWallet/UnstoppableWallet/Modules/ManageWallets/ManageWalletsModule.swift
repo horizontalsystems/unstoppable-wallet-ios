@@ -9,6 +9,7 @@ struct ManageWalletsModule {
         guard let service = ManageWalletsService(
                 marketKit: App.shared.marketKit,
                 walletManager: App.shared.walletManager,
+                restoreSettingsManager: App.shared.restoreSettingsManager,
                 testNetManager: App.shared.testNetManager,
                 accountManager: App.shared.accountManager,
                 enableCoinService: enableCoinService

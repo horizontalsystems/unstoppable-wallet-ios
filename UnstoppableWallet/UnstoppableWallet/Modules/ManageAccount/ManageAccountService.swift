@@ -12,8 +12,6 @@ class ManageAccountService {
     }
 
     private let accountManager: AccountManager
-    private let walletManager: WalletManager
-    private let restoreSettingsManager: RestoreSettingsManager
     private let pinKit: IPinKit
     private let disposeBag = DisposeBag()
 
@@ -28,15 +26,13 @@ class ManageAccountService {
 
     private var newName: String
 
-    init?(accountId: String, accountManager: AccountManager, walletManager: WalletManager, restoreSettingsManager: RestoreSettingsManager, pinKit: IPinKit) {
+    init?(accountId: String, accountManager: AccountManager, pinKit: IPinKit) {
         guard let account = accountManager.account(id: accountId) else {
             return nil
         }
 
         self.account = account
         self.accountManager = accountManager
-        self.walletManager = walletManager
-        self.restoreSettingsManager = restoreSettingsManager
         self.pinKit = pinKit
 
         newName = account.name
@@ -85,23 +81,6 @@ extension ManageAccountService {
 
     var isPinSet: Bool {
         pinKit.isPinSet
-    }
-
-    var accountSettingsInfo: [(Coin, RestoreSettingType, String)] {
-        let accountWallets = walletManager.wallets(account: account)
-
-        return restoreSettingsManager.accountSettingsInfo(account: account).compactMap { blockchainType, restoreSettingType, value in
-            guard let wallet = accountWallets.first(where: { $0.token.blockchainType == blockchainType }) else {
-                return nil
-            }
-
-            // hide birthday height if it is set to 0
-            if restoreSettingType == .birthdayHeight && value == "0" {
-                return nil
-            }
-
-            return (wallet.coin, restoreSettingType, value)
-        }
     }
 
     func set(name: String) {

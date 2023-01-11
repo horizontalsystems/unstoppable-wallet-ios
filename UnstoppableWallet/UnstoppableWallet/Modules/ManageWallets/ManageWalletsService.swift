@@ -7,6 +7,7 @@ class ManageWalletsService {
     private let account: Account
     private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
+    private let restoreSettingsManager: RestoreSettingsManager
     private let testNetManager: TestNetManager
     private let enableCoinService: EnableCoinService
     private let disposeBag = DisposeBag()
@@ -24,7 +25,7 @@ class ManageWalletsService {
         }
     }
 
-    init?(marketKit: MarketKit.Kit, walletManager: WalletManager, testNetManager: TestNetManager, accountManager: AccountManager, enableCoinService: EnableCoinService) {
+    init?(marketKit: MarketKit.Kit, walletManager: WalletManager, restoreSettingsManager: RestoreSettingsManager, testNetManager: TestNetManager, accountManager: AccountManager, enableCoinService: EnableCoinService) {
         guard let account = accountManager.activeAccount else {
             return nil
         }
@@ -32,6 +33,7 @@ class ManageWalletsService {
         self.account = account
         self.marketKit = marketKit
         self.walletManager = walletManager
+        self.restoreSettingsManager = restoreSettingsManager
         self.testNetManager = testNetManager
         self.enableCoinService = enableCoinService
 
@@ -120,8 +122,7 @@ class ManageWalletsService {
     }
 
     private func item(fullCoin: FullCoin) -> Item {
-        if !fullCoin.tokens.isEmpty,
-           fullCoin.tokens.allSatisfy({ $0.blockchainType.isUnsupported }) {
+        if !fullCoin.tokens.isEmpty, fullCoin.tokens.allSatisfy({ $0.blockchainType.isUnsupported }) {
             return Item(fullCoin: fullCoin, state: .unsupportedByApp)
         }
 
@@ -133,7 +134,11 @@ class ManageWalletsService {
             itemState = .unsupportedByWalletType
         } else {
             let enabled = isEnabled(coin: fullCoin.coin)
-            itemState = .supported(enabled: enabled, hasSettings: enabled && hasSettingsOrTokens(tokens: fullCoin.tokens))
+            itemState = .supported(
+                    enabled: enabled,
+                    hasSettings: enabled && hasSettingsOrTokens(tokens: fullCoin.tokens),
+                    hasInfo: enabled && fullCoin.tokens.first?.blockchainType == .zcash
+            )
         }
 
         return Item(fullCoin: fullCoin, state: itemState)
@@ -237,6 +242,24 @@ extension ManageWalletsService {
         enableCoinService.configure(fullCoin: fullCoin, accountType: account.type, configuredTokens: coinWallets.map { $0.configuredToken })
     }
 
+    func birthdayHeight(uid: String) -> (Blockchain, Int)? {
+        guard let fullCoin = fullCoins.first(where: { $0.coin.uid == uid }) else {
+            return nil
+        }
+
+        guard let token = fullCoin.tokens.first else {
+            return nil
+        }
+
+        let settings = restoreSettingsManager.settings(account: account, blockchainType: token.blockchainType)
+
+        guard let birthdayHeight = settings.birthdayHeight else {
+            return nil
+        }
+
+        return (token.blockchain, birthdayHeight)
+    }
+
 }
 
 extension ManageWalletsService {
@@ -249,7 +272,7 @@ extension ManageWalletsService {
     enum ItemState {
         case unsupportedByWalletType
         case unsupportedByApp
-        case supported(enabled: Bool, hasSettings: Bool)
+        case supported(enabled: Bool, hasSettings: Bool, hasInfo: Bool)
     }
 
 }

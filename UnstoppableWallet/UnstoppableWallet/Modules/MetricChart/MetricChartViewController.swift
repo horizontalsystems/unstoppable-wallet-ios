@@ -54,7 +54,7 @@ class MetricChartViewController: ThemeActionSheetController {
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(titleView.snp.bottom)
+            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
         }
 
         title = viewModel.title

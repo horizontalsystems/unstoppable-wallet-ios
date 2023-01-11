@@ -50,7 +50,7 @@ class ItemSelectorViewController: ThemeActionSheetController {
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             if let titleView = titleView {
-                maker.top.equalTo(titleView.snp.bottom)
+                maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
             } else {
                 maker.top.equalToSuperview()
             }

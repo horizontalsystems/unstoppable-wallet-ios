@@ -40,7 +40,7 @@ class UnlinkWatchViewController: ThemeActionSheetController {
         view.addSubview(descriptionView)
         descriptionView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(titleView.snp.bottom)
+            maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
         }
 
         descriptionView.text = "settings_manage_keys.delete.confirmation_watch".localized

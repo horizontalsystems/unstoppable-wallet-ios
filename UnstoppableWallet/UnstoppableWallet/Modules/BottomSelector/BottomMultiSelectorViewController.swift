@@ -55,7 +55,7 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
         }
 
         var lastView: UIView = titleView
-        var lastMargin: CGFloat = 0
+        var lastMargin: CGFloat = .margin12
 
         if let description = config.description {
             let descriptionView = HighlightedDescriptionView()
@@ -63,7 +63,7 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
             view.addSubview(descriptionView)
             descriptionView.snp.makeConstraints { maker in
                 maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-                maker.top.equalTo(titleView.snp.bottom)
+                maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
             }
 
             descriptionView.text = description

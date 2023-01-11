@@ -3,7 +3,7 @@ import SnapKit
 import ThemeKit
 
 class BottomSheetTitleView: UIView {
-    static let height: CGFloat = 72
+    static let height: CGFloat = 60
 
     private let imageView = UIImageView()
     private let titleLabel = UILabel()
@@ -21,14 +21,14 @@ class BottomSheetTitleView: UIView {
         addSubview(imageView)
         imageView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin32)
-            maker.centerY.equalToSuperview()
+            maker.top.equalToSuperview().offset(CGFloat.margin24)
             maker.size.equalTo(CGFloat.iconSize24)
         }
 
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.leading.equalTo(imageView.snp.trailing).offset(CGFloat.margin16)
-            maker.centerY.equalToSuperview()
+            maker.centerY.equalTo(imageView)
         }
 
         titleLabel.font = .headline2
@@ -38,7 +38,7 @@ class BottomSheetTitleView: UIView {
         closeButton.snp.makeConstraints { maker in
             maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin16)
             maker.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.centerY.equalToSuperview()
+            maker.centerY.equalTo(imageView)
             maker.size.equalTo(CGFloat.iconSize24 + 2 * CGFloat.margin8)
         }
 

@@ -401,6 +401,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                     title: .subhead2("coin_page.tvl_rank".localized),
                     value: .subhead1(tvlRank),
                     accessoryType: .disclosure,
+                    isFirst: true,
                     isLast: !hasRatio,
                     action: { [weak self] in
                         self?.openTvlRank()

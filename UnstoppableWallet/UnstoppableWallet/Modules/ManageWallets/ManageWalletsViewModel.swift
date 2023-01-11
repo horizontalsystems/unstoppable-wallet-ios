@@ -11,6 +11,7 @@ class ManageWalletsViewModel {
     private let viewItemsRelay = BehaviorRelay<[CoinToggleViewModel.ViewItem]>(value: [])
     private let notFoundVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let disableCoinRelay = PublishRelay<Coin>()
+    private let showBirthdayHeightRelay = PublishRelay<BirthdayHeightViewItem>()
 
     init(service: ManageWalletsService) {
         self.service = service
@@ -25,7 +26,8 @@ class ManageWalletsViewModel {
         let viewItemState: CoinToggleViewModel.ViewItemState
 
         switch item.state {
-        case let .supported(enabled, hasSettings): viewItemState = .toggleVisible(enabled: enabled, hasSettings: hasSettings)
+        case let .supported(enabled, hasSettings, hasInfo):
+            viewItemState = .toggleVisible(enabled: enabled, hasSettings: hasSettings, hasInfo: hasInfo)
         case .unsupportedByApp:
             viewItemState = .toggleHidden(notSupportedReason: "manage_wallets.not_supported.by_app.description".localized(item.fullCoin.coin.name))
         case .unsupportedByWalletType:
@@ -68,6 +70,20 @@ extension ManageWalletsViewModel: ICoinToggleViewModel {
         service.configure(uid: uid)
     }
 
+    func onTapInfo(uid: String) {
+        guard let (blockchain, birthdayHeight) = service.birthdayHeight(uid: uid) else {
+            return
+        }
+
+        let viewItem = BirthdayHeightViewItem(
+                blockchainImageUrl: blockchain.type.imageUrl,
+                blockchainName: blockchain.name,
+                birthdayHeight: String(birthdayHeight)
+        )
+
+        showBirthdayHeightRelay.accept(viewItem)
+    }
+
     func onUpdate(filter: String) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             self?.service.set(filter: filter)
@@ -86,12 +102,26 @@ extension ManageWalletsViewModel {
         disableCoinRelay.asSignal()
     }
 
+    var showBirthdayHeightSignal: Signal<BirthdayHeightViewItem> {
+        showBirthdayHeightRelay.asSignal()
+    }
+
     var accountTypeDescription: String {
         service.accountType.description
     }
 
     var addTokenEnabled: Bool {
         service.accountType.canAddTokens
+    }
+
+}
+
+extension ManageWalletsViewModel {
+
+    struct BirthdayHeightViewItem {
+        let blockchainImageUrl: String
+        let blockchainName: String
+        let birthdayHeight: String
     }
 
 }
