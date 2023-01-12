@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Adicionado à Carteira";
 "alert.already_added_to_wallet" = "Já adicionado à carteira";
 "alert.not_supported_yet" = "Não suportado ainda";
-"alert.copied" = "Copied";
+"alert.copied" = "Copiado";
 "alert.created" = "Criado";
 "alert.restored" = "Restaurado";
 "alert.address_added" = "Endereço Adicionado";
@@ -560,9 +560,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.global.tvl_in_defi.title" = "TVL no DeFi";
 
 "market.global.btc_dominance.title" = "Dominação Bitcoin";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "Volume em 24h";
+"market.global.defi_cap.title" = "Mercado de DeFi";
+"market.global.tvl_in_defi.title" = "TVL no DeFi";
 "market.global.btc_dominance.description" = "A mudança histórica na relação entre o capital de mercado do Bitcoin e o resto dos mercados de criptomoedas. \n\nNormalmente, quando o domínio do Bitcoin está tendendo à alta, o resto das tendências do mercado cripto para baixo e vice-versa.";
 "market.global.volume_24h.description" = "A mudança histórica no volume diário do mercado de trading agregado para todas as criptomoedas.";
 "market.global.defi_cap.description" = "A mudança histórica no valor cumulativo do mercado dos tokens no setor DeFi.";
@@ -953,6 +953,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "appearance.theme.dark" = "Escuro";
 "appearance.theme.light" = "Claro";
 
+"appearance.tab_settings" = "Tabs Settings";
+"appearance.markets_tab" = "Markets Tab";
 "appearance.launch_screen" = "Tela Inicial";
 "appearance.launch_screen.auto" = "Automático";
 "appearance.launch_screen.balance" = "Saldo";
