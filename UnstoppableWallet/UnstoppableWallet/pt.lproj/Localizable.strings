@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Adicionado à Carteira";
 "alert.already_added_to_wallet" = "Já adicionado à carteira";
 "alert.not_supported_yet" = "Não suportado ainda";
-"alert.copied" = "Copiado";
+"alert.copied" = "Copied";
 "alert.created" = "Criado";
 "alert.restored" = "Restaurado";
 "alert.address_added" = "Endereço Adicionado";
@@ -95,6 +95,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Restore
 
 "restore.title" = "Restaurar";
+"restore.advanced" = "Advanced";
 "restore.by" = "Por";
 "restore.restore_by" = "Restaurar por";
 "restore.restore_type.mnemonic" = "Frase de Recuperação";
@@ -559,9 +560,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.global.tvl_in_defi.title" = "TVL no DeFi";
 
 "market.global.btc_dominance.title" = "Dominação Bitcoin";
-"market.global.volume_24h.title" = "Volume em 24h";
-"market.global.defi_cap.title" = "Mercado de DeFi";
-"market.global.tvl_in_defi.title" = "TVL no DeFi";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "A mudança histórica na relação entre o capital de mercado do Bitcoin e o resto dos mercados de criptomoedas. \n\nNormalmente, quando o domínio do Bitcoin está tendendo à alta, o resto das tendências do mercado cripto para baixo e vice-versa.";
 "market.global.volume_24h.description" = "A mudança histórica no volume diário do mercado de trading agregado para todas as criptomoedas.";
 "market.global.defi_cap.description" = "A mudança histórica no valor cumulativo do mercado dos tokens no setor DeFi.";
@@ -801,8 +802,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "settings.title" = "Configurações";
 "settings.tab_bar_item" = "Configurações";
-"settings.security_center" = "Central de Segurança";
 "settings.manage_accounts" = "Gerenciar carteiras";
+"settings.blockchain_settings" = "Blockchain Settings";
+"settings.security" = "Security";
 "settings.experimental_features" = "Experimental";
 "settings.base_currency" = "Moeda base";
 "settings.language" = "Idioma";
@@ -826,6 +828,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "manage_wallets.search_placeholder" = "Nome, código ou endereço do contrato";
 "manage_wallets.not_supported" = "Não suportado";
 "manage_wallets.not_supported.description" = "Seu tipo de carteira atual %@ não suporta %@";
+"manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
 "manage_coins.add_coin.title" = "Adicionar %@";
 "manage_coins.add_coin.subtitle" = "Carteira %@";
@@ -867,6 +870,10 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Settings -> Tell Friends
 
 "settings_tell_friends.text" = "Seja Unstoppable";
+
+// Settings -> Blockchain Settings
+
+"blockchain_settings.title" = "Blockchain Settings";
 
 // Settings -> Security
 
@@ -1015,9 +1022,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Create Wallet
 
-"create_wallet.title" = "Nova Carteira";
+"create_wallet.description" = "Your first step to become Unstoppable";
+"create_wallet.advanced_setup" = "Advanced Setup";
 "create_wallet.create_button" = "Criar";
-"create_wallet.mnemonic" = "Mnemônico";
+"create_wallet.advanced_button" = "Advanced";
+"create_wallet.phrase_count" = "Phrase Count";
 "create_wallet.12_words" = "12 palavras (recomendado)";
 "create_wallet.n_words" = "%@ palavras";
 "create_wallet.word_list" = "Listas de palavras";
@@ -1083,8 +1092,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "wallet_connect.active_account" = "Carteira ativa";
 "wallet_connect.address" = "Endereço";
 "wallet_connect.network" = "Rede";
-"wallet_connect.address" = "Endereço";
-"wallet_connect.network" = "Rede";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Solicitações Pendentes";
 "wallet_connect.main.no_any_supported_chains" = "Nenhuma cadeia suportada!";
 "wallet_connect.main.unsupported_chains" = "Algumas cadeias não são suportadas!";
@@ -1177,6 +1186,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "manage_account.public_keys" = "Chaves públicas";
 "manage_account.backup_recovery_phrase" = "Backup da frase de recuperação";
 "manage_account.unlink" = "Desvincular";
+
+// Birthday Height
+
+"birthday_height.title" = "Birthday Height";
+"birthday_height.description" = "Birthday Height Description";
 
 // Birthday Input
 
