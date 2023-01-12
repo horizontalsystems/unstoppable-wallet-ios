@@ -62,8 +62,9 @@ class AppearanceViewController: ThemeViewController {
     }
 
     private func sync(launchScreenViewItems: [AppearanceViewModel.ViewItem]) {
+        let changeSection = launchScreenViewItems.count != self.launchScreenViewItems.count
         self.launchScreenViewItems = launchScreenViewItems
-        reloadTable()
+        reloadTable(animated: !changeSection)
     }
 
     private func sync(appIconViewItems: [AppearanceViewModel.AppIconViewItem]) {
@@ -81,9 +82,13 @@ class AppearanceViewController: ThemeViewController {
         reloadTable()
     }
 
-    private func reloadTable() {
+    private func toggleMarketTabVisible() {
+        viewModel.onToggleShowMarketScreen()
+    }
+
+    private func reloadTable(animated: Bool = true) {
         if loaded {
-            tableView.reload(animated: true)
+            tableView.reload(animated: animated)
         }
     }
 
@@ -97,7 +102,7 @@ extension AppearanceViewController: SectionsDataSource {
                 image: .local(UIImage(named: viewItem.iconName)?.withTintColor(.themeGray)),
                 title: .body(viewItem.title),
                 accessoryType: .check(viewItem.selected),
-                hash: "\(viewItem.selected)",
+                hash: "\(id)_\(viewItem.selected)",
                 autoDeselect: true,
                 isFirst: isFirst,
                 isLast: isLast,
@@ -110,7 +115,8 @@ extension AppearanceViewController: SectionsDataSource {
                 id: "theme-mode",
                 headerState: tableView.sectionHeader(text: "appearance.theme".localized),
                 footerState: .margin(height: .margin24),
-                rows: viewItems.enumerated().map { index, viewItem in
+                rows: viewItems.enumerated().map { index,
+                                                   viewItem in
                     row(
                             viewItem: viewItem,
                             id: "theme-mode-\(index)",
@@ -123,15 +129,39 @@ extension AppearanceViewController: SectionsDataSource {
         )
     }
 
-    private func launchScreenSection(viewItems: [AppearanceViewModel.ViewItem]) -> SectionProtocol {
+    private func showMarketTabSection() -> SectionProtocol {
         Section(
+                id: "market-tab-section",
+                headerState: tableView.sectionHeader(text: "appearance.tab_settings".localized),
+                footerState: .margin(height: .margin24),
+                rows: [
+                    tableView.universalRow48(
+                            id: "show_market_tab",
+                            image: .local(UIImage(named: "markets_24")),
+                            title: .body("appearance.markets_tab".localized),
+                            accessoryType: .switch(isOn: viewModel.showMarketTab) { [weak self] _ in self?.toggleMarketTabVisible() },
+                            hash: "\(viewModel.showMarketTab)",
+                            autoDeselect: true,
+                            isFirst: true,
+                            isLast: true
+                    )
+                ]
+        )
+    }
+
+    private func launchScreenSection(viewItems: [AppearanceViewModel.ViewItem]) -> SectionProtocol? {
+        guard !viewItems.isEmpty else {
+            return nil
+        }
+
+        return Section(
                 id: "launch-screen",
                 headerState: tableView.sectionHeader(text: "appearance.launch_screen".localized),
                 footerState: .margin(height: .margin24),
                 rows: viewItems.enumerated().map { index, viewItem in
                     row(
                             viewItem: viewItem,
-                            id: "launch-screen-\(index)",
+                            id: "launch-screen-\(viewItem.title)",
                             isFirst: index == 0,
                             isLast: index == viewItems.count - 1
                     ) { [weak self] in
@@ -210,14 +240,20 @@ extension AppearanceViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-        [
+        var sections: [SectionProtocol] = [
             Section(id: "top-margin", headerState: .margin(height: .margin12)),
             themeModeSection(viewItems: themeModeViewItems),
-            launchScreenSection(viewItems: launchScreenViewItems),
+            showMarketTabSection(),
+        ]
+        if let launchScreenSection = launchScreenSection(viewItems: launchScreenViewItems) {
+            sections.append(launchScreenSection)
+        }
+        sections.append(contentsOf: [
             appIconSection(viewItems: appIconViewItems),
             conversionSection(viewItems: conversionViewItems),
             balanceValueSection(viewItems: balanceValueViewItems)
-        ]
+        ])
+        return sections
     }
 
 }

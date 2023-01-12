@@ -31,6 +31,8 @@ class MainService {
         }
     }
 
+    private let showMarketRelay = PublishRelay<Bool>()
+
     init(localStorage: LocalStorage, storage: StorageKit.ILocalStorage, launchScreenManager: LaunchScreenManager, accountManager: AccountManager, walletManager: WalletManager, presetTab: MainModule.Tab?) {
         self.localStorage = localStorage
         self.storage = storage
@@ -40,6 +42,7 @@ class MainService {
 
         subscribe(disposeBag, accountManager.accountsObservable) { [weak self] in self?.sync(accounts: $0) }
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] in self?.sync(activeWallets: $0) }
+        subscribe(disposeBag, launchScreenManager.showMarketObservable) { [weak self] in self?.sync(showMarket: $0) }
 
         sync(accounts: accountManager.accounts)
         sync(activeWallets: walletManager.activeWallets)
@@ -53,6 +56,10 @@ class MainService {
         hasWallets = !activeWallets.isEmpty
     }
 
+    private func sync(showMarket: Bool) {
+        showMarketRelay.accept(showMarket)
+    }
+
 }
 
 extension MainService {
@@ -63,6 +70,14 @@ extension MainService {
 
     var hasWalletsObservable: Observable<Bool> {
         hasWalletsRelay.asObservable()
+    }
+
+    var showMarket: Bool {
+        launchScreenManager.showMarket
+    }
+
+    var showMarketObservable: Observable<Bool> {
+        showMarketRelay.asObservable()
     }
 
     var initialTab: MainModule.Tab {

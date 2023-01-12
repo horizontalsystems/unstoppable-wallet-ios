@@ -952,6 +952,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "appearance.theme.dark" = "Dark";
 "appearance.theme.light" = "Light";
 
+"appearance.tab_settings" = "Tabs Settings";
+"appearance.markets_tab" = "Markets Tab";
 "appearance.launch_screen" = "Launch Screen";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Balance";
