@@ -14,9 +14,8 @@ class LaunchScreenManager {
     var launchScreen: LaunchScreen {
         get {
             if let rawValue: String = storage.value(for: keyLaunchScreen), let launchScreen = LaunchScreen(rawValue: rawValue) {
-                // check if market hidden, but launchScreen still market.
-                if !showMarket && launchScreen == .marketOverview {
-                    storage.set(value: LaunchScreen.auto.rawValue, for: keyLaunchScreen)
+                // check if market hidden
+                if !showMarket {
                     return .auto
                 }
 
