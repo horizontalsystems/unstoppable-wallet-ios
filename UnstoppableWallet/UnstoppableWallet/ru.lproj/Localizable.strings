@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Добавлено в Кошелек";
 "alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Ещё не поддерживается";
-"alert.copied" = "Скопировано";
+"alert.copied" = "Copied";
 "alert.created" = "Создан";
 "alert.restored" = "Восстановлен";
 "alert.address_added" = "Адрес Добавлен";
@@ -95,6 +95,7 @@
 // Restore
 
 "restore.title" = "Восстановить";
+"restore.advanced" = "Advanced";
 "restore.by" = "Из";
 "restore.restore_by" = "Восстановить из";
 "restore.restore_type.mnemonic" = "Фраза Восстановления";
@@ -560,9 +561,9 @@
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 
 "market.global.btc_dominance.title" = "Доминирование Bitcoin";
-"market.global.volume_24h.title" = "Объем Торгов (24ч)";
-"market.global.defi_cap.title" = "Капитализация DeFi";
-"market.global.tvl_in_defi.title" = "TVL в DeFi";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка и наоборот.";
 "market.global.volume_24h.description" = "Историческое изменение в ежедневном совокупном объеме торговли для всех криптовалют.";
 "market.global.defi_cap.description" = "Историческое изменение в совокупной рыночной стоимости токенов в Децентрализованном Финансовом Секторе.";
@@ -802,8 +803,9 @@
 
 "settings.title" = "Настройки";
 "settings.tab_bar_item" = "Настройки";
-"settings.security_center" = "Центр Безопасности";
 "settings.manage_accounts" = "Управление Кошельками";
+"settings.blockchain_settings" = "Blockchain Settings";
+"settings.security" = "Security";
 "settings.experimental_features" = "Экспериментальные Функции";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
@@ -827,6 +829,7 @@
 "manage_wallets.search_placeholder" = "Имя, код или адрес контракта";
 "manage_wallets.not_supported" = "Не поддерживается";
 "manage_wallets.not_supported.description" = "Ваш текущий тип кошелька %@ не поддерживает %@";
+"manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
 "manage_coins.add_coin.title" = "Добавить %@";
 "manage_coins.add_coin.subtitle" = "%@ Кошелек";
@@ -868,6 +871,10 @@
 // Settings -> Tell Friends
 
 "settings_tell_friends.text" = "Be Unstoppable";
+
+// Settings -> Blockchain Settings
+
+"blockchain_settings.title" = "Blockchain Settings";
 
 // Settings -> Security
 
@@ -1016,9 +1023,11 @@
 
 // Create Wallet
 
-"create_wallet.title" = "Создать Кошелек";
+"create_wallet.description" = "Your first step to become Unstoppable";
+"create_wallet.advanced_setup" = "Advanced Setup";
 "create_wallet.create_button" = "Создать";
-"create_wallet.mnemonic" = "Мнемоническая Фраза";
+"create_wallet.advanced_button" = "Advanced";
+"create_wallet.phrase_count" = "Phrase Count";
 "create_wallet.12_words" = "12 слов (рекомендуется)";
 "create_wallet.n_words" = "%@ слов";
 "create_wallet.word_list" = "Список Слов";
@@ -1084,8 +1093,8 @@
 "wallet_connect.active_account" = "Активный Кошелек";
 "wallet_connect.address" = "Адрес";
 "wallet_connect.network" = "Сеть";
-"wallet_connect.address" = "Адрес";
-"wallet_connect.network" = "Сеть";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Отложенные Запросы";
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
 "wallet_connect.main.unsupported_chains" = "Некоторые блокчейны не поддерживаются!";
@@ -1178,6 +1187,11 @@
 "manage_account.public_keys" = "Публичные Ключи";
 "manage_account.backup_recovery_phrase" = "Сделать резервную копию фразы восстановления";
 "manage_account.unlink" = "Отсоединить";
+
+// Birthday Height
+
+"birthday_height.title" = "Birthday Height";
+"birthday_height.description" = "Birthday Height Description";
 
 // Birthday Input
 
