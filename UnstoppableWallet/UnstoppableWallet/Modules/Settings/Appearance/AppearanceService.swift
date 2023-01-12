@@ -48,6 +48,11 @@ class AppearanceService {
         }
     }
 
+    private let showMarketTabRelay = PublishRelay<Bool>()
+    var showMarketTab: Bool {
+        launchScreenManager.showMarket
+    }
+
     init(themeManager: ThemeManager, launchScreenManager: LaunchScreenManager, appIconManager: AppIconManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceConversionManager: BalanceConversionManager) {
         self.themeManager = themeManager
         self.launchScreenManager = launchScreenManager
@@ -74,6 +79,11 @@ class AppearanceService {
     }
 
     private func syncLaunchScreenItems(current: LaunchScreen) {
+        if !launchScreenManager.showMarket {
+            launchScreenItems = []
+            return
+        }
+
         launchScreenItems = LaunchScreen.allCases.map { launchScreen in
             LaunchScreenItem(launchScreen: launchScreen, current: launchScreen == current)
         }
@@ -121,6 +131,10 @@ extension AppearanceService {
         balancePrimaryValueItemsRelay.asObservable()
     }
 
+    var showMarketTabObservable: Observable<Bool> {
+        showMarketTabRelay.asObservable()
+    }
+
     func setThemeMode(index: Int) {
         themeManager.themeMode = themeModes[index]
         syncThemeModeItems()
@@ -128,6 +142,11 @@ extension AppearanceService {
 
     func setLaunchScreen(index: Int) {
         launchScreenManager.launchScreen = LaunchScreen.allCases[index]
+    }
+
+    func toggleMarketScreen() {
+        launchScreenManager.showMarket = !launchScreenManager.showMarket
+        syncLaunchScreenItems(current: launchScreenManager.launchScreen)
     }
 
     func setAppIcon(index: Int) {

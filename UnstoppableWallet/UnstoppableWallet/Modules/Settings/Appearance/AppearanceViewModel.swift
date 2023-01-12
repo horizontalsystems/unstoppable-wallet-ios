@@ -107,12 +107,24 @@ extension AppearanceViewModel {
         balanceValueViewItemsRelay.asDriver()
     }
 
+    var showMarketTabDriver: Driver<Bool> {
+        service.showMarketTabObservable.asDriver(onErrorJustReturn: true)
+    }
+
+    var showMarketTab: Bool {
+        service.showMarketTab
+    }
+
     func onSelectThemeMode(index: Int) {
         service.setThemeMode(index: index)
     }
 
     func onSelectLaunchScreen(index: Int) {
         service.setLaunchScreen(index: index)
+    }
+
+    func onToggleShowMarketScreen() {
+        service.toggleMarketScreen()
     }
 
     func onSelectAppIcon(index: Int) {

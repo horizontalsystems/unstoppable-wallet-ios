@@ -10,7 +10,7 @@ class MainViewController: ThemeTabBarController {
     private let viewModel: MainViewModel
     var workers = [IMainWorker]()
 
-    private let marketModule = ThemeNavigationController(rootViewController: MarketModule.viewController())
+    private var marketModule: UIViewController?
     private let balanceModule = ThemeNavigationController(rootViewController: WalletModule.viewController())
     private let onboardingModule = OnboardingBalanceViewController()
     private let transactionsModule = ThemeNavigationController(rootViewController: TransactionsModule.viewController())
@@ -19,6 +19,7 @@ class MainViewController: ThemeTabBarController {
     private var showAlerts = [(() -> ())]()
 
     private var lastTimeStamp: TimeInterval = 0
+    private var didAppear: Bool = false
 
     init(viewModel: MainViewModel) {
         self.viewModel = viewModel
@@ -41,6 +42,7 @@ class MainViewController: ThemeTabBarController {
 
         subscribe(disposeBag, viewModel.releaseNotesUrlDriver) { [weak self] url in self?.showReleaseNotes(url: url) }
         subscribe(disposeBag, viewModel.deepLinkDriver) { [weak self] deepLink in self?.handle(deepLink: deepLink) }
+        subscribe(disposeBag, viewModel.showMarketDriver) { [weak self] in self?.handle(showMarket: $0) }
 
         if viewModel.needToShowJailbreakAlert {
             showJailbreakAlert()
@@ -52,6 +54,11 @@ class MainViewController: ThemeTabBarController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         showNextAlert()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        didAppear = true
     }
 
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -84,12 +91,23 @@ class MainViewController: ThemeTabBarController {
         case .onboarding: balanceTabModule = onboardingModule
         }
 
-        viewControllers = [
-            marketModule,
+        var viewControllers = [UIViewController]()
+        if viewModel.showMarket {
+            let marketModule = marketModule ?? ThemeNavigationController(rootViewController: MarketModule.viewController())
+            self.marketModule = marketModule
+
+            viewControllers.append(marketModule)
+        } else {
+            marketModule = nil
+        }
+
+        viewControllers.append(contentsOf: [
             balanceTabModule,
             transactionsModule,
             settingsModule
-        ]
+        ])
+
+        setViewControllers(viewControllers, animated: didAppear)
     }
 
     private func syncTransactionsTab(enabled: Bool) {
@@ -150,6 +168,10 @@ class MainViewController: ThemeTabBarController {
                 handler.handle(deepLink: deepLink)
             }
         }
+    }
+
+    private func handle(showMarket: Bool) {
+        sync(balanceTabState: viewModel.balanceTabState)
     }
 
 }

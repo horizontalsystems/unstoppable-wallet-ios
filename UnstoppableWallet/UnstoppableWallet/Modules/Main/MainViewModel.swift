@@ -13,6 +13,7 @@ class MainViewModel {
 
     private let balanceTabStateRelay = BehaviorRelay<BalanceTabState>(value: .balance)
     private let transactionsTabEnabledRelay = BehaviorRelay<Bool>(value: true)
+    private let showMarketRelay = BehaviorRelay<Bool>(value: true)
 
     init(service: MainService, badgeService: MainBadgeService, releaseNotesService: ReleaseNotesService, jailbreakService: JailbreakService, deepLinkService: DeepLinkService) {
         self.service = service
@@ -23,6 +24,7 @@ class MainViewModel {
 
         subscribe(disposeBag, service.hasAccountsObservable) { [weak self] in self?.sync(hasAccounts: $0) }
         subscribe(disposeBag, service.hasWalletsObservable) { [weak self] in self?.sync(hasWallets: $0) }
+        subscribe(disposeBag, service.showMarketObservable) { [weak self] in self?.sync(showMarket: $0) }
 
         sync(hasAccounts: service.hasAccounts)
     }
@@ -34,6 +36,10 @@ class MainViewModel {
 
     private func sync(hasWallets: Bool) {
         transactionsTabEnabledRelay.accept(service.hasAccounts && hasWallets)
+    }
+
+    private func sync(showMarket: Bool) {
+        showMarketRelay.accept(showMarket)
     }
 
 }
@@ -48,12 +54,24 @@ extension MainViewModel {
         releaseNotesService.releaseNotesUrlObservable.asDriver(onErrorJustReturn: nil)
     }
 
+    var showMarket: Bool {
+        service.showMarket
+    }
+
+    var showMarketDriver: Driver<Bool> {
+        showMarketRelay.asDriver()
+    }
+
     var needToShowJailbreakAlert: Bool {
         jailbreakService.needToShowAlert
     }
 
     var deepLinkDriver: Driver<DeepLinkManager.DeepLink?> {
         deepLinkService.deepLinkObservable.asDriver(onErrorJustReturn: nil)
+    }
+
+    var balanceTabState: BalanceTabState {
+        service.hasAccounts ? .balance : .onboarding
     }
 
     var balanceTabStateDriver: Driver<BalanceTabState> {
