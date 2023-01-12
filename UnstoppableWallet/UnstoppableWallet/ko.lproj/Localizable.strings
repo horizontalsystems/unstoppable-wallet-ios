@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "Copied";
+"alert.copied" = "복사됨";
 "alert.created" = "생성됨";
 "alert.restored" = "복구됨";
 "alert.address_added" = "주소 추가됨";
@@ -950,6 +950,8 @@
 "appearance.theme.dark" = "어두운";
 "appearance.theme.light" = "밝은";
 
+"appearance.tab_settings" = "Tabs Settings";
+"appearance.markets_tab" = "Markets Tab";
 "appearance.launch_screen" = "시작 화면";
 "appearance.launch_screen.auto" = "자동";
 "appearance.launch_screen.balance" = "잔액";
