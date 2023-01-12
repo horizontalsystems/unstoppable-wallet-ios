@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "복사됨";
+"alert.copied" = "Copied";
 "alert.created" = "생성됨";
 "alert.restored" = "복구됨";
 "alert.address_added" = "주소 추가됨";
@@ -93,6 +93,7 @@
 // Restore
 
 "restore.title" = "복구";
+"restore.advanced" = "Advanced";
 "restore.by" = "으로";
 "restore.restore_by" = "복원 날짜";
 "restore.restore_type.mnemonic" = "복구 문구";
@@ -798,8 +799,9 @@
 
 "settings.title" = "설정";
 "settings.tab_bar_item" = "설정";
-"settings.security_center" = "보안 센터";
 "settings.manage_accounts" = "지갑 관리하기";
+"settings.blockchain_settings" = "Blockchain Settings";
+"settings.security" = "Security";
 "settings.experimental_features" = "실험";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
@@ -823,6 +825,7 @@
 "manage_wallets.search_placeholder" = "이름, 코드 또는 계약 주소";
 "manage_wallets.not_supported" = "지원 되지 않음";
 "manage_wallets.not_supported.description" = "현재 지갑 유형 %@은(는) %@을(를) 지원하지 않습니다.";
+"manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
 "manage_coins.add_coin.title" = "%@ 추가 ";
 "manage_coins.add_coin.subtitle" = "%@ 지갑";
@@ -864,6 +867,10 @@
 // Settings -> Tell Friends
 
 "settings_tell_friends.text" = "Be Unstoppable";
+
+// Settings -> Blockchain Settings
+
+"blockchain_settings.title" = "Blockchain Settings";
 
 // Settings -> Security
 
@@ -1012,9 +1019,11 @@
 
 // Create Wallet
 
-"create_wallet.title" = "새 지갑";
+"create_wallet.description" = "Your first step to become Unstoppable";
+"create_wallet.advanced_setup" = "Advanced Setup";
 "create_wallet.create_button" = "만들기";
-"create_wallet.mnemonic" = "연상 기호";
+"create_wallet.advanced_button" = "Advanced";
+"create_wallet.phrase_count" = "Phrase Count";
 "create_wallet.12_words" = "12 단어 (권장)";
 "create_wallet.n_words" = "%@ 단어";
 "create_wallet.word_list" = "단어 목록";
@@ -1080,8 +1089,8 @@
 "wallet_connect.active_account" = "지갑 활성화";
 "wallet_connect.address" = "주소";
 "wallet_connect.network" = "네트워크";
-"wallet_connect.address" = "주소";
-"wallet_connect.network" = "네트워크";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
 "wallet_connect.main.unsupported_chains" = "일부 체인은 지원되지 않습니다!";
@@ -1174,6 +1183,11 @@
 "manage_account.public_keys" = "공개 키";
 "manage_account.backup_recovery_phrase" = "백업 복구 문구";
 "manage_account.unlink" = "링크 해제";
+
+// Birthday Height
+
+"birthday_height.title" = "Birthday Height";
+"birthday_height.description" = "Birthday Height Description";
 
 // Birthday Input
 
