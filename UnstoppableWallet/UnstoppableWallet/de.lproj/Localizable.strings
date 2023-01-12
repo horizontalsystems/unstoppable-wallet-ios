@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Zum Wallet hinzugefügt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
-"alert.copied" = "Kopiert";
+"alert.copied" = "Copied";
 "alert.created" = "Erstellt";
 "alert.restored" = "Wiederherstellen";
 "alert.address_added" = "Adresse hinzugefügt";
@@ -93,6 +93,7 @@
 // Restore
 
 "restore.title" = "Wiederherstellen aus";
+"restore.advanced" = "Advanced";
 "restore.by" = "Von";
 "restore.restore_by" = "Wiederherstellen von";
 "restore.restore_type.mnemonic" = "Wiederherstellungsphrase";
@@ -799,8 +800,9 @@
 
 "settings.title" = "Einstellungen";
 "settings.tab_bar_item" = "Einstellungen";
-"settings.security_center" = "Sicherheit";
 "settings.manage_accounts" = "Wallets verwalten";
+"settings.blockchain_settings" = "Blockchain Settings";
+"settings.security" = "Security";
 "settings.experimental_features" = "Experimentell";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
@@ -824,6 +826,7 @@
 "manage_wallets.search_placeholder" = "Name, Code oder Vertragsadresse";
 "manage_wallets.not_supported" = "Nicht unterstützt";
 "manage_wallets.not_supported.description" = "Ihr aktueller Wallet-Typ %@ unterstützt %@ nicht";
+"manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
 "manage_coins.add_coin.title" = "%@ hinzufügen ";
 "manage_coins.add_coin.subtitle" = "%@ Wallet";
@@ -865,6 +868,10 @@
 // Settings -> Tell Friends
 
 "settings_tell_friends.text" = "Be Unstoppable";
+
+// Settings -> Blockchain Settings
+
+"blockchain_settings.title" = "Blockchain Settings";
 
 // Settings -> Security
 
@@ -1013,9 +1020,11 @@
 
 // Create Wallet
 
-"create_wallet.title" = "Neues Wallet";
+"create_wallet.description" = "Your first step to become Unstoppable";
+"create_wallet.advanced_setup" = "Advanced Setup";
 "create_wallet.create_button" = "Erstellen";
-"create_wallet.mnemonic" = "Eselsbrücke";
+"create_wallet.advanced_button" = "Advanced";
+"create_wallet.phrase_count" = "Phrase Count";
 "create_wallet.12_words" = "12 Wörter (empfohlen)";
 "create_wallet.n_words" = "%@ Wörter";
 "create_wallet.word_list" = "Wortliste";
@@ -1081,8 +1090,8 @@
 "wallet_connect.active_account" = "Aktive Wallet";
 "wallet_connect.address" = "Adresse";
 "wallet_connect.network" = "Netzwerk";
-"wallet_connect.address" = "Adresse";
-"wallet_connect.network" = "Netzwerk";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Ausstehende Anfragen";
 "wallet_connect.main.no_any_supported_chains" = "Keine unterstützten Ketten!";
 "wallet_connect.main.unsupported_chains" = "Einige Ketten werden nicht unterstützt!";
@@ -1175,6 +1184,11 @@
 "manage_account.public_keys" = "Öffentliche Schlüssel";
 "manage_account.backup_recovery_phrase" = "Wiederherstellungsphrase sichern";
 "manage_account.unlink" = "Verknüpfung trennen";
+
+// Birthday Height
+
+"birthday_height.title" = "Birthday Height";
+"birthday_height.description" = "Birthday Height Description";
 
 // Birthday Input
 
