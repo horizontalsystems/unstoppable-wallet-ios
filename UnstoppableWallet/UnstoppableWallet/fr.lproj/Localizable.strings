@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Ajouté au portefeuille";
 "alert.already_added_to_wallet" = "Déjà ajouté au portefeuille";
 "alert.not_supported_yet" = "Pas pris en charge pour le moment";
-"alert.copied" = "Copié";
+"alert.copied" = "Copied";
 "alert.created" = "Établi";
 "alert.restored" = "Restauré ";
 "alert.address_added" = "Adresse ajoutée";
@@ -93,6 +93,7 @@
 // Restore
 
 "restore.title" = "Restaurer";
+"restore.advanced" = "Advanced";
 "restore.by" = "Par";
 "restore.restore_by" = "Restaurer par";
 "restore.restore_type.mnemonic" = "Phrase de récupération";
@@ -556,9 +557,9 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominance Bitcoin";
-"market.global.volume_24h.title" = "Volume 24h";
-"market.global.defi_cap.title" = "Cap DeFi";
-"market.global.tvl_in_defi.title" = "TVL en DeFi";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
 "market.global.volume_24h.description" = "La variation historique du volume global quotidien du marché des transactions pour toutes les cryptomonnaies.";
 "market.global.defi_cap.description" = "L'évolution historique de la valeur de marché cumulée des tokens dans le secteur de la finance décentralisée.";
@@ -798,8 +799,9 @@
 
 "settings.title" = "Paramètres";
 "settings.tab_bar_item" = "Paramètres";
-"settings.security_center" = "Centre de Sécurité";
 "settings.manage_accounts" = "Gérer les portefeuilles";
+"settings.blockchain_settings" = "Blockchain Settings";
+"settings.security" = "Security";
 "settings.experimental_features" = "Expérimental";
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
@@ -823,6 +825,7 @@
 "manage_wallets.search_placeholder" = "Nom, code ou adresse du contrat";
 "manage_wallets.not_supported" = "Non pris en charge";
 "manage_wallets.not_supported.description" = "Votre type de portefeuille actuel %@ ne prend pas en charge %@";
+"manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
 "manage_coins.add_coin.title" = "Ajouter %@ ";
 "manage_coins.add_coin.subtitle" = "%@ Portefeuille";
@@ -864,6 +867,10 @@
 // Settings -> Tell Friends
 
 "settings_tell_friends.text" = "Soyez Unstoppable";
+
+// Settings -> Blockchain Settings
+
+"blockchain_settings.title" = "Blockchain Settings";
 
 // Settings -> Security
 
@@ -1012,9 +1019,11 @@
 
 // Create Wallet
 
-"create_wallet.title" = "Nouveau porte-monnaie";
+"create_wallet.description" = "Your first step to become Unstoppable";
+"create_wallet.advanced_setup" = "Advanced Setup";
 "create_wallet.create_button" = "Créer";
-"create_wallet.mnemonic" = "Mnémonique";
+"create_wallet.advanced_button" = "Advanced";
+"create_wallet.phrase_count" = "Phrase Count";
 "create_wallet.12_words" = "12 mots (recommandé)";
 "create_wallet.n_words" = "%@ mots";
 "create_wallet.word_list" = "Listes de mots";
@@ -1080,8 +1089,8 @@
 "wallet_connect.active_account" = "Activer le portefeuille";
 "wallet_connect.address" = "Adresse";
 "wallet_connect.network" = "Réseau";
-"wallet_connect.address" = "Adresse";
-"wallet_connect.network" = "Réseau";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Demandes en attente";
 "wallet_connect.main.no_any_supported_chains" = "Aucune chaîne prise en charge !";
 "wallet_connect.main.unsupported_chains" = "Certaines chaînes ne sont pas prises en charge !";
@@ -1174,6 +1183,11 @@
 "manage_account.public_keys" = "Clés publiques";
 "manage_account.backup_recovery_phrase" = "Phrase de récupération de sauvegarde";
 "manage_account.unlink" = "Dissocier";
+
+// Birthday Height
+
+"birthday_height.title" = "Birthday Height";
+"birthday_height.description" = "Birthday Height Description";
 
 // Birthday Input
 
