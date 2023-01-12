@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "添加到钱包";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
-"alert.copied" = "已复制";
+"alert.copied" = "Copied";
 "alert.created" = "已创建";
 "alert.restored" = "已恢复";
 "alert.address_added" = "地址已添加";
@@ -95,6 +95,7 @@
 // Restore
 
 "restore.title" = "恢复";
+"restore.advanced" = "Advanced";
 "restore.by" = "由";
 "restore.restore_by" = "还原方式";
 "restore.restore_type.mnemonic" = "恢复码";
@@ -558,9 +559,9 @@
 "market.global.tvl_in_defi.title" = "DeFi锁定";
 
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
-"market.global.volume_24h.title" = "24h成交量";
-"market.global.defi_cap.title" = "DeFi市值";
-"market.global.tvl_in_defi.title" = "DeFi锁定";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
 "market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
 "market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
@@ -800,8 +801,9 @@
 
 "settings.title" = "设置";
 "settings.tab_bar_item" = "设置";
-"settings.security_center" = "安全中心";
 "settings.manage_accounts" = "管理钱包";
+"settings.blockchain_settings" = "Blockchain Settings";
+"settings.security" = "Security";
 "settings.experimental_features" = "实验性功能";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
@@ -825,6 +827,7 @@
 "manage_wallets.search_placeholder" = "姓名、代码或合同地址";
 "manage_wallets.not_supported" = "不支持";
 "manage_wallets.not_supported.description" = "您当前的钱包类型 %@ 不支持 %@";
+"manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
 "manage_coins.add_coin.title" = "添加%@ ";
 "manage_coins.add_coin.subtitle" = "%@钱包";
@@ -866,6 +869,10 @@
 // Settings -> Tell Friends
 
 "settings_tell_friends.text" = "Be Unstoppable";
+
+// Settings -> Blockchain Settings
+
+"blockchain_settings.title" = "Blockchain Settings";
 
 // Settings -> Security
 
@@ -1014,9 +1021,11 @@
 
 // Create Wallet
 
-"create_wallet.title" = "新钱包";
+"create_wallet.description" = "Your first step to become Unstoppable";
+"create_wallet.advanced_setup" = "Advanced Setup";
 "create_wallet.create_button" = "创建";
-"create_wallet.mnemonic" = "助记词";
+"create_wallet.advanced_button" = "Advanced";
+"create_wallet.phrase_count" = "Phrase Count";
 "create_wallet.12_words" = "12 个单词(推荐)";
 "create_wallet.n_words" = "%@ 个单词";
 "create_wallet.word_list" = "字符列表";
@@ -1082,8 +1091,8 @@
 "wallet_connect.active_account" = "激活钱包";
 "wallet_connect.address" = "地址";
 "wallet_connect.network" = "网络";
-"wallet_connect.address" = "地址";
-"wallet_connect.network" = "网络";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "待处理请求";
 "wallet_connect.main.no_any_supported_chains" = "没有任何支持的链！";
 "wallet_connect.main.unsupported_chains" = "一些链是不支持的！";
@@ -1176,6 +1185,11 @@
 "manage_account.public_keys" = "公钥";
 "manage_account.backup_recovery_phrase" = "备份恢复词";
 "manage_account.unlink" = "取消链接";
+
+// Birthday Height
+
+"birthday_height.title" = "Birthday Height";
+"birthday_height.description" = "Birthday Height Description";
 
 // Birthday Input
 
