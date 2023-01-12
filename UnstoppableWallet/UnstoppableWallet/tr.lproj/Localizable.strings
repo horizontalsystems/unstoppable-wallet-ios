@@ -40,7 +40,7 @@
 "alert.added_to_wallet" = "Cüzdana Eklendi";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
-"alert.copied" = "Kopyalandı";
+"alert.copied" = "Copied";
 "alert.created" = "Oluşturuldu";
 "alert.restored" = "Geri yüklendi ";
 "alert.address_added" = "Adres eklendi";
@@ -96,6 +96,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Restore
 
 "restore.title" = "Geri Yükle";
+"restore.advanced" = "Advanced";
 "restore.by" = "İçerik";
 "restore.restore_by" = "Geri Yükle";
 "restore.restore_type.mnemonic" = "Kurtarma cümlesi";
@@ -801,8 +802,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "settings.title" = "Ayarlar";
 "settings.tab_bar_item" = "Ayarlar";
-"settings.security_center" = "Güvenlik Merkezi";
 "settings.manage_accounts" = "Cüzdanları yönet";
+"settings.blockchain_settings" = "Blockchain Settings";
+"settings.security" = "Security";
 "settings.experimental_features" = "Deneysel";
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
@@ -826,6 +828,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "manage_wallets.search_placeholder" = "Ad, kod veya sözleşme adresi";
 "manage_wallets.not_supported" = "Desteklenmiyor";
 "manage_wallets.not_supported.description" = "Mevcut cüzdan türünüz %@, %@'yi desteklemiyor";
+"manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
 "manage_coins.add_coin.title" = "%@ ekle ";
 "manage_coins.add_coin.subtitle" = "%@ Cüzdanı";
@@ -867,6 +870,10 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Settings -> Tell Friends
 
 "settings_tell_friends.text" = "Be Unstoppable";
+
+// Settings -> Blockchain Settings
+
+"blockchain_settings.title" = "Blockchain Settings";
 
 // Settings -> Security
 
@@ -1015,9 +1022,11 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Create Wallet
 
-"create_wallet.title" = "Yeni Cüzdan";
+"create_wallet.description" = "Your first step to become Unstoppable";
+"create_wallet.advanced_setup" = "Advanced Setup";
 "create_wallet.create_button" = "Oluştur";
-"create_wallet.mnemonic" = "Mnemonic";
+"create_wallet.advanced_button" = "Advanced";
+"create_wallet.phrase_count" = "Phrase Count";
 "create_wallet.12_words" = "12 kelimeler (Tavsiye edilen)";
 "create_wallet.n_words" = "%@ kelime";
 "create_wallet.word_list" = "Kelime Listesi";
@@ -1083,8 +1092,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.active_account" = "Aktif Cüzdan";
 "wallet_connect.address" = "Adres";
 "wallet_connect.network" = "Ağ";
-"wallet_connect.address" = "Adres";
-"wallet_connect.network" = "Ağ";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
 "wallet_connect.main.no_any_supported_chains" = "Desteklenen zincir yok!";
 "wallet_connect.main.unsupported_chains" = "Bazı zincirler desteklenmiyor!";
@@ -1177,6 +1186,11 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "manage_account.public_keys" = "Genel Anahtarlar";
 "manage_account.backup_recovery_phrase" = "Yedekleme Kurtarma İfadesi";
 "manage_account.unlink" = "Ayır";
+
+// Birthday Height
+
+"birthday_height.title" = "Birthday Height";
+"birthday_height.description" = "Birthday Height Description";
 
 // Birthday Input
 
