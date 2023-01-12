@@ -40,7 +40,7 @@
 "alert.added_to_wallet" = "Cüzdana Eklendi";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
-"alert.copied" = "Copied";
+"alert.copied" = "Kopyalandı";
 "alert.created" = "Oluşturuldu";
 "alert.restored" = "Geri yüklendi ";
 "alert.address_added" = "Adres eklendi";
@@ -953,6 +953,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "appearance.theme.dark" = "Karanlık";
 "appearance.theme.light" = "Açık";
 
+"appearance.tab_settings" = "Tabs Settings";
+"appearance.markets_tab" = "Markets Tab";
 "appearance.launch_screen" = "Başlangıç Ekranı";
 "appearance.launch_screen.auto" = "Oto";
 "appearance.launch_screen.balance" = "Bakiye";
