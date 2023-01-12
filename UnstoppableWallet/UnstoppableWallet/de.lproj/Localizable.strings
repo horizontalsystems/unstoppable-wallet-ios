@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Zum Wallet hinzugefügt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
-"alert.copied" = "Copied";
+"alert.copied" = "Kopiert";
 "alert.created" = "Erstellt";
 "alert.restored" = "Wiederherstellen";
 "alert.address_added" = "Adresse hinzugefügt";
@@ -951,6 +951,8 @@
 "appearance.theme.dark" = "Dunkel";
 "appearance.theme.light" = "Hell";
 
+"appearance.tab_settings" = "Tabs Settings";
+"appearance.markets_tab" = "Markets Tab";
 "appearance.launch_screen" = "Startbildschirm";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Guthaben";
