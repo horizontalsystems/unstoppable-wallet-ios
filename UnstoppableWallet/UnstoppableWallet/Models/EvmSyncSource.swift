@@ -11,6 +11,13 @@ class EvmSyncSource {
         self.transactionSource = transactionSource
     }
 
+    var isHttp: Bool {
+        switch rpcSource {
+        case .http: return true
+        default: return false
+        }
+    }
+
 }
 
 extension EvmSyncSource: Equatable {
