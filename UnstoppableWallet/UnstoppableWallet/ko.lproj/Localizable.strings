@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "Copied";
+"alert.copied" = "복사됨";
 "alert.created" = "생성됨";
 "alert.restored" = "복구됨";
 "alert.wallet_added" = "Wallet Added";
@@ -189,8 +189,8 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "백업 복구 문구";
-"backup_prompt.warning" = "휴대전화 분실, 도난, 파손 등의 경우 지갑을 복구할 수 있도록 복구 문구 및 관련 비밀번호의 백업 사본을 만드십시오.";
+"backup_prompt.title" = "Backup";
+"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken etc.";
 "backup_prompt.backup" = "백업";
 "backup_prompt.later" = "나중에";
 
@@ -1091,8 +1091,8 @@
 "wallet_connect.active_account" = "지갑 활성화";
 "wallet_connect.address" = "주소";
 "wallet_connect.network" = "네트워크";
-"wallet_connect.address" = "주소";
-"wallet_connect.network" = "네트워크";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
 "wallet_connect.main.unsupported_chains" = "일부 체인은 지원되지 않습니다!";
