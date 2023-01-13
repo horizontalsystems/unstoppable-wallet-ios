@@ -25,11 +25,6 @@ class CreateAccountSimpleViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
         navigationItem.largeTitleDisplayMode = .never
 
@@ -92,6 +87,26 @@ class CreateAccountSimpleViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.show(error: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.finish() }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        transitionCoordinator?.animate { [weak self] context in
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithTransparentBackground()
+            self?.navigationController?.navigationBar.standardAppearance = appearance
+            self?.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        transitionCoordinator?.animate { [weak self] context in
+            self?.navigationController?.navigationBar.standardAppearance = UINavigationBar.appearance().standardAppearance
+            self?.navigationController?.navigationBar.scrollEdgeAppearance = UINavigationBar.appearance().scrollEdgeAppearance
+        }
     }
 
     @objc private func onTapCancel() {
