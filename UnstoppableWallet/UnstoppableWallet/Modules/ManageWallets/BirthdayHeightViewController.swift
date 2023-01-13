@@ -62,17 +62,8 @@ extension BirthdayHeightViewController: SectionsDataSource {
 
         return [
             Section(
-                    id: "description",
-                    footerState: .margin(height: .margin12),
-                    rows: [
-                        tableView.descriptionRow(
-                                id: "description",
-                                text: "birthday_height.description".localized
-                        )
-                    ]
-            ),
-            Section(
                     id: "main",
+                    headerState: .margin(height: .margin12),
                     rows: [
                         CellBuilderNew.row(
                                 rootElement: .hStack([
