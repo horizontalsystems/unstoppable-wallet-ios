@@ -1,20 +1,24 @@
 import Foundation
 import RxSwift
-import Alamofire
 import EvmKit
-import ObjectMapper
+import Eip20Kit
 import HsToolKit
 import MarketKit
 
 class AddEvmTokenBlockchainService {
     private let blockchain: Blockchain
     private let networkManager: NetworkManager
-    private let apiUrl: String
+    private let rpcSource: RpcSource
 
-    init(blockchain: Blockchain, networkManager: NetworkManager, appConfigProvider: AppConfigProvider) {
+    init?(blockchain: Blockchain, networkManager: NetworkManager, evmSyncSourceManager: EvmSyncSourceManager) {
         self.blockchain = blockchain
         self.networkManager = networkManager
-        apiUrl = appConfigProvider.marketApiUrl
+
+        guard let rpcSource = evmSyncSourceManager.httpSyncSource(blockchainType: blockchain.type)?.rpcSource else {
+            return nil
+        }
+
+        self.rpcSource = rpcSource
     }
 
 }
@@ -35,42 +39,30 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
     }
 
     func tokenSingle(reference: String) -> Single<Token> {
-        let reference = reference.lowercased()
+        guard let address = try? EvmKit.Address(hex: reference) else {
+            return Single.error(TokenError.invalidReference)
+        }
 
-        let parameters: Parameters = [
-            "blockchain": blockchain.uid,
-            "address": reference,
-        ]
-
-        let url = "\(apiUrl)/v1/token_info/eip20"
-        let request = networkManager.session.request(url, parameters: parameters)
         let tokenQuery = tokenQuery(reference: reference)
         let blockchain = blockchain
 
-        return networkManager.single(request: request).map { (tokenInfo: TokenInfo) in
-            Token(
-                    coin: Coin(uid: tokenQuery.customCoinUid, name: tokenInfo.name, code: tokenInfo.symbol),
-                    blockchain: blockchain,
-                    type: tokenQuery.tokenType,
-                    decimals: tokenInfo.decimals
-            )
-        }
+        return Eip20Kit.Kit.tokenInfoSingle(networkManager: networkManager, rpcSource: rpcSource, contractAddress: address)
+                .map { tokenInfo in
+                    Token(
+                            coin: Coin(uid: tokenQuery.customCoinUid, name: tokenInfo.name, code: tokenInfo.symbol),
+                            blockchain: blockchain,
+                            type: tokenQuery.tokenType,
+                            decimals: tokenInfo.decimals
+                    )
+                }
     }
 
 }
 
 extension AddEvmTokenBlockchainService {
 
-    struct TokenInfo: ImmutableMappable {
-        let name: String
-        let symbol: String
-        let decimals: Int
-
-        init(map: Map) throws {
-            name = try map.value("name")
-            symbol = try map.value("symbol")
-            decimals = try map.value("decimals")
-        }
+    enum TokenError: Error {
+        case invalidReference
     }
 
 }

@@ -11,11 +11,11 @@ struct AddTokenModule {
             return nil
         }
 
-        var addTokenServices: [IAddTokenBlockchainService] = App.shared.evmBlockchainManager.allBlockchains.map {
-            AddEvmTokenBlockchainService(blockchain: $0, networkManager: App.shared.networkManager, appConfigProvider: App.shared.appConfigProvider)
+        var addTokenServices: [IAddTokenBlockchainService] = App.shared.evmBlockchainManager.allBlockchains.compactMap {
+            AddEvmTokenBlockchainService(blockchain: $0, networkManager: App.shared.networkManager, evmSyncSourceManager: App.shared.evmSyncSourceManager)
         }
 
-        if let service = AddBep2TokenBlockchainService(marketKit: App.shared.marketKit, networkManager: App.shared.networkManager, appConfigProvider: App.shared.appConfigProvider) {
+        if let service = AddBep2TokenBlockchainService(marketKit: App.shared.marketKit, networkManager: App.shared.networkManager) {
             addTokenServices.append(service)
         }
 

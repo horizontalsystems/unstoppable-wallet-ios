@@ -8,16 +8,14 @@ import MarketKit
 class AddBep2TokenBlockchainService {
     private let blockchain: Blockchain
     private let networkManager: NetworkManager
-    private let apiUrl: String
 
-    init?(marketKit: MarketKit.Kit, networkManager: NetworkManager, appConfigProvider: AppConfigProvider) {
+    init?(marketKit: MarketKit.Kit, networkManager: NetworkManager) {
         guard let blockchain = try? marketKit.blockchain(uid: BlockchainType.binanceChain.uid) else {
             return nil
         }
 
         self.blockchain = blockchain
         self.networkManager = networkManager
-        apiUrl = appConfigProvider.marketApiUrl
     }
 
 }
@@ -40,39 +38,49 @@ extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
         let reference = reference.uppercased()
 
         let parameters: Parameters = [
-            "blockchain": blockchain.uid,
-            "symbol": reference
+            "limit": 1000
         ]
 
-        let url = "\(apiUrl)/v1/token_info/bep2"
+        let url = "https://dex.binance.org/api/v1/tokens"
         let request = networkManager.session.request(url, parameters: parameters)
         let tokenQuery = tokenQuery(reference: reference)
         let blockchain = blockchain
 
-        return networkManager.single(request: request).map { (tokenInfo: TokenInfo) in
-            Token(
-                    coin: Coin(uid: tokenQuery.customCoinUid, name: tokenInfo.name, code: tokenInfo.originalSymbol),
-                    blockchain: blockchain,
-                    type: tokenQuery.tokenType,
-                    decimals: tokenInfo.decimals
-            )
-        }
+        return networkManager.single(request: request)
+                .flatMap { (bep2Tokens: [Bep2Token]) -> Single<Token> in
+                    guard let bep2Token = bep2Tokens.first(where: { $0.symbol == reference }) else {
+                        return Single.error(TokenError.notFound)
+                    }
+
+                    let token = Token(
+                            coin: Coin(uid: tokenQuery.customCoinUid, name: bep2Token.name, code: bep2Token.originalSymbol),
+                            blockchain: blockchain,
+                            type: tokenQuery.tokenType,
+                            decimals: 0
+                    )
+
+                    return Single.just(token)
+                }
     }
 
 }
 
 extension AddBep2TokenBlockchainService {
 
-    struct TokenInfo: ImmutableMappable {
+    struct Bep2Token: ImmutableMappable {
         let name: String
         let originalSymbol: String
-        let decimals: Int
+        let symbol: String
 
         init(map: Map) throws {
             name = try map.value("name")
             originalSymbol = try map.value("original_symbol")
-            decimals = try map.value("contract_decimals")
+            symbol = try map.value("symbol")
         }
+    }
+
+    enum TokenError: Error {
+        case notFound
     }
 
 }

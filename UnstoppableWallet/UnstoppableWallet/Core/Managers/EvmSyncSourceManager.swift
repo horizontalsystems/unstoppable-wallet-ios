@@ -120,6 +120,16 @@ extension EvmSyncSourceManager {
         return syncSources[0]
     }
 
+    func httpSyncSource(blockchainType: BlockchainType) -> EvmSyncSource? {
+        let syncSources = allSyncSources(blockchainType: blockchainType)
+
+        if let name = storage.evmSyncSourceName(blockchainType: blockchainType), let syncSource = syncSources.first(where: { $0.name == name }), syncSource.isHttp {
+            return syncSource
+        }
+
+        return syncSources.first { $0.isHttp }
+    }
+
     func save(syncSource: EvmSyncSource, blockchainType: BlockchainType) {
         storage.save(evmSyncSourceName: syncSource.name, blockchainType: blockchainType)
         syncSourceRelay.accept(blockchainType)
