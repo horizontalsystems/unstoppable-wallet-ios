@@ -39,10 +39,10 @@
 "alert.added_to_wallet" = "添加到钱包";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
-"alert.copied" = "已复制";
+"alert.copied" = "Copied";
 "alert.created" = "已创建";
 "alert.restored" = "已恢复";
-"alert.address_added" = "地址已添加";
+"alert.wallet_added" = "Wallet Added";
 "alert.deleted" = "已删除";
 "alert.waiting_for_session" = "等待会话";
 "alert.try_again" = "再试一次";
@@ -241,7 +241,7 @@
 
 "switch_account.title" = "切换钱包";
 "switch_account.wallets" = "钱包";
-"switch_account.watch_addresses" = "观察地址";
+"switch_account.watch_wallets" = "Watch Wallets";
 
 // Release notes
 
@@ -559,9 +559,9 @@
 "market.global.tvl_in_defi.title" = "DeFi锁定";
 
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
-"market.global.volume_24h.title" = "24h成交量";
-"market.global.defi_cap.title" = "DeFi市值";
-"market.global.tvl_in_defi.title" = "DeFi锁定";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
 "market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
 "market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
@@ -1093,8 +1093,8 @@
 "wallet_connect.active_account" = "激活钱包";
 "wallet_connect.address" = "地址";
 "wallet_connect.network" = "网络";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "地址";
+"wallet_connect.network" = "网络";
 "wallet_connect.list.pending_requests" = "待处理请求";
 "wallet_connect.main.no_any_supported_chains" = "没有任何支持的链！";
 "wallet_connect.main.unsupported_chains" = "一些链是不支持的！";
@@ -1165,10 +1165,9 @@
 
 // Onboarding
 
-"onboarding.balance.description" = "尚无钱包";
 "onboarding.balance.create" = "创建";
 "onboarding.balance.restore" = "恢复";
-"onboarding.balance.watch" = "观察地址";
+"onboarding.balance.watch" = "Watch Wallet";
 "onboarding.balance.password_hint" = "贴士！使用一个新密码恢复现有的钱包将生成一个全新的钱包。如果您希望对多个钱包使用单个12-24个单词的助记词恢复码，这将非常方便。";
 
 // Manage Accounts
@@ -1191,7 +1190,6 @@
 // Birthday Height
 
 "birthday_height.title" = "Birthday Height";
-"birthday_height.description" = "Birthday Height Description";
 
 // Birthday Input
 
@@ -1241,7 +1239,7 @@
 
 // Watch Address
 
-"watch_address.title" = "观察地址";
+"watch_address.title" = "Watch Wallet";
 "watch_address.watch" = "观察";
 "watch_address.address" = "地址";
 "watch_address.by" = "由";
