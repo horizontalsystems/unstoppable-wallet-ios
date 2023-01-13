@@ -240,7 +240,7 @@ extension ManageAccountViewController: SectionsDataSource {
         case .backupRecoveryPhrase:
             return tableView.universalRow48(
                     id: "backup-recovery-phrase",
-                    image: .local(UIImage(named: "warning_2_24")),
+                    image: .local(UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)),
                     title: .custom("manage_account.backup_recovery_phrase".localized, .body, .themeLucian),
                     autoDeselect: true,
                     isFirst: isFirst,
