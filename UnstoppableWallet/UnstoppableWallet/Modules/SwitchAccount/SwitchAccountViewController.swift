@@ -113,7 +113,7 @@ extension SwitchAccountViewController: SectionsDataSource {
         if !viewModel.watchViewItems.isEmpty {
             let section = Section(
                     id: "watch",
-                    headerState: tableView.sectionHeader(text: "switch_account.watch_addresses".localized),
+                    headerState: tableView.sectionHeader(text: "switch_account.watch_wallets".localized),
                     rows: viewModel.watchViewItems.enumerated().map { index, viewItem in
                         row(viewItem: viewItem, watchIcon: true, index: index, isFirst: index == 0, isLast: index == viewModel.watchViewItems.count - 1)
                     }

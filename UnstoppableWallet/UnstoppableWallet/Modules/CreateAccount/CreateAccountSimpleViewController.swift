@@ -100,13 +100,11 @@ class CreateAccountSimpleViewController: ThemeViewController {
         }
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
 
-        transitionCoordinator?.animate { [weak self] context in
-            self?.navigationController?.navigationBar.standardAppearance = UINavigationBar.appearance().standardAppearance
-            self?.navigationController?.navigationBar.scrollEdgeAppearance = UINavigationBar.appearance().scrollEdgeAppearance
-        }
+        navigationController?.navigationBar.standardAppearance = UINavigationBar.appearance().standardAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = UINavigationBar.appearance().scrollEdgeAppearance
     }
 
     @objc private func onTapCancel() {

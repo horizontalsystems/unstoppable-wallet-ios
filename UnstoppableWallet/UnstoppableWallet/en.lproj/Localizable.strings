@@ -42,7 +42,7 @@
 "alert.copied" = "Copied";
 "alert.created" = "Created";
 "alert.restored" = "Restored";
-"alert.address_added" = "Address Added";
+"alert.wallet_added" = "Wallet Added";
 "alert.deleted" = "Deleted";
 "alert.waiting_for_session" = "Waiting for Session";
 "alert.try_again" = "Try Again";
@@ -241,7 +241,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "switch_account.title" = "Switch Wallet";
 "switch_account.wallets" = "Wallets";
-"switch_account.watch_addresses" = "Watch Addresses";
+"switch_account.watch_wallets" = "Watch Wallets";
 
 // Release notes
 
@@ -1165,10 +1165,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Onboarding
 
-"onboarding.balance.description" = "You don’t have any installed wallets yet.\nCreate new wallet or restore an existing one.";
 "onboarding.balance.create" = "Create";
 "onboarding.balance.restore" = "Restore";
-"onboarding.balance.watch" = "Watch Address";
+"onboarding.balance.watch" = "Watch Wallet";
 "onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will generate a brand new wallet. This is handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
@@ -1240,7 +1239,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Watch Address
 
-"watch_address.title" = "Watch Address";
+"watch_address.title" = "Watch Wallet";
 "watch_address.watch" = "Watch";
 "watch_address.address" = "Address";
 "watch_address.by" = "By";

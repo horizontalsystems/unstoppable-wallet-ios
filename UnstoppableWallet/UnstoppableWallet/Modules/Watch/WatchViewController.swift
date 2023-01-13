@@ -105,7 +105,7 @@ class WatchViewController: KeyboardAwareViewController {
             self?.watchButton.isEnabled = enabled
         }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
-            HudHelper.instance.show(banner: .addressAdded)
+            HudHelper.instance.show(banner: .walletAdded)
             (self?.sourceViewController ?? self)?.dismiss(animated: true)
         }
 

@@ -25,8 +25,7 @@ class OnboardingBalanceViewController: ThemeViewController {
             maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        placeholderView.image = UIImage(named: "wallet_48")
-        placeholderView.text = "onboarding.balance.description".localized
+        placeholderView.image = UIImage(named: "add_to_wallet_48")
 
         placeholderView.addPrimaryButton(
                 style: .yellow,

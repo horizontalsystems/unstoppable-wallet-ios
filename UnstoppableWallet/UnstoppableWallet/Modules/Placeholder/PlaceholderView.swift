@@ -63,6 +63,7 @@ class PlaceholderView: UIView {
 
         stackView.addArrangedSubview(label)
 
+        label.isHidden = true
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = .subhead2
@@ -80,7 +81,10 @@ class PlaceholderView: UIView {
 
     var text: String? {
         get { label.text }
-        set { label.text = newValue }
+        set {
+            label.text = newValue
+            label.isHidden = newValue == nil
+        }
     }
 
     func addPrimaryButton(style: PrimaryButton.Style, title: String, target: Any, action: Selector) {
