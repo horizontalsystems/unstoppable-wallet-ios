@@ -40,10 +40,10 @@
 "alert.added_to_wallet" = "Cüzdana Eklendi";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
-"alert.copied" = "Kopyalandı";
+"alert.copied" = "Copied";
 "alert.created" = "Oluşturuldu";
 "alert.restored" = "Geri yüklendi ";
-"alert.address_added" = "Adres eklendi";
+"alert.wallet_added" = "Wallet Added";
 "alert.deleted" = "Sil";
 "alert.waiting_for_session" = "Oturum bekleniyor";
 "alert.try_again" = "Tekrar deneyin";
@@ -242,7 +242,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "switch_account.title" = "Cüzdan Değiştir";
 "switch_account.wallets" = "Cüzdanlar";
-"switch_account.watch_addresses" = "Adresi İzle";
+"switch_account.watch_wallets" = "Watch Wallets";
 
 // Release notes
 
@@ -1094,8 +1094,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.active_account" = "Aktif Cüzdan";
 "wallet_connect.address" = "Adres";
 "wallet_connect.network" = "Ağ";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Adres";
+"wallet_connect.network" = "Ağ";
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
 "wallet_connect.main.no_any_supported_chains" = "Desteklenen zincir yok!";
 "wallet_connect.main.unsupported_chains" = "Bazı zincirler desteklenmiyor!";
@@ -1166,10 +1166,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Onboarding
 
-"onboarding.balance.description" = "Henüz cüzdan yok";
 "onboarding.balance.create" = "Oluştur";
 "onboarding.balance.restore" = "Geri Yükle";
-"onboarding.balance.watch" = "Adresi İzle";
+"onboarding.balance.watch" = "Watch Wallet";
 "onboarding.balance.password_hint" = "İpucu! Mevcut bir cüzdanı geri yüklemek, yeni bir şifre ile en baştan bir cüzdan oluşturur. Birden fazla cüzdan için 12-24 kelimelik tek bir hatırlatıcı kurtarma öbeği kullanmak istiyorsanız kullanışlıdır.";
 
 // Manage Accounts
@@ -1192,7 +1191,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Birthday Height
 
 "birthday_height.title" = "Birthday Height";
-"birthday_height.description" = "Birthday Height Description";
 
 // Birthday Input
 
@@ -1242,7 +1240,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Watch Address
 
-"watch_address.title" = "Adresi İzle";
+"watch_address.title" = "Watch Wallet";
 "watch_address.watch" = "İzle";
 "watch_address.address" = "Adres";
 "watch_address.by" = "İçerik";
