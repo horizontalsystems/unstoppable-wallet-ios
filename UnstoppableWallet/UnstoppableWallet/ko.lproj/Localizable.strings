@@ -39,10 +39,10 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "복사됨";
+"alert.copied" = "Copied";
 "alert.created" = "생성됨";
 "alert.restored" = "복구됨";
-"alert.address_added" = "주소 추가됨";
+"alert.wallet_added" = "Wallet Added";
 "alert.deleted" = "삭제";
 "alert.waiting_for_session" = "세션을 기다리는 중";
 "alert.try_again" = "다시 시도하십시오.";
@@ -239,7 +239,7 @@
 
 "switch_account.title" = "지갑 변경";
 "switch_account.wallets" = "지갑";
-"switch_account.watch_addresses" = "관찰 주소";
+"switch_account.watch_wallets" = "Watch Wallets";
 
 // Release notes
 
@@ -1091,8 +1091,8 @@
 "wallet_connect.active_account" = "지갑 활성화";
 "wallet_connect.address" = "주소";
 "wallet_connect.network" = "네트워크";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "주소";
+"wallet_connect.network" = "네트워크";
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
 "wallet_connect.main.unsupported_chains" = "일부 체인은 지원되지 않습니다!";
@@ -1163,10 +1163,9 @@
 
 // Onboarding
 
-"onboarding.balance.description" = "아직 지갑이 없습니다";
 "onboarding.balance.create" = "만들기";
 "onboarding.balance.restore" = "복구";
-"onboarding.balance.watch" = "주소 관찰";
+"onboarding.balance.watch" = "Watch Wallet";
 "onboarding.balance.password_hint" = "중요! 기존 지갑을 복원하지만 새로운 암호를 사용하면 완전히 새로운 지갑이 생성됩니다. 여러 지갑에 대해 단일 12-24 단어 니모닉 복구 구문을 사용하려는 경우 편리합니다.";
 
 // Manage Accounts
@@ -1189,7 +1188,6 @@
 // Birthday Height
 
 "birthday_height.title" = "Birthday Height";
-"birthday_height.description" = "Birthday Height Description";
 
 // Birthday Input
 
@@ -1239,7 +1237,7 @@
 
 // Watch Address
 
-"watch_address.title" = "관찰 주소";
+"watch_address.title" = "Watch Wallet";
 "watch_address.watch" = "관찰";
 "watch_address.address" = "주소";
 "watch_address.by" = "작성";
