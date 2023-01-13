@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Zum Wallet hinzugefügt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
-"alert.copied" = "Copied";
+"alert.copied" = "Kopiert";
 "alert.created" = "Erstellt";
 "alert.restored" = "Wiederherstellen";
 "alert.wallet_added" = "Wallet Added";
@@ -190,8 +190,8 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Wiederherstellungsphrase sichern";
-"backup_prompt.warning" = "Erstellen Sie eine Sicherungskopie der Wiederherstellungsphrase und des zugehörigen Passworts, mit dem Sie Ihre Wallet wiederherstellen können, wenn Ihr Telefon verloren geht, gestohlen, kaputt, etc.";
+"backup_prompt.title" = "Backup";
+"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken etc.";
 "backup_prompt.backup" = "Sichern";
 "backup_prompt.later" = "Später";
 
@@ -1092,8 +1092,8 @@
 "wallet_connect.active_account" = "Aktive Wallet";
 "wallet_connect.address" = "Adresse";
 "wallet_connect.network" = "Netzwerk";
-"wallet_connect.address" = "Adresse";
-"wallet_connect.network" = "Netzwerk";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Ausstehende Anfragen";
 "wallet_connect.main.no_any_supported_chains" = "Keine unterstützten Ketten!";
 "wallet_connect.main.unsupported_chains" = "Einige Ketten werden nicht unterstützt!";
