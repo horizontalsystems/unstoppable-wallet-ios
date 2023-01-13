@@ -39,10 +39,10 @@
 "alert.added_to_wallet" = "Agregar a Wallet";
 "alert.already_added_to_wallet" = "Ya se ha añadido a Wallet";
 "alert.not_supported_yet" = "Aún no compatible";
-"alert.copied" = "Copiado";
+"alert.copied" = "Copied";
 "alert.created" = "Creado";
 "alert.restored" = "Restaurado ";
-"alert.address_added" = "Dirección añadida";
+"alert.wallet_added" = "Wallet Added";
 "alert.deleted" = "Eliminado";
 "alert.waiting_for_session" = "Esperando a la sesión";
 "alert.try_again" = "Inténtalo de nuevo";
@@ -239,7 +239,7 @@
 
 "switch_account.title" = "Cambiar monedero";
 "switch_account.wallets" = "Monederos";
-"switch_account.watch_addresses" = "Ver Dirección";
+"switch_account.watch_wallets" = "Watch Wallets";
 
 // Release notes
 
@@ -557,9 +557,9 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominio Bitcoin";
-"market.global.volume_24h.title" = "Volumen de 24 horas";
-"market.global.defi_cap.title" = "Cap. DeFi";
-"market.global.tvl_in_defi.title" = "TVL en DeFi";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "El cambio histórico en la relación entre el límite de mercado de Bitcoin y el resto de los mercados de criptomonedas. \n\nPor lo general, cuando el dominio de Bitcoin tiende a ser más alto, el resto de las tendencias del mercado de criptomonedas disminuye y viceversa.";
 "market.global.volume_24h.description" = "El cambio histórico en el volumen diario del mercado de operaciones agregadas para todas las criptomonedas.";
 "market.global.defi_cap.description" = "El cambio histórico en el valor acumulado del mercado de los tokens en el sector de las finanzas descentralizadas.";
@@ -1091,8 +1091,8 @@
 "wallet_connect.active_account" = "Active su cartera";
 "wallet_connect.address" = "Dirección";
 "wallet_connect.network" = "Red";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Dirección";
+"wallet_connect.network" = "Red";
 "wallet_connect.list.pending_requests" = "Solicitudes Pendientes";
 "wallet_connect.main.no_any_supported_chains" = "¡No hay cadenas compatibles!";
 "wallet_connect.main.unsupported_chains" = "¡Algunas cadenas no son soportadas!";
@@ -1163,10 +1163,9 @@
 
 // Onboarding
 
-"onboarding.balance.description" = "Todavía no hay monederos";
 "onboarding.balance.create" = "Crear";
 "onboarding.balance.restore" = "Restaurar";
-"onboarding.balance.watch" = "Ver Dirección";
+"onboarding.balance.watch" = "Watch Wallet";
 "onboarding.balance.password_hint" = "¡Sugerencia! Restaurar un monedero existente pero con una nueva contraseña generará un nuevo monedero. Esto puede ser útil si quieres usar una sola frase de recuperación mnemónica de 12-24 palabras para múltiples monederos.";
 
 // Manage Accounts
@@ -1189,7 +1188,6 @@
 // Birthday Height
 
 "birthday_height.title" = "Birthday Height";
-"birthday_height.description" = "Birthday Height Description";
 
 // Birthday Input
 
@@ -1239,7 +1237,7 @@
 
 // Watch Address
 
-"watch_address.title" = "Ver Dirección";
+"watch_address.title" = "Watch Wallet";
 "watch_address.watch" = "Ver";
 "watch_address.address" = "Dirección";
 "watch_address.by" = "Por";
