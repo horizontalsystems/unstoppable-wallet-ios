@@ -40,7 +40,7 @@
 "alert.added_to_wallet" = "Cüzdana Eklendi";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
-"alert.copied" = "Copied";
+"alert.copied" = "Kopyalandı";
 "alert.created" = "Oluşturuldu";
 "alert.restored" = "Geri yüklendi ";
 "alert.wallet_added" = "Wallet Added";
@@ -192,8 +192,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Backup Prompt
 
-"backup_prompt.title" = "Yedekleme Kurtarma İfadesi";
-"backup_prompt.warning" = "Telefonunuzun kaybolması, çalınması, kırılması vb. durumlarda cüzdanınızı kurtarmanıza olanak sağlayacak kurtarma ifadesinin ve ilgili parolanın yedek bir kopyasını oluşturun.";
+"backup_prompt.title" = "Backup";
+"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken etc.";
 "backup_prompt.backup" = "Yedekle";
 "backup_prompt.later" = "Sonra";
 
@@ -1094,8 +1094,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.active_account" = "Aktif Cüzdan";
 "wallet_connect.address" = "Adres";
 "wallet_connect.network" = "Ağ";
-"wallet_connect.address" = "Adres";
-"wallet_connect.network" = "Ağ";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
 "wallet_connect.main.no_any_supported_chains" = "Desteklenen zincir yok!";
 "wallet_connect.main.unsupported_chains" = "Bazı zincirler desteklenmiyor!";
