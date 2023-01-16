@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "添加到钱包";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
-"alert.copied" = "已复制";
+"alert.copied" = "Copied";
 "alert.created" = "已创建";
 "alert.restored" = "已恢复";
 "alert.wallet_added" = "Wallet Added";
@@ -191,7 +191,7 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Backup";
+"backup_prompt.title" = "Backup Wallet";
 "backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken etc.";
 "backup_prompt.backup" = "备份";
 "backup_prompt.later" = "稍后";
@@ -559,9 +559,9 @@
 "market.global.tvl_in_defi.title" = "DeFi锁定";
 
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
-"market.global.volume_24h.title" = "24h成交量";
-"market.global.defi_cap.title" = "DeFi市值";
-"market.global.tvl_in_defi.title" = "DeFi锁定";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
 "market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
 "market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
@@ -1078,12 +1078,17 @@
 // Add Token
 
 "add_token.title" = "添加代币";
-"add_token.already_added" = "已添加";
-"add_token.choose_token" = "选择代币";
-"add_token.invalid_contract_address_or_bep2_symbol" = "无效的合约地址或BEP2符号";
-"add_token.token_not_found" = "找不到代币";
-"add_token.input_placeholder" = "智能合约地址";
-"add_token.bep2_not_supported" = "您当前的钱包 EVM 私钥不支持 BEP2 代币";
+"add_token.blockchain" = "Blockchain";
+"add_token.already_added" = "This token is already in the Coin Manager list";
+"add_token.invalid_contract_address" = "Invalid contract address";
+"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
+"add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
+"add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
+"add_token.input_placeholder.contract_address" = "Contract Address";
+"add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
+"add_token.coin_name" = "Coin Name";
+"add_token.symbol" = "Symbol";
+"add_token.decimals" = "Decimals";
 
 // Wallet Connect
 
