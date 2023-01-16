@@ -40,7 +40,7 @@
 "alert.added_to_wallet" = "Cüzdana Eklendi";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
-"alert.copied" = "Kopyalandı";
+"alert.copied" = "Copied";
 "alert.created" = "Oluşturuldu";
 "alert.restored" = "Geri yüklendi ";
 "alert.wallet_added" = "Wallet Added";
@@ -192,7 +192,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Backup Prompt
 
-"backup_prompt.title" = "Backup";
+"backup_prompt.title" = "Backup Wallet";
 "backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken etc.";
 "backup_prompt.backup" = "Yedekle";
 "backup_prompt.later" = "Sonra";
@@ -1079,12 +1079,17 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Add Token
 
 "add_token.title" = "Token Ekle";
-"add_token.already_added" = "Zaten ekli";
-"add_token.choose_token" = "Tokenleri seç";
-"add_token.invalid_contract_address_or_bep2_symbol" = "Geçersiz sözleşme adresi veya BEP2 sembolü";
-"add_token.token_not_found" = "Token bulunamadı";
-"add_token.input_placeholder" = "Sözleşme Adresi";
-"add_token.bep2_not_supported" = "Mevcut cüzdanınız EVM özel anahtarı, BEP2 belirteçlerini desteklemiyor";
+"add_token.blockchain" = "Blockchain";
+"add_token.already_added" = "This token is already in the Coin Manager list";
+"add_token.invalid_contract_address" = "Invalid contract address";
+"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
+"add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
+"add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
+"add_token.input_placeholder.contract_address" = "Contract Address";
+"add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
+"add_token.coin_name" = "Coin Name";
+"add_token.symbol" = "Symbol";
+"add_token.decimals" = "Decimals";
 
 // Wallet Connect
 
