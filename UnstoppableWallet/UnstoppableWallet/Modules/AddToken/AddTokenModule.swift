@@ -11,19 +11,43 @@ struct AddTokenModule {
             return nil
         }
 
-        var addTokenServices: [IAddTokenBlockchainService] = App.shared.evmBlockchainManager.allBlockchains.compactMap {
-            AddEvmTokenBlockchainService(blockchain: $0, networkManager: App.shared.networkManager, evmSyncSourceManager: App.shared.evmSyncSourceManager)
+        var items = [Item]()
+
+        for blockchain in App.shared.evmBlockchainManager.allBlockchains {
+            if let service: IAddTokenBlockchainService = AddEvmTokenBlockchainService(
+                    blockchain: blockchain,
+                    networkManager: App.shared.networkManager,
+                    evmSyncSourceManager: App.shared.evmSyncSourceManager
+            ) {
+                let item = Item(blockchain: blockchain, service: service)
+                items.append(item)
+            }
+
         }
 
-        if let service = AddBep2TokenBlockchainService(marketKit: App.shared.marketKit, networkManager: App.shared.networkManager) {
-            addTokenServices.append(service)
+        if let blockchain = try? App.shared.marketKit.blockchain(uid: BlockchainType.binanceChain.uid), blockchain.type.supports(accountType: account.type) {
+            let service: IAddTokenBlockchainService = AddBep2TokenBlockchainService(
+                    blockchain: blockchain,
+                    networkManager: App.shared.networkManager
+            )
+            let item = Item(blockchain: blockchain, service: service)
+            items.append(item)
         }
 
-        let service = AddTokenService(account: account, blockchainServices: addTokenServices, marketKit: App.shared.marketKit, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager)
+        let service = AddTokenService(account: account, items: items, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager)
         let viewModel = AddTokenViewModel(service: service)
         let viewController = AddTokenViewController(viewModel: viewModel)
 
         return ThemeNavigationController(rootViewController: viewController)
+    }
+
+}
+
+extension AddTokenModule {
+
+    struct Item {
+        let blockchain: Blockchain
+        let service: IAddTokenBlockchainService
     }
 
 }

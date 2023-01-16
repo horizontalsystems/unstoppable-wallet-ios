@@ -5,15 +5,15 @@ import HsToolKit
 import MarketKit
 
 protocol IAddTokenBlockchainService {
-    func isValid(reference: String) -> Bool
+    var placeholder: String { get }
+    func validate(reference: String) throws
     func tokenQuery(reference: String) -> TokenQuery
     func tokenSingle(reference: String) -> Single<Token>
 }
 
 class AddTokenService {
     private let account: Account
-    private let blockchainServices: [IAddTokenBlockchainService]
-    private let marketKit: MarketKit.Kit
+    private let items: [AddTokenModule.Item]
     private let coinManager: CoinManager
     private let walletManager: WalletManager
 
@@ -26,58 +26,64 @@ class AddTokenService {
         }
     }
 
-    init(account: Account, blockchainServices: [IAddTokenBlockchainService], marketKit: MarketKit.Kit, coinManager: CoinManager, walletManager: WalletManager) {
+    private let currentBlockchainItemRelay = PublishRelay<CurrentBlockchainItem>()
+    private(set) var currentBlockchainItem: CurrentBlockchainItem {
+        didSet {
+            currentBlockchainItemRelay.accept(currentBlockchainItem)
+        }
+    }
+
+    private var currentIndex: Int = 0
+    private var currentReference: String?
+
+    init(account: Account, items: [AddTokenModule.Item], coinManager: CoinManager, walletManager: WalletManager) {
+        let sortedItems = items.sorted(by: { $0.blockchain.type.order < $1.blockchain.type.order })
+
         self.account = account
-        self.blockchainServices = blockchainServices
-        self.marketKit = marketKit
+        self.items = sortedItems
         self.coinManager = coinManager
         self.walletManager = walletManager
+
+        currentBlockchainItem = CurrentBlockchainItem(item: sortedItems[0])
     }
 
-    private func joinedTokensSingle(services: [IAddTokenBlockchainService], reference: String) -> Single<[Token]> {
-        let singles: [Single<Token?>] = services.map { service in
-            service.tokenSingle(reference: reference)
-                    .map { token -> Token? in token }
-                    .catchErrorJustReturn(nil)
+    private func syncState() {
+        disposeBag = DisposeBag()
+
+        guard let reference = currentReference, !reference.isEmpty else {
+            state = .idle
+            return
         }
 
-        return Single.zip(singles) { tokens in
-            tokens.compactMap { $0 }
-        }
-    }
+        let service = items[currentIndex].service
 
-    private func initialItems(tokens: [Token]) -> ([Item], [Item]) {
-        let enabled = tokens.count == 1
-
-        let activeTokens = walletManager.activeWallets.map { $0.token }
-
-        let sortedTokens = tokens.sorted { lhsToken, rhsToken in
-            lhsToken.blockchain.type.order < rhsToken.blockchain.type.order
+        do {
+            try service.validate(reference: reference)
+        } catch {
+            state = .failed(error: error)
+            return
         }
 
-        let addedTokens = sortedTokens.filter { activeTokens.contains($0) }
-        let tokens = sortedTokens.filter { !activeTokens.contains($0) }
+        let tokenQuery = service.tokenQuery(reference: reference)
 
-        let addedItems = addedTokens.map { Item(token: $0, enabled: true) }
-        let items = tokens.map { Item(token: $0, enabled: enabled) }
-
-        return (addedItems, items)
-    }
-
-    private func handleInitialState(tokens: [Token]) {
-        if tokens.isEmpty {
-            state = .failed(error: TokenError.notFound)
-        } else {
-            let (addedItems, items) = initialItems(tokens: tokens)
-
-            if items.count == 1, let item = items.first,
-               item.token.blockchainType == .binanceChain,
-               !BlockchainType.binanceChain.supports(accountType: account.type) {
-                state = .bep2NotSupported
-            } else {
-                state = .fetched(items: items, addedItems: addedItems)
-            }
+        if let existingToken = try? coinManager.token(query: tokenQuery) {
+            state = .alreadyExists(token: existingToken)
+            return
         }
+
+        state = .loading
+
+        service.tokenSingle(reference: reference)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(
+                        onSuccess: { [weak self] token in
+                            self?.state = .fetched(token: token)
+                        },
+                        onError: { [weak self] error in
+                            self?.state = .failed(error: error)
+                        }
+                )
+                .disposed(by: disposeBag)
     }
 
 }
@@ -88,76 +94,34 @@ extension AddTokenService {
         stateRelay.asObservable()
     }
 
+    var currentBlockchainItemObservable: Observable<CurrentBlockchainItem> {
+        currentBlockchainItemRelay.asObservable()
+    }
+
+    var blockchainItems: [BlockchainItem] {
+        items.enumerated().map { index, item in
+            BlockchainItem(blockchain: item.blockchain, current: index == currentIndex)
+        }
+    }
+
+    func setBlockchain(index: Int) {
+        currentIndex = index
+        currentBlockchainItem = CurrentBlockchainItem(item: items[index])
+        syncState()
+    }
+
     func set(reference: String?) {
-        disposeBag = DisposeBag()
-
-        guard let reference = reference, !reference.isEmpty else {
-            state = .idle
-            return
-        }
-
-        let validServices = blockchainServices.filter { $0.isValid(reference: reference) }
-
-        guard !validServices.isEmpty else {
-            state = .failed(error: TokenError.invalidReference)
-            return
-        }
-
-        var tokens = [Token]()
-        var notFoundServices = [IAddTokenBlockchainService]()
-
-        for service in validServices {
-            let tokenQuery = service.tokenQuery(reference: reference)
-
-            if let existingToken = try? coinManager.token(query: tokenQuery) {
-                tokens.append(existingToken)
-            } else {
-                notFoundServices.append(service)
-            }
-        }
-
-        if notFoundServices.isEmpty {
-            handleInitialState(tokens: tokens)
-            return
-        }
-
-        state = .loading
-
-        joinedTokensSingle(services: notFoundServices, reference: reference)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] serviceTokens in
-                    self?.handleInitialState(tokens: tokens + serviceTokens)
-                })
-                .disposed(by: disposeBag)
+        currentReference = reference
+        syncState()
     }
 
-    func toggleToken(index: Int) {
-        guard case .fetched(let items, let addedItems) = state else {
+    func save() {
+        guard case .fetched(let token) = state else {
             return
         }
 
-        guard index < items.count else {
-            return
-        }
-
-        items[index].enabled = !items[index].enabled
-
-        state = .fetched(items: items, addedItems: addedItems)
-    }
-
-    func save() throws {
-        guard case .fetched(let items, _) = state else {
-            return
-        }
-
-        let enabledItems = items.filter { $0.enabled }
-
-        guard !enabledItems.isEmpty else {
-            return
-        }
-
-        let wallets = enabledItems.map { Wallet(token: $0.token, account: account) }
-        walletManager.save(wallets: wallets)
+        let wallet = Wallet(token: token, account: account)
+        walletManager.save(wallets: [wallet])
     }
 
 }
@@ -167,30 +131,23 @@ extension AddTokenService {
     enum State {
         case idle
         case loading
-        case fetched(items: [Item], addedItems: [Item])
+        case alreadyExists(token: Token)
+        case fetched(token: Token)
         case failed(error: Error)
-        case bep2NotSupported
     }
 
-    class Item {
-        let token: Token
-        var enabled: Bool
-
-        init(token: Token, enabled: Bool) {
-            self.token = token
-            self.enabled = enabled
-        }
+    struct BlockchainItem {
+        let blockchain: Blockchain
+        let current: Bool
     }
 
-    enum TokenError: LocalizedError {
-        case invalidReference
-        case notFound
+    struct CurrentBlockchainItem {
+        let blockchain: Blockchain
+        let placeholder: String
 
-        var errorDescription: String? {
-            switch self {
-            case .invalidReference: return "add_token.invalid_contract_address_or_bep2_symbol".localized
-            case .notFound: return "add_token.token_not_found".localized
-            }
+        init(item: AddTokenModule.Item) {
+            blockchain = item.blockchain
+            placeholder = item.service.placeholder
         }
     }
 

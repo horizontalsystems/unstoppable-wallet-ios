@@ -25,12 +25,15 @@ class AddEvmTokenBlockchainService {
 
 extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
 
-    func isValid(reference: String) -> Bool {
+    var placeholder: String {
+        "add_token.input_placeholder.contract_address".localized
+    }
+
+    func validate(reference: String) throws {
         do {
             _ = try EvmKit.Address(hex: reference)
-            return true
         } catch {
-            return false
+            throw TokenError.invalidAddress
         }
     }
 
@@ -40,7 +43,7 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
 
     func tokenSingle(reference: String) -> Single<Token> {
         guard let address = try? EvmKit.Address(hex: reference) else {
-            return Single.error(TokenError.invalidReference)
+            return Single.error(TokenError.invalidAddress)
         }
 
         let tokenQuery = tokenQuery(reference: reference)
@@ -55,14 +58,25 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
                             decimals: tokenInfo.decimals
                     )
                 }
+                .catchError { _ in
+                    Single.error(TokenError.notFound(blockchainName: blockchain.name))
+                }
     }
 
 }
 
 extension AddEvmTokenBlockchainService {
 
-    enum TokenError: Error {
-        case invalidReference
+    enum TokenError: LocalizedError {
+        case invalidAddress
+        case notFound(blockchainName: String)
+
+        var errorDescription: String? {
+            switch self {
+            case .invalidAddress: return "add_token.invalid_contract_address".localized
+            case .notFound(let blockchainName): return "add_token.contract_address_not_found".localized(blockchainName)
+            }
+        }
     }
 
 }

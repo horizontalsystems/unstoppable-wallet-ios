@@ -191,7 +191,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Backup Prompt
 
-"backup_prompt.title" = "Backup";
+"backup_prompt.title" = "Backup Wallet";
 "backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken etc.";
 "backup_prompt.backup" = "Backup";
 "backup_prompt.later" = "Later";
@@ -1078,12 +1078,17 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Add Token
 
 "add_token.title" = "Add Token";
-"add_token.already_added" = "Already Added";
-"add_token.choose_token" = "Choose Token";
-"add_token.invalid_contract_address_or_bep2_symbol" = "Invalid contract address or BEP2 symbol";
-"add_token.token_not_found" = "Token not found";
-"add_token.input_placeholder" = "Contract Address";
-"add_token.bep2_not_supported" = "You current wallet EVM private key does not support BEP2 tokens";
+"add_token.blockchain" = "Blockchain";
+"add_token.already_added" = "This token is already in the Coin Manager list";
+"add_token.invalid_contract_address" = "Invalid contract address";
+"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
+"add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
+"add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
+"add_token.input_placeholder.contract_address" = "Contract Address";
+"add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
+"add_token.coin_name" = "Coin Name";
+"add_token.symbol" = "Symbol";
+"add_token.decimals" = "Decimals";
 
 // Wallet Connect
 
