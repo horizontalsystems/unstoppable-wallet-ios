@@ -71,7 +71,7 @@ class MainSettingsViewController: ThemeViewController {
         baseCurrencyCell.set(backgroundStyle: .lawrence)
         syncBaseCurrency()
 
-        languageCell.set(backgroundStyle: .lawrence)
+        languageCell.set(backgroundStyle: .lawrence, isLast: true)
         buildTitleValue(cell: languageCell, image: UIImage(named: "globe_24"), title: "settings.language".localized, value: viewModel.currentLanguage)
 
         aboutCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)

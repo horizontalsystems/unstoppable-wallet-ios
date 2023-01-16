@@ -9,11 +9,7 @@ class AddBep2TokenBlockchainService {
     private let blockchain: Blockchain
     private let networkManager: NetworkManager
 
-    init?(marketKit: MarketKit.Kit, networkManager: NetworkManager) {
-        guard let blockchain = try? marketKit.blockchain(uid: BlockchainType.binanceChain.uid) else {
-            return nil
-        }
-
+    init(blockchain: Blockchain, networkManager: NetworkManager) {
         self.blockchain = blockchain
         self.networkManager = networkManager
     }
@@ -22,12 +18,18 @@ class AddBep2TokenBlockchainService {
 
 extension AddBep2TokenBlockchainService: IAddTokenBlockchainService {
 
-    func isValid(reference: String) -> Bool {
+    var placeholder: String {
+        "add_token.input_placeholder.bep2_symbol".localized
+    }
+
+    func validate(reference: String) throws {
         guard let regex = try? NSRegularExpression(pattern: "\\w+-\\w+") else {
-            return false
+            throw TokenError.invalidSymbol
         }
 
-        return regex.firstMatch(in: reference, range: NSRange(location: 0, length: reference.count)) != nil
+        guard regex.firstMatch(in: reference, range: NSRange(location: 0, length: reference.count)) != nil else {
+            throw TokenError.invalidSymbol
+        }
     }
 
     func tokenQuery(reference: String) -> TokenQuery {
@@ -79,8 +81,16 @@ extension AddBep2TokenBlockchainService {
         }
     }
 
-    enum TokenError: Error {
+    enum TokenError: LocalizedError {
+        case invalidSymbol
         case notFound
+
+        var errorDescription: String? {
+            switch self {
+            case .invalidSymbol: return "add_token.invalid_bep2_symbol".localized
+            case .notFound: return "add_token.bep2_symbol_not_found".localized
+            }
+        }
     }
 
 }

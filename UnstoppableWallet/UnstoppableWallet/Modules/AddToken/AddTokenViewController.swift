@@ -9,7 +9,6 @@ import ComponentKit
 
 class AddTokenViewController: ThemeViewController {
     private let viewModel: AddTokenViewModel
-
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -20,6 +19,7 @@ class AddTokenViewController: ThemeViewController {
     private let addButtonHolder = BottomGradientHolder()
     private let addButton = PrimaryButton()
 
+    private var blockchain: String = ""
     private var viewItem: AddTokenViewModel.ViewItem?
     private var isLoaded = false
 
@@ -49,7 +49,6 @@ class AddTokenViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         inputCell.isEditable = false
-        inputCell.inputPlaceholder = "add_token.input_placeholder".localized
         inputCell.onChangeHeight = { [weak self] in self?.reloadHeights() }
         inputCell.onChangeText = { [weak self] in self?.viewModel.onEnter(reference: $0) }
         inputCell.onFetchText = { [weak self] in
@@ -72,8 +71,13 @@ class AddTokenViewController: ThemeViewController {
         }
 
         addButton.set(style: .yellow)
+        addButton.setTitle("button.add".localized, for: .normal)
         addButton.addTarget(self, action: #selector(onTapAddButton), for: .touchUpInside)
 
+        subscribe(disposeBag, viewModel.blockchainDriver) { [weak self] blockchain in
+            self?.blockchain = blockchain
+            self?.reloadTable()
+        }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
             self?.inputCell.set(isLoading: loading)
         }
@@ -81,11 +85,11 @@ class AddTokenViewController: ThemeViewController {
             self?.viewItem = viewItem
             self?.reloadTable()
         }
-        subscribe(disposeBag, viewModel.buttonTitleDriver) { [weak self] title in
-            self?.addButton.setTitle(title, for: .normal)
-        }
         subscribe(disposeBag, viewModel.buttonEnabledDriver) { [weak self] enabled in
             self?.addButton.isEnabled = enabled
+        }
+        subscribe(disposeBag, viewModel.placeholderDriver) { [weak self] placeholder in
+            self?.inputCell.inputPlaceholder = placeholder
         }
         subscribe(disposeBag, viewModel.cautionDriver) { [weak self] caution in
             self?.inputCell.set(cautionType: caution?.type)
@@ -129,118 +133,48 @@ class AddTokenViewController: ThemeViewController {
         tableView.reload(animated: true)
     }
 
+    private func openBlockchainSelector() {
+        let controller = SingleSelectorViewController(
+                title: "add_token.blockchain".localized,
+                viewItems: viewModel.blockchainViewItems,
+                onSelect: { [weak self] in
+                    self?.viewModel.onSelectBlockchain(index: $0)
+                }
+        )
+
+        present(ThemeNavigationController(rootViewController: controller), animated: true)
+    }
+
 }
 
 extension AddTokenViewController: SectionsDataSource {
 
-    private func tokenSection(viewItem: AddTokenViewModel.TokenViewItem, index: Int, bottomMargin: CGFloat) -> SectionProtocol {
-        Section(
-                id: "token-\(index)",
-                footerState: .margin(height: bottomMargin),
-                rows: [
-                    CellBuilderNew.row(
-                            rootElement: .hStack([
-                                .image32 { component in
-                                    component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.placeholderImageName))
-                                },
-                                .vStackCentered([
-                                    .hStack([
-                                        .text { component in
-                                            component.font = .body
-                                            component.textColor = .themeLeah
-                                            component.text = viewItem.coinCode
-                                            component.setContentHuggingPriority(.required, for: .horizontal)
-                                        },
-                                        .margin8,
-                                        .badge { component in
-                                            component.badgeView.set(style: .small)
-                                            component.badgeView.text = viewItem.protocolInfo
-                                        },
-                                        .margin0,
-                                        .text { _ in }
-                                    ]),
-                                    .margin(1),
-                                    .text { component in
-                                        component.font = .subhead2
-                                        component.textColor = .themeGray
-                                        component.text = viewItem.coinName
-                                    }
-                                ]),
-                                .image24 { component in
-                                    component.imageView.image = UIImage(named: viewItem.isOn ? "checkbox_active_24" : "checkbox_diactive_24")
-                                }
-                            ]),
-                            tableView: tableView,
-                            id: "token-\(index)",
-                            hash: "\(viewItem.isOn)",
-                            height: .heightDoubleLineCell,
-                            autoDeselect: true,
-                            bind: { cell in
-                                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                            },
-                            action: { [weak self] in
-                                self?.viewModel.onToggleToken(index: index)
-                            }
-                    )
-                ]
-        )
-    }
-
-    private func addedTokenSection(viewItem: AddTokenViewModel.TokenViewItem, index: Int, isFirst: Bool, isLast: Bool) -> SectionProtocol {
-        Section(
-                id: "added-token-\(index)",
-                headerState: isFirst ? tableView.sectionHeader(text: "add_token.already_added".localized) : .margin(height: 0),
-                footerState: .margin(height: isLast ? .margin32 : .margin12),
-                rows: [
-                    CellBuilderNew.row(
-                            rootElement: .hStack([
-                                .image32 { component in
-                                    component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: viewItem.placeholderImageName))
-                                },
-                                .vStackCentered([
-                                    .hStack([
-                                        .text { component in
-                                            component.font = .body
-                                            component.textColor = .themeLeah
-                                            component.text = viewItem.coinCode
-                                            component.setContentHuggingPriority(.required, for: .horizontal)
-                                        },
-                                        .margin8,
-                                        .badge { component in
-                                            component.badgeView.set(style: .small)
-                                            component.badgeView.text = viewItem.protocolInfo
-                                        },
-                                        .margin0,
-                                        .text { _ in }
-                                    ]),
-                                    .margin(1),
-                                    .text { component in
-                                        component.font = .subhead2
-                                        component.textColor = .themeGray
-                                        component.text = viewItem.coinName
-                                    }
-                                ]),
-                                .image20 { component in
-                                    component.imageView.image = UIImage(named: "check_1_20")?.withTintColor(.themeGray)
-                                }
-                            ]),
-                            tableView: tableView,
-                            id: "added-token-\(index)",
-                            height: .heightDoubleLineCell,
-                            bind: { cell in
-                                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                            }
-                    )
-                ]
-        )
-    }
-
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
             Section(
-                    id: "input",
+                    id: "blockchain",
                     headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin24),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        tableView.universalRow48(
+                                id: "blockchain",
+                                image: .local(UIImage(named: "blocks_24")?.withTintColor(.themeGray)),
+                                title: .body("add_token.blockchain".localized),
+                                value: .subhead1(blockchain, gray: true),
+                                accessoryType: .dropdown,
+                                hash: blockchain,
+                                autoDeselect: true,
+                                isFirst: true,
+                                isLast: true,
+                                action: { [weak self] in
+                                    self?.openBlockchainSelector()
+                                }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "input",
+                    footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(
                                 cell: inputCell,
@@ -260,25 +194,32 @@ extension AddTokenViewController: SectionsDataSource {
             )
         ]
 
-        if let tokenViewItems = viewItem?.tokenViewItems, !tokenViewItems.isEmpty {
-            sections.append(contentsOf: tokenViewItems.enumerated().map { index, viewItem in
-                tokenSection(
-                        viewItem: viewItem,
-                        index: index,
-                        bottomMargin: index == tokenViewItems.count - 1 ? ((self.viewItem?.addedTokenViewItems ?? []).isEmpty ? .margin32 : .margin24) : .margin12
-                )
-            })
-        }
-
-        if let tokenViewItems = viewItem?.addedTokenViewItems, !tokenViewItems.isEmpty {
-            sections.append(contentsOf: tokenViewItems.enumerated().map { index, viewItem in
-                addedTokenSection(
-                        viewItem: viewItem,
-                        index: index,
-                        isFirst: index == 0,
-                        isLast: index == tokenViewItems.count - 1
-                )
-            })
+        if let viewItem = viewItem {
+            sections.append(
+                    Section(
+                            id: "token-info",
+                            footerState: .margin(height: .margin32),
+                            rows: [
+                                tableView.universalRow48(
+                                        id: "coin-name",
+                                        title: .subhead2("add_token.coin_name".localized, gray: true),
+                                        value: .subhead1(viewItem.name),
+                                        isFirst: true
+                                ),
+                                tableView.universalRow48(
+                                        id: "coin-name",
+                                        title: .subhead2("add_token.symbol".localized, gray: true),
+                                        value: .subhead1(viewItem.code)
+                                ),
+                                tableView.universalRow48(
+                                        id: "coin-name",
+                                        title: .subhead2("add_token.decimals".localized, gray: true),
+                                        value: .subhead1(viewItem.decimals),
+                                        isLast: true
+                                )
+                            ]
+                    )
+            )
         }
 
         return sections

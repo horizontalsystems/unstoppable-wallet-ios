@@ -7,86 +7,74 @@ class AddTokenViewModel {
     private let service: AddTokenService
     private let disposeBag = DisposeBag()
 
+    private let blockchainRelay = BehaviorRelay<String>(value: "")
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
-    private let buttonTitleRelay = BehaviorRelay<String?>(value: nil)
     private let buttonEnabledRelay = BehaviorRelay<Bool>(value: false)
+    private let placeholderRelay = BehaviorRelay<String>(value: "")
     private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let finishRelay = PublishRelay<Void>()
 
     init(service: AddTokenService) {
         self.service = service
 
-        service.stateObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] state in
-                    self?.sync(state: state)
-                })
-                .disposed(by: disposeBag)
+        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(disposeBag, service.currentBlockchainItemObservable) { [weak self] in self?.sync(currentBlockchainItem: $0) }
 
         sync(state: service.state)
+        sync(currentBlockchainItem: service.currentBlockchainItem)
+    }
+
+    private func sync(currentBlockchainItem: AddTokenService.CurrentBlockchainItem) {
+        blockchainRelay.accept(currentBlockchainItem.blockchain.name)
+        placeholderRelay.accept(currentBlockchainItem.placeholder)
     }
 
     private func sync(state: AddTokenService.State) {
-        if case .loading = state {
-            loadingRelay.accept(true)
-        } else {
+        switch state {
+        case .idle:
             loadingRelay.accept(false)
-        }
-
-        switch state {
-        case .fetched(let items, let addedItems):
-            viewItemRelay.accept(viewItem(items: items, addedItems: addedItems))
-
-            if items.isEmpty {
-                buttonTitleRelay.accept("add_token.already_added".localized)
-                buttonEnabledRelay.accept(false)
-            } else {
-                let hasEnabledItem = items.contains { $0.enabled }
-                buttonTitleRelay.accept(hasEnabledItem ? "button.add".localized : "add_token.choose_token".localized)
-                buttonEnabledRelay.accept(hasEnabledItem)
-            }
-        default:
             viewItemRelay.accept(nil)
-            buttonTitleRelay.accept("button.add".localized)
             buttonEnabledRelay.accept(false)
-        }
-
-        switch state {
-        case .failed(let error):
-            cautionRelay.accept(Caution(text: error.convertedError.localizedDescription, type: .error))
-        case .bep2NotSupported:
-            cautionRelay.accept(Caution(text: "add_token.bep2_not_supported".localized, type: .warning))
-        default:
             cautionRelay.accept(nil)
+        case .loading:
+            loadingRelay.accept(true)
+            viewItemRelay.accept(nil)
+            buttonEnabledRelay.accept(false)
+            cautionRelay.accept(nil)
+        case .alreadyExists(let token):
+            loadingRelay.accept(false)
+            viewItemRelay.accept(viewItem(token: token))
+            buttonEnabledRelay.accept(false)
+            cautionRelay.accept(Caution(text: "add_token.already_added".localized, type: .warning))
+        case .fetched(let token):
+            loadingRelay.accept(false)
+            viewItemRelay.accept(viewItem(token: token))
+            buttonEnabledRelay.accept(true)
+            cautionRelay.accept(nil)
+        case .failed(let error):
+            loadingRelay.accept(false)
+            viewItemRelay.accept(nil)
+            buttonEnabledRelay.accept(false)
+            cautionRelay.accept(Caution(text: error.convertedError.localizedDescription, type: .error))
         }
     }
 
-    private func viewItem(items: [AddTokenService.Item], addedItems: [AddTokenService.Item]) -> ViewItem {
+    private func viewItem(token: Token) -> ViewItem {
         ViewItem(
-                tokenViewItems: items.map {
-                    tokenViewItem(item: $0)
-                },
-                addedTokenViewItems: addedItems.map {
-                    tokenViewItem(item: $0)
-                }
-        )
-    }
-
-    private func tokenViewItem(item: AddTokenService.Item) -> TokenViewItem {
-        TokenViewItem(
-                imageUrl: item.token.coin.imageUrl,
-                placeholderImageName: item.token.placeholderImageName,
-                coinCode: item.token.coin.code,
-                coinName: item.token.coin.name,
-                protocolInfo: item.token.protocolInfo.uppercased(),
-                isOn: item.enabled
+                name: token.coin.name,
+                code: token.coin.code,
+                decimals: String(token.decimals)
         )
     }
 
 }
 
 extension AddTokenViewModel {
+
+    var blockchainDriver: Driver<String> {
+        blockchainRelay.asDriver()
+    }
 
     var loadingDriver: Driver<Bool> {
         loadingRelay.asDriver()
@@ -96,12 +84,12 @@ extension AddTokenViewModel {
         viewItemRelay.asDriver()
     }
 
-    var buttonTitleDriver: Driver<String?> {
-        buttonTitleRelay.asDriver()
-    }
-
     var buttonEnabledDriver: Driver<Bool> {
         buttonEnabledRelay.asDriver()
+    }
+
+    var placeholderDriver: Driver<String> {
+        placeholderRelay.asDriver()
     }
 
     var cautionDriver: Driver<Caution?> {
@@ -112,21 +100,27 @@ extension AddTokenViewModel {
         finishRelay.asSignal()
     }
 
+    var blockchainViewItems: [SingleSelectorViewController.ViewItem] {
+        service.blockchainItems.map { item in
+            SingleSelectorViewController.ViewItem(
+                    imageUrl: item.blockchain.type.imageUrl,
+                    title: item.blockchain.name,
+                    selected: item.current
+            )
+        }
+    }
+
+    func onSelectBlockchain(index: Int) {
+        service.setBlockchain(index: index)
+    }
+
     func onEnter(reference: String?) {
         service.set(reference: reference)
     }
 
-    func onToggleToken(index: Int) {
-        service.toggleToken(index: index)
-    }
-
     func onTapButton() {
-        do {
-            try service.save()
-            finishRelay.accept(())
-        } catch {
-            // todo
-        }
+        service.save()
+        finishRelay.accept(())
     }
 
 }
@@ -134,17 +128,9 @@ extension AddTokenViewModel {
 extension AddTokenViewModel {
 
     struct ViewItem {
-        let tokenViewItems: [TokenViewItem]
-        let addedTokenViewItems: [TokenViewItem]
-    }
-
-    struct TokenViewItem {
-        let imageUrl: String
-        let placeholderImageName: String
-        let coinCode: String
-        let coinName: String
-        let protocolInfo: String
-        let isOn: Bool
+        let name: String
+        let code: String
+        let decimals: String
     }
 
 }
