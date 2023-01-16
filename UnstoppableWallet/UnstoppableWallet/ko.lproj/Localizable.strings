@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "복사됨";
+"alert.copied" = "Copied";
 "alert.created" = "생성됨";
 "alert.restored" = "복구됨";
 "alert.wallet_added" = "Wallet Added";
@@ -189,7 +189,7 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Backup";
+"backup_prompt.title" = "Backup Wallet";
 "backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken etc.";
 "backup_prompt.backup" = "백업";
 "backup_prompt.later" = "나중에";
@@ -1076,12 +1076,17 @@
 // Add Token
 
 "add_token.title" = "토큰 추가";
-"add_token.already_added" = "이미 추가됨";
-"add_token.choose_token" = "토큰 선택";
-"add_token.invalid_contract_address_or_bep2_symbol" = "잘못된 계약 주소 또는 BEP2 기호";
-"add_token.token_not_found" = "토큰 찾을 수 없음";
-"add_token.input_placeholder" = "계약 주소";
-"add_token.bep2_not_supported" = "현재 지갑 EVM 개인 키는 BEP2 토큰을 지원하지 않습니다.";
+"add_token.blockchain" = "Blockchain";
+"add_token.already_added" = "This token is already in the Coin Manager list";
+"add_token.invalid_contract_address" = "Invalid contract address";
+"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
+"add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
+"add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
+"add_token.input_placeholder.contract_address" = "Contract Address";
+"add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
+"add_token.coin_name" = "Coin Name";
+"add_token.symbol" = "Symbol";
+"add_token.decimals" = "Decimals";
 
 // Wallet Connect
 
