@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Agregar a Wallet";
 "alert.already_added_to_wallet" = "Ya se ha añadido a Wallet";
 "alert.not_supported_yet" = "Aún no compatible";
-"alert.copied" = "Copiado";
+"alert.copied" = "Copied";
 "alert.created" = "Creado";
 "alert.restored" = "Restaurado ";
 "alert.wallet_added" = "Wallet Added";
@@ -189,7 +189,7 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Backup";
+"backup_prompt.title" = "Backup Wallet";
 "backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken etc.";
 "backup_prompt.backup" = "Copia de seguridad";
 "backup_prompt.later" = "Más tarde";
@@ -557,9 +557,9 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominio Bitcoin";
-"market.global.volume_24h.title" = "Volumen de 24 horas";
-"market.global.defi_cap.title" = "Cap. DeFi";
-"market.global.tvl_in_defi.title" = "TVL en DeFi";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "El cambio histórico en la relación entre el límite de mercado de Bitcoin y el resto de los mercados de criptomonedas. \n\nPor lo general, cuando el dominio de Bitcoin tiende a ser más alto, el resto de las tendencias del mercado de criptomonedas disminuye y viceversa.";
 "market.global.volume_24h.description" = "El cambio histórico en el volumen diario del mercado de operaciones agregadas para todas las criptomonedas.";
 "market.global.defi_cap.description" = "El cambio histórico en el valor acumulado del mercado de los tokens en el sector de las finanzas descentralizadas.";
@@ -1076,12 +1076,17 @@
 // Add Token
 
 "add_token.title" = "Añadir Token";
-"add_token.already_added" = "Ya añadido";
-"add_token.choose_token" = "Elegir token";
-"add_token.invalid_contract_address_or_bep2_symbol" = "Dirección de contrato inválida o símbolo BEP2";
-"add_token.token_not_found" = "Token no encontrado";
-"add_token.input_placeholder" = "Dirección del contrato";
-"add_token.bep2_not_supported" = "Su clave privada EVM de cartera actual no soporta tokens BEP2";
+"add_token.blockchain" = "Blockchain";
+"add_token.already_added" = "This token is already in the Coin Manager list";
+"add_token.invalid_contract_address" = "Invalid contract address";
+"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
+"add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
+"add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
+"add_token.input_placeholder.contract_address" = "Contract Address";
+"add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
+"add_token.coin_name" = "Coin Name";
+"add_token.symbol" = "Symbol";
+"add_token.decimals" = "Decimals";
 
 // Wallet Connect
 
