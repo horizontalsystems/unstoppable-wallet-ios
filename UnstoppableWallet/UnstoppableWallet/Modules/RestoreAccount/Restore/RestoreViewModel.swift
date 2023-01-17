@@ -9,13 +9,15 @@ protocol IRestoreSubViewModel: AnyObject {
 }
 
 class RestoreViewModel {
+    private let service: RestoreService
     private let mnemonicViewModel: IRestoreSubViewModel
     private let privateKeyViewModel: IRestoreSubViewModel
 
     private let restoreTypeRelay = BehaviorRelay<RestoreType>(value: .mnemonic)
-    private let proceedRelay = PublishRelay<AccountType>()
+    private let proceedRelay = PublishRelay<(String, AccountType)>()
 
-    init(mnemonicViewModel: IRestoreSubViewModel, privateKeyViewModel: IRestoreSubViewModel) {
+    init(service: RestoreService, mnemonicViewModel: IRestoreSubViewModel, privateKeyViewModel: IRestoreSubViewModel) {
+        self.service = service
         self.mnemonicViewModel = mnemonicViewModel
         self.privateKeyViewModel = privateKeyViewModel
     }
@@ -35,8 +37,16 @@ extension RestoreViewModel {
         restoreTypeRelay.asDriver()
     }
 
-    var proceedSignal: Signal<AccountType> {
+    var proceedSignal: Signal<(String, AccountType)> {
         proceedRelay.asSignal()
+    }
+
+    var namePlaceholder: String {
+        service.defaultAccountName
+    }
+
+    func onChange(name: String) {
+        service.name = name
     }
 
     func onSelect(restoreType: RestoreType) {
@@ -50,7 +60,7 @@ extension RestoreViewModel {
 
     func onTapProceed() {
         if let accountType = subViewModel.resolveAccountType() {
-            proceedRelay.accept(accountType)
+            proceedRelay.accept((service.resolvedName, accountType))
         }
     }
 

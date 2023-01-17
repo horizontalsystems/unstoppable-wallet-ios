@@ -19,6 +19,8 @@ class RestoreViewController: KeyboardAwareViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
+    private let nameCell = TextFieldCell()
+
     private let mnemonicInputCell = MnemonicInputCell()
     private let mnemonicCautionCell = FormCautionCell()
     private let wordListCell = BaseSelectableThemeCell()
@@ -112,6 +114,12 @@ class RestoreViewController: KeyboardAwareViewController {
             advancedButton.addTarget(self, action: #selector(onTapAdvanced), for: .touchUpInside)
         }
 
+        let namePlaceholder = viewModel.namePlaceholder
+        nameCell.inputText = namePlaceholder
+        nameCell.inputPlaceholder = namePlaceholder
+        nameCell.autocapitalizationType = .words
+        nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0 ?? "") }
+
         mnemonicInputCell.set(placeholderText: "restore.mnemonic.placeholder".localized)
         mnemonicInputCell.onChangeHeight = { [weak self] in self?.reloadTable() }
         mnemonicInputCell.onChangeMnemonicText = { [weak self] in self?.mnemonicViewModel.onChange(text: $0, cursorOffset: $1) }
@@ -164,7 +172,7 @@ class RestoreViewController: KeyboardAwareViewController {
             self?.restoreType = restoreType
             self?.tableView.reload()
         }
-        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openSelectCoins(accountType: $0) }
+        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openSelectCoins(accountName: $0, accountType: $1) }
         subscribe(disposeBag, mnemonicViewModel.possibleWordsDriver) { [weak self] in
             self?.hintView.set(words: $0)
             self?.syncHintView()
@@ -216,7 +224,7 @@ class RestoreViewController: KeyboardAwareViewController {
 
         showAccessoryView = !hideHint
         hintView.isHidden = hideHint
-        setInitialState(bottomPadding: hideHint ? 0 : hintView.height)
+        setInitialState(bottomPadding: wrapperViewHeight + (hideHint ? 0 : hintView.height))
     }
 
     private func sync(inputsVisible: Bool) {
@@ -247,8 +255,8 @@ class RestoreViewController: KeyboardAwareViewController {
         mnemonicInputCell.set(text: text)
     }
 
-    private func openSelectCoins(accountType: AccountType) {
-        let viewController = RestoreSelectModule.viewController(accountType: accountType, returnViewController: returnViewController)
+    private func openSelectCoins(accountName: String, accountType: AccountType) {
+        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, returnViewController: returnViewController)
         navigationController?.pushViewController(viewController, animated: true)
     }
 
@@ -272,7 +280,7 @@ class RestoreViewController: KeyboardAwareViewController {
 
     private func onTapRestoreType() {
         let alertController = AlertRouter.module(
-                title: "restore.restore_by".localized,
+                title: "restore.import_by".localized,
                 viewItems: RestoreViewModel.RestoreType.allCases.enumerated().map { index, restoreType in
                     AlertViewItem(
                             text: restoreType.title,
@@ -296,18 +304,34 @@ class RestoreViewController: KeyboardAwareViewController {
 extension RestoreViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        var sections = [SectionProtocol]()
+        var sections: [SectionProtocol] = [
+            Section(
+                    id: "margin",
+                    headerState: .margin(height: .margin12)
+            ),
+            Section(
+                    id: "name",
+                    headerState: tableView.sectionHeader(text: "create_wallet.name".localized),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        StaticRow(
+                                cell: nameCell,
+                                id: "name",
+                                height: .heightSingleLineCell
+                        )
+                    ]
+            )
+        ]
 
         if advanced {
             sections.append(
                     Section(
                             id: "restore-type",
-                            headerState: .margin(height: .margin12),
                             footerState: .margin(height: .margin32),
                             rows: [
                                 tableView.universalRow48(
                                         id: "restore_type",
-                                        title: .body("restore.by".localized),
+                                        title: .body("restore.import_by".localized),
                                         value: .subhead1(restoreType.title, gray: true),
                                         accessoryType: .dropdown,
                                         autoDeselect: true,
@@ -326,7 +350,6 @@ extension RestoreViewController: SectionsDataSource {
             sections.append(
                     Section(
                             id: "mnemonic-input",
-                            headerState: .margin(height: advanced ? 0 : .margin12),
                             rows: [
                                 StaticRow(
                                         cell: mnemonicInputCell,
@@ -393,7 +416,7 @@ extension RestoreViewController: SectionsDataSource {
                             rows: [
                                 tableView.universalRow48(
                                         id: "non-standard_restore",
-                                        title: .body("restore.non_standard_restore".localized),
+                                        title: .body("restore.non_standard_import".localized),
                                         accessoryType: .disclosure,
                                         autoDeselect: true,
                                         isFirst: true,

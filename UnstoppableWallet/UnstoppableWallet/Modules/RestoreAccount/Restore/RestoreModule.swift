@@ -11,7 +11,8 @@ struct RestoreModule {
         let privateKeyService = RestorePrivateKeyService()
         let privateKeyViewModel = RestorePrivateKeyViewModel(service: privateKeyService)
 
-        let viewModel = RestoreViewModel(mnemonicViewModel: mnemonicViewModel, privateKeyViewModel: privateKeyViewModel)
+        let service = RestoreService(accountFactory: App.shared.accountFactory)
+        let viewModel = RestoreViewModel(service: service, mnemonicViewModel: mnemonicViewModel, privateKeyViewModel: privateKeyViewModel)
 
         let viewController = RestoreViewController(
                 advanced: advanced,

@@ -30,7 +30,7 @@ class RestoreSelectViewController: CoinToggleViewController {
         navigationItem.searchController = nil
 
         title = "restore_select.title".localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.restore".localized, style: .done, target: self, action: #selector(onTapRightBarButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.import".localized, style: .done, target: self, action: #selector(onTapRightBarButton))
 
         enableCoinView.onOpenController = { [weak self] controller in
             self?.open(controller: controller)
@@ -39,7 +39,7 @@ class RestoreSelectViewController: CoinToggleViewController {
         subscribe(disposeBag, viewModel.restoreEnabledDriver) { [weak self] in self?.navigationItem.rightBarButtonItem?.isEnabled = $0 }
         subscribe(disposeBag, viewModel.disableBlockchainSignal) { [weak self] in self?.setToggle(on: false, uid: $0) }
         subscribe(disposeBag, viewModel.successSignal) { [weak self] in
-            HudHelper.instance.show(banner: .restored)
+            HudHelper.instance.show(banner: .imported)
             (self?.returnViewController ?? self)?.dismiss(animated: true)
         }
     }

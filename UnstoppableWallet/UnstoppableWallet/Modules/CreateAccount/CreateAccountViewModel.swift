@@ -76,6 +76,10 @@ extension CreateAccountViewModel {
         finishRelay.asSignal()
     }
 
+    var namePlaceholder: String {
+        service.defaultAccountName
+    }
+
     var wordCountViewItems: [AlertViewItem] {
         Mnemonic.WordCount.allCases.map { wordCount in
             let title: String
@@ -86,6 +90,10 @@ extension CreateAccountViewModel {
 
             return AlertViewItem(text: title, selected: wordCount == service.wordCount)
         }
+    }
+
+    func onChange(name: String) {
+        service.name = name
     }
 
     func onSelectWordCount(index: Int) {

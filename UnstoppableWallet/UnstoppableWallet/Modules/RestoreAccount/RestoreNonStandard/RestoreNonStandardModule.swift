@@ -8,7 +8,8 @@ struct RestoreNonStandardModule {
         let mnemonicService = RestoreMnemonicNonStandardService(languageManager: LanguageManager.shared)
         let mnemonicViewModel = RestoreMnemonicNonStandardViewModel(service: mnemonicService)
 
-        let viewModel = RestoreNonStandardViewModel(mnemonicViewModel: mnemonicViewModel)
+        let service = RestoreService(accountFactory: App.shared.accountFactory)
+        let viewModel = RestoreNonStandardViewModel(service: service, mnemonicViewModel: mnemonicViewModel)
 
         let viewController = RestoreNonStandardViewController(
                 viewModel: viewModel,

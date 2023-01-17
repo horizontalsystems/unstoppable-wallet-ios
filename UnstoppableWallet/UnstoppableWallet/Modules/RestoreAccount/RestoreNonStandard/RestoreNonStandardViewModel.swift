@@ -4,11 +4,13 @@ import RxRelay
 import RxCocoa
 
 class RestoreNonStandardViewModel {
+    private let service: RestoreService
     private let mnemonicViewModel: RestoreMnemonicNonStandardViewModel
 
-    private let proceedRelay = PublishRelay<AccountType>()
+    private let proceedRelay = PublishRelay<(String, AccountType)>()
 
-    init(mnemonicViewModel: RestoreMnemonicNonStandardViewModel) {
+    init(service: RestoreService, mnemonicViewModel: RestoreMnemonicNonStandardViewModel) {
+        self.service = service
         self.mnemonicViewModel = mnemonicViewModel
     }
 
@@ -16,13 +18,21 @@ class RestoreNonStandardViewModel {
 
 extension RestoreNonStandardViewModel {
 
-    var proceedSignal: Signal<AccountType> {
+    var proceedSignal: Signal<(String, AccountType)> {
         proceedRelay.asSignal()
+    }
+
+    var namePlaceholder: String {
+        service.defaultAccountName
+    }
+
+    func onChange(name: String) {
+        service.name = name
     }
 
     func onTapProceed() {
         if let accountType = mnemonicViewModel.resolveAccountType() {
-            proceedRelay.accept(accountType)
+            proceedRelay.accept((service.resolvedName, accountType))
         }
     }
 

@@ -5,7 +5,7 @@
 "button.continue" = "Continue";
 "button.done" = "Done";
 "button.reset" = "Reset";
-"button.restore" = "Restore";
+"button.import" = "Import";
 "button.next" = "Next";
 "button.share" = "Share";
 "button.paste" = "Paste";
@@ -41,7 +41,7 @@
 "alert.not_supported_yet" = "Not Supported Yet";
 "alert.copied" = "Copied";
 "alert.created" = "Created";
-"alert.restored" = "Restored";
+"alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
 "alert.deleted" = "Deleted";
 "alert.waiting_for_session" = "Waiting for Session";
@@ -94,10 +94,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Restore
 
-"restore.title" = "Restore";
+"restore.title" = "Import Wallet";
 "restore.advanced" = "Advanced";
-"restore.by" = "By";
-"restore.restore_by" = "Restore By";
+"restore.import_by" = "Import By";
 "restore.restore_type.mnemonic" = "Recovery Phrase";
 "restore.restore_type.private_key" = "Private Key";
 "restore.mnemonic.placeholder" = "Enter Recovery Phrase";
@@ -109,8 +108,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "restore.input.passphrase" = "Passphrase";
 "restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase";
 "restore.error.empty_passphrase" = "The passphrase cannot be empty";
-"restore.non_standard_restore" = "Non-Standard Restore";
-"restore.non_standard_restore.description" = "This page provides a special wallet restore mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after restoring such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once restored you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
+"restore.non_standard_import" = "Non-Standard Import";
+"restore.non_standard_import.description" = "This page provides a special wallet import mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
 "restore.warning.non_recommended.description" = "This wallet seems to use a non-standard character in its secret word list and/or a passphrase. If you do not see a balance or transactions please read below for details.  \n\nCLICK TO GET MORE INFO";
 "restore.error.non_standard.description"  = "This is a non-standard wallet.\n\nCLICK TO GET MORE INFO";
 
@@ -125,7 +124,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
 "sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when importing an existing wallet.";
 
 // Coin Platforms
 
@@ -829,15 +828,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "manage_wallets.not_supported.description" = "Your current wallet type %@ does not support %@";
 "manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
-"manage_coins.add_coin.title" = "Add %@";
-"manage_coins.add_coin.subtitle" = "%@ Wallet";
-"manage_coins.add_coin.text.set_up" = "You need to set up %@ wallet to be able to send or receive %@.";
-"manage_coins.add_coin.text.create_or_restore" = "Use the Create button below to set up a new %@ wallet, or the Restore button to import an existing one.";
-"manage_coins.add_coin.text.create_only" = "At this point Unstoppable is not able to create a new %@ wallet. You’re only able to restore an existing one.";
-"manage_coins.add_coin.text.tokens" = "You will be able to use this wallet for: %@.";
-"manage_coins.add_coin.create" = "Create";
-"manage_coins.add_coin.restore" = "Restore";
-
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Experimental";
@@ -916,8 +906,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings_manage_keys.title" = "Manage Wallets";
 "settings_manage_keys.delete" = "Delete";
 "settings_manage_keys.backup" = "Backup";
-"settings_manage_keys.create" = "Create";
-"settings_manage_keys.restore" = "Restore";
 "settings_manage_keys.delete.title" = "Delete Wallet";
 "settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from the device.";
 "settings_manage_keys.delete.confirmation_loose" = "If you didn't back up the private key for this wallet, you will lose access to your funds.";
@@ -1023,10 +1011,11 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Create Wallet
 
-"create_wallet.description" = "Your first step to become Unstoppable";
+"create_wallet.title" = "New Wallet";
+"create_wallet.name" = "Name";
 "create_wallet.advanced_setup" = "Advanced Setup";
-"create_wallet.create_button" = "Create";
-"create_wallet.advanced_button" = "Advanced";
+"create_wallet.create" = "Create";
+"create_wallet.advanced" = "Advanced";
 "create_wallet.phrase_count" = "Phrase Count";
 "create_wallet.12_words" = "12 words (recommended)";
 "create_wallet.n_words" = "%@ words";
@@ -1132,7 +1121,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "wallet_connect_list.new_connection" = "New Connection";
 "wallet_connect_list.disconnecting" = "Disconnecting";
 
-"wallet_connect.no_account.description" = "No suitable wallet. You need to create or restore existing wallet.";
+"wallet_connect.no_account.description" = "No suitable wallet. You need to create or import existing wallet.";
 "wallet_connect.no_account.i_understand" = "I Understand";
 
 "wallet_connect.non_supported_account.description" = "You current wallet type %@ does not support WalletConnect";
@@ -1170,10 +1159,10 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Onboarding
 
-"onboarding.balance.create" = "Create";
-"onboarding.balance.restore" = "Restore";
+"onboarding.balance.create" = "New Wallet";
+"onboarding.balance.import" = "Import Wallet";
 "onboarding.balance.watch" = "Watch Wallet";
-"onboarding.balance.password_hint" = "Tip! Restoring an existing wallet but with a new passphrase will generate a brand new wallet. This is handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
+"onboarding.balance.password_hint" = "Tip! Importing an existing wallet but with a new passphrase will generate a brand new wallet. This is handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 

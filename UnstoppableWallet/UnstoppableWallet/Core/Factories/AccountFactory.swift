@@ -8,13 +8,6 @@ class AccountFactory {
         self.accountManager = accountManager
     }
 
-    private var nextAccountName: String {
-        let nonWatchAccounts = accountManager.accounts.filter { !$0.watchAccount }
-        let order = nonWatchAccounts.count + 1
-
-        return "Wallet \(order)"
-    }
-
     private var nextWatchAccountName: String {
         let watchAccounts = accountManager.accounts.filter { $0.watchAccount }
         let order = watchAccounts.count + 1
@@ -26,10 +19,17 @@ class AccountFactory {
 
 extension AccountFactory {
 
-    func account(type: AccountType, origin: AccountOrigin) -> Account {
+    var nextAccountName: String {
+        let nonWatchAccounts = accountManager.accounts.filter { !$0.watchAccount }
+        let order = nonWatchAccounts.count + 1
+
+        return "Wallet \(order)"
+    }
+
+    func account(type: AccountType, origin: AccountOrigin, name: String) -> Account {
         Account(
                 id: UUID().uuidString,
-                name: nextAccountName,
+                name: name,
                 type: type,
                 origin: origin,
                 backedUp: origin == .restored

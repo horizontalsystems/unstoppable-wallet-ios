@@ -36,7 +36,7 @@ class OnboardingBalanceViewController: ThemeViewController {
 
         placeholderView.addPrimaryButton(
                 style: .gray,
-                title: "onboarding.balance.restore".localized,
+                title: "onboarding.balance.import".localized,
                 target: self,
                 action: #selector(didTapRestore)
         )
