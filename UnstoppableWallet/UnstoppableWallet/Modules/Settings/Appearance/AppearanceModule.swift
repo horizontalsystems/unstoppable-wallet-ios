@@ -30,9 +30,9 @@ extension ThemeMode: CustomStringConvertible {
 
     public var iconName: String {
         switch self {
-        case .system: return "settings_20"
-        case .dark: return "dark_20"
-        case .light: return "light_20"
+        case .system: return "settings_24"
+        case .dark: return "dark_24"
+        case .light: return "light_24"
         }
     }
 

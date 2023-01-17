@@ -15,9 +15,9 @@ enum LaunchScreen: String, CaseIterable {
 
     var iconName: String {
         switch self {
-        case .auto: return "brush_24"
+        case .auto: return "settings_24"
         case .balance: return "wallet_24"
-        case .marketOverview: return "chart_type_20"
+        case .marketOverview: return "markets_24"
         case .watchlist: return "star_24"
         }
     }

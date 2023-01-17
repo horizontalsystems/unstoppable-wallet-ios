@@ -189,7 +189,7 @@ extension CoinMarketsViewController: SectionsDataSource {
         let headerState: ViewState<UITableViewHeaderFooterView>
 
         if let viewItems = viewItems, !viewItems.isEmpty {
-            headerState = .static(view: headerView, height: .headerSingleLineCell)
+            headerState = .static(view: headerView, height: .heightSingleLineCell)
         } else {
             headerState = .margin(height: 0)
         }

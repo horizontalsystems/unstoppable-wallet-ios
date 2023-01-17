@@ -39,8 +39,8 @@ class SecuritySettingsViewModel {
         }
 
         switch biometryType {
-        case .faceId: return BiometryViewItem(enabled: pinItem.biometryEnabled, icon: "face_id_20", title: "settings_security.face_id".localized)
-        case .touchId: return BiometryViewItem(enabled: pinItem.biometryEnabled, icon: "touch_id_2_20", title: "settings_security.touch_id".localized)
+        case .faceId: return BiometryViewItem(enabled: pinItem.biometryEnabled, icon: "face_id_24", title: "settings_security.face_id".localized)
+        case .touchId: return BiometryViewItem(enabled: pinItem.biometryEnabled, icon: "touch_id_2_24", title: "settings_security.touch_id".localized)
         case .none: return nil
         }
     }
