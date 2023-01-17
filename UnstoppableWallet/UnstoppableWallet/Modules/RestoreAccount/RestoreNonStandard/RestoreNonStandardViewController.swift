@@ -60,6 +60,8 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
             maker.edges.equalToSuperview()
         }
 
+        closedKeyboardAdditionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: wrapperViewHeight, right: 0)
+
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
@@ -286,7 +288,7 @@ extension RestoreNonStandardViewController: SectionsDataSource {
             ),
             Section(
                     id: "passphrase",
-                    footerState: inputsVisible ? tableView.sectionFooter(text: "restore.passphrase_description".localized) : .margin(height: 0),
+                    footerState: inputsVisible ? tableView.sectionFooter(text: "restore.passphrase_description".localized) : .margin(height: .margin24),
                     rows: [
                         StaticRow(
                                 cell: passphraseCell,

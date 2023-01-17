@@ -10,6 +10,7 @@ class KeyboardAwareViewController: ThemeViewController {
     private var keyboardFrame: CGRect?
 
     // handling accessory view position
+    var closedKeyboardAdditionalContentInsets: UIEdgeInsets = .zero
     var oldPadding: CGFloat = 0
     var accessoryView: UIView?
     private var pseudoAccessoryView: PseudoAccessoryView?
@@ -134,6 +135,7 @@ class KeyboardAwareViewController: ThemeViewController {
 
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - view.safeAreaInsets.bottom, right: 0)
         for scrollView in scrollViews {
+            print("Content Inset: \(insets)")
             scrollView.contentInset = insets
             scrollView.scrollIndicatorInsets = insets
         }
@@ -146,7 +148,7 @@ class KeyboardAwareViewController: ThemeViewController {
         pseudoAccessoryView?.heightValue = accessoryViewHeight
 
         for scrollView in scrollViews {
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (pseudoAccessoryView?.height ?? 0) - view.safeAreaInsets.bottom, right: 0)
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (pseudoAccessoryView?.height ?? 0) - view.safeAreaInsets.bottom, right: 0).add(closedKeyboardAdditionalContentInsets)
             scrollView.scrollIndicatorInsets = .zero
         }
     }

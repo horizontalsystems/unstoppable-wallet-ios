@@ -111,6 +111,8 @@ class RestoreViewController: KeyboardAwareViewController {
             advancedButton.setTitle("restore.advanced".localized, for: .normal)
             advancedButton.addTarget(self, action: #selector(onTapAdvanced), for: .touchUpInside)
         }
+        let bottomBarHeight = wrapperViewHeight + (!advanced ? (.heightButton + .margin16) : 0)
+        closedKeyboardAdditionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: bottomBarHeight, right: 0)
 
         mnemonicInputCell.set(placeholderText: "restore.mnemonic.placeholder".localized)
         mnemonicInputCell.onChangeHeight = { [weak self] in self?.reloadTable() }
@@ -327,6 +329,7 @@ extension RestoreViewController: SectionsDataSource {
                     Section(
                             id: "mnemonic-input",
                             headerState: .margin(height: advanced ? 0 : .margin12),
+                            footerState: .margin(height: .margin24),
                             rows: [
                                 StaticRow(
                                         cell: mnemonicInputCell,
