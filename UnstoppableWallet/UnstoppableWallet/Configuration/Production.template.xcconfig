@@ -5,6 +5,7 @@ arbiscan_api_key =
 optimism_etherscan_api_key =
 bscscan_api_key =
 polygonscan_api_key =
+gnosisscan_api_key =
 snowtrace_api_key =
 defiyield_api_key =
 twitter_bearer_token =

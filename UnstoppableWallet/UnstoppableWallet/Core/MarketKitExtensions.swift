@@ -37,6 +37,7 @@ extension MarketKit.Token {
         case .avalanche: return true
         case .optimism: return true
         case .arbitrumOne: return true
+        case .gnosis: return true
         default: return false
         }
     }
@@ -126,6 +127,7 @@ extension MarketKit.TokenQuery {
         case (.ethereumGoerli, .native), (.ethereumGoerli, .eip20): return true
         case (.optimism, .native), (.optimism, .eip20): return true
         case (.arbitrumOne, .native), (.arbitrumOne, .eip20): return true
+        case (.gnosis, .native), (.gnosis, .eip20): return true
         case (.binanceSmartChain, .native), (.binanceSmartChain, .eip20): return true
         case (.polygon, .native), (.polygon, .eip20): return true
         case (.avalanche, .native), (.avalanche, .eip20): return true
@@ -155,6 +157,7 @@ extension MarketKit.BlockchainType {
             switch self {
             case .optimism: return "Optimism"
             case .arbitrumOne: return "Arbitrum"
+            case .gnosis: return "Gnosis"
             case .binanceChain: return "BEP2"
             default: return nil
             }
@@ -167,6 +170,7 @@ extension MarketKit.BlockchainType {
             case .avalanche: return "Avalanche"
             case .optimism: return "Optimism"
             case .arbitrumOne: return "Arbitrum"
+            case .gnosis: return "Gnosis"
             default: return nil
             }
         case .bep2:
@@ -236,9 +240,10 @@ extension MarketKit.BlockchainType {
         case .litecoin: return 8
         case .dash: return 9
         case .binanceChain: return 10
-        case .arbitrumOne: return 11
-        case .optimism: return 12
-        case .ethereumGoerli: return 13
+        case .gnosis: return 11
+        case .arbitrumOne: return 12
+        case .optimism: return 13
+        case .ethereumGoerli: return 14
         default: return Int.max
         }
     }
@@ -299,7 +304,7 @@ extension MarketKit.BlockchainType {
             }
         case .evmPrivateKey, .evmAddress:
             switch self {
-            case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne: return true
+            case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis: return true
             default: return false
             }
         }

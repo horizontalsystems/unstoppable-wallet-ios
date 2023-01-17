@@ -14,6 +14,7 @@ class RestoreSelectService {
         .avalanche,
         .optimism,
         .arbitrumOne,
+        .gnosis,
         .binanceSmartChain,
         .binanceChain,
     ]

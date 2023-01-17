@@ -6,6 +6,8 @@
 	<string>${arbiscan_api_key}</string>
 	<key>BscscanApiKey</key>
 	<string>${bscscan_api_key}</string>
+	<key>GnosisscanApiKey</key>
+	<string>${gnosisscan_api_key}</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
