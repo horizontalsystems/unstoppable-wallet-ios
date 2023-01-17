@@ -173,7 +173,7 @@ extension CoinTreasuriesViewController: SectionsDataSource {
         return [
             Section(
                     id: "treasuries",
-                    headerState: .static(view: headerView, height: .headerSingleLineCell),
+                    headerState: .static(view: headerView, height: .heightSingleLineCell),
                     footerState: .marginColor(height: .margin32, color: .clear),
                     rows: viewItems.enumerated().map { row(viewItem: $1, index: $0, isLast: $0 == viewItems.count - 1) }
             ),

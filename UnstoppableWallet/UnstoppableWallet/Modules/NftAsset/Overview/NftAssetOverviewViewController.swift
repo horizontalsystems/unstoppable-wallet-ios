@@ -146,10 +146,10 @@ class NftAssetOverviewViewController: ThemeViewController {
 
     private func linkIcon(type: NftAssetOverviewViewModel.LinkType) -> UIImage? {
         switch type {
-        case .website: return UIImage(named: "globe_20")
-        case .provider: return UIImage(named: "open_sea_20")
-        case .discord: return UIImage(named: "discord_20")
-        case .twitter: return UIImage(named: "twitter_20")
+        case .website: return UIImage(named: "globe_24")
+        case .provider: return UIImage(named: "open_sea_24")
+        case .discord: return UIImage(named: "discord_24")
+        case .twitter: return UIImage(named: "twitter_24")
         }
     }
 
