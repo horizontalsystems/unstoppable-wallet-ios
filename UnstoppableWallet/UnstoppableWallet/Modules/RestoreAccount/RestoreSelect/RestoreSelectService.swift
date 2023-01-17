@@ -19,6 +19,7 @@ class RestoreSelectService {
         .binanceChain,
     ]
 
+    private let accountName: String
     private let accountType: AccountType
     private let accountFactory: AccountFactory
     private let accountManager: AccountManager
@@ -44,7 +45,8 @@ class RestoreSelectService {
         }
     }
 
-    init(accountType: AccountType, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, testNetManager: TestNetManager, evmAccountRestoreStateManager: EvmAccountRestoreStateManager, marketKit: MarketKit.Kit, enableCoinService: EnableCoinService) {
+    init(accountName: String, accountType: AccountType, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, testNetManager: TestNetManager, evmAccountRestoreStateManager: EvmAccountRestoreStateManager, marketKit: MarketKit.Kit, enableCoinService: EnableCoinService) {
+        self.accountName = accountName
         self.accountType = accountType
         self.accountFactory = accountFactory
         self.accountManager = accountManager
@@ -210,7 +212,7 @@ extension RestoreSelectService {
     }
 
     func restore() {
-        let account = accountFactory.account(type: accountType, origin: .restored)
+        let account = accountFactory.account(type: accountType, origin: .restored, name: accountName)
         accountManager.save(account: account)
 
         for (token, settings) in restoreSettingsMap {

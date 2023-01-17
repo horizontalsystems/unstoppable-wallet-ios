@@ -21,6 +21,7 @@ class CreateAccountService {
 
     private let passphraseEnabledRelay = BehaviorRelay<Bool>(value: false)
 
+    var name: String = ""
     var passphrase: String = ""
     var passphraseConfirmation: String = ""
 
@@ -33,19 +34,21 @@ class CreateAccountService {
         self.marketKit = marketKit
     }
 
-    private func activateDefaultWallets(account: Account) {
-        let defaultBlockchainTypes: [BlockchainType] = [.bitcoin, .ethereum, .binanceSmartChain]
+    private func activateDefaultWallets(account: Account) throws {
+        let tokenQueries = [
+            TokenQuery(blockchainType: .bitcoin, tokenType: .native),
+            TokenQuery(blockchainType: .ethereum, tokenType: .native),
+            TokenQuery(blockchainType: .binanceSmartChain, tokenType: .native),
+            TokenQuery(blockchainType: .ethereum, tokenType: .eip20(address: "0xdac17f958d2ee523a2206206994597c13d831ec7")), // USDT
+            TokenQuery(blockchainType: .binanceSmartChain, tokenType: .eip20(address: "0xe9e7cea3dedca5984780bafc599bd69add087d56")) // BUSD
+        ]
 
         var wallets = [Wallet]()
 
-        for blockchainType in defaultBlockchainTypes {
-            guard let token = try? marketKit.token(query: TokenQuery(blockchainType: blockchainType, tokenType: .native)) else {
-                continue
-            }
+        for token in try marketKit.tokens(queries: tokenQueries) {
+            predefinedBlockchainService.prepareNew(account: account, blockchainType: token.blockchainType)
 
-            predefinedBlockchainService.prepareNew(account: account, blockchainType: blockchainType)
-
-            let defaultSettingsArray = blockchainType.defaultSettingsArray(accountType: account.type)
+            let defaultSettingsArray = token.blockchainType.defaultSettingsArray(accountType: account.type)
 
             if defaultSettingsArray.isEmpty {
                 wallets.append(Wallet(token: token, account: account))
@@ -68,12 +71,12 @@ extension CreateAccountService {
         wordCountRelay.asObservable()
     }
 
-    var passphraseEnabled: Bool {
-        passphraseEnabledRelay.value
-    }
-
     var passphraseEnabledObservable: Observable<Bool> {
         passphraseEnabledRelay.asObservable()
+    }
+
+    var defaultAccountName: String {
+        accountFactory.nextAccountName
     }
 
     func set(wordCount: Mnemonic.WordCount) {
@@ -89,7 +92,7 @@ extension CreateAccountService {
     }
 
     func createAccount() throws {
-        if passphraseEnabled {
+        if passphraseEnabledRelay.value {
             guard !passphrase.isEmpty else {
                 throw CreateError.emptyPassphrase
             }
@@ -101,10 +104,16 @@ extension CreateAccountService {
 
         let words = try Mnemonic.generate(wordCount: wordCount, language: .english)
         let accountType: AccountType = .mnemonic(words: words, salt: passphrase, bip39Compliant: true)
-        let account = accountFactory.account(type: accountType, origin: .created)
+
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let account = accountFactory.account(
+                type: accountType,
+                origin: .created,
+                name: trimmedName.isEmpty ? defaultAccountName : trimmedName
+        )
 
         accountManager.save(account: account)
-        activateDefaultWallets(account: account)
+        try activateDefaultWallets(account: account)
 
         accountManager.set(lastCreatedAccount: account)
     }

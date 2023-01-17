@@ -18,6 +18,7 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let nameCell = TextFieldCell()
     private let mnemonicCell = BaseSelectableThemeCell()
     private let passphraseToggleCell = BaseThemeCell()
     private let passphraseCell = TextFieldCell()
@@ -37,7 +38,7 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
         self.viewModel = viewModel
         self.listener = listener
 
-        super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
+        super.init(scrollViews: [tableView])
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -48,7 +49,7 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
         super.viewDidLoad()
 
         title = "create_wallet.advanced_setup".localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "create_wallet.create_button".localized, style: .done, target: self, action: #selector(onTapCreate))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "create_wallet.create".localized, style: .done, target: self, action: #selector(onTapCreate))
         navigationItem.largeTitleDisplayMode = .never
 
         view.addSubview(tableView)
@@ -75,8 +76,14 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
         }
 
         createButton.set(style: .yellow)
-        createButton.setTitle("create_wallet.create_button".localized, for: .normal)
+        createButton.setTitle("create_wallet.create".localized, for: .normal)
         createButton.addTarget(self, action: #selector(onTapCreate), for: .touchUpInside)
+
+        let namePlaceholder = viewModel.namePlaceholder
+        nameCell.inputText = namePlaceholder
+        nameCell.inputPlaceholder = namePlaceholder
+        nameCell.autocapitalizationType = .words
+        nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0 ?? "") }
 
         mnemonicCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
@@ -210,8 +217,23 @@ extension CreateAccountAdvancedViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
             Section(
+                    id: "margin",
+                    headerState: .margin(height: .margin12)
+            ),
+            Section(
+                    id: "name",
+                    headerState: tableView.sectionHeader(text: "create_wallet.name".localized),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        StaticRow(
+                                cell: nameCell,
+                                id: "name",
+                                height: .heightSingleLineCell
+                        )
+                    ]
+            ),
+            Section(
                     id: "mnemonic",
-                    headerState: .margin(height: .margin12),
                     footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(

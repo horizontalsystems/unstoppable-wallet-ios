@@ -15,7 +15,7 @@ extension HudHelper {
         case saved
         case done
         case created
-        case restored
+        case imported
         case walletAdded
         case deleted
         case noInternet
@@ -48,7 +48,7 @@ extension HudHelper {
             case .saved: image = UIImage(named: "download_24")
             case .done: image = UIImage(named: "circle_check_24")
             case .created: image = UIImage(named: "add_to_wallet_24")
-            case .restored: image = UIImage(named: "add_to_wallet_2_24")
+            case .imported: image = UIImage(named: "add_to_wallet_2_24")
             case .walletAdded: image = UIImage(named: "binocule_24")
             case .deleted: image = UIImage(named: "trash_24")
             case .noInternet: image = UIImage(named: "no_internet_24")
@@ -70,7 +70,7 @@ extension HudHelper {
             switch self {
             case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .revoked, .attention: return .themeJacob
             case .removedFromWatchlist,  .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
-            case .addedToWallet, .copied, .saved, .done, .created, .restored, .walletAdded, .enabled, .success: return .themeRemus
+            case .addedToWallet, .copied, .saved, .done, .created, .imported, .walletAdded, .enabled, .success: return .themeRemus
             case .waitingForSession, .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return .themeGray
             }
         }
@@ -86,7 +86,7 @@ extension HudHelper {
             case .saved: return "alert.saved".localized
             case .done: return "alert.success_action".localized
             case .created: return "alert.created".localized
-            case .restored: return "alert.restored".localized
+            case .imported: return "alert.imported".localized
             case .walletAdded: return "alert.wallet_added".localized
             case .deleted: return "alert.deleted".localized
             case .noInternet: return "alert.no_internet".localized

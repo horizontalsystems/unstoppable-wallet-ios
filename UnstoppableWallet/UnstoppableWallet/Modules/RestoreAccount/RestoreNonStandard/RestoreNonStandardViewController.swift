@@ -20,6 +20,8 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
     private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
     private let nextButton = PrimaryButton()
 
+    private let nameCell = TextFieldCell()
+
     private let mnemonicInputCell = MnemonicInputCell()
     private let mnemonicCautionCell = FormCautionCell()
     private let wordListCell = BaseSelectableThemeCell()
@@ -50,7 +52,7 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "restore.non_standard_restore".localized
+        title = "restore.non_standard_import".localized
 
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .done, target: self, action: #selector(onTapNext))
@@ -82,6 +84,12 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
         nextButton.set(style: .yellow)
         nextButton.setTitle("button.next".localized, for: .normal)
         nextButton.addTarget(self, action: #selector(onTapNext), for: .touchUpInside)
+
+        let namePlaceholder = viewModel.namePlaceholder
+        nameCell.inputText = namePlaceholder
+        nameCell.inputPlaceholder = namePlaceholder
+        nameCell.autocapitalizationType = .words
+        nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0 ?? "") }
 
         mnemonicInputCell.set(placeholderText: "restore.mnemonic.placeholder".localized)
         mnemonicInputCell.onChangeHeight = { [weak self] in self?.reloadTable() }
@@ -124,7 +132,7 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
             self?.mnemonicViewModel.onSelect(word: word)
         }
 
-        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openSelectCoins(accountType: $0) }
+        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openSelectCoins(accountName: $0, accountType: $1) }
         subscribe(disposeBag, mnemonicViewModel.possibleWordsDriver) { [weak self] in
             self?.hintView.set(words: $0)
             self?.syncHintView()
@@ -194,8 +202,8 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
         mnemonicInputCell.set(text: text)
     }
 
-    private func openSelectCoins(accountType: AccountType) {
-        let viewController = RestoreSelectModule.viewController(accountType: accountType, returnViewController: returnViewController)
+    private func openSelectCoins(accountName: String, accountType: AccountType) {
+        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, returnViewController: returnViewController)
         navigationController?.pushViewController(viewController, animated: true)
     }
 
@@ -222,9 +230,10 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
 extension RestoreNonStandardViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let descriptionText = "restore.non_standard_restore.description".localized
+        let descriptionText = "restore.non_standard_import.description".localized
         var sections: [SectionProtocol] = [
-            Section(id: "description",
+            Section(
+                    id: "description",
                     headerState: .margin(height: 3),
                     footerState: .margin(height: .margin32),
                     rows: [
@@ -238,6 +247,18 @@ extension RestoreNonStandardViewController: SectionsDataSource {
                                     cell.label.font = .subhead2
                                     cell.label.textColor = .themeGray
                                 }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "name",
+                    headerState: tableView.sectionHeader(text: "create_wallet.name".localized),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        StaticRow(
+                                cell: nameCell,
+                                id: "name",
+                                height: .heightSingleLineCell
                         )
                     ]
             )

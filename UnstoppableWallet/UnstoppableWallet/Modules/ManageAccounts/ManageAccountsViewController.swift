@@ -73,7 +73,7 @@ class ManageAccountsViewController: ThemeViewController {
             .text { (component: TextComponent) -> () in
                 component.font = .body
                 component.textColor = .themeJacob
-                component.text = "onboarding.balance.restore".localized
+                component.text = "onboarding.balance.import".localized
             }
         ]))
 
