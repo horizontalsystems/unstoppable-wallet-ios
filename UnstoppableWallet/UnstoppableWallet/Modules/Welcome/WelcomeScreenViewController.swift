@@ -144,7 +144,7 @@ class WelcomeScreenViewController: ThemeViewController {
         }
 
         startButton.set(style: .yellow)
-        startButton.setTitle("intro.start".localized, for: .normal)
+        startButton.setTitle("button.next".localized, for: .normal)
         startButton.addTarget(self, action: #selector(onTapStart), for: .touchUpInside)
 
         view.addSubview(logoWrapperView)
@@ -207,7 +207,11 @@ class WelcomeScreenViewController: ThemeViewController {
     }
 
     @objc private func onTapStart() {
-        UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: MainModule.instance())
+        if pageControl.currentPage < pageControl.numberOfPages - 1 {
+            scrollView.setContentOffset(CGPoint(x: scrollView.width * CGFloat(pageControl.currentPage + 1), y: 0), animated: true)
+        } else {
+            UIApplication.shared.windows.first { $0.isKeyWindow }?.set(newRootController: MainModule.instance())
+        }
     }
 
 }

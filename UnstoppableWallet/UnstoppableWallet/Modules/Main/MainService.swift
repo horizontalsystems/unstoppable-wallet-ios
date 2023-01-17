@@ -94,7 +94,7 @@ extension MainService {
                 }
             }
 
-            return .market
+            return .balance
         case .balance:
             return .balance
         case .marketOverview, .watchlist:

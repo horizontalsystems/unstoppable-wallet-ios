@@ -1051,7 +1051,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Intro
 
-"intro.start" = "Be Unstoppable";
 "intro.unchain_assets.title" = "Unchain Assets";
 "intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
 "intro.go_borderless.title" = "Go Borderless";
