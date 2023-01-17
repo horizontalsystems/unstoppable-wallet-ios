@@ -91,6 +91,14 @@ class EvmSyncSourceManager {
                         transactionSource: .arbiscan(apiKey: appConfigProvider.arbiscanKey)
                 )
             ]
+        case .gnosis:
+            return [
+                EvmSyncSource(
+                        name: "Gnosis.io HTTP",
+                        rpcSource: .gnosisRpcHttp(),
+                        transactionSource: .gnosis(apiKey: appConfigProvider.gnosisscanKey)
+                )
+            ]
         default:
             return []
         }

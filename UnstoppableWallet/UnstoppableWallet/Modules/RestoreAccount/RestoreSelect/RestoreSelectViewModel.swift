@@ -42,6 +42,7 @@ class RestoreSelectViewModel {
         case .binanceSmartChain: return "BNB, BEP20 tokens"
         case .polygon: return "MATIC, ERC20 tokens"
         case .avalanche: return "AVAX, ERC20 tokens"
+        case .gnosis: return "xDAI, ERC20 tokens"
         case .optimism: return "L2 chain"
         case .arbitrumOne: return "L2 chain"
         case .zcash: return "ZEC"

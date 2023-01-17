@@ -11,6 +11,7 @@ class MarketAdvancedSearchService {
         .binanceChain,
         .arbitrumOne,
         .avalanche,
+        .gnosis,
         .unsupported(uid: "fantom"),
         .unsupported(uid: "harmony"),
         .unsupported(uid: "huobi-token"),
