@@ -130,6 +130,17 @@ extension SingleLineFormTextView {
         set { textField.isUserInteractionEnabled = newValue }
     }
 
+    var isSecureTextEntry: Bool {
+        get { textField.isSecureTextEntry }
+        set {
+            textField.isSecureTextEntry = newValue
+            if newValue {
+                textField.textContentType = .oneTimeCode
+                textField.clearButtonMode = .never
+            }
+        }
+    }
+
     var keyboardType: UIKeyboardType {
         get { textField.keyboardType }
         set { textField.keyboardType = newValue }
