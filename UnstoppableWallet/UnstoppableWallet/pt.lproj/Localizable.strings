@@ -5,7 +5,7 @@
 "button.continue" = "Continuar";
 "button.done" = "Concluído";
 "button.reset" = "Redefinir";
-"button.restore" = "Restaurar";
+"button.import" = "Import";
 "button.next" = "Próximo";
 "button.share" = "Compartilhar";
 "button.paste" = "Colar";
@@ -39,9 +39,9 @@
 "alert.added_to_wallet" = "Adicionado à Carteira";
 "alert.already_added_to_wallet" = "Já adicionado à carteira";
 "alert.not_supported_yet" = "Não suportado ainda";
-"alert.copied" = "Copied";
+"alert.copied" = "Copiado";
 "alert.created" = "Criado";
-"alert.restored" = "Restaurado";
+"alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
 "alert.deleted" = "Excluído";
 "alert.waiting_for_session" = "Aguardando sessão";
@@ -94,10 +94,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Restore
 
-"restore.title" = "Restaurar";
+"restore.title" = "Import Wallet";
 "restore.advanced" = "Advanced";
-"restore.by" = "Por";
-"restore.restore_by" = "Restaurar por";
+"restore.import_by" = "Import By";
 "restore.restore_type.mnemonic" = "Frase de Recuperação";
 "restore.restore_type.private_key" = "Chave Privada";
 "restore.mnemonic.placeholder" = "Insira 12, 15, 18, 21 ou 24 palavras";
@@ -107,11 +106,10 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "restore.checksum_error" = "Soma de Verificação Inválida";
 "restore.passphrase" = "Senha";
 "restore.input.passphrase" = "Senha";
-"restore.passphrase_description" = "Digite a senha que você usou ao criar esta frase mnemônica";
+"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet but a new passphrase will a generate a brand new wallet.";
 "restore.error.empty_passphrase" = "O senha não pode estar em branco";
-"restore.non_standard_restore" = "Restauração Não-Padrão";
-"restore.non_standard_restore.description" = "Esta página fornece um mecanismo especial de recuperação de carteira para usuários da Unstoppable que possuem uma carteira Não Padrão.  Geralmente, essas carteiras podem ter sido criadas na versão Unstoppable 0.27 - 0.28 usando uma lista de palavras mnemônicas não inglesas e/ou um caractere especial na senha da carteira (ou seja, símbolo diacrítico).\n\nSe você for um usuário afetado, o saldo da sua carteira será mostrado como 0 após a atualização para a versão 0.29.  Esta página permitirá que você restaure o acesso à sua carteira não padrão.  Uma vez restaurado, é recomendável criar uma nova carteira (que será compatível com o padrão) e mover fundos para lá.
-";
+"restore.non_standard_import" = "Non-Standard Import";
+"restore.non_standard_import.description" = "This page provides a special wallet import mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
 "restore.warning.non_recommended.description" = "Esta carteira parece usar um caractere não padrão em sua lista de palavras secretas e/ou uma frase secreta.  Se você não ver um saldo ou transações, leia abaixo para obter detalhes.\n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
 "restore.error.non_standard.description" = "Esta é uma carteira não padrão. \n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
 
@@ -126,7 +124,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Comum antes de 2018";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Comum depois de 2018";
 "sync_mode.from_blockchain" = "Da Blockchain";
-"blockchain_settings.description" = "Selecione o formato do endereço para a moeda. Prossiga com a opção recomendada se não tiver certeza. Um formato correto deve ser escolhido quando restaurar uma carteira existente.";
+"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when importing an existing wallet.";
 
 // Coin Platforms
 
@@ -830,15 +828,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "manage_wallets.not_supported.description" = "Seu tipo de carteira atual %@ não suporta %@";
 "manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
-"manage_coins.add_coin.title" = "Adicionar %@";
-"manage_coins.add_coin.subtitle" = "Carteira %@";
-"manage_coins.add_coin.text.set_up" = "Você precisa configurar a carteira %@ para poder enviar ou receber %@.";
-"manage_coins.add_coin.text.create_or_restore" = "Use o botão criar abaixo para configurar uma nova carteira %@ ou o botão restaurar para importar uma existente.";
-"manage_coins.add_coin.text.create_only" = "Neste ponto não é possível criar uma carteira %@. Você só consegue restaurar uma existente.";
-"manage_coins.add_coin.text.tokens" = "Você conseguirá usar esta carteira para: %@.";
-"manage_coins.add_coin.create" = "Criar";
-"manage_coins.add_coin.restore" = "Restaurar";
-
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Experimental";
@@ -917,8 +906,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "settings_manage_keys.title" = "Gerenciar carteiras";
 "settings_manage_keys.delete" = "Deletar";
 "settings_manage_keys.backup" = "Backup";
-"settings_manage_keys.create" = "Criar";
-"settings_manage_keys.restore" = "Restaurar";
 "settings_manage_keys.delete.title" = "Excluir Carteira";
 "settings_manage_keys.delete.confirmation_remove" = "A ação irá apagar esta carteira do dispositivo.";
 "settings_manage_keys.delete.confirmation_loose" = "Se você não fizer o backup da chave privada desta carteira, perderá o acesso aos seus fundos.";
@@ -1024,10 +1011,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Create Wallet
 
-"create_wallet.description" = "Your first step to become Unstoppable";
+"create_wallet.title" = "New Wallet";
+"create_wallet.name" = "Name";
 "create_wallet.advanced_setup" = "Advanced Setup";
-"create_wallet.create_button" = "Criar";
-"create_wallet.advanced_button" = "Advanced";
+"create_wallet.create" = "Create";
+"create_wallet.advanced" = "Advanced";
 "create_wallet.phrase_count" = "Phrase Count";
 "create_wallet.12_words" = "12 palavras (recomendado)";
 "create_wallet.n_words" = "%@ palavras";
@@ -1035,7 +1023,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "create_wallet.passphrase" = "Senha";
 "create_wallet.input.passphrase" = "Senha";
 "create_wallet.input.confirm" = "Confirmar";
-"create_wallet.passphrase_description" = "Senhas agregam uma camada de segurança adicional às carteiras, permitindo que os usuários criem várias carteiras multimoedas independentes, usando uma única frase mnemônica de recuperação, mas associada à senhas diferentes. \n\nPara restaurar estas carteiras, o usuário precisará de uma frase de recuperação mnemônica, bem como de uma senha para cada carteira a ser restaurada.";
+"create_wallet.passphrase_description" = "Passphrases add additional security layer to the wallets enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase (secret 12 words) but associated with different passwords.\n\nTo restore these wallets a user will require menmonic recovery phrase as well as a password for each to be restored wallet.";
 "create_wallet.error.empty_passphrase" = "A senha não pode estar vazia";
 "create_wallet.error.forbidden_symbols" = "Por favor, use apenas símbolos suportados: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Confirmação da senha não coincide";
@@ -1063,7 +1051,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Intro
 
-"intro.start" = "Seja Unstoppable";
 "intro.unchain_assets.title" = "Libere Recursos";
 "intro.unchain_assets.description" = "Não se prenda, e não deixe que te prendam";
 "intro.go_borderless.title" = "Seja sem fronteiras";
@@ -1133,7 +1120,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "wallet_connect_list.new_connection" = "Nova Conexão";
 "wallet_connect_list.disconnecting" = "Desconectando";
 
-"wallet_connect.no_account.description" = "Nenhuma carteira adequada. Você precisa criar ou restaurar uma carteira existente.";
+"wallet_connect.no_account.description" = "No suitable wallet. You need to create or import existing wallet.";
 "wallet_connect.no_account.i_understand" = "Estou ciente";
 
 "wallet_connect.non_supported_account.description" = "Seu tipo de carteira atual %@ não suporta WalletConnect";
@@ -1171,10 +1158,10 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Onboarding
 
-"onboarding.balance.create" = "Criar";
-"onboarding.balance.restore" = "Restaurar";
+"onboarding.balance.create" = "New Wallet";
+"onboarding.balance.import" = "Import Wallet";
 "onboarding.balance.watch" = "Watch Wallet";
-"onboarding.balance.password_hint" = "Dica: Restaurar uma carteira existente, mas com uma nova senha irá gerar uma carteira nova. Isso é útil se você quiser usar uma única frase de recuperação mnemônica de 12 – 24 palavras para várias carteiras.";
+"onboarding.balance.password_hint" = "Tip! Importing an existing wallet but with a new passphrase will generate a brand new wallet. This is handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
