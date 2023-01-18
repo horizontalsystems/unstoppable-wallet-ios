@@ -2998,6 +2998,12 @@
 		D09200C8293F21720091981A /* RestoreNonStandardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C1293F21720091981A /* RestoreNonStandardModule.swift */; };
 		D09200C9293F21720091981A /* RestoreNonStandardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C1293F21720091981A /* RestoreNonStandardModule.swift */; };
 		D09200CA293F21720091981A /* RestoreNonStandardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C1293F21720091981A /* RestoreNonStandardModule.swift */; };
+		D0D5BCBC2976CB9F00587FDB /* PasswordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */; };
+		D0D5BCBD2976CB9F00587FDB /* PasswordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */; };
+		D0D5BCBE2976CB9F00587FDB /* PasswordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */; };
+		D0D5BCC02976D3B300587FDB /* PsswordInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */; };
+		D0D5BCC12976D3B300587FDB /* PsswordInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */; };
+		D0D5BCC22976D3B300587FDB /* PsswordInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */; };
 		D0DA740D272A6EFC0072BE86 /* IDNSDK in Frameworks */ = {isa = PBXBuildFile; productRef = D0DA740C272A6EFC0072BE86 /* IDNSDK */; };
 		D0DA740F272A6EFC0072BE86 /* UnicodeURL in Frameworks */ = {isa = PBXBuildFile; productRef = D0DA740E272A6EFC0072BE86 /* UnicodeURL */; };
 		D0DA7411272A6F180072BE86 /* IDNSDK in Frameworks */ = {isa = PBXBuildFile; productRef = D0DA7410272A6F180072BE86 /* IDNSDK */; };
@@ -4321,6 +4327,8 @@
 		D09200BF293F21700091981A /* RestoreNonStandardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardViewController.swift; sourceTree = "<group>"; };
 		D09200C0293F21710091981A /* RestoreNonStandardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardViewModel.swift; sourceTree = "<group>"; };
 		D09200C1293F21720091981A /* RestoreNonStandardModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardModule.swift; sourceTree = "<group>"; };
+		D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputView.swift; sourceTree = "<group>"; };
+		D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsswordInputCell.swift; sourceTree = "<group>"; };
 		D0EE557D2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		D0EE557E2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D31C4759238BF175008CB818 /* MnemonicDerivation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicDerivation.swift; sourceTree = "<group>"; };
@@ -4706,6 +4714,7 @@
 				11B359CC2E1E7853CD1547B3 /* LogoHeaderCell.swift */,
 				11B35FEC3027F45085959FBB /* NftDoubleCell.swift */,
 				11B35968F5DE9FDA6EC26FCD /* TextInputCell.swift */,
+				D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -5678,6 +5687,7 @@
 				11B3573AF91C82342639A9B1 /* InputSecondaryCircleButtonWrapperView.swift */,
 				11B3522A9A7774977CF39A1D /* NftImageView.swift */,
 				11B350E1584E954D281FA87D /* NftAssetView.swift */,
+				D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -8232,6 +8242,7 @@
 				58AAA75833ABACB35792803A /* UniswapSettingsDataSource.swift in Sources */,
 				58AAA2EDEB8DF3AF22E8F615 /* OneInchSettingsDataSource.swift in Sources */,
 				58AAA5B74C7C6C5E2BCC28B2 /* OneInchSettingsModule.swift in Sources */,
+				D0D5BCBE2976CB9F00587FDB /* PasswordInputView.swift in Sources */,
 				58AAA3FF95AB8AD32BD8853E /* SwapDeadlineViewModel.swift in Sources */,
 				58AAAEDB596694C9127E2441 /* RecipientAddressViewModel.swift in Sources */,
 				D36DE0E3272FD887000BC916 /* OneInchProvider.swift in Sources */,
@@ -8503,6 +8514,7 @@
 				11B35B10BF879154489CA619 /* NftCollectionViewController.swift in Sources */,
 				11B35B41F0EB6AD27CA54F2B /* NftCollectionService.swift in Sources */,
 				11B35E9946C553160F26F137 /* NftCollectionViewModel.swift in Sources */,
+				D0D5BCC22976D3B300587FDB /* PsswordInputCell.swift in Sources */,
 				11B350766FA40E07F6882DC5 /* NftCollectionModule.swift in Sources */,
 				11B35F3B297E523677AF0481 /* NftCollectionOverviewService.swift in Sources */,
 				11B357C4F7DF4488A81E4EB3 /* NftCollectionOverviewViewModel.swift in Sources */,
@@ -9284,6 +9296,7 @@
 				58AAA696C47479181333FBA5 /* UniswapSettingsDataSource.swift in Sources */,
 				58AAA604A4728EF375F8937D /* OneInchSettingsDataSource.swift in Sources */,
 				58AAA5D1FB4312F714C1D097 /* OneInchSettingsModule.swift in Sources */,
+				D0D5BCBD2976CB9F00587FDB /* PasswordInputView.swift in Sources */,
 				58AAA2CEB9DB7E34921D7778 /* SwapDeadlineViewModel.swift in Sources */,
 				58AAAF041A3FE53A28893E74 /* RecipientAddressViewModel.swift in Sources */,
 				D36DE0E2272FD887000BC916 /* OneInchProvider.swift in Sources */,
@@ -9555,6 +9568,7 @@
 				11B350ADB6D0D0C3E97F73D6 /* NftCollectionViewController.swift in Sources */,
 				11B35E4E9EA0B6F6A1157E17 /* NftCollectionService.swift in Sources */,
 				11B35AB1A8FB2E49C98FCBEB /* NftCollectionViewModel.swift in Sources */,
+				D0D5BCC12976D3B300587FDB /* PsswordInputCell.swift in Sources */,
 				11B35633B952154A098532A4 /* NftCollectionModule.swift in Sources */,
 				11B35B9C05783F7EA0C7C0EC /* NftCollectionOverviewService.swift in Sources */,
 				11B355EE18C23669D470BBB0 /* NftCollectionOverviewViewModel.swift in Sources */,
@@ -10336,6 +10350,7 @@
 				58AAA289FEAE983739189B8D /* RecipientAddressViewModel.swift in Sources */,
 				58AAA49049C7EA04AABC41E9 /* SwapSlippageViewModel.swift in Sources */,
 				58AAA9ABBBA6A19CBC351D52 /* AddressResolutionProvider.swift in Sources */,
+				D0D5BCBC2976CB9F00587FDB /* PasswordInputView.swift in Sources */,
 				58AAA10B748931BA5FA867DA /* SwapViewModel.swift in Sources */,
 				58AAA9475B1C057E82B25C76 /* OneInchFeeService.swift in Sources */,
 				58AAA6371183D7FB9606FEDA /* OneInchSendEvmTransactionService.swift in Sources */,
@@ -10607,6 +10622,7 @@
 				11B35AD1BD3E71EC4C29051F /* NftCollectionViewModel.swift in Sources */,
 				11B3586BF6AC0538272E71A4 /* NftCollectionModule.swift in Sources */,
 				11B35355FF6481B50773C868 /* NftCollectionOverviewService.swift in Sources */,
+				D0D5BCC02976D3B300587FDB /* PsswordInputCell.swift in Sources */,
 				11B357A9F8949912C12A17D7 /* NftCollectionOverviewViewModel.swift in Sources */,
 				11B35E79C4795DD87198ACB7 /* NftCollectionOverviewModule.swift in Sources */,
 				11B3596F09D52300F7F0067D /* NftCollectionOverviewViewController.swift in Sources */,

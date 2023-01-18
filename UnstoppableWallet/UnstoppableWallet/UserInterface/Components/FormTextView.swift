@@ -15,6 +15,7 @@ protocol IFormTextView: UIView {
     var font: UIFont? { get set }
     var placeholder: String? { get set }
     var isEditable: Bool { get set }
+    var isSecureTextEntry: Bool { get set }
     var keyboardType: UIKeyboardType { get set }
     var autocapitalizationType: UITextAutocapitalizationType { get set }
     var autocorrectionType: UITextAutocorrectionType { get set }
@@ -133,6 +134,11 @@ extension FormTextView {
     var isEditable: Bool {
         get { textView.isUserInteractionEnabled }
         set { textView.isUserInteractionEnabled = newValue }
+    }
+
+    var isSecureTextEntry: Bool {
+        get { textView.isSecureTextEntry }
+        set { textView.isSecureTextEntry = newValue }
     }
 
     var maximumNumberOfLines: Int {

@@ -108,6 +108,11 @@ extension InputStackView {
         set { formTextView.isValidText = newValue }
     }
 
+    var isSecureTextEntry: Bool {
+        get { formTextView.isSecureTextEntry }
+        set { formTextView.isSecureTextEntry = newValue }
+    }
+
     func prependSubview(_ view: ISizeAwareView, customSpacing: CGFloat? = nil) {
         let spacing = customSpacing ?? stackView.spacing
 

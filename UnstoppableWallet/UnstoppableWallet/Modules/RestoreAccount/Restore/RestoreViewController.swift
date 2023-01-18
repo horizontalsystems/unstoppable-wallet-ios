@@ -26,8 +26,9 @@ class RestoreViewController: KeyboardAwareViewController {
     private let wordListCell = BaseSelectableThemeCell()
 
     private let passphraseToggleCell = BaseThemeCell()
-    private let passphraseCell = TextFieldCell()
+    private let passphraseCell = PasswordInputCell()
     private let passphraseCautionCell = FormCautionCell()
+    private let passphraseDescriptionCell = HighlightedDescriptionCell()
 
     private let hintView = RestoreMnemonicHintView()
 
@@ -144,11 +145,13 @@ class RestoreViewController: KeyboardAwareViewController {
                 )
         )
 
-        passphraseCell.isSecureTextEntry = true
+        passphraseCell.set(textSecure: true)
+        passphraseCell.onTextSecurityChange = { [weak self] in self?.passphraseCell.set(textSecure: $0) }
         passphraseCell.inputPlaceholder = "restore.input.passphrase".localized
         passphraseCell.onChangeText = { [weak self] in self?.mnemonicViewModel.onChange(passphrase: $0 ?? "") }
 
         passphraseCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+        passphraseDescriptionCell.descriptionText = "restore.passphrase_description".localized
 
         view.addSubview(hintView)
         hintView.snp.makeConstraints { maker in
@@ -374,7 +377,7 @@ extension RestoreViewController: SectionsDataSource {
                     Section(
                             id: "wordlist-passphrase-toggle",
                             headerState: .margin(height: .margin32),
-                            footerState: .margin(height: .margin24),
+                            footerState: .margin(height: .margin32),
                             rows: [
                                 StaticRow(
                                         cell: wordListCell,
@@ -394,7 +397,7 @@ extension RestoreViewController: SectionsDataSource {
                     ),
                     Section(
                             id: "passphrase",
-                            footerState: inputsVisible ? tableView.sectionFooter(text: "restore.passphrase_description".localized) : .margin(height: 0),
+                            footerState: inputsVisible ? .margin(height: .margin24) : .margin(height: 0),
                             rows: [
                                 StaticRow(
                                         cell: passphraseCell,
@@ -407,6 +410,13 @@ extension RestoreViewController: SectionsDataSource {
                                         dynamicHeight: { [weak self] width in
                                             self?.passphraseCautionCell.height(containerWidth: width) ?? 0
                                         }
+                                ),
+                                StaticRow(
+                                       cell: passphraseDescriptionCell,
+                                       id: "passphrase-description",
+                                       dynamicHeight: { [weak self] width in
+                                           self.flatMap { $0.inputsVisible ? $0.passphraseDescriptionCell.height(containerWidth: width) : 0 } ?? 0
+                                       }
                                 )
                             ]
                     ),

@@ -21,9 +21,9 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
     private let nameCell = TextFieldCell()
     private let mnemonicCell = BaseSelectableThemeCell()
     private let passphraseToggleCell = BaseThemeCell()
-    private let passphraseCell = TextFieldCell()
+    private let passphraseCell = PasswordInputCell()
     private let passphraseCautionCell = FormCautionCell()
-    private let passphraseConfirmationCell = TextFieldCell()
+    private let passphraseConfirmationCell = PasswordInputCell()
     private let passphraseConfirmationCautionCell = FormCautionCell()
 
     private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
@@ -99,14 +99,16 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
                 )
         )
 
-        passphraseCell.isSecureTextEntry = true
+        passphraseCell.set(textSecure: true)
+        passphraseCell.onTextSecurityChange = { [weak self] in self?.syncTextSecurity(textSecure: $0) }
         passphraseCell.inputPlaceholder = "create_wallet.input.passphrase".localized
         passphraseCell.onChangeText = { [weak self] in self?.viewModel.onChange(passphrase: $0 ?? "") }
         passphraseCell.isValidText = { [weak self] in self?.viewModel.validatePassphrase(text: $0) ?? true }
 
         passphraseCautionCell.onChangeHeight = { [weak self] in self?.syncCellHeights() }
 
-        passphraseConfirmationCell.isSecureTextEntry = true
+        passphraseConfirmationCell.set(textSecure: true)
+        passphraseConfirmationCell.onTextSecurityChange = { [weak self] in self?.syncTextSecurity(textSecure: $0) }
         passphraseConfirmationCell.inputPlaceholder = "create_wallet.input.confirm".localized
         passphraseConfirmationCell.onChangeText = { [weak self] in self?.viewModel.onChange(passphraseConfirmation: $0 ?? "") }
         passphraseConfirmationCell.isValidText = { [weak self] in self?.viewModel.validatePassphraseConfirmation(text: $0) ?? true }
@@ -138,6 +140,11 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
 
     @objc private func onTapCreate() {
         viewModel.onTapCreate()
+    }
+
+    private func syncTextSecurity(textSecure: Bool) {
+        passphraseCell.set(textSecure: textSecure)
+        passphraseConfirmationCell.set(textSecure: textSecure)
     }
 
     private func sync(inputsVisible: Bool) {
