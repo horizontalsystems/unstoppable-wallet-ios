@@ -5,7 +5,7 @@
 "button.continue" = "Continuer";
 "button.done" = "Fait";
 "button.reset" = "Réinitialiser";
-"button.restore" = "Restaurer";
+"button.import" = "Import";
 "button.next" = "Suivant";
 "button.share" = "Partager";
 "button.paste" = "Coller";
@@ -39,9 +39,9 @@
 "alert.added_to_wallet" = "Ajouté au portefeuille";
 "alert.already_added_to_wallet" = "Déjà ajouté au portefeuille";
 "alert.not_supported_yet" = "Pas pris en charge pour le moment";
-"alert.copied" = "Copied";
+"alert.copied" = "Copié";
 "alert.created" = "Établi";
-"alert.restored" = "Restauré ";
+"alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
 "alert.deleted" = "Supprimer";
 "alert.waiting_for_session" = "En attente de session";
@@ -92,10 +92,9 @@
 
 // Restore
 
-"restore.title" = "Restaurer";
+"restore.title" = "Import Wallet";
 "restore.advanced" = "Advanced";
-"restore.by" = "Par";
-"restore.restore_by" = "Restaurer par";
+"restore.import_by" = "Import By";
 "restore.restore_type.mnemonic" = "Phrase de récupération";
 "restore.restore_type.private_key" = "Clé privée";
 "restore.mnemonic.placeholder" = "Entrez 12, 15, 18, 21 ou 24 mots";
@@ -105,10 +104,10 @@
 "restore.checksum_error" = "Somme de contrôle invalide";
 "restore.passphrase" = "Phrase d'authentification";
 "restore.input.passphrase" = "Phrase d'authentification";
-"restore.passphrase_description" = "Entrez la phrase d'authentification que vous avez utilisée pour créer cette phrase mnémonique";
+"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet but a new passphrase will a generate a brand new wallet.";
 "restore.error.empty_passphrase" = "La phrase d'authentification ne peut pas être une valeur vide";
-"restore.non_standard_restore" = "Restauration non-standard";
-"restore.non_standard_restore.description" = "Sur cette page, vous trouverez un mécanisme spécial de restauration de portefeuille pour les utilisateurs d'Unstoppable dont le portefeuille n'est pas standard. En général, de tels portefeuilles ont été créés dans la version 0.27 - 0.28 d'Unstoppable en utilisant une liste de mots mnémoniques non-anglais et/ou un caractère spécial dans la phrase de passe du portefeuille (c'est-à-dire un symbole diacritique).\n\nSi vous êtes un utilisateur concerné, le solde de votre portefeuille sera affiché à 0 après la restauration de ce portefeuille dans la version 0.29 ou supérieure. Grâce à cette page, vous pourrez restaurer l'accès à votre portefeuille non-standard. Une fois la restauration effectuée, il est conseillé de créer un nouveau portefeuille (qui sera conforme aux normes) et d'y transférer vos fonds.";
+"restore.non_standard_import" = "Non-Standard Import";
+"restore.non_standard_import.description" = "This page provides a special wallet import mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
 "restore.warning.non_recommended.description" = "Ce portefeuille semble utiliser un caractère non-standard dans sa liste de mots secrets et/ou dans une phrase de passe. Si vous ne voyez pas de solde ou de transactions, veuillez vous reporter aux informations ci-dessous. \n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
 "restore.error.non_standard.description" = "Ce portefeuille n'est pas conforme aux normes.\n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
 
@@ -123,7 +122,7 @@
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Commun avant 2018";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Commun après 2018";
 "sync_mode.from_blockchain" = "De la Blockchain";
-"blockchain_settings.description" = "Sélectionnez le format d'adresse de la pièce. Procédez avec l'option recommandée si vous n'êtes pas sur de vous. Un format correct doit être choisi lors de la restauration d'un portefeuille existant.";
+"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when importing an existing wallet.";
 
 // Coin Platforms
 
@@ -827,15 +826,6 @@
 "manage_wallets.not_supported.description" = "Votre type de portefeuille actuel %@ ne prend pas en charge %@";
 "manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
-"manage_coins.add_coin.title" = "Ajouter %@ ";
-"manage_coins.add_coin.subtitle" = "%@ Portefeuille";
-"manage_coins.add_coin.text.set_up" = "Vous devez créer un portefeuille %@ pour envoyer ou recevoir des %@.";
-"manage_coins.add_coin.text.create_or_restore" = "Utilisez le bouton Créer ci-dessous pour créer un nouveau portefeuille %@, ou le bouton Restaurer pour importer un portefeuille existant.";
-"manage_coins.add_coin.text.create_only" = "À ce stade, Unstoppable n'est pas en mesure de créer de nouveaux portefeuilles %@. Vous ne pouvez restaurer que celui déjà existant.";
-"manage_coins.add_coin.text.tokens" = "Vous pourrez utiliser ce portefeuille pour: %@.";
-"manage_coins.add_coin.create" = "Créer";
-"manage_coins.add_coin.restore" = "Restaurer";
-
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Expérimental";
@@ -914,8 +904,6 @@
 "settings_manage_keys.title" = "Gérer les portefeuilles";
 "settings_manage_keys.delete" = "Supprimer";
 "settings_manage_keys.backup" = "Sauvegarde";
-"settings_manage_keys.create" = "Créer";
-"settings_manage_keys.restore" = "Restaurer";
 "settings_manage_keys.delete.title" = "Supprimer le portefeuille";
 "settings_manage_keys.delete.confirmation_remove" = "L'action va supprimer ce portefeuille de l'appareil.";
 "settings_manage_keys.delete.confirmation_loose" = "Si vous n'avez pas sauvegardé la clé privée de ce portefeuille, vous perdrez l'accès à vos fonds.";
@@ -1021,10 +1009,11 @@
 
 // Create Wallet
 
-"create_wallet.description" = "Your first step to become Unstoppable";
+"create_wallet.title" = "New Wallet";
+"create_wallet.name" = "Name";
 "create_wallet.advanced_setup" = "Advanced Setup";
-"create_wallet.create_button" = "Créer";
-"create_wallet.advanced_button" = "Advanced";
+"create_wallet.create" = "Create";
+"create_wallet.advanced" = "Advanced";
 "create_wallet.phrase_count" = "Phrase Count";
 "create_wallet.12_words" = "12 mots (recommandé)";
 "create_wallet.n_words" = "%@ mots";
@@ -1032,7 +1021,7 @@
 "create_wallet.passphrase" = "Phrase d'authentification";
 "create_wallet.input.passphrase" = "Phrase d'authentification";
 "create_wallet.input.confirm" = "Confirmer";
-"create_wallet.passphrase_description" = "Les phrases d'authentification ajoutent une strate de sécurité supplémentaire aux portefeuilles. Les utilisateurs peuvent ainsi créer plusieurs portefeuilles indépendants à pièces multiples à l'aide d'une seule phrase de réinitialisation mnémonique, mais associée à des mots de passe différents. \n\nPour restaurer ces portefeuilles, l'utilisateur doit disposer d'une phrase de réinitialisation mnémonique et d'un mot de passe pour chaque portefeuille à restaurer.";
+"create_wallet.passphrase_description" = "Passphrases add additional security layer to the wallets enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase (secret 12 words) but associated with different passwords.\n\nTo restore these wallets a user will require menmonic recovery phrase as well as a password for each to be restored wallet.";
 "create_wallet.error.empty_passphrase" = "La phrase d'authentification ne peut pas être laissée en blanc";
 "create_wallet.error.forbidden_symbols" = "Veuillez utiliser uniquement les symboles pris en charge : A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "La confirmation de la phrase d'authentification ne correspond pas";
@@ -1060,7 +1049,6 @@
 
 // Intro
 
-"intro.start" = "Be Unstoppable";
 "intro.unchain_assets.title" = "Désenchaînez les actifs";
 "intro.unchain_assets.description" = "Ne vous enfermez pas et ne laissez pas les autres vous le faire";
 "intro.go_borderless.title" = "Sans frontières";
@@ -1130,7 +1118,7 @@
 "wallet_connect_list.new_connection" = "Nouvelle connexion";
 "wallet_connect_list.disconnecting" = "Déconnexion";
 
-"wallet_connect.no_account.description" = "Aucun portefeuille adéquat. Vous devez créer ou restaurer un portefeuille existant.";
+"wallet_connect.no_account.description" = "No suitable wallet. You need to create or import existing wallet.";
 "wallet_connect.no_account.i_understand" = "J’ai Compris";
 
 "wallet_connect.non_supported_account.description" = "Votre type de portefeuille actuel %@ ne prend pas en charge WalletConnect";
@@ -1168,10 +1156,10 @@
 
 // Onboarding
 
-"onboarding.balance.create" = "Créer";
-"onboarding.balance.restore" = "Restaurer";
+"onboarding.balance.create" = "New Wallet";
+"onboarding.balance.import" = "Import Wallet";
 "onboarding.balance.watch" = "Watch Wallet";
-"onboarding.balance.password_hint" = "Astuce ! La restauration d'un portefeuille existant, mais avec une nouvelle phrase d'authentification, génère un tout nouveau portefeuille. Pratique si vous souhaitez utiliser une seule phrase de réinitialisation mnémonique de 12 à 24 mots pour plusieurs portefeuilles.";
+"onboarding.balance.password_hint" = "Tip! Importing an existing wallet but with a new passphrase will generate a brand new wallet. This is handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
