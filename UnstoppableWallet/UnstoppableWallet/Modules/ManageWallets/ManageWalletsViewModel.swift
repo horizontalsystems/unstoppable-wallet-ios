@@ -38,7 +38,7 @@ class ManageWalletsViewModel {
         return CoinToggleViewModel.ViewItem(
                 uid: item.fullCoin.coin.uid,
                 imageUrl: item.fullCoin.coin.imageUrl,
-                placeholderImageName: item.fullCoin.placeholderImageName,
+                placeholderImageName: "placeholder_circle_32",
                 title: item.fullCoin.coin.code,
                 subtitle: item.fullCoin.coin.name,
                 state: viewItemState

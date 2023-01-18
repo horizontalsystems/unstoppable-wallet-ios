@@ -49,7 +49,7 @@ class CoinPageService {
     }
 
     private var enabledWallets: [Wallet] {
-        let tokens = fullCoin.supportedTokens
+        let tokens = fullCoin.tokens
         return walletManager.activeWallets.filter { tokens.contains($0.token) }
     }
 

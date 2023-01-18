@@ -105,7 +105,7 @@ class MarketDiscoveryViewModel {
         SearchViewItem(
                 uid: fullCoin.coin.uid,
                 imageUrl: fullCoin.coin.imageUrl,
-                placeholderImageName: fullCoin.placeholderImageName,
+                placeholderImageName: "placeholder_circle_32",
                 name: fullCoin.coin.name,
                 code: fullCoin.coin.code,
                 favorite: false
