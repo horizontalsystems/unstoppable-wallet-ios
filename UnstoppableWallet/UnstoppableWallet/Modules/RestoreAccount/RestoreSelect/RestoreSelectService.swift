@@ -62,8 +62,8 @@ class RestoreSelectService {
         subscribe(disposeBag, enableCoinService.disableCoinObservable) { [weak self] coin in
             self?.handleDisable(coin: coin)
         }
-        subscribe(disposeBag, enableCoinService.cancelEnableCoinObservable) { [weak self] fullCoin in
-            self?.handleCancelEnable(fullCoin: fullCoin)
+        subscribe(disposeBag, enableCoinService.cancelEnableCoinObservable) { [weak self] coin in
+            self?.handleCancelEnable(coin: coin)
         }
 
         syncInternalItems()
@@ -158,8 +158,8 @@ class RestoreSelectService {
         syncState()
     }
 
-    private func handleCancelEnable(fullCoin: FullCoin) {
-        guard let token = tokens.first(where: { fullCoin.supportedTokens.contains($0) }) else {
+    private func handleCancelEnable(coin: Coin) {
+        guard let token = tokens.first(where: { $0.coin == coin }) else {
             return
         }
 

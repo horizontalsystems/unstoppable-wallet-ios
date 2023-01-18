@@ -109,7 +109,7 @@ extension CoinDetailsService {
     }
 
     var auditAddresses: [String] {
-        fullCoin.supportedTokens.compactMap { token in
+        fullCoin.tokens.compactMap { token in
             switch (token.blockchainType, token.type) {
             case (.ethereum, .eip20(let address)): return address
             case (.binanceSmartChain, .eip20(let address)): return address
@@ -119,7 +119,7 @@ extension CoinDetailsService {
     }
 
     var hasMajorHolders: Bool {
-        for token in fullCoin.supportedTokens {
+        for token in fullCoin.tokens {
             switch (token.blockchainType, token.type) {
             case (.ethereum, .eip20): return true
             default: ()

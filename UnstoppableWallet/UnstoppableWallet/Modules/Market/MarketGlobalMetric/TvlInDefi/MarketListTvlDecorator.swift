@@ -27,7 +27,7 @@ extension MarketListTvlDecorator: IMarketListDecorator {
         case .fullCoin(let fullCoin):
             uid = fullCoin.coin.uid
             iconUrl = fullCoin.coin.imageUrl
-            iconPlaceholderName = fullCoin.placeholderImageName
+            iconPlaceholderName = "placeholder_circle_32"
             name = fullCoin.coin.name
         case .defiCoin(let defiName, let logo):
             iconUrl = logo

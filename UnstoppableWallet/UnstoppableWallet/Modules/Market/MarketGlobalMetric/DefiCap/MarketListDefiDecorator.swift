@@ -55,7 +55,7 @@ extension MarketListDefiDecorator: IMarketListDecorator {
                 uid: marketInfo.fullCoin.coin.uid,
                 iconUrl: marketInfo.fullCoin.coin.imageUrl,
                 iconShape: .round,
-                iconPlaceholderName: marketInfo.fullCoin.placeholderImageName,
+                iconPlaceholderName: "placeholder_circle_32",
                 leftPrimaryValue: marketInfo.fullCoin.coin.code,
                 leftSecondaryValue: marketInfo.fullCoin.coin.name,
                 badge: "\(item.tvlRank)",

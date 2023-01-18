@@ -304,7 +304,7 @@ extension MarketKit.BlockchainType {
             }
         case .evmPrivateKey, .evmAddress:
             switch self {
-            case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis: return true
+            case .ethereum, .ethereumGoerli, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis: return true
             default: return false
             }
         }
@@ -328,14 +328,10 @@ extension MarketKit.Coin {
 
 extension MarketKit.FullCoin {
 
-    var supportedTokens: [Token] {
-        tokens.filter { $0.isSupported }
-    }
-
     func eligibleTokens(accountType: AccountType) -> [Token] {
-        supportedTokens.filter { token in
-            token.blockchainType.supports(accountType: accountType)
-        }
+        tokens
+                .filter { $0.isSupported }
+                .filter { $0.blockchainType.supports(accountType: accountType) }
     }
 
 }

@@ -46,8 +46,8 @@ class ManageWalletsService {
         subscribe(disposeBag, enableCoinService.disableCoinObservable) { [weak self] coin in
             self?.handleDisable(coin: coin)
         }
-        subscribe(disposeBag, enableCoinService.cancelEnableCoinObservable) { [weak self] fullCoin in
-            self?.handleCancelEnable(fullCoin: fullCoin)
+        subscribe(disposeBag, enableCoinService.cancelEnableCoinObservable) { [weak self] coin in
+            self?.handleCancelEnable(coin: coin)
         }
 
         sync(wallets: walletManager.activeWallets)
@@ -58,39 +58,43 @@ class ManageWalletsService {
 
     private func fetchFullCoins() -> [FullCoin] {
         do {
-            let fullCoins: [FullCoin]
-
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                var featuredFullCoins = try marketKit.fullCoins(filter: "", limit: 100).filter { fullCoin in
-                    !fullCoin.eligibleTokens(accountType: account.type).isEmpty
-                }
+                var fullCoins = try marketKit.fullCoins(filter: "", limit: 1000)
+                        .filter { !$0.eligibleTokens(accountType: account.type).isEmpty }
+                        .prefix(100)
 
                 if testNetManager.testNetEnabled {
-                    featuredFullCoins += testNetManager.baseTokens.map { $0.fullCoin }
+                    fullCoins += testNetManager.baseTokens
+                            .map { $0.fullCoin }
+                            .filter { !$0.eligibleTokens(accountType: account.type).isEmpty }
                 }
 
-                let featuredCoins = featuredFullCoins.map { $0.coin }
-                let enabledFullCoins = try marketKit.fullCoins(coinUids: wallets.filter { !featuredCoins.contains($0.coin) }.map { $0.coin.uid })
+                let allCoins = fullCoins.map { $0.coin }
+                let enabledFullCoins = try marketKit.fullCoins(coinUids: wallets.filter { !allCoins.contains($0.coin) }.map { $0.coin.uid })
 
                 let customFullCoins = wallets.map { $0.token }.filter { $0.isCustom }.map { $0.fullCoin }
 
-                fullCoins = featuredFullCoins + enabledFullCoins + customFullCoins
+                return fullCoins + enabledFullCoins + customFullCoins
             } else if let ethAddress = try? EvmKit.Address(hex: filter) {
                 let address = ethAddress.hex
                 let tokens = try marketKit.tokens(reference: address)
                 let coinUids = Array(Set(tokens.map { $0.coin.uid }))
-                fullCoins = try marketKit.fullCoins(coinUids: coinUids)
+
+                return try marketKit.fullCoins(coinUids: coinUids)
+                        .filter { !$0.eligibleTokens(accountType: account.type).isEmpty }
             } else {
-                var allFullCoins = try marketKit.fullCoins(filter: filter, limit: 20)
+                var fullCoins = try marketKit.fullCoins(filter: filter, limit: 1000)
+                        .filter { !$0.eligibleTokens(accountType: account.type).isEmpty }
+                        .prefix(20)
 
                 if testNetManager.testNetEnabled {
-                    allFullCoins += testNetManager.baseTokens(filter: filter).map { $0.fullCoin }
+                    fullCoins += testNetManager.baseTokens(filter: filter)
+                            .map { $0.fullCoin }
+                            .filter { !$0.eligibleTokens(accountType: account.type).isEmpty }
                 }
 
-                fullCoins = allFullCoins
+                return Array(fullCoins)
             }
-
-            return fullCoins
         } catch {
             return []
         }
@@ -190,9 +194,9 @@ class ManageWalletsService {
         cancelEnableCoinRelay.accept(coin)
     }
 
-    private func handleCancelEnable(fullCoin: FullCoin) {
-        if !isEnabled(coin: fullCoin.coin) {
-            cancelEnableCoinRelay.accept(fullCoin.coin)
+    private func handleCancelEnable(coin: Coin) {
+        if !isEnabled(coin: coin) {
+            cancelEnableCoinRelay.accept(coin)
         }
     }
 

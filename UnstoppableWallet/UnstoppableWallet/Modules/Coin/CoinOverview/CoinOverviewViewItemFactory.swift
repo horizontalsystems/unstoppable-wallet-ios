@@ -174,7 +174,7 @@ extension CoinOverviewViewItemFactory {
                         name: fullCoin.coin.name,
                         marketCapRank: marketCapRank,
                         imageUrl: fullCoin.coin.imageUrl,
-                        imagePlaceholderName: fullCoin.placeholderImageName
+                        imagePlaceholderName: "placeholder_circle_32"
                 ),
 
                 marketCapRank: marketCapRank,

@@ -17,12 +17,12 @@ class CoinTokensViewModel {
     }
 
     private func handle(request: CoinTokensService.Request) {
-        let fullCoin = request.fullCoin
-        let tokens = fullCoin.supportedTokens.sorted
+        let coin = request.coin
+        let tokens = request.eligibleTokens
 
         let config = BottomMultiSelectorViewController.Config(
-                icon: .remote(url: fullCoin.coin.imageUrl, placeholder: fullCoin.placeholderImageName),
-                title: fullCoin.coin.code,
+                icon: .remote(url: coin.imageUrl, placeholder: "placeholder_circle_32"),
+                title: coin.code,
                 description: tokens.count == 1 ? nil : "coin_platforms.description".localized,
                 allowEmpty: request.allowEmpty,
                 selectedIndexes: request.currentTokens.compactMap { tokens.firstIndex(of: $0) },
@@ -53,8 +53,7 @@ extension CoinTokensViewModel {
             return
         }
 
-        let supportedTokens = request.fullCoin.supportedTokens.sorted
-        service.select(tokens: indexes.map { supportedTokens[$0] }, coin: request.fullCoin.coin)
+        service.select(tokens: indexes.map { request.eligibleTokens[$0] }, coin: request.coin)
     }
 
     func onCancelSelect() {
@@ -62,7 +61,7 @@ extension CoinTokensViewModel {
             return
         }
 
-        service.cancel(fullCoin: request.fullCoin)
+        service.cancel(coin: request.coin)
     }
 
 }

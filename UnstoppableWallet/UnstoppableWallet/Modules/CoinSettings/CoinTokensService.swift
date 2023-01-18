@@ -4,7 +4,7 @@ import MarketKit
 
 class CoinTokensService {
     private let approveTokensRelay = PublishRelay<CoinWithTokens>()
-    private let rejectApproveTokensRelay = PublishRelay<FullCoin>()
+    private let rejectApproveTokensRelay = PublishRelay<Coin>()
 
     private let requestRelay = PublishRelay<Request>()
 }
@@ -15,7 +15,7 @@ extension CoinTokensService {
         approveTokensRelay.asObservable()
     }
 
-    var rejectApproveTokensObservable: Observable<FullCoin> {
+    var rejectApproveTokensObservable: Observable<Coin> {
         rejectApproveTokensRelay.asObservable()
     }
 
@@ -23,8 +23,8 @@ extension CoinTokensService {
         requestRelay.asObservable()
     }
 
-    func approveTokens(fullCoin: FullCoin, currentTokens: [Token] = [], allowEmpty: Bool = false) {
-        let request = Request(fullCoin: fullCoin, currentTokens: currentTokens, allowEmpty: allowEmpty)
+    func approveTokens(coin: Coin, eligibleTokens: [Token], currentTokens: [Token] = [], allowEmpty: Bool = false) {
+        let request = Request(coin: coin, eligibleTokens: eligibleTokens.sorted, currentTokens: currentTokens, allowEmpty: allowEmpty)
         requestRelay.accept(request)
     }
 
@@ -33,8 +33,8 @@ extension CoinTokensService {
         approveTokensRelay.accept(coinWithTokens)
     }
 
-    func cancel(fullCoin: FullCoin) {
-        rejectApproveTokensRelay.accept(fullCoin)
+    func cancel(coin: Coin) {
+        rejectApproveTokensRelay.accept(coin)
     }
 
 }
@@ -52,7 +52,8 @@ extension CoinTokensService {
     }
 
     struct Request {
-        let fullCoin: FullCoin
+        let coin: Coin
+        let eligibleTokens: [Token]
         let currentTokens: [Token]
         let allowEmpty: Bool
     }
