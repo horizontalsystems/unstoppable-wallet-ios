@@ -5,7 +5,7 @@
 "button.continue" = "Продолжить";
 "button.done" = "Готово";
 "button.reset" = "Сбросить";
-"button.restore" = "Восстановить";
+"button.import" = "Import";
 "button.next" = "Далее";
 "button.share" = "Поделиться";
 "button.paste" = "Вставить";
@@ -39,9 +39,9 @@
 "alert.added_to_wallet" = "Добавлено в Кошелек";
 "alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Ещё не поддерживается";
-"alert.copied" = "Copied";
+"alert.copied" = "Скопировано";
 "alert.created" = "Создан";
-"alert.restored" = "Восстановлен";
+"alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
 "alert.deleted" = "Удалено";
 "alert.waiting_for_session" = "Ожидание Сессии";
@@ -94,10 +94,9 @@
 
 // Restore
 
-"restore.title" = "Восстановить";
+"restore.title" = "Import Wallet";
 "restore.advanced" = "Advanced";
-"restore.by" = "Из";
-"restore.restore_by" = "Восстановить из";
+"restore.import_by" = "Import By";
 "restore.restore_type.mnemonic" = "Фраза Восстановления";
 "restore.restore_type.private_key" = "Приватный Ключ";
 "restore.mnemonic.placeholder" = "Введите 12, 15, 18, 21 или 24 слова";
@@ -107,11 +106,10 @@
 "restore.checksum_error" = "Неверная контрольная сумма";
 "restore.passphrase" = "Кодовая Фраза";
 "restore.input.passphrase" = "Кодовая Фраза";
-"restore.passphrase_description" = "Введите свою кодовую фразу, которую вы использовали при создании этой мнемонической фразы";
+"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet but a new passphrase will a generate a brand new wallet.";
 "restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
-"restore.non_standard_restore" = "Нестандартное Восстановление";
-"restore.non_standard_restore.description" = "На этой странице представлен специальный механизм восстановления кошелька для пользователей Unstoppable с нестандартным кошельком. Как правило, такие кошельки могли быть созданы в версиях Unstoppable 0.27–0.28 с использованием неанглоязычного списка мнемонических слов и/или специального символа в парольной фразе кошелька (например, диакритического знака).
-\n\nЕсли вы являетесь затронутым пользователем, то баланс вашего кошелька будет отображаться как 0 после восстановления такого кошелька в версии 0.29 или выше.Эта страница позволит вам восстановить доступ к вашему нестандартному кошельку. После восстановления рекомендуется создать новый кошелек (который будет соответствовать стандарту) и перевести туда средства.";
+"restore.non_standard_import" = "Non-Standard Import";
+"restore.non_standard_import.description" = "This page provides a special wallet import mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
 "restore.warning.non_recommended.description" = "Похоже, этот кошелек использует нестандартный символ в списке мнемонических слов и/или парольной фразе. Если вы не видите баланс или транзакции, пожалуйста, прочтите подробности ниже.
 \n\nПОЖАЛУЙСТА НАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ.";
 "restore.error.non_standard.description" = "Это нестандартный кошелек.\n\nНАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ";
@@ -127,7 +125,7 @@
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Было до 2018 года";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Применяется после 2018 года";
 "sync_mode.from_blockchain" = "Из Блокчейна";
-"blockchain_settings.description" = "Выберите формат адреса для токена. Если вы сомневаетесь в правильности выбранного формата, выберите рекомендуемую опцию. При восстановлении существующего кошелька должен быть выбран правильный формат.";
+"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when importing an existing wallet.";
 
 // Coin Platforms
 
@@ -831,15 +829,6 @@
 "manage_wallets.not_supported.description" = "Ваш текущий тип кошелька %@ не поддерживает %@";
 "manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
-"manage_coins.add_coin.title" = "Добавить %@";
-"manage_coins.add_coin.subtitle" = "%@ Кошелек";
-"manage_coins.add_coin.text.set_up" = "Вам нужно настроить кошелек %@, чтобы отправлять или получать %@.";
-"manage_coins.add_coin.text.create_or_restore" = "Используйте кнопку \"Создать\", чтобы настроить новый кошелек %@ или \"Восстановить\", чтобы импортировать существующий.";
-"manage_coins.add_coin.text.create_only" = "На данный момент Unstoppable не может создать новый %@ кошелек. Вы можете только восстановить существующий.";
-"manage_coins.add_coin.text.tokens" = "Вы сможете использовать этот кошелек для: %@.";
-"manage_coins.add_coin.create" = "Создать";
-"manage_coins.add_coin.restore" = "Восстановить";
-
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Экспериментальные Функции";
@@ -918,8 +907,6 @@
 "settings_manage_keys.title" = "Кошельки";
 "settings_manage_keys.delete" = "Удалить";
 "settings_manage_keys.backup" = "Резервная Копия";
-"settings_manage_keys.create" = "Создать";
-"settings_manage_keys.restore" = "Восстановить";
 "settings_manage_keys.delete.title" = "Удалить Кошелек";
 "settings_manage_keys.delete.confirmation_remove" = "Действие удалит этот кошелек с устройства.";
 "settings_manage_keys.delete.confirmation_loose" = "Если вы не сделали резервную копию приватного ключа для этого кошелька, вы потеряете доступ к вашим средствам.";
@@ -1025,10 +1012,11 @@
 
 // Create Wallet
 
-"create_wallet.description" = "Your first step to become Unstoppable";
+"create_wallet.title" = "New Wallet";
+"create_wallet.name" = "Name";
 "create_wallet.advanced_setup" = "Advanced Setup";
-"create_wallet.create_button" = "Создать";
-"create_wallet.advanced_button" = "Advanced";
+"create_wallet.create" = "Create";
+"create_wallet.advanced" = "Advanced";
 "create_wallet.phrase_count" = "Phrase Count";
 "create_wallet.12_words" = "12 слов (рекомендуется)";
 "create_wallet.n_words" = "%@ слов";
@@ -1036,7 +1024,7 @@
 "create_wallet.passphrase" = "Кодовая Фраза";
 "create_wallet.input.passphrase" = "Кодовая Фраза";
 "create_wallet.input.confirm" = "Подтвердить";
-"create_wallet.passphrase_description" = "Кодовые фразы обеспечивают дополнительную защиту для кошельков, позволяя пользователям создавать несколько независимых мультивалютных кошельков, использующих одну мнемоническую фразу для восстановления, но имеющих разные пароли.\n\nДля восстановления этих кошельков пользователю потребуются мнемоническая фраза для восстановления, а также пароль для каждого восстанавливаемого кошелька.";
+"create_wallet.passphrase_description" = "Passphrases add additional security layer to the wallets enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase (secret 12 words) but associated with different passwords.\n\nTo restore these wallets a user will require menmonic recovery phrase as well as a password for each to be restored wallet.";
 "create_wallet.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "create_wallet.error.forbidden_symbols" = "Пожалуйста, используйте только поддерживаемые символы: A-Z a-z 0-9 ' \" ` & / ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Подтвержденная кодовая фраза не совпадает";
@@ -1064,7 +1052,6 @@
 
 // Intro
 
-"intro.start" = "Be Unstoppable";
 "intro.unchain_assets.title" = "Освободите активы";
 "intro.unchain_assets.description" = "Распоряжайтесь активами свободно и без ограничений";
 "intro.go_borderless.title" = "Избавьтесь от Границ";
@@ -1134,7 +1121,7 @@
 "wallet_connect_list.new_connection" = "Новое Подключение";
 "wallet_connect_list.disconnecting" = "Отсоединение";
 
-"wallet_connect.no_account.description" = "Нет подходящего кошелька. Вам нужно создать или восстановить текущий кошелек.";
+"wallet_connect.no_account.description" = "No suitable wallet. You need to create or import existing wallet.";
 "wallet_connect.no_account.i_understand" = "Я Понимаю";
 
 "wallet_connect.non_supported_account.description" = "Ваш текущий тип кошелька %@ не поддерживает WalletConnect";
@@ -1172,10 +1159,10 @@
 
 // Onboarding
 
-"onboarding.balance.create" = "Создать";
-"onboarding.balance.restore" = "Восстановить";
+"onboarding.balance.create" = "New Wallet";
+"onboarding.balance.import" = "Import Wallet";
 "onboarding.balance.watch" = "Watch Wallet";
-"onboarding.balance.password_hint" = "Совет: восстановление существующего кошелька при помощи другой кодовой фразы приведет к созданию нового кошелька. Это очень удобно, когда вы хотите использовать одну мнемоническую восстановительную фразу длиной от 12 до 24 слов для нескольких кошельков.";
+"onboarding.balance.password_hint" = "Tip! Importing an existing wallet but with a new passphrase will generate a brand new wallet. This is handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
