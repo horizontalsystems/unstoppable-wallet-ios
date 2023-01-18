@@ -5,7 +5,7 @@
 "button.continue" = "继续";
 "button.done" = "完成";
 "button.reset" = "重置";
-"button.restore" = "恢复";
+"button.import" = "Import";
 "button.next" = "下一步";
 "button.share" = "分享";
 "button.paste" = "粘帖";
@@ -39,9 +39,9 @@
 "alert.added_to_wallet" = "添加到钱包";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
-"alert.copied" = "Copied";
+"alert.copied" = "已复制";
 "alert.created" = "已创建";
-"alert.restored" = "已恢复";
+"alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
 "alert.deleted" = "已删除";
 "alert.waiting_for_session" = "等待会话";
@@ -94,10 +94,9 @@
 
 // Restore
 
-"restore.title" = "恢复";
+"restore.title" = "Import Wallet";
 "restore.advanced" = "Advanced";
-"restore.by" = "由";
-"restore.restore_by" = "还原方式";
+"restore.import_by" = "Import By";
 "restore.restore_type.mnemonic" = "恢复码";
 "restore.restore_type.private_key" = "私钥";
 "restore.mnemonic.placeholder" = "输入12、15、18、21或24个单词";
@@ -107,10 +106,10 @@
 "restore.checksum_error" = "校验和无效";
 "restore.passphrase" = "密码";
 "restore.input.passphrase" = "密码";
-"restore.passphrase_description" = "输入您在创建此助记词时使用的密码";
+"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet but a new passphrase will a generate a brand new wallet.";
 "restore.error.empty_passphrase" = "密码不能为空白";
-"restore.non_standard_restore" = "非标准还原";
-"restore.non_standard_restore.description" = "此页面为拥有非标准钱包的 Unstoppable 用户提供了一种特殊的钱包恢复机制。 通常，此类钱包可以在 Unstoppable 版本 0.27 - 0.28 中使用非英语助记词列表和/或钱包密码短语中的特殊字符（即变音符号）创建。\n\n如果您是受影响的用户，那么在 0.29 或更高版本中恢复此类钱包后，您的钱包余额将显示为 0。 此页面将使您能够恢复对非标准钱包的访问。 恢复后，建议您创建一个新钱包（符合标准）并将资金转移到那里。";
+"restore.non_standard_import" = "Non-Standard Import";
+"restore.non_standard_import.description" = "This page provides a special wallet import mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
 "restore.warning.non_recommended.description" = "这个钱包似乎在其密码列表和/或密码短语中使用了非标准字符。 如果您没有看到余额或交易，请阅读下面的详细信息。\n\n点击获取更多信息";
 "restore.error.non_standard.description" = "这是一个不符合标准的钱包。 详情请阅读下文。\n\n点击获取更多信息";
 
@@ -125,7 +124,7 @@
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "2018年之前常用";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "2018年之后常用";
 "sync_mode.from_blockchain" = "来自区块链";
-"blockchain_settings.description" = "选择代币的地址格式。如果不确定，请使用建议选项继续。应在恢复现有钱包时选择正确的格式。";
+"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when importing an existing wallet.";
 
 // Coin Platforms
 
@@ -829,15 +828,6 @@
 "manage_wallets.not_supported.description" = "您当前的钱包类型 %@ 不支持 %@";
 "manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
-"manage_coins.add_coin.title" = "添加%@ ";
-"manage_coins.add_coin.subtitle" = "%@钱包";
-"manage_coins.add_coin.text.set_up" = "您必须创建%@钱包才能对%@进行转账或收款。";
-"manage_coins.add_coin.text.create_or_restore" = "您可以单击“创建”按钮以初始化新的%@钱包，或单击“恢复”按钮以导入现有的钱包。";
-"manage_coins.add_coin.text.create_only" = "目前，Unstoppable无法创建新的%@钱包。 请导入现有的钱包。";
-"manage_coins.add_coin.text.tokens" = "您可以使用%@钱包了";
-"manage_coins.add_coin.create" = "创建";
-"manage_coins.add_coin.restore" = "恢复";
-
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "实验性";
@@ -916,8 +906,6 @@
 "settings_manage_keys.title" = "管理钱包";
 "settings_manage_keys.delete" = "删除";
 "settings_manage_keys.backup" = "备份";
-"settings_manage_keys.create" = "创建";
-"settings_manage_keys.restore" = "恢复";
 "settings_manage_keys.delete.title" = "删除钱包";
 "settings_manage_keys.delete.confirmation_remove" = "该操作将从此设备删除钱包。";
 "settings_manage_keys.delete.confirmation_loose" = "如果您尚未对此钱包备份私钥，您将失去您的资金。";
@@ -1023,10 +1011,11 @@
 
 // Create Wallet
 
-"create_wallet.description" = "Your first step to become Unstoppable";
+"create_wallet.title" = "New Wallet";
+"create_wallet.name" = "Name";
 "create_wallet.advanced_setup" = "Advanced Setup";
-"create_wallet.create_button" = "创建";
-"create_wallet.advanced_button" = "Advanced";
+"create_wallet.create" = "Create";
+"create_wallet.advanced" = "Advanced";
 "create_wallet.phrase_count" = "Phrase Count";
 "create_wallet.12_words" = "12 个单词(推荐)";
 "create_wallet.n_words" = "%@ 个单词";
@@ -1034,7 +1023,7 @@
 "create_wallet.passphrase" = "密码";
 "create_wallet.input.passphrase" = "密码";
 "create_wallet.input.confirm" = "确认";
-"create_wallet.passphrase_description" = "密码为钱包增加了一个额外的保安层，让用户可以使用可关联不同密码的单一个助记词恢复码来创建多个独立的多代币钱包。\n\n要恢复这些钱包，用户必须具备助记词恢复码以及每一个待恢复钱包的密码。";
+"create_wallet.passphrase_description" = "Passphrases add additional security layer to the wallets enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase (secret 12 words) but associated with different passwords.\n\nTo restore these wallets a user will require menmonic recovery phrase as well as a password for each to be restored wallet.";
 "create_wallet.error.empty_passphrase" = "密码不能为空";
 "create_wallet.error.forbidden_symbols" = "请只使用支持的符号：A-Z a-z 0-9 ' \" & / ? , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "确认密码不匹配";
@@ -1062,7 +1051,6 @@
 
 // Intro
 
-"intro.start" = "Be Unstoppable";
 "intro.unchain_assets.title" = "解除资产";
 "intro.unchain_assets.description" = "请勿锁定您自己，也不要让别人对您这样做";
 "intro.go_borderless.title" = "进入无国界";
@@ -1132,7 +1120,7 @@
 "wallet_connect_list.new_connection" = "新连接";
 "wallet_connect_list.disconnecting" = "正在断开连接";
 
-"wallet_connect.no_account.description" = "没有合适的钱包。您需要创建或恢复现有钱包.";
+"wallet_connect.no_account.description" = "No suitable wallet. You need to create or import existing wallet.";
 "wallet_connect.no_account.i_understand" = "我理解";
 
 "wallet_connect.non_supported_account.description" = "您当前的钱包类型 %@ 不支持 WalletConnect";
@@ -1170,10 +1158,10 @@
 
 // Onboarding
 
-"onboarding.balance.create" = "创建";
-"onboarding.balance.restore" = "恢复";
+"onboarding.balance.create" = "New Wallet";
+"onboarding.balance.import" = "Import Wallet";
 "onboarding.balance.watch" = "Watch Wallet";
-"onboarding.balance.password_hint" = "贴士！使用一个新密码恢复现有的钱包将生成一个全新的钱包。如果您希望对多个钱包使用单个12-24个单词的助记词恢复码，这将非常方便。";
+"onboarding.balance.password_hint" = "Tip! Importing an existing wallet but with a new passphrase will generate a brand new wallet. This is handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
