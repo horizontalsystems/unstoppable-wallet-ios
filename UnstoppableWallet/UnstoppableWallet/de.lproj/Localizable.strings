@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Zum Wallet hinzugefügt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
-"alert.copied" = "Kopiert";
+"alert.copied" = "Copied";
 "alert.created" = "Erstellt";
 "alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
@@ -1084,8 +1084,8 @@
 "wallet_connect.active_account" = "Aktive Wallet";
 "wallet_connect.address" = "Adresse";
 "wallet_connect.network" = "Netzwerk";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Adresse";
+"wallet_connect.network" = "Netzwerk";
 "wallet_connect.list.pending_requests" = "Ausstehende Anfragen";
 "wallet_connect.main.no_any_supported_chains" = "Keine unterstützten Ketten!";
 "wallet_connect.main.unsupported_chains" = "Einige Ketten werden nicht unterstützt!";
@@ -1119,8 +1119,8 @@
 "wallet_connect_list.disconnecting" = "Verbindung wird getrennt";
 
 "wallet_connect.no_account.description" = "You need to create or import a wallet before you can use WalletConnect.";
-"wallet_connect.unbackuped_account.description" = "Your current wallet is not backed up.";
-"wallet_connect.error_dialog.i_understand" = "I Understand";
+"wallet_connect.no_account.close" = "Close";
+"wallet_connect.unbackuped_account.description" = "You need to backup %@ before you can use WalletConnect";
 
 "wallet_connect.non_supported_account.description" = "Your current wallet type %@ does not support WalletConnect";
 "wallet_connect.non_supported_account.switch" = "Wechseln";
