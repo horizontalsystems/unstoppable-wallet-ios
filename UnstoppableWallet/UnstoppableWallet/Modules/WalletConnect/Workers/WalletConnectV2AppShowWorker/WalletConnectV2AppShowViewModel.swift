@@ -27,11 +27,16 @@ class WalletConnectV2AppShowViewModel {
 
     func onWalletConnectDeepLink(url: String) {
         guard let activeAccount = service.activeAccount else {
-            openWalletConnectRelay.accept(.noAccount)
+            openWalletConnectRelay.accept(.errorDialog(error: .noAccount))
             return
         }
 
-        openWalletConnectRelay.accept(activeAccount.type.supportsWalletConnect ? .pair(url: url) : .nonSupportedAccountType(accountTypeDescription: activeAccount.type.description))
+        if !activeAccount.type.supportsWalletConnect {
+            openWalletConnectRelay.accept(.errorDialog(error: .nonSupportedAccountType(accountTypeDescription: activeAccount.type.description)))
+            return
+        }
+
+        openWalletConnectRelay.accept(activeAccount.backedUp ? .pair(url: url) : .errorDialog(error: .unbackupedAccount))
     }
 
 }
@@ -54,8 +59,7 @@ extension WalletConnectV2AppShowViewModel {
     enum WalletConnectOpenMode {
         case pair(url: String)
         case proposal(WalletConnectSign.Session.Proposal)
-        case noAccount
-        case nonSupportedAccountType(accountTypeDescription: String)
+        case errorDialog(error: WalletConnectV2AppShowView.WalletConnectOpenError)
     }
 
 }

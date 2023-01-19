@@ -20,10 +20,6 @@ class WalletConnectV2AppShowView {
 
     private func openWalletConnect(mode: WalletConnectV2AppShowViewModel.WalletConnectOpenMode) {
         switch mode {
-        case .noAccount:
-            WalletConnectV2AppShowView.showWalletConnectError(error: .noAccount, viewController: parentViewController)
-        case .nonSupportedAccountType(let accountTypeDescription):
-            WalletConnectV2AppShowView.showWalletConnectError(error: .nonSupportedAccountType(accountTypeDescription: accountTypeDescription), viewController: parentViewController)
         case .pair(let uri):
             switch WalletConnectUriHandler.uriVersion(uri: uri) {
             case 1:
@@ -51,6 +47,8 @@ class WalletConnectV2AppShowView {
             }
         case .proposal(let proposal):
             processWalletConnectPair(proposal: proposal)
+        case .errorDialog(let error):
+            WalletConnectV2AppShowView.showWalletConnectError(error: error, viewController: parentViewController)
         }
     }
 
@@ -103,7 +101,7 @@ extension WalletConnectV2AppShowView {
                     title: "wallet_connect.title".localized,
                     image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob),
                     description: "wallet_connect.no_account.description".localized,
-                    buttonTitle: "wallet_connect.no_account.i_understand".localized,
+                    buttonTitle: "wallet_connect.error_dialog.i_understand".localized,
                     onTapButton: InformationModule.afterClose())
 
             viewController?.present(presentingViewController, animated: true)
@@ -118,12 +116,22 @@ extension WalletConnectV2AppShowView {
                     })
 
             viewController?.present(presentingViewController, animated: true)
+        case .unbackupedAccount:
+            let presentingViewController = InformationModule.simpleInfo(
+                    title: "wallet_connect.title".localized,
+                    image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob),
+                    description: "wallet_connect.unbackuped_account.description".localized,
+                    buttonTitle: "wallet_connect.error_dialog.i_understand".localized,
+                    onTapButton: InformationModule.afterClose())
+
+            viewController?.present(presentingViewController, animated: true)
         }
     }
 
     enum WalletConnectOpenError {
         case noAccount
         case nonSupportedAccountType(accountTypeDescription: String)
+        case unbackupedAccount
     }
 
 }

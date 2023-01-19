@@ -117,11 +117,16 @@ extension MainSettingsViewModel {
 
     func onTapWalletConnect() {
         guard let activeAccount = service.activeAccount else {
-            openWalletConnectRelay.accept(.noAccount)
+            openWalletConnectRelay.accept(.errorDialog(error: .noAccount))
             return
         }
 
-        openWalletConnectRelay.accept(activeAccount.type.supportsWalletConnect ? .list : .nonSupportedAccountType(accountTypeDescription: activeAccount.type.description))
+        if !activeAccount.type.supportsWalletConnect {
+            openWalletConnectRelay.accept(.errorDialog(error: .nonSupportedAccountType(accountTypeDescription: activeAccount.type.description)))
+            return
+        }
+
+        openWalletConnectRelay.accept(activeAccount.backedUp ? .list : .errorDialog(error: .unbackupedAccount))
     }
 
     func onTapCompanyLink() {
@@ -134,8 +139,7 @@ extension MainSettingsViewModel {
 
     enum WalletConnectOpenMode {
         case list
-        case noAccount
-        case nonSupportedAccountType(accountTypeDescription: String)
+        case errorDialog(error: WalletConnectV2AppShowView.WalletConnectOpenError)
     }
 
 }

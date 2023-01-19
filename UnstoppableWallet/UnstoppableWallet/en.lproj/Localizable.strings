@@ -1121,9 +1121,10 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "wallet_connect_list.disconnecting" = "Disconnecting";
 
 "wallet_connect.no_account.description" = "No suitable wallet. You need to create or import existing wallet.";
-"wallet_connect.no_account.i_understand" = "I Understand";
+"wallet_connect.unbackuped_account.description" = "Your current wallet is not backed up.";
+"wallet_connect.error_dialog.i_understand" = "I Understand";
 
-"wallet_connect.non_supported_account.description" = "You current wallet type %@ does not support WalletConnect";
+"wallet_connect.non_supported_account.description" = "Your current wallet type %@ does not support WalletConnect";
 "wallet_connect.non_supported_account.switch" = "Switch";
 
 "wallet_connect.pending_requests_title" = "Pending Requests";
