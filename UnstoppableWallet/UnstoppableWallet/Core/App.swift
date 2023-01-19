@@ -97,9 +97,6 @@ class App {
 
     let appIconManager = AppIconManager()
 
-    let proFeaturesAuthorizationAdapter: ProFeaturesAuthorizationAdapter
-    let proFeaturesAuthorizationManager: ProFeaturesAuthorizationManager
-
     let appManager: AppManager
 
     init() {
@@ -293,10 +290,6 @@ class App {
         balancePrimaryValueManager = BalancePrimaryValueManager(localStorage: StorageKit.LocalStorage.default)
         balanceHiddenManager = BalanceHiddenManager(localStorage: StorageKit.LocalStorage.default)
         balanceConversionManager = BalanceConversionManager(marketKit: marketKit, localStorage: StorageKit.LocalStorage.default)
-
-        let proFeaturesStorage = ProFeaturesStorage(secureStorage: keychainKit.secureStorage)
-        proFeaturesAuthorizationAdapter = ProFeaturesAuthorizationAdapter(networkManager: networkManager, appConfigProvider: appConfigProvider)
-        proFeaturesAuthorizationManager = ProFeaturesAuthorizationManager(storage: proFeaturesStorage, accountManager: accountManager, evmSyncSourceManager: evmSyncSourceManager)
 
         appManager = AppManager(
                 accountManager: accountManager,

@@ -9,24 +9,20 @@ import MarketKit
 
 class CoinDetailsViewController: ThemeViewController {
     private let viewModel: CoinDetailsViewModel
-    private let proFeaturesViewModel: ProFeaturesYakAuthorizationViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
 
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = PlaceholderViewModule.reachabilityView()
-    private let proFeaturesCell: ProFeaturesPassesCell
 
     weak var parentNavigationController: UINavigationController?
 
     private var viewItem: CoinDetailsViewModel.ViewItem?
 
-    init(viewModel: CoinDetailsViewModel, proFeaturesViewModel: ProFeaturesYakAuthorizationViewModel) {
+    init(viewModel: CoinDetailsViewModel) {
         self.viewModel = viewModel
-        self.proFeaturesViewModel = proFeaturesViewModel
 
-        proFeaturesCell = ProFeaturesPassesCell(viewModel: proFeaturesViewModel)
         super.init()
     }
 
@@ -72,8 +68,6 @@ class CoinDetailsViewController: ThemeViewController {
         tableView.showsVerticalScrollIndicator = false
 
         tableView.registerCell(forClass: MarketCardCell.self)
-
-        proFeaturesCell.parentViewController = parentNavigationController
 
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in
             self?.sync(viewItem: $0)
@@ -143,45 +137,14 @@ class CoinDetailsViewController: ThemeViewController {
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func openProDataChart(proFeaturesActivated: Bool, type: CoinProChartModule.ProChartType) {
-        let viewController = ProFeatures.mountainYakBottomSheet {
-            print("Can open main mint controller!")
-        }
-
+    private func openProDataChart(type: CoinProChartModule.ProChartType) {
+        let viewController = CoinProChartModule.viewController(coinUid: viewModel.coin.uid, type: type)
         parentNavigationController?.present(viewController, animated: true)
-
-//        guard proFeaturesActivated else {
-//            proFeaturesViewModel.authorize()
-//            return
-//        }
-//
-//        // todo: Route pro charts.
-//        let viewController = CoinProChartModule.viewController(coinUid: viewModel.coin.uid, type: type)
-//        parentNavigationController?.present(viewController, animated: true)
     }
 
 }
 
 extension CoinDetailsViewController: SectionsDataSource {
-
-    private func proFeaturesPassesSection(viewItem: CoinDetailsViewModel.ViewItem) -> SectionProtocol? {
-        guard !viewItem.proFeaturesActivated else {
-            return nil
-        }
-
-        return Section(
-                id: "pro-features-passes-section",
-                headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin12),
-                rows: [
-                    StaticRow(
-                            cell: proFeaturesCell,
-                            id: "pro-features-passes",
-                            height: ProFeaturesPassesCell.height
-                    )
-                ]
-        )
-    }
 
     private func hasCharts(items: [MarketCardView.ViewItem?]) -> Bool {
         !items.compactMap { $0 } .isEmpty
@@ -200,12 +163,12 @@ extension CoinDetailsViewController: SectionsDataSource {
 
                     if let volumeViewItem = viewItem.tokenLiquidity.volume {
                         cell.append(viewItem: volumeViewItem) { [weak self] in
-                            self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .volume)
+                            self?.openProDataChart(type: .volume)
                         }
                     }
                     if let liquidityViewItem = viewItem.tokenLiquidity.liquidity {
                        cell.append(viewItem: liquidityViewItem) { [weak self] in
-                            self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .liquidity)
+                            self?.openProDataChart(type: .liquidity)
                         }
                     }
                 }
@@ -240,12 +203,12 @@ extension CoinDetailsViewController: SectionsDataSource {
 
                     if let txCountViewItem = viewItem.tokenDistribution.txCount {
                         cell.append(viewItem: txCountViewItem) { [weak self] in
-                            self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .txCount)
+                            self?.openProDataChart(type: .txCount)
                         }
                     }
                     if let txVolumeViewItem = viewItem.tokenDistribution.txVolume {
                         cell.append(viewItem: txVolumeViewItem) { [weak self] in
-                            self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .txVolume)
+                            self?.openProDataChart(type: .txVolume)
                         }
                     }
                 }
@@ -261,7 +224,7 @@ extension CoinDetailsViewController: SectionsDataSource {
 
                     if let activeAddressesViewItem = viewItem.tokenDistribution.activeAddresses {
                         cell.append(viewItem: activeAddressesViewItem) { [weak self] in
-                            self?.openProDataChart(proFeaturesActivated: viewItem.proFeaturesActivated, type: .activeAddresses)
+                            self?.openProDataChart(type: .activeAddresses)
                         }
                     }
                 }
@@ -308,8 +271,7 @@ extension CoinDetailsViewController: SectionsDataSource {
     }
 
     private func distributionSections(viewItem: CoinDetailsViewModel.ViewItem, isFirst: Bool) -> [SectionProtocol]? {
-//        var sections = distributionCharts(viewItem: viewItem, isLast: !viewItem.hasMajorHolders)
-        var sections = [SectionProtocol]()
+        var sections = distributionCharts(viewItem: viewItem, isLast: !viewItem.hasMajorHolders)
 
         if viewItem.hasMajorHolders {
             let majorHoldersRow = tableView.universalRow48(
@@ -432,25 +394,23 @@ extension CoinDetailsViewController: SectionsDataSource {
         return sections
     }
 
-    private func investorDataSections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
+    private func investorDataSections(viewItem: CoinDetailsViewModel.ViewItem, isFirst: Bool) -> [SectionProtocol]? {
         let treasuries = viewItem.treasuries
         let fundsInvested = viewItem.fundsInvested
         let reportsCount = viewItem.reportsCount
 
         var rows = [RowProtocol]()
 
-        let hasTreasuries = treasuries != nil
-        let hasFundsInvested = fundsInvested != nil
-        let hasReports = reportsCount != nil
+        let count = [treasuries, fundsInvested, reportsCount].compactMap { $0 }.count
 
-        if let treasuries = treasuries {
+        if let treasuries {
             let row = tableView.universalRow48(
                     id: "treasuries",
                     title: .subhead2("coin_page.treasuries".localized),
                     value: .subhead1(treasuries),
                     accessoryType: .disclosure,
                     isFirst: true,
-                    isLast: !hasFundsInvested && !hasReports
+                    isLast: rows.count == count - 1
             ) { [weak self] in
                 self?.openTreasuries()
             }
@@ -458,14 +418,14 @@ extension CoinDetailsViewController: SectionsDataSource {
             rows.append(row)
         }
 
-        if let fundsInvested = fundsInvested {
+        if let fundsInvested {
             let row = tableView.universalRow48(
                     id: "funds-invested",
                     title: .subhead2("coin_page.funds_invested".localized),
                     value: .subhead1(fundsInvested),
                     accessoryType: .disclosure,
-                    isFirst: !hasTreasuries,
-                    isLast: !hasReports
+                    isFirst: rows.isEmpty,
+                    isLast: rows.count == count - 1
             ) { [weak self] in
                 self?.openFundsInvested()
             }
@@ -473,14 +433,14 @@ extension CoinDetailsViewController: SectionsDataSource {
             rows.append(row)
         }
 
-        if let reportsCount = reportsCount {
+        if let reportsCount {
             let row = tableView.universalRow48(
                     id: "reports",
                     title: .subhead2("coin_page.reports".localized),
                     value: .subhead1(reportsCount),
                     accessoryType: .disclosure,
-                    isFirst: !hasTreasuries && !hasFundsInvested,
-                    isLast: true
+                    isFirst: rows.isEmpty,
+                    isLast: rows.count == count - 1
             ) { [weak self] in
                 self?.openReports()
             }
@@ -496,7 +456,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                         id: "investor-data-header",
                         footerState: .margin(height: .margin12),
                         rows: [
-                            tableView.headerInfoRow(id: "header-investor-data", title: "coin_page.investor_data".localized)
+                            tableView.headerInfoRow(id: "header-investor-data", title: "coin_page.investor_data".localized, topSeparator: !isFirst)
                         ]
                 ),
                 Section(
@@ -569,13 +529,9 @@ extension CoinDetailsViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let viewItem = viewItem {
-//            if let proFeaturesSection = proFeaturesPassesSection(viewItem: viewItem) {
-//                sections.append(proFeaturesSection)
-//            }
-//
-//            if let liquiditySections = liquiditySections(viewItem: viewItem, isFirst: sections.isEmpty) {
-//                sections.append(contentsOf: liquiditySections)
-//            }
+            if let liquiditySections = liquiditySections(viewItem: viewItem, isFirst: sections.isEmpty) {
+                sections.append(contentsOf: liquiditySections)
+            }
 
             if let distributionSections = distributionSections(viewItem: viewItem, isFirst: sections.isEmpty) {
                 sections.append(contentsOf: distributionSections)
@@ -585,7 +541,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                 sections.append(contentsOf: tvlSections)
             }
 
-            if let investorDataSections = investorDataSections(viewItem: viewItem) {
+            if let investorDataSections = investorDataSections(viewItem: viewItem, isFirst: sections.isEmpty) {
                 sections.append(contentsOf: investorDataSections)
             }
 
