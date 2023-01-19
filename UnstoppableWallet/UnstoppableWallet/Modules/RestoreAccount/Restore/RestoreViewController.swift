@@ -9,7 +9,7 @@ import ComponentKit
 import UIExtensions
 
 class RestoreViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
+    private var wrapperViewHeight: CGFloat = .margin16 + .heightButton + .margin32
 
     private let advanced: Bool
     private let viewModel: RestoreViewModel
@@ -77,6 +77,9 @@ class RestoreViewController: KeyboardAwareViewController {
 
         tableView.sectionDataSource = self
 
+        if !advanced {
+            wrapperViewHeight += .margin16 + .heightButton //additional button
+        }
         let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
 
         view.addSubview(gradientWrapperView)
@@ -114,6 +117,7 @@ class RestoreViewController: KeyboardAwareViewController {
             advancedButton.setTitle("restore.advanced".localized, for: .normal)
             advancedButton.addTarget(self, action: #selector(onTapAdvanced), for: .touchUpInside)
         }
+        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: wrapperViewHeight - .margin16, right: 0)
 
         let namePlaceholder = viewModel.namePlaceholder
         nameCell.inputText = namePlaceholder
@@ -227,7 +231,7 @@ class RestoreViewController: KeyboardAwareViewController {
 
         showAccessoryView = !hideHint
         hintView.isHidden = hideHint
-        setInitialState(bottomPadding: wrapperViewHeight + (hideHint ? 0 : hintView.height))
+        setInitialState(bottomPadding: hideHint ? 0 : hintView.height)
     }
 
     private func sync(inputsVisible: Bool) {
@@ -376,7 +380,6 @@ extension RestoreViewController: SectionsDataSource {
                 let advancedSections: [SectionProtocol] = [
                     Section(
                             id: "wordlist-passphrase-toggle",
-                            headerState: .margin(height: .margin32),
                             footerState: .margin(height: .margin32),
                             rows: [
                                 StaticRow(
@@ -397,7 +400,7 @@ extension RestoreViewController: SectionsDataSource {
                     ),
                     Section(
                             id: "passphrase",
-                            footerState: inputsVisible ? .margin(height: .margin24) : .margin(height: 0),
+                            footerState: inputsVisible ? .margin(height: .margin32) : .margin(height: 0),
                             rows: [
                                 StaticRow(
                                         cell: passphraseCell,
@@ -445,6 +448,7 @@ extension RestoreViewController: SectionsDataSource {
             sections.append(
                     Section(
                             id: "private-key-input",
+                            footerState: .margin(height: .margin32),
                             rows: [
                                 StaticRow(
                                         cell: privateKeyInputCell,

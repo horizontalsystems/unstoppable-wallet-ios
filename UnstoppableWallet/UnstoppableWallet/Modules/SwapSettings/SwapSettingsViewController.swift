@@ -9,7 +9,7 @@ import ComponentKit
 import UIExtensions
 
 class SwapSettingsViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .heightButton + .margin16 + .margin16
+    private let wrapperViewHeight: CGFloat = .margin16 + .heightButton + .margin32
     private let animationDuration: TimeInterval = 0.2
     private let disposeBag = DisposeBag()
 
@@ -60,9 +60,9 @@ class SwapSettingsViewController: KeyboardAwareViewController {
 
         gradientWrapperView.addSubview(applyButton)
         applyButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide)
+            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
         }
         applyButton.set(style: .yellow)
         applyButton.setTitle("button.apply".localized, for: .normal)
@@ -71,12 +71,15 @@ class SwapSettingsViewController: KeyboardAwareViewController {
         subscribe(disposeBag, dataSourceManager.dataSourceUpdated) { [weak self] _ in self?.updateDataSource() }
         updateDataSource()
 
-        setInitialState(bottomPadding: wrapperViewHeight)
+        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -.margin16, right: 0)
+        additionalInsetsOnlyForClosedKeyboard = false
+        ignoreSafeAreaForAccessoryView = false
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        setInitialState(bottomPadding: gradientWrapperView.height)
         isLoaded = true
     }
 

@@ -134,6 +134,7 @@ extension OneInchSettingsDataSource {
 
             Section(
                     id: "service-fee",
+                    footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(
                                 cell: serviceFeeNoteCell,

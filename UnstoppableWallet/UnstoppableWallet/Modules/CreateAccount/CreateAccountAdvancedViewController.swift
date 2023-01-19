@@ -13,7 +13,7 @@ protocol ICreateAccountListener: UIViewController {
 }
 
 class CreateAccountAdvancedViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
+    private let wrapperViewHeight: CGFloat =  .margin16 + .heightButton + .margin32
     private let viewModel: CreateAccountViewModel
     private let disposeBag = DisposeBag()
 
@@ -132,7 +132,7 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
         subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.show(error: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.finish() }
 
-        setInitialState(bottomPadding: wrapperViewHeight)
+        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: wrapperViewHeight - .margin16, right: 0)
 
         tableView.buildSections()
         isLoaded = true
