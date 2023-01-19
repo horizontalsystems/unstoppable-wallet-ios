@@ -124,7 +124,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
 "sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when importing an existing wallet.";
+"blockchain_settings.description" = "Select address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
