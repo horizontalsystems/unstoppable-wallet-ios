@@ -6,15 +6,11 @@ struct CoinDetailsModule {
         let service = CoinDetailsService(
                 fullCoin: fullCoin,
                 marketKit: App.shared.marketKit,
-                currencyKit: App.shared.currencyKit,
-                proFeaturesManager: App.shared.proFeaturesAuthorizationManager
+                currencyKit: App.shared.currencyKit
         )
-        let proFeaturesService = ProFeaturesYakAuthorizationService(manager: App.shared.proFeaturesAuthorizationManager, adapter: App.shared.proFeaturesAuthorizationAdapter)
-
         let viewModel = CoinDetailsViewModel(service: service)
-        let proFeaturesViewModel = ProFeaturesYakAuthorizationViewModel(service: proFeaturesService)
 
-        return CoinDetailsViewController(viewModel: viewModel, proFeaturesViewModel: proFeaturesViewModel)
+        return CoinDetailsViewController(viewModel: viewModel)
     }
 
 }

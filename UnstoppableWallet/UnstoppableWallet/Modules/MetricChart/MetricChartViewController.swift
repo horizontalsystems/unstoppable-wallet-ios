@@ -99,7 +99,7 @@ extension MetricChartViewController {
     private var chartSection: SectionProtocol {
         Section(
                 id: "chart",
-                footerState: tableView.sectionFooter(text: viewModel.description ?? ""),
+                footerState: viewModel.description.map { tableView.sectionFooter(text: $0) } ?? .margin(height: .margin16),
                 rows: [chartRow]
         )
     }

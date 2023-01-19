@@ -6,7 +6,7 @@ import LanguageKit
 class CoinProChartModule {
 
     static func viewController(coinUid: String, type: ProChartType) -> UIViewController {
-        let chartFetcher = ProChartFetcher(marketKit: App.shared.marketKit, proFeaturesManager: App.shared.proFeaturesAuthorizationManager, coinUid: coinUid, type: type)
+        let chartFetcher = ProChartFetcher(marketKit: App.shared.marketKit, coinUid: coinUid, type: type)
 
         let chartService = MetricChartService(
                 currencyKit: App.shared.currencyKit,
@@ -40,6 +40,16 @@ extension CoinProChartModule {
             case .txCount: return "coin_page.tx_count".localized
             case .txVolume: return "coin_page.tx_volume".localized
             case .activeAddresses: return "coin_page.active_addresses".localized
+            }
+        }
+
+        var description: String {
+            switch self {
+            case .volume: return "coin_page.dex_volume.description".localized
+            case .liquidity: return "coin_page.dex_liquidity.description".localized
+            case .txCount: return "coin_page.tx_count.description".localized
+            case .txVolume: return "coin_page.tx_volume.description".localized
+            case .activeAddresses: return "coin_page.active_addresses.description".localized
             }
         }
 

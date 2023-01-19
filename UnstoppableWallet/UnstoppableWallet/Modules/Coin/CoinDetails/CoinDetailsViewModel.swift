@@ -50,11 +50,6 @@ class CoinDetailsViewModel {
     private func chart(title: String, item: CoinDetailsService.ProData, isCurrencyValue: Bool = true) -> MarketCardView.ViewItem? {
         switch item {
         case .empty: return nil
-        case .forbidden: return MarketCardView.ViewItem(
-                title: title,
-                value: "***",
-                description: "coin_page.chart.locked".localized,
-                descriptionColor: .themeGray)
         case .completed(let values):
             guard let first = values.first, let last = values.last else {
                 return nil
@@ -84,14 +79,14 @@ class CoinDetailsViewModel {
         }
     }
 
-    private func tokenLiquidity(proFeatures: CoinDetailsService.ProFeatures) -> TokenLiquidityViewItem {
+    private func tokenLiquidity(proFeatures: CoinDetailsService.AnalyticData) -> TokenLiquidityViewItem {
         TokenLiquidityViewItem(
                 volume: chart(title: CoinProChartModule.ProChartType.volume.title, item: proFeatures.dexVolumes),
                 liquidity: chart(title: CoinProChartModule.ProChartType.liquidity.title, item: proFeatures.dexLiquidity)
         )
     }
 
-    private func tokenDistribution(proFeatures: CoinDetailsService.ProFeatures) -> TokenDistributionViewItem {
+    private func tokenDistribution(proFeatures: CoinDetailsService.AnalyticData) -> TokenDistributionViewItem {
         TokenDistributionViewItem(
                 txCount: chart(title: CoinProChartModule.ProChartType.txCount.title, item: proFeatures.txCount, isCurrencyValue: false),
                 txVolume: chart(title: CoinProChartModule.ProChartType.txVolume.title, item: proFeatures.txVolume),
@@ -101,9 +96,8 @@ class CoinDetailsViewModel {
 
     private func viewItem(item: CoinDetailsService.Item) -> ViewItem {
         ViewItem(
-                proFeaturesActivated: item.proFeatures.activated,
-                tokenLiquidity: tokenLiquidity(proFeatures: item.proFeatures),
-                tokenDistribution: tokenDistribution(proFeatures: item.proFeatures),
+                tokenLiquidity: tokenLiquidity(proFeatures: item.analytics),
+                tokenDistribution: tokenDistribution(proFeatures: item.analytics),
                 hasMajorHolders: service.hasMajorHolders,
                 tvlChart: chart(title: "coin_page.chart_tvl".localized, item: item.tvls.flatMap { .completed($0) } ?? .empty),
                 tvlRank: item.marketInfoDetails.tvlRank.map { "#\($0)" },
@@ -181,7 +175,6 @@ extension CoinDetailsViewModel {
 extension CoinDetailsViewModel {
 
     struct ViewItem {
-        let proFeaturesActivated: Bool
         let tokenLiquidity: TokenLiquidityViewItem
         let tokenDistribution: TokenDistributionViewItem
         let hasMajorHolders: Bool
