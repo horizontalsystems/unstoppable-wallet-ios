@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "복사됨";
+"alert.copied" = "Copied";
 "alert.created" = "생성됨";
 "alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
@@ -113,16 +113,16 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Legacy";
-"coin_settings.derivation.title.bip49" = "최신(권장)";
-"coin_settings.derivation.title.bip84" = "최신";
+"coin_settings.derivation.title.bip44" = "Old";
+"coin_settings.derivation.title.bip49" = "Good";
+"coin_settings.derivation.title.bip84" = "Best";
 "coin_settings.title" = "블록 체인 설정";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "현금주소(권장)";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "2018년 이전 공통";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "2018년 이후 공통";
 "sync_mode.from_blockchain" = "블록체인으로 부터";
-"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when importing an existing wallet.";
+"blockchain_settings.description" = "Select address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -1084,8 +1084,8 @@
 "wallet_connect.active_account" = "지갑 활성화";
 "wallet_connect.address" = "주소";
 "wallet_connect.network" = "네트워크";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "주소";
+"wallet_connect.network" = "네트워크";
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
 "wallet_connect.main.unsupported_chains" = "일부 체인은 지원되지 않습니다!";
@@ -1119,9 +1119,10 @@
 "wallet_connect_list.disconnecting" = "연결을 끊는 중...";
 
 "wallet_connect.no_account.description" = "No suitable wallet. You need to create or import existing wallet.";
-"wallet_connect.no_account.i_understand" = "이해합니다";
+"wallet_connect.unbackuped_account.description" = "Your current wallet is not backed up.";
+"wallet_connect.error_dialog.i_understand" = "I Understand";
 
-"wallet_connect.non_supported_account.description" = "현재 지갑 유형 %@은(는) WalletConnect를 지원하지 않습니다.";
+"wallet_connect.non_supported_account.description" = "Your current wallet type %@ does not support WalletConnect";
 "wallet_connect.non_supported_account.switch" = "전환";
 
 "wallet_connect.pending_requests_title" = "보류 중인 요청";
