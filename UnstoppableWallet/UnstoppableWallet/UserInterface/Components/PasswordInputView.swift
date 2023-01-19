@@ -25,8 +25,8 @@ class PasswordInputView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        secureButtonView.button.set(image: UIImage(named: "eye_2_off_24"))
-        insecureButtonView.button.set(image: UIImage(named: "eye_2_24"))
+        secureButtonView.button.set(image: UIImage(named: "eye_off_20"))
+        insecureButtonView.button.set(image: UIImage(named: "eye_20"))
 
         secureButtonView.onTapButton = { [weak self] in self?.onTextSecurityChange?(true) }
         insecureButtonView.onTapButton = { [weak self] in self?.onTextSecurityChange?(false) }

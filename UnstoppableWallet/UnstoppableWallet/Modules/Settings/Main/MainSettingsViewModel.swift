@@ -126,7 +126,7 @@ extension MainSettingsViewModel {
             return
         }
 
-        openWalletConnectRelay.accept(activeAccount.backedUp ? .list : .errorDialog(error: .unbackupedAccount))
+        openWalletConnectRelay.accept(activeAccount.backedUp ? .list : .errorDialog(error: .unbackupedAccount(account: activeAccount)))
     }
 
     func onTapCompanyLink() {

@@ -101,7 +101,7 @@ extension WalletConnectV2AppShowView {
                     title: "wallet_connect.title".localized,
                     image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob),
                     description: "wallet_connect.no_account.description".localized,
-                    buttonTitle: "wallet_connect.error_dialog.i_understand".localized,
+                    buttonTitle: "wallet_connect.no_account.close".localized,
                     onTapButton: InformationModule.afterClose())
 
             viewController?.present(presentingViewController, animated: true)
@@ -116,13 +116,19 @@ extension WalletConnectV2AppShowView {
                     })
 
             viewController?.present(presentingViewController, animated: true)
-        case .unbackupedAccount:
+        case .unbackupedAccount(let account):
             let presentingViewController = InformationModule.simpleInfo(
-                    title: "wallet_connect.title".localized,
-                    image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob),
-                    description: "wallet_connect.unbackuped_account.description".localized,
-                    buttonTitle: "wallet_connect.error_dialog.i_understand".localized,
-                    onTapButton: InformationModule.afterClose())
+                    title: "backup_required.title".localized,
+                    image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob),
+                    description: "wallet_connect.unbackuped_account.description".localized(account.name),
+                    buttonTitle: "backup_prompt.backup".localized,
+                    onTapButton: InformationModule.afterClose { [weak viewController] in
+                        guard let backupViewController = BackupModule.viewController(account: account) else {
+                            return
+                        }
+
+                        viewController?.present(backupViewController, animated: true)
+                    })
 
             viewController?.present(presentingViewController, animated: true)
         }
@@ -131,7 +137,7 @@ extension WalletConnectV2AppShowView {
     enum WalletConnectOpenError {
         case noAccount
         case nonSupportedAccountType(accountTypeDescription: String)
-        case unbackupedAccount
+        case unbackupedAccount(account: Account)
     }
 
 }

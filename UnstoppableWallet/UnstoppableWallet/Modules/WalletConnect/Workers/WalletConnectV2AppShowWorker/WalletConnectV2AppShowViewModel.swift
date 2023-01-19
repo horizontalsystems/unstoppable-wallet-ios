@@ -36,7 +36,7 @@ class WalletConnectV2AppShowViewModel {
             return
         }
 
-        openWalletConnectRelay.accept(activeAccount.backedUp ? .pair(url: url) : .errorDialog(error: .unbackupedAccount))
+        openWalletConnectRelay.accept(activeAccount.backedUp ? .pair(url: url) : .errorDialog(error: .unbackupedAccount(account: activeAccount)))
     }
 
 }
