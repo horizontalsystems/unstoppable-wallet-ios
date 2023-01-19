@@ -9,7 +9,7 @@ import ComponentKit
 import UIExtensions
 
 class RestoreNonStandardViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
+    private let wrapperViewHeight: CGFloat = .margin16 + .heightButton + .margin32
 
     private let viewModel: RestoreNonStandardViewModel
     private let mnemonicViewModel: RestoreMnemonicNonStandardViewModel
@@ -62,6 +62,8 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
+
+        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: wrapperViewHeight - .margin16, right: 0)
 
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
@@ -270,6 +272,7 @@ extension RestoreNonStandardViewController: SectionsDataSource {
         let mnemonicSections: [SectionProtocol] = [
             Section(
                     id: "mnemonic-input",
+                    footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(
                                 cell: mnemonicInputCell,
@@ -289,7 +292,6 @@ extension RestoreNonStandardViewController: SectionsDataSource {
             ),
             Section(
                     id: "wordlist-passphrase-toggle",
-                    headerState: .margin(height: .margin32),
                     footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(

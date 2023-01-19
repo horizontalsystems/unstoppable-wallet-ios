@@ -105,13 +105,18 @@ class SendEip1155ViewController: KeyboardAwareViewController {
         }
         subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openConfirm(sendData: $0) }
 
-        setInitialState(bottomPadding: wrapperViewHeight)
+        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -.margin16, right: 0)
+        additionalInsetsOnlyForClosedKeyboard = false
+        ignoreSafeAreaForAccessoryView = false
+
         tableView.buildSections()
         isLoaded = true
     }
 
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        setInitialState(bottomPadding: gradientWrapperView.height)
 
         if !keyboardShown && viewModel.showKeyboard {
             DispatchQueue.main.async  {

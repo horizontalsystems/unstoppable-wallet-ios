@@ -109,10 +109,18 @@ class WatchViewController: KeyboardAwareViewController {
             (self?.sourceViewController ?? self)?.dismiss(animated: true)
         }
 
-        setInitialState(bottomPadding: wrapperViewHeight)
+        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -.margin16, right: 0)
+        additionalInsetsOnlyForClosedKeyboard = false
+        ignoreSafeAreaForAccessoryView = false
 
         tableView.buildSections()
         isLoaded = true
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        setInitialState(bottomPadding: gradientWrapperView.height)
     }
 
     @objc private func onTapCancel() {
@@ -181,6 +189,7 @@ extension WatchViewController: SectionsDataSource {
         case .evmAddress:
             let evmAddressSection: SectionProtocol = Section(
                     id: "address",
+                    footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(
                                 cell: addressCell,
@@ -203,6 +212,7 @@ extension WatchViewController: SectionsDataSource {
         case .publicKey:
             let publicKeySection: SectionProtocol = Section(
                     id: "public-key-input",
+                    footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(
                                 cell: publicKeyInputCell,

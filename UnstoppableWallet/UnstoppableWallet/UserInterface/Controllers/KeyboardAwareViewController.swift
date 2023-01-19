@@ -10,8 +10,15 @@ class KeyboardAwareViewController: ThemeViewController {
     private var keyboardFrame: CGRect?
 
     // handling accessory view position
+    var additionalContentInsets: UIEdgeInsets = .zero  // additional inset. Put scrollView content under accessoryView, usign .bottom = newValue
+    var additionalInsetsOnlyForClosedKeyboard: Bool = true // AdditionalContentInsets by default using only in closed state (mean that not for accessoryView, but wrapper on screen bottom)
+
     var oldPadding: CGFloat = 0
+
     var accessoryView: UIView?
+
+    var ignoreSafeAreaForAccessoryView = true   // when accessory view is wrapper which covering safeArea. You must setInitialState(bottomPadding: wrapper.height) in didAppear(:)
+
     private var pseudoAccessoryView: PseudoAccessoryView?
 
     public var shouldObserveKeyboard = true
@@ -74,6 +81,10 @@ class KeyboardAwareViewController: ThemeViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        for scrollView in scrollViews {
+            scrollView.contentInset = additionalContentInsets
+        }
+
         observeKeyboard(true)
     }
 
@@ -132,7 +143,7 @@ class KeyboardAwareViewController: ThemeViewController {
         self.keyboardFrame = keyboardFrame
         pseudoAccessoryView?.heightValue = accessoryViewHeight
 
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - view.safeAreaInsets.bottom, right: 0)
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - view.safeAreaInsets.bottom, right: 0).add(additionalInsetsOnlyForClosedKeyboard ? .zero : additionalContentInsets)
         for scrollView in scrollViews {
             scrollView.contentInset = insets
             scrollView.scrollIndicatorInsets = insets
@@ -145,8 +156,13 @@ class KeyboardAwareViewController: ThemeViewController {
         keyboardFrame = nil
         pseudoAccessoryView?.heightValue = accessoryViewHeight
 
+        var bottomInset = accessoryViewHeight
+        if !ignoreSafeAreaForAccessoryView {
+            bottomInset -= view.safeAreaInsets.bottom
+        }
+
         for scrollView in scrollViews {
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (pseudoAccessoryView?.height ?? 0) - view.safeAreaInsets.bottom, right: 0)
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0).add(additionalContentInsets)
             scrollView.scrollIndicatorInsets = .zero
         }
     }
