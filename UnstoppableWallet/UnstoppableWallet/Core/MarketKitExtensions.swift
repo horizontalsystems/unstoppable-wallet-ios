@@ -208,7 +208,7 @@ extension MarketKit.BlockchainType {
         case .bitcoin, .litecoin:
             switch accountType {
             case .mnemonic:
-                return [[.derivation: MnemonicDerivation.bip49.rawValue]]
+                return [[.derivation: MnemonicDerivation.bip84.rawValue]]
             case .hdExtendedKey(let key):
                 return [[.derivation: key.info.purpose.mnemonicDerivation.rawValue]]
             default:
