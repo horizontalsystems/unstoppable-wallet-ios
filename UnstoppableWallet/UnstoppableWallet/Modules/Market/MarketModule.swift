@@ -351,8 +351,8 @@ extension MarketModule {  // ViewModel Items
 
         var radius: CGFloat {
             switch self {
-            case .square: return .cornerRadius4
-            case .round: return .cornerRadius12
+            case .square: return .cornerRadius8
+            case .round: return .cornerRadius16
             case .full: return 0
             }
         }

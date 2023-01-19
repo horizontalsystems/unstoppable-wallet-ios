@@ -82,7 +82,7 @@ extension SwapSelectProviderViewController: SectionsDataSource {
             Section(
                     id: "theme",
                     rows: viewItems.enumerated().map { index, viewItem in
-                        tableView.universalRow48(
+                        tableView.universalRow56(
                                 id: viewItem.title,
                                 image: .local(UIImage(named: viewItem.icon)),
                                 title: .body(viewItem.title),

@@ -65,7 +65,7 @@ extension MarketListTvlDecorator: IMarketListDecorator {
         return MarketModule.ListViewItem(
                 uid: uid,
                 iconUrl: iconUrl,
-                iconShape: .round,
+                iconShape: .square,
                 iconPlaceholderName: iconPlaceholderName,
                 leftPrimaryValue: name,
                 leftSecondaryValue: defiCoin.chains.count == 1 ? defiCoin.chains[0] : "coin_page.tvl_rank.multi_chain".localized,
