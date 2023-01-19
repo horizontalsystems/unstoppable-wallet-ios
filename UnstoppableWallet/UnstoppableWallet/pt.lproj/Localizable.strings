@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Adicionado à Carteira";
 "alert.already_added_to_wallet" = "Já adicionado à carteira";
 "alert.not_supported_yet" = "Não suportado ainda";
-"alert.copied" = "Copiado";
+"alert.copied" = "Copied";
 "alert.created" = "Criado";
 "alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
@@ -115,16 +115,16 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Legacy";
-"coin_settings.derivation.title.bip49" = "Novo (recomendado)";
-"coin_settings.derivation.title.bip84" = "O Mais Novo";
+"coin_settings.derivation.title.bip44" = "Old";
+"coin_settings.derivation.title.bip49" = "Good";
+"coin_settings.derivation.title.bip84" = "Best";
 "coin_settings.title" = "Configurações da Blockchain";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recomendado)";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Comum antes de 2018";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Comum depois de 2018";
 "sync_mode.from_blockchain" = "Da Blockchain";
-"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when importing an existing wallet.";
+"blockchain_settings.description" = "Select address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -558,9 +558,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.global.tvl_in_defi.title" = "TVL no DeFi";
 
 "market.global.btc_dominance.title" = "Dominação Bitcoin";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "Volume em 24h";
+"market.global.defi_cap.title" = "Mercado de DeFi";
+"market.global.tvl_in_defi.title" = "TVL no DeFi";
 "market.global.btc_dominance.description" = "A mudança histórica na relação entre o capital de mercado do Bitcoin e o resto dos mercados de criptomoedas. \n\nNormalmente, quando o domínio do Bitcoin está tendendo à alta, o resto das tendências do mercado cripto para baixo e vice-versa.";
 "market.global.volume_24h.description" = "A mudança histórica no volume diário do mercado de trading agregado para todas as criptomoedas.";
 "market.global.defi_cap.description" = "A mudança histórica no valor cumulativo do mercado dos tokens no setor DeFi.";
@@ -1086,8 +1086,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "wallet_connect.active_account" = "Carteira ativa";
 "wallet_connect.address" = "Endereço";
 "wallet_connect.network" = "Rede";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Endereço";
+"wallet_connect.network" = "Rede";
 "wallet_connect.list.pending_requests" = "Solicitações Pendentes";
 "wallet_connect.main.no_any_supported_chains" = "Nenhuma cadeia suportada!";
 "wallet_connect.main.unsupported_chains" = "Algumas cadeias não são suportadas!";
@@ -1121,9 +1121,10 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "wallet_connect_list.disconnecting" = "Desconectando";
 
 "wallet_connect.no_account.description" = "No suitable wallet. You need to create or import existing wallet.";
-"wallet_connect.no_account.i_understand" = "Estou ciente";
+"wallet_connect.unbackuped_account.description" = "Your current wallet is not backed up.";
+"wallet_connect.error_dialog.i_understand" = "I Understand";
 
-"wallet_connect.non_supported_account.description" = "Seu tipo de carteira atual %@ não suporta WalletConnect";
+"wallet_connect.non_supported_account.description" = "Your current wallet type %@ does not support WalletConnect";
 "wallet_connect.non_supported_account.switch" = "Alternar";
 
 "wallet_connect.pending_requests_title" = "Solicitações Pendentes";
