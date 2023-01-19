@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "添加到钱包";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
-"alert.copied" = "Copied";
+"alert.copied" = "已复制";
 "alert.created" = "已创建";
 "alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
@@ -558,9 +558,9 @@
 "market.global.tvl_in_defi.title" = "DeFi锁定";
 
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
-"market.global.volume_24h.title" = "24h成交量";
-"market.global.defi_cap.title" = "DeFi市值";
-"market.global.tvl_in_defi.title" = "DeFi锁定";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
 "market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
 "market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
@@ -892,7 +892,7 @@
 "blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
 "blockchain_settings.info.transaction_inputs_outputs" = "交易输入 / 输出";
 "blockchain_settings.info.transaction_inputs_outputs.content" = "大多数比特币交易，以及比特币现金、Dash和莱特币等加密货币的交易，都会产生两种输出。一种输出是发送给接收者的数量，另一个是返回给发送者的找零输出。大多数钱包构造交易的方式使第三方很容易理解哪些输出发送给了接收方，哪些是返回给发送方的找零。当返回给发送方的输出稍后用于未来的交易时，这两个交易之间的连接就变得明显了。\n\nUnstoppable钱包实施了一些措施，让人们更难弄清楚哪些输出流向了哪里。\n\n对于Unstoppable用户有两种选项可用：\n\n1. 随机变换：每一交易的交易输出顺序均实现了随机化。有时候便令可能是第一个输出，有时可能是第二个。如果用户信任应用的开发者，那么可以考虑这一推荐选项。\n\n2. 确定性：有一个共同商定的交易输出顺序标准（称为BIP69）。在开源钱包中，该标准确保钱包用户不需要信任应用程序开发者如何实现输出顺序。由于这个标准非常新，还没有太多钱包对其进行了实现。因此，有可能可以看到在一个区块链上的一个交易是否是从使用或不使用该标准的钱包上发送。";
-"blockchain_settings.info.sync_mode" = "同步模式";
+"blockchain_settings.info.sync_mode" = "RPC Mode";
 "blockchain_settings.info.sync_mode.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
 
 // Manage Accounts
@@ -940,7 +940,7 @@
 "appearance.theme.dark" = "深色";
 "appearance.theme.light" = "浅色";
 
-"appearance.tab_settings" = "Tabs Settings";
+"appearance.tab_settings" = "Tab Settings";
 "appearance.markets_tab" = "Markets Tab";
 "appearance.launch_screen" = "启动屏幕";
 "appearance.launch_screen.auto" = "自动";
@@ -1086,8 +1086,8 @@
 "wallet_connect.active_account" = "激活钱包";
 "wallet_connect.address" = "地址";
 "wallet_connect.network" = "网络";
-"wallet_connect.address" = "地址";
-"wallet_connect.network" = "网络";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "待处理请求";
 "wallet_connect.main.no_any_supported_chains" = "没有任何支持的链！";
 "wallet_connect.main.unsupported_chains" = "一些链是不支持的！";
@@ -1120,7 +1120,7 @@
 "wallet_connect_list.new_connection" = "新连接";
 "wallet_connect_list.disconnecting" = "正在断开连接";
 
-"wallet_connect.no_account.description" = "No suitable wallet. You need to create or import existing wallet.";
+"wallet_connect.no_account.description" = "You need to create or import a wallet before you can use WalletConnect.";
 "wallet_connect.unbackuped_account.description" = "Your current wallet is not backed up.";
 "wallet_connect.error_dialog.i_understand" = "I Understand";
 
