@@ -115,9 +115,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Legacy";
-"coin_settings.derivation.title.bip49" = "Newer (recommended)";
-"coin_settings.derivation.title.bip84" = "Newest";
+"coin_settings.derivation.title.bip44" = "Old";
+"coin_settings.derivation.title.bip49" = "Good";
+"coin_settings.derivation.title.bip84" = "Best";
 "coin_settings.title" = "Blockchain Settings";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
