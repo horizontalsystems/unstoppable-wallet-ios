@@ -72,8 +72,8 @@ class EvmNetworkViewController: ThemeViewController {
         }
     }
 
-    private func openSyncModeInfo() {
-        present(InfoModule.syncModeInfo, animated: true)
+    private func openRpcSourceInfo() {
+        present(InfoModule.rpcSourceInfo, animated: true)
     }
 
 }
@@ -101,8 +101,8 @@ extension EvmNetworkViewController: SectionsDataSource {
                     headerState: .margin(height: .margin12),
                     footerState: .margin(height: .margin32),
                     rows: [
-                        tableView.subtitleWithInfoButtonRow(text: "evm_network.sync_node".localized) { [weak self] in
-                            self?.openSyncModeInfo()
+                        tableView.subtitleWithInfoButtonRow(text: "evm_network.rpc_source".localized) { [weak self] in
+                            self?.openRpcSourceInfo()
                         }
                     ] + viewItems.enumerated().map { index, viewItem in
                         row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)

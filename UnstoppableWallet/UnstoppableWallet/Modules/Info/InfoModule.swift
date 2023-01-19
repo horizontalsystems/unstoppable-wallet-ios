@@ -64,11 +64,11 @@ extension InfoModule {
         )
     }
 
-    static var syncModeInfo: UIViewController {
+    static var rpcSourceInfo: UIViewController {
         viewController(
                 viewItems: [
-                    .header2(text: "blockchain_settings.info.sync_mode".localized),
-                    .text(text: "blockchain_settings.info.sync_mode.content".localized),
+                    .header2(text: "blockchain_settings.info.rpc_source".localized),
+                    .text(text: "blockchain_settings.info.rpc_source.content".localized),
                 ]
         )
     }
