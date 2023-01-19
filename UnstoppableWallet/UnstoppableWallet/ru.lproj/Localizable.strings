@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Добавлено в Кошелек";
 "alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Ещё не поддерживается";
-"alert.copied" = "Скопировано";
+"alert.copied" = "Copied";
 "alert.created" = "Создан";
 "alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
@@ -116,16 +116,16 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Legacy";
-"coin_settings.derivation.title.bip49" = "Новые (рекомендуется)";
-"coin_settings.derivation.title.bip84" = "Новые";
+"coin_settings.derivation.title.bip44" = "Old";
+"coin_settings.derivation.title.bip49" = "Good";
+"coin_settings.derivation.title.bip84" = "Best";
 "coin_settings.title" = "Настройки Блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (рекомендуется)";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Было до 2018 года";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Применяется после 2018 года";
 "sync_mode.from_blockchain" = "Из Блокчейна";
-"blockchain_settings.description" = "Select address format for the coin. Proceed with recommended option if unsure. A correct format should be chosen when importing an existing wallet.";
+"blockchain_settings.description" = "Select address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -559,9 +559,9 @@
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 
 "market.global.btc_dominance.title" = "Доминирование Bitcoin";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "Объем Торгов (24ч)";
+"market.global.defi_cap.title" = "Капитализация DeFi";
+"market.global.tvl_in_defi.title" = "TVL в DeFi";
 "market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка и наоборот.";
 "market.global.volume_24h.description" = "Историческое изменение в ежедневном совокупном объеме торговли для всех криптовалют.";
 "market.global.defi_cap.description" = "Историческое изменение в совокупной рыночной стоимости токенов в Децентрализованном Финансовом Секторе.";
@@ -1087,8 +1087,8 @@
 "wallet_connect.active_account" = "Активный Кошелек";
 "wallet_connect.address" = "Адрес";
 "wallet_connect.network" = "Сеть";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Адрес";
+"wallet_connect.network" = "Сеть";
 "wallet_connect.list.pending_requests" = "Отложенные Запросы";
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
 "wallet_connect.main.unsupported_chains" = "Некоторые блокчейны не поддерживаются!";
@@ -1122,9 +1122,10 @@
 "wallet_connect_list.disconnecting" = "Отсоединение";
 
 "wallet_connect.no_account.description" = "No suitable wallet. You need to create or import existing wallet.";
-"wallet_connect.no_account.i_understand" = "Я Понимаю";
+"wallet_connect.unbackuped_account.description" = "Your current wallet is not backed up.";
+"wallet_connect.error_dialog.i_understand" = "I Understand";
 
-"wallet_connect.non_supported_account.description" = "Ваш текущий тип кошелька %@ не поддерживает WalletConnect";
+"wallet_connect.non_supported_account.description" = "Your current wallet type %@ does not support WalletConnect";
 "wallet_connect.non_supported_account.switch" = "Перекл.";
 
 "wallet_connect.pending_requests_title" = "Отложенные Запросы";
