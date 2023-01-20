@@ -18,7 +18,15 @@ class EvmSyncSourceManager {
         infuraRpcSource = .ethereumInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret)
     }
 
-    private func defaultSyncSources(blockchainType: BlockchainType) -> [EvmSyncSource] {
+}
+
+extension EvmSyncSourceManager {
+
+    var syncSourceObservable: Observable<BlockchainType> {
+        syncSourceRelay.asObservable()
+    }
+
+    func defaultSyncSources(blockchainType: BlockchainType) -> [EvmSyncSource] {
         switch blockchainType {
         case .ethereum:
             return [
@@ -104,18 +112,13 @@ class EvmSyncSourceManager {
         }
     }
 
-}
-
-extension EvmSyncSourceManager {
-
-    var syncSourceObservable: Observable<BlockchainType> {
-        syncSourceRelay.asObservable()
+    func customSyncSources(blockchainType: BlockchainType) -> [EvmSyncSource] {
+        []
+        // todo: load custom network from DB
     }
 
     func allSyncSources(blockchainType: BlockchainType) -> [EvmSyncSource] {
-        defaultSyncSources(blockchainType: blockchainType)
-
-        // todo: load custom network from DB
+        defaultSyncSources(blockchainType: blockchainType) + customSyncSources(blockchainType: blockchainType)
     }
 
     func syncSource(blockchainType: BlockchainType) -> EvmSyncSource {
