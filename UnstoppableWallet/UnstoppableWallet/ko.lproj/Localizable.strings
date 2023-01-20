@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "Copied";
+"alert.copied" = "복사됨";
 "alert.created" = "생성됨";
 "alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
@@ -1011,17 +1011,17 @@
 
 "create_wallet.title" = "New Wallet";
 "create_wallet.name" = "Name";
-"create_wallet.advanced_setup" = "Advanced Setup";
+"create_wallet.advanced_setup" = "Advanced";
 "create_wallet.create" = "Create";
 "create_wallet.advanced" = "Advanced";
-"create_wallet.phrase_count" = "Phrase Count";
+"create_wallet.phrase_count" = "Mnemonic";
 "create_wallet.12_words" = "12 단어 (권장)";
 "create_wallet.n_words" = "%@ 단어";
 "create_wallet.word_list" = "단어 목록";
 "create_wallet.passphrase" = "암호 문구";
 "create_wallet.input.passphrase" = "암호 문구";
 "create_wallet.input.confirm" = "확인";
-"create_wallet.passphrase_description" = "Passphrases add additional security layer to the wallets enabling users to create multiple independent multi-coin wallets using a single mnemonic recovery phrase (secret 12 words) but associated with different passwords.\n\nTo restore these wallets a user will require menmonic recovery phrase as well as a password for each to be restored wallet.";
+"create_wallet.passphrase_description" = "Passphrases add additional security layer for wallets. To restore such wallet a user required both mnemonic as well as a passphrase.\n\nPassphrases also make it easy for users to have many multi-coin wallets using a single mnemonic but different passwords.";
 "create_wallet.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "create_wallet.error.forbidden_symbols" = "지원되는 기호만 사용하세요: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "암호 확인이 일치하지 않습니다";
@@ -1084,8 +1084,8 @@
 "wallet_connect.active_account" = "지갑 활성화";
 "wallet_connect.address" = "주소";
 "wallet_connect.network" = "네트워크";
-"wallet_connect.address" = "주소";
-"wallet_connect.network" = "네트워크";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
 "wallet_connect.main.unsupported_chains" = "일부 체인은 지원되지 않습니다!";
