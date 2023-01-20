@@ -6,11 +6,12 @@ import MarketKit
 class EvmNetworkService {
     let blockchain: Blockchain
     private let evmSyncSourceManager: EvmSyncSourceManager
+    private var currentSyncSource: EvmSyncSource
 
-    private let itemsRelay = PublishRelay<[Item]>()
-    private(set) var items: [Item] = [] {
+    private let stateRelay = PublishRelay<State>()
+    private(set) var state: State = State(defaultItems: [], customItems: []) {
         didSet {
-            itemsRelay.accept(items)
+            stateRelay.accept(state)
         }
     }
 
@@ -18,30 +19,25 @@ class EvmNetworkService {
         self.blockchain = blockchain
         self.evmSyncSourceManager = evmSyncSourceManager
 
-        syncItems()
+        currentSyncSource = evmSyncSourceManager.syncSource(blockchainType: blockchain.type)
+
+        syncState()
     }
 
-    private func syncItems() {
-        let currentNetwork = currentSyncSource
+    private func syncState() {
+        state = State(
+                defaultItems: items(syncSources: evmSyncSourceManager.defaultSyncSources(blockchainType: blockchain.type)),
+                customItems: items(syncSources: evmSyncSourceManager.customSyncSources(blockchainType: blockchain.type))
+        )
+    }
 
-        items = evmSyncSourceManager.allSyncSources(blockchainType: blockchain.type).map { syncSource in
+    private func items(syncSources: [EvmSyncSource]) -> [Item] {
+        syncSources.map { syncSource in
             Item(
                     syncSource: syncSource,
-                    selected: syncSource == currentNetwork
+                    selected: syncSource == currentSyncSource
             )
         }
-    }
-
-    private var currentSyncSource: EvmSyncSource {
-        evmSyncSourceManager.syncSource(blockchainType: blockchain.type)
-    }
-
-}
-
-extension EvmNetworkService {
-
-    var itemsObservable: Observable<[Item]> {
-        itemsRelay.asObservable()
     }
 
     func setCurrent(syncSource: EvmSyncSource) {
@@ -50,11 +46,35 @@ extension EvmNetworkService {
         }
 
         evmSyncSourceManager.save(syncSource: syncSource, blockchainType: blockchain.type)
+
+        currentSyncSource = syncSource
+        syncState()
     }
 
 }
 
 extension EvmNetworkService {
+
+    var stateObservable: Observable<State> {
+        stateRelay.asObservable()
+    }
+
+    func setDefault(index: Int) {
+        setCurrent(syncSource: state.defaultItems[index].syncSource)
+    }
+
+    func setCustom(index: Int) {
+        setCurrent(syncSource: state.customItems[index].syncSource)
+    }
+
+}
+
+extension EvmNetworkService {
+
+    struct State {
+        let defaultItems: [Item]
+        let customItems: [Item]
+    }
 
     struct Item {
         let syncSource: EvmSyncSource

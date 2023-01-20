@@ -1201,6 +1201,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // EVM Network
 
 "evm_network.rpc_source" = "RPC Source";
+"evm_network.added" = "Added";
+"evm_network.add_new" = "Add New";
 
 // Fee Settings
 
