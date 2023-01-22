@@ -2965,6 +2965,9 @@
 		D04D98EA268055A2001A3135 /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04D98E9268055A2001A3135 /* TransactionRecord.swift */; };
 		D04D98EB268055A2001A3135 /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04D98E9268055A2001A3135 /* TransactionRecord.swift */; };
 		D04D98EC268055A2001A3135 /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04D98E9268055A2001A3135 /* TransactionRecord.swift */; };
+		D090AF61297D725D00699916 /* TransparentIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D090AF60297D725D00699916 /* TransparentIconButtonView.swift */; };
+		D090AF62297D725D00699916 /* TransparentIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D090AF60297D725D00699916 /* TransparentIconButtonView.swift */; };
+		D090AF63297D725D00699916 /* TransparentIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D090AF60297D725D00699916 /* TransparentIconButtonView.swift */; };
 		D09200B3293F21520091981A /* RestoreMnemonicNonStandardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200AF293F21510091981A /* RestoreMnemonicNonStandardService.swift */; };
 		D09200B4293F21520091981A /* RestoreMnemonicNonStandardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200AF293F21510091981A /* RestoreMnemonicNonStandardService.swift */; };
 		D09200B5293F21520091981A /* RestoreMnemonicNonStandardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200AF293F21510091981A /* RestoreMnemonicNonStandardService.swift */; };
@@ -4298,6 +4301,7 @@
 		D02A67BA272A7460009B2C1C /* CoinTweetsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTweetsService.swift; sourceTree = "<group>"; };
 		D02A67BB272A7460009B2C1C /* CoinTweetsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTweetsModule.swift; sourceTree = "<group>"; };
 		D04D98E9268055A2001A3135 /* TransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecord.swift; sourceTree = "<group>"; };
+		D090AF60297D725D00699916 /* TransparentIconButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentIconButtonView.swift; sourceTree = "<group>"; };
 		D09200AF293F21510091981A /* RestoreMnemonicNonStandardService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreMnemonicNonStandardService.swift; sourceTree = "<group>"; };
 		D09200B2293F21520091981A /* RestoreMnemonicNonStandardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreMnemonicNonStandardViewModel.swift; sourceTree = "<group>"; };
 		D09200BF293F21700091981A /* RestoreNonStandardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardViewController.swift; sourceTree = "<group>"; };
@@ -5663,6 +5667,7 @@
 				11B3522A9A7774977CF39A1D /* NftImageView.swift */,
 				11B350E1584E954D281FA87D /* NftAssetView.swift */,
 				D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */,
+				D090AF60297D725D00699916 /* TransparentIconButtonView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -8708,6 +8713,7 @@
 				ABC9A6CD700EF3638908DAEB /* IntegerFormAmountInputView.swift in Sources */,
 				11B353BAE1506FFC2EECCA4C /* RestoreModule.swift in Sources */,
 				11B353419612C43B03D7714C /* RestoreViewController.swift in Sources */,
+				D090AF63297D725D00699916 /* TransparentIconButtonView.swift in Sources */,
 				11B35D3FB8D747AE9F17CDC2 /* RestorePrivateKeyService.swift in Sources */,
 				11B35244AAE61D619416F2E5 /* RestorePrivateKeyViewModel.swift in Sources */,
 				11B3550B05165247DD58BAF4 /* RestoreViewModel.swift in Sources */,
@@ -9756,6 +9762,7 @@
 				ABC9A6A792282ACC8DAB62BC /* IntegerFormAmountInputView.swift in Sources */,
 				11B359BA446B27E6D369B35E /* RestoreModule.swift in Sources */,
 				11B35907781848EB0C20759A /* RestoreViewController.swift in Sources */,
+				D090AF62297D725D00699916 /* TransparentIconButtonView.swift in Sources */,
 				11B356D4E85B0A0133F6870C /* RestorePrivateKeyService.swift in Sources */,
 				11B3529D506ADAEB715BF0D1 /* RestorePrivateKeyViewModel.swift in Sources */,
 				11B35A5C28DF128893703B6C /* RestoreViewModel.swift in Sources */,
@@ -10804,6 +10811,7 @@
 				ABC9A4045F498EE345B998D8 /* IntegerFormAmountInputView.swift in Sources */,
 				11B35EB5359DB0EA8058A75C /* RestoreModule.swift in Sources */,
 				11B354FE5CD0F5658C7CCC69 /* RestoreViewController.swift in Sources */,
+				D090AF61297D725D00699916 /* TransparentIconButtonView.swift in Sources */,
 				11B35A79476177D3BE7DE477 /* RestorePrivateKeyService.swift in Sources */,
 				11B35C1F4E9F3139EFB37535 /* RestorePrivateKeyViewModel.swift in Sources */,
 				11B350340029D15D3BC15C3B /* RestoreViewModel.swift in Sources */,

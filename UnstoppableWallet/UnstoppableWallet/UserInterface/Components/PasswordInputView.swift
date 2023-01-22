@@ -7,8 +7,8 @@ class PasswordInputView: UIView {
     private let formValidatedView: FormValidatedView
     private let inputStackView = InputStackView(singleLine: true)
 
-    private let secureButtonView = InputSecondaryCircleButtonWrapperView()
-    private let insecureButtonView = InputSecondaryCircleButtonWrapperView()
+    private let secureButtonView = TransparentIconButtonView()
+    private let insecureButtonView = TransparentIconButtonView()
 
     var onTextSecurityChange: ((Bool) -> ())?
 
@@ -25,11 +25,11 @@ class PasswordInputView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        secureButtonView.button.set(image: UIImage(named: "eye_off_20"))
-        insecureButtonView.button.set(image: UIImage(named: "eye_20"))
+        secureButtonView.set(image: UIImage(named: "eye_20"))
+        insecureButtonView.set(image: UIImage(named: "eye_off_20"))
 
-        secureButtonView.onTapButton = { [weak self] in self?.onTextSecurityChange?(true) }
-        insecureButtonView.onTapButton = { [weak self] in self?.onTextSecurityChange?(false) }
+        secureButtonView.onTap = { [weak self] in self?.onTextSecurityChange?(true) }
+        insecureButtonView.onTap = { [weak self] in self?.onTextSecurityChange?(false) }
 
         inputStackView.autocapitalizationType = .none
         inputStackView.autocorrectionType = .no
