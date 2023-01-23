@@ -16,7 +16,7 @@ class ChartCell: UITableViewCell {
 
     private var currentValueView: ChartCurrentValueView?
 
-    private var intervalSelectView: FilterHeaderView?
+    private var intervalSelectView: FilterView?
     private var selectedValueView: ChartPointInfoView?
 
     private let chartView: RateChartView
@@ -34,7 +34,7 @@ class ChartCell: UITableViewCell {
             currentValueView = ChartCurrentValueView()
         }
         if viewOptions.contains(.timePeriodAndSelectedValue) {
-            intervalSelectView = FilterHeaderView(buttonStyle: .transparent)
+            intervalSelectView = FilterView(buttonStyle: .transparent)
             selectedValueView = ChartPointInfoView()
         }
         if viewOptions.contains(.indicatorSelector) {
@@ -96,7 +96,7 @@ class ChartCell: UITableViewCell {
                 maker.height.equalTo(ChartViewOptions.timePeriodAndSelectedValue.elementHeight)
             }
 
-            intervalSelectView.backgroundView?.backgroundColor = .clear
+            intervalSelectView.backgroundColor = .clear
             intervalSelectView.reload(filters: viewModel.intervals.map { .item(title: $0) })
 
             let topSeparator = UIView()
@@ -343,7 +343,7 @@ extension ChartCell {
 
             for index in 0..<6 {
                 let option = ChartViewOptions(rawValue: 1 << index)
-                if self.contains(option) {
+                if contains(option) {
                     height += option.elementHeight
                 }
             }

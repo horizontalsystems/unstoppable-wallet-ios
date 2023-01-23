@@ -15,7 +15,7 @@ class OneInchDataSource {
     private let viewModel: OneInchViewModel
     private let allowanceViewModel: SwapAllowanceViewModel
 
-    private let settingsHeaderView = TextDropDownAndSettingsView()
+    private let settingsHeaderView = TextDropDownAndSettingsHeaderView()
 
     private let inputCell: SwapInputCell
 
@@ -124,7 +124,7 @@ class OneInchDataSource {
     }
 
     func viewDidAppear() {
-        inputCell.becomeFirstResponder()
+        _ = inputCell.becomeFirstResponder()
     }
 
     private func handle(balance: String?) {
@@ -369,7 +369,7 @@ extension OneInchDataSource: ISwapDataSource {
 
         sections.append(Section(
                 id: "header",
-                headerState: .static(view: settingsHeaderView, height: TextDropDownAndSettingsView.height),
+                headerState: .static(view: settingsHeaderView, height: TextDropDownAndSettingsHeaderView.height),
                 rows: [
                 ]
         ))

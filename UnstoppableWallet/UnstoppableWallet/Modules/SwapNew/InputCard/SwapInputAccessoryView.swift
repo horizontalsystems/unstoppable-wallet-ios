@@ -2,7 +2,7 @@ import UIKit
 
 class SwapInputAccessoryView: UIView {
     private let separatorView = UIView()
-    private let autocompleteView = FilterHeaderView(buttonStyle: .default)
+    private let autocompleteView = FilterView(buttonStyle: .default)
 
     private var heightConstraint: NSLayoutConstraint?
     var heightValue: CGFloat = 0 {
@@ -26,15 +26,15 @@ class SwapInputAccessoryView: UIView {
         addSubview(autocompleteView)
         autocompleteView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
-            maker.height.equalTo(FilterHeaderView.height)
+            maker.height.equalTo(FilterView.height)
         }
 
         autocompleteView.autoDeselect = true
         autocompleteView.reload(filters: [
-            FilterHeaderView.ViewItem.item(title: "25%"),
-            FilterHeaderView.ViewItem.item(title: "50%"),
-            FilterHeaderView.ViewItem.item(title: "75%"),
-            FilterHeaderView.ViewItem.item(title: "100%"),
+            FilterView.ViewItem.item(title: "25%"),
+            FilterView.ViewItem.item(title: "50%"),
+            FilterView.ViewItem.item(title: "75%"),
+            FilterView.ViewItem.item(title: "100%"),
         ])
         autocompleteView.onSelect = {[weak self] in self?.onTap(at: $0) }
     }
