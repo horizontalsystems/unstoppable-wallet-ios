@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Adicionado à Carteira";
 "alert.already_added_to_wallet" = "Já adicionado à carteira";
 "alert.not_supported_yet" = "Não suportado ainda";
-"alert.copied" = "Copiado";
+"alert.copied" = "Copied";
 "alert.created" = "Criado";
 "alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
@@ -558,9 +558,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.global.tvl_in_defi.title" = "TVL no DeFi";
 
 "market.global.btc_dominance.title" = "Dominação Bitcoin";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.volume_24h.title" = "Volume em 24h";
+"market.global.defi_cap.title" = "Mercado de DeFi";
+"market.global.tvl_in_defi.title" = "TVL no DeFi";
 "market.global.btc_dominance.description" = "A mudança histórica na relação entre o capital de mercado do Bitcoin e o resto dos mercados de criptomoedas. \n\nNormalmente, quando o domínio do Bitcoin está tendendo à alta, o resto das tendências do mercado cripto para baixo e vice-versa.";
 "market.global.volume_24h.description" = "A mudança histórica no volume diário do mercado de trading agregado para todas as criptomoedas.";
 "market.global.defi_cap.description" = "A mudança histórica no valor cumulativo do mercado dos tokens no setor DeFi.";
@@ -892,8 +892,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "blockchain_settings.info.restore_source.content" = "Esta configuração só é relevante ao restaurar uma carteira existente. É um processo de obtenção de histórico de transações para uma determinada criptomoeda, então o aplicativo de carteira é capaz de exibir transações anteriores e calcular o saldo do usuário. Isto precisa acontecer apenas uma vez quando o usuário restaura as carteiras previamente criadas.\n\nNeste ponto, existem duas possíveis maneiras de uma carteira móvel como o Unstoppable de fazer isso:\n\n1. do Servidor API: Há um servidor predefinido por terceiros que hospeda toda a blockchain e tem todos os dados processados e otimizados para fornecer esses dados de forma rápida. Este método é rápido, mas potencialmente (não necessariamente) menos privado. É também um método centralizado para restaurar uma carteira, pois depende da disponibilidade de um servidor de terceiros. Esta opção é recomendada devido à velocidade de obtenção de dados (5-10 minutos).\n\n2. da Blockchain: O aplicativo tenta restaurar diretamente de uma rede de nós da blockchain. Essa é uma maneira descentralizada de restaurar o saldo das carteiras e transações anteriores. O aplicativo pança muitos dos nós da rede e solicita dados deles sem abordar alguns nós especificamente. Esta opção é lenta e pode levar facilmente 2-3 horas, o aplicativo precisa estar aberto enquanto a restauração está acontecendo. Este método de restauração não depende de nenhuma entidade e deve funcionar em todas as condições.";
 "blockchain_settings.info.transaction_inputs_outputs" = "Entradas / Saídas de Transação";
 "blockchain_settings.info.transaction_inputs_outputs.content" = "A maioria das transações do Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira Unstoppable implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários Unstoppable:\n\n1. Embaralhamento: A ordem de saídas da transação é randomizada em cada transação. Às vezes a mudança pode ser a primeira saída, às vezes pode ser a segunda. Se um usuário confia no desenvolvedor do aplicativo, considere esta opção recomendada.\n\n2. Determinístico: Há um padrão comumente acordado para encomendar saídas de transação (conhecido como BIP69). Nas carteiras de código aberto, que o padrão garante que os usuários de carteira não precisam confiar em como desenvolvedores do aplicativo implementam a ordenação das saídas. Como este padrão é novo, muitas carteiras ainda não o implementaram. Como resultado, é um pouco possível ver no blockchain se uma transação foi enviada de uma carteira que usa esse padrão ou não.";
-"blockchain_settings.info.sync_mode" = "RPC Mode";
-"blockchain_settings.info.sync_mode.content" = "Esta configuração controla como este aplicativo interage com blockchains ao enviar ou receber transações.\n\nNo caso do Bitcoin, Bitcoin Cash, Litecoin e Dash, a comunicação com os nós da rede blockchain é totalmente peer-to-peer. Os pings Unstoppable são feitos em muitos nós e se comunicam com um deles. Cada vez que o aplicativo se conecta a um nó diferente.\n\nNo caso da Ethereum, da Binance Smart Chain e outras blockchains de EVM, não existem alternativas para as carteiras móveis para interagir com as respectivas blockchains que não sejam por provedores de serviços RPC de terceiros (ex. Infura.io) ou nós pessoais. Isso essencialmente significa que sua comunicação com essa blockchain não é descentralizada. Isso não afeta seus fundos de forma alguma, apenas a capacidade de se conectar à rede blockchain.\n\nFique tranquilo, vamos mantê-lo no radar e em breve tentaremos fornecer uma forma descentralizada para sincronizar. Paciência.";
+"blockchain_settings.info.rpc_source" = "RPC Source";
+"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
 
 // Manage Accounts
 
@@ -1086,8 +1086,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "wallet_connect.active_account" = "Carteira ativa";
 "wallet_connect.address" = "Endereço";
 "wallet_connect.network" = "Rede";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Endereço";
+"wallet_connect.network" = "Rede";
 "wallet_connect.list.pending_requests" = "Solicitações Pendentes";
 "wallet_connect.main.no_any_supported_chains" = "Nenhuma cadeia suportada!";
 "wallet_connect.main.unsupported_chains" = "Algumas cadeias não são suportadas!";
@@ -1200,7 +1200,18 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // EVM Network
 
-"evm_network.sync_node" = "Sincronizar Nó";
+"evm_network.rpc_source" = "RPC Source";
+"evm_network.added" = "Added";
+"evm_network.add_new" = "Add New";
+
+// Add RPC Source
+
+"add_evm_sync_source.title" = "Add RPC Source";
+"add_evm_sync_source.name" = "Name";
+"add_evm_sync_source.rpc_url" = "RPC URL";
+"add_evm_sync_source.basic_auth" = "Basic Auth (optional)";
+"add_evm_sync_source.warning.url_exists" = "RPC Source with this url already exists";
+"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: http, https, ws, wss";
 
 // Fee Settings
 
