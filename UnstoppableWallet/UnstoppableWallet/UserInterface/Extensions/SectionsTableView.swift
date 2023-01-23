@@ -210,7 +210,21 @@ extension SectionsTableView {
     }
 
     // universal cell with image32, multi-text, value and accessory for 62 height
-    func universalRow62(id: String, image: CellBuilderNew.CellElement.Image? = nil, title: CellBuilderNew.CellElement.Text? = nil, description: CellBuilderNew.CellElement.Text? = nil, value: CellBuilderNew.CellElement.Text? = nil, accessoryType: CellBuilderNew.CellElement.AccessoryType = .none, hash: String? = nil, backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: (() -> ())? = nil) -> RowProtocol {
+    func universalRow62(
+            id: String,
+            image: CellBuilderNew.CellElement.Image? = nil,
+            title: CellBuilderNew.CellElement.Text? = nil,
+            description: CellBuilderNew.CellElement.Text? = nil,
+            value: CellBuilderNew.CellElement.Text? = nil,
+            accessoryType: CellBuilderNew.CellElement.AccessoryType = .none,
+            hash: String? = nil,
+            backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence,
+            autoDeselect: Bool = false,
+            rowActionProvider: (() -> [RowAction])? = nil,
+            isFirst: Bool = false,
+            isLast: Bool = false,
+            action: (() -> ())? = nil
+    ) -> RowProtocol {
         let elements = universalImage32Elements(image: image, title: title, description: description, value: value, accessoryType: accessoryType)
 
         return CellBuilderNew.row(
@@ -220,6 +234,7 @@ extension SectionsTableView {
                 hash: hash,
                 height: .heightDoubleLineCell,
                 autoDeselect: autoDeselect,
+                rowActionProvider: rowActionProvider,
                 bind: { cell in
                     cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
                 },

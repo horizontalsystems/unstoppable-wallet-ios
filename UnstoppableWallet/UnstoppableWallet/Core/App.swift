@@ -163,7 +163,8 @@ class App {
         let blockchainSettingsStorage = BlockchainSettingsStorage(storage: blockchainSettingRecordStorage)
         btcBlockchainManager = BtcBlockchainManager(marketKit: marketKit, storage: blockchainSettingsStorage)
 
-        evmSyncSourceManager = EvmSyncSourceManager(appConfigProvider: appConfigProvider, storage: blockchainSettingsStorage)
+        let evmSyncSourceStorage = EvmSyncSourceStorage(dbPool: dbPool)
+        evmSyncSourceManager = EvmSyncSourceManager(appConfigProvider: appConfigProvider, blockchainSettingsStorage: blockchainSettingsStorage, evmSyncSourceStorage: evmSyncSourceStorage)
 
         let evmAccountRestoreStateStorage = EvmAccountRestoreStateStorage(dbPool: dbPool)
         evmAccountRestoreStateManager = EvmAccountRestoreStateManager(storage: evmAccountRestoreStateStorage)

@@ -39,12 +39,12 @@ extension BlockchainSettingsStorage {
         try? storage.save(record: record)
     }
 
-    func evmSyncSourceName(blockchainType: BlockchainType) -> String? {
+    func evmSyncSourceUrl(blockchainType: BlockchainType) -> String? {
         try? storage.record(blockchainUid: blockchainType.uid, key: keyEvmSyncSource).flatMap { $0.value }
     }
 
-    func save(evmSyncSourceName: String, blockchainType: BlockchainType) {
-        let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: keyEvmSyncSource, value: evmSyncSourceName)
+    func save(evmSyncSourceUrl: String, blockchainType: BlockchainType) {
+        let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: keyEvmSyncSource, value: evmSyncSourceUrl)
         try? storage.save(record: record)
     }
 

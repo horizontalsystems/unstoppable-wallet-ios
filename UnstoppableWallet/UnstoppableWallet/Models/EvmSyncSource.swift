@@ -1,3 +1,4 @@
+import Foundation
 import EvmKit
 
 class EvmSyncSource {
@@ -23,7 +24,18 @@ class EvmSyncSource {
 extension EvmSyncSource: Equatable {
 
     static func ==(lhs: EvmSyncSource, rhs: EvmSyncSource) -> Bool {
-        lhs.name == rhs.name
+        lhs.rpcSource.url == rhs.rpcSource.url
+    }
+
+}
+
+extension RpcSource {
+
+    var url: URL {
+        switch self {
+        case .http(let urls, _): return urls[0]
+        case .webSocket(let url, _): return url
+        }
     }
 
 }
