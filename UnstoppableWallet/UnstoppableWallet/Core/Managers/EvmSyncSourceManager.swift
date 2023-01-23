@@ -6,16 +6,33 @@ import MarketKit
 
 class EvmSyncSourceManager {
     private let appConfigProvider: AppConfigProvider
-    private let storage: BlockchainSettingsStorage
+    private let blockchainSettingsStorage: BlockchainSettingsStorage
+    private let evmSyncSourceStorage: EvmSyncSourceStorage
 
     private let syncSourceRelay = PublishRelay<BlockchainType>()
+    private let syncSourcesUpdatedRelay = PublishRelay<BlockchainType>()
     let infuraRpcSource: RpcSource
 
-    init(appConfigProvider: AppConfigProvider, storage: BlockchainSettingsStorage) {
+    init(appConfigProvider: AppConfigProvider, blockchainSettingsStorage: BlockchainSettingsStorage, evmSyncSourceStorage: EvmSyncSourceStorage) {
         self.appConfigProvider = appConfigProvider
-        self.storage = storage
+        self.blockchainSettingsStorage = blockchainSettingsStorage
+        self.evmSyncSourceStorage = evmSyncSourceStorage
 
         infuraRpcSource = .ethereumInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret)
+    }
+
+    private func defaultTransactionSource(blockchainType: BlockchainType) -> EvmKit.TransactionSource {
+        switch blockchainType {
+        case .ethereum: return .ethereumEtherscan(apiKey: appConfigProvider.etherscanKey)
+        case .ethereumGoerli: return .goerliEtherscan(apiKey: appConfigProvider.etherscanKey)
+        case .binanceSmartChain: return .bscscan(apiKey: appConfigProvider.bscscanKey)
+        case .polygon: return .polygonscan(apiKey: appConfigProvider.polygonscanKey)
+        case .avalanche: return .snowtrace(apiKey: appConfigProvider.snowtraceKey)
+        case .optimism: return .optimisticEtherscan(apiKey: appConfigProvider.optimismEtherscanKey)
+        case .arbitrumOne: return .arbiscan(apiKey: appConfigProvider.arbiscanKey)
+        case .gnosis: return .gnosis(apiKey: appConfigProvider.gnosisscanKey)
+        default: fatalError("Non-supported EVM blockchain")
+        }
     }
 
 }
@@ -26,6 +43,10 @@ extension EvmSyncSourceManager {
         syncSourceRelay.asObservable()
     }
 
+    var syncSourcesUpdatedObservable: Observable<BlockchainType> {
+        syncSourcesUpdatedRelay.asObservable()
+    }
+
     func defaultSyncSources(blockchainType: BlockchainType) -> [EvmSyncSource] {
         switch blockchainType {
         case .ethereum:
@@ -33,12 +54,12 @@ extension EvmSyncSourceManager {
                 EvmSyncSource(
                         name: "Infura WebSocket",
                         rpcSource: .ethereumInfuraWebsocket(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
-                        transactionSource: .ethereumEtherscan(apiKey: appConfigProvider.etherscanKey)
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
                 EvmSyncSource(
                         name: "Infura HTTP",
                         rpcSource: infuraRpcSource,
-                        transactionSource: .ethereumEtherscan(apiKey: appConfigProvider.etherscanKey)
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
         case .ethereumGoerli:
@@ -46,12 +67,12 @@ extension EvmSyncSourceManager {
                 EvmSyncSource(
                         name: "Infura WebSocket",
                         rpcSource: .goerliInfuraWebsocket(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
-                        transactionSource: .goerliEtherscan(apiKey: appConfigProvider.etherscanKey)
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
                 EvmSyncSource(
                         name: "Infura HTTP",
                         rpcSource: .goerliInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
-                        transactionSource: .goerliEtherscan(apiKey: appConfigProvider.etherscanKey)
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
         case .binanceSmartChain:
@@ -59,12 +80,12 @@ extension EvmSyncSourceManager {
                 EvmSyncSource(
                         name: "Default HTTP",
                         rpcSource: .binanceSmartChainHttp(),
-                        transactionSource: .bscscan(apiKey: appConfigProvider.bscscanKey)
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
                 EvmSyncSource(
                         name: "BSC-RPC HTTP",
                         rpcSource: .bscRpcHttp(),
-                        transactionSource: .bscscan(apiKey: appConfigProvider.bscscanKey)
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
         case .polygon:
@@ -72,7 +93,7 @@ extension EvmSyncSourceManager {
                 EvmSyncSource(
                         name: "Polygon-RPC HTTP",
                         rpcSource: .polygonRpcHttp(),
-                        transactionSource: .polygonscan(apiKey: appConfigProvider.polygonscanKey)
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
         case .avalanche:
@@ -80,7 +101,7 @@ extension EvmSyncSourceManager {
                 EvmSyncSource(
                         name: "Avax.network HTTP",
                         rpcSource: .avaxNetworkHttp(),
-                        transactionSource: .snowtrace(apiKey: appConfigProvider.snowtraceKey)
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
         case .optimism:
@@ -88,7 +109,7 @@ extension EvmSyncSourceManager {
                 EvmSyncSource(
                         name: "Optimism.io HTTP",
                         rpcSource: .optimismRpcHttp(),
-                        transactionSource: .optimisticEtherscan(apiKey: appConfigProvider.optimismEtherscanKey)
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
         case .arbitrumOne:
@@ -96,7 +117,7 @@ extension EvmSyncSourceManager {
                 EvmSyncSource(
                         name: "Arbitrum.io HTTP",
                         rpcSource: .arbitrumOneRpcHttp(),
-                        transactionSource: .arbiscan(apiKey: appConfigProvider.arbiscanKey)
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
         case .gnosis:
@@ -104,7 +125,7 @@ extension EvmSyncSourceManager {
                 EvmSyncSource(
                         name: "Gnosis.io HTTP",
                         rpcSource: .gnosisRpcHttp(),
-                        transactionSource: .gnosis(apiKey: appConfigProvider.gnosisscanKey)
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
         default:
@@ -113,8 +134,31 @@ extension EvmSyncSourceManager {
     }
 
     func customSyncSources(blockchainType: BlockchainType) -> [EvmSyncSource] {
-        []
-        // todo: load custom network from DB
+        do {
+            let records = try evmSyncSourceStorage.records(blockchainTypeUid: blockchainType.uid)
+
+            return records.compactMap { record in
+                guard let url = URL(string: record.url), let scheme = url.scheme else {
+                    return nil
+                }
+
+                let rpcSource: RpcSource
+
+                switch scheme {
+                case "http", "https": rpcSource = .http(urls: [url], auth: record.auth)
+                case "ws", "wss": rpcSource = .webSocket(url: url, auth: record.auth)
+                default: return nil
+                }
+
+                return EvmSyncSource(
+                        name: url.host ?? "",
+                        rpcSource: rpcSource,
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                )
+            }
+        } catch {
+            return []
+        }
     }
 
     func allSyncSources(blockchainType: BlockchainType) -> [EvmSyncSource] {
@@ -124,7 +168,8 @@ extension EvmSyncSourceManager {
     func syncSource(blockchainType: BlockchainType) -> EvmSyncSource {
         let syncSources = allSyncSources(blockchainType: blockchainType)
 
-        if let name = storage.evmSyncSourceName(blockchainType: blockchainType), let syncSource = syncSources.first(where: { $0.name == name }) {
+        if let urlString = blockchainSettingsStorage.evmSyncSourceUrl(blockchainType: blockchainType),
+           let syncSource = syncSources.first(where: { $0.rpcSource.url.absoluteString == urlString }) {
             return syncSource
         }
 
@@ -134,16 +179,45 @@ extension EvmSyncSourceManager {
     func httpSyncSource(blockchainType: BlockchainType) -> EvmSyncSource? {
         let syncSources = allSyncSources(blockchainType: blockchainType)
 
-        if let name = storage.evmSyncSourceName(blockchainType: blockchainType), let syncSource = syncSources.first(where: { $0.name == name }), syncSource.isHttp {
+        if let urlString = blockchainSettingsStorage.evmSyncSourceUrl(blockchainType: blockchainType),
+           let syncSource = syncSources.first(where: { $0.rpcSource.url.absoluteString == urlString }), syncSource.isHttp {
             return syncSource
         }
 
         return syncSources.first { $0.isHttp }
     }
 
-    func save(syncSource: EvmSyncSource, blockchainType: BlockchainType) {
-        storage.save(evmSyncSourceName: syncSource.name, blockchainType: blockchainType)
+    func saveCurrent(syncSource: EvmSyncSource, blockchainType: BlockchainType) {
+        blockchainSettingsStorage.save(evmSyncSourceUrl: syncSource.rpcSource.url.absoluteString, blockchainType: blockchainType)
         syncSourceRelay.accept(blockchainType)
+    }
+
+    func saveSyncSource(blockchainType: BlockchainType, url: URL, auth: String?) {
+        let record = EvmSyncSourceRecord(
+                blockchainTypeUid: blockchainType.uid,
+                url: url.absoluteString,
+                auth: auth
+        )
+
+        try? evmSyncSourceStorage.save(record: record)
+
+        if let syncSource = customSyncSources(blockchainType: blockchainType).first(where: { $0.rpcSource.url == url }) {
+            saveCurrent(syncSource: syncSource, blockchainType: blockchainType)
+        }
+
+        syncSourcesUpdatedRelay.accept(blockchainType)
+    }
+
+    func delete(syncSource: EvmSyncSource, blockchainType: BlockchainType) {
+        let isCurrent = self.syncSource(blockchainType: blockchainType) == syncSource
+
+        try? evmSyncSourceStorage.delete(blockchainTypeUid: blockchainType.uid, url: syncSource.rpcSource.url.absoluteString)
+
+        if isCurrent {
+            syncSourceRelay.accept(blockchainType)
+        }
+
+        syncSourcesUpdatedRelay.accept(blockchainType)
     }
 
 }

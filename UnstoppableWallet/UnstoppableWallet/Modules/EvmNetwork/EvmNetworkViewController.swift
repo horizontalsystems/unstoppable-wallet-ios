@@ -79,21 +79,34 @@ class EvmNetworkViewController: ThemeViewController {
     }
 
     private func openAddNew() {
-        // todo
+        let module = AddEvmSyncSourceModule.viewController(blockchainType: viewModel.blockchainType)
+        present(module, animated: true)
     }
 
 }
 
 extension EvmNetworkViewController: SectionsDataSource {
 
-    private func row(id: String, viewItem: EvmNetworkViewModel.ViewItem, index: Int, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol {
+    private func customRowActions(index: Int) -> [RowAction] {
+        [
+            RowAction(
+                    pattern: .icon(image: UIImage(named: "circle_minus_shifted_24"), background: UIColor(red: 0, green: 0, blue: 0, alpha: 0)),
+                    action: { [weak self] _ in
+                        self?.viewModel.onRemoveCustom(index: index)
+                    }
+            )
+        ]
+    }
+
+    private func row(id: String, viewItem: EvmNetworkViewModel.ViewItem, rowActionProvider: (() -> [RowAction])? = nil, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol {
         tableView.universalRow62(
                 id: id,
                 title: .body(viewItem.name),
                 description: .subhead2(viewItem.url),
                 accessoryType: .check(viewItem.selected),
-                hash: "\(viewItem.selected)",
+                hash: "\(viewItem.selected)-\(isFirst)-\(isLast)",
                 autoDeselect: true,
+                rowActionProvider: rowActionProvider,
                 isFirst: isFirst,
                 isLast: isLast,
                 action: action
@@ -114,7 +127,6 @@ extension EvmNetworkViewController: SectionsDataSource {
                         row(
                                 id: "default-\(index)",
                                 viewItem: viewItem,
-                                index: index,
                                 isFirst: index == 0,
                                 isLast: index == defaultViewItems.count - 1,
                                 action: { [weak self] in
@@ -135,7 +147,9 @@ extension EvmNetworkViewController: SectionsDataSource {
                                 row(
                                         id: "custom-\(index)",
                                         viewItem: viewItem,
-                                        index: index,
+                                        rowActionProvider: { [weak self] in
+                                            self?.customRowActions(index: index) ?? []
+                                        },
                                         isFirst: index == 0,
                                         isLast: index == customViewItems.count - 1,
                                         action: { [weak self] in

@@ -6,7 +6,7 @@ import MarketKit
 class EvmNetworkService {
     let blockchain: Blockchain
     private let evmSyncSourceManager: EvmSyncSourceManager
-    private var currentSyncSource: EvmSyncSource
+    private var disposeBag = DisposeBag()
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = State(defaultItems: [], customItems: []) {
@@ -19,9 +19,13 @@ class EvmNetworkService {
         self.blockchain = blockchain
         self.evmSyncSourceManager = evmSyncSourceManager
 
-        currentSyncSource = evmSyncSourceManager.syncSource(blockchainType: blockchain.type)
+        subscribe(disposeBag, evmSyncSourceManager.syncSourcesUpdatedObservable) { [weak self] _ in self?.syncState() }
 
         syncState()
+    }
+
+    private var currentSyncSource: EvmSyncSource {
+        evmSyncSourceManager.syncSource(blockchainType: blockchain.type)
     }
 
     private func syncState() {
@@ -32,7 +36,9 @@ class EvmNetworkService {
     }
 
     private func items(syncSources: [EvmSyncSource]) -> [Item] {
-        syncSources.map { syncSource in
+        let currentSyncSource = currentSyncSource
+
+        return syncSources.map { syncSource in
             Item(
                     syncSource: syncSource,
                     selected: syncSource == currentSyncSource
@@ -45,9 +51,8 @@ class EvmNetworkService {
             return
         }
 
-        evmSyncSourceManager.save(syncSource: syncSource, blockchainType: blockchain.type)
+        evmSyncSourceManager.saveCurrent(syncSource: syncSource, blockchainType: blockchain.type)
 
-        currentSyncSource = syncSource
         syncState()
     }
 
@@ -65,6 +70,10 @@ extension EvmNetworkService {
 
     func setCustom(index: Int) {
         setCurrent(syncSource: state.customItems[index].syncSource)
+    }
+
+    func removeCustom(index: Int) {
+        evmSyncSourceManager.delete(syncSource: state.customItems[index].syncSource, blockchainType: blockchain.type)
     }
 
 }

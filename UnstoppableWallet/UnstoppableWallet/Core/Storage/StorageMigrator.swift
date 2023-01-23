@@ -715,6 +715,16 @@ class StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Create EvmSyncSourceRecord") { db in
+            try db.create(table: EvmSyncSourceRecord.databaseTableName) { t in
+                t.column(EvmSyncSourceRecord.Columns.blockchainTypeUid.name, .text).notNull()
+                t.column(EvmSyncSourceRecord.Columns.url.name, .text).notNull()
+                t.column(EvmSyncSourceRecord.Columns.auth.name, .text)
+
+                t.primaryKey([EvmSyncSourceRecord.Columns.blockchainTypeUid.name, EvmSyncSourceRecord.Columns.url.name], onConflict: .replace)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

@@ -3,6 +3,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import EvmKit
+import MarketKit
 
 class EvmNetworkViewModel {
     private let service: EvmNetworkService
@@ -63,12 +64,20 @@ extension EvmNetworkViewModel {
         service.blockchain.type.imageUrl
     }
 
+    var blockchainType: BlockchainType {
+        service.blockchain.type
+    }
+
     func onSelectDefault(index: Int) {
         service.setDefault(index: index)
     }
 
     func onSelectCustom(index: Int) {
         service.setCustom(index: index)
+    }
+
+    func onRemoveCustom(index: Int) {
+        service.removeCustom(index: index)
     }
 
 }

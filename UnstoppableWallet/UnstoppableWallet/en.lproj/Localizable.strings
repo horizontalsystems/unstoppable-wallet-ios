@@ -1204,6 +1204,15 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "evm_network.added" = "Added";
 "evm_network.add_new" = "Add New";
 
+// Add RPC Source
+
+"add_evm_sync_source.title" = "Add RPC Source";
+"add_evm_sync_source.name" = "Name";
+"add_evm_sync_source.rpc_url" = "RPC URL";
+"add_evm_sync_source.basic_auth" = "Basic Auth (optional)";
+"add_evm_sync_source.warning.url_exists" = "RPC Source with this url already exists";
+"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: http, https, ws, wss";
+
 // Fee Settings
 
 "fee_settings" = "Fee Settings";
