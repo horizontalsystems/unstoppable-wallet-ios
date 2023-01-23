@@ -10,7 +10,7 @@ class TransactionsViewItemFactory {
         self.evmLabelManager = evmLabelManager
     }
 
-    func typeFilterViewItems(typeFilters: [TransactionTypeFilter]) -> [FilterHeaderView.ViewItem] {
+    func typeFilterViewItems(typeFilters: [TransactionTypeFilter]) -> [FilterView.ViewItem] {
         typeFilters.map {
             if $0 == .all {
                 return .all

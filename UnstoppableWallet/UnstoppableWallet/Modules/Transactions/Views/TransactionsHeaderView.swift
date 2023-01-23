@@ -5,7 +5,7 @@ import UIExtensions
 import ThemeKit
 import ComponentKit
 
-class TransactionsHeaderView: UITableViewHeaderFooterView {
+class TransactionsHeaderView: UIView {
     static let height: CGFloat = .heightSingleLineCell
 
     private let viewModel: TransactionsViewModel
@@ -18,12 +18,11 @@ class TransactionsHeaderView: UITableViewHeaderFooterView {
     init(viewModel: TransactionsViewModel) {
         self.viewModel = viewModel
 
-        super.init(reuseIdentifier: nil)
+        super.init(frame: .zero)
 
-        backgroundView = UIView()
-        backgroundView?.backgroundColor = .themeNavigationBarBackground
+        backgroundColor = .themeNavigationBarBackground
 
-        contentView.addSubview(blockchainButton)
+        addSubview(blockchainButton)
         blockchainButton.snp.makeConstraints { maker in
             maker.leading.centerY.equalToSuperview()
         }
@@ -33,7 +32,7 @@ class TransactionsHeaderView: UITableViewHeaderFooterView {
         blockchainButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         blockchainButton.addTarget(self, action: #selector(onTapBlockchainButton), for: .touchUpInside)
 
-        contentView.addSubview(tokenButton)
+        addSubview(tokenButton)
         tokenButton.snp.makeConstraints { maker in
             maker.trailing.centerY.equalToSuperview()
         }
@@ -45,7 +44,7 @@ class TransactionsHeaderView: UITableViewHeaderFooterView {
 
         let separatorView = UIView()
 
-        contentView.addSubview(separatorView)
+        addSubview(separatorView)
         separatorView.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview()
             maker.height.equalTo(CGFloat.heightOnePixel)

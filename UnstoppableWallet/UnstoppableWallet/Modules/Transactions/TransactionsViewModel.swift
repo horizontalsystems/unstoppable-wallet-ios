@@ -197,7 +197,7 @@ extension TransactionsViewModel {
         resetEnabledRelay.asDriver()
     }
 
-    var typeFilterViewItems: [FilterHeaderView.ViewItem] {
+    var typeFilterViewItems: [FilterView.ViewItem] {
         factory.typeFilterViewItems(typeFilters: TransactionTypeFilter.allCases)
     }
 

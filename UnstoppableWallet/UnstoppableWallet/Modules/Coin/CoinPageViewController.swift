@@ -12,7 +12,7 @@ class CoinPageViewController: ThemeViewController {
     private let enableCoinView: EnableCoinView
     private let disposeBag = DisposeBag()
 
-    private let tabsView = FilterHeaderView(buttonStyle: .tab)
+    private let tabsView = FilterView(buttonStyle: .tab)
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
     private let overviewController: CoinOverviewViewController
@@ -51,7 +51,7 @@ class CoinPageViewController: ThemeViewController {
         tabsView.snp.makeConstraints { maker in
             maker.top.equalTo(view.safeAreaLayoutGuide)
             maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(FilterHeaderView.height)
+            maker.height.equalTo(FilterView.height)
         }
 
         view.addSubview(pageViewController.view)
@@ -61,7 +61,7 @@ class CoinPageViewController: ThemeViewController {
         }
 
         tabsView.reload(filters: CoinPageModule.Tab.allCases.map {
-            FilterHeaderView.ViewItem.item(title: $0.title)
+            FilterView.ViewItem.item(title: $0.title)
         })
 
         tabsView.onSelect = { [weak self] index in

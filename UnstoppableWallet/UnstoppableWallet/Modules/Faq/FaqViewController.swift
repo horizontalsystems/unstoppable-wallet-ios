@@ -106,7 +106,7 @@ class FaqViewController: ThemeViewController {
     private func sync(sectionItems: [FaqService.SectionItem]) {
         self.sectionItems = sectionItems
 
-        sectionFilterView.reload(filters: sectionItems.map { FilterHeaderView.ViewItem.item(title: $0.title) })
+        sectionFilterView.reload(filters: sectionItems.map { FilterView.ViewItem.item(title: $0.title) })
         sectionFilterView.select(index: 0)
         currentSection = 0
 

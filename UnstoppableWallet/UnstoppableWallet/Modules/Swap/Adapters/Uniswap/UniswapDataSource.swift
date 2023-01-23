@@ -15,7 +15,7 @@ class UniswapDataSource {
     private let viewModel: UniswapViewModel
     private let allowanceViewModel: SwapAllowanceViewModel
 
-    private let settingsHeaderView = TextDropDownAndSettingsView()
+    private let settingsHeaderView = TextDropDownAndSettingsHeaderView()
 
     private let inputCell: SwapInputCell
 
@@ -131,7 +131,7 @@ class UniswapDataSource {
     }
 
     func viewDidAppear() {
-        inputCell.becomeFirstResponder()
+        _ = inputCell.becomeFirstResponder()
     }
 
     private func handle(balance: String?) {
@@ -387,7 +387,7 @@ extension UniswapDataSource: ISwapDataSource {
 
         sections.append(Section(
                 id: "header",
-                headerState: .static(view: settingsHeaderView, height: TextDropDownAndSettingsView.height),
+                headerState: .static(view: settingsHeaderView, height: TextDropDownAndSettingsHeaderView.height),
                 rows: [
                 ]
         ))

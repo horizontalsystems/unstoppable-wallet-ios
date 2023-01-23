@@ -70,7 +70,7 @@ class GuidesViewController: ThemeViewController {
         viewModel.filters
                 .drive(onNext: { [weak self] filters in
                     self?.filterHeaderView.reload(filters: filters.map { filter in
-                        FilterHeaderView.ViewItem.item(title: filter)
+                        FilterView.ViewItem.item(title: filter)
                     })
                 })
                 .disposed(by: disposeBag)

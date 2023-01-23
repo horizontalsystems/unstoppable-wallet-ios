@@ -3,7 +3,7 @@ import ThemeKit
 import SnapKit
 import ComponentKit
 
-class TextDropDownAndSettingsView: UITableViewHeaderFooterView {
+class TextDropDownAndSettingsView: UIView {
     static let height: CGFloat = .heightSingleLineCell
 
     private let dropdownButton = SecondaryButton()
@@ -16,17 +16,9 @@ class TextDropDownAndSettingsView: UITableViewHeaderFooterView {
     var onTapSettings: (() -> ())?
     var onTapSelector: ((Int) -> ())?
 
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-        commonInit()
-    }
-
     init() {
-        super.init(reuseIdentifier: "")
-        commonInit()
-    }
+        super.init(frame: .zero)
 
-    private func commonInit() {
         addSubview(dropdownButton)
         dropdownButton.snp.makeConstraints { maker in
             maker.leading.centerY.equalToSuperview()

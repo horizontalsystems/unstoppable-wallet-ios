@@ -468,7 +468,7 @@ extension ZcashAdapter: IAdapter {
         do {
             balanceSubject.onNext(_balanceData)
             await fixPendingTransactionsIfNeeded()
-            print("\(Date()) Try to start synchronizer : retry = \(retry), by Thread:\(Thread.current)")
+//            print("\(Date()) Try to start synchronizer : retry = \(retry), by Thread:\(Thread.current)")
             try synchronizer.start(retry: retry)
         } catch {
             state = .notSynced(error: error)

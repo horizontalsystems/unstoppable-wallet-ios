@@ -8,7 +8,7 @@ class MarketViewController: ThemeViewController {
     private let viewModel: MarketViewModel
     private let disposeBag = DisposeBag()
 
-    private let tabsView = FilterHeaderView(buttonStyle: .tab)
+    private let tabsView = FilterView(buttonStyle: .tab)
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
     private var marketOverviewViewController: MarketOverviewViewController?
@@ -43,7 +43,7 @@ class MarketViewController: ThemeViewController {
         tabsView.snp.makeConstraints { maker in
             maker.top.equalTo(view.safeAreaLayoutGuide)
             maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(FilterHeaderView.height)
+            maker.height.equalTo(FilterView.height)
         }
 
         view.addSubview(pageViewController.view)
@@ -54,7 +54,7 @@ class MarketViewController: ThemeViewController {
         }
 
         tabsView.reload(filters: viewModel.tabs.map {
-            FilterHeaderView.ViewItem.item(title: $0.title)
+            FilterView.ViewItem.item(title: $0.title)
         })
 
         tabsView.onSelect = { [weak self] index in

@@ -14,7 +14,7 @@ class TransactionsViewController: ThemeViewController {
     private let headerView: TransactionsHeaderView
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let emptyView = PlaceholderView()
-    private let typeFiltersView = FilterHeaderView(buttonStyle: .tab)
+    private let typeFiltersView = FilterView(buttonStyle: .tab)
     private let syncSpinner = HUDActivityView.create(with: .medium24)
 
     private var sectionViewItems = [TransactionsViewModel.SectionViewItem]()
@@ -66,7 +66,7 @@ class TransactionsViewController: ThemeViewController {
         typeFiltersView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(view.safeAreaLayoutGuide)
-            maker.height.equalTo(FilterHeaderView.height)
+            maker.height.equalTo(FilterView.height)
         }
 
         typeFiltersView.reload(filters: viewModel.typeFilterViewItems)
