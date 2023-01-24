@@ -5,7 +5,7 @@
 "button.continue" = "继续";
 "button.done" = "完成";
 "button.reset" = "重置";
-"button.import" = "Import";
+"button.import" = "恢复";
 "button.next" = "下一步";
 "button.share" = "分享";
 "button.paste" = "粘帖";
@@ -39,9 +39,9 @@
 "alert.added_to_wallet" = "添加到钱包";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
-"alert.copied" = "Copied";
+"alert.copied" = "已复制";
 "alert.created" = "已创建";
-"alert.imported" = "Imported";
+"alert.imported" = "已恢复";
 "alert.wallet_added" = "Wallet Added";
 "alert.deleted" = "已删除";
 "alert.waiting_for_session" = "等待会话";
@@ -94,9 +94,9 @@
 
 // Restore
 
-"restore.title" = "Import Wallet";
+"restore.title" = "恢复自";
 "restore.advanced" = "Advanced";
-"restore.import_by" = "Import By";
+"restore.import_by" = "由";
 "restore.restore_type.mnemonic" = "恢复码";
 "restore.restore_type.private_key" = "私钥";
 "restore.mnemonic.placeholder" = "输入12、15、18、21或24个单词";
@@ -106,7 +106,7 @@
 "restore.checksum_error" = "校验和无效";
 "restore.passphrase" = "密码";
 "restore.input.passphrase" = "密码";
-"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet but a new passphrase will a generate a brand new wallet.";
+"restore.passphrase_description" = "输入您在创建此助记词时使用的密码.";
 "restore.error.empty_passphrase" = "密码不能为空白";
 "restore.non_standard_import" = "Non-Standard Import";
 "restore.non_standard_import.description" = "This page provides a special wallet import mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
