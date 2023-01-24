@@ -193,7 +193,7 @@ extension TextInputCell: UITextViewDelegate {
 
 extension TextInputCell: IScanQrViewControllerDelegate {
 
-    func didScan(viewController: UIViewController, string: String) {
+    func didFetch(string: String) {
         set(text: string)
     }
 
