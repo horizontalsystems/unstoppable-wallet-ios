@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "Copied";
+"alert.copied" = "복사됨";
 "alert.created" = "생성됨";
 "alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
@@ -104,7 +104,7 @@
 "restore.checksum_error" = "유효하지 않은 체크섬";
 "restore.passphrase" = "암호문구";
 "restore.input.passphrase" = "암호문구";
-"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet but a new passphrase will a generate a brand new wallet.";
+"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet but a new passphrase will generate a brand-new wallet.";
 "restore.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "restore.non_standard_import" = "Non-Standard Import";
 "restore.non_standard_import.description" = "This page provides a special wallet import mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
@@ -122,7 +122,7 @@
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "2018년 이전 공통";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "2018년 이후 공통";
 "sync_mode.from_blockchain" = "블록체인으로 부터";
-"blockchain_settings.description" = "Select address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
+"blockchain_settings.description" = "Select the address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -143,7 +143,7 @@
 "recovery_phrase.tap_to_show" = "탭하여 복구 문구 표시";
 "recovery_phrase.passphrase" = "암호문구";
 "recovery_phrase.copy_warning.title" = "복구 문구 복사 위험";
-"recovery_phrase.copy_warning.description" = "보안 조치로 개인 키에 복사 작업을 사용하지 않는 것이 좋습니다.";
+"recovery_phrase.copy_warning.description" = "As a security measure,we recommend not using copy action on recovery phrase.";
 
 // EVM Private Key
 
@@ -189,14 +189,14 @@
 // Backup Prompt
 
 "backup_prompt.title" = "Backup Wallet";
-"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken etc.";
+"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken, etc.";
 "backup_prompt.backup" = "백업";
 "backup_prompt.later" = "나중에";
 
 // Errors
 
 "error.send.self_transfer" = "자체로 전송이 지원되지 않음";
-"error.send_binance.memo_required" = "수신자는 송금 내역에 메모 기록을 필요로 합니다";
+"error.send_binance.memo_required" = "The receiver requires a non-empty memo in the transfer transaction";
 "error.send_binance.only_digits_allowed" = "메모에는 숫자만 포함하셔야 합니다";
 "error.send_z_cash.transparent_address" = "Unstoppable은 투명 주소에 대한 지불을 지원하지 않습니다";
 
@@ -302,7 +302,7 @@
 "send.confirmation.fee" = "수수료";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.send_button" = "전송";
-"send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
+"send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.resend_button" = "재전송";
 "send.confirmation.cancel_description" = "이 작업은 자신에게 새로운 0 금액 트랜잭션으로 다시 전송하여 이전 트랜잭션을 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
 "send.confirmation.cancel_button" = "트랜잭션 취소";
@@ -385,7 +385,7 @@
 "swap.advanced_settings.error.invalid_deadline" = "올바르지 않은 마감 시간";
 
 "swap.one_inch.error.cannot_estimate" = "추정 오류";
-"swap.one_inch.error.cannot_estimate.info" = "잔액을 확인하여 수수료를 충당하기에 충분한 %@이 있는지 확인하십시오. 또는 가격 슬리피지 금액을 늘리고 다시 시도하십시오. 3초 후에 자동 재시도합니다...";
+"swap.one_inch.error.cannot_estimate.info" = "Check the balance to ensure there is enough %@ to cover the fee. Or try increasing the price slippage amount and try again. Will auto-retry in 3 sec...";
 "swap.one_inch.error.insufficient_liquidity" = "유동성 부족";
 "swap.one_inch.error.insufficient_liquidity.info" = "이 거래를 처리할 수 있는 유동성이 충분하지 않을 수 있습니다. 금액을 낮추십시오.";
 
@@ -399,7 +399,7 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "스왑";
-"swap.confirmation.impact_too_high" = "시장 가격과 예상 결제 가격의 차이가 너무 큽니다.";
+"swap.confirmation.impact_too_high" = "The difference between the market price and the expected settlement price is too high.";
 "swap.confirmation.minimum_received" = "최소 지급액";
 "swap.confirmation.maximum_sent" = "최대 속도";
 
@@ -409,9 +409,9 @@
 "swap.dex_info.header_allowance" = "허용량";
 "swap.dex_info.content_allowance" = "토큰 스왑을 실행할 때 거래소가 사용자를 대신하여 지출할 수 있는 금액. 실제 스왑 거래가 발생하기 전에 선행 거래 설정 충분한 여유가 필요합니다.";
 "swap.dex_info.header_price_impact" = "가격 영향";
-"swap.dex_info.content_price_impact" = "표시된 가격과의 예상 가격 편차는 일반적으로 스왑 금액에 따라 증가합니다.";
+"swap.dex_info.content_price_impact" = "The expected price deviation from a shown price typically increases with the swap amount.";
 "swap.dex_info.header_swap_fee" = "스왑 비용";
-"swap.dex_info.content_swap_fee" = "플랫폼에서의 스왑 작업에 대한 서비스 수수료이며, 사용자가 판매하는 통화에 표시됩니다. 대부분의 주문의 경우 0.3% 또는 0.6%여야 합니다.";
+"swap.dex_info.content_swap_fee" = "A service fee for the swap action on the platform, shown in the currency the user sells. For most orders, it should be either 0.3 % or 0.6 %.";
 "swap.dex_info.header_guaranteed_amount" = "보증 금액";
 "swap.dex_info.content_guaranteed_amount" = "사용자가 스왑 작업의 결과로 받을 최소 금액입니다.";
 "swap.dex_info.header_maximum_spend" = "최대 속도";
@@ -847,12 +847,11 @@
 "terms.title" = "약관";
 "terms.i_agree" = "동의함";
 
-"terms.item.1" = "지갑 복구 문구를 백업하여 자금에 다시 액세스하십시오.";
-"terms.item.2" = "개인 키 및 복구 문구는 장치에만 저장됩니다.";
-"terms.item.3" = "스마트폰 잠금 해제 PIN을 비활성화하면 앱에서 모든 지갑이 삭제됩니다. 자금에 대한 액세스 권한을 다시 얻으려면 복구 문구가 필요합니다.";
-"terms.item.4" = "탈옥(루팅), 출처를 알 수 없는 앱 설치, 오래된 OS 사용은 자금의 안전을 위협할 수 있습니다.";
-"terms.item.5" = "이 앱을 구동하는 코드에 발견되지 않은 소프트웨어 문제가 있을 수 있으며 이로 인해 예기치 않은 동작이나 앱 오작동이 발생할 수 있습니다.";
-"terms.item.6" = "자금의 안전은 사용자만이 책임을 지며 다른 주체는 책임이 없습니다.";
+"terms.item.1" = "Securely backup recovery phrases for each wallet. It's the only way to regain access to funds if the app malfunctions.";
+"terms.item.2" = "The wallet recovery phrases are randomly generated on the device during setup and are not stored elsewhere.";
+"terms.item.3" = "Disabling unlock PIN (code) on the smartphone deletes all wallets from the app. Recovery phrases will be needed to restore access to funds.";
+"terms.item.4" = "Jailbreaking (rooting), using outdated OS, and installing apps from unknown sources may endanger the safety of funds.";
+"terms.item.5" = "There may be undiscovered software issues in the code powering this app which may cause the app to malfunction.";
 
 // Settings -> Tell Friends
 
@@ -887,7 +886,7 @@
 "btc_transaction_sort_mode.bip69.description" = "사전 색인 작성";
 
 "blockchain_settings.info.restore_source" = "매개 변수 복원";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
 "blockchain_settings.info.transaction_inputs_outputs" = "트랜잭션 입력/출력";
 "blockchain_settings.info.transaction_inputs_outputs.content" = "대부분의 비트코인 ​​거래는 물론 비트코인 ​​캐시, 대시 및 라이트코인을 포함한 유사한 암호화폐의 거래는 두 가지 출력을 생성합니다. 하나의 출력은 수신자에게 가는 금액이고 다른 하나는 발신자에게 반환되는 변경 출력입니다. 대부분의 지갑이 트랜잭션을 구성하는 방식을 통해 제3자는 출력 중 어느 것이 수신 당사자에게 갔고 어느 것이 발신자에게 반환된 변경 금액인지 쉽게 이해할 수 있습니다. 발신자에게 반환된 출력은 나중에 미래의 거래에 사용되기 때문에 이 두 거래 사이의 연결이 분명해집니다.\n\nUnstoppable 지갑은 누군가가 어떤 출력이 어디로 가는지 알아내기 어렵게 하는 조치를 구현합니다.\n\n 멈출 수 없는 사용자가 사용할 수 있는 두 가지 옵션:\n\n1. 셔플: 트랜잭션 출력 순서는 모든 트랜잭션에서 무작위로 지정됩니다. 때로는 변화가 첫 번째 출력이 될 수도 있고 때로는 두 번째 출력이 될 수도 있습니다. 사용자가 앱 개발자를 신뢰한다면 이것을 권장 옵션으로 고려하십시오.\n\n2. 결정적: 트랜잭션 출력 주문에 대해 일반적으로 합의된 표준이 있습니다(BIP69로 알려짐). 오픈 소스 지갑에서 이 표준은 지갑 사용자가 앱 개발자가 출력 순서를 구현하는 방법을 신뢰할 필요가 없도록 합니다. 이 표준은 새롭기 때문에 아직 많은 지갑에서 구현하지 않았습니다. 결과적으로 해당 표준을 사용하는 지갑에서 트랜잭션이 전송되었는지 여부를 블록체인에서 확인할 수 있습니다.";
 "blockchain_settings.info.rpc_source" = "RPC Source";
@@ -1021,7 +1020,7 @@
 "create_wallet.passphrase" = "암호 문구";
 "create_wallet.input.passphrase" = "암호 문구";
 "create_wallet.input.confirm" = "확인";
-"create_wallet.passphrase_description" = "Passphrases add additional security layer for wallets. To restore such wallet a user required both mnemonic as well as a passphrase.\n\nPassphrases also make it easy for users to have many multi-coin wallets using a single mnemonic but different passwords.";
+"create_wallet.passphrase_description" = "Passphrases add an additional security layer for wallets. To restore such a wallet a user required both mnemonic as well as a passphrase.\n\nPassphrases also make it easy for users to have many multi-coin wallets using a single mnemonic but different password.";
 "create_wallet.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "create_wallet.error.forbidden_symbols" = "지원되는 기호만 사용하세요: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "암호 확인이 일치하지 않습니다";
@@ -1078,20 +1077,20 @@
 
 // Wallet Connect
 
-"wallet_connect.title" = "Wallet Connect";
+"wallet_connect.title" = "WalletConnect";
 "wallet_connect.error.invalid_url" = "잘못된 주소";
 "wallet_connect.url" = "URL 주소";
 "wallet_connect.active_account" = "지갑 활성화";
 "wallet_connect.address" = "주소";
 "wallet_connect.network" = "네트워크";
-"wallet_connect.address" = "주소";
-"wallet_connect.network" = "네트워크";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
 "wallet_connect.main.unsupported_chains" = "일부 체인은 지원되지 않습니다!";
 "wallet_connect.connect_description" = "승인을 눌러 이 앱이 귀하의 공공 주소를 볼 수 있도록 허용하십시오. 이것은 잠재적인 피싱 위험으로부터 데이터를 보호하기 위한 중요한 보안 단계 입니다.";
 "wallet_connect.usage_description" = "브라우저로 이동하십시오. 브라우저에서 상호 작용하는 동안에는 이 페이지를 닫지 마십시오.";
-"wallet_connect.no_connection" = "연결을 설정하지 못했습니다. 다시 연결해 보세요.";
+"wallet_connect.no_connection" = "Failed to establish a connection. Try reconnecting again.";
 "wallet_connect.button_reconnect" = "재연결";
 "wallet_connect.button_disconnect" = "연결 해제";
 "ethereum_transaction.error.title" = "오류";
@@ -1109,7 +1108,7 @@
 "wallet_connect.sign.message" = "서명할 메시지";
 "wallet_connect.sign.description" = "인증을 위해 메시지에 서명하십시오";
 
-"wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "활성 세션 없음";
 
 "wallet_connect.list.pairings" = "동기화";
@@ -1153,7 +1152,7 @@
 "status_info.completed.title" = "완료됨";
 "status_info.confirmed.content" = "거래가 완료되고 영구적이고 되돌릴 수 없는 것으로 간주됩니다.";
 "status_info.failed.title" = "실패";
-"status_info.failed.content" = "거래가 처리되지 않았으며 가치 이전이 발생하지 않았습니다. 실패 원인에 따라 일부 실패한 거래는 거래 수수료를 소모할 수 있습니다. 다른 거래로 대체되거나 취소된 거래는 거래 수수료를 소비하지 않으며 실패한 것으로 표시됩니다. Unstoppable 앱은 거래 실패의 원인을 표시할 수 없지만 사용자는 etherscan.io와 같은 공개 블록 탐색기에서 직접 찾을 수 있습니다.";
+"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Depending on the fail reason, some failed transactions may consume transaction fees. Transactions that were replaced or canceled by another transaction do not consume transaction fees and will also appear as failed. The Unstoppable app is unable to show the reason for failed transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
 
 // Onboarding
 
