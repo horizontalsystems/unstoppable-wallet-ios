@@ -106,7 +106,7 @@
 "restore.checksum_error" = "校验和无效";
 "restore.passphrase" = "密码";
 "restore.input.passphrase" = "密码";
-"restore.passphrase_description" = "输入您在创建此助记词时使用的密码.";
+"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet but a new passphrase will generate a brand-new wallet.";
 "restore.error.empty_passphrase" = "密码不能为空白";
 "restore.non_standard_import" = "Non-Standard Import";
 "restore.non_standard_import.description" = "This page provides a special wallet import mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
@@ -124,7 +124,7 @@
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "2018年之前常用";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "2018年之后常用";
 "sync_mode.from_blockchain" = "来自区块链";
-"blockchain_settings.description" = "Select address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
+"blockchain_settings.description" = "Select the address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -145,7 +145,7 @@
 "recovery_phrase.tap_to_show" = "点击显示恢复密语";
 "recovery_phrase.passphrase" = "密码";
 "recovery_phrase.copy_warning.title" = "恢复短语复制的风险";
-"recovery_phrase.copy_warning.description" = "作为一项安全措施，我们建议不要复制私钥。";
+"recovery_phrase.copy_warning.description" = "As a security measure,we recommend not using copy action on recovery phrase.";
 
 // EVM Private Key
 
@@ -191,14 +191,14 @@
 // Backup Prompt
 
 "backup_prompt.title" = "Backup Wallet";
-"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken etc.";
+"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken, etc.";
 "backup_prompt.backup" = "备份";
 "backup_prompt.later" = "稍后";
 
 // Errors
 
 "error.send.self_transfer" = "不支持发送给自己";
-"error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
+"error.send_binance.memo_required" = "The receiver requires a non-empty memo in the transfer transaction";
 "error.send_binance.only_digits_allowed" = "要求备注仅包含数字";
 "error.send_z_cash.transparent_address" = "Unstoppable不支持对透明地址付款";
 
@@ -304,7 +304,7 @@
 "send.confirmation.fee" = "费用";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.send_button" = "发送​​";
-"send.confirmation.resend_description" = "此操作将尝试通过以较高的费用重新发送之前的交易以使其失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
+"send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.resend_button" = "重新发送";
 "send.confirmation.cancel_description" = "此操作将尝试通过向自己重新发送新的0金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
 "send.confirmation.cancel_button" = "取消交易";
@@ -387,7 +387,7 @@
 "swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
 
 "swap.one_inch.error.cannot_estimate" = "估计错误";
-"swap.one_inch.error.cannot_estimate.info" = "错误！检查余额并确保有足够的%@来支付费用。或者尝试增加价格下跌金额并重试。将在3秒后重试...";
+"swap.one_inch.error.cannot_estimate.info" = "Check the balance to ensure there is enough %@ to cover the fee. Or try increasing the price slippage amount and try again. Will auto-retry in 3 sec...";
 "swap.one_inch.error.insufficient_liquidity" = "流动性不足";
 "swap.one_inch.error.insufficient_liquidity.info" = "可能没有足够的流动资金来处理此交易。请尝试降低减少金额。";
 
@@ -401,7 +401,7 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "掉期交易";
-"swap.confirmation.impact_too_high" = "市场价格与预期结算价格之间的差额太高。";
+"swap.confirmation.impact_too_high" = "The difference between the market price and the expected settlement price is too high.";
 "swap.confirmation.minimum_received" = "收到的最小金额";
 "swap.confirmation.maximum_sent" = "最大支出";
 
@@ -411,9 +411,9 @@
 "swap.dex_info.header_allowance" = "补贴";
 "swap.dex_info.content_allowance" = "当执行令牌交换时，交易所可以代表用户花费的金额。 在进行实际互换交易之前，需要先确定足够的备抵。";
 "swap.dex_info.header_price_impact" = "价格影响";
-"swap.dex_info.content_price_impact" = "预期价格和显示价格的偏差通常会增加互兑金额。";
+"swap.dex_info.content_price_impact" = "The expected price deviation from a shown price typically increases with the swap amount.";
 "swap.dex_info.header_swap_fee" = "掉期交易费用";
-"swap.dex_info.content_swap_fee" = "以用户出售货币显示的 平台上互兑操作的服务费。对于大部分订单，这应为0.3%或0.6%。";
+"swap.dex_info.content_swap_fee" = "A service fee for the swap action on the platform, shown in the currency the user sells. For most orders, it should be either 0.3 % or 0.6 %.";
 "swap.dex_info.header_guaranteed_amount" = "保证金额";
 "swap.dex_info.content_guaranteed_amount" = "一名用户因为互兑操作将收到的最小金额。";
 "swap.dex_info.header_maximum_spend" = "最大支出";
@@ -558,9 +558,9 @@
 "market.global.tvl_in_defi.title" = "DeFi锁定";
 
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
-"market.global.volume_24h.title" = "24h成交量";
-"market.global.defi_cap.title" = "DeFi市值";
-"market.global.tvl_in_defi.title" = "DeFi锁定";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
 "market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
 "market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
@@ -849,12 +849,11 @@
 "terms.title" = "条款";
 "terms.i_agree" = "我同意";
 
-"terms.item.1" = "备份你的钱包恢复短语以重新获取资金。";
-"terms.item.2" = "私钥和恢复短语仅保存在您的设备上。";
-"terms.item.3" = "禁用智能手机解锁 PIN 会删除应用程序中的所有钱包。需要恢复短语才能重新获得资金。";
-"terms.item.4" = "越狱(rooting)，从未知来源安装应用，使用过时的操作系统会危及资金安全。";
-"terms.item.5" = "这个应用程序的代码可能会出现未发现的软件问题，这可能会导致意外的行为或应用程序故障。";
-"terms.item.6" = "只有用户负责资金的安全，而没有其他实体。";
+"terms.item.1" = "Securely backup recovery phrases for each wallet. It's the only way to regain access to funds if the app malfunctions.";
+"terms.item.2" = "The wallet recovery phrases are randomly generated on the device during setup and are not stored elsewhere.";
+"terms.item.3" = "Disabling unlock PIN (code) on the smartphone deletes all wallets from the app. Recovery phrases will be needed to restore access to funds.";
+"terms.item.4" = "Jailbreaking (rooting), using outdated OS, and installing apps from unknown sources may endanger the safety of funds.";
+"terms.item.5" = "There may be undiscovered software issues in the code powering this app which may cause the app to malfunction.";
 
 // Settings -> Tell Friends
 
@@ -889,7 +888,7 @@
 "btc_transaction_sort_mode.bip69.description" = "词典索引";
 
 "blockchain_settings.info.restore_source" = "恢复参数";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
 "blockchain_settings.info.transaction_inputs_outputs" = "交易输入 / 输出";
 "blockchain_settings.info.transaction_inputs_outputs.content" = "大多数比特币交易，以及比特币现金、Dash和莱特币等加密货币的交易，都会产生两种输出。一种输出是发送给接收者的数量，另一个是返回给发送者的找零输出。大多数钱包构造交易的方式使第三方很容易理解哪些输出发送给了接收方，哪些是返回给发送方的找零。当返回给发送方的输出稍后用于未来的交易时，这两个交易之间的连接就变得明显了。\n\nUnstoppable钱包实施了一些措施，让人们更难弄清楚哪些输出流向了哪里。\n\n对于Unstoppable用户有两种选项可用：\n\n1. 随机变换：每一交易的交易输出顺序均实现了随机化。有时候便令可能是第一个输出，有时可能是第二个。如果用户信任应用的开发者，那么可以考虑这一推荐选项。\n\n2. 确定性：有一个共同商定的交易输出顺序标准（称为BIP69）。在开源钱包中，该标准确保钱包用户不需要信任应用程序开发者如何实现输出顺序。由于这个标准非常新，还没有太多钱包对其进行了实现。因此，有可能可以看到在一个区块链上的一个交易是否是从使用或不使用该标准的钱包上发送。";
 "blockchain_settings.info.rpc_source" = "RPC Source";
@@ -1023,7 +1022,7 @@
 "create_wallet.passphrase" = "密码";
 "create_wallet.input.passphrase" = "密码";
 "create_wallet.input.confirm" = "确认";
-"create_wallet.passphrase_description" = "Passphrases add additional security layer for wallets. To restore such wallet a user required both mnemonic as well as a passphrase.\n\nPassphrases also make it easy for users to have many multi-coin wallets using a single mnemonic but different passwords.";
+"create_wallet.passphrase_description" = "Passphrases add an additional security layer for wallets. To restore such a wallet a user required both mnemonic as well as a passphrase.\n\nPassphrases also make it easy for users to have many multi-coin wallets using a single mnemonic but different password.";
 "create_wallet.error.empty_passphrase" = "密码不能为空";
 "create_wallet.error.forbidden_symbols" = "请只使用支持的符号：A-Z a-z 0-9 ' \" & / ? , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "确认密码不匹配";
@@ -1080,20 +1079,20 @@
 
 // Wallet Connect
 
-"wallet_connect.title" = "Wallet Connect";
+"wallet_connect.title" = "WalletConnect";
 "wallet_connect.error.invalid_url" = "无效的URL地址";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "激活钱包";
 "wallet_connect.address" = "地址";
 "wallet_connect.network" = "网络";
-"wallet_connect.address" = "地址";
-"wallet_connect.network" = "网络";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "待处理请求";
 "wallet_connect.main.no_any_supported_chains" = "没有任何支持的链！";
 "wallet_connect.main.unsupported_chains" = "一些链是不支持的！";
 "wallet_connect.connect_description" = "点击批准，表示您允许此应用查看您的公开地址。这是保护您的数据免受潜在钓鱼风险威胁的重要安全步骤。";
 "wallet_connect.usage_description" = "您可以前往浏览器。在浏览器中进行交互时不要关闭此页面。";
-"wallet_connect.no_connection" = "无法建立连接。请重新连接。";
+"wallet_connect.no_connection" = "Failed to establish a connection. Try reconnecting again.";
 "wallet_connect.button_reconnect" = "重新连接";
 "wallet_connect.button_disconnect" = "断开连接";
 "ethereum_transaction.error.title" = "出错";
@@ -1111,7 +1110,7 @@
 "wallet_connect.sign.message" = "待签名消息";
 "wallet_connect.sign.description" = "请对消息签名以便进行验证";
 
-"wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "没有活跃会话";
 
 "wallet_connect.list.pairings" = "Pairings";
@@ -1155,7 +1154,7 @@
 "status_info.completed.title" = "已完成";
 "status_info.confirmed.content" = "交易已完成并被视为永久和不可逆。";
 "status_info.failed.title" = "失败";
-"status_info.failed.content" = "交易没有得到处理，也没有进行价值转移。根据失败原因的不同，某些失败的交易可能会耗费交易费用。被另一笔交易替换或取消的交易不会耗费交易费用，并且也会出现失败。 Unstoppable应用无法显示交易失败的原因。 但用户可以在如etherscan.io等公共区块探索程序上查看 。";
+"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Depending on the fail reason, some failed transactions may consume transaction fees. Transactions that were replaced or canceled by another transaction do not consume transaction fees and will also appear as failed. The Unstoppable app is unable to show the reason for failed transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
 
 // Onboarding
 
