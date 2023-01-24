@@ -149,7 +149,7 @@ extension AddressInputView {
 
 extension AddressInputView: IScanQrViewControllerDelegate {
 
-    func didScan(viewController: UIViewController, string: String) {
+    func didFetch(string: String) {
         onFetchText?(string)
     }
 

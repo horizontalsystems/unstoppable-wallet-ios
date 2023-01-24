@@ -17,7 +17,6 @@ class WalletConnectListViewController: ThemeViewController {
     private let bottomButton = PrimaryButton()
 
     private let tableView = SectionsTableView(style: .grouped)
-    private weak var scanQrViewController: WalletConnectScanQrViewController?
 
     init(listViewV1: WalletConnectV1ListView, listViewV2: WalletConnectV2ListView, viewModel: WalletConnectListViewModel) {
         self.listViewV1 = listViewV1
@@ -104,10 +103,8 @@ class WalletConnectListViewController: ThemeViewController {
     }
 
     @objc private func startNewConnection() {
-        let scanQrViewController = WalletConnectScanQrViewController()
-        self.scanQrViewController = scanQrViewController
+        let scanQrViewController = ScanQrViewController(reportAfterDismiss: true, pasteEnabled: true)
         scanQrViewController.delegate = self
-
         present(scanQrViewController, animated: true)
     }
 
@@ -116,20 +113,11 @@ class WalletConnectListViewController: ThemeViewController {
             return
         }
 
-        guard let scanQrViewController = scanQrViewController else {
-            present(viewController, animated: true)
-            return
-        }
-
-        scanQrViewController.dismiss(animated: true) { [weak self] in
-            self?.present(viewController, animated: true)
-        }
+        present(viewController, animated: true)
     }
 
     private func showV2ValidatedSuccessful(uri: String) {
-        scanQrViewController?.dismiss(animated: true) { [weak self] in
-            self?.viewModel.pairV2(validUri: uri)
-        }
+        viewModel.pairV2(validUri: uri)
     }
 
     private func showWaitingForSession(_ isShow: Bool) {
@@ -152,11 +140,32 @@ class WalletConnectListViewController: ThemeViewController {
         HudHelper.instance.show(banner: .error(string: text))
     }
 
-    private func show(newConnectionError: String) { //TODO: connection error without ScanQR???
-        let viewController = WalletConnectErrorViewController(error: newConnectionError)
-        viewController.delegate = scanQrViewController
+    private func show(newConnectionError: String) {
+        let title = BottomSheetItem.ComplexTitleViewItem(
+                title: "WalletConnect",
+                image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)
+        )
+        let description = InformationModule.Item.description(
+                text: newConnectionError,
+                isHighlighted: true
+        )
+        let tryAgainButton = InformationModule.ButtonItem(
+                style: .yellow,
+                title: "alert.try_again".localized,
+                action: InformationModule.afterClose({ [weak self] in self?.startNewConnection() })
+        )
+        let cancelButton = InformationModule.ButtonItem(
+                style: .gray,
+                title: "button.cancel".localized,
+                action: InformationModule.afterClose()
+        )
+        let viewController =  InformationModule.viewController(
+                title: .complex(viewItem: title),
+                items: [description],
+                buttons: [tryAgainButton, cancelButton]
+        ).toBottomSheet
 
-        scanQrViewController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
+        present(viewController, animated: true)
     }
 
 }
@@ -172,7 +181,7 @@ extension WalletConnectListViewController: SectionsDataSource {
 
 extension WalletConnectListViewController: IScanQrViewControllerDelegate {
 
-    func didScan(viewController: UIViewController, string: String) {
+    func didFetch(string: String) {
         viewModel.didScan(string: string)
     }
 
