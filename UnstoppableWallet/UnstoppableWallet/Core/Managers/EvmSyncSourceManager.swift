@@ -52,25 +52,30 @@ extension EvmSyncSourceManager {
         case .ethereum:
             return [
                 EvmSyncSource(
-                        name: "Infura WebSocket",
+                        name: "Infura",
                         rpcSource: .ethereumInfuraWebsocket(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
                 EvmSyncSource(
-                        name: "Infura HTTP",
+                        name: "Infura",
                         rpcSource: infuraRpcSource,
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
+                        name: "LlamaNodes",
+                        rpcSource: .http(urls: [URL(string: "https://eth.llamarpc.com")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
         case .ethereumGoerli:
             return [
                 EvmSyncSource(
-                        name: "Infura WebSocket",
+                        name: "Infura",
                         rpcSource: .goerliInfuraWebsocket(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
                 EvmSyncSource(
-                        name: "Infura HTTP",
+                        name: "Infura",
                         rpcSource: .goerliInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
@@ -78,53 +83,83 @@ extension EvmSyncSourceManager {
         case .binanceSmartChain:
             return [
                 EvmSyncSource(
-                        name: "Default HTTP",
+                        name: "Binance",
                         rpcSource: .binanceSmartChainHttp(),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
                 EvmSyncSource(
-                        name: "BSC-RPC HTTP",
+                        name: "BSC RPC",
                         rpcSource: .bscRpcHttp(),
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
+                        name: "1RPC",
+                        rpcSource: .http(urls: [URL(string: "https://1rpc.io/bnb")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
         case .polygon:
             return [
                 EvmSyncSource(
-                        name: "Polygon-RPC HTTP",
+                        name: "Polygon RPC",
                         rpcSource: .polygonRpcHttp(),
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
+                        name: "LlamaNodes",
+                        rpcSource: .http(urls: [URL(string: "https://polygon.llamarpc.com")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
         case .avalanche:
             return [
                 EvmSyncSource(
-                        name: "Avax.network HTTP",
+                        name: "Avax Network",
                         rpcSource: .avaxNetworkHttp(),
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
+                        name: "PublicNode",
+                        rpcSource: .http(urls: [URL(string: "https://avalanche-evm.publicnode.com")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
         case .optimism:
             return [
                 EvmSyncSource(
-                        name: "Optimism.io HTTP",
+                        name: "Optimism",
                         rpcSource: .optimismRpcHttp(),
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
+                        name: "Omnia",
+                        rpcSource: .http(urls: [URL(string: "https://endpoints.omniatech.io/v1/op/mainnet/public")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
         case .arbitrumOne:
             return [
                 EvmSyncSource(
-                        name: "Arbitrum.io HTTP",
+                        name: "Arbitrum",
                         rpcSource: .arbitrumOneRpcHttp(),
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
+                        name: "1RPC",
+                        rpcSource: .http(urls: [URL(string: "https://1rpc.io/arb")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
         case .gnosis:
             return [
                 EvmSyncSource(
-                        name: "Gnosis.io HTTP",
+                        name: "Gnosis Chain",
                         rpcSource: .gnosisRpcHttp(),
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
+                        name: "Ankr",
+                        rpcSource: .http(urls: [URL(string: "https://rpc.ankr.com/gnosis")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
