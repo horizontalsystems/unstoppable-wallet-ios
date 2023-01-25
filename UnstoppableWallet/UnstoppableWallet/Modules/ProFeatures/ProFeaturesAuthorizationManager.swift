@@ -93,7 +93,8 @@ extension ProFeaturesAuthorizationManager {
         let accountData = sortedAccountData()
 
         guard !accountData.isEmpty,
-              let provider = try? Eip1155Provider.instance(rpcSource: evmSyncSourceManager.infuraRpcSource) else {
+              let httpSyncSource = evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
+              let provider = try? Eip1155Provider.instance(rpcSource: httpSyncSource.rpcSource) else {
 
             return Single.just(nil)
         }

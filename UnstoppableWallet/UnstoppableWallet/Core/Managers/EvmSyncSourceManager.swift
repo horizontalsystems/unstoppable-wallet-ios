@@ -11,14 +11,11 @@ class EvmSyncSourceManager {
 
     private let syncSourceRelay = PublishRelay<BlockchainType>()
     private let syncSourcesUpdatedRelay = PublishRelay<BlockchainType>()
-    let infuraRpcSource: RpcSource
 
     init(appConfigProvider: AppConfigProvider, blockchainSettingsStorage: BlockchainSettingsStorage, evmSyncSourceStorage: EvmSyncSourceStorage) {
         self.appConfigProvider = appConfigProvider
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.evmSyncSourceStorage = evmSyncSourceStorage
-
-        infuraRpcSource = .ethereumInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret)
     }
 
     private func defaultTransactionSource(blockchainType: BlockchainType) -> EvmKit.TransactionSource {
@@ -58,7 +55,7 @@ extension EvmSyncSourceManager {
                 ),
                 EvmSyncSource(
                         name: "Infura",
-                        rpcSource: infuraRpcSource,
+                        rpcSource: .ethereumInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
                 EvmSyncSource(
