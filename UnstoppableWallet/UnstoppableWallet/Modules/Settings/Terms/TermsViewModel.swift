@@ -3,7 +3,7 @@ import RxRelay
 import RxCocoa
 
 class TermsViewModel {
-    private let termCount = 6
+    private let termCount = 5
 
     private let service: TermsService
 
