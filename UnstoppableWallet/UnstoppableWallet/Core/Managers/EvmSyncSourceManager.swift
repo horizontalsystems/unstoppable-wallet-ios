@@ -90,8 +90,8 @@ extension EvmSyncSourceManager {
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
                 EvmSyncSource(
-                        name: "1RPC",
-                        rpcSource: .http(urls: [URL(string: "https://1rpc.io/bnb")!], auth: nil),
+                        name: "Omnia",
+                        rpcSource: .http(urls: [URL(string: "https://endpoints.omniatech.io/v1/bsc/mainnet/public")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
@@ -142,8 +142,8 @@ extension EvmSyncSourceManager {
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
                 EvmSyncSource(
-                        name: "1RPC",
-                        rpcSource: .http(urls: [URL(string: "https://1rpc.io/arb")!], auth: nil),
+                        name: "Omnia",
+                        rpcSource: .http(urls: [URL(string: "https://endpoints.omniatech.io/v1/arbitrum/one/public")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]
