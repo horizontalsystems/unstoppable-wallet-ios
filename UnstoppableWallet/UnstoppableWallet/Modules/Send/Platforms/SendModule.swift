@@ -50,7 +50,8 @@ class SendModule {
                 .append(handler: bitcoinParserItem)
                 .append(handler: udnAddressParserItem)
 
-        if let ensAddressParserItem = EnsAddressParserItem(rpcSource: App.shared.evmSyncSourceManager.infuraRpcSource, rawAddressParserItem: bitcoinParserItem) {
+        if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
+           let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: bitcoinParserItem) {
             addressParserChain.append(handler: ensAddressParserItem)
         }
 
