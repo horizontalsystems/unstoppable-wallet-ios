@@ -357,6 +357,7 @@ extension RestoreViewController: SectionsDataSource {
             sections.append(
                     Section(
                             id: "mnemonic-input",
+                            footerState: .margin(height: .margin32),
                             rows: [
                                 StaticRow(
                                         cell: mnemonicInputCell,

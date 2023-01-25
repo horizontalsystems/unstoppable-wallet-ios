@@ -247,7 +247,7 @@ extension ManageAccountsViewController: SectionsDataSource {
             ),
             Section(
                     id: "actions",
-                    footerState: tableView.sectionFooter(text: "onboarding.balance.password_hint".localized),
+                    footerState: .margin(height: .margin32),
                     rows: [
                         StaticRow(
                                 cell: createCell,
