@@ -1161,7 +1161,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "onboarding.balance.create" = "New Wallet";
 "onboarding.balance.import" = "Import Wallet";
 "onboarding.balance.watch" = "Watch Wallet";
-"onboarding.balance.password_hint" = "Tip! Importing an existing wallet but with a new passphrase will generate a brand new wallet. This is handy if you want to use a single 12-24 word mnemonic recovery phrase for multiple wallets.";
 
 // Manage Accounts
 
