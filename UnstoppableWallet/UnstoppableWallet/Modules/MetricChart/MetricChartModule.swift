@@ -20,7 +20,7 @@ protocol IMetricChartFetcher {
 extension IMetricChartFetcher {
 
     var intervals: [HsTimePeriod] {
-        HsTimePeriod.allCases
+        [.day1, .week1, .week2, .month1, .month3, .month6, .year1]
     }
 
     var needUpdateObservable: Observable<()> {

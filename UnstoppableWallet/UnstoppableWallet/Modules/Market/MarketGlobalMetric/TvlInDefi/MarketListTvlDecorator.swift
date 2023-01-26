@@ -51,6 +51,7 @@ extension MarketListTvlDecorator: IMarketListDecorator {
             case .month3: tvlChange = defiCoin.tvlChange3m
             case .month6: tvlChange = defiCoin.tvlChange6m
             case .year1: tvlChange = defiCoin.tvlChange1y
+            case .year2: ()
             }
 
             switch service.marketTvlField {

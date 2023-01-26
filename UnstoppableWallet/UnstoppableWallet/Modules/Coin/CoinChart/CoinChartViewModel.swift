@@ -10,9 +10,10 @@ import HUD
 protocol IChartViewModel {
     var chartTitle: String? { get }
     var intervals: [String] { get }
+    var intervalsUpdatedWithCurrentIndexDriver: Driver<Int> { get }
+    var intervalIndexDriver: Driver<Int> { get }
     var pointSelectModeEnabledDriver: Driver<Bool> { get }
     var pointSelectedItemDriver: Driver<SelectedPointViewItem?> { get }
-    var intervalIndexDriver: Driver<Int> { get }
     var loadingDriver: Driver<Bool> { get }
     var valueDriver: Driver<String?> { get }
     var chartInfoDriver: Driver<CoinChartViewModel.ViewItem?> { get }
@@ -20,7 +21,7 @@ protocol IChartViewModel {
 
     func onSelectInterval(at index: Int)
     func onTap(indicator: ChartIndicatorSet)
-    func viewDidLoad()
+    func start()
     func retry()
 }
 
@@ -29,31 +30,48 @@ class CoinChartViewModel {
     private let factory: CoinChartFactory
     private let disposeBag = DisposeBag()
 
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.coin-chart-view-model")
+
     //todo: refactor!
     private let pointSelectModeEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let pointSelectedItemRelay = BehaviorRelay<SelectedPointViewItem?>(value: nil)
 
+    private let intervalsUpdatedWithCurrentIndex = BehaviorRelay<Int>(value: 0)
     private let intervalIndexRelay = BehaviorRelay<Int>(value: 0)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let valueRelay = BehaviorRelay<String?>(value: nil)
     private let chartInfoRelay = BehaviorRelay<CoinChartViewModel.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    let intervals = HsTimePeriod.allCases.map { $0.title.uppercased() }
+    var intervals: [String] {
+        service.validIntervals.map { $0.title } + ["chart.time_duration.all".localized]
+    }
 
     init(service: CoinChartService, factory: CoinChartFactory) {
         self.service = service
         self.factory = factory
 
-        subscribe(disposeBag, service.intervalObservable) { [weak self] in self?.sync(interval: $0) }
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(scheduler, disposeBag, service.intervalsUpdatedObservable) { [weak self] in self?.syncIntervalsUpdate() }
+        subscribe(scheduler, disposeBag, service.periodTypeObservable) { [weak self] in self?.sync(periodType: $0) }
+        subscribe(scheduler, disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
-        sync(interval: service.interval)
+        sync(periodType: service.periodType)
         sync(state: service.state)
     }
 
-    private func sync(interval: HsTimePeriod) {
-        intervalIndexRelay.accept(HsTimePeriod.allCases.firstIndex(of: interval) ?? 0)
+    private func syncIntervalsUpdate() {
+        intervalsUpdatedWithCurrentIndex.accept(index(periodType: service.periodType))
+    }
+
+    private func index(periodType: HsPeriodType) -> Int {
+        switch periodType {
+        case .byStartTime: return service.validIntervals.count
+        case .byPeriod(let interval): return service.validIntervals.firstIndex(of: interval) ?? 0
+        }
+    }
+
+    private func sync(periodType: HsPeriodType) {
+        intervalIndexRelay.accept(index(periodType: periodType))
     }
 
     private func sync(state: DataStatus<CoinChartService.Item>) {
@@ -74,7 +92,7 @@ class CoinChartViewModel {
             return
         }
 
-        chartInfoRelay.accept(factory.convert(item: item, interval: service.interval, currency: service.currency, selectedIndicator: service.selectedIndicator))
+        chartInfoRelay.accept(factory.convert(item: item, periodType: service.periodType, currency: service.currency, selectedIndicator: service.selectedIndicator))
     }
 
 }
@@ -91,6 +109,10 @@ extension CoinChartViewModel: IChartViewModel {
 
     var pointSelectedItemDriver: Driver<SelectedPointViewItem?> {
         pointSelectedItemRelay.asDriver()
+    }
+
+    var intervalsUpdatedWithCurrentIndexDriver: Driver<Int> {
+        intervalsUpdatedWithCurrentIndex.asDriver()
     }
 
     var intervalIndexDriver: Driver<Int> {
@@ -114,24 +136,30 @@ extension CoinChartViewModel: IChartViewModel {
     }
 
     func onSelectInterval(at index: Int) {
-        let intervals = HsTimePeriod.allCases
+        let intervals = service.validIntervals
+
+        if intervals.count == index {
+            service.setPeriodAll()
+            return
+        }
+
         guard intervals.count > index else {
             return
         }
 
-        service.interval = intervals[index]
+        service.setPeriod(interval: intervals[index])
     }
 
     func onTap(indicator: ChartIndicatorSet) {
         service.selectedIndicator = service.selectedIndicator.toggle(indicator: indicator)
     }
 
-    func viewDidLoad() {
-        service.fetchChartData()
+    func start() {
+        service.fetch()
     }
 
     func retry() {
-        service.fetchChartData()
+        service.fetch()
     }
 
 }
@@ -194,7 +222,7 @@ extension HsTimePeriod {
         case .month3: return "chart.time_duration.month3".localized
         case .month6: return "chart.time_duration.halfyear".localized
         case .year1: return "chart.time_duration.year".localized
-//        case .year2: return "chart.time_duration.year2".localized
+        case .year2: return "chart.time_duration.year2".localized
         }
     }
 

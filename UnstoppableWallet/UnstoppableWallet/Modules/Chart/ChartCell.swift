@@ -248,6 +248,11 @@ class ChartCell: UITableViewCell {
         intervalSelectView?.select(index: typeIndex)
     }
 
+    private func syncIntervals(typeIndex: Int) {
+        intervalSelectView?.reload(filters: viewModel.intervals.map { .item(title: $0) })
+        syncChart(typeIndex: typeIndex)
+    }
+
     private func showLoading() {
         chartView.isHidden = true
 
@@ -288,6 +293,7 @@ extension ChartCell {
         subscribe(disposeBag, viewModel.pointSelectModeEnabledDriver) { [weak self] in self?.syncChart(selected: $0) }
         subscribe(disposeBag, viewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
         subscribe(disposeBag, viewModel.intervalIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
+        subscribe(disposeBag, viewModel.intervalsUpdatedWithCurrentIndexDriver) { [weak self] in self?.syncIntervals(typeIndex: $0) }
 
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] in self?.syncChart(loading: $0) }
         subscribe(disposeBag, viewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }

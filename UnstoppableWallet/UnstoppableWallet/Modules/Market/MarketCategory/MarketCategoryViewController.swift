@@ -47,7 +47,7 @@ class MarketCategoryViewController: MarketListViewController {
         tableView.registerCell(forClass: MarketCategoryHeaderCell.self)
 
         chartRow.onReady = { [weak chartCell] in chartCell?.onLoad() }
-        chartViewModel.viewDidLoad()
+        chartViewModel.start()
     }
 
     @objc private func onTapClose() {

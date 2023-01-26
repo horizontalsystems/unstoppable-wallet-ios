@@ -7,7 +7,6 @@ class LocalStorage {
     private let biometricOnKey = "biometric_on_key"
     private let lastExitDateKey = "last_exit_date_key"
     private let keySendInputType = "amount-type-switch-service-amount-type"
-    private let keyChartInterval = "chart_type_key"
     private let mainShownOnceKey = "main_shown_once_key"
     private let jailbreakShownOnceKey = "jailbreak_shown_once_key"
     private let debugLogKey = "debug_log_key"
@@ -76,18 +75,6 @@ extension LocalStorage {
     func setDefaultProvider(blockchainType: BlockchainType, provider: SwapModule.Dex.Provider) {
         let key = [keyDefaultProvider, blockchainType.uid].joined(separator: "|")
         storage.set(value: provider.rawValue, for: key)
-    }
-
-    var chartInterval: HsTimePeriod? {
-        get {
-            if let rawValue: String = storage.value(for: keyChartInterval), let interval = HsTimePeriod(rawValue: rawValue) {
-                return interval
-            }
-            return nil
-        }
-        set {
-            storage.set(value: newValue?.rawValue, for: keyChartInterval)
-        }
     }
 
 }

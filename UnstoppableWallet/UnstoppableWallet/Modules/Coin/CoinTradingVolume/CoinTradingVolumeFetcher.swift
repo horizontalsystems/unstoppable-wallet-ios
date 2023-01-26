@@ -34,7 +34,7 @@ extension CoinTradingVolumeFetcher: IMetricChartFetcher {
 
     func fetchSingle(currencyCode: String, interval: HsTimePeriod) -> Single<[MetricChartModule.Item]> {
         marketKit
-            .chartInfoSingle(coinUid: coinUid, currencyCode: currencyCode, interval: interval)
+            .chartInfoSingle(coinUid: coinUid, currencyCode: currencyCode, periodType: .byPeriod(interval))
             .map { info in
                 info
                     .points
