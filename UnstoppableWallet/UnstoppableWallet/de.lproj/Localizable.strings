@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Zum Wallet hinzugefügt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
-"alert.copied" = "Copied";
+"alert.copied" = "Kopiert";
 "alert.created" = "Erstellt";
 "alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
@@ -1083,8 +1083,8 @@
 "wallet_connect.active_account" = "Aktive Wallet";
 "wallet_connect.address" = "Adresse";
 "wallet_connect.network" = "Netzwerk";
-"wallet_connect.address" = "Adresse";
-"wallet_connect.network" = "Netzwerk";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Ausstehende Anfragen";
 "wallet_connect.main.no_any_supported_chains" = "Keine unterstützten Ketten!";
 "wallet_connect.main.unsupported_chains" = "Einige Ketten werden nicht unterstützt!";
@@ -1249,6 +1249,8 @@
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Account Extended Public Key eingeben";
 "watch_address.public_key.invalid_key" = "Ungültiger Schlüssel";
+"watch_address.choose_blockchain" = "Choose Blockchain";
+"watch_address.choose_coin" = "Choose Coin";
 
 // Nft Collections
 
