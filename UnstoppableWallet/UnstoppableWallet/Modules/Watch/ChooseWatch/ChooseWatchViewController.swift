@@ -7,14 +7,14 @@ import RxCocoa
 import ComponentKit
 import UIExtensions
 
-class ChooseBlockchainViewController: CoinToggleViewController {
-    private let viewModel: ChooseBlockchainViewModel
+class ChooseWatchViewController: CoinToggleViewController {
+    private let viewModel: ChooseWatchViewModel
     private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
     private let watchButton = PrimaryButton()
 
     private weak var sourceViewController: UIViewController?
 
-    init(viewModel: ChooseBlockchainViewModel, sourceViewController: UIViewController?) {
+    init(viewModel: ChooseWatchViewModel, sourceViewController: UIViewController?) {
         self.viewModel = viewModel
         self.sourceViewController = sourceViewController
 
@@ -30,7 +30,7 @@ class ChooseBlockchainViewController: CoinToggleViewController {
 
         navigationItem.searchController = nil
 
-        title = "watch_address.choose_blockchain".localized
+        title = viewModel.title
 
         view.addSubview(gradientWrapperView)
         gradientWrapperView.snp.makeConstraints { maker in

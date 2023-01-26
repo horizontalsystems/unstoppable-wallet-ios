@@ -60,7 +60,7 @@ extension WatchEvmAddressService {
             }
         }
 
-        var name: String? {
+        var domain: String? {
             switch self {
             case .ready(_, let domain): return domain
             case .notReady: return nil

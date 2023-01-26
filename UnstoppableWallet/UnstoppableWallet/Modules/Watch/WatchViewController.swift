@@ -81,9 +81,9 @@ class WatchViewController: KeyboardAwareViewController {
         nextButton.setTitle("button.next".localized, for: .normal)
         nextButton.addTarget(self, action: #selector(onTapNext), for: .touchUpInside)
 
-        let namePlaceholder = viewModel.namePlaceholder
-        nameCell.inputText = namePlaceholder
-        nameCell.inputPlaceholder = namePlaceholder
+        let defaultName = viewModel.defaultName
+        nameCell.inputText = defaultName
+        nameCell.inputPlaceholder = defaultName
         nameCell.autocapitalizationType = .words
         nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0 ?? "") }
 
@@ -100,6 +100,10 @@ class WatchViewController: KeyboardAwareViewController {
 
         publicKeyCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
+        subscribe(disposeBag, viewModel.nameSignal) { [weak self] name in
+            self?.nameCell.inputText = name
+            self?.nameCell.inputPlaceholder = name
+        }
         subscribe(disposeBag, viewModel.watchTypeDriver) { [weak self] watchType in
             self?.watchType = watchType
             self?.tableView.reload()
