@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "Copied";
+"alert.copied" = "복사됨";
 "alert.created" = "생성됨";
 "alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
@@ -1083,8 +1083,8 @@
 "wallet_connect.active_account" = "지갑 활성화";
 "wallet_connect.address" = "주소";
 "wallet_connect.network" = "네트워크";
-"wallet_connect.address" = "주소";
-"wallet_connect.network" = "네트워크";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
 "wallet_connect.main.unsupported_chains" = "일부 체인은 지원되지 않습니다!";
@@ -1249,6 +1249,8 @@
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Account Extended Public Key 입력";
 "watch_address.public_key.invalid_key" = "잘못된 암호입니다";
+"watch_address.choose_blockchain" = "Choose Blockchain";
+"watch_address.choose_coin" = "Choose Coin";
 
 // Nft Collections
 
