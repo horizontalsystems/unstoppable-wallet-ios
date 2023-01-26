@@ -37,7 +37,7 @@ extension WatchPublicKeyViewModel: IWatchSubViewModel {
         service.stateObservable.map { $0.watchEnabled }
     }
 
-    var nameObservable: Observable<String?> {
+    var domainObservable: Observable<String?> {
         Observable.just(nil)
     }
 

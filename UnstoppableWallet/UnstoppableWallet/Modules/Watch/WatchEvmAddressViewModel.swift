@@ -22,8 +22,8 @@ extension WatchEvmAddressViewModel: IWatchSubViewModel {
         service.stateObservable.map { $0.watchEnabled }
     }
 
-    var nameObservable: Observable<String?> {
-        service.stateObservable.map { $0.name }
+    var domainObservable: Observable<String?> {
+        service.stateObservable.map { $0.domain }
     }
 
     func resolve() -> AccountType? {

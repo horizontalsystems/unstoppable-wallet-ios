@@ -6,7 +6,7 @@ import RxCocoa
 protocol IWatchSubViewModel: AnyObject {
     var watchEnabled: Bool { get }
     var watchEnabledObservable: Observable<Bool> { get }
-    var nameObservable: Observable<String?> { get }
+    var domainObservable: Observable<String?> { get }
     func resolve() -> AccountType?
 }
 
@@ -18,6 +18,7 @@ class WatchViewModel {
 
     private let watchTypeRelay = BehaviorRelay<WatchModule.WatchType>(value: .evmAddress)
     private let watchEnabledRelay = BehaviorRelay<Bool>(value: false)
+    private let nameRelay = PublishRelay<String>()
     private let proceedRelay = PublishRelay<(WatchModule.WatchType, AccountType, String)>()
 
     init(service: WatchService, evmAddressViewModel: IWatchSubViewModel, publicKeyViewModel: IWatchSubViewModel) {
@@ -39,16 +40,17 @@ class WatchViewModel {
         disposeBag = DisposeBag()
         sync(watchEnabled: subViewModel.watchEnabled)
         subscribe(disposeBag, subViewModel.watchEnabledObservable) { [weak self] in self?.sync(watchEnabled: $0) }
-        subscribe(disposeBag, subViewModel.nameObservable) { [weak self] in self?.sync(name: $0) }
+        subscribe(disposeBag, subViewModel.domainObservable) { [weak self] in self?.sync(domain: $0) }
     }
 
     private func sync(watchEnabled: Bool) {
         watchEnabledRelay.accept(watchEnabled)
     }
 
-    private func sync(name: String?) {
-        if let name = name, service.name == nil {
-            service.set(name: name)
+    private func sync(domain: String?) {
+        if let domain = domain, service.name == nil {
+            service.set(name: domain)
+            nameRelay.accept(domain)
         }
     }
 
@@ -68,8 +70,12 @@ extension WatchViewModel {
         proceedRelay.asSignal()
     }
 
-    var namePlaceholder: String {
+    var defaultName: String {
         service.defaultAccountName
+    }
+
+    var nameSignal: Signal<String> {
+        nameRelay.asSignal()
     }
 
     func onChange(name: String) {

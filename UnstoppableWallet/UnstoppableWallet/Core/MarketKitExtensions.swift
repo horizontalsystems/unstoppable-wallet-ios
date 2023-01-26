@@ -326,6 +326,25 @@ extension MarketKit.BlockchainType {
         }
     }
 
+    var description: String {
+        switch self {
+        case .bitcoin: return "BTC (BIP44, BIP49, BIP84)"
+        case .ethereum: return "ETH, ERC20 tokens"
+        case .binanceSmartChain: return "BNB, BEP20 tokens"
+        case .polygon: return "MATIC, ERC20 tokens"
+        case .avalanche: return "AVAX, ERC20 tokens"
+        case .gnosis: return "xDAI, ERC20 tokens"
+        case .optimism: return "L2 chain"
+        case .arbitrumOne: return "L2 chain"
+        case .zcash: return "ZEC"
+        case .dash: return "DASH"
+        case .bitcoinCash: return "BCH (Legacy, CashAddress)"
+        case .litecoin: return "LTC (BIP44, BIP49, BIP84)"
+        case .binanceChain: return "BNB, BEP2 tokens"
+        default: return ""
+        }
+    }
+
 }
 
 extension MarketKit.Coin {

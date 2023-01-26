@@ -8,7 +8,7 @@ class ChooseCoinService {
     private let walletManager: WalletManager
     private let marketKit: MarketKit.Kit
 
-    var items = [Item]()
+    private(set) var items = [WatchModule.Item]()
 
     init(accountType: AccountType, accountName: String, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit) {
         self.accountType = accountType
@@ -18,10 +18,10 @@ class ChooseCoinService {
         self.walletManager = walletManager
         self.marketKit = marketKit
 
-        items = btcTokens()
+        items = btcItems()
     }
 
-    private func btcTokens() -> [Item] {
+    private func btcItems() -> [WatchModule.Item] {
         guard case .hdExtendedKey(let key) = accountType, case .public = key else {
             return []
         }
@@ -32,9 +32,9 @@ class ChooseCoinService {
             return []
         }
 
-        var configuredTokens = [Item]()
+        var items = [WatchModule.Item]()
 
-        for (index, token) in tokens.enumerated() {
+        for (index, token) in tokens.sorted(by: { $0.blockchainType.order < $1.blockchainType.order }).enumerated() {
             guard token.blockchainType.supports(accountType: accountType) else {
                 continue
             }
@@ -42,27 +42,32 @@ class ChooseCoinService {
             switch token.blockchainType.coinSettingType {
                 case .derivation:
                     let coinSettings: CoinSettings = [.derivation: key.info.purpose.mnemonicDerivation.rawValue]
-                    configuredTokens.append(Item(uid: "\(index)", token: token, coinSettings: coinSettings))
+                    items.append(.coin(uid: "\(index)", token: token, coinSettings: coinSettings))
 
                 case .bitcoinCashCoinType:
                     BitcoinCashCoinType.allCases.forEach { coinType in
                         let coinSettings: CoinSettings = [.bitcoinCashCoinType: coinType.rawValue]
-                        configuredTokens.append(Item(uid: "\(index)_\(coinType.rawValue)", token: token, coinSettings: coinSettings))
+                        items.append(.coin(uid: "\(index)_\(coinType.rawValue)", token: token, coinSettings: coinSettings))
                     }
 
                 default:
-                    configuredTokens.append(Item(uid: "\(index)", token: token, coinSettings: [:]))
+                    items.append(.coin(uid: "\(index)", token: token, coinSettings: [:]))
             }
         }
 
-        return configuredTokens
+        return items
     }
 
     private func enableWallets(account: Account, enabledTokensUids: [String]) {
-        let enabledItems = items.filter { enabledTokensUids.contains($0.uid) }
-        let wallets = enabledItems.map { item -> Wallet in
-            let configuredToken = ConfiguredToken(token: item.token, coinSettings: item.coinSettings)
-            return Wallet(configuredToken: configuredToken, account: account)
+        var wallets = [Wallet]()
+
+        for item in items {
+            guard case let .coin(uid, token, coinSettings) = item, enabledTokensUids.contains(uid) else {
+                continue
+            }
+
+            let configuredToken = ConfiguredToken(token: token, coinSettings: coinSettings)
+            wallets.append(Wallet(configuredToken: configuredToken, account: account))
         }
 
         walletManager.save(wallets: wallets)
@@ -70,22 +75,12 @@ class ChooseCoinService {
 
 }
 
-extension ChooseCoinService {
+extension ChooseCoinService: IChooseWatchService {
 
-    func watch(enabledTokensUids: [String]) {
+    func watch(enabledUids: [String]) {
         let account = accountFactory.watchAccount(type: accountType, name: accountName)
         accountManager.save(account: account)
-        enableWallets(account: account, enabledTokensUids: enabledTokensUids)
-    }
-
-}
-
-extension ChooseCoinService {
-
-    struct Item {
-        let uid: String
-        let token: Token
-        let coinSettings: CoinSettings
+        enableWallets(account: account, enabledTokensUids: enabledUids)
     }
 
 }

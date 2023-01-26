@@ -47,9 +47,11 @@ struct WatchModule {
     }
 
     static func viewController(sourceViewController: UIViewController? = nil, watchType: WatchType, accountType: AccountType, name: String) -> UIViewController {
+        let service: IChooseWatchService
+
         switch watchType {
             case .evmAddress:
-                let service = ChooseBlockchainService(
+                service = ChooseBlockchainService(
                     accountType: accountType,
                     accountName: name,
                     accountFactory: App.shared.accountFactory,
@@ -59,12 +61,8 @@ struct WatchModule {
                     marketKit: App.shared.marketKit
                 )
 
-                let viewModel = ChooseBlockchainViewModel(service: service)
-
-                return ChooseBlockchainViewController(viewModel: viewModel, sourceViewController: sourceViewController)
-
             case .publicKey:
-                let service = ChooseCoinService(
+                service = ChooseCoinService(
                     accountType: accountType,
                     accountName: name,
                     accountFactory: App.shared.accountFactory,
@@ -72,10 +70,11 @@ struct WatchModule {
                     walletManager: App.shared.walletManager,
                     marketKit: App.shared.marketKit
                 )
-                let viewModel = ChooseCoinViewModel(service: service)
-
-                return ChooseCoinViewController(viewModel: viewModel, sourceViewController: sourceViewController)
         }
+
+        let viewModel = ChooseWatchViewModel(service: service, watchType: watchType)
+
+        return ChooseWatchViewController(viewModel: viewModel, sourceViewController: sourceViewController)
     }
 
 }
@@ -92,6 +91,11 @@ extension WatchModule {
                 case .publicKey: return "watch_address.public_key".localized
             }
         }
+    }
+
+    enum Item {
+        case coin(uid: String, token: Token, coinSettings: CoinSettings)
+        case blockchain(blockchain: Blockchain)
     }
 
 }
