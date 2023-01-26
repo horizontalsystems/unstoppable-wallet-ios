@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "지갑에 추가됨";
 "alert.already_added_to_wallet" = "이미 지갑에 추가됨";
 "alert.not_supported_yet" = "아직 지원하지 않음";
-"alert.copied" = "복사됨";
+"alert.copied" = "Copied";
 "alert.created" = "생성됨";
 "alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
@@ -983,6 +983,7 @@
 "chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1년";
 "chart.time_duration.year2" = "2년";
+"chart.time_duration.all" = "ALL";
 
 "chart.market_cap" = "시가총액";
 "chart.volume" = "볼륨 (24 시간)";
