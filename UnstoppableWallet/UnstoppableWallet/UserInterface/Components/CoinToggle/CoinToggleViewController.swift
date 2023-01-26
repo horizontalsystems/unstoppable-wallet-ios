@@ -63,11 +63,22 @@ class CoinToggleViewController: ThemeSearchViewController {
             component.setImage(urlString: viewItem.imageUrl, placeholder: viewItem.placeholderImageName.flatMap { UIImage(named: $0) })
         })
         elements.append(.vStackCentered([
-            .text { (component: TextComponent) -> () in
-                component.font = .body
-                component.textColor = .themeLeah
-                component.text = viewItem.title
-            },
+            .hStack([
+                .text { component in
+                    component.font = .body
+                    component.textColor = .themeLeah
+                    component.text = viewItem.title
+                    component.setContentHuggingPriority(.required, for: .horizontal)
+                },
+                .margin8,
+                .badge { component in
+                    component.badgeView.set(style: .small)
+                    component.badgeView.text = viewItem.badge
+                    component.isHidden = viewItem.badge == nil
+                },
+                .margin0,
+                .text { _ in }
+            ]),
             .margin(1),
             .text { (component: TextComponent) -> () in
                 component.font = .subhead2

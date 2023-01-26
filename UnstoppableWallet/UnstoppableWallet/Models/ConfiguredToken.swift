@@ -26,14 +26,7 @@ extension ConfiguredToken: Hashable {
 extension ConfiguredToken {
 
     public var badge: String? {
-        switch token.blockchain.type {
-        case .bitcoin, .litecoin:
-            return coinSettings.derivation?.rawValue.uppercased()
-        case .bitcoinCash:
-            return coinSettings.bitcoinCashCoinType?.rawValue.uppercased()
-        default:
-            return token.protocolName?.uppercased()
-        }
+        token.blockchain.type.badge(coinSettings: coinSettings) ?? token.protocolName?.uppercased()
     }
 
 }

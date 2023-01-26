@@ -16,15 +16,16 @@ class WatchViewController: KeyboardAwareViewController {
     private let tableView = SectionsTableView(style: .grouped)
 
     private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
-    private let watchButton = PrimaryButton()
+    private let nextButton = PrimaryButton()
 
+    private let nameCell = TextFieldCell()
     private let addressCell: RecipientAddressInputCell
     private let addressCautionCell: RecipientAddressCautionCell
 
     private let publicKeyInputCell = TextInputCell()
     private let publicKeyCautionCell = FormCautionCell()
 
-    private var watchType: WatchViewModel.WatchType = .evmAddress
+    private var watchType: WatchModule.WatchType = .evmAddress
     private var isLoaded = false
 
     private weak var sourceViewController: UIViewController?
@@ -51,7 +52,8 @@ class WatchViewController: KeyboardAwareViewController {
 
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "watch_address.watch".localized, style: .done, target: self, action: #selector(onTapWatch))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .done, target: self, action: #selector(onTapNext))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -68,16 +70,22 @@ class WatchViewController: KeyboardAwareViewController {
             maker.leading.trailing.bottom.equalToSuperview()
         }
 
-        gradientWrapperView.addSubview(watchButton)
-        watchButton.snp.makeConstraints { maker in
+        gradientWrapperView.addSubview(nextButton)
+        nextButton.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(CGFloat.margin32)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
             maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
         }
 
-        watchButton.set(style: .yellow)
-        watchButton.setTitle("watch_address.watch".localized, for: .normal)
-        watchButton.addTarget(self, action: #selector(onTapWatch), for: .touchUpInside)
+        nextButton.set(style: .yellow)
+        nextButton.setTitle("button.next".localized, for: .normal)
+        nextButton.addTarget(self, action: #selector(onTapNext), for: .touchUpInside)
+
+        let namePlaceholder = viewModel.namePlaceholder
+        nameCell.inputText = namePlaceholder
+        nameCell.inputPlaceholder = namePlaceholder
+        nameCell.autocapitalizationType = .words
+        nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0 ?? "") }
 
         addressCell.onChangeHeight = { [weak self] in self?.reloadTable() }
         addressCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
@@ -102,11 +110,10 @@ class WatchViewController: KeyboardAwareViewController {
         }
         subscribe(disposeBag, viewModel.watchEnabledDriver) { [weak self] enabled in
             self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
-            self?.watchButton.isEnabled = enabled
+            self?.nextButton.isEnabled = enabled
         }
-        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
-            HudHelper.instance.show(banner: .walletAdded)
-            (self?.sourceViewController ?? self)?.dismiss(animated: true)
+        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] (watchType, accountType, name) in
+            self?.proceedToNextPage(watchType: watchType, accountType: accountType, name: name)
         }
 
         additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -.margin16, right: 0)
@@ -127,8 +134,8 @@ class WatchViewController: KeyboardAwareViewController {
         dismiss(animated: true)
     }
 
-    @objc private func onTapWatch() {
-        viewModel.onTapWatch()
+    @objc private func onTapNext() {
+        viewModel.onTapNext()
     }
 
     private func reloadTable() {
@@ -144,17 +151,23 @@ class WatchViewController: KeyboardAwareViewController {
     private func onTapWatchType() {
         let alertController = AlertRouter.module(
                 title: "watch_address.watch_by".localized,
-                viewItems: WatchViewModel.WatchType.allCases.enumerated().map { index, watchType in
+                viewItems: WatchModule.WatchType.allCases.enumerated().map { index, watchType in
                     AlertViewItem(
                             text: watchType.title,
                             selected: self.watchType == watchType
                     )
                 }
         ) { [weak self] index in
-            self?.viewModel.onSelect(watchType: WatchViewModel.WatchType.allCases[index])
+            self?.viewModel.onSelect(watchType: WatchModule.WatchType.allCases[index])
         }
 
         present(alertController, animated: true)
+    }
+
+    private func proceedToNextPage(watchType: WatchModule.WatchType, accountType: AccountType, name: String) {
+        let viewController = WatchModule.viewController(sourceViewController: sourceViewController, watchType: watchType, accountType: accountType, name: name)
+
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
 }
@@ -162,12 +175,28 @@ class WatchViewController: KeyboardAwareViewController {
 extension WatchViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        var sections = [SectionProtocol]()
+        var sections: [SectionProtocol] = [
+            Section(
+                id: "margin",
+                headerState: .margin(height: .margin12)
+            ),
+            Section(
+                id: "name",
+                headerState: tableView.sectionHeader(text: "create_wallet.name".localized),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: nameCell,
+                        id: "name",
+                        height: .heightSingleLineCell
+                    )
+                ]
+            )
+        ]
 
         sections.append(
                 Section(
                         id: "watch-type",
-                        headerState: .margin(height: .margin12),
                         footerState: .margin(height: .margin32),
                         rows: [
                             tableView.universalRow48(

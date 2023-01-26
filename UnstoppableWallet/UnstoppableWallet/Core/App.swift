@@ -42,7 +42,6 @@ class App {
     let walletManager: WalletManager
     let adapterManager: AdapterManager
     let transactionAdapterManager: TransactionAdapterManager
-    let watchAddressBlockchainManager: WatchAddressBlockchainManager
 
     let nftMetadataManager: NftMetadataManager
     let nftAdapterManager: NftAdapterManager
@@ -203,12 +202,6 @@ class App {
                 adapterManager: adapterManager,
                 evmBlockchainManager: evmBlockchainManager,
                 adapterFactory: adapterFactory
-        )
-        watchAddressBlockchainManager = WatchAddressBlockchainManager(
-                marketKit: marketKit,
-                walletManager: walletManager,
-                accountManager: accountManager,
-                evmBlockchainManager: evmBlockchainManager
         )
 
         let nftDatabaseStorage = try! NftDatabaseStorage(dbPool: dbPool)
