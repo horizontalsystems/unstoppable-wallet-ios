@@ -13,6 +13,7 @@ class ChartIntervalConverter {
         case .month3: return 18 * day
         case .month6: return month
         case .year1: return 2 * month
+        case .year2: return 4 * month
         }
     }
 

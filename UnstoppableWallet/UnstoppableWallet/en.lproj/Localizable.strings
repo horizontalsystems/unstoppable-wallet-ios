@@ -985,6 +985,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1Y";
 "chart.time_duration.year2" = "2Y";
+"chart.time_duration.all" = "ALL";
 
 "chart.market_cap" = "Market Cap";
 "chart.volume" = "Volume (24h)";

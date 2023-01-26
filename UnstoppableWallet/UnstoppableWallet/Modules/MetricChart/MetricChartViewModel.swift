@@ -77,6 +77,10 @@ extension MetricChartViewModel: IChartViewModel {
         pointSelectedItemRelay.asDriver()
     }
 
+    var intervalsUpdatedWithCurrentIndexDriver: Driver<Int> {
+        .just(0)
+    }
+
     var intervalIndexDriver: Driver<Int> {
         intervalIndexRelay.asDriver()
     }
@@ -112,7 +116,7 @@ extension MetricChartViewModel: IChartViewModel {
         // ignoring indicators
     }
 
-    func viewDidLoad() {
+    func start() {
         service.fetchChartData()
     }
 

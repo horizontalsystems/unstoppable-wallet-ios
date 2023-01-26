@@ -109,7 +109,7 @@ class CoinOverviewViewController: ThemeViewController {
         chartRow.onReady = { [weak chartCell] in chartCell?.onLoad() }
 
         viewModel.onLoad()
-        chartViewModel.viewDidLoad()
+        chartViewModel.start()
     }
 
     override func viewWillAppear(_ animated: Bool) {

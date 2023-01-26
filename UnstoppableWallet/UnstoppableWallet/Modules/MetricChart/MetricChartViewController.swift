@@ -82,7 +82,7 @@ class MetricChartViewController: ThemeActionSheetController {
         chartRow.onReady = { [weak chartCell] in chartCell?.onLoad() }
 
         tableView.buildSections()
-        viewModel.viewDidLoad()
+        viewModel.start()
     }
 
     private func reloadTable() {

@@ -8,22 +8,16 @@ class CoinChartService {
     private var disposeBag = DisposeBag()
 
     private let marketKit: MarketKit.Kit
-    private let localStorage: LocalStorage
     private let currencyKit: CurrencyKit.Kit
     private let coinUid: String
 
-    private let intervalRelay = PublishRelay<HsTimePeriod>()
-    var interval: HsTimePeriod {
-        get {
-            localStorage.chartInterval ?? .day1
-        }
-        set {
-            guard localStorage.chartInterval != newValue else {
-                return
+    private let periodTypeRelay = PublishRelay<HsPeriodType>()
+    var periodType: HsPeriodType = .day1 {
+        didSet {
+            if periodType != oldValue {
+                periodTypeRelay.accept(periodType)
+                fetch()
             }
-            localStorage.chartInterval = newValue
-            intervalRelay.accept(newValue)
-            fetchChartData()
         }
     }
 
@@ -31,6 +25,15 @@ class CoinChartService {
     private(set) var state: DataStatus<Item> = .loading {
         didSet {
             stateRelay.accept(state)
+        }
+    }
+
+    private let intervalsUpdatedRelay = PublishRelay<()>()
+    private(set) var startTime: TimeInterval? {
+        didSet {
+            if startTime != oldValue {
+                intervalsUpdatedRelay.accept(())
+            }
         }
     }
 
@@ -43,19 +46,38 @@ class CoinChartService {
         }
     }
 
-    init(marketKit: MarketKit.Kit, localStorage: LocalStorage, currencyKit: CurrencyKit.Kit, coinUid: String) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, coinUid: String) {
         self.marketKit = marketKit
-        self.localStorage = localStorage
         self.currencyKit = currencyKit
         self.coinUid = coinUid
     }
 
-    func fetchChartData() {
+    func fetch() {
+        let genesisTimeSingle: Single<TimeInterval>
+        if let startTime {
+            genesisTimeSingle = .just(startTime)
+        } else {
+            genesisTimeSingle = marketKit.chartPriceStart(coinUid: coinUid)
+        }
+
+        disposeBag = DisposeBag()
+        genesisTimeSingle
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onSuccess: { [weak self] startTime in
+                    self?.startTime = startTime
+                    self?.fetchChartData()
+                }, onError: { [weak self] error in
+                    self?.state = .failed(error)
+                })
+                .disposed(by: disposeBag)
+    }
+
+    private func fetchChartData() {
         disposeBag = DisposeBag()
         state = .loading
 
         coinPrice = marketKit.coinPrice(coinUid: coinUid, currencyCode: currency.code)
-        chartInfo = marketKit.chartInfo(coinUid: coinUid, currencyCode: currency.code, interval: interval)
+        chartInfo = marketKit.chartInfo(coinUid: coinUid, currencyCode: currency.code, periodType: periodType)
 
         marketKit
                 .coinPriceObservable(coinUid: coinUid, currencyCode: currency.code)
@@ -69,7 +91,7 @@ class CoinChartService {
                 .disposed(by: disposeBag)
 
         marketKit
-                .chartInfoObservable(coinUid: coinUid, currencyCode: currency.code, interval: interval)
+                .chartInfoObservable(coinUid: coinUid, currencyCode: currency.code, periodType: periodType)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] chartInfo in
                     self?.chartInfo = chartInfo
@@ -102,8 +124,12 @@ class CoinChartService {
 
 extension CoinChartService {
 
-    var intervalObservable: Observable<HsTimePeriod> {
-        intervalRelay.asObservable()
+    var periodTypeObservable: Observable<HsPeriodType> {
+        periodTypeRelay.asObservable()
+    }
+
+    var intervalsUpdatedObservable: Observable<()> {
+        intervalsUpdatedRelay.asObservable()
     }
 
     var stateObservable: Observable<DataStatus<Item>> {
@@ -112,6 +138,18 @@ extension CoinChartService {
 
     var currency: Currency {
         currencyKit.baseCurrency
+    }
+
+    var validIntervals: [HsTimePeriod] {
+        HsChartHelper.validIntervals(startTime: startTime)
+    }
+
+    func setPeriodAll() {
+        periodType = .byStartTime(startTime ?? 0)
+    }
+
+    func setPeriod(interval: HsTimePeriod) {
+        periodType = .byPeriod(interval)
     }
 
 }

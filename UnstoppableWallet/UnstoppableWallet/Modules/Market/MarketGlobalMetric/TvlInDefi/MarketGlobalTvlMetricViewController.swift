@@ -54,7 +54,7 @@ class MarketGlobalTvlMetricViewController: MarketListViewController {
         chartRow.onReady = { [weak chartCell] in chartCell?.onLoad() }
 
         tableView.buildSections()
-        chartViewModel.viewDidLoad()
+        chartViewModel.start()
     }
 
     @objc private func onTapClose() {

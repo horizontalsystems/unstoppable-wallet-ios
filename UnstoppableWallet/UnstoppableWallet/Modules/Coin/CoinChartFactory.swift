@@ -88,7 +88,7 @@ class CoinChartFactory {
         return .neutral
     }
 
-    func convert(item: CoinChartService.Item, interval: HsTimePeriod, currency: Currency, selectedIndicator: ChartIndicatorSet) -> CoinChartViewModel.ViewItem {
+    func convert(item: CoinChartService.Item, periodType: HsPeriodType, currency: Currency, selectedIndicator: ChartIndicatorSet) -> CoinChartViewModel.ViewItem {
         var points = item.chartInfo.points
         var endTimestamp = item.chartInfo.endTimestamp
 
@@ -103,7 +103,7 @@ class CoinChartFactory {
             points.append(ChartPoint(timestamp: timestamp, value: rate))
 
             // create extended point for 24h ago
-            if interval == .day1, let rateDiff24 = item.rateDiff24h {
+            if periodType == .day1, let rateDiff24 = item.rateDiff24h {
                 let firstTimestamp = timestamp - 24 * 60 * 60
                 let price24h = 100 * rate / (100 + rateDiff24)
                 extendedPoint = ChartPoint(timestamp: firstTimestamp, value: price24h)
@@ -155,8 +155,8 @@ class CoinChartFactory {
         }
 
         // make timeline for chart
-
-        let gridInterval = ChartIntervalConverter.convert(interval: interval) // hours count
+        //todo Fix it!
+        let gridInterval = periodType.gridInterval
         let timeline = timelineHelper
                 .timestamps(startTimestamp: data.startWindow, endTimestamp: data.endWindow, separateHourlyInterval: gridInterval)
                 .map {
@@ -164,7 +164,7 @@ class CoinChartFactory {
                 }
 
         // disable indicators if chart interval less than 7d
-        let correctedIndicator: ChartIndicatorSet? = [HsTimePeriod.day1].contains(interval) ? nil : selectedIndicator
+        let correctedIndicator: ChartIndicatorSet? = periodType == .day1 ? nil : selectedIndicator
 
         return CoinChartViewModel.ViewItem(chartData: data, chartTrend: chartTrend, chartDiff: chartDiff, minValue: minRateString, maxValue: maxRateString, timeline: timeline, selectedIndicator: correctedIndicator)
     }
@@ -192,6 +192,34 @@ class CoinChartFactory {
         }
 
         return SelectedPointViewItem(date: formattedDate, value: formattedValue, rightSideMode: rightSideMode)
+    }
+
+    static func gridInterval(fromTimestamp: TimeInterval) -> Int {
+        guard let daysCount = Calendar.current.dateComponents([.day], from: Date(timeIntervalSince1970: fromTimestamp), to: Date()).day else {
+            return ChartIntervalConverter.convert(interval: .year1)
+        }
+        // try to split interval by 4 chunks
+        return daysCount / 4 * 24
+    }
+
+}
+
+extension HsPeriodType {
+
+    public func `in`(_ intervals: [HsTimePeriod]) -> Bool {
+        switch self {
+        case .byPeriod(let interval): return intervals.contains(interval)
+        case .byStartTime: return true
+        }
+    }
+
+    var gridInterval: Int {
+        switch self {
+        case .byPeriod(let interval):
+            return ChartIntervalConverter.convert(interval: interval)
+        case .byStartTime(let startTime):
+            return CoinChartFactory.gridInterval(fromTimestamp: startTime)
+        }
     }
 
 }
