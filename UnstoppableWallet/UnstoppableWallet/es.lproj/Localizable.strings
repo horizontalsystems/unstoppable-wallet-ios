@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Agregar a Wallet";
 "alert.already_added_to_wallet" = "Ya se ha añadido a Wallet";
 "alert.not_supported_yet" = "Aún no compatible";
-"alert.copied" = "Copied";
+"alert.copied" = "Copiado";
 "alert.created" = "Creado";
 "alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
@@ -556,9 +556,9 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominio Bitcoin";
-"market.global.volume_24h.title" = "Volumen de 24 horas";
-"market.global.defi_cap.title" = "Cap. DeFi";
-"market.global.tvl_in_defi.title" = "TVL en DeFi";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "El cambio histórico en la relación entre el límite de mercado de Bitcoin y el resto de los mercados de criptomonedas. \n\nPor lo general, cuando el dominio de Bitcoin tiende a ser más alto, el resto de las tendencias del mercado de criptomonedas disminuye y viceversa.";
 "market.global.volume_24h.description" = "El cambio histórico en el volumen diario del mercado de operaciones agregadas para todas las criptomonedas.";
 "market.global.defi_cap.description" = "El cambio histórico en el valor acumulado del mercado de los tokens en el sector de las finanzas descentralizadas.";
@@ -1083,8 +1083,8 @@
 "wallet_connect.active_account" = "Active su cartera";
 "wallet_connect.address" = "Dirección";
 "wallet_connect.network" = "Red";
-"wallet_connect.address" = "Dirección";
-"wallet_connect.network" = "Red";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Solicitudes Pendientes";
 "wallet_connect.main.no_any_supported_chains" = "¡No hay cadenas compatibles!";
 "wallet_connect.main.unsupported_chains" = "¡Algunas cadenas no son soportadas!";
@@ -1249,6 +1249,8 @@
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Introduzca Account Extended Public Key ";
 "watch_address.public_key.invalid_key" = "Clave no válida";
+"watch_address.choose_blockchain" = "Choose Blockchain";
+"watch_address.choose_coin" = "Choose Coin";
 
 // Nft Collections
 
