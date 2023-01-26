@@ -37,12 +37,16 @@ extension WatchPublicKeyViewModel: IWatchSubViewModel {
         service.stateObservable.map { $0.watchEnabled }
     }
 
-    func resolve() -> (AccountType, String?)? {
+    var nameObservable: Observable<String?> {
+        Observable.just(nil)
+    }
+
+    func resolve() -> AccountType? {
         cautionRelay.accept(nil)
 
         do {
             let accountType = try service.resolve()
-            return (accountType, nil)
+            return accountType
         } catch {
             cautionRelay.accept(Caution(text: "watch_address.public_key.invalid_key".localized, type: .error))
             return nil

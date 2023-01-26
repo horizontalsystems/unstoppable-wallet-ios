@@ -20,6 +20,7 @@ class CoinToggleViewModel {
         let placeholderImageName: String?
         let title: String
         let subtitle: String
+        let badge: String?
         let state: ViewItemState
     }
 

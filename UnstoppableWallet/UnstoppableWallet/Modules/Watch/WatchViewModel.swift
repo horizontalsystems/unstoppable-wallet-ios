@@ -6,7 +6,8 @@ import RxCocoa
 protocol IWatchSubViewModel: AnyObject {
     var watchEnabled: Bool { get }
     var watchEnabledObservable: Observable<Bool> { get }
-    func resolve() -> (AccountType, String?)?
+    var nameObservable: Observable<String?> { get }
+    func resolve() -> AccountType?
 }
 
 class WatchViewModel {
@@ -15,9 +16,9 @@ class WatchViewModel {
     private let publicKeyViewModel: IWatchSubViewModel
     private var disposeBag = DisposeBag()
 
-    private let watchTypeRelay = BehaviorRelay<WatchType>(value: .evmAddress)
+    private let watchTypeRelay = BehaviorRelay<WatchModule.WatchType>(value: .evmAddress)
     private let watchEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let finishRelay = PublishRelay<Void>()
+    private let proceedRelay = PublishRelay<(WatchModule.WatchType, AccountType, String)>()
 
     init(service: WatchService, evmAddressViewModel: IWatchSubViewModel, publicKeyViewModel: IWatchSubViewModel) {
         self.service = service
@@ -38,17 +39,24 @@ class WatchViewModel {
         disposeBag = DisposeBag()
         sync(watchEnabled: subViewModel.watchEnabled)
         subscribe(disposeBag, subViewModel.watchEnabledObservable) { [weak self] in self?.sync(watchEnabled: $0) }
+        subscribe(disposeBag, subViewModel.nameObservable) { [weak self] in self?.sync(name: $0) }
     }
 
     private func sync(watchEnabled: Bool) {
         watchEnabledRelay.accept(watchEnabled)
     }
 
+    private func sync(name: String?) {
+        if let name = name, service.name == nil {
+            service.set(name: name)
+        }
+    }
+
 }
 
 extension WatchViewModel {
 
-    var watchTypeDriver: Driver<WatchType> {
+    var watchTypeDriver: Driver<WatchModule.WatchType> {
         watchTypeRelay.asDriver()
     }
 
@@ -56,11 +64,19 @@ extension WatchViewModel {
         watchEnabledRelay.asDriver()
     }
 
-    var finishSignal: Signal<Void> {
-        finishRelay.asSignal()
+    var proceedSignal: Signal<(WatchModule.WatchType, AccountType, String)> {
+        proceedRelay.asSignal()
     }
 
-    func onSelect(watchType: WatchType) {
+    var namePlaceholder: String {
+        service.defaultAccountName
+    }
+
+    func onChange(name: String) {
+        service.set(name: name)
+    }
+
+    func onSelect(watchType: WatchModule.WatchType) {
         guard watchTypeRelay.value != watchType else {
             return
         }
@@ -69,26 +85,9 @@ extension WatchViewModel {
         syncSubViewModel()
     }
 
-    func onTapWatch() {
-        if let (accountType, name) = subViewModel.resolve() {
-            service.watch(accountType: accountType, name: name)
-            finishRelay.accept(())
-        }
-    }
-
-}
-
-extension WatchViewModel {
-
-    enum WatchType: CaseIterable {
-        case evmAddress
-        case publicKey
-
-        var title: String {
-            switch self {
-            case .evmAddress: return "watch_address.evm_address".localized
-            case .publicKey: return "watch_address.public_key".localized
-            }
+    func onTapNext() {
+        if let accountType = subViewModel.resolve() {
+            proceedRelay.accept((watchTypeRelay.value, accountType, service.resolvedName))
         }
     }
 

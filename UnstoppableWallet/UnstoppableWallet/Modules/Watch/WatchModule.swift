@@ -27,10 +27,7 @@ struct WatchModule {
         let publicKeyService = WatchPublicKeyService()
         let publicKeyViewModel = WatchPublicKeyViewModel(service: publicKeyService)
 
-        let service = WatchService(
-                accountFactory: App.shared.accountFactory,
-                accountManager: App.shared.accountManager
-        )
+        let service = WatchService(accountFactory: App.shared.accountFactory)
         let viewModel = WatchViewModel(
                 service: service,
                 evmAddressViewModel: evmAddressViewModel,
@@ -47,6 +44,54 @@ struct WatchModule {
         )
 
         return ThemeNavigationController(rootViewController: viewController)
+    }
+
+    static func viewController(sourceViewController: UIViewController? = nil, watchType: WatchType, accountType: AccountType, name: String) -> UIViewController {
+        switch watchType {
+            case .evmAddress:
+                let service = ChooseBlockchainService(
+                    accountType: accountType,
+                    accountName: name,
+                    accountFactory: App.shared.accountFactory,
+                    accountManager: App.shared.accountManager,
+                    walletManager: App.shared.walletManager,
+                    evmBlockchainManager: App.shared.evmBlockchainManager,
+                    marketKit: App.shared.marketKit
+                )
+
+                let viewModel = ChooseBlockchainViewModel(service: service)
+
+                return ChooseBlockchainViewController(viewModel: viewModel, sourceViewController: sourceViewController)
+
+            case .publicKey:
+                let service = ChooseCoinService(
+                    accountType: accountType,
+                    accountName: name,
+                    accountFactory: App.shared.accountFactory,
+                    accountManager: App.shared.accountManager,
+                    walletManager: App.shared.walletManager,
+                    marketKit: App.shared.marketKit
+                )
+                let viewModel = ChooseCoinViewModel(service: service)
+
+                return ChooseCoinViewController(viewModel: viewModel, sourceViewController: sourceViewController)
+        }
+    }
+
+}
+
+extension WatchModule {
+
+    enum WatchType: CaseIterable {
+        case evmAddress
+        case publicKey
+
+        var title: String {
+            switch self {
+                case .evmAddress: return "watch_address.evm_address".localized
+                case .publicKey: return "watch_address.public_key".localized
+            }
+        }
     }
 
 }

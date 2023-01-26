@@ -38,9 +38,9 @@ extension WatchEvmAddressService {
         stateRelay.asObservable()
     }
 
-    func resolve() -> (AccountType, String?)? {
+    func resolve() -> AccountType? {
         switch state {
-        case let .ready(address, domain): return (AccountType.evmAddress(address: address), domain)
+        case let .ready(address, _): return AccountType.evmAddress(address: address)
         case .notReady: return nil
         }
     }
@@ -59,6 +59,14 @@ extension WatchEvmAddressService {
             case .notReady: return false
             }
         }
+
+        var name: String? {
+            switch self {
+            case .ready(_, let domain): return domain
+            case .notReady: return nil
+            }
+        }
+
     }
 
 }

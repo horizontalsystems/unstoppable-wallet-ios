@@ -315,6 +315,17 @@ extension MarketKit.BlockchainType {
         return false
     }
 
+    func badge(coinSettings: CoinSettings) -> String? {
+        switch self {
+        case .bitcoin, .litecoin:
+            return coinSettings.derivation?.rawValue.uppercased()
+        case .bitcoinCash:
+            return coinSettings.bitcoinCashCoinType?.rawValue.uppercased()
+        default:
+            return nil
+        }
+    }
+
 }
 
 extension MarketKit.Coin {

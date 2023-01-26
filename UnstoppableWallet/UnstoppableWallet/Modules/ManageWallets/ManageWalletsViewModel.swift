@@ -41,6 +41,7 @@ class ManageWalletsViewModel {
                 placeholderImageName: "placeholder_circle_32",
                 title: item.fullCoin.coin.code,
                 subtitle: item.fullCoin.coin.name,
+                badge: nil,
                 state: viewItemState
         )
     }

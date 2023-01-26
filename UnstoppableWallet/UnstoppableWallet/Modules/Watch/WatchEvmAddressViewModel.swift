@@ -22,7 +22,11 @@ extension WatchEvmAddressViewModel: IWatchSubViewModel {
         service.stateObservable.map { $0.watchEnabled }
     }
 
-    func resolve() -> (AccountType, String?)? {
+    var nameObservable: Observable<String?> {
+        service.stateObservable.map { $0.name }
+    }
+
+    func resolve() -> AccountType? {
         service.resolve()
     }
 
