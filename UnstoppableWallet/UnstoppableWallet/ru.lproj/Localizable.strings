@@ -39,7 +39,7 @@
 "alert.added_to_wallet" = "Добавлено в Кошелек";
 "alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Ещё не поддерживается";
-"alert.copied" = "Copied";
+"alert.copied" = "Скопировано";
 "alert.created" = "Создан";
 "alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
@@ -559,9 +559,9 @@
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 
 "market.global.btc_dominance.title" = "Доминирование Bitcoin";
-"market.global.volume_24h.title" = "Объем Торгов (24ч)";
-"market.global.defi_cap.title" = "Капитализация DeFi";
-"market.global.tvl_in_defi.title" = "TVL в DeFi";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка и наоборот.";
 "market.global.volume_24h.description" = "Историческое изменение в ежедневном совокупном объеме торговли для всех криптовалют.";
 "market.global.defi_cap.description" = "Историческое изменение в совокупной рыночной стоимости токенов в Децентрализованном Финансовом Секторе.";
@@ -1086,8 +1086,8 @@
 "wallet_connect.active_account" = "Активный Кошелек";
 "wallet_connect.address" = "Адрес";
 "wallet_connect.network" = "Сеть";
-"wallet_connect.address" = "Адрес";
-"wallet_connect.network" = "Сеть";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Отложенные Запросы";
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
 "wallet_connect.main.unsupported_chains" = "Некоторые блокчейны не поддерживаются!";
@@ -1252,6 +1252,8 @@
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Введите Account Extended Public Key";
 "watch_address.public_key.invalid_key" = "Неверный Ключ";
+"watch_address.choose_blockchain" = "Choose Blockchain";
+"watch_address.choose_coin" = "Choose Coin";
 
 // Nft Collections
 
