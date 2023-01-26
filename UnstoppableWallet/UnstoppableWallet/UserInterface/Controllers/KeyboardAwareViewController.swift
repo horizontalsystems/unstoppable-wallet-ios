@@ -81,10 +81,6 @@ class KeyboardAwareViewController: ThemeViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        for scrollView in scrollViews {
-            scrollView.contentInset = additionalContentInsets
-        }
-
         observeKeyboard(true)
     }
 
