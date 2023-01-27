@@ -10,7 +10,11 @@ class KeyboardAwareViewController: ThemeViewController {
     private var keyboardFrame: CGRect?
 
     // handling accessory view position
-    var additionalContentInsets: UIEdgeInsets = .zero  // additional inset. Put scrollView content under accessoryView, usign .bottom = newValue
+    var additionalContentInsets: UIEdgeInsets = .zero { // additional inset. Put scrollView content under accessoryView, usign .bottom = newValue
+        didSet {
+            updateInsets()
+        }
+    }
     var additionalInsetsOnlyForClosedKeyboard: Bool = true // AdditionalContentInsets by default using only in closed state (mean that not for accessoryView, but wrapper on screen bottom)
 
     var oldPadding: CGFloat = 0
@@ -152,6 +156,15 @@ class KeyboardAwareViewController: ThemeViewController {
         keyboardFrame = nil
         pseudoAccessoryView?.heightValue = accessoryViewHeight
 
+        updateInsets()
+    }
+
+    public func setInitialState(bottomPadding: CGFloat) {
+        pseudoAccessoryView?.heightValue = bottomPadding
+        oldPadding = -bottomPadding
+    }
+
+    public func updateInsets() {
         var bottomInset = accessoryViewHeight
         if !ignoreSafeAreaForAccessoryView {
             bottomInset -= view.safeAreaInsets.bottom
@@ -161,11 +174,6 @@ class KeyboardAwareViewController: ThemeViewController {
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0).add(additionalContentInsets)
             scrollView.scrollIndicatorInsets = .zero
         }
-    }
-
-    public func setInitialState(bottomPadding: CGFloat) {
-        pseudoAccessoryView?.heightValue = bottomPadding
-        oldPadding = -bottomPadding
     }
 
     public func updateUIKeyboard(initial: Bool = false) {
