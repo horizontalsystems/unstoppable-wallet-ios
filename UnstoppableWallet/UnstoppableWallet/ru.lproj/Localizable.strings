@@ -945,7 +945,7 @@
 "appearance.launch_screen" = "Запуск Экрана";
 "appearance.launch_screen.auto" = "По умолчанию";
 "appearance.launch_screen.balance" = "Баланс";
-"appearance.launch_screen.market_overview" = "Обзор Рынка";
+"appearance.launch_screen.market_overview" = "Обзор рынка";
 "appearance.launch_screen.watchlist" = "Избранное";
 
 "appearance.app_icon" = "Иконка Приложения";
@@ -1316,7 +1316,7 @@
 "nft_collection.overview.floor_price" = "Минимальная цена";
 "nft_collection.overview.all_time_average" = "Средняя оценка за все время";
 "nft_collection.overview.royalty" = "Вознаграждение";
-"nft_collection.overview.inception_date" = "Дата Старта";
+"nft_collection.overview.inception_date" = "Дата старта";
 
 "nft.activity.empty_list" = "Нет активности";
 "nft.activity.event_types" = "Типы Событий";
