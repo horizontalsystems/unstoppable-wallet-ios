@@ -9,8 +9,8 @@
 "button.next" = "Далее";
 "button.share" = "Поделиться";
 "button.paste" = "Вставить";
-"button.backup" = "Резервная Копия";
-"button.copy" = "Скопировать";
+"button.backup" = "Резервная копия";
+"button.copy" = "Копировать";
 "button.retry" = "Повторить";
 "button.report" = "Пожаловаться";
 "button.add" = "Добавить";
@@ -26,23 +26,23 @@
 "alert" = "Предупреждение";
 "alert.copied" = "Скопировано";
 "alert.saved" = "Сохранено";
-"alert.no_internet" = "Нет Интернета";
-"alert.wrong_amount" = "Неверная Сумма";
-"alert.no_fee" = "Неверная Комиссия";
+"alert.no_internet" = "Нет интернета";
+"alert.wrong_amount" = "Неправильная сумма";
+"alert.no_fee" = "Неправильная комиссия";
 "alert.warning" = "Внимание";
 "alert.error" = "Ошибка";
-"alert.unknown_error" = "Неизвестная Ошибка";
+"alert.unknown_error" = "Неизвестная ошибка";
 "alert.success_action" = "Готово!";
 
-"alert.added_to_watchlist" = "Добавлено в Избранное";
-"alert.removed_from_watchlist" = "Удалить из Избранного";
-"alert.added_to_wallet" = "Добавлено в Кошелек";
+"alert.added_to_watchlist" = "Добавлено в избранное";
+"alert.removed_from_watchlist" = "Удалить из избранного";
+"alert.added_to_wallet" = "Добавлено в кошелек";
 "alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Ещё не поддерживается";
-"alert.copied" = "Copied";
+"alert.copied" = "Скопировано";
 "alert.created" = "Создан";
-"alert.imported" = "Imported";
-"alert.wallet_added" = "Wallet Added";
+"alert.imported" = "Импортировано";
+"alert.wallet_added" = "Кошелек добавлен";
 "alert.deleted" = "Удалено";
 "alert.waiting_for_session" = "Ожидание Сессии";
 "alert.try_again" = "Попробовать ещё раз";
@@ -94,12 +94,12 @@
 
 // Restore
 
-"restore.title" = "Import Wallet";
-"restore.advanced" = "Advanced";
+"restore.title" = "Импорт кошелька";
+"restore.advanced" = "Доп. настройки";
 "restore.import_by" = "Import By";
-"restore.restore_type.mnemonic" = "Фраза Восстановления";
-"restore.restore_type.private_key" = "Приватный Ключ";
-"restore.mnemonic.placeholder" = "Введите 12, 15, 18, 21 или 24 слова";
+"restore.restore_type.mnemonic" = "Фраза восстановления";
+"restore.restore_type.private_key" = "Приватный ключ";
+"restore.mnemonic.placeholder" = "Введите фразу восстановления";
 "restore.private_key.placeholder" = "Введите приватный ключ EVM, BIP32 Root Key или Account Extended Private Key";
 "restore.private_key.invalid_key" = "Неверный Ключ";
 "restore_error.mnemonic_word_count" = "Неправильное количество слов. Должно быть 12-24 слова. Вы ввели: %@";
@@ -108,7 +108,7 @@
 "restore.input.passphrase" = "Кодовая Фраза";
 "restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet but a new passphrase will generate a brand-new wallet.";
 "restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
-"restore.non_standard_import" = "Non-Standard Import";
+"restore.non_standard_import" = "Нестандартный импорт";
 "restore.non_standard_import.description" = "This page provides a special wallet import mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
 "restore.warning.non_recommended.description" = "Похоже, этот кошелек использует нестандартный символ в списке мнемонических слов и/или парольной фразе. Если вы не видите баланс или транзакции, пожалуйста, прочтите подробности ниже.
 \n\nПОЖАЛУЙСТА НАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ.";
@@ -193,7 +193,7 @@
 
 "backup_prompt.title" = "Backup Wallet";
 "backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken, etc.";
-"backup_prompt.backup" = "Резервная Копия";
+"backup_prompt.backup" = "Резервная копия";
 "backup_prompt.later" = "Позже";
 
 // Errors
@@ -215,15 +215,15 @@
 "balance.syncing" = "Синхронизация...";
 "balance.searching" = "Поиск транзакций...";
 "balance.downloading_sapling" = "Загрузка sapling... %d%%";
-"balance.downloading_blocks" = "Загрузка Блоков";
-"balance.scanning_blocks" = "Сканирование Блоков";
-"balance.enhancing_transactions" = "Улучшение Транзакций";
+"balance.downloading_blocks" = "Загрузка блоков";
+"balance.scanning_blocks" = "Сканирование блоков";
+"balance.enhancing_transactions" = "Улучшение транзакций";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Синхронизация... %@";
 "balance.synced_through" = "до %@";
-"balance.add_coin" = "Добавить Токен";
-"balance.empty.add_coins" = "Добавить Токены";
+"balance.add_coin" = "Добавить токен";
+"balance.empty.add_coins" = "Добавить токены";
 "balance.empty.description" = "Вы еще не добавили монеты в этот кошелек.";
 "balance.watch_empty.description" = "У кошелька с этим адресом нет баланса";
 "balance.sort_by" = "Сортировать по";
@@ -233,7 +233,7 @@
 "balance.sort.price_change" = "По Изменению Цены(%)";
 
 "balance_error.change_source" = "Сменить Источник";
-"balance_error.sync_error" = "Ошибка Синхронизации";
+"balance_error.sync_error" = "Ошибка синхронизации";
 "lost_accounts.warning_title" = "Ошибка связки ключей iOS";
 "lost_accounts.warning_message" = "Зашифрованные данные вашего кошелька были недавно аннулированы, поскольку ваш экран блокировки iOS был изменен";
 
@@ -241,11 +241,11 @@
 
 "switch_account.title" = "Сменить Кошелек";
 "switch_account.wallets" = "Кошельки";
-"switch_account.watch_wallets" = "Watch Wallets";
+"switch_account.watch_wallets" = "Просмотр кошелька";
 
 // Release notes
 
-"release_notes.title" = "Что Нового";
+"release_notes.title" = "Что нового";
 "release_notes.follow_us" = "Мы в соцсетях";
 
 // Deposit
@@ -897,9 +897,9 @@
 
 // Manage Accounts
 
-"manage_accounts.migration_required" = "Требуется Миграция";
-"manage_accounts.migration_recommended" = "Рекомендуется Миграция";
-"manage_accounts.backup_required" = "Необходима Резерв.Копия";
+"manage_accounts.migration_required" = "Требуется миграция";
+"manage_accounts.migration_recommended" = "Рекомендуется миграция";
+"manage_accounts.backup_required" = "Необходима резерв. копия";
 
 // Manage Keys
 
@@ -1122,7 +1122,7 @@
 "wallet_connect_list.disconnecting" = "Отсоединение";
 
 "wallet_connect.no_account.description" = "You need to create or import a wallet before you can use WalletConnect.";
-"wallet_connect.no_account.close" = "Close";
+"wallet_connect.no_account.close" = "Закрыть";
 "wallet_connect.unbackuped_account.description" = "You need to backup %@ before you can use WalletConnect";
 
 "wallet_connect.non_supported_account.description" = "Your current wallet type %@ does not support WalletConnect";
@@ -1172,13 +1172,13 @@
 // Manage Account
 
 "manage_account.name" = "Имя";
-"manage_account.recovery_phrase" = "Фраза для восстановления";
-"manage_account.evm_private_key" = "Приватный Ключ EVM";
+"manage_account.recovery_phrase" = "Фраза восстановления";
+"manage_account.evm_private_key" = "Приватный ключ EVM";
 "manage_account.bip32_root_key" = "BIP32 Root Key";
 "manage_account.account_extended_private_key" = "Account Extended Private Key";
 "manage_account.account_extended_public_key" = "Account Extended Public Key";
 "manage_account.public_keys" = "Публичные Ключи";
-"manage_account.backup_recovery_phrase" = "Сделать резервную копию фразы восстановления";
+"manage_account.backup_recovery_phrase" = "Резервная копия";
 "manage_account.unlink" = "Отсоединить";
 
 // Birthday Height
