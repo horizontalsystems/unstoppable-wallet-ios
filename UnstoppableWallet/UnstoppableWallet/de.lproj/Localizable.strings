@@ -5,7 +5,7 @@
 "button.continue" = "Weiter";
 "button.done" = "Fertig";
 "button.reset" = "Zurücksetzen";
-"button.import" = "Import";
+"button.import" = "Wiederherstellen";
 "button.next" = "Weiter";
 "button.share" = "Teilen";
 "button.paste" = "Einsetzen";
@@ -39,9 +39,9 @@
 "alert.added_to_wallet" = "Zum Wallet hinzugefügt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
-"alert.copied" = "Copied";
+"alert.copied" = "Kopiert";
 "alert.created" = "Erstellt";
-"alert.imported" = "Imported";
+"alert.imported" = "Wiederherstellen";
 "alert.wallet_added" = "Wallet Added";
 "alert.deleted" = "Gelöscht";
 "alert.waiting_for_session" = "Warte auf Sitzung";
@@ -93,7 +93,7 @@
 // Restore
 
 "restore.title" = "Import Wallet";
-"restore.advanced" = "Advanced";
+"restore.advanced" = "Erweitert";
 "restore.import_by" = "Import By";
 "restore.restore_type.mnemonic" = "Wiederherstellungsphrase";
 "restore.restore_type.private_key" = "Privater Schlüssel";
@@ -104,7 +104,7 @@
 "restore.checksum_error" = "Ungültige Prüfsumme";
 "restore.passphrase" = "Passphrase";
 "restore.input.passphrase" = "Passphrase";
-"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet but a new passphrase will generate a brand-new wallet.";
+"restore.passphrase_description" = "Geben Sie Ihre Passphrase ein, die Sie beim Erstellen dieser Eselsbrücke verwendet haben.";
 "restore.error.empty_passphrase" = "Die Passphrase darf nicht leer sein";
 "restore.non_standard_import" = "Non-Standard Import";
 "restore.non_standard_import.description" = "This page provides a special wallet import mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
@@ -113,9 +113,9 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Old";
-"coin_settings.derivation.title.bip49" = "Good";
-"coin_settings.derivation.title.bip84" = "Best";
+"coin_settings.derivation.title.bip44" = "Alt";
+"coin_settings.derivation.title.bip49" = "Gut";
+"coin_settings.derivation.title.bip84" = "Beste";
 "coin_settings.title" = "Blockchain Einstellungen";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (empfohlen)";
@@ -188,7 +188,7 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Backup Wallet";
+"backup_prompt.title" = "Wallet sichern";
 "backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken, etc.";
 "backup_prompt.backup" = "Sichern";
 "backup_prompt.later" = "Später";
@@ -238,7 +238,7 @@
 
 "switch_account.title" = "Wallet wechseln";
 "switch_account.wallets" = "Wallets";
-"switch_account.watch_wallets" = "Watch Wallets";
+"switch_account.watch_wallets" = "Watch-Adresse";
 
 // Release notes
 
