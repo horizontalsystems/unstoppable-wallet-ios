@@ -191,7 +191,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Backup Prompt
 
-"backup_prompt.title" = "Backup Wallet";
+"backup_prompt.title" = "Cüzdanı yedekle";
 "backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken, etc.";
 "backup_prompt.backup" = "Yedekle";
 "backup_prompt.later" = "Sonra";
@@ -802,7 +802,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "settings.title" = "Ayarlar";
 "settings.tab_bar_item" = "Ayarlar";
 "settings.manage_accounts" = "Cüzdanları yönet";
-"settings.blockchain_settings" = "Blockchain Settings";
+"settings.blockchain_settings" = "Blockchain Ayarları";
 "settings.security" = "Security";
 "settings.experimental_features" = "Deneysel";
 "settings.base_currency" = "Para birimi";
@@ -862,7 +862,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Settings -> Blockchain Settings
 
-"blockchain_settings.title" = "Blockchain Settings";
+"blockchain_settings.title" = "Blockchain Ayarları";
 
 // Settings -> Security
 
@@ -986,7 +986,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "chart.time_duration.halfyear" = "6A";
 "chart.time_duration.year" = "1Y";
 "chart.time_duration.year2" = "2Y";
-"chart.time_duration.all" = "ALL";
+"chart.time_duration.all" = "All";
 
 "chart.market_cap" = "Market kap.";
 "chart.volume" = "Birim(24 saat)";
@@ -1012,8 +1012,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Create Wallet
 
-"create_wallet.title" = "New Wallet";
-"create_wallet.name" = "Name";
+"create_wallet.title" = "Yeni Cüzdan";
+"create_wallet.name" = "İsim";
 "create_wallet.advanced_setup" = "Advanced";
 "create_wallet.create" = "Create";
 "create_wallet.advanced" = "Advanced";
@@ -1087,8 +1087,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.active_account" = "Aktif Cüzdan";
 "wallet_connect.address" = "Adres";
 "wallet_connect.network" = "Ağ";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Adres";
+"wallet_connect.network" = "Ağ";
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
 "wallet_connect.main.no_any_supported_chains" = "Desteklenen zincir yok!";
 "wallet_connect.main.unsupported_chains" = "Bazı zincirler desteklenmiyor!";
@@ -1122,10 +1122,10 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "wallet_connect_list.disconnecting" = "Bağlantı kesiliyor";
 
 "wallet_connect.no_account.description" = "You need to create or import a wallet before you can use WalletConnect.";
-"wallet_connect.no_account.close" = "Close";
+"wallet_connect.no_account.close" = "Kapat";
 "wallet_connect.unbackuped_account.description" = "You need to backup %@ before you can use WalletConnect";
 
-"wallet_connect.non_supported_account.description" = "Your current wallet type %@ does not support WalletConnect";
+"wallet_connect.non_supported_account.description" = "Mevcut cüzdan türünüz %@ WalletConnect'i desteklemiyor";
 "wallet_connect.non_supported_account.switch" = "Değiştir";
 
 "wallet_connect.pending_requests_title" = "Bekleyen Talepler";
@@ -1156,7 +1156,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "status_info.completed.title" = "Tamamlandı";
 "status_info.confirmed.content" = "İşlem tamamlandı ve bunun kalıcı ve tersine çevrilemez olduğu kabul edilir.";
 "status_info.failed.title" = "Başarısız";
-"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Depending on the fail reason, some failed transactions may consume transaction fees. Transactions that were replaced or canceled by another transaction do not consume transaction fees and will also appear as failed. The Unstoppable app is unable to show the reason for failed transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
+"status_info.failed.content" = "İşlem gerçekleşmedi ve herhangi bir değer transferi yapılmadı. Başarısız olma nedenine bağlı olarak, bazı başarısız işlemler, işlem ücreti tüketebilir. Başka bir işlemle değiştirilen veya iptal edilen işlemler, işlem ücretini tüketmez ve başarısız olarak görüntülenir. Unstoppable uygulaması başarısız işlemlerin nedenini gösteremez, ancak kullanıcılar bunu örneğin etherscan.io gibi herkese açık bir blok gezgininde kendileri arayabilirler.";
 
 // Onboarding
 
@@ -1201,13 +1201,13 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // EVM Network
 
 "evm_network.rpc_source" = "RPC Source";
-"evm_network.added" = "Added";
+"evm_network.added" = "Eklendi";
 "evm_network.add_new" = "Add New";
 
 // Add RPC Source
 
 "add_evm_sync_source.title" = "Add RPC Source";
-"add_evm_sync_source.name" = "Name";
+"add_evm_sync_source.name" = "İsim";
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "Basic Auth (optional)";
 "add_evm_sync_source.warning.url_exists" = "RPC Source with this url already exists";
@@ -1244,7 +1244,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Watch Address
 
-"watch_address.title" = "Watch Wallet";
+"watch_address.title" = "Adresi İzle";
 "watch_address.watch" = "İzle";
 "watch_address.address" = "Adres";
 "watch_address.by" = "İçerik";
@@ -1253,7 +1253,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Account Extended Public Key ";
 "watch_address.public_key.invalid_key" = "Geçersiz Anahtar";
-"watch_address.choose_blockchain" = "Choose Blockchain";
+"watch_address.choose_blockchain" = "Blockchain Seç";
 "watch_address.choose_coin" = "Choose Coin";
 
 // Nft Collections
