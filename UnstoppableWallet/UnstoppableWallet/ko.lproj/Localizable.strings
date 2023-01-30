@@ -1072,7 +1072,7 @@
 "add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
 "add_token.input_placeholder.contract_address" = "Contract Address";
 "add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
-"add_token.coin_name" = "Coin Name";
+"add_token.coin_name" = "코인 이름";
 "add_token.symbol" = "Symbol";
 "add_token.decimals" = "Decimals";
 
