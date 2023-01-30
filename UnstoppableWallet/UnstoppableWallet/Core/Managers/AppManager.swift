@@ -61,7 +61,6 @@ extension AppManager {
         pinKit.didFinishLaunching()
         kitCleaner.clear()
 
-        appVersionManager.checkLatestVersion()
         rateAppManager.onLaunch()
 
         evmLabelManager.sync()

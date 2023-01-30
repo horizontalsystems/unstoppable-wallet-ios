@@ -40,25 +40,19 @@ class MainViewController: ThemeTabBarController {
         subscribe(disposeBag, viewModel.transactionsTabEnabledDriver) { [weak self] in self?.syncTransactionsTab(enabled: $0) }
         subscribe(disposeBag, viewModel.settingsBadgeDriver) { [weak self] in self?.setSettingsBadge(visible: $0.0, count: $0.1) }
 
-        subscribe(disposeBag, viewModel.releaseNotesUrlDriver) { [weak self] url in self?.showReleaseNotes(url: url) }
-        subscribe(disposeBag, viewModel.deepLinkDriver) { [weak self] deepLink in self?.handle(deepLink: deepLink) }
         subscribe(disposeBag, viewModel.showMarketDriver) { [weak self] in self?.handle(showMarket: $0) }
-
-        if viewModel.needToShowJailbreakAlert {
-            showJailbreakAlert()
-        }
+        subscribe(disposeBag, viewModel.showReleaseNotesDriver) { [weak self] in self?.showReleaseNotes(url: $0) }
+        subscribe(disposeBag, viewModel.showJailbreakDriver) { [weak self] in self?.showJailbreakAlert() }
+        subscribe(disposeBag, viewModel.showDeepLinkDriver) { [weak self] in self?.handle(deepLink: $0) }
 
         viewModel.onLoad()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        showNextAlert()
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
         didAppear = true
+        viewModel.handleNextAlert()
     }
 
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -123,30 +117,25 @@ class MainViewController: ThemeTabBarController {
             return
         }
 
-        showAlerts.append({
-            let module = MarkdownModule.gitReleaseNotesMarkdownViewController(url: url, presented: true, closeHandler: { [weak self] in
-                self?.showNextAlert()
-            })
-            DispatchQueue.main.async {
-                let controller = ThemeNavigationController(rootViewController: module)
-                if let delegate = module as? UIAdaptivePresentationControllerDelegate {
-                    controller.presentationController?.delegate = delegate
-                }
-                return self.present(controller, animated: true)
-            }
+        viewModel.onReleaseNotesShown()
+        let module = MarkdownModule.gitReleaseNotesMarkdownViewController(url: url, presented: true, closeHandler: { [weak self] in
+            self?.viewModel.handleNextAlert()
         })
+
+        let controller = ThemeNavigationController(rootViewController: module)
+        if let delegate = module as? UIAdaptivePresentationControllerDelegate {
+            controller.presentationController?.delegate = delegate
+        }
+
+        present(controller, animated: true)
     }
 
     private func showJailbreakAlert() {
-        showAlerts.append({
-            let jailbreakAlertController = NoPasscodeViewController(mode: .jailbreak, completion: { [weak self] in
-                self?.viewModel.onSuccessJailbreakAlert()
-                self?.showNextAlert()
-            })
-            DispatchQueue.main.async {
-                self.present(jailbreakAlertController, animated: true)
-            }
+        viewModel.onSuccessJailbreakAlert()
+        let jailbreakAlertController = NoPasscodeViewController(mode: .jailbreak, completion: { [weak self] in
+            self?.viewModel.handleNextAlert()
         })
+        present(jailbreakAlertController, animated: true)
     }
 
     private func showNextAlert() {
@@ -165,6 +154,7 @@ class MainViewController: ThemeTabBarController {
 
         workers.forEach { worker in
             if let handler = worker as? IDeepLinkHandler {
+                viewModel.onDeepLinkShown()
                 handler.handle(deepLink: deepLink)
             }
         }

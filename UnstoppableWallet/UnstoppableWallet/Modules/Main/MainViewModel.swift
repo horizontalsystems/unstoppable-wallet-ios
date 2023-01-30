@@ -15,6 +15,10 @@ class MainViewModel {
     private let transactionsTabEnabledRelay = BehaviorRelay<Bool>(value: true)
     private let showMarketRelay = BehaviorRelay<Bool>(value: true)
 
+    private let showReleaseNotesRelay = PublishRelay<URL?>()
+    private let showJailbreakRelay = PublishRelay<()>()
+    private let showDeepLinkRelay = PublishRelay<DeepLinkManager.DeepLink?>()
+
     init(service: MainService, badgeService: MainBadgeService, releaseNotesService: ReleaseNotesService, jailbreakService: JailbreakService, deepLinkService: DeepLinkService) {
         self.service = service
         self.badgeService = badgeService
@@ -25,6 +29,11 @@ class MainViewModel {
         subscribe(disposeBag, service.hasAccountsObservable) { [weak self] in self?.sync(hasAccounts: $0) }
         subscribe(disposeBag, service.hasWalletsObservable) { [weak self] in self?.sync(hasWallets: $0) }
         subscribe(disposeBag, service.showMarketObservable) { [weak self] in self?.sync(showMarket: $0) }
+        subscribe(disposeBag, service.handleAlertsObservable) { [weak self] in
+            DispatchQueue.main.async {
+                self?.handleNextAlert()
+            }
+        }
 
         sync(hasAccounts: service.hasAccounts)
     }
@@ -42,16 +51,22 @@ class MainViewModel {
         showMarketRelay.accept(showMarket)
     }
 
+    func handleNextAlert() {
+        if let releaseNotesUrl = releaseNotesService.releaseNotesUrl {
+            showReleaseNotesRelay.accept(releaseNotesUrl)
+        } else if jailbreakService.needToShowAlert {
+            showJailbreakRelay.accept(())
+        } else if let deepLink = deepLinkService.deepLink {
+            showDeepLinkRelay.accept(deepLink)
+        }
+    }
+
 }
 
 extension MainViewModel {
 
     var settingsBadgeDriver: Driver<(Bool, Int)> {
         badgeService.settingsBadgeObservable.asDriver(onErrorJustReturn: (false, 0))
-    }
-
-    var releaseNotesUrlDriver: Driver<URL?> {
-        releaseNotesService.releaseNotesUrlObservable.asDriver(onErrorJustReturn: nil)
     }
 
     var showMarket: Bool {
@@ -62,12 +77,20 @@ extension MainViewModel {
         showMarketRelay.asDriver()
     }
 
-    var needToShowJailbreakAlert: Bool {
-        jailbreakService.needToShowAlert
+    var showReleaseNotesDriver: Driver<URL?> {
+        showReleaseNotesRelay.asDriver(onErrorJustReturn: nil)
     }
 
-    var deepLinkDriver: Driver<DeepLinkManager.DeepLink?> {
-        deepLinkService.deepLinkObservable.asDriver(onErrorJustReturn: nil)
+    var showJailbreakDriver: Driver<()> {
+        showJailbreakRelay.asDriver(onErrorJustReturn: ())
+    }
+
+    var showDeepLinkDriver: Driver<DeepLinkManager.DeepLink?> {
+        showDeepLinkRelay.asDriver(onErrorJustReturn: nil)
+    }
+
+    var needToShowJailbreakAlert: Bool {
+        jailbreakService.needToShowAlert
     }
 
     var balanceTabState: BalanceTabState {
@@ -90,8 +113,16 @@ extension MainViewModel {
         service.setMainShownOnce()
     }
 
+    func onReleaseNotesShown() {
+        releaseNotesService.updateStoredVersion()
+    }
+
     func onSuccessJailbreakAlert() {
         jailbreakService.setAlertShown()
+    }
+
+    func onDeepLinkShown() {
+        deepLinkService.setDeepLinkShown()
     }
 
     func onSwitch(tab: MainModule.Tab) {

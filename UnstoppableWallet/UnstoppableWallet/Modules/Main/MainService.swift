@@ -2,6 +2,7 @@ import Foundation
 import RxSwift
 import RxRelay
 import StorageKit
+import PinKit
 
 class MainService {
     private let keyTabIndex = "main-tab-index"
@@ -10,6 +11,7 @@ class MainService {
     private let storage: StorageKit.ILocalStorage
     private let launchScreenManager: LaunchScreenManager
     private let accountManager: AccountManager
+    private let pinKit: IPinKit
     private let presetTab: MainModule.Tab?
     private let disposeBag = DisposeBag()
 
@@ -31,18 +33,23 @@ class MainService {
         }
     }
 
+    private let handleAlertsRelay = PublishRelay<()>()
     private let showMarketRelay = PublishRelay<Bool>()
 
-    init(localStorage: LocalStorage, storage: StorageKit.ILocalStorage, launchScreenManager: LaunchScreenManager, accountManager: AccountManager, walletManager: WalletManager, presetTab: MainModule.Tab?) {
+    private var isColdStart: Bool = true
+
+    init(localStorage: LocalStorage, storage: StorageKit.ILocalStorage, launchScreenManager: LaunchScreenManager, accountManager: AccountManager, walletManager: WalletManager, appManager: IAppManager, pinKit: IPinKit, presetTab: MainModule.Tab?) {
         self.localStorage = localStorage
         self.storage = storage
         self.launchScreenManager = launchScreenManager
         self.accountManager = accountManager
+        self.pinKit = pinKit
         self.presetTab = presetTab
 
         subscribe(disposeBag, accountManager.accountsObservable) { [weak self] in self?.sync(accounts: $0) }
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] in self?.sync(activeWallets: $0) }
         subscribe(disposeBag, launchScreenManager.showMarketObservable) { [weak self] in self?.sync(showMarket: $0) }
+        subscribe(disposeBag, appManager.didBecomeActiveObservable) { [weak self] in self?.didBecomeActive() }
 
         sync(accounts: accountManager.accounts)
         sync(activeWallets: walletManager.activeWallets)
@@ -60,6 +67,17 @@ class MainService {
         showMarketRelay.accept(showMarket)
     }
 
+    private func didBecomeActive() {
+        if !pinKit.isPinSet, isColdStart {  // If pin not set, in first time we don't need to handleAlerts. (ViewController handle it from didAppear)
+            isColdStart = false
+            return
+        }
+
+        if !pinKit.isLocked {   // If pin locked, after input it ViewController will handle alerts form didAppear
+            handleAlertsRelay.accept(())
+        }
+    }
+
 }
 
 extension MainService {
@@ -74,6 +92,10 @@ extension MainService {
 
     var showMarket: Bool {
         launchScreenManager.showMarket
+    }
+
+    var handleAlertsObservable: Observable<()> {
+        handleAlertsRelay.asObservable()
     }
 
     var showMarketObservable: Observable<Bool> {

@@ -15,6 +15,8 @@ struct MainModule {
                 launchScreenManager: App.shared.launchScreenManager,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
+                appManager: App.shared.appManager,
+                pinKit: App.shared.pinKit,
                 presetTab: presetTab
         )
         let badgeService = MainBadgeService(
@@ -38,7 +40,8 @@ struct MainModule {
 
         let walletConnectWorkerService = WalletConnectV2AppShowService(
                 walletConnectV2Manager: App.shared.walletConnectV2SessionManager,
-                accountManager: App.shared.accountManager)
+                accountManager: App.shared.accountManager,
+                pinKit: App.shared.pinKit)
         let walletConnectWorkerViewModel = WalletConnectV2AppShowViewModel(service: walletConnectWorkerService)
         let walletConnectWorkerView = WalletConnectV2AppShowView(
                 viewModel: walletConnectWorkerViewModel,
