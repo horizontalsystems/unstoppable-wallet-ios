@@ -6,14 +6,17 @@ class AppVersionManager {
     private let systemInfoManager: SystemInfoManager
     private let storage: AppVersionStorage
 
-    private let newVersionRelay = BehaviorRelay<AppVersion?>(value: nil)
+    var newVersion: AppVersion? {
+        let currentVersion = systemInfoManager.appVersion
 
-    init(systemInfoManager: SystemInfoManager, storage: AppVersionStorage) {
-        self.systemInfoManager = systemInfoManager
-        self.storage = storage
+        guard let lastVersion = storage.appVersions.last, currentVersion > lastVersion else {
+            return nil
+        }
+
+        return currentVersion
     }
 
-    private func addLatestVersion() {
+    func updateStoredVersion() {
         let currentVersion = systemInfoManager.appVersion
 
         guard let lastVersion = storage.appVersions.last else {
@@ -24,24 +27,16 @@ class AppVersionManager {
         if lastVersion.version != currentVersion.version || lastVersion.build != currentVersion.build {
             storage.save(appVersions: [currentVersion])
         }
-        if currentVersion > lastVersion {
-            newVersionRelay.accept(currentVersion)
-        }
+    }
+
+    init(systemInfoManager: SystemInfoManager, storage: AppVersionStorage) {
+        self.systemInfoManager = systemInfoManager
+        self.storage = storage
     }
 
 }
 
 extension AppVersionManager {
-
-    func checkLatestVersion() {
-        DispatchQueue.global(qos: .background).async {
-            self.addLatestVersion()
-        }
-    }
-
-    var newVersionObservable: Observable<AppVersion?> {
-        newVersionRelay.asObservable()
-    }
 
     var currentVersion: AppVersion {
         systemInfoManager.appVersion
