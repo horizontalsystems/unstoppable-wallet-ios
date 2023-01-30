@@ -5,7 +5,7 @@
 "button.continue" = "계속";
 "button.done" = "완료";
 "button.reset" = "초기화";
-"button.restore" = "복구";
+"button.import" = "복구";
 "button.next" = "다음";
 "button.share" = "공유";
 "button.paste" = "불여넣기";
@@ -41,8 +41,8 @@
 "alert.not_supported_yet" = "아직 지원하지 않음";
 "alert.copied" = "복사됨";
 "alert.created" = "생성됨";
-"alert.restored" = "복구됨";
-"alert.address_added" = "주소 추가됨";
+"alert.imported" = "복구됨";
+"alert.wallet_added" = "Wallet Added";
 "alert.deleted" = "삭제";
 "alert.waiting_for_session" = "세션을 기다리는 중";
 "alert.try_again" = "다시 시도하십시오.";
@@ -92,9 +92,9 @@
 
 // Restore
 
-"restore.title" = "복구";
-"restore.by" = "으로";
-"restore.restore_by" = "복원 날짜";
+"restore.title" = "다음에서 복원하기";
+"restore.advanced" = "Advanced";
+"restore.import_by" = "으로";
 "restore.restore_type.mnemonic" = "복구 문구";
 "restore.restore_type.private_key" = "개인 암호";
 "restore.mnemonic.placeholder" = "12, 15, 18, 21 또는 24단어 입력";
@@ -104,25 +104,25 @@
 "restore.checksum_error" = "유효하지 않은 체크섬";
 "restore.passphrase" = "암호문구";
 "restore.input.passphrase" = "암호문구";
-"restore.passphrase_description" = "이 연상 부호를 만들 때 사용한 암호 문구 입력";
+"restore.passphrase_description" = "이 연상 부호를 만들 때 사용한 암호 문구 입력.";
 "restore.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
-"restore.non_standard_restore" = "비표준 복원";
-"restore.non_standard_restore.description" = "이 페이지는 비표준 지갑을 가지고 있는 Unstoppable 사용자를 위한 특별한 지갑 복원 메커니즘을 제공합니다. 일반적으로 이러한 지갑은 Unstoppable 버전 0.27 - 0.28에서 영어가 아닌 니모닉 단어 목록 및/또는 지갑 암호의 특수 문자(예: 분음 부호)를 사용하여 생성되었을 수 있습니다.\n\n영향을 받는 사용자인 경우 버전 0.29로 업데이트하면 지갑 잔액이 0으로 표시됩니다. 이 페이지에서는 비표준 지갑에 대한 액세스를 복원할 수 있습니다. 복원되면 새 지갑(표준 준수)을 만들고 그곳으로 자금을 옮기는 것이 좋습니다.";
+"restore.non_standard_import" = "비표준 복원";
+"restore.non_standard_import.description" = "이 페이지는 비표준 지갑을 가지고 있는 Unstoppable 사용자를 위한 특별한 지갑 복원 메커니즘을 제공합니다. 일반적으로 이러한 지갑은 Unstoppable 버전 0.27 - 0.28에서 영어가 아닌 니모닉 단어 목록 및/또는 지갑 암호의 특수 문자(예: 분음 부호)를 사용하여 생성되었을 수 있습니다.\n\n영향을 받는 사용자인 경우 버전 0.29로 업데이트하면 지갑 잔액이 0으로 표시됩니다. 이 페이지에서는 비표준 지갑에 대한 액세스를 복원할 수 있습니다. 복원되면 새 지갑(표준 준수)을 만들고 그곳으로 자금을 옮기는 것이 좋습니다.";
 "restore.warning.non_recommended.description" = "이 지갑은 비밀 단어 목록 및/또는 암호 문구에 비표준 문자를 사용하는 것 같습니다. 잔액이나 거래 내역이 보이지 않으면 아래에서 자세한 내용을 읽어보세요.\n\n더 많은 정보를 얻으려면 클릭하십시오";
 "restore.error.non_standard.description" = "비표준 호환 지갑입니다. 자세한 내용은 아래를 참조하십시오.\n\n더 많은 정보를 얻으려면 클릭하십시오";
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Legacy";
-"coin_settings.derivation.title.bip49" = "최신(권장)";
-"coin_settings.derivation.title.bip84" = "최신";
+"coin_settings.derivation.title.bip44" = "Old";
+"coin_settings.derivation.title.bip49" = "Good";
+"coin_settings.derivation.title.bip84" = "Best";
 "coin_settings.title" = "블록 체인 설정";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "현금주소(권장)";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "2018년 이전 공통";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "2018년 이후 공통";
 "sync_mode.from_blockchain" = "블록체인으로 부터";
-"blockchain_settings.description" = "코인의 주소 형식을 선택합니다. 확실하지 않은 경우 권장 옵션을 진행합니다. 기존 지갑을 복원할 때 올바른 형식을 선택해야 합니다.";
+"blockchain_settings.description" = "Select the address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -188,8 +188,8 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "백업 복구 문구";
-"backup_prompt.warning" = "휴대전화 분실, 도난, 파손 등의 경우 지갑을 복구할 수 있도록 복구 문구 및 관련 비밀번호의 백업 사본을 만드십시오.";
+"backup_prompt.title" = "백업용 지갑";
+"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken, etc.";
 "backup_prompt.backup" = "백업";
 "backup_prompt.later" = "나중에";
 
@@ -238,7 +238,7 @@
 
 "switch_account.title" = "지갑 변경";
 "switch_account.wallets" = "지갑";
-"switch_account.watch_addresses" = "관찰 주소";
+"switch_account.watch_wallets" = "관찰 주소";
 
 // Release notes
 
@@ -798,8 +798,9 @@
 
 "settings.title" = "설정";
 "settings.tab_bar_item" = "설정";
-"settings.security_center" = "보안 센터";
 "settings.manage_accounts" = "지갑 관리하기";
+"settings.blockchain_settings" = "블록 체인 설정";
+"settings.security" = "보안 센터";
 "settings.experimental_features" = "실험";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
@@ -823,15 +824,7 @@
 "manage_wallets.search_placeholder" = "이름, 코드 또는 계약 주소";
 "manage_wallets.not_supported" = "지원 되지 않음";
 "manage_wallets.not_supported.description" = "현재 지갑 유형 %@은(는) %@을(를) 지원하지 않습니다.";
-
-"manage_coins.add_coin.title" = "%@ 추가 ";
-"manage_coins.add_coin.subtitle" = "%@ 지갑";
-"manage_coins.add_coin.text.set_up" = "귀하께서는 %@ 을 보내거나 받으시려면 %@ 지갑을 설정하셔야 합니다.";
-"manage_coins.add_coin.text.create_or_restore" = "아래 만들기 버튼을 사용하여 새 %@ 지갑을 설정하거나 복원 버튼을 사용하여 기존 지갑을 가져오세요.";
-"manage_coins.add_coin.text.create_only" = "현재 Unstoppable은 신규 %@ 지갑을 생성할 수 없습니다. 기존 지갑 복원만 가능합니다.";
-"manage_coins.add_coin.text.tokens" = "이 지갑은 다음 항목을 위해 사용할 수 있습니다: %@";
-"manage_coins.add_coin.create" = "만들기";
-"manage_coins.add_coin.restore" = "복구";
+"manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
 // Settings -> Experimental Features
 
@@ -854,16 +847,19 @@
 "terms.title" = "약관";
 "terms.i_agree" = "동의함";
 
-"terms.item.1" = "지갑 복구 문구를 백업하여 자금에 다시 액세스하십시오.";
-"terms.item.2" = "개인 키 및 복구 문구는 장치에만 저장됩니다.";
-"terms.item.3" = "스마트폰 잠금 해제 PIN을 비활성화하면 앱에서 모든 지갑이 삭제됩니다. 자금에 대한 액세스 권한을 다시 얻으려면 복구 문구가 필요합니다.";
-"terms.item.4" = "탈옥(루팅), 출처를 알 수 없는 앱 설치, 오래된 OS 사용은 자금의 안전을 위협할 수 있습니다.";
-"terms.item.5" = "이 앱을 구동하는 코드에 발견되지 않은 소프트웨어 문제가 있을 수 있으며 이로 인해 예기치 않은 동작이나 앱 오작동이 발생할 수 있습니다.";
-"terms.item.6" = "자금의 안전은 사용자만이 책임을 지며 다른 주체는 책임이 없습니다.";
+"terms.item.1" = "Securely backup recovery phrases for each wallet. It's the only way to regain access to funds if the app malfunctions.";
+"terms.item.2" = "The wallet recovery phrases are randomly generated on the device during setup and are not stored elsewhere.";
+"terms.item.3" = "Disabling unlock PIN (code) on the smartphone deletes all wallets from the app. Recovery phrases will be needed to restore access to funds.";
+"terms.item.4" = "Jailbreaking (rooting), using outdated OS, and installing apps from unknown sources may endanger the safety of funds.";
+"terms.item.5" = "There may be undiscovered software issues in the code powering this app which may cause the app to malfunction.";
 
 // Settings -> Tell Friends
 
 "settings_tell_friends.text" = "Be Unstoppable";
+
+// Settings -> Blockchain Settings
+
+"blockchain_settings.title" = "블록 체인 설정";
 
 // Settings -> Security
 
@@ -890,11 +886,11 @@
 "btc_transaction_sort_mode.bip69.description" = "사전 색인 작성";
 
 "blockchain_settings.info.restore_source" = "매개 변수 복원";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
 "blockchain_settings.info.transaction_inputs_outputs" = "트랜잭션 입력/출력";
 "blockchain_settings.info.transaction_inputs_outputs.content" = "대부분의 비트코인 ​​거래는 물론 비트코인 ​​캐시, 대시 및 라이트코인을 포함한 유사한 암호화폐의 거래는 두 가지 출력을 생성합니다. 하나의 출력은 수신자에게 가는 금액이고 다른 하나는 발신자에게 반환되는 변경 출력입니다. 대부분의 지갑이 트랜잭션을 구성하는 방식을 통해 제3자는 출력 중 어느 것이 수신 당사자에게 갔고 어느 것이 발신자에게 반환된 변경 금액인지 쉽게 이해할 수 있습니다. 발신자에게 반환된 출력은 나중에 미래의 거래에 사용되기 때문에 이 두 거래 사이의 연결이 분명해집니다.\n\nUnstoppable 지갑은 누군가가 어떤 출력이 어디로 가는지 알아내기 어렵게 하는 조치를 구현합니다.\n\n 멈출 수 없는 사용자가 사용할 수 있는 두 가지 옵션:\n\n1. 셔플: 트랜잭션 출력 순서는 모든 트랜잭션에서 무작위로 지정됩니다. 때로는 변화가 첫 번째 출력이 될 수도 있고 때로는 두 번째 출력이 될 수도 있습니다. 사용자가 앱 개발자를 신뢰한다면 이것을 권장 옵션으로 고려하십시오.\n\n2. 결정적: 트랜잭션 출력 주문에 대해 일반적으로 합의된 표준이 있습니다(BIP69로 알려짐). 오픈 소스 지갑에서 이 표준은 지갑 사용자가 앱 개발자가 출력 순서를 구현하는 방법을 신뢰할 필요가 없도록 합니다. 이 표준은 새롭기 때문에 아직 많은 지갑에서 구현하지 않았습니다. 결과적으로 해당 표준을 사용하는 지갑에서 트랜잭션이 전송되었는지 여부를 블록체인에서 확인할 수 있습니다.";
-"blockchain_settings.info.sync_mode" = "동기화 모드";
-"blockchain_settings.info.sync_mode.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.rpc_source" = "RPC Source";
+"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
 
 // Manage Accounts
 
@@ -907,8 +903,6 @@
 "settings_manage_keys.title" = "지갑 관리하기";
 "settings_manage_keys.delete" = "삭제";
 "settings_manage_keys.backup" = "백업";
-"settings_manage_keys.create" = "만들기";
-"settings_manage_keys.restore" = "복구";
 "settings_manage_keys.delete.title" = "지갑 삭제하기";
 "settings_manage_keys.delete.confirmation_remove" = "장치에서 이 지갑을 삭제합니다.";
 "settings_manage_keys.delete.confirmation_loose" = "이 지갑의 개인 암호를 백업하지 않으면 귀하께서는 자금 접근을 하지 못합니다.";
@@ -943,6 +937,8 @@
 "appearance.theme.dark" = "어두운";
 "appearance.theme.light" = "밝은";
 
+"appearance.tab_settings" = "Tab Settings";
+"appearance.markets_tab" = "Markets Tab";
 "appearance.launch_screen" = "시작 화면";
 "appearance.launch_screen.auto" = "자동";
 "appearance.launch_screen.balance" = "잔액";
@@ -987,6 +983,7 @@
 "chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1년";
 "chart.time_duration.year2" = "2년";
+"chart.time_duration.all" = "ALL";
 
 "chart.market_cap" = "시가총액";
 "chart.volume" = "볼륨 (24 시간)";
@@ -1013,15 +1010,18 @@
 // Create Wallet
 
 "create_wallet.title" = "새 지갑";
-"create_wallet.create_button" = "만들기";
-"create_wallet.mnemonic" = "연상 기호";
+"create_wallet.name" = "이름";
+"create_wallet.advanced_setup" = "Advanced";
+"create_wallet.create" = "생성하기";
+"create_wallet.advanced" = "Advanced";
+"create_wallet.phrase_count" = "연상 기호";
 "create_wallet.12_words" = "12 단어 (권장)";
 "create_wallet.n_words" = "%@ 단어";
 "create_wallet.word_list" = "단어 목록";
 "create_wallet.passphrase" = "암호 문구";
 "create_wallet.input.passphrase" = "암호 문구";
 "create_wallet.input.confirm" = "확인";
-"create_wallet.passphrase_description" = "암호 문구는 사용자가 하나의 연상 기호 복구 문구를 사용하여 여러 개의 독립적인 멀티코인 지갑을 만들 수 있도록 지갑에 보안 계층을 추가합니다.\n\n이러한 지갑을 복원하려면 사용자가 복원하기 위해 각 지갑에 대한 비밀번호와 연상 기호 복구 문구가 필요합니다.";
+"create_wallet.passphrase_description" = "Passphrases add an additional security layer for wallets. To restore such a wallet a user required both mnemonic as well as a passphrase.\n\nPassphrases also make it easy for users to have many multi-coin wallets using a single mnemonic but different password.";
 "create_wallet.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "create_wallet.error.forbidden_symbols" = "지원되는 기호만 사용하세요: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "암호 확인이 일치하지 않습니다";
@@ -1049,7 +1049,6 @@
 
 // Intro
 
-"intro.start" = "Be Unstoppable";
 "intro.unchain_assets.title" = "풀린 자산";
 "intro.unchain_assets.description" = "자신을 잠금하지 말고 다른 사람들이 귀하에게 그렇게 하도록 두지 마십시오.";
 "intro.go_borderless.title" = "무경계로";
@@ -1065,16 +1064,21 @@
 // Add Token
 
 "add_token.title" = "토큰 추가";
-"add_token.already_added" = "이미 추가됨";
-"add_token.choose_token" = "토큰 선택";
-"add_token.invalid_contract_address_or_bep2_symbol" = "잘못된 계약 주소 또는 BEP2 기호";
-"add_token.token_not_found" = "토큰 찾을 수 없음";
-"add_token.input_placeholder" = "계약 주소";
-"add_token.bep2_not_supported" = "현재 지갑 EVM 개인 키는 BEP2 토큰을 지원하지 않습니다.";
+"add_token.blockchain" = "Blockchain";
+"add_token.already_added" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
+"add_token.invalid_contract_address" = "Invalid contract address";
+"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
+"add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
+"add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
+"add_token.input_placeholder.contract_address" = "계약 주소";
+"add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
+"add_token.coin_name" = "코인 이름";
+"add_token.symbol" = "기호";
+"add_token.decimals" = "소수점";
 
 // Wallet Connect
 
-"wallet_connect.title" = "Wallet Connect";
+"wallet_connect.title" = "WalletConnect";
 "wallet_connect.error.invalid_url" = "잘못된 주소";
 "wallet_connect.url" = "URL 주소";
 "wallet_connect.active_account" = "지갑 활성화";
@@ -1105,7 +1109,7 @@
 "wallet_connect.sign.message" = "서명할 메시지";
 "wallet_connect.sign.description" = "인증을 위해 메시지에 서명하십시오";
 
-"wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "활성 세션 없음";
 
 "wallet_connect.list.pairings" = "동기화";
@@ -1114,8 +1118,9 @@
 "wallet_connect_list.new_connection" = "새로운 연결";
 "wallet_connect_list.disconnecting" = "연결을 끊는 중...";
 
-"wallet_connect.no_account.description" = "적합한 지갑이 없습니다. 기존 지갑을 생성하거나 복원해야 합니다.";
-"wallet_connect.no_account.i_understand" = "이해합니다";
+"wallet_connect.no_account.description" = "You need to create or import a wallet before you can use WalletConnect.";
+"wallet_connect.no_account.close" = "닫기";
+"wallet_connect.unbackuped_account.description" = "You need to backup %@ before you can use WalletConnect";
 
 "wallet_connect.non_supported_account.description" = "현재 지갑 유형 %@은(는) WalletConnect를 지원하지 않습니다.";
 "wallet_connect.non_supported_account.switch" = "전환";
@@ -1152,11 +1157,9 @@
 
 // Onboarding
 
-"onboarding.balance.description" = "아직 지갑이 없습니다";
 "onboarding.balance.create" = "만들기";
-"onboarding.balance.restore" = "복구";
+"onboarding.balance.import" = "다음에서 복원하기";
 "onboarding.balance.watch" = "주소 관찰";
-"onboarding.balance.password_hint" = "중요! 기존 지갑을 복원하지만 새로운 암호를 사용하면 완전히 새로운 지갑이 생성됩니다. 여러 지갑에 대해 단일 12-24 단어 니모닉 복구 구문을 사용하려는 경우 편리합니다.";
 
 // Manage Accounts
 
@@ -1175,6 +1178,10 @@
 "manage_account.backup_recovery_phrase" = "백업 복구 문구";
 "manage_account.unlink" = "링크 해제";
 
+// Birthday Height
+
+"birthday_height.title" = "Birthday Height";
+
 // Birthday Input
 
 "birthday_input.title" = "생일 신장";
@@ -1190,7 +1197,18 @@
 
 // EVM Network
 
-"evm_network.sync_node" = "동기화 노드";
+"evm_network.rpc_source" = "RPC Source";
+"evm_network.added" = "추가됨";
+"evm_network.add_new" = "신규로 추가";
+
+// Add RPC Source
+
+"add_evm_sync_source.title" = "Add RPC Source";
+"add_evm_sync_source.name" = "이름";
+"add_evm_sync_source.rpc_url" = "RPC URL";
+"add_evm_sync_source.basic_auth" = "Basic Auth (optional)";
+"add_evm_sync_source.warning.url_exists" = "RPC Source with this url already exists";
+"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: http, https, ws, wss";
 
 // Fee Settings
 
@@ -1223,7 +1241,7 @@
 
 // Watch Address
 
-"watch_address.title" = "관찰 주소";
+"watch_address.title" = "주소 관찰";
 "watch_address.watch" = "관찰";
 "watch_address.address" = "주소";
 "watch_address.by" = "작성";
@@ -1232,6 +1250,8 @@
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Account Extended Public Key 입력";
 "watch_address.public_key.invalid_key" = "잘못된 암호입니다";
+"watch_address.choose_blockchain" = "블록체인 선택";
+"watch_address.choose_coin" = "코인 선택";
 
 // Nft Collections
 

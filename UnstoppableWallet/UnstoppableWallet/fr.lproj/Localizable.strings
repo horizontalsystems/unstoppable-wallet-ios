@@ -5,7 +5,7 @@
 "button.continue" = "Continuer";
 "button.done" = "Fait";
 "button.reset" = "Réinitialiser";
-"button.restore" = "Restaurer";
+"button.import" = "Import";
 "button.next" = "Suivant";
 "button.share" = "Partager";
 "button.paste" = "Coller";
@@ -41,8 +41,8 @@
 "alert.not_supported_yet" = "Pas pris en charge pour le moment";
 "alert.copied" = "Copié";
 "alert.created" = "Établi";
-"alert.restored" = "Restauré ";
-"alert.address_added" = "Adresse ajoutée";
+"alert.imported" = "Importé";
+"alert.wallet_added" = "Portefeuille ajouté";
 "alert.deleted" = "Supprimer";
 "alert.waiting_for_session" = "En attente de session";
 "alert.try_again" = "Réessayez";
@@ -92,9 +92,9 @@
 
 // Restore
 
-"restore.title" = "Restaurer";
-"restore.by" = "Par";
-"restore.restore_by" = "Restaurer par";
+"restore.title" = "Importer le porte-monnaie";
+"restore.advanced" = "Avancé";
+"restore.import_by" = "Importer par";
 "restore.restore_type.mnemonic" = "Phrase de récupération";
 "restore.restore_type.private_key" = "Clé privée";
 "restore.mnemonic.placeholder" = "Entrez 12, 15, 18, 21 ou 24 mots";
@@ -104,25 +104,25 @@
 "restore.checksum_error" = "Somme de contrôle invalide";
 "restore.passphrase" = "Phrase d'authentification";
 "restore.input.passphrase" = "Phrase d'authentification";
-"restore.passphrase_description" = "Entrez la phrase d'authentification que vous avez utilisée pour créer cette phrase mnémonique";
+"restore.passphrase_description" = "Entrez la phrase d'authentification que vous avez utilisée pour créer cette phrase mnémonique.";
 "restore.error.empty_passphrase" = "La phrase d'authentification ne peut pas être une valeur vide";
-"restore.non_standard_restore" = "Restauration non-standard";
-"restore.non_standard_restore.description" = "Sur cette page, vous trouverez un mécanisme spécial de restauration de portefeuille pour les utilisateurs d'Unstoppable dont le portefeuille n'est pas standard. En général, de tels portefeuilles ont été créés dans la version 0.27 - 0.28 d'Unstoppable en utilisant une liste de mots mnémoniques non-anglais et/ou un caractère spécial dans la phrase de passe du portefeuille (c'est-à-dire un symbole diacritique).\n\nSi vous êtes un utilisateur concerné, le solde de votre portefeuille sera affiché à 0 après la restauration de ce portefeuille dans la version 0.29 ou supérieure. Grâce à cette page, vous pourrez restaurer l'accès à votre portefeuille non-standard. Une fois la restauration effectuée, il est conseillé de créer un nouveau portefeuille (qui sera conforme aux normes) et d'y transférer vos fonds.";
+"restore.non_standard_import" = "Restauration non-standard";
+"restore.non_standard_import.description" = "Sur cette page, vous trouverez un mécanisme spécial de restauration de portefeuille pour les utilisateurs d'Unstoppable dont le portefeuille n'est pas standard. En général, de tels portefeuilles ont été créés dans la version 0.27 - 0.28 d'Unstoppable en utilisant une liste de mots mnémoniques non-anglais et/ou un caractère spécial dans la phrase de passe du portefeuille (c'est-à-dire un symbole diacritique).\n\nSi vous êtes un utilisateur concerné, le solde de votre portefeuille sera affiché à 0 après la restauration de ce portefeuille dans la version 0.29 ou supérieure. Grâce à cette page, vous pourrez restaurer l'accès à votre portefeuille non-standard. Une fois la restauration effectuée, il est conseillé de créer un nouveau portefeuille (qui sera conforme aux normes) et d'y transférer vos fonds.";
 "restore.warning.non_recommended.description" = "Ce portefeuille semble utiliser un caractère non-standard dans sa liste de mots secrets et/ou dans une phrase de passe. Si vous ne voyez pas de solde ou de transactions, veuillez vous reporter aux informations ci-dessous. \n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
 "restore.error.non_standard.description" = "Ce portefeuille n'est pas conforme aux normes.\n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Legacy";
-"coin_settings.derivation.title.bip49" = "Plus récent (recommandé)";
-"coin_settings.derivation.title.bip84" = "Plus récent";
+"coin_settings.derivation.title.bip44" = "Ancien";
+"coin_settings.derivation.title.bip49" = "Bon";
+"coin_settings.derivation.title.bip84" = "Meilleur";
 "coin_settings.title" = "Paramètres de la Blockchain";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommendé)";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Commun avant 2018";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Commun après 2018";
 "sync_mode.from_blockchain" = "De la Blockchain";
-"blockchain_settings.description" = "Sélectionnez le format d'adresse de la pièce. Procédez avec l'option recommandée si vous n'êtes pas sur de vous. Un format correct doit être choisi lors de la restauration d'un portefeuille existant.";
+"blockchain_settings.description" = "Sélectionnez le format d'adresse pour la réception des paiements. Un format correct doit être choisi lors de la restauration d'un portefeuille existant.";
 
 // Coin Platforms
 
@@ -188,8 +188,8 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Phrase de récupération de sauvegarde";
-"backup_prompt.warning" = "Créez une copie de sauvegarde de la phrase de récupération et du mot de passe qui vous permettra de récupérer votre portefeuille si votre téléphone est perdu, volé, cassé, etc.";
+"backup_prompt.title" = "Porte-monnaie de Sauvegarde";
+"backup_prompt.warning" = "Sauvegarder ce portefeuille en créant une copie de sa phrase de récupération. Il sera nécessaire pour accéder au portefeuille si votre téléphone est perdu, volé, cassé, etc.";
 "backup_prompt.backup" = "Sauvegarde";
 "backup_prompt.later" = "Plus tard";
 
@@ -238,7 +238,7 @@
 
 "switch_account.title" = "Changer de portefeuille";
 "switch_account.wallets" = "Portefeuilles";
-"switch_account.watch_addresses" = "Adresse à suivre";
+"switch_account.watch_wallets" = "Regarder les portefeuilles";
 
 // Release notes
 
@@ -409,7 +409,7 @@
 "swap.dex_info.header_allowance" = "Allocation";
 "swap.dex_info.content_allowance" = "Le montant qu\'un échange peut dépenser pour le compte de l\'utilisateur lors de l\'exécution de swaps de jetons. Une provision suffisante est requise avant de pouvoir effectuer une opération d\'échange réelle.";
 "swap.dex_info.header_price_impact" = "Impact prix";
-"swap.dex_info.content_price_impact" = "L'écart de prix attendu par rapport à un prix affiché, augmente généralement avec le montant de l'échange.";
+"swap.dex_info.content_price_impact" = "L'écart de prix attendu par rapport à un prix affiché, augmente généralement avec le montant de l\'échange.";
 "swap.dex_info.header_swap_fee" = "Frais d'échange";
 "swap.dex_info.content_swap_fee" = "Des frais de service pour l'opération d'échange sur la plateforme, indiqués dans la devise dans laquelle l'utilisateur vend. Pour la plupart des ordres, ils devraient être de 0,3 % ou 0,6 %.";
 "swap.dex_info.header_guaranteed_amount" = "Montant garanti";
@@ -634,7 +634,7 @@
 
 "coin_page.category" = "Catégorie";
 
-"coin_page.contracts" = "Contracts";
+"coin_page.contracts" = "Contrats";
 "coin_page.links" = "Liens";
 
 "coin_page.guide" = "Guide";
@@ -798,8 +798,9 @@
 
 "settings.title" = "Paramètres";
 "settings.tab_bar_item" = "Paramètres";
-"settings.security_center" = "Centre de Sécurité";
 "settings.manage_accounts" = "Gérer les portefeuilles";
+"settings.blockchain_settings" = "Paramètres de la Blockchain";
+"settings.security" = "Centre de Sécurité";
 "settings.experimental_features" = "Expérimental";
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
@@ -823,15 +824,7 @@
 "manage_wallets.search_placeholder" = "Nom, code ou adresse du contrat";
 "manage_wallets.not_supported" = "Non pris en charge";
 "manage_wallets.not_supported.description" = "Votre type de portefeuille actuel %@ ne prend pas en charge %@";
-
-"manage_coins.add_coin.title" = "Ajouter %@ ";
-"manage_coins.add_coin.subtitle" = "%@ Portefeuille";
-"manage_coins.add_coin.text.set_up" = "Vous devez créer un portefeuille %@ pour envoyer ou recevoir des %@.";
-"manage_coins.add_coin.text.create_or_restore" = "Utilisez le bouton Créer ci-dessous pour créer un nouveau portefeuille %@, ou le bouton Restaurer pour importer un portefeuille existant.";
-"manage_coins.add_coin.text.create_only" = "À ce stade, Unstoppable n'est pas en mesure de créer de nouveaux portefeuilles %@. Vous ne pouvez restaurer que celui déjà existant.";
-"manage_coins.add_coin.text.tokens" = "Vous pourrez utiliser ce portefeuille pour: %@.";
-"manage_coins.add_coin.create" = "Créer";
-"manage_coins.add_coin.restore" = "Restaurer";
+"manage_wallets.not_supported.by_app.description" = "Unstoppable ne supporte pas %@";
 
 // Settings -> Experimental Features
 
@@ -854,16 +847,19 @@
 "terms.title" = "Conditions";
 "terms.i_agree" = "J'accepte";
 
-"terms.item.1" = "Sauvegardez les phrases de récupération de votre portefeuille pour regagner l'accès aux fonds.";
-"terms.item.2" = "Les clés privées et les phrases de récupération ne sont stockées que sur votre appareil.";
-"terms.item.3" = "La désactivation du code PIN du smartphone supprime tous les portefeuilles de l'application. Des phrases de récupération seront nécessaires pour regagner l'accès aux fonds.";
-"terms.item.4" = "La rupture de prison (root), l'installation d'applications à partir de sources inconnues, et l'utilisation d'un système d'exploitation obsolète peuvent mettre en danger la sécurité des fonds.";
-"terms.item.5" = "Il peut y avoir des problèmes de logiciels non découverts dans le code alimentant cette application, ce qui peut entraîner un comportement inattendu ou un dysfonctionnement de l'application.";
-"terms.item.6" = "Seul l'utilisateur est responsable de la sécurité des fonds et aucune autre entité.";
+"terms.item.1" = "Sauvegarde sécurisée des phrases de récupération pour chaque portefeuille. C'est le seul moyen de récupérer l'accès aux fonds si l'application ne fonctionne pas.";
+"terms.item.2" = "Les phrases de récupération du portefeuille sont générées aléatoirement sur l'appareil lors de l'installation et ne sont pas stockées ailleurs.";
+"terms.item.3" = "La désactivation du code PIN (code) sur le smartphone supprime tous les portefeuilles de l'application. Des phrases de récupération seront nécessaires pour restaurer l'accès aux fonds.";
+"terms.item.4" = "La mise en prison (root), l'utilisation d'un système d'exploitation obsolète et l'installation d'applications à partir de sources inconnues peuvent mettre en danger la sécurité des fonds.";
+"terms.item.5" = "Il peut y avoir des problèmes de logiciels non découverts dans le code alimentant cette application, ce qui peut causer un dysfonctionnement de l'application.";
 
 // Settings -> Tell Friends
 
 "settings_tell_friends.text" = "Soyez Unstoppable";
+
+// Settings -> Blockchain Settings
+
+"blockchain_settings.title" = "Paramètres de la Blockchain";
 
 // Settings -> Security
 
@@ -890,11 +886,11 @@
 "btc_transaction_sort_mode.bip69.description" = "Indexation lexicographique";
 
 "blockchain_settings.info.restore_source" = "Restorer la source";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets. \n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes). \n\n2. from Blockchain: The app tries to restore directly from a network of the blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
 "blockchain_settings.info.transaction_inputs_outputs" = "Entrées / Sorties de transaction";
 "blockchain_settings.info.transaction_inputs_outputs.content" = "La plupart des transactions en Bitcoin, ainsi que les transactions en cryptomonnaies similaires comme Bitcoin Cash, Dash et Litecoin, génèrent deux sorties. Une sortie est le montant qui va au destinataire et l'autre est la sortie de la monnaie qui est retournée à l'expéditeur. La façon dont la plupart des portefeuilles construisent les transactions permet à une tierce partie de comprendre facilement laquelle des sorties est allée à la partie réceptrice et laquelle était le montant de la monnaie retournée à l'expéditeur. Comme le montant retourné à l'expéditeur est ensuite utilisé dans de futures transactions, un lien entre ces deux transactions devient apparent.\n\nLe portefeuille Unstoppable applique des mesures pour qu'il soit plus difficile pour quelqu'un de comprendre quel montant va à quel endroit.\n\nLes utilisateurs d'Unstoppable disposent de deux options:\n\n1. Mélange : l'ordre des sorties est aléatoire à chaque transaction. Parfois, la monnaie peut être la première à sortir, parfois, elle peut être la deuxième. Si un utilisateur fait confiance au développeur de l'application, alors considérez ce choix comme une option recommandée.\n\n2. Déterministe : il existe une norme communément acceptée pour classer les sorties de transaction (connue sous le nom de BIP69). Dans les portefeuilles à code source ouvert, cette norme assure que les utilisateurs de portefeuilles n'ont pas besoin de faire confiance à la façon dont les développeurs de l'application mettent en œuvre l'ordre des sorties. Comme cette norme est nouvelle, peu de portefeuilles l'ont encore implémentée. Par conséquent, il est en quelque sorte possible de voir sur la blockchain si une transaction a été envoyée depuis un portefeuille qui utilise cette norme ou non.";
-"blockchain_settings.info.sync_mode" = "Mode de synchronisation";
-"blockchain_settings.info.sync_mode.content" = "Ce paramètre contrôle la façon dont cette application interagit avec les blockchains lors de l'envoi ou de la réception de transactions.\n\nDans le cas du Bitcoin, du Bitcoin Cash, du Litecoin et du Dash, la communication avec les nœuds du réseau blockchain est entièrement de pair à pair. Unstoppable ping plusieurs nœuds et communique avec l'un d'entre eux.\n\nDans le cas d'Ethereum, de Binance Smart Chain et d'autres blockchains EVM, les portefeuilles mobiles n'ont pas d'autre choix pour interagir avec les blockchains respectives que de passer par des fournisseurs de services RPC tiers (par exemple Infura.io) ou des nœuds personnels. Cela signifie essentiellement que votre communication avec cette blockchain n'est pas décentralisée. Cela n'a aucune incidence sur vos fonds, mais seulement sur votre capacité à vous connecter au réseau de la blockchain.\n\nRassurez-vous, nous réfléchissons à une solution et nous essaierons très bientôt de vous proposer un moyen décentralisé de synchronisation. Patience.";
+"blockchain_settings.info.rpc_source" = "Source RPC";
+"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
 
 // Manage Accounts
 
@@ -907,8 +903,6 @@
 "settings_manage_keys.title" = "Gérer les portefeuilles";
 "settings_manage_keys.delete" = "Supprimer";
 "settings_manage_keys.backup" = "Sauvegarde";
-"settings_manage_keys.create" = "Créer";
-"settings_manage_keys.restore" = "Restaurer";
 "settings_manage_keys.delete.title" = "Supprimer le portefeuille";
 "settings_manage_keys.delete.confirmation_remove" = "L'action va supprimer ce portefeuille de l'appareil.";
 "settings_manage_keys.delete.confirmation_loose" = "Si vous n'avez pas sauvegardé la clé privée de ce portefeuille, vous perdrez l'accès à vos fonds.";
@@ -943,6 +937,8 @@
 "appearance.theme.dark" = "Sombre";
 "appearance.theme.light" = "Classique";
 
+"appearance.tab_settings" = "Paramètres des onglets";
+"appearance.markets_tab" = "Onglet Marchés";
 "appearance.launch_screen" = "Écran de démarrage";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Solde";
@@ -987,6 +983,7 @@
 "chart.time_duration.halfyear" = "6 m.";
 "chart.time_duration.year" = "1J";
 "chart.time_duration.year2" = "2A";
+"chart.time_duration.all" = "TOUS";
 
 "chart.market_cap" = "Cap. marché";
 "chart.volume" = "Volume(24h)";
@@ -1013,15 +1010,18 @@
 // Create Wallet
 
 "create_wallet.title" = "Nouveau porte-monnaie";
-"create_wallet.create_button" = "Créer";
-"create_wallet.mnemonic" = "Mnémonique";
+"create_wallet.name" = "Nom";
+"create_wallet.advanced_setup" = "Avancé";
+"create_wallet.create" = "Créer";
+"create_wallet.advanced" = "Avancé";
+"create_wallet.phrase_count" = "Mnémonique";
 "create_wallet.12_words" = "12 mots (recommandé)";
 "create_wallet.n_words" = "%@ mots";
 "create_wallet.word_list" = "Listes de mots";
 "create_wallet.passphrase" = "Phrase d'authentification";
 "create_wallet.input.passphrase" = "Phrase d'authentification";
 "create_wallet.input.confirm" = "Confirmer";
-"create_wallet.passphrase_description" = "Les phrases d'authentification ajoutent une strate de sécurité supplémentaire aux portefeuilles. Les utilisateurs peuvent ainsi créer plusieurs portefeuilles indépendants à pièces multiples à l'aide d'une seule phrase de réinitialisation mnémonique, mais associée à des mots de passe différents. \n\nPour restaurer ces portefeuilles, l'utilisateur doit disposer d'une phrase de réinitialisation mnémonique et d'un mot de passe pour chaque portefeuille à restaurer.";
+"create_wallet.passphrase_description" = "Les phrases de passe ajoutent une couche de sécurité supplémentaire pour les portefeuilles. Pour restaurer un tel portefeuille, un utilisateur a besoin à la fois de mnémonique et d'une phrase de passe.\n\nLes phrases de passe permettent également aux utilisateurs d'avoir facilement de nombreux portefeuilles multi-pièces en utilisant un seul mot de passe mnémonique mais différent.";
 "create_wallet.error.empty_passphrase" = "La phrase d'authentification ne peut pas être laissée en blanc";
 "create_wallet.error.forbidden_symbols" = "Veuillez utiliser uniquement les symboles pris en charge : A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "La confirmation de la phrase d'authentification ne correspond pas";
@@ -1049,7 +1049,6 @@
 
 // Intro
 
-"intro.start" = "Be Unstoppable";
 "intro.unchain_assets.title" = "Désenchaînez les actifs";
 "intro.unchain_assets.description" = "Ne vous enfermez pas et ne laissez pas les autres vous le faire";
 "intro.go_borderless.title" = "Sans frontières";
@@ -1065,16 +1064,21 @@
 // Add Token
 
 "add_token.title" = "Ajouter le token";
-"add_token.already_added" = "Déjà ajouté";
-"add_token.choose_token" = "Choisir les jetons";
-"add_token.invalid_contract_address_or_bep2_symbol" = "Adresse du contrat ou symbole BEP2 non valide";
-"add_token.token_not_found" = "Token non trouvé";
-"add_token.input_placeholder" = "Adresse du contrat";
-"add_token.bep2_not_supported" = "La clé privée EVM de votre portefeuille actuel ne supporte pas les jetons BEP2";
+"add_token.blockchain" = "Blockchain";
+"add_token.already_added" = "Ce token figure déjà sur la liste du gestionnaire des pièces";
+"add_token.invalid_contract_address" = "Adresse du contrat invalide";
+"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
+"add_token.contract_address_not_found" = "Adresse du contrat introuvable dans la blockchain %@";
+"add_token.bep2_symbol_not_found" = "Symbole BEP2 introuvable";
+"add_token.input_placeholder.contract_address" = "Adresse du contrat";
+"add_token.input_placeholder.bep2_symbol" = "Symbole BEP2";
+"add_token.coin_name" = "Nom de la pièce";
+"add_token.symbol" = "Symbole";
+"add_token.decimals" = "Decimales";
 
 // Wallet Connect
 
-"wallet_connect.title" = "Wallet Connect";
+"wallet_connect.title" = "WalletConnect";
 "wallet_connect.error.invalid_url" = "Adresse URL invalide";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Activer le portefeuille";
@@ -1105,7 +1109,7 @@
 "wallet_connect.sign.message" = "Message à signer";
 "wallet_connect.sign.description" = "Veuillez signer un message pour vous authentifier";
 
-"wallet_connect_list.title" = "Wallet Connect";
+"wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Aucune session active";
 
 "wallet_connect.list.pairings" = "Pairings";
@@ -1114,8 +1118,9 @@
 "wallet_connect_list.new_connection" = "Nouvelle connexion";
 "wallet_connect_list.disconnecting" = "Déconnexion";
 
-"wallet_connect.no_account.description" = "Aucun portefeuille adéquat. Vous devez créer ou restaurer un portefeuille existant.";
-"wallet_connect.no_account.i_understand" = "J’ai Compris";
+"wallet_connect.no_account.description" = "Vous devez créer ou importer un portefeuille avant de pouvoir utiliser WalletConnect.";
+"wallet_connect.no_account.close" = "Fermer";
+"wallet_connect.unbackuped_account.description" = "Vous devez sauvegarder %@ avant de pouvoir utiliser WalletConnect";
 
 "wallet_connect.non_supported_account.description" = "Votre type de portefeuille actuel %@ ne prend pas en charge WalletConnect";
 "wallet_connect.non_supported_account.switch" = "Basculer";
@@ -1152,11 +1157,9 @@
 
 // Onboarding
 
-"onboarding.balance.description" = "Pas de portefeuille actuellement";
-"onboarding.balance.create" = "Créer";
-"onboarding.balance.restore" = "Restaurer";
-"onboarding.balance.watch" = "Adresse à suivre";
-"onboarding.balance.password_hint" = "Astuce ! La restauration d'un portefeuille existant, mais avec une nouvelle phrase d'authentification, génère un tout nouveau portefeuille. Pratique si vous souhaitez utiliser une seule phrase de réinitialisation mnémonique de 12 à 24 mots pour plusieurs portefeuilles.";
+"onboarding.balance.create" = "Nouveau porte-monnaie";
+"onboarding.balance.import" = "Importer le porte-monnaie";
+"onboarding.balance.watch" = "Regarder les portefeuilles";
 
 // Manage Accounts
 
@@ -1175,6 +1178,10 @@
 "manage_account.backup_recovery_phrase" = "Phrase de récupération de sauvegarde";
 "manage_account.unlink" = "Dissocier";
 
+// Birthday Height
+
+"birthday_height.title" = "Hauteur de l'anniversaire";
+
 // Birthday Input
 
 "birthday_input.title" = "Hauteur de l'anniversaire";
@@ -1190,7 +1197,18 @@
 
 // EVM Network
 
-"evm_network.sync_node" = "Noeud de synchronisation";
+"evm_network.rpc_source" = "Source RPC";
+"evm_network.added" = "Ajouté";
+"evm_network.add_new" = "Ajouter un Nouveau";
+
+// Add RPC Source
+
+"add_evm_sync_source.title" = "Ajouter une source RPC";
+"add_evm_sync_source.name" = "Nom";
+"add_evm_sync_source.rpc_url" = "RPC URL";
+"add_evm_sync_source.basic_auth" = "Authentification basique (facultatif)";
+"add_evm_sync_source.warning.url_exists" = "La source RPC avec cette url existe déjà";
+"add_evm_sync_source.error.invalid_url" = "L'url saisie n'est pas valide. L'url valide doit avoir un des schémas suivants : http, https, ws, wss";
 
 // Fee Settings
 
@@ -1223,15 +1241,17 @@
 
 // Watch Address
 
-"watch_address.title" = "Adresse à suivre";
+"watch_address.title" = "Regarder les portefeuilles";
 "watch_address.watch" = "Suivi";
 "watch_address.address" = "Adresse";
 "watch_address.by" = "Par";
 "watch_address.watch_by" = "Regarder par";
 "watch_address.evm_address" = "Adresse EVM";
 "watch_address.public_key" = "Account xPubKey";
-"watch_address.public_key.placeholder" = "Enter Account Extended Public Key ";
+"watch_address.public_key.placeholder" = "Entrez Account Extended Public Key ";
 "watch_address.public_key.invalid_key" = "Clé invalide";
+"watch_address.choose_blockchain" = "Choisir la blockchain";
+"watch_address.choose_coin" = "Choisir la pièce";
 
 // Nft Collections
 

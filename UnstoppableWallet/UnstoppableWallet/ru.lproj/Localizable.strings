@@ -5,12 +5,12 @@
 "button.continue" = "Продолжить";
 "button.done" = "Готово";
 "button.reset" = "Сбросить";
-"button.restore" = "Восстановить";
+"button.import" = "Импорт";
 "button.next" = "Далее";
 "button.share" = "Поделиться";
 "button.paste" = "Вставить";
-"button.backup" = "Резервная Копия";
-"button.copy" = "Скопировать";
+"button.backup" = "Резервная копия";
+"button.copy" = "Копировать";
 "button.retry" = "Повторить";
 "button.report" = "Пожаловаться";
 "button.add" = "Добавить";
@@ -26,23 +26,23 @@
 "alert" = "Предупреждение";
 "alert.copied" = "Скопировано";
 "alert.saved" = "Сохранено";
-"alert.no_internet" = "Нет Интернета";
-"alert.wrong_amount" = "Неверная Сумма";
-"alert.no_fee" = "Неверная Комиссия";
+"alert.no_internet" = "Нет интернета";
+"alert.wrong_amount" = "Неправильная сумма";
+"alert.no_fee" = "Неправильная комиссия";
 "alert.warning" = "Внимание";
 "alert.error" = "Ошибка";
-"alert.unknown_error" = "Неизвестная Ошибка";
+"alert.unknown_error" = "Неизвестная ошибка";
 "alert.success_action" = "Готово!";
 
-"alert.added_to_watchlist" = "Добавлено в Избранное";
-"alert.removed_from_watchlist" = "Удалить из Избранного";
-"alert.added_to_wallet" = "Добавлено в Кошелек";
+"alert.added_to_watchlist" = "Добавлено в избранное";
+"alert.removed_from_watchlist" = "Удалить из избранного";
+"alert.added_to_wallet" = "Добавлено в кошелек";
 "alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Ещё не поддерживается";
 "alert.copied" = "Скопировано";
 "alert.created" = "Создан";
-"alert.restored" = "Восстановлен";
-"alert.address_added" = "Адрес Добавлен";
+"alert.imported" = "Импортировано";
+"alert.wallet_added" = "Кошелек добавлен";
 "alert.deleted" = "Удалено";
 "alert.waiting_for_session" = "Ожидание Сессии";
 "alert.try_again" = "Попробовать ещё раз";
@@ -94,22 +94,22 @@
 
 // Restore
 
-"restore.title" = "Восстановить";
-"restore.by" = "Из";
-"restore.restore_by" = "Восстановить из";
-"restore.restore_type.mnemonic" = "Фраза Восстановления";
-"restore.restore_type.private_key" = "Приватный Ключ";
-"restore.mnemonic.placeholder" = "Введите 12, 15, 18, 21 или 24 слова";
+"restore.title" = "Импорт кошелька";
+"restore.advanced" = "Доп. настройки";
+"restore.import_by" = "Через";
+"restore.restore_type.mnemonic" = "Фраза восстановления";
+"restore.restore_type.private_key" = "Приватный ключ";
+"restore.mnemonic.placeholder" = "Введите фразу восстановления";
 "restore.private_key.placeholder" = "Введите приватный ключ EVM, BIP32 Root Key или Account Extended Private Key";
 "restore.private_key.invalid_key" = "Неверный Ключ";
 "restore_error.mnemonic_word_count" = "Неправильное количество слов. Должно быть 12-24 слова. Вы ввели: %@";
 "restore.checksum_error" = "Неверная контрольная сумма";
 "restore.passphrase" = "Кодовая Фраза";
 "restore.input.passphrase" = "Кодовая Фраза";
-"restore.passphrase_description" = "Введите свою кодовую фразу, которую вы использовали при создании этой мнемонической фразы";
+"restore.passphrase_description" = "Введите свою кодовую фразу, которую вы использовали при создании этой мнемонической фразы.";
 "restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
-"restore.non_standard_restore" = "Нестандартное Восстановление";
-"restore.non_standard_restore.description" = "На этой странице представлен специальный механизм восстановления кошелька для пользователей Unstoppable с нестандартным кошельком. Как правило, такие кошельки могли быть созданы в версиях Unstoppable 0.27–0.28 с использованием неанглоязычного списка мнемонических слов и/или специального символа в парольной фразе кошелька (например, диакритического знака).
+"restore.non_standard_import" = "Нестандартный импорт";
+"restore.non_standard_import.description" = "На этой странице представлен специальный механизм восстановления кошелька для пользователей Unstoppable с нестандартным кошельком. Как правило, такие кошельки могли быть созданы в версиях Unstoppable 0.27–0.28 с использованием неанглоязычного списка мнемонических слов и/или специального символа в парольной фразе кошелька (например, диакритического знака).
 \n\nЕсли вы являетесь затронутым пользователем, то баланс вашего кошелька будет отображаться как 0 после восстановления такого кошелька в версии 0.29 или выше.Эта страница позволит вам восстановить доступ к вашему нестандартному кошельку. После восстановления рекомендуется создать новый кошелек (который будет соответствовать стандарту) и перевести туда средства.";
 "restore.warning.non_recommended.description" = "Похоже, этот кошелек использует нестандартный символ в списке мнемонических слов и/или парольной фразе. Если вы не видите баланс или транзакции, пожалуйста, прочтите подробности ниже.
 \n\nПОЖАЛУЙСТА НАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ.";
@@ -117,16 +117,16 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Legacy";
-"coin_settings.derivation.title.bip49" = "Новые (рекомендуется)";
-"coin_settings.derivation.title.bip84" = "Новые";
+"coin_settings.derivation.title.bip44" = "Old";
+"coin_settings.derivation.title.bip49" = "Good";
+"coin_settings.derivation.title.bip84" = "Best";
 "coin_settings.title" = "Настройки Блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (рекомендуется)";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Было до 2018 года";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Применяется после 2018 года";
 "sync_mode.from_blockchain" = "Из Блокчейна";
-"blockchain_settings.description" = "Выберите формат адреса для токена. Если вы сомневаетесь в правильности выбранного формата, выберите рекомендуемую опцию. При восстановлении существующего кошелька должен быть выбран правильный формат.";
+"blockchain_settings.description" = "Select the address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -192,9 +192,9 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Сделать резервную копию фразы восстановления";
-"backup_prompt.warning" = "Создайте резервную копию вашей фразы восстановления и пароля, которые позволят вам восстановить ваш кошелек, если телефон потерян, украден, сломал и т.д.";
-"backup_prompt.backup" = "Резервная Копия";
+"backup_prompt.title" = "Резервная Копия";
+"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.backup" = "Резервная копия";
 "backup_prompt.later" = "Позже";
 
 // Errors
@@ -216,15 +216,15 @@
 "balance.syncing" = "Синхронизация...";
 "balance.searching" = "Поиск транзакций...";
 "balance.downloading_sapling" = "Загрузка sapling... %d%%";
-"balance.downloading_blocks" = "Загрузка Блоков";
-"balance.scanning_blocks" = "Сканирование Блоков";
-"balance.enhancing_transactions" = "Улучшение Транзакций";
+"balance.downloading_blocks" = "Загрузка блоков";
+"balance.scanning_blocks" = "Сканирование блоков";
+"balance.enhancing_transactions" = "Улучшение транзакций";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Синхронизация... %@";
 "balance.synced_through" = "до %@";
-"balance.add_coin" = "Добавить Токен";
-"balance.empty.add_coins" = "Добавить Токены";
+"balance.add_coin" = "Добавить токен";
+"balance.empty.add_coins" = "Добавить токены";
 "balance.empty.description" = "Вы еще не добавили монеты в этот кошелек.";
 "balance.watch_empty.description" = "У кошелька с этим адресом нет баланса";
 "balance.sort_by" = "Сортировать по";
@@ -234,7 +234,7 @@
 "balance.sort.price_change" = "По Изменению Цены(%)";
 
 "balance_error.change_source" = "Сменить Источник";
-"balance_error.sync_error" = "Ошибка Синхронизации";
+"balance_error.sync_error" = "Ошибка синхронизации";
 "lost_accounts.warning_title" = "Ошибка связки ключей iOS";
 "lost_accounts.warning_message" = "Зашифрованные данные вашего кошелька были недавно аннулированы, поскольку ваш экран блокировки iOS был изменен";
 
@@ -242,11 +242,11 @@
 
 "switch_account.title" = "Сменить Кошелек";
 "switch_account.wallets" = "Кошельки";
-"switch_account.watch_addresses" = "Посмотреть Адрес";
+"switch_account.watch_wallets" = "Просмотр кошелька";
 
 // Release notes
 
-"release_notes.title" = "Что Нового";
+"release_notes.title" = "Что нового";
 "release_notes.follow_us" = "Мы в соцсетях";
 
 // Deposit
@@ -802,8 +802,9 @@
 
 "settings.title" = "Настройки";
 "settings.tab_bar_item" = "Настройки";
-"settings.security_center" = "Центр Безопасности";
 "settings.manage_accounts" = "Управление Кошельками";
+"settings.blockchain_settings" = "Настройки блокчейна";
+"settings.security" = "Безопасность";
 "settings.experimental_features" = "Экспериментальные Функции";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
@@ -827,15 +828,7 @@
 "manage_wallets.search_placeholder" = "Имя, код или адрес контракта";
 "manage_wallets.not_supported" = "Не поддерживается";
 "manage_wallets.not_supported.description" = "Ваш текущий тип кошелька %@ не поддерживает %@";
-
-"manage_coins.add_coin.title" = "Добавить %@";
-"manage_coins.add_coin.subtitle" = "%@ Кошелек";
-"manage_coins.add_coin.text.set_up" = "Вам нужно настроить кошелек %@, чтобы отправлять или получать %@.";
-"manage_coins.add_coin.text.create_or_restore" = "Используйте кнопку \"Создать\", чтобы настроить новый кошелек %@ или \"Восстановить\", чтобы импортировать существующий.";
-"manage_coins.add_coin.text.create_only" = "На данный момент Unstoppable не может создать новый %@ кошелек. Вы можете только восстановить существующий.";
-"manage_coins.add_coin.text.tokens" = "Вы сможете использовать этот кошелек для: %@.";
-"manage_coins.add_coin.create" = "Создать";
-"manage_coins.add_coin.restore" = "Восстановить";
+"manage_wallets.not_supported.by_app.description" = "UW не поддерживает %@";
 
 // Settings -> Experimental Features
 
@@ -858,16 +851,19 @@
 "terms.title" = "Условия Использования";
 "terms.i_agree" = "Я принимаю";
 
-"terms.item.1" = "Сделайте резервную копию фраз восстановления кошелька, чтобы восстановить доступ к средствам.";
-"terms.item.2" = "Приватные ключи и фразы восстановления хранятся только на вашем устройстве.";
-"terms.item.3" = "Отключение PIN-кода для разблокировки смартфона приводит к удалению всех кошельков из приложения. Фразы восстановления потребуются для восстановления доступа к средствам.";
-"terms.item.4" = "Jailbreaking(rooting), установка приложений из неизвестных источников и использование устаревшей ОС могут поставить под угрозу безопасность средств.";
-"terms.item.5" = "В процессе работы кода могут возникнуть проблемы с программным обеспечением, которые могут привести к неожиданному поведению или неисправности приложения.";
-"terms.item.6" = "Только пользователь несет ответственность за сохранность средств и никто другой.";
+"terms.item.1" = "Securely backup recovery phrases for each wallet. It's the only way to regain access to funds if the app malfunctions.";
+"terms.item.2" = "The wallet recovery phrases are randomly generated on the device during setup and are not stored elsewhere.";
+"terms.item.3" = "Disabling unlock PIN (code) on the smartphone deletes all wallets from the app. Recovery phrases will be needed to restore access to funds.";
+"terms.item.4" = "Jailbreaking (rooting), using outdated OS, and installing apps from unknown sources may endanger the safety of funds.";
+"terms.item.5" = "There may be undiscovered software issues in the code powering this app which may cause the app to malfunction.";
 
 // Settings -> Tell Friends
 
 "settings_tell_friends.text" = "Be Unstoppable";
+
+// Settings -> Blockchain Settings
+
+"blockchain_settings.title" = "Настройки блокчейна";
 
 // Settings -> Security
 
@@ -897,22 +893,20 @@
 "blockchain_settings.info.restore_source.content" = "Этот параметр актуален только при восстановлении существующего кошелька. Это процесс получения истории транзакций для данной монеты, чтобы приложение кошелька могло отображать предыдущие транзакции и определять последний баланс. Это должно произойти только один раз при восстановлении пользователем ранее созданного кошелька. На данный момент у такого мобильного кошелька, как Unstoppable, есть два возможных способа для реализации этого вопроса: \n\n1. С сервера API: существует предопределенный сторонний сервер, на котором размещается вся цепочка блоков, происходит обработка всех данных и их подготовка к быстрому предоставлению. Это быстрый метод, однако он предполагает потенциальное отслеживание IP-адресов и запрашиваемых данных. Этот вариант рекомендуется использовать из-за скорости получения данных (5-10 минут). Он сопряжен с минимальными рисками. Если пользователь восстанавливает данные со своего собственного сервера, то нет никакой угрозы конфиденциальности.\n\n2. Из блокчейна: в этом случае приложение пытается восстановить данные напрямую из p2p-сети узлов блокчейна. Приложение пингует многие из этих узлов и запрашивает у них данные. Потенциально эти узлы могут отслеживать IP-адрес пользователя и сделанные запросы, однако во время восстановления данных приложение может переключаться между узлами. В любое время в сети находится около 10 000 биткойн-узлов. Это медленный вариант обработки данных, она может занять 2-3 часа и приложение должно быть открыто во время их восстановления.";
 "blockchain_settings.info.transaction_inputs_outputs" = "Вводы / выводы транзакций";
 "blockchain_settings.info.transaction_inputs_outputs.content" = "Многие биткойн-транзакции, а также транзакции, осуществляемые в похожих криптовалютах, включая Bitcoin Cash, Dash и Litecoin, генерируют два типа выходных данных. Первый тип выходных данных - это сумма, отправляемая получателю, а второй - сдача, возвращаемая отправителю. Руководствуясь принципом обработки транзакций большинства кошельков, третья сторона может легко понять, какие из выходных данных были отправлены принимающей стороне, а также узнать сумму сдачи, возвращенную отправителю. Поскольку сдача, возвращаемая отправителю, позже используется для осуществлениях других транзакций, связь между этими двумя типами выходных данных становится очевидной.\n\nКошелек Unstoppable применяет специальные меры для сокрытия направлений отправки двух типов выходных данных.\n\nПользователям Unstoppable доступны два варианта устранения этой проблемы:\n\n1. Микширование: Порядок вывода транзакций рандомизируется для каждой транзакции. Сдача может быть первым типом выходных данных,  а иногда, наоборот, вторым. Если пользователь доверяет разработчику приложения, то рекомендуется использовать этот вариант.\n\n2. Детерминирование: существует общепринятый стандарт для упорядочения выходных данных транзакций под названием BIP69. В кошельках с открытым исходным кодом применение этого стандарта гарантирует, что пользователям кошелька не нужно будет полагаться на принцип реализации порядка выходных данных разработчиками приложения. Поскольку этот стандарт является новым, многие кошельки его пока еще не внедрили. Поэтому в блокчейне видно, была ли транзакция отправлена ​​из кошелька с таким стандартом или нет.";
-"blockchain_settings.info.sync_mode" = "Режим Синхронизации";
-"blockchain_settings.info.sync_mode.content" = "Этот параметр определяет способ взаимодействия приложения с блокчейнами при отправке или получении транзакций.\n\nКогда речь идет о Bitcoin, Bitcoin Cash, Litecoin, и Dash, связь с сетевыми узлами блокчейна полностью равноправна. Unstoppable пингует многие узлы и связывается с одним из них. Каждый раз приложение подключается к другому узлу.\n\nЧто касается Ethereum и Binance Smart Chain, то пока нет подходящих альтернативных вариантов мобильных кошельков для взаимодействия с соответствующими блокчейнами кроме сторонних поставщиков услуг RPC (т.е. Infura.io) или личными узлами Ethereum. Это значит, что ваше взаимодействие с блокчейном не децентрализовано. Это влияет не на ваши средства, а на возможность подключения к сети блокчейн.";
+"blockchain_settings.info.rpc_source" = "Источник RPC";
+"blockchain_settings.info.rpc_source.content" = "Этот параметр определяет способ взаимодействия приложения с блокчейнами при отправке или получении транзакций.\n\nКогда речь идет о Bitcoin, Bitcoin Cash, Litecoin, и Dash, связь с сетевыми узлами блокчейна полностью равноправна. Unstoppable пингует многие узлы и связывается с одним из них. Каждый раз приложение подключается к другому узлу.\n\nЧто касается Ethereum и Binance Smart Chain, то пока нет подходящих альтернативных вариантов мобильных кошельков для взаимодействия с соответствующими блокчейнами кроме сторонних поставщиков услуг RPC (т.е. Infura.io) или личными узлами Ethereum. Это значит, что ваше взаимодействие с блокчейном не децентрализовано. Это влияет не на ваши средства, а на возможность подключения к сети блокчейн.";
 
 // Manage Accounts
 
-"manage_accounts.migration_required" = "Требуется Миграция";
-"manage_accounts.migration_recommended" = "Рекомендуется Миграция";
-"manage_accounts.backup_required" = "Необходима Резерв.Копия";
+"manage_accounts.migration_required" = "Требуется миграция";
+"manage_accounts.migration_recommended" = "Рекомендуется миграция";
+"manage_accounts.backup_required" = "Необходима резерв. копия";
 
 // Manage Keys
 
 "settings_manage_keys.title" = "Кошельки";
 "settings_manage_keys.delete" = "Удалить";
 "settings_manage_keys.backup" = "Резервная Копия";
-"settings_manage_keys.create" = "Создать";
-"settings_manage_keys.restore" = "Восстановить";
 "settings_manage_keys.delete.title" = "Удалить Кошелек";
 "settings_manage_keys.delete.confirmation_remove" = "Действие удалит этот кошелек с устройства.";
 "settings_manage_keys.delete.confirmation_loose" = "Если вы не сделали резервную копию приватного ключа для этого кошелька, вы потеряете доступ к вашим средствам.";
@@ -947,10 +941,12 @@
 "appearance.theme.dark" = "Тёмная";
 "appearance.theme.light" = "Светлая";
 
+"appearance.tab_settings" = "Настройки вкладки";
+"appearance.markets_tab" = "Markets Tab";
 "appearance.launch_screen" = "Запуск Экрана";
 "appearance.launch_screen.auto" = "По умолчанию";
 "appearance.launch_screen.balance" = "Баланс";
-"appearance.launch_screen.market_overview" = "Обзор Рынка";
+"appearance.launch_screen.market_overview" = "Обзор рынка";
 "appearance.launch_screen.watchlist" = "Избранное";
 
 "appearance.app_icon" = "Иконка Приложения";
@@ -991,6 +987,7 @@
 "chart.time_duration.halfyear" = "6М";
 "chart.time_duration.year" = "1Г";
 "chart.time_duration.year2" = "2Г";
+"chart.time_duration.all" = "ВСЕ";
 
 "chart.market_cap" = "Рын. Капитализация";
 "chart.volume" = "Объём (за 24 ч)";
@@ -1016,16 +1013,19 @@
 
 // Create Wallet
 
-"create_wallet.title" = "Создать Кошелек";
-"create_wallet.create_button" = "Создать";
-"create_wallet.mnemonic" = "Мнемоническая Фраза";
+"create_wallet.title" = "Новый кошелек";
+"create_wallet.name" = "Название";
+"create_wallet.advanced_setup" = "Доп. настройки";
+"create_wallet.create" = "Создать";
+"create_wallet.advanced" = "Доп. настройки";
+"create_wallet.phrase_count" = "Мнемоническая фраза";
 "create_wallet.12_words" = "12 слов (рекомендуется)";
 "create_wallet.n_words" = "%@ слов";
 "create_wallet.word_list" = "Список Слов";
 "create_wallet.passphrase" = "Кодовая Фраза";
 "create_wallet.input.passphrase" = "Кодовая Фраза";
 "create_wallet.input.confirm" = "Подтвердить";
-"create_wallet.passphrase_description" = "Кодовые фразы обеспечивают дополнительную защиту для кошельков, позволяя пользователям создавать несколько независимых мультивалютных кошельков, использующих одну мнемоническую фразу для восстановления, но имеющих разные пароли.\n\nДля восстановления этих кошельков пользователю потребуются мнемоническая фраза для восстановления, а также пароль для каждого восстанавливаемого кошелька.";
+"create_wallet.passphrase_description" = "Passphrases add an additional security layer for wallets. To restore such a wallet a user required both mnemonic as well as a passphrase.\n\nPassphrases also make it easy for users to have many multi-coin wallets using a single mnemonic but different password.";
 "create_wallet.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "create_wallet.error.forbidden_symbols" = "Пожалуйста, используйте только поддерживаемые символы: A-Z a-z 0-9 ' \" ` & / ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Подтвержденная кодовая фраза не совпадает";
@@ -1053,7 +1053,6 @@
 
 // Intro
 
-"intro.start" = "Be Unstoppable";
 "intro.unchain_assets.title" = "Освободите активы";
 "intro.unchain_assets.description" = "Распоряжайтесь активами свободно и без ограничений";
 "intro.go_borderless.title" = "Избавьтесь от Границ";
@@ -1069,12 +1068,17 @@
 // Add Token
 
 "add_token.title" = "Добавить Токен";
-"add_token.already_added" = "Уже Добавлено";
-"add_token.choose_token" = "Выберите Токен";
-"add_token.invalid_contract_address_or_bep2_symbol" = "Неверный адрес контракта или символ BEP2";
-"add_token.token_not_found" = "Токен не найден";
-"add_token.input_placeholder" = "Адрес Контракта";
-"add_token.bep2_not_supported" = "Ваш текущий приватный ключ EVM не поддерживает токены BEP2";
+"add_token.blockchain" = "Blockchain";
+"add_token.already_added" = "Этот токен уже есть в списке";
+"add_token.invalid_contract_address" = "Неверный адрес контракта";
+"add_token.invalid_bep2_symbol" = "Неверный символ BEP2";
+"add_token.contract_address_not_found" = "Адрес контракта не найден в %@ блокчейне ";
+"add_token.bep2_symbol_not_found" = "Символ BEP2 не найден";
+"add_token.input_placeholder.contract_address" = "Адрес контракта";
+"add_token.input_placeholder.bep2_symbol" = "Символ BEP2";
+"add_token.coin_name" = "Название токена";
+"add_token.symbol" = "Символ";
+"add_token.decimals" = "Десятичные знаки";
 
 // Wallet Connect
 
@@ -1118,8 +1122,9 @@
 "wallet_connect_list.new_connection" = "Новое Подключение";
 "wallet_connect_list.disconnecting" = "Отсоединение";
 
-"wallet_connect.no_account.description" = "Нет подходящего кошелька. Вам нужно создать или восстановить текущий кошелек.";
-"wallet_connect.no_account.i_understand" = "Я Понимаю";
+"wallet_connect.no_account.description" = "Вам нужно создать или импортировать кошелек перед использованием WalletConnect.";
+"wallet_connect.no_account.close" = "Закрыть";
+"wallet_connect.unbackuped_account.description" = "Вам нужно сделать резервную копию %@ перед использованием WalletConnect";
 
 "wallet_connect.non_supported_account.description" = "Ваш текущий тип кошелька %@ не поддерживает WalletConnect";
 "wallet_connect.non_supported_account.switch" = "Перекл.";
@@ -1156,11 +1161,9 @@
 
 // Onboarding
 
-"onboarding.balance.description" = "Пока нет кошельков";
-"onboarding.balance.create" = "Создать";
-"onboarding.balance.restore" = "Восстановить";
-"onboarding.balance.watch" = "Посмотреть Адрес";
-"onboarding.balance.password_hint" = "Совет: восстановление существующего кошелька при помощи другой кодовой фразы приведет к созданию нового кошелька. Это очень удобно, когда вы хотите использовать одну мнемоническую восстановительную фразу длиной от 12 до 24 слов для нескольких кошельков.";
+"onboarding.balance.create" = "Новый кошелек";
+"onboarding.balance.import" = "Импорт кошелька";
+"onboarding.balance.watch" = "Просмотр кошелька";
 
 // Manage Accounts
 
@@ -1170,14 +1173,18 @@
 // Manage Account
 
 "manage_account.name" = "Имя";
-"manage_account.recovery_phrase" = "Фраза для восстановления";
-"manage_account.evm_private_key" = "Приватный Ключ EVM";
+"manage_account.recovery_phrase" = "Фраза восстановления";
+"manage_account.evm_private_key" = "Приватный ключ EVM";
 "manage_account.bip32_root_key" = "BIP32 Root Key";
 "manage_account.account_extended_private_key" = "Account Extended Private Key";
 "manage_account.account_extended_public_key" = "Account Extended Public Key";
 "manage_account.public_keys" = "Публичные Ключи";
-"manage_account.backup_recovery_phrase" = "Сделать резервную копию фразы восстановления";
+"manage_account.backup_recovery_phrase" = "Резервная копия";
 "manage_account.unlink" = "Отсоединить";
+
+// Birthday Height
+
+"birthday_height.title" = "Блок создания";
 
 // Birthday Input
 
@@ -1194,7 +1201,18 @@
 
 // EVM Network
 
-"evm_network.sync_node" = "Синхронизировать Нод";
+"evm_network.rpc_source" = "Источник RPC";
+"evm_network.added" = "Добавлен";
+"evm_network.add_new" = "Добавить новый";
+
+// Add RPC Source
+
+"add_evm_sync_source.title" = "Добавить источник RPC";
+"add_evm_sync_source.name" = "Название";
+"add_evm_sync_source.rpc_url" = "RPC URL";
+"add_evm_sync_source.basic_auth" = "Базовая авторизация (опц.)";
+"add_evm_sync_source.warning.url_exists" = "RPC Источник с таким url уже существует";
+"add_evm_sync_source.error.invalid_url" = "Введенный url неверен. Допустимый url должен иметь одну из следующих схем: http, https, ws, wss";
 
 // Fee Settings
 
@@ -1227,7 +1245,7 @@
 
 // Watch Address
 
-"watch_address.title" = "Посмотреть Адрес";
+"watch_address.title" = "Просмотр кошелька";
 "watch_address.watch" = "Смотреть";
 "watch_address.address" = "Адрес";
 "watch_address.by" = "Из";
@@ -1236,6 +1254,8 @@
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Введите Account Extended Public Key";
 "watch_address.public_key.invalid_key" = "Неверный Ключ";
+"watch_address.choose_blockchain" = "Выбрать блокчейн";
+"watch_address.choose_coin" = "Выбрать токен";
 
 // Nft Collections
 
@@ -1297,7 +1317,7 @@
 "nft_collection.overview.floor_price" = "Минимальная цена";
 "nft_collection.overview.all_time_average" = "Средняя оценка за все время";
 "nft_collection.overview.royalty" = "Вознаграждение";
-"nft_collection.overview.inception_date" = "Дата Старта";
+"nft_collection.overview.inception_date" = "Дата старта";
 
 "nft.activity.empty_list" = "Нет активности";
 "nft.activity.event_types" = "Типы Событий";
