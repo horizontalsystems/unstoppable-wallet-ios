@@ -5,7 +5,7 @@
 "button.continue" = "Continuar";
 "button.done" = "Concluído";
 "button.reset" = "Redefinir";
-"button.import" = "Import";
+"button.import" = "Importar";
 "button.next" = "Próximo";
 "button.share" = "Compartilhar";
 "button.paste" = "Colar";
@@ -39,10 +39,10 @@
 "alert.added_to_wallet" = "Adicionado à Carteira";
 "alert.already_added_to_wallet" = "Já adicionado à carteira";
 "alert.not_supported_yet" = "Não suportado ainda";
-"alert.copied" = "Copied";
+"alert.copied" = "Copiado";
 "alert.created" = "Criado";
-"alert.imported" = "Imported";
-"alert.wallet_added" = "Wallet Added";
+"alert.imported" = "Importado";
+"alert.wallet_added" = "Carteira adicionada";
 "alert.deleted" = "Excluído";
 "alert.waiting_for_session" = "Aguardando sessão";
 "alert.try_again" = "Tentar Novamente";
@@ -94,9 +94,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Restore
 
-"restore.title" = "Import Wallet";
+"restore.title" = "Importar carteira";
 "restore.advanced" = "Avançado";
-"restore.import_by" = "Import By";
+"restore.import_by" = "Importar por";
 "restore.restore_type.mnemonic" = "Frase de Recuperação";
 "restore.restore_type.private_key" = "Chave Privada";
 "restore.mnemonic.placeholder" = "Insira 12, 15, 18, 21 ou 24 palavras";
@@ -124,7 +124,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Comum antes de 2018";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Comum depois de 2018";
 "sync_mode.from_blockchain" = "Da Blockchain";
-"blockchain_settings.description" = "Select the address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
+"blockchain_settings.description" = "Selecione o formato de endereço para receber pagamentos. Um formato correto deve ser escolhido quando restaurar uma carteira existente.";
 
 // Coin Platforms
 
@@ -145,7 +145,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "recovery_phrase.tap_to_show" = "Toque para mostrar a frase de recuperação";
 "recovery_phrase.passphrase" = "Senha";
 "recovery_phrase.copy_warning.title" = "Risco ao copiar a frase de recuperação";
-"recovery_phrase.copy_warning.description" = "As a security measure,we recommend not using copy action on recovery phrase.";
+"recovery_phrase.copy_warning.description" = "Como medida de segurança, recomendamos que não use a ação de copiar na frase de recuperação.";
 
 // EVM Private Key
 
@@ -190,15 +190,15 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Backup Prompt
 
-"backup_prompt.title" = "Backup Wallet";
-"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.title" = "Carteira de Backup";
+"backup_prompt.warning" = "Fazer backup desta carteira criando uma cópia de sua frase de recuperação. Será necessário para acessar a carteira se seu telefone for perdido, roubado, quebrado, etc.";
 "backup_prompt.backup" = "‘Backup’";
 "backup_prompt.later" = "Mais tarde";
 
 // Errors
 
 "error.send.self_transfer" = "Não é possível enviar para você mesmo";
-"error.send_binance.memo_required" = "The receiver requires a non-empty memo in the transfer transaction";
+"error.send_binance.memo_required" = "O receptor requer uma nota não vazia na transação de transferência";
 "error.send_binance.only_digits_allowed" = "Requer que o memorando contenha apenas dígitos";
 "error.send_z_cash.transparent_address" = "A Unstoppable não é suporta pagamentos para um endereço vazio";
 
@@ -240,7 +240,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "switch_account.title" = "Trocar carteira";
 "switch_account.wallets" = "Carteiras";
-"switch_account.watch_wallets" = "Watch Wallets";
+"switch_account.watch_wallets" = "Ver Endereço";
 
 // Release notes
 
@@ -304,7 +304,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "send.confirmation.fee" = "Taxa";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.send_button" = "Enviar";
-"send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.resend_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
 "send.confirmation.resend_button" = "Enviar novamente";
 "send.confirmation.cancel_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
 "send.confirmation.cancel_button" = "Cancelar transação";
@@ -387,7 +387,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "swap.advanced_settings.error.invalid_deadline" = "Prazo de tarefa inválido";
 
 "swap.one_inch.error.cannot_estimate" = "Erro de Estimativa";
-"swap.one_inch.error.cannot_estimate.info" = "Check the balance to ensure there is enough %@ to cover the fee. Or try increasing the price slippage amount and try again. Will auto-retry in 3 sec...";
+"swap.one_inch.error.cannot_estimate.info" = "Verifique o saldo para garantir que haja %@ suficiente para cobrir a taxa. Ou tente aumentar o preço do slippage e tente novamente. Será possível tentar novamente em 3 seg...";
 "swap.one_inch.error.insufficient_liquidity" = "Liquidez Insuficiente";
 "swap.one_inch.error.insufficient_liquidity.info" = "Provavelmente não existe liquidez suficiente disponível para processar esta operação. Tente reduzir o valor.";
 
@@ -401,7 +401,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Trocar";
-"swap.confirmation.impact_too_high" = "The difference between the market price and the expected settlement price is too high.";
+"swap.confirmation.impact_too_high" = "A diferença entre o preço de mercado e o preço de liquidação esperado é bastante elevada.";
 "swap.confirmation.minimum_received" = "Mínimo recebido";
 "swap.confirmation.maximum_sent" = "Gastos máximos";
 
@@ -411,9 +411,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "swap.dex_info.header_allowance" = "Preço";
 "swap.dex_info.content_allowance" = "O montante que uma exchange pode gastar em nome do usuário na execução de trocas simbólicas. É necessária uma margem suficiente para que uma transação de troca efetiva possa ocorrer.";
 "swap.dex_info.header_price_impact" = "Impacto de preço";
-"swap.dex_info.content_price_impact" = "The expected price deviation from a shown price typically increases with the swap amount.";
+"swap.dex_info.content_price_impact" = "O desvio de preço esperado de um valor mostrado, normalmente aumenta com o montante de swap.";
 "swap.dex_info.header_swap_fee" = "Tarifas de troca";
-"swap.dex_info.content_swap_fee" = "A service fee for the swap action on the platform, shown in the currency the user sells. For most orders, it should be either 0.3 % or 0.6 %.";
+"swap.dex_info.content_swap_fee" = "Uma taxa de serviço para a ação de troca na plataforma, mostrada na moeda que o usuário vende. Para a maioria das encomendas, deve situar-se nos 0,3% ou nos 0,6%.";
 "swap.dex_info.header_guaranteed_amount" = "Valor garantido";
 "swap.dex_info.content_guaranteed_amount" = "A quantia mínima que um usuário receberá em resultado de uma ação de troca.";
 "swap.dex_info.header_maximum_spend" = "Gastos máximos";
@@ -849,11 +849,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "terms.title" = "Termos";
 "terms.i_agree" = "Eu concordo";
 
-"terms.item.1" = "Securely backup recovery phrases for each wallet. It's the only way to regain access to funds if the app malfunctions.";
-"terms.item.2" = "The wallet recovery phrases are randomly generated on the device during setup and are not stored elsewhere.";
-"terms.item.3" = "Disabling unlock PIN (code) on the smartphone deletes all wallets from the app. Recovery phrases will be needed to restore access to funds.";
-"terms.item.4" = "Jailbreaking (rooting), using outdated OS, and installing apps from unknown sources may endanger the safety of funds.";
-"terms.item.5" = "There may be undiscovered software issues in the code powering this app which may cause the app to malfunction.";
+"terms.item.1" = "Frases de recuperação de backup seguros para cada carteira. É a única maneira de recuperar o acesso a fundos se o aplicativo não funcionar.";
+"terms.item.2" = "As frases de recuperação de carteira são geradas aleatoriamente no dispositivo durante a configuração e não são armazenadas em outro lugar.";
+"terms.item.3" = "Desabilitando o PIN (código) no smartphone exclui todas as carteiras do aplicativo. As frases de recuperação serão necessárias para restaurar o acesso aos fundos.";
+"terms.item.4" = "O Jailbreaking (root), o uso de SO desatualizado e a instalação de aplicativos de fontes desconhecidas podem colocar em risco a segurança do dinheiro.";
+"terms.item.5" = "Pode haver problemas de software não descobertos no código que irá ligá-lo e causar problemas no aplicativo.";
 
 // Settings -> Tell Friends
 
@@ -891,8 +891,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "blockchain_settings.info.restore_source.content" = "Esta configuração só é relevante ao restaurar uma carteira existente. É um processo de obtenção de histórico de transações para uma determinada criptomoeda, então o aplicativo de carteira é capaz de exibir transações anteriores e calcular o saldo do usuário. Isto precisa acontecer apenas uma vez quando o usuário restaura as carteiras previamente criadas.\n\nNeste ponto, existem duas possíveis maneiras de uma carteira móvel como o Unstoppable de fazer isso:\n\n1. do Servidor API: Há um servidor predefinido por terceiros que hospeda toda a blockchain e tem todos os dados processados e otimizados para fornecer esses dados de forma rápida. Este método é rápido, mas potencialmente (não necessariamente) menos privado. É também um método centralizado para restaurar uma carteira, pois depende da disponibilidade de um servidor de terceiros. Esta opção é recomendada devido à velocidade de obtenção de dados (5-10 minutos).\n\n2. da Blockchain: O aplicativo tenta restaurar diretamente de uma rede de nós da blockchain. Essa é uma maneira descentralizada de restaurar o saldo das carteiras e transações anteriores. O aplicativo pança muitos dos nós da rede e solicita dados deles sem abordar alguns nós especificamente. Esta opção é lenta e pode levar facilmente 2-3 horas, o aplicativo precisa estar aberto enquanto a restauração está acontecendo. Este método de restauração não depende de nenhuma entidade e deve funcionar em todas as condições.";
 "blockchain_settings.info.transaction_inputs_outputs" = "Entradas / Saídas de Transação";
 "blockchain_settings.info.transaction_inputs_outputs.content" = "A maioria das transações do Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira Unstoppable implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários Unstoppable:\n\n1. Embaralhamento: A ordem de saídas da transação é randomizada em cada transação. Às vezes a mudança pode ser a primeira saída, às vezes pode ser a segunda. Se um usuário confia no desenvolvedor do aplicativo, considere esta opção recomendada.\n\n2. Determinístico: Há um padrão comumente acordado para encomendar saídas de transação (conhecido como BIP69). Nas carteiras de código aberto, que o padrão garante que os usuários de carteira não precisam confiar em como desenvolvedores do aplicativo implementam a ordenação das saídas. Como este padrão é novo, muitas carteiras ainda não o implementaram. Como resultado, é um pouco possível ver no blockchain se uma transação foi enviada de uma carteira que usa esse padrão ou não.";
-"blockchain_settings.info.rpc_source" = "RPC Source";
-"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.rpc_source" = "Fonte RPC";
+"blockchain_settings.info.rpc_source.content" = "Esta configuração controla como este aplicativo interage com blockchains ao enviar ou receber transações.\n\nNo caso do Bitcoin, Bitcoin Cash, Litecoin e Dash, a comunicação com os nós da rede blockchain é totalmente peer-to-peer. Os pings Unstoppable são feitos em muitos nós e se comunicam com um deles. Cada vez que o aplicativo se conecta a um nó diferente.\n\nNo caso da Ethereum, da Binance Smart Chain e outras blockchains de EVM, não existem alternativas para as carteiras móveis para interagir com as respectivas blockchains que não sejam por provedores de serviços RPC de terceiros (ex. Infura.io) ou nós pessoais. Isso essencialmente significa que sua comunicação com essa blockchain não é descentralizada. Isso não afeta seus fundos de forma alguma, apenas a capacidade de se conectar à rede blockchain.\n\nFique tranquilo, vamos mantê-lo no radar e em breve tentaremos fornecer uma forma descentralizada para sincronizar. Paciência.";
 
 // Manage Accounts
 
@@ -939,8 +939,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "appearance.theme.dark" = "Escuro";
 "appearance.theme.light" = "Claro";
 
-"appearance.tab_settings" = "Tab Settings";
-"appearance.markets_tab" = "Markets Tab";
+"appearance.tab_settings" = "Configurações de Abas";
+"appearance.markets_tab" = "Guia de Mercados";
 "appearance.launch_screen" = "Tela Inicial";
 "appearance.launch_screen.auto" = "Automático";
 "appearance.launch_screen.balance" = "Saldo";
@@ -985,7 +985,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "chart.time_duration.halfyear" = "6M";
 "chart.time_duration.year" = "1A";
 "chart.time_duration.year2" = "2A";
-"chart.time_duration.all" = "ALL";
+"chart.time_duration.all" = "TODOS";
 
 "chart.market_cap" = "Capitalização de mercado";
 "chart.volume" = "Volume (24h)";
@@ -1011,10 +1011,10 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Create Wallet
 
-"create_wallet.title" = "New Wallet";
+"create_wallet.title" = "Nova Carteira";
 "create_wallet.name" = "Nome";
 "create_wallet.advanced_setup" = "Avançado";
-"create_wallet.create" = "Create";
+"create_wallet.create" = "Criar";
 "create_wallet.advanced" = "Avançado";
 "create_wallet.phrase_count" = "Mnemônico";
 "create_wallet.12_words" = "12 palavras (recomendado)";
@@ -1023,7 +1023,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "create_wallet.passphrase" = "Senha";
 "create_wallet.input.passphrase" = "Senha";
 "create_wallet.input.confirm" = "Confirmar";
-"create_wallet.passphrase_description" = "Passphrases add an additional security layer for wallets. To restore such a wallet a user required both mnemonic as well as a passphrase.\n\nPassphrases also make it easy for users to have many multi-coin wallets using a single mnemonic but different password.";
+"create_wallet.passphrase_description" = "As frases-chave adicionam uma camada de segurança adicional para carteiras. Para restaurar tal carteira, um usuário precisa tanto de uma senha quanto mnemônica.\n\nAs frases-chave também tornam mais fácil para os usuários terem muitas carteiras de multi moedas usando uma única senha mnemônica, mas diferente.";
 "create_wallet.error.empty_passphrase" = "A senha não pode estar vazia";
 "create_wallet.error.forbidden_symbols" = "Por favor, use apenas símbolos suportados: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Confirmação da senha não coincide";
@@ -1067,11 +1067,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "add_token.title" = "Adicionar token";
 "add_token.blockchain" = "Blockchain";
-"add_token.already_added" = "This token is already in the Coin Manager list";
-"add_token.invalid_contract_address" = "Invalid contract address";
+"add_token.already_added" = "Este token já está na lista de moedas";
+"add_token.invalid_contract_address" = "Endereço do contrato inválido";
 "add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
-"add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
-"add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
+"add_token.contract_address_not_found" = "Endereço do contrato não encontrado em %@ blockchain";
+"add_token.bep2_symbol_not_found" = "Símbolo BEP2 não encontrado";
 "add_token.input_placeholder.contract_address" = "Endereço do Contrato";
 "add_token.input_placeholder.bep2_symbol" = "Símbolo BEP2";
 "add_token.coin_name" = "Nome da Moeda";
@@ -1093,7 +1093,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "wallet_connect.main.unsupported_chains" = "Algumas cadeias não são suportadas!";
 "wallet_connect.connect_description" = "Ao clicar em aprovar, você permite que este aplicativo veja seu endereço público. Este é um importante passo de segurança para proteger seus dados de potenciais riscos de phishing.";
 "wallet_connect.usage_description" = "Você pode ir ao navegador. Não feche esta página enquanto interage no navegador.";
-"wallet_connect.no_connection" = "Failed to establish a connection. Try reconnecting again.";
+"wallet_connect.no_connection" = "Não foi possível estabelecer a conexão. Tente reconectar novamente.";
 "wallet_connect.button_reconnect" = "Reconectar";
 "wallet_connect.button_disconnect" = "Desconectar";
 "ethereum_transaction.error.title" = "Erro";
@@ -1120,11 +1120,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "wallet_connect_list.new_connection" = "Nova Conexão";
 "wallet_connect_list.disconnecting" = "Desconectando";
 
-"wallet_connect.no_account.description" = "You need to create or import a wallet before you can use WalletConnect.";
+"wallet_connect.no_account.description" = "Você precisa criar ou importar uma carteira antes de usar o WalletConnect.";
 "wallet_connect.no_account.close" = "Fechar";
-"wallet_connect.unbackuped_account.description" = "You need to backup %@ before you can use WalletConnect";
+"wallet_connect.unbackuped_account.description" = "Você precisa fazer o backup de %@ antes de poder usar o WalletConnect";
 
-"wallet_connect.non_supported_account.description" = "Your current wallet type %@ does not support WalletConnect";
+"wallet_connect.non_supported_account.description" = "Seu tipo de carteira atual %@ não suporta WalletConnect";
 "wallet_connect.non_supported_account.switch" = "Alternar";
 
 "wallet_connect.pending_requests_title" = "Solicitações Pendentes";
@@ -1155,13 +1155,13 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "status_info.completed.title" = "Concluído";
 "status_info.confirmed.content" = "A transação está concluída e considerada permanente e irreversível.";
 "status_info.failed.title" = "Falhou";
-"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Depending on the fail reason, some failed transactions may consume transaction fees. Transactions that were replaced or canceled by another transaction do not consume transaction fees and will also appear as failed. The Unstoppable app is unable to show the reason for failed transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
+"status_info.failed.content" = "A transação não foi processada e nenhuma transferência de valor ocorreu. Dependendo do motivo, algumas transações com falha podem consumir taxas de transação. As transações que foram substituídas ou canceladas por outra transação não consomem taxas de transação e também aparecerão com falha. O aplicativo Unstoppable não consegue mostrar o motivo das transações com falha, mas os usuários podem procurá-lo em um explorador de blocos público, como o etherscan.io.";
 
 // Onboarding
 
-"onboarding.balance.create" = "New Wallet";
-"onboarding.balance.import" = "Import Wallet";
-"onboarding.balance.watch" = "Watch Wallet";
+"onboarding.balance.create" = "Nova Carteira";
+"onboarding.balance.import" = "Importar carteira";
+"onboarding.balance.watch" = "Ver Endereço";
 
 // Manage Accounts
 
@@ -1199,18 +1199,18 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // EVM Network
 
-"evm_network.rpc_source" = "RPC Source";
+"evm_network.rpc_source" = "Fonte RPC";
 "evm_network.added" = "Adicionado";
-"evm_network.add_new" = "Add New";
+"evm_network.add_new" = "Adicionar novo";
 
 // Add RPC Source
 
-"add_evm_sync_source.title" = "Add RPC Source";
+"add_evm_sync_source.title" = "Adicionar fonte RPC";
 "add_evm_sync_source.name" = "Nome";
 "add_evm_sync_source.rpc_url" = "RPC URL";
-"add_evm_sync_source.basic_auth" = "Basic Auth (optional)";
-"add_evm_sync_source.warning.url_exists" = "RPC Source with this url already exists";
-"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: http, https, ws, wss";
+"add_evm_sync_source.basic_auth" = "Autenticação básica (opcional)";
+"add_evm_sync_source.warning.url_exists" = "Fonte RPC com esta url já existe";
+"add_evm_sync_source.error.invalid_url" = "Url inserida é inválida. URL válida deve ter um dos seguintes esquemas: http, https, ws, wss";
 
 // Fee Settings
 
@@ -1293,7 +1293,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "nft_asset.links" = "Links";
 "nft_asset.links.website" = "Site";
 "nft_asset.options.save_to_photos" = "Salvar na Galeria";
-"nft_asset.options.set_as_watch_face" = "Set as Watch Face";
+"nft_asset.options.set_as_watch_face" = "Definir como Face Assistida";
 "nft_asset.save_to_photos.failed" = "Falha ao salvar a imagem NFT";
 
 // Nft Collection
