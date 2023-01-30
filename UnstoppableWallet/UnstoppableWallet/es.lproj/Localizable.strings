@@ -5,7 +5,7 @@
 "button.continue" = "Continuar";
 "button.done" = "Listo";
 "button.reset" = "Reiniciar";
-"button.import" = "Import";
+"button.import" = "Importar";
 "button.next" = "Siguiente";
 "button.share" = "Compartir";
 "button.paste" = "Pegar";
@@ -92,7 +92,7 @@
 
 // Restore
 
-"restore.title" = "Import Wallet";
+"restore.title" = "Importar monedero";
 "restore.advanced" = "Avanzado";
 "restore.import_by" = "Importar por";
 "restore.restore_type.mnemonic" = "Frase de Recuperación";
@@ -104,25 +104,25 @@
 "restore.checksum_error" = "Suma de verificación inválida";
 "restore.passphrase" = "Frase de contraseña";
 "restore.input.passphrase" = "Frase de contraseña";
-"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet but a new passphrase will generate a brand-new wallet.";
+"restore.passphrase_description" = "Introduzca su frase de contraseña que utilizó al crear esta frase mnemotécnica.";
 "restore.error.empty_passphrase" = "La frase no puede estar vacía";
 "restore.non_standard_import" = "Restauración no estándar";
-"restore.non_standard_import.description" = "This page provides a special wallet import mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
+"restore.non_standard_import.description" = "Esta página proporciona un mecanismo especial de restauración de monedero para usuarios de Unstoppable que tienen un monedero no estándar. Por lo general, dichos monederos se podrían haber creado en la versión 0.27 - 0.28 de Unstoppable utilizando una lista de palabras mnemotécnicas que no están en inglés y/o un carácter especial en la frase de contraseña del monedero (es decir, un símbolo diacrítico).\n\nSi es un usuario afectado, el saldo de su billetera se mostrará en 0 después de restaurar dicha billetera en la versión 0.29 o superior. Esta página te permitirá restaurar el acceso a tu monedero no estándar. Una vez restaurado, se recomienda crear un nuevo monedero (que cumplirá con los estándares) y mover todos los fondos allí.";
 "restore.warning.non_recommended.description" = "Este monedero parece usar un carácter no estándar en tu lista de palabras secretas y/o una frase de contraseña. Si no logras ver un saldo o transacciones, continua leyenda para obtener más detalles.\n\nHAGA CLIC PARA OBTENER MÁS INFORMACIÓN";
 "restore.error.non_standard.description" = "Esta es una cartera no estándar. \n\nCLICK PARA CONTRAR MÁS INFO";
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Old";
-"coin_settings.derivation.title.bip49" = "Good";
-"coin_settings.derivation.title.bip84" = "Best";
+"coin_settings.derivation.title.bip44" = "Antiguo";
+"coin_settings.derivation.title.bip49" = "Bueno";
+"coin_settings.derivation.title.bip84" = "Mejor";
 "coin_settings.title" = "Configuración de Blockchain";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "Dirección de caja (recomendado)";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Común antes de 2018";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Común después de 2018";
 "sync_mode.from_blockchain" = "Desde Blockchain";
-"blockchain_settings.description" = "Select the address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
+"blockchain_settings.description" = "Seleccione el formato de dirección para recibir pagos. Debe elegirse un formato correcto cuando se restaure una cartera existente.";
 
 // Coin Platforms
 
@@ -143,7 +143,7 @@
 "recovery_phrase.tap_to_show" = "Toca para mostrar la frase de recuperación";
 "recovery_phrase.passphrase" = "Contraseña";
 "recovery_phrase.copy_warning.title" = "Copia de Riesgo de Recuperación";
-"recovery_phrase.copy_warning.description" = "As a security measure,we recommend not using copy action on recovery phrase.";
+"recovery_phrase.copy_warning.description" = "Como medida de seguridad recomendamos no utilizar la acción de copia en la clave privada.";
 
 // EVM Private Key
 
@@ -189,14 +189,14 @@
 // Backup Prompt
 
 "backup_prompt.title" = "Backup del Monedero";
-"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.warning" = "Copia de seguridad de esta cartera creando una copia de su frase de recuperación. Será necesario para acceder al monedero si su teléfono está perdido, robado, roto, etc.";
 "backup_prompt.backup" = "Copia de seguridad";
 "backup_prompt.later" = "Más tarde";
 
 // Errors
 
 "error.send.self_transfer" = "Enviarte a vos mismo no está soportado";
-"error.send_binance.memo_required" = "The receiver requires a non-empty memo in the transfer transaction";
+"error.send_binance.memo_required" = "El receptor requiere que el memo no esté vacío en la transacción de transferencia";
 "error.send_binance.only_digits_allowed" = "Es necesario que el memo contenga únicamente dígitos";
 "error.send_z_cash.transparent_address" = "Unstoppable no soporta pagos a una dirección transparente";
 
@@ -238,7 +238,7 @@
 
 "switch_account.title" = "Cambiar monedero";
 "switch_account.wallets" = "Monederos";
-"switch_account.watch_wallets" = "Watch Wallets";
+"switch_account.watch_wallets" = "Ver Monedero";
 
 // Release notes
 
@@ -302,7 +302,7 @@
 "send.confirmation.fee" = "Comisión";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.send_button" = "Enviar";
-"send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.resend_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que será invalidada y reemplazada. Sólo una de estas dos transacciones se incluirá en la cadena de bloques.";
 "send.confirmation.resend_button" = "Reenviar";
 "send.confirmation.cancel_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que será invalidada y reemplazada. Sólo una de estas dos transacciones se incluirá en la cadena de bloques.";
 "send.confirmation.cancel_button" = "Cancelar la transacción";
@@ -385,7 +385,7 @@
 "swap.advanced_settings.error.invalid_deadline" = "Fecha límite no válida";
 
 "swap.one_inch.error.cannot_estimate" = "Error de estimación";
-"swap.one_inch.error.cannot_estimate.info" = "Check the balance to ensure there is enough %@ to cover the fee. Or try increasing the price slippage amount and try again. Will auto-retry in 3 sec...";
+"swap.one_inch.error.cannot_estimate.info" = "¡Error! Comprueba el saldo y asegúrate de que hay suficientes %@ para cubrir la comisión. O intente aumentar la cantidad del deslizamiento del precio e intente de nuevo. Volverá a intentarlo en 3 segundos...";
 "swap.one_inch.error.insufficient_liquidity" = "Liquidez insuficiente";
 "swap.one_inch.error.insufficient_liquidity.info" = "Probablemente no hay suficiente liquidez disponible para procesar esta operación. Intente reducir la cantidad.";
 
@@ -399,7 +399,7 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Permutar";
-"swap.confirmation.impact_too_high" = "The difference between the market price and the expected settlement price is too high.";
+"swap.confirmation.impact_too_high" = "La diferencia entre el precio de mercado y el precio esperado de liquidación es demasiado alta.";
 "swap.confirmation.minimum_received" = "Mínimo Recibido";
 "swap.confirmation.maximum_sent" = "Gasto máximo";
 
@@ -409,9 +409,9 @@
 "swap.dex_info.header_allowance" = "Permiso de acceso";
 "swap.dex_info.content_allowance" = "La cantidad que un intercambio puede gastar en nombre del usuario al ejecutar swaps de token. Se requiere un permiso suficiente para establecer una transacción anterior antes de que pueda tener lugar una transacción de intercambio real.";
 "swap.dex_info.header_price_impact" = "Impacto en el precio";
-"swap.dex_info.content_price_impact" = "The expected price deviation from a shown price typically increases with the swap amount.";
+"swap.dex_info.content_price_impact" = "Desviación de precio esperada de un valor mostrado, normalmente aumenta con la cantidad de swap.";
 "swap.dex_info.header_swap_fee" = "Tarifa por intercambio";
-"swap.dex_info.content_swap_fee" = "A service fee for the swap action on the platform, shown in the currency the user sells. For most orders, it should be either 0.3 % or 0.6 %.";
+"swap.dex_info.content_swap_fee" = "Una tarifa de servicio para la acción de intercambio en la plataforma, mostrada en la moneda que el usuario vende. Para la mayoría de las ordenes debería ser del 0.3% o del 0.6%.";
 "swap.dex_info.header_guaranteed_amount" = "Cantidad Garantizada";
 "swap.dex_info.content_guaranteed_amount" = "La cantidad mínima que un usuario va a recibir como resultado de una acción de intercambio.";
 "swap.dex_info.header_maximum_spend" = "Gasto máximo";
@@ -849,9 +849,9 @@
 
 "terms.item.1" = "Copia de seguridad frases de recuperación para cada cartera. Es la única manera de recuperar el acceso a los fondos si la aplicación no funciona correctamente.";
 "terms.item.2" = "Las frases de recuperación del monedero se generan aleatoriamente en el dispositivo durante la instalación y no se almacenan en ningún otro lugar.";
-"terms.item.3" = "Disabling unlock PIN (code) on the smartphone deletes all wallets from the app. Recovery phrases will be needed to restore access to funds.";
-"terms.item.4" = "Jailbreaking (rooting), using outdated OS, and installing apps from unknown sources may endanger the safety of funds.";
-"terms.item.5" = "There may be undiscovered software issues in the code powering this app which may cause the app to malfunction.";
+"terms.item.3" = "Desactivar el PIN de desbloqueo (código) en el smartphone elimina todas las carteras de la aplicación. Se necesitarán frases de recuperación para restaurar el acceso a los fondos.";
+"terms.item.4" = "Rompiendo carcelarios (rooting), usando un sistema operativo obsoleto e instalando aplicaciones de fuentes desconocidas pueden poner en peligro la seguridad de los fondos.";
+"terms.item.5" = "Puede haber problemas de software no descubiertos en el código que permite que esta aplicación funcione mal.";
 
 // Settings -> Tell Friends
 
@@ -937,8 +937,8 @@
 "appearance.theme.dark" = "Oscuro";
 "appearance.theme.light" = "Claro";
 
-"appearance.tab_settings" = "Tab Settings";
-"appearance.markets_tab" = "Markets Tab";
+"appearance.tab_settings" = "Ajustes de pestaña";
+"appearance.markets_tab" = "Pestaña de Mercados";
 "appearance.launch_screen" = "Pantalla de lanzamiento";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Saldo";
@@ -1009,11 +1009,11 @@
 
 // Create Wallet
 
-"create_wallet.title" = "New Wallet";
+"create_wallet.title" = "Nuevo Monedero";
 "create_wallet.name" = "Nombre";
-"create_wallet.advanced_setup" = "Advanced";
-"create_wallet.create" = "Create";
-"create_wallet.advanced" = "Advanced";
+"create_wallet.advanced_setup" = "Avanzado";
+"create_wallet.create" = "Crear";
+"create_wallet.advanced" = "Avanzado";
 "create_wallet.phrase_count" = "Mnemónico";
 "create_wallet.12_words" = "12 palabras (recomendado)";
 "create_wallet.n_words" = "%@ palabras";
@@ -1021,7 +1021,7 @@
 "create_wallet.passphrase" = "Frase de contraseña";
 "create_wallet.input.passphrase" = "Frase de contraseña";
 "create_wallet.input.confirm" = "Confirmar";
-"create_wallet.passphrase_description" = "Passphrases add an additional security layer for wallets. To restore such a wallet a user required both mnemonic as well as a passphrase.\n\nPassphrases also make it easy for users to have many multi-coin wallets using a single mnemonic but different password.";
+"create_wallet.passphrase_description" = "Las contraseñas añaden una capa de seguridad adicional para las carteras. Para restaurar dicha cartera, un usuario requiere tanto mnemonic como una contraseña.\n\nPassphrases también facilita a los usuarios tener muchos monederos multi-moneda usando un solo mnemónico pero diferente contraseña.";
 "create_wallet.error.empty_passphrase" = "La frase de contraseña no puede estar vacía";
 "create_wallet.error.forbidden_symbols" = "Utilice solo símbolos admitidos: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "La confirmación de la frase de contraseña no coincide";
@@ -1065,7 +1065,7 @@
 
 "add_token.title" = "Añadir Token";
 "add_token.blockchain" = "Blockchain";
-"add_token.already_added" = "This token is already in the Coin Manager list";
+"add_token.already_added" = "Este token ya está en la lista del gestor de monedas";
 "add_token.invalid_contract_address" = "Dirección del contrato inválida";
 "add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
 "add_token.contract_address_not_found" = "Dirección del contrato no encontrada en la cadena de bloques %@";
@@ -1118,7 +1118,7 @@
 "wallet_connect_list.new_connection" = "Nueva Conexión";
 "wallet_connect_list.disconnecting" = "Desconectando";
 
-"wallet_connect.no_account.description" = "You need to create or import a wallet before you can use WalletConnect.";
+"wallet_connect.no_account.description" = "Necesita crear o importar una cartera antes de poder usar WalletConnect.";
 "wallet_connect.no_account.close" = "Cerrar";
 "wallet_connect.unbackuped_account.description" = "Necesitas hacer una copia de seguridad de %@ antes de poder usar WalletConnect";
 
@@ -1157,9 +1157,9 @@
 
 // Onboarding
 
-"onboarding.balance.create" = "New Wallet";
-"onboarding.balance.import" = "Import Wallet";
-"onboarding.balance.watch" = "Watch Wallet";
+"onboarding.balance.create" = "Nuevo monedero";
+"onboarding.balance.import" = "Importar monedero";
+"onboarding.balance.watch" = "Ver Monedero";
 
 // Manage Accounts
 
