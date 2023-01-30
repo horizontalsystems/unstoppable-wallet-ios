@@ -5,7 +5,7 @@
 "button.continue" = "Продолжить";
 "button.done" = "Готово";
 "button.reset" = "Сбросить";
-"button.import" = "Import";
+"button.import" = "Импорт";
 "button.next" = "Далее";
 "button.share" = "Поделиться";
 "button.paste" = "Вставить";
@@ -96,7 +96,7 @@
 
 "restore.title" = "Импорт кошелька";
 "restore.advanced" = "Доп. настройки";
-"restore.import_by" = "Import By";
+"restore.import_by" = "Через";
 "restore.restore_type.mnemonic" = "Фраза восстановления";
 "restore.restore_type.private_key" = "Приватный ключ";
 "restore.mnemonic.placeholder" = "Введите фразу восстановления";
@@ -106,10 +106,11 @@
 "restore.checksum_error" = "Неверная контрольная сумма";
 "restore.passphrase" = "Кодовая Фраза";
 "restore.input.passphrase" = "Кодовая Фраза";
-"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet but a new passphrase will generate a brand-new wallet.";
+"restore.passphrase_description" = "Введите свою кодовую фразу, которую вы использовали при создании этой мнемонической фразы.";
 "restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "restore.non_standard_import" = "Нестандартный импорт";
-"restore.non_standard_import.description" = "This page provides a special wallet import mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
+"restore.non_standard_import.description" = "На этой странице представлен специальный механизм восстановления кошелька для пользователей Unstoppable с нестандартным кошельком. Как правило, такие кошельки могли быть созданы в версиях Unstoppable 0.27–0.28 с использованием неанглоязычного списка мнемонических слов и/или специального символа в парольной фразе кошелька (например, диакритического знака).
+\n\nЕсли вы являетесь затронутым пользователем, то баланс вашего кошелька будет отображаться как 0 после восстановления такого кошелька в версии 0.29 или выше.Эта страница позволит вам восстановить доступ к вашему нестандартному кошельку. После восстановления рекомендуется создать новый кошелек (который будет соответствовать стандарту) и перевести туда средства.";
 "restore.warning.non_recommended.description" = "Похоже, этот кошелек использует нестандартный символ в списке мнемонических слов и/или парольной фразе. Если вы не видите баланс или транзакции, пожалуйста, прочтите подробности ниже.
 \n\nПОЖАЛУЙСТА НАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ.";
 "restore.error.non_standard.description" = "Это нестандартный кошелек.\n\nНАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ";
@@ -146,7 +147,7 @@
 "recovery_phrase.tap_to_show" = "Нажмите, чтобы показать фразу восстановления";
 "recovery_phrase.passphrase" = "Кодовая Фраза";
 "recovery_phrase.copy_warning.title" = "Риск копирования фразы восстановления";
-"recovery_phrase.copy_warning.description" = "As a security measure,we recommend not using copy action on recovery phrase.";
+"recovery_phrase.copy_warning.description" = "В целях безопасности мы не рекомендуем использовать действие копирования фразы восстановления.";
 
 // EVM Private Key
 
@@ -191,7 +192,7 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Backup Wallet";
+"backup_prompt.title" = "Резервная Копия";
 "backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken, etc.";
 "backup_prompt.backup" = "Резервная копия";
 "backup_prompt.later" = "Позже";
@@ -199,7 +200,7 @@
 // Errors
 
 "error.send.self_transfer" = "Отправка самому себе невозможна";
-"error.send_binance.memo_required" = "The receiver requires a non-empty memo in the transfer transaction";
+"error.send_binance.memo_required" = "При отправке транзакции получателю необходимо заполнить поле мемо";
 "error.send_binance.only_digits_allowed" = "Поле мемо должно содержать только цифры";
 "error.send_z_cash.transparent_address" = "Unstoppable не поддерживает платежи на публичный адрес";
 
@@ -305,7 +306,7 @@
 "send.confirmation.fee" = "Комиссия";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.send_button" = "Отправить";
-"send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.resend_description" = "Это действие аннулирует предыдущую транзакцию, переотправив ее с более высокой комиссией. Если исходная транзакция ожидает обработки во время отправки новой, то вероятность ее аннулирования и замены довольно высока. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.resend_button" = "Отправить Повторно";
 "send.confirmation.cancel_description" = "Это действие аннулирует предыдущую транзакцию, переотправив ее себе как транзакцию с нулевой суммой. Если исходная транзакция ожидает обработки во время отправки новой, то вероятность ее аннулирования и замены довольно высока. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.cancel_button" = "Отменить Транзакцию";
@@ -388,7 +389,7 @@
 "swap.advanced_settings.error.invalid_deadline" = "Недопустимый Срок";
 
 "swap.one_inch.error.cannot_estimate" = "Ошибка Оценки";
-"swap.one_inch.error.cannot_estimate.info" = "Check the balance to ensure there is enough %@ to cover the fee. Or try increasing the price slippage amount and try again. Will auto-retry in 3 sec...";
+"swap.one_inch.error.cannot_estimate.info" = "Проверьте баланс и убедитесь, что на нем достаточно %@ для покрытия комиссии. Или попробуйте увеличить предел скольжения цены и повторите попытку снова. Следующая попытка через 3 секунды...";
 "swap.one_inch.error.insufficient_liquidity" = "Недостаточно Ликвидности";
 "swap.one_inch.error.insufficient_liquidity.info" = "Кажется, для этой сделки не хватает ликвидности. Попробуйте уменьшить сумму сделки.";
 
@@ -402,7 +403,7 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Обменять";
-"swap.confirmation.impact_too_high" = "The difference between the market price and the expected settlement price is too high.";
+"swap.confirmation.impact_too_high" = "Разница между рыночной ценой и ожидаемой расчетной ценой слишком высока.";
 "swap.confirmation.minimum_received" = "Получено Минимум";
 "swap.confirmation.maximum_sent" = "Максимальная Трата";
 
@@ -412,9 +413,9 @@
 "swap.dex_info.header_allowance" = "Разрешение";
 "swap.dex_info.content_allowance" = "Сумма, которую exchange может потратить от имени пользователя при выполнении обмена токенов. Действующая транзакция, устанавливающая достаточный уровень допустимости, необходима для того, чтобы транзакция обмена была осуществлена.";
 "swap.dex_info.header_price_impact" = "Отклонение от рын. цены";
-"swap.dex_info.content_price_impact" = "The expected price deviation from a shown price typically increases with the swap amount.";
+"swap.dex_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
 "swap.dex_info.header_swap_fee" = "Комиссия за обмен";
-"swap.dex_info.content_swap_fee" = "A service fee for the swap action on the platform, shown in the currency the user sells. For most orders, it should be either 0.3 % or 0.6 %.";
+"swap.dex_info.content_swap_fee" = "Плата за услугу обмена на платформе, показана в валюте, в которой продает пользователь. Для большинства заказов составляет или 0,3% или 0,6%.";
 "swap.dex_info.header_guaranteed_amount" = "Гарантированная Сумма";
 "swap.dex_info.content_guaranteed_amount" = "Минимальная сумма, которую получит пользователь в результате обмена.";
 "swap.dex_info.header_maximum_spend" = "Максимальная Трата";
@@ -802,8 +803,8 @@
 "settings.title" = "Настройки";
 "settings.tab_bar_item" = "Настройки";
 "settings.manage_accounts" = "Управление Кошельками";
-"settings.blockchain_settings" = "Blockchain Settings";
-"settings.security" = "Security";
+"settings.blockchain_settings" = "Настройки блокчейна";
+"settings.security" = "Безопасность";
 "settings.experimental_features" = "Экспериментальные Функции";
 "settings.base_currency" = "Базовая Валюта";
 "settings.language" = "Язык";
@@ -827,7 +828,7 @@
 "manage_wallets.search_placeholder" = "Имя, код или адрес контракта";
 "manage_wallets.not_supported" = "Не поддерживается";
 "manage_wallets.not_supported.description" = "Ваш текущий тип кошелька %@ не поддерживает %@";
-"manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
+"manage_wallets.not_supported.by_app.description" = "UW не поддерживает %@";
 
 // Settings -> Experimental Features
 
@@ -862,7 +863,7 @@
 
 // Settings -> Blockchain Settings
 
-"blockchain_settings.title" = "Blockchain Settings";
+"blockchain_settings.title" = "Настройки блокчейна";
 
 // Settings -> Security
 
@@ -889,11 +890,11 @@
 "btc_transaction_sort_mode.bip69.description" = "Лексикографическая Индексация";
 
 "blockchain_settings.info.restore_source" = "Опции Восстановления";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "Этот параметр актуален только при восстановлении существующего кошелька. Это процесс получения истории транзакций для данной монеты, чтобы приложение кошелька могло отображать предыдущие транзакции и определять последний баланс. Это должно произойти только один раз при восстановлении пользователем ранее созданного кошелька. На данный момент у такого мобильного кошелька, как Unstoppable, есть два возможных способа для реализации этого вопроса: \n\n1. С сервера API: существует предопределенный сторонний сервер, на котором размещается вся цепочка блоков, происходит обработка всех данных и их подготовка к быстрому предоставлению. Это быстрый метод, однако он предполагает потенциальное отслеживание IP-адресов и запрашиваемых данных. Этот вариант рекомендуется использовать из-за скорости получения данных (5-10 минут). Он сопряжен с минимальными рисками. Если пользователь восстанавливает данные со своего собственного сервера, то нет никакой угрозы конфиденциальности.\n\n2. Из блокчейна: в этом случае приложение пытается восстановить данные напрямую из p2p-сети узлов блокчейна. Приложение пингует многие из этих узлов и запрашивает у них данные. Потенциально эти узлы могут отслеживать IP-адрес пользователя и сделанные запросы, однако во время восстановления данных приложение может переключаться между узлами. В любое время в сети находится около 10 000 биткойн-узлов. Это медленный вариант обработки данных, она может занять 2-3 часа и приложение должно быть открыто во время их восстановления.";
 "blockchain_settings.info.transaction_inputs_outputs" = "Вводы / выводы транзакций";
 "blockchain_settings.info.transaction_inputs_outputs.content" = "Многие биткойн-транзакции, а также транзакции, осуществляемые в похожих криптовалютах, включая Bitcoin Cash, Dash и Litecoin, генерируют два типа выходных данных. Первый тип выходных данных - это сумма, отправляемая получателю, а второй - сдача, возвращаемая отправителю. Руководствуясь принципом обработки транзакций большинства кошельков, третья сторона может легко понять, какие из выходных данных были отправлены принимающей стороне, а также узнать сумму сдачи, возвращенную отправителю. Поскольку сдача, возвращаемая отправителю, позже используется для осуществлениях других транзакций, связь между этими двумя типами выходных данных становится очевидной.\n\nКошелек Unstoppable применяет специальные меры для сокрытия направлений отправки двух типов выходных данных.\n\nПользователям Unstoppable доступны два варианта устранения этой проблемы:\n\n1. Микширование: Порядок вывода транзакций рандомизируется для каждой транзакции. Сдача может быть первым типом выходных данных,  а иногда, наоборот, вторым. Если пользователь доверяет разработчику приложения, то рекомендуется использовать этот вариант.\n\n2. Детерминирование: существует общепринятый стандарт для упорядочения выходных данных транзакций под названием BIP69. В кошельках с открытым исходным кодом применение этого стандарта гарантирует, что пользователям кошелька не нужно будет полагаться на принцип реализации порядка выходных данных разработчиками приложения. Поскольку этот стандарт является новым, многие кошельки его пока еще не внедрили. Поэтому в блокчейне видно, была ли транзакция отправлена ​​из кошелька с таким стандартом или нет.";
-"blockchain_settings.info.rpc_source" = "RPC Source";
-"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. Unstoppable pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.rpc_source" = "Источник RPC";
+"blockchain_settings.info.rpc_source.content" = "Этот параметр определяет способ взаимодействия приложения с блокчейнами при отправке или получении транзакций.\n\nКогда речь идет о Bitcoin, Bitcoin Cash, Litecoin, и Dash, связь с сетевыми узлами блокчейна полностью равноправна. Unstoppable пингует многие узлы и связывается с одним из них. Каждый раз приложение подключается к другому узлу.\n\nЧто касается Ethereum и Binance Smart Chain, то пока нет подходящих альтернативных вариантов мобильных кошельков для взаимодействия с соответствующими блокчейнами кроме сторонних поставщиков услуг RPC (т.е. Infura.io) или личными узлами Ethereum. Это значит, что ваше взаимодействие с блокчейном не децентрализовано. Это влияет не на ваши средства, а на возможность подключения к сети блокчейн.";
 
 // Manage Accounts
 
@@ -940,7 +941,7 @@
 "appearance.theme.dark" = "Тёмная";
 "appearance.theme.light" = "Светлая";
 
-"appearance.tab_settings" = "Tab Settings";
+"appearance.tab_settings" = "Настройки вкладки";
 "appearance.markets_tab" = "Markets Tab";
 "appearance.launch_screen" = "Запуск Экрана";
 "appearance.launch_screen.auto" = "По умолчанию";
@@ -986,7 +987,7 @@
 "chart.time_duration.halfyear" = "6М";
 "chart.time_duration.year" = "1Г";
 "chart.time_duration.year2" = "2Г";
-"chart.time_duration.all" = "ALL";
+"chart.time_duration.all" = "ВСЕ";
 
 "chart.market_cap" = "Рын. Капитализация";
 "chart.volume" = "Объём (за 24 ч)";
@@ -1012,12 +1013,12 @@
 
 // Create Wallet
 
-"create_wallet.title" = "New Wallet";
-"create_wallet.name" = "Name";
-"create_wallet.advanced_setup" = "Advanced";
-"create_wallet.create" = "Create";
-"create_wallet.advanced" = "Advanced";
-"create_wallet.phrase_count" = "Mnemonic";
+"create_wallet.title" = "Новый кошелек";
+"create_wallet.name" = "Название";
+"create_wallet.advanced_setup" = "Доп. настройки";
+"create_wallet.create" = "Создать";
+"create_wallet.advanced" = "Доп. настройки";
+"create_wallet.phrase_count" = "Мнемоническая фраза";
 "create_wallet.12_words" = "12 слов (рекомендуется)";
 "create_wallet.n_words" = "%@ слов";
 "create_wallet.word_list" = "Список Слов";
@@ -1068,16 +1069,16 @@
 
 "add_token.title" = "Добавить Токен";
 "add_token.blockchain" = "Blockchain";
-"add_token.already_added" = "This token is already in the Coin Manager list";
-"add_token.invalid_contract_address" = "Invalid contract address";
-"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
-"add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
-"add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
-"add_token.input_placeholder.contract_address" = "Contract Address";
-"add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
-"add_token.coin_name" = "Coin Name";
-"add_token.symbol" = "Symbol";
-"add_token.decimals" = "Decimals";
+"add_token.already_added" = "Этот токен уже есть в списке";
+"add_token.invalid_contract_address" = "Неверный адрес контракта";
+"add_token.invalid_bep2_symbol" = "Неверный символ BEP2";
+"add_token.contract_address_not_found" = "Адрес контракта не найден в %@ блокчейне ";
+"add_token.bep2_symbol_not_found" = "Символ BEP2 не найден";
+"add_token.input_placeholder.contract_address" = "Адрес контракта";
+"add_token.input_placeholder.bep2_symbol" = "Символ BEP2";
+"add_token.coin_name" = "Название токена";
+"add_token.symbol" = "Символ";
+"add_token.decimals" = "Десятичные знаки";
 
 // Wallet Connect
 
@@ -1087,14 +1088,14 @@
 "wallet_connect.active_account" = "Активный Кошелек";
 "wallet_connect.address" = "Адрес";
 "wallet_connect.network" = "Сеть";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Адрес";
+"wallet_connect.network" = "Сеть";
 "wallet_connect.list.pending_requests" = "Отложенные Запросы";
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
 "wallet_connect.main.unsupported_chains" = "Некоторые блокчейны не поддерживаются!";
 "wallet_connect.connect_description" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
 "wallet_connect.usage_description" = "Вы можете перейти в браузер. Не закрывайте эту страницу во время использования браузера.";
-"wallet_connect.no_connection" = "Failed to establish a connection. Try reconnecting again.";
+"wallet_connect.no_connection" = "Не удалось установить соединение. Попробуйте переподключиться снова.";
 "wallet_connect.button_reconnect" = "Повторное подключение";
 "wallet_connect.button_disconnect" = "Отсоединить";
 "ethereum_transaction.error.title" = "Ошибка";
@@ -1121,11 +1122,11 @@
 "wallet_connect_list.new_connection" = "Новое Подключение";
 "wallet_connect_list.disconnecting" = "Отсоединение";
 
-"wallet_connect.no_account.description" = "You need to create or import a wallet before you can use WalletConnect.";
+"wallet_connect.no_account.description" = "Вам нужно создать или импортировать кошелек перед использованием WalletConnect.";
 "wallet_connect.no_account.close" = "Закрыть";
-"wallet_connect.unbackuped_account.description" = "You need to backup %@ before you can use WalletConnect";
+"wallet_connect.unbackuped_account.description" = "Вам нужно сделать резервную копию %@ перед использованием WalletConnect";
 
-"wallet_connect.non_supported_account.description" = "Your current wallet type %@ does not support WalletConnect";
+"wallet_connect.non_supported_account.description" = "Ваш текущий тип кошелька %@ не поддерживает WalletConnect";
 "wallet_connect.non_supported_account.switch" = "Перекл.";
 
 "wallet_connect.pending_requests_title" = "Отложенные Запросы";
@@ -1156,13 +1157,13 @@
 "status_info.completed.title" = "Завершено";
 "status_info.confirmed.content" = "Транзакция завершена и считается постоянной и необратимой.";
 "status_info.failed.title" = "Не удалось";
-"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Depending on the fail reason, some failed transactions may consume transaction fees. Transactions that were replaced or canceled by another transaction do not consume transaction fees and will also appear as failed. The Unstoppable app is unable to show the reason for failed transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
+"status_info.failed.content" = "Транзакция не была обработана и передача средств не произошла. В зависимости от причины неудачи, некоторые неудачные транзакции могут использовать комиссию за транзакцию. Транзакции, которые были заменены или отменены другой транзакцией, не потребляют транзакционные сборы и также будут показаны как \"не удалось\". Приложение Unstoppable не может показать причину неудачных транзакций, но пользователи могут посмотреть это в etherscan.io.";
 
 // Onboarding
 
-"onboarding.balance.create" = "New Wallet";
-"onboarding.balance.import" = "Import Wallet";
-"onboarding.balance.watch" = "Watch Wallet";
+"onboarding.balance.create" = "Новый кошелек";
+"onboarding.balance.import" = "Импорт кошелька";
+"onboarding.balance.watch" = "Просмотр кошелька";
 
 // Manage Accounts
 
@@ -1183,7 +1184,7 @@
 
 // Birthday Height
 
-"birthday_height.title" = "Birthday Height";
+"birthday_height.title" = "Блок создания";
 
 // Birthday Input
 
@@ -1200,18 +1201,18 @@
 
 // EVM Network
 
-"evm_network.rpc_source" = "RPC Source";
-"evm_network.added" = "Added";
-"evm_network.add_new" = "Add New";
+"evm_network.rpc_source" = "Источник RPC";
+"evm_network.added" = "Добавлен";
+"evm_network.add_new" = "Добавить новый";
 
 // Add RPC Source
 
-"add_evm_sync_source.title" = "Add RPC Source";
-"add_evm_sync_source.name" = "Name";
+"add_evm_sync_source.title" = "Добавить источник RPC";
+"add_evm_sync_source.name" = "Название";
 "add_evm_sync_source.rpc_url" = "RPC URL";
-"add_evm_sync_source.basic_auth" = "Basic Auth (optional)";
-"add_evm_sync_source.warning.url_exists" = "RPC Source with this url already exists";
-"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: http, https, ws, wss";
+"add_evm_sync_source.basic_auth" = "Базовая авторизация (опц.)";
+"add_evm_sync_source.warning.url_exists" = "RPC Источник с таким url уже существует";
+"add_evm_sync_source.error.invalid_url" = "Введенный url неверен. Допустимый url должен иметь одну из следующих схем: http, https, ws, wss";
 
 // Fee Settings
 
@@ -1244,7 +1245,7 @@
 
 // Watch Address
 
-"watch_address.title" = "Watch Wallet";
+"watch_address.title" = "Просмотр кошелька";
 "watch_address.watch" = "Смотреть";
 "watch_address.address" = "Адрес";
 "watch_address.by" = "Из";
@@ -1253,8 +1254,8 @@
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Введите Account Extended Public Key";
 "watch_address.public_key.invalid_key" = "Неверный Ключ";
-"watch_address.choose_blockchain" = "Choose Blockchain";
-"watch_address.choose_coin" = "Choose Coin";
+"watch_address.choose_blockchain" = "Выбрать блокчейн";
+"watch_address.choose_coin" = "Выбрать токен";
 
 // Nft Collections
 
