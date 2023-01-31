@@ -556,7 +556,7 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominance Bitcoin";
-"market.global.volume_24h.title" = "Volume 24h";
+"market.global.volume_24h.title" = "Volume des dernières 24h";
 "market.global.defi_cap.title" = "Cap DeFi";
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
@@ -1315,18 +1315,14 @@
 "nft_collection.overview.royalty" = "Redevance";
 "nft_collection.overview.inception_date" = "Date de création";
 
+"nft.activity.contracts" = "Contrats";
 "nft.activity.empty_list" = "Aucune activité pour l'instant";
 "nft.activity.event_types" = "Types d'évènement";
 "nft.activity.event_type.all" = "Tous les événements";
-"nft.activity.event_type.list" = "Liste";
 "nft.activity.event_type.sale" = "Vente";
-"nft.activity.event_type.offer" = "Offre saisie";
-"nft.activity.event_type.bid" = "Enchère saisie";
-"nft.activity.event_type.bidCancel" = "Enchère retirée";
 "nft.activity.event_type.transfer" = "Transfert";
-"nft.activity.event_type.approve" = "Approuver";
-"nft.activity.event_type.custom" = "Personnalisé";
-"nft.activity.event_type.payout" = "Versement";
-"nft.activity.event_type.cancel" = "Annuler";
-"nft.activity.event_type.bulkCancel" = "Annuler en bloc";
-"nft.activity.event_type.unknown" = "Inconnu";
+"nft.activity.event_type.mint" = "Mint";
+"nft.activity.event_type.list" = "Liste";
+"nft.activity.event_type.listCancel" = "List Cancel";
+"nft.activity.event_type.offer" = "Offer";
+"nft.activity.event_type.offerCancel" = "Offer Cancel";
