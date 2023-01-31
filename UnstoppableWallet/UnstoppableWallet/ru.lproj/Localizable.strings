@@ -117,7 +117,7 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Old";
+"coin_settings.derivation.title.bip44" = "Старый";
 "coin_settings.derivation.title.bip49" = "Good";
 "coin_settings.derivation.title.bip84" = "Best";
 "coin_settings.title" = "Настройки Блокчейна";
@@ -560,7 +560,7 @@
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 
 "market.global.btc_dominance.title" = "Доминирование Bitcoin";
-"market.global.volume_24h.title" = "Объем Торгов (24ч)";
+"market.global.volume_24h.title" = "Объем торгов (24ч)";
 "market.global.defi_cap.title" = "Капитализация DeFi";
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 "market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка и наоборот.";
@@ -1319,18 +1319,14 @@
 "nft_collection.overview.royalty" = "Вознаграждение";
 "nft_collection.overview.inception_date" = "Дата старта";
 
+"nft.activity.contracts" = "Контракты";
 "nft.activity.empty_list" = "Нет активности";
 "nft.activity.event_types" = "Типы Событий";
 "nft.activity.event_type.all" = "Все События";
-"nft.activity.event_type.list" = "Список";
 "nft.activity.event_type.sale" = "Продажа";
-"nft.activity.event_type.offer" = "Предложение Сделано";
-"nft.activity.event_type.bid" = "Ставка Сделана";
-"nft.activity.event_type.bidCancel" = "Ставка Отозвана";
 "nft.activity.event_type.transfer" = "Перевод";
-"nft.activity.event_type.approve" = "Разрешить";
-"nft.activity.event_type.custom" = "Индивидуальная";
-"nft.activity.event_type.payout" = "Выплата";
-"nft.activity.event_type.cancel" = "Отменить";
-"nft.activity.event_type.bulkCancel" = "Массовая Отмена";
-"nft.activity.event_type.unknown" = "Неизвестная";
+"nft.activity.event_type.mint" = "Минт";
+"nft.activity.event_type.list" = "Список";
+"nft.activity.event_type.listCancel" = "List Cancel";
+"nft.activity.event_type.offer" = "Offer";
+"nft.activity.event_type.offerCancel" = "Offer Cancel";
