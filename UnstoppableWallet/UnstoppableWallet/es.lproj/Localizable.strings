@@ -557,7 +557,7 @@
 
 "market.global.btc_dominance.title" = "Dominio Bitcoin";
 "market.global.volume_24h.title" = "Volumen de 24 horas";
-"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.defi_cap.title" = "Cap. DeFi";
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.btc_dominance.description" = "El cambio histórico en la relación entre el límite de mercado de Bitcoin y el resto de los mercados de criptomonedas. \n\nPor lo general, cuando el dominio de Bitcoin tiende a ser más alto, el resto de las tendencias del mercado de criptomonedas disminuye y viceversa.";
 "market.global.volume_24h.description" = "El cambio histórico en el volumen diario del mercado de operaciones agregadas para todas las criptomonedas.";
@@ -1323,6 +1323,6 @@
 "nft.activity.event_type.transfer" = "Transferir";
 "nft.activity.event_type.mint" = "Mint";
 "nft.activity.event_type.list" = "Lista";
-"nft.activity.event_type.listCancel" = "List Cancel";
-"nft.activity.event_type.offer" = "Offer";
-"nft.activity.event_type.offerCancel" = "Offer Cancel";
+"nft.activity.event_type.listCancel" = "Lista Cancelar";
+"nft.activity.event_type.offer" = "Oferta";
+"nft.activity.event_type.offerCancel" = "Cancelar oferta";
