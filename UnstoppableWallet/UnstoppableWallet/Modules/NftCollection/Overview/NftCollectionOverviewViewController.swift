@@ -260,11 +260,29 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                                 .image32 { (component: ImageComponent) in
                                     component.setImage(urlString: viewItem.iconUrl, placeholder: nil)
                                 },
-                                .text { (component: TextComponent) in
-                                    component.font = .subhead2
-                                    component.textColor = .themeGray
-                                    component.text = viewItem.reference.shortened
-                                },
+                                .vStackCentered([
+                                    .hStack([
+                                        .text { component in
+                                            component.font = .body
+                                            component.textColor = .themeLeah
+                                            component.text = viewItem.name
+                                            component.setContentHuggingPriority(.required, for: .horizontal)
+                                        },
+                                        .margin8,
+                                        .badge { component in
+                                            component.badgeView.set(style: .small)
+                                            component.badgeView.text = viewItem.schema
+                                        },
+                                        .margin0,
+                                        .text { _ in }
+                                    ]),
+                                    .margin(1),
+                                    .text { component in
+                                        component.font = .subhead2
+                                        component.textColor = .themeGray
+                                        component.text = viewItem.reference.shortened
+                                    }
+                                ]),
                                 .secondaryCircleButton { (component: SecondaryCircleButtonComponent) in
                                     component.button.set(image: UIImage(named: "copy_20"))
                                     component.onTap = {

@@ -11,7 +11,7 @@ struct NftActivityModule {
 
         let cellFactory: INftActivityCellFactory
         switch eventListType {
-        case .collection: cellFactory = NftCollectionCellFactory()
+        case .collection(_, let providerUid): cellFactory = NftCollectionCellFactory(providerCollectionUid: providerUid)
         case .asset: cellFactory = NftAssetCellFactory()
         }
 

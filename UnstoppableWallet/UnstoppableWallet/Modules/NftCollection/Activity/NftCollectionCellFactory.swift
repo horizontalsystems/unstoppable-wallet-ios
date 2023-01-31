@@ -3,10 +3,19 @@ import SectionsTableView
 import ComponentKit
 
 class NftCollectionCellFactory: NftAssetCellFactory {
+    private let providerCollectionUid: String
+
+    init(providerCollectionUid: String) {
+        self.providerCollectionUid = providerCollectionUid
+    }
 
     override func action(viewItem: NftActivityViewModel.EventViewItem) -> (() -> ())? {
-        { [weak self] in
-            self?.openAsset(viewItem: viewItem)
+        guard let nftUid = viewItem.nftUid else {
+            return nil
+        }
+
+        return { [weak self] in
+            self?.openAsset(nftUid: nftUid)
         }
     }
 
@@ -27,8 +36,8 @@ class NftCollectionCellFactory: NftAssetCellFactory {
         }
     }
 
-    private func openAsset(viewItem: NftActivityViewModel.EventViewItem) {
-        let module = NftAssetModule.viewController(providerCollectionUid: viewItem.providerCollectionUid, nftUid: viewItem.nftUid)
+    private func openAsset(nftUid: NftUid) {
+        let module = NftAssetModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
         parentNavigationController?.pushViewController(module, animated: true)
     }
 }

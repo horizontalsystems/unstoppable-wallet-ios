@@ -9,7 +9,7 @@ struct NftAssetMetadata {
     let imageUrl: String?
     let previewImageUrl: String?
     let description: String?
-    let nftType: String
+    let contract: NftContractMetadata
     let externalLink: String?
     let providerLink: String?
 

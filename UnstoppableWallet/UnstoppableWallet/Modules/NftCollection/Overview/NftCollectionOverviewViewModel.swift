@@ -48,7 +48,7 @@ class NftCollectionOverviewViewModel {
                 logoImageUrl: collection.imageUrl ?? collection.thumbnailImageUrl,
                 name: collection.name,
                 description: collection.description,
-                contracts: collection.contracts.map { contractViewItem(address: $0) },
+                contracts: collection.contracts.map { contractViewItem(contract: $0) },
                 links: linkViewItems(collection: collection),
                 statsViewItems: statViewItem(collection: collection),
                 royalty: collection.royalty.flatMap { ValueFormatter.instance.format(percentValue: $0, showSign: false) },
@@ -56,11 +56,13 @@ class NftCollectionOverviewViewModel {
         )
     }
 
-    private func contractViewItem(address: String) -> ContractViewItem {
+    private func contractViewItem(contract: NftContractMetadata) -> ContractViewItem {
         ContractViewItem(
                 iconUrl: service.blockchainType.imageUrl,
-                reference: address,
-                explorerUrl: service.blockchain?.explorerUrl.map { $0.replacingOccurrences(of: "$ref", with: address) }
+                name: contract.name,
+                schema: contract.schema,
+                reference: contract.address,
+                explorerUrl: service.blockchain?.explorerUrl.map { $0.replacingOccurrences(of: "$ref", with: contract.address) }
         )
     }
 
@@ -195,6 +197,8 @@ extension NftCollectionOverviewViewModel {
 
     struct ContractViewItem {
         let iconUrl: String
+        let name: String
+        let schema: String
         let reference: String
         let explorerUrl: String?
     }

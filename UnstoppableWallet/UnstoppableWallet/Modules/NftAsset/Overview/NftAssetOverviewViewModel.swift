@@ -59,7 +59,7 @@ class NftAssetOverviewViewModel {
                 description: asset.description,
                 contractAddress: service.nftUid.contractAddress,
                 tokenId: service.nftUid.tokenId,
-                schemaName: asset.nftType,
+                schemaName: asset.contract.schema,
                 blockchain: service.nftUid.blockchainType.uid,
                 links: linkViewItems(asset: asset, collection: collection),
                 sendVisible: item.isOwned
