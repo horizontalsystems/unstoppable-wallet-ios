@@ -56,14 +56,14 @@ class NftActivityViewModel {
         var coinPrice = ""
         var fiatPrice: String?
 
-        if let amount = event.amount {
-            let coinValue = CoinValue(kind: .token(token: amount.token), value: amount.value)
+        if let price = event.price {
+            let coinValue = CoinValue(kind: .token(token: price.token), value: price.value)
             if let value = ValueFormatter.instance.formatShort(coinValue: coinValue) {
                 coinPrice = value
             }
 
             if let priceItem = item.priceItem {
-                fiatPrice = ValueFormatter.instance.formatShort(currency: priceItem.price.currency, value: amount.value * priceItem.price.value)
+                fiatPrice = ValueFormatter.instance.formatShort(currency: priceItem.price.currency, value: price.value * priceItem.price.value)
             }
         }
 
@@ -76,11 +76,10 @@ class NftActivityViewModel {
         }
 
         return EventViewItem(
-                providerCollectionUid: event.asset.providerCollectionUid,
-                nftUid: event.asset.nftUid,
+                nftUid: event.nftUid,
                 type: type,
                 date: DateHelper.instance.formatFullTime(from: event.date),
-                imageUrl: event.asset.previewImageUrl,
+                imageUrl: event.previewImageUrl,
                 coinPrice: coinPrice,
                 fiatPrice: fiatPrice
         )
@@ -164,8 +163,7 @@ extension NftActivityViewModel {
     }
 
     struct EventViewItem {
-        let providerCollectionUid: String
-        let nftUid: NftUid
+        let nftUid: NftUid?
         let type: String
         let date: String
         let imageUrl: String?

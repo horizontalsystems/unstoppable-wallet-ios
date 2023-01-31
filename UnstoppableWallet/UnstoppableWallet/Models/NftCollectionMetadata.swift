@@ -5,7 +5,7 @@ struct NftCollectionMetadata {
     let blockchainType: BlockchainType
 
     let providerUid: String
-    let contracts: [String]
+    let contracts: [NftContractMetadata]
 
     let name: String
     let description: String?

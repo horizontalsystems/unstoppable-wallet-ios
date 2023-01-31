@@ -9,7 +9,7 @@ class NftActivityService {
     private let coinPriceService: WalletCoinPriceService
     private var disposeBag = DisposeBag()
 
-    let filterEventTypes: [NftEventMetadata.EventType] = [.sale, .list, .offer, .bid, .transfer]
+    let filterEventTypes: [NftEventMetadata.EventType] = [.sale, .list, .offer, .transfer, .mint]
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .loading {
@@ -30,6 +30,20 @@ class NftActivityService {
         }
     }
 
+    private let contractIndexRelay = PublishRelay<Int>()
+    var contractIndex: Int = 0 {
+        didSet {
+            if contractIndex != oldValue {
+                contractIndexRelay.accept(contractIndex)
+                queue.async {
+                    self._loadInitial()
+                }
+            }
+        }
+    }
+
+    private(set) var contracts: [NftContractMetadata] = []
+
     private var paginationData: PaginationData?
     private var loadingMore = false
 
@@ -44,8 +58,14 @@ class NftActivityService {
 
     private func single(paginationData: PaginationData? = nil) -> Single<([NftEventMetadata], PaginationData?)> {
         switch eventListType {
-        case let .collection(blockchainType, providerUid): return nftMetadataManager.collectionEventsMetadataSingle(blockchainType: blockchainType, providerUid: providerUid, eventType: eventType, paginationData: paginationData)
-        case let .asset(nftUid): return nftMetadataManager.assetEventsMetadataSingle(nftUid: nftUid, eventType: eventType, paginationData: paginationData)
+        case let .collection(blockchainType, _):
+            if contracts.count > contractIndex {
+                return nftMetadataManager.collectionEventsMetadataSingle(blockchainType: blockchainType, contractAddress: contracts[contractIndex].address, eventType: eventType, paginationData: paginationData)
+            } else {
+                return Single.error(FetchError.noContract)
+            }
+        case let .asset(nftUid):
+            return nftMetadataManager.assetEventsMetadataSingle(nftUid: nftUid, eventType: eventType, paginationData: paginationData)
         }
     }
 
@@ -53,6 +73,27 @@ class NftActivityService {
         disposeBag = DisposeBag()
 
         state = .loading
+
+        switch eventListType {
+        case let .collection(blockchainType, providerUid):
+            if contracts.isEmpty {
+                nftMetadataManager.collectionMetadataSingle(blockchainType: blockchainType, providerUid: providerUid)
+                        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                        .subscribe(onSuccess: { [weak self] collection in
+                            if collection.contracts.isEmpty {
+                                self?.handle(error: FetchError.noContract)
+                            } else {
+                                self?.contracts = collection.contracts
+                                self?.loadInitial()
+                            }
+                        }, onError: { [weak self] error in
+                            self?.handle(error: error)
+                        })
+                        .disposed(by: disposeBag)
+                return
+            }
+        default: ()
+        }
 
         single()
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -124,7 +165,7 @@ class NftActivityService {
         var tokens = Set<Token>()
 
         for item in items {
-            if let amount = item.event.amount {
+            if let amount = item.event.price {
                 tokens.insert(amount.token)
             }
         }
@@ -134,7 +175,7 @@ class NftActivityService {
 
     private func updatePriceItems(items: [Item], map: [String: WalletCoinPriceService.Item]) {
         for item in items {
-            item.priceItem = item.event.amount.flatMap { map[$0.token.coin.uid] }
+            item.priceItem = item.event.price.flatMap { map[$0.token.coin.uid] }
         }
     }
 
@@ -211,6 +252,10 @@ extension NftActivityService {
         init(event: NftEventMetadata) {
             self.event = event
         }
+    }
+
+    enum FetchError: Error {
+        case noContract
     }
 
 }

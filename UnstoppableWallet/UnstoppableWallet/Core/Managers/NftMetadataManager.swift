@@ -7,14 +7,19 @@ import ObjectMapper
 class NftMetadataManager {
     private let storage: NftStorage
     private let providerMap: [BlockchainType: INftProvider]
+    private let eventProviderMap: [BlockchainType: INftEventProvider]
 
     private let addressMetadataRelay = PublishRelay<(NftKey, NftAddressMetadata)>()
 
-    init(networkManager: NetworkManager, marketKit: MarketKit.Kit, appConfigProvider: AppConfigProvider, storage: NftStorage) {
+    init(networkManager: NetworkManager, marketKit: MarketKit.Kit, storage: NftStorage) {
         self.storage = storage
 
         providerMap = [
-            .ethereum: OpenSeaNftProvider(networkManager: networkManager, marketKit: marketKit, appConfigProvider: appConfigProvider)
+            .ethereum: OpenSeaNftProvider(networkManager: networkManager, marketKit: marketKit)
+        ]
+
+        eventProviderMap = [
+            .ethereum: ReservoirNftProvider(networkManager: networkManager, marketKit: marketKit)
         ]
     }
 
@@ -75,19 +80,19 @@ extension NftMetadataManager {
     }
 
     func assetEventsMetadataSingle(nftUid: NftUid, eventType: NftEventMetadata.EventType?, paginationData: PaginationData? = nil) -> Single<([NftEventMetadata], PaginationData?)> {
-        guard let provider = providerMap[nftUid.blockchainType] else {
+        guard let provider = eventProviderMap[nftUid.blockchainType] else {
             return Single.error(ProviderError.noProviderForBlockchainType)
         }
 
         return provider.assetEventsMetadataSingle(nftUid: nftUid, eventType: eventType, paginationData: paginationData)
     }
 
-    func collectionEventsMetadataSingle(blockchainType: BlockchainType, providerUid: String, eventType: NftEventMetadata.EventType?, paginationData: PaginationData? = nil) -> Single<([NftEventMetadata], PaginationData?)> {
-        guard let provider = providerMap[blockchainType] else {
+    func collectionEventsMetadataSingle(blockchainType: BlockchainType, contractAddress: String, eventType: NftEventMetadata.EventType?, paginationData: PaginationData? = nil) -> Single<([NftEventMetadata], PaginationData?)> {
+        guard let provider = eventProviderMap[blockchainType] else {
             return Single.error(ProviderError.noProviderForBlockchainType)
         }
 
-        return provider.collectionEventsMetadataSingle(blockchainType: blockchainType, providerUid: providerUid, eventType: eventType, paginationData: paginationData)
+        return provider.collectionEventsMetadataSingle(blockchainType: blockchainType, contractAddress: contractAddress, eventType: eventType, paginationData: paginationData)
     }
 
     func assetsBriefMetadataSingle(nftUids: Set<NftUid>) -> Single<[NftAssetBriefMetadata]> {
