@@ -207,9 +207,9 @@ class KeyboardAwareViewController: ThemeViewController {
     }
 
     override open func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
-        if !viewControllerToPresent.isKind(of: UISearchController.self) {
+        let stopObserveKeyboard = !viewControllerToPresent.isKind(of: UISearchController.self)  // SearchControllers presenting transparent on parent and need to obsevre parent content
+        if stopObserveKeyboard {
             view.endEditing(true)
-            observeKeyboard(false)
         }
 
         if let programmaticallyDismissedViewController = viewControllerToPresent as? IDismissDelegate {
@@ -219,7 +219,16 @@ class KeyboardAwareViewController: ThemeViewController {
         }
         
         viewControllerToPresent.presentationController?.delegate = self
-        super.present(viewControllerToPresent, animated: flag, completion: completion)
+
+        let awaitClosingKeyboardTime: TimeInterval = keyboardFrame == nil ? 0 : 0.05
+        DispatchQueue.main.asyncAfter(deadline: .now() + awaitClosingKeyboardTime) {    // Time delay needed to handle keyboard dismissing (change insets and accessory position)
+            super.present(viewControllerToPresent, animated: flag) { [weak self] in
+                if stopObserveKeyboard {
+                    self?.observeKeyboard(false)
+                }
+                completion?()
+            }
+        }
     }
 
     func syncContentOffsetIfRequired(textView: UITextView) {
