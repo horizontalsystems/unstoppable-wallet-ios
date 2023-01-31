@@ -42,7 +42,12 @@ class NftActivityService {
         }
     }
 
-    private(set) var contracts: [NftContractMetadata] = []
+    private let contractsRelay = PublishRelay<[NftContractMetadata]>()
+    private(set) var contracts: [NftContractMetadata] = [] {
+        didSet {
+            contractsRelay.accept(contracts)
+        }
+    }
 
     private var paginationData: PaginationData?
     private var loadingMore = false
@@ -215,6 +220,21 @@ extension NftActivityService {
 
     var eventTypeObservable: Observable<NftEventMetadata.EventType?> {
         eventTypeRelay.asObservable()
+    }
+
+    var contractIndexObservable: Observable<Int> {
+        contractIndexRelay.asObservable()
+    }
+
+    var contractsObservable: Observable<[NftContractMetadata]> {
+        contractsRelay.asObservable()
+    }
+
+    var blockchainType: BlockchainType? {
+        switch eventListType {
+        case .collection(let blockchainType, _): return blockchainType
+        default: return nil
+        }
     }
 
     func loadInitial() {

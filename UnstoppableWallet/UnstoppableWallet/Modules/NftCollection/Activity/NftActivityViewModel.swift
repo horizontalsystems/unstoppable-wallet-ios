@@ -9,6 +9,7 @@ class NftActivityViewModel {
     private let disposeBag = DisposeBag()
 
     private let eventTypeRelay = BehaviorRelay<String>(value: "")
+    private let contractRelay = BehaviorRelay<String?>(value: nil)
 
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
@@ -18,6 +19,8 @@ class NftActivityViewModel {
         self.service = service
 
         subscribe(disposeBag, service.eventTypeObservable) { [weak self] in self?.sync(eventType: $0) }
+        subscribe(disposeBag, service.contractsObservable) { [weak self] _ in self?.syncContracts() }
+        subscribe(disposeBag, service.contractIndexObservable) { [weak self] _ in self?.syncContracts() }
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
         sync(eventType: service.eventType)
@@ -26,6 +29,14 @@ class NftActivityViewModel {
 
     private func sync(eventType: NftEventMetadata.EventType?) {
         eventTypeRelay.accept(title(eventType: eventType))
+    }
+
+    private func syncContracts() {
+        if service.contracts.count > 1 {
+            contractRelay.accept(service.contracts[service.contractIndex].name)
+        } else {
+            contractRelay.accept(nil)
+        }
     }
 
     private func sync(state: NftActivityService.State) {
@@ -95,39 +106,15 @@ class NftActivityViewModel {
 
 }
 
-extension NftActivityViewModel: IDropdownFilterHeaderViewModel {
+extension NftActivityViewModel {
 
-    var dropdownTitle: String {
-        "nft.activity.event_types".localized
-    }
-
-    var dropdownViewItems: [AlertViewItem] {
-        var items = [AlertViewItem]()
-
-        items.append(AlertViewItem(text: title(eventType: nil), selected: service.eventType == nil))
-
-        for eventType in service.filterEventTypes {
-            items.append(AlertViewItem(text: title(eventType: eventType), selected: service.eventType == eventType))
-        }
-
-        return items
-    }
-
-    var dropdownValueDriver: Driver<String> {
+    var eventTypeDriver: Driver<String> {
         eventTypeRelay.asDriver()
     }
 
-    func onSelectDropdown(index: Int) {
-        if index == 0 {
-            service.eventType = nil
-        } else {
-            service.eventType = service.filterEventTypes[index - 1]
-        }
+    var contractDriver: Driver<String?> {
+        contractRelay.asDriver()
     }
-
-}
-
-extension NftActivityViewModel {
 
     var viewItemDriver: Driver<ViewItem?> {
         viewItemRelay.asDriver()
@@ -139,6 +126,46 @@ extension NftActivityViewModel {
 
     var syncErrorDriver: Driver<Bool> {
         syncErrorRelay.asDriver()
+    }
+
+    var contractViewItems: [BottomSingleSelectorViewController.ViewItem] {
+        guard let blockchainType = service.blockchainType else {
+            return []
+        }
+
+        return service.contracts.enumerated().map { index, contract in
+            BottomSingleSelectorViewController.ViewItem(
+                    icon: .remote(url: blockchainType.imageUrl, placeholder: nil),
+                    title: contract.name,
+                    subtitle: contract.address.shortened,
+                    badge: contract.schema,
+                    selected: service.contractIndex == index
+            )
+        }
+    }
+
+    var eventTypeViewItems: [AlertViewItem] {
+        var items = [AlertViewItem]()
+
+        items.append(AlertViewItem(text: title(eventType: nil), selected: service.eventType == nil))
+
+        for eventType in service.filterEventTypes {
+            items.append(AlertViewItem(text: title(eventType: eventType), selected: service.eventType == eventType))
+        }
+
+        return items
+    }
+
+    func onSelectEventType(index: Int) {
+        if index == 0 {
+            service.eventType = nil
+        } else {
+            service.eventType = service.filterEventTypes[index - 1]
+        }
+    }
+
+    func onSelectContract(index: Int) {
+        service.contractIndex = index
     }
 
     func onLoad() {
