@@ -5,7 +5,7 @@
 "button.continue" = "Devam";
 "button.done" = "Bitti";
 "button.reset" = "Sıfırla";
-"button.import" = "Import";
+"button.import" = "Geri Yükle";
 "button.next" = "İleri";
 "button.share" = "Paylaş";
 "button.paste" = "Yapıştır";
@@ -40,10 +40,10 @@
 "alert.added_to_wallet" = "Cüzdana Eklendi";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
-"alert.copied" = "Copied";
+"alert.copied" = "Kopyalandı";
 "alert.created" = "Oluşturuldu";
-"alert.imported" = "Imported";
-"alert.wallet_added" = "Wallet Added";
+"alert.imported" = "Geri yüklendi";
+"alert.wallet_added" = "Cüzdan Eklendi";
 "alert.deleted" = "Sil";
 "alert.waiting_for_session" = "Oturum bekleniyor";
 "alert.try_again" = "Tekrar deneyin";
