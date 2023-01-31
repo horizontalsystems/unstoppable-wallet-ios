@@ -95,9 +95,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Restore
 
-"restore.title" = "Import Wallet";
-"restore.advanced" = "Advanced";
-"restore.import_by" = "Import By";
+"restore.title" = "Cuzdan Yükle";
+"restore.advanced" = "İleri düzey";
+"restore.import_by" = "Yükleme seç";
 "restore.restore_type.mnemonic" = "Kurtarma cümlesi";
 "restore.restore_type.private_key" = "Gizli Anahtar";
 "restore.mnemonic.placeholder" = "12, 15, 18, 21 veya 24 kelime girin";
@@ -459,7 +459,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "market.tvl.platform_field.all" = "All";
 
-"market.sort_by" = "Sort By";
+"market.sort_by" = "Sırala";
 
 "market.top.title" = "Top Coins";
 "market.top.description" = "Top Coins by market cap rank";
@@ -1014,9 +1014,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "create_wallet.title" = "Yeni Cüzdan";
 "create_wallet.name" = "İsim";
-"create_wallet.advanced_setup" = "Advanced";
+"create_wallet.advanced_setup" = "İleri düzey";
 "create_wallet.create" = "Create";
-"create_wallet.advanced" = "Advanced";
+"create_wallet.advanced" = "İleri düzey";
 "create_wallet.phrase_count" = "Mnemonic";
 "create_wallet.12_words" = "12 kelimeler (Tavsiye edilen)";
 "create_wallet.n_words" = "%@ kelime";
@@ -1073,7 +1073,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
 "add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
 "add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
-"add_token.input_placeholder.contract_address" = "Contract Address";
+"add_token.input_placeholder.contract_address" = "Sözleşme Adresi";
 "add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
 "add_token.coin_name" = "Coin Name";
 "add_token.symbol" = "Symbol";
@@ -1160,8 +1160,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Onboarding
 
-"onboarding.balance.create" = "New Wallet";
-"onboarding.balance.import" = "Import Wallet";
+"onboarding.balance.create" = "Yeni Cüzdan";
+"onboarding.balance.import" = "Cuzdan Yükle";
 "onboarding.balance.watch" = "Watch Wallet";
 
 // Manage Accounts
@@ -1254,7 +1254,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "watch_address.public_key.placeholder" = "Account Extended Public Key ";
 "watch_address.public_key.invalid_key" = "Geçersiz Anahtar";
 "watch_address.choose_blockchain" = "Blockchain Seç";
-"watch_address.choose_coin" = "Choose Coin";
+"watch_address.choose_coin" = "Kripto Parayı Seç";
 
 // Nft Collections
 
@@ -1318,18 +1318,14 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "nft_collection.overview.royalty" = "Royalty";
 "nft_collection.overview.inception_date" = "Başlangıç ​​tarihi";
 
+"nft.activity.contracts" = "Contracts";
 "nft.activity.empty_list" = "Henüz öğe etkinliği yok";
 "nft.activity.event_types" = "Etkinlik Türleri";
 "nft.activity.event_type.all" = "Tüm Etkinlikler";
-"nft.activity.event_type.list" = "Liste";
 "nft.activity.event_type.sale" = "İndirim";
-"nft.activity.event_type.offer" = "Son Teklif Girildi";
-"nft.activity.event_type.bid" = "Teklif Girildi";
-"nft.activity.event_type.bidCancel" = "Teklif Geri Çekildi";
 "nft.activity.event_type.transfer" = "Aktar";
-"nft.activity.event_type.approve" = "Onayla";
-"nft.activity.event_type.custom" = "Özel";
-"nft.activity.event_type.payout" = "Ödeme";
-"nft.activity.event_type.cancel" = "İptal";
-"nft.activity.event_type.bulkCancel" = "Toplu İptal";
-"nft.activity.event_type.unknown" = "Bilinmeyen";
+"nft.activity.event_type.mint" = "Mint";
+"nft.activity.event_type.list" = "Liste";
+"nft.activity.event_type.listCancel" = "List Cancel";
+"nft.activity.event_type.offer" = "Offer";
+"nft.activity.event_type.offerCancel" = "Offer Cancel";
