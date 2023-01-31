@@ -110,7 +110,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "restore.passphrase_description" = "Bu anımsatıcı ifadeyi oluştururken kullandığınız parolayı girin. Mevcut bir cüzdanı yeni bir parolayla geri yüklemek, yepyeni bir cüzdan oluşturur.";
 "restore.error.empty_passphrase" = "Şifre boş bırakılamaz";
 "restore.non_standard_import" = "Standart Olmayan Yükleme";
-"restore.non_standard_import.description" = "This page provides a special wallet import mechanism to Unstoppable users who have a non-standard wallet. Such wallets might have been created in Unstoppable version 0.27 - 0.28 using a non-English mnemonic word list and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
+"restore.non_standard_import.description" = "Bu sayfa, standart olmayan bir cüzdanı olan Unstoppable kullanıcıları için özel geri yükleme mekanizması sağlar. Genel olarak, bu tür cüzdanlar, İngilizce olmayan bir anımsatma kelimeleri listesi ve/veya cüzdan şifresinde özel bir karakter (yani aksan simgesi) kullanılarak Unstoppable 0.27 - 0.28 sürümünde oluşturulmuş olabilir.\n\n Bu durumdan etkilenen bir kullanıcıysanız, 0.29 sürümüne güncelledikten sonra cüzdan bakiyeniz 0 olarak görüntülenir. Bu sayfa, standart olmayan cüzdanınıza erişimi geri yüklemenizi sağlayacaktır. Geri yüklendikten sonra, yeni bir cüzdan oluşturmanız (standartlarla uyumlu) ve paranızı oraya taşımanız önerilir.";
 "restore.warning.non_recommended.description" = "Bu cüzdan, gizli sözcükler listesinde ve/veya bir şifrede standart olmayan bir karakter kullanıyor gibi görünüyor. Bir bakiye veya işlem göremiyorsanız lütfen bilgi için aşağıya bakınız.\n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYINIZ";
 "restore.error.non_standard.description" = "Bu standart olmayan bir cüzdandır. \n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYIN";
 
@@ -192,7 +192,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Backup Prompt
 
 "backup_prompt.title" = "Cüzdanı yedekle";
-"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.warning" = "Kurtarma ifadesinin bir kopyasını oluşturarak bu cüzdanı yedekleyin. Telefonunuzun kaybolması, çalınması, kırılması vb. durumlarda cüzdana erişmek için gerekli olacaktır.";
 "backup_prompt.backup" = "Yedekle";
 "backup_prompt.later" = "Sonra";
 
@@ -305,7 +305,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.fee" = "Ücret";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.send_button" = "Gönder";
-"send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.resend_description" = "Bunu yapmak, daha yüksek bir ücretle işlemi yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
 "send.confirmation.resend_button" = "Yeniden Gönder";
 "send.confirmation.cancel_description" = "Bunu yapmak, kendine yeni bir 0 tutarlı işlemi olarak yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
 "send.confirmation.cancel_button" = "İşlemi İptal Et";
@@ -388,7 +388,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "swap.advanced_settings.error.invalid_deadline" = "Geçersiz Son Tarih";
 
 "swap.one_inch.error.cannot_estimate" = "Tahmin Hatası";
-"swap.one_inch.error.cannot_estimate.info" = "Check the balance to ensure there is enough %@ to cover the fee. Or try increasing the price slippage amount and try again. Will auto-retry in 3 sec...";
+"swap.one_inch.error.cannot_estimate.info" = "Hata! Bakiyeyi kontrol edin ve ücreti karşılayacak kadar %@ olduğundan emin olun. Veya fiyat kayma miktarını artırmayı deneyin ve tekrar deneyin. 3 saniye sonra tekrar denenecektir...";
 "swap.one_inch.error.insufficient_liquidity" = "Likidite Yetersiz";
 "swap.one_inch.error.insufficient_liquidity.info" = "Muhtemelen bu işlemin gerçekleşmesi için yeterli likidite mevcut değil. Tutarı düşürmeyi deneyin.";
 
@@ -1024,7 +1024,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "create_wallet.passphrase" = "Parola";
 "create_wallet.input.passphrase" = "Parola";
 "create_wallet.input.confirm" = "Onayla";
-"create_wallet.passphrase_description" = "Passphrases add an additional security layer for wallets. To restore such a wallet a user required both mnemonic as well as a passphrase.\n\nPassphrases also make it easy for users to have many multi-coin wallets using a single mnemonic but different password.";
+"create_wallet.passphrase_description" = "Parolalar, cüzdanlar için ek bir güvenlik katmanı ekler. Bir cüzdanı geri yüklemek için bir kullanıcı hem anımsatıcı hem de bir parola gerektiriyordu.\n\n\nParolalar, kullanıcıların tek bir anımsatıcı ancak farklı bir parola kullanarak çok paralı cüzdanlara sahip olmalarını da kolaylaştırır.";
 "create_wallet.error.empty_passphrase" = "Parola boş olamaz";
 "create_wallet.error.forbidden_symbols" = "Lütfen yalnızca desteklenen sembolleri kullanın:  A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Parola onayı eşleşmiyor";
@@ -1071,7 +1071,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "add_token.already_added" = "Bu token zaten kripto para yöneticisi listesindedir";
 "add_token.invalid_contract_address" = "Geçersiz sözleşme adresi";
 "add_token.invalid_bep2_symbol" = "Geçersiz BEP2 symbolu";
-"add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
+"add_token.contract_address_not_found" = "Sözleşme adresi %@ blockchain'de bulunamadı";
 "add_token.bep2_symbol_not_found" = "BEP2 sembolü bulunamadı";
 "add_token.input_placeholder.contract_address" = "Sözleşme Adresi";
 "add_token.input_placeholder.bep2_symbol" = "BEP2 sembolü";
@@ -1123,7 +1123,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "wallet_connect.no_account.description" = "WalletConnect'i kullanmadan önce bir cüzdan oluşturmanız veya içe aktarmanız gerekir.";
 "wallet_connect.no_account.close" = "Kapat";
-"wallet_connect.unbackuped_account.description" = "You need to backup %@ before you can use WalletConnect";
+"wallet_connect.unbackuped_account.description" = "WalletConnect'i kullanmadan önce %@ yedeklemeniz gerekir";
 
 "wallet_connect.non_supported_account.description" = "Mevcut cüzdan türünüz %@ WalletConnect'i desteklemiyor";
 "wallet_connect.non_supported_account.switch" = "Değiştir";
