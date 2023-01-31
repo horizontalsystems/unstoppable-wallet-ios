@@ -1315,18 +1315,14 @@
 "nft_collection.overview.royalty" = "고귀함";
 "nft_collection.overview.inception_date" = "개시일";
 
+"nft.activity.contracts" = "Contracts";
 "nft.activity.empty_list" = "아직 항목 활동이 없습니다";
 "nft.activity.event_types" = "이벤트 유형";
 "nft.activity.event_type.all" = "모든 이벤트";
-"nft.activity.event_type.list" = "목록";
 "nft.activity.event_type.sale" = "판매";
-"nft.activity.event_type.offer" = "입력된 제안";
-"nft.activity.event_type.bid" = "입력된 입찰가";
-"nft.activity.event_type.bidCancel" = "입찰 철회";
 "nft.activity.event_type.transfer" = "전송";
-"nft.activity.event_type.approve" = "승인";
-"nft.activity.event_type.custom" = "사용자 지정";
-"nft.activity.event_type.payout" = "지불";
-"nft.activity.event_type.cancel" = "취소";
-"nft.activity.event_type.bulkCancel" = "대량 취소";
-"nft.activity.event_type.unknown" = "알 수 없음";
+"nft.activity.event_type.mint" = "민트";
+"nft.activity.event_type.list" = "목록";
+"nft.activity.event_type.listCancel" = "List Cancel";
+"nft.activity.event_type.offer" = "Offer";
+"nft.activity.event_type.offerCancel" = "Offer Cancel";
