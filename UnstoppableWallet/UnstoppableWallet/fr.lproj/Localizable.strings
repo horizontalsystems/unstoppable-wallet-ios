@@ -104,7 +104,7 @@
 "restore.checksum_error" = "Somme de contrôle invalide";
 "restore.passphrase" = "Phrase d'authentification";
 "restore.input.passphrase" = "Phrase d'authentification";
-"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet with a new passphrase will generate a brand-new wallet.";
+"restore.passphrase_description" = "Entrez la phrase d'authentification que vous avez utilisée pour créer cette phrase mnémonique.";
 "restore.error.empty_passphrase" = "La phrase d'authentification ne peut pas être une valeur vide";
 "restore.non_standard_import" = "Restauration non-standard";
 "restore.non_standard_import.description" = "Sur cette page, vous trouverez un mécanisme spécial de restauration de portefeuille pour les utilisateurs d'Unstoppable dont le portefeuille n'est pas standard. En général, de tels portefeuilles ont été créés dans la version 0.27 - 0.28 d'Unstoppable en utilisant une liste de mots mnémoniques non-anglais et/ou un caractère spécial dans la phrase de passe du portefeuille (c'est-à-dire un symbole diacritique).\n\nSi vous êtes un utilisateur concerné, le solde de votre portefeuille sera affiché à 0 après la restauration de ce portefeuille dans la version 0.29 ou supérieure. Grâce à cette page, vous pourrez restaurer l'accès à votre portefeuille non-standard. Une fois la restauration effectuée, il est conseillé de créer un nouveau portefeuille (qui sera conforme aux normes) et d'y transférer vos fonds.";
@@ -1323,6 +1323,6 @@
 "nft.activity.event_type.transfer" = "Transfert";
 "nft.activity.event_type.mint" = "Mint";
 "nft.activity.event_type.list" = "Liste";
-"nft.activity.event_type.listCancel" = "List Cancel";
-"nft.activity.event_type.offer" = "Offer";
-"nft.activity.event_type.offerCancel" = "Offer Cancel";
+"nft.activity.event_type.listCancel" = "Annuler la liste";
+"nft.activity.event_type.offer" = "Offre";
+"nft.activity.event_type.offerCancel" = "Offre annulée";
