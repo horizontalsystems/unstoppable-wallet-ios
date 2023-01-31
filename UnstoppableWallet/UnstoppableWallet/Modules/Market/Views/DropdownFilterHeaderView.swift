@@ -12,7 +12,7 @@ protocol IDropdownFilterHeaderViewModel: AnyObject {
     func onSelectDropdown(index: Int)
 }
 
-class DropdownFilterHeaderView: UITableViewHeaderFooterView {
+class DropdownFilterHeaderView: UIView {
     private let viewModel: IDropdownFilterHeaderViewModel
     private let disposeBag = DisposeBag()
 
@@ -23,14 +23,13 @@ class DropdownFilterHeaderView: UITableViewHeaderFooterView {
     init(viewModel: IDropdownFilterHeaderViewModel, hasTopSeparator: Bool = true) {
         self.viewModel = viewModel
 
-        super.init(reuseIdentifier: nil)
+        super.init(frame: .zero)
 
-        backgroundView = UIView()
-        backgroundView?.backgroundColor = .themeNavigationBarBackground
+        backgroundColor = .themeNavigationBarBackground
 
         if hasTopSeparator {
             let separatorView = UIView()
-            contentView.addSubview(separatorView)
+            addSubview(separatorView)
             separatorView.snp.makeConstraints { maker in
                 maker.leading.trailing.equalToSuperview()
                 maker.top.equalToSuperview()
@@ -40,7 +39,7 @@ class DropdownFilterHeaderView: UITableViewHeaderFooterView {
             separatorView.backgroundColor = .themeSteel20
         }
 
-        contentView.addSubview(dropdownButton)
+        addSubview(dropdownButton)
         dropdownButton.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
             maker.centerY.equalToSuperview()

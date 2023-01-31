@@ -14,7 +14,7 @@ class NftActivityViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .plain)
     private let headerView: DropdownFilterHeaderView
-    private let wrapperView = UIView()
+    private let spinnerWrapper = UIView()
     private let spinner = HUDActivityView.create(with: .medium24)
     private let emptyView = PlaceholderView()
     private let errorView = PlaceholderViewModule.reachabilityView()
@@ -51,37 +51,6 @@ class NftActivityViewController: ThemeViewController {
         }
 
         view.addSubview(tableView)
-        view.addSubview(wrapperView)
-
-        wrapperView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-            maker.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-
-        wrapperView.addSubview(spinner)
-        spinner.snp.makeConstraints { maker in
-            maker.center.equalToSuperview()
-        }
-
-        spinner.startAnimating()
-
-        wrapperView.addSubview(errorView)
-        errorView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
-
-        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
-
-        view.addSubview(emptyView)
-        emptyView.snp.makeConstraints { maker in
-            maker.top.equalTo(headerView.snp.bottom)
-            maker.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-
-        emptyView.isHidden = true
-        emptyView.image = UIImage(named: "outgoing_raw_48")
-        emptyView.text = "nft.activity.empty_list".localized
-
         tableView.snp.makeConstraints { maker in
             maker.top.equalTo(headerView.snp.bottom)
             maker.leading.trailing.bottom.equalToSuperview()
@@ -95,6 +64,41 @@ class NftActivityViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: SpinnerCell.self)
+
+        view.addSubview(spinnerWrapper)
+
+        spinnerWrapper.snp.makeConstraints { maker in
+            maker.top.equalTo(headerView.snp.bottom)
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        spinnerWrapper.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        spinner.startAnimating()
+
+        view.addSubview(errorView)
+        errorView.snp.makeConstraints { maker in
+            maker.top.equalTo(headerView.snp.bottom)
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
+
+        view.addSubview(emptyView)
+        emptyView.snp.makeConstraints { maker in
+            maker.top.equalTo(headerView.snp.bottom)
+            maker.leading.trailing.equalToSuperview()
+            maker.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        emptyView.isHidden = true
+        emptyView.image = UIImage(named: "outgoing_raw_48")
+        emptyView.text = "nft.activity.empty_list".localized
 
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItem: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] loading in
@@ -114,7 +118,7 @@ class NftActivityViewController: ThemeViewController {
     private func sync(viewItem: NftActivityViewModel.ViewItem?) {
         self.viewItem = viewItem
         tableView.reload()
-        wrapperView.isHidden = viewItem != nil
+        spinnerWrapper.isHidden = viewItem != nil
         emptyView.isHidden = !(viewItem.map { $0.eventViewItems.isEmpty && $0.allLoaded } ?? false)
     }
 
