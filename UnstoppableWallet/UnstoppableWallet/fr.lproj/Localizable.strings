@@ -104,7 +104,7 @@
 "restore.checksum_error" = "Somme de contrôle invalide";
 "restore.passphrase" = "Phrase d'authentification";
 "restore.input.passphrase" = "Phrase d'authentification";
-"restore.passphrase_description" = "Entrez la phrase d'authentification que vous avez utilisée pour créer cette phrase mnémonique.";
+"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet with a new passphrase will generate a brand-new wallet.";
 "restore.error.empty_passphrase" = "La phrase d'authentification ne peut pas être une valeur vide";
 "restore.non_standard_import" = "Restauration non-standard";
 "restore.non_standard_import.description" = "Sur cette page, vous trouverez un mécanisme spécial de restauration de portefeuille pour les utilisateurs d'Unstoppable dont le portefeuille n'est pas standard. En général, de tels portefeuilles ont été créés dans la version 0.27 - 0.28 d'Unstoppable en utilisant une liste de mots mnémoniques non-anglais et/ou un caractère spécial dans la phrase de passe du portefeuille (c'est-à-dire un symbole diacritique).\n\nSi vous êtes un utilisateur concerné, le solde de votre portefeuille sera affiché à 0 après la restauration de ce portefeuille dans la version 0.29 ou supérieure. Grâce à cette page, vous pourrez restaurer l'accès à votre portefeuille non-standard. Une fois la restauration effectuée, il est conseillé de créer un nouveau portefeuille (qui sera conforme aux normes) et d'y transférer vos fonds.";
@@ -556,7 +556,7 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominance Bitcoin";
-"market.global.volume_24h.title" = "Volume des dernières 24h";
+"market.global.volume_24h.title" = "Volume 24h";
 "market.global.defi_cap.title" = "Cap DeFi";
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
@@ -1084,7 +1084,7 @@
 "wallet_connect.active_account" = "Activer le portefeuille";
 "wallet_connect.address" = "Adresse";
 "wallet_connect.network" = "Réseau";
-"wallet_connect.address" = "Adresse";
+"wallet_connect.address" = "Adresses";
 "wallet_connect.network" = "Réseau";
 "wallet_connect.list.pending_requests" = "Demandes en attente";
 "wallet_connect.main.no_any_supported_chains" = "Aucune chaîne prise en charge !";
