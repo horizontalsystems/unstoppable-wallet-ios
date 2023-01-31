@@ -13,7 +13,7 @@ class NftActivityViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .plain)
-    private let headerView: DropdownFilterHeaderView
+    private let headerView: NftActivityHeaderView
     private let spinnerWrapper = UIView()
     private let spinner = HUDActivityView.create(with: .medium24)
     private let emptyView = PlaceholderView()
@@ -30,7 +30,7 @@ class NftActivityViewController: ThemeViewController {
     init(viewModel: NftActivityViewModel, cellFactory: INftActivityCellFactory) {
         self.viewModel = viewModel
         self.cellFactory = cellFactory
-        headerView = DropdownFilterHeaderView(viewModel: viewModel, hasTopSeparator: false)
+        headerView = NftActivityHeaderView(viewModel: viewModel)
 
         super.init()
 
