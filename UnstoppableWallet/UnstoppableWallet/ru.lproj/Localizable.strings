@@ -106,7 +106,7 @@
 "restore.checksum_error" = "Неверная контрольная сумма";
 "restore.passphrase" = "Кодовая Фраза";
 "restore.input.passphrase" = "Кодовая Фраза";
-"restore.passphrase_description" = "Enter the passphrase you used when creating this mnemonic phrase. Restoring an existing wallet with a new passphrase will generate a brand-new wallet.";
+"restore.passphrase_description" = "Введите свою кодовую фразу, которую вы использовали при создании этой мнемонической фразы.";
 "restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "restore.non_standard_import" = "Нестандартный импорт";
 "restore.non_standard_import.description" = "На этой странице представлен специальный механизм восстановления кошелька для пользователей Unstoppable с нестандартным кошельком. Как правило, такие кошельки могли быть созданы в версиях Unstoppable 0.27–0.28 с использованием неанглоязычного списка мнемонических слов и/или специального символа в парольной фразе кошелька (например, диакритического знака).
@@ -118,8 +118,8 @@
 // Coin Settings
 
 "coin_settings.derivation.title.bip44" = "Старый";
-"coin_settings.derivation.title.bip49" = "Good";
-"coin_settings.derivation.title.bip84" = "Best";
+"coin_settings.derivation.title.bip49" = "Новый";
+"coin_settings.derivation.title.bip84" = "Новейший";
 "coin_settings.title" = "Настройки Блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (рекомендуется)";
