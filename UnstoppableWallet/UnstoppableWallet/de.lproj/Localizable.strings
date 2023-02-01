@@ -1316,18 +1316,14 @@
 "nft_collection.overview.royalty" = "Royalty";
 "nft_collection.overview.inception_date" = "Inception Date";
 
+"nft.activity.contracts" = "Contracts";
 "nft.activity.empty_list" = "Noch keine Artikel-Aktivität";
 "nft.activity.event_types" = "Ereignistypen";
 "nft.activity.event_type.all" = "Alle Ereignisse";
-"nft.activity.event_type.list" = "Liste";
 "nft.activity.event_type.sale" = "Sale";
-"nft.activity.event_type.offer" = "Angebot eingegeben";
-"nft.activity.event_type.bid" = "Gebot eingegeben";
-"nft.activity.event_type.bidCancel" = "Bid Withdrawn";
 "nft.activity.event_type.transfer" = "Transfer";
-"nft.activity.event_type.approve" = "Bestätigen";
-"nft.activity.event_type.custom" = "Custom";
-"nft.activity.event_type.payout" = "Auszahlung";
-"nft.activity.event_type.cancel" = "Abbrechen";
-"nft.activity.event_type.bulkCancel" = "Massenabbruch";
-"nft.activity.event_type.unknown" = "Unbekannt";
+"nft.activity.event_type.mint" = "Mint";
+"nft.activity.event_type.list" = "Liste";
+"nft.activity.event_type.listCancel" = "Liste abbrechen";
+"nft.activity.event_type.offer" = "Angebot";
+"nft.activity.event_type.offerCancel" = "Angebot abbrechen";

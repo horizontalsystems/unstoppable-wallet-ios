@@ -1317,18 +1317,14 @@
 "nft_collection.overview.royalty" = "荣耀";
 "nft_collection.overview.inception_date" = "起始日期";
 
+"nft.activity.contracts" = "合约";
 "nft.activity.empty_list" = "还没有项目活动";
 "nft.activity.event_types" = "事件类型";
 "nft.activity.event_type.all" = "全部事件";
-"nft.activity.event_type.list" = "列表";
 "nft.activity.event_type.sale" = "出售";
-"nft.activity.event_type.offer" = "已输入报价";
-"nft.activity.event_type.bid" = "已输入出价";
-"nft.activity.event_type.bidCancel" = "已撤回出价";
 "nft.activity.event_type.transfer" = "转帐";
-"nft.activity.event_type.approve" = "批准请求";
-"nft.activity.event_type.custom" = "自定义";
-"nft.activity.event_type.payout" = "支出";
-"nft.activity.event_type.cancel" = "取消";
-"nft.activity.event_type.bulkCancel" = "批量取消";
-"nft.activity.event_type.unknown" = "未知";
+"nft.activity.event_type.mint" = "薄荷绿";
+"nft.activity.event_type.list" = "列表";
+"nft.activity.event_type.listCancel" = "取消列表";
+"nft.activity.event_type.offer" = "报价";
+"nft.activity.event_type.offerCancel" = "取消报价";

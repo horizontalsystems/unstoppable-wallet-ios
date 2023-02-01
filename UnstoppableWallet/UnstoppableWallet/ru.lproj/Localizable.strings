@@ -117,16 +117,16 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Old";
-"coin_settings.derivation.title.bip49" = "Good";
-"coin_settings.derivation.title.bip84" = "Best";
+"coin_settings.derivation.title.bip44" = "Старый";
+"coin_settings.derivation.title.bip49" = "Новый";
+"coin_settings.derivation.title.bip84" = "Новейший";
 "coin_settings.title" = "Настройки Блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (рекомендуется)";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "Было до 2018 года";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "Применяется после 2018 года";
 "sync_mode.from_blockchain" = "Из Блокчейна";
-"blockchain_settings.description" = "Select the address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
+"blockchain_settings.description" = "Выберите формат адреса для получения средств. При восстановлении существующего кошелька должен быть выбран правильный формат.";
 
 // Coin Platforms
 
@@ -193,7 +193,7 @@
 // Backup Prompt
 
 "backup_prompt.title" = "Резервная Копия";
-"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.warning" = "Сделайте резервную копию этого кошелька, создав копию его фразы восстановления. Это будет необходимо для доступа к кошельку, если ваш телефон утерян, украден, повреждён и т.д.";
 "backup_prompt.backup" = "Резервная копия";
 "backup_prompt.later" = "Позже";
 
@@ -851,11 +851,11 @@
 "terms.title" = "Условия Использования";
 "terms.i_agree" = "Я принимаю";
 
-"terms.item.1" = "Securely backup recovery phrases for each wallet. It's the only way to regain access to funds if the app malfunctions.";
-"terms.item.2" = "The wallet recovery phrases are randomly generated on the device during setup and are not stored elsewhere.";
-"terms.item.3" = "Disabling unlock PIN (code) on the smartphone deletes all wallets from the app. Recovery phrases will be needed to restore access to funds.";
-"terms.item.4" = "Jailbreaking (rooting), using outdated OS, and installing apps from unknown sources may endanger the safety of funds.";
-"terms.item.5" = "There may be undiscovered software issues in the code powering this app which may cause the app to malfunction.";
+"terms.item.1" = "Безопасное резервное копирование фраз для каждого кошелька. Это единственный способ восстановить доступ к средствам, если приложение не работает.";
+"terms.item.2" = "Фразы восстановления кошелька генерируются случайным образом на устройстве во время установки и не хранятся в другом месте.";
+"terms.item.3" = "Отключение PIN-кода разблокировки на смартфоне удаляет все кошельки из приложения. Для восстановления доступа к средствам потребуется восстановление фраз.";
+"terms.item.4" = "Jailbreaking (rooting), использование устаревших ОС и установка приложений из неизвестных источников могут поставить под угрозу безопасность средств.";
+"terms.item.5" = "В процессе работы кода могут возникнуть проблемы с программным обеспечением, что может привести к сбоям приложения.";
 
 // Settings -> Tell Friends
 
@@ -942,7 +942,7 @@
 "appearance.theme.light" = "Светлая";
 
 "appearance.tab_settings" = "Настройки вкладки";
-"appearance.markets_tab" = "Markets Tab";
+"appearance.markets_tab" = "Вкладка Рынки";
 "appearance.launch_screen" = "Запуск Экрана";
 "appearance.launch_screen.auto" = "По умолчанию";
 "appearance.launch_screen.balance" = "Баланс";
@@ -1025,7 +1025,7 @@
 "create_wallet.passphrase" = "Кодовая Фраза";
 "create_wallet.input.passphrase" = "Кодовая Фраза";
 "create_wallet.input.confirm" = "Подтвердить";
-"create_wallet.passphrase_description" = "Passphrases add an additional security layer for wallets. To restore such a wallet a user required both mnemonic as well as a passphrase.\n\nPassphrases also make it easy for users to have many multi-coin wallets using a single mnemonic but different password.";
+"create_wallet.passphrase_description" = "Кодовая фраза добавляет дополнительный слой безопасности для кошельков. Чтобы восстановить такой кошелек требуется как мнемоник, так и кодовая фраза.\n\\Кодовая фраза также облегчает пользователям возможность иметь множество мульти-монетных кошельков, используя одну фразу восстановления, но другой пароль.";
 "create_wallet.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "create_wallet.error.forbidden_symbols" = "Пожалуйста, используйте только поддерживаемые символы: A-Z a-z 0-9 ' \" ` & / ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Подтвержденная кодовая фраза не совпадает";
@@ -1319,18 +1319,14 @@
 "nft_collection.overview.royalty" = "Вознаграждение";
 "nft_collection.overview.inception_date" = "Дата старта";
 
+"nft.activity.contracts" = "Контракты";
 "nft.activity.empty_list" = "Нет активности";
 "nft.activity.event_types" = "Типы Событий";
 "nft.activity.event_type.all" = "Все События";
-"nft.activity.event_type.list" = "Список";
 "nft.activity.event_type.sale" = "Продажа";
-"nft.activity.event_type.offer" = "Предложение Сделано";
-"nft.activity.event_type.bid" = "Ставка Сделана";
-"nft.activity.event_type.bidCancel" = "Ставка Отозвана";
 "nft.activity.event_type.transfer" = "Перевод";
-"nft.activity.event_type.approve" = "Разрешить";
-"nft.activity.event_type.custom" = "Индивидуальная";
-"nft.activity.event_type.payout" = "Выплата";
-"nft.activity.event_type.cancel" = "Отменить";
-"nft.activity.event_type.bulkCancel" = "Массовая Отмена";
-"nft.activity.event_type.unknown" = "Неизвестная";
+"nft.activity.event_type.mint" = "Минт";
+"nft.activity.event_type.list" = "Список";
+"nft.activity.event_type.listCancel" = "List Cancel";
+"nft.activity.event_type.offer" = "Предложение";
+"nft.activity.event_type.offerCancel" = "Предложение отменено";

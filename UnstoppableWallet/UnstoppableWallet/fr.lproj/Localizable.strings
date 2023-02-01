@@ -1084,7 +1084,7 @@
 "wallet_connect.active_account" = "Activer le portefeuille";
 "wallet_connect.address" = "Adresse";
 "wallet_connect.network" = "Réseau";
-"wallet_connect.address" = "Adresse";
+"wallet_connect.address" = "Adresses";
 "wallet_connect.network" = "Réseau";
 "wallet_connect.list.pending_requests" = "Demandes en attente";
 "wallet_connect.main.no_any_supported_chains" = "Aucune chaîne prise en charge !";
@@ -1315,18 +1315,14 @@
 "nft_collection.overview.royalty" = "Redevance";
 "nft_collection.overview.inception_date" = "Date de création";
 
+"nft.activity.contracts" = "Contrats";
 "nft.activity.empty_list" = "Aucune activité pour l'instant";
 "nft.activity.event_types" = "Types d'évènement";
 "nft.activity.event_type.all" = "Tous les événements";
-"nft.activity.event_type.list" = "Liste";
 "nft.activity.event_type.sale" = "Vente";
-"nft.activity.event_type.offer" = "Offre saisie";
-"nft.activity.event_type.bid" = "Enchère saisie";
-"nft.activity.event_type.bidCancel" = "Enchère retirée";
 "nft.activity.event_type.transfer" = "Transfert";
-"nft.activity.event_type.approve" = "Approuver";
-"nft.activity.event_type.custom" = "Personnalisé";
-"nft.activity.event_type.payout" = "Versement";
-"nft.activity.event_type.cancel" = "Annuler";
-"nft.activity.event_type.bulkCancel" = "Annuler en bloc";
-"nft.activity.event_type.unknown" = "Inconnu";
+"nft.activity.event_type.mint" = "Mint";
+"nft.activity.event_type.list" = "Liste";
+"nft.activity.event_type.listCancel" = "Annuler la liste";
+"nft.activity.event_type.offer" = "Offre";
+"nft.activity.event_type.offerCancel" = "Offre annulée";
