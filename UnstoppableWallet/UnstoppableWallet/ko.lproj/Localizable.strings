@@ -42,7 +42,7 @@
 "alert.copied" = "복사됨";
 "alert.created" = "생성됨";
 "alert.imported" = "복구됨";
-"alert.wallet_added" = "Wallet Added";
+"alert.wallet_added" = "지갑이 추가됨";
 "alert.deleted" = "삭제";
 "alert.waiting_for_session" = "세션을 기다리는 중";
 "alert.try_again" = "다시 시도하십시오.";
@@ -93,7 +93,7 @@
 // Restore
 
 "restore.title" = "다음에서 복원하기";
-"restore.advanced" = "Advanced";
+"restore.advanced" = "고급의";
 "restore.import_by" = "으로";
 "restore.restore_type.mnemonic" = "복구 문구";
 "restore.restore_type.private_key" = "개인 암호";
@@ -113,16 +113,16 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Old";
-"coin_settings.derivation.title.bip49" = "Good";
-"coin_settings.derivation.title.bip84" = "Best";
+"coin_settings.derivation.title.bip44" = "기존";
+"coin_settings.derivation.title.bip49" = "좋은";
+"coin_settings.derivation.title.bip84" = "최상의";
 "coin_settings.title" = "블록 체인 설정";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "현금주소(권장)";
 "coin_settings.bitcoin_cash_coin_type.description.type0" = "2018년 이전 공통";
 "coin_settings.bitcoin_cash_coin_type.description.type145" = "2018년 이후 공통";
 "sync_mode.from_blockchain" = "블록체인으로 부터";
-"blockchain_settings.description" = "Select the address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
+"blockchain_settings.description" = "지불을 받기 위한 주소 형식을 선택하십시오. 기존 지갑을 복원할 때 올바른 형식을 선택해야 합니다.";
 
 // Coin Platforms
 
@@ -189,7 +189,7 @@
 // Backup Prompt
 
 "backup_prompt.title" = "백업용 지갑";
-"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.warning" = "복구 문구의 복사본을 생성하여 이 지갑을 백업하십시오. 휴대폰 분실, 도난, 파손 등의 경우 지갑에 액세스하기 위해 필요합니다.";
 "backup_prompt.backup" = "백업";
 "backup_prompt.later" = "나중에";
 
@@ -847,11 +847,11 @@
 "terms.title" = "약관";
 "terms.i_agree" = "동의함";
 
-"terms.item.1" = "Securely backup recovery phrases for each wallet. It's the only way to regain access to funds if the app malfunctions.";
-"terms.item.2" = "The wallet recovery phrases are randomly generated on the device during setup and are not stored elsewhere.";
-"terms.item.3" = "Disabling unlock PIN (code) on the smartphone deletes all wallets from the app. Recovery phrases will be needed to restore access to funds.";
-"terms.item.4" = "Jailbreaking (rooting), using outdated OS, and installing apps from unknown sources may endanger the safety of funds.";
-"terms.item.5" = "There may be undiscovered software issues in the code powering this app which may cause the app to malfunction.";
+"terms.item.1" = "지갑별 복구 문구를 안전하게 백업합니다. 앱이 오작동하는 경우 자금에 다시 액세스할 수 있는 유일한 방법입니다.";
+"terms.item.2" = "지갑 복구 문구는 설정 중에 장치에서 임의로 생성되며 다른 곳에 저장되지 않습니다.";
+"terms.item.3" = "스마트폰에서 잠금 해제 PIN(코드)을 비활성화하면 앱에서 모든 지갑이 삭제됩니다. 자금에 대한 액세스를 복원하려면 복구 문구가 필요합니다.";
+"terms.item.4" = "탈옥(루팅), 오래된 OS 사용, 출처를 알 수 없는 앱 설치 등은 자금의 안전을 위협할 수 있습니다.";
+"terms.item.5" = "이 앱을 구동하는 코드에 발견되지 않은 소프트웨어 문제가 있을 수 있으며 이로 인해 앱이 오작동할 수 있습니다.";
 
 // Settings -> Tell Friends
 
@@ -937,7 +937,7 @@
 "appearance.theme.dark" = "어두운";
 "appearance.theme.light" = "밝은";
 
-"appearance.tab_settings" = "Tab Settings";
+"appearance.tab_settings" = "탭 설정";
 "appearance.markets_tab" = "Markets Tab";
 "appearance.launch_screen" = "시작 화면";
 "appearance.launch_screen.auto" = "자동";
@@ -1011,9 +1011,9 @@
 
 "create_wallet.title" = "새 지갑";
 "create_wallet.name" = "이름";
-"create_wallet.advanced_setup" = "Advanced";
+"create_wallet.advanced_setup" = "고급의";
 "create_wallet.create" = "생성하기";
-"create_wallet.advanced" = "Advanced";
+"create_wallet.advanced" = "고급의";
 "create_wallet.phrase_count" = "연상 기호";
 "create_wallet.12_words" = "12 단어 (권장)";
 "create_wallet.n_words" = "%@ 단어";
@@ -1021,7 +1021,7 @@
 "create_wallet.passphrase" = "암호 문구";
 "create_wallet.input.passphrase" = "암호 문구";
 "create_wallet.input.confirm" = "확인";
-"create_wallet.passphrase_description" = "Passphrases add an additional security layer for wallets. To restore such a wallet a user required both mnemonic as well as a passphrase.\n\nPassphrases also make it easy for users to have many multi-coin wallets using a single mnemonic but different password.";
+"create_wallet.passphrase_description" = "암호는 지갑에 대한 추가 보안 계층을 추가합니다. 이러한 지갑을 복원하려면 사용자는 니모닉과 암호가 모두 필요했습니다.\n\n암호는 또한 사용자가 하나의 니모닉을 사용하지만 다른 암호를 사용하여 여러 코인 지갑을 쉽게 가질 수 있도록 합니다.";
 "create_wallet.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "create_wallet.error.forbidden_symbols" = "지원되는 기호만 사용하세요: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "암호 확인이 일치하지 않습니다";
@@ -1066,10 +1066,10 @@
 "add_token.title" = "토큰 추가";
 "add_token.blockchain" = "Blockchain";
 "add_token.already_added" = "이 토큰은 이미 코인 매니저 리스트에 있습니다.";
-"add_token.invalid_contract_address" = "Invalid contract address";
-"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
-"add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
-"add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
+"add_token.invalid_contract_address" = "잘못된 계약 주소";
+"add_token.invalid_bep2_symbol" = "잘못된 BEP2 기호";
+"add_token.contract_address_not_found" = "%@ 블록체인에서 계약 주소를 찾을 수 없습니다.";
+"add_token.bep2_symbol_not_found" = "BEP2 기호를 찾을 수 없음";
 "add_token.input_placeholder.contract_address" = "계약 주소";
 "add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
 "add_token.coin_name" = "코인 이름";
@@ -1118,9 +1118,9 @@
 "wallet_connect_list.new_connection" = "새로운 연결";
 "wallet_connect_list.disconnecting" = "연결을 끊는 중...";
 
-"wallet_connect.no_account.description" = "You need to create or import a wallet before you can use WalletConnect.";
+"wallet_connect.no_account.description" = "WalletConnect를 사용하려면 먼저 지갑을 생성하거나 가져와야 합니다.";
 "wallet_connect.no_account.close" = "닫기";
-"wallet_connect.unbackuped_account.description" = "You need to backup %@ before you can use WalletConnect";
+"wallet_connect.unbackuped_account.description" = "WalletConnect를 사용하려면 %@을(를) 백업해야 합니다.";
 
 "wallet_connect.non_supported_account.description" = "현재 지갑 유형 %@은(는) WalletConnect를 지원하지 않습니다.";
 "wallet_connect.non_supported_account.switch" = "전환";
@@ -1203,12 +1203,12 @@
 
 // Add RPC Source
 
-"add_evm_sync_source.title" = "Add RPC Source";
+"add_evm_sync_source.title" = "RPC 소스 추가";
 "add_evm_sync_source.name" = "이름";
 "add_evm_sync_source.rpc_url" = "RPC URL";
-"add_evm_sync_source.basic_auth" = "Basic Auth (optional)";
-"add_evm_sync_source.warning.url_exists" = "RPC Source with this url already exists";
-"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: http, https, ws, wss";
+"add_evm_sync_source.basic_auth" = "기본 인증(선택 사항)";
+"add_evm_sync_source.warning.url_exists" = "이 URL이 있는 RPC 소스가 이미 존재합니다.";
+"add_evm_sync_source.error.invalid_url" = "입력한 URL이 잘못되었습니다. 유효한 URL은 http, https, ws, wss 스키마 중 하나여야 합니다.";
 
 // Fee Settings
 
@@ -1323,6 +1323,6 @@
 "nft.activity.event_type.transfer" = "전송";
 "nft.activity.event_type.mint" = "민트";
 "nft.activity.event_type.list" = "목록";
-"nft.activity.event_type.listCancel" = "List Cancel";
-"nft.activity.event_type.offer" = "Offer";
-"nft.activity.event_type.offerCancel" = "Offer Cancel";
+"nft.activity.event_type.listCancel" = "목록 취소";
+"nft.activity.event_type.offer" = "제안";
+"nft.activity.event_type.offerCancel" = "제안 취소";
