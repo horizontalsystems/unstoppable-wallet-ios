@@ -17,7 +17,7 @@ class CoinTvlFetcher {
 extension CoinTvlFetcher: IMetricChartConfiguration {
     var title: String { "coin_page.tvl".localized }
     var description: String? { "coin_page.tvl.description".localized  }
-    var poweredBy: String { "DefiLlama API" }
+    var poweredBy: String? { "DefiLlama API" }
 
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue

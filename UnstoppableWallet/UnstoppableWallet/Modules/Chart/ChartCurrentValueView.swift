@@ -65,6 +65,11 @@ extension ChartCurrentValueView {
         set { diffLabel.textColor = newValue }
     }
 
+    var showDiff: Bool {
+        get { !diffLabel.isHidden }
+        set { diffLabel.isHidden = !newValue }
+    }
+
     func set(diff: Decimal?) {
         diffLabel.set(value: diff)
     }

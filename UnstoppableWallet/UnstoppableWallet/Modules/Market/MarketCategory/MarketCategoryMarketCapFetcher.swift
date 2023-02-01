@@ -17,7 +17,7 @@ class MarketCategoryMarketCapFetcher {
 extension MarketCategoryMarketCapFetcher: IMetricChartConfiguration {
     var title: String { category }
     var description: String? { nil }
-    var poweredBy: String { "HorizontalSystems API" }
+    var poweredBy: String? { "HorizontalSystems API" }
 
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue

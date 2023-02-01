@@ -4,6 +4,7 @@ import CurrencyKit
 import Chart
 
 enum MovementTrend {
+    case ignore
     case neutral
     case down
     case up

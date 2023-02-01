@@ -162,12 +162,12 @@ extension CoinDetailsViewController: SectionsDataSource {
                     cell.clear()
 
                     if let volumeViewItem = viewItem.tokenLiquidity.volume {
-                        cell.append(viewItem: volumeViewItem) { [weak self] in
+                        cell.append(viewItem: volumeViewItem, configuration: .cumulativeChartPreview) { [weak self] in
                             self?.openProDataChart(type: .volume)
                         }
                     }
                     if let liquidityViewItem = viewItem.tokenLiquidity.liquidity {
-                       cell.append(viewItem: liquidityViewItem) { [weak self] in
+                       cell.append(viewItem: liquidityViewItem, configuration: .chartPreview) { [weak self] in
                             self?.openProDataChart(type: .liquidity)
                         }
                     }
@@ -202,12 +202,12 @@ extension CoinDetailsViewController: SectionsDataSource {
                     cell.clear()
 
                     if let txCountViewItem = viewItem.tokenDistribution.txCount {
-                        cell.append(viewItem: txCountViewItem) { [weak self] in
+                        cell.append(viewItem: txCountViewItem, configuration: .cumulativeChartPreview) { [weak self] in
                             self?.openProDataChart(type: .txCount)
                         }
                     }
                     if let txVolumeViewItem = viewItem.tokenDistribution.txVolume {
-                        cell.append(viewItem: txVolumeViewItem) { [weak self] in
+                        cell.append(viewItem: txVolumeViewItem, configuration: .cumulativeChartPreview) { [weak self] in
                             self?.openProDataChart(type: .txVolume)
                         }
                     }
@@ -223,7 +223,7 @@ extension CoinDetailsViewController: SectionsDataSource {
                     cell.clear()
 
                     if let activeAddressesViewItem = viewItem.tokenDistribution.activeAddresses {
-                        cell.append(viewItem: activeAddressesViewItem) { [weak self] in
+                        cell.append(viewItem: activeAddressesViewItem, configuration: .chartPreview) { [weak self] in
                             self?.openProDataChart(type: .activeAddresses)
                         }
                     }

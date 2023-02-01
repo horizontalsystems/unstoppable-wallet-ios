@@ -22,7 +22,7 @@ extension TopPlatformMarketCapFetcher: IMetricChartConfiguration {
         "some description"
     }
 
-    var poweredBy: String {
+    var poweredBy: String? {
         "HorizontalSystems API"
     }
 

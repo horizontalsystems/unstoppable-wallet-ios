@@ -19,7 +19,7 @@ class ProChartFetcher {
 extension ProChartFetcher: IMetricChartConfiguration {
     var title: String { type.title }
     var description: String? { type.description }
-    var poweredBy: String { "HorizontalSystems API" }
+    var poweredBy: String? { nil }
 
     var valueType: MetricChartModule.ValueType {
         switch type {
@@ -37,14 +37,17 @@ extension ProChartFetcher: IMetricChartFetcher {
         switch type {
         case .volume: single = marketKit.dexVolumesSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: interval).map { $0.volumePoints }
         case .liquidity: single = marketKit.dexLiquiditySingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: interval).map { $0.volumePoints }
-        case .txCount: single = marketKit.transactionDataSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: interval, platform: nil).map { $0.countPoints }
+        case .txCount: single = marketKit.transactionDataSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: interval, platform: nil).map { response in
+            zip(response.countPoints, response.volumePoints).map { ChartPoint(timestamp: $0.timestamp, value: $0.value, extra: [ChartPoint.volume: $1.value]) }
+        }
         case .txVolume: single = marketKit.transactionDataSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: interval, platform: nil).map { $0.volumePoints }
         case .activeAddresses: single = marketKit.activeAddressesSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: interval, platform: nil).map { $0.countPoints }
         }
 
         return single.map { items in
             items.map {
-                MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp)
+                let volume: [ChartIndicatorName: Decimal]? = $0.extra[ChartPoint.volume].map { [.volume: $0] }
+                return MetricChartModule.Item(value: $0.value, indicators: volume, timestamp: $0.timestamp)
             }
         }
     }
