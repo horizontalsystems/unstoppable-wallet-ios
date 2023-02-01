@@ -1325,6 +1325,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "nft.activity.event_type.transfer" = "Transferir";
 "nft.activity.event_type.mint" = "Mint";
 "nft.activity.event_type.list" = "Lista";
-"nft.activity.event_type.listCancel" = "List Cancel";
+"nft.activity.event_type.listCancel" = "Lista De Cancelar";
 "nft.activity.event_type.offer" = "Oferta";
 "nft.activity.event_type.offerCancel" = "Cancelar oferta";
