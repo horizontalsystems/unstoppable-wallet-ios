@@ -1324,6 +1324,6 @@
 "nft.activity.event_type.transfer" = "Transfer";
 "nft.activity.event_type.mint" = "Mint";
 "nft.activity.event_type.list" = "Liste";
-"nft.activity.event_type.listCancel" = "List Cancel";
+"nft.activity.event_type.listCancel" = "Liste abbrechen";
 "nft.activity.event_type.offer" = "Angebot";
 "nft.activity.event_type.offerCancel" = "Angebot abbrechen";
