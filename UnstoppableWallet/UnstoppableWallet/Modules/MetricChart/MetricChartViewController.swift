@@ -19,10 +19,10 @@ class MetricChartViewController: ThemeActionSheetController {
     private let chartCell: ChartCell
     private let chartRow: StaticRow
 
-    init(viewModel: MetricChartViewModel, configuration: ChartConfiguration) {
+    init(viewModel: MetricChartViewModel, viewOptions: ChartCell.ChartViewOptions = ChartCell.metricChart, configuration: ChartConfiguration) {
         self.viewModel = viewModel
 
-        chartCell = ChartCell(viewModel: viewModel, touchDelegate: viewModel, viewOptions: ChartCell.metricChart, configuration: configuration)
+        chartCell = ChartCell(viewModel: viewModel, touchDelegate: viewModel, viewOptions: viewOptions, configuration: configuration)
 
         chartRow = StaticRow(
                 cell: chartCell,
@@ -55,6 +55,9 @@ class MetricChartViewController: ThemeActionSheetController {
         tableView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
+            if viewModel.poweredBy == nil {
+                maker.bottom.equalTo(view.safeAreaLayoutGuide)
+            }
         }
 
         title = viewModel.title
@@ -67,17 +70,19 @@ class MetricChartViewController: ThemeActionSheetController {
         tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerCell(forClass: TextCell.self)
 
-        view.addSubview(poweredByLabel)
-        poweredByLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.top.equalTo(tableView.snp.bottom)
-            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
-        }
+        if let poweredBy = viewModel.poweredBy {
+            view.addSubview(poweredByLabel)
+            poweredByLabel.snp.makeConstraints { maker in
+                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+                maker.top.equalTo(tableView.snp.bottom)
+                maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
+            }
 
-        poweredByLabel.textAlignment = .center
-        poweredByLabel.textColor = .themeGray
-        poweredByLabel.font = .caption
-        poweredByLabel.text = "Powered By \(viewModel.poweredBy)"
+            poweredByLabel.textAlignment = .center
+            poweredByLabel.textColor = .themeGray
+            poweredByLabel.font = .caption
+            poweredByLabel.text = "Powered By \(poweredBy)"
+        }
 
         chartRow.onReady = { [weak chartCell] in chartCell?.onLoad() }
 

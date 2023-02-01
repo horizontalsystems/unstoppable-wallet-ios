@@ -153,7 +153,7 @@ extension MarketMetricView {
         let colorType: ChartColorType
         switch trend {
         case .neutral: colorType = .neutral
-        case .up: colorType = .up
+        case .up, .ignore: colorType = .up
         case .down: colorType = .down
         }
 
@@ -176,7 +176,7 @@ extension MarketMetricView {
         let colorType: ChartColorType
         switch trend {
         case .neutral: colorType = .neutral
-        case .up: colorType = .up
+        case .up, .ignore: colorType = .up
         case .down: colorType = .down
         }
 

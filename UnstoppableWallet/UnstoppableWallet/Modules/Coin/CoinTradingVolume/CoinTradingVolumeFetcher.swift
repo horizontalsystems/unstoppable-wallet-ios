@@ -18,7 +18,7 @@ class CoinTradingVolumeFetcher {
 extension CoinTradingVolumeFetcher: IMetricChartConfiguration {
     var title: String { "coin_page.trading_volume".localized }
     var description: String? { "coin_page.trading_volume.description".localized(coinTitle) }
-    var poweredBy: String { "CoinGecko API" }
+    var poweredBy: String? { "CoinGecko API" }
 
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue

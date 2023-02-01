@@ -14,12 +14,13 @@ class CoinProChartModule {
                 interval: .month1
         )
 
-        let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
+        let factory = MetricChartFactory(timelineHelper: TimelineHelper(), valueType: type.valueType, currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
 
         return MetricChartViewController(
                 viewModel: chartViewModel,
-                configuration: ChartConfiguration.chartWithoutIndicators).toBottomSheet
+                viewOptions: [type.hasDiff ? .currentValueWithDiff : .currentValue, .timePeriodAndSelectedValue, .chart, .timeline],
+                configuration: type.hasDiff ? .chartWithoutIndicators : .cumulativeChartWithoutIndicators).toBottomSheet
     }
 
 }
@@ -53,6 +54,25 @@ extension CoinProChartModule {
             }
         }
 
+        var valueType: ChartValueType {
+            switch self {
+            case .volume: return .cumulative
+            case .liquidity: return .last
+            case .txCount: return .cumulative
+            case .txVolume: return .cumulative
+            case .activeAddresses: return .last
+            }
+        }
+
+        var hasDiff: Bool {
+            valueType == .last
+        }
+
+    }
+
+    enum ChartValueType {
+        case cumulative
+        case last
     }
 
 }

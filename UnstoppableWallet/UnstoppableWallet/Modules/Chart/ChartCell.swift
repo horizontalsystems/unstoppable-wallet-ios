@@ -30,8 +30,10 @@ class ChartCell: UITableViewCell {
         self.viewModel = viewModel
         self.viewOptions = viewOptions
 
-        if viewOptions.contains(.currentValue) {
+        let showDiff = viewOptions.contains(.currentValueWithDiff)
+        if showDiff || viewOptions.contains(.currentValue) {
             currentValueView = ChartCurrentValueView()
+            currentValueView?.showDiff = showDiff
         }
         if viewOptions.contains(.timePeriodAndSelectedValue) {
             intervalSelectView = FilterView(buttonStyle: .transparent)
@@ -61,7 +63,7 @@ class ChartCell: UITableViewCell {
             currentValueView.snp.makeConstraints { maker in
                 maker.top.equalTo(lastView.snp.bottom)
                 maker.leading.trailing.equalToSuperview()
-                maker.height.equalTo(ChartViewOptions.currentValue.elementHeight)
+                maker.height.equalTo(ChartViewOptions.currentValueWithDiff.elementHeight)
             }
 
             currentValueView.title = viewModel.chartTitle
@@ -170,7 +172,7 @@ class ChartCell: UITableViewCell {
         switch trend {
         case .neutral:
             chartView.setCurve(colorType: .neutral)
-        case .up:
+        case .ignore, .up:
             chartView.setCurve(colorType: .up)
         case .down:
             chartView.setCurve(colorType: .down)
@@ -312,29 +314,35 @@ extension ChartCell {
         viewOptions.cumulativeHeight
     }
 
+    var showDiffValue: Bool {
+        get { currentValueView?.showDiff ?? false }
+        set { currentValueView?.showDiff = newValue }
+    }
 }
 
 extension ChartCell {
     static let coinChart: ChartViewOptions = .all
-    static let metricChart: ChartViewOptions = [.currentValue, .timePeriodAndSelectedValue, .chart, .timeline]
+    static let metricChart: ChartViewOptions = [.currentValueWithDiff, .timePeriodAndSelectedValue, .chart, .timeline]
+    static let coinAnalyticsChart: ChartViewOptions = [.currentValue, .timePeriodAndSelectedValue, .chart, .timeline]
     static let smallChart: ChartViewOptions = [.chart]
 
     struct ChartViewOptions: OptionSet {
         static let none: ChartViewOptions = []
-        static let all: ChartViewOptions = [.currentValue, .timePeriodAndSelectedValue, .chart, .indicators, .timeline, .indicatorSelector]
+        static let all: ChartViewOptions = [.currentValueWithDiff, .timePeriodAndSelectedValue, .chart, .indicators, .timeline, .indicatorSelector]
 
         static let currentValue = ChartViewOptions(rawValue: 1 << 0)
-        static let timePeriodAndSelectedValue = ChartViewOptions(rawValue: 1 << 1)
-        static let chart = ChartViewOptions(rawValue: 1 << 2)
-        static let indicators = ChartViewOptions(rawValue: 1 << 3)
-        static let timeline = ChartViewOptions(rawValue: 1 << 4)
-        static let indicatorSelector = ChartViewOptions(rawValue: 1 << 5)
+        static let currentValueWithDiff = ChartViewOptions(rawValue: 1 << 1)
+        static let timePeriodAndSelectedValue = ChartViewOptions(rawValue: 1 << 2)
+        static let chart = ChartViewOptions(rawValue: 1 << 3)
+        static let indicators = ChartViewOptions(rawValue: 1 << 4)
+        static let timeline = ChartViewOptions(rawValue: 1 << 5)
+        static let indicatorSelector = ChartViewOptions(rawValue: 1 << 6)
 
         let rawValue: Int8
 
         var elementHeight: CGFloat {
             switch self {
-            case .currentValue: return .heightSingleLineCell
+            case .currentValueWithDiff, .currentValue: return .heightSingleLineCell
             case .timePeriodAndSelectedValue: return .heightSingleLineCell
             case .chart: return ChartCell.chartHeight
             case .indicators: return ChartCell.indicatorHeight
@@ -347,7 +355,7 @@ extension ChartCell {
         var cumulativeHeight: CGFloat {
             var height:CGFloat = 0
 
-            for index in 0..<6 {
+            for index in 0..<7 {
                 let option = ChartViewOptions(rawValue: 1 << index)
                 if contains(option) {
                     height += option.elementHeight
@@ -360,7 +368,7 @@ extension ChartCell {
         var chartHeight: CGFloat {
             let chartElements = [Self.chart, Self.indicators, Self.timeline]
 
-            return chartElements.reduce(0) { self.contains($1) ? ($0 + $1.elementHeight) : $0 }
+            return chartElements.reduce(0) { contains($1) ? ($0 + $1.elementHeight) : $0 }
         }
 
     }

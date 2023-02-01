@@ -47,7 +47,7 @@ class CoinDetailsViewModel {
         }
     }
 
-    private func chart(title: String, item: CoinDetailsService.ProData, isCurrencyValue: Bool = true) -> MarketCardView.ViewItem? {
+    private func chart(title: String, item: CoinDetailsService.ProData, description: String? = nil, currentValueType: CoinProChartModule.ChartValueType = .last, isCurrencyValue: Bool = true) -> MarketCardView.ViewItem? {
         switch item {
         case .empty: return nil
         case .completed(let values):
@@ -64,33 +64,43 @@ class CoinDetailsViewModel {
             let diffColor = DiffLabel.color(value: diffValue)
 
             let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
-            let value = isCurrencyValue ?
-                    ValueFormatter.instance.formatShort(currency: service.currency, value: last.value) :
-                    ValueFormatter.instance.formatShort(value: last.value)
+
+            var value: Decimal
+            var ignoreTrend = false
+
+            switch currentValueType {
+            case .last: value = last.value
+            case .cumulative:
+                value = values.map { $0.value }.reduce(0, +)
+                ignoreTrend = true                      // For cumulative value trend must be ignored
+            }
+            let valueString = isCurrencyValue ?
+                    ValueFormatter.instance.formatShort(currency: service.currency, value: value) :
+                    ValueFormatter.instance.formatShort(value: value)
 
             return MarketCardView.ViewItem(
                     title: title,
-                    value: value,
-                    description: diff ?? "n/a".localized,
-                    descriptionColor: diffColor,
+                    value: valueString,
+                    description: ignoreTrend ? nil : diff,
+                    descriptionColor: ignoreTrend ? nil : diffColor,
                     chartData: chartData,
-                    movementTrend: diffValue.isSignMinus ? .down : .up
+                    movementTrend: ignoreTrend ? .ignore : (diffValue.isSignMinus ? .down : .up)
             )
         }
     }
 
     private func tokenLiquidity(proFeatures: CoinDetailsService.AnalyticData) -> TokenLiquidityViewItem {
         TokenLiquidityViewItem(
-                volume: chart(title: CoinProChartModule.ProChartType.volume.title, item: proFeatures.dexVolumes),
-                liquidity: chart(title: CoinProChartModule.ProChartType.liquidity.title, item: proFeatures.dexLiquidity)
+                volume: chart(title: CoinProChartModule.ProChartType.volume.title, item: proFeatures.dexVolumes, currentValueType: .cumulative),
+                liquidity: chart(title: CoinProChartModule.ProChartType.liquidity.title, item: proFeatures.dexLiquidity, currentValueType: .last)
         )
     }
 
     private func tokenDistribution(proFeatures: CoinDetailsService.AnalyticData) -> TokenDistributionViewItem {
         TokenDistributionViewItem(
-                txCount: chart(title: CoinProChartModule.ProChartType.txCount.title, item: proFeatures.txCount, isCurrencyValue: false),
-                txVolume: chart(title: CoinProChartModule.ProChartType.txVolume.title, item: proFeatures.txVolume),
-                activeAddresses: chart(title: CoinProChartModule.ProChartType.activeAddresses.title, item: proFeatures.activeAddresses, isCurrencyValue: false)
+                txCount: chart(title: CoinProChartModule.ProChartType.txCount.title, item: proFeatures.txCount, currentValueType: .cumulative, isCurrencyValue: false),
+                txVolume: chart(title: CoinProChartModule.ProChartType.txVolume.title, item: proFeatures.txVolume, currentValueType: .cumulative),
+                activeAddresses: chart(title: CoinProChartModule.ProChartType.activeAddresses.title, item: proFeatures.activeAddresses, currentValueType: .last, isCurrencyValue: false)
         )
     }
 

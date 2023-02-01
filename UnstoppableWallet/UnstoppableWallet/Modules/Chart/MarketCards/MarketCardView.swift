@@ -60,7 +60,7 @@ class MarketCardView: UIView {
 
         descriptionStackView.distribution = .fill
         descriptionStackView.axis = .horizontal
-        descriptionStackView.spacing = .margin4
+        descriptionStackView.spacing = .margin16
         descriptionStackView.isUserInteractionEnabled = false
 
         descriptionStackView.addArrangedSubview(descriptionWrapper)
@@ -121,7 +121,10 @@ class MarketCardView: UIView {
 
     var descriptionText: String? {
         get { descriptionView.text }
-        set { descriptionView.text = newValue }
+        set {
+            descriptionWrapper.isHidden = newValue == nil
+            descriptionView.text = newValue
+        }
     }
 
     var descriptionColor: UIColor! {
@@ -129,17 +132,18 @@ class MarketCardView: UIView {
         set { descriptionView.textColor = newValue }
     }
 
-    func set(chartData data: ChartData?, trend: MovementTrend?) {
+    func set(chartData data: ChartData?, trend: MovementTrend?, configuration: ChartConfiguration = ChartConfiguration.chartPreview) {
         chartView.isHidden = data == nil
         guard let data = data, let trend = trend else {
             alreadyHasData = false
             return
         }
 
-        chartView.apply(configuration: ChartConfiguration.chartPreview)
+        chartView.apply(configuration: configuration)
 
         let colorType: ChartColorType
         switch trend {
+        case .ignore: colorType = .up
         case .neutral: colorType = .neutral
         case .up: colorType = .up
         case .down: colorType = .down
@@ -150,13 +154,13 @@ class MarketCardView: UIView {
         alreadyHasData = true
     }
 
-    func set(viewItem: ViewItem) {
+    func set(viewItem: ViewItem, configuration: ChartConfiguration = .chartPreview) {
         title = viewItem.title
         value = viewItem.value
         descriptionText = viewItem.description
         descriptionColor = viewItem.descriptionColor ?? .themeGray
 
-        set(chartData: viewItem.chartData, trend: viewItem.movementTrend)
+        set(chartData: viewItem.chartData, trend: viewItem.movementTrend, configuration: configuration)
     }
 }
 

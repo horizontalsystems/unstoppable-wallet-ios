@@ -17,15 +17,21 @@ extension ChartConfiguration {
     }
 
     static var chartWithoutIndicators: ChartConfiguration {
-        let configuration = ChartConfiguration().applyColors()
+        ChartConfiguration().applyColors().applyChartWithoutIndicators()
+    }
 
-        configuration.mainHeight = ChartCell.chartHeight
-        configuration.showIndicators = false
-        configuration.indicatorHeight = 0
-        configuration.timelineHeight = ChartCell.timelineHeight
-        configuration.timelineInsets = UIEdgeInsets(top: 4, left: 8, bottom: 0, right: 8)
+    static var cumulativeChartWithoutIndicators: ChartConfiguration {
+        ChartConfiguration().applyColors(trendIgnore: true).applyChartWithoutIndicators()
+    }
 
-        return configuration
+    @discardableResult private func applyChartWithoutIndicators() -> Self {
+        mainHeight = ChartCell.chartHeight
+        showIndicators = false
+        indicatorHeight = 0
+        timelineHeight = ChartCell.timelineHeight
+        timelineInsets = UIEdgeInsets(top: 4, left: 8, bottom: 0, right: 8)
+
+        return self
     }
 
     static var chartWithDominance: ChartConfiguration {
@@ -36,38 +42,44 @@ extension ChartConfiguration {
     }
 
     static var chartPreview: ChartConfiguration {
-        let config = ChartConfiguration().applyColors()
-
-        config.mainHeight = 25
-        config.indicatorHeight = 0
-        config.timelineHeight = 0
-        config.curvePadding = UIEdgeInsets(top: .margin2, left: 0, bottom: 10, right: 0)
-
-        config.showBorders = false
-        config.showIndicators = false
-        config.showLimits = false
-        config.showVerticalLines = false
-        config.isInteractive = false
-
-        let clear = [UIColor.clear]
-        config.trendUpGradient = clear
-        config.trendDownGradient = clear
-        config.pressedGradient = clear
-        config.neutralGradient = clear
-
-        return config
+        ChartConfiguration().applyColors().applyPreview()
     }
 
-    @discardableResult private func applyColors() -> Self {
+    static var cumulativeChartPreview: ChartConfiguration {
+        ChartConfiguration().applyColors(trendIgnore: true).applyPreview()
+    }
+
+    @discardableResult private func applyPreview() -> Self {
+        mainHeight = 25
+        indicatorHeight = 0
+        timelineHeight = 0
+        curvePadding = UIEdgeInsets(top: .margin2, left: 0, bottom: 10, right: 0)
+
+        showBorders = false
+        showIndicators = false
+        showLimits = false
+        showVerticalLines = false
+        isInteractive = false
+
+        let clear = [UIColor.clear]
+        trendUpGradient = clear
+        trendDownGradient = clear
+        pressedGradient = clear
+        neutralGradient = clear
+
+        return self
+    }
+
+    @discardableResult private func applyColors(trendIgnore: Bool = false) -> Self {
         borderColor = .themeSteel20
         backgroundColor = .clear
 
-        trendUpColor = UIColor.themeGreenD
-        trendDownColor = UIColor.themeRedD
+        trendUpColor = trendIgnore ? UIColor.themeJacob : UIColor.themeGreenD
+        trendDownColor = trendIgnore ? UIColor.themeJacob : UIColor.themeRedD
         pressedColor = .themeNina
         outdatedColor = .themeNina
 
-        trendUpGradient = [UIColor](repeatElement(UIColor(hex: 0x13D670), count: 3))
+        trendUpGradient = [UIColor](repeatElement(UIColor(hex: trendIgnore ? 0xFFa800 : 0x13D670), count: 3))
         trendDownGradient = [UIColor(hex: 0x7413D6), UIColor(hex: 0x7413D6), UIColor(hex: 0xFF0303)]
         pressedGradient = [UIColor](repeatElement(.themeLeah, count: 3))
         neutralGradient = [UIColor](repeatElement(.themeGray50, count: 3))

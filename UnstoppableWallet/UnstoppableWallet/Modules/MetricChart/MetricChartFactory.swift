@@ -8,10 +8,12 @@ class MetricChartFactory {
     static private let noChangesLimitPercent: Decimal = 0.2
 
     private let timelineHelper: ITimelineHelper
+    private let valueType: CoinProChartModule.ChartValueType
     private let dateFormatter = DateFormatter()
 
-    init(timelineHelper: ITimelineHelper, currentLocale: Locale) {
+    init(timelineHelper: ITimelineHelper, valueType: CoinProChartModule.ChartValueType = .last, currentLocale: Locale) {
         self.timelineHelper = timelineHelper
+        self.valueType = valueType
 
         dateFormatter.locale = currentLocale
     }
@@ -82,9 +84,18 @@ extension MetricChartFactory {
         var valueDiff: Decimal?
         var value: String?
         if let first = data.items.first(where: { ($0.indicators[.rate] ?? 0) != 0 }), let last = data.items.last, let firstValue = first.indicators[.rate], let lastValue = last.indicators[.rate] {
-            value = format(value: lastValue, currency: currency, valueType: valueType)
-            valueDiff = (lastValue - firstValue) / firstValue * 100
-            chartTrend = (lastValue - firstValue).isSignMinus ? .down : .up
+            //check valueType
+            switch self.valueType {
+            case .last:
+                value = format(value: lastValue, currency: currency, valueType: valueType)
+                chartTrend = (lastValue - firstValue).isSignMinus ? .down : .up
+                valueDiff = (lastValue - firstValue) / firstValue * 100
+            case .cumulative:
+                let valueDecimal = data.items.compactMap { $0.indicators[.rate] }.reduce(0, +)
+                value = format(value: valueDecimal, currency: currency, valueType: valueType)
+                chartTrend = .ignore
+            }
+
         }
 
         // make timeline for chart

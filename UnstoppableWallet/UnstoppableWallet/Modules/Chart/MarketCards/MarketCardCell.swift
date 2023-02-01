@@ -31,12 +31,12 @@ class MarketCardCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func append(viewItem: MarketCardView.ViewItem, onTap: (() -> ())? = nil) {
+    func append(viewItem: MarketCardView.ViewItem, configuration: ChartConfiguration = .chartPreview, onTap: (() -> ())? = nil) {
         let marketCardView = MarketCardView()
         marketCardView.onTap = onTap
 
         append(view: marketCardView)
-        marketCardView.set(viewItem: viewItem)
+        marketCardView.set(viewItem: viewItem, configuration: configuration)
     }
 
 }

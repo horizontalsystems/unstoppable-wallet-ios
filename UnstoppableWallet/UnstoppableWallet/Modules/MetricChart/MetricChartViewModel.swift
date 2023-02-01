@@ -26,7 +26,7 @@ class MetricChartViewModel {
 
     var title: String { chartConfiguration.title }
     var description: String? { chartConfiguration.description }
-    var poweredBy: String { chartConfiguration.poweredBy }
+    var poweredBy: String? { chartConfiguration.poweredBy }
 
     init(service: MetricChartService, chartConfiguration: IMetricChartConfiguration, factory: MetricChartFactory) {
         self.service = service
@@ -78,7 +78,7 @@ extension MetricChartViewModel: IChartViewModel {
     }
 
     var intervalsUpdatedWithCurrentIndexDriver: Driver<Int> {
-        .just(0)
+        .empty()
     }
 
     var intervalIndexDriver: Driver<Int> {

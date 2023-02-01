@@ -594,7 +594,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "coin_page.token_liquidity" = "Token Liquidity";
 "coin_page.token_liquidity.description" = "The state of liquidity for the given asset on decentralized exchange markets.";
-"coin_page.dex_volume" = "DEX Volume";
+"coin_page.dex_volume" = "DEX Volume (30d)";
 "coin_page.dex_volume.description" = "The trading volume for the token on decentralized exchanges.";
 "coin_page.dex_liquidity" = "DEX Liquidity";
 "coin_page.dex_liquidity.description" = "The total amount of available liquidity for the token on decentralized exchanges.";
@@ -602,9 +602,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "coin_page.token_distribution" = "Token Distribution";
 "coin_page.token_distribution.description" = "Onchain token parameters. Typically, healthy projects have an active on-chain user base and well-distributed token.";
-"coin_page.tx_count" = "Tx Count";
+"coin_page.tx_count" = "Tx Count (30d)";
 "coin_page.tx_count.description" = "The number of token transactions recorded on-chain over various periods.";
-"coin_page.tx_volume" = "Tx Volume";
+"coin_page.tx_volume" = "Tx Volume (30d)";
 "coin_page.tx_volume.description" = "The aggregate token transaction volume is recorded on-chain. The volume is measured in the actual tokens (not USD).";
 "coin_page.active_addresses" = "Active Addresses";
 "coin_page.active_addresses.description" = "The number of unique wallet addresses involved in transactions over various periods.";

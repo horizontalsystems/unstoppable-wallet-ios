@@ -7,7 +7,7 @@ import MarketKit
 protocol IMetricChartConfiguration {
     var title: String { get }
     var description: String? { get }
-    var poweredBy: String { get }
+    var poweredBy: String? { get }
     var valueType: MetricChartModule.ValueType { get }
 }
 

@@ -27,7 +27,7 @@ class MarketGlobalTvlFetcher {
 extension MarketGlobalTvlFetcher: IMetricChartConfiguration {
     var title: String { MarketGlobalModule.MetricsType.tvlInDefi.title }
     var description: String? { MarketGlobalModule.MetricsType.tvlInDefi.description }
-    var poweredBy: String { "DefiLlama API" }
+    var poweredBy: String? { "DefiLlama API" }
 
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue
