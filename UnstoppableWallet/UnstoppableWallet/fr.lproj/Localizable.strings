@@ -556,7 +556,7 @@
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominance Bitcoin";
-"market.global.volume_24h.title" = "Volume des dernières 24h";
+"market.global.volume_24h.title" = "Volume 24h";
 "market.global.defi_cap.title" = "Cap DeFi";
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
@@ -593,6 +593,7 @@
 "coin_page.token_liquidity" = "Liquidité du token";
 "coin_page.token_liquidity.description" = "L'état de la liquidité pour l'actif donné sur les marchés d'échange décentralisés.";
 "coin_page.dex_volume" = "Volume DEX (30d)";
+"coin_page.dex_volume.title" = "Volume DEX";
 "coin_page.dex_volume.description" = "Le volume de trading pour le token sur les échanges décentralisés.";
 "coin_page.dex_liquidity" = "Liquidité DEX";
 "coin_page.dex_liquidity.description" = "Le montant total des liquidités disponibles pour le token sur les échanges décentralisés.";
@@ -601,8 +602,10 @@
 "coin_page.token_distribution" = "Distribution du token";
 "coin_page.token_distribution.description" = "Paramètres on-chain du token. En général, les projets sains ont une base d'utilisateurs on-chain active et un token bien distribué.";
 "coin_page.tx_count" = "Nombre de Tx (30d)";
+"coin_page.tx_count.title" = "Nombre de Tx";
 "coin_page.tx_count.description" = "Le nombre de transactions du token enregistrées on-chain sur différentes périodes.";
 "coin_page.tx_volume" = "Volume Tx (30d)";
+"coin_page.tx_volume.title" = "Volume Tx";
 "coin_page.tx_volume.description" = "Le volume global des transactions de tokens est enregistré on-chain. Le volume est mesuré en tokens réels (pas en USD).";
 "coin_page.active_addresses" = "Adresses actives";
 "coin_page.active_addresses.description" = "Le nombre d'adresses uniques de portefeuille impliquées dans les transactions sur différentes périodes.";
@@ -1084,7 +1087,7 @@
 "wallet_connect.active_account" = "Activer le portefeuille";
 "wallet_connect.address" = "Adresse";
 "wallet_connect.network" = "Réseau";
-"wallet_connect.address" = "Adresse";
+"wallet_connect.address" = "Adresses";
 "wallet_connect.network" = "Réseau";
 "wallet_connect.list.pending_requests" = "Demandes en attente";
 "wallet_connect.main.no_any_supported_chains" = "Aucune chaîne prise en charge !";
