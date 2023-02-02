@@ -560,7 +560,7 @@
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 
 "market.global.btc_dominance.title" = "Доминирование Bitcoin";
-"market.global.volume_24h.title" = "Объем торгов (24ч)";
+"market.global.volume_24h.title" = "Объем Торгов (24ч)";
 "market.global.defi_cap.title" = "Капитализация DeFi";
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 "market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка и наоборот.";
@@ -596,7 +596,8 @@
 
 "coin_page.token_liquidity" = "Ликвидность токена";
 "coin_page.token_liquidity.description" = "Состояние ликвидности для данного актива на децентрализованных валютных рынках.";
-"coin_page.dex_volume" = "Объем торг. (30д)";
+"coin_page.dex_volume" = "Объем торг. DEX (30д)";
+"coin_page.dex_volume.title" = "Объем торгов DEX";
 "coin_page.dex_volume.description" = "Торговый объем для токена на децентрализованных биржах.";
 "coin_page.dex_liquidity" = "Ликвидность DEX";
 "coin_page.dex_liquidity.description" = "Общая сумма доступной ликвидности для токена на децентрализованных биржах.";
@@ -605,8 +606,10 @@
 "coin_page.token_distribution" = "Распределение Токенов";
 "coin_page.token_distribution.description" = "Параметры токена блокчейна. Обычно, нормальные проекты имеют активную базу пользователей и хорошо распределенный токен.";
 "coin_page.tx_count" = "Транзакций (30д):";
+"coin_page.tx_count.title" = "Tx Count";
 "coin_page.tx_count.description" = "Количество транзакций токенов, зарегистрированных ончейн за различные периоды.";
 "coin_page.tx_volume" = "Объем транз. (30д)";
+"coin_page.tx_volume.title" = "Tx Volume";
 "coin_page.tx_volume.description" = "Совокупный объем транзакций токенов регистрируется ончейн. Объем измеряется в токенах (а не в долларах США).";
 "coin_page.active_addresses" = "Активные адреса";
 "coin_page.active_addresses.description" = "Количество уникальных адресов кошельков, использованных для осуществления транзакций за различные периоды.";
