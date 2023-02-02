@@ -557,7 +557,7 @@
 
 "market.global.btc_dominance.title" = "Dominio Bitcoin";
 "market.global.volume_24h.title" = "Volumen de 24 horas";
-"market.global.defi_cap.title" = "Cap. DeFi";
+"market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.btc_dominance.description" = "El cambio histórico en la relación entre el límite de mercado de Bitcoin y el resto de los mercados de criptomonedas. \n\nPor lo general, cuando el dominio de Bitcoin tiende a ser más alto, el resto de las tendencias del mercado de criptomonedas disminuye y viceversa.";
 "market.global.volume_24h.description" = "El cambio histórico en el volumen diario del mercado de operaciones agregadas para todas las criptomonedas.";
@@ -592,7 +592,7 @@
 
 "coin_page.token_liquidity" = "Liquidez del Token";
 "coin_page.token_liquidity.description" = "Estado de liquidez para el activo dado en los mercados de divisas descentralizados.";
-"coin_page.dex_volume" = "Volumen DEX";
+"coin_page.dex_volume" = "Volumen DEX (30d)";
 "coin_page.dex_volume.description" = "El volumen de negociación del token en los intercambios descentralizados.";
 "coin_page.dex_liquidity" = "Liquidez DEX";
 "coin_page.dex_liquidity.description" = "La cantidad total de liquidez disponible para la ficha de intercambio descentralizado.";
@@ -600,9 +600,9 @@
 
 "coin_page.token_distribution" = "Distribución de Token";
 "coin_page.token_distribution.description" = "Parámetros de token de Onchain. Por lo general, los proyectos saludables tienen una base de usuario activa en la cadena y un token bien distribuido.";
-"coin_page.tx_count" = "Conteo Tx";
+"coin_page.tx_count" = "Cuenta Tx (30d)";
 "coin_page.tx_count.description" = "El número de transacciones de fichas registradas en cadena en varios períodos.";
-"coin_page.tx_volume" = "Volumen Tx";
+"coin_page.tx_volume" = "Volumen Tx (30d)";
 "coin_page.tx_volume.description" = "El volumen de transacción de token agregada se registra en cadena. El volumen se mide en los tokens reales (no en USD).";
 "coin_page.active_addresses" = "Direcciones activas";
 "coin_page.active_addresses.description" = "El número de direcciones únicas de cartera involucradas en transacciones durante varios períodos.";
