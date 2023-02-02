@@ -602,10 +602,10 @@
 "coin_page.token_distribution" = "Distribution du token";
 "coin_page.token_distribution.description" = "Paramètres on-chain du token. En général, les projets sains ont une base d'utilisateurs on-chain active et un token bien distribué.";
 "coin_page.tx_count" = "Nombre de Tx (30d)";
-"coin_page.tx_count.title" = "Tx Count";
+"coin_page.tx_count.title" = "Nombre de Tx";
 "coin_page.tx_count.description" = "Le nombre de transactions du token enregistrées on-chain sur différentes périodes.";
 "coin_page.tx_volume" = "Volume Tx (30d)";
-"coin_page.tx_volume.title" = "Tx Volume";
+"coin_page.tx_volume.title" = "Volume Tx";
 "coin_page.tx_volume.description" = "Le volume global des transactions de tokens est enregistré on-chain. Le volume est mesuré en tokens réels (pas en USD).";
 "coin_page.active_addresses" = "Adresses actives";
 "coin_page.active_addresses.description" = "Le nombre d'adresses uniques de portefeuille impliquées dans les transactions sur différentes périodes.";
