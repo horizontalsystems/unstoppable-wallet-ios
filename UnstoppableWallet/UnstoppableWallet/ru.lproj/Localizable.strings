@@ -596,7 +596,7 @@
 
 "coin_page.token_liquidity" = "Ликвидность Токена";
 "coin_page.token_liquidity.description" = "Состояние ликвидности для данного актива на децентрализованных валютных рынках.";
-"coin_page.dex_volume" = "DEX Volume (30d)";
+"coin_page.dex_volume" = "Объем торг. (30д)";
 "coin_page.dex_volume.description" = "Торговый объем для токена на децентрализованных биржах.";
 "coin_page.dex_liquidity" = "Ликвидность DEX";
 "coin_page.dex_liquidity.description" = "Общая сумма доступной ликвидности для токена на децентрализованных биржах.";
@@ -604,9 +604,9 @@
 
 "coin_page.token_distribution" = "Распределение Токенов";
 "coin_page.token_distribution.description" = "Параметры токена блокчейна. Обычно, нормальные проекты имеют активную базу пользователей и хорошо распределенный токен.";
-"coin_page.tx_count" = "Tx Count (30d)";
+"coin_page.tx_count" = "Кол-во транз. (30д)";
 "coin_page.tx_count.description" = "Количество транзакций токенов, зарегистрированных ончейн за различные периоды.";
-"coin_page.tx_volume" = "Tx Volume (30d)";
+"coin_page.tx_volume" = "Объем транз. (30д)";
 "coin_page.tx_volume.description" = "Совокупный объем транзакций токенов регистрируется ончейн. Объем измеряется в токенах (а не в долларах США).";
 "coin_page.active_addresses" = "Активные адреса";
 "coin_page.active_addresses.description" = "Количество уникальных адресов кошельков, использованных для осуществления транзакций за различные периоды.";
