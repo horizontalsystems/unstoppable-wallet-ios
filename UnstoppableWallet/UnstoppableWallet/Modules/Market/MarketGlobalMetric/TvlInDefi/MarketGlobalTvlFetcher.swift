@@ -2,17 +2,20 @@ import RxSwift
 import RxCocoa
 import Foundation
 import MarketKit
+import CurrencyKit
 import Chart
 
 class MarketGlobalTvlFetcher {
     private let disposeBag = DisposeBag()
     private let marketKit: MarketKit.Kit
+    private let currencyKit: CurrencyKit.Kit
     private let service: MarketGlobalTvlMetricService
 
     private let needUpdateRelay = PublishRelay<()>()
 
-    init(marketKit: MarketKit.Kit, marketGlobalTvlPlatformService: MarketGlobalTvlMetricService) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, marketGlobalTvlPlatformService: MarketGlobalTvlMetricService) {
         self.marketKit = marketKit
+        self.currencyKit = currencyKit
         service = marketGlobalTvlPlatformService
 
         subscribe(disposeBag, service.marketPlatformObservable) { [weak self] _ in self?.needUpdate() }
@@ -30,7 +33,7 @@ extension MarketGlobalTvlFetcher: IMetricChartConfiguration {
     var poweredBy: String? { "DefiLlama API" }
 
     var valueType: MetricChartModule.ValueType {
-        .compactCurrencyValue
+        .compactCurrencyValue(currencyKit.baseCurrency)
     }
 
 }
@@ -41,9 +44,9 @@ extension MarketGlobalTvlFetcher: IMetricChartFetcher {
         needUpdateRelay.asObservable()
     }
 
-    func fetchSingle(currencyCode: String, interval: HsTimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
+    func fetchSingle(interval: HsTimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
         marketKit
-                .marketInfoGlobalTvlSingle(platform: service.marketPlatformField.chain, currencyCode: currencyCode, timePeriod: interval)
+                .marketInfoGlobalTvlSingle(platform: service.marketPlatformField.chain, currencyCode: currencyKit.baseCurrency.code, timePeriod: interval)
                 .map { points in
                     points.map { point -> MetricChartModule.Item in
                         MetricChartModule.Item(value: point.value, timestamp: point.timestamp)

@@ -59,7 +59,7 @@ class MetricChartViewModel {
             return
         }
 
-        let viewItem = factory.convert(items: items, interval: service.interval, valueType: chartConfiguration.valueType, currency: service.currency)
+        let viewItem = factory.convert(items: items, interval: service.interval, valueType: chartConfiguration.valueType)
         valueRelay.accept(viewItem.currentValue)
 
         chartInfoRelay.accept(viewItem)
@@ -134,7 +134,7 @@ extension MetricChartViewModel: IChartViewTouchDelegate {
 
     public func select(item: ChartItem) {
         HapticGenerator.instance.notification(.feedback(.soft))
-        pointSelectedItemRelay.accept(factory.selectedPointViewItem(chartItem: item, valueType: chartConfiguration.valueType, currency: service.currency))
+        pointSelectedItemRelay.accept(factory.selectedPointViewItem(chartItem: item, valueType: chartConfiguration.valueType))
     }
 
     public func touchUp() {

@@ -138,7 +138,7 @@ class CoinDetailsViewController: ThemeViewController {
     }
 
     private func openProDataChart(type: CoinProChartModule.ProChartType) {
-        let viewController = CoinProChartModule.viewController(coinUid: viewModel.coin.uid, type: type)
+        let viewController = CoinProChartModule.viewController(coin: viewModel.coin, type: type)
         parentNavigationController?.present(viewController, animated: true)
     }
 

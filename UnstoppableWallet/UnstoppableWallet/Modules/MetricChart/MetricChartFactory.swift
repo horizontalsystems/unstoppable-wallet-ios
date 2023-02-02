@@ -34,7 +34,7 @@ class MetricChartFactory {
         return ChartData(items: items, startTimestamp: points.first?.timestamp ?? 0, endTimestamp: points.last?.timestamp ?? 0)
     }
 
-    private func format(value: Decimal?, currency: Currency, valueType: MetricChartModule.ValueType, exactlyValue: Bool = false) -> String? {
+    private func format(value: Decimal?, valueType: MetricChartModule.ValueType, exactlyValue: Bool = false) -> String? {
         guard let value = value else {
             return nil
         }
@@ -42,7 +42,7 @@ class MetricChartFactory {
         switch valueType {
         case .percent:         // values in percent
             return ValueFormatter.instance.format(percentValue: value, showSign: false)
-        case .currencyValue:
+        case .currencyValue(let currency):
             return ValueFormatter.instance.formatFull(currency: currency, value: value)
         case .counter:
             if exactlyValue {
@@ -50,7 +50,15 @@ class MetricChartFactory {
             } else {
                 return ValueFormatter.instance.formatShort(value: value)
             }
-        case .compactCurrencyValue:                   // others in compact forms
+        case .compactCoinValue(let coin):
+            let valueString: String?
+            if exactlyValue {
+                valueString = value.description
+            } else {
+                valueString = ValueFormatter.instance.formatShort(value: value)
+            }
+            return [valueString, coin.code].compactMap { $0 }.joined(separator: " ")
+        case .compactCurrencyValue(let currency):                   // others in compact forms
             if exactlyValue {
                 return ValueFormatter.instance.formatFull(currency: currency, value: value)
             } else {
@@ -63,7 +71,7 @@ class MetricChartFactory {
 
 extension MetricChartFactory {
 
-    func convert(items: [MetricChartModule.Item], interval: HsTimePeriod, valueType: MetricChartModule.ValueType, currency: Currency) -> MetricChartViewModel.ViewItem {
+    func convert(items: [MetricChartModule.Item], interval: HsTimePeriod, valueType: MetricChartModule.ValueType) -> MetricChartViewModel.ViewItem {
         // build data with rates
         let data = chartData(points: items)
 
@@ -75,8 +83,8 @@ extension MetricChartFactory {
             min = minValue * (1 - Self.noChangesLimitPercent)
             max = maxValue * (1 + Self.noChangesLimitPercent)
         }
-        let minString = format(value: min, currency: currency, valueType: valueType)
-        let maxString = format(value: max, currency: currency, valueType: valueType)
+        let minString = format(value: min, valueType: valueType)
+        let maxString = format(value: max, valueType: valueType)
 
         // determine chart growing state. when chart not full - it's nil
         var chartTrend: MovementTrend = .neutral
@@ -87,12 +95,12 @@ extension MetricChartFactory {
             //check valueType
             switch self.valueType {
             case .last:
-                value = format(value: lastValue, currency: currency, valueType: valueType)
+                value = format(value: lastValue, valueType: valueType)
                 chartTrend = (lastValue - firstValue).isSignMinus ? .down : .up
                 valueDiff = (lastValue - firstValue) / firstValue * 100
             case .cumulative:
                 let valueDecimal = data.items.compactMap { $0.indicators[.rate] }.reduce(0, +)
-                value = format(value: valueDecimal, currency: currency, valueType: valueType)
+                value = format(value: valueDecimal, valueType: valueType)
                 chartTrend = .ignore
             }
 
@@ -110,7 +118,7 @@ extension MetricChartFactory {
         return MetricChartViewModel.ViewItem(currentValue: value, chartData: data, chartTrend: chartTrend, chartDiff: valueDiff, minValue: minString, maxValue: maxString, timeline: timeline, selectedIndicator: ChartIndicatorSet.none)
     }
 
-    func selectedPointViewItem(chartItem: ChartItem, valueType: MetricChartModule.ValueType, currency: Currency) -> SelectedPointViewItem? {
+    func selectedPointViewItem(chartItem: ChartItem, valueType: MetricChartModule.ValueType) -> SelectedPointViewItem? {
         guard let value = chartItem.indicators[.rate] else {
             return nil
         }
@@ -118,7 +126,7 @@ extension MetricChartFactory {
         let date = Date(timeIntervalSince1970: chartItem.timestamp)
         let formattedDate = DateHelper.instance.formatFullTime(from: date)
 
-        let formattedValue = format(value: value, currency: currency, valueType: valueType, exactlyValue: true)
+        let formattedValue = format(value: value, valueType: valueType, exactlyValue: true)
 
         var rightSideMode: SelectedPointViewItem.RightSideMode = .none
         if let dominance = chartItem.indicators[.dominance] {

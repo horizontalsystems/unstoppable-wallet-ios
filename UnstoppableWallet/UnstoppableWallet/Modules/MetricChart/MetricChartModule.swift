@@ -3,6 +3,7 @@ import RxSwift
 import Chart
 import LanguageKit
 import MarketKit
+import CurrencyKit
 
 protocol IMetricChartConfiguration {
     var title: String { get }
@@ -14,7 +15,7 @@ protocol IMetricChartConfiguration {
 protocol IMetricChartFetcher {
     var intervals: [HsTimePeriod] { get }
     var needUpdateObservable: Observable<()> { get }
-    func fetchSingle(currencyCode: String, interval: HsTimePeriod) -> Single<[MetricChartModule.Item]>
+    func fetchSingle(interval: HsTimePeriod) -> Single<[MetricChartModule.Item]>
 }
 
 extension IMetricChartFetcher {
@@ -34,8 +35,9 @@ class MetricChartModule {
     enum ValueType {
         case percent
         case counter
-        case compactCurrencyValue
-        case currencyValue
+        case compactCoinValue(Coin)
+        case compactCurrencyValue(Currency)
+        case currencyValue(Currency)
     }
 
     struct Item {

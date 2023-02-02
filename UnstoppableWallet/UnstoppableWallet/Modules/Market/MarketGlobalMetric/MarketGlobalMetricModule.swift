@@ -33,9 +33,8 @@ struct MarketGlobalMetricModule {
         let listViewModel = MarketListWatchViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
         let headerViewModel = MarketSingleSortHeaderViewModel(service: service, decorator: decorator)
 
-        let chartFetcher = MarketGlobalFetcher(marketKit: App.shared.marketKit, metricsType: type)
+        let chartFetcher = MarketGlobalFetcher(currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit, metricsType: type)
         let chartService = MetricChartService(
-                currencyKit: App.shared.currencyKit,
                 chartFetcher: chartFetcher,
                 interval: .day1
         )
@@ -68,9 +67,8 @@ struct MarketGlobalMetricModule {
         let listViewModel = MarketListWatchViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
         let headerViewModel = MarketSingleSortHeaderViewModel(service: service, decorator: decorator)
 
-        let chartFetcher = MarketGlobalFetcher(marketKit: App.shared.marketKit, metricsType: .defiCap)
+        let chartFetcher = MarketGlobalFetcher(currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit, metricsType: .defiCap)
         let chartService = MetricChartService(
-                currencyKit: App.shared.currencyKit,
                 chartFetcher: chartFetcher,
                 interval: .day1
         )
@@ -97,9 +95,8 @@ struct MarketGlobalMetricModule {
         let listViewModel = MarketListWatchViewModel(service: service, watchlistToggleService: watchlistToggleService, decorator: decorator)
         let headerViewModel = MarketTvlSortHeaderViewModel(service: service, decorator: decorator)
 
-        let chartFetcher = MarketGlobalTvlFetcher(marketKit: App.shared.marketKit, marketGlobalTvlPlatformService: service)
+        let chartFetcher = MarketGlobalTvlFetcher(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, marketGlobalTvlPlatformService: service)
         let chartService = MetricChartService(
-                currencyKit: App.shared.currencyKit,
                 chartFetcher: chartFetcher,
                 interval: .day1
         )

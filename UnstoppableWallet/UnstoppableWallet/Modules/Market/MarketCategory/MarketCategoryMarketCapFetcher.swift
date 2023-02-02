@@ -1,14 +1,17 @@
 import RxSwift
 import Foundation
 import MarketKit
+import CurrencyKit
 import Chart
 
 class MarketCategoryMarketCapFetcher {
     private let marketKit: MarketKit.Kit
+    private let currencyKit: CurrencyKit.Kit
     private let category: String
 
-    init(marketKit: MarketKit.Kit, category: String) {
+    init(currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit, category: String) {
         self.marketKit = marketKit
+        self.currencyKit = currencyKit
         self.category = category
     }
 
@@ -20,7 +23,7 @@ extension MarketCategoryMarketCapFetcher: IMetricChartConfiguration {
     var poweredBy: String? { "HorizontalSystems API" }
 
     var valueType: MetricChartModule.ValueType {
-        .compactCurrencyValue
+        .compactCurrencyValue(currencyKit.baseCurrency)
     }
 
 }
@@ -31,9 +34,9 @@ extension MarketCategoryMarketCapFetcher: IMetricChartFetcher {
         [.day1, .week1, .month1]
     }
 
-    func fetchSingle(currencyCode: String, interval: HsTimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
+    func fetchSingle(interval: HsTimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
         marketKit
-                .coinCategoryMarketCapChartSingle(category: category, currencyCode: currencyCode, timePeriod: interval)
+                .coinCategoryMarketCapChartSingle(category: category, currencyCode: currencyKit.baseCurrency.code, timePeriod: interval)
                 .map { points in
                     points.map { point -> MetricChartModule.Item in
                         MetricChartModule.Item(value: point.marketCap, timestamp: point.timestamp)

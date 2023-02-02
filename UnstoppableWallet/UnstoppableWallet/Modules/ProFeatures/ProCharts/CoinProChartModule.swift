@@ -2,14 +2,14 @@ import UIKit
 import RxSwift
 import Chart
 import LanguageKit
+import MarketKit
 
 class CoinProChartModule {
 
-    static func viewController(coinUid: String, type: ProChartType) -> UIViewController {
-        let chartFetcher = ProChartFetcher(marketKit: App.shared.marketKit, coinUid: coinUid, type: type)
+    static func viewController(coin: Coin, type: ProChartType) -> UIViewController {
+        let chartFetcher = ProChartFetcher(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, coin: coin, type: type)
 
         let chartService = MetricChartService(
-                currencyKit: App.shared.currencyKit,
                 chartFetcher: chartFetcher,
                 interval: .month1
         )

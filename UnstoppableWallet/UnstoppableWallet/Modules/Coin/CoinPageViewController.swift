@@ -119,8 +119,8 @@ class CoinPageViewController: ThemeViewController {
     private func viewController(tab: CoinPageModule.Tab) -> UIViewController {
         switch tab {
         case .overview: return overviewController
-        case .markets: return marketsController
         case .details: return detailsController
+        case .markets: return marketsController
         case .tweets: return tweetsController
         }
     }

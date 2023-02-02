@@ -1,14 +1,17 @@
 import MarketKit
+import CurrencyKit
 import RxSwift
 import Foundation
 
 class CoinTradingVolumeFetcher {
     private let marketKit: MarketKit.Kit
+    private let currencyKit: CurrencyKit.Kit
     private let coinUid: String
     private let coinTitle: String
 
-    init(marketKit: MarketKit.Kit, coinUid: String, coinTitle: String) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, coinUid: String, coinTitle: String) {
         self.marketKit = marketKit
+        self.currencyKit = currencyKit
         self.coinUid = coinUid
         self.coinTitle = coinTitle
     }
@@ -21,7 +24,7 @@ extension CoinTradingVolumeFetcher: IMetricChartConfiguration {
     var poweredBy: String? { "CoinGecko API" }
 
     var valueType: MetricChartModule.ValueType {
-        .compactCurrencyValue
+        .compactCurrencyValue(currencyKit.baseCurrency)
     }
 
 }
@@ -32,9 +35,9 @@ extension CoinTradingVolumeFetcher: IMetricChartFetcher {
         [.month1, .month3, .month6, .year1]
     }
 
-    func fetchSingle(currencyCode: String, interval: HsTimePeriod) -> Single<[MetricChartModule.Item]> {
+    func fetchSingle(interval: HsTimePeriod) -> Single<[MetricChartModule.Item]> {
         marketKit
-            .chartInfoSingle(coinUid: coinUid, currencyCode: currencyCode, periodType: .byPeriod(interval))
+            .chartInfoSingle(coinUid: coinUid, currencyCode: currencyKit.baseCurrency.code, periodType: .byPeriod(interval))
             .map { info in
                 info
                     .points
