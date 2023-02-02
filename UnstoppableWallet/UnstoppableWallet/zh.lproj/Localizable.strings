@@ -594,7 +594,7 @@
 
 "coin_page.token_liquidity" = "代币流动性";
 "coin_page.token_liquidity.description" = "去中心化交易市场上特定资产的流动资金状况。";
-"coin_page.dex_volume" = "DEX Volume (30d)";
+"coin_page.dex_volume" = "DEX 音量 (30d)";
 "coin_page.dex_volume.description" = "去中心化交易所的代币交易量。";
 "coin_page.dex_liquidity" = "DEX流动性";
 "coin_page.dex_liquidity.description" = "去中心化交易所的可用流动资金总额。";
@@ -602,9 +602,9 @@
 
 "coin_page.token_distribution" = "代币分布";
 "coin_page.token_distribution.description" = "链上代币参数。通常，健康的项目都具有活跃的链上用户基础以及分布良好的代币。";
-"coin_page.tx_count" = "Tx Count (30d)";
+"coin_page.tx_count" = "Tx 计数 (30d)";
 "coin_page.tx_count.description" = "在不同时期的链上记录的代币交易数量。";
-"coin_page.tx_volume" = "Tx Volume (30d)";
+"coin_page.tx_volume" = "Tx 音量 (30d)";
 "coin_page.tx_volume.description" = "总代币交易量记录在链上。交易量是以实际代币（而非美元）进行度量。";
 "coin_page.active_addresses" = "活跃地址";
 "coin_page.active_addresses.description" = "不同时期交易中唯一钱包地址的数量。";
