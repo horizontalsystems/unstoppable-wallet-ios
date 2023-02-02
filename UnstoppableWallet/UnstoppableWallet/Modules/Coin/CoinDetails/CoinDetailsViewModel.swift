@@ -95,16 +95,16 @@ class CoinDetailsViewModel {
 
     private func tokenLiquidity(proFeatures: CoinDetailsService.AnalyticData) -> TokenLiquidityViewItem {
         TokenLiquidityViewItem(
-                volume: chart(title: CoinProChartModule.ProChartType.volume.title, item: proFeatures.dexVolumes, currentValueType: .cumulative),
-                liquidity: chart(title: CoinProChartModule.ProChartType.liquidity.title, item: proFeatures.dexLiquidity, currentValueType: .last)
+                volume: chart(title: CoinProChartModule.ProChartType.volume.valueTitle, item: proFeatures.dexVolumes, currentValueType: .cumulative),
+                liquidity: chart(title: CoinProChartModule.ProChartType.liquidity.valueTitle, item: proFeatures.dexLiquidity, currentValueType: .last)
         )
     }
 
     private func tokenDistribution(proFeatures: CoinDetailsService.AnalyticData) -> TokenDistributionViewItem {
         TokenDistributionViewItem(
-                txCount: chart(title: CoinProChartModule.ProChartType.txCount.title, item: proFeatures.txCount, currentValueType: .cumulative, chartPreviewValuePostfix: .noPostfix),
-                txVolume: chart(title: CoinProChartModule.ProChartType.txVolume.title, item: proFeatures.txVolume, currentValueType: .cumulative, chartPreviewValuePostfix: .coin),
-                activeAddresses: chart(title: CoinProChartModule.ProChartType.activeAddresses.title, item: proFeatures.activeAddresses, currentValueType: .last, chartPreviewValuePostfix: .noPostfix)
+                txCount: chart(title: CoinProChartModule.ProChartType.txCount.valueTitle, item: proFeatures.txCount, currentValueType: .cumulative, chartPreviewValuePostfix: .noPostfix),
+                txVolume: chart(title: CoinProChartModule.ProChartType.txVolume.valueTitle, item: proFeatures.txVolume, currentValueType: .cumulative, chartPreviewValuePostfix: .coin),
+                activeAddresses: chart(title: CoinProChartModule.ProChartType.activeAddresses.valueTitle, item: proFeatures.activeAddresses, currentValueType: .last, chartPreviewValuePostfix: .noPostfix)
         )
     }
 

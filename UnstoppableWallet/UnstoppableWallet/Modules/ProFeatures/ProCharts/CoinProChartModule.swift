@@ -34,12 +34,22 @@ extension CoinProChartModule {
         case txVolume
         case activeAddresses
 
-        var title: String {
+        var valueTitle: String {
             switch self {
             case .volume: return "coin_page.dex_volume".localized
             case .liquidity: return "coin_page.dex_liquidity".localized
             case .txCount: return "coin_page.tx_count".localized
             case .txVolume: return "coin_page.tx_volume".localized
+            case .activeAddresses: return "coin_page.active_addresses".localized
+            }
+        }
+
+        var title: String {
+            switch self {
+            case .volume: return "coin_page.dex_volume.title".localized
+            case .liquidity: return "coin_page.dex_liquidity".localized
+            case .txCount: return "coin_page.tx_count.title".localized
+            case .txVolume: return "coin_page.tx_volume.title".localized
             case .activeAddresses: return "coin_page.active_addresses".localized
             }
         }
