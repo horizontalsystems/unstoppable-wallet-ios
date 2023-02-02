@@ -592,7 +592,7 @@
 
 "coin_page.token_liquidity" = "Liquidité du token";
 "coin_page.token_liquidity.description" = "L'état de la liquidité pour l'actif donné sur les marchés d'échange décentralisés.";
-"coin_page.dex_volume" = "DEX Volume (30d)";
+"coin_page.dex_volume" = "Volume DEX (30d)";
 "coin_page.dex_volume.description" = "Le volume de trading pour le token sur les échanges décentralisés.";
 "coin_page.dex_liquidity" = "Liquidité DEX";
 "coin_page.dex_liquidity.description" = "Le montant total des liquidités disponibles pour le token sur les échanges décentralisés.";
@@ -600,9 +600,9 @@
 
 "coin_page.token_distribution" = "Distribution du token";
 "coin_page.token_distribution.description" = "Paramètres on-chain du token. En général, les projets sains ont une base d'utilisateurs on-chain active et un token bien distribué.";
-"coin_page.tx_count" = "Tx Count (30d)";
+"coin_page.tx_count" = "Nombre de Tx (30d)";
 "coin_page.tx_count.description" = "Le nombre de transactions du token enregistrées on-chain sur différentes périodes.";
-"coin_page.tx_volume" = "Tx Volume (30d)";
+"coin_page.tx_volume" = "Volume Tx (30d)";
 "coin_page.tx_volume.description" = "Le volume global des transactions de tokens est enregistré on-chain. Le volume est mesuré en tokens réels (pas en USD).";
 "coin_page.active_addresses" = "Adresses actives";
 "coin_page.active_addresses.description" = "Le nombre d'adresses uniques de portefeuille impliquées dans les transactions sur différentes périodes.";
