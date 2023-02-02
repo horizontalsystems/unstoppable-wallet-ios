@@ -94,7 +94,7 @@ extension InfoModule {
                 viewItems: [
                     .header2(text: "coin_page.token_liquidity".localized),
                     .text(text: "coin_page.token_liquidity.description".localized),
-                    .header(text: "coin_page.dex_volume".localized),
+                    .header(text: "coin_page.dex_volume.title".localized),
                     .text(text: "coin_page.dex_volume.description".localized),
                     .header(text: "coin_page.dex_liquidity".localized),
                     .text(text: "coin_page.dex_liquidity.description".localized)
@@ -107,9 +107,9 @@ extension InfoModule {
                 viewItems: [
                     .header2(text: "coin_page.token_distribution".localized),
                     .text(text: "coin_page.token_distribution.description".localized),
-                    .header(text: "coin_page.tx_count".localized),
+                    .header(text: "coin_page.tx_count.title".localized),
                     .text(text: "coin_page.tx_count.description".localized),
-                    .header(text: "coin_page.tx_volume".localized),
+                    .header(text: "coin_page.tx_volume.title".localized),
                     .text(text: "coin_page.tx_volume.description".localized),
                     .header(text: "coin_page.active_addresses".localized),
                     .text(text: "coin_page.active_addresses.description".localized),
