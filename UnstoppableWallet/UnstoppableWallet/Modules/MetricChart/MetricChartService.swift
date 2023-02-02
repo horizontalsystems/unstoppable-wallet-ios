@@ -9,7 +9,6 @@ class MetricChartService {
     private var fetcherDisposeBag = DisposeBag()
 
     private var chartFetcher: IMetricChartFetcher
-    private let currencyKit: CurrencyKit.Kit
 
     private let intervalRelay = PublishRelay<HsTimePeriod>()
     var interval: HsTimePeriod {
@@ -29,8 +28,7 @@ class MetricChartService {
         }
     }
 
-    init(currencyKit: CurrencyKit.Kit, chartFetcher: IMetricChartFetcher, interval: HsTimePeriod) {
-        self.currencyKit = currencyKit
+    init(chartFetcher: IMetricChartFetcher, interval: HsTimePeriod) {
         self.chartFetcher = chartFetcher
         self.interval = interval
 
@@ -42,7 +40,7 @@ class MetricChartService {
         state = .loading
 
         chartFetcher
-            .fetchSingle(currencyCode: currencyKit.baseCurrency.code, interval: interval)
+            .fetchSingle(interval: interval)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] items in
                 self?.state = .completed(items)
@@ -64,10 +62,6 @@ extension MetricChartService {
 
     var stateObservable: Observable<DataStatus<[MetricChartModule.Item]>> {
         stateRelay.asObservable()
-    }
-
-    var currency: Currency {
-        currencyKit.baseCurrency
     }
 
 }

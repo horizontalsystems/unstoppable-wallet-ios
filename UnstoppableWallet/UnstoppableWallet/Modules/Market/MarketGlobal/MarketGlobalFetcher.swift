@@ -1,14 +1,17 @@
 import RxSwift
 import Foundation
 import MarketKit
+import CurrencyKit
 import Chart
 
 class MarketGlobalFetcher {
     private let marketKit: MarketKit.Kit
+    private let currencyKit: CurrencyKit.Kit
     private let metricsType: MarketGlobalModule.MetricsType
 
-    init(marketKit: MarketKit.Kit, metricsType: MarketGlobalModule.MetricsType) {
+    init(currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit, metricsType: MarketGlobalModule.MetricsType) {
         self.marketKit = marketKit
+        self.currencyKit = currencyKit
         self.metricsType = metricsType
     }
 
@@ -20,16 +23,16 @@ extension MarketGlobalFetcher: IMetricChartConfiguration {
     var poweredBy: String? { "DefiLlama API" }
 
     var valueType: MetricChartModule.ValueType {
-        .compactCurrencyValue
+        .compactCurrencyValue(currencyKit.baseCurrency)
     }
 
 }
 
 extension MarketGlobalFetcher: IMetricChartFetcher {
 
-    func fetchSingle(currencyCode: String, interval: HsTimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
+    func fetchSingle(interval: HsTimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
         marketKit
-                .globalMarketPointsSingle(currencyCode: currencyCode, timePeriod: interval)
+                .globalMarketPointsSingle(currencyCode: currencyKit.baseCurrency.code, timePeriod: interval)
                 .map { [weak self] points in
                     let result = points.map { point -> MetricChartModule.Item in
                         let value: Decimal

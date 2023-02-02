@@ -24,8 +24,8 @@ struct MarketCategoryModule {
                 favoritesManager: App.shared.favoritesManager
         )
 
-        let marketCapFetcher = MarketCategoryMarketCapFetcher(marketKit: App.shared.marketKit, category: category.uid)
-        let chartService = MetricChartService(currencyKit: App.shared.currencyKit, chartFetcher: marketCapFetcher, interval: .day1)
+        let marketCapFetcher = MarketCategoryMarketCapFetcher(currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit, category: category.uid)
+        let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .day1)
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MarketCategoryMetricChartViewModel(service: chartService, chartConfiguration: marketCapFetcher, factory: factory)
 

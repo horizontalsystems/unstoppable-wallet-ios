@@ -44,15 +44,15 @@ extension CoinPageModule {
 
     enum Tab: Int, CaseIterable {
         case overview
-        case markets
         case details
+        case markets
         case tweets
 
         var title: String {
             switch self {
             case .overview: return "coin_page.tab.overview".localized
-            case .markets: return "coin_page.tab.markets".localized
             case .details: return "coin_page.tab.details".localized
+            case .markets: return "coin_page.tab.markets".localized
             case .tweets: return "coin_page.tab.tweets".localized
             }
         }

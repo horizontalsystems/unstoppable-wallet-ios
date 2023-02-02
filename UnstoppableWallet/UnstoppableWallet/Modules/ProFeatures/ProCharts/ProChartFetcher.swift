@@ -1,16 +1,19 @@
 import RxSwift
 import Foundation
 import MarketKit
+import CurrencyKit
 import Chart
 
 class ProChartFetcher {
     private let marketKit: MarketKit.Kit
-    private let coinUid: String
+    private let currencyKit: CurrencyKit.Kit
+    private let coin: Coin
     private let type: CoinProChartModule.ProChartType
 
-    init(marketKit: MarketKit.Kit, coinUid: String, type: CoinProChartModule.ProChartType) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, coin: Coin, type: CoinProChartModule.ProChartType) {
         self.marketKit = marketKit
-        self.coinUid = coinUid
+        self.currencyKit = currencyKit
+        self.coin = coin
         self.type = type
     }
 
@@ -24,7 +27,8 @@ extension ProChartFetcher: IMetricChartConfiguration {
     var valueType: MetricChartModule.ValueType {
         switch type {
         case .activeAddresses, .txCount: return .counter
-        default: return .compactCurrencyValue
+        case .txVolume: return .compactCoinValue(coin)
+        default: return .compactCurrencyValue(currencyKit.baseCurrency)
         }
     }
 
@@ -32,16 +36,16 @@ extension ProChartFetcher: IMetricChartConfiguration {
 
 extension ProChartFetcher: IMetricChartFetcher {
 
-    func fetchSingle(currencyCode: String, interval: HsTimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
+    func fetchSingle(interval: HsTimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
         let single: Single<[ChartPoint]>
         switch type {
-        case .volume: single = marketKit.dexVolumesSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: interval).map { $0.volumePoints }
-        case .liquidity: single = marketKit.dexLiquiditySingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: interval).map { $0.volumePoints }
-        case .txCount: single = marketKit.transactionDataSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: interval, platform: nil).map { response in
+        case .volume: single = marketKit.dexVolumesSingle(coinUid: coin.uid, currencyCode: currencyKit.baseCurrency.code, timePeriod: interval).map { $0.volumePoints }
+        case .liquidity: single = marketKit.dexLiquiditySingle(coinUid: coin.uid, currencyCode: currencyKit.baseCurrency.code, timePeriod: interval).map { $0.volumePoints }
+        case .txCount: single = marketKit.transactionDataSingle(coinUid: coin.uid, currencyCode: currencyKit.baseCurrency.code, timePeriod: interval, platform: nil).map { response in
             zip(response.countPoints, response.volumePoints).map { ChartPoint(timestamp: $0.timestamp, value: $0.value, extra: [ChartPoint.volume: $1.value]) }
         }
-        case .txVolume: single = marketKit.transactionDataSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: interval, platform: nil).map { $0.volumePoints }
-        case .activeAddresses: single = marketKit.activeAddressesSingle(coinUid: coinUid, currencyCode: currencyCode, timePeriod: interval, platform: nil).map { $0.countPoints }
+        case .txVolume: single = marketKit.transactionDataSingle(coinUid: coin.uid, currencyCode: currencyKit.baseCurrency.code, timePeriod: interval, platform: nil).map { $0.volumePoints }
+        case .activeAddresses: single = marketKit.activeAddressesSingle(coinUid: coin.uid, currencyCode: currencyKit.baseCurrency.code, timePeriod: interval, platform: nil).map { $0.countPoints }
         }
 
         return single.map { items in

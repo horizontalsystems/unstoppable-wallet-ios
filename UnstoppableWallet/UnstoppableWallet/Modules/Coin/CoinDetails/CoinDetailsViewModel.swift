@@ -47,7 +47,7 @@ class CoinDetailsViewModel {
         }
     }
 
-    private func chart(title: String, item: CoinDetailsService.ProData, description: String? = nil, currentValueType: CoinProChartModule.ChartValueType = .last, isCurrencyValue: Bool = true) -> MarketCardView.ViewItem? {
+    private func chart(title: String, item: CoinDetailsService.ProData, description: String? = nil, currentValueType: CoinProChartModule.ChartValueType = .last, chartPreviewValuePostfix: ChartPreviewValuePostfix = .currency) -> MarketCardView.ViewItem? {
         switch item {
         case .empty: return nil
         case .completed(let values):
@@ -74,9 +74,13 @@ class CoinDetailsViewModel {
                 value = values.map { $0.value }.reduce(0, +)
                 ignoreTrend = true                      // For cumulative value trend must be ignored
             }
-            let valueString = isCurrencyValue ?
-                    ValueFormatter.instance.formatShort(currency: service.currency, value: value) :
-                    ValueFormatter.instance.formatShort(value: value)
+
+            let valueString: String?
+            switch chartPreviewValuePostfix {
+            case .currency: valueString = ValueFormatter.instance.formatShort(currency: service.currency, value: value)
+            case .coin: valueString = ValueFormatter.instance.formatShort(value: value).map { [$0, coin.code].joined(separator: " ") }
+            case .noPostfix: valueString = ValueFormatter.instance.formatShort(value: value)
+            }
 
             return MarketCardView.ViewItem(
                     title: title,
@@ -98,9 +102,9 @@ class CoinDetailsViewModel {
 
     private func tokenDistribution(proFeatures: CoinDetailsService.AnalyticData) -> TokenDistributionViewItem {
         TokenDistributionViewItem(
-                txCount: chart(title: CoinProChartModule.ProChartType.txCount.title, item: proFeatures.txCount, currentValueType: .cumulative, isCurrencyValue: false),
-                txVolume: chart(title: CoinProChartModule.ProChartType.txVolume.title, item: proFeatures.txVolume, currentValueType: .cumulative),
-                activeAddresses: chart(title: CoinProChartModule.ProChartType.activeAddresses.title, item: proFeatures.activeAddresses, currentValueType: .last, isCurrencyValue: false)
+                txCount: chart(title: CoinProChartModule.ProChartType.txCount.title, item: proFeatures.txCount, currentValueType: .cumulative, chartPreviewValuePostfix: .noPostfix),
+                txVolume: chart(title: CoinProChartModule.ProChartType.txVolume.title, item: proFeatures.txVolume, currentValueType: .cumulative, chartPreviewValuePostfix: .coin),
+                activeAddresses: chart(title: CoinProChartModule.ProChartType.activeAddresses.title, item: proFeatures.activeAddresses, currentValueType: .last, chartPreviewValuePostfix: .noPostfix)
         )
     }
 
@@ -331,6 +335,12 @@ extension CoinDetailsViewModel {
         let diffColor: UIColor
         let chartData: ChartData?
         let chartTrend: MovementTrend
+    }
+
+    enum ChartPreviewValuePostfix {
+    case currency
+    case coin
+    case noPostfix
     }
 
 }
