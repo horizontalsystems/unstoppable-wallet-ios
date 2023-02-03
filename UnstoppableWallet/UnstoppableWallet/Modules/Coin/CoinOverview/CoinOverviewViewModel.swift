@@ -97,6 +97,7 @@ extension CoinOverviewViewModel {
     struct ContractViewItem {
         let iconUrl: String
         let title: String
+        let subtitle: String
         let reference: String
         let explorerUrl: String?
     }

@@ -2,10 +2,6 @@ import MarketKit
 
 extension TokenQuery {
 
-    var protocolName: String? {
-        blockchainType.protocolName(tokenProtocol: tokenType.tokenProtocol)
-    }
-
     var customCoinUid: String {
         "custom-\(id)"
     }

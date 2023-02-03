@@ -24,7 +24,7 @@ extension CoinTokensService {
     }
 
     func approveTokens(coin: Coin, eligibleTokens: [Token], currentTokens: [Token] = [], allowEmpty: Bool = false) {
-        let request = Request(coin: coin, eligibleTokens: eligibleTokens.sorted, currentTokens: currentTokens, allowEmpty: allowEmpty)
+        let request = Request(coin: coin, eligibleTokens: eligibleTokens.sorted(), currentTokens: currentTokens, allowEmpty: allowEmpty)
         requestRelay.accept(request)
     }
 

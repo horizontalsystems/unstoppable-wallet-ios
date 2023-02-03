@@ -29,7 +29,7 @@ class CoinTokensViewModel {
                 viewItems: tokens.map { token in
                     BottomMultiSelectorViewController.ViewItem(
                             icon: .remote(url: token.blockchain.type.imageUrl, placeholder: nil),
-                            title: token.protocolInfo,
+                            title: token.tokenBlockchain,
                             subtitle: token.typeInfo,
                             copyableString: token.copyableTypeInfo
                     )

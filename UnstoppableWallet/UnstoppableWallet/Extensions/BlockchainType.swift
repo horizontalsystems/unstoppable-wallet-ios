@@ -5,37 +5,6 @@ import MarketKit
 
 extension BlockchainType {
 
-    func protocolName(tokenProtocol: TokenProtocol) -> String? {
-        switch tokenProtocol {
-        case .native:
-            switch self {
-            case .optimism: return "Optimism"
-            case .arbitrumOne: return "Arbitrum"
-            case .gnosis: return "Gnosis"
-            case .binanceChain: return "BEP2"
-            default: return nil
-            }
-        case .eip20:
-            switch self {
-            case .ethereum: return "ERC20"
-            case .ethereumGoerli: return "Goerli ERC20"
-            case .binanceSmartChain: return "BEP20"
-            case .polygon: return "Polygon"
-            case .avalanche: return "Avalanche"
-            case .optimism: return "Optimism"
-            case .arbitrumOne: return "Arbitrum"
-            case .gnosis: return "Gnosis"
-            default: return nil
-            }
-        case .bep2:
-            return "BEP2"
-        case .spl:
-            return "SPL"
-        default:
-            return nil
-        }
-    }
-
     func placeholderImageName(tokenProtocol: TokenProtocol?) -> String {
         tokenProtocol.map { "\(uid)_\($0)_32" } ?? "placeholder_circle_32"
     }

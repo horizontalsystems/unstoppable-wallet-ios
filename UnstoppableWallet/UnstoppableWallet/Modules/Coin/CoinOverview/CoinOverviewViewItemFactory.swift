@@ -78,12 +78,30 @@ class CoinOverviewViewItemFactory {
         let contracts: [CoinOverviewViewModel.ContractViewItem] = tokens.compactMap { token in
             switch token.type {
             case .eip20(let address):
-                return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, title: address.shortened, reference: address, explorerUrl: explorerUrl(token: token, reference: address))
+                return CoinOverviewViewModel.ContractViewItem(
+                        iconUrl: token.blockchainType.imageUrl,
+                        title: token.blockchain.name,
+                        subtitle: address.shortened,
+                        reference: address,
+                        explorerUrl: explorerUrl(token: token, reference: address)
+                )
             case .bep2(let symbol):
-                return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, title: symbol, reference: symbol, explorerUrl: explorerUrl(token: token, reference: symbol))
+                return CoinOverviewViewModel.ContractViewItem(
+                        iconUrl: token.blockchainType.imageUrl,
+                        title: token.blockchain.name,
+                        subtitle: symbol,
+                        reference: symbol,
+                        explorerUrl: explorerUrl(token: token, reference: symbol)
+                )
             case let .unsupported(_, reference):
                 if let reference = reference {
-                    return CoinOverviewViewModel.ContractViewItem(iconUrl: token.blockchainType.imageUrl, title: reference.shortened, reference: reference, explorerUrl: explorerUrl(token: token, reference: reference))
+                    return CoinOverviewViewModel.ContractViewItem(
+                            iconUrl: token.blockchainType.imageUrl,
+                            title: token.blockchain.name,
+                            subtitle: reference.shortened,
+                            reference: reference,
+                            explorerUrl: explorerUrl(token: token, reference: reference)
+                    )
                 } else {
                     return nil
                 }

@@ -3,7 +3,44 @@ import MarketKit
 extension Token {
 
     var protocolName: String? {
-        tokenQuery.protocolName
+        switch type {
+        case .native:
+            switch blockchainType {
+            case .ethereum, .binanceSmartChain: return nil
+            case .binanceChain: return "BEP2"
+            default: return blockchain.name
+            }
+        case .eip20:
+            switch blockchainType {
+            case .ethereum: return "ERC20"
+            case .binanceSmartChain: return "BEP20"
+            default: return blockchain.name
+            }
+        case .bep2:
+            return "BEP2"
+        default:
+            return blockchain.name
+        }
+    }
+
+    var tokenBlockchain: String {
+        switch type {
+        case .native:
+            switch blockchainType {
+            case .binanceChain: return "\(blockchain.name) (BEP2)"
+            default: return blockchain.name
+            }
+        case .eip20:
+            switch blockchainType {
+            case .ethereum: return "\(blockchain.name) (ERC20)"
+            case .binanceSmartChain: return "\(blockchain.name) (BEP20)"
+            default: return blockchain.name
+            }
+        case .bep2:
+            return "\(blockchain.name) (BEP2)"
+        default:
+            return blockchain.name
+        }
     }
 
     var isCustom: Bool {
@@ -31,26 +68,9 @@ extension Token {
         }
     }
 
-    var protocolInfo: String {
-        switch type {
-        case .native: return blockchain.name
-        case .eip20, .bep2: return protocolName ?? ""
-        default: return ""
-        }
-    }
-
     var typeInfo: String {
         switch type {
-        case .native:
-            var parts = ["coin_platforms.native".localized]
-
-            switch blockchainType {
-            case .binanceSmartChain: parts.append("(BEP20)")
-            case .binanceChain: parts.append("(BEP2)")
-            default: ()
-            }
-
-            return parts.joined(separator: " ")
+        case .native: return "coin_platforms.native".localized
         case .eip20(let address): return address.shortened
         case .bep2(let symbol): return symbol
         default: return ""
@@ -67,19 +87,17 @@ extension Token {
 
 }
 
-extension Array where Element == Token {
+extension Token: Comparable {
 
-    var sorted: [Token] {
-        sorted {
-            let lhsTypeOrder = $0.type.order
-            let rhsTypeOrder = $1.type.order
+    public static func <(lhs: Token, rhs: Token) -> Bool {
+        let lhsTypeOrder = lhs.type.order
+        let rhsTypeOrder = rhs.type.order
 
-            guard lhsTypeOrder == rhsTypeOrder else {
-                return lhsTypeOrder < rhsTypeOrder
-            }
-
-            return $0.blockchainType.order < $1.blockchainType.order
+        guard lhsTypeOrder == rhsTypeOrder else {
+            return lhsTypeOrder < rhsTypeOrder
         }
+
+        return lhs.blockchainType.order < rhs.blockchainType.order
     }
 
 }

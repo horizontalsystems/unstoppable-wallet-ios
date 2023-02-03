@@ -103,7 +103,7 @@ extension EnableCoinService {
                 enableCoinRelay.accept(([ConfiguredToken(token: token)], [:]))
             }
         } else {
-            coinTokensService.approveTokens(coin: fullCoin.coin, eligibleTokens: eligibleTokens, currentTokens: eligibleTokens.isEmpty ? [] : [eligibleTokens.sorted[0]])
+            coinTokensService.approveTokens(coin: fullCoin.coin, eligibleTokens: eligibleTokens, currentTokens: eligibleTokens.isEmpty ? [] : [eligibleTokens.sorted()[0]])
         }
     }
 

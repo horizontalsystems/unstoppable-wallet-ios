@@ -15,6 +15,8 @@ class HighlightedDescriptionBaseView: UIView {
         borderWidth = 1
         cornerRadius = .cornerRadius12
         layer.cornerCurve = .continuous
+
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
     }
 
     required public init?(coder aDecoder: NSCoder) {

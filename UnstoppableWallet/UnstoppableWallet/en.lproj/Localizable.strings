@@ -315,7 +315,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "send.amount_error.minimum_amount" = "Minimum amount %@";
 "send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.amount_warning.coin_needed_for_fee" = "Consider leaving some %@ on balance to be able to pay for future transactions.";
-"send.token.insufficient_fee_alert" = "Transaction fees for %@ (%@) paid in %@. You need %@.";
+"send.token.insufficient_fee_alert" = "Transaction fees for transferring %@ (on %@) paid in %@. You need %@.";
 
 "send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
 "send.fee_settings.amount_error.balance" = "The current %@ balance is below the amount required to process theis transaction, including transaction fee.";
