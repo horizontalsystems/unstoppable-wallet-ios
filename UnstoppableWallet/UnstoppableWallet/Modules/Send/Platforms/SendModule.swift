@@ -165,7 +165,6 @@ class SendModule {
 
     private static func viewController(token: Token, adapter: ISendBinanceAdapter) -> UIViewController? {
         let feeToken = App.shared.feeCoinProvider.feeToken(token: token) ?? token
-        let feeTokenProtocol = App.shared.feeCoinProvider.feeTokenProtocol(token: token)
 
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
         let coinService = CoinService(token: token, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
@@ -228,7 +227,7 @@ class SendModule {
 
         // Fee
         let feeViewModel = SendFeeViewModel(service: feeService)
-        let feeWarningViewModel = SendBinanceFeeWarningViewModel(adapter: adapter, coinCode: token.coin.code, tokenProtocol: feeTokenProtocol, feeToken: feeToken)
+        let feeWarningViewModel = SendBinanceFeeWarningViewModel(adapter: adapter, coinCode: token.coin.code, feeToken: feeToken)
 
         // Confirmation and Settings
         let sendFactory = SendBinanceFactory(

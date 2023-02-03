@@ -21,13 +21,4 @@ extension FeeCoinProvider {
         }
     }
 
-    func feeTokenProtocol(token: Token) -> String? {
-        switch token.type {
-        case .eip20, .bep2:
-            return token.protocolName
-        default:
-            return nil
-        }
-    }
-
 }

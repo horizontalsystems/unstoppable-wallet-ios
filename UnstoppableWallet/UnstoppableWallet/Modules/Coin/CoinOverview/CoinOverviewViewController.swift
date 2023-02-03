@@ -318,12 +318,20 @@ extension CoinOverviewViewController {
                     .image32 { (component: ImageComponent) -> () in
                         component.setImage(urlString: viewItem.iconUrl, placeholder: nil)
                     },
-                    .text { (component: TextComponent) -> () in
-                        component.font = .subhead2
-                        component.textColor = .themeGray
-                        component.lineBreakMode = .byTruncatingMiddle
-                        component.text = viewItem.title
-                    },
+                    .vStackCentered([
+                        .text { component in
+                            component.font = .body
+                            component.textColor = .themeLeah
+                            component.text = viewItem.title
+                        },
+                        .margin(1),
+                        .text { component in
+                            component.font = .subhead2
+                            component.textColor = .themeGray
+                            component.text = viewItem.subtitle
+                            component.lineBreakMode = .byTruncatingMiddle
+                        }
+                    ]),
                     .secondaryCircleButton { (component: SecondaryCircleButtonComponent) -> () in
                         component.button.set(image: UIImage(named: "copy_20"))
                         component.onTap = {
@@ -344,7 +352,7 @@ extension CoinOverviewViewController {
                 ]),
                 tableView: tableView,
                 id: "contract-\(index)",
-                height: .heightCell56,
+                height: .heightDoubleLineCell,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                 }
