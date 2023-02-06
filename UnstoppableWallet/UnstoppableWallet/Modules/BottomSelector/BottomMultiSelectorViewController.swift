@@ -143,7 +143,7 @@ extension BottomMultiSelectorViewController: SectionsDataSource {
 
                         return CellBuilderNew.row(
                                 rootElement: .hStack([
-                                    .image24 { component in
+                                    .image32 { component in
                                         if let icon = viewItem.icon {
                                             switch icon {
                                             case .local(let name):
