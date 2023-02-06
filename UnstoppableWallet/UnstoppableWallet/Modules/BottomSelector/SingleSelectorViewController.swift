@@ -59,7 +59,7 @@ extension SingleSelectorViewController: SectionsDataSource {
                     headerState: .margin(height: .margin12),
                     footerState: .margin(height: .margin32),
                     rows: viewItems.enumerated().map { index, viewItem in
-                        tableView.universalRow48(
+                        tableView.universalRow56(
                                 id: "item-\(index)",
                                 image: .url(viewItem.imageUrl),
                                 title: .body(viewItem.title),

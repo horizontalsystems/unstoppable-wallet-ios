@@ -81,7 +81,7 @@ extension CoinSelectViewController: SectionsDataSource {
 
                         return CellBuilderNew.row(
                                 rootElement: .hStack([
-                                    .image24 { component in
+                                    .image32 { component in
                                         component.setImage(urlString: viewItem.token.coin.imageUrl, placeholder: UIImage(named: viewItem.token.placeholderImageName))
                                     },
                                     .vStackCentered([
