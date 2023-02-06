@@ -26,15 +26,19 @@ class SendFeePriorityCell: BaseSelectableThemeCell {
 
     private func sync(priority: String?) {
         CellBuilderNew.buildStatic(cell: self, rootElement: .hStack([
-            .image24 { (component: ImageComponent) -> () in
-                component.imageView.image = UIImage(named: "circle_information_24")
-            },
-            .text { (component: TextComponent) -> () in
+            .text { component in
                 component.font = .subhead2
                 component.textColor = .themeGray
                 component.text = "send.tx_speed".localized
+                component.setContentHuggingPriority(.required, for: .horizontal)
             },
-            .secondaryButton { (component: SecondaryButtonComponent) -> () in
+            .margin8,
+            .image20 { component in
+                component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
+            },
+            .margin0,
+            .text { _ in },
+            .secondaryButton { component in
                 component.button.set(style: .default)
                 component.button.set(image: UIImage(named: "arrow_small_down_20"))
                 component.button.setTitle(priority, for: .normal)

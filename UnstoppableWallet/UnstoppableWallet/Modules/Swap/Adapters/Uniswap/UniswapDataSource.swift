@@ -286,19 +286,25 @@ class UniswapDataSource {
     }
 
     private func build(staticCell: BaseThemeCell, id: String, title: String, showInfo: Bool = false, value: String?, valueColor: UIColor, progress: CGFloat? = nil) {
-        var cellElements = [CellBuilderNew.CellElement]()
-        if showInfo {
-            cellElements.append(.image20 { component in
-                component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
-            })
-        }
-        cellElements.append(contentsOf: [
+        var cellElements: [CellBuilderNew.CellElement] = [
             .text { component in
                 component.font = .subhead2
                 component.textColor = .themeGray
                 component.text = title
                 component.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-            },
+            }
+        ]
+
+        if showInfo {
+            cellElements.append(contentsOf: [
+                .margin8,
+                .image20 { component in
+                    component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
+                }
+            ])
+        }
+
+        cellElements.append(contentsOf: [
             .text { component in
                 component.font = .subhead2
                 component.textColor = valueColor
