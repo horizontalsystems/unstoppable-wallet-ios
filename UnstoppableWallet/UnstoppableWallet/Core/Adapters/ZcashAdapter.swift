@@ -67,15 +67,16 @@ class ZcashAdapter {
     }
 
 
-    init(wallet: Wallet, restoreSettings: RestoreSettings, testMode: Bool) throws {
+    init(wallet: Wallet, restoreSettings: RestoreSettings) throws {
         guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
         }
 
-        network = ZcashNetworkBuilder.network(for: testMode ? .testnet : .mainnet)
+        network = ZcashNetworkBuilder.network(for: .mainnet)
         fee = network.constants.defaultFee().decimalValue.decimalValue
 
-        let endPoint = testMode ? "lightwalletd.testnet.electriccoin.co" : "mainnet.lightwalletd.com"
+//        let endPoint = "lightwalletd.testnet.electriccoin.co" // testnet
+        let endPoint = "mainnet.lightwalletd.com"
 
         token = wallet.token
         transactionSource = wallet.transactionSource

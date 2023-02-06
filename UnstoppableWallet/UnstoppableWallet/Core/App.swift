@@ -61,8 +61,6 @@ class App {
     let restoreSettingsManager: RestoreSettingsManager
     let predefinedBlockchainService: PredefinedBlockchainService
 
-    private let testModeIndicator: TestModeIndicator
-
     let logRecordManager: LogRecordManager
 
     var debugLogger: DebugLogger?
@@ -171,7 +169,7 @@ class App {
         let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, evmAccountRestoreStateManager: evmAccountRestoreStateManager, marketKit: marketKit)
         evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, testNetManager: testNetManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
 
-        let binanceKitManager = BinanceKitManager(appConfigProvider: appConfigProvider)
+        let binanceKitManager = BinanceKitManager()
 
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)
@@ -183,7 +181,6 @@ class App {
         evmLabelManager = EvmLabelManager(provider: hsLabelProvider, storage: evmLabelStorage, syncerStateStorage: syncerStateStorage)
 
         let adapterFactory = AdapterFactory(
-                appConfigProvider: appConfigProvider,
                 evmBlockchainManager: evmBlockchainManager,
                 evmSyncSourceManager: evmSyncSourceManager,
                 binanceKitManager: binanceKitManager,
@@ -224,8 +221,6 @@ class App {
 
         pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default)
         let blurManager = BlurManager(pinKit: pinKit)
-
-        testModeIndicator = TestModeIndicator(appConfigProvider: appConfigProvider)
 
         let appVersionRecordStorage = AppVersionRecordStorage(dbPool: dbPool)
         let appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)

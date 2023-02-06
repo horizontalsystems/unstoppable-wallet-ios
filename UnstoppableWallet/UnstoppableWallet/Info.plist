@@ -2,19 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIApplicationSceneManifest</key>
-	<dict>
-		<key>UIApplicationSupportsMultipleScenes</key>
-		<false/>
-		<key>UISceneConfigurations</key>
-		<dict/>
-	</dict>
 	<key>ArbiscanApiKey</key>
 	<string>${arbiscan_api_key}</string>
 	<key>BscscanApiKey</key>
 	<string>${bscscan_api_key}</string>
-	<key>GnosisscanApiKey</key>
-	<string>${gnosisscan_api_key}</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -50,6 +41,8 @@
 	<string>$(defiyield_api_key)</string>
 	<key>EtherscanApiKey</key>
 	<string>${etherscan_api_key}</string>
+	<key>GnosisscanApiKey</key>
+	<string>${gnosisscan_api_key}</string>
 	<key>HsProviderApiKey</key>
 	<string>$(hs_provider_api_key)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
@@ -86,10 +79,15 @@
 	<string>${ShowBuildNumber}</string>
 	<key>SnowtraceApiKey</key>
 	<string>${snowtrace_api_key}</string>
-	<key>TestMode</key>
-	<string>${TestMode}</string>
 	<key>TwitterBearerToken</key>
 	<string>${twitter_bearer_token}</string>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict/>
+	</dict>
 	<key>UIBackgroundModes</key>
 	<array/>
 	<key>UILaunchStoryboardName</key>

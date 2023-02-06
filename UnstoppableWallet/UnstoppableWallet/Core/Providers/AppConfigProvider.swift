@@ -14,10 +14,6 @@ class AppConfigProvider {
         (Bundle.main.object(forInfoDictionaryKey: "MarketApiUrl") as? String) ?? ""
     }
 
-    var testMode: Bool {
-        Bundle.main.object(forInfoDictionaryKey: "TestMode") as? String == "true"
-    }
-
     var officeMode: Bool {
         Bundle.main.object(forInfoDictionaryKey: "OfficeMode") as? String == "true"
     }

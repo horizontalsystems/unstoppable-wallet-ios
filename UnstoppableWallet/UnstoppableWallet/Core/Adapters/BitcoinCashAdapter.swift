@@ -7,7 +7,7 @@ import HdWalletKit
 class BitcoinCashAdapter: BitcoinBaseAdapter {
     private let bitcoinCashKit: BitcoinCashKit.Kit
 
-    init(wallet: Wallet, syncMode: BitcoinCore.SyncMode, testMode: Bool) throws {
+    init(wallet: Wallet, syncMode: BitcoinCore.SyncMode) throws {
         guard let bitcoinCashCoinType = wallet.coinSettings.bitcoinCashCoinType else {
             throw AdapterError.wrongParameters
         }
@@ -19,7 +19,7 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
         case .type145: kitCoinType = .type145
         }
 
-        let networkType: BitcoinCashKit.Kit.NetworkType = testMode ? .testNet : .mainNet(coinType: kitCoinType)
+        let networkType: BitcoinCashKit.Kit.NetworkType = .mainNet(coinType: kitCoinType)
         let logger = App.shared.logger.scoped(with: "BitcoinCashKit")
 
         switch wallet.account.type {
@@ -49,7 +49,7 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
             throw AdapterError.unsupportedAccount
         }
 
-        super.init(abstractKit: bitcoinCashKit, wallet: wallet, testMode: testMode)
+        super.init(abstractKit: bitcoinCashKit, wallet: wallet)
 
         bitcoinCashKit.delegate = self
     }
@@ -59,7 +59,7 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
     }
 
     override func explorerUrl(transactionHash: String) -> String? {
-        testMode ? nil : "https://bch.btc.com/" + transactionHash
+        "https://bch.btc.com/" + transactionHash
     }
 
 }
