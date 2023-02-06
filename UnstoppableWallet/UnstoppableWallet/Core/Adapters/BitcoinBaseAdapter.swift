@@ -10,7 +10,6 @@ class BitcoinBaseAdapter {
     static let confirmationsThreshold = 3
 
     private let abstractKit: AbstractKit
-    let testMode: Bool
     private let coinRate: Decimal = pow(10, 8)
 
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
@@ -29,9 +28,8 @@ class BitcoinBaseAdapter {
     private let token: Token
     private let transactionSource: TransactionSource
 
-    init(abstractKit: AbstractKit, wallet: Wallet, testMode: Bool) {
+    init(abstractKit: AbstractKit, wallet: Wallet) {
         self.abstractKit = abstractKit
-        self.testMode = testMode
         token = wallet.token
         transactionSource = wallet.transactionSource
 

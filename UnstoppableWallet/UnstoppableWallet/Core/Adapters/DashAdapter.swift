@@ -11,8 +11,8 @@ class DashAdapter: BitcoinBaseAdapter {
 
     private let dashKit: DashKit.Kit
 
-    init(wallet: Wallet, syncMode: BitcoinCore.SyncMode, testMode: Bool) throws {
-        let networkType: DashKit.Kit.NetworkType = testMode ? .testNet : .mainNet
+    init(wallet: Wallet, syncMode: BitcoinCore.SyncMode) throws {
+        let networkType: DashKit.Kit.NetworkType = .mainNet
         let logger = App.shared.logger.scoped(with: "DashKit")
 
         switch wallet.account.type {
@@ -42,7 +42,7 @@ class DashAdapter: BitcoinBaseAdapter {
             throw AdapterError.unsupportedAccount
         }
 
-        super.init(abstractKit: dashKit, wallet: wallet, testMode: testMode)
+        super.init(abstractKit: dashKit, wallet: wallet)
 
         dashKit.delegate = self
     }
@@ -52,7 +52,7 @@ class DashAdapter: BitcoinBaseAdapter {
     }
 
     override func explorerUrl(transactionHash: String) -> String? {
-        testMode ? nil : "https://insight.dash.org/insight/tx/" + transactionHash
+        "https://insight.dash.org/insight/tx/" + transactionHash
     }
 
 }

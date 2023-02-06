@@ -3,16 +3,10 @@ import RxSwift
 import BinanceChainKit
 
 class BinanceKitManager {
-    private let appConfigProvider: AppConfigProvider
-
     private weak var _binanceKit: BinanceChainKit?
     private var currentAccount: Account?
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.ethereum-kit-manager", qos: .userInitiated)
-
-    init(appConfigProvider: AppConfigProvider) {
-        self.appConfigProvider = appConfigProvider
-    }
 
     private func _binanceKit(account: Account) throws -> BinanceChainKit {
         if let _binanceKit = _binanceKit, let currentAccount = currentAccount, currentAccount == account {
@@ -25,7 +19,7 @@ class BinanceKitManager {
 
         let binanceKit = try BinanceChainKit.instance(
                 seed: seed,
-                networkType: appConfigProvider.testMode ? .testNet : .mainNet,
+                networkType: .mainNet,
                 walletId: account.id,
                 minLogLevel: .error
         )

@@ -7,8 +7,8 @@ import MarketKit
 class BitcoinAdapter: BitcoinBaseAdapter {
     private let bitcoinKit: BitcoinKit.Kit
 
-    init(wallet: Wallet, syncMode: BitcoinCore.SyncMode, testMode: Bool) throws {
-        let networkType: BitcoinKit.Kit.NetworkType = testMode ? .testNet : .mainNet
+    init(wallet: Wallet, syncMode: BitcoinCore.SyncMode) throws {
+        let networkType: BitcoinKit.Kit.NetworkType = .mainNet
         let logger = App.shared.logger.scoped(with: "BitcoinKit")
 
         switch wallet.account.type {
@@ -43,7 +43,7 @@ class BitcoinAdapter: BitcoinBaseAdapter {
             throw AdapterError.unsupportedAccount
         }
 
-        super.init(abstractKit: bitcoinKit, wallet: wallet, testMode: testMode)
+        super.init(abstractKit: bitcoinKit, wallet: wallet)
 
         bitcoinKit.delegate = self
     }
@@ -53,7 +53,7 @@ class BitcoinAdapter: BitcoinBaseAdapter {
     }
 
     override func explorerUrl(transactionHash: String) -> String? {
-        testMode ? nil : "https://blockchair.com/bitcoin/transaction/" + transactionHash
+        "https://blockchair.com/bitcoin/transaction/" + transactionHash
     }
 
 }

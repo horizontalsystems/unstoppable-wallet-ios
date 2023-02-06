@@ -5,7 +5,6 @@ import EvmKit
 import MarketKit
 
 class AdapterFactory {
-    private let appConfigProvider: AppConfigProvider
     private let evmBlockchainManager: EvmBlockchainManager
     private let evmSyncSourceManager: EvmSyncSourceManager
     private let binanceKitManager: BinanceKitManager
@@ -14,8 +13,7 @@ class AdapterFactory {
     private let coinManager: CoinManager
     private let evmLabelManager: EvmLabelManager
 
-    init(appConfigProvider: AppConfigProvider, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, binanceKitManager: BinanceKitManager, btcBlockchainManager: BtcBlockchainManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, evmLabelManager: EvmLabelManager) {
-        self.appConfigProvider = appConfigProvider
+    init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, binanceKitManager: BinanceKitManager, btcBlockchainManager: BtcBlockchainManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, evmLabelManager: EvmLabelManager) {
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
         self.binanceKitManager = binanceKitManager
@@ -71,23 +69,23 @@ extension AdapterFactory {
 
         case (.native, .bitcoin):
             let syncMode = btcBlockchainManager.syncMode(blockchainType: .bitcoin, accountOrigin: wallet.account.origin)
-            return try? BitcoinAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
+            return try? BitcoinAdapter(wallet: wallet, syncMode: syncMode)
 
         case (.native, .bitcoinCash):
             let syncMode = btcBlockchainManager.syncMode(blockchainType: .bitcoinCash, accountOrigin: wallet.account.origin)
-            return try? BitcoinCashAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
+            return try? BitcoinCashAdapter(wallet: wallet, syncMode: syncMode)
 
         case (.native, .litecoin):
             let syncMode = btcBlockchainManager.syncMode(blockchainType: .litecoin, accountOrigin: wallet.account.origin)
-            return try? LitecoinAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
+            return try? LitecoinAdapter(wallet: wallet, syncMode: syncMode)
 
         case (.native, .dash):
             let syncMode = btcBlockchainManager.syncMode(blockchainType: .dash, accountOrigin: wallet.account.origin)
-            return try? DashAdapter(wallet: wallet, syncMode: syncMode, testMode: appConfigProvider.testMode)
+            return try? DashAdapter(wallet: wallet, syncMode: syncMode)
 
         case (.native, .zcash):
             let restoreSettings = restoreSettingsManager.settings(account: wallet.account, blockchainType: .zcash)
-            return try? ZcashAdapter(wallet: wallet, restoreSettings: restoreSettings, testMode: appConfigProvider.testMode)
+            return try? ZcashAdapter(wallet: wallet, restoreSettings: restoreSettings)
 
         case (.native, .binanceChain), (.bep2, .binanceChain):
             let query = TokenQuery(blockchainType: .binanceChain, tokenType: .native)
