@@ -3339,6 +3339,9 @@
 		D3C187F2290FD01B00FE1900 /* LanguageKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187F1290FD01B00FE1900 /* LanguageKit */; };
 		D3C187F4290FD01B00FE1900 /* SectionsTableView in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187F3290FD01B00FE1900 /* SectionsTableView */; };
 		D3C187F6290FD01B00FE1900 /* StorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187F5290FD01B00FE1900 /* StorageKit */; };
+		D3E1D00B2990D9BE00C68F00 /* Hodler in Frameworks */ = {isa = PBXBuildFile; productRef = D3E1D00A2990D9BE00C68F00 /* Hodler */; };
+		D3E1D00D2990DA0400C68F00 /* Hodler in Frameworks */ = {isa = PBXBuildFile; productRef = D3E1D00C2990DA0400C68F00 /* Hodler */; };
+		D3E1D00F2990DA5200C68F00 /* Hodler in Frameworks */ = {isa = PBXBuildFile; productRef = D3E1D00E2990DA5200C68F00 /* Hodler */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -4477,6 +4480,7 @@
 				D3604EA828F03DDD0066C366 /* MarketKit in Frameworks */,
 				D36E0C2E28D084D500B622B9 /* CollectionViewCenteredFlowLayout in Frameworks */,
 				D3604EA228F03DDD0066C366 /* BitcoinKit in Frameworks */,
+				D3E1D00F2990DA5200C68F00 /* Hodler in Frameworks */,
 				D3604EB228F03DDD0066C366 /* Chart in Frameworks */,
 				D3604EA628F03DDD0066C366 /* LitecoinKit in Frameworks */,
 				D3373D9520BEC7B30082BC4A /* AVFoundation.framework in Frameworks */,
@@ -4523,6 +4527,7 @@
 				D3604E9028F03DC00066C366 /* MarketKit in Frameworks */,
 				D36E0C2C28D084CB00B622B9 /* CollectionViewCenteredFlowLayout in Frameworks */,
 				D3604E8A28F03DBF0066C366 /* BitcoinKit in Frameworks */,
+				D3E1D00D2990DA0400C68F00 /* Hodler in Frameworks */,
 				D3604E9A28F03DC00066C366 /* Chart in Frameworks */,
 				D3604E8E28F03DBF0066C366 /* LitecoinKit in Frameworks */,
 				D38405B9218317DF007D50AD /* AVFoundation.framework in Frameworks */,
@@ -4585,6 +4590,7 @@
 				D3C187D5290FCF7D00FE1900 /* HUD in Frameworks */,
 				D3604E8228F03C6B0066C366 /* FeeRateKit in Frameworks */,
 				D3C187D2290FCF3D00FE1900 /* ComponentKit in Frameworks */,
+				D3E1D00B2990D9BE00C68F00 /* Hodler in Frameworks */,
 				D3604E7628F03B5E0066C366 /* PinKit in Frameworks */,
 				6B423FD42913785800EE5E70 /* BitcoinCore in Frameworks */,
 				D339A93D29126D0F00B895BE /* HsCryptoKit in Frameworks */,
@@ -7591,6 +7597,7 @@
 				D3C187F3290FD01B00FE1900 /* SectionsTableView */,
 				D3C187F5290FD01B00FE1900 /* StorageKit */,
 				D339A94029126D3400B895BE /* HsCryptoKit */,
+				D3E1D00E2990DA5200C68F00 /* Hodler */,
 			);
 			productName = Wallet;
 			productReference = D3285F4220BD158E00644076 /* Unstoppable DT.app */;
@@ -7647,6 +7654,7 @@
 				D3C187E7290FD00E00FE1900 /* SectionsTableView */,
 				D3C187E9290FD00E00FE1900 /* StorageKit */,
 				D339A93E29126D2A00B895BE /* HsCryptoKit */,
+				D3E1D00C2990DA0400C68F00 /* Hodler */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -7705,6 +7713,7 @@
 				D339A93C29126D0F00B895BE /* HsCryptoKit */,
 				6B423FD32913785800EE5E70 /* BitcoinCore */,
 				D0C87E65298D17D5000CA9BE /* libzcashlc */,
+				D3E1D00A2990D9BE00C68F00 /* Hodler */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -7789,6 +7798,7 @@
 				D339A93B29126D0E00B895BE /* XCRemoteSwiftPackageReference "HsCryptoKit.Swift" */,
 				6B423FD22913785800EE5E70 /* XCRemoteSwiftPackageReference "BitcoinCore.Swift" */,
 				D0C87E64298D17D5000CA9BE /* XCRemoteSwiftPackageReference "zcash-light-client-ffi" */,
+				D3E1D0092990D9BE00C68F00 /* XCRemoteSwiftPackageReference "Hodler.Swift" */,
 			);
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
@@ -11720,6 +11730,14 @@
 				version = 1.0.0;
 			};
 		};
+		D3E1D0092990D9BE00C68F00 /* XCRemoteSwiftPackageReference "Hodler.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/Hodler.Swift";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -12287,6 +12305,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3C187DC290FCFE400FE1900 /* XCRemoteSwiftPackageReference "StorageKit.Swift" */;
 			productName = StorageKit;
+		};
+		D3E1D00A2990D9BE00C68F00 /* Hodler */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3E1D0092990D9BE00C68F00 /* XCRemoteSwiftPackageReference "Hodler.Swift" */;
+			productName = Hodler;
+		};
+		D3E1D00C2990DA0400C68F00 /* Hodler */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3E1D0092990D9BE00C68F00 /* XCRemoteSwiftPackageReference "Hodler.Swift" */;
+			productName = Hodler;
+		};
+		D3E1D00E2990DA5200C68F00 /* Hodler */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3E1D0092990D9BE00C68F00 /* XCRemoteSwiftPackageReference "Hodler.Swift" */;
+			productName = Hodler;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
