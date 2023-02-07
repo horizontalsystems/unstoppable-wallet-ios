@@ -3,26 +3,27 @@ import ZcashLightClientKit
 import RxSwift
 
 class ZcashTransactionPool {
-    private var confirmedTransactions = Set<ZcashTransaction>()
-    private var pendingTransactions = Set<ZcashTransaction>()
+    private var confirmedTransactions = Set<ZcashTransactionWrapper>()
+    private var pendingTransactions = Set<ZcashTransactionWrapper>()
+    private let synchronizer: SDKSynchronizer
     private let receiveAddress: SaplingAddress
 
-    init(receiveAddress: SaplingAddress) {
+    init(synchronizer: SDKSynchronizer, receiveAddress: SaplingAddress) {
+        self.synchronizer = synchronizer
         self.receiveAddress = receiveAddress
     }
 
-    private func transactions(filter: TransactionTypeFilter) -> [ZcashTransaction] {
+    private func transactions(filter: TransactionTypeFilter) -> [ZcashTransactionWrapper] {
         var confirmedTransactions = confirmedTransactions
         var pendingTransactions = pendingTransactions
-        let stringEncodedSaplingAddress = receiveAddress.stringEncoded
         switch filter {
         case .all: ()
         case .incoming:
-            confirmedTransactions = confirmedTransactions.filter { $0.sentTo(address: stringEncodedSaplingAddress) }
-            pendingTransactions = pendingTransactions.filter { $0.sentTo(address: stringEncodedSaplingAddress) }
+            confirmedTransactions = confirmedTransactions.filter { !$0.isSentTransaction }
+            pendingTransactions = pendingTransactions.filter { !$0.isSentTransaction }
         case .outgoing:
-            confirmedTransactions = confirmedTransactions.filter { !$0.sentTo(address: stringEncodedSaplingAddress) }
-            pendingTransactions = pendingTransactions.filter { !$0.sentTo(address: stringEncodedSaplingAddress) }
+            confirmedTransactions = confirmedTransactions.filter { $0.isSentTransaction }
+            pendingTransactions = pendingTransactions.filter { !$0.isSentTransaction }
         default:
             confirmedTransactions = []
             pendingTransactions = []
@@ -31,18 +32,16 @@ class ZcashTransactionPool {
         return Array(confirmedTransactions.union(pendingTransactions)).sorted()
     }
 
-    private func zcashTransactions(_ transactions: [SignedTransactionEntity]) -> [ZcashTransaction] {
-        transactions.compactMap { tx in
-            switch tx {
-            case let tx as PendingTransactionEntity: return ZcashTransaction(pendingTransaction: tx)
-            case let tx as ConfirmedTransactionEntity: return ZcashTransaction(confirmedTransaction: tx)
-            default: return nil
-            }
-        }
+    private func zcashTransactions(_ transactions: [PendingTransactionEntity]) -> [ZcashTransactionWrapper] {
+        transactions.compactMap { ZcashTransactionWrapper(pendingTransaction: $0) }
     }
 
-    @discardableResult private func sync(own: inout Set<ZcashTransaction>, incoming: [ZcashTransaction]) -> [ZcashTransaction] {
-        var newTxs = [ZcashTransaction]()
+    private func zcashTransactions(_ transactions: [ZcashTransaction.Overview]) -> [ZcashTransactionWrapper] {
+        transactions.compactMap { ZcashTransactionWrapper(confirmedTransaction: $0) }
+    }
+
+    @discardableResult private func sync(own: inout Set<ZcashTransactionWrapper>, incoming: [ZcashTransactionWrapper]) -> [ZcashTransactionWrapper] {
+        var newTxs = [ZcashTransactionWrapper]()
         incoming.forEach { transaction in
             if own.insert(transaction).inserted {
                 newTxs.append(transaction)
@@ -51,20 +50,20 @@ class ZcashTransactionPool {
         return newTxs
     }
 
-    func store(confirmedTransactions: [ConfirmedTransactionEntity], pendingTransactions: [PendingTransactionEntity]) {
+    func store(confirmedTransactions: [ZcashTransaction.Overview], pendingTransactions: [PendingTransactionEntity]) {
         self.pendingTransactions = Set(zcashTransactions(pendingTransactions))
         self.confirmedTransactions = Set(zcashTransactions(confirmedTransactions))
     }
 
-    func sync(transactions: [PendingTransactionEntity]) -> [ZcashTransaction] {
+    func sync(transactions: [PendingTransactionEntity]) -> [ZcashTransactionWrapper] {
         sync(own: &pendingTransactions, incoming: zcashTransactions(transactions))
     }
 
-    func sync(transactions: [ConfirmedTransactionEntity]) -> [ZcashTransaction] {
+    func sync(transactions: [ZcashTransaction.Overview]) -> [ZcashTransactionWrapper] {
         sync(own: &confirmedTransactions, incoming: zcashTransactions(transactions))
     }
 
-    func transaction(by hash: String) -> ZcashTransaction? {
+    func transaction(by hash: String) -> ZcashTransactionWrapper? {
         transactions(filter: .all).first { $0.transactionHash == hash }
     }
 
@@ -72,7 +71,7 @@ class ZcashTransactionPool {
 
 extension ZcashTransactionPool {
 
-    func transactionsSingle(from: TransactionRecord?, filter: TransactionTypeFilter, limit: Int) -> Single<[ZcashTransaction]> {
+    func transactionsSingle(from: TransactionRecord?, filter: TransactionTypeFilter, limit: Int) -> Single<[ZcashTransactionWrapper]> {
         let transactions = transactions(filter: filter)
 
         guard let transaction = from else {
@@ -86,3 +85,26 @@ extension ZcashTransactionPool {
     }
 
 }
+
+//extension PendingTransactionEntity {
+//
+//    func transactionEntity(defaultFee: Zatoshi) -> ZcashTransaction.Overview {
+//        ZcashTransaction.Overview(
+//                blockTime: createTime,
+//                expiryHeight: expiryHeight,
+//                fee: fee,
+//                id: id ?? -1,
+//                index: nil,
+//                isWalletInternal: false,
+//                hasChange: false,
+//                memoCount: 0,
+//                minedHeight: minedHeight,
+//                raw: raw,
+//                rawID: rawTransactionId ?? Data(),
+//                receivedNoteCount: 0,
+//                sentNoteCount: 0,
+//                value: value
+//        )
+//    }
+//
+//}
