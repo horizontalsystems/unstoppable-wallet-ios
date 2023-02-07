@@ -2,12 +2,13 @@ import Foundation
 import ZcashLightClientKit
 import HsExtensions
 
-class ZcashTransaction {
+class ZcashTransactionWrapper {
     let id: String?
     let raw: Data?
     let transactionHash: String
     let transactionIndex: Int
     let toAddress: String?
+    let isSentTransaction: Bool
     let expiryHeight: Int?
     let minedHeight: Int?
     let timestamp: TimeInterval
@@ -15,21 +16,18 @@ class ZcashTransaction {
     let memo: String?
     let failed: Bool
 
-    init?(confirmedTransaction: ConfirmedTransactionEntity) {
-        guard let rawTransactionId = confirmedTransaction.rawTransactionId else {
-            return nil
-        }
-
-        id = confirmedTransaction.id?.description
+    init?(confirmedTransaction: ZcashTransaction.Overview) {
+        id = confirmedTransaction.id.description
         raw = confirmedTransaction.raw
-        transactionHash = rawTransactionId.hs.reversedHex
-        transactionIndex = confirmedTransaction.transactionIndex
-        toAddress = confirmedTransaction.toAddress
+        transactionHash = confirmedTransaction.rawID.hs.reversedHex
+        transactionIndex = confirmedTransaction.index ?? 0
+        toAddress = nil
+        isSentTransaction = confirmedTransaction.isSentTransaction
         minedHeight = confirmedTransaction.minedHeight
         expiryHeight = confirmedTransaction.expiryHeight
-        timestamp = confirmedTransaction.blockTimeInSeconds
+        timestamp = confirmedTransaction.blockTime ?? 0
         value = confirmedTransaction.value
-        memo = confirmedTransaction.memo.flatMap { String(bytes: $0, encoding: .utf8) }
+        memo = nil // confirmedTransaction.memo.flatMap { String(bytes: $0, encoding: .utf8) }
         failed = false
     }
 
@@ -43,6 +41,7 @@ class ZcashTransaction {
         transactionHash = rawTransactionId.hs.reversedHex
         transactionIndex = -1
         toAddress = pendingTransaction.recipient.asString
+        isSentTransaction = pendingTransaction.value < Zatoshi(0)
         minedHeight = nil
         expiryHeight = pendingTransaction.expiryHeight
         timestamp = pendingTransaction.createTime
@@ -72,9 +71,9 @@ extension PendingTransactionRecipient {
     }
 }
 
-extension ZcashTransaction: Comparable {
+extension ZcashTransactionWrapper: Comparable {
 
-    public static func <(lhs: ZcashTransaction, rhs: ZcashTransaction) -> Bool {
+    public static func <(lhs: ZcashTransactionWrapper, rhs: ZcashTransactionWrapper) -> Bool {
         if lhs.timestamp != rhs.timestamp {
             return lhs.timestamp > rhs.timestamp
         } else {
@@ -82,13 +81,13 @@ extension ZcashTransaction: Comparable {
         }
     }
 
-    public static func ==(lhs: ZcashTransaction, rhs: ZcashTransaction) -> Bool {
+    public static func ==(lhs: ZcashTransactionWrapper, rhs: ZcashTransactionWrapper) -> Bool {
         lhs.transactionHash == rhs.transactionHash
     }
 
 }
 
-extension ZcashTransaction: Hashable {
+extension ZcashTransactionWrapper: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(transactionHash)
@@ -96,7 +95,7 @@ extension ZcashTransaction: Hashable {
 
 }
 
-extension ZcashTransaction {
+extension ZcashTransactionWrapper {
 
     var description: String {
         "TX(Zcash) === hash:\(transactionHash) : \(toAddress?.prefix(6) ?? "N/A") : \(transactionIndex) height: \(minedHeight?.description ?? "N/A") timestamp \(timestamp.description)"
