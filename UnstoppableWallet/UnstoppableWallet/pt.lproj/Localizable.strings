@@ -174,13 +174,13 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Backup Verify Words
 
-"backup_verify_words.title" = "Verificar";
+"backup_verify_words.title" = "Confirmar";
 "backup_verify_words.description" = "Selecione duas palavras solicitadas da sua frase de recuperação de carteira";
 "backup_verify_words.incorrect_word" = "Palavra incorreta";
 
 // Backup Verify Passphrase
 
-"backup_verify_passphrase.title" = "Verificar";
+"backup_verify_passphrase.title" = "Confirmar";
 "backup_verify_passphrase.description" = "Insira a senha";
 "backup_verify_passphrase.incorrect_passphrase" = "Senha incorreta";
 
@@ -584,7 +584,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_page.market_cap" = "Capitalização de mercado";
 "coin_page.circulating_supply" = "Em Circulação";
 "coin_page.total_supply" = "Fornecimento total";
-"coin_page.diluted_market_cap" = "Cap. De Mercado diluído";
+"coin_page.diluted_market_cap" = "MCap Diludido";
 "coin_page.genesis_date" = "Data de Início";
 
 "coin_page.trading_volume" = "Volume de Operações";
@@ -665,9 +665,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_page.security_parameters.confiscation_resistance" = "Resistente a confisco";
 "coin_page.security_parameters.censorship_resistance" = "Resistente à censura";
 
-"coin_page.security_parameters.level.low" = "Baixo";
+"coin_page.security_parameters.level.low" = "Baixa";
 "coin_page.security_parameters.level.medium" = "Médio";
-"coin_page.security_parameters.level.high" = "Alto";
+"coin_page.security_parameters.level.high" = "Alta";
 "coin_page.security_parameters.issuance.decentralized" = "Descentralizada";
 "coin_page.security_parameters.issuance.centralized" = "Centralizado";
 "coin_page.security_parameters.resistance.yes" = "Sim";
@@ -727,7 +727,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "transactions.all_coins" = "Todas as moedas";
 "transactions.choose_coin" = "Escolher Moedas";
 "transactions.clear" = "Limpar";
-"transactions.filter_all" = "Todas";
+"transactions.filter_all" = "Todos";
 "transactions.syncing_text" = "Por favor, aguarde a sincronização concluir";
 "transactions.empty_text" = "Você ainda não tem nenhuma transação pendente ou anterior";
 "transactions.pending" = "Pendente";
@@ -755,7 +755,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "transactions.today" = "Hoje";
 "transactions.yesterday" = "Ontem";
 
-"transactions.types.all" = "Todas";
+"transactions.types.all" = "Todos";
 "transactions.types.incoming" = "Recebido";
 "transactions.types.outgoing" = "Enviado";
 "transactions.types.swap" = "Trocas";
@@ -868,7 +868,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Settings -> Security
 
-"settings_security.title" = "Central de Segurança";
+"settings_security.title" = "Segurança";
 "settings_security.passcode" = "Senha";
 "settings_security.change_pin" = "Editar senha";
 "settings_security.touch_id" = "Touch ID";
@@ -907,7 +907,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "settings_manage_keys.title" = "Gerenciar carteiras";
 "settings_manage_keys.delete" = "Deletar";
-"settings_manage_keys.backup" = "Backup";
+"settings_manage_keys.backup" = "‘Backup’";
 "settings_manage_keys.delete.title" = "Excluir Carteira";
 "settings_manage_keys.delete.confirmation_remove" = "A ação irá apagar esta carteira do dispositivo.";
 "settings_manage_keys.delete.confirmation_loose" = "Se você não fizer o backup da chave privada desta carteira, perderá o acesso aos seus fundos.";
@@ -1313,7 +1313,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "nft_collection.overview.owners" = "Donos";
 "nft_collection.overview.items" = "Itens";
-"nft_collection.overview.24h_volume" = "Volume 24h";
+"nft_collection.overview.24h_volume" = "Volume em 24h";
 "nft_collection.overview.today_sellers" = "Vendedores de Hoje";
 "nft_collection.overview.floor_price" = "Preço Mínimo";
 "nft_collection.overview.all_time_average" = "Média de todo o período";
