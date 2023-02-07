@@ -26,7 +26,8 @@ class BackupViewController: ThemeViewController {
 
         title = "backup.title".localized
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "circle_information_24"), style: .plain, target: self, action: #selector(onTapInfo))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.largeTitleDisplayMode = .never
 
@@ -66,6 +67,15 @@ class BackupViewController: ThemeViewController {
 
     @objc private func onTapCancel() {
         dismiss(animated: true)
+    }
+
+    @objc private func onTapInfo() {
+        guard let url = FaqUrlHelper.privateKeysUrl else {
+            return
+        }
+
+        let module = MarkdownModule.viewController(url: url, handleRelativeUrl: false)
+        present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
     @objc private func onTapVerify() {

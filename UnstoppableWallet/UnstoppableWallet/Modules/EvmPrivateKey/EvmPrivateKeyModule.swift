@@ -9,9 +9,7 @@ struct EvmPrivateKeyModule {
         }
 
         let viewModel = EvmPrivateKeyViewModel(service: service)
-        let viewController = EvmPrivateKeyViewController(viewModel: viewModel)
-
-        return ThemeNavigationController(rootViewController: viewController)
+        return EvmPrivateKeyViewController(viewModel: viewModel)
     }
 
 }

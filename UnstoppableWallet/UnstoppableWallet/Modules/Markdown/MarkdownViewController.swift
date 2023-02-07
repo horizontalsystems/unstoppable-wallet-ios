@@ -33,6 +33,10 @@ class MarkdownViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if navigationController?.viewControllers.first == self {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
+        }
+
         view.addSubview(tableView)
         makeTableViewConstraints(tableView: tableView)
 
@@ -76,6 +80,10 @@ class MarkdownViewController: ThemeViewController {
         }
 
         tableView.buildSections()
+    }
+
+    @objc private func onTapClose() {
+        dismiss(animated: true)
     }
 
     public func makeTableViewConstraints(tableView: UIView) {
