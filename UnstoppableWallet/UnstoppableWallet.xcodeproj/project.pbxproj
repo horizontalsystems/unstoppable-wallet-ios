@@ -1465,8 +1465,8 @@
 		3AF9F61B253EF555000626A8 /* ZcashTransactionPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F617253EF555000626A8 /* ZcashTransactionPool.swift */; };
 		3AF9F61D253EF555000626A8 /* ZcashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F618253EF555000626A8 /* ZcashAdapter.swift */; };
 		3AF9F61E253EF555000626A8 /* ZcashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F618253EF555000626A8 /* ZcashAdapter.swift */; };
-		3AF9F620253EF555000626A8 /* ZcashTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F619253EF555000626A8 /* ZcashTransaction.swift */; };
-		3AF9F621253EF555000626A8 /* ZcashTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F619253EF555000626A8 /* ZcashTransaction.swift */; };
+		3AF9F620253EF555000626A8 /* ZcashTransactionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F619253EF555000626A8 /* ZcashTransactionWrapper.swift */; };
+		3AF9F621253EF555000626A8 /* ZcashTransactionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9F619253EF555000626A8 /* ZcashTransactionWrapper.swift */; };
 		3C7B99D3D6AE0B1C0D8E5F09 /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
 		3C7B9BAF807355796DCA80C4 /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */; };
 		3C7B9BFD8EA7360907306675 /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
@@ -3048,7 +3048,7 @@
 		3AB682BC25BADD97002197A5 /* MarketOverviewModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewModule.swift; sourceTree = "<group>"; };
 		3AF9F617253EF555000626A8 /* ZcashTransactionPool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZcashTransactionPool.swift; sourceTree = "<group>"; };
 		3AF9F618253EF555000626A8 /* ZcashAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZcashAdapter.swift; sourceTree = "<group>"; };
-		3AF9F619253EF555000626A8 /* ZcashTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZcashTransaction.swift; sourceTree = "<group>"; };
+		3AF9F619253EF555000626A8 /* ZcashTransactionWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZcashTransactionWrapper.swift; sourceTree = "<group>"; };
 		3C7B94F32F315F4F753D89AD /* UrlManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlManager.swift; sourceTree = "<group>"; };
 		3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewController.swift; sourceTree = "<group>"; };
 		5039F971269C5A9A004711B8 /* ReleaseNotesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseNotesViewController.swift; sourceTree = "<group>"; };
@@ -4873,7 +4873,7 @@
 				11B35AAAC675987369F2DA1B /* BinanceAdapter.swift */,
 				11B356861F703A5A5C6630B6 /* LitecoinAdapter.swift */,
 				3AF9F618253EF555000626A8 /* ZcashAdapter.swift */,
-				3AF9F619253EF555000626A8 /* ZcashTransaction.swift */,
+				3AF9F619253EF555000626A8 /* ZcashTransactionWrapper.swift */,
 				3AF9F617253EF555000626A8 /* ZcashTransactionPool.swift */,
 				2FA5DD29DAF03BC6C13B0076 /* EvmTransactionConverter.swift */,
 				2FA5DD0A8C1E757651F3CA3B /* EvmTransactionsAdapter.swift */,
@@ -6981,7 +6981,7 @@
 				11B3542831EAA647A1D16E8A /* MarkdownVisitor.swift in Sources */,
 				11B357D211A75BDFED448AA4 /* MarkdownListItemCell.swift in Sources */,
 				11B3587EF674C1E8EEE61DE7 /* MarkdownBlockQuoteCell.swift in Sources */,
-				3AF9F621253EF555000626A8 /* ZcashTransaction.swift in Sources */,
+				3AF9F621253EF555000626A8 /* ZcashTransactionWrapper.swift in Sources */,
 				11B35BF725773F2C13275E53 /* DescriptionCell.swift in Sources */,
 				11B35C1154D256BDAEC61BFC /* TermsManager.swift in Sources */,
 				11B356D60C39544F165547AA /* TermsService.swift in Sources */,
@@ -8085,7 +8085,7 @@
 				11B35F4A3EAF8D2C66E8D6E5 /* MarkdownVisitor.swift in Sources */,
 				11B3511B03A70BEA48637907 /* MarkdownListItemCell.swift in Sources */,
 				11B358B90E2D1A8832637F34 /* MarkdownBlockQuoteCell.swift in Sources */,
-				3AF9F620253EF555000626A8 /* ZcashTransaction.swift in Sources */,
+				3AF9F620253EF555000626A8 /* ZcashTransactionWrapper.swift in Sources */,
 				11B3539B3634BF7B3B1B9061 /* DescriptionCell.swift in Sources */,
 				11B3595CF65B69B3B04635E0 /* TermsManager.swift in Sources */,
 				11B359AA65D8E9BE25175DAF /* TermsService.swift in Sources */,
@@ -9487,7 +9487,7 @@
 			repositoryURL = "https://github.com/zcash/ZcashLightClientKit";
 			requirement = {
 				kind = exactVersion;
-				version = "0.17.5-beta";
+				version = "0.18.0-beta";
 			};
 		};
 		D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */ = {
