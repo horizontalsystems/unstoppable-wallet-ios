@@ -9,7 +9,7 @@ import HsExtensions
 
 
 class ZcashAdapter {
-    private static let limitShowingDownloadBlockCount = 100
+    private static let limitShowingDownloadBlockCount = 50
     private let disposeBag = DisposeBag()
 
     private let token: Token
@@ -23,8 +23,10 @@ class ZcashAdapter {
     private let uniqueId: String
     private let spendingKey: UnifiedSpendingKey // this being a single account does not need to be an array
     private let loggingProxy = ZcashLogger(logLevel: .error)
+
     private(set) var network: ZcashNetwork
     private(set) var fee: Decimal
+
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
     private let balanceSubject = PublishSubject<BalanceData>()
@@ -56,14 +58,18 @@ class ZcashAdapter {
 
     private(set) var syncing: Bool = true
 
-    private func defaultFee(network: ZcashNetwork, height: Int? = nil) -> Decimal {
+    private func defaultFee(network: ZcashNetwork, height: Int? = nil) -> Zatoshi {
         let fee: Zatoshi
         if let lastBlockHeight = height {
             fee = network.constants.defaultFee(for: lastBlockHeight)
         } else {
             fee = network.constants.defaultFee()
         }
-        return fee.decimalValue.decimalValue
+        return fee
+    }
+
+    private func defaultFeeDecimal(network: ZcashNetwork, height: Int? = nil) -> Decimal {
+        defaultFee(network: network, height: height).decimalValue.decimalValue
     }
 
 
@@ -76,7 +82,7 @@ class ZcashAdapter {
         fee = network.constants.defaultFee().decimalValue.decimalValue
 
 //        let endPoint = "lightwalletd.testnet.electriccoin.co" // testnet
-        let endPoint = "mainnet.lightwalletd.com"
+        let endPoint = "lightwalletd.electriccoin.co" //"mainnet.lightwalletd.com"
 
         token = wallet.token
         transactionSource = wallet.transactionSource
@@ -126,7 +132,7 @@ class ZcashAdapter {
 
         address = unifiedAddress
         self.saplingAddress = saplingAddress
-        transactionPool = ZcashTransactionPool(receiveAddress: saplingAddress)
+        transactionPool = ZcashTransactionPool(synchronizer: synchronizer, receiveAddress: saplingAddress)
 
         subscribeSynchronizerNotifications()
         subscribeDownloadService()
@@ -144,23 +150,56 @@ class ZcashAdapter {
     }
 
     nonisolated private func subscribeSynchronizerNotifications() {
-        let center = NotificationCenter.default
-
         // state changing
-        center.addObserver(self, selector: #selector(statusUpdated(_:)), name: Notification.Name.synchronizerDisconnected, object: synchronizer)
-        center.addObserver(self, selector: #selector(statusUpdated(_:)), name: Notification.Name.synchronizerStarted, object: synchronizer)
-        center.addObserver(self, selector: #selector(statusUpdated(_:)), name: Notification.Name.synchronizerSynced, object: synchronizer)
-        center.addObserver(self, selector: #selector(statusUpdated(_:)), name: Notification.Name.synchronizerDisconnected, object: synchronizer)
-        center.addObserver(self, selector: #selector(statusUpdated(_:)), name: Notification.Name.synchronizerFailed, object: synchronizer)
+        let center = NotificationCenter.default
+        let subscribeToNotifications: [Notification.Name] = [
+            .synchronizerStarted,
+            .synchronizerProgressUpdated,
+            .synchronizerStatusWillUpdate,
+            .synchronizerSynced,
+            .synchronizerStopped,
+            .synchronizerDisconnected,
+            .synchronizerSyncing,
+            .synchronizerEnhancing,
+            .synchronizerFetching,
+            .synchronizerFailed
+        ]
+
+        for notificationName in subscribeToNotifications {
+            center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: notificationName, object: synchronizer)
+        }
+
+        center.addObserver(self, selector: #selector(blockProcessorUpdated(_:)), name: Notification.Name.blockProcessorUpdated, object: synchronizer)
+        center.addObserver(self, selector: #selector(blockProcessorFinished(_:)), name: Notification.Name.blockProcessorFinished, object: synchronizer)
+        center.addObserver(self, selector: #selector(blockProcessorStartedEnhancing(_:)), name: Notification.Name.blockProcessorFinished, object: synchronizer)
+
+//        center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: Notification.Name.synchronizerDisconnected, object: synchronizer)
+//        center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: Notification.Name.synchronizerStarted, object: synchronizer)
+//        center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: Notification.Name.synchronizerSynced, object: synchronizer)
+//        center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: Notification.Name.synchronizerDisconnected, object: synchronizer)
+//        center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: Notification.Name.synchronizerFailed, object: synchronizer)
 
         // sync progress changing
-        center.addObserver(self, selector: #selector(statusUpdated(_:)), name: Notification.Name.synchronizerProgressUpdated, object: synchronizer)
+        center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: Notification.Name.synchronizerProgressUpdated, object: synchronizer)
 
         //found new transactions
         center.addObserver(self, selector: #selector(transactionsUpdated(_:)), name: Notification.Name.synchronizerFoundTransactions, object: synchronizer)
 
-        //latestHeight
-        center.addObserver(self, selector: #selector(blockHeightUpdated(_:)), name: Notification.Name.blockProcessorUpdated, object: synchronizer.blockProcessor)
+//        //latestHeight
+//        center.addObserver(self, selector: #selector(blockHeightUpdated(_:)), name: Notification.Name.blockProcessorUpdated, object: synchronizer.blockProcessor)
+    }
+
+    @objc private func blockProcessorUpdated(_ notification: Notification) {
+        print("blockProcessorUpdated")
+    }
+
+    @objc private func blockProcessorFinished(_ notification: Notification) {
+        print("blockProcessorFinished")
+
+    }
+
+    @objc private func blockProcessorStartedEnhancing(_ notification: Notification) {
+        print("blockProcessorStartedEnhancing")
     }
 
     nonisolated private func subscribeDownloadService() {
@@ -188,41 +227,55 @@ class ZcashAdapter {
         return Double(overall > 0 ? Float((p.progressHeight - birthday)) / Float(overall) : 0)
     }
 
-    @objc private func statusUpdated(_ notification: Notification) {
+    @objc private func processorNotificationUpdated(_ notification: Notification) {
+        print("\(Date()) ==> SYNCRONIZER update! \(Thread.current)")
+        print("Old State: \(state)")
         var newState = state
-        var blockDate: Date? = nil
-        if let blockTime = notification.userInfo?[SDKSynchronizer.NotificationKeys.blockDate] as? Date {
-            blockDate = blockTime
-        }
+
+//        var blockDate: Date? = nil
+//        if let blockTime = notification.userInfo?[SDKSynchronizer.NotificationKeys.blockDate] as? Date {
+//            blockDate = blockTime
+//        }
+
         switch synchronizer.status {
         case .disconnected:
+            print("==> ==> Disconnected")
             newState = .syncing(progress: nil, lastBlockDate: nil)
         case .stopped:
+            print("==> ==> Stopped")
             newState = .notSynced(error: AppError.unknownError)
         case .synced:
+            print("==> ==> Synced")
             newState = .synced
             synchronizerState = notification.userInfo?[SDKSynchronizer.NotificationKeys.synchronizerState] as? SDKSynchronizer.SynchronizerState
-        case .downloading(let p):
-            let diff = p.targetHeight - p.progressHeight
+        case .syncing(let p):
+            print("==> ==> Syncing")
+            print("==> ==> ==> \n\(p)")
+            var lastDownloaded = 0
+            if case let .downloadingBlocks(number, lastBlock) = state {
+                lastDownloaded = number
+            }
+
+            let diff = p.progressHeight - lastDownloaded
             if !state.isDownloading ||
-                       (diff < Self.limitShowingDownloadBlockCount) ||
-                       (diff % Self.limitShowingDownloadBlockCount) == 0 { // show first changing state, every 100 blocks and last 100 blocks
+                       (diff > Self.limitShowingDownloadBlockCount) { // show first changing state, every 100 blocks and last 100 blocks
                 newState = .downloadingBlocks(number: p.progressHeight, lastBlock: p.targetHeight)
             }
         case .enhancing(let p):
+            print("==> ==> Enhancing")
+            print("==> ==> ==> \n\(p)")
             newState = .enhancingTransactions(number: p.enhancedTransactions, count: p.totalTransactions)
         case .unprepared:
             newState = .notSynced(error: AppError.unknownError)
-        case .validating:
-            newState = .syncing(progress: 0, lastBlockDate: blockDate)
-        case .scanning(let p):
-            let diff = p.targetHeight - p.progressHeight
-            if !state.isScanning ||
-                       (diff < Self.limitShowingDownloadBlockCount) ||
-                       (diff % Self.limitShowingDownloadBlockCount) == 0 { // show first changing state, every 100 blocks and last 100 blocks
-                newState = .scanningBlocks(number: p.progressHeight, lastBlock: p.targetHeight)
-            }
+//        case .scanning(let p):
+//            let diff = p.targetHeight - p.progressHeight
+//            if !state.isScanning ||
+//                       (diff < Self.limitShowingDownloadBlockCount) ||
+//                       (diff % Self.limitShowingDownloadBlockCount) == 0 { // show first changing state, every 100 blocks and last 100 blocks
+//                newState = .scanningBlocks(number: p.progressHeight, lastBlock: p.targetHeight)
+//            }
         case .fetching:
+            print("==> ==> Fetching")
             newState = .syncing(progress: 0, lastBlockDate: nil)
         case .error:
             newState = .notSynced(error: AppError.unknownError)
@@ -235,7 +288,7 @@ class ZcashAdapter {
 
     @objc private func transactionsUpdated(_ notification: Notification) {
         if let userInfo = notification.userInfo,
-           let txs = userInfo[SDKSynchronizer.NotificationKeys.foundTransactions] as? [ConfirmedTransactionEntity] {
+           let txs = userInfo[SDKSynchronizer.NotificationKeys.foundTransactions] as? [ZcashTransaction.Overview] {
             let newTxs = transactionPool.sync(transactions: txs)
             transactionRecordsSubject.onNext(newTxs.map {
                 transactionRecord(fromTransaction: $0)
@@ -262,7 +315,7 @@ class ZcashAdapter {
         }
     }
 
-    func transactionRecord(fromTransaction transaction: ZcashTransaction) -> TransactionRecord {
+    func transactionRecord(fromTransaction transaction: ZcashTransactionWrapper) -> TransactionRecord {
         let showRawTransaction = transaction.minedHeight == nil || transaction.failed
 
         // TODO: Should have it's own transactions with memo
@@ -276,7 +329,7 @@ class ZcashAdapter {
                     blockHeight: transaction.minedHeight,
                     confirmationsThreshold: ZcashSDK.defaultRewindDistance,
                     date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                    fee: defaultFee(network: self.network, height: transaction.minedHeight),
+                    fee: defaultFeeDecimal(network: network, height: transaction.minedHeight),
                     failed: transaction.failed,
                     lockInfo: nil,
                     conflictingHash: nil,
@@ -295,7 +348,7 @@ class ZcashAdapter {
                     blockHeight: transaction.minedHeight,
                     confirmationsThreshold: ZcashSDK.defaultRewindDistance,
                     date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                    fee: defaultFee(network: self.network, height: transaction.minedHeight),
+                    fee: defaultFeeDecimal(network: self.network, height: transaction.minedHeight),
                     failed: transaction.failed,
                     lockInfo: nil,
                     conflictingHash: nil,
@@ -336,7 +389,7 @@ class ZcashAdapter {
         return isExist
     }
 
-    func fixPendingTransactionsIfNeeded() async{
+    func fixPendingTransactionsIfNeeded() async {
         // check if we need to perform the fix or leave
         guard !localStorage.zcashAlwaysPendingRewind else {
             return
@@ -347,12 +400,12 @@ class ZcashAdapter {
             let txs = try synchronizer.allPendingTransactions()
 
             // fetch the first one that's reported to be unmined
-            guard let firstUnmined = txs.filter({ !$0.isMined }).first?.transactionEntity else {
+            guard let firstUnmined = txs.filter({ !$0.isMined }).first else {
                 localStorage.zcashAlwaysPendingRewind = true
                 return
             }
 
-            try await synchronizer.rewind(.transaction(firstUnmined))
+            try await synchronizer.rewind(.transaction(firstUnmined.makeTransactionEntity(defaultFee: defaultFee(network: network))))
             localStorage.zcashAlwaysPendingRewind = true
         } catch SynchronizerError.rewindErrorUnknownArchorHeight {
             do {
@@ -761,6 +814,13 @@ enum ZCashAdapterState: Equatable {
         switch self {
         case .scanningBlocks: return true
         default: return false
+        }
+    }
+
+    var lastProcessedBlockHeight: Int? {
+        switch self {
+        case .downloadingBlocks(_, let last), .scanningBlocks(_, let last): return last
+        default: return nil
         }
     }
 
