@@ -40,6 +40,7 @@ class ManageAccountViewController: ThemeViewController {
         title = viewModel.accountName
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.save".localized, style: .done, target: self, action: #selector(onTapSave))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -104,7 +105,7 @@ class ManageAccountViewController: ThemeViewController {
             return
         }
 
-        present(viewController, animated: true)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func openEvmPrivateKey(account: Account) {
@@ -112,22 +113,22 @@ class ManageAccountViewController: ThemeViewController {
             return
         }
 
-        present(viewController, animated: true)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func openBip32RootKey(account: Account) {
         let viewController = ExtendedKeyModule.viewController(mode: .bip32RootKey, accountType: account.type)
-        present(viewController, animated: true)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func openAccountExtendedPrivateKey(account: Account) {
         let viewController = ExtendedKeyModule.viewController(mode: .accountExtendedPrivateKey, accountType: account.type)
-        present(viewController, animated: true)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func openAccountExtendedPublicKey(account: Account) {
         let viewController = ExtendedKeyModule.viewController(mode: .accountExtendedPublicKey, accountType: account.type)
-        present(viewController, animated: true)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func openBackup(account: Account) {

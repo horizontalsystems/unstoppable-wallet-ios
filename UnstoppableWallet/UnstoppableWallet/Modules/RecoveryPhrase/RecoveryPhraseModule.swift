@@ -9,9 +9,7 @@ struct RecoveryPhraseModule {
         }
 
         let viewModel = RecoveryPhraseViewModel(service: service)
-        let viewController = RecoveryPhraseViewController(viewModel: viewModel)
-
-        return ThemeNavigationController(rootViewController: viewController)
+        return RecoveryPhraseViewController(viewModel: viewModel)
     }
 
 }

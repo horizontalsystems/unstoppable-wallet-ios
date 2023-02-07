@@ -32,7 +32,7 @@ class ExtendedKeyViewController: ThemeViewController {
         title = viewModel.title
 
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "circle_information_24"), style: .plain, target: self, action: #selector(onTapInfo))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -71,8 +71,13 @@ class ExtendedKeyViewController: ThemeViewController {
         loaded = true
     }
 
-    @objc private func onTapClose() {
-        dismiss(animated: true)
+    @objc private func onTapInfo() {
+        guard let url = FaqUrlHelper.privateKeysUrl else {
+            return
+        }
+
+        let module = MarkdownModule.viewController(url: url, handleRelativeUrl: false)
+        present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
     @objc private func onTapCopy() {

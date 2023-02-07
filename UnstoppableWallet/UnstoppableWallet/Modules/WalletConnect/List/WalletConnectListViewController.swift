@@ -43,7 +43,7 @@ class WalletConnectListViewController: ThemeViewController {
 
         title = "wallet_connect_list.title".localized
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "qr_scan_24"), style: .plain, target: self, action: #selector(startNewConnection))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "circle_information_24"), style: .plain, target: self, action: #selector(onTapInfo))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -94,6 +94,15 @@ class WalletConnectListViewController: ThemeViewController {
         if viewModel.emptyList {
             startNewConnection()
         }
+    }
+
+    @objc private func onTapInfo() {
+        guard let url = FaqUrlHelper.walletConnectUrl else {
+            return
+        }
+
+        let module = MarkdownModule.viewController(url: url, handleRelativeUrl: false)
+        present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
     private func syncItems() {
