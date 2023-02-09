@@ -39,7 +39,7 @@ struct CellComponent {
         )
     }
 
-    static func amountRow(tableView: SectionsTableView, rowInfo: RowInfo, iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType) -> RowProtocol {
+    static func amountRow(tableView: SectionsTableView, rowInfo: RowInfo, iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType, action: (() -> ())? = nil) -> RowProtocol {
         CellBuilderNew.row(
                 rootElement: .hStack([
                     .image32 { (component: ImageComponent) -> () in
@@ -63,9 +63,11 @@ struct CellComponent {
                 id: "amount-\(rowInfo.index)",
                 hash: "amount-\(coinAmount)-\(currencyAmount ?? "")",
                 height: .heightCell56,
+                autoDeselect: true,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                }
+                },
+                action: action
         )
     }
 

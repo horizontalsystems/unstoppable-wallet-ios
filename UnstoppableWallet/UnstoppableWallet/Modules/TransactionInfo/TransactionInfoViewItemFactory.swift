@@ -24,7 +24,8 @@ class TransactionInfoViewItemFactory {
                     iconPlaceholderImageName: iconPlaceholderImageName,
                     coinAmount: "∞ \(transactionValue.coinCode)",
                     currencyAmount: "transactions.value.unlimited".localized,
-                    type: type
+                    type: type,
+                    coinUid: transactionValue.coin?.uid
             )
         } else {
             var currencyValue: CurrencyValue?
@@ -38,7 +39,8 @@ class TransactionInfoViewItemFactory {
                     iconPlaceholderImageName: iconPlaceholderImageName,
                     coinAmount: transactionValue.formattedFull(showSign: type.showSign) ?? "n/a".localized,
                     currencyAmount: currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
-                    type: type
+                    type: type,
+                    coinUid: transactionValue.coin?.uid
             )
         }
     }
