@@ -825,25 +825,18 @@
 "manage_wallets.title" = "Monederos";
 "manage_wallets.not_found" = "No se han encontrado resultados. Intente añadir el token manualmente.";
 "manage_wallets.search_placeholder" = "Nombre, código o dirección del contrato";
-"manage_wallets.not_supported" = "No soportado";
-"manage_wallets.not_supported.description" = "Su tipo de cartera actual %@ no soporta %@";
-"manage_wallets.not_supported.by_app.description" = "Unstoppable no soporta %@";
 
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "Las siguientes características son experimentales y deben utilizarse con precaución. Aunque hemos probado a fondo estas características usando nuestros propios fondos criptográficos, no podemos garantizar que funcionen como se espera en todos los casos posibles.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
-"settings.experimental_features.evm_testnet" = "Testnet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "Activar";
 "settings.bitcoin_hodling.description" = "Permite enviar Bitcoins que no se pueden gastar hasta la fecha establecida.\n\nEl receptor de dicha transacción debe utilizar el monedero Unstoppable.\n\nSólo el monedero Unstoppable puede identificar correctamente tales transacciones en la red Bitcoin, así como permitir que el receptor gaste esos Bitcoins después de que expire el período de bloqueo.\n\nSi eres un HODLer, puedes usar esta función para obligarte a retener tus Bitcoins enviándote dicha transacción a ti mismo.\n\nPor ser característica experimental, la cantidad máxima por transacción está limitada a 0.5 BTC.";
-"settings.evm_testnet.title" = "Testnet";
-"settings.evm_testnet.enable" = "Activar";
-"settings.evm_testnet.description" = "Esta opción activa la red de pruebas Goerli de Ethereum sólo para token GoerliETH y la añade al administrador de monedas.\n\nSólo afecta al token GoerliETH mientras todos los demás tokens EVM y Ethereum operan sobre mainnet. En otras palabras, sólo las transacciones en GoerliETH pasan por Goerli testnet, mientras que todas las demás transferencias de token EVM incluyendo ETH pasan por mainnet.";
 
 // Settings -> Terms
 
