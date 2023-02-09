@@ -195,11 +195,17 @@ class CoinChartFactory {
     }
 
     static func gridInterval(fromTimestamp: TimeInterval) -> Int {
-        guard let daysCount = Calendar.current.dateComponents([.day], from: Date(timeIntervalSince1970: fromTimestamp), to: Date()).day else {
+        guard let hoursCount = Calendar.current.dateComponents([.hour], from: Date(timeIntervalSince1970: fromTimestamp), to: Date()).hour else {
             return ChartIntervalConverter.convert(interval: .year1)
         }
+
         // try to split interval by 4 chunks
-        return daysCount / 4 * 24
+        switch hoursCount {
+        case 120...Int.max: return hoursCount / 4
+        case 60..<120: return 24
+        case 28..<60: return 12
+        default: return 4
+        }
     }
 
 }
