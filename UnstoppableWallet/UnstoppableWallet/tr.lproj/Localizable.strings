@@ -827,25 +827,18 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "manage_wallets.title" = "Cüzdanlar";
 "manage_wallets.not_found" = "Sonuç bulunamadı. Belirteci manuel olarak eklemeyi deneyin.";
 "manage_wallets.search_placeholder" = "Ad, kod veya sözleşme adresi";
-"manage_wallets.not_supported" = "Desteklenmiyor";
-"manage_wallets.not_supported.description" = "Mevcut cüzdan türünüz %@, %@'yi desteklemiyor";
-"manage_wallets.not_supported.by_app.description" = "Unstoppable %@ destegi yok";
 
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Deneysel";
 "settings.experimental_features.description" = "Aşağıdaki özellikler deneyseldir ve dikkatli kullanılmalıdır. Bu özellikleri kendi kripto fonlarımızı kullanarak baştan sona test etmemize rağmen, olası tüm durumlarda beklendiği gibi çalışmalarını garanti edemeyiz.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
-"settings.experimental_features.evm_testnet" = "Testnet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "Activate";
 "settings.bitcoin_hodling.description" = "Belirtilen tarihe kadar harcanmamış Bitcoin'leri göndermenize olanak verir.\n\nBu tür bir işlemin alıcısı Unstoppable cüzdan kullanmalıdır.\n\nSadece Unstoppable cüzdan, Bitcoin ağındaki bu tür işlemleri doğru bir şekilde tanımlayabilir ve kilitleme süresi dolduktan sonra da alıcının bu Bitcoin'leri harcamasını sağlayabilir.\n\nEğer bir HODLer iseniz, kendinize böyle bir işlem göndererek, bu özelliği Bitcoin'lerinizi zarar etmeden uzun süre elinizde tutmaya zorlamak için kullanabilirsiniz.\n\nDeneysel bir özellik olduğundan, işlem başına maksimum tutar 0.5 BTC ile sınırlandırılmıştır.";
-"settings.evm_testnet.title" = "Testnet";
-"settings.evm_testnet.enable" = "Activate";
-"settings.evm_testnet.description" = "Bu seçenek, Ethereum'un Goerli test ağını yalnızca GoerliETH belirteci için etkinleştirir ve madeni para yöneticisine ekler.\n\nDiğer tüm EVM ve Ethereum belirteçleri ana ağ üzerinden çalışırken yalnızca GoerliETH belirtecini etkiler. Başka bir deyişle, yalnızca GoerliETH'deki işlemler Goerli testnet'ten geçerken, ETH dahil diğer tüm EVM token transferleri ana ağdan geçer.";
 
 // Settings -> Terms
 
