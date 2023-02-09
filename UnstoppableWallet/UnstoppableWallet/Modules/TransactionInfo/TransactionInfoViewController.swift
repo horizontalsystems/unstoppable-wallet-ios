@@ -89,7 +89,6 @@ class TransactionInfoViewController: ThemeViewController {
 
     private func statusRow(rowInfo: RowInfo, status: TransactionStatus) -> RowProtocol {
         let hash: String
-        var hasButton = true
         var value: String
         var icon: UIImage?
         var spinnerProgress: Double?
@@ -105,7 +104,6 @@ class TransactionInfoViewController: ThemeViewController {
             spinnerProgress = progress * 0.8 + 0.2
         case .completed:
             hash = "completed"
-            hasButton = false
             value = "transactions.completed".localized
             icon = UIImage(named: "check_1_20")?.withTintColor(.themeRemus)
         case .failed:
@@ -116,21 +114,10 @@ class TransactionInfoViewController: ThemeViewController {
 
         return CellBuilderNew.row(
                 rootElement: .hStack([
-                    .transparentIconButton { [weak self] (component: TransparentIconButtonComponent) -> () in
-                        if hasButton {
-                            component.isHidden = false
-                            component.button.isSelected = true
-                            component.button.set(image: UIImage(named: "circle_information_24"))
-                            component.onTap = {
-                                self?.openStatusInfo()
-                            }
-                        } else {
-                            component.isHidden = true
-                        }
-                    },
-                    .margin4,
-                    .textElement(text: .subhead2("status".localized)),
-                    .textElement(text: .subhead1(value)),
+                    .textElement(text: .subhead2("status".localized), parameters: .highHugging),
+                    .margin8,
+                    .imageElement(image: .local(UIImage(named: "circle_information_20")?.withTintColor(.themeGray)), size: .image20),
+                    .textElement(text: .subhead1(value), parameters: .rightAlignment),
                     .margin8,
                     .imageElement(image: .local(icon), size: .image20),
                     .determiniteSpinner20 { (component: DeterminiteSpinnerComponent) -> () in
@@ -142,13 +129,16 @@ class TransactionInfoViewController: ThemeViewController {
                         }
                     }
                 ]),
-                layoutMargins: UIEdgeInsets(top: 0, left: hasButton ? .margin4 : CellBuilderNew.defaultMargin, bottom: 0, right: CellBuilderNew.defaultMargin),
                 tableView: tableView,
                 id: "status",
                 hash: hash,
                 height: .heightCell48,
+                autoDeselect: true,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+                },
+                action: { [weak self] in
+                    self?.openStatusInfo()
                 }
         )
     }
