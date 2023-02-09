@@ -8,6 +8,23 @@ struct ConfiguredToken {
         self.token = token
         self.coinSettings = coinSettings
     }
+
+    var coin: Coin {
+        token.coin
+    }
+
+    var blockchain: Blockchain {
+        token.blockchain
+    }
+
+    var blockchainType: BlockchainType {
+        token.blockchainType
+    }
+
+    var badge: String? {
+        token.blockchain.type.badge(coinSettings: coinSettings) ?? token.protocolName?.uppercased()
+    }
+
 }
 
 extension ConfiguredToken: Hashable {
@@ -19,14 +36,6 @@ extension ConfiguredToken: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(token)
         hasher.combine(coinSettings)
-    }
-
-}
-
-extension ConfiguredToken {
-
-    public var badge: String? {
-        token.blockchain.type.badge(coinSettings: coinSettings) ?? token.protocolName?.uppercased()
     }
 
 }

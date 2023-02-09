@@ -77,6 +77,10 @@ extension RestoreSettingsService {
         rejectApproveSettingsRelay.accept(token)
     }
 
+    func settings(account: Account, blockchainType: BlockchainType) -> RestoreSettings {
+        manager.settings(account: account, blockchainType: blockchainType)
+    }
+
 }
 
 extension RestoreSettingsService {

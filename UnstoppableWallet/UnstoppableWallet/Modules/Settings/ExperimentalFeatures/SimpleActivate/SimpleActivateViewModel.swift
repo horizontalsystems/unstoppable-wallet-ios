@@ -47,12 +47,8 @@ extension SimpleActivateViewModel {
         static var bitcoinHodling = ViewItem(
                 title: "settings.bitcoin_hodling.title".localized,
                 activateTitle: "settings.bitcoin_hodling.lock_time".localized,
-                activateDescription: "settings.bitcoin_hodling.description".localized)
-
-        static var testNet = ViewItem(
-                title: "settings.evm_testnet.title".localized,
-                activateTitle: "settings.evm_testnet.enable".localized,
-                activateDescription: "settings.evm_testnet.description".localized)
+                activateDescription: "settings.bitcoin_hodling.description".localized
+        )
 
         let title: String
         let activateTitle: String

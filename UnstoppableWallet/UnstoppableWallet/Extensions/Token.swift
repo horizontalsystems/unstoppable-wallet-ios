@@ -85,6 +85,21 @@ extension Token {
         }
     }
 
+    func configuredTokens(accountType: AccountType) -> [ConfiguredToken] {
+        switch blockchainType {
+        case .bitcoin, .litecoin:
+            return accountType.supportedDerivations.map {
+                ConfiguredToken(token: self, coinSettings: [.derivation: $0.rawValue])
+            }
+        case .bitcoinCash:
+            return BitcoinCashCoinType.allCases.map {
+                ConfiguredToken(token: self, coinSettings: [.bitcoinCashCoinType: $0.rawValue])
+            }
+        default:
+            return [ConfiguredToken(token: self)]
+        }
+    }
+
 }
 
 extension Token: Comparable {

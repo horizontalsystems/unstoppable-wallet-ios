@@ -33,6 +33,14 @@ enum MnemonicDerivation: String, CaseIterable {
         }
     }
 
+    var order: Int {
+        switch self {
+        case .bip44: return 0
+        case .bip49: return 1
+        case .bip84: return 2
+        }
+    }
+
 }
 
 extension Purpose {

@@ -5,17 +5,15 @@ import RxRelay
 class WalletConnectSessionManager {
     private let storage: WalletConnectSessionStorage
     private let accountManager: AccountManager
-    private let testNetManager: TestNetManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let disposeBag = DisposeBag()
 
     private let sessionsRelay = BehaviorRelay<[WalletConnectSession]>(value: [])
 
-    init(storage: WalletConnectSessionStorage, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, testNetManager: TestNetManager) {
+    init(storage: WalletConnectSessionStorage, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager) {
         self.storage = storage
         self.accountManager = accountManager
         self.evmBlockchainManager = evmBlockchainManager
-        self.testNetManager = testNetManager
 
         accountManager.accountDeletedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -48,10 +46,7 @@ class WalletConnectSessionManager {
     }
 
     private func isChainIdsEnabled(chainId: Int) -> Bool {
-        guard let blockchain = evmBlockchainManager.blockchain(chainId: chainId) else {
-            return false
-        }
-        return (testNetManager.testNetEnabled || !blockchain.type.isTestNet)
+        evmBlockchainManager.blockchain(chainId: chainId) != nil
     }
 
 }

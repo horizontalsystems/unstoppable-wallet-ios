@@ -14,7 +14,6 @@ class EvmBlockchainManager {
     ]
 
     private let syncSourceManager: EvmSyncSourceManager
-    private let testNetManager: TestNetManager
     private let marketKit: MarketKit.Kit
     private let accountManagerFactory: EvmAccountManagerFactory
 
@@ -23,21 +22,14 @@ class EvmBlockchainManager {
 
     var allBlockchains: [Blockchain] {
         do {
-            var allBlockchains = try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
-
-            if testNetManager.testNetEnabled {
-                allBlockchains += testNetManager.blockchains
-            }
-
-            return allBlockchains
+            return try marketKit.blockchains(uids: blockchainTypes.map { $0.uid })
         } catch {
             return []
         }
     }
 
-    init(syncSourceManager: EvmSyncSourceManager, testNetManager: TestNetManager, marketKit: MarketKit.Kit, accountManagerFactory: EvmAccountManagerFactory) {
+    init(syncSourceManager: EvmSyncSourceManager, marketKit: MarketKit.Kit, accountManagerFactory: EvmAccountManagerFactory) {
         self.syncSourceManager = syncSourceManager
-        self.testNetManager = testNetManager
         self.marketKit = marketKit
         self.accountManagerFactory = accountManagerFactory
     }
@@ -92,11 +84,7 @@ extension EvmBlockchainManager {
 
     func baseToken(blockchainType: BlockchainType) -> Token? {
         let query = TokenQuery(blockchainType: blockchainType, tokenType: .native)
-        if let token = try? marketKit.token(query: query) {
-            return token
-        }
-
-        return testNetManager.baseToken(blockchainType: blockchainType)
+        return try? marketKit.token(query: query)
     }
 
     func evmKitManager(blockchainType: BlockchainType) -> EvmKitManager {
