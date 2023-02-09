@@ -74,6 +74,14 @@ class TransactionInfoViewController: ThemeViewController {
         }
     }
 
+    private func openCoin(coinUid: String) {
+        guard let module = CoinPageModule.viewController(coinUid: coinUid) else {
+            return
+        }
+
+        present(module, animated: true)
+    }
+
     private func openNftAsset(providerCollectionUid: String, nftUid: NftUid) {
         let module = NftAssetModule.viewController(providerCollectionUid: providerCollectionUid, nftUid: nftUid)
         present(ThemeNavigationController(rootViewController: module), animated: true)
@@ -408,8 +416,16 @@ class TransactionInfoViewController: ThemeViewController {
         switch viewItem {
         case let .actionTitle(iconName, iconDimmed, title, subTitle):
             return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: iconDimmed, title: title, value: subTitle ?? "")
-        case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type):
-            return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type)
+        case let .amount(iconUrl, iconPlaceholderImageName, coinAmount, currencyAmount, type, coinUid):
+            var action: (() -> ())?
+
+            if let coinUid = coinUid {
+                action = { [weak self] in
+                    self?.openCoin(coinUid: coinUid)
+                }
+            }
+
+            return CellComponent.amountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, coinAmount: coinAmount, currencyAmount: currencyAmount, type: type, action: action)
         case let .nftAmount(iconUrl, iconPlaceholderImageName, nftAmount, type, providerCollectionUid, nftUid):
             var onTapOpenNft: (() -> ())?
 
