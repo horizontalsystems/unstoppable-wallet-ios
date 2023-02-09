@@ -32,34 +32,3 @@ extension BitcoinHodlingService: ISimpleActivateService {
     }
 
 }
-
-class TestNetActivateService {
-    private let testNetManager: TestNetManager
-    private let activatedChangedRelay = BehaviorRelay<Bool>(value: false)
-
-    init(testNetManager: TestNetManager) {
-        self.testNetManager = testNetManager
-    }
-
-}
-
-extension TestNetActivateService: ISimpleActivateService {
-
-    var activated: Bool {
-        get {
-            testNetManager.testNetEnabled
-        }
-        set {
-            testNetManager.testNetEnabled = newValue
-        }
-    }
-
-    var activatedChangedObservable: Observable<Bool> {
-        testNetManager.testNetEnabledObservable
-    }
-
-    func toggle() {
-        activated = !activated
-    }
-
-}

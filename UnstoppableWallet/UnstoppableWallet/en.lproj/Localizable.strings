@@ -827,25 +827,18 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "manage_wallets.title" = "Coin Manager";
 "manage_wallets.not_found" = "No results found. Try to add token manually.";
 "manage_wallets.search_placeholder" = "Name, code or contract address";
-"manage_wallets.not_supported" = "Not supported";
-"manage_wallets.not_supported.description" = "Your current wallet type %@ does not support %@";
-"manage_wallets.not_supported.by_app.description" = "Unstoppable does not support %@";
 
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
-"settings.experimental_features.evm_testnet" = "Testnet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "Activate";
 "settings.bitcoin_hodling.description" = "This enables you to send Bitcoins that cannot be spent until a specified date. \n\nThe receiver of such transactions should use the Unstoppable wallet app version 0.10 or newer, with the BIP44 address format for Bitcoin. \n\nOnly the Unstoppable wallet can correctly identify such transactions on the Bitcoin network, as well as enable the receiver to spend those Bitcoins after the lock period expires. \n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transactions to yourself.";
-"settings.evm_testnet.title" = "Testnet";
-"settings.evm_testnet.enable" = "Activate";
-"settings.evm_testnet.description" = "This option activates Ethereum's Goerli testnet only for GoerliETH token and adds it to the coin manager. \n\nIt only affects GoerliETH token while all other EVM and Ethereum tokens operate over mainnet. In other words, only transactions in GoerliETH go through Goerli testnet, while all other EVM token transfers including ETH go through mainnet.";
 
 // Settings -> Terms
 

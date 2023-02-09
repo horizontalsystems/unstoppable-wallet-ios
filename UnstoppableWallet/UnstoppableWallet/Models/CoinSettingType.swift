@@ -54,4 +54,14 @@ extension CoinSettings {
         self[.bitcoinCashCoinType].flatMap { BitcoinCashCoinType(rawValue: $0) }
     }
 
+    var order: Int {
+        if let derivation = derivation {
+            return derivation.order
+        } else if let bitcoinCashCoinType = bitcoinCashCoinType {
+            return bitcoinCashCoinType.order
+        } else {
+            return 0
+        }
+    }
+
 }

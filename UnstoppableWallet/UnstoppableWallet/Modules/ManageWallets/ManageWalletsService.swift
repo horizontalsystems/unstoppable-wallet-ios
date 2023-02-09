@@ -7,17 +7,15 @@ class ManageWalletsService {
     private let account: Account
     private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
-    private let restoreSettingsManager: RestoreSettingsManager
-    private let testNetManager: TestNetManager
-    private let enableCoinService: EnableCoinService
+    private let restoreSettingsService: RestoreSettingsService
     private let disposeBag = DisposeBag()
 
-    private var fullCoins = [FullCoin]()
+    private var configuredTokens = [ConfiguredToken]()
     private var wallets = Set<Wallet>()
     private var filter: String = ""
 
     private let itemsRelay = PublishRelay<[Item]>()
-    private let cancelEnableCoinRelay = PublishRelay<Coin>()
+    private let cancelEnableRelay = PublishRelay<Int>()
 
     var items: [Item] = [] {
         didSet {
@@ -25,7 +23,7 @@ class ManageWalletsService {
         }
     }
 
-    init?(marketKit: MarketKit.Kit, walletManager: WalletManager, restoreSettingsManager: RestoreSettingsManager, testNetManager: TestNetManager, accountManager: AccountManager, enableCoinService: EnableCoinService) {
+    init?(marketKit: MarketKit.Kit, walletManager: WalletManager, accountManager: AccountManager, restoreSettingsService: RestoreSettingsService) {
         guard let account = accountManager.activeAccount else {
             return nil
         }
@@ -33,171 +31,182 @@ class ManageWalletsService {
         self.account = account
         self.marketKit = marketKit
         self.walletManager = walletManager
-        self.restoreSettingsManager = restoreSettingsManager
-        self.testNetManager = testNetManager
-        self.enableCoinService = enableCoinService
+        self.restoreSettingsService = restoreSettingsService
 
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
             self?.handleUpdated(wallets: wallets)
         }
-        subscribe(disposeBag, enableCoinService.enableCoinObservable) { [weak self] configuredTokens, restoreSettings in
-            self?.handleEnableCoin(configuredTokens: configuredTokens, restoreSettings: restoreSettings)
+        subscribe(disposeBag, restoreSettingsService.approveSettingsObservable) { [weak self] tokenWithSettings in
+            self?.handleApproveRestoreSettings(token: tokenWithSettings.token, settings: tokenWithSettings.settings)
         }
-        subscribe(disposeBag, enableCoinService.disableCoinObservable) { [weak self] coin in
-            self?.handleDisable(coin: coin)
-        }
-        subscribe(disposeBag, enableCoinService.cancelEnableCoinObservable) { [weak self] coin in
-            self?.handleCancelEnable(coin: coin)
+        subscribe(disposeBag, restoreSettingsService.rejectApproveSettingsObservable) { [weak self] token in
+            self?.handleRejectApproveRestoreSettings(token: token)
         }
 
         sync(wallets: walletManager.activeWallets)
-        syncFullCoins()
-        sortFullCoins()
+        syncConfiguredTokens()
+        sortConfiguredTokens()
         syncState()
     }
 
-    private func fetchFullCoins() -> [FullCoin] {
+    private func handleApproveRestoreSettings(token: Token, settings: RestoreSettings = [:]) {
+        if !settings.isEmpty {
+            restoreSettingsService.save(settings: settings, account: account, blockchainType: token.blockchainType)
+        }
+
+        save(configuredToken: ConfiguredToken(token: token))
+    }
+
+    private func handleRejectApproveRestoreSettings(token: Token) {
+        guard let index = configuredTokens.firstIndex(where: { $0.token == token }) else {
+            return
+        }
+
+        cancelEnableRelay.accept(index)
+    }
+
+    private func fetchConfiguredTokens() -> [ConfiguredToken] {
         do {
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                var fullCoins = try marketKit.fullCoins(filter: "", limit: 1000)
-                        .filter { !$0.eligibleTokens(accountType: account.type).isEmpty }
-                        .prefix(100)
+                let queries = [
+                    TokenQuery(blockchainType: .bitcoin, tokenType: .native),
+                    TokenQuery(blockchainType: .ethereum, tokenType: .native),
+                    TokenQuery(blockchainType: .binanceSmartChain, tokenType: .native),
+                ]
 
-                if testNetManager.testNetEnabled {
-                    fullCoins += testNetManager.baseTokens
-                            .map { $0.fullCoin }
-                            .filter { !$0.eligibleTokens(accountType: account.type).isEmpty }
-                }
+                let tokens = try marketKit.tokens(queries: queries)
 
-                let allCoins = fullCoins.map { $0.coin }
-                let enabledFullCoins = try marketKit.fullCoins(coinUids: wallets.filter { !allCoins.contains($0.coin) }.map { $0.coin.uid })
+                let featuredConfiguredTokens = tokens
+                        .filter { $0.isSupported && $0.blockchainType.supports(accountType: account.type) }
+                        .map { $0.configuredTokens(accountType: account.type) }
+                        .flatMap { $0 }
 
-                let customFullCoins = wallets.map { $0.token }.filter { $0.isCustom }.map { $0.fullCoin }
+                let enabledConfiguredTokens = wallets.map { $0.configuredToken }
 
-                return fullCoins + enabledFullCoins + customFullCoins
+                return Array(Set(featuredConfiguredTokens + enabledConfiguredTokens))
             } else if let ethAddress = try? EvmKit.Address(hex: filter) {
                 let address = ethAddress.hex
                 let tokens = try marketKit.tokens(reference: address)
-                let coinUids = Array(Set(tokens.map { $0.coin.uid }))
 
-                return try marketKit.fullCoins(coinUids: coinUids)
-                        .filter { !$0.eligibleTokens(accountType: account.type).isEmpty }
+                return tokens
+                        .filter { $0.isSupported && $0.blockchainType.supports(accountType: account.type) }
+                        .map { $0.configuredTokens(accountType: account.type) }
+                        .flatMap { $0 }
             } else {
-                var fullCoins = try marketKit.fullCoins(filter: filter, limit: 1000)
-                        .filter { !$0.eligibleTokens(accountType: account.type).isEmpty }
-                        .prefix(20)
+                let allFullCoins = try marketKit.fullCoins(filter: filter, limit: 100)
+                let tokens = allFullCoins.map { $0.tokens }.flatMap { $0 }
 
-                if testNetManager.testNetEnabled {
-                    fullCoins += testNetManager.baseTokens(filter: filter)
-                            .map { $0.fullCoin }
-                            .filter { !$0.eligibleTokens(accountType: account.type).isEmpty }
-                }
-
-                return Array(fullCoins)
+                return tokens
+                        .filter { $0.isSupported && $0.blockchainType.supports(accountType: account.type) }
+                        .map { $0.configuredTokens(accountType: account.type) }
+                        .flatMap { $0 }
             }
         } catch {
             return []
         }
     }
 
-    private func syncFullCoins() {
-        fullCoins = fetchFullCoins()
+    private func syncConfiguredTokens() {
+        configuredTokens = fetchConfiguredTokens()
     }
 
-    private func isEnabled(coin: Coin) -> Bool {
-        wallets.contains { $0.coin == coin }
+    private func isEnabled(configuredToken: ConfiguredToken) -> Bool {
+        wallets.contains { $0.configuredToken == configuredToken }
     }
 
-    private func sortFullCoins() {
-        fullCoins.sort(filter: filter) { isEnabled(coin: $0) }
+    private func sortConfiguredTokens() {
+        configuredTokens.sort { lhsConfiguredToken, rhsConfiguredToken in
+            let lhsEnabled = isEnabled(configuredToken: lhsConfiguredToken)
+            let rhsEnabled = isEnabled(configuredToken: rhsConfiguredToken)
+
+            if lhsEnabled != rhsEnabled {
+                return lhsEnabled
+            }
+
+            if !filter.isEmpty {
+                let filter = filter.lowercased()
+
+                let lhsExactCode = lhsConfiguredToken.coin.code.lowercased() == filter
+                let rhsExactCode = rhsConfiguredToken.coin.code.lowercased() == filter
+
+                if lhsExactCode != rhsExactCode {
+                    return lhsExactCode
+                }
+
+                let lhsStartsWithCode = lhsConfiguredToken.coin.code.lowercased().starts(with: filter)
+                let rhsStartsWithCode = rhsConfiguredToken.coin.code.lowercased().starts(with: filter)
+
+                if lhsStartsWithCode != rhsStartsWithCode {
+                    return lhsStartsWithCode
+                }
+
+                let lhsStartsWithName = lhsConfiguredToken.coin.name.lowercased().starts(with: filter)
+                let rhsStartsWithName = rhsConfiguredToken.coin.name.lowercased().starts(with: filter)
+
+                if lhsStartsWithName != rhsStartsWithName {
+                    return lhsStartsWithName
+                }
+            }
+
+            let lhsMarketCapRank = lhsConfiguredToken.coin.marketCapRank ?? Int.max
+            let rhsMarketCapRank = rhsConfiguredToken.coin.marketCapRank ?? Int.max
+
+            if lhsMarketCapRank != rhsMarketCapRank {
+                return lhsMarketCapRank < rhsMarketCapRank
+            }
+
+            let lhsName = lhsConfiguredToken.coin.name.lowercased()
+            let rhsName = rhsConfiguredToken.coin.name.lowercased()
+
+            if lhsName != rhsName {
+                return lhsName < rhsName
+            }
+
+            let lhsOrder = lhsConfiguredToken.blockchainType.order
+            let rhsOrder = rhsConfiguredToken.blockchainType.order
+
+            if lhsOrder != rhsOrder {
+                return lhsOrder < rhsOrder
+            }
+
+            return lhsConfiguredToken.coinSettings.order < rhsConfiguredToken.coinSettings.order
+        }
     }
 
     private func sync(wallets: [Wallet]) {
         self.wallets = Set(wallets)
     }
 
-    private func hasSettingsOrTokens(tokens: [Token]) -> Bool {
-        if tokens.count == 1 {
-            let token = tokens[0]
-            return token.blockchainType.coinSettingType != nil || token.type != .native
-        } else {
-            return true
-        }
-    }
+    private func item(configuredToken: ConfiguredToken) -> Item {
+        let enabled = isEnabled(configuredToken: configuredToken)
 
-    private func item(fullCoin: FullCoin) -> Item {
-        if !fullCoin.tokens.isEmpty, fullCoin.tokens.allSatisfy({ $0.blockchainType.isUnsupported }) {
-            return Item(fullCoin: fullCoin, state: .unsupportedByApp)
-        }
-
-        let eligibleTokens = fullCoin.eligibleTokens(accountType: accountType)
-
-        let itemState: ItemState
-
-        if eligibleTokens.isEmpty {
-            itemState = .unsupportedByWalletType
-        } else {
-            let enabled = isEnabled(coin: fullCoin.coin)
-            itemState = .supported(
-                    enabled: enabled,
-                    hasSettings: enabled && hasSettingsOrTokens(tokens: fullCoin.tokens),
-                    hasInfo: enabled && fullCoin.tokens.first?.blockchainType == .zcash
-            )
-        }
-
-        return Item(fullCoin: fullCoin, state: itemState)
+        return Item(
+                configuredToken: configuredToken,
+                enabled: enabled,
+                hasInfo: enabled && configuredToken.blockchainType == .zcash
+        )
     }
 
     private func syncState() {
-        items = fullCoins.map { item(fullCoin: $0) }
+        items = configuredTokens.map { item(configuredToken: $0) }
     }
 
     private func handleUpdated(wallets: [Wallet]) {
         sync(wallets: wallets)
 
-        let newFullCoins = fetchFullCoins()
+        let newConfiguredTokens = fetchConfiguredTokens()
 
-        if newFullCoins.count > fullCoins.count {
-            fullCoins = newFullCoins
-            sortFullCoins()
+        if newConfiguredTokens.count > configuredTokens.count {
+            configuredTokens = newConfiguredTokens
+            sortConfiguredTokens()
         }
 
         syncState()
     }
 
-    private func handleEnableCoin(configuredTokens: [ConfiguredToken], restoreSettings: RestoreSettings) {
-        guard let coin = configuredTokens.first?.token.coin else {
-            return
-        }
-
-        if !restoreSettings.isEmpty && configuredTokens.count == 1 {
-            enableCoinService.save(restoreSettings: restoreSettings, account: account, blockchainType: configuredTokens[0].token.blockchainType)
-        }
-
-        let existingWallets = wallets.filter { $0.coin == coin }
-        let existingConfiguredTokens = existingWallets.map { $0.configuredToken }
-
-        let newConfiguredTokens = configuredTokens.filter { !existingConfiguredTokens.contains($0) }
-        let removedWallets = existingWallets.filter { !configuredTokens.contains($0.configuredToken) }
-
-        let newWallets = newConfiguredTokens.map { Wallet(configuredToken: $0, account: account) }
-
-        if !newWallets.isEmpty || !removedWallets.isEmpty {
-            walletManager.handle(newWallets: newWallets, deletedWallets: Array(removedWallets))
-        }
-    }
-
-    private func handleDisable(coin: Coin) {
-        let walletsToDelete = wallets.filter { $0.coin == coin }
-        walletManager.delete(wallets: Array(walletsToDelete))
-
-        cancelEnableCoinRelay.accept(coin)
-    }
-
-    private func handleCancelEnable(coin: Coin) {
-        if !isEnabled(coin: coin) {
-            cancelEnableCoinRelay.accept(coin)
-        }
+    private func save(configuredToken: ConfiguredToken) {
+        let wallet = Wallet(configuredToken: configuredToken, account: account)
+        walletManager.save(wallets: [wallet])
     }
 
 }
@@ -208,8 +217,8 @@ extension ManageWalletsService {
         itemsRelay.asObservable()
     }
 
-    var cancelEnableCoinObservable: Observable<Coin> {
-        cancelEnableCoinRelay.asObservable()
+    var cancelEnableObservable: Observable<Int> {
+        cancelEnableRelay.asObservable()
     }
 
     var accountType: AccountType {
@@ -219,49 +228,37 @@ extension ManageWalletsService {
     func set(filter: String) {
         self.filter = filter
 
-        syncFullCoins()
-        sortFullCoins()
+        syncConfiguredTokens()
+        sortConfiguredTokens()
         syncState()
     }
 
-    func enable(uid: String) {
-        guard let fullCoin = fullCoins.first(where: { $0.coin.uid == uid }) else {
-            return
-        }
+    func enable(index: Int) {
+        let configuredToken = configuredTokens[index]
 
-        enableCoinService.enable(fullCoin: fullCoin, accountType: account.type, account: account)
+        if !configuredToken.blockchainType.restoreSettingTypes.isEmpty {
+            restoreSettingsService.approveSettings(token: configuredToken.token, account: account)
+        } else {
+            save(configuredToken: configuredToken)
+        }
     }
 
-    func disable(uid: String) {
-        let walletsToDelete = wallets.filter { $0.coin.uid == uid }
+    func disable(index: Int) {
+        let configuredToken = configuredTokens[index]
+        let walletsToDelete = wallets.filter { $0.configuredToken == configuredToken }
         walletManager.delete(wallets: Array(walletsToDelete))
     }
 
-    func configure(uid: String) {
-        guard let fullCoin = fullCoins.first(where: { $0.coin.uid == uid }) else {
-            return
-        }
+    func birthdayHeight(index: Int) -> (Blockchain, Int)? {
+        let configuredToken = configuredTokens[index]
 
-        let coinWallets = wallets.filter { $0.coin.uid == uid }
-        enableCoinService.configure(fullCoin: fullCoin, accountType: account.type, configuredTokens: coinWallets.map { $0.configuredToken })
-    }
-
-    func birthdayHeight(uid: String) -> (Blockchain, Int)? {
-        guard let fullCoin = fullCoins.first(where: { $0.coin.uid == uid }) else {
-            return nil
-        }
-
-        guard let token = fullCoin.tokens.first else {
-            return nil
-        }
-
-        let settings = restoreSettingsManager.settings(account: account, blockchainType: token.blockchainType)
+        let settings = restoreSettingsService.settings(account: account, blockchainType: configuredToken.blockchainType)
 
         guard let birthdayHeight = settings.birthdayHeight else {
             return nil
         }
 
-        return (token.blockchain, birthdayHeight)
+        return (configuredToken.blockchain, birthdayHeight)
     }
 
 }
@@ -269,14 +266,9 @@ extension ManageWalletsService {
 extension ManageWalletsService {
 
     struct Item {
-        let fullCoin: FullCoin
-        let state: ItemState
-    }
-
-    enum ItemState {
-        case unsupportedByWalletType
-        case unsupportedByApp
-        case supported(enabled: Bool, hasSettings: Bool, hasInfo: Bool)
+        let configuredToken: ConfiguredToken
+        let enabled: Bool
+        let hasInfo: Bool
     }
 
 }

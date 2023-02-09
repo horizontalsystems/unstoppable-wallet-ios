@@ -12,7 +12,6 @@ class WalletConnectV2SessionManager {
     private let storage: WalletConnectV2SessionStorage
     private let accountManager: AccountManager
     private let currentDateProvider: CurrentDateProvider
-    private let testNetManager: TestNetManager
     private let evmBlockchainManager: EvmBlockchainManager
 
     private let sessionsRelay = BehaviorRelay<[WalletConnectSign.Session]>(value: [])
@@ -20,13 +19,12 @@ class WalletConnectV2SessionManager {
     private let pairingsRelay = BehaviorRelay<[WalletConnectPairing.Pairing]>(value: [])
     private let sessionRequestReceivedRelay = PublishRelay<WalletConnectRequest>()
 
-    init(service: WalletConnectV2Service, storage: WalletConnectV2SessionStorage, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, currentDateProvider: CurrentDateProvider, testNetManager: TestNetManager) {
+    init(service: WalletConnectV2Service, storage: WalletConnectV2SessionStorage, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, currentDateProvider: CurrentDateProvider) {
         self.service = service
         self.storage = storage
         self.accountManager = accountManager
         self.evmBlockchainManager = evmBlockchainManager
         self.currentDateProvider = currentDateProvider
-        self.testNetManager = testNetManager
 
         subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in
             self?.handleDeleted(account: $0)
@@ -45,9 +43,6 @@ class WalletConnectV2SessionManager {
         }
         subscribe(disposeBag, service.pairingUpdatedObservable) { [weak self] in
             self?.syncPairings()
-        }
-        subscribe(disposeBag, testNetManager.testNetEnabledObservable) { [weak self] in
-            self?.syncTestNetVisible(enabled: $0)
         }
 
         syncSessions()
@@ -130,16 +125,9 @@ class WalletConnectV2SessionManager {
         pairingsRelay.accept(service.pairings)
     }
 
-    private func syncTestNetVisible(enabled: Bool) {
-        syncSessions()
-    }
-
     private func isChainIdsEnabled(chainIds: [Int]) -> Bool {
         chainIds.allSatisfy { id in
-            guard let blockchain = evmBlockchainManager.blockchain(chainId: id) else {
-                return false
-            }
-            return (testNetManager.testNetEnabled || !blockchain.type.isTestNet)
+            evmBlockchainManager.blockchain(chainId: id) != nil
         }
     }
 

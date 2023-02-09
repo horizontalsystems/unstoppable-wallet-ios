@@ -10,12 +10,6 @@ struct SimpleActivateModule {
         return SimpleActivateViewController(viewModel: viewModel)
     }
 
-    static var evmTestnetViewController: UIViewController {
-        let service = TestNetActivateService(testNetManager: App.shared.testNetManager)
-        let viewModel = SimpleActivateViewModel(service: service, config: .testNet)
-        return SimpleActivateViewController(viewModel: viewModel)
-    }
-
 }
 
 protocol ISimpleActivateService {

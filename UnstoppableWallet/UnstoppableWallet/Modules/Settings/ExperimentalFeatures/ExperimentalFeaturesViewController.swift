@@ -4,13 +4,9 @@ import ThemeKit
 import ComponentKit
 
 class ExperimentalFeaturesViewController: ThemeViewController {
-    private let viewModel: ExperimentalFeaturesViewModel
-
     private let tableView = SectionsTableView(style: .grouped)
 
-    init(viewModel: ExperimentalFeaturesViewModel) {
-        self.viewModel = viewModel
-
+    override init() {
         super.init()
 
         hidesBottomBarWhenPushed = true
@@ -46,10 +42,6 @@ class ExperimentalFeaturesViewController: ThemeViewController {
         navigationController?.pushViewController(SimpleActivateModule.bitcoinHodlingViewController, animated: true)
     }
 
-    private func openEvmTestnet() {
-        navigationController?.pushViewController(SimpleActivateModule.evmTestnetViewController, animated: true)
-    }
-
 }
 
 extension ExperimentalFeaturesViewController: SectionsDataSource {
@@ -71,17 +63,9 @@ extension ExperimentalFeaturesViewController: SectionsDataSource {
                                 title: .body("settings.experimental_features.bitcoin_hodling".localized),
                                 accessoryType: .disclosure,
                                 isFirst: true,
-                                action: { [weak self] in
-                                    self?.openBitcoinHodling()
-                                }
-                        ),
-                        tableView.universalRow48(
-                                id: "evm_testnet",
-                                title: .body("settings.experimental_features.evm_testnet".localized),
-                                accessoryType: .disclosure,
                                 isLast: true,
                                 action: { [weak self] in
-                                    self?.openEvmTestnet()
+                                    self?.openBitcoinHodling()
                                 }
                         )
                     ]
