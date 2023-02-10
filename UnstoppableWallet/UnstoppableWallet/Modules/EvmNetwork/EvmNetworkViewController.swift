@@ -169,7 +169,7 @@ extension EvmNetworkViewController: SectionsDataSource {
                             tableView.universalRow48(
                                     id: "add-new",
                                     image: .local(UIImage(named: "plus_24")?.withTintColor(.themeJacob)),
-                                    title: .custom("evm_network.add_new".localized, .body, .themeJacob),
+                                    title: .body("evm_network.add_new".localized, color: .themeJacob),
                                     autoDeselect: true,
                                     isFirst: true,
                                     isLast: true,

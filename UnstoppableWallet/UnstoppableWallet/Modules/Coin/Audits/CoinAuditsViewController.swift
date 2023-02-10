@@ -122,7 +122,7 @@ extension CoinAuditsViewController: SectionsDataSource {
                 .margin(1),
                 .textElement(text: .subhead2(auditViewItem.name))
             ]),
-            .textElement(text: .subhead1(auditViewItem.issues, gray: true), parameters: .rightAlignment)
+            .textElement(text: .subhead1(auditViewItem.issues, color: .themeGray), parameters: .rightAlignment)
         ]
         if auditViewItem.reportUrl != nil {
             elements.append(contentsOf: CellBuilderNew.CellElement.accessoryElements(.disclosure))

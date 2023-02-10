@@ -205,7 +205,7 @@ struct CellComponent {
                 id: "value-\(rowInfo.index)",
                 image: iconName.flatMap { UIImage(named: $0)?.withTintColor(.themeGray) }.map { .local($0) },
                 title: .subhead2(title),
-                value: .custom(value, .subhead1, type.textColor),
+                value: .subhead1(value, color: type.textColor),
                 hash: value,
                 isFirst: rowInfo.isFirst,
                 isLast: rowInfo.isLast

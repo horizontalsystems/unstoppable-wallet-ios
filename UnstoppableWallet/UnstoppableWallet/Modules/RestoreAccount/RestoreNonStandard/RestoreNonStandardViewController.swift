@@ -193,7 +193,7 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
                     tableView.universalImage24Elements(
                             image: .local(UIImage(named: "globe_24")?.withTintColor(.themeGray)),
                             title: .body("create_wallet.word_list".localized),
-                            value: .subhead1(wordListLanguage, gray: true),
+                            value: .subhead1(wordListLanguage, color: .themeGray),
                             accessoryType: .dropdown
                     )
                 )

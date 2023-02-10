@@ -296,7 +296,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                     ),
                     tableView.universalRow48(
                             id: "collection",
-                            title: .custom(collectionName, .body, .themeJacob),
+                            title: .body(collectionName, color: .themeJacob),
                             accessoryType: .disclosure,
                             backgroundStyle: .transparent,
                             autoDeselect: true,
@@ -588,7 +588,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
         tableView.universalRow48(
                 id: "detail-\(title)",
                 title: .body(title),
-                value: .subhead1(value, gray: true),
+                value: .subhead1(value, color: .themeGray),
                 isLast: isLast
         )
     }

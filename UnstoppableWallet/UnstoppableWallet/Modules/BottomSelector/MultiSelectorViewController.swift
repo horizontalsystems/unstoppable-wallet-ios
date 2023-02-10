@@ -74,7 +74,7 @@ extension MultiSelectorViewController: SectionsDataSource {
     private func row(id: String, isFirst: Bool, isLast: Bool, value: String, valueColor: UIColor, selected: Bool, action: @escaping () -> ()) -> RowProtocol {
         tableView.universalRow48(
                 id: id,
-                title: .custom(value, .body, valueColor),
+                title: .body(value, color: valueColor),
                 accessoryType: .check(selected),
                 hash: "\(selected)",
                 autoDeselect: true,

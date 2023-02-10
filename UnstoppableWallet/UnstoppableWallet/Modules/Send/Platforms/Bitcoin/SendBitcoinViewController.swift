@@ -80,7 +80,7 @@ class SendBitcoinViewController: BaseSendViewController {
         }
         let elements = tableView.universalImage24Elements(
                 title: .subhead2("send.hodler_locktime".localized),
-                value: .subhead1(value, gray: false),
+                value: .subhead1(value),
                 accessoryType: .dropdown)
 
         CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements))

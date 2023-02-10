@@ -114,7 +114,7 @@ class WalletConnectV2ListView {
     private func pairingCountCell(tableView: SectionsTableView, pairingCount: Int) -> RowProtocol {
         tableView.universalRow48(id: "session-pairing",
                 title: .body("wallet_connect.list.pairings".localized),
-                value: .subhead1("\(pairingCount)", gray: true),
+                value: .subhead1("\(pairingCount)", color: .themeGray),
                 accessoryType: .disclosure,
                 autoDeselect: true,
                 isFirst: true,

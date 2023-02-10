@@ -160,7 +160,7 @@ extension AddTokenViewController: SectionsDataSource {
                                 id: "blockchain",
                                 image: .local(UIImage(named: "blocks_24")?.withTintColor(.themeGray)),
                                 title: .body("add_token.blockchain".localized),
-                                value: .subhead1(blockchain, gray: true),
+                                value: .subhead1(blockchain, color: .themeGray),
                                 accessoryType: .dropdown,
                                 hash: blockchain,
                                 autoDeselect: true,
@@ -202,18 +202,18 @@ extension AddTokenViewController: SectionsDataSource {
                             rows: [
                                 tableView.universalRow48(
                                         id: "coin-name",
-                                        title: .subhead2("add_token.coin_name".localized, gray: true),
+                                        title: .subhead2("add_token.coin_name".localized),
                                         value: .subhead1(viewItem.name),
                                         isFirst: true
                                 ),
                                 tableView.universalRow48(
                                         id: "coin-name",
-                                        title: .subhead2("add_token.symbol".localized, gray: true),
+                                        title: .subhead2("add_token.symbol".localized),
                                         value: .subhead1(viewItem.code)
                                 ),
                                 tableView.universalRow48(
                                         id: "coin-name",
-                                        title: .subhead2("add_token.decimals".localized, gray: true),
+                                        title: .subhead2("add_token.decimals".localized),
                                         value: .subhead1(viewItem.decimals),
                                         isLast: true
                                 )

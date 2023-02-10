@@ -243,7 +243,7 @@ extension ManageAccountViewController: SectionsDataSource {
             return tableView.universalRow48(
                     id: "backup-recovery-phrase",
                     image: .local(UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)),
-                    title: .custom("manage_account.backup_recovery_phrase".localized, .body, .themeLucian),
+                    title: .body("manage_account.backup_recovery_phrase".localized, color: .themeLucian),
                     autoDeselect: true,
                     isFirst: isFirst,
                     isLast: isLast
@@ -326,7 +326,7 @@ extension ManageAccountViewController: SectionsDataSource {
                             tableView.universalRow48(
                                     id: "unlink",
                                     image: .local(UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
-                                    title: .custom("manage_account.unlink".localized, .body, .themeLucian),
+                                    title: .body("manage_account.unlink".localized, color: .themeLucian),
                                     autoDeselect: true,
                                     isFirst: true,
                                     isLast: true

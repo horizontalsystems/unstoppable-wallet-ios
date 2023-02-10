@@ -72,7 +72,7 @@ class BottomSheetItem {
         return tableView.universalRow48(
                 id: "row_\(rowIndex)",
                 image: image,
-                title: .custom(viewItem.title, .body, viewItem.titleColor),
+                title: .body(viewItem.title, color: viewItem.titleColor),
                 accessoryType: .check(viewItem.selected),
                 hash: "\(viewItem.selected)",
                 backgroundStyle: .bordered,
