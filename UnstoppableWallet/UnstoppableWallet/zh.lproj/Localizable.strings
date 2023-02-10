@@ -779,7 +779,7 @@
 "tx_info.button_explorer" = "查看于%@";
 "tx_info.rate" = "历史价格";
 "tx_info.options.speed_up" = "加速";
-"tx_info.options.cancel" = "取消";
+"tx_info.options.cancel" = "取消交易";
 "tx_info.transaction.already_in_block" = "交易已在区块中";
 "tx_info.fee" = "费用";
 "tx_info.fee.estimated" = "费用（预估）";
@@ -797,7 +797,6 @@
 "tx_info.you_paid" = "您已支付";
 "tx_info.you_got" = "您已获得";
 "tx_info.price" = "价格";
-"tx_info.options" = "选项";
 
 // Settings
 
