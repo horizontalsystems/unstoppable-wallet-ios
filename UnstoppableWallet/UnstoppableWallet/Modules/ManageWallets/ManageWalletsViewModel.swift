@@ -26,7 +26,7 @@ class ManageWalletsViewModel {
         let token = item.configuredToken.token
 
         return ViewItem(
-                uid: token.coin.uid,
+                uid: String(item.configuredToken.hashValue),
                 imageUrl: token.coin.imageUrl,
                 placeholderImageName: token.placeholderImageName,
                 title: token.coin.code,
