@@ -779,7 +779,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "tx_info.button_explorer" = "Ver no %@";
 "tx_info.rate" = "Dados históricos";
 "tx_info.options.speed_up" = "Acelerar";
-"tx_info.options.cancel" = "Cancelar";
+"tx_info.options.cancel" = "Cancelar transação";
 "tx_info.transaction.already_in_block" = "A transação já foi confirmada";
 "tx_info.fee" = "Taxa";
 "tx_info.fee.estimated" = "Taxa (est.)";
@@ -797,7 +797,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "tx_info.you_paid" = "Você Paga";
 "tx_info.you_got" = "Você Tem";
 "tx_info.price" = "Preço";
-"tx_info.options" = "Opções";
 
 // Settings
 
