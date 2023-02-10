@@ -148,7 +148,7 @@ extension ExtendedKeyViewController: SectionsDataSource {
         tableView.universalRow48(
                 id: item.id,
                 title: .body(item.title),
-                value: .subhead1(item.value, gray: true),
+                value: .subhead1(item.value, color: .themeGray),
                 accessoryType: item.action == nil ? .none : .dropdown,
                 autoDeselect: true,
                 isFirst: isFirst,

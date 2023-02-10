@@ -481,7 +481,7 @@ extension CoinDetailsViewController: SectionsDataSource {
             let row = tableView.universalRow48(
                 id: "security-\(viewItem.type)",
                 title: .subhead2(viewItem.type.title),
-                value: .custom(viewItem.value, .subhead1, viewItem.valueGrade.textColor),
+                value: .subhead1(viewItem.value, color: viewItem.valueGrade.textColor),
                 isFirst: index == 0,
                 isLast: index == securityViewItems.count - 1 && !hasAudits
             )

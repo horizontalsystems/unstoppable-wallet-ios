@@ -96,7 +96,7 @@ extension CoinInvestorsViewController: SectionsDataSource {
                 rows: [
                     tableView.universalRow48(
                             id: "header-\(index)",
-                            title: .custom(title, .body, .themeJacob),
+                            title: .body(title, color: .themeJacob),
                             value: .body(value),
                             backgroundStyle: .transparent
                     )
@@ -109,7 +109,7 @@ extension CoinInvestorsViewController: SectionsDataSource {
                 id: fundViewItem.uid,
                 image: .url(fundViewItem.logoUrl, placeholder: "placeholder_circle_32"),
                 title: .body(fundViewItem.name),
-                value: fundViewItem.isLead ? .custom("coin_page.funds_invested.lead".localized, .subhead1, .themeRemus) : nil,
+                value: fundViewItem.isLead ? .subhead1("coin_page.funds_invested.lead".localized, color: .themeRemus) : nil,
                 accessoryType: fundViewItem.url.isEmpty ? .none : .disclosure,
                 autoDeselect: true,
                 isFirst: isFirst,

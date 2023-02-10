@@ -206,7 +206,7 @@ extension WatchViewController: SectionsDataSource {
                             tableView.universalRow48(
                                     id: "watch_type",
                                     title: .body("watch_address.by".localized),
-                                    value: .subhead1(watchType.title, gray: true),
+                                    value: .subhead1(watchType.title, color: .themeGray),
                                     accessoryType: .dropdown,
                                     autoDeselect: true,
                                     isFirst: true,

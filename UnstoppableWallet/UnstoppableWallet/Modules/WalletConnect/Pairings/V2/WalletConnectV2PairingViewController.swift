@@ -139,7 +139,7 @@ class WalletConnectV2PairingViewController: ThemeViewController {
                     tableView.universalRow48(
                             id: "delete_all",
                             image: .local(UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
-                            title: .custom("wallet_connect.paired_dapps.disconnect_all".localized, .body, .themeLucian),
+                            title: .body("wallet_connect.paired_dapps.disconnect_all".localized, color: .themeLucian),
                             autoDeselect: true,
                             isFirst: true,
                             isLast: true,

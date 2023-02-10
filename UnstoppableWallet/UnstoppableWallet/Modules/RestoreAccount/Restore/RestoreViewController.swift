@@ -248,7 +248,7 @@ class RestoreViewController: KeyboardAwareViewController {
                         tableView.universalImage24Elements(
                                 image: .local(UIImage(named: "globe_24")?.withTintColor(.themeGray)),
                                 title: .body("create_wallet.word_list".localized),
-                                value: .subhead1(wordListLanguage, gray: true),
+                                value: .subhead1(wordListLanguage),
                                 accessoryType: .dropdown
                         )
                 )
@@ -339,7 +339,7 @@ extension RestoreViewController: SectionsDataSource {
                                 tableView.universalRow48(
                                         id: "restore_type",
                                         title: .body("restore.import_by".localized),
-                                        value: .subhead1(restoreType.title, gray: true),
+                                        value: .subhead1(restoreType.title),
                                         accessoryType: .dropdown,
                                         autoDeselect: true,
                                         isFirst: true,

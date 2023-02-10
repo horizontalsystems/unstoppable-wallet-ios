@@ -205,7 +205,7 @@ extension CreateAccountAdvancedViewController: SectionsDataSource {
                         tableView.universalImage24Elements(
                                 image: .local(image?.withTintColor(.themeGray)),
                                 title: .body(title),
-                                value: .subhead1(value, gray: true),
+                                value: .subhead1(value, color: .themeGray),
                                 accessoryType: .dropdown
                         )
                 )

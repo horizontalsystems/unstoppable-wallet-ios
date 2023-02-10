@@ -139,7 +139,7 @@ class MarketAdvancedSearchViewController: ThemeViewController {
     private func buildSelector(cell: BaseThemeCell, title: String? = nil, viewItem: MarketAdvancedSearchViewModel.ViewItem? = nil) {
         let elements = tableView.universalImage24Elements(
                 title: .body(title),
-                value: viewItem.map { .custom($0.value, .subhead1, $0.valueStyle.valueTextColor )},
+                value: viewItem.map { .subhead1($0.value, color: $0.valueStyle.valueTextColor )},
                 accessoryType: .dropdown)
         CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements)
         )

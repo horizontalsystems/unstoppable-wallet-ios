@@ -165,7 +165,7 @@ extension CoinOverviewViewController {
                             id: "coin-info",
                             image: .url(viewItem.imageUrl, placeholder: viewItem.imagePlaceholderName),
                             title: .body(viewItem.name, color: .themeGray),
-                            value: .subhead1(viewItem.marketCapRank, gray: true),
+                            value: .subhead1(viewItem.marketCapRank, color: .themeGray),
                             backgroundStyle: .transparent,
                             isFirst: true,
                             isLast: false

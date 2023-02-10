@@ -405,7 +405,7 @@ extension WalletConnectMainViewController: SectionsDataSource {
                     rows.append(tableView.universalRow48(
                             id: "value-\(index)",
                             title: .subhead2(title),
-                            value: .custom(value, .subhead1, valueColor ?? .themeLeah),
+                            value: .subhead1(value, color: valueColor ?? .themeLeah),
                             hash: value,
                             isFirst: isFirst,
                             isLast: isLast

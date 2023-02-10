@@ -218,7 +218,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                     tableView.universalRow48(
                             id: "text_\(index)",
                             title: .subhead2(tuple.0),
-                            value: .subhead1(tuple.1, gray: false),
+                            value: .subhead1(tuple.1),
                             isFirst: index == 0,
                             isLast: index == rowTexts.count - 1
                     )
