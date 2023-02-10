@@ -65,9 +65,9 @@ class TransactionInfoViewController: ThemeViewController {
         present(InfoModule.transactionStatusInfo, animated: true)
     }
 
-    private func openResend(action: TransactionInfoModule.Option) {
+    private func openResend(type: ResendEvmTransactionType) {
         do {
-            let viewController = try SendEvmConfirmationModule.resendViewController(adapter: adapter, action: action, transactionHash: viewModel.transactionHash)
+            let viewController = try SendEvmConfirmationModule.resendViewController(adapter: adapter, type: type, transactionHash: viewModel.transactionHash)
             present(ThemeNavigationController(rootViewController: viewController), animated: true)
         } catch {
             HudHelper.instance.show(banner: .error(string: error.localizedDescription))
@@ -143,31 +143,43 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func optionsRow(rowInfo: RowInfo, viewItems: [TransactionInfoModule.OptionViewItem]) -> RowProtocol {
-        var elements: [CellBuilderNew.CellElement] = [.textElement(text: .subhead2("tx_info.options".localized))]
+    private func optionRow(rowInfo: RowInfo, option: TransactionInfoModule.Option) -> RowProtocol {
+        let image: UIImage?
+        let title: String
+        let color: UIColor
+        let action: () -> ()
 
-        for (index, viewItem) in viewItems.enumerated() {
-            elements.append(.secondaryButton { (component: SecondaryButtonComponent) -> () in
-                component.button.set(style: .default)
-                component.button.setTitle(viewItem.title, for: .normal)
-                component.button.isEnabled = viewItem.active
-                component.onTap = { [weak self] in
-                    self?.openResend(action: viewItem.option)
-                }
-            })
-            if index < viewItems.count - 1 {
-                elements.append(.margin8)
+        switch option {
+        case .resend(let type):
+            switch type {
+            case .speedUp:
+                image = UIImage(named: "arrow_medium_2_up_24")
+                title = "tx_info.options.speed_up".localized
+                color = .themeJacob
+            case .cancel:
+                image = UIImage(named: "outgoing_raw_24")
+                title = "tx_info.options.cancel".localized
+                color = .themeLucian
+            }
+
+            action = { [weak self] in
+                self?.openResend(type: type)
             }
         }
 
         return CellBuilderNew.row(
-                rootElement: .hStack(elements),
+                rootElement: .hStack([
+                    .imageElement(image: .local(image?.withTintColor(color)), size: .image24),
+                    .textElement(text: .body(title, color: color))
+                ]),
                 tableView: tableView,
-                id: "options",
+                id: "option-\(rowInfo.index)",
                 height: .heightCell48,
+                autoDeselect: true,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                }
+                },
+                action: action
         )
     }
 
@@ -428,8 +440,8 @@ class TransactionInfoViewController: ThemeViewController {
             return CellComponent.nftAmountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, nftAmount: nftAmount, type: type, onTapOpenNft: onTapOpenNft)
         case let .status(status):
             return statusRow(rowInfo: rowInfo, status: status)
-        case let .options(actions: viewItems):
-            return optionsRow(rowInfo: rowInfo, viewItems: viewItems)
+        case let .option(option):
+            return optionRow(rowInfo: rowInfo, option: option)
         case let .date(date):
             return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: "tx_info.date".localized, value: DateHelper.instance.formatFullTime(from: date))
         case let .from(value, valueTitle):

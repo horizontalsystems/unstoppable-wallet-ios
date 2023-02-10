@@ -82,6 +82,14 @@ enum TransactionStatus {
         default: return false
         }
     }
+
+    var isPending: Bool {
+        switch self {
+        case .pending: return true
+        default: return false
+        }
+    }
+
 }
 
 extension TransactionStatus: Equatable {

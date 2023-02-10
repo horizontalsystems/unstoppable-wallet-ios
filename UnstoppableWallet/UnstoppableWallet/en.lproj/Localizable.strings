@@ -779,7 +779,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "tx_info.button_explorer" = "View on %@";
 "tx_info.rate" = "Historical Rate";
 "tx_info.options.speed_up" = "Speed Up";
-"tx_info.options.cancel" = "Cancel";
+"tx_info.options.cancel" = "Cancel Transaction";
 "tx_info.transaction.already_in_block" = "Transaction already in block";
 "tx_info.fee" = "Fee";
 "tx_info.fee.estimated" = "Fee (est.)";
@@ -797,7 +797,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "tx_info.you_paid" = "You Paid";
 "tx_info.you_got" = "You Got";
 "tx_info.price" = "Price";
-"tx_info.options" = "Options";
 
 // Settings
 
