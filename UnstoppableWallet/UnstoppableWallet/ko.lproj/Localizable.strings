@@ -777,7 +777,7 @@
 "tx_info.button_explorer" = "%@에서 보기";
 "tx_info.rate" = "과거 환율";
 "tx_info.options.speed_up" = "가속";
-"tx_info.options.cancel" = "취소";
+"tx_info.options.cancel" = "트랜잭션 취소";
 "tx_info.transaction.already_in_block" = "이미 차단된 거래";
 "tx_info.fee" = "수수료";
 "tx_info.fee.estimated" = "수수료 (추정)";
@@ -795,7 +795,6 @@
 "tx_info.you_paid" = "지불한 금액";
 "tx_info.you_got" = "받았던 금액";
 "tx_info.price" = "금액";
-"tx_info.options" = "옵션";
 
 // Settings
 
