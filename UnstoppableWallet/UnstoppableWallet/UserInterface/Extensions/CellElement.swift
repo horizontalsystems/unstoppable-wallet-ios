@@ -92,9 +92,10 @@ extension CellBuilderNew.CellElement {
 
     struct Text {
         static func custom(_ text: String?, _ font: UIFont, _ color: UIColor) -> Self { Text(text: text, font: font, textColor: color) }
-        static func body(_ text: String?, gray: Bool = false) -> Self { Text(text: text, font: .body, textColor: gray ? .themeGray: .themeLeah) }
         static func subhead1(_ text: String?, gray: Bool = false) -> Self { Text(text: text, font: .subhead1, textColor: gray ? .themeGray: .themeLeah) }
         static func subhead2(_ text: String?, gray: Bool = true) -> Self { Text(text: text, font: .subhead2, textColor: gray ? .themeGray: .themeLeah) }
+
+        static func body(_ text: String?, color: UIColor = .themeLeah) -> Self { Text(text: text, font: .body, textColor: color) }
 
         let text: String?
         let font: UIFont

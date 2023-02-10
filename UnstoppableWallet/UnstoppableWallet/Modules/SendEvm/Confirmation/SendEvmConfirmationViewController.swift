@@ -8,13 +8,13 @@ import ComponentKit
 class SendEvmConfirmationViewController: SendEvmTransactionViewController {
     private let sendButton = PrimaryButton()
 
-    var confirmationTitle = "confirm"
-    var confirmationButtonTitle = "send.confirmation.send_button"
+    var confirmationTitle = "confirm".localized
+    var confirmationButtonTitle = "send.confirmation.send_button".localized
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = confirmationTitle.localized
+        title = confirmationTitle
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
 
         bottomWrapper.addSubview(sendButton)
@@ -25,7 +25,7 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
         }
 
         sendButton.set(style: .yellow)
-        sendButton.setTitle(confirmationButtonTitle.localized, for: .normal)
+        sendButton.setTitle(confirmationButtonTitle, for: .normal)
         sendButton.addTarget(self, action: #selector(onTapSend), for: .touchUpInside)
 
         subscribe(disposeBag, transactionViewModel.sendEnabledDriver) { [weak self] in self?.sendButton.isEnabled = $0 }

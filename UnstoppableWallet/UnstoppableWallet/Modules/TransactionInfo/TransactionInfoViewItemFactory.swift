@@ -447,28 +447,17 @@ class TransactionInfoViewItemFactory {
             .status(status: status)
         ]
 
-        if actionEnabled, let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction {
+        if let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction, let transactionValue = evmRecord.fee {
+            let title: String
             switch status {
-            case .pending:
-                transactionViewItems.append(.options(actions: [
-                    TransactionInfoModule.OptionViewItem(title: "tx_info.options.speed_up".localized, active: true, option: .speedUp),
-                    TransactionInfoModule.OptionViewItem(title: "tx_info.options.cancel".localized, active: true, option: .cancel)
-                ]))
-            default: ()
+            case .pending: title = "tx_info.fee.estimated".localized
+            case .processing, .failed, .completed: title = "tx_info.fee".localized
             }
 
-            if let transactionValue = evmRecord.fee {
-                let title: String
-                switch status {
-                case .pending: title = "tx_info.fee.estimated".localized
-                case .processing, .failed, .completed: title = "tx_info.fee".localized
-                }
-
-                feeViewItem = .fee(
-                        title: title,
-                        value: feeString(transactionValue: transactionValue, rate: _rate(transactionValue))
-                )
-            }
+            feeViewItem = .fee(
+                    title: title,
+                    value: feeString(transactionValue: transactionValue, rate: _rate(transactionValue))
+            )
         }
 
         if let feeViewItem = feeViewItem {
@@ -478,6 +467,13 @@ class TransactionInfoViewItemFactory {
         transactionViewItems.append(.id(value: record.transactionHash))
 
         sections.append(transactionViewItems)
+
+        if actionEnabled, let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction, status.isPending {
+            sections.append([
+                .option(option: .resend(type: .speedUp)),
+                .option(option: .resend(type: .cancel))
+            ])
+        }
 
         sections.append([
             .explorer(title: "tx_info.view_on".localized(item.explorerTitle), url: item.explorerUrl)

@@ -164,7 +164,7 @@ extension CoinOverviewViewController {
                     tableView.universalRow56(
                             id: "coin-info",
                             image: .url(viewItem.imageUrl, placeholder: viewItem.imagePlaceholderName),
-                            title: .body(viewItem.name, gray: true),
+                            title: .body(viewItem.name, color: .themeGray),
                             value: .subhead1(viewItem.marketCapRank, gray: true),
                             backgroundStyle: .transparent,
                             isFirst: true,

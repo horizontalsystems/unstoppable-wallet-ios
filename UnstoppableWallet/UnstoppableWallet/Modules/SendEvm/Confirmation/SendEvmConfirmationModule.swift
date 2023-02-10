@@ -97,7 +97,7 @@ struct SendEvmConfirmationModule {
         return controller
     }
 
-    static func resendViewController(adapter: ITransactionsAdapter, action: TransactionInfoModule.Option, transactionHash: String) throws -> UIViewController {
+    static func resendViewController(adapter: ITransactionsAdapter, type: ResendEvmTransactionType, transactionHash: String) throws -> UIViewController {
         guard let adapter = adapter as? EvmTransactionsAdapter, let fullTransaction = adapter.evmKit.transaction(hash: Data(hex: transactionHash.hs.stripHexPrefix())) else {
             throw CreateModuleError.wrongTransaction
         }
@@ -124,7 +124,7 @@ struct SendEvmConfirmationModule {
         }
 
         let sendData: SendEvmData
-        switch action {
+        switch type {
         case .speedUp:
             let transactionData = TransactionData(to: to, value: value, input: input, nonce: transaction.nonce)
             sendData = SendEvmData(transactionData: transactionData, additionalInfo: nil, warnings: [])
@@ -142,9 +142,17 @@ struct SendEvmConfirmationModule {
         let feeViewModel = EvmFeeViewModel(service: feeService, gasPriceService: gasPriceService, coinService: coinServiceFactory.baseCoinService)
 
         let viewController = SendEvmConfirmationViewController(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
-        viewController.confirmationTitle = action.confirmTitle
-        viewController.confirmationButtonTitle = action.confirmButtonTitle
-        viewController.topDescription = action.description
+
+        switch type {
+        case .speedUp:
+            viewController.confirmationTitle = "tx_info.options.speed_up".localized
+            viewController.confirmationButtonTitle = "send.confirmation.resend_button".localized
+            viewController.topDescription = "send.confirmation.resend_description".localized
+        case .cancel:
+            viewController.confirmationTitle = "tx_info.options.cancel".localized
+            viewController.confirmationButtonTitle = "send.confirmation.cancel_button".localized
+            viewController.topDescription = "send.confirmation.cancel_description".localized
+        }
 
         return viewController
     }
@@ -167,4 +175,9 @@ extension SendEvmConfirmationModule {
 
     }
 
+}
+
+enum ResendEvmTransactionType {
+    case speedUp
+    case cancel
 }

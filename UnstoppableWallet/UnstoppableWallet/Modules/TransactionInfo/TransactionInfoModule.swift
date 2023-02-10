@@ -24,35 +24,7 @@ struct TransactionInfoModule {
 extension TransactionInfoModule {
 
     enum Option {
-        case speedUp
-        case cancel
-
-        var confirmTitle: String {
-            switch self {
-            case .speedUp: return "tx_info.options.speed_up"
-            case .cancel: return "tx_info.options.cancel"
-            }
-        }
-
-        var confirmButtonTitle: String {
-            switch self {
-            case .speedUp: return "send.confirmation.resend_button"
-            case .cancel: return "send.confirmation.cancel_button"
-            }
-        }
-
-        var description: String {
-            switch self {
-            case .speedUp: return "send.confirmation.resend_description".localized
-            case .cancel: return "send.confirmation.cancel_description".localized
-            }
-        }
-    }
-
-    struct OptionViewItem {
-        let title: String
-        let active: Bool
-        let option: Option
+        case resend(type: ResendEvmTransactionType)
     }
 
     enum ViewItem {
@@ -60,7 +32,7 @@ extension TransactionInfoModule {
         case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType, coinUid: String?)
         case nftAmount(iconUrl: String?, iconPlaceholderImageName: String, nftAmount: String, type: AmountType, providerCollectionUid: String?, nftUid: NftUid?)
         case status(status: TransactionStatus)
-        case options(actions: [OptionViewItem])
+        case option(option: Option)
         case date(date: Date)
         case from(value: String, valueTitle: String?)
         case to(value: String, valueTitle: String?)
