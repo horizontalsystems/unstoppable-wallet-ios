@@ -781,7 +781,7 @@
 "tx_info.button_explorer" = "Посмотреть на %@";
 "tx_info.rate" = "Исторический курс";
 "tx_info.options.speed_up" = "Ускорить";
-"tx_info.options.cancel" = "Отменить";
+"tx_info.options.cancel" = "Отменить Транзакцию";
 "tx_info.transaction.already_in_block" = "Транзакция уже в блоке";
 "tx_info.fee" = "Комиссия";
 "tx_info.fee.estimated" = "Комиссия (прим.)";
@@ -799,7 +799,6 @@
 "tx_info.you_paid" = "Вы Заплатили";
 "tx_info.you_got" = "Вы Получили";
 "tx_info.price" = "Цена";
-"tx_info.options" = "Параметры";
 
 // Settings
 
