@@ -777,7 +777,7 @@
 "tx_info.button_explorer" = "Ver en %@";
 "tx_info.rate" = "Tasa histórica";
 "tx_info.options.speed_up" = "Acelerar";
-"tx_info.options.cancel" = "Cancelar";
+"tx_info.options.cancel" = "Cancelar la transacción";
 "tx_info.transaction.already_in_block" = "La transacción ya está en bloque";
 "tx_info.fee" = "Comisión";
 "tx_info.fee.estimated" = "Tarifa (est.)";
@@ -795,7 +795,6 @@
 "tx_info.you_paid" = "Has pagado";
 "tx_info.you_got" = "Tienes";
 "tx_info.price" = "Precio";
-"tx_info.options" = "Opciones";
 
 // Settings
 
