@@ -115,14 +115,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Eski";
-"coin_settings.derivation.title.bip49" = "İyi";
-"coin_settings.derivation.title.bip84" = "En İyi";
 "coin_settings.title" = "Blockchain Ayarları";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (önerilen)";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "2018 öncesinde yaygın";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "2018 sonrasında yaygın";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.from_blockchain" = "Blockchain çıkışlı";
 "blockchain_settings.description" = "Ödemeleri almak için adres biçimini seçin. Mevcut bir cüzdanı geri yüklerken doğru bir format seçilmelidir.";
 
@@ -639,7 +634,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "coin_page.category" = "Category";
 
-"coin_page.contracts" = "Contracts";
+"coin_page.blockchains" = "Blockchains";
+"coin_page.bips" = "BIPs";
+"coin_page.coin_types" = "Coin Types";
 "coin_page.links" = "Links";
 
 "coin_page.guide" = "Guide";
@@ -1205,7 +1202,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "Basic Auth (optional)";
 "add_evm_sync_source.warning.url_exists" = "Bu URL'ye sahip RPC kaynak zaten var";
-"add_evm_sync_source.error.invalid_url" = "Girilen Url geçersiz. Geçerli url aşağıdaki şemalardan birine sahip olmalıdır: http, https, ws, wss";
+"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: https, wss";
 
 // Fee Settings
 
