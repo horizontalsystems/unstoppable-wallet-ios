@@ -113,14 +113,9 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Ancien";
-"coin_settings.derivation.title.bip49" = "Bon";
-"coin_settings.derivation.title.bip84" = "Meilleur";
 "coin_settings.title" = "Paramètres de la Blockchain";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommendé)";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Commun avant 2018";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Commun après 2018";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.from_blockchain" = "De la Blockchain";
 "blockchain_settings.description" = "Sélectionnez le format d'adresse pour la réception des paiements. Un format correct doit être choisi lors de la restauration d'un portefeuille existant.";
 
@@ -637,7 +632,9 @@
 
 "coin_page.category" = "Catégorie";
 
-"coin_page.contracts" = "Contrats";
+"coin_page.blockchains" = "Blockchains";
+"coin_page.bips" = "BIPs";
+"coin_page.coin_types" = "Coin Types";
 "coin_page.links" = "Liens";
 
 "coin_page.guide" = "Guide";
@@ -1203,7 +1200,7 @@
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "Authentification basique (facultatif)";
 "add_evm_sync_source.warning.url_exists" = "La source RPC avec cette url existe déjà";
-"add_evm_sync_source.error.invalid_url" = "L'url saisie n'est pas valide. L'url valide doit avoir un des schémas suivants : http, https, ws, wss";
+"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: https, wss";
 
 // Fee Settings
 
