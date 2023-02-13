@@ -113,14 +113,9 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "기존";
-"coin_settings.derivation.title.bip49" = "좋은";
-"coin_settings.derivation.title.bip84" = "최상의";
 "coin_settings.title" = "블록 체인 설정";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "현금주소(권장)";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "2018년 이전 공통";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "2018년 이후 공통";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.from_blockchain" = "블록체인으로 부터";
 "blockchain_settings.description" = "지불을 받기 위한 주소 형식을 선택하십시오. 기존 지갑을 복원할 때 올바른 형식을 선택해야 합니다.";
 
@@ -637,7 +632,9 @@
 
 "coin_page.category" = "Category";
 
-"coin_page.contracts" = "Contracts";
+"coin_page.blockchains" = "Blockchains";
+"coin_page.bips" = "BIPs";
+"coin_page.coin_types" = "Coin Types";
 "coin_page.links" = "Links";
 
 "coin_page.guide" = "Guide";
@@ -1203,7 +1200,7 @@
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "기본 인증(선택 사항)";
 "add_evm_sync_source.warning.url_exists" = "이 URL이 있는 RPC 소스가 이미 존재합니다.";
-"add_evm_sync_source.error.invalid_url" = "입력한 URL이 잘못되었습니다. 유효한 URL은 http, https, ws, wss 스키마 중 하나여야 합니다.";
+"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: https, wss";
 
 // Fee Settings
 
