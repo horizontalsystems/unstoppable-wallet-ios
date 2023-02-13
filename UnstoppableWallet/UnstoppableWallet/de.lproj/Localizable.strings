@@ -114,14 +114,9 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Alt";
-"coin_settings.derivation.title.bip49" = "Gut";
-"coin_settings.derivation.title.bip84" = "Beste";
 "coin_settings.title" = "Blockchain Einstellungen";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (empfohlen)";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Üblich vor 2018";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Üblich nach 2018";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.from_blockchain" = "Von Blockchain";
 "blockchain_settings.description" = "Wählen Sie das Adressformat für den Empfang von Zahlungen. Ein korrektes Format sollte bei der Wiederherstellung einer bestehenden Brieftasche gewählt werden.";
 
@@ -638,7 +633,9 @@
 
 "coin_page.category" = "Category";
 
-"coin_page.contracts" = "Contracts";
+"coin_page.blockchains" = "Blockchains";
+"coin_page.bips" = "BIPs";
+"coin_page.coin_types" = "Coin Types";
 "coin_page.links" = "Links";
 
 "coin_page.guide" = "Guide";
@@ -1204,7 +1201,7 @@
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "Einfacher Auth (optional)";
 "add_evm_sync_source.warning.url_exists" = "RPC-Quelle mit dieser URL existiert bereits";
-"add_evm_sync_source.error.invalid_url" = "Die eingegebene URL ist ungültig. Gültige URL muss eines der folgenden Schemata haben: http, https, ws, wss";
+"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: https, wss";
 
 // Fee Settings
 
