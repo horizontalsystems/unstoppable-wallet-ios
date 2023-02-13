@@ -115,14 +115,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Antigo";
-"coin_settings.derivation.title.bip49" = "Excelente";
-"coin_settings.derivation.title.bip84" = "Melhor";
 "coin_settings.title" = "Configurações da Blockchain";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recomendado)";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Comum antes de 2018";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Comum depois de 2018";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.from_blockchain" = "Da Blockchain";
 "blockchain_settings.description" = "Selecione o formato de endereço para receber pagamentos. Um formato correto deve ser escolhido quando restaurar uma carteira existente.";
 
@@ -639,7 +634,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "coin_page.category" = "Categoria";
 
-"coin_page.contracts" = "Contratos";
+"coin_page.blockchains" = "Blockchains";
+"coin_page.bips" = "BIPs";
+"coin_page.coin_types" = "Coin Types";
 "coin_page.links" = "Links";
 
 "coin_page.guide" = "Guia";
@@ -1205,7 +1202,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "Autenticação básica (opcional)";
 "add_evm_sync_source.warning.url_exists" = "Fonte RPC com esta url já existe";
-"add_evm_sync_source.error.invalid_url" = "Url inserida é inválida. URL válida deve ter um dos seguintes esquemas: http, https, ws, wss";
+"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: https, wss";
 
 // Fee Settings
 
