@@ -6,6 +6,7 @@ extension TokenQuery {
         "custom-\(id)"
     }
 
+    // todo: remove this method
     var isSupported: Bool {
         switch (blockchainType, tokenType) {
         case (.bitcoin, .native): return true

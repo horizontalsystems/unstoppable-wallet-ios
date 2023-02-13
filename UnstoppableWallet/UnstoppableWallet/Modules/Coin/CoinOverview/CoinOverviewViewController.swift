@@ -105,6 +105,9 @@ class CoinOverviewViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
             self?.errorView.isHidden = !visible
         }
+        subscribe(disposeBag, viewModel.hudSignal) {
+            HudHelper.instance.show(banner: $0)
+        }
 
         chartRow.onReady = { [weak chartCell] in chartCell?.onLoad() }
 
@@ -312,33 +315,36 @@ extension CoinOverviewViewController {
         )
     }
 
-    private func contractRow(viewItem: CoinOverviewViewModel.ContractViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
-        CellBuilderNew.row(
+    private func typeRow(viewItem: CoinOverviewViewModel.TypeViewItem, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        var action: (() -> ())?
+
+        if let reference = viewItem.reference {
+            action = {
+                CopyHelper.copyAndNotify(value: reference)
+            }
+        }
+
+        return CellBuilderNew.row(
                 rootElement: .hStack([
-                    .image32 { (component: ImageComponent) -> () in
-                        component.setImage(urlString: viewItem.iconUrl, placeholder: nil)
-                    },
+                    .imageElement(image: .url(viewItem.iconUrl), size: .image32),
                     .vStackCentered([
-                        .text { component in
-                            component.font = .body
-                            component.textColor = .themeLeah
-                            component.text = viewItem.title
-                        },
+                        .textElement(text: .body(viewItem.title)),
                         .margin(1),
-                        .text { component in
-                            component.font = .subhead2
-                            component.textColor = .themeGray
-                            component.text = viewItem.subtitle
-                            component.lineBreakMode = .byTruncatingMiddle
-                        }
+                        .textElement(text: .subhead2(viewItem.subtitle), parameters: .truncatingMiddle)
                     ]),
-                    .secondaryCircleButton { (component: SecondaryCircleButtonComponent) -> () in
-                        component.button.set(image: UIImage(named: "copy_20"))
+                    .secondaryCircleButton { [weak self] component in
+                        component.isHidden = !viewItem.showAdd
+                        component.button.set(image: UIImage(named: "add_to_wallet_2_20"))
                         component.onTap = {
-                            CopyHelper.copyAndNotify(value: viewItem.reference)
+                            self?.viewModel.onTapAddToWallet(index: index)
                         }
                     },
-                    .secondaryCircleButton { [weak self] (component: SecondaryCircleButtonComponent) -> () in
+                    .secondaryCircleButton { component in
+                        component.isHidden = !viewItem.showAdded
+                        component.button.set(image: UIImage(named: "in_wallet_20"))
+                        component.button.isEnabled = false
+                    },
+                    .secondaryCircleButton { [weak self] component in
                         if let explorerUrl = viewItem.explorerUrl {
                             component.isHidden = false
                             component.button.set(image: UIImage(named: "globe_20"))
@@ -351,21 +357,23 @@ extension CoinOverviewViewController {
                     }
                 ]),
                 tableView: tableView,
-                id: "contract-\(index)",
+                id: "type-\(index)",
                 height: .heightDoubleLineCell,
+                autoDeselect: true,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
-                }
+                },
+                action: action
         )
     }
 
-    private func contractsSection(contracts: [CoinOverviewViewModel.ContractViewItem]) -> SectionProtocol {
+    private func typesSection(title: String, types: [CoinOverviewViewModel.TypeViewItem]) -> SectionProtocol {
         Section(
-                id: "contract-info",
+                id: "types",
                 headerState: .margin(height: .margin12),
-                rows: [tableView.subtitleRow(text: "coin_page.contracts".localized)] +
-                        contracts.enumerated().map { index, viewItem in
-                            contractRow(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == contracts.count - 1)
+                rows: [tableView.subtitleRow(text: title)] +
+                        types.enumerated().map { index, viewItem in
+                            typeRow(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == types.count - 1)
                         }
         )
     }
@@ -463,12 +471,12 @@ extension CoinOverviewViewController: SectionsDataSource {
 
             sections.append(performanceSection(viewItems: viewItem.performance))
 
-            if let categories = viewItem.categories {
-                sections.append(categoriesSection(categories: categories))
+            if let types = viewItem.types {
+                sections.append(typesSection(title: viewItem.typesTitle, types: types))
             }
 
-            if let contracts = viewItem.contracts {
-                sections.append(contractsSection(contracts: contracts))
+            if let categories = viewItem.categories {
+                sections.append(categoriesSection(categories: categories))
             }
 
             if !viewItem.description.isEmpty {

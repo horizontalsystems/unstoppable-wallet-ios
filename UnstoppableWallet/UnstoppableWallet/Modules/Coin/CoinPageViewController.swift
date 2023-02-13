@@ -9,7 +9,6 @@ import ComponentKit
 
 class CoinPageViewController: ThemeViewController {
     private let viewModel: CoinPageViewModel
-    private let enableCoinView: EnableCoinView
     private let disposeBag = DisposeBag()
 
     private let tabsView = FilterView(buttonStyle: .tab)
@@ -20,12 +19,10 @@ class CoinPageViewController: ThemeViewController {
     private let detailsController: CoinDetailsViewController
     private let tweetsController: CoinTweetsViewController
 
-    private var addWalletState: CoinPageViewModel.AddWalletState = .hidden
     private var favorite = false
 
-    init(viewModel: CoinPageViewModel, enableCoinView: EnableCoinView, overviewController: CoinOverviewViewController, marketsController: CoinMarketsViewController, detailsController: CoinDetailsViewController, tweetsController: CoinTweetsViewController) {
+    init(viewModel: CoinPageViewModel, overviewController: CoinOverviewViewController, marketsController: CoinMarketsViewController, detailsController: CoinDetailsViewController, tweetsController: CoinTweetsViewController) {
         self.viewModel = viewModel
-        self.enableCoinView = enableCoinView
         self.overviewController = overviewController
         self.marketsController = marketsController
         self.detailsController = detailsController
@@ -68,20 +65,12 @@ class CoinPageViewController: ThemeViewController {
             self?.onSelectTab(index: index)
         }
 
-        enableCoinView.onOpenController = { [weak self] controller in
-            self?.present(controller, animated: true)
-        }
-
         overviewController.parentNavigationController = navigationController
         detailsController.parentNavigationController = navigationController
         tweetsController.parentNavigationController = navigationController
 
         subscribe(disposeBag, viewModel.favoriteDriver) { [weak self] in
             self?.favorite = $0
-            self?.syncButtons()
-        }
-        subscribe(disposeBag, viewModel.addWalletStateDriver) { [weak self] in
-            self?.addWalletState = $0
             self?.syncButtons()
         }
         subscribe(disposeBag, viewModel.hudSignal) {
@@ -97,10 +86,6 @@ class CoinPageViewController: ThemeViewController {
 
     @objc private func onTapFavorite() {
         viewModel.onTapFavorite()
-    }
-
-    @objc private func onTapAddWallet() {
-        viewModel.onTapAddWallet()
     }
 
     private func onSelectTab(index: Int) {
@@ -136,17 +121,6 @@ class CoinPageViewController: ThemeViewController {
         )
         favoriteItem.tintColor = favorite ? .themeJacob : .themeGray
         items.append(favoriteItem)
-
-        if case .visible(let added) = addWalletState {
-            let addWalletItem = UIBarButtonItem(
-                    image: added ? UIImage(named: "in_wallet_24")?.withRenderingMode(.alwaysOriginal) : UIImage(named: "add_to_wallet_2_24"),
-                    style: .plain,
-                    target: self,
-                    action: #selector(onTapAddWallet)
-            )
-            addWalletItem.tintColor = added ? nil : .themeGray
-            items.append(addWalletItem)
-        }
 
         navigationItem.rightBarButtonItems = items
     }

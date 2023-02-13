@@ -3,11 +3,14 @@ enum BitcoinCashCoinType: String, CaseIterable {
     case type145
 
     var title: String {
-        "coin_settings.bitcoin_cash_coin_type.title.\(self)".localized
+        switch self {
+        case .type0: return "Type 0"
+        case .type145: return "Type 145"
+        }
     }
 
     var description: String {
-        "coin_settings.bitcoin_cash_coin_type.description.\(self)".localized
+        "coin_settings.bitcoin_cash_coin_type.title.\(self)".localized
     }
 
     var order: Int {

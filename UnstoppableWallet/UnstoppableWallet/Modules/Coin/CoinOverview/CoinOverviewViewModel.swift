@@ -4,6 +4,7 @@ import RxRelay
 import RxCocoa
 import MarketKit
 import UIKit
+import ComponentKit
 
 class CoinOverviewViewModel {
     private let service: CoinOverviewService
@@ -13,6 +14,7 @@ class CoinOverviewViewModel {
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
+    private let hudRelay = PublishRelay<HudHelper.BannerType>()
 
     init(service: CoinOverviewService) {
         self.service = service
@@ -29,7 +31,7 @@ class CoinOverviewViewModel {
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
         case .completed(let item):
-            viewItemRelay.accept(viewItemFactory.viewItem(item: item, currency: service.currency, fullCoin: service.fullCoin))
+            viewItemRelay.accept(viewItemFactory.viewItem(item: item, currency: service.currency))
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
         case .failed:
@@ -55,12 +57,24 @@ extension CoinOverviewViewModel {
         syncErrorRelay.asDriver()
     }
 
+    var hudSignal: Signal<HudHelper.BannerType> {
+        hudRelay.asSignal()
+    }
+
     func onLoad() {
         service.sync()
     }
 
     func onTapRetry() {
         service.sync()
+    }
+
+    func onTapAddToWallet(index: Int) {
+        do {
+            try service.addToWallet(index: index)
+            hudRelay.accept(.addedToWallet)
+        } catch {
+        }
     }
 
 }
@@ -88,18 +102,21 @@ extension CoinOverviewViewModel {
 
         let performance: [[PerformanceViewItem]]
         let categories: [String]?
-        let contracts: [ContractViewItem]?
+        let typesTitle: String
+        let types: [TypeViewItem]?
         let description: String
         let guideUrl: URL?
         let links: [LinkViewItem]
     }
 
-    struct ContractViewItem {
+    struct TypeViewItem {
         let iconUrl: String
-        let title: String
-        let subtitle: String
-        let reference: String
+        let title: String?
+        let subtitle: String?
+        let reference: String?
         let explorerUrl: String?
+        let showAdd: Bool
+        let showAdded: Bool
     }
 
     enum PerformanceViewItem {

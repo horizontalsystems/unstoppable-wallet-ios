@@ -41,7 +41,7 @@ class CoinSettingsViewModel {
                 viewItems: allDerivations.map { derivation in
                     BottomMultiSelectorViewController.ViewItem(
                             title: derivation.title,
-                            subtitle: derivation.description
+                            subtitle: derivation.addressType
                     )
                 }
         )
