@@ -129,7 +129,7 @@ def force_update_devices(type)
   match(
     type: type,
     username: "hrzsystems8888@gmail.com",
-    app_identifier: "io.horizontalsystems.bank-wallet,io.horizontalsystems.bank-wallet.dev,io.horizontalsystems.bank-wallet.dev.testnet",
+    app_identifier: "io.horizontalsystems.bank-wallet,io.horizontalsystems.bank-wallet.dev",
     force_for_new_devices: true
   )
 end
@@ -229,6 +229,49 @@ platform :ios do
   lane :new_device do
     force_update_devices("development")
     force_update_devices("adhoc")
+  end
+
+  lane :match_readonly do
+    match(
+      type: "development",
+      readonly: true,
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev"]
+    )
+
+    match(
+      type: "adhoc",
+      readonly: true,
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev"]
+    )
+
+    match(
+      type: "appstore",
+      readonly: true,
+      app_identifier: ["io.horizontalsystems.bank-wallet"]
+    )
+  end
+
+  lane :match_generate do |options|
+    match(
+      type: "development",
+      username: options[:username],
+      team_id: "HC4MCAXJ66",
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev"]
+    )
+
+    match(
+      type: "adhoc",
+      username: options[:username],
+      team_id: "HC4MCAXJ66",
+      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev"]
+    )
+
+    match(
+      type: "appstore",
+      username: options[:username],
+      team_id: "HC4MCAXJ66",
+      app_identifier: ["io.horizontalsystems.bank-wallet"]
+    )
   end
 
 end
