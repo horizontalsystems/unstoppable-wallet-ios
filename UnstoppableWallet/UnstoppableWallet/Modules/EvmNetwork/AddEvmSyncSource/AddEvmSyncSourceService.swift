@@ -34,7 +34,7 @@ extension AddEvmSyncSourceService {
             throw UrlError.invalid
         }
 
-        guard ["http", "https", "ws", "wss"].contains(scheme) else {
+        guard ["https", "wss"].contains(scheme) else {
             throw UrlError.invalid
         }
 
