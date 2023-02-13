@@ -115,14 +115,9 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "旧的";
-"coin_settings.derivation.title.bip49" = "好";
-"coin_settings.derivation.title.bip84" = "最佳的";
 "coin_settings.title" = "区块链设置";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "遗留问题";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "资金地址（推荐）";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "2018年之前常用";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "2018年之后常用";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.from_blockchain" = "来自区块链";
 "blockchain_settings.description" = "选择接收付款的地址格式。恢复现有钱包时应选择正确的格式。";
 
@@ -639,7 +634,9 @@
 
 "coin_page.category" = "分类";
 
-"coin_page.contracts" = "合约";
+"coin_page.blockchains" = "区块链";
+"coin_page.bips" = "BIPs";
+"coin_page.coin_types" = "Coin Types";
 "coin_page.links" = "链接";
 
 "coin_page.guide" = "指南";
@@ -1205,7 +1202,7 @@
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "基本认证(可选)";
 "add_evm_sync_source.warning.url_exists" = "此网址的 RPC 源已存在";
-"add_evm_sync_source.error.invalid_url" = "输入的URL无效。有效网址必须具有以下方案之一： http，https，ws，wss";
+"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: https, wss";
 
 // Fee Settings
 
