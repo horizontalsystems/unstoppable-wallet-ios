@@ -117,14 +117,9 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Старый";
-"coin_settings.derivation.title.bip49" = "Новый";
-"coin_settings.derivation.title.bip84" = "Новейший";
 "coin_settings.title" = "Настройки блокчейна";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (рекомендуется)";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Было до 2018 года";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Применяется после 2018 года";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.from_blockchain" = "Из Блокчейна";
 "blockchain_settings.description" = "Выберите формат адреса для получения средств. При восстановлении существующего кошелька должен быть выбран правильный формат.";
 
@@ -641,7 +636,9 @@
 
 "coin_page.category" = "Категория";
 
-"coin_page.contracts" = "Контракты";
+"coin_page.blockchains" = "Блокчейны";
+"coin_page.bips" = "BIPs";
+"coin_page.coin_types" = "Coin Types";
 "coin_page.links" = "Ссылки";
 
 "coin_page.guide" = "Руководство";
@@ -1207,7 +1204,7 @@
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "Базовая авторизация (опц.)";
 "add_evm_sync_source.warning.url_exists" = "RPC Источник с таким url уже существует";
-"add_evm_sync_source.error.invalid_url" = "Введенный url неверен. Допустимый url должен иметь одну из следующих схем: http, https, ws, wss";
+"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: https, wss";
 
 // Fee Settings
 
