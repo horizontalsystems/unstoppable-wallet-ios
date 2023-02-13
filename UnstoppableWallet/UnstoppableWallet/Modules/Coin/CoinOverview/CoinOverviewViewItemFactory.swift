@@ -62,51 +62,78 @@ class CoinOverviewViewItemFactory {
         return categories.isEmpty ? nil : categories.map { $0.name }
     }
 
-    private func explorerUrl(token: Token, reference: String) -> String? {
-        guard let explorerUrl = token.blockchain.explorerUrl else {
+    private func explorerUrl(blockchain: Blockchain, reference: String?) -> String? {
+        guard let explorerUrl = blockchain.explorerUrl, let reference = reference else {
             return nil
         }
 
         return explorerUrl.replacingOccurrences(of: "$ref", with: reference)
     }
 
-    private func contractViewItems(info: MarketInfoOverview) -> [CoinOverviewViewModel.ContractViewItem]? {
-        let tokens = info.fullCoin.tokens.sorted { lhsToken, rhsToken in
-            lhsToken.blockchain.type.order < rhsToken.blockchain.type.order
+    private func typesTitle(coinUid: String) -> String {
+        switch coinUid {
+        case "bitcoin", "litecoin": return "coin_page.bips".localized
+        case "bitcoin-cash": return "coin_page.coin_types".localized
+        default: return "coin_page.blockchains".localized
         }
+    }
 
-        let contracts: [CoinOverviewViewModel.ContractViewItem] = tokens.compactMap { token in
-            switch token.type {
-            case .eip20(let address):
-                return CoinOverviewViewModel.ContractViewItem(
-                        iconUrl: token.blockchainType.imageUrl,
-                        title: token.blockchain.name,
-                        subtitle: address.shortened,
-                        reference: address,
-                        explorerUrl: explorerUrl(token: token, reference: address)
-                )
-            case .bep2(let symbol):
-                return CoinOverviewViewModel.ContractViewItem(
-                        iconUrl: token.blockchainType.imageUrl,
-                        title: token.blockchain.name,
-                        subtitle: symbol,
-                        reference: symbol,
-                        explorerUrl: explorerUrl(token: token, reference: symbol)
-                )
-            case let .unsupported(_, reference):
-                if let reference = reference {
-                    return CoinOverviewViewModel.ContractViewItem(
-                            iconUrl: token.blockchainType.imageUrl,
-                            title: token.blockchain.name,
-                            subtitle: reference.shortened,
-                            reference: reference,
-                            explorerUrl: explorerUrl(token: token, reference: reference)
-                    )
-                } else {
-                    return nil
+    private func typeViewItems(tokenItems: [CoinOverviewService.TokenItem]) -> [CoinOverviewViewModel.TypeViewItem]? {
+        let contracts: [CoinOverviewViewModel.TypeViewItem] = tokenItems.map { item in
+            let blockchain = item.configuredToken.blockchain
+
+            let title: String?
+            let subtitle: String?
+            var reference: String?
+            var url: String?
+            var showAdd = false
+            var showAdded = false
+
+            switch item.configuredToken.token.type {
+            case .native:
+                switch blockchain.type {
+                case .bitcoin, .litecoin:
+                    title = item.configuredToken.coinSettings.derivation?.title
+                    subtitle = item.configuredToken.coinSettings.derivation?.addressType
+                case .bitcoinCash:
+                    title = item.configuredToken.coinSettings.bitcoinCashCoinType?.title
+                    subtitle = item.configuredToken.coinSettings.bitcoinCashCoinType?.description
+                default:
+                    title = blockchain.name
+                    subtitle = "coin_platforms.native".localized
                 }
-            default: return nil
+            case .eip20(let address), .spl(let address):
+                title = blockchain.name
+                subtitle = address.shortened
+                reference = address
+                url = explorerUrl(blockchain: blockchain, reference: address)
+            case .bep2(let symbol):
+                title = blockchain.name
+                subtitle = symbol
+                reference = symbol
+                url = explorerUrl(blockchain: blockchain, reference: symbol)
+            case let .unsupported(_, _reference):
+                title = blockchain.name
+                subtitle = _reference?.shortened
+                reference = _reference
+                url = explorerUrl(blockchain: blockchain, reference: reference)
             }
+
+            switch item.state {
+            case .notSupported: ()
+            case .supported: showAdd = true
+            case .alreadyAdded: showAdded = true
+            }
+
+            return CoinOverviewViewModel.TypeViewItem(
+                    iconUrl: blockchain.type.imageUrl,
+                    title: title,
+                    subtitle: subtitle,
+                    reference: reference,
+                    explorerUrl: url,
+                    showAdd: showAdd,
+                    showAdded: showAdded
+            )
         }
 
         return contracts.isEmpty ? nil : contracts
@@ -182,16 +209,17 @@ class CoinOverviewViewItemFactory {
 
 extension CoinOverviewViewItemFactory {
 
-    func viewItem(item: CoinOverviewService.Item, currency: Currency, fullCoin: FullCoin) -> CoinOverviewViewModel.ViewItem {
+    func viewItem(item: CoinOverviewService.Item, currency: Currency) -> CoinOverviewViewModel.ViewItem {
         let info = item.info
-        let coinCode = fullCoin.coin.code
+        let coin = info.fullCoin.coin
+        let coinCode = coin.code
         let marketCapRank = info.marketCapRank.map { "#\($0)" }
 
         return CoinOverviewViewModel.ViewItem(
                 coinViewItem: CoinOverviewViewModel.CoinViewItem(
-                        name: fullCoin.coin.name,
+                        name: coin.name,
                         marketCapRank: marketCapRank,
-                        imageUrl: fullCoin.coin.imageUrl,
+                        imageUrl: coin.imageUrl,
                         imagePlaceholderName: "placeholder_circle_32"
                 ),
 
@@ -206,7 +234,8 @@ extension CoinOverviewViewItemFactory {
 
                 performance: performanceViewItems(info: info),
                 categories: categories(info: info),
-                contracts: contractViewItems(info: info),
+                typesTitle: typesTitle(coinUid: coin.uid),
+                types: typeViewItems(tokenItems: item.tokens),
                 description: info.description,
                 guideUrl: item.guideUrl,
                 links: links(info: info)

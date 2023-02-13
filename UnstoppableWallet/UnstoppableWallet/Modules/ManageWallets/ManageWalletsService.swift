@@ -77,9 +77,9 @@ class ManageWalletsService {
                 let tokens = try marketKit.tokens(queries: queries)
 
                 let featuredConfiguredTokens = tokens
-                        .filter { $0.isSupported && $0.blockchainType.supports(accountType: account.type) }
-                        .map { $0.configuredTokens(accountType: account.type) }
+                        .map { $0.configuredTokens }
                         .flatMap { $0 }
+                        .filter { account.type.supports(configuredToken: $0) }
 
                 let enabledConfiguredTokens = wallets.map { $0.configuredToken }
 
@@ -89,17 +89,17 @@ class ManageWalletsService {
                 let tokens = try marketKit.tokens(reference: address)
 
                 return tokens
-                        .filter { $0.isSupported && $0.blockchainType.supports(accountType: account.type) }
-                        .map { $0.configuredTokens(accountType: account.type) }
+                        .map { $0.configuredTokens }
                         .flatMap { $0 }
+                        .filter { account.type.supports(configuredToken: $0) }
             } else {
                 let allFullCoins = try marketKit.fullCoins(filter: filter, limit: 100)
                 let tokens = allFullCoins.map { $0.tokens }.flatMap { $0 }
 
                 return tokens
-                        .filter { $0.isSupported && $0.blockchainType.supports(accountType: account.type) }
-                        .map { $0.configuredTokens(accountType: account.type) }
+                        .map { $0.configuredTokens }
                         .flatMap { $0 }
+                        .filter { account.type.supports(configuredToken: $0) }
             }
         } catch {
             return []

@@ -101,6 +101,7 @@ extension BlockchainType {
         }
     }
 
+    // todo: remove this method
     func supports(accountType: AccountType) -> Bool {
         switch accountType {
         case .mnemonic:
@@ -139,7 +140,7 @@ extension BlockchainType {
         case .bitcoin, .litecoin:
             return coinSettings.derivation?.rawValue.uppercased()
         case .bitcoinCash:
-            return coinSettings.bitcoinCashCoinType?.rawValue.uppercased()
+            return coinSettings.bitcoinCashCoinType?.title.uppercased()
         default:
             return nil
         }

@@ -2,6 +2,7 @@ import Foundation
 import HdWalletKit
 import EvmKit
 import BitcoinCore
+import MarketKit
 
 enum AccountType {
     case mnemonic(words: [String], salt: String, bip39Compliant: Bool)
@@ -20,6 +21,7 @@ enum AccountType {
         }
     }
 
+    // todo: remove this method
     var supportedDerivations: [MnemonicDerivation] {
         switch self {
         case .mnemonic:
@@ -28,6 +30,67 @@ enum AccountType {
             return [key.info.purpose.mnemonicDerivation]
         default:
             return []
+        }
+    }
+
+    func supports(configuredToken: ConfiguredToken) -> Bool {
+        switch self {
+        case .mnemonic:
+            switch (configuredToken.blockchainType, configuredToken.token.type) {
+            case (.bitcoin, .native): return true
+            case (.bitcoinCash, .native): return true
+            case (.litecoin, .native): return true
+            case (.dash, .native): return true
+            case (.zcash, .native): return true
+            case (.binanceChain, .native), (.binanceChain, .bep2): return true
+            case (.ethereum, .native), (.ethereum, .eip20): return true
+            case (.binanceSmartChain, .native), (.binanceSmartChain, .eip20): return true
+            case (.polygon, .native), (.polygon, .eip20): return true
+            case (.avalanche, .native), (.avalanche, .eip20): return true
+            case (.gnosis, .native), (.gnosis, .eip20): return true
+            case (.arbitrumOne, .native), (.arbitrumOne, .eip20): return true
+            case (.optimism, .native), (.optimism, .eip20): return true
+            case (.ethereumGoerli, .native), (.ethereumGoerli, .eip20): return true
+            default: return false
+            }
+        case .hdExtendedKey(let key):
+            switch configuredToken.blockchainType {
+            case .bitcoin, .litecoin:
+                guard let derivation = configuredToken.coinSettings.derivation, key.info.purpose.mnemonicDerivation == derivation else {
+                    return false
+                }
+
+                switch configuredToken.blockchainType {
+                case .bitcoin:
+                    return key.info.coinType == .bitcoin
+                case .litecoin:
+                    switch (key.info.coinType, derivation) {
+                    case (.bitcoin, .bip44): return true
+                    case (.bitcoin, .bip49): return true
+                    case (.bitcoin, .bip84): return true
+                    case (.litecoin, .bip44): return true
+                    case (.litecoin, .bip49): return true
+                    default: return false
+                    }
+                default: return false
+                }
+            case .bitcoinCash, .dash:
+                return key.info.purpose == .bip44
+            default:
+                return false
+            }
+        case .evmPrivateKey, .evmAddress:
+            switch (configuredToken.blockchainType, configuredToken.token.type) {
+            case (.ethereum, .native), (.ethereum, .eip20): return true
+            case (.binanceSmartChain, .native), (.binanceSmartChain, .eip20): return true
+            case (.polygon, .native), (.polygon, .eip20): return true
+            case (.avalanche, .native), (.avalanche, .eip20): return true
+            case (.gnosis, .native), (.gnosis, .eip20): return true
+            case (.arbitrumOne, .native), (.arbitrumOne, .eip20): return true
+            case (.optimism, .native), (.optimism, .eip20): return true
+            case (.ethereumGoerli, .native), (.ethereumGoerli, .eip20): return true
+            default: return false
+            }
         }
     }
 

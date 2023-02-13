@@ -115,14 +115,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Old";
-"coin_settings.derivation.title.bip49" = "Good";
-"coin_settings.derivation.title.bip84" = "Best";
 "coin_settings.title" = "Blockchain Settings";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Common before 2018";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Common after 2018";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.from_blockchain" = "From Blockchain";
 "blockchain_settings.description" = "Select the address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
 
@@ -639,7 +634,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "coin_page.category" = "Category";
 
-"coin_page.contracts" = "Contracts";
+"coin_page.blockchains" = "Blockchains";
+"coin_page.bips" = "BIPs";
+"coin_page.coin_types" = "Coin Types";
 "coin_page.links" = "Links";
 
 "coin_page.guide" = "Guide";

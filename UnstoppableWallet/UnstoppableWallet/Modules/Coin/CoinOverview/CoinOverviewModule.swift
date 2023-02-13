@@ -4,19 +4,22 @@ import Chart
 
 struct CoinOverviewModule {
 
-    static func viewController(fullCoin: FullCoin) -> CoinOverviewViewController {
+    static func viewController(coinUid: String) -> CoinOverviewViewController {
         let service = CoinOverviewService(
-                fullCoin: fullCoin,
+                coinUid: coinUid,
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
                 languageManager: LanguageManager.shared,
-                appConfigProvider: App.shared.appConfigProvider
+                appConfigProvider: App.shared.appConfigProvider,
+                accountManager: App.shared.accountManager,
+                walletManager: App.shared.walletManager
         )
 
         let chartService = CoinChartService(
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
-                coinUid: fullCoin.coin.uid)
+                coinUid: coinUid
+        )
 
         let viewModel = CoinOverviewViewModel(service: service)
 

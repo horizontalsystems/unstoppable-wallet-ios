@@ -47,6 +47,7 @@ extension Token {
         coin.uid == tokenQuery.customCoinUid
     }
 
+    // todo: remove this method
     var isSupported: Bool {
         tokenQuery.isSupported
     }
@@ -85,10 +86,10 @@ extension Token {
         }
     }
 
-    func configuredTokens(accountType: AccountType) -> [ConfiguredToken] {
+    var configuredTokens: [ConfiguredToken] {
         switch blockchainType {
         case .bitcoin, .litecoin:
-            return accountType.supportedDerivations.map {
+            return MnemonicDerivation.allCases.map {
                 ConfiguredToken(token: self, coinSettings: [.derivation: $0.rawValue])
             }
         case .bitcoinCash:

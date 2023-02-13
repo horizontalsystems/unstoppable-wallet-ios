@@ -10,25 +10,20 @@ struct CoinPageModule {
             return nil
         }
 
-        let (enableCoinService, enableCoinView) = EnableCoinModule.module()
         let service = CoinPageService(
                 fullCoin: fullCoin,
-                favoritesManager: App.shared.favoritesManager,
-                accountManager: App.shared.accountManager,
-                walletManager: App.shared.walletManager,
-                enableCoinService: enableCoinService
+                favoritesManager: App.shared.favoritesManager
         )
 
         let viewModel = CoinPageViewModel(service: service)
 
-        let overviewController = CoinOverviewModule.viewController(fullCoin: fullCoin)
+        let overviewController = CoinOverviewModule.viewController(coinUid: coinUid)
         let marketsController = CoinMarketsModule.viewController(coin: fullCoin.coin)
         let detailsController = CoinDetailsModule.viewController(fullCoin: fullCoin)
         let tweetsController = CoinTweetsModule.viewController(fullCoin: fullCoin)
 
         let viewController = CoinPageViewController(
                 viewModel: viewModel,
-                enableCoinView: enableCoinView,
                 overviewController: overviewController,
                 marketsController: marketsController,
                 detailsController: detailsController,
