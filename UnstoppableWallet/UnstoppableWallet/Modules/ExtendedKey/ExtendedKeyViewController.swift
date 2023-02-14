@@ -201,7 +201,23 @@ extension ExtendedKeyViewController: SectionsDataSource {
         let backgroundStyle: BaseThemeCell.BackgroundStyle = .bordered
         let textFont: UIFont = .subhead1
 
-        return [
+        var sections = [SectionProtocol]()
+
+        if viewItem.keyIsPrivate {
+            sections.append(
+                    Section(
+                            id: "warning",
+                            rows: [
+                                tableView.highlightedDescriptionRow(
+                                        id: "warning",
+                                        text: "recovery_phrase.warning".localized
+                                )
+                            ]
+                    )
+            )
+        }
+
+        sections.append(contentsOf: [
             Section(
                     id: "controls",
                     headerState: .margin(height: .margin12),
@@ -245,7 +261,9 @@ extension ExtendedKeyViewController: SectionsDataSource {
                         )
                     ]
             )
-        ]
+        ])
+
+        return sections
     }
 
 }
