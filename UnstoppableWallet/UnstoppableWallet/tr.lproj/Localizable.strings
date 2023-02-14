@@ -136,7 +136,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Recovery Phrase
 
 "recovery_phrase.title" = "Kurtarma cümlesi";
-"recovery_phrase.warning" = "Kurtarma ifadenizi asla kimseyle paylaşmayın. Unstoppable ekip asla kurtarma ifadenizi istemez.";
+"recovery_phrase.warning" = "Never share this key with anyone. Unstoppable Wallet support team will never ask for it.";
 "recovery_phrase.tap_to_show" = "Kurtarma ifadesini göstermek için dokunun";
 "recovery_phrase.passphrase" = "Parola";
 "recovery_phrase.copy_warning.title" = "Kurtarma Riski İfadesi kopyası";
@@ -145,7 +145,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // EVM Private Key
 
 "evm_private_key.title" = "EVM Özel anahtar";
-"evm_private_key.warning" = "Bu anahtar, tüm EVM uyumlu blok zincirleri içindir. Onu kimseyle paylaşmayın.";
 "evm_private_key.tap_to_show" = "Özel anahtarı göstermek için dokunun";
 
 // Extended Key
@@ -1164,13 +1163,32 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "manage_account.name" = "İsim";
 "manage_account.recovery_phrase" = "Kurtarma cümlesi";
-"manage_account.evm_private_key" = "EVM Özel anahtar";
-"manage_account.bip32_root_key" = "BIP32 Root Key";
-"manage_account.account_extended_private_key" = "Account Extended Private Key";
-"manage_account.account_extended_public_key" = "Account Extended Public Key";
 "manage_account.public_keys" = "Genel Anahtarlar";
+"manage_account.private_keys" = "Private Keys";
 "manage_account.backup_recovery_phrase" = "Yedekleme Kurtarma İfadesi";
 "manage_account.unlink" = "Ayır";
+
+// Manage Account -> Public Keys
+
+"public_keys.title" = "Genel Anahtarlar";
+"public_keys.evm_address" = "EVM Adresi";
+"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM based blockchains.";
+"public_keys.account_extended_public_key" = "Account Extended Public Key";
+"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
+
+// Manage Account -> Private Keys
+
+"private_keys.title" = "Private Keys";
+"private_keys.evm_private_key" = "EVM Özel anahtar";
+"private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
+"private_keys.bip32_root_key" = "BIP32 Root Key";
+"private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
+"private_keys.account_extended_private_key" = "Account Extended Private Key";
+"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within respective wallet.";
+
+// Manage Account -> EVM Address
+
+"evm_address.title" = "EVM Adresi";
 
 // Birthday Height
 
