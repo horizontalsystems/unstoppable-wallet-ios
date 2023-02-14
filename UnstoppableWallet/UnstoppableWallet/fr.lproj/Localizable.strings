@@ -134,7 +134,7 @@
 // Recovery Phrase
 
 "recovery_phrase.title" = "Phrase de récupération";
-"recovery_phrase.warning" = "Ne partagez jamais votre phrase de récupération avec quiconque. Une équipe imparable ne demandera jamais votre phrase de récupération.";
+"recovery_phrase.warning" = "Never share this key with anyone. Unstoppable Wallet support team will never ask for it.";
 "recovery_phrase.tap_to_show" = "Appuyez pour afficher la phrase de récupération";
 "recovery_phrase.passphrase" = "Phrase d'authentification";
 "recovery_phrase.copy_warning.title" = "Copie de la phrase de récupération";
@@ -143,7 +143,6 @@
 // EVM Private Key
 
 "evm_private_key.title" = "Clé privée EVM";
-"evm_private_key.warning" = "Cette clé est pour toutes les blockchains compatibles EVM. Ne la partagez avec personne.";
 "evm_private_key.tap_to_show" = "Appuyez pour afficher la clé privée";
 
 // Extended Key
@@ -1162,13 +1161,32 @@
 
 "manage_account.name" = "Nom";
 "manage_account.recovery_phrase" = "Phrase de récupération";
-"manage_account.evm_private_key" = "Clé privée EVM";
-"manage_account.bip32_root_key" = "BIP32 Root Key";
-"manage_account.account_extended_private_key" = "Account Extended Private Key";
-"manage_account.account_extended_public_key" = "Account Extended Public Key";
 "manage_account.public_keys" = "Clés publiques";
+"manage_account.private_keys" = "Private Keys";
 "manage_account.backup_recovery_phrase" = "Phrase de récupération de sauvegarde";
 "manage_account.unlink" = "Dissocier";
+
+// Manage Account -> Public Keys
+
+"public_keys.title" = "Clés publiques";
+"public_keys.evm_address" = "Adresse EVM";
+"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM based blockchains.";
+"public_keys.account_extended_public_key" = "Account Extended Public Key";
+"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
+
+// Manage Account -> Private Keys
+
+"private_keys.title" = "Private Keys";
+"private_keys.evm_private_key" = "Clé privée EVM";
+"private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
+"private_keys.bip32_root_key" = "BIP32 Root Key";
+"private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
+"private_keys.account_extended_private_key" = "Account Extended Private Key";
+"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within respective wallet.";
+
+// Manage Account -> EVM Address
+
+"evm_address.title" = "Adresse EVM";
 
 // Birthday Height
 
