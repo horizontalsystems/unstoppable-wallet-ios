@@ -136,7 +136,7 @@
 // Recovery Phrase
 
 "recovery_phrase.title" = "恢复码";
-"recovery_phrase.warning" = "永远不会与任何人分享您的恢复短语。无法阻止的团队将永远不会要求您的恢复短语。";
+"recovery_phrase.warning" = "Never share this key with anyone. Unstoppable Wallet support team will never ask for it.";
 "recovery_phrase.tap_to_show" = "点击显示恢复密语";
 "recovery_phrase.passphrase" = "密码";
 "recovery_phrase.copy_warning.title" = "恢复短语复制的风险";
@@ -145,7 +145,6 @@
 // EVM Private Key
 
 "evm_private_key.title" = "EVM 私钥";
-"evm_private_key.warning" = "此密钥适用于所有EVM兼容的区块链。请不要与任何人分享。";
 "evm_private_key.tap_to_show" = "点击显示私钥";
 
 // Extended Key
@@ -1164,13 +1163,32 @@
 
 "manage_account.name" = "名称";
 "manage_account.recovery_phrase" = "恢复码";
-"manage_account.evm_private_key" = "EVM 私钥";
-"manage_account.bip32_root_key" = "BIP32 Root Key";
-"manage_account.account_extended_private_key" = "Account Extended Private Key";
-"manage_account.account_extended_public_key" = "Account Extended Public Key";
 "manage_account.public_keys" = "公钥";
+"manage_account.private_keys" = "Private Keys";
 "manage_account.backup_recovery_phrase" = "备份恢复词";
 "manage_account.unlink" = "取消链接";
+
+// Manage Account -> Public Keys
+
+"public_keys.title" = "公钥";
+"public_keys.evm_address" = "EVM 地址";
+"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM based blockchains.";
+"public_keys.account_extended_public_key" = "Account Extended Public Key";
+"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
+
+// Manage Account -> Private Keys
+
+"private_keys.title" = "Private Keys";
+"private_keys.evm_private_key" = "EVM 私钥";
+"private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
+"private_keys.bip32_root_key" = "BIP32 Root Key";
+"private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
+"private_keys.account_extended_private_key" = "Account Extended Private Key";
+"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within respective wallet.";
+
+// Manage Account -> EVM Address
+
+"evm_address.title" = "EVM 地址";
 
 // Birthday Height
 
