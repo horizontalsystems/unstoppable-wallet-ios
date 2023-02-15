@@ -53,6 +53,10 @@ class SwapViewController: ThemeViewController {
         tableView.sectionDataSource = self
         tableView.keyboardDismissMode = .onDrag
 
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+
         subscribeToViewModel()
     }
 

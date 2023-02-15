@@ -84,7 +84,6 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
 
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-        tableView.keyboardDismissMode = .interactive
 
         view.addSubview(notFoundPlaceholder)
         notFoundPlaceholder.snp.makeConstraints { maker in
@@ -220,6 +219,10 @@ extension MarketDiscoveryViewController: UICollectionViewDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard indexPath.section != 0 else {
+            return
+        }
+
         switch discoveryViewItems[indexPath.item].type {
         case .topCoins:
             let viewController = MarketTopModule.viewController()

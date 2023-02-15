@@ -7,7 +7,7 @@ import RxCocoa
 import ComponentKit
 import PinKit
 
-class ManageAccountViewController: ThemeViewController {
+class ManageAccountViewController: KeyboardAwareViewController {
     private let viewModel: ManageAccountViewModel
     private let disposeBag = DisposeBag()
 
@@ -25,7 +25,7 @@ class ManageAccountViewController: ThemeViewController {
         self.viewModel = viewModel
         self.sourceViewController = sourceViewController
 
-        super.init()
+        super.init(scrollViews: [tableView])
 
         hidesBottomBarWhenPushed = true
     }

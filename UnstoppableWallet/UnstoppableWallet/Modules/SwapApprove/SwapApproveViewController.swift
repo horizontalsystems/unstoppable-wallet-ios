@@ -47,7 +47,6 @@ class SwapApproveViewController: KeyboardAwareViewController {
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
         tableView.allowsSelection = false
-        tableView.keyboardDismissMode = .interactive
 
         amountCell.inputText = viewModel.initialAmount
         amountCell.inputPlaceholder = "send.amount_placeholder".localized
