@@ -69,14 +69,14 @@ class CoinOverviewService {
                 .map { configuredToken in
                     let state: TokenItemState
 
-                    if let account = account, account.type.supports(configuredToken: configuredToken) {
+                    if let account = account, !account.watchAccount, account.type.supports(configuredToken: configuredToken) {
                         if walletConfiguredTokens.contains(configuredToken) {
                             state = .alreadyAdded
                         } else {
-                            state = .supported
+                            state = .canBeAdded
                         }
                     } else {
-                        state = .notSupported
+                        state = .cannotBeAdded
                     }
 
                     return TokenItem(
@@ -175,9 +175,9 @@ extension CoinOverviewService {
     }
 
     enum TokenItemState {
-        case notSupported
-        case supported
+        case canBeAdded
         case alreadyAdded
+        case cannotBeAdded
     }
 
     enum AddToWalletError: Error {
