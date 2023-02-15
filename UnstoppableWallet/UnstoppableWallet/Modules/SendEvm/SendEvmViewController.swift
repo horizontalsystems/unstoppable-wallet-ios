@@ -69,6 +69,10 @@ class SendEvmViewController: ThemeViewController {
         tableView.keyboardDismissMode = .onDrag
         tableView.sectionDataSource = self
 
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+
         amountCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
         recipientCell.onChangeHeight = { [weak self] in self?.reloadTable() }

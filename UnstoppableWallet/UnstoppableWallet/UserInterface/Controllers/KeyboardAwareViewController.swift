@@ -80,12 +80,20 @@ class KeyboardAwareViewController: ThemeViewController {
             scrollView.showsVerticalScrollIndicator = false
             scrollView.keyboardDismissMode = .interactive
         }
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         observeKeyboard(true)
+    }
+
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     private func observeKeyboard(_ start: Bool) {

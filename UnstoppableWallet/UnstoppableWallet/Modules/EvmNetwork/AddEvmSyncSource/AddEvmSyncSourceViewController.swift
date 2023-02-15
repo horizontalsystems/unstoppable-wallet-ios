@@ -44,7 +44,6 @@ class AddEvmSyncSourceViewController: KeyboardAwareViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.keyboardDismissMode = .interactive
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self

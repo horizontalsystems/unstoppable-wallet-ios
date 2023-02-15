@@ -41,6 +41,10 @@ class ThemeSearchViewController: KeyboardAwareViewController {
         }
     }
 
+    override func dismissKeyboard() {
+        searchController.isActive = false
+    }
+
     func onUpdate(filter: String?) {
     }
 
