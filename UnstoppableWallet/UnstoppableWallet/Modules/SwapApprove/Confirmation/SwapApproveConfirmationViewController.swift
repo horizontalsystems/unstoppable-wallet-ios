@@ -9,10 +9,10 @@ class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
     private let approveButton = PrimaryButton()
     private weak var delegate: ISwapApproveDelegate?
 
-    init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EvmFeeViewModel, delegate: ISwapApproveDelegate?) {
+    init(transactionViewModel: SendEvmTransactionViewModel, settingsService: EvmSendSettingsService, feeViewModel: EvmFeeViewModel, delegate: ISwapApproveDelegate?) {
         self.delegate = delegate
 
-        super.init(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
+        super.init(transactionViewModel: transactionViewModel, settingsService: settingsService, feeViewModel: feeViewModel)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -23,7 +23,6 @@ class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
         super.viewDidLoad()
 
         title = "confirm".localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onTapCancel))
 
         bottomWrapper.addSubview(approveButton)
         approveButton.snp.makeConstraints { maker in
@@ -37,10 +36,6 @@ class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 
         subscribe(disposeBag, transactionViewModel.sendEnabledDriver) { [weak self] in self?.approveButton.isEnabled = $0 }
-    }
-
-    @objc private func onTapCancel() {
-        dismiss(animated: true)
     }
 
     @objc private func onTapApprove() {

@@ -59,21 +59,25 @@ class FeeCell: BaseSelectableThemeCell {
     private func sync() {
         CellBuilderNew.buildStatic(cell: self, rootElement:
             .hStack([
-                .image24 { [weak self] (component: ImageComponent) in
-                    component.imageView.image = UIImage(named: "circle_information_24")
-                    component.isHidden = !(self?.viewModel.hasInformation ?? false)
-                },
                 .text { [weak self] (component: TextComponent) -> () in
                     component.font = .subhead2
                     component.textColor = .themeGray
                     component.text = self?.viewModel.title
+                    component.setContentHuggingPriority(.required, for: .horizontal)
                 },
+                .margin8,
+                .image20 { component in
+                    component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
+                },
+                .margin0,
+                .text { _ in },
                 .text { [weak self] (component: TextComponent) -> () in
                     if let value = self?.value {
                         component.isHidden = false
                         component.font = .subhead1
                         component.textColor = value.type.textColor
                         component.text = value.text
+                        component.textAlignment = .right
                     } else {
                         component.isHidden = true
                     }

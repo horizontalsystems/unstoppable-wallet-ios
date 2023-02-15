@@ -8,8 +8,6 @@ class Eip1559GasPriceService {
     private static let feeHistoryRewardPercentile = [50]
 
     private static let tipsSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))
-    private static let baseFeeAvailableRangeBounds = RangeBounds(lower: .factor(0.5), upper: .factor(3))
-    private static let tipsAvailableRangeBounds = RangeBounds(lower: .fixed(0), upper: .factor(10))
 
     private var disposeBag = DisposeBag()
 
@@ -33,17 +31,6 @@ class Eip1559GasPriceService {
 
     private(set) var baseFee: Int = 0
     private(set) var tips: Int = 0
-    private(set) var baseFeeRange: ClosedRange<Int> = 0 ... 0 {
-        didSet {
-            baseFeeRangeChangedRelay.accept(())
-        }
-    }
-
-    private(set) var tipsRange: ClosedRange<Int> = 0 ... 0 {
-        didSet {
-            tipsRangeChangedRelay.accept(())
-        }
-    }
 
     private(set) var status: DataStatus<FallibleData<GasPrice>> = .loading {
         didSet {
@@ -136,14 +123,6 @@ class Eip1559GasPriceService {
         if usingRecommended {
             baseFee = recommendedBaseFee
             tips = recommendedTips
-        }
-
-        if !baseFeeRange.contains(recommendedBaseFee) {
-            baseFeeRange = Self.baseFeeAvailableRangeBounds.range(around: recommendedBaseFee, containing: baseFee)
-        }
-
-        if !tipsRange.contains(recommendedTips) {
-            tipsRange = Self.tipsAvailableRangeBounds.range(around: recommendedTips, containing: tips)
         }
 
         sync()

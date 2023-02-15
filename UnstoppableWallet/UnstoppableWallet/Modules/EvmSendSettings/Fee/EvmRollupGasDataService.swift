@@ -14,7 +14,7 @@ class EvmRollupGasDataService: EvmCommonGasDataService {
     }
 
     private func l1GasFeeSingle(transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int) -> Single<BigUInt> {
-        l1FeeProvider.getL1Fee(gasPrice: gasPrice, gasLimit: gasLimit, to: transactionData.to, value: transactionData.value, data: transactionData.input, nonce: transactionData.nonce ?? 1)
+        l1FeeProvider.getL1Fee(gasPrice: gasPrice, gasLimit: gasLimit, to: transactionData.to, value: transactionData.value, data: transactionData.input)
     }
 
     private func stubMaxHex(value: BigUInt) -> BigUInt {

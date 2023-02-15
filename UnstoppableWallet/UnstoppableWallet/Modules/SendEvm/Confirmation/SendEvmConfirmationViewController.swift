@@ -15,7 +15,6 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
         super.viewDidLoad()
 
         title = confirmationTitle
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
 
         bottomWrapper.addSubview(sendButton)
         sendButton.snp.makeConstraints { maker in
@@ -29,10 +28,6 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
         sendButton.addTarget(self, action: #selector(onTapSend), for: .touchUpInside)
 
         subscribe(disposeBag, transactionViewModel.sendEnabledDriver) { [weak self] in self?.sendButton.isEnabled = $0 }
-    }
-
-    @objc private func onTapCancel() {
-        dismiss(animated: true)
     }
 
     @objc private func onTapSend() {

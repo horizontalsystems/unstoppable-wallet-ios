@@ -52,6 +52,7 @@ class SendEvmViewController: ThemeViewController {
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(didTapCancel))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         iconImageView.snp.makeConstraints { make in
             make.size.equalTo(CGFloat.iconSize24)

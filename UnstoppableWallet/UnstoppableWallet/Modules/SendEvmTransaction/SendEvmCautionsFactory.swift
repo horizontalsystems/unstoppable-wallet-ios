@@ -23,6 +23,17 @@ class SendEvmCautionsFactory {
                         )
                     ]
                 }
+            } else if let error = error as? NonceService.NonceError {
+                switch error {
+                case .alreadyInUse:
+                    return [
+                        TitledCaution(
+                                title: "evm_send_settings.nonce.already_in_use".localized,
+                                text: "evm_send_settings.nonce.already_in_use.info".localized(baseCoinService.token.coin.code),
+                                type: .error
+                        )
+                    ]
+                }
             } else {
                 return [convert(error: error, baseCoinService: baseCoinService)]
             }

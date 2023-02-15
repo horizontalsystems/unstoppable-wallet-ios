@@ -22,6 +22,10 @@ struct CoinValue {
         kind.decimals
     }
 
+    var formattedFull: String? {
+        ValueFormatter.instance.formatFull(coinValue: self)
+    }
+
 }
 
 extension CoinValue {

@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import RxCocoa
 import RxRelay
@@ -10,22 +11,18 @@ class LegacyEvmFeeViewModel {
     private let feeService: IEvmFeeService
     private let coinService: CoinService
     private let feeViewItemFactory: FeeViewItemFactory
-    private let cautionsFactory: SendEvmCautionsFactory
 
-    private let resetButtonActiveRelay = BehaviorRelay<Bool>(value: false)
-    private let valueRelay = BehaviorRelay<FeeCell.Value?>(value: nil)
+    private let alteredStateRelay = PublishRelay<Void>()
+    private let valueRelay = BehaviorRelay<FeeCellNew.Value?>(value: nil)
     private let spinnerVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let gasLimitRelay = BehaviorRelay<String>(value: "n/a")
-    private let gasPriceRelay = BehaviorRelay<String>(value: "n/a")
-    private let gasPriceSliderRelay = BehaviorRelay<FeeViewItem?>(value: nil)
-    private let cautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
+    private let gasPriceRelay = BehaviorRelay<Decimal?>(value: nil)
 
-    init(gasPriceService: LegacyGasPriceService, feeService: IEvmFeeService, coinService: CoinService, feeViewItemFactory: FeeViewItemFactory, cautionsFactory: SendEvmCautionsFactory) {
+    init(gasPriceService: LegacyGasPriceService, feeService: IEvmFeeService, coinService: CoinService, feeViewItemFactory: FeeViewItemFactory) {
         self.gasPriceService = gasPriceService
         self.feeService = feeService
         self.coinService = coinService
         self.feeViewItemFactory = feeViewItemFactory
-        self.cautionsFactory = cautionsFactory
 
         sync(transactionStatus: feeService.status)
         sync(gasPriceStatus: gasPriceService.status)
@@ -38,78 +35,70 @@ class LegacyEvmFeeViewModel {
 
     private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>) {
         if case .completed(let fallibleGasPrice) = gasPriceStatus, case .legacy(let gasPrice) = fallibleGasPrice.data {
-            let feeStep = gasPriceService.recommendedGasPrice.significant(depth: FeeViewItemFactory.stepDepth)
-            let viewItem = feeViewItemFactory.viewItem(value: gasPrice, step: feeStep, range: gasPriceService.gasPriceRange)
-            gasPriceRelay.accept(viewItem.description)
-            gasPriceSliderRelay.accept(viewItem)
+            gasPriceRelay.accept(feeViewItemFactory.decimalValue(value: gasPrice))
         } else {
-            gasPriceRelay.accept("n/a".localized)
-            gasPriceSliderRelay.accept(nil)
+            gasPriceRelay.accept(nil)
         }
     }
 
     private func sync(transactionStatus: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
         let spinnerVisible: Bool
-        let maxFeeValue: FeeCell.Value?
+        let maxFeeValue: FeeCellNew.Value?
         let gasLimit: String
-        let cautions: [TitledCaution]
 
         switch transactionStatus {
         case .loading:
             spinnerVisible = true
             maxFeeValue = nil
             gasLimit = "n/a".localized
-            cautions = []
         case .failed(let error):
             spinnerVisible = false
-            maxFeeValue = FeeCell.Value(text: "n/a".localized, type: .error)
+            maxFeeValue = .error(text: "n/a".localized)
             gasLimit = "n/a".localized
-            cautions = cautionsFactory.items(errors: [error], warnings: [], baseCoinService: coinService)
         case .completed(let fallibleTransaction):
             spinnerVisible = false
 
             let gasData = fallibleTransaction.data.gasData
-            let valueType: FeeCell.ValueType = fallibleTransaction.errors.isEmpty ? .regular : .error
-            maxFeeValue = FeeCell.Value(text: coinService.amountData(value: gasData.fee).formattedFull, type: valueType)
+            let amountData = coinService.amountData(value: gasData.fee)
+            if fallibleTransaction.errors.isEmpty, let coinValue = amountData.coinValue.formattedFull {
+                maxFeeValue = .regular(text: coinValue, secondaryText: amountData.currencyValue?.formattedFull)
+            } else {
+                maxFeeValue = .error(text: "n/a".localized)
+            }
+
             gasLimit = gasData.limit.description
-            cautions = cautionsFactory.items(errors: fallibleTransaction.errors, warnings: fallibleTransaction.warnings, baseCoinService: coinService)
         }
 
         spinnerVisibleRelay.accept(spinnerVisible)
         valueRelay.accept(maxFeeValue)
         gasLimitRelay.accept(gasLimit)
-        cautionRelay.accept(cautions.first)
     }
 
     private func sync(usingRecommended: Bool) {
-        resetButtonActiveRelay.accept(!usingRecommended)
+        alteredStateRelay.accept(Void())
     }
 
 }
 
 extension LegacyEvmFeeViewModel {
 
+    var altered: Bool {
+        !gasPriceService.usingRecommended
+    }
+
+    var alteredStateSignal: Signal<Void> {
+        alteredStateRelay.asSignal()
+    }
+
     var gasLimitDriver: Driver<String> {
         gasLimitRelay.asDriver()
     }
 
-    var gasPriceDriver: Driver<String> {
+    var gasPriceDriver: Driver<Decimal?> {
         gasPriceRelay.asDriver()
     }
 
-    var gasPriceSliderDriver: Driver<FeeViewItem?> {
-        gasPriceSliderRelay.asDriver()
-    }
-
-    var cautionDriver: Driver<TitledCaution?> {
-        cautionRelay.asDriver()
-    }
-
-    var resetButtonActiveDriver: Driver<Bool> {
-        resetButtonActiveRelay.asDriver()
-    }
-
-    func set(value: Float) {
+    func set(value: Decimal) {
         gasPriceService.set(gasPrice: feeViewItemFactory.intValue(value: value))
     }
 
@@ -119,9 +108,13 @@ extension LegacyEvmFeeViewModel {
 
 }
 
-extension LegacyEvmFeeViewModel: IFeeViewModel {
+extension LegacyEvmFeeViewModel: IFeeViewModelNew {
 
-    var valueDriver: Driver<FeeCell.Value?> {
+    var hasInformation: Bool {
+        true
+    }
+
+    var valueDriver: Driver<FeeCellNew.Value?> {
         valueRelay.asDriver()
     }
 

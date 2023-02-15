@@ -5,10 +5,11 @@ import RxRelay
 import RxSwift
 
 class EvmFeeService {
-    private let evmKit: EvmKit.Kit
-    private let gasPriceService: IGasPriceService
-    private let gasDataService: EvmCommonGasDataService
+    let gasPriceService: IGasPriceService
+    let coinService: CoinService
 
+    private let evmKit: EvmKit.Kit
+    private let gasDataService: EvmCommonGasDataService
     private var transactionData: TransactionData
 
     private let transactionStatusRelay = PublishRelay<DataStatus<FallibleData<EvmFeeModule.Transaction>>>()
@@ -21,10 +22,11 @@ class EvmFeeService {
     private var disposeBag = DisposeBag()
     private var gasPriceDisposeBag = DisposeBag()
 
-    init(evmKit: EvmKit.Kit, gasPriceService: IGasPriceService, gasDataService: EvmCommonGasDataService, transactionData: TransactionData) {
+    init(evmKit: EvmKit.Kit, gasPriceService: IGasPriceService, gasDataService: EvmCommonGasDataService, coinService: CoinService, transactionData: TransactionData) {
         self.evmKit = evmKit
         self.gasPriceService = gasPriceService
         self.gasDataService = gasDataService
+        self.coinService = coinService
         self.transactionData = transactionData
 
         sync(gasPriceStatus: gasPriceService.status)

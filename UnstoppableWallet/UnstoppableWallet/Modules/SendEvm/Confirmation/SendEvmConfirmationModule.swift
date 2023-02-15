@@ -84,15 +84,14 @@ struct SendEvmConfirmationModule {
             return nil
         }
 
-        let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKit)
-        let gasDataService = EvmCommonGasDataService.instance(evmKit: evmKit, blockchainType: evmKitWrapper.blockchainType, gasLimitSurchargePercent: sendData.transactionData.input.isEmpty ? 0 : 20)
-        let feeService = EvmFeeService(evmKit: evmKit, gasPriceService: gasPriceService, gasDataService: gasDataService, transactionData: sendData.transactionData)
-        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, evmLabelManager: App.shared.evmLabelManager)
+        let (settingsService, feeViewModel) = EvmSendSettingsModule.instance(
+                evmKit: evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory,
+                gasLimitSurchargePercent: sendData.transactionData.input.isEmpty ? 0 : 20
+        )
 
-        let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
-        let feeViewModel = EvmFeeViewModel(service: feeService, gasPriceService: gasPriceService, coinService: coinServiceFactory.baseCoinService)
-
-        let controller = SendEvmConfirmationViewController(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
+        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
+        let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
+        let controller = SendEvmConfirmationViewController(transactionViewModel: viewModel, settingsService: settingsService, feeViewModel: feeViewModel)
 
         return controller
     }
@@ -126,22 +125,22 @@ struct SendEvmConfirmationModule {
         let sendData: SendEvmData
         switch type {
         case .speedUp:
-            let transactionData = TransactionData(to: to, value: value, input: input, nonce: transaction.nonce)
+            let transactionData = TransactionData(to: to, value: value, input: input)
             sendData = SendEvmData(transactionData: transactionData, additionalInfo: nil, warnings: [])
         case .cancel:
-            let transactionData = TransactionData(to: adapter.evmKit.receiveAddress, value: 0, input: Data(), nonce: transaction.nonce)
+            let transactionData = TransactionData(to: adapter.evmKit.receiveAddress, value: 0, input: Data())
             sendData = SendEvmData(transactionData: transactionData, additionalInfo: nil, warnings: [])
         }
 
-        let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit, previousTransaction: transaction)
-        let gasDataService = EvmCommonGasDataService.instance(evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, gasLimit: transaction.gasLimit)
-        let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, gasDataService: gasDataService, transactionData: sendData.transactionData)
-        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, feeService: feeService, evmLabelManager: App.shared.evmLabelManager)
+        let (settingsService, feeViewModel) = EvmSendSettingsModule.instance(
+                evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory,
+                previousTransaction: transaction, gasLimit: transaction.gasLimit
+        )
 
-        let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
-        let feeViewModel = EvmFeeViewModel(service: feeService, gasPriceService: gasPriceService, coinService: coinServiceFactory.baseCoinService)
+        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
+        let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
 
-        let viewController = SendEvmConfirmationViewController(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
+        let viewController = SendEvmConfirmationViewController(transactionViewModel: viewModel, settingsService: settingsService, feeViewModel: feeViewModel)
 
         switch type {
         case .speedUp:

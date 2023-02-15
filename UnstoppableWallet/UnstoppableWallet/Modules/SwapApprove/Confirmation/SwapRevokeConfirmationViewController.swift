@@ -10,10 +10,10 @@ class SwapRevokeConfirmationViewController: SendEvmTransactionViewController {
     private let cancelButton = PrimaryButton()
     private weak var delegate: ISwapApproveDelegate?
 
-    init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EvmFeeViewModel, delegate: ISwapApproveDelegate?) {
+    init(transactionViewModel: SendEvmTransactionViewModel, settingsService: EvmSendSettingsService, feeViewModel: EvmFeeViewModel, delegate: ISwapApproveDelegate?) {
         self.delegate = delegate
 
-        super.init(transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
+        super.init(transactionViewModel: transactionViewModel, settingsService: settingsService, feeViewModel: feeViewModel)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -24,7 +24,6 @@ class SwapRevokeConfirmationViewController: SendEvmTransactionViewController {
         super.viewDidLoad()
 
         title = "confirm".localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onTapCancel))
 
         bottomWrapper.addSubview(approveButton)
         approveButton.snp.makeConstraints { maker in

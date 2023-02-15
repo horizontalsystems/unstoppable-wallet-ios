@@ -12,7 +12,6 @@ class SwapConfirmationViewController: SendEvmTransactionViewController {
         super.viewDidLoad()
 
         title = "confirm".localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onTapCancel))
 
         bottomWrapper.addSubview(swapButton)
         swapButton.snp.makeConstraints { maker in
@@ -26,10 +25,6 @@ class SwapConfirmationViewController: SendEvmTransactionViewController {
         swapButton.addTarget(self, action: #selector(onTapSwap), for: .touchUpInside)
 
         subscribe(disposeBag, transactionViewModel.sendEnabledDriver) { [weak self] in self?.swapButton.isEnabled = $0 }
-    }
-
-    @objc private func onTapCancel() {
-        dismiss(animated: true)
     }
 
     @objc private func onTapSwap() {

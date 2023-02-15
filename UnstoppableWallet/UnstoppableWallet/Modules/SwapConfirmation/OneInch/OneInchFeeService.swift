@@ -26,6 +26,9 @@ struct OneInchSwapParameters: Equatable {
 }
 
 class OneInchFeeService {
+    let gasPriceService: IGasPriceService
+    let coinService: CoinService
+
     private static let retryInterval = 3
     private var gasPriceDisposeBag = DisposeBag()
     private var disposeBag = DisposeBag()
@@ -35,7 +38,7 @@ class OneInchFeeService {
 
     private let evmKit: EvmKit.Kit
     private let provider: OneInchProvider
-    private let gasPriceService: IGasPriceService
+
     private(set) var parameters: OneInchSwapParameters
 
     private let transactionStatusRelay = PublishRelay<DataStatus<FallibleData<EvmFeeModule.Transaction>>>()
@@ -47,10 +50,11 @@ class OneInchFeeService {
 
     var amountTo: Decimal?
 
-    init(evmKit: EvmKit.Kit, provider: OneInchProvider, gasPriceService: IGasPriceService, parameters: OneInchSwapParameters) {
+    init(evmKit: EvmKit.Kit, provider: OneInchProvider, gasPriceService: IGasPriceService, coinService: CoinService, parameters: OneInchSwapParameters) {
         self.evmKit = evmKit
         self.provider = provider
         self.gasPriceService = gasPriceService
+        self.coinService = coinService
         self.parameters = parameters
 
         sync(gasPriceStatus: gasPriceService.status)
