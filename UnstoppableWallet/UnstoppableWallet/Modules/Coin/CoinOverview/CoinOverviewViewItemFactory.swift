@@ -120,9 +120,9 @@ class CoinOverviewViewItemFactory {
             }
 
             switch item.state {
-            case .notSupported: ()
-            case .supported: showAdd = true
+            case .canBeAdded: showAdd = true
             case .alreadyAdded: showAdded = true
+            case .cannotBeAdded: ()
             }
 
             return CoinOverviewViewModel.TypeViewItem(
