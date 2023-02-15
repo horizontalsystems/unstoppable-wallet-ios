@@ -325,6 +325,10 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "approve.confirmation.you_revoke" = "You Revoke";
 "approve.confirmation.spender" = "Spender";
 
+"evm_send_settings.nonce.title" = "Nonce";
+"evm_send_settings.nonce.info" = "A nonce is a number attached to every transaction you send on Ethereum or any other EVM blockchain.";
+"evm_send_settings.nonce.already_in_use" = "Used Nonce";
+"evm_send_settings.nonce.already_in_use.info" = "An executed transaction with this nonce already exists.";
 // CoinSelector
 
 "choose_coin.title" = "Choose Coins";
@@ -1224,8 +1228,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "add_evm_sync_source.warning.url_exists" = "RPC Source with this url already exists";
 "add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: https, wss";
 
-// Fee Settings
+// EVM Send Settings
 
+"evm_send_settings.title" = "Advanced";
 "fee_settings" = "Fee Settings";
 "fee_settings.fee" = "Fee";
 "fee_settings.fee.info" = "The expected total fee for the given transaction.";

@@ -35,7 +35,20 @@ extension FeeViewItemFactory {
         )
     }
 
+    func description(value: Int, step: Int) -> String {
+        scale.description(value: scale.wrap(value: value, step: step))
+    }
+
+    func decimalValue(value: Int) -> Decimal {
+        Decimal(value) / Decimal(scale.scaleValue)
+    }
+
+    func intValue(value: Decimal) -> Int {
+        NSDecimalNumber(decimal: value * Decimal(scale.scaleValue)).intValue
+    }
+
     func intValue(value: Float) -> Int {
         Int(value * Float(scale.scaleValue))
     }
+
 }

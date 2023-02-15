@@ -1,4 +1,0 @@
-import CurrencyKit
-
-extension CurrencyValue {
-}

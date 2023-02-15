@@ -97,6 +97,7 @@ extension CellBuilderNew.CellElement {
         static func body(_ text: String?, color: UIColor = .themeLeah) -> Self { Text(text: text, font: .body, textColor: color) }
         static func subhead1(_ text: String?, color: UIColor = .themeLeah) -> Self { Text(text: text, font: .subhead1, textColor: color) }
         static func subhead2(_ text: String?, color: UIColor = .themeGray) -> Self { Text(text: text, font: .subhead2, textColor: color) }
+        static func caption(_ text: String?, color: UIColor = .themeGray) -> Self { Text(text: text, font: .caption, textColor: color) }
         static func custom(_ text: String?, _ font: UIFont, _ color: UIColor) -> Self { Text(text: text, font: font, textColor: color) }
 
         let text: String?

@@ -29,19 +29,19 @@ struct WalletConnectSendEthereumTransactionRequestModule {
         }
 
         let service = WalletConnectSendEthereumTransactionRequestService(request: request, baseService: signService)
-        let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit, gasPrice: service.gasPrice)
-
-        let gasDataService = EvmCommonGasDataService.instance(evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, gasLimit: request.transaction.gasLimit, gasLimitSurchargePercent: 10)
-        let feeService = EvmFeeService(evmKit: evmKitWrapper.evmKit, gasPriceService: gasPriceService, gasDataService: gasDataService, transactionData: service.transactionData)
         let additionalInfo: SendEvmData.AdditionInfo = .otherDApp(info: SendEvmData.DAppInfo(name: request.dAppName))
         let sendEvmData = SendEvmData(transactionData: service.transactionData, additionalInfo: additionalInfo, warnings: [])
-        let sendService = SendEvmTransactionService(sendData: sendEvmData, evmKitWrapper: evmKitWrapper, feeService: feeService, evmLabelManager: App.shared.evmLabelManager)
 
+        let (settingsService, feeViewModel) = EvmSendSettingsModule.instance(
+                evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendEvmData, coinServiceFactory: coinServiceFactory,
+                gasPrice: service.gasPrice, gasLimit: request.transaction.gasLimit, gasLimitSurchargePercent: 10
+        )
+
+        let sendService = SendEvmTransactionService(sendData: sendEvmData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
         let transactionViewModel = SendEvmTransactionViewModel(service: sendService, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
-        let feeViewModel = EvmFeeViewModel(service: feeService, gasPriceService: gasPriceService, coinService: coinServiceFactory.baseCoinService)
         let viewModel = WalletConnectSendEthereumTransactionRequestViewModel(service: service)
 
-        return WalletConnectRequestViewController(viewModel: viewModel, transactionViewModel: transactionViewModel, feeViewModel: feeViewModel)
+        return WalletConnectRequestViewController(viewModel: viewModel, transactionViewModel: transactionViewModel, settingsService: settingsService, feeViewModel: feeViewModel)
     }
 
 }

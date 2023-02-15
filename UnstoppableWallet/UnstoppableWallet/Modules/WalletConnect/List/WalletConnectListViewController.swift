@@ -44,6 +44,7 @@ class WalletConnectListViewController: ThemeViewController {
         title = "wallet_connect_list.title".localized
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "circle_information_24"), style: .plain, target: self, action: #selector(onTapInfo))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

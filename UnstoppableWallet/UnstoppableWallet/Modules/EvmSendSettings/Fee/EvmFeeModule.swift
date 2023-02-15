@@ -7,26 +7,6 @@ import ThemeKit
 
 struct EvmFeeModule {
 
-    static func viewController(feeViewModel: EvmFeeViewModel) -> UIViewController? {
-        let feeService = feeViewModel.service
-        let coinService = feeViewModel.coinService
-        let gasPriceService = feeViewModel.gasPriceService
-        let feeViewItemFactory = FeeViewItemFactory(scale: coinService.token.blockchainType.feePriceScale)
-        let cautionsFactory = SendEvmCautionsFactory()
-
-        switch gasPriceService {
-        case let legacyService as LegacyGasPriceService:
-            let viewModel = LegacyEvmFeeViewModel(gasPriceService: legacyService, feeService: feeService, coinService: coinService, feeViewItemFactory: feeViewItemFactory, cautionsFactory: cautionsFactory)
-            return ThemeNavigationController(rootViewController: LegacyEvmFeeViewController(viewModel: viewModel))
-
-        case let eip1559Service as Eip1559GasPriceService:
-            let viewModel = Eip1559EvmFeeViewModel(gasPriceService: eip1559Service, feeService: feeService, coinService: coinService, feeViewItemFactory: feeViewItemFactory, cautionsFactory: cautionsFactory)
-            return ThemeNavigationController(rootViewController: Eip1559EvmFeeViewController(viewModel: viewModel))
-
-        default: return nil
-        }
-    }
-
     static func gasPriceService(evmKit: EvmKit.Kit, gasPrice: GasPrice? = nil, previousTransaction: EvmKit.Transaction? = nil) -> IGasPriceService {
         if evmKit.chain.isEIP1559Supported {
             var initialMaxBaseFee: Int? = nil
@@ -121,6 +101,8 @@ extension EvmFeeModule {
 }
 
 protocol IEvmFeeService {
+    var gasPriceService: IGasPriceService { get }
+    var coinService: CoinService { get }
     var status: DataStatus<FallibleData<EvmFeeModule.Transaction>> { get }
     var statusObservable: Observable<DataStatus<FallibleData<EvmFeeModule.Transaction>>> { get }
 }

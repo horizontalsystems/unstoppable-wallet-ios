@@ -7,7 +7,6 @@ import RxSwift
 
 class LegacyGasPriceService {
     private static let gasPriceSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))
-    private static let gasPriceAvailableRangeBounds = RangeBounds(lower: .factor(0.6), upper: .factor(3))
 
     private var disposeBag = DisposeBag()
 
@@ -66,9 +65,6 @@ extension LegacyGasPriceService: IGasPriceService {
 }
 
 extension LegacyGasPriceService {
-    var gasPriceRange: ClosedRange<Int> {
-        Self.gasPriceAvailableRangeBounds.range(around: recommendedGasPrice)
-    }
 
     var usingRecommendedObservable: Observable<Bool> {
         usingRecommendedRelay.asObservable()

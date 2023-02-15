@@ -11,9 +11,9 @@ enum AmountInfo {
     var formattedFull: String? {
         switch self {
         case .coinValue(let coinValue):
-            return ValueFormatter.instance.formatFull(coinValue: coinValue)
+            return coinValue.formattedFull
         case .currencyValue(let currencyValue):
-            return ValueFormatter.instance.formatFull(currencyValue: currencyValue)
+            return currencyValue.formattedFull
         }
     }
 
@@ -40,11 +40,11 @@ struct AmountData {
     var formattedFull: String {
         var parts = [String]()
 
-        if let formatted = ValueFormatter.instance.formatFull(coinValue: coinValue) {
+        if let formatted = coinValue.formattedFull {
             parts.append(formatted)
         }
 
-        if let currencyValue = currencyValue, let formatted = ValueFormatter.instance.formatFull(currencyValue: currencyValue) {
+        if let formatted = currencyValue?.formattedFull {
             parts.append(formatted)
         }
 

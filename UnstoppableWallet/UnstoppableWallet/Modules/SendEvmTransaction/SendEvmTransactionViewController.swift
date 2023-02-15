@@ -10,12 +10,12 @@ class SendEvmTransactionViewController: ThemeViewController {
     let disposeBag = DisposeBag()
 
     let transactionViewModel: SendEvmTransactionViewModel
-    let feeViewModel: EvmFeeViewModel
+    let settingsService: EvmSendSettingsService
 
     private let tableView = SectionsTableView(style: .grouped)
     let bottomWrapper = BottomGradientHolder()
 
-    private let maxFeeCell: EditableFeeCell
+    private let maxFeeCell: FeeCellNew
 
     private var sectionViewItems = [SendEvmTransactionViewModel.SectionViewItem]()
     private let caution1Cell = TitledHighlightedDescriptionCell()
@@ -24,11 +24,11 @@ class SendEvmTransactionViewController: ThemeViewController {
 
     var topDescription: String?
 
-    init(transactionViewModel: SendEvmTransactionViewModel, feeViewModel: EvmFeeViewModel) {
+    init(transactionViewModel: SendEvmTransactionViewModel, settingsService: EvmSendSettingsService, feeViewModel: EvmFeeViewModel) {
         self.transactionViewModel = transactionViewModel
-        self.feeViewModel = feeViewModel
+        self.settingsService = settingsService
 
-        maxFeeCell = EditableFeeCell(viewModel: feeViewModel)
+        maxFeeCell = FeeCellNew(viewModel: feeViewModel)
 
         super.init()
     }
@@ -39,6 +39,9 @@ class SendEvmTransactionViewController: ThemeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "manage_2_20"), style: .plain, target: self, action: #selector(openFeeSettings))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -98,8 +101,8 @@ class SendEvmTransactionViewController: ThemeViewController {
         dismiss(animated: true)
     }
 
-    private func openFeeSettings() {
-        guard let controller = EvmFeeModule.viewController(feeViewModel: feeViewModel) else {
+    @objc private func openFeeSettings() {
+        guard let controller = EvmSendSettingsModule.viewController(settingsService: settingsService) else {
             return
         }
 
@@ -175,11 +178,8 @@ extension SendEvmTransactionViewController: SectionsDataSource {
                         StaticRow(
                                 cell: maxFeeCell,
                                 id: "fee",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.openFeeSettings()
-                                }
+                                height: .heightDoubleLineCell,
+                                autoDeselect: true
                         )
                     ]
             )
