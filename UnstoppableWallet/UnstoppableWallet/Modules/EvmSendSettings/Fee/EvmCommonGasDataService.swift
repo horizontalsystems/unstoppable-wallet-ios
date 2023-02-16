@@ -9,11 +9,11 @@ class EvmCommonGasDataService {
     private let evmKit: EvmKit.Kit
     private let gasLimitSurchargePercent: Int
 
-    private(set) var gasLimit: Int?
+    private(set) var predefinedGasLimit: Int?
 
     init(evmKit: EvmKit.Kit, gasLimit: Int? = nil, gasLimitSurchargePercent: Int = 0) {
         self.evmKit = evmKit
-        self.gasLimit = gasLimit
+        predefinedGasLimit = gasLimit
         self.gasLimitSurchargePercent = gasLimitSurchargePercent
     }
 
@@ -22,6 +22,10 @@ class EvmCommonGasDataService {
     }
 
     func gasDataSingle(gasPrice: GasPrice, transactionData: TransactionData, stubAmount: BigUInt? = nil) -> Single<EvmFeeModule.GasData> {
+        if let gasLimit = predefinedGasLimit {
+            return .just(EvmFeeModule.GasData(limit: gasLimit, price: gasPrice))
+        }
+
         let adjustedTransactionData = stubAmount.map { TransactionData(to: transactionData.to, value: $0, input: transactionData.input) } ?? transactionData
 
         return evmKit.estimateGas(transactionData: adjustedTransactionData, gasPrice: gasPrice).map { [weak self] estimatedGasLimit in
@@ -31,13 +35,6 @@ class EvmCommonGasDataService {
         }
     }
 
-    func predefinedGasData(gasPrice: GasPrice, transactionData _: TransactionData) -> Single<EvmFeeModule.GasData>? {
-        guard let gasLimit = gasLimit else {
-            return nil
-        }
-
-        return .just(EvmFeeModule.GasData(limit: gasLimit, price: gasPrice))
-    }
 }
 
 extension EvmCommonGasDataService {

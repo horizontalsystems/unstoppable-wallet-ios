@@ -65,7 +65,7 @@ class OneInchFeeService {
         evmKit.accountState?.balance ?? 0
     }
 
-    private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>) {
+    private func sync(gasPriceStatus: DataStatus<FallibleData<EvmFeeModule.GasPrices>>) {
         switch gasPriceStatus {
         case .loading: status = .loading
         case .failed(let error): status = .failed(error)
@@ -73,7 +73,7 @@ class OneInchFeeService {
         }
     }
 
-    private func sync(fallibleGasPrice: FallibleData<GasPrice>) {
+    private func sync(fallibleGasPrice: FallibleData<EvmFeeModule.GasPrices>) {
         disposeBag = DisposeBag()
 
         let recipient: EvmKit.Address? = parameters.recipient.flatMap { try? EvmKit.Address(hex: $0.raw) }
@@ -84,7 +84,7 @@ class OneInchFeeService {
                         amount: parameters.amountFrom,
                         recipient: recipient,
                         slippage: parameters.slippage,
-                        gasPrice: fallibleGasPrice.data
+                        gasPrice: fallibleGasPrice.data.userDefined
                 )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] swap in
@@ -95,7 +95,7 @@ class OneInchFeeService {
                 .disposed(by: disposeBag)
     }
 
-    private func onSwap(error: Error, fallibleGasPrice: FallibleData<GasPrice>) {
+    private func onSwap(error: Error, fallibleGasPrice: FallibleData<EvmFeeModule.GasPrices>) {
         parameters.amountTo = 0
 
         if let error = error as? OneInchKit.Kit.SwapError, error == .cannotEstimate {       // retry request fee every 5 seconds if cannot estimate
@@ -111,11 +111,11 @@ class OneInchFeeService {
         status = .failed(error.convertedError)
     }
 
-    private func sync(swap: OneInchKit.Swap, fallibleGasPrice: FallibleData<GasPrice>) {
+    private func sync(swap: OneInchKit.Swap, fallibleGasPrice: FallibleData<EvmFeeModule.GasPrices>) {
         let tx = swap.transaction
         let gasData = EvmFeeModule.GasData(
                 limit: surchargedGasLimit(gasLimit: surchargedGasLimit(gasLimit: tx.gasLimit)),
-                price: fallibleGasPrice.data
+                price: fallibleGasPrice.data.userDefined
         )
 
         parameters.amountTo = swap.amountOut ?? 0

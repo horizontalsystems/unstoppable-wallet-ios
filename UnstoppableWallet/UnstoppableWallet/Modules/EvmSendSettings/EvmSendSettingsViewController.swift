@@ -75,6 +75,7 @@ class EvmSendSettingsViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.cautionDriver) { [weak self] in self?.handle(caution: $0) }
 
         tableView.buildSections()
+        syncResetButton()
 
         loaded = true
     }
