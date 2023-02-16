@@ -14,14 +14,6 @@ class SendEvmCautionsFactory {
                                 type: .error
                         )
                     ]
-                case .lowMaxFee:
-                    return [
-                        TitledCaution(
-                                title: "fee_settings.errors.low_max_fee".localized,
-                                text: "fee_settings.errors.low_max_fee.info".localized(baseCoinService.token.coin.code),
-                                type: .error
-                        )
-                    ]
                 }
             } else if let error = error as? NonceService.NonceError {
                 switch error {
@@ -82,6 +74,9 @@ class SendEvmCautionsFactory {
             case .replacementTransactionUnderpriced:
                 title = "fee_settings.errors.replacement_transaction_underpriced".localized
                 text = "ethereum_transaction.error.replacement_transaction_underpriced".localized
+            case .tipsHigherThanMaxFee:
+                title = "fee_settings.errors.tips_higher_than_max_fee".localized
+                text = "ethereum_transaction.error.tips_higher_than_max_fee".localized
             }
         }
 

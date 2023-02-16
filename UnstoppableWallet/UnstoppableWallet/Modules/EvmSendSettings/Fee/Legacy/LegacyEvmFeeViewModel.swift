@@ -33,8 +33,8 @@ class LegacyEvmFeeViewModel {
         subscribe(disposeBag, gasPriceService.usingRecommendedObservable) { [weak self] in self?.sync(usingRecommended: $0) }
     }
 
-    private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>) {
-        if case .completed(let fallibleGasPrice) = gasPriceStatus, case .legacy(let gasPrice) = fallibleGasPrice.data {
+    private func sync(gasPriceStatus: DataStatus<FallibleData<EvmFeeModule.GasPrices>>) {
+        if case .completed(let fallibleGasPrice) = gasPriceStatus, case .legacy(let gasPrice) = fallibleGasPrice.data.userDefined {
             gasPriceRelay.accept(feeViewItemFactory.decimalValue(value: gasPrice))
         } else {
             gasPriceRelay.accept(nil)
@@ -51,7 +51,7 @@ class LegacyEvmFeeViewModel {
             spinnerVisible = true
             maxFeeValue = nil
             gasLimit = "n/a".localized
-        case .failed(let error):
+        case .failed(_):
             spinnerVisible = false
             maxFeeValue = .error(text: "n/a".localized)
             gasLimit = "n/a".localized

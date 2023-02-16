@@ -28,7 +28,7 @@ class Eip1559EvmFeeViewModel {
 
         sync(transactionStatus: feeService.status)
         sync(gasPriceStatus: gasPriceService.status)
-        sync(recommendedBaseFee: gasPriceService.recommendedBaseFee)
+        sync(recommendedBaseFee: gasPriceService.recommendedMaxFee)
         sync(usingRecommended: gasPriceService.usingRecommended)
 
         subscribe(disposeBag, feeService.statusObservable) { [weak self] in
@@ -61,7 +61,7 @@ class Eip1559EvmFeeViewModel {
             spinnerVisible = true
             maxFeeValue = nil
             gasLimit = "n/a".localized
-        case let .failed(error):
+        case .failed(_):
             spinnerVisible = false
             maxFeeValue = .error(text: "n/a".localized)
             gasLimit = "n/a".localized
@@ -83,7 +83,7 @@ class Eip1559EvmFeeViewModel {
         gasLimitRelay.accept(gasLimit)
     }
 
-    private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>?) {
+    private func sync(gasPriceStatus: DataStatus<FallibleData<EvmFeeModule.GasPrices>>?) {
         let gasPriceStatus = gasPriceStatus ?? gasPriceService.status
 
         guard case .completed = gasPriceStatus else {
@@ -92,7 +92,7 @@ class Eip1559EvmFeeViewModel {
             return
         }
 
-        maxGasPriceRelay.accept(feeViewItemFactory.decimalValue(value: gasPriceService.baseFee))
+        maxGasPriceRelay.accept(feeViewItemFactory.decimalValue(value: gasPriceService.maxFee))
         tipsRelay.accept(feeViewItemFactory.decimalValue(value: gasPriceService.tips))
     }
 
@@ -134,7 +134,7 @@ extension Eip1559EvmFeeViewModel {
     }
 
     func set(maxGasPrice: Decimal) {
-        gasPriceService.set(baseFee: feeViewItemFactory.intValue(value: maxGasPrice))
+        gasPriceService.set(maxFee: feeViewItemFactory.intValue(value: maxGasPrice))
     }
 
     func set(tips: Decimal) {

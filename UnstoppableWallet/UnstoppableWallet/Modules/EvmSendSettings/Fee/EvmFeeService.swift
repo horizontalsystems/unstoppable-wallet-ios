@@ -35,64 +35,70 @@ class EvmFeeService {
         }
     }
 
-    private func sync(gasPriceStatus: DataStatus<FallibleData<GasPrice>>) {
+    private func sync(gasPriceStatus: DataStatus<FallibleData<EvmFeeModule.GasPrices>>) {
         switch gasPriceStatus {
         case .loading: status = .loading
         case let .failed(error): status = .failed(error)
-        case let .completed(fallibleGasPrice): sync(fallibleGasPrice: fallibleGasPrice)
+        case let .completed(fallibleGasPrices): sync(fallibleGasPrices: fallibleGasPrices)
         }
     }
 
-    private func sync(fallibleGasPrice: FallibleData<GasPrice>) {
+    private func sync(fallibleGasPrices: FallibleData<EvmFeeModule.GasPrices>) {
+        disposeBag = DisposeBag()
         let single: Single<EvmFeeModule.Transaction>
         let transactionData = transactionData
 
-        if let transactionSingle = gasDataService.predefinedGasData(gasPrice: fallibleGasPrice.data, transactionData: transactionData) {
-            // transaction comes with predefined gasLimit
-            single = transactionSingle
-                .map {
-                    EvmFeeModule.Transaction(transactionData: transactionData, gasData: $0)
-                }
-        } else if transactionData.input.isEmpty, transactionData.value == evmBalance {
+        if transactionData.input.isEmpty, transactionData.value == evmBalance {
             // If try to send native token (input is empty) and max value, we must calculate fee and decrease maximum value by that fee
             single = gasDataService
-                .gasDataSingle(gasPrice: fallibleGasPrice.data, transactionData: transactionData, stubAmount: 1)
-                .flatMap { adjustedGasData in
-                    let adjustedValue = transactionData.value - adjustedGasData.fee
+                    .gasDataSingle(gasPrice: fallibleGasPrices.data.recommended, transactionData: transactionData, stubAmount: 1)
+                    .flatMap { adjustedGasData in
+                        adjustedGasData.set(price: fallibleGasPrices.data.userDefined)
+                        let adjustedValue = transactionData.value - adjustedGasData.fee
 
-                    if adjustedValue <= 0 {
-                        return Single.error(EvmFeeModule.GasDataError.insufficientBalance)
-                    } else {
-                        let adjustedTransactionData = TransactionData(to: transactionData.to, value: adjustedValue, input: transactionData.input)
-                        return Single.just(EvmFeeModule.Transaction(transactionData: adjustedTransactionData, gasData: adjustedGasData))
+                        if adjustedValue <= 0 {
+                            return Single.error(EvmFeeModule.GasDataError.insufficientBalance)
+                        } else {
+                            let adjustedTransactionData = TransactionData(to: transactionData.to, value: adjustedValue, input: transactionData.input)
+                            return Single.just(EvmFeeModule.Transaction(transactionData: adjustedTransactionData, gasData: adjustedGasData))
+                        }
                     }
-                }
         } else {
-            // transaction for tokens
             single = gasDataService
-                .gasDataSingle(gasPrice: fallibleGasPrice.data, transactionData: transactionData)
-                .map {
-                    EvmFeeModule.Transaction(transactionData: transactionData, gasData: $0)
-                }
+                    .gasDataSingle(gasPrice: fallibleGasPrices.data.userDefined, transactionData: transactionData)
+                    .catchError { [weak self] error in
+                        if case AppError.ethereum(reason: let ethereumError) = error.convertedError,
+                           case .lowerThanBaseGasLimit = ethereumError,
+                           let _self = self {
+                            return _self
+                                    .gasDataService
+                                    .gasDataSingle(gasPrice: fallibleGasPrices.data.recommended, transactionData: transactionData)
+                                    .map { gasData in
+                                        gasData.set(price: fallibleGasPrices.data.userDefined)
+                                        return gasData
+                                    }
+                        }
+
+                        return .error(error)
+                    }
+                    .map { EvmFeeModule.Transaction(transactionData: transactionData, gasData: $0) }
         }
 
-        disposeBag = DisposeBag()
-        single
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onSuccess: { [weak self] transaction in
-                self?.syncStatus(fallibleGasPrice: fallibleGasPrice, transaction: transaction)
-            }, onError: { error in
-                self.status = .failed(error)
-            })
-            .disposed(by: disposeBag)
+        single.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onSuccess: { [weak self] transaction in
+                    self?.syncStatus(transaction: transaction, errors: fallibleGasPrices.errors, warnings: fallibleGasPrices.warnings)
+                }, onError: { error in
+                    self.status = .failed(error)
+                })
+                .disposed(by: disposeBag)
     }
 
     private var evmBalance: BigUInt {
         evmKit.accountState?.balance ?? 0
     }
 
-    private func syncStatus(fallibleGasPrice: FallibleData<GasPrice>, transaction: EvmFeeModule.Transaction) {
-        var errors: [Error] = fallibleGasPrice.errors
+    private func syncStatus(transaction: EvmFeeModule.Transaction, errors: [Error], warnings: [Warning]) {
+        var errors: [Error] = errors
 
         let totalAmount = transaction.transactionData.value + transaction.gasData.fee
         if totalAmount > evmBalance {
@@ -100,7 +106,7 @@ class EvmFeeService {
         }
 
         status = .completed(FallibleData<EvmFeeModule.Transaction>(
-            data: transaction, errors: errors, warnings: fallibleGasPrice.warnings
+            data: transaction, errors: errors, warnings: warnings
         ))
     }
 }

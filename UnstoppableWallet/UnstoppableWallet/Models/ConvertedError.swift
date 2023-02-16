@@ -146,6 +146,10 @@ extension EvmKit.JsonRpcResponse.ResponseError: ConvertibleError {
                 return AppError.ethereum(reason: .replacementTransactionUnderpriced)
             }
 
+            if rpcError.message.contains("max priority fee per gas higher than max fee per gas") {
+                return AppError.ethereum(reason: .tipsHigherThanMaxFee)
+            }
+
             return self
         default: return self
         }

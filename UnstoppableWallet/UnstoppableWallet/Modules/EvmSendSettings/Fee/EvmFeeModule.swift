@@ -11,7 +11,7 @@ struct EvmFeeModule {
         if evmKit.chain.isEIP1559Supported {
             var initialMaxBaseFee: Int? = nil
             var initialMaxTips: Int? = nil
-            var minRecommendedBaseFee: Int? = nil
+            var minRecommendedMaxFee: Int? = nil
             var minRecommendedTips: Int? = nil
 
             if case .eip1559(let maxBaseFee, let maxTips) = gasPrice {
@@ -20,11 +20,11 @@ struct EvmFeeModule {
             }
 
             if let previousMaxFeePerGas = previousTransaction?.maxFeePerGas, let previousMaxPriorityFeePerGas = previousTransaction?.maxPriorityFeePerGas {
-                minRecommendedBaseFee = previousMaxFeePerGas - previousMaxPriorityFeePerGas
+                minRecommendedMaxFee = previousMaxFeePerGas
                 minRecommendedTips = previousMaxPriorityFeePerGas
             }
 
-            return Eip1559GasPriceService(evmKit: evmKit, initialMaxBaseFee: initialMaxBaseFee, initialMaxTips: initialMaxTips, minRecommendedBaseFee: minRecommendedBaseFee, minRecommendedTips: minRecommendedTips)
+            return Eip1559GasPriceService(evmKit: evmKit, initialMaxBaseFee: initialMaxBaseFee, initialMaxTips: initialMaxTips, minRecommendedMaxFee: minRecommendedMaxFee, minRecommendedTips: minRecommendedTips)
         } else {
             var initialGasPrice: Int? = nil
             var minRecommendedGasPrice: Int? = nil
@@ -46,7 +46,6 @@ extension EvmFeeModule {
 
     enum GasDataError: Error {
         case insufficientBalance
-        case lowMaxFee
     }
 
     enum GasDataWarning: Warning {
@@ -54,9 +53,14 @@ extension EvmFeeModule {
         case overpricing
     }
 
+    struct GasPrices {
+        let recommended: GasPrice
+        let userDefined: GasPrice
+    }
+
     class GasData {
         let limit: Int
-        let price: GasPrice
+        private(set) var price: GasPrice
 
         init(limit: Int, price: GasPrice) {
             self.limit = limit
@@ -69,6 +73,10 @@ extension EvmFeeModule {
 
         var description: String {
             "L1 transaction: gasLimit:\(limit) - gasPrice:\(price.description)"
+        }
+
+        func set(price: GasPrice) {
+            self.price = price
         }
     }
 
@@ -108,8 +116,8 @@ protocol IEvmFeeService {
 }
 
 protocol IGasPriceService {
-    var status: DataStatus<FallibleData<GasPrice>> { get }
-    var statusObservable: Observable<DataStatus<FallibleData<GasPrice>>> { get }
+    var status: DataStatus<FallibleData<EvmFeeModule.GasPrices>> { get }
+    var statusObservable: Observable<DataStatus<FallibleData<EvmFeeModule.GasPrices>>> { get }
     var usingRecommended: Bool { get }
 }
 

@@ -123,18 +123,21 @@ struct SendEvmConfirmationModule {
         }
 
         let sendData: SendEvmData
+        let gasLimit: Int?
         switch type {
         case .speedUp:
             let transactionData = TransactionData(to: to, value: value, input: input)
             sendData = SendEvmData(transactionData: transactionData, additionalInfo: nil, warnings: [])
+            gasLimit = transaction.gasLimit
         case .cancel:
             let transactionData = TransactionData(to: adapter.evmKit.receiveAddress, value: 0, input: Data())
             sendData = SendEvmData(transactionData: transactionData, additionalInfo: nil, warnings: [])
+            gasLimit = nil
         }
 
         let (settingsService, feeViewModel) = EvmSendSettingsModule.instance(
                 evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory,
-                previousTransaction: transaction, gasLimit: transaction.gasLimit
+                previousTransaction: transaction, gasLimit: gasLimit
         )
 
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)

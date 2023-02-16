@@ -8,7 +8,7 @@ class NonceService {
 
     private(set) var minimumNonce: Int = 0
     private(set) var recommendedNonce: Int = 0
-    private var nonce: Int {
+    private var nonce: Int = 0 {
         didSet {
             sync()
         }
@@ -27,8 +27,15 @@ class NonceService {
 
     init(evmKit: EvmKit.Kit, replacingNonce: Int?) {
         self.evmKit = evmKit
-        nonce = replacingNonce ?? 0
-        frozen = replacingNonce != nil
+
+        if let nonce = replacingNonce {
+            self.nonce = nonce
+            frozen = true
+
+            status = .completed(FallibleData(data: nonce, errors: [], warnings: []))
+        } else {
+            frozen = false
+        }
 
         resetNonce()
     }

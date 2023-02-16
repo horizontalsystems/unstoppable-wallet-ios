@@ -25,7 +25,13 @@ class EvmRollupGasDataService: EvmCommonGasDataService {
     }
 
     override func gasDataSingle(gasPrice: GasPrice, transactionData: TransactionData, stubAmount: BigUInt?) -> Single<EvmFeeModule.GasData> {
-        super.gasDataSingle(gasPrice: gasPrice, transactionData: transactionData, stubAmount: stubAmount)
+        if let gasLimit = predefinedGasLimit {
+            return l1GasFeeSingle(transactionData: transactionData, gasPrice: gasPrice, gasLimit: gasLimit).map { l1GasFee in
+                EvmFeeModule.RollupGasData(additionalFee: l1GasFee, limit: gasLimit, price: gasPrice)
+            }
+        }
+
+        return super.gasDataSingle(gasPrice: gasPrice, transactionData: transactionData, stubAmount: stubAmount)
             .flatMap { [weak self] commonGasData in
                 var l1TransactionData = transactionData
                 // if we calculate stub fee for l2 layer. we need calculate l1BaseFee using maximum value converted to FFF..FFF view
@@ -41,13 +47,4 @@ class EvmRollupGasDataService: EvmCommonGasDataService {
             }
     }
 
-    override func predefinedGasData(gasPrice: GasPrice, transactionData: TransactionData) -> Single<EvmFeeModule.GasData>? {
-        guard let gasLimit = gasLimit else {
-            return nil
-        }
-
-        return l1GasFeeSingle(transactionData: transactionData, gasPrice: gasPrice, gasLimit: gasLimit).map { l1GasFee in
-            EvmFeeModule.RollupGasData(additionalFee: l1GasFee, limit: gasLimit, price: gasPrice)
-        }
-    }
 }
