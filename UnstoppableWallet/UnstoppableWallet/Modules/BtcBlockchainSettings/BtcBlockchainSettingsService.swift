@@ -13,12 +13,6 @@ class BtcBlockchainSettingsService {
         }
     }
 
-    var transactionMode: TransactionDataSortMode {
-        didSet {
-            syncHasChanges()
-        }
-    }
-
     private let hasChangesRelay = BehaviorRelay<Bool>(value: false)
 
     init(blockchain: Blockchain, btcBlockchainManager: BtcBlockchainManager) {
@@ -26,14 +20,12 @@ class BtcBlockchainSettingsService {
         self.btcBlockchainManager = btcBlockchainManager
 
         restoreMode = btcBlockchainManager.restoreMode(blockchainType: blockchain.type)
-        transactionMode = btcBlockchainManager.transactionSortMode(blockchainType: blockchain.type)
     }
 
     private func syncHasChanges() {
         let initialRestoreMode = btcBlockchainManager.restoreMode(blockchainType: blockchain.type)
-        let initialTransactionMode = btcBlockchainManager.transactionSortMode(blockchainType: blockchain.type)
 
-        hasChangesRelay.accept(restoreMode != initialRestoreMode || transactionMode != initialTransactionMode)
+        hasChangesRelay.accept(restoreMode != initialRestoreMode)
     }
 
 }
@@ -47,10 +39,6 @@ extension BtcBlockchainSettingsService {
     func save() {
         if restoreMode != btcBlockchainManager.restoreMode(blockchainType: blockchain.type) {
             btcBlockchainManager.save(restoreMode: restoreMode, blockchainType: blockchain.type)
-        }
-
-        if transactionMode != btcBlockchainManager.transactionSortMode(blockchainType: blockchain.type) {
-            btcBlockchainManager.save(transactionSortMode: transactionMode, blockchainType: blockchain.type)
         }
     }
 

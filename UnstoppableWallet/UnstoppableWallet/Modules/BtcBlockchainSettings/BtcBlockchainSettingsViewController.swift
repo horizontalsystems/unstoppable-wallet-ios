@@ -16,7 +16,6 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
     private let saveButton = PrimaryButton()
 
     private var restoreModeViewItems = [BtcBlockchainSettingsViewModel.ViewItem]()
-    private var transactionModeViewItems = [BtcBlockchainSettingsViewModel.ViewItem]()
     private var loaded = false
 
     init(viewModel: BtcBlockchainSettingsViewModel) {
@@ -68,7 +67,6 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
         saveButton.addTarget(self, action: #selector(onTapSave), for: .touchUpInside)
 
         subscribe(disposeBag, viewModel.restoreModeViewItemsDriver) { [weak self] in self?.sync(restoreModeViewItems: $0) }
-        subscribe(disposeBag, viewModel.transactionModeViewItemsDriver) { [weak self] in self?.sync(transactionModeViewItems: $0) }
         subscribe(disposeBag, viewModel.canSaveDriver) { [weak self] in self?.sync(canSave: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.dismiss(animated: true) }
 
@@ -89,11 +87,6 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
         reloadTable()
     }
 
-    private func sync(transactionModeViewItems: [BtcBlockchainSettingsViewModel.ViewItem]) {
-        self.transactionModeViewItems = transactionModeViewItems
-        reloadTable()
-    }
-
     private func sync(canSave: Bool) {
         saveButton.isEnabled = canSave
     }
@@ -106,10 +99,6 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
 
     private func openRestoreModeInfo() {
         present(InfoModule.restoreSourceInfo, animated: true)
-    }
-
-    private func openTransactionModeInfo() {
-        present(InfoModule.transactionInputsOutputsInfo, animated: true)
     }
 
 }
@@ -149,19 +138,6 @@ extension BtcBlockchainSettingsViewController: SectionsDataSource {
                     ] + restoreModeViewItems.enumerated().map { index, viewItem in
                         row(id: "restore", viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == restoreModeViewItems.count - 1) { [weak self] in
                             self?.viewModel.onSelectRestoreMode(index: index)
-                        }
-                    }
-            ),
-            Section(
-                    id: "transaction-mode",
-                    footerState: tableView.sectionFooter(text: "btc_blockchain_settings.transaction_inputs_outputs.description".localized(viewModel.title)),
-                    rows: [
-                        tableView.subtitleWithInfoButtonRow(text: "btc_blockchain_settings.transaction_inputs_outputs".localized) { [weak self] in
-                            self?.openTransactionModeInfo()
-                        }
-                    ] + transactionModeViewItems.enumerated().map { index, viewItem in
-                        row(id: "transaction", viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == transactionModeViewItems.count - 1) { [weak self] in
-                            self?.viewModel.onSelectTransactionMode(index: index)
                         }
                     }
             )

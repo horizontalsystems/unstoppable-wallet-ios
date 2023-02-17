@@ -7,14 +7,12 @@ class BtcBlockchainSettingsViewModel {
     private let disposeBag = DisposeBag()
 
     private let restoreModeViewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
-    private let transactionModeViewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
     private let finishRelay = PublishRelay<()>()
 
     init(service: BtcBlockchainSettingsService) {
         self.service = service
 
         syncRestoreModeState()
-        syncTransactionModeState()
     }
 
     private func syncRestoreModeState() {
@@ -24,23 +22,12 @@ class BtcBlockchainSettingsViewModel {
         restoreModeViewItemsRelay.accept(viewItems)
     }
 
-    private func syncTransactionModeState() {
-        let viewItems = TransactionDataSortMode.allCases.map { mode in
-            ViewItem(name: mode.title, description: mode.description, selected: mode == service.transactionMode)
-        }
-        transactionModeViewItemsRelay.accept(viewItems)
-    }
-
 }
 
 extension BtcBlockchainSettingsViewModel {
 
     var restoreModeViewItemsDriver: Driver<[ViewItem]> {
         restoreModeViewItemsRelay.asDriver()
-    }
-
-    var transactionModeViewItemsDriver: Driver<[ViewItem]> {
-        transactionModeViewItemsRelay.asDriver()
     }
 
     var canSaveDriver: Driver<Bool> {
@@ -62,11 +49,6 @@ extension BtcBlockchainSettingsViewModel {
     func onSelectRestoreMode(index: Int) {
         service.restoreMode = BtcRestoreMode.allCases[index]
         syncRestoreModeState()
-    }
-
-    func onSelectTransactionMode(index: Int) {
-        service.transactionMode = TransactionDataSortMode.allCases[index]
-        syncTransactionModeState()
     }
 
     func onTapSave() {
