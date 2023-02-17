@@ -18,6 +18,7 @@ class NonceViewModel {
 
         sync(nonceStatus: service.status)
         subscribe(disposeBag, service.statusObservable) { [weak self] in self?.sync(nonceStatus: $0) }
+        subscribe(disposeBag, service.usingRecommendedObservable) { [weak self] in self?.sync(usingRecommended: $0) }
     }
 
     private func sync(nonceStatus: DataStatus<FallibleData<Int>>) {
@@ -38,6 +39,10 @@ class NonceViewModel {
 
         spinnerVisibleRelay.accept(spinnerVisible)
         valueRelay.accept(value)
+    }
+
+    private func sync(usingRecommended: Bool) {
+        alteredStateRelay.accept(Void())
     }
 
 }

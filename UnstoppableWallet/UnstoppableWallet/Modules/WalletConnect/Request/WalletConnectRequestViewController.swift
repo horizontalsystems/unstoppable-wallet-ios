@@ -11,10 +11,10 @@ class WalletConnectRequestViewController: SendEvmTransactionViewController {
     private let approveButton = PrimaryButton()
     private let rejectButton = PrimaryButton()
 
-    init(viewModel: WalletConnectSendEthereumTransactionRequestViewModel, transactionViewModel: SendEvmTransactionViewModel, settingsService: EvmSendSettingsService, feeViewModel: EvmFeeViewModel) {
+    init(viewModel: WalletConnectSendEthereumTransactionRequestViewModel, transactionViewModel: SendEvmTransactionViewModel, settingsViewModel: EvmSendSettingsViewModel) {
         self.viewModel = viewModel
 
-        super.init(transactionViewModel: transactionViewModel, settingsService: settingsService, feeViewModel: feeViewModel)
+        super.init(transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)
     }
 
     required init?(coder aDecoder: NSCoder) {

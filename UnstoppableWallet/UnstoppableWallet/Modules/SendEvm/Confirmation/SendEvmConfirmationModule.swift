@@ -84,14 +84,16 @@ struct SendEvmConfirmationModule {
             return nil
         }
 
-        let (settingsService, feeViewModel) = EvmSendSettingsModule.instance(
+        guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
                 evmKit: evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory,
                 gasLimitSurchargePercent: sendData.transactionData.input.isEmpty ? 0 : 20
-        )
+        ) else {
+            return nil
+        }
 
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
         let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
-        let controller = SendEvmConfirmationViewController(transactionViewModel: viewModel, settingsService: settingsService, feeViewModel: feeViewModel)
+        let controller = SendEvmConfirmationViewController(transactionViewModel: viewModel, settingsViewModel: settingsViewModel)
 
         return controller
     }
@@ -135,15 +137,17 @@ struct SendEvmConfirmationModule {
             gasLimit = nil
         }
 
-        let (settingsService, feeViewModel) = EvmSendSettingsModule.instance(
+        guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
                 evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory,
                 previousTransaction: transaction, gasLimit: gasLimit
-        )
+        ) else {
+            throw CreateModuleError.cantCreateFeeSettingsModule
+        }
 
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
         let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
 
-        let viewController = SendEvmConfirmationViewController(transactionViewModel: viewModel, settingsService: settingsService, feeViewModel: feeViewModel)
+        let viewController = SendEvmConfirmationViewController(transactionViewModel: viewModel, settingsViewModel: settingsViewModel)
 
         switch type {
         case .speedUp:
@@ -166,11 +170,12 @@ extension SendEvmConfirmationModule {
     enum CreateModuleError: LocalizedError {
         case wrongTransaction
         case cantCreateFeeRateProvider
+        case cantCreateFeeSettingsModule
         case alreadyInBlock
 
         var errorDescription: String? {
             switch self {
-            case .wrongTransaction, .cantCreateFeeRateProvider: return "alert.unknown_error".localized
+            case .wrongTransaction, .cantCreateFeeRateProvider, .cantCreateFeeSettingsModule: return "alert.unknown_error".localized
             case .alreadyInBlock: return "tx_info.transaction.already_in_block".localized
             }
         }

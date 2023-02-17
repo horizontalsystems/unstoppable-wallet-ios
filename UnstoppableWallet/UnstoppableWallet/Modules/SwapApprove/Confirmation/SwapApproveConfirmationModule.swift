@@ -21,18 +21,20 @@ struct SwapApproveConfirmationModule {
             return nil
         }
 
-        let (settingsService, feeViewModel) = EvmSendSettingsModule.instance(
+        guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
                 evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory,
                 gasLimitSurchargePercent: 20
-        )
+        ) else {
+            return nil
+        }
 
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
         let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
 
         if revokeAllowance {
-            return SwapRevokeConfirmationViewController(transactionViewModel: transactionViewModel, settingsService: settingsService, feeViewModel: feeViewModel, delegate: delegate)
+            return SwapRevokeConfirmationViewController(transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel, delegate: delegate)
         }
-        return SwapApproveConfirmationViewController(transactionViewModel: transactionViewModel, settingsService: settingsService, feeViewModel: feeViewModel, delegate: delegate)
+        return SwapApproveConfirmationViewController(transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel, delegate: delegate)
     }
 
     static func revokeViewController(data: SwapAllowanceService.ApproveData, delegate: ISwapApproveDelegate) -> UIViewController? {

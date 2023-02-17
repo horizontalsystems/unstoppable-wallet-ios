@@ -5,16 +5,18 @@ import SectionsTableView
 import RxSwift
 import RxCocoa
 import ComponentKit
+import Foundation
 
 class SendEvmTransactionViewController: ThemeViewController {
     let disposeBag = DisposeBag()
 
     let transactionViewModel: SendEvmTransactionViewModel
-    let settingsService: EvmSendSettingsService
+    let settingsViewModel: EvmSendSettingsViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
     let bottomWrapper = BottomGradientHolder()
 
+    private let nonceCell = BaseThemeCell()
     private let maxFeeCell: FeeCellNew
 
     private var sectionViewItems = [SendEvmTransactionViewModel.SectionViewItem]()
@@ -24,11 +26,11 @@ class SendEvmTransactionViewController: ThemeViewController {
 
     var topDescription: String?
 
-    init(transactionViewModel: SendEvmTransactionViewModel, settingsService: EvmSendSettingsService, feeViewModel: EvmFeeViewModel) {
+    init(transactionViewModel: SendEvmTransactionViewModel, settingsViewModel: EvmSendSettingsViewModel) {
         self.transactionViewModel = transactionViewModel
-        self.settingsService = settingsService
+        self.settingsViewModel = settingsViewModel
 
-        maxFeeCell = FeeCellNew(viewModel: feeViewModel)
+        maxFeeCell = FeeCellNew(viewModel: settingsViewModel.feeViewModel)
 
         super.init()
     }
@@ -42,6 +44,8 @@ class SendEvmTransactionViewController: ThemeViewController {
 
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "manage_2_20"), style: .plain, target: self, action: #selector(openFeeSettings))
+
+        nonceCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -71,9 +75,24 @@ class SendEvmTransactionViewController: ThemeViewController {
             self?.reloadTable()
         }
 
+        subscribe(disposeBag, settingsViewModel.nonceViewModel.alteredStateSignal) { [weak self] in self?.tableView.reload() }
+        subscribe(disposeBag, settingsViewModel.nonceViewModel.valueDriver) { [weak self] in self?.sync(nonce: $0) }
+
         tableView.buildSections()
 
         isLoaded = true
+    }
+
+    private func sync(nonce: Decimal?) {
+        let value = nonce.flatMap { "\(NSDecimalNumber(decimal: $0).intValue)" } ?? ""
+
+        CellBuilderNew.buildStatic(
+                cell: nonceCell,
+                rootElement: .hStack([
+                    .textElement(text: .subhead2("send.confirmation.nonce".localized)),
+                    .textElement(text: .subhead1(value), parameters: [.allCompression, .rightAlignment])
+                ])
+        )
     }
 
     private func handle(cautions: [TitledCaution]) {
@@ -102,7 +121,7 @@ class SendEvmTransactionViewController: ThemeViewController {
     }
 
     @objc private func openFeeSettings() {
-        guard let controller = EvmSendSettingsModule.viewController(settingsService: settingsService) else {
+        guard let controller = EvmSendSettingsModule.viewController(settingsViewModel: settingsViewModel) else {
             return
         }
 
@@ -170,25 +189,44 @@ extension SendEvmTransactionViewController: SectionsDataSource {
             section(sectionViewItem: sectionViewItem, index: index)
         }
 
-        let feeSections: [SectionProtocol] = [
-            Section(
-                    id: "fee",
-                    headerState: .margin(height: .margin12),
-                    rows: [
-                        StaticRow(
-                                cell: maxFeeCell,
-                                id: "fee",
-                                height: .heightDoubleLineCell,
-                                autoDeselect: true
-                        )
-                    ]
+        var settingsSections: [SectionProtocol] = []
+
+        if settingsViewModel.nonceViewModel.altered && !settingsViewModel.nonceViewModel.frozen {
+            settingsSections.append(
+                    Section(
+                            id: "nonce",
+                            headerState: .margin(height: .margin16),
+                            rows: [
+                                StaticRow(
+                                        cell: nonceCell,
+                                        id: "nonce",
+                                        height: .heightCell48,
+                                        autoDeselect: true
+                                )
+                            ]
+                    )
             )
-        ]
+        }
+
+        settingsSections.append(
+                Section(
+                        id: "fee",
+                        headerState: .margin(height: .margin16),
+                        rows: [
+                            StaticRow(
+                                    cell: maxFeeCell,
+                                    id: "fee",
+                                    height: .heightDoubleLineCell,
+                                    autoDeselect: true
+                            )
+                        ]
+                )
+        )
 
         let cautionsSections: [SectionProtocol] = [
             Section(
                     id: "caution1",
-                    headerState: .margin(height: .margin12),
+                    headerState: .margin(height: .margin16),
                     rows: [
                         StaticRow(
                                 cell: caution1Cell,
@@ -213,7 +251,7 @@ extension SendEvmTransactionViewController: SectionsDataSource {
             )
         ]
 
-        return transactionSections + feeSections + cautionsSections
+        return transactionSections + settingsSections + cautionsSections
     }
 
 }

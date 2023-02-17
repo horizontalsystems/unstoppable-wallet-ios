@@ -20,15 +20,17 @@ struct SwapConfirmationModule {
             return nil
         }
 
-        let (settingsService, feeViewModel) = EvmSendSettingsModule.instance(
+        guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
                 evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory,
                 gasLimitSurchargePercent: 20
-        )
+        ) else {
+            return nil
+        }
 
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
         let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
 
-        return SwapConfirmationViewController(transactionViewModel: viewModel, settingsService: settingsService, feeViewModel: feeViewModel)
+        return SwapConfirmationViewController(transactionViewModel: viewModel, settingsViewModel: settingsViewModel)
     }
 
     static func viewController(parameters: OneInchSwapParameters, dex: SwapModule.Dex) -> UIViewController? {
@@ -36,7 +38,8 @@ struct SwapConfirmationModule {
             return nil
         }
 
-        guard let swapKit = try? OneInchKit.Kit.instance(evmKit: evmKitWrapper.evmKit) else {
+        let evmKit = evmKitWrapper.evmKit
+        guard let swapKit = try? OneInchKit.Kit.instance(evmKit: evmKit) else {
             return nil
         }
 
@@ -52,16 +55,33 @@ struct SwapConfirmationModule {
             return nil
         }
 
-        let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKitWrapper.evmKit)
-        let feeService = OneInchFeeService(evmKit: evmKitWrapper.evmKit,  provider: oneInchProvider, gasPriceService: gasPriceService, coinService: coinServiceFactory.baseCoinService, parameters: parameters)
-        let service = OneInchSendEvmTransactionService(evmKitWrapper: evmKitWrapper, transactionFeeService: feeService)
-        let nonceService = NonceService(evmKit: evmKitWrapper.evmKit, replacingNonce: nil)
+        let gasPriceService = EvmFeeModule.gasPriceService(evmKit: evmKit)
+        let coinService = coinServiceFactory.baseCoinService
+        let feeViewItemFactory = FeeViewItemFactory(scale: coinService.token.blockchainType.feePriceScale)
+        let nonceService = NonceService(evmKit: evmKit, replacingNonce: nil)
+        let feeService = OneInchFeeService(evmKit: evmKit,  provider: oneInchProvider, gasPriceService: gasPriceService, coinService: coinServiceFactory.baseCoinService, parameters: parameters)
         let settingsService = EvmSendSettingsService(feeService: feeService, nonceService: nonceService)
 
-        let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
-        let feeViewModel = EvmFeeViewModel(service: feeService, gasPriceService: gasPriceService, coinService: coinServiceFactory.baseCoinService)
+        let cautionsFactory = SendEvmCautionsFactory()
+        let nonceViewModel = NonceViewModel(service: nonceService)
 
-        return SwapConfirmationViewController(transactionViewModel: transactionViewModel, settingsService: settingsService, feeViewModel: feeViewModel)
+        let settingsViewModel: EvmSendSettingsViewModel
+        switch gasPriceService {
+        case let legacyService as LegacyGasPriceService:
+            let feeViewModel = LegacyEvmFeeViewModel(gasPriceService: legacyService, feeService: feeService, coinService: coinService, feeViewItemFactory: feeViewItemFactory)
+            settingsViewModel = EvmSendSettingsViewModel(service: settingsService, feeViewModel: feeViewModel, nonceViewModel: nonceViewModel, cautionsFactory: cautionsFactory)
+
+        case let eip1559Service as Eip1559GasPriceService:
+            let feeViewModel = Eip1559EvmFeeViewModel(gasPriceService: eip1559Service, feeService: feeService, coinService: coinService, feeViewItemFactory: feeViewItemFactory)
+            settingsViewModel = EvmSendSettingsViewModel(service: settingsService, feeViewModel: feeViewModel, nonceViewModel: nonceViewModel, cautionsFactory: cautionsFactory)
+
+        default: return nil
+        }
+
+        let transactionSettings = OneInchSendEvmTransactionService(evmKitWrapper: evmKitWrapper, transactionFeeService: feeService)
+        let transactionViewModel = SendEvmTransactionViewModel(service: transactionSettings, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
+
+        return SwapConfirmationViewController(transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)
     }
 
 }

@@ -5,7 +5,7 @@ import ComponentKit
 import ThemeKit
 
 protocol IFeeViewModelNew {
-    var hasInformation: Bool { get }
+    var showInfoIcon: Bool { get }
     var valueDriver: Driver<FeeCellNew.Value?> { get }
     var spinnerVisibleDriver: Driver<Bool> { get }
 }
@@ -26,7 +26,7 @@ class FeeCellNew: BaseSelectableThemeCell {
         backgroundColor = .clear
         clipsToBounds = true
         set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        selectionStyle = viewModel.hasInformation ? .default : .none
+        selectionStyle = viewModel.showInfoIcon ? .default : .none
         sync()
 
         subscribe(disposeBag, viewModel.valueDriver) { [weak self] value in
@@ -49,7 +49,7 @@ class FeeCellNew: BaseSelectableThemeCell {
         ]
 
         var infoElements = [CellBuilderNew.CellElement]()
-        if viewModel.hasInformation {
+        if viewModel.showInfoIcon {
             infoElements.append(contentsOf: [
                 .margin8,
                 .imageElement(image: .local(UIImage(named: "circle_information_20")?.withTintColor(.themeGray)), size: .image20),

@@ -32,16 +32,18 @@ struct WalletConnectSendEthereumTransactionRequestModule {
         let additionalInfo: SendEvmData.AdditionInfo = .otherDApp(info: SendEvmData.DAppInfo(name: request.dAppName))
         let sendEvmData = SendEvmData(transactionData: service.transactionData, additionalInfo: additionalInfo, warnings: [])
 
-        let (settingsService, feeViewModel) = EvmSendSettingsModule.instance(
+        guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
                 evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendEvmData, coinServiceFactory: coinServiceFactory,
                 gasPrice: service.gasPrice, gasLimit: request.transaction.gasLimit, gasLimitSurchargePercent: 10
-        )
+        ) else {
+            return nil
+        }
 
         let sendService = SendEvmTransactionService(sendData: sendEvmData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
         let transactionViewModel = SendEvmTransactionViewModel(service: sendService, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
         let viewModel = WalletConnectSendEthereumTransactionRequestViewModel(service: service)
 
-        return WalletConnectRequestViewController(viewModel: viewModel, transactionViewModel: transactionViewModel, settingsService: settingsService, feeViewModel: feeViewModel)
+        return WalletConnectRequestViewController(viewModel: viewModel, transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)
     }
 
 }
