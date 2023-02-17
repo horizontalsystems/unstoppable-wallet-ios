@@ -113,14 +113,9 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "Antiguo";
-"coin_settings.derivation.title.bip49" = "Bueno";
-"coin_settings.derivation.title.bip84" = "Mejor";
 "coin_settings.title" = "Configuración de Blockchain";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "Dirección de caja (recomendado)";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "Común antes de 2018";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "Común después de 2018";
 "sync_mode.from_blockchain" = "Desde Blockchain";
 "blockchain_settings.description" = "Seleccione el formato de dirección para recibir pagos. Debe elegirse un formato correcto cuando se restaure una cartera existente.";
 
@@ -141,14 +136,13 @@
 "recovery_phrase.title" = "Frase de Recuperación";
 "recovery_phrase.warning" = "Nunca comparta su frase de recuperación con nadie. El equipo imparable nunca pedirá su frase de recuperación.";
 "recovery_phrase.tap_to_show" = "Toca para mostrar la frase de recuperación";
-"recovery_phrase.passphrase" = "Contraseña";
+"recovery_phrase.passphrase" = "Frase de contraseña";
 "recovery_phrase.copy_warning.title" = "Copia de Riesgo de Recuperación";
 "recovery_phrase.copy_warning.description" = "Como medida de seguridad recomendamos no utilizar la acción de copia en la clave privada.";
 
 // EVM Private Key
 
 "evm_private_key.title" = "Clave Privada EVM";
-"evm_private_key.warning" = "Esta clave es para todas las blockchains compatibles con EVM. No la comparta con nadie.";
 "evm_private_key.tap_to_show" = "Toca para mostrar la clave privada";
 
 // Extended Key
@@ -166,7 +160,7 @@
 "backup.title" = "Frase de Recuperación";
 "backup.description" = "Escriba estas palabras en el orden correcto y guárdelas en un lugar seguro";
 "backup.tap_to_show" = "Toca para mostrar la frase de recuperación";
-"backup.passphrase" = "Contraseña";
+"backup.passphrase" = "Frase de contraseña";
 "backup.verify" = "Verificar";
 "backup.verified" = "Verificado";
 
@@ -283,11 +277,11 @@
 "send.hodler_error.unsupported_address" = "El bloqueo del tiempo solo funciona con direcciones P2PKH (a partir de 1)";
 "send.fee_info.title" = "Velocidad de transacción";
 "send.fee_info.description" = "Las blockchain de Bitcoin como las de Ethereum requieren que los usuarios paguen comisiones de red al enviar transacciones. Las comisiones son más altas cuando muchas transacciones están teniendo lugar en la red y más bajas cuando el blockchain está menos ocupado.";
-"send.fee_info.header_slow" = "Lento";
+"send.fee_info.header_slow" = "Bajo";
 "send.fee_info.content_slow" = "Seleccionar un valor de este rango puede resultar en que la transacción quede pendiente por horas o sea rechazada por completo. Cuanto más bajo sea el valor, mas tardará en confirmar la transacción.";
-"send.fee_info.header_average" = "Promedio";
+"send.fee_info.header_average" = "Recomendado";
 "send.fee_info.content_average" = "Normalmente, el valor de tarifa recomendado debería ser suficiente para que la transacción sea procesada entre un minuto/hora para Bitcoin y dentro de minutos para Ethereum.";
-"send.fee_info.header_fast" = "Rápido";
+"send.fee_info.header_fast" = "Alto";
 "send.fee_info.content_fast" = "Para las transacciones en las que la prioridad sea importante, recomendamos utilizar el valor de una tarifa mayor. Se espera que la selección de un ajuste de una tarifa mayor sea suficiente para que la transacción se complete dentro de 10 minutos para Bitcoin y dentro de unos minutos para Ethereum.";
 "send.fee_info.content_conclusion" = "El monedero Unstoppable hace una conjetura adecuada basada en la actividad de la red y no puede garantizar que los valores de comisión sugeridos siempre resulten en un comportamiento esperado.";
 
@@ -412,7 +406,7 @@
 "swap.dex_info.content_price_impact" = "Desviación de precio esperada de un valor mostrado, normalmente aumenta con la cantidad de swap.";
 "swap.dex_info.header_swap_fee" = "Tarifa por intercambio";
 "swap.dex_info.content_swap_fee" = "Una tarifa de servicio para la acción de intercambio en la plataforma, mostrada en la moneda que el usuario vende. Para la mayoría de las ordenes debería ser del 0.3% o del 0.6%.";
-"swap.dex_info.header_guaranteed_amount" = "Cantidad Garantizada";
+"swap.dex_info.header_guaranteed_amount" = "Mínimo Obtenido";
 "swap.dex_info.content_guaranteed_amount" = "La cantidad mínima que un usuario va a recibir como resultado de una acción de intercambio.";
 "swap.dex_info.header_maximum_spend" = "Gasto máximo";
 "swap.dex_info.content_maximum_spend" = "La cantidad máxima que un usuario va a recibir como resultado de una acción de intercambio.";
@@ -420,7 +414,7 @@
 "swap.dex_info.header_other" = "Otro";
 "swap.dex_info.header_transaction_fee" = "Tarifa de Transacción";
 "swap.dex_info.content_transaction_fee" = "El costo estimado del proceso de la transacción dada en la %@ blockchain. %@ Las Transacciones Relacionadas normalmente costarán más que las transacciones genéricas de de token.";
-"swap.dex_info.header_transaction_speed" = "Velocidad de la transacción";
+"swap.dex_info.header_transaction_speed" = "Velocidad de transacción";
 "swap.dex_info.content_transaction_speed" = "Las transacciones con una tarifa de transacción más alta darán como resultado velocidades de procesamiento más rápidas. Lo opuesto también.";
 
 "swap.dex_info.link_button" = "%@ Sitio";
@@ -448,7 +442,7 @@
 "market.top.market_cap.title" = "Capitalización de Mercado";
 "market.top.diluted_market_cap.title" = "Capitalización de Mercado Diliuída";
 
-"market.market_field.mcap" = "Cap. de Mercado";
+"market.market_field.mcap" = "Capitalización de Mercado";
 "market.market_field.vol" = "Volumen";
 
 "market.tvl.market_field.value" = "USD";
@@ -487,7 +481,7 @@
 
 "market_watchlist.empty.caption" = "Tu Watchlist está vacía.";
 
-"market.search.title" = "Búsqueda";
+"market.search.title" = "Buscar";
 "market.search.empty_text" = "No se han encontrado resultados";
 
 "market.advanced_search.title" = "Filtros";
@@ -550,14 +544,14 @@
 
 "market.advanced_search_results.title" = "Resultados";
 
-"market.global.total_market_cap.title" = "Capitalización Total";
+"market.global.total_market_cap.title" = "Total Cap";
 "market.global.volume_24h.title" = "Volumen de 24 horas";
-"market.global.defi_cap.title" = "Cap. DeFi";
+"market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 
 "market.global.btc_dominance.title" = "Dominio Bitcoin";
 "market.global.volume_24h.title" = "Volumen de 24 horas";
-"market.global.defi_cap.title" = "Cap. DeFi";
+"market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.btc_dominance.description" = "El cambio histórico en la relación entre el límite de mercado de Bitcoin y el resto de los mercados de criptomonedas. \n\nPor lo general, cuando el dominio de Bitcoin tiende a ser más alto, el resto de las tendencias del mercado de criptomonedas disminuye y viceversa.";
 "market.global.volume_24h.description" = "El cambio histórico en el volumen diario del mercado de operaciones agregadas para todas las criptomonedas.";
@@ -567,7 +561,7 @@
 // Coin Page
 
 "coin_page.roi.hour1" = "1 Hora";
-"coin_page.roi.hour24" = "1 Día";
+"coin_page.roi.hour24" = "1 día";
 "coin_page.roi.day7" = "1 Semana";
 "coin_page.roi.day14" = "2 Semanas";
 "coin_page.roi.day30" = "1 Mes";
@@ -579,13 +573,13 @@
 "coin_page.tab.details" = "Estadísticas";
 "coin_page.tab.tweets" = "Tweets";
 
-"coin_page.market_cap" = "Capitalización de Mercado";
+"coin_page.market_cap" = "Capitalización del Mercado";
 "coin_page.circulating_supply" = "En Circulación";
 "coin_page.total_supply" = "Suminstro Total";
-"coin_page.diluted_market_cap" = "Cap. de Mercado Diluida";
+"coin_page.diluted_market_cap" = "Capitalización de Mercado Diliuída";
 "coin_page.genesis_date" = "Fecha de inicio";
 
-"coin_page.trading_volume" = "Volumen de comercio";
+"coin_page.trading_volume" = "Volumen de Comercio";
 "coin_page.trading_volume.description" = "El cambio histórico en el volumen de operaciones diarias acumuladas por %@";
 "coin_page.markets" = "Mercados";
 "coin_page.markets.empty" = "No hay datos disponibles";
@@ -637,7 +631,11 @@
 
 "coin_page.category" = "Categoría";
 
-"coin_page.contracts" = "Contratos";
+"coin_page.blockchains" = "Blockchains";
+"coin_page.bips" = "BIPs";
+"coin_page.coin_types" = "Coin Types";
+"coin_page.show_more" = "Mostrar más";
+"coin_page.show_less" = "Show Less";
 "coin_page.links" = "Enlaces";
 
 "coin_page.guide" = "Instructivos";
@@ -773,11 +771,11 @@
 "tx_info.from_hash" = "Desde ";
 "tx_info.transaction_id" = "Identificación de la transacción";
 "tx_info.to_hash" = "Para";
-"tx_info.spender" = "Gastos";
+"tx_info.spender" = "Gastador";
 "tx_info.button_explorer" = "Ver en %@";
 "tx_info.rate" = "Tasa histórica";
 "tx_info.options.speed_up" = "Acelerar";
-"tx_info.options.cancel" = "Cancelar";
+"tx_info.options.cancel" = "Cancelar la transacción";
 "tx_info.transaction.already_in_block" = "La transacción ya está en bloque";
 "tx_info.fee" = "Comisión";
 "tx_info.fee.estimated" = "Tarifa (est.)";
@@ -795,7 +793,6 @@
 "tx_info.you_paid" = "Has pagado";
 "tx_info.you_got" = "Tienes";
 "tx_info.price" = "Precio";
-"tx_info.options" = "Opciones";
 
 // Settings
 
@@ -825,25 +822,18 @@
 "manage_wallets.title" = "Monederos";
 "manage_wallets.not_found" = "No se han encontrado resultados. Intente añadir el token manualmente.";
 "manage_wallets.search_placeholder" = "Nombre, código o dirección del contrato";
-"manage_wallets.not_supported" = "No soportado";
-"manage_wallets.not_supported.description" = "Su tipo de cartera actual %@ no soporta %@";
-"manage_wallets.not_supported.by_app.description" = "Unstoppable no soporta %@";
 
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "Las siguientes características son experimentales y deben utilizarse con precaución. Aunque hemos probado a fondo estas características usando nuestros propios fondos criptográficos, no podemos garantizar que funcionen como se espera en todos los casos posibles.";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
-"settings.experimental_features.evm_testnet" = "Testnet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "Activar";
 "settings.bitcoin_hodling.description" = "Permite enviar Bitcoins que no se pueden gastar hasta la fecha establecida.\n\nEl receptor de dicha transacción debe utilizar el monedero Unstoppable.\n\nSólo el monedero Unstoppable puede identificar correctamente tales transacciones en la red Bitcoin, así como permitir que el receptor gaste esos Bitcoins después de que expire el período de bloqueo.\n\nSi eres un HODLer, puedes usar esta función para obligarte a retener tus Bitcoins enviándote dicha transacción a ti mismo.\n\nPor ser característica experimental, la cantidad máxima por transacción está limitada a 0.5 BTC.";
-"settings.evm_testnet.title" = "Testnet";
-"settings.evm_testnet.enable" = "Activar";
-"settings.evm_testnet.description" = "Esta opción activa la red de pruebas Goerli de Ethereum sólo para token GoerliETH y la añade al administrador de monedas.\n\nSólo afecta al token GoerliETH mientras todos los demás tokens EVM y Ethereum operan sobre mainnet. En otras palabras, sólo las transacciones en GoerliETH pasan por Goerli testnet, mientras que todas las demás transferencias de token EVM incluyendo ETH pasan por mainnet.";
 
 // Settings -> Terms
 
@@ -866,7 +856,7 @@
 
 // Settings -> Security
 
-"settings_security.title" = "Centro de seguridad";
+"settings_security.title" = "Seguridad";
 "settings_security.passcode" = "Código de acceso";
 "settings_security.change_pin" = "Editar el código ";
 "settings_security.touch_id" = "Identificación táctil";
@@ -964,7 +954,7 @@
 
 // Edit PIN
 
-"edit_pin.title" = "Editar el código de acceso";
+"edit_pin.title" = "Editar el código ";
 "edit_pin.unlock_info" = "Código actual";
 "edit_pin.new_pin_info" = "Nuevo código de acceso";
 
@@ -988,18 +978,18 @@
 "chart.time_duration.year2" = "2 Años";
 "chart.time_duration.all" = "TODO";
 
-"chart.market_cap" = "Cap. de Mercado";
+"chart.market_cap" = "Capitalización del Mercado";
 "chart.volume" = "Volumen (24St)";
-"chart.circulation" = "En circulación";
+"chart.circulation" = "En Circulación";
 "chart.selected.volume" = "Volumen";
 "chart.price_indicator_range.day" = "Rango de 24h";
 "chart.price_indicator_range.year" = "Rango de 52 semanas";
 
 "chart.market.header" = "Mercado";
-"chart.market.market_cap" = "Cap. de Mercado";
-"chart.market.volume" = "Volumen (24 h)";
-"chart.market.circulation" = "En circulación";
-"chart.market.total_supply" = "Suministro total";
+"chart.market.market_cap" = "Capitalización del Mercado";
+"chart.market.volume" = "Volumen (24St)";
+"chart.market.circulation" = "En Circulación";
+"chart.market.total_supply" = "Suminstro Total";
 
 "chart.performance.week_changes" = "Cambios (1 Semana)";
 "chart.performance.month_changes" = "Cambios (1 Mes)";
@@ -1017,7 +1007,7 @@
 "create_wallet.advanced_setup" = "Avanzado";
 "create_wallet.create" = "Crear";
 "create_wallet.advanced" = "Avanzado";
-"create_wallet.phrase_count" = "Mnemónico";
+"create_wallet.phrase_count" = "Frase de Recuperación";
 "create_wallet.12_words" = "12 palabras (recomendado)";
 "create_wallet.n_words" = "%@ palabras";
 "create_wallet.word_list" = "Lista de palabras";
@@ -1104,7 +1094,7 @@
 "ethereum_transaction.error.nonce_already_in_block" = "La transacción ya está en bloque!";
 "ethereum_transaction.error.replacement_transaction_underpriced" = "Cuota no suficiente para reemplazar la transacción";
 "ethereum_transaction.error.reverted" = "La transacción no pudo ser ejecutada: %@";
-"wallet_connect.request_title" = "Pedido";
+"wallet_connect.request_title" = "Llamada de Contrato";
 "wallet_connect.button.confirm" = "Confirmar";
 "wallet_connect.sign.request_title" = "Solicitud de Firma";
 "wallet_connect.sign.domain" = "Dominio";
@@ -1155,12 +1145,12 @@
 "status_info.processing.content" = "La transacción ha sido incluida en el blockchain pero todavía no ha alcanzado la finalidad permanente. En este punto, es posible considerar que la transacción fue completada para pagos más pequeños. Para pagos más grandes se recomienda esperar hasta que el estado cambie a completar.";
 "status_info.completed.title" = "Finalizado";
 "status_info.confirmed.content" = "La transacción se completó y se considera permanente e irreversible.";
-"status_info.failed.title" = "Falló";
+"status_info.failed.title" = "Falla";
 "status_info.failed.content" = "La transacción no se procesó y no hubo transferencia de valor. Dependiendo de la razón del fracaso, algunas transacciones fallidas pueden consumir comisiones de transacción. Las transacciones que fueron reemplazadas o canceladas por otra transacción no consumen comisiones de transacción y también aparecerán sa fallida. La aplicación imparable no puede mostrar la razón de las transacciones fallidas, pero los usuarios son capaces de buscarlo ellos mismos en un explorador público de bloques etherscan.io.";
 
 // Onboarding
 
-"onboarding.balance.create" = "Nuevo monedero";
+"onboarding.balance.create" = "Nuevo Monedero";
 "onboarding.balance.import" = "Importar monedero";
 "onboarding.balance.watch" = "Ver Monedero";
 
@@ -1173,13 +1163,32 @@
 
 "manage_account.name" = "Nombre";
 "manage_account.recovery_phrase" = "Frase de Recuperación";
-"manage_account.evm_private_key" = "Clave Privada EVM";
-"manage_account.bip32_root_key" = "BIP32 Root Key";
-"manage_account.account_extended_private_key" = "Account Extended Private Key";
-"manage_account.account_extended_public_key" = "Account Extended Public Key";
 "manage_account.public_keys" = "Claves públicas";
+"manage_account.private_keys" = "Private Keys";
 "manage_account.backup_recovery_phrase" = "Respaldar Frase de Recuperación";
 "manage_account.unlink" = "Desenlazar";
+
+// Manage Account -> Public Keys
+
+"public_keys.title" = "Claves públicas";
+"public_keys.evm_address" = "Dirección EVM";
+"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM based blockchains.";
+"public_keys.account_extended_public_key" = "Account Extended Public Key";
+"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
+
+// Manage Account -> Private Keys
+
+"private_keys.title" = "Private Keys";
+"private_keys.evm_private_key" = "Clave Privada EVM";
+"private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
+"private_keys.bip32_root_key" = "BIP32 Root Key";
+"private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
+"private_keys.account_extended_private_key" = "Account Extended Private Key";
+"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within respective wallet.";
+
+// Manage Account -> EVM Address
+
+"evm_address.title" = "Dirección EVM";
 
 // Birthday Height
 
@@ -1189,7 +1198,7 @@
 
 "birthday_input.title" = "Altura de Cumpleaños";
 "birthday_input.description" = "Para sincronización rápida puede introducir la altura del cumpleaños del monedero.";
-"birthday_input.new_wallet" = "Nuevo monedero";
+"birthday_input.new_wallet" = "Nuevo Monedero";
 "birthday_input.new_wallet.description" = "No tienes ninguna transacción antes";
 "birthday_input.old_wallet" = "Añadir Monedero";
 "birthday_input.old_wallet.description" = "Usado antes y tiene transacciones";
@@ -1244,7 +1253,7 @@
 
 // Watch Address
 
-"watch_address.title" = "Ver Dirección";
+"watch_address.title" = "Ver Monedero";
 "watch_address.watch" = "Ver";
 "watch_address.address" = "Dirección";
 "watch_address.by" = "Por";
@@ -1311,9 +1320,9 @@
 
 "nft_collection.overview.owners" = "Propietarios";
 "nft_collection.overview.items" = "Elementos";
-"nft_collection.overview.24h_volume" = "Volumen 24h";
+"nft_collection.overview.24h_volume" = "Volumen de 24 horas";
 "nft_collection.overview.today_sellers" = "Súbditos de hoy";
-"nft_collection.overview.floor_price" = "Precio del piso";
+"nft_collection.overview.floor_price" = "Precio mínimo";
 "nft_collection.overview.all_time_average" = "Promedio de tiempo";
 "nft_collection.overview.royalty" = "Royalty";
 "nft_collection.overview.inception_date" = "Fecha de inicio";
