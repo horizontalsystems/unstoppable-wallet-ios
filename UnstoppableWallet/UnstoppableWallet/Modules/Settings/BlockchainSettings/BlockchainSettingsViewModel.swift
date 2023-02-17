@@ -24,7 +24,7 @@ class BlockchainSettingsViewModel {
             BlockchainViewItem(
                     iconUrl: btcItem.blockchain.type.imageUrl,
                     name: btcItem.blockchain.name,
-                    value: "\(btcItem.restoreMode.title), \(btcItem.transactionMode.title)"
+                    value: "\(btcItem.restoreMode.title)"
             )
         }
 

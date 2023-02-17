@@ -21,7 +21,6 @@ class BlockchainSettingsService {
         self.evmSyncSourceManager = evmSyncSourceManager
 
         subscribe(disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] _ in self?.syncItem() }
-        subscribe(disposeBag, btcBlockchainManager.transactionSortModeUpdatedObservable) { [weak self] _ in self?.syncItem() }
         subscribe(disposeBag, evmSyncSourceManager.syncSourceObservable) { [weak self] _ in self?.syncItem() }
 
         syncItem()
@@ -30,8 +29,7 @@ class BlockchainSettingsService {
     private func syncItem() {
         let btcItems: [BtcItem] = btcBlockchainManager.allBlockchains.map { blockchain in
             let restoreMode = btcBlockchainManager.restoreMode(blockchainType: blockchain.type)
-            let transactionMode = btcBlockchainManager.transactionSortMode(blockchainType: blockchain.type)
-            return BtcItem(blockchain: blockchain, restoreMode: restoreMode, transactionMode: transactionMode)
+            return BtcItem(blockchain: blockchain, restoreMode: restoreMode)
         }
 
         let evmItems: [EvmItem] = evmBlockchainManager.allBlockchains.map { blockchain in
@@ -65,7 +63,6 @@ extension BlockchainSettingsService {
     struct BtcItem {
         let blockchain: Blockchain
         let restoreMode: BtcRestoreMode
-        let transactionMode: TransactionDataSortMode
     }
 
     struct EvmItem {
