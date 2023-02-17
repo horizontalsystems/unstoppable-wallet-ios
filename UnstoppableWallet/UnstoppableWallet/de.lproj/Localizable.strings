@@ -635,6 +635,8 @@
 "coin_page.blockchains" = "Blockchains";
 "coin_page.bips" = "BIPs";
 "coin_page.coin_types" = "Coin Types";
+"coin_page.show_more" = "Mehr anzeigen";
+"coin_page.show_less" = "Show Less";
 "coin_page.links" = "Links";
 
 "coin_page.guide" = "Guide";
