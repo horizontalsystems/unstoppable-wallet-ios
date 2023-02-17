@@ -8,7 +8,7 @@ class NonceService {
 
     private(set) var minimumNonce: Int = 0
     private(set) var recommendedNonce: Int = 0
-    private var nonce: Int = 0 {
+    private(set) var nonce: Int = 0 {
         didSet {
             sync()
         }
@@ -64,6 +64,7 @@ extension NonceService {
 
     func set(nonce: Int) {
         self.nonce = nonce
+        usingRecommended = false
     }
 
     func resetNonce() {

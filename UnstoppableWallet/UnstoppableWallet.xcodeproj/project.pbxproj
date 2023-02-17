@@ -1380,12 +1380,10 @@
 		2FA5DB5E2D23E973286979E8 /* HistoricalRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6FADA5ECA61D3011CDE /* HistoricalRateService.swift */; };
 		2FA5DB996067F4B2961DCB04 /* ExperimentalFeaturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DC1396F20FC90B033146 /* ExperimentalFeaturesViewController.swift */; };
 		2FA5DBACDF09BE11FB7C40A7 /* ContractCallTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D008CA69267C8E5E00001E0A /* ContractCallTransactionRecord.swift */; };
-		2FA5DBB2820672B7F3A8B6FF /* EvmFeeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEC96FB4FC56828B622A /* EvmFeeViewModel.swift */; };
 		2FA5DBD32AA258A75A2FDD95 /* EvmSendSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D7B174B3D69FEAD69E78 /* EvmSendSettingsService.swift */; };
 		2FA5DBE42827FF3D114DBF4B /* CoinOverviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D85022014B00241B6913 /* CoinOverviewService.swift */; };
 		2FA5DC0554CE24AE27663585 /* EvmTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D682FBA971A9D1A09B2D /* EvmTransactionRecord.swift */; };
 		2FA5DC0EF03C92C2125D433E /* BinanceChainOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF5B8B69876A526CCDDD /* BinanceChainOutgoingTransactionRecord.swift */; };
-		2FA5DC19B5B99F666EDC838A /* EvmFeeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEC96FB4FC56828B622A /* EvmFeeViewModel.swift */; };
 		2FA5DC4BBDF469873662BDEE /* Eip1559EvmFeeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDF215D171796AA34FE /* Eip1559EvmFeeViewModel.swift */; };
 		2FA5DC6DC976D88C1E578403 /* UnknownSwapTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF48D44BB409FB94CED9 /* UnknownSwapTransactionRecord.swift */; };
 		2FA5DC95B68FC21FD48CCB13 /* BinanceChainTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEEA5C3A80D310255459 /* BinanceChainTransactionRecord.swift */; };
@@ -3009,7 +3007,6 @@
 		2FA5DE3FC4EA4B42BC982C9A /* BitcoinIncomingTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinIncomingTransactionRecord.swift; sourceTree = "<group>"; };
 		2FA5DE415A04A29B90C59105 /* SelectableValueView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectableValueView.swift; sourceTree = "<group>"; };
 		2FA5DE7E78C640A9EA13C1DA /* BinanceChainIncomingTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinanceChainIncomingTransactionRecord.swift; sourceTree = "<group>"; };
-		2FA5DEC96FB4FC56828B622A /* EvmFeeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmFeeViewModel.swift; sourceTree = "<group>"; };
 		2FA5DEDF215D171796AA34FE /* Eip1559EvmFeeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Eip1559EvmFeeViewModel.swift; sourceTree = "<group>"; };
 		2FA5DEEA5C3A80D310255459 /* BinanceChainTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinanceChainTransactionRecord.swift; sourceTree = "<group>"; };
 		2FA5DF48D44BB409FB94CED9 /* UnknownSwapTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownSwapTransactionRecord.swift; sourceTree = "<group>"; };
@@ -5259,7 +5256,6 @@
 				2FA5D88E9F89DCAE169A0937 /* EvmCommonGasDataService.swift */,
 				2FA5DDCA755F1439B51E12E5 /* EvmFeeService.swift */,
 				2FA5DCD7797C13645F3D5F8A /* EvmFeeViewItemFactory.swift */,
-				2FA5DEC96FB4FC56828B622A /* EvmFeeViewModel.swift */,
 				2FA5D924ED6978DD47365B51 /* EvmRollupGasDataService.swift */,
 			);
 			path = Fee;
@@ -7806,7 +7802,6 @@
 				2FA5DDDE9097C0CD9C0F5BD5 /* EvmFeeModule.swift in Sources */,
 				2FA5DF34B11401B29082BBD2 /* EvmFeeService.swift in Sources */,
 				2FA5DE0C343661BC10D2767F /* EvmFeeViewItemFactory.swift in Sources */,
-				2FA5DBB2820672B7F3A8B6FF /* EvmFeeViewModel.swift in Sources */,
 				2FA5D43131923C094E518B94 /* EvmRollupGasDataService.swift in Sources */,
 				2FA5DB16A7E67A97A08D43DC /* NonceDataSource.swift in Sources */,
 				2FA5D8E83DFBD235B805C79C /* NonceService.swift in Sources */,
@@ -8900,7 +8895,6 @@
 				2FA5D4C0118B480BEFDFB082 /* EvmFeeModule.swift in Sources */,
 				2FA5D98FF7412EBBD2FFFBC4 /* EvmFeeService.swift in Sources */,
 				2FA5D01A5570C6DE5D07E2C4 /* EvmFeeViewItemFactory.swift in Sources */,
-				2FA5DC19B5B99F666EDC838A /* EvmFeeViewModel.swift in Sources */,
 				2FA5DE1153742388007774D3 /* EvmRollupGasDataService.swift in Sources */,
 				2FA5DE2D347DBC660830CB41 /* NonceDataSource.swift in Sources */,
 				2FA5D1F6979A345597788DE9 /* NonceService.swift in Sources */,

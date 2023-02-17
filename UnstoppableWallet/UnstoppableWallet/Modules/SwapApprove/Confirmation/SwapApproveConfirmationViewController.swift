@@ -9,10 +9,10 @@ class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
     private let approveButton = PrimaryButton()
     private weak var delegate: ISwapApproveDelegate?
 
-    init(transactionViewModel: SendEvmTransactionViewModel, settingsService: EvmSendSettingsService, feeViewModel: EvmFeeViewModel, delegate: ISwapApproveDelegate?) {
+    init(transactionViewModel: SendEvmTransactionViewModel, settingsViewModel: EvmSendSettingsViewModel, delegate: ISwapApproveDelegate?) {
         self.delegate = delegate
 
-        super.init(transactionViewModel: transactionViewModel, settingsService: settingsService, feeViewModel: feeViewModel)
+        super.init(transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -110,7 +110,7 @@ extension LegacyEvmFeeViewModel {
 
 extension LegacyEvmFeeViewModel: IFeeViewModelNew {
 
-    var hasInformation: Bool {
+    var showInfoIcon: Bool {
         true
     }
 

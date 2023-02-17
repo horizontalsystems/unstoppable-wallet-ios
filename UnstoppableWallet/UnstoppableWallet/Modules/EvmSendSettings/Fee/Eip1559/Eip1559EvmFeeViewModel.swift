@@ -148,7 +148,7 @@ extension Eip1559EvmFeeViewModel {
 
 extension Eip1559EvmFeeViewModel: IFeeViewModelNew {
 
-    var hasInformation: Bool {
+    var showInfoIcon: Bool {
         true
     }
 

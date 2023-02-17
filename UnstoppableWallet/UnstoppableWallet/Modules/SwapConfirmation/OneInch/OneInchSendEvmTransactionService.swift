@@ -22,7 +22,7 @@ class OneInchSendEvmTransactionService {
         }
     }
 
-    private(set) var dataState: SendEvmTransactionService.DataState = SendEvmTransactionService.DataState(transactionData: nil, additionalInfo: nil, decoration: nil)
+    private(set) var dataState: SendEvmTransactionService.DataState = SendEvmTransactionService.DataState(transactionData: nil, additionalInfo: nil, decoration: nil, nonce: nil)
 
     private let sendStateRelay = PublishRelay<SendEvmTransactionService.SendState>()
     private(set) var sendState: SendEvmTransactionService.SendState = .idle {
@@ -41,7 +41,8 @@ class OneInchSendEvmTransactionService {
         dataState = SendEvmTransactionService.DataState(
                 transactionData: nil,
                 additionalInfo: additionalInfo(parameters: transactionFeeService.parameters),
-                decoration: nil
+                decoration: nil,
+                nonce: nil
         )
     }
 
@@ -61,7 +62,8 @@ class OneInchSendEvmTransactionService {
             dataState = SendEvmTransactionService.DataState(
                     transactionData: transaction.transactionData,
                     additionalInfo: additionalInfo(parameters: transactionFeeService.parameters),
-                    decoration: evmKit.decorate(transactionData: transaction.transactionData)
+                    decoration: evmKit.decorate(transactionData: transaction.transactionData),
+                    nonce: nil
             )
 
             if fallibleTransaction.errors.isEmpty {

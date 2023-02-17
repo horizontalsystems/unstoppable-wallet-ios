@@ -55,7 +55,8 @@ class SendEvmTransactionService {
         dataState = DataState(
                 transactionData: sendData.transactionData,
                 additionalInfo: sendData.additionalInfo,
-                decoration: evmKitWrapper.evmKit.decorate(transactionData: sendData.transactionData)
+                decoration: evmKitWrapper.evmKit.decorate(transactionData: sendData.transactionData),
+                nonce: settingsService.nonceService.frozen ? settingsService.nonceService.nonce : nil
         )
 
         subscribe(disposeBag, settingsService.statusObservable) { [weak self] in self?.sync(status: $0) }
@@ -95,7 +96,8 @@ class SendEvmTransactionService {
         dataState = DataState(
                 transactionData: transactionData,
                 additionalInfo: sendData.additionalInfo,
-                decoration: evmKit.decorate(transactionData: transactionData)
+                decoration: evmKit.decorate(transactionData: transactionData),
+                nonce: settingsService.nonceService.frozen ? settingsService.nonceService.nonce : nil
         )
     }
 
@@ -155,6 +157,7 @@ extension SendEvmTransactionService {
         let transactionData: TransactionData?
         let additionalInfo: SendEvmData.AdditionInfo?
         var decoration: TransactionDecoration?
+        let nonce: Int?
     }
 
     enum SendState {
