@@ -636,6 +636,8 @@
 "coin_page.blockchains" = "区块链";
 "coin_page.bips" = "BIPs";
 "coin_page.coin_types" = "Coin Types";
+"coin_page.show_more" = "显示更多";
+"coin_page.show_less" = "Show Less";
 "coin_page.links" = "链接";
 
 "coin_page.guide" = "指南";
