@@ -115,14 +115,9 @@
 
 // Coin Settings
 
-"coin_settings.derivation.title.bip44" = "旧的";
-"coin_settings.derivation.title.bip49" = "好";
-"coin_settings.derivation.title.bip84" = "最佳的";
 "coin_settings.title" = "区块链设置";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "遗留问题";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "资金地址（推荐）";
-"coin_settings.bitcoin_cash_coin_type.description.type0" = "2018年之前常用";
-"coin_settings.bitcoin_cash_coin_type.description.type145" = "2018年之后常用";
 "sync_mode.from_blockchain" = "来自区块链";
 "blockchain_settings.description" = "选择接收付款的地址格式。恢复现有钱包时应选择正确的格式。";
 
@@ -150,7 +145,6 @@
 // EVM Private Key
 
 "evm_private_key.title" = "EVM 私钥";
-"evm_private_key.warning" = "此密钥适用于所有EVM兼容的区块链。请不要与任何人分享。";
 "evm_private_key.tap_to_show" = "点击显示私钥";
 
 // Extended Key
@@ -285,11 +279,11 @@
 "send.hodler_error.unsupported_address" = "时间锁定只能和P2PKH地址（以1开头）一起使用";
 "send.fee_info.title" = "交易速度";
 "send.fee_info.description" = "比特币和Etherum区块链都要求用户在发送交易时支付网络费用。当区块链上发生大量交易时费用较高；而区块链空闲时费用较低。";
-"send.fee_info.header_slow" = "慢";
+"send.fee_info.header_slow" = "低";
 "send.fee_info.content_slow" = "选择此范围中的值可能导致交易需等待数小时或被完全拒绝。值越低，确认交易的所需时间越长。";
-"send.fee_info.header_average" = "平均";
+"send.fee_info.header_average" = "推荐";
 "send.fee_info.content_average" = "通常，此费用范围应足以使比特币（Bitcoin）交易在数分钟/小时、以太币（Ethereum）在数分钟内得到处理。";
-"send.fee_info.header_fast" = "快";
+"send.fee_info.header_fast" = "高";
 "send.fee_info.content_fast" = "对于优先级重要的交易，我们建议使用高收费值。 预计这将足以在10分钟内完成比特币交易，1-2分钟以内完成Etherefis。";
 "send.fee_info.content_conclusion" = "Unstoppable钱包以网络活动为基础作出有根据的猜测，但不能保证所建议费用值总能实现预期行为。";
 
@@ -299,7 +293,7 @@
 "send.confirmation.address" = "地址";
 "send.confirmation.account" = "账户";
 "send.confirmation.memo" = "Memo";
-"send.confirmation.memo_placeholder" = "备忘录";
+"send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "总额";
 "send.confirmation.fee" = "费用";
 "send.confirmation.time_lock" = "TimeLock";
@@ -345,7 +339,7 @@
 "swap.you_get" = "您获得";
 "swap.token" = "选择";
 "swap.advanced_settings" = "掉期设置";
-"swap.proceed_button" = "继续";
+"swap.proceed_button" = "下一步";
 "swap.approve.title" = "互兑批准";
 "swap.approve.description" = "您应为智能合约授予权限，以代表您互兑给定的代币。此权限设定了智能合约可以使用的金额。它不会影响您的余额，但需要小额费用以执行批准交易。\n\n虽然这可以在每一次交易之前按需完成，但是预先对将来的交易批准较大的金额将使成本更低。";
 "swap.approve.amount_error.already_approved" = "您已经有了此金额的限额";
@@ -382,7 +376,7 @@
 "swap.advanced_settings.service_fee_description" = "典型平台上交换动作的服务费：0.3% 或 0.6%";
 "swap.advanced_settings.error.lower_slippage" = "您的交易可能失败。";
 "swap.advanced_settings.error.higher_slippage" = "下跌容忍不得高于%@%%";
-"swap.advanced_settings.error.invalid_address" = "无效地址";
+"swap.advanced_settings.error.invalid_address" = "错误地址";
 "swap.advanced_settings.error.invalid_slippage" = "无效延误";
 "swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
 
@@ -414,7 +408,7 @@
 "swap.dex_info.content_price_impact" = "预期价格和显示价格的偏差通常会增加互兑金额。";
 "swap.dex_info.header_swap_fee" = "掉期交易费用";
 "swap.dex_info.content_swap_fee" = "以用户出售货币显示的去中心化代币兑换平台上互兑操作的服务费。对于大部分订单，这应为0.3%或0.6%。";
-"swap.dex_info.header_guaranteed_amount" = "保证金额";
+"swap.dex_info.header_guaranteed_amount" = "最小获取金额";
 "swap.dex_info.content_guaranteed_amount" = "一名用户因为互兑操作将收到的最小金额。";
 "swap.dex_info.header_maximum_spend" = "最大支出";
 "swap.dex_info.content_maximum_spend" = "一名用户因为互兑操作将收到的最大金额。";
@@ -489,7 +483,7 @@
 
 "market_watchlist.empty.caption" = "您的观察列表为空。";
 
-"market.search.title" = "查询";
+"market.search.title" = "搜索​​​​";
 "market.search.empty_text" = "未发现结果";
 
 "market.advanced_search.title" = "过滤器";
@@ -507,7 +501,7 @@
 "market.advanced_search.liquidity" = "DEX流动性";
 "market.advanced_search.blockchains" = "区块链";
 "market.advanced_search.price_period" = "价格区间";
-"market.advanced_search.price_change" = "价格变化";
+"market.advanced_search.price_change" = "价格变动";
 
 "market.advanced_search.outperformed_btc" = "跑赢BTC";
 "market.advanced_search.outperformed_eth" = "跑赢ETH";
@@ -554,13 +548,13 @@
 
 "market.global.total_market_cap.title" = "总市值";
 "market.global.volume_24h.title" = "24h成交量";
-"market.global.defi_cap.title" = "DeFi市值";
-"market.global.tvl_in_defi.title" = "DeFi锁定";
+"market.global.defi_cap.title" = "DeFi市场价值";
+"market.global.tvl_in_defi.title" = "DeFi中的TVL";
 
 "market.global.btc_dominance.title" = "Bitcoin市场占比";
 "market.global.volume_24h.title" = "24h成交量";
-"market.global.defi_cap.title" = "DeFi市值";
-"market.global.tvl_in_defi.title" = "DeFi锁定";
+"market.global.defi_cap.title" = "DeFi市场价值";
+"market.global.tvl_in_defi.title" = "DeFi中的TVL";
 "market.global.btc_dominance.description" = "比特币市值与其他加密货币市值之间比率的历史变化。\n\n通常，当比特币主导地位上升时，其他加密市场会下降，反之亦然。";
 "market.global.volume_24h.description" = "所有加密货币每日交易量的历史变化。";
 "market.global.defi_cap.description" = "去中心化金融板块代币累积市值的历史变化。";
@@ -576,7 +570,7 @@
 "coin_page.roi.day200" = "6月";
 "coin_page.roi.year1" = "1 年";
 
-"coin_page.tab.overview" = "行情";
+"coin_page.tab.overview" = "价格";
 "coin_page.tab.markets" = "市场";
 "coin_page.tab.details" = "分析";
 "coin_page.tab.tweets" = "推文";
@@ -639,7 +633,11 @@
 
 "coin_page.category" = "分类";
 
-"coin_page.contracts" = "合约";
+"coin_page.blockchains" = "区块链";
+"coin_page.bips" = "BIPs";
+"coin_page.coin_types" = "Coin Types";
+"coin_page.show_more" = "显示更多";
+"coin_page.show_less" = "Show Less";
 "coin_page.links" = "链接";
 
 "coin_page.guide" = "指南";
@@ -647,7 +645,7 @@
 "coin_page.whitepaper" = "白皮书";
 
 "coin_page.favorited" = "添加到关注列表";
-"coin_page.unfavorited" = "从关注列表移除";
+"coin_page.unfavorited" = "从观察名单中删除";
 "coin_page.added_to_wallet" = "加入钱包";
 "coin_page.already_added_to_wallet" = "已经加入钱包";
 
@@ -722,12 +720,12 @@
 
 "transactions.title" = "交易";
 "transactions.tab_bar_item" = "交易";
-"transactions.blockchain" = "区块链";
+"transactions.blockchain" = "Blockchain";
 "transactions.all_blockchains" = "所有Blockchains";
 "transactions.all_coins" = "所有硬币";
 "transactions.choose_coin" = "选择代币";
 "transactions.clear" = "清空";
-"transactions.filter_all" = "全部";
+"transactions.filter_all" = "所有";
 "transactions.syncing_text" = "请等待同步结束";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
 "transactions.pending" = "待处理";
@@ -755,7 +753,7 @@
 "transactions.today" = "今天";
 "transactions.yesterday" = "昨天";
 
-"transactions.types.all" = "全部";
+"transactions.types.all" = "所有";
 "transactions.types.incoming" = "已收到";
 "transactions.types.outgoing" = "已发送";
 "transactions.types.swap" = "掉期交易";
@@ -779,7 +777,7 @@
 "tx_info.button_explorer" = "查看于%@";
 "tx_info.rate" = "历史价格";
 "tx_info.options.speed_up" = "加速";
-"tx_info.options.cancel" = "取消";
+"tx_info.options.cancel" = "取消交易";
 "tx_info.transaction.already_in_block" = "交易已在区块中";
 "tx_info.fee" = "费用";
 "tx_info.fee.estimated" = "费用（预估）";
@@ -789,15 +787,14 @@
 "tx_info.unlocked_at" = "在 %@ 解锁了";
 "tx_info.recipient_hash" = "收款人";
 "tx_info.raw_transaction" = "原始交易";
-"tx_info.memo" = "备忘录";
+"tx_info.memo" = "Memo";
 "tx_info.service" = "服务";
-"tx_info.view_on" = "于%@查看";
+"tx_info.view_on" = "查看于%@";
 "tx_info.you_pay" = "您支付";
 "tx_info.you_get" = "您获得";
 "tx_info.you_paid" = "您已支付";
 "tx_info.you_got" = "您已获得";
 "tx_info.price" = "价格";
-"tx_info.options" = "选项";
 
 // Settings
 
@@ -827,25 +824,18 @@
 "manage_wallets.title" = "钱包";
 "manage_wallets.not_found" = "未找到任何结果。请尝试手动添加令牌。";
 "manage_wallets.search_placeholder" = "姓名、代码或合同地址";
-"manage_wallets.not_supported" = "不支持";
-"manage_wallets.not_supported.description" = "您当前的钱包类型 %@ 不支持 %@";
-"manage_wallets.not_supported.by_app.description" = "不可阻止不支持 %@";
 
 // Settings -> Experimental Features
 
-"settings.experimental_features.title" = "实验性";
+"settings.experimental_features.title" = "实验性功能";
 "settings.experimental_features.description" = "以下功能为实验性，应谨慎使用。虽然我们已使用自己的加密货币资金对这些功能进行了彻底测试，但是我们不保证它们在所有情况下都能如常工作。";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
-"settings.experimental_features.evm_testnet" = "Testnet";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "激活";
 "settings.bitcoin_hodling.description" = "让您汇出在指定日期前无法消费的比特币。\n\n此交易的收款人应使用Unstoppable钱包。\n\n只有Unstoppable钱包能够正确识别此类在比特币网络上的交易并让收款人在锁定期限结束后消费那些比特币。\n\n如果您是持有人，您可以使用此功能通过向自己发送此类交易的方式来强制自己持有比特币。\n\n作为实验性功能，每次交易的最大金额限制为0.5 BTC。";
-"settings.evm_testnet.title" = "Testnet";
-"settings.evm_testnet.enable" = "激活";
-"settings.evm_testnet.description" = "此选项仅对 GoerliETH 令牌激活Etherum的 Goerli 测试网，并将其添加到硬币管理器。\n\n它只影响GoerliETH 令牌，而所有其他 EVM 和 Etherum 令牌都在主网上运行。 换言之，只有GoerliETH中的交易通过Goerli testnet，而所有其他EVM令牌转账，包括ETH，都通过主网。";
 
 // Settings -> Terms
 
@@ -937,7 +927,7 @@
 
 "appearance.title" = "外观";
 
-"appearance.theme" = "主题样式";
+"appearance.theme" = "主题";
 "appearance.theme.system" = "系统";
 "appearance.theme.dark" = "深色";
 "appearance.theme.light" = "浅色";
@@ -993,7 +983,7 @@
 "chart.market_cap" = "市场价值";
 "chart.volume" = "量(24小时)";
 "chart.circulation" = "流通中";
-"chart.selected.volume" = "交易量";
+"chart.selected.volume" = "成交量";
 "chart.price_indicator_range.day" = "24小时范围";
 "chart.price_indicator_range.year" = "52星期范围";
 
@@ -1019,7 +1009,7 @@
 "create_wallet.advanced_setup" = "高级";
 "create_wallet.create" = "创建";
 "create_wallet.advanced" = "高级";
-"create_wallet.phrase_count" = "助记词";
+"create_wallet.phrase_count" = "恢复码";
 "create_wallet.12_words" = "12 个单词(推荐)";
 "create_wallet.n_words" = "%@ 个单词";
 "create_wallet.word_list" = "字符列表";
@@ -1069,7 +1059,7 @@
 // Add Token
 
 "add_token.title" = "添加代币";
-"add_token.blockchain" = "区块链";
+"add_token.blockchain" = "Blockchain";
 "add_token.already_added" = "该代币已在代币管理列表中";
 "add_token.invalid_contract_address" = "请输入正确的合约地址";
 "add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
@@ -1106,10 +1096,10 @@
 "ethereum_transaction.error.nonce_already_in_block" = "交易已在区块中!";
 "ethereum_transaction.error.replacement_transaction_underpriced" = "费用不足以替换交易";
 "ethereum_transaction.error.reverted" = "无法执行交易： %@";
-"wallet_connect.request_title" = "请求";
+"wallet_connect.request_title" = "合约调用";
 "wallet_connect.button.confirm" = "确认";
 "wallet_connect.sign.request_title" = "签名请求";
-"wallet_connect.sign.domain" = "域";
+"wallet_connect.sign.domain" = "域名";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "待签名消息";
 "wallet_connect.sign.description" = "请对消息签名以便进行验证";
@@ -1146,7 +1136,7 @@
 
 // FAQ
 
-"faq.title" = "FAQ";
+"faq.title" = "常见问题";
 
 // Status Info
 
@@ -1162,7 +1152,7 @@
 
 // Onboarding
 
-"onboarding.balance.create" = "创建";
+"onboarding.balance.create" = "新钱包";
 "onboarding.balance.import" = "恢复自";
 "onboarding.balance.watch" = "观察地址";
 
@@ -1175,13 +1165,32 @@
 
 "manage_account.name" = "名称";
 "manage_account.recovery_phrase" = "恢复码";
-"manage_account.evm_private_key" = "EVM 私钥";
-"manage_account.bip32_root_key" = "BIP32 Root Key";
-"manage_account.account_extended_private_key" = "Account Extended Private Key";
-"manage_account.account_extended_public_key" = "Account Extended Public Key";
 "manage_account.public_keys" = "公钥";
+"manage_account.private_keys" = "Private Keys";
 "manage_account.backup_recovery_phrase" = "备份恢复词";
 "manage_account.unlink" = "取消链接";
+
+// Manage Account -> Public Keys
+
+"public_keys.title" = "公钥";
+"public_keys.evm_address" = "EVM 地址";
+"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM based blockchains.";
+"public_keys.account_extended_public_key" = "Account Extended Public Key";
+"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
+
+// Manage Account -> Private Keys
+
+"private_keys.title" = "Private Keys";
+"private_keys.evm_private_key" = "EVM 私钥";
+"private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
+"private_keys.bip32_root_key" = "BIP32 Root Key";
+"private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
+"private_keys.account_extended_private_key" = "Account Extended Private Key";
+"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within respective wallet.";
+
+// Manage Account -> EVM Address
+
+"evm_address.title" = "EVM 地址";
 
 // Birthday Height
 
@@ -1234,7 +1243,7 @@
 "fee_settings.tips" = "最大矿工提示";
 "fee_settings.tips.info" = "矿工费用（又称矿工消费）是指用户可选择的费用，用户可以包括此费用以鼓励网络参与者让他们交易优先。";
 "fee_settings.errors.insufficient_balance" = "余额不足";
-"fee_settings.errors.insufficient_balance.info" = "当前%@余额低于此交易所需金额，包括交易费用。";
+"fee_settings.errors.insufficient_balance.info" = "當前%@餘額低於處理此交易所需的金額，包括交易費用。";
 "fee_settings.errors.low_max_fee" = "低费用";
 "fee_settings.errors.low_max_fee.info" = "当前设置的交易费用金额不足以处理此交易。";
 "fee_settings.errors.nonce_already_in_block" = "无法替换交易。";
@@ -1292,7 +1301,7 @@
 "nft_asset.details.contract_address" = "智能合约地址";
 "nft_asset.details.token_id" = "代币 ID";
 "nft_asset.details.token_standard" = "代币标准";
-"nft_asset.details.blockchain" = "区块链";
+"nft_asset.details.blockchain" = "Blockchain";
 "nft_asset.links" = "链接";
 "nft_asset.links.website" = "网站";
 "nft_asset.options.save_to_photos" = "保存到照片";
@@ -1312,8 +1321,8 @@
 
 
 "nft_collection.overview.owners" = "所有者";
-"nft_collection.overview.items" = "项目";
-"nft_collection.overview.24h_volume" = "24小时音量";
+"nft_collection.overview.items" = "条目";
+"nft_collection.overview.24h_volume" = "24h成交量";
 "nft_collection.overview.today_sellers" = "今天的卖家";
 "nft_collection.overview.floor_price" = "底价";
 "nft_collection.overview.all_time_average" = "全部时间平均值";
