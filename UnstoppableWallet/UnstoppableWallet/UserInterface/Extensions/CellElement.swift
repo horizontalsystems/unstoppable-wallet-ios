@@ -18,6 +18,9 @@ extension CellBuilderNew.CellElement {  // prepared cell elements for most frequ
             if parameters.contains(.rightAlignment) {
                 component.textAlignment = .right
             }
+            if parameters.contains(.centerAlignment) {
+                component.textAlignment = .center
+            }
             if parameters.contains(.truncatingMiddle) {
                 component.lineBreakMode = .byTruncatingMiddle
             }
@@ -111,6 +114,7 @@ extension CellBuilderNew.CellElement {
         static let highHugging = TextParameters(rawValue: 1 << 1)
         static let truncatingMiddle = TextParameters(rawValue: 1 << 2)
         static let rightAlignment = TextParameters(rawValue: 1 << 3)
+        static let centerAlignment = TextParameters(rawValue: 1 << 4)
     }
 
     class AccessoryType {

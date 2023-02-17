@@ -78,8 +78,8 @@ class CoinOverviewViewItemFactory {
         }
     }
 
-    private func typeViewItems(tokenItems: [CoinOverviewService.TokenItem]) -> [CoinOverviewViewModel.TypeViewItem]? {
-        let contracts: [CoinOverviewViewModel.TypeViewItem] = tokenItems.map { item in
+    private func typeViewItems(tokenItems: [CoinOverviewService.TokenItem]) -> [CoinOverviewViewModel.TypeViewItem] {
+        tokenItems.map { item in
             let blockchain = item.configuredToken.blockchain
 
             let title: String?
@@ -135,8 +135,6 @@ class CoinOverviewViewItemFactory {
                     showAdded: showAdded
             )
         }
-
-        return contracts.isEmpty ? nil : contracts
     }
 
     private func linkTitle(type: LinkType, url: String) -> String {
@@ -209,11 +207,21 @@ class CoinOverviewViewItemFactory {
 
 extension CoinOverviewViewItemFactory {
 
-    func viewItem(item: CoinOverviewService.Item, currency: Currency) -> CoinOverviewViewModel.ViewItem {
+    func viewItem(item: CoinOverviewService.Item, currency: Currency, typesShown: Bool) -> CoinOverviewViewModel.ViewItem {
         let info = item.info
         let coin = info.fullCoin.coin
         let coinCode = coin.code
         let marketCapRank = info.marketCapRank.map { "#\($0)" }
+
+        var types: CoinOverviewViewModel.TypesViewItem?
+
+        if !item.tokens.isEmpty {
+            types = CoinOverviewViewModel.TypesViewItem(
+                    title: typesTitle(coinUid: coin.uid),
+                    viewItems: typeViewItems(tokenItems: item.tokens.count > 4 && !typesShown ? Array(item.tokens.prefix(3)) : item.tokens),
+                    action: item.tokens.count > 4 ? (typesShown ? .showLess : .showMore) : nil
+            )
+        }
 
         return CoinOverviewViewModel.ViewItem(
                 coinViewItem: CoinOverviewViewModel.CoinViewItem(
@@ -234,8 +242,7 @@ extension CoinOverviewViewItemFactory {
 
                 performance: performanceViewItems(info: info),
                 categories: categories(info: info),
-                typesTitle: typesTitle(coinUid: coin.uid),
-                types: typeViewItems(tokenItems: item.tokens),
+                types: types,
                 description: info.description,
                 guideUrl: item.guideUrl,
                 links: links(info: info)

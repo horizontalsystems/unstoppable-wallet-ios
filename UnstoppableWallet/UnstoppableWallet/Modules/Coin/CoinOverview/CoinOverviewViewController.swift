@@ -367,14 +367,45 @@ extension CoinOverviewViewController {
         )
     }
 
-    private func typesSection(title: String, types: [CoinOverviewViewModel.TypeViewItem]) -> SectionProtocol {
-        Section(
+    private func typesSection(typesViewItem: CoinOverviewViewModel.TypesViewItem) -> SectionProtocol {
+        var rows: [RowProtocol] = [
+            tableView.subtitleRow(text: typesViewItem.title)
+        ]
+
+        for (index, viewItem) in typesViewItem.viewItems.enumerated() {
+            rows.append(
+                    typeRow(
+                            viewItem: viewItem,
+                            index: index,
+                            isFirst: index == 0,
+                            isLast: typesViewItem.action != nil ? false : index == typesViewItem.viewItems.count - 1
+                    )
+            )
+        }
+
+        if let action = typesViewItem.action {
+            rows.append(
+                    CellBuilderNew.row(
+                            rootElement: .textElement(text: .body(action.title), parameters: .centerAlignment),
+                            tableView: tableView,
+                            id: "action",
+                            hash: "\(action.rawValue)",
+                            height: .heightCell48,
+                            autoDeselect: true,
+                            bind: { cell in
+                                cell.set(backgroundStyle: .lawrence, isLast: true)
+                            },
+                            action: { [weak self] in
+                                self?.viewModel.onTap(typesAction: action)
+                            }
+                    )
+            )
+        }
+
+        return Section(
                 id: "types",
                 headerState: .margin(height: .margin12),
-                rows: [tableView.subtitleRow(text: title)] +
-                        types.enumerated().map { index, viewItem in
-                            typeRow(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == types.count - 1)
-                        }
+                rows: rows
         )
     }
 
@@ -472,7 +503,7 @@ extension CoinOverviewViewController: SectionsDataSource {
             sections.append(performanceSection(viewItems: viewItem.performance))
 
             if let types = viewItem.types {
-                sections.append(typesSection(title: viewItem.typesTitle, types: types))
+                sections.append(typesSection(typesViewItem: types))
             }
 
             if let categories = viewItem.categories {
