@@ -15,6 +15,7 @@ class LocalStorage {
     private let keyRateAppLastRequestDate = "rate_app_last_request_date"
     private let keyZCashRewind = "z_cash_always_pending_rewind"
     private let keyDefaultProvider = "swap_provider"
+    private let keyRemoteContactSync = "icloud-sync-value"
 
     private let storage: StorageKit.ILocalStorage
 
@@ -49,6 +50,11 @@ extension LocalStorage {
     var lockTimeEnabled: Bool {
         get { storage.value(for: keyLockTimeEnabled) ?? false }
         set { storage.set(value: newValue, for: keyLockTimeEnabled) }
+    }
+
+    var remoteSync: Bool {
+        get { storage.value(for: keyRemoteContactSync) ?? false }
+        set { storage.set(value: newValue, for: keyRemoteContactSync) }
     }
 
     var appLaunchCount: Int {
