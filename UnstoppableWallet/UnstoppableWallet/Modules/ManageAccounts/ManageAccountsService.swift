@@ -1,8 +1,11 @@
 import RxSwift
 import RxRelay
+import Contacts
+import EvmKit
 
 class ManageAccountsService {
     private let accountManager: AccountManager
+    private var contactManager: ContactManager?
     private let disposeBag = DisposeBag()
 
     private let itemsRelay = PublishRelay<[Item]>()
@@ -18,6 +21,10 @@ class ManageAccountsService {
         subscribe(disposeBag, accountManager.accountsObservable) { [weak self] _ in self?.syncItems() }
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] _ in self?.syncItems() }
 
+        let contactManager = ContactManager(localStorage: App.shared.localStorage)
+        self.contactManager = contactManager
+
+        App.shared.localStorage.remoteSync = true
         syncItems()
     }
 
@@ -46,6 +53,24 @@ extension ManageAccountsService {
 
     func set(activeAccountId: String) {
         accountManager.set(activeAccountId: activeAccountId)
+    }
+
+    func onTapEdit(accountId: String) {
+        guard let contactManager else {
+            return
+        }
+        print("===> Contacts:")
+        print(contactManager.contacts ?? [])
+
+        let newContact = Contact(name: "Ant013", addresses: [
+            ContactAddress(blockhainUid: "btc", address: "bc1sdjfshsdk")
+        ])
+
+        do {
+            try contactManager.update(contact: newContact)
+        } catch {
+            print(error)
+        }
     }
 
 }

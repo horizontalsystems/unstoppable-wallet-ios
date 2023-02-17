@@ -82,6 +82,10 @@ extension ManageAccountsViewModel {
         }
     }
 
+    func onTapEdit(accountId: String) {
+        service.onTapEdit(accountId: accountId)
+    }
+
 }
 
 extension ManageAccountsViewModel {
