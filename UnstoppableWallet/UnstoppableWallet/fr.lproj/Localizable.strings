@@ -152,7 +152,7 @@
 "extended_key.account_extended_public_key" = "Account Extended Public Key";
 "extended_key.purpose" = "Objectif";
 "extended_key.blockchain" = "Blockchain";
-"extended_key.account" = "Account";
+"extended_key.account" = "Compte";
 "extended_key.tap_to_show" = "Appuyez pour afficher extended private key";
 
 // Backup
@@ -289,7 +289,7 @@
 "send.confirmation.to" = "À";
 "send.confirmation.domain" = "Domaine";
 "send.confirmation.address" = "Adresses";
-"send.confirmation.account" = "Account";
+"send.confirmation.account" = "Compte";
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
@@ -1164,7 +1164,7 @@
 "manage_account.name" = "Nom";
 "manage_account.recovery_phrase" = "Phrase de récupération";
 "manage_account.public_keys" = "Clés publiques";
-"manage_account.private_keys" = "Private Keys";
+"manage_account.private_keys" = "Clés privées";
 "manage_account.backup_recovery_phrase" = "Phrase de récupération de sauvegarde";
 "manage_account.unlink" = "Dissocier";
 
@@ -1178,7 +1178,7 @@
 
 // Manage Account -> Private Keys
 
-"private_keys.title" = "Private Keys";
+"private_keys.title" = "Clés privées";
 "private_keys.evm_private_key" = "Clé privée EVM";
 "private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
