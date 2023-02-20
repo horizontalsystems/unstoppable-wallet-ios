@@ -6,7 +6,7 @@ class InputStackView: UIView {
     private let stackView = UIStackView()
     private let formTextView: IFormTextView
     private var leftViews = [(ISizeAwareView, CGFloat)]()
-    private var rightViews = [ISizeAwareView]()
+    private var rightViews = [(ISizeAwareView, CGFloat)]()
 
     init(singleLine: Bool = false) {
         if singleLine {
@@ -124,9 +124,15 @@ extension InputStackView {
         }
     }
 
-    func appendSubview(_ view: ISizeAwareView) {
-        rightViews.append(view)
+    func appendSubview(_ view: ISizeAwareView, customSpacing: CGFloat? = nil) {
+        let spacing = customSpacing ?? stackView.spacing
+        
+        rightViews.append((view, spacing))
         stackView.addArrangedSubview(view)
+
+        if let customSpacing = customSpacing {
+            stackView.setCustomSpacing(customSpacing, after: view)
+        }
     }
 
 }
@@ -141,15 +147,15 @@ extension InputStackView: IHeightControlView {
     func height(containerWidth: CGFloat) -> CGFloat {
         var textViewWidth = containerWidth - stackView.layoutMargins.width
         let visibleLeftViews = leftViews.filter { !$0.0.isHidden }
-        let visibleRightViews = rightViews.filter { !$0.isHidden }
+        let visibleRightViews = rightViews.filter { !$0.0.isHidden }
 
         for (view, spacing) in visibleLeftViews {
             textViewWidth -= view.width(containerWidth: .greatestFiniteMagnitude) + spacing
         }
 
 
-        for view in visibleRightViews {
-            textViewWidth -= view.width(containerWidth: .greatestFiniteMagnitude) + stackView.spacing
+        for (view, spacing) in visibleRightViews {
+            textViewWidth -= view.width(containerWidth: .greatestFiniteMagnitude) + spacing
         }
 
         return formTextView.height(containerWidth: textViewWidth)

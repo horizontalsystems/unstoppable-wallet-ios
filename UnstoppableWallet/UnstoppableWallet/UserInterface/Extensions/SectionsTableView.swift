@@ -103,13 +103,13 @@ extension SectionsTableView {
         )
     }
 
-    func subtitleWithInfoButtonRow(text: String, action: @escaping () -> ()) -> RowProtocol {
+    func subtitleWithInfoButtonRow(text: String, uppercase: Bool = true, action: @escaping () -> ()) -> RowProtocol {
         CellBuilderNew.row(
                 rootElement: .hStack([
                     .text { (component: TextComponent) -> () in
                         component.font = .subhead1
                         component.textColor = .themeGray
-                        component.text = text.uppercased()
+                        component.text = uppercase ? text.uppercased() : text
                     },
                     .image20 { (component: ImageComponent) -> () in
                         component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)

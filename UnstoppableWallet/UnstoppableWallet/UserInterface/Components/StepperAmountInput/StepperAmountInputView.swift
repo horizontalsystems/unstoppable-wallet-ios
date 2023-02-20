@@ -54,7 +54,7 @@ class StepperAmountInputView: UIView {
             self?.onTapPlus()
         }
 
-        inputStackView.appendSubview(minusView)
+        inputStackView.appendSubview(minusView, customSpacing: 16)
         inputStackView.appendSubview(plusView)
 
         inputStackView.placeholder = ""

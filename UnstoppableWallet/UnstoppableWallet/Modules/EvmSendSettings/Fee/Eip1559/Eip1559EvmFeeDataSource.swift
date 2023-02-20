@@ -35,6 +35,9 @@ class Eip1559EvmFeeDataSource {
         gasLimitCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
         baseFeeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
 
+        syncGasLimitCell()
+        syncBaseFeeCell()
+
         subscribe(disposeBag, viewModel.gasLimitDriver) { [weak self] value in self?.syncGasLimitCell(value: value) }
         subscribe(disposeBag, viewModel.currentBaseFeeDriver) { [weak self] value in self?.syncBaseFeeCell(value: value) }
         subscribe(disposeBag, viewModel.maxGasPriceDriver) { [weak self] value in self?.maxGasPriceCell.value = value }
@@ -43,9 +46,6 @@ class Eip1559EvmFeeDataSource {
 
         maxGasPriceCell.onChangeValue = { [weak self] value in self?.viewModel.set(maxGasPrice: value) }
         tipsCell.onChangeValue = { [weak self] value in self?.viewModel.set(tips: value) }
-
-        syncGasLimitCell()
-        syncBaseFeeCell()
     }
 
     private func syncGasLimitCell(value: String? = nil) {
@@ -66,7 +66,7 @@ class Eip1559EvmFeeDataSource {
         CellBuilderNew.buildStatic(
                 cell: baseFeeCell,
                 rootElement: .hStack([
-                    .textElement(text: .subhead2("fee_settings.current_base_fee".localized), parameters: [.highHugging]),
+                    .textElement(text: .subhead2("fee_settings.base_fee".localized), parameters: [.highHugging]),
                     .margin8,
                     .imageElement(image: .local(UIImage(named: "circle_information_20")), size: .image20),
                     .margin0,
@@ -115,7 +115,12 @@ extension Eip1559EvmFeeDataSource: IEvmSendSettingsDataSource {
                         StaticRow(
                                 cell: baseFeeCell,
                                 id: "base-fee",
-                                height: .heightCell48
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.onOpenInfo?("fee_settings.base_fee".localized, "fee_settings.base_fee.info".localized)
+                                }
+
                         )
                     ]
             )
@@ -126,8 +131,8 @@ extension Eip1559EvmFeeDataSource: IEvmSendSettingsDataSource {
                     id: "max-gas-price",
                     headerState: .margin(height: .margin24),
                     rows: [
-                        tableView.subtitleWithInfoButtonRow(text: "fee_settings.max_fee".localized + " (Gwei/Gas)") { [weak self] in
-                            self?.onOpenInfo?("fee_settings.max_fee".localized + " (Gwei/Gas)", "fee_settings.max_fee.info".localized)
+                        tableView.subtitleWithInfoButtonRow(text: "fee_settings.max_fee_rate".localized + " (Gwei)", uppercase: false) { [weak self] in
+                            self?.onOpenInfo?("fee_settings.max_fee_rate".localized, "fee_settings.max_fee_rate.info".localized)
                         },
                         StaticRow(
                                 cell: maxGasPriceCell,
@@ -143,7 +148,7 @@ extension Eip1559EvmFeeDataSource: IEvmSendSettingsDataSource {
                     id: "tips",
                     headerState: .margin(height: .margin24),
                     rows: [
-                        tableView.subtitleWithInfoButtonRow(text: "fee_settings.tips".localized + " (Gwei/Gas)") { [weak self] in
+                        tableView.subtitleWithInfoButtonRow(text: "fee_settings.tips".localized + " (Gwei)", uppercase: false) { [weak self] in
                             self?.onOpenInfo?("fee_settings.tips".localized, "fee_settings.tips.info".localized)
                         },
                         StaticRow(
