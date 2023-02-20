@@ -1095,6 +1095,8 @@
 "ethereum_transaction.error.lower_than_base_gas_limit" = "选定的费用值太低，将被拒绝！";
 "ethereum_transaction.error.nonce_already_in_block" = "交易已在区块中!";
 "ethereum_transaction.error.replacement_transaction_underpriced" = "费用不足以替换交易";
+"ethereum_transaction.error.transaction_underpriced" = "Fee not enough to send the transaction";
+"ethereum_transaction.error.tips_higher_than_max_fee" = "Max fee cannot be lower than the tips, because Max fee includes the tips.";
 "ethereum_transaction.error.reverted" = "无法执行交易： %@";
 "wallet_connect.request_title" = "合约调用";
 "wallet_connect.button.confirm" = "确认";
@@ -1224,30 +1226,42 @@
 "add_evm_sync_source.warning.url_exists" = "此网址的 RPC 源已存在";
 "add_evm_sync_source.error.invalid_url" = "输入的URL无效。有效网址必须具有以下方案之一： http，https，ws，wss";
 
-// Fee Settings
+// EVM Send Settings
+
+"evm_send_settings.title" = "高级";
+"evm_send_settings.nonce" = "Transaction Nonce";
+"evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
+"evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
+"evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
 
 "fee_settings" = "费用设置";
 "fee_settings.fee" = "费用";
 "fee_settings.fee.info" = "给定交易的预期总费用。";
-"fee_settings.fee_priority" = "速度";
 "fee_settings.fee_rate" = "费率";
+
 "fee_settings.max_fee" = "最大手续费";
-"fee_settings.max_fee.info" = "给定交易的最大预计总费用。通常，实际交易费用会更低。";
+"fee_settings.max_fee.info" = "The maximum estimated transaction fee to be paid for this transaction, computed based on the gas limit, max fee rate and max priority fee values below. The actual fee paid will normally be lower.";
 "fee_settings.gas_limit" = "燃料限制";
-"fee_settings.gas_limit.info" = "燃料限制是用户发送给定交易时愿意花费的最大燃料单位。复杂交易比简单交易需要更多的燃料单位。每一交易的燃料限制将自动得到估计和设置。";
+"fee_settings.gas_limit.info" = "Transaction complexity is measured in units called \"gas\". It varies depending on the smart contract being executed. The Gas Limit is the estimated maximum gas needed to execute it. The actual gas used will normally be lower.";
+
 "fee_settings.gas_price" = "燃料价格";
 "fee_settings.gas_price.info" = "网上交易费用将按燃料单位计量。燃料价格是用户愿意按单位消费的金额。 当网络忙碌时，燃料价格就高，空闲时价格就低。 燃料价格不足常常是交易被长期搁置的一个原因。";
-"fee_settings.current_base_fee" = "当前基本费用";
-"fee_settings.base_fee" = "最大基本费用";
-"fee_settings.base_fee.info" = "以太坊上的每笔交易都要求用户花费一定数量的燃料单位来处理该交易。单个燃料单元的价格随网络条件实时变化，不受任何单一实体的控制。最大基本费率与可选的矿工消费（见下文）是指用户愿意为发送交易支付的燃料单位的最高价格。";
-"fee_settings.tips" = "最大矿工提示";
-"fee_settings.tips.info" = "矿工费用（又称矿工消费）是指用户可选择的费用，用户可以包括此费用以鼓励网络参与者让他们交易优先。";
+
+"fee_settings.base_fee" = "Base Fee";
+"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
+"fee_settings.max_fee_rate" = "Max Fee Rate";
+"fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
+"fee_settings.tips" = "Max Priority Fee";
+"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+
 "fee_settings.errors.insufficient_balance" = "余额不足";
 "fee_settings.errors.insufficient_balance.info" = "當前%@餘額低於處理此交易所需的金額，包括交易費用。";
 "fee_settings.errors.low_max_fee" = "低费用";
 "fee_settings.errors.low_max_fee.info" = "当前设置的交易费用金额不足以处理此交易。";
 "fee_settings.errors.nonce_already_in_block" = "无法替换交易。";
 "fee_settings.errors.replacement_transaction_underpriced" = "替换交易的低费用";
+"fee_settings.errors.transaction_underpriced" = "Low Fee for transaction";
+"fee_settings.errors.tips_higher_than_max_fee" = "Max Fee is too low";
 "fee_settings.warning.risk_of_getting_stuck" = "有风险";
 "fee_settings.warning.risk_of_getting_stuck.info" = "交易可能会在一段时间内仍然处于待处理状态或完全失败。";
 "fee_settings.warning.overpricing" = "费用太高";
