@@ -1093,6 +1093,8 @@
 "ethereum_transaction.error.lower_than_base_gas_limit" = "선택한 수수료 값이 너무 낮아 거부됩니다!";
 "ethereum_transaction.error.nonce_already_in_block" = "이미 차단된 거래!";
 "ethereum_transaction.error.replacement_transaction_underpriced" = "거래를 대체하기에 충분하지 않은 수수료";
+"ethereum_transaction.error.transaction_underpriced" = "Fee not enough to send the transaction";
+"ethereum_transaction.error.tips_higher_than_max_fee" = "Max fee cannot be lower than the tips, because Max fee includes the tips.";
 "ethereum_transaction.error.reverted" = "거래를 실행할 수 없습니다: %@";
 "wallet_connect.request_title" = "계약 콜";
 "wallet_connect.button.confirm" = "확인";
@@ -1222,30 +1224,42 @@
 "add_evm_sync_source.warning.url_exists" = "이 URL이 있는 RPC 소스가 이미 존재합니다.";
 "add_evm_sync_source.error.invalid_url" = "입력한 URL이 잘못되었습니다. 유효한 URL은 http, https, ws, wss 스키마 중 하나여야 합니다.";
 
-// Fee Settings
+// EVM Send Settings
+
+"evm_send_settings.title" = "고급의";
+"evm_send_settings.nonce" = "Transaction Nonce";
+"evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
+"evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
+"evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
 
 "fee_settings" = "수수료 설정";
 "fee_settings.fee" = "수수료";
 "fee_settings.fee.info" = "주어진 트랜잭션에 대한 예상 총 수수료입니다.";
-"fee_settings.fee_priority" = "속도";
 "fee_settings.fee_rate" = "수수료율";
+
 "fee_settings.max_fee" = "최대 수수료";
-"fee_settings.max_fee.info" = "주어진 거래에 대한 최대 예상 총 수수료입니다. 일반적으로 실제 거래 수수료는 더 낮습니다.";
+"fee_settings.max_fee.info" = "The maximum estimated transaction fee to be paid for this transaction, computed based on the gas limit, max fee rate and max priority fee values below. The actual fee paid will normally be lower.";
 "fee_settings.gas_limit" = "Gas Limit";
-"fee_settings.gas_limit.info" = "가스 한도는 사용자가 주어진 거래를 보낼 때 기꺼이 지출할 가스 단위의 최대량입니다. 복잡한 거래에는 단순한 거래보다 더 많은 가스 단위가 필요합니다. 가스 한도는 각 거래에 대해 자동으로 추정 및 설정됩니다.";
+"fee_settings.gas_limit.info" = "Transaction complexity is measured in units called \"gas\". It varies depending on the smart contract being executed. The Gas Limit is the estimated maximum gas needed to execute it. The actual gas used will normally be lower.";
+
 "fee_settings.gas_price" = "Gas Used";
 "fee_settings.gas_price.info" = "네트워크 거래 수수료는 가스 단위로 측정됩니다. 가스 가격은 사용자가 가스 단위당 지출할 의향이 있는 금액입니다. 네트워크가 사용 중일 때는 가스 가격이 높고 유휴 상태일 때는 가스 가격이 낮습니다. 가스 가격이 충분하지 않아 거래가 장기간 보류 상태로 남아 있는 경우가 많습니다.";
-"fee_settings.current_base_fee" = "현재 기본 수수료";
-"fee_settings.base_fee" = "최대 기본 수수료";
-"fee_settings.base_fee.info" = "이더리움의 각 트랜잭션은 사용자가 해당 트랜잭션을 처리하기 위해 일정량의 가스 단위를 소비해야 합니다. 단일 가스 장치의 가격은 네트워크 상태에 따라 실시간으로 변경되며 단일 개체에 의해 제어되지 않습니다. 최대 옵션 채굴자 팁(아래 참조)과 결합된 기본 수수료율은 사용자가 거래를 보내기 위해 지불할 용의가 있는 가스 단위의 최고 가격을 나타냅니다.";
-"fee_settings.tips" = "최대 채굴자 팁";
-"fee_settings.tips.info" = "채굴자 수수료(일명 광부 팁)는 네트워크 참가자가 거래의 우선 순위를 정하도록 장려하기 위해 사용자가 포함할 수 있는 선택적 수수료를 나타냅니다.";
+
+"fee_settings.base_fee" = "Base Fee";
+"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
+"fee_settings.max_fee_rate" = "Max Fee Rate";
+"fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
+"fee_settings.tips" = "Max Priority Fee";
+"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+
 "fee_settings.errors.insufficient_balance" = "잔액이 부족합니다";
 "fee_settings.errors.insufficient_balance.info" = "현재 %@ 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
 "fee_settings.errors.low_max_fee" = "적은 수수료";
 "fee_settings.errors.low_max_fee.info" = "설정된 거래 수수료 금액이 현재 이 거래를 처리하기에 충분하지 않습니다.";
 "fee_settings.errors.nonce_already_in_block" = "트랜잭션을 대체할 수 없습니다.";
 "fee_settings.errors.replacement_transaction_underpriced" = "교체 거래에 대한 낮은 수수료";
+"fee_settings.errors.transaction_underpriced" = "Low Fee for transaction";
+"fee_settings.errors.tips_higher_than_max_fee" = "Max Fee is too low";
 "fee_settings.warning.risk_of_getting_stuck" = "위험";
 "fee_settings.warning.risk_of_getting_stuck.info" = "트랜잭션이 잠시 동안 보류 상태로 유지되거나 완전히 실패할 수 있습니다.";
 "fee_settings.warning.overpricing" = "수수료가 너무 높음";
