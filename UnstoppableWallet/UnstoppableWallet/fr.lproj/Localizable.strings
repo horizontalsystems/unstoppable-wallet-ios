@@ -1093,6 +1093,8 @@
 "ethereum_transaction.error.lower_than_base_gas_limit" = "La valeur de frais sélectionnée est trop faible et sera rejetée !";
 "ethereum_transaction.error.nonce_already_in_block" = "Transaction déjà dans le block!";
 "ethereum_transaction.error.replacement_transaction_underpriced" = "Frais insuffisants pour remplacer la transaction";
+"ethereum_transaction.error.transaction_underpriced" = "Fee not enough to send the transaction";
+"ethereum_transaction.error.tips_higher_than_max_fee" = "Max fee cannot be lower than the tips, because Max fee includes the tips.";
 "ethereum_transaction.error.reverted" = "La transaction ne peut être exécutée : %@";
 "wallet_connect.request_title" = "Appel de contrat";
 "wallet_connect.button.confirm" = "Confirmer";
@@ -1222,30 +1224,42 @@
 "add_evm_sync_source.warning.url_exists" = "La source RPC avec cette url existe déjà";
 "add_evm_sync_source.error.invalid_url" = "L'url saisie n'est pas valide. L'url valide doit avoir un des schémas suivants : http, https, ws, wss";
 
-// Fee Settings
+// EVM Send Settings
+
+"evm_send_settings.title" = "Avancé";
+"evm_send_settings.nonce" = "Transaction Nonce";
+"evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
+"evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
+"evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
 
 "fee_settings" = "Paramètres des frais";
 "fee_settings.fee" = "Frais";
 "fee_settings.fee.info" = "Le total des frais attendus pour la transaction donnée.";
-"fee_settings.fee_priority" = "Vitesse";
 "fee_settings.fee_rate" = "Taux de frais";
+
 "fee_settings.max_fee" = "Frais Max";
-"fee_settings.max_fee.info" = "Les frais totaux maximums escomptés pour la transaction donnée. En règle générale, les frais réels de la transaction sont inférieurs à ce montant.";
+"fee_settings.max_fee.info" = "The maximum estimated transaction fee to be paid for this transaction, computed based on the gas limit, max fee rate and max priority fee values below. The actual fee paid will normally be lower.";
 "fee_settings.gas_limit" = "Gas Limit";
-"fee_settings.gas_limit.info" = "La limite de gas est le montant maximum d'unités de gas qu'un utilisateur est prêt à dépenser lors de l'envoi d'une transaction donnée. Les transactions complexes nécessitent plus d'unités de gas que les transactions plus simples. La limite de gas est une estimation et est fixée automatiquement pour chaque transaction.";
+"fee_settings.gas_limit.info" = "Transaction complexity is measured in units called \"gas\". It varies depending on the smart contract being executed. The Gas Limit is the estimated maximum gas needed to execute it. The actual gas used will normally be lower.";
+
 "fee_settings.gas_price" = "Gas Price";
 "fee_settings.gas_price.info" = "Les frais pour effectuer des transactions sur le réseau sont mesurés en unités de gas. Le prix du gas est le montant qu'un utilisateur est prêt à dépenser par unité de gas. Le prix du gas est élevé lorsque le réseau est encombré, et faible lorsqu'il est inactif. Souvent, une transaction reste en suspens pendant une période prolongée si le montant du gas est insuffisant.";
-"fee_settings.current_base_fee" = "Frais de base actuels";
-"fee_settings.base_fee" = "Frais de base maximum";
-"fee_settings.base_fee.info" = "Sur Ethereum, chaque transaction exige de l'utilisateur qu'il dépense une certaine quantité d'unités de gas pour le traitement de ladite transaction. Le prix d'une unité de gas unique change en temps réel en fonction des conditions du réseau et n'est pas contrôlé par une seule entité. Le taux de frais de base maximum combiné au pourboire optionnel pour le mineur (voir ci-dessous) fait référence au prix le plus élevé pour une unité de gas qu'un utilisateur est prêt à payer pour envoyer la transaction.";
-"fee_settings.tips" = "Conseils pour Max Miner";
-"fee_settings.tips.info" = "Les frais de mineur (aussi pourboire de mineur) font référence aux frais facultatifs que les utilisateurs peuvent inclure pour inciter les participants au réseau à donner la priorité à leurs transactions.";
+
+"fee_settings.base_fee" = "Base Fee";
+"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
+"fee_settings.max_fee_rate" = "Max Fee Rate";
+"fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
+"fee_settings.tips" = "Max Priority Fee";
+"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+
 "fee_settings.errors.insufficient_balance" = "Solde insuffisant";
 "fee_settings.errors.insufficient_balance.info" = "Le solde actuel des ETH est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
 "fee_settings.errors.low_max_fee" = "Frais faibles";
 "fee_settings.errors.low_max_fee.info" = "Le montant des frais de transaction défini est insuffisant pour traiter cette transaction immédiatement.";
 "fee_settings.errors.nonce_already_in_block" = "Impossible de remplacer la transaction.";
 "fee_settings.errors.replacement_transaction_underpriced" = "Frais bas pour la transaction de remplacement";
+"fee_settings.errors.transaction_underpriced" = "Low Fee for transaction";
+"fee_settings.errors.tips_higher_than_max_fee" = "Max Fee is too low";
 "fee_settings.warning.risk_of_getting_stuck" = "Risqué";
 "fee_settings.warning.risk_of_getting_stuck.info" = "La transaction risque de rester en attente pendant un certain temps ou d'échouer complètement.";
 "fee_settings.warning.overpricing" = "Frais trop élevés";
