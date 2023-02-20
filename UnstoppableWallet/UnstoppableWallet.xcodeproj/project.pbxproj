@@ -4671,6 +4671,7 @@
 			children = (
 				11B35AC73BD1A5E8D91C19E9 /* CoinToggle */,
 				1A5649BF68168E626B3F69C4 /* Performance */,
+				2FA5DAF95B94874E05E49B2C /* StepperAmountInput */,
 				11B359824DCDF3B05413CDD2 /* MultiTextMetricsView.swift */,
 				2FA5DE415A04A29B90C59105 /* SelectableValueView.swift */,
 				11B3538D10D6256399A51F61 /* SelfSizedSectionsTableView.swift */,
@@ -4698,7 +4699,6 @@
 				D090AF60297D725D00699916 /* TransparentIconButtonView.swift */,
 				11B359C62F476065C11EE049 /* TextDropDownAndSettingsView.swift */,
 				11B3598D3D2FCEB51E0A0760 /* TextDropDownAndSettingsHeaderView.swift */,
-				2FA5DAF95B94874E05E49B2C /* StepperAmountInput */,
 			);
 			path = Components;
 			sourceTree = "<group>";

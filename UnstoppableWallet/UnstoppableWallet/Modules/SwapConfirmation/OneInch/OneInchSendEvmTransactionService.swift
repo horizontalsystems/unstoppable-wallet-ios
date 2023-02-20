@@ -13,7 +13,8 @@ class OneInchSendEvmTransactionService {
     private let disposeBag = DisposeBag()
 
     private let evmKitWrapper: EvmKitWrapper
-    private let transactionFeeService: OneInchFeeService
+    private let oneInchFeeService: OneInchFeeService
+    private let settingsService: EvmSendSettingsService
 
     private let stateRelay = PublishRelay<SendEvmTransactionService.State>()
     private(set) var state: SendEvmTransactionService.State = .notReady(errors: [], warnings: []) {
@@ -31,16 +32,17 @@ class OneInchSendEvmTransactionService {
         }
     }
 
-    init(evmKitWrapper: EvmKitWrapper, transactionFeeService: OneInchFeeService) {
+    init(evmKitWrapper: EvmKitWrapper, oneInchFeeService: OneInchFeeService, settingsService: EvmSendSettingsService) {
         self.evmKitWrapper = evmKitWrapper
-        self.transactionFeeService = transactionFeeService
+        self.oneInchFeeService = oneInchFeeService
+        self.settingsService = settingsService
 
-        subscribe(disposeBag, transactionFeeService.statusObservable) { [weak self] in self?.sync(status: $0) }
+        subscribe(disposeBag, settingsService.statusObservable) { [weak self] in self?.sync(status: $0) }
 
         // show initial info from parameters
         dataState = SendEvmTransactionService.DataState(
                 transactionData: nil,
-                additionalInfo: additionalInfo(parameters: transactionFeeService.parameters),
+                additionalInfo: additionalInfo(parameters: oneInchFeeService.parameters),
                 decoration: nil,
                 nonce: nil
         )
@@ -50,7 +52,7 @@ class OneInchSendEvmTransactionService {
         evmKitWrapper.evmKit
     }
 
-    private func sync(status: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
+    private func sync(status: DataStatus<FallibleData<EvmSendSettingsService.Transaction>>) {
         switch status {
         case .loading:
             state = .notReady(errors: [], warnings: [])
@@ -61,9 +63,9 @@ class OneInchSendEvmTransactionService {
 
             dataState = SendEvmTransactionService.DataState(
                     transactionData: transaction.transactionData,
-                    additionalInfo: additionalInfo(parameters: transactionFeeService.parameters),
+                    additionalInfo: additionalInfo(parameters: oneInchFeeService.parameters),
                     decoration: evmKit.decorate(transactionData: transaction.transactionData),
-                    nonce: nil
+                    nonce: settingsService.nonceService.frozen ? settingsService.nonceService.nonce : nil
             )
 
             if fallibleTransaction.errors.isEmpty {
@@ -108,7 +110,7 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
     }
 
     func send() {
-        guard case .ready = state, case .completed(let fallibleTransaction) = transactionFeeService.status else {
+        guard case .ready = state, case .completed(let fallibleTransaction) = settingsService.status else {
             return
         }
         let transaction = fallibleTransaction.data
@@ -118,7 +120,8 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
         evmKitWrapper.sendSingle(
                         transactionData: transaction.transactionData,
                         gasPrice: transaction.gasData.price,
-                        gasLimit: transaction.gasData.limit
+                        gasLimit: transaction.gasData.limit,
+                        nonce: transaction.nonce
                 )
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] fullTransaction in

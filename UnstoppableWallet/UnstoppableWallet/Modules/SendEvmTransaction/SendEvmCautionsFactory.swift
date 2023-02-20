@@ -20,8 +20,8 @@ class SendEvmCautionsFactory {
                 case .alreadyInUse:
                     return [
                         TitledCaution(
-                                title: "evm_send_settings.nonce.already_in_use".localized,
-                                text: "evm_send_settings.nonce.already_in_use.info".localized(baseCoinService.token.coin.code),
+                                title: "evm_send_settings.nonce.errors.already_in_use".localized,
+                                text: "evm_send_settings.nonce.errors.already_in_use.info".localized(baseCoinService.token.coin.code),
                                 type: .error
                         )
                     ]

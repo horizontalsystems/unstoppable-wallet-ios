@@ -27,14 +27,13 @@ class LegacyEvmFeeDataSource {
     func viewDidLoad() {
         maxFeeCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
         gasLimitCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+        syncGasLimitCell()
 
         subscribe(disposeBag, viewModel.gasLimitDriver) { [weak self] in self?.syncGasLimitCell(value: $0) }
         subscribe(disposeBag, viewModel.gasPriceDriver) { [weak self] in self?.gasPriceCell.value = $0 }
         subscribe(disposeBag, viewModel.alteredStateSignal) { [weak self] in self?.onUpdateAlteredState?() }
 
         gasPriceCell.onChangeValue = { [weak self] value in self?.viewModel.set(value: value) }
-
-        syncGasLimitCell()
     }
 
     private func syncGasLimitCell(value: String? = nil) {
@@ -81,7 +80,12 @@ extension LegacyEvmFeeDataSource: IEvmSendSettingsDataSource {
                         StaticRow(
                                 cell: gasLimitCell,
                                 id: "gas-limit",
-                                height: .heightCell48
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.onOpenInfo?("fee_settings.gas_limit".localized, "fee_settings.gas_limit.info".localized)
+                                }
+
                         )
                     ]
             )
@@ -92,7 +96,7 @@ extension LegacyEvmFeeDataSource: IEvmSendSettingsDataSource {
                     id: "gas-price",
                     headerState: .margin(height: .margin24),
                     rows: [
-                        tableView.subtitleWithInfoButtonRow(text: "fee_settings.gas_price".localized + " (GWEI)") { [weak self] in
+                        tableView.subtitleWithInfoButtonRow(text: "fee_settings.gas_price".localized + " (Gwei)", uppercase: false) { [weak self] in
                             self?.onOpenInfo?("fee_settings.gas_price".localized, "fee_settings.gas_price.info".localized)
                         },
                         StaticRow(

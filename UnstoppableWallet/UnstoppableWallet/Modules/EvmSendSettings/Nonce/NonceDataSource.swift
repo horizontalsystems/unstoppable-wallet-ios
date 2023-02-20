@@ -45,8 +45,8 @@ extension NonceDataSource: IEvmSendSettingsDataSource {
                     id: "nonce",
                     headerState: .margin(height: .margin24),
                     rows: [
-                        tableView.subtitleWithInfoButtonRow(text: "evm_send_settings.nonce.title".localized) { [weak self] in
-                            self?.onOpenInfo?("evm_send_settings.nonce.title".localized, "evm_send_settings.nonce.info".localized)
+                        tableView.subtitleWithInfoButtonRow(text: "evm_send_settings.nonce".localized, uppercase: false) { [weak self] in
+                            self?.onOpenInfo?("evm_send_settings.nonce".localized, "evm_send_settings.nonce.info".localized)
                         },
                         StaticRow(
                                 cell: nonceCell,

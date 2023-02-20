@@ -78,7 +78,7 @@ struct SwapConfirmationModule {
         default: return nil
         }
 
-        let transactionSettings = OneInchSendEvmTransactionService(evmKitWrapper: evmKitWrapper, transactionFeeService: feeService)
+        let transactionSettings = OneInchSendEvmTransactionService(evmKitWrapper: evmKitWrapper, oneInchFeeService: feeService, settingsService: settingsService)
         let transactionViewModel = SendEvmTransactionViewModel(service: transactionSettings, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
 
         return SwapConfirmationViewController(transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)
