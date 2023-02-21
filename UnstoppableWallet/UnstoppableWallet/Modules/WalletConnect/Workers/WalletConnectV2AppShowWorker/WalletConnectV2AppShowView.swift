@@ -48,7 +48,7 @@ class WalletConnectV2AppShowView {
         case .proposal(let proposal):
             processWalletConnectPair(proposal: proposal)
         case .errorDialog(let error):
-            WalletConnectV2AppShowView.showWalletConnectError(error: error, viewController: parentViewController)
+            WalletConnectV2AppShowView.showWalletConnectError(error: error, sourceViewController: parentViewController)
         }
     }
 
@@ -94,44 +94,56 @@ class WalletConnectV2AppShowView {
 
 extension WalletConnectV2AppShowView {
 
-    static func showWalletConnectError(error: WalletConnectOpenError, viewController: UIViewController?) {
+    static func showWalletConnectError(error: WalletConnectOpenError, sourceViewController: UIViewController?) {
+        let viewController: UIViewController
+
         switch error {
         case .noAccount:
-            let presentingViewController = InformationModule.simpleInfo(
+            viewController = BottomSheetModule.viewController(
+                    image: .local(image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)),
                     title: "wallet_connect.title".localized,
-                    image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob),
-                    description: "wallet_connect.no_account.description".localized,
-                    buttonTitle: "wallet_connect.no_account.close".localized,
-                    onTapButton: InformationModule.afterClose())
-
-            viewController?.present(presentingViewController, animated: true)
+                    items: [
+                        .highlightedDescription(text: "wallet_connect.no_account.description".localized)
+                    ],
+                    buttons: [
+                        .init(style: .yellow, title: "button.ok".localized)
+                    ]
+            )
         case .nonSupportedAccountType(let accountTypeDescription):
-            let presentingViewController = InformationModule.simpleInfo(
+            viewController = BottomSheetModule.viewController(
+                    image: .local(image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)),
                     title: "wallet_connect.title".localized,
-                    image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob),
-                    description: "wallet_connect.non_supported_account.description".localized(accountTypeDescription),
-                    buttonTitle: "wallet_connect.non_supported_account.switch".localized,
-                    onTapButton: InformationModule.afterClose { [weak viewController] in
-                        viewController?.present(SwitchAccountModule.viewController(), animated: true)
-                    })
-
-            viewController?.present(presentingViewController, animated: true)
+                    items: [
+                        .highlightedDescription(text: "wallet_connect.non_supported_account.description".localized(accountTypeDescription))
+                    ],
+                    buttons: [
+                        .init(style: .yellow, title: "wallet_connect.non_supported_account.switch".localized, actionType: .afterClose) { [weak sourceViewController] in
+                            sourceViewController?.present(SwitchAccountModule.viewController(), animated: true)
+                        },
+                        .init(style: .transparent, title: "button.cancel".localized)
+                    ]
+            )
         case .unbackupedAccount(let account):
-            let presentingViewController = InformationModule.simpleInfo(
+            viewController = BottomSheetModule.viewController(
+                    image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
                     title: "backup_required.title".localized,
-                    image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob),
-                    description: "wallet_connect.unbackuped_account.description".localized(account.name),
-                    buttonTitle: "backup_prompt.backup".localized,
-                    onTapButton: InformationModule.afterClose { [weak viewController] in
-                        guard let backupViewController = BackupModule.viewController(account: account) else {
-                            return
-                        }
+                    items: [
+                        .highlightedDescription(text: "wallet_connect.unbackuped_account.description".localized(account.name))
+                    ],
+                    buttons: [
+                        .init(style: .yellow, title: "backup_prompt.backup".localized, actionType: .afterClose) { [ weak sourceViewController] in
+                            guard let viewController = BackupModule.viewController(account: account) else {
+                                return
+                            }
 
-                        viewController?.present(backupViewController, animated: true)
-                    })
-
-            viewController?.present(presentingViewController, animated: true)
+                            sourceViewController?.present(viewController, animated: true)
+                        },
+                        .init(style: .transparent, title: "button.cancel".localized)
+                    ]
+            )
         }
+
+        sourceViewController?.present(viewController, animated: true)
     }
 
     enum WalletConnectOpenError {

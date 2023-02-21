@@ -339,18 +339,23 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openBackupRequired(wallet: Wallet) {
-        let viewController = InformationModule.simpleInfo(
+        let viewController = BottomSheetModule.viewController(
+                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
                 title: "backup_required.title".localized,
-                image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob),
-                description: "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name),
-                buttonTitle: "settings_manage_keys.backup".localized,
-                onTapButton: InformationModule.afterClose { [weak self] in
-                    guard let viewController = BackupModule.viewController(account: wallet.account) else {
-                        return
-                    }
+                items: [
+                    .highlightedDescription(text: "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name))
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "settings_manage_keys.backup".localized, actionType: .afterClose) { [ weak self] in
+                        guard let viewController = BackupModule.viewController(account: wallet.account) else {
+                            return
+                        }
 
-                    self?.present(viewController, animated: true)
-                })
+                        self?.present(viewController, animated: true)
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized)
+                ]
+        )
 
         present(viewController, animated: true)
     }
@@ -403,17 +408,7 @@ class WalletViewController: ThemeViewController {
             return
         }
 
-        let viewController = InformationModule.backupPrompt { [weak self] in
-            self?.showBackupModule(account: account)
-        }
-        present(viewController, animated: true)
-    }
-
-    private func showBackupModule(account: Account) {
-        guard let viewController = BackupModule.viewController(account: account) else {
-            return
-        }
-
+        let viewController = BottomSheetModule.backupPrompt(account: account, sourceViewController: self)
         present(viewController, animated: true)
     }
 

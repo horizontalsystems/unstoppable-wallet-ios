@@ -125,15 +125,19 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         disclaimerShown = true
         // show disclaimer
 
-        let title = BottomSheetItem.ComplexTitleViewItem(title: "alert.warning".localized, image: UIImage(named: "circle_information_24")?.withTintColor(.themeJacob))
-        let description = InformationModule.Item.description(text: "restore_setting.download.disclaimer".localized, isHighlighted: true)
-        let continueButton = InformationModule.ButtonItem(style: .yellow, title: "button.continue".localized, action: InformationModule.afterClose { [weak self] in
-            self?.setOldTypeActive(showKeyboard: showKeyboard)
-        })
-        let cancelButton = InformationModule.ButtonItem(style: .transparent, title: "button.cancel".localized, action: InformationModule.afterClose())
-        let alertController = InformationModule.viewController(title: .complex(viewItem: title), items: [description], buttons: [continueButton, cancelButton])
+        let viewController = BottomSheetModule.viewController(
+                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                title: "alert.warning".localized,
+                items: [
+                    .highlightedDescription(text: "restore_setting.download.disclaimer".localized)
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "button.continue".localized) { [ weak self] in self?.setOldTypeActive(showKeyboard: showKeyboard) },
+                    .init(style: .transparent, title: "button.cancel".localized)
+                ]
+        )
 
-        return present(alertController, animated: true)
+        present(viewController, animated: true)
     }
 
     private func setOldTypeActive(showKeyboard: Bool = true) {

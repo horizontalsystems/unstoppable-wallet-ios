@@ -151,29 +151,17 @@ class WalletConnectListViewController: ThemeViewController {
     }
 
     private func show(newConnectionError: String) {
-        let title = BottomSheetItem.ComplexTitleViewItem(
+        let viewController = BottomSheetModule.viewController(
+                image: .local(image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)),
                 title: "WalletConnect",
-                image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)
+                items: [
+                    .highlightedDescription(text: newConnectionError)
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "alert.try_again".localized, actionType: .afterClose) { [ weak self] in self?.startNewConnection() },
+                    .init(style: .transparent, title: "button.cancel".localized)
+                ]
         )
-        let description = InformationModule.Item.description(
-                text: newConnectionError,
-                isHighlighted: true
-        )
-        let tryAgainButton = InformationModule.ButtonItem(
-                style: .yellow,
-                title: "alert.try_again".localized,
-                action: InformationModule.afterClose({ [weak self] in self?.startNewConnection() })
-        )
-        let cancelButton = InformationModule.ButtonItem(
-                style: .gray,
-                title: "button.cancel".localized,
-                action: InformationModule.afterClose()
-        )
-        let viewController =  InformationModule.viewController(
-                title: .complex(viewItem: title),
-                items: [description],
-                buttons: [tryAgainButton, cancelButton]
-        ).toBottomSheet
 
         present(viewController, animated: true)
     }
