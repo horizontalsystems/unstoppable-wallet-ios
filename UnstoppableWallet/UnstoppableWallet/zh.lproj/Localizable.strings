@@ -85,6 +85,8 @@
 "number.trillion" = "%@万亿";
 "number.quadrillion" = "%@千萬億";
 
+"selector.any" = "Any";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable需要使用相机扫描二维码。
@@ -512,7 +514,6 @@
 "market.advanced_search.top" = "前 %d";
 "market.advanced_search.reset_all" = "重置";
 
-"market.advanced_search.any" = "任何";
 "market.advanced_search.less_5_m" = "<5M";
 "market.advanced_search.less_10_m" = "<10百万";
 "market.advanced_search.less_50_m" = "<50百万";
@@ -1116,7 +1117,6 @@
 "wallet_connect_list.disconnecting" = "正在断开连接";
 
 "wallet_connect.no_account.description" = "您需要先创建或导入钱包才能使用 WaletConnect。";
-"wallet_connect.no_account.close" = "关闭";
 "wallet_connect.unbackuped_account.description" = "您需要先备份 %@ 才能使用钱包连接";
 
 "wallet_connect.non_supported_account.description" = "您当前的钱包类型 %@ 不支持 WalletConnect";
