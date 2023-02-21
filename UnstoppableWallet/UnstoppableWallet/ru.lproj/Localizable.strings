@@ -85,6 +85,8 @@
 "number.trillion" = "%@ трл";
 "number.quadrillion" = "%@ квадрлн";
 
+"selector.any" = "Any";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable требуется доступ к вашей камере для сканирования QR-кода.
@@ -514,7 +516,6 @@
 "market.advanced_search.top" = "Топ %d";
 "market.advanced_search.reset_all" = "Сбросить";
 
-"market.advanced_search.any" = "Любые";
 "market.advanced_search.less_5_m" = "< 5млн";
 "market.advanced_search.less_10_m" = "< 10млн";
 "market.advanced_search.less_50_m" = "< 50млн";
@@ -1118,7 +1119,6 @@
 "wallet_connect_list.disconnecting" = "Отсоединение";
 
 "wallet_connect.no_account.description" = "Вам нужно создать или импортировать кошелек перед использованием WalletConnect.";
-"wallet_connect.no_account.close" = "Закрыть";
 "wallet_connect.unbackuped_account.description" = "Вам нужно сделать резервную копию %@ перед использованием WalletConnect";
 
 "wallet_connect.non_supported_account.description" = "Ваш текущий тип кошелька %@ не поддерживает WalletConnect";
