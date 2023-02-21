@@ -100,10 +100,10 @@ extension AddTokenViewModel {
         finishRelay.asSignal()
     }
 
-    var blockchainViewItems: [SingleSelectorViewController.ViewItem] {
+    var blockchainViewItems: [SelectorModule.ViewItem] {
         service.blockchainItems.map { item in
-            SingleSelectorViewController.ViewItem(
-                    imageUrl: item.blockchain.type.imageUrl,
+            SelectorModule.ViewItem(
+                    image: .url(item.blockchain.type.imageUrl),
                     title: item.blockchain.name,
                     selected: item.current
             )

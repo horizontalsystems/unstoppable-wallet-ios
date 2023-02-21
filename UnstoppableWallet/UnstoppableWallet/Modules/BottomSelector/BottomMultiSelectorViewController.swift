@@ -10,23 +10,28 @@ protocol IBottomMultiSelectorDelegate: AnyObject {
 }
 
 class BottomMultiSelectorViewController: ThemeActionSheetController {
-    private let config: Config
+    private let config: SelectorModule.MultiConfig
     private weak var delegate: IBottomMultiSelectorDelegate?
 
     private let titleView = BottomSheetTitleView()
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
     private let doneButton = PrimaryButton()
 
-    private var currentIndexes: Set<Int>
+    private var currentIndexes = Set<Int>()
     private var didTapDone = false
 
-    init(config: Config, delegate: IBottomMultiSelectorDelegate) {
+    init(config: SelectorModule.MultiConfig, delegate: IBottomMultiSelectorDelegate) {
         self.config = config
         self.delegate = delegate
 
-        currentIndexes = Set(config.selectedIndexes)
+        for (index, viewItem) in config.viewItems.enumerated() {
+            if viewItem.selected {
+                currentIndexes.insert(index)
+            }
+        }
 
         super.init()
+
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -40,42 +45,12 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
         titleView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
         }
-
-        titleView.title = config.title
-
-        switch config.icon {
-        case .local(let name):
-            titleView.image = UIImage(named: name)
-        case .remote(let url, let placeholder):
-            titleView.set(imageUrl: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
-        }
-
-        titleView.onTapClose = { [weak self] in
-            self?.dismiss(animated: true)
-        }
-
-        var lastView: UIView = titleView
-        var lastMargin: CGFloat = .margin12
-
-        if let description = config.description {
-            let descriptionView = HighlightedDescriptionView()
-
-            view.addSubview(descriptionView)
-            descriptionView.snp.makeConstraints { maker in
-                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-                maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
-            }
-
-            descriptionView.text = description
-
-            lastView = descriptionView
-            lastMargin = .margin12
-        }
+        titleView.bind(image: config.image, title: config.title, viewController: self)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(lastView.snp.bottom).offset(lastMargin)
+            maker.top.equalTo(titleView.snp.bottom)
         }
 
         tableView.sectionDataSource = self
@@ -132,96 +107,36 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
 
 extension BottomMultiSelectorViewController: SectionsDataSource {
 
+    private var descriptionRows: [RowProtocol] {
+        guard let description = config.description else {
+            return []
+        }
+
+        return [
+            tableView.highlightedDescriptionRow(id: "description", text: description)
+        ]
+    }
+
     func buildSections() -> [SectionProtocol] {
         [
             Section(
                     id: "main",
-                    rows: config.viewItems.enumerated().map { index, viewItem in
-                        let selected = currentIndexes.contains(index)
-                        let isFirst = index == 0
-                        let isLast = index == config.viewItems.count - 1
-
-                        return CellBuilderNew.row(
-                                rootElement: .hStack([
-                                    .image32 { component in
-                                        if let icon = viewItem.icon {
-                                            switch icon {
-                                            case .local(let name):
-                                                component.imageView.image = UIImage(named: name)
-                                            case .remote(let url, let placeholder):
-                                                component.setImage(urlString: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
-                                            }
-                                            component.isHidden = false
-                                        } else {
-                                            component.isHidden = true
-                                        }
-                                    },
-                                    .vStackCentered([
-                                        .text { component in
-                                            component.font = .body
-                                            component.textColor = .themeLeah
-                                            component.text = viewItem.title
-                                        },
-                                        .margin(1),
-                                        .text { component in
-                                            component.font = .subhead2
-                                            component.textColor = .themeGray
-                                            component.lineBreakMode = .byTruncatingMiddle
-                                            component.text = viewItem.subtitle
-                                        }
-                                    ]),
-                                    .switch { [weak self] component in
-                                        component.switchView.isOn = selected
-                                        component.onSwitch = { self?.onToggle(index: index, isOn: $0) }
-                                    }
-                                ]),
+                    headerState: .margin(height: config.description != nil ? 0 : .margin12),
+                    rows: descriptionRows + config.viewItems.enumerated().map { index, viewItem in
+                        SelectorModule.row(
+                                viewItem: viewItem,
                                 tableView: tableView,
-                                id: "item_\(index)",
-                                hash: "\(selected)",
-                                height: .heightDoubleLineCell,
-                                autoDeselect: true,
-                                bind: { cell in
-                                    cell.set(backgroundStyle: .bordered, isFirst: isFirst, isLast: isLast)
-                                },
-                                action: viewItem.copyableString.map { string in
-                                    { CopyHelper.copyAndNotify(value: string) }
-                                }
-                        )
+                                isOn: currentIndexes.contains(index),
+                                backgroundStyle: .bordered,
+                                index: index,
+                                isFirst: index == 0,
+                                isLast: index == config.viewItems.count - 1
+                        ) { [weak self] index, isOn in
+                            self?.onToggle(index: index, isOn: isOn)
+                        }
                     }
             )
         ]
-    }
-
-}
-
-extension BottomMultiSelectorViewController {
-
-    struct Config {
-        let icon: IconStyle
-        let title: String
-        let description: String?
-        let allowEmpty: Bool
-        let selectedIndexes: [Int]
-        let viewItems: [ViewItem]
-    }
-
-    struct ViewItem {
-        let icon: IconStyle?
-        let title: String
-        let subtitle: String
-        let copyableString: String?
-
-        init(icon: IconStyle? = nil, title: String, subtitle: String, copyableString: String? = nil) {
-            self.icon = icon
-            self.title  = title
-            self.subtitle = subtitle
-            self.copyableString = copyableString
-        }
-    }
-
-    enum IconStyle {
-        case local(name: String)
-        case remote(url: String, placeholder: String?)
     }
 
 }

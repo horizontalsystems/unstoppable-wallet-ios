@@ -45,11 +45,11 @@ class MetricChartViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.title = viewModel.title
-        titleView.image = UIImage(named: "chart_2_24")?.withTintColor(.themeJacob)
-        titleView.onTapClose = { [weak self] in
-            self?.dismiss(animated: true)
-        }
+        titleView.bind(
+                image: .local(image: UIImage(named: "chart_2_24")?.withTintColor(.themeJacob)),
+                title: viewModel.title,
+                viewController: self
+        )
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

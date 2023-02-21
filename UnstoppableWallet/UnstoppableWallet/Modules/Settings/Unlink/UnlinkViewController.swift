@@ -35,11 +35,11 @@ class UnlinkViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.title = "settings_manage_keys.delete.title".localized
-        titleView.image = UIImage(named: "trash_24")?.withTintColor(.themeLucian)
-        titleView.onTapClose = { [weak self] in
-            self?.dismiss(animated: true)
-        }
+        titleView.bind(
+                image: .local(image: UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
+                title: "settings_manage_keys.delete.title".localized,
+                viewController: self
+        )
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

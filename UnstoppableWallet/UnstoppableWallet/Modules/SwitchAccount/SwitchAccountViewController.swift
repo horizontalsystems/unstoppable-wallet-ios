@@ -31,11 +31,11 @@ class SwitchAccountViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.title = "switch_account.title".localized
-        titleView.image = UIImage(named: "switch_wallet_24")?.withTintColor(.themeJacob)
-        titleView.onTapClose = { [weak self] in
-            self?.dismiss(animated: true)
-        }
+        titleView.bind(
+                image: .local(image: UIImage(named: "switch_wallet_24")?.withTintColor(.themeJacob)),
+                title: "switch_account.title".localized,
+                viewController: self
+        )
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -123,19 +123,6 @@ extension SwitchAccountViewController: SectionsDataSource {
         }
 
         return sections
-    }
-
-}
-
-extension SwitchAccountViewController: ActionSheetViewDelegate {
-
-    public var height: CGFloat? {
-        guard let window = view.window else {
-            return nil
-        }
-
-        let availableHeight = window.bounds.height - BottomSheetTitleView.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom - 100
-        return tableView.intrinsicContentSize.height > availableHeight ? availableHeight : nil
     }
 
 }

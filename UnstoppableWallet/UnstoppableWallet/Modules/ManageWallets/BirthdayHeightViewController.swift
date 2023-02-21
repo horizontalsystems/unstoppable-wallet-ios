@@ -33,11 +33,11 @@ class BirthdayHeightViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.title = blockchainName
-        titleView.set(imageUrl: blockchainImageUrl, placeholder: nil)
-        titleView.onTapClose = { [weak self] in
-            self?.dismiss(animated: true)
-        }
+        titleView.bind(
+                image: .remote(url: blockchainImageUrl, placeholder: nil),
+                title: blockchainName,
+                viewController: self
+        )
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

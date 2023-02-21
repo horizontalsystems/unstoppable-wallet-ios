@@ -3,42 +3,57 @@ import SnapKit
 import ThemeKit
 
 class BottomSheetTitleView: UIView {
-    static let height: CGFloat = 60
-
     private let imageView = UIImageView()
     private let titleLabel = UILabel()
-    private let closeButton = UIButton()
+    private let subtitleLabel = UILabel()
 
-    var onTapClose: (() -> ())?
+    private weak var viewController: UIViewController?
 
     init() {
         super.init(frame: .zero)
 
-        self.snp.makeConstraints { maker in
-            maker.height.equalTo(BottomSheetTitleView.height)
+        snp.makeConstraints { maker in
+            maker.height.equalTo(60)
         }
 
-        addSubview(imageView)
-        imageView.snp.makeConstraints { maker in
+        let stackView = UIStackView()
+
+        stackView.spacing = .margin16
+
+        addSubview(stackView)
+        stackView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().offset(CGFloat.margin32)
             maker.top.equalToSuperview().offset(CGFloat.margin24)
-            maker.size.equalTo(CGFloat.iconSize24)
         }
 
-        addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(imageView.snp.trailing).offset(CGFloat.margin16)
-            maker.centerY.equalTo(imageView)
+        stackView.addArrangedSubview(imageView)
+        imageView.snp.makeConstraints { maker in
+            maker.size.equalTo(CGFloat.iconSize32)
         }
 
-        titleLabel.font = .headline2
+        let titleStackView = UIStackView()
+        stackView.addArrangedSubview(titleStackView)
+
+        titleStackView.axis = .vertical
+        titleStackView.spacing = 1
+
+        titleStackView.addArrangedSubview(titleLabel)
+
+        titleLabel.font = .body
         titleLabel.textColor = .themeLeah
+
+        titleStackView.addArrangedSubview(subtitleLabel)
+
+        subtitleLabel.font = .subhead2
+        subtitleLabel.textColor = .themeGray
+
+        let closeButton = UIButton()
 
         addSubview(closeButton)
         closeButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin16)
+            maker.leading.equalTo(stackView.snp.trailing).offset(CGFloat.margin16)
             maker.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.centerY.equalTo(imageView)
+            maker.centerY.equalTo(stackView)
             maker.size.equalTo(CGFloat.iconSize24 + 2 * CGFloat.margin8)
         }
 
@@ -52,22 +67,48 @@ class BottomSheetTitleView: UIView {
     }
 
     @objc private func _onTapClose() {
-        onTapClose?()
+        viewController?.dismiss(animated: true)
     }
 
-    var title: String? {
-        get { titleLabel.text }
-        set { titleLabel.text = newValue }
+    func bind(image: Image? = nil, title: String, subtitle: String? = nil, viewController: UIViewController) {
+        snp.updateConstraints { maker in
+            maker.height.equalTo(subtitle != nil ? 72 : 60)
+        }
+
+        if let image = image {
+            imageView.isHidden = false
+
+            imageView.snp.updateConstraints { maker in
+                maker.size.equalTo(subtitle != nil ? CGFloat.iconSize32 : CGFloat.iconSize24)
+            }
+
+            switch image {
+            case .local(let image): imageView.image = image
+            case let .remote(url, placeholder): imageView.setImage(withUrlString: url, placeholder: placeholder.flatMap { UIImage(named: $0) })
+            }
+        } else {
+            imageView.isHidden = true
+        }
+
+        titleLabel.text = title
+
+        if let subtitle = subtitle {
+            subtitleLabel.isHidden = false
+            subtitleLabel.text = subtitle
+        } else {
+            subtitleLabel.isHidden = true
+        }
+
+        self.viewController = viewController
     }
 
-    var image: UIImage? {
-        get { imageView.image }
-        set { imageView.image = newValue }
-    }
+}
 
-    func set(imageUrl: String?, placeholder: UIImage?) {
-        imageView.tintColor = nil
-        imageView.kf.setImage(with: imageUrl.flatMap { URL(string: $0) }, placeholder: placeholder, options: [.scaleFactor(UIScreen.main.scale)])
+extension BottomSheetTitleView {
+
+    enum Image {
+        case local(image: UIImage?)
+        case remote(url: String, placeholder: String?)
     }
 
 }

@@ -4,12 +4,12 @@ import ComponentKit
 import SectionsTableView
 
 class SingleSelectorViewController: ThemeViewController {
-    private let viewItems: [ViewItem]
+    private let viewItems: [SelectorModule.ViewItem]
     private let onSelect: (Int) -> ()
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    init(title: String, viewItems: [ViewItem], onSelect: @escaping (Int) -> ()) {
+    init(title: String, viewItems: [SelectorModule.ViewItem], onSelect: @escaping (Int) -> ()) {
         self.viewItems = viewItems
         self.onSelect = onSelect
 
@@ -25,7 +25,7 @@ class SingleSelectorViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .done, target: self, action: #selector(onTapClose))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -34,8 +34,8 @@ class SingleSelectorViewController: ThemeViewController {
 
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-
         tableView.sectionDataSource = self
+
         tableView.buildSections()
     }
 
@@ -43,7 +43,7 @@ class SingleSelectorViewController: ThemeViewController {
         dismiss(animated: true)
     }
 
-    private func onTap(index: Int) {
+    private func onSelect(index: Int) {
         onSelect(index)
         dismiss(animated: true)
     }
@@ -59,30 +59,20 @@ extension SingleSelectorViewController: SectionsDataSource {
                     headerState: .margin(height: .margin12),
                     footerState: .margin(height: .margin32),
                     rows: viewItems.enumerated().map { index, viewItem in
-                        tableView.universalRow56(
-                                id: "item-\(index)",
-                                image: .url(viewItem.imageUrl),
-                                title: .body(viewItem.title),
-                                accessoryType: .check(viewItem.selected),
+                        SelectorModule.row(
+                                viewItem: viewItem,
+                                tableView: tableView,
+                                selected: viewItem.selected,
+                                backgroundStyle: .lawrence,
+                                index: index,
                                 isFirst: index == 0,
-                                isLast: index == viewItems.count - 1,
-                                action: { [weak self] in
-                                    self?.onTap(index: index)
-                                }
-                        )
+                                isLast: index == viewItems.count - 1
+                        ) { [weak self] in
+                            self?.onSelect(index: index)
+                        }
                     }
             )
         ]
-    }
-
-}
-
-extension SingleSelectorViewController {
-
-    struct ViewItem {
-        let imageUrl: String
-        let title: String
-        let selected: Bool
     }
 
 }

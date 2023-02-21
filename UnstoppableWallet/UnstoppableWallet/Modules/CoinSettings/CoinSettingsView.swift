@@ -16,8 +16,8 @@ class CoinSettingsView {
         }
     }
 
-    private func showBottomSelector(config: BottomMultiSelectorViewController.Config) {
-        let controller = BottomMultiSelectorViewController(config: config, delegate: self).toBottomSheet
+    private func showBottomSelector(config: SelectorModule.MultiConfig) {
+        let controller = SelectorModule.bottomMultiSelectorViewController(config: config, delegate: self)
         onOpenController?(controller)
     }
 

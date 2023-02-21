@@ -7,7 +7,7 @@ class CoinSettingsViewModel {
     private let service: CoinSettingsService
     private let disposeBag = DisposeBag()
 
-    private let openBottomSelectorRelay = PublishRelay<BottomMultiSelectorViewController.Config>()
+    private let openBottomSelectorRelay = PublishRelay<SelectorModule.MultiConfig>()
 
     private var currentRequest: CoinSettingsService.Request?
 
@@ -18,7 +18,7 @@ class CoinSettingsViewModel {
     }
 
     private func handle(request: CoinSettingsService.Request) {
-        let config: BottomMultiSelectorViewController.Config
+        let config: SelectorModule.MultiConfig
 
         switch request.type {
         case let .derivation(allDerivations, current):
@@ -31,33 +31,33 @@ class CoinSettingsViewModel {
         openBottomSelectorRelay.accept(config)
     }
 
-    private func derivationConfig(token: Token, allowEmpty: Bool, allDerivations: [MnemonicDerivation], current: [MnemonicDerivation]) -> BottomMultiSelectorViewController.Config {
-        BottomMultiSelectorViewController.Config(
-                icon: .remote(url: token.coin.imageUrl, placeholder: token.placeholderImageName),
+    private func derivationConfig(token: Token, allowEmpty: Bool, allDerivations: [MnemonicDerivation], current: [MnemonicDerivation]) -> SelectorModule.MultiConfig {
+        SelectorModule.MultiConfig(
+                image: .remote(url: token.coin.imageUrl, placeholder: token.placeholderImageName),
                 title: token.coin.code,
                 description: "blockchain_settings.description".localized,
                 allowEmpty: allowEmpty,
-                selectedIndexes: current.compactMap { allDerivations.firstIndex(of: $0) },
                 viewItems: allDerivations.map { derivation in
-                    BottomMultiSelectorViewController.ViewItem(
+                    SelectorModule.ViewItem(
                             title: derivation.title,
-                            subtitle: derivation.addressType
+                            subtitle: derivation.addressType,
+                            selected: current.contains(derivation)
                     )
                 }
         )
     }
 
-    private func bitcoinCashCoinTypeConfig(token: Token, allowEmpty: Bool, allTypes: [BitcoinCashCoinType], current: [BitcoinCashCoinType]) -> BottomMultiSelectorViewController.Config {
-        BottomMultiSelectorViewController.Config(
-                icon: .remote(url: token.coin.imageUrl, placeholder: token.placeholderImageName),
+    private func bitcoinCashCoinTypeConfig(token: Token, allowEmpty: Bool, allTypes: [BitcoinCashCoinType], current: [BitcoinCashCoinType]) -> SelectorModule.MultiConfig {
+        SelectorModule.MultiConfig(
+                image: .remote(url: token.coin.imageUrl, placeholder: token.placeholderImageName),
                 title: token.coin.code,
                 description: "blockchain_settings.description".localized,
                 allowEmpty: allowEmpty,
-                selectedIndexes: current.compactMap { allTypes.firstIndex(of: $0) },
                 viewItems: allTypes.map { type in
-                    BottomMultiSelectorViewController.ViewItem(
+                    SelectorModule.ViewItem(
                             title: type.title,
-                            subtitle: type.description
+                            subtitle: type.description,
+                            selected: current.contains(type)
                     )
                 }
         )
@@ -67,7 +67,7 @@ class CoinSettingsViewModel {
 
 extension CoinSettingsViewModel {
 
-    var openBottomSelectorSignal: Signal<BottomMultiSelectorViewController.Config> {
+    var openBottomSelectorSignal: Signal<SelectorModule.MultiConfig> {
         openBottomSelectorRelay.asSignal()
     }
 
