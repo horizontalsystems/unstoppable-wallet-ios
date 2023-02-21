@@ -5,7 +5,7 @@ import ComponentKit
 import SectionsTableView
 
 class InformationViewController: ThemeActionSheetController {
-    private static let buttonSpacing = CGFloat.margin12
+    private static let buttonSpacing: CGFloat = .margin12
 
     private var titleView: UIView?
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
@@ -97,11 +97,11 @@ class InformationViewController: ThemeActionSheetController {
             return
         }
 
-        titleView.title = viewItem.title
-        titleView.image = viewItem.image
-        titleView.onTapClose = { [weak self] in
-            self?.onTapClose()
-        }
+        titleView.bind(
+                image: .local(image: viewItem.image),
+                title: viewItem.title,
+                viewController: self
+        )
     }
 
     private func descriptionSection(text: String, isHighlighted: Bool = true) -> SectionProtocol {

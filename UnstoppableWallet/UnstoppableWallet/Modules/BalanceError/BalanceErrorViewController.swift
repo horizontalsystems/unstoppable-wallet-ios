@@ -33,11 +33,11 @@ class BalanceErrorViewController: ThemeActionSheetController {
             maker.leading.top.trailing.equalToSuperview()
         }
 
-        titleView.title = "balance_error.sync_error".localized
-        titleView.image = UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)
-        titleView.onTapClose = { [weak self] in
-            self?.dismiss(animated: true)
-        }
+        titleView.bind(
+                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)),
+                title: "balance_error.sync_error".localized,
+                viewController: self
+        )
 
         let retryButton = PrimaryButton()
 

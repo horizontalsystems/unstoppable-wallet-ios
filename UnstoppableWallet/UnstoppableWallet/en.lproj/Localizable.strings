@@ -85,6 +85,8 @@
 "number.trillion" = "%@T";
 "number.quadrillion" = "%@Q";
 
+"selector.any" = "Any";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
@@ -512,7 +514,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Reset";
 
-"market.advanced_search.any" = "Any";
 "market.advanced_search.less_5_m" = "< 5M";
 "market.advanced_search.less_10_m" = "< 10M";
 "market.advanced_search.less_50_m" = "< 50M";

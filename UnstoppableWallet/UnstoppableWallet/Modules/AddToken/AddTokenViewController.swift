@@ -134,15 +134,15 @@ class AddTokenViewController: ThemeViewController {
     }
 
     private func openBlockchainSelector() {
-        let controller = SingleSelectorViewController(
+        let viewController = SelectorModule.singleSelectorViewController(
                 title: "add_token.blockchain".localized,
                 viewItems: viewModel.blockchainViewItems,
-                onSelect: { [weak self] in
-                    self?.viewModel.onSelectBlockchain(index: $0)
+                onSelect: { [weak self] index in
+                    self?.viewModel.onSelectBlockchain(index: index)
                 }
         )
 
-        present(ThemeNavigationController(rootViewController: controller), animated: true)
+        present(viewController, animated: true)
     }
 
 }

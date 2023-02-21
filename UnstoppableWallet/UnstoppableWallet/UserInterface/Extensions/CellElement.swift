@@ -3,26 +3,32 @@ import ComponentKit
 
 extension CellBuilderNew.CellElement {  // prepared cell elements for most frequency used layouts
 
-    static func textElement(text: Text, parameters: TextParameters = .none) -> CellBuilderNew.CellElement {
-        .text { (component: TextComponent) -> () in
-            component.font = text.font
-            component.textColor = text.textColor
-            component.text = text.text
+    static func textElement(text: Text?, parameters: TextParameters = .none) -> CellBuilderNew.CellElement {
+        .text { component in
+            if let text = text {
+                component.isHidden = false
 
-            if parameters.contains(.highHugging) {
-                component.setContentHuggingPriority(.required, for: .horizontal)
-            }
-            if parameters.contains(.highResistance) {
-                component.setContentCompressionResistancePriority(.required, for: .horizontal)
-            }
-            if parameters.contains(.rightAlignment) {
-                component.textAlignment = .right
-            }
-            if parameters.contains(.centerAlignment) {
-                component.textAlignment = .center
-            }
-            if parameters.contains(.truncatingMiddle) {
-                component.lineBreakMode = .byTruncatingMiddle
+                component.font = text.font
+                component.textColor = text.textColor
+                component.text = text.text
+
+                if parameters.contains(.highHugging) {
+                    component.setContentHuggingPriority(.required, for: .horizontal)
+                }
+                if parameters.contains(.highResistance) {
+                    component.setContentCompressionResistancePriority(.required, for: .horizontal)
+                }
+                if parameters.contains(.rightAlignment) {
+                    component.textAlignment = .right
+                }
+                if parameters.contains(.centerAlignment) {
+                    component.textAlignment = .center
+                }
+                if parameters.contains(.truncatingMiddle) {
+                    component.lineBreakMode = .byTruncatingMiddle
+                }
+            } else {
+                component.isHidden = true
             }
         }
     }

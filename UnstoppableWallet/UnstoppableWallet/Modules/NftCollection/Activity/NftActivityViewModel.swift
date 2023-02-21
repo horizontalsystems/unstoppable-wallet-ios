@@ -128,14 +128,14 @@ extension NftActivityViewModel {
         syncErrorRelay.asDriver()
     }
 
-    var contractViewItems: [BottomSingleSelectorViewController.ViewItem] {
+    var contractViewItems: [SelectorModule.ViewItem] {
         guard let blockchainType = service.blockchainType else {
             return []
         }
 
         return service.contracts.enumerated().map { index, contract in
-            BottomSingleSelectorViewController.ViewItem(
-                    icon: .remote(url: blockchainType.imageUrl, placeholder: nil),
+            SelectorModule.ViewItem(
+                    image: .url(blockchainType.imageUrl),
                     title: contract.name,
                     subtitle: contract.address.shortened,
                     badge: contract.schema,

@@ -76,7 +76,7 @@ class MarketAdvancedSearchViewModel {
         let valueStyle: ValueStyle
 
         if service.blockchains.isEmpty {
-            value = "market.advanced_search.any".localized
+            value = "selector.any".localized
             valueStyle = .none
         } else if service.blockchains.count == 1 {
             value = service.blockchains[0].name
@@ -147,10 +147,11 @@ extension MarketAdvancedSearchViewModel {
         }
     }
 
-    var blockchainViewItems: [MultiSelectorViewController.ViewItem] {
+    var blockchainViewItems: [SelectorModule.ViewItem] {
         service.allBlockchains.map { blockchain in
-            MultiSelectorViewController.ViewItem(
-                    value: blockchain.name,
+            SelectorModule.ViewItem(
+                    image: .url(blockchain.type.imageUrl, placeholder: "placeholder_rectangle_32"),
+                    title: blockchain.name,
                     selected: service.blockchains.contains(blockchain)
             )
         }
@@ -287,7 +288,7 @@ extension MarketAdvancedSearchService.ValueFilter {
 
     var title: String {
         switch self {
-        case .none: return "market.advanced_search.any".localized
+        case .none: return "selector.any".localized
         case .lessM5: return "market.advanced_search.less_5_m".localized
         case .lessM10: return "market.advanced_search.less_10_m".localized
         case .lessM50: return "market.advanced_search.less_50_m".localized
@@ -324,7 +325,7 @@ extension MarketAdvancedSearchService.PriceChangeFilter {
 
     var title: String {
         switch self {
-        case .none: return "market.advanced_search.any".localized
+        case .none: return "selector.any".localized
         case .plus10: return "> +10 %"
         case .plus25: return "> +25 %"
         case .plus50: return "> +50 %"

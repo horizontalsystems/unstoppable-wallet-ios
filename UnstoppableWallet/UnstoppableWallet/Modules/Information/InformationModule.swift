@@ -3,6 +3,7 @@ import ThemeKit
 import ComponentKit
 
 class InformationModule {
+
     static func afterClose(_ action: (() -> ())? = nil) -> (UIViewController) -> () {
         { controller in
             controller.dismiss(animated: true) {

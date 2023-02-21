@@ -217,30 +217,27 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     private func openSelectNetwork() {
-        let titleViewItem = BottomSheetItem.ComplexTitleViewItem(
-                title: "wallet_connect.network".localized,
-                image: UIImage(named: "blocks_24")?.withTintColor(.themeJacob)
-        )
-
         let viewItems = viewModel.blockchainSelectorViewItems
 
-        let items = viewItems.map {
-            ItemSelectorModule.Item.simple(
-                    viewItem: BottomSheetItem.SimpleViewItem(
-                            imageUrl: $0.imageUrl,
-                            title: $0.title,
-                            selected: $0.selected
-                    )
+        let selectorViewItems = viewItems.map {
+            SelectorModule.ViewItem(
+                    image: .url($0.imageUrl),
+                    title: $0.title,
+                    selected: $0.selected
             )
         }
 
-        let itemSelector = ItemSelectorModule.viewController(title: .complex(viewItem: titleViewItem), items: items, onTap: { [weak self] selector, index in
-            selector.dismiss(animated: true)
-            self?.viewModel.onSelect(chainId: viewItems[index].chainId)
-        })
+        let viewController = SelectorModule.bottomSingleSelectorViewController(
+                image: .local(image: UIImage(named: "blocks_24")?.withTintColor(.themeJacob)),
+                title: "wallet_connect.network".localized,
+                viewItems: selectorViewItems,
+                onSelect: { [weak self] index in
+                    self?.viewModel.onSelect(chainId: viewItems[index].chainId)
+                }
+        )
 
         DispatchQueue.main.async {
-            self.present(itemSelector.toBottomSheet, animated: true)
+            self.present(viewController, animated: true)
         }
     }
 

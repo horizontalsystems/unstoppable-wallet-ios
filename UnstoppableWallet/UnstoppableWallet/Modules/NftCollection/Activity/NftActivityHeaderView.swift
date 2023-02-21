@@ -67,18 +67,16 @@ class NftActivityHeaderView: UIView {
     }
 
     @objc private func onTapContract() {
-        let config = BottomSingleSelectorViewController.Config(
-                icon: .local(name: "paper_contract_24"),
+        let viewController = SelectorModule.bottomSingleSelectorViewController(
+                image: .local(image: UIImage(named: "paper_contract_24")?.withTintColor(.themeJacob)),
                 title: "nft.activity.contracts".localized,
-                description: nil,
-                viewItems: viewModel.contractViewItems
+                viewItems: viewModel.contractViewItems,
+                onSelect: { [weak self] index in
+                    self?.viewModel.onSelectContract(index: index)
+                }
         )
 
-        let selectorController = BottomSingleSelectorViewController(config: config) { [weak self] index in
-            self?.viewModel.onSelectContract(index: index)
-        }
-
-        viewController?.present(selectorController.toBottomSheet, animated: true)
+        self.viewController?.present(viewController, animated: true)
     }
 
 }

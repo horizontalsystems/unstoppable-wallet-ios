@@ -4,14 +4,14 @@ import SectionsTableView
 import ComponentKit
 
 class MultiSelectorViewController: ThemeViewController {
-    private let values: [String]
+    private let viewItems: [SelectorModule.ViewItem]
     private var currentIndexes = Set<Int>()
     private let onFinish: ([Int]) -> ()
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    init(title: String, viewItems: [ViewItem], onFinish: @escaping ([Int]) -> ()) {
-        values = viewItems.map { $0.value }
+    init(title: String, viewItems: [SelectorModule.ViewItem], onFinish: @escaping ([Int]) -> ()) {
+        self.viewItems = viewItems
 
         for (index, viewItem) in viewItems.enumerated() {
             if viewItem.selected {
@@ -42,8 +42,8 @@ class MultiSelectorViewController: ThemeViewController {
 
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-
         tableView.sectionDataSource = self
+
         tableView.buildSections()
     }
 
@@ -71,19 +71,6 @@ class MultiSelectorViewController: ThemeViewController {
 
 extension MultiSelectorViewController: SectionsDataSource {
 
-    private func row(id: String, isFirst: Bool, isLast: Bool, value: String, valueColor: UIColor, selected: Bool, action: @escaping () -> ()) -> RowProtocol {
-        tableView.universalRow48(
-                id: id,
-                title: .body(value, color: valueColor),
-                accessoryType: .check(selected),
-                hash: "\(selected)",
-                autoDeselect: true,
-                isFirst: isFirst,
-                isLast: isLast,
-                action: action
-        )
-    }
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
@@ -91,41 +78,31 @@ extension MultiSelectorViewController: SectionsDataSource {
                     headerState: .margin(height: .margin12),
                     footerState: .margin(height: .margin32),
                     rows: [
-                        row(
-                                id: "any-row",
+                        tableView.universalRow48(
+                                id: "any",
+                                title: .body("selector.any".localized),
+                                accessoryType: .check(currentIndexes.isEmpty),
+                                hash: "\(currentIndexes.isEmpty)",
+                                autoDeselect: true,
                                 isFirst: true,
-                                isLast: false,
-                                value: "market.advanced_search.any".localized,
-                                valueColor: .themeGray,
-                                selected: currentIndexes.isEmpty,
                                 action: { [weak self] in
                                     self?.onTapAny()
                                 }
                         )
-                    ] + values.enumerated().map { index, value in
-                        row(
-                                id: "item_\(index)",
-                                isFirst: false,
-                                isLast: index == values.count - 1,
-                                value: value,
-                                valueColor: .themeLeah,
+                    ] + viewItems.enumerated().map { index, viewItem in
+                        SelectorModule.row(
+                                viewItem: viewItem,
+                                tableView: tableView,
                                 selected: currentIndexes.contains(index),
-                                action: { [weak self] in
-                                    self?.onTap(index: index)
-                                }
-                        )
+                                backgroundStyle: .lawrence,
+                                index: index,
+                                isLast: index == viewItems.count - 1
+                        ) { [weak self] in
+                            self?.onTap(index: index)
+                        }
                     }
             )
         ]
-    }
-
-}
-
-extension MultiSelectorViewController {
-
-    struct ViewItem {
-        let value: String
-        let selected: Bool
     }
 
 }

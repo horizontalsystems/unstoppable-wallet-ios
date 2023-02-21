@@ -6,7 +6,7 @@ class CoinTokensViewModel {
     private let service: CoinTokensService
     private let disposeBag = DisposeBag()
 
-    private let openBottomSelectorRelay = PublishRelay<BottomMultiSelectorViewController.Config>()
+    private let openBottomSelectorRelay = PublishRelay<SelectorModule.MultiConfig>()
 
     private var currentRequest: CoinTokensService.Request?
 
@@ -20,18 +20,17 @@ class CoinTokensViewModel {
         let coin = request.coin
         let tokens = request.eligibleTokens
 
-        let config = BottomMultiSelectorViewController.Config(
-                icon: .remote(url: coin.imageUrl, placeholder: "placeholder_circle_32"),
+        let config = SelectorModule.MultiConfig(
+                image: .remote(url: coin.imageUrl, placeholder: "placeholder_circle_32"),
                 title: coin.code,
                 description: tokens.count == 1 ? nil : "coin_platforms.description".localized,
                 allowEmpty: request.allowEmpty,
-                selectedIndexes: request.currentTokens.compactMap { tokens.firstIndex(of: $0) },
                 viewItems: tokens.map { token in
-                    BottomMultiSelectorViewController.ViewItem(
-                            icon: .remote(url: token.blockchain.type.imageUrl, placeholder: nil),
+                    SelectorModule.ViewItem(
+                            image: .url(token.blockchain.type.imageUrl),
                             title: token.tokenBlockchain,
                             subtitle: token.typeInfo,
-                            copyableString: token.copyableTypeInfo
+                            selected: request.currentTokens.contains(token)
                     )
                 }
         )
@@ -44,7 +43,7 @@ class CoinTokensViewModel {
 
 extension CoinTokensViewModel {
 
-    var openBottomSelectorSignal: Signal<BottomMultiSelectorViewController.Config> {
+    var openBottomSelectorSignal: Signal<SelectorModule.MultiConfig> {
         openBottomSelectorRelay.asSignal()
     }
 
