@@ -370,7 +370,7 @@ class UniswapDataSource {
             return
         }
 
-        let viewController = InformationModule.description(title: title, text: text)
+        let viewController = BottomSheetModule.description(title: title, text: text)
         onOpen?(viewController, false)
     }
 

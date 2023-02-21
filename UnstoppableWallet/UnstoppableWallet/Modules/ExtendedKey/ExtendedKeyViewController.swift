@@ -82,7 +82,7 @@ class ExtendedKeyViewController: ThemeViewController {
 
     @objc private func onTapCopy() {
         if viewItem.keyIsPrivate {
-            let viewController = InformationModule.copyConfirmation(value: viewItem.key)
+            let viewController = BottomSheetModule.copyConfirmation(value: viewItem.key)
             present(viewController, animated: true)
         } else {
             UIPasteboard.general.string = viewItem.key

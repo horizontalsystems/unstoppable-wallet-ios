@@ -324,7 +324,7 @@ class MainSettingsViewController: ThemeViewController {
     private func openWalletConnect(mode: MainSettingsViewModel.WalletConnectOpenMode) {
         switch mode {
         case .errorDialog(let error):
-            WalletConnectV2AppShowView.showWalletConnectError(error: error, viewController: self)
+            WalletConnectV2AppShowView.showWalletConnectError(error: error, sourceViewController: self)
         case .list:
             navigationController?.pushViewController(WalletConnectListModule.viewController(), animated: true)
         }

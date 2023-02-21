@@ -24,11 +24,3 @@ class ThemeActionSheetController: UIViewController {
         super.dismiss(animated: flag, completion: completion)
     }
 }
-
-extension InformationViewController: ActionSheetViewDelegate {
-
-    public func didInteractiveDismissed() {
-        onInteractiveDismiss?()
-    }
-
-}

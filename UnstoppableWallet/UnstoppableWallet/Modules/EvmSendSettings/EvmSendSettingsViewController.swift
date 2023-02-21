@@ -89,7 +89,7 @@ class EvmSendSettingsViewController: ThemeViewController {
     }
 
     private func openInfo(title: String, description: String) {
-        let viewController = InformationModule.description(title: title, text: description)
+        let viewController = BottomSheetModule.description(title: title, text: description)
         present(viewController, animated: true)
     }
 
