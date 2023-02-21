@@ -85,6 +85,8 @@
 "number.trillion" = "%@T";
 "number.quadrillion" = "%@Q";
 
+"selector.any" = "Any";
+
 // Access Camera
 
 "access_camera.message" = "Unstoppable, QR kodunu okuyabilmek için kameranıza erişime ihtiyaç duyuyor.
@@ -512,7 +514,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Sıfırla";
 
-"market.advanced_search.any" = "Any";
 "market.advanced_search.less_5_m" = "< 5M";
 "market.advanced_search.less_10_m" = "< 10M";
 "market.advanced_search.less_50_m" = "< 50M";
@@ -1116,7 +1117,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "wallet_connect_list.disconnecting" = "Bağlantı kesiliyor";
 
 "wallet_connect.no_account.description" = "WalletConnect'i kullanmadan önce bir cüzdan oluşturmanız veya içe aktarmanız gerekir.";
-"wallet_connect.no_account.close" = "Kapat";
 "wallet_connect.unbackuped_account.description" = "WalletConnect'i kullanmadan önce %@ yedeklemeniz gerekir";
 
 "wallet_connect.non_supported_account.description" = "Mevcut cüzdan türünüz %@ WalletConnect'i desteklemiyor";
