@@ -85,6 +85,8 @@
 "number.trillion" = "%@T";
 "number.quadrillion" = "%@Q";
 
+"selector.any" = "Any";
+
 // Access Camera
 
 "access_camera.message" = "El monedero Unstoppable necesita acceder a su cámara para escanear el código QR.\n\nIr a Ajustes - > Unstoppable y permita el acceso a cámara.";
@@ -510,7 +512,6 @@
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Reiniciar";
 
-"market.advanced_search.any" = "Cualquier";
 "market.advanced_search.less_5_m" = "< 5M";
 "market.advanced_search.less_10_m" = "< 10M";
 "market.advanced_search.less_50_m" = "< 50M";
@@ -1114,7 +1115,6 @@
 "wallet_connect_list.disconnecting" = "Desconectando";
 
 "wallet_connect.no_account.description" = "Necesita crear o importar una cartera antes de poder usar WalletConnect.";
-"wallet_connect.no_account.close" = "Cerrar";
 "wallet_connect.unbackuped_account.description" = "Necesitas hacer una copia de seguridad de %@ antes de poder usar WalletConnect";
 
 "wallet_connect.non_supported_account.description" = "El tipo de cartera actual %@ no es compatible con WalletConnect";
