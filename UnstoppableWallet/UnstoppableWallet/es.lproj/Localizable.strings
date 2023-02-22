@@ -1199,11 +1199,11 @@
 // Birthday Input
 
 "birthday_input.title" = "Altura de Cumpleaños";
-"birthday_input.description" = "Para sincronización rápida puede introducir la altura del cumpleaños del monedero.";
+"birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
 "birthday_input.new_wallet" = "Nuevo Monedero";
-"birthday_input.new_wallet.description" = "No tienes ninguna transacción antes";
-"birthday_input.old_wallet" = "Añadir Monedero";
-"birthday_input.old_wallet.description" = "Usado antes y tiene transacciones";
+"birthday_input.new_wallet.description" = "Doesn't have any transactions";
+"birthday_input.old_wallet" = "Existing Wallet";
+"birthday_input.old_wallet.description" = "Has transactions";
 "birthday_input.input_placeholder" = "%@ (opcional)";
 
 "restore_setting.birthday_height" = "%@ Altura de Cumpleaños";
