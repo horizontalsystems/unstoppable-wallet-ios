@@ -64,7 +64,9 @@ class ManageWalletsViewController: ThemeSearchViewController {
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.onUpdate(viewItems: $0) }
         subscribe(disposeBag, viewModel.notFoundVisibleDriver) { [weak self] in self?.setNotFound(visible: $0) }
         subscribe(disposeBag, viewModel.disableItemSignal) { [weak self] in self?.setToggle(on: false, index: $0) }
+        subscribe(disposeBag, viewModel.showInfoSignal) { [weak self] in self?.showInfo(viewItem: $0) }
         subscribe(disposeBag, viewModel.showBirthdayHeightSignal) { [weak self] in self?.showBirthdayHeight(viewItem: $0) }
+        subscribe(disposeBag, viewModel.showContractSignal) { [weak self] in self?.showContract(viewItem: $0) }
 
         tableView.buildSections()
 
@@ -101,14 +103,33 @@ class ManageWalletsViewController: ThemeSearchViewController {
         notFoundPlaceholder.isHidden = !visible
     }
 
+    private func showInfo(viewItem: ManageWalletsViewModel.InfoViewItem) {
+        showBottomSheet(viewItem: viewItem.coin, items: [
+            .description(text: viewItem.text)
+        ])
+    }
+
     private func showBirthdayHeight(viewItem: ManageWalletsViewModel.BirthdayHeightViewItem) {
-        let viewController = BirthdayHeightViewController(
-                blockchainImageUrl: viewItem.blockchainImageUrl,
-                blockchainName: viewItem.blockchainName,
-                birthdayHeight: viewItem.birthdayHeight
+        showBottomSheet(viewItem: viewItem.coin, items: [
+            .copyableValue(title: "birthday_height.title".localized, value: viewItem.height)
+        ])
+    }
+
+    private func showContract(viewItem: ManageWalletsViewModel.ContractViewItem) {
+        showBottomSheet(viewItem: viewItem.coin, items: [
+            .contractAddress(imageUrl: viewItem.blockchainImageUrl, value: viewItem.value, explorerUrl: viewItem.explorerUrl)
+        ])
+    }
+
+    private func showBottomSheet(viewItem: ManageWalletsViewModel.CoinViewItem, items: [BottomSheetModule.Item]) {
+        let viewController = BottomSheetModule.viewController(
+                image: .remote(url: viewItem.coinImageUrl, placeholder: viewItem.coinPlaceholderImageName),
+                title: viewItem.coinCode,
+                subtitle: viewItem.coinName,
+                items: items
         )
 
-        present(viewController.toBottomSheet, animated: true)
+        present(viewController, animated: true)
     }
 
     override func onUpdate(filter: String?) {
@@ -145,12 +166,7 @@ extension ManageWalletsViewController: SectionsDataSource {
             },
             .vStackCentered([
                 .hStack([
-                    .text { component in
-                        component.font = .body
-                        component.textColor = .themeLeah
-                        component.text = viewItem.title
-                        component.setContentHuggingPriority(.required, for: .horizontal)
-                    },
+                    .textElement(text: .body(viewItem.title), parameters: .highHugging),
                     .margin8,
                     .badge { component in
                         component.isHidden = viewItem.badge == nil
@@ -161,21 +177,15 @@ extension ManageWalletsViewController: SectionsDataSource {
                     .text { _ in }
                 ]),
                 .margin(1),
-                .text { component in
-                    component.font = .subhead2
-                    component.textColor = .themeGray
-                    component.text = viewItem.subtitle
-                }
+                .textElement(text: .subhead2(viewItem.subtitle))
             ]),
-            viewItem.hasInfo ? .margin4 : .margin16,
-            .transparentIconButton { [weak self] component in
+            .secondaryCircleButton { [weak self] component in
                 component.isHidden = !viewItem.hasInfo
-                component.button.set(image: UIImage(named: "circle_information_20"))
+                component.button.set(image: UIImage(named: "circle_information_20"), style: .transparent)
                 component.onTap = {
                     self?.viewModel.onTapInfo(index: index)
                 }
             },
-            .margin4,
             .switch { component in
                 if let forceOn = forceToggleOn {
                     component.switchView.setOn(forceOn, animated: true)
@@ -205,6 +215,7 @@ extension ManageWalletsViewController: SectionsDataSource {
                                 id: "token_\(viewItem.uid)",
                                 hash: "token_\(viewItem.enabled)_\(viewItem.hasInfo)_\(isLast)",
                                 height: .heightDoubleLineCell,
+                                autoDeselect: true,
                                 bind: { cell in
                                     cell.set(backgroundStyle: .transparent, isLast: isLast)
                                 }

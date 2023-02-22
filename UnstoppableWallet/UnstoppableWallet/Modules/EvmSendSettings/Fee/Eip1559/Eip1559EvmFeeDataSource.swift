@@ -11,8 +11,8 @@ class Eip1559EvmFeeDataSource {
     private let disposeBag = DisposeBag()
 
     private let maxFeeCell: FeeCellNew
-    private var gasLimitCell = BaseSelectableThemeCell()
-    private var baseFeeCell = BaseSelectableThemeCell()
+    private var gasLimitCell = BaseThemeCell()
+    private var baseFeeCell = BaseThemeCell()
     private var maxGasPriceCell = StepperAmountInputCell(allowFractionalNumbers: true)
     private var tipsCell = StepperAmountInputCell(allowFractionalNumbers: true)
 
@@ -52,12 +52,14 @@ class Eip1559EvmFeeDataSource {
         CellBuilderNew.buildStatic(
                 cell: gasLimitCell,
                 rootElement: .hStack([
-                    .textElement(text: .subhead2("fee_settings.gas_limit".localized), parameters: [.highHugging]),
-                    .margin8,
-                    .imageElement(image: .local(UIImage(named: "circle_information_20")), size: .image20),
-                    .margin0,
-                    .text { _ in },
-                    .textElement(text: .subhead1(value), parameters: [.allCompression, .rightAlignment])
+                    .secondaryButton { [weak self] component in
+                        component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
+                        component.button.setTitle("fee_settings.gas_limit".localized, for: .normal)
+                        component.onTap = {
+                            self?.onOpenInfo?("fee_settings.gas_limit".localized, "fee_settings.gas_limit.info".localized)
+                        }
+                    },
+                    .textElement(text: .subhead1(value), parameters: [.rightAlignment])
                 ])
         )
     }
@@ -66,12 +68,14 @@ class Eip1559EvmFeeDataSource {
         CellBuilderNew.buildStatic(
                 cell: baseFeeCell,
                 rootElement: .hStack([
-                    .textElement(text: .subhead2("fee_settings.base_fee".localized), parameters: [.highHugging]),
-                    .margin8,
-                    .imageElement(image: .local(UIImage(named: "circle_information_20")), size: .image20),
-                    .margin0,
-                    .text { _ in },
-                    .textElement(text: .subhead1(value), parameters: [.allCompression, .rightAlignment])
+                    .secondaryButton { [weak self] component in
+                        component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
+                        component.button.setTitle("fee_settings.base_fee".localized, for: .normal)
+                        component.onTap = {
+                            self?.onOpenInfo?("fee_settings.base_fee".localized, "fee_settings.base_fee.info".localized)
+                        }
+                    },
+                    .textElement(text: .subhead1(value), parameters: [.rightAlignment])
                 ])
         )
     }
@@ -98,28 +102,17 @@ extension Eip1559EvmFeeDataSource: IEvmSendSettingsDataSource {
                                 cell: maxFeeCell,
                                 id: "fee",
                                 height: .heightDoubleLineCell,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.onOpenInfo?("fee_settings.max_fee".localized, "fee_settings.max_fee.info".localized)
-                                }
+                                autoDeselect: true
                         ),
                         StaticRow(
                                 cell: gasLimitCell,
                                 id: "gas-limit",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.onOpenInfo?("fee_settings.gas_limit".localized, "fee_settings.gas_limit.info".localized)
-                                }
+                                height: .heightCell48
                         ),
                         StaticRow(
                                 cell: baseFeeCell,
                                 id: "base-fee",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.onOpenInfo?("fee_settings.base_fee".localized, "fee_settings.base_fee.info".localized)
-                                }
+                                height: .heightCell48
 
                         )
                     ]

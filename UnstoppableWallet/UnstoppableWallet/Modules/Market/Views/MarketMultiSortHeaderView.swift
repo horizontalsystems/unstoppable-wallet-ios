@@ -53,8 +53,7 @@ class MarketMultiSortHeaderView: UITableViewHeaderFooterView {
             maker.centerY.equalToSuperview()
         }
 
-        sortButton.set(style: .transparent)
-        sortButton.set(image: UIImage(named: "arrow_small_down_20"))
+        sortButton.set(style: .transparent, image: UIImage(named: "arrow_small_down_20"))
         sortButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
         syncSortButtonTitle()

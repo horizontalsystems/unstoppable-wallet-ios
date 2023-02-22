@@ -115,9 +115,13 @@ class TransactionInfoViewController: ThemeViewController {
 
         return CellBuilderNew.row(
                 rootElement: .hStack([
-                    .textElement(text: .subhead2("status".localized), parameters: .highHugging),
-                    .margin8,
-                    .imageElement(image: .local(UIImage(named: "circle_information_20")?.withTintColor(.themeGray)), size: .image20),
+                    .secondaryButton { [weak self] component in
+                        component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
+                        component.button.setTitle("status".localized, for: .normal)
+                        component.onTap = {
+                            self?.openStatusInfo()
+                        }
+                    },
                     .textElement(text: .subhead1(value), parameters: .rightAlignment),
                     .margin8,
                     .imageElement(image: .local(icon), size: .image20),
@@ -134,12 +138,8 @@ class TransactionInfoViewController: ThemeViewController {
                 id: "status",
                 hash: hash,
                 height: .heightCell48,
-                autoDeselect: true,
                 bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-                },
-                action: { [weak self] in
-                    self?.openStatusInfo()
                 }
         )
     }

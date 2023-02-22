@@ -89,23 +89,20 @@ class CoinToggleViewController: ThemeSearchViewController {
         switch viewItem.state {
         case let .toggleVisible(enabled, hasSettings, hasInfo):
             elements.append(contentsOf: [
-                hasSettings || hasInfo ? .margin4 : .margin16,
-                .transparentIconButton { [weak self] (component: TransparentIconButtonComponent) -> () in
+                .secondaryCircleButton { [weak self] component in
                     component.isHidden = !hasSettings
-                    component.button.set(image: UIImage(named: "edit2_20"))
+                    component.button.set(image: UIImage(named: "edit2_20"), style: .transparent)
                     component.onTap = {
                         self?.viewModel.onTapSettings(uid: viewItem.uid)
                     }
                 },
-                .margin4,
-                .transparentIconButton { [weak self] component in
+                .secondaryCircleButton { [weak self] component in
                     component.isHidden = !hasInfo
-                    component.button.set(image: UIImage(named: "circle_information_20"))
+                    component.button.set(image: UIImage(named: "circle_information_20"), style: .transparent)
                     component.onTap = {
                         self?.viewModel.onTapInfo(uid: viewItem.uid)
                     }
                 },
-                .margin4,
                 .switch { (component: SwitchComponent) -> () in
                     if let forceOn = forceToggleOn {
                         component.switchView.setOn(forceOn, animated: true)

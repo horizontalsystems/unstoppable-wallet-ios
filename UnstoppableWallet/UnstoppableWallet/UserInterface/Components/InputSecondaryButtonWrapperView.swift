@@ -4,11 +4,14 @@ import SnapKit
 import ComponentKit
 
 class InputSecondaryButtonWrapperView: UIView, ISizeAwareView {
+    private let style: SecondaryButton.Style
     let button = SecondaryButton()
 
     var onTapButton: (() -> ())?
 
     init(style: SecondaryButton.Style) {
+        self.style = style
+
         super.init(frame: .zero)
 
         addSubview(button)
@@ -31,7 +34,7 @@ class InputSecondaryButtonWrapperView: UIView, ISizeAwareView {
     }
 
     func width(containerWidth: CGFloat) -> CGFloat {
-        SecondaryButton.width(title: button.title(for: .normal) ?? "")
+        SecondaryButton.width(title: button.title(for: .normal) ?? "", style: style, hasImage: false)
     }
 
 }

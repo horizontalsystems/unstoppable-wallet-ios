@@ -19,11 +19,13 @@ class BottomSheetTitleView: UIView {
         let stackView = UIStackView()
 
         stackView.spacing = .margin16
+        stackView.alignment = .center
 
         addSubview(stackView)
         stackView.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().offset(CGFloat.margin32)
-            maker.top.equalToSuperview().offset(CGFloat.margin24)
+            maker.leading.equalToSuperview().inset(CGFloat.margin32)
+            maker.top.equalToSuperview().inset(CGFloat.margin24)
+            maker.bottom.equalToSuperview().inset(CGFloat.margin12)
         }
 
         stackView.addArrangedSubview(imageView)
@@ -57,7 +59,8 @@ class BottomSheetTitleView: UIView {
             maker.size.equalTo(CGFloat.iconSize24 + 2 * CGFloat.margin8)
         }
 
-        closeButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        closeButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+        closeButton.setContentHuggingPriority(.required, for: .horizontal)
         closeButton.setImage(UIImage(named: "close_3_24"), for: .normal)
         closeButton.addTarget(self, action: #selector(_onTapClose), for: .touchUpInside)
     }
@@ -90,6 +93,7 @@ class BottomSheetTitleView: UIView {
             imageView.isHidden = true
         }
 
+        titleLabel.font = subtitle != nil ? .body : .headline2
         titleLabel.text = title
 
         if let subtitle = subtitle {

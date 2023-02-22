@@ -39,8 +39,7 @@ class SendFeePriorityCell: BaseSelectableThemeCell {
             .margin0,
             .text { _ in },
             .secondaryButton { component in
-                component.button.set(style: .default)
-                component.button.set(image: UIImage(named: "arrow_small_down_20"))
+                component.button.set(style: .default, image: UIImage(named: "arrow_small_down_20"))
                 component.button.setTitle(priority, for: .normal)
                 component.onTap = { [weak self] in
                     self?.onTapPriority()

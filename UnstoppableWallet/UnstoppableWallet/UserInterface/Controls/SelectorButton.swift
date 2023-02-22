@@ -21,8 +21,6 @@ class SelectorButton: SecondaryButton {
     }
 
     func set(items: [String]) {
-        set(style: .default)
-
         self.items = items
 
         guard !items.isEmpty else {
@@ -48,9 +46,7 @@ class SelectorButton: SecondaryButton {
         }
 
         setTitle(items[index], for: .normal)
-        setImage(UIImage(named: imageName(count: items.count, index: index)), for: .normal)
-        setImage(UIImage(named: imageName(count: items.count, index: index))?.withTintColor(.themeGray50), for: .disabled)
-        syncInsets()
+        set(style: .default, image: UIImage(named: imageName(count: items.count, index: index)))
 
         currentIndex = index
 

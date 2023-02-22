@@ -84,10 +84,6 @@ struct CellComponent {
                         component.textColor = type.textColor
                         component.lineBreakMode = .byTruncatingMiddle
                         component.text = nftAmount
-                    },
-                    .image20 { component in
-                        component.isHidden = onTapOpenNft == nil
-                        component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
                     }
                 ]),
                 tableView: tableView,

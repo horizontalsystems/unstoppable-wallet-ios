@@ -44,8 +44,7 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
             maker.centerY.equalToSuperview()
         }
 
-        dropdownButton.set(style: .transparent)
-        dropdownButton.set(image: UIImage(named: "arrow_small_down_20"))
+        dropdownButton.set(style: .transparent, image: UIImage(named: "arrow_small_down_20"))
         dropdownButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         dropdownButton.addTarget(self, action: #selector(onTapDropdownButton), for: .touchUpInside)
 

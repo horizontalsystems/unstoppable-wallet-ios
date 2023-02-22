@@ -5,13 +5,13 @@ import ThemeKit
 
 extension SectionsTableView {
 
-    func sectionHeader(text: String) -> ViewState<SubtitleHeaderFooterView> {
+    func sectionHeader(text: String, height: CGFloat? = nil) -> ViewState<SubtitleHeaderFooterView> {
         registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
 
         return .cellType(
                 hash: text,
                 binder: { $0.bind(text: text) },
-                dynamicHeight: { _ in SubtitleHeaderFooterView.height }
+                dynamicHeight: { _ in height ?? SubtitleHeaderFooterView.height }
         )
     }
 
