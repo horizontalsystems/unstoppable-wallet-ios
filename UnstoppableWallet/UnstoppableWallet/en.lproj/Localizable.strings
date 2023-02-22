@@ -1201,11 +1201,11 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Birthday Input
 
 "birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "For quick synchronization you can enter the wallet's birthday height.";
+"birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
 "birthday_input.new_wallet" = "New Wallet";
-"birthday_input.new_wallet.description" = "Don’t have any transaction before";
-"birthday_input.old_wallet" = "Old Wallet";
-"birthday_input.old_wallet.description" = "Used before and has transactions";
+"birthday_input.new_wallet.description" = "Doesn't have any transactions";
+"birthday_input.old_wallet" = "Existing Wallet";
+"birthday_input.old_wallet.description" = "Has transactions";
 "birthday_input.input_placeholder" = "%@ (optional)";
 
 "restore_setting.birthday_height" = "%@ Birthday Height";
