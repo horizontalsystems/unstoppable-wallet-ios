@@ -3,7 +3,7 @@ import RxCocoa
 
 class EvmSendSettingsViewModel {
     let service: EvmSendSettingsService
-    let feeViewModel: IFeeViewModelNew
+    let feeViewModel: IFeeViewModel
     let nonceViewModel: NonceViewModel
 
     private let disposeBag = DisposeBag()
@@ -12,7 +12,7 @@ class EvmSendSettingsViewModel {
     private let cautionsFactory: SendEvmCautionsFactory
     private let cautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
 
-    init(service: EvmSendSettingsService, feeViewModel: IFeeViewModelNew, nonceViewModel: NonceViewModel, cautionsFactory: SendEvmCautionsFactory) {
+    init(service: EvmSendSettingsService, feeViewModel: IFeeViewModel, nonceViewModel: NonceViewModel, cautionsFactory: SendEvmCautionsFactory) {
         self.service = service
         self.feeViewModel = feeViewModel
         self.nonceViewModel = nonceViewModel

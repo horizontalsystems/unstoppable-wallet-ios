@@ -18,7 +18,7 @@ class SendZcashViewController: BaseSendViewController {
          feeViewModel: SendFeeViewModel
     ) {
         memoCell = SendMemoInputCell(viewModel: memoViewModel, topInset: .margin12)
-        feeCell = FeeCell(viewModel: feeViewModel)
+        feeCell = FeeCell(viewModel: feeViewModel, title: "fee_settings.fee".localized)
 
         super.init(
                 confirmationFactory: confirmationFactory,

@@ -13,7 +13,7 @@ class Eip1559EvmFeeViewModel {
     private let feeViewItemFactory: FeeViewItemFactory
 
     private let alteredStateRelay = PublishRelay<Void>()
-    private let valueRelay = BehaviorRelay<FeeCellNew.Value?>(value: nil)
+    private let valueRelay = BehaviorRelay<FeeCell.Value?>(value: nil)
     private let spinnerVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let gasLimitRelay = BehaviorRelay<String>(value: "n/a")
     private let currentBaseFeeRelay = BehaviorRelay<String>(value: "n/a")
@@ -53,7 +53,7 @@ class Eip1559EvmFeeViewModel {
 
     private func sync(transactionStatus: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
         let spinnerVisible: Bool
-        let maxFeeValue: FeeCellNew.Value?
+        let maxFeeValue: FeeCell.Value?
         let gasLimit: String
 
         switch transactionStatus {
@@ -146,13 +146,13 @@ extension Eip1559EvmFeeViewModel {
     }
 }
 
-extension Eip1559EvmFeeViewModel: IFeeViewModelNew {
+extension Eip1559EvmFeeViewModel: IFeeViewModel {
 
     var showInfoIcon: Bool {
         true
     }
 
-    var valueDriver: Driver<FeeCellNew.Value?> {
+    var valueDriver: Driver<FeeCell.Value?> {
         valueRelay.asDriver()
     }
 

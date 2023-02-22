@@ -10,7 +10,7 @@ class Eip1559EvmFeeDataSource {
     private let viewModel: Eip1559EvmFeeViewModel
     private let disposeBag = DisposeBag()
 
-    private let maxFeeCell: FeeCellNew
+    private let maxFeeCell: FeeCell
     private var gasLimitCell = BaseThemeCell()
     private var baseFeeCell = BaseThemeCell()
     private var maxGasPriceCell = StepperAmountInputCell(allowFractionalNumbers: true)
@@ -23,7 +23,7 @@ class Eip1559EvmFeeDataSource {
     init(viewModel: Eip1559EvmFeeViewModel) {
         self.viewModel = viewModel
 
-        maxFeeCell = FeeCellNew(viewModel: viewModel)
+        maxFeeCell = FeeCell(viewModel: viewModel, title: "fee_settings.max_fee".localized)
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -15,14 +15,12 @@ class SendFeeSettingsViewController: ThemeViewController {
     let bottomWrapper = BottomGradientHolder()
 
     private let feeViewModel: SendFeeViewModel
-    private let feeSliderViewModel: SendFeeSliderViewModel
     private let feeCautionViewModel: SendFeeWarningViewModel
     private let amountCautionViewModel: SendFeeSettingsAmountCautionViewModel
 
     private let feeCell: FeeCell
     private let feePriorityCell: SendFeePriorityCell
     private let feeRateCell = BaseThemeCell()
-    private let feeSliderCell: FeeSliderCell
     private let feeWarningCell = TitledHighlightedDescriptionCell()
     private let feeAmountErrorCell = TitledHighlightedDescriptionCell()
 
@@ -30,19 +28,15 @@ class SendFeeSettingsViewController: ThemeViewController {
 
     private var loaded = false
 
-    init(viewModel: SendFeeSettingsViewModel, feeViewModel: SendFeeViewModel, feeSliderViewModel: SendFeeSliderViewModel, feePriorityViewModel: SendFeePriorityViewModel, feeCautionViewModel: SendFeeWarningViewModel, amountCautionViewModel: SendFeeSettingsAmountCautionViewModel) {
+    init(viewModel: SendFeeSettingsViewModel, feeViewModel: SendFeeViewModel, feePriorityViewModel: SendFeePriorityViewModel, feeCautionViewModel: SendFeeWarningViewModel, amountCautionViewModel: SendFeeSettingsAmountCautionViewModel) {
         self.viewModel = viewModel
         self.feeViewModel = feeViewModel
-        self.feeSliderViewModel = feeSliderViewModel
         self.feeCautionViewModel = feeCautionViewModel
         self.amountCautionViewModel = amountCautionViewModel
 
-        feeCell = FeeCell(viewModel: feeViewModel)
-        feeCell.selectionStyle = feeViewModel.hasInformation ? .default : .none
+        feeCell = FeeCell(viewModel: feeViewModel, title: "fee_settings.fee".localized)
 
         feePriorityCell = SendFeePriorityCell(viewModel: feePriorityViewModel)
-        feeSliderCell = FeeSliderCell(sliderDriver: feeSliderViewModel.sliderDriver)
-        feeSliderCell.set(scale: .satoshi)
 
         super.init()
 
@@ -76,7 +70,6 @@ class SendFeeSettingsViewController: ThemeViewController {
         sync(feeSliderViewItem: nil)
 
         feePriorityCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        feeSliderCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
 
         view.addSubview(bottomWrapper)
         bottomWrapper.snp.makeConstraints { maker in
@@ -95,11 +88,6 @@ class SendFeeSettingsViewController: ThemeViewController {
         doneButton.set(style: .yellow)
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDone), for: .touchUpInside)
-
-        subscribe(disposeBag, feeSliderViewModel.sliderDriver) { [weak self] in
-            self?.sync(feeSliderViewItem: $0)
-        }
-        feeSliderViewModel.subscribeTracking(cell: feeSliderCell)
 
         subscribe(disposeBag, feeCautionViewModel.cautionDriver) { [weak self] in
             self?.handle(cell: self?.feeWarningCell, caution: $0)
@@ -150,7 +138,7 @@ class SendFeeSettingsViewController: ThemeViewController {
     }
 
     private func openInfo(title: String, description: String) {
-        guard feeViewModel.hasInformation else {
+        guard feeViewModel.showInfoIcon else {
             return
         }
 
@@ -205,27 +193,6 @@ extension SendFeeSettingsViewController: SectionsDataSource {
             )
         ]
 
-        var feeSliderSection = [SectionProtocol]()
-        feeSliderSection.append(
-                Section(
-                        id: "fee-slider",
-                        headerState: .margin(height: .margin8),
-                        rows: [
-                            StaticRow(
-                                    cell: feeRateCell,
-                                    id: "fee-rate",
-                                    height: .heightCell48
-                            ),
-                            StaticRow(
-                                    cell: feeSliderCell,
-                                    id: "fee-slider",
-                                    height: .heightCell48
-                            )
-                        ]
-                )
-        )
-
-
         let cautionsSections: [SectionProtocol] = [
             Section(
                     id: "cautions",
@@ -249,7 +216,7 @@ extension SendFeeSettingsViewController: SectionsDataSource {
             )
         ]
 
-        return feeSections + feeSliderSection + cautionsSections
+        return feeSections + cautionsSections
     }
 
 }

@@ -17,7 +17,7 @@ class SendEvmTransactionViewController: ThemeViewController {
     let bottomWrapper = BottomGradientHolder()
 
     private let nonceCell = BaseThemeCell()
-    private let maxFeeCell: FeeCellNew
+    private let maxFeeCell: FeeCell
 
     private var sectionViewItems = [SendEvmTransactionViewModel.SectionViewItem]()
     private let caution1Cell = TitledHighlightedDescriptionCell()
@@ -30,7 +30,7 @@ class SendEvmTransactionViewController: ThemeViewController {
         self.transactionViewModel = transactionViewModel
         self.settingsViewModel = settingsViewModel
 
-        maxFeeCell = FeeCellNew(viewModel: settingsViewModel.feeViewModel)
+        maxFeeCell = FeeCell(viewModel: settingsViewModel.feeViewModel, title: "fee_settings.max_fee".localized)
 
         super.init()
     }

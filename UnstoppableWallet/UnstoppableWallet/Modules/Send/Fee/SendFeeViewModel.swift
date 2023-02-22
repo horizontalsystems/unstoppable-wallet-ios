@@ -43,36 +43,26 @@ class SendFeeViewModel {
         case .failed:
             spinnerVisibleRelay.accept(false)
 
-            valueRelay.accept(FeeCell.Value(text: "n/a".localized, type: .error))
+            valueRelay.accept(.error(text: "n/a".localized))
         case .completed(let state):
             spinnerVisibleRelay.accept(false)
             firstLoaded = true
 
             guard !state.primaryInfo.value.isZero else {
-                valueRelay.accept(FeeCell.Value(text: "n/a".localized, type: .disabled))
+                valueRelay.accept(.disabled(text: "n/a".localized))
                 return
             }
 
-            let text = [state.primaryInfo, state.secondaryInfo]
-                    .compactMap {
-                        $0?.formattedFull
-                    }
-                    .joined(separator: " | ")
-
-            valueRelay.accept(FeeCell.Value(text: text, type: .regular))
+            valueRelay.accept(.regular(text: state.primaryInfo.formattedFull ?? "n/a".localized, secondaryText: state.secondaryInfo?.formattedFull))
         }
     }
 
 }
 
-extension SendFeeViewModel: IEditableFeeViewModel {
+extension SendFeeViewModel: IFeeViewModel {
 
-    var hasInformation: Bool {
+    var showInfoIcon: Bool {
         false
-    }
-
-    var title: String {
-        "fee_settings.fee".localized
     }
 
     var valueDriver: Driver<FeeCell.Value?> {

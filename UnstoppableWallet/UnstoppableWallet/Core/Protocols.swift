@@ -169,3 +169,7 @@ protocol IErrorService: AnyObject {
     var error: Error? { get }
     var errorObservable: Observable<Error?> { get }
 }
+
+protocol IDynamicHeightCellDelegate: AnyObject {
+    func onChangeHeight()
+}

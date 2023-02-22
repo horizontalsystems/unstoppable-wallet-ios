@@ -29,7 +29,7 @@ class SendBinanceViewController: BaseSendViewController {
 
         memoCell = SendMemoInputCell(viewModel: memoViewModel)
 
-        feeCell = FeeCell(viewModel: feeViewModel)
+        feeCell = FeeCell(viewModel: feeViewModel, title: "fee_settings.fee".localized)
 
         super.init(
                 confirmationFactory: confirmationFactory,
