@@ -129,7 +129,11 @@ class OneInchDataSource {
 
     private func handle(balance: String?) {
         lastAvailableBalance = balance
-        build(staticCell: availableBalanceCell, id: "available-balance", title: "send.available_balance".localized, value: balance, valueColor: .themeLeah)
+
+        CellBuilderNew.buildStatic(cell: availableBalanceCell, rootElement: .hStack([
+            .textElement(text: .subhead2("send.available_balance".localized), parameters: .highHugging),
+            .textElement(text: .subhead2(balance, color: .themeLeah), parameters: .rightAlignment)
+        ]))
 
         onReload?()
     }
@@ -147,7 +151,17 @@ class OneInchDataSource {
 
     private func handle(allowance: String?) {
         lastAllowance = allowance
-        build(staticCell: allowanceCell, id: "allowance", title: "swap.allowance".localized, showInfo: true, value: allowance, valueColor: .themeLucian)
+
+        CellBuilderNew.buildStatic(cell: allowanceCell, rootElement: .hStack([
+            .secondaryButton { [weak self] component in
+                component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
+                component.button.setTitle("swap.allowance".localized, for: .normal)
+                component.onTap = {
+                    self?.showInfo(description: InfoDescription(title: "swap.allowance".localized, text: "swap.dex_info.content_allowance".localized))
+                }
+            },
+            .textElement(text: .subhead2(allowance, color: .themeLucian), parameters: .rightAlignment)
+        ]))
 
         onReload?()
     }
@@ -271,31 +285,6 @@ class OneInchDataSource {
         viewModel.onChangeAmountType(index: index)
     }
 
-    private func build(staticCell: BaseThemeCell, id: String, title: String, showInfo: Bool = false, value: String?, valueColor: UIColor, progress: CGFloat? = nil) {
-        var cellElements = [CellBuilderNew.CellElement]()
-        if showInfo {
-            cellElements.append(.image20 { component in
-                component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
-            })
-        }
-        cellElements.append(contentsOf: [
-            .text { component in
-                component.font = .subhead2
-                component.textColor = .themeGray
-                component.text = title
-                component.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-            },
-            .text { component in
-                component.font = .subhead2
-                component.textColor = valueColor
-                component.text = value
-                component.textAlignment = .right
-            },
-        ])
-
-        CellBuilderNew.buildStatic(cell: staticCell, rootElement: .hStack(cellElements))
-    }
-
     private var infoSection: SectionProtocol {
         let noAlerts = warningCell.descriptionText == nil && error == nil
 
@@ -307,8 +296,6 @@ class OneInchDataSource {
             InfoCellViewItem(
                     id: "allowance",
                     cell: allowanceCell,
-                    descriptionTitle: "swap.allowance".localized,
-                    description: "swap.dex_info.content_allowance".localized,
                     isVisible: noAlerts && lastAllowance != nil),
             InfoCellViewItem(
                     id: "available-balance",
@@ -329,10 +316,8 @@ class OneInchDataSource {
             return StaticRow(
                     cell: viewItem.cell,
                     id: viewItem.id,
-                    height: viewItem.isVisible ? .heightSingleLineCell : 0,
-                    action: viewItem.description != nil ? { [weak self] in
-                        self?.showInfo(title: viewItem.descriptionTitle, text: viewItem.description)
-            } : nil)
+                    height: viewItem.isVisible ? .heightSingleLineCell : 0
+            )
         }
 
 
@@ -343,12 +328,8 @@ class OneInchDataSource {
         )
     }
 
-    private func showInfo(title: String?, text: String?) {
-        guard let title = title, let text = text else {
-            return
-        }
-
-        let viewController = BottomSheetModule.description(title: title, text: text)
+    private func showInfo(description: InfoDescription) {
+        let viewController = BottomSheetModule.description(title: description.title, text: description.text)
         onOpen?(viewController, false)
     }
 }
@@ -455,20 +436,15 @@ extension OneInchDataSource: IDynamicHeightCellDelegate {
 
 extension OneInchDataSource {
 
-    class InfoCellViewItem {
+    struct InfoCellViewItem {
         let id: String
         let cell: BaseThemeCell
-        let descriptionTitle: String?
-        let description: String?
         let isVisible: Bool
+    }
 
-        init(id: String, cell: BaseThemeCell, descriptionTitle: String? = nil, description: String? = nil, isVisible: Bool) {
-            self.id = id
-            self.cell = cell
-            self.descriptionTitle = descriptionTitle
-            self.description = description
-            self.isVisible = isVisible
-        }
+    struct InfoDescription {
+        let title: String
+        let text: String
     }
 
 }

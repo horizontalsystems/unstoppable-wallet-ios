@@ -34,9 +34,7 @@ class TokenSelectView: UIView {
             maker.trailing.equalToSuperview()
         }
 
-        tokenButton.set(style: .transparent)
-        tokenButton.set(image: UIImage(named: "arrow_small_down_20"))
-        tokenButton.syncInsets()
+        tokenButton.set(style: .transparent, image: UIImage(named: "arrow_small_down_20"))
         tokenButton.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
 
         tokenButton.setContentHuggingPriority(.required, for: .horizontal)

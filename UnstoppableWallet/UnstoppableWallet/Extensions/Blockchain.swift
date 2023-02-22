@@ -9,4 +9,12 @@ extension Blockchain {
         }
     }
 
+    func explorerUrl(reference: String?) -> String? {
+        guard let explorerUrl = explorerUrl, let reference = reference else {
+            return nil
+        }
+
+        return explorerUrl.replacingOccurrences(of: "$ref", with: reference)
+    }
+
 }

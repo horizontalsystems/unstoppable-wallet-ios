@@ -40,7 +40,7 @@ class BackupMnemonicWordCell: UICollectionViewCell {
 extension BackupMnemonicWordCell {
 
     static func size(word: String) -> CGSize {
-        CGSize(width: SecondaryButton.width(title: word), height: SecondaryButton.height)
+        CGSize(width: SecondaryButton.width(title: word, style: .default, hasImage: false), height: SecondaryButton.height(style: .default))
     }
 
 }

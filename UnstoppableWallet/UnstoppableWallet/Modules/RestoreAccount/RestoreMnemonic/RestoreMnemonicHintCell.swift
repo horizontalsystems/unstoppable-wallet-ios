@@ -39,7 +39,7 @@ class RestoreMnemonicHintCell: UICollectionViewCell {
 extension RestoreMnemonicHintCell {
 
     static func size(word: String) -> CGSize {
-        CGSize(width: SecondaryButton.width(title: word), height: .heightSingleLineCell)
+        CGSize(width: SecondaryButton.width(title: word, style: .default, hasImage: false), height: .heightSingleLineCell)
     }
 
 }

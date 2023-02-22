@@ -4,7 +4,6 @@ import ComponentKit
 
 class SecondaryButtonCell: UITableViewCell {
     private static let verticalPadding: CGFloat = .margin16
-    static let height: CGFloat = SecondaryButton.height + 2 * verticalPadding
 
     private let button = SecondaryButton()
 
@@ -44,6 +43,14 @@ class SecondaryButtonCell: UITableViewCell {
 
     func set(style: SecondaryButton.Style) {
         button.set(style: style)
+    }
+
+}
+
+extension SecondaryButtonCell {
+
+    static func height(style: SecondaryButton.Style) -> CGFloat {
+        SecondaryButton.height(style: style) + 2 * verticalPadding
     }
 
 }

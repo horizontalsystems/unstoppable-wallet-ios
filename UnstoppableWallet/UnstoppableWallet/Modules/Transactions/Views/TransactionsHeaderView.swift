@@ -27,8 +27,7 @@ class TransactionsHeaderView: UIView {
             maker.leading.centerY.equalToSuperview()
         }
 
-        blockchainButton.set(style: .transparent)
-        blockchainButton.set(image: UIImage(named: "arrow_small_down_20"))
+        blockchainButton.set(style: .transparent, image: UIImage(named: "arrow_small_down_20"))
         blockchainButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         blockchainButton.addTarget(self, action: #selector(onTapBlockchainButton), for: .touchUpInside)
 
@@ -37,8 +36,7 @@ class TransactionsHeaderView: UIView {
             maker.trailing.centerY.equalToSuperview()
         }
 
-        tokenButton.set(style: .transparent)
-        tokenButton.set(image: UIImage(named: "arrow_small_down_20"))
+        tokenButton.set(style: .transparent, image: UIImage(named: "arrow_small_down_20"))
         tokenButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         tokenButton.addTarget(self, action: #selector(onTapTokenButton), for: .touchUpInside)
 

@@ -106,17 +106,17 @@ class CoinOverviewViewItemFactory {
                 title = blockchain.name
                 subtitle = address.shortened
                 reference = address
-                url = explorerUrl(blockchain: blockchain, reference: address)
+                url = blockchain.explorerUrl(reference: address)
             case .bep2(let symbol):
                 title = blockchain.name
                 subtitle = symbol
                 reference = symbol
-                url = explorerUrl(blockchain: blockchain, reference: symbol)
+                url = blockchain.explorerUrl(reference: symbol)
             case let .unsupported(_, _reference):
                 title = blockchain.name
                 subtitle = _reference?.shortened
                 reference = _reference
-                url = explorerUrl(blockchain: blockchain, reference: reference)
+                url = blockchain.explorerUrl(reference: reference)
             }
 
             switch item.state {

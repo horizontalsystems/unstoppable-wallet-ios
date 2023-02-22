@@ -177,13 +177,28 @@ class ManageWalletsService {
         self.wallets = Set(wallets)
     }
 
+    private func hasInfo(configuredToken: ConfiguredToken, enabled: Bool) -> Bool {
+        if configuredToken.blockchainType.coinSettingType != nil {
+            return true
+        }
+
+        if !configuredToken.blockchainType.restoreSettingTypes.isEmpty, enabled {
+            return true
+        }
+
+        switch configuredToken.token.type {
+        case .eip20, .bep2: return true
+        default: return false
+        }
+    }
+
     private func item(configuredToken: ConfiguredToken) -> Item {
         let enabled = isEnabled(configuredToken: configuredToken)
 
         return Item(
                 configuredToken: configuredToken,
                 enabled: enabled,
-                hasInfo: enabled && configuredToken.blockchainType == .zcash
+                hasInfo: hasInfo(configuredToken: configuredToken, enabled: enabled)
         )
     }
 
@@ -249,16 +264,32 @@ extension ManageWalletsService {
         walletManager.delete(wallets: Array(walletsToDelete))
     }
 
-    func birthdayHeight(index: Int) -> (Blockchain, Int)? {
+    func infoItem(index: Int) -> InfoItem? {
         let configuredToken = configuredTokens[index]
+        let blockchainType = configuredToken.blockchainType
+        let token = configuredToken.token
 
-        let settings = restoreSettingsService.settings(account: account, blockchainType: configuredToken.blockchainType)
-
-        guard let birthdayHeight = settings.birthdayHeight else {
-            return nil
+        if let coinSettingType = blockchainType.coinSettingType {
+            switch coinSettingType {
+            case .derivation: return InfoItem(token: token, type: .derivation)
+            case .bitcoinCashCoinType: return InfoItem(token: token, type: .bitcoinCashCoinType)
+            }
         }
 
-        return (configuredToken.blockchain, birthdayHeight)
+        for restoreSettingType in blockchainType.restoreSettingTypes {
+            switch restoreSettingType {
+            case .birthdayHeight:
+                let settings = restoreSettingsService.settings(account: account, blockchainType: blockchainType)
+                if let birthdayHeight = settings.birthdayHeight {
+                    return InfoItem(token: token, type: .birthdayHeight(height: birthdayHeight))
+                }
+            }
+        }
+
+        switch token.type {
+        case .eip20(let value), .bep2(let value): return InfoItem(token: token, type: .contractAddress(value: value, explorerUrl: configuredToken.blockchain.explorerUrl(reference: value)))
+        default: return nil
+        }
     }
 
 }
@@ -269,6 +300,18 @@ extension ManageWalletsService {
         let configuredToken: ConfiguredToken
         let enabled: Bool
         let hasInfo: Bool
+    }
+
+    struct InfoItem {
+        let token: Token
+        let type: InfoType
+    }
+
+    enum InfoType {
+        case derivation
+        case bitcoinCashCoinType
+        case birthdayHeight(height: Int)
+        case contractAddress(value: String, explorerUrl: String?)
     }
 
 }

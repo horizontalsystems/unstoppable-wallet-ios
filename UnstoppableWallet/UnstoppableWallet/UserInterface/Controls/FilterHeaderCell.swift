@@ -44,8 +44,8 @@ class FilterHeaderCell: UICollectionViewCell {
 
 extension FilterHeaderCell {
 
-    static func width(title: String) -> CGFloat {
-        SecondaryButton.width(title: title)
+    static func width(title: String, style: SecondaryButton.Style) -> CGFloat {
+        SecondaryButton.width(title: title, style: style, hasImage: false)
     }
 
 }

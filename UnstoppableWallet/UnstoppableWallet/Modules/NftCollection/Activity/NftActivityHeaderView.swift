@@ -26,8 +26,7 @@ class NftActivityHeaderView: UIView {
             maker.leading.centerY.equalToSuperview()
         }
 
-        eventTypeButton.set(style: .transparent)
-        eventTypeButton.set(image: UIImage(named: "arrow_small_down_20"))
+        eventTypeButton.set(style: .transparent, image: UIImage(named: "arrow_small_down_20"))
         eventTypeButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         eventTypeButton.addTarget(self, action: #selector(onTapEventType), for: .touchUpInside)
 
@@ -37,8 +36,7 @@ class NftActivityHeaderView: UIView {
             maker.centerY.equalToSuperview()
         }
 
-        contractButton.set(style: .default)
-        contractButton.set(image: UIImage(named: "arrow_small_down_20"))
+        contractButton.set(style: .default, image: UIImage(named: "arrow_small_down_20"))
         contractButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         contractButton.addTarget(self, action: #selector(onTapContract), for: .touchUpInside)
 

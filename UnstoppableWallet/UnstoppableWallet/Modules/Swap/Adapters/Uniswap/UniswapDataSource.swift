@@ -136,7 +136,11 @@ class UniswapDataSource {
 
     private func handle(balance: String?) {
         lastAvailableBalance = balance
-        build(staticCell: availableBalanceCell, id: "available-balance", title: "send.available_balance".localized, value: balance, valueColor: .themeLeah)
+
+        CellBuilderNew.buildStatic(cell: availableBalanceCell, rootElement: .hStack([
+            .textElement(text: .subhead2("send.available_balance".localized), parameters: .highHugging),
+            .textElement(text: .subhead2(balance, color: .themeLeah), parameters: .rightAlignment)
+        ]))
 
         onReload?()
     }
@@ -144,7 +148,17 @@ class UniswapDataSource {
     private func handle(priceImpact: UniswapModule.PriceImpactViewItem?) {
         lastPriceImpact = priceImpact
         let color = Self.levelColors[priceImpact?.level.rawValue ?? 2]
-        build(staticCell: priceImpactCell, id: "price-impact", title: "swap.price_impact".localized, showInfo: true, value: priceImpact?.value, valueColor: color)
+
+        CellBuilderNew.buildStatic(cell: priceImpactCell, rootElement: .hStack([
+            .secondaryButton { [weak self] component in
+                component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
+                component.button.setTitle("swap.price_impact".localized, for: .normal)
+                component.onTap = {
+                    self?.showInfo(title: "swap.dex_info.header_price_impact".localized, text: "swap.dex_info.content_price_impact".localized)
+                }
+            },
+            .textElement(text: .subhead2(priceImpact?.value, color: color), parameters: .rightAlignment)
+        ]))
 
         onReload?()
     }
@@ -162,7 +176,17 @@ class UniswapDataSource {
 
     private func handle(allowance: String?) {
         lastAllowance = allowance
-        build(staticCell: allowanceCell, id: "allowance", title: "swap.allowance".localized, showInfo: true, value: allowance, valueColor: .themeLucian)
+
+        CellBuilderNew.buildStatic(cell: allowanceCell, rootElement: .hStack([
+            .secondaryButton { [weak self] component in
+                component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
+                component.button.setTitle("swap.allowance".localized, for: .normal)
+                component.onTap = {
+                    self?.showInfo(title: "swap.dex_info.header_allowance".localized, text: "swap.dex_info.content_allowance".localized)
+                }
+            },
+            .textElement(text: .subhead2(allowance, color: .themeLucian), parameters: .rightAlignment)
+        ]))
 
         onReload?()
     }
@@ -327,8 +351,6 @@ class UniswapDataSource {
             InfoCellViewItem(
                     id: "allowance",
                     cell: allowanceCell,
-                    descriptionTitle: "swap.dex_info.header_allowance".localized,
-                    description: "swap.dex_info.content_allowance".localized,
                     isVisible: noAlerts && lastAllowance != nil),
             InfoCellViewItem(
                     id: "available-balance",
@@ -337,8 +359,6 @@ class UniswapDataSource {
             InfoCellViewItem(
                     id: "price-impact",
                     cell: priceImpactCell,
-                    descriptionTitle: "swap.dex_info.header_price_impact".localized,
-                    description: "swap.dex_info.content_price_impact".localized,
                     isVisible: noAlerts && lastPriceImpact != nil),
         ]
 
@@ -351,10 +371,8 @@ class UniswapDataSource {
             return StaticRow(
                     cell: viewItem.cell,
                     id: viewItem.id,
-                    height: viewItem.isVisible ? .heightSingleLineCell : 0,
-                    action: viewItem.description != nil ? { [weak self] in
-                        self?.showInfo(title: viewItem.descriptionTitle, text: viewItem.description)
-                    } : nil)
+                    height: viewItem.isVisible ? .heightSingleLineCell : 0
+            )
         }
 
 
@@ -365,11 +383,7 @@ class UniswapDataSource {
         )
     }
 
-    private func showInfo(title: String?, text: String?) {
-        guard let title = title, let text = text else {
-            return
-        }
-
+    private func showInfo(title: String, text: String) {
         let viewController = BottomSheetModule.description(title: title, text: text)
         onOpen?(viewController, false)
     }
@@ -482,15 +496,11 @@ extension UniswapDataSource {
     class InfoCellViewItem {
         let id: String
         let cell: BaseThemeCell
-        let descriptionTitle: String?
-        let description: String?
         let isVisible: Bool
 
-        init(id: String, cell: BaseThemeCell, descriptionTitle: String? = nil, description: String? = nil, isVisible: Bool) {
+        init(id: String, cell: BaseThemeCell, isVisible: Bool) {
             self.id = id
             self.cell = cell
-            self.descriptionTitle = descriptionTitle
-            self.description = description
             self.isVisible = isVisible
         }
     }

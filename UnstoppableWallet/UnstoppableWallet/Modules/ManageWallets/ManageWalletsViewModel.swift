@@ -11,7 +11,9 @@ class ManageWalletsViewModel {
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
     private let notFoundVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let disableItemRelay = PublishRelay<Int>()
+    private let showInfoRelay = PublishRelay<InfoViewItem>()
     private let showBirthdayHeightRelay = PublishRelay<BirthdayHeightViewItem>()
+    private let showContractRelay = PublishRelay<ContractViewItem>()
 
     init(service: ManageWalletsService) {
         self.service = service
@@ -58,8 +60,16 @@ extension ManageWalletsViewModel {
         disableItemRelay.asSignal()
     }
 
+    var showInfoSignal: Signal<InfoViewItem> {
+        showInfoRelay.asSignal()
+    }
+
     var showBirthdayHeightSignal: Signal<BirthdayHeightViewItem> {
         showBirthdayHeightRelay.asSignal()
+    }
+
+    var showContractSignal: Signal<ContractViewItem> {
+        showContractRelay.asSignal()
     }
 
     var addTokenEnabled: Bool {
@@ -75,17 +85,29 @@ extension ManageWalletsViewModel {
     }
 
     func onTapInfo(index: Int) {
-        guard let (blockchain, birthdayHeight) = service.birthdayHeight(index: index) else {
+        guard let infoItem = service.infoItem(index: index) else {
             return
         }
 
-        let viewItem = BirthdayHeightViewItem(
-                blockchainImageUrl: blockchain.type.imageUrl,
-                blockchainName: blockchain.name,
-                birthdayHeight: String(birthdayHeight)
+        let coinViewItem = CoinViewItem(
+                coinImageUrl: infoItem.token.coin.imageUrl,
+                coinPlaceholderImageName: infoItem.token.placeholderImageName,
+                coinName: infoItem.token.coin.name,
+                coinCode: infoItem.token.coin.code
         )
 
-        showBirthdayHeightRelay.accept(viewItem)
+
+        switch infoItem.type {
+        case .derivation:
+            let coinName = infoItem.token.coin.name
+            showInfoRelay.accept(InfoViewItem(coin: coinViewItem, text: "manage_wallets.derivation_description".localized(coinName, coinName, coinName)))
+        case .bitcoinCashCoinType:
+            showInfoRelay.accept(InfoViewItem(coin: coinViewItem, text: "manage_wallets.bitcoin_cash_coin_type_description".localized))
+        case .birthdayHeight(let height):
+            showBirthdayHeightRelay.accept(BirthdayHeightViewItem(coin: coinViewItem, height: String(height)))
+        case let .contractAddress(value, explorerUrl):
+            showContractRelay.accept(ContractViewItem(coin: coinViewItem, blockchainImageUrl: infoItem.token.blockchainType.imageUrl, value: value, explorerUrl: explorerUrl))
+        }
     }
 
     func onUpdate(filter: String) {
@@ -109,10 +131,28 @@ extension ManageWalletsViewModel {
         let hasInfo: Bool
     }
 
+    struct CoinViewItem {
+        let coinImageUrl: String
+        let coinPlaceholderImageName: String
+        let coinName: String
+        let coinCode: String
+    }
+
+    struct InfoViewItem {
+        let coin: CoinViewItem
+        let text: String
+    }
+
     struct BirthdayHeightViewItem {
+        let coin: CoinViewItem
+        let height: String
+    }
+
+    struct ContractViewItem {
+        let coin: CoinViewItem
         let blockchainImageUrl: String
-        let blockchainName: String
-        let birthdayHeight: String
+        let value: String
+        let explorerUrl: String?
     }
 
 }

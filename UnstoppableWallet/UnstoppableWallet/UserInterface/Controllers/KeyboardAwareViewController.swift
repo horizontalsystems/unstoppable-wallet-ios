@@ -82,7 +82,7 @@ class KeyboardAwareViewController: ThemeViewController {
         }
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tap.cancelsTouchesInView = false
+        tap.delegate = self
         view.addGestureRecognizer(tap)
     }
 
@@ -297,3 +297,12 @@ extension KeyboardAwareViewController: UIAdaptivePresentationControllerDelegate 
     }
 
 }
+
+extension KeyboardAwareViewController: UIGestureRecognizerDelegate {
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        touch.view is UITableView
+    }
+
+}
+

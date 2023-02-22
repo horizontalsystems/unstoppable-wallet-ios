@@ -1,6 +1,7 @@
 import UIKit
 import ThemeKit
 import ComponentKit
+import SectionsTableView
 
 class BottomSheetModule {
 
@@ -67,6 +68,8 @@ extension BottomSheetModule {
     enum Item {
         case description(text: String)
         case highlightedDescription(text: String)
+        case copyableValue(title: String, value: String)
+        case contractAddress(imageUrl: String, value: String, explorerUrl: String?)
     }
 
     struct Button {

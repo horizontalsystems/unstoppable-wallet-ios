@@ -111,7 +111,7 @@ class FilterView: UIView {
         let width = collectionView.width - collectionView.contentInset.left - collectionView.contentInset.right - interitemSpacing
 
         var items = Array(0..<filters.count)
-                .map { IndexedWidth(index: $0, width: FilterHeaderCell.width(title: title(index: $0))) }
+                .map { IndexedWidth(index: $0, width: FilterHeaderCell.width(title: title(index: $0), style: buttonStyle)) }
 
         let initialItemWidth = items.reduce(0) { $0 + $1.width }
         if initialItemWidth >= width {     // elements can't fit into screen
