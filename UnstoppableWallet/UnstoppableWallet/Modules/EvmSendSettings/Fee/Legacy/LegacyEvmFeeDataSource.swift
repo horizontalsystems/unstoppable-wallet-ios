@@ -10,7 +10,7 @@ class LegacyEvmFeeDataSource {
     private let viewModel: LegacyEvmFeeViewModel
     private let disposeBag = DisposeBag()
 
-    private let maxFeeCell: FeeCellNew
+    private let maxFeeCell: FeeCell
     private var gasLimitCell = BaseThemeCell()
     private var gasPriceCell = StepperAmountInputCell(allowFractionalNumbers: true)
 
@@ -21,7 +21,7 @@ class LegacyEvmFeeDataSource {
     init(viewModel: LegacyEvmFeeViewModel) {
         self.viewModel = viewModel
 
-        maxFeeCell = FeeCellNew(viewModel: viewModel)
+        maxFeeCell = FeeCell(viewModel: viewModel, title: "fee_settings.max_fee".localized)
     }
 
     func viewDidLoad() {

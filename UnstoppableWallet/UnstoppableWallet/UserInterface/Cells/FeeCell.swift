@@ -5,41 +5,30 @@ import ComponentKit
 import ThemeKit
 
 protocol IFeeViewModel {
-    var hasInformation: Bool { get }
-    var title: String { get }
+    var showInfoIcon: Bool { get }
     var valueDriver: Driver<FeeCell.Value?> { get }
     var spinnerVisibleDriver: Driver<Bool> { get }
-}
-
-extension IFeeViewModel {
-
-    var hasInformation: Bool {
-        true
-    }
-
-    var title: String {
-        "fee_settings.max_fee".localized
-    }
-
 }
 
 class FeeCell: BaseSelectableThemeCell {
     private let disposeBag = DisposeBag()
 
     private let viewModel: IFeeViewModel
+    private let title: String
 
     private var value: FeeCell.Value?
     private var spinnerVisible: Bool = false
 
-    init(viewModel: IFeeViewModel) {
+    init(viewModel: IFeeViewModel, title: String) {
         self.viewModel = viewModel
+        self.title = title
 
         super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
         clipsToBounds = true
         set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        selectionStyle = viewModel.hasInformation ? .default : .none
+        selectionStyle = viewModel.showInfoIcon ? .default : .none
         sync()
 
         subscribe(disposeBag, viewModel.valueDriver) { [weak self] value in
@@ -57,46 +46,73 @@ class FeeCell: BaseSelectableThemeCell {
     }
 
     private func sync() {
-        CellBuilderNew.buildStatic(cell: self, rootElement:
-            .hStack([
-                .text { [weak self] (component: TextComponent) -> () in
-                    component.font = .subhead2
-                    component.textColor = .themeGray
-                    component.text = self?.viewModel.title
-                    component.setContentHuggingPriority(.required, for: .horizontal)
-                },
+        let titleElements: [CellBuilderNew.CellElement] = [
+            .textElement(text: .subhead2(title), parameters: .highHugging)
+        ]
+
+        var infoElements = [CellBuilderNew.CellElement]()
+        if viewModel.showInfoIcon {
+            infoElements.append(contentsOf: [
                 .margin8,
-                .image20 { component in
-                    component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
-                },
+                .imageElement(image: .local(UIImage(named: "circle_information_20")?.withTintColor(.themeGray)), size: .image20),
                 .margin0,
                 .text { _ in },
-                .text { [weak self] (component: TextComponent) -> () in
-                    if let value = self?.value {
-                        component.isHidden = false
-                        component.font = .subhead1
-                        component.textColor = value.type.textColor
-                        component.text = value.text
-                        component.textAlignment = .right
-                    } else {
-                        component.isHidden = true
-                    }
-                },
-                .spinner20 { [weak self] (component: SpinnerComponent) -> () in
-                    component.isHidden = !(self?.spinnerVisible ?? false)
-                }
             ])
-        )
+        }
+
+        let valueElements: [CellBuilderNew.CellElement] = [
+            .vStackCentered([
+                .text({ [weak self] component in
+                    if let value = self?.value, case let .regular(text, _) = value {
+                        component.font = .subhead1
+                        component.textColor = .themeLeah
+                        component.text = text
+                        component.textAlignment = .right
+                    }
+                }),
+                .margin(1),
+                .text({ [weak self] component in
+                    if let value = self?.value, case let .regular(_, secondaryText) = value {
+                        component.font = .caption
+                        component.textColor = .themeGray
+                        component.text = secondaryText ?? "---"
+                        component.textAlignment = .right
+                    }
+                }),
+            ], { [weak self] component in
+                if let value = self?.value, case .regular = value {
+                    component.isHidden = false
+                } else {
+                    component.isHidden = true
+                }
+            }),
+            .text({ [weak self] component in
+                if let value = self?.value, case let .error(text) = value {
+                    component.isHidden = false
+                    component.font = .subhead1
+                    component.textColor = .themeLucian
+                    component.text = text
+                    component.textAlignment = .right
+                } else {
+                    component.isHidden = true
+                }
+            }),
+            .spinner20 { [weak self] component in
+                component.isHidden = !(self?.spinnerVisible ?? false)
+            }
+        ]
+
+        CellBuilderNew.buildStatic(cell: self, rootElement: .hStack(titleElements + infoElements + valueElements))
     }
 
 }
 
 extension FeeCell {
 
-    enum ValueType {
-        case disabled
-        case regular
-        case error
+    enum Value {
+        case disabled(text: String)
+        case regular(text: String, secondaryText: String?)
+        case error(text: String)
 
         var textColor: UIColor {
             switch self {
@@ -105,11 +121,6 @@ extension FeeCell {
             case .error: return .themeLucian
             }
         }
-    }
-
-    struct Value {
-        let text: String
-        let type: ValueType
     }
 
 }

@@ -13,7 +13,7 @@ class LegacyEvmFeeViewModel {
     private let feeViewItemFactory: FeeViewItemFactory
 
     private let alteredStateRelay = PublishRelay<Void>()
-    private let valueRelay = BehaviorRelay<FeeCellNew.Value?>(value: nil)
+    private let valueRelay = BehaviorRelay<FeeCell.Value?>(value: nil)
     private let spinnerVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let gasLimitRelay = BehaviorRelay<String>(value: "n/a")
     private let gasPriceRelay = BehaviorRelay<Decimal?>(value: nil)
@@ -43,7 +43,7 @@ class LegacyEvmFeeViewModel {
 
     private func sync(transactionStatus: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
         let spinnerVisible: Bool
-        let maxFeeValue: FeeCellNew.Value?
+        let maxFeeValue: FeeCell.Value?
         let gasLimit: String
 
         switch transactionStatus {
@@ -108,13 +108,13 @@ extension LegacyEvmFeeViewModel {
 
 }
 
-extension LegacyEvmFeeViewModel: IFeeViewModelNew {
+extension LegacyEvmFeeViewModel: IFeeViewModel {
 
     var showInfoIcon: Bool {
         true
     }
 
-    var valueDriver: Driver<FeeCellNew.Value?> {
+    var valueDriver: Driver<FeeCell.Value?> {
         valueRelay.asDriver()
     }
 

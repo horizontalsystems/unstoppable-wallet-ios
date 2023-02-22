@@ -131,18 +131,8 @@ extension SendBitcoinFactory: ISendConfirmationFactory {
 extension SendBitcoinFactory: ISendFeeSettingsFactory {
 
     func feeSettingsViewController() throws -> UIViewController {
-        guard let customRangedFeeRateProvider = customFeeRateProvider else {
-            throw AppError.unknownError
-        }
-
         let feeViewModel = SendFeeViewModel(service: feeService)
-        let feeSliderService = SendFeeSliderService(
-                service: feePriorityService,
-                feeRateService: feeRateService,
-                customRangedFeeRateProvider: customRangedFeeRateProvider
-        )
         let feeViewItemFactory = FeeViewItemFactory(scale: .satoshi)
-        let feeSliderViewModel = SendFeeSliderViewModel(feeViewItemFactory: feeViewItemFactory, service: feeSliderService)
         let feePriorityViewModel = SendFeePriorityViewModel(service: feePriorityService)
         let feeCautionViewModel = SendFeeWarningViewModel(service: feeRateService)
         let amountCautionViewModel = SendFeeSettingsAmountCautionViewModel(
@@ -156,7 +146,6 @@ extension SendBitcoinFactory: ISendFeeSettingsFactory {
         let viewController = SendFeeSettingsViewController(
                 viewModel: viewModel,
                 feeViewModel: feeViewModel,
-                feeSliderViewModel: feeSliderViewModel,
                 feePriorityViewModel: feePriorityViewModel,
                 feeCautionViewModel: feeCautionViewModel,
                 amountCautionViewModel: amountCautionViewModel

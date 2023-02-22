@@ -12,7 +12,7 @@ class SendBitcoinViewController: BaseSendViewController {
     private let feeWarningViewModel: ITitledCautionViewModel
     private let timeLockViewModel: SendTimeLockViewModel?
 
-    private let feeCell: EditableFeeCell
+    private let feeCell: FeeCell
     private let feeCautionCell = TitledHighlightedDescriptionCell()
 
     private var timeLockCell: BaseSelectableThemeCell?
@@ -33,7 +33,7 @@ class SendBitcoinViewController: BaseSendViewController {
         self.feeWarningViewModel = feeWarningViewModel
         self.timeLockViewModel = timeLockViewModel
 
-        feeCell = EditableFeeCell(viewModel: feeViewModel, isLast: timeLockViewModel == nil)
+        feeCell = FeeCell(viewModel: feeViewModel, title: "fee_settings.fee".localized)
 
         if timeLockViewModel != nil {
             let timeLockCell = BaseSelectableThemeCell()
