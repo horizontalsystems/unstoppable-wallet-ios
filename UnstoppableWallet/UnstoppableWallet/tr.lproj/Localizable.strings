@@ -1201,11 +1201,11 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Birthday Input
 
 "birthday_input.title" = "Oluşturulma Günü Üst Sınırı";
-"birthday_input.description" = "Hızlı senkronizasyon için cüzdanın doğum günü yüksekliğini girebilirsiniz.";
+"birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
 "birthday_input.new_wallet" = "Yeni Cüzdan";
-"birthday_input.new_wallet.description" = "Daha önce herhangi bir işlem yapma";
-"birthday_input.old_wallet" = "Cüzdan Ekle";
-"birthday_input.old_wallet.description" = "Daha önce kullanılmış ve işlemleri var";
+"birthday_input.new_wallet.description" = "Doesn't have any transactions";
+"birthday_input.old_wallet" = "Existing Wallet";
+"birthday_input.old_wallet.description" = "Has transactions";
 "birthday_input.input_placeholder" = "%@ (isteğe bağlı)";
 
 "restore_setting.birthday_height" = "%@ Oluşturulma Günü Üst Sınırı";
