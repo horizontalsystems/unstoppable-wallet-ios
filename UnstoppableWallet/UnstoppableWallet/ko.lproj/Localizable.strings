@@ -1199,11 +1199,11 @@
 // Birthday Input
 
 "birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "빠른 동기화를 위해 지갑의 생일 키를 입력할 수 있습니다.";
+"birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
 "birthday_input.new_wallet" = "새 지갑";
-"birthday_input.new_wallet.description" = "이전에 거래가 없는 경우";
-"birthday_input.old_wallet" = "오래된 지갑";
-"birthday_input.old_wallet.description" = "이전에 사용되었으며 트랜잭션이 있습니다.";
+"birthday_input.new_wallet.description" = "Doesn't have any transactions";
+"birthday_input.old_wallet" = "Existing Wallet";
+"birthday_input.old_wallet.description" = "Has transactions";
 "birthday_input.input_placeholder" = "%@ (선택사항)";
 
 "restore_setting.birthday_height" = "생일 높이 %@";
