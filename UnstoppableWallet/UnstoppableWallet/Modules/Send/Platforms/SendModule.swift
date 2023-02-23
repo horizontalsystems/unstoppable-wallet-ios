@@ -59,10 +59,9 @@ class SendModule {
         let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
 
         // Fee
-        let feePriorityService = SendFeePriorityService(provider: feeRateProvider)
-        let feeRateService = SendFeeRateService(priorityService: feePriorityService, provider: feeRateProvider)
+        let feeRateService = SendFeeRateService(provider: feeRateProvider)
         let feeFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
-        let feeService = SendBitcoinFeeService(fiatService: feeFiatService, feePriorityService: feePriorityService, feeToken: token)
+        let feeService = SendBitcoinFeeService(fiatService: feeFiatService, feeToken: token)
 
         // TimeLock
         var timeLockService: SendTimeLockService?
@@ -105,7 +104,6 @@ class SendModule {
         addressService.customErrorService = timeLockErrorService
 
         feeService.feeValueService = bitcoinAdapterService
-        feePriorityService.feeRateService = feeRateService
 
         // ViewModels
         let viewModel = SendViewModel(service: service)
@@ -139,7 +137,6 @@ class SendModule {
                 feeFiatService: feeFiatService,
                 feeService: feeService,
                 feeRateService: feeRateService,
-                feePriorityService: feePriorityService,
                 timeLockService: timeLockService,
                 adapterService: bitcoinAdapterService,
                 customFeeRateProvider: customRangedFeeRateProvider,

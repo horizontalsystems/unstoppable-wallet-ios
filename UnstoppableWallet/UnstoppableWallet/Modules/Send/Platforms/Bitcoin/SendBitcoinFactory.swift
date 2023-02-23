@@ -69,7 +69,6 @@ class SendBitcoinFactory: BaseSendFactory {
     private let feeFiatService: FiatService
     private let feeService: SendFeeService
     private let feeRateService: SendFeeRateService
-    private let feePriorityService: SendFeePriorityService
     private let addressService: AddressService
     private let timeLockService: SendTimeLockService?
     private let adapterService: SendBitcoinAdapterService
@@ -77,13 +76,12 @@ class SendBitcoinFactory: BaseSendFactory {
     private let logger: Logger
     private let token: Token
 
-    init(fiatService: FiatService, amountCautionService: SendAmountCautionService, addressService: AddressService, feeFiatService: FiatService, feeService: SendFeeService, feeRateService: SendFeeRateService, feePriorityService: SendFeePriorityService, timeLockService: SendTimeLockService?, adapterService: SendBitcoinAdapterService, customFeeRateProvider: ICustomRangedFeeRateProvider?, logger: Logger, token: Token) {
+    init(fiatService: FiatService, amountCautionService: SendAmountCautionService, addressService: AddressService, feeFiatService: FiatService, feeService: SendFeeService, feeRateService: SendFeeRateService, timeLockService: SendTimeLockService?, adapterService: SendBitcoinAdapterService, customFeeRateProvider: ICustomRangedFeeRateProvider?, logger: Logger, token: Token) {
         self.fiatService = fiatService
         self.amountCautionService = amountCautionService
         self.feeFiatService = feeFiatService
         self.feeService = feeService
         self.feeRateService = feeRateService
-        self.feePriorityService = feePriorityService
         self.addressService = addressService
         self.timeLockService = timeLockService
         self.adapterService = adapterService
@@ -132,21 +130,18 @@ extension SendBitcoinFactory: ISendFeeSettingsFactory {
 
     func feeSettingsViewController() throws -> UIViewController {
         let feeViewModel = SendFeeViewModel(service: feeService)
-        let feeViewItemFactory = FeeViewItemFactory(scale: .satoshi)
-        let feePriorityViewModel = SendFeePriorityViewModel(service: feePriorityService)
         let feeCautionViewModel = SendFeeWarningViewModel(service: feeRateService)
         let amountCautionViewModel = SendFeeSettingsAmountCautionViewModel(
                 service: amountCautionService,
                 feeToken: token
         )
 
-        let service = SendFeeSettingsService(feeService: feeService, feeRateService: feeRateService, feePriorityService: feePriorityService)
+        let service = SendFeeSettingsService()
         let viewModel = SendFeeSettingsViewModel(service: service)
 
         let viewController = SendFeeSettingsViewController(
                 viewModel: viewModel,
                 feeViewModel: feeViewModel,
-                feePriorityViewModel: feePriorityViewModel,
                 feeCautionViewModel: feeCautionViewModel,
                 amountCautionViewModel: amountCautionViewModel
         )
