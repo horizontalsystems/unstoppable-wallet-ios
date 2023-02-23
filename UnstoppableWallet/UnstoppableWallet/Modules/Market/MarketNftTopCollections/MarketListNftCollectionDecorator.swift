@@ -22,10 +22,8 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
         let collection = item.collection
 
         var floorPriceString = "---"
-        var iconPlaceholderName = "placeholder_rectangle_32"
-        if let floorPrice = collection.floorPrice {
-            iconPlaceholderName = floorPrice.token.placeholderImageName
 
+        if let floorPrice = collection.floorPrice {
             let coinValue = CoinValue(kind: .token(token: floorPrice.token), value: floorPrice.value)
             if let value = ValueFormatter.instance.formatShort(coinValue: coinValue) {
                 floorPriceString = "market.top.floor_price".localized + " " + value
@@ -46,7 +44,7 @@ extension MarketListNftCollectionDecorator: IMarketListDecorator {
                 uid: collection.uid,
                 iconUrl: collection.thumbnailImageUrl ?? "",
                 iconShape: .square,
-                iconPlaceholderName: iconPlaceholderName,
+                iconPlaceholderName: "placeholder_rectangle_32",
                 leftPrimaryValue: collection.name,
                 leftSecondaryValue: floorPriceString,
                 badge: "\(item.index)",

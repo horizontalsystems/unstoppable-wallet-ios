@@ -24,7 +24,7 @@ class RestoreSelectViewModel {
         CoinToggleViewModel.ViewItem(
                 uid: item.blockchain.uid,
                 imageUrl: item.blockchain.type.imageUrl,
-                placeholderImageName: nil,
+                placeholderImageName: "placeholder_rectangle_32",
                 title: item.blockchain.name,
                 subtitle: item.blockchain.type.description,
                 badge: nil,

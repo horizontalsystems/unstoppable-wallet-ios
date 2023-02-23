@@ -103,7 +103,7 @@ extension AddTokenViewModel {
     var blockchainViewItems: [SelectorModule.ViewItem] {
         service.blockchainItems.map { item in
             SelectorModule.ViewItem(
-                    image: .url(item.blockchain.type.imageUrl),
+                    image: .url(item.blockchain.type.imageUrl, placeholder: "placeholder_rectangle_32"),
                     title: item.blockchain.name,
                     selected: item.current
             )

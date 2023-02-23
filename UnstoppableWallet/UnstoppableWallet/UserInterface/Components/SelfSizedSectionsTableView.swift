@@ -23,8 +23,14 @@ class SelfSizedSectionsTableView: SectionsTableView {
         }
     }
 
+    override func adjustedContentInsetDidChange() {
+        super.adjustedContentInsetDidChange()
+
+        invalidateIntrinsicContentSize()
+    }
+
     override var intrinsicContentSize: CGSize {
-        contentSize
+        CGSize(width: contentSize.width, height: contentSize.height + adjustedContentInset.bottom)
     }
 
 }

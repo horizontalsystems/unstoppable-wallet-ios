@@ -27,7 +27,7 @@ class CoinTokensViewModel {
                 allowEmpty: request.allowEmpty,
                 viewItems: tokens.map { token in
                     SelectorModule.ViewItem(
-                            image: .url(token.blockchain.type.imageUrl),
+                            image: .url(token.blockchain.type.imageUrl, placeholder: "placeholder_rectangle_32"),
                             title: token.tokenBlockchain,
                             subtitle: token.typeInfo,
                             selected: request.currentTokens.contains(token)

@@ -52,7 +52,7 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         iconImageView.snp.makeConstraints { make in
             make.size.equalTo(CGFloat.iconSize24)
         }
-        iconImageView.setImage(withUrlString: token.blockchain.type.imageUrl, placeholder: nil)
+        iconImageView.setImage(withUrlString: token.blockchain.type.imageUrl, placeholder: UIImage(named: token.placeholderImageName))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

@@ -77,7 +77,7 @@ extension BlockchainSettingsViewController: SectionsDataSource {
     private func blockchainRow(id: String, viewItem: BlockchainSettingsViewModel.BlockchainViewItem, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol {
         tableView.universalRow62(
                 id: id,
-                image: .url(viewItem.iconUrl),
+                image: .url(viewItem.iconUrl, placeholder: "placeholder_rectangle_32"),
                 title: .body(viewItem.name),
                 description: .subhead2(viewItem.value),
                 accessoryType: .disclosure,

@@ -326,7 +326,7 @@ extension CoinOverviewViewController {
 
         return CellBuilderNew.row(
                 rootElement: .hStack([
-                    .imageElement(image: .url(viewItem.iconUrl), size: .image32),
+                    .imageElement(image: .url(viewItem.iconUrl, placeholder: "placeholder_rectangle_32"), size: .image32),
                     .vStackCentered([
                         .textElement(text: .body(viewItem.title)),
                         .margin(1),

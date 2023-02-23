@@ -135,7 +135,7 @@ extension NftActivityViewModel {
 
         return service.contracts.enumerated().map { index, contract in
             SelectorModule.ViewItem(
-                    image: .url(blockchainType.imageUrl),
+                    image: .url(blockchainType.imageUrl, placeholder: "placeholder_rectangle_32"),
                     title: contract.name,
                     subtitle: contract.address.shortened,
                     badge: contract.schema,
