@@ -51,40 +51,12 @@ class BitcoinFeeRateProvider: ICustomRangedFeeRateProvider {
     let step: Int = 1
 
     private let feeRateProvider: FeeRateProvider
-    private let lowPriorityBlockCount = 6
-    private let mediumPriorityBlockCount = 2
-    private let highPriorityBlockCount = 1
+    private let recommendedBlockCount = 2
 
     init(feeRateProvider: FeeRateProvider) {
         self.feeRateProvider = feeRateProvider
     }
-
-    var feeRatePriorityList: [FeeRatePriority] {
-        [
-            .low,
-            .recommended,
-            .high,
-            .custom(value: customFeeRange.lowerBound, range: customFeeRange)
-        ]
-    }
-    var recommendedFeeRate: Single<Int> { feeRateProvider.bitcoinFeeRate(blockCount: mediumPriorityBlockCount) }
-
-    var defaultFeeRatePriority: FeeRatePriority {
-        .recommended
-    }
-
-    func feeRate(priority: FeeRatePriority) -> Single<Int> {
-        switch priority {
-        case .low:
-            return feeRateProvider.bitcoinFeeRate(blockCount: lowPriorityBlockCount)
-        case .high:
-            return feeRateProvider.bitcoinFeeRate(blockCount: highPriorityBlockCount)
-        case .recommended:
-            return feeRateProvider.bitcoinFeeRate(blockCount: mediumPriorityBlockCount)
-        case let .custom(value, _):
-            return Single.just(value)
-        }
-    }
+    var recommendedFeeRate: Single<Int> { feeRateProvider.bitcoinFeeRate(blockCount: recommendedBlockCount) }
 
 }
 
@@ -96,7 +68,6 @@ class LitecoinFeeRateProvider: IFeeRateProvider {
     }
 
     var recommendedFeeRate: Single<Int> { feeRateProvider.litecoinFeeRate }
-    var feeRatePriorityList: [FeeRatePriority] = []
 
 }
 
@@ -108,7 +79,6 @@ class BitcoinCashFeeRateProvider: IFeeRateProvider {
     }
 
     var recommendedFeeRate: Single<Int> { feeRateProvider.bitcoinCashFeeRate }
-    var feeRatePriorityList: [FeeRatePriority] = []
 
 }
 
@@ -120,27 +90,6 @@ class DashFeeRateProvider: IFeeRateProvider {
     }
 
     var recommendedFeeRate: Single<Int> { feeRateProvider.dashFeeRate }
-    var feeRatePriorityList: [FeeRatePriority] = []
-}
-
-extension IFeeRateProvider {
-
-    var feeRatePriorityList: [FeeRatePriority] {
-        [.recommended]
-    }
-
-    var defaultFeeRatePriority: FeeRatePriority {
-        .recommended
-    }
-
-    func feeRate(priority: FeeRatePriority) -> Single<Int> {
-        if case let .custom(value, _) = priority {
-            return Single.just(value)
-        }
-
-        return recommendedFeeRate
-    }
-
 }
 
 private func ceil(_ value: Int, multiply: Double?) -> Int {

@@ -12,7 +12,7 @@ class SendFeeSettingsViewModel {
     init(service: SendFeeSettingsService) {
         self.service = service
 
-        subscribe(disposeBag, service.isInitialPriorityObservable) { [weak self] in self?.sync(isInitialPriority: $0)}
+        subscribe(disposeBag, service.defaultFeeRateObservable) { [weak self] in self?.sync(isInitialPriority: $0)}
     }
 
     private func sync(isInitialPriority: Bool) {

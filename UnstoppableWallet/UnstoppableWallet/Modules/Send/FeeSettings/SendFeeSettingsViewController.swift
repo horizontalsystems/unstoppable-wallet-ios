@@ -19,7 +19,6 @@ class SendFeeSettingsViewController: ThemeViewController {
     private let amountCautionViewModel: SendFeeSettingsAmountCautionViewModel
 
     private let feeCell: FeeCell
-    private let feePriorityCell: SendFeePriorityCell
     private let feeRateCell = BaseThemeCell()
     private let feeWarningCell = TitledHighlightedDescriptionCell()
     private let feeAmountErrorCell = TitledHighlightedDescriptionCell()
@@ -28,7 +27,7 @@ class SendFeeSettingsViewController: ThemeViewController {
 
     private var loaded = false
 
-    init(viewModel: SendFeeSettingsViewModel, feeViewModel: SendFeeViewModel, feePriorityViewModel: SendFeePriorityViewModel, feeCautionViewModel: SendFeeWarningViewModel, amountCautionViewModel: SendFeeSettingsAmountCautionViewModel) {
+    init(viewModel: SendFeeSettingsViewModel, feeViewModel: SendFeeViewModel, feeCautionViewModel: SendFeeWarningViewModel, amountCautionViewModel: SendFeeSettingsAmountCautionViewModel) {
         self.viewModel = viewModel
         self.feeViewModel = feeViewModel
         self.feeCautionViewModel = feeCautionViewModel
@@ -36,11 +35,7 @@ class SendFeeSettingsViewController: ThemeViewController {
 
         feeCell = FeeCell(viewModel: feeViewModel, title: "fee_settings.fee".localized)
 
-        feePriorityCell = SendFeePriorityCell(viewModel: feePriorityViewModel)
-
         super.init()
-
-        feePriorityCell.sourceViewController = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -68,8 +63,6 @@ class SendFeeSettingsViewController: ThemeViewController {
 
         feeRateCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
         sync(feeSliderViewItem: nil)
-
-        feePriorityCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
         view.addSubview(bottomWrapper)
         bottomWrapper.snp.makeConstraints { maker in
@@ -172,21 +165,6 @@ extension SendFeeSettingsViewController: SectionsDataSource {
                                 autoDeselect: true,
                                 action: { [weak self] in
                                     self?.openInfo(title: "fee_settings.fee".localized, description: "fee_settings.fee.info".localized)
-                                }
-                        )
-                    ]
-            ),
-            Section(
-                    id: "fee-speed",
-                    headerState: .margin(height: .margin8),
-                    rows: [
-                        StaticRow(
-                                cell: feePriorityCell,
-                                id: "fee-priority",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.present(InfoModule.feeInfo, animated: true)
                                 }
                         )
                     ]
