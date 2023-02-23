@@ -738,7 +738,6 @@
 		11B35AE3AAD6811C48B91DE3 /* BaseCurrencySettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350669B3E9E6155F33F23 /* BaseCurrencySettingsViewModel.swift */; };
 		11B35AE7D9E8BA8BDB06703F /* EnabledWalletCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566B18FBFBA85D98D824 /* EnabledWalletCacheManager.swift */; };
 		11B35AF1B38CDF6728158514 /* AppConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3586FDC91E3742847B7E0 /* AppConfigProvider.swift */; };
-		11B35AF26E7D87C2CD32C4CA /* BirthdayHeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B5B2DA84492D5EBBCC5 /* BirthdayHeightViewController.swift */; };
 		11B35AF2A7175246F8586F09 /* SendEvmModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3515139F2682C9C733F3D /* SendEvmModule.swift */; };
 		11B35AF308141DC4CFA45918 /* NftHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357B1854BAD99C7CFB3DE /* NftHeaderViewModel.swift */; };
 		11B35AF765474AEE15CA4240 /* AccountRecord_v_0_20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3506CB3D780A00F4BBBBE /* AccountRecord_v_0_20.swift */; };
@@ -830,7 +829,6 @@
 		11B35C68D57727AB0DAC7753 /* NftAddressMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BEEB24CDB82D3F4E7C0 /* NftAddressMetadata.swift */; };
 		11B35C7571913301EA997727 /* BackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E9CB53CC4A626C2F5B6 /* BackupService.swift */; };
 		11B35C7BB534F9FFE5B6B3A6 /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3519AE11DC423E0D078E2 /* TokenType.swift */; };
-		11B35C83676ADB250F3F017C /* BirthdayHeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B5B2DA84492D5EBBCC5 /* BirthdayHeightViewController.swift */; };
 		11B35C8621E221DA1F157A5B /* AccountFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4D6F474C2EB3687EB4 /* AccountFactory.swift */; };
 		11B35C8A1082D0A8F0B354B1 /* RestoreMnemonicHintCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358604E6B530C5DB22B92 /* RestoreMnemonicHintCell.swift */; };
 		11B35C8A76BB5C69263E9757 /* AlertModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C9F199E2A1D297480A4 /* AlertModule.swift */; };
@@ -2670,7 +2668,6 @@
 		11B35B57346197B8C3061B8F /* BlockchainSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockchainSettingsViewModel.swift; sourceTree = "<group>"; };
 		11B35B57AFCEAA3AA071F07F /* BaseCurrencySettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCurrencySettingsModule.swift; sourceTree = "<group>"; };
 		11B35B58E21336A3DF5A9B45 /* NftMetadataSyncRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftMetadataSyncRecord.swift; sourceTree = "<group>"; };
-		11B35B5B2DA84492D5EBBCC5 /* BirthdayHeightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BirthdayHeightViewController.swift; sourceTree = "<group>"; };
 		11B35B6D6FCA3745DE0750BD /* MainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainService.swift; sourceTree = "<group>"; };
 		11B35B70808A7D2484859EFD /* FaqViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaqViewController.swift; sourceTree = "<group>"; };
 		11B35B7D66631DD5D91D0773 /* CoinMarketsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinMarketsModule.swift; sourceTree = "<group>"; };
@@ -4370,7 +4367,6 @@
 				11B3529B6C7C426755CE9E14 /* ManageWalletsService.swift */,
 				11B3550ED151B4C6824B9779 /* ManageWalletsViewModel.swift */,
 				11B35C4D645B4468F84EADB7 /* ManageWalletsViewController.swift */,
-				11B35B5B2DA84492D5EBBCC5 /* BirthdayHeightViewController.swift */,
 			);
 			path = ManageWallets;
 			sourceTree = "<group>";
@@ -7738,7 +7734,6 @@
 				11B35C9A7D0786D397A04F51 /* BlockchainSettingsViewModel.swift in Sources */,
 				11B3524E749AEC08F13CF4AE /* BlockchainSettingsService.swift in Sources */,
 				11B3598FA583DAF18B5C0C70 /* BlockchainSettingsViewController.swift in Sources */,
-				11B35C83676ADB250F3F017C /* BirthdayHeightViewController.swift in Sources */,
 				11B35525C4BAEF22CF73F261 /* CreateAccountSimpleViewController.swift in Sources */,
 				11B35446CFD6FBB7C3B64B55 /* SingleSelectorViewController.swift in Sources */,
 				11B3577BDCF978797E6C283E /* RestoreService.swift in Sources */,
@@ -8829,7 +8824,6 @@
 				11B35F6BCA795E816E50308A /* BlockchainSettingsViewModel.swift in Sources */,
 				11B352841C5901ABCC0096C2 /* BlockchainSettingsService.swift in Sources */,
 				11B3529895DBE58FBAA17E12 /* BlockchainSettingsViewController.swift in Sources */,
-				11B35AF26E7D87C2CD32C4CA /* BirthdayHeightViewController.swift in Sources */,
 				11B3540CF7A5AA26C196D796 /* CreateAccountSimpleViewController.swift in Sources */,
 				11B357C5FC1B7FDE86244DA5 /* SingleSelectorViewController.swift in Sources */,
 				11B35BE5E6974F580927CAFA /* RestoreService.swift in Sources */,
@@ -9451,7 +9445,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ComponentKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.7;
+				version = 1.0.8;
 			};
 		};
 		D3C187D3290FCF7D00FE1900 /* XCRemoteSwiftPackageReference "HUD.Swift" */ = {

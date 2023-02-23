@@ -113,6 +113,7 @@ class BottomSheetViewController: ThemeActionSheetController {
     private func copyableValueSection(index: Int, title: String, value: String) -> SectionProtocol {
         Section(
                 id: "section-\(index)",
+                headerState: .margin(height: .margin12),
                 rows: [
                     CellBuilderNew.row(
                             rootElement: .hStack([
@@ -146,7 +147,7 @@ class BottomSheetViewController: ThemeActionSheetController {
                 rows: [
                     CellBuilderNew.row(
                             rootElement: .hStack([
-                                .imageElement(image: .url(imageUrl), size: .image32),
+                                .imageElement(image: .url(imageUrl, placeholder: "placeholder_rectangle_32"), size: .image32),
                                 .text { component in
                                     component.font = textFont
                                     component.textColor = .themeLeah

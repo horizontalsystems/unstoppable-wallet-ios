@@ -38,7 +38,9 @@ class EvmNetworkViewController: ThemeViewController {
         iconImageView.snp.makeConstraints { make in
             make.size.equalTo(CGFloat.iconSize24)
         }
-        iconImageView.setImage(withUrlString: viewModel.iconUrl, placeholder: nil)
+        iconImageView.cornerRadius = .cornerRadius4
+        iconImageView.cornerCurve = .continuous
+        iconImageView.setImage(withUrlString: viewModel.iconUrl, placeholder: UIImage(named: "placeholder_rectangle_24"))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

@@ -258,7 +258,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                     CellBuilderNew.row(
                             rootElement: .hStack([
                                 .image32 { (component: ImageComponent) in
-                                    component.setImage(urlString: viewItem.iconUrl, placeholder: nil)
+                                    component.setImage(urlString: viewItem.iconUrl, placeholder: UIImage(named: "placeholder_rectangle_32"))
                                 },
                                 .vStackCentered([
                                     .hStack([

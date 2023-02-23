@@ -221,7 +221,7 @@ class WalletConnectMainViewController: ThemeViewController {
 
         let selectorViewItems = viewItems.map {
             SelectorModule.ViewItem(
-                    image: .url($0.imageUrl),
+                    image: .url($0.imageUrl, placeholder: "placeholder_rectangle_32"),
                     title: $0.title,
                     selected: $0.selected
             )

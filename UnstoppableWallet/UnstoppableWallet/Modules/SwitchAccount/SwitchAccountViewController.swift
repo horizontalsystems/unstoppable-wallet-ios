@@ -12,7 +12,7 @@ class SwitchAccountViewController: ThemeActionSheetController {
     private let disposeBag = DisposeBag()
 
     private let titleView = BottomSheetTitleView()
-    private let tableView = SelfSizedSectionsTableView(style: .grouped)
+    private let tableView = SelfSizedSectionsTableView(style: .plain)
 
     init(viewModel: SwitchAccountViewModel) {
         self.viewModel = viewModel
@@ -41,12 +41,12 @@ class SwitchAccountViewController: ThemeActionSheetController {
         tableView.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview()
             maker.top.equalTo(titleView.snp.bottom).offset(CGFloat.margin12)
-            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
+            maker.bottom.equalToSuperview()
         }
 
-        tableView.contentInsetAdjustmentBehavior = .never
-        tableView.automaticallyAdjustsScrollIndicatorInsets = false
-
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
         tableView.sectionDataSource = self
 
         tableView.buildSections()
@@ -100,8 +100,8 @@ extension SwitchAccountViewController: SectionsDataSource {
         if !viewModel.regularViewItems.isEmpty {
             let section = Section(
                     id: "regular",
-                    headerState: tableView.sectionHeader(text: "switch_account.wallets".localized),
-                    footerState: .margin(height: viewModel.watchViewItems.isEmpty ? 0 : .margin24),
+                    headerState: tableView.sectionHeader(text: "switch_account.wallets".localized, backgroundColor: .themeLawrence),
+                    footerState: .marginColor(height: .margin24, color: .clear),
                     rows: viewModel.regularViewItems.enumerated().map { index, viewItem in
                         row(viewItem: viewItem, watchIcon: false, index: index, isFirst: index == 0, isLast: index == viewModel.regularViewItems.count - 1)
                     }
@@ -113,7 +113,8 @@ extension SwitchAccountViewController: SectionsDataSource {
         if !viewModel.watchViewItems.isEmpty {
             let section = Section(
                     id: "watch",
-                    headerState: tableView.sectionHeader(text: "switch_account.watch_wallets".localized),
+                    headerState: tableView.sectionHeader(text: "switch_account.watch_wallets".localized, backgroundColor: .themeLawrence),
+                    footerState: .marginColor(height: .margin24, color: .clear),
                     rows: viewModel.watchViewItems.enumerated().map { index, viewItem in
                         row(viewItem: viewItem, watchIcon: true, index: index, isFirst: index == 0, isLast: index == viewModel.watchViewItems.count - 1)
                     }

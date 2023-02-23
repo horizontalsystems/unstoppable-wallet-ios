@@ -201,7 +201,7 @@ extension AppearanceViewController: SectionsDataSource {
                 rows: viewItems.enumerated().map { index, viewItem in
                     tableView.universalRow56(
                             id: "balance-conversion-\(index)",
-                            image: .url(viewItem.urlString),
+                            image: .url(viewItem.urlString, placeholder: "placeholder_circle_32"),
                             title: .body(viewItem.title),
                             accessoryType: .check(viewItem.selected),
                             hash: "\(viewItem.selected)",
