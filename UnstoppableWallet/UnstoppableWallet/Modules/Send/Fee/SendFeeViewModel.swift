@@ -52,10 +52,6 @@ class SendFeeViewModel {
 
 extension SendFeeViewModel: IFeeViewModel {
 
-    var showInfoIcon: Bool {
-        false
-    }
-
     var valueDriver: Driver<FeeCell.Value?> {
         valueRelay.asDriver()
     }

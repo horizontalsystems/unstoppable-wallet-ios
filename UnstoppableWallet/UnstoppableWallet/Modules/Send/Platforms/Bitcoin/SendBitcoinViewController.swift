@@ -110,6 +110,11 @@ class SendBitcoinViewController: BaseSendViewController {
         present(alertController, animated: true)
     }
 
+    private func openInfo(title: String, description: String) {
+        let viewController = BottomSheetModule.description(title: title, text: description)
+        present(viewController, animated: true)
+    }
+
     var feeSection: SectionProtocol {
         Section(
                 id: "fee",
@@ -118,7 +123,11 @@ class SendBitcoinViewController: BaseSendViewController {
                     StaticRow(
                             cell: feeCell,
                             id: "fee",
-                            height: .heightCell48
+                            height: .heightDoubleLineCell,
+                            autoDeselect: true,
+                            action: { [weak self] in
+                                self?.openInfo(title: "fee_settings.fee".localized, description: "fee_settings.fee.info".localized)
+                            }
                     )
                 ]
         )

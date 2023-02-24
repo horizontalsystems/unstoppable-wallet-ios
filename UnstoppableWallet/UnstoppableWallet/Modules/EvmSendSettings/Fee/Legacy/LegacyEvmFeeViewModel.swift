@@ -110,10 +110,6 @@ extension LegacyEvmFeeViewModel {
 
 extension LegacyEvmFeeViewModel: IFeeViewModel {
 
-    var showInfoIcon: Bool {
-        true
-    }
-
     var valueDriver: Driver<FeeCell.Value?> {
         valueRelay.asDriver()
     }
