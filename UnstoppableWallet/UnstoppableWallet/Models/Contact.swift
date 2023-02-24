@@ -5,8 +5,8 @@ class ContactAddress: ImmutableMappable {
     let blockchainUid: String
     let address: String
 
-    init(blockhainUid: String, address: String) {
-        self.blockchainUid = blockhainUid
+    init(blockchainUid: String, address: String) {
+        self.blockchainUid = blockchainUid
         self.address = address
     }
 
@@ -23,31 +23,36 @@ class ContactAddress: ImmutableMappable {
 }
 
 class Contact: ImmutableMappable, Equatable {
+    let uid: String
     let name: String
     let addresses: [ContactAddress]
 
-    init(name: String, addresses: [ContactAddress]) {
+    init(uid: String, name: String, addresses: [ContactAddress]) {
+        self.uid = uid
         self.name = name
         self.addresses = addresses
     }
 
     required init(map: Map) throws {
+        uid = try map.value("uid")
         name = try map.value("name")
         addresses = try map.value("addresses")
     }
 
     func mapping(map: Map) {
+        uid      >>> map["uid"]
         name      >>> map["name"]
         addresses >>> map["addresses"]
     }
 
     static func ==(lhs: Contact, rhs: Contact) -> Bool {
-        lhs.name == rhs.name
+        lhs.uid == rhs.uid
     }
 
 }
 
 class ContactBook: ImmutableMappable {
+    static let empty = ContactBook(timestamp: .zero, contacts: [])
     let timestamp: TimeInterval
     let contacts: [Contact]
 

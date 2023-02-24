@@ -3,21 +3,6 @@ import RxRelay
 import MarketKit
 
 class RestoreSelectService {
-    private let blockchainTypes: [BlockchainType] = [
-        .bitcoin,
-        .bitcoinCash,
-        .litecoin,
-        .dash,
-        .zcash,
-        .ethereum,
-        .polygon,
-        .avalanche,
-        .optimism,
-        .arbitrumOne,
-        .gnosis,
-        .binanceSmartChain,
-        .binanceChain,
-    ]
 
     private let accountName: String
     private let accountType: AccountType
@@ -70,7 +55,7 @@ class RestoreSelectService {
 
     private func syncInternalItems() {
         do {
-            let allowedBlockchainTypes = blockchainTypes.filter { $0.supports(accountType: accountType)}
+            let allowedBlockchainTypes = BlockchainType.supported.filter { $0.supports(accountType: accountType)}
             let marketTokens = try marketKit.tokens(queries: allowedBlockchainTypes.map { TokenQuery(blockchainType: $0, tokenType: .native) })
 
             tokens = allowedBlockchainTypes.sorted { $0.order < $1.order }.compactMap { type in

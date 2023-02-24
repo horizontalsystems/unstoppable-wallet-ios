@@ -4,6 +4,21 @@ import NftKit
 import MarketKit
 
 extension BlockchainType {
+    static let supported: [BlockchainType] = [
+        .bitcoin,
+        .bitcoinCash,
+        .litecoin,
+        .dash,
+        .zcash,
+        .ethereum,
+        .polygon,
+        .avalanche,
+        .optimism,
+        .arbitrumOne,
+        .gnosis,
+        .binanceSmartChain,
+        .binanceChain,
+    ]
 
     func placeholderImageName(tokenProtocol: TokenProtocol?) -> String {
         tokenProtocol.map { "\(uid)_\($0)_32" } ?? "placeholder_circle_32"

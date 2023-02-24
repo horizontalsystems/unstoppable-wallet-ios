@@ -9,7 +9,9 @@
 		<string>applinks:unstoppable.money</string>
 	</array>
 	<key>com.apple.developer.icloud-container-identifiers</key>
-	<array/>
+	<array>
+		<string>iCloud.io.horizontalsystems.bank-wallet.dev</string>
+	</array>
 	<key>com.apple.developer.icloud-services</key>
 	<array/>
 </dict>

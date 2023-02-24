@@ -285,8 +285,12 @@ extension BitcoinBaseAdapter {
         }
     }
 
-    func validate(address: String, pluginData: [UInt8: IBitcoinPluginData] = [:]) throws {
+    func validate(address: String, pluginData: [UInt8: IBitcoinPluginData]) throws {
         try abstractKit.validate(address: address, pluginData: pluginData)
+    }
+
+    func validate(address: String) throws {
+        try validate(address: address, pluginData: [:])
     }
 
     func fee(amount: Decimal, feeRate: Int, address: String?, pluginData: [UInt8: IBitcoinPluginData] = [:]) -> Decimal {
