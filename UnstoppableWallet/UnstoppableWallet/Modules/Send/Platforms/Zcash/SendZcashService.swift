@@ -113,10 +113,6 @@ extension SendZcashService: ISendService {
 
 extension SendZcashService: ISendXFeeValueService {
 
-    var editable: Bool {
-        false
-    }
-
     var feeState: DataStatus<Decimal> {
         .completed(adapter.fee)
     }

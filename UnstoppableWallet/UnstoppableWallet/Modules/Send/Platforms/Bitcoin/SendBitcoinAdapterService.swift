@@ -5,7 +5,6 @@ import RxRelay
 import HsToolKit
 
 protocol ISendXFeeValueService: AnyObject {
-    var editable: Bool { get }
     var feeState: DataStatus<Decimal> { get }
     var feeStateObservable: Observable<DataStatus<Decimal>> { get }
 }
@@ -25,7 +24,7 @@ class SendBitcoinAdapterService {
     private let disposeBag = DisposeBag()
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.send.bitcoin_adapter_service", qos: .userInitiated)
 
-    private let feeRateService: SendFeeRateService
+    private let feeRateService: FeeRateService
     private let amountInputService: IAmountInputService
     private let addressService: AddressService
     private let timeLockService: SendTimeLockService?
@@ -70,7 +69,7 @@ class SendBitcoinAdapterService {
         }
     }
 
-    init(feeRateService: SendFeeRateService, amountInputService: IAmountInputService, addressService: AddressService, timeLockService: SendTimeLockService?, btcBlockchainManager: BtcBlockchainManager, adapter: ISendBitcoinAdapter) {
+    init(feeRateService: FeeRateService, amountInputService: IAmountInputService, addressService: AddressService, timeLockService: SendTimeLockService?, btcBlockchainManager: BtcBlockchainManager, adapter: ISendBitcoinAdapter) {
         self.feeRateService = feeRateService
         self.amountInputService = amountInputService
         self.addressService = addressService
@@ -91,7 +90,7 @@ class SendBitcoinAdapterService {
             }
         }
 
-        subscribe(disposeBag, feeRateService.feeRateObservable) { [weak self] in
+        subscribe(disposeBag, feeRateService.statusObservable) { [weak self] in
             self?.sync(feeRate: $0)
         }
 
@@ -100,7 +99,7 @@ class SendBitcoinAdapterService {
     }
 
     private func sync(feeRate: DataStatus<Int>? = nil, updatedFrom: UpdatedField = .feeRate) {
-        let feeRate = feeRate ?? feeRateService.feeRate
+        let feeRate = feeRate ?? feeRateService.status
         let amount = amountInputService.amount
 
         switch feeRate {
@@ -144,10 +143,6 @@ class SendBitcoinAdapterService {
 
 extension SendBitcoinAdapterService: ISendXFeeValueService, IAvailableBalanceService, ISendXSendAmountBoundsService {
 
-    var editable: Bool {
-        !feeRateService.staticFeeRate
-    }
-
     var feeStateObservable: Observable<DataStatus<Decimal>> {
         feeStateRelay.asObservable()
     }
@@ -180,7 +175,7 @@ extension SendBitcoinAdapterService: ISendService {
         default: return Single.error(AppError.addressInvalid)
         }
 
-        guard case let .completed(feeRate) = feeRateService.feeRate else {
+        guard case let .completed(feeRate) = feeRateService.status else {
             return Single.error(SendTransactionError.noFee)
         }
 

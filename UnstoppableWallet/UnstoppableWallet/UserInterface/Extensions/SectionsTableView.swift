@@ -69,16 +69,22 @@ extension SectionsTableView {
         )
     }
 
-    func descriptionRow(id: String, text: String, ignoreBottomMargin: Bool = false) -> RowProtocol {
+    func descriptionRow(id: String, text: String, font: UIFont? = nil, textColor: UIColor? = nil, ignoreBottomMargin: Bool = false) -> RowProtocol {
         registerCell(forClass: DescriptionCell.self)
 
         return Row<DescriptionCell>(
                 id: id,
-                dynamicHeight: { width in
-                    DescriptionCell.height(containerWidth: width, text: text, ignoreBottomMargin: ignoreBottomMargin)
+                dynamicHeight: { containerWidth in
+                    DescriptionCell.height(containerWidth: containerWidth, text: text, font: font, ignoreBottomMargin: true)
                 },
                 bind: { cell, _ in
                     cell.label.text = text
+                    if let font = font {
+                        cell.label.font = font
+                    }
+                    if let textColor = textColor {
+                        cell.label.textColor = textColor
+                    }
                 }
         )
     }

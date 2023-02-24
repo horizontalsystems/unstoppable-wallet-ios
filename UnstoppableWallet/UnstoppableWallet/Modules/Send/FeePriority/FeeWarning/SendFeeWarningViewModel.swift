@@ -5,7 +5,7 @@ import RxCocoa
 class SendFeeWarningViewModel {
 
     private let disposeBag = DisposeBag()
-    private let service: SendFeeRateService
+    private let service: FeeRateService
     private let cautionTitle: String
     private let cautionText: String
 
@@ -18,19 +18,16 @@ class SendFeeWarningViewModel {
         }
     }
 
-    init(service: SendFeeRateService, cautionTitle: String = "send.fee_settings.stuck_warning.title".localized, cautionText: String = "send.fee_settings.stuck_warning".localized) {
+    init(service: FeeRateService, cautionTitle: String = "send.fee_settings.stuck_warning.title".localized, cautionText: String = "send.fee_settings.stuck_warning".localized) {
         self.service = service
         self.cautionTitle = cautionTitle
         self.cautionText = cautionText
 
-        subscribe(disposeBag, service.recommendedFeeRateObservable) { [weak self] _ in self?.sync() }
-        subscribe(disposeBag, service.feeRateObservable) { [weak self] _ in self?.sync() }
+        subscribe(disposeBag, service.statusObservable) { [weak self] _ in self?.sync() }
     }
 
     private func sync() {
-        if case let .completed(feeRate) = service.feeRate,
-           let recommendedFeeRate = service.recommendedFeeRate,
-           recommendedFeeRate > feeRate {
+        if case let .completed(feeRate) = service.status, service.recommendedFeeRate > feeRate {
             caution = TitledCaution(title: cautionTitle, text: cautionText, type: .warning)
         } else {
             caution = nil

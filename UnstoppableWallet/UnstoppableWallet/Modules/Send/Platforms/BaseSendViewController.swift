@@ -14,6 +14,7 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
     let tableView = SectionsTableView(style: .grouped)
 
     private let confirmationFactory: ISendConfirmationFactory
+    private let feeSettingsFactory: ISendFeeSettingsFactory?
 
     private let amountCautionViewModel: SendAmountCautionViewModel
 
@@ -31,6 +32,7 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
     private var keyboardShown = false
 
     init(confirmationFactory: ISendConfirmationFactory,
+         feeSettingsFactory: ISendFeeSettingsFactory? = nil,
          viewModel: SendViewModel,
          availableBalanceViewModel: SendAvailableBalanceViewModel,
          amountInputViewModel: AmountInputViewModel,
@@ -39,6 +41,7 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
     ) {
 
         self.confirmationFactory = confirmationFactory
+        self.feeSettingsFactory = feeSettingsFactory
 
         self.viewModel = viewModel
         self.amountCautionViewModel = amountCautionViewModel
@@ -63,7 +66,12 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
         title = "send.title".localized(viewModel.token.coin.code)
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(didTapCancel))
+
+        if feeSettingsFactory == nil {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(didTapCancel))
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "manage_2_20"), style: .plain, target: self, action: #selector(openFeeSettings))
+        }
 
         iconImageView.snp.makeConstraints { make in
             make.size.equalTo(CGFloat.iconSize24)
@@ -134,6 +142,14 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
 
     @objc private func didTapCancel() {
         dismiss(animated: true)
+    }
+
+    @objc private func openFeeSettings() {
+        guard let viewController = try? feeSettingsFactory?.feeSettingsViewController() else {
+            return
+        }
+
+        present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
     private func openConfirm() {

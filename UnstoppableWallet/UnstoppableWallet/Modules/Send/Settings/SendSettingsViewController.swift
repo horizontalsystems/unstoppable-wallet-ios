@@ -6,17 +6,17 @@ import RxSwift
 import RxCocoa
 import ComponentKit
 
-class EvmSendSettingsViewController: ThemeViewController {
+class SendSettingsViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
-    private let viewModel: EvmSendSettingsViewModel
-    private let dataSources: [IEvmSendSettingsDataSource]
+    private let viewModel: SendSettingsViewModel
+    private let dataSources: [ISendSettingsDataSource]
     private let tableView = SectionsTableView(style: .grouped)
     private let cautionCell = TitledHighlightedDescriptionCell()
 
     private var loaded = false
 
-    init(viewModel: EvmSendSettingsViewModel, dataSources: [IEvmSendSettingsDataSource]) {
+    init(viewModel: SendSettingsViewModel, dataSources: [ISendSettingsDataSource]) {
         self.viewModel = viewModel
         self.dataSources = dataSources
 
@@ -110,7 +110,7 @@ class EvmSendSettingsViewController: ThemeViewController {
 
 }
 
-extension EvmSendSettingsViewController: SectionsDataSource {
+extension SendSettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         let dataSourceSections = dataSources.map{ $0.buildSections }.reduce([], +)
