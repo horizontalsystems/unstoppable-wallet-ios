@@ -2,32 +2,32 @@ import RxSwift
 import RxCocoa
 
 class SendSettingsViewModel {
-    let service: SendSettingsService
+    let feeCautionViewModel: SendFeeWarningViewModel
+    let amountCautionViewModel: SendFeeSettingsAmountCautionViewModel
 
     private let disposeBag = DisposeBag()
 
     private let cautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
 
-    init(service: SendSettingsService) {
-        self.service = service
+    init(feeCautionViewModel: SendFeeWarningViewModel, amountCautionViewModel: SendFeeSettingsAmountCautionViewModel) {
+        self.feeCautionViewModel = feeCautionViewModel
+        self.amountCautionViewModel = amountCautionViewModel
 
-        subscribe(disposeBag, service.statusObservable) { [weak self] in self?.sync(transactionStatus: $0) }
-        sync(transactionStatus: service.status)
+        subscribe(disposeBag, feeCautionViewModel.cautionDriver) { [weak self] _ in self?.sync() }
+        subscribe(disposeBag, amountCautionViewModel.amountCautionDriver) { [weak self] _ in self?.sync() }
+        sync()
     }
 
-    private func sync(transactionStatus: DataStatus<Void>) {
-        let cautions: [TitledCaution]
+    private func sync() {
+        var caution: TitledCaution? = nil
 
-        switch transactionStatus {
-        case .loading:
-            cautions = []
-        case .failed(let error):
-            cautions = []
-        case .completed(let fallibleTransaction):
-            cautions = []
+        if let error = amountCautionViewModel.amountCaution {
+            caution = error
+        } else if let warning = feeCautionViewModel.caution {
+            caution = warning
         }
 
-        cautionRelay.accept(cautions.first)
+        cautionRelay.accept(caution)
     }
 
 }

@@ -129,9 +129,12 @@ extension SendBitcoinFactory: ISendConfirmationFactory {
 extension SendBitcoinFactory: ISendFeeSettingsFactory {
 
     func feeSettingsViewController() throws -> UIViewController {
-        let service = SendSettingsService(feeService: feeService, feeRateService: feeRateService, amountCautionService: amountCautionService, token: token)
-
-        let viewModel = SendSettingsViewModel(service: service)
+        let feeCautionViewModel = SendFeeWarningViewModel(service: feeRateService)
+        let amountCautionViewModel = SendFeeSettingsAmountCautionViewModel(
+                service: amountCautionService,
+                feeToken: token
+        )
+        let viewModel = SendSettingsViewModel(feeCautionViewModel: feeCautionViewModel, amountCautionViewModel: amountCautionViewModel)
         let feeViewModel = SendFeeViewModel(service: feeService)
         let feeRateViewModel = FeeRateViewModel(service: feeRateService)
 

@@ -1996,8 +1996,6 @@
 		D022062529A765F000AC9DEA /* DropDownListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D022061F29A765F000AC9DEA /* DropDownListService.swift */; };
 		D022063629A7661600AC9DEA /* SendSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D022062729A7661600AC9DEA /* SendSettingsModule.swift */; };
 		D022063729A7661600AC9DEA /* SendSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D022062729A7661600AC9DEA /* SendSettingsModule.swift */; };
-		D022063829A7661600AC9DEA /* SendSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D022062829A7661600AC9DEA /* SendSettingsService.swift */; };
-		D022063929A7661600AC9DEA /* SendSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D022062829A7661600AC9DEA /* SendSettingsService.swift */; };
 		D022063A29A7661600AC9DEA /* TimeLockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D022062A29A7661600AC9DEA /* TimeLockViewModel.swift */; };
 		D022063B29A7661600AC9DEA /* TimeLockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D022062A29A7661600AC9DEA /* TimeLockViewModel.swift */; };
 		D022063C29A7661600AC9DEA /* TimeLockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D022062B29A7661600AC9DEA /* TimeLockService.swift */; };
@@ -3314,7 +3312,6 @@
 		D022061E29A765F000AC9DEA /* DropDownListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownListViewModel.swift; sourceTree = "<group>"; };
 		D022061F29A765F000AC9DEA /* DropDownListService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownListService.swift; sourceTree = "<group>"; };
 		D022062729A7661600AC9DEA /* SendSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendSettingsModule.swift; sourceTree = "<group>"; };
-		D022062829A7661600AC9DEA /* SendSettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendSettingsService.swift; sourceTree = "<group>"; };
 		D022062A29A7661600AC9DEA /* TimeLockViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLockViewModel.swift; sourceTree = "<group>"; };
 		D022062B29A7661600AC9DEA /* TimeLockService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLockService.swift; sourceTree = "<group>"; };
 		D022062D29A7661600AC9DEA /* FeeRateDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateDataSource.swift; sourceTree = "<group>"; };
@@ -6266,7 +6263,6 @@
 				D022063129A7661600AC9DEA /* InputOutputOrder */,
 				D022062929A7661600AC9DEA /* TimeLock */,
 				D022062729A7661600AC9DEA /* SendSettingsModule.swift */,
-				D022062829A7661600AC9DEA /* SendSettingsService.swift */,
 				D022063429A7661600AC9DEA /* SendSettingsViewController.swift */,
 				D022063529A7661600AC9DEA /* SendSettingsViewModel.swift */,
 			);
@@ -7145,7 +7141,6 @@
 				11B35CC9B7885797A99D25CA /* BackupViewModel.swift in Sources */,
 				11B3598BE9C7A456A70B5DFD /* BackupVerifyWordsViewModel.swift in Sources */,
 				11B35828C42630241AE8D0E0 /* BackupVerifyWordsService.swift in Sources */,
-				D022063929A7661600AC9DEA /* SendSettingsService.swift in Sources */,
 				11B3534EF58DAC9E15DC49A5 /* BackupVerifyWordsViewController.swift in Sources */,
 				11B35E08C957B79CF373E9FB /* BackupVerifyWordsModule.swift in Sources */,
 				11B353521013A50A7029634D /* CoinSettingsView.swift in Sources */,
@@ -8236,7 +8231,6 @@
 				11B359F73F1D626BF832977F /* BackupModule.swift in Sources */,
 				11B35FAB33C25AD7C739D2A0 /* BackupService.swift in Sources */,
 				11B35D374847BF12E1CFC23D /* BackupViewModel.swift in Sources */,
-				D022063829A7661600AC9DEA /* SendSettingsService.swift in Sources */,
 				11B35328067C30C80DF244DF /* BackupVerifyWordsViewModel.swift in Sources */,
 				11B354460024FA6EDB8B27DC /* BackupVerifyWordsService.swift in Sources */,
 				11B3508A67A63E5580A177FD /* BackupVerifyWordsViewController.swift in Sources */,
