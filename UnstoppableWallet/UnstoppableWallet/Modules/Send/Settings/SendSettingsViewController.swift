@@ -29,6 +29,10 @@ class SendSettingsViewController: ThemeViewController {
                 self?.openInfo(title: title, description: description)
             }
 
+            dataSource.present = { [weak self] viewController in
+                self?.present(viewController, animated: true)
+            }
+
             dataSource.onUpdateAlteredState = { [weak self] in
                 self?.syncResetButton()
             }

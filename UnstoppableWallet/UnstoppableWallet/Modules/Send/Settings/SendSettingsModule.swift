@@ -31,6 +31,7 @@ struct SendSettingsModule {
 protocol ISendSettingsDataSource: AnyObject {
     var tableView: SectionsTableView? { get set }
     var onOpenInfo: ((String, String) -> ())? { get set }
+    var present: ((UIViewController) -> ())? { get set }
     var onUpdateAlteredState: (() -> ())? { get set }
 
     var altered: Bool { get }

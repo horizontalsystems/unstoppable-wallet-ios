@@ -29,8 +29,9 @@ class SendBitcoinAdapterService {
     private let addressService: AddressService
     private let timeLockService: SendTimeLockService?
     private let btcBlockchainManager: BtcBlockchainManager
-
     private let adapter: ISendBitcoinAdapter
+
+    let inputOutputOrderService: InputOutputOrderService
 
     // Outputs
     let feeStateRelay = BehaviorRelay<DataStatus<Decimal>>(value: .loading)
@@ -69,11 +70,13 @@ class SendBitcoinAdapterService {
         }
     }
 
-    init(feeRateService: FeeRateService, amountInputService: IAmountInputService, addressService: AddressService, timeLockService: SendTimeLockService?, btcBlockchainManager: BtcBlockchainManager, adapter: ISendBitcoinAdapter) {
+    init(feeRateService: FeeRateService, amountInputService: IAmountInputService, addressService: AddressService,
+         inputOutputOrderService: InputOutputOrderService, timeLockService: SendTimeLockService?, btcBlockchainManager: BtcBlockchainManager, adapter: ISendBitcoinAdapter) {
         self.feeRateService = feeRateService
         self.amountInputService = amountInputService
         self.addressService = addressService
         self.timeLockService = timeLockService
+        self.inputOutputOrderService = inputOutputOrderService
         self.btcBlockchainManager = btcBlockchainManager
         self.adapter = adapter
 
@@ -183,13 +186,12 @@ extension SendBitcoinAdapterService: ISendService {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
-        let sortMode = btcBlockchainManager.transactionSortMode(blockchainType: adapter.blockchainType)
         return adapter.sendSingle(
                 amount: amountInputService.amount,
                 address: address.raw,
                 feeRate: feeRate,
                 pluginData: pluginData,
-                sortMode: sortMode,
+                sortMode: inputOutputOrderService.selectedItem,
                 logger: logger
         )
     }

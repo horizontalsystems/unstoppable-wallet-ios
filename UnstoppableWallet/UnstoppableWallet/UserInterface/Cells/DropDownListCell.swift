@@ -4,14 +4,18 @@ import RxCocoa
 import ComponentKit
 import ThemeKit
 
+protocol IDropDownListViewModel {
+    var selectedItemDriver: Driver<String?> { get }
+}
+
 class DropDownListCell: BaseSelectableThemeCell {
     private let disposeBag = DisposeBag()
-    private let viewModel: DropDownListViewModel
+    private let viewModel: IDropDownListViewModel
     private let title: String
 
-    weak var sourceViewController: UIViewController?
+    var showList: (() -> ())? = nil
 
-    init(viewModel: DropDownListViewModel, title: String) {
+    init(viewModel: IDropDownListViewModel, title: String) {
         self.viewModel = viewModel
         self.title = title
 
@@ -20,17 +24,14 @@ class DropDownListCell: BaseSelectableThemeCell {
         backgroundColor = .clear
         clipsToBounds = true
 
-        sync(item: nil)
-        subscribe(disposeBag, viewModel.selectedItemDriver) { [weak self] item in
-            self?.sync(item: item)
-        }
+        subscribe(disposeBag, viewModel.selectedItemDriver) { [weak self] item in self?.sync(item: item) }
     }
 
     private func sync(item: String?) {
         CellBuilderNew.buildStatic(cell: self, rootElement: .hStack([
             .text { [weak self] component in
-                component.font = .subhead2
-                component.textColor = .themeGray
+                component.font = .body
+                component.textColor = .themeLeah
                 component.text = self?.title ?? "n/a".localized
             },
             .secondaryButton { component in
@@ -38,26 +39,14 @@ class DropDownListCell: BaseSelectableThemeCell {
                 component.button.set(image: UIImage(named: "arrow_small_down_20"))
                 component.button.setTitle(item, for: .normal)
                 component.onTap = { [weak self] in
-                    self?.onTapList()
+                    self?.showList?()
                 }
             }
         ]))
-
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    private func onTapList() {
-//        let alertController = AlertRouter.module(
-//                title: "send.tx_speed".localized,
-//                viewItems: viewModel.itemsList
-//        ) { [weak self] index in
-//            self?.viewModel.onSelect(index)
-//        }
-//
-//        sourceViewController?.present(alertController, animated: true)
     }
 
 }
