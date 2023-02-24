@@ -57,7 +57,7 @@ extension CoinDetailsMetricCell {
         metricViews[index].title = title
     }
 
-    func append(viewItem: CoinDetailsViewModel.ChartViewItem, onTap: (() -> ())? = nil) {
+    func append(viewItem: CoinAnalyticsViewModel.ChartViewItem, onTap: (() -> ())? = nil) {
         let metricView = MarketMetricView(configuration: configuration)
         metricView.onTap = onTap
 

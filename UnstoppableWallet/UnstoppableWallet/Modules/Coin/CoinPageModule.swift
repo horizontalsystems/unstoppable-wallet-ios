@@ -19,14 +19,14 @@ struct CoinPageModule {
 
         let overviewController = CoinOverviewModule.viewController(coinUid: coinUid)
         let marketsController = CoinMarketsModule.viewController(coin: fullCoin.coin)
-        let detailsController = CoinDetailsModule.viewController(fullCoin: fullCoin)
+        let analyticsController = CoinAnalyticsModule.viewController(fullCoin: fullCoin)
         let tweetsController = CoinTweetsModule.viewController(fullCoin: fullCoin)
 
         let viewController = CoinPageViewController(
                 viewModel: viewModel,
                 overviewController: overviewController,
+                analyticsController: analyticsController,
                 marketsController: marketsController,
-                detailsController: detailsController,
                 tweetsController: tweetsController
         )
 
@@ -39,14 +39,14 @@ extension CoinPageModule {
 
     enum Tab: Int, CaseIterable {
         case overview
-        case details
+        case analytics
         case markets
         case tweets
 
         var title: String {
             switch self {
             case .overview: return "coin_page.tab.overview".localized
-            case .details: return "coin_page.tab.details".localized
+            case .analytics: return "coin_page.tab.analytics".localized
             case .markets: return "coin_page.tab.markets".localized
             case .tweets: return "coin_page.tab.tweets".localized
             }

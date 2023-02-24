@@ -16,16 +16,16 @@ class CoinPageViewController: ThemeViewController {
 
     private let overviewController: CoinOverviewViewController
     private let marketsController: CoinMarketsViewController
-    private let detailsController: CoinDetailsViewController
+    private let analyticsController: CoinAnalyticsViewController
     private let tweetsController: CoinTweetsViewController
 
     private var favorite = false
 
-    init(viewModel: CoinPageViewModel, overviewController: CoinOverviewViewController, marketsController: CoinMarketsViewController, detailsController: CoinDetailsViewController, tweetsController: CoinTweetsViewController) {
+    init(viewModel: CoinPageViewModel, overviewController: CoinOverviewViewController, analyticsController: CoinAnalyticsViewController, marketsController: CoinMarketsViewController, tweetsController: CoinTweetsViewController) {
         self.viewModel = viewModel
         self.overviewController = overviewController
+        self.analyticsController = analyticsController
         self.marketsController = marketsController
-        self.detailsController = detailsController
         self.tweetsController = tweetsController
 
         super.init()
@@ -66,7 +66,7 @@ class CoinPageViewController: ThemeViewController {
         }
 
         overviewController.parentNavigationController = navigationController
-        detailsController.parentNavigationController = navigationController
+        analyticsController.parentNavigationController = navigationController
         tweetsController.parentNavigationController = navigationController
 
         subscribe(disposeBag, viewModel.favoriteDriver) { [weak self] in
@@ -104,7 +104,7 @@ class CoinPageViewController: ThemeViewController {
     private func viewController(tab: CoinPageModule.Tab) -> UIViewController {
         switch tab {
         case .overview: return overviewController
-        case .details: return detailsController
+        case .analytics: return analyticsController
         case .markets: return marketsController
         case .tweets: return tweetsController
         }
