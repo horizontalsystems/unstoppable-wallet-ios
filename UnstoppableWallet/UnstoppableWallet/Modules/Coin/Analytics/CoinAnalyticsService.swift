@@ -4,7 +4,7 @@ import MarketKit
 import CurrencyKit
 import Chart
 
-class CoinDetailsService {
+class CoinAnalyticsService {
     private let proFeaturesUpdateDisposeBag = DisposeBag()
     private var disposeBag = DisposeBag()
 
@@ -75,7 +75,7 @@ class CoinDetailsService {
 
 }
 
-extension CoinDetailsService {
+extension CoinAnalyticsService {
 
     var stateObservable: Observable<DataStatus<Item>> {
         stateRelay.asObservable()
@@ -139,7 +139,7 @@ extension CoinDetailsService {
 
 }
 
-extension CoinDetailsService {
+extension CoinAnalyticsService {
 
     struct ChartItem {
         let chartData: ChartData?

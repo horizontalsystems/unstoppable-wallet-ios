@@ -136,19 +136,19 @@ extension InfoModule {
         viewController(
                 viewItems: [
                     .header2(text: "coin_page.security_parameters".localized),
-                    .header(text: CoinDetailsViewModel.SecurityType.privacy.title),
-                    .text(text: CoinDetailsViewModel.SecurityLevel.high.title.uppercased() + ":\n" + CoinDetailsViewModel.SecurityLevel.high.description),
-                    .text(text: CoinDetailsViewModel.SecurityLevel.medium.title.uppercased() + ":\n" + CoinDetailsViewModel.SecurityLevel.medium.description),
-                    .text(text: CoinDetailsViewModel.SecurityLevel.low.title.uppercased() + ":\n" + CoinDetailsViewModel.SecurityLevel.low.description),
-                    .header(text: CoinDetailsViewModel.SecurityType.issuance.title),
-                    .text(text: CoinDetailsViewModel.SecurityIssuance.decentralized.title.uppercased() + ":\n" + CoinDetailsViewModel.SecurityIssuance.decentralized.description),
-                    .text(text: CoinDetailsViewModel.SecurityIssuance.centralized.title.uppercased() + ":\n" + CoinDetailsViewModel.SecurityIssuance.centralized.description),
-                    .header(text: CoinDetailsViewModel.SecurityType.confiscationResistance.title),
-                    .text(text: CoinDetailsViewModel.SecurityConfiscationResistance.yes.title.uppercased() + ":\n" + CoinDetailsViewModel.SecurityConfiscationResistance.yes.description),
-                    .text(text: CoinDetailsViewModel.SecurityConfiscationResistance.no.title.uppercased() + ":\n" + CoinDetailsViewModel.SecurityConfiscationResistance.no.description),
-                    .header(text: CoinDetailsViewModel.SecurityType.censorshipResistance.title),
-                    .text(text: CoinDetailsViewModel.SecurityCensorshipResistance.yes.title.uppercased() + ":\n" + CoinDetailsViewModel.SecurityCensorshipResistance.yes.description),
-                    .text(text: CoinDetailsViewModel.SecurityCensorshipResistance.no.title.uppercased() + ":\n" + CoinDetailsViewModel.SecurityCensorshipResistance.no.description)
+                    .header(text: CoinAnalyticsViewModel.SecurityType.privacy.title),
+                    .text(text: CoinAnalyticsViewModel.SecurityLevel.high.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityLevel.high.description),
+                    .text(text: CoinAnalyticsViewModel.SecurityLevel.medium.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityLevel.medium.description),
+                    .text(text: CoinAnalyticsViewModel.SecurityLevel.low.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityLevel.low.description),
+                    .header(text: CoinAnalyticsViewModel.SecurityType.issuance.title),
+                    .text(text: CoinAnalyticsViewModel.SecurityIssuance.decentralized.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityIssuance.decentralized.description),
+                    .text(text: CoinAnalyticsViewModel.SecurityIssuance.centralized.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityIssuance.centralized.description),
+                    .header(text: CoinAnalyticsViewModel.SecurityType.confiscationResistance.title),
+                    .text(text: CoinAnalyticsViewModel.SecurityConfiscationResistance.yes.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityConfiscationResistance.yes.description),
+                    .text(text: CoinAnalyticsViewModel.SecurityConfiscationResistance.no.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityConfiscationResistance.no.description),
+                    .header(text: CoinAnalyticsViewModel.SecurityType.censorshipResistance.title),
+                    .text(text: CoinAnalyticsViewModel.SecurityCensorshipResistance.yes.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityCensorshipResistance.yes.description),
+                    .text(text: CoinAnalyticsViewModel.SecurityCensorshipResistance.no.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityCensorshipResistance.no.description)
                 ]
         )
     }

@@ -7,8 +7,8 @@ import ComponentKit
 import HUD
 import MarketKit
 
-class CoinDetailsViewController: ThemeViewController {
-    private let viewModel: CoinDetailsViewModel
+class CoinAnalyticsViewController: ThemeViewController {
+    private let viewModel: CoinAnalyticsViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -18,9 +18,9 @@ class CoinDetailsViewController: ThemeViewController {
 
     weak var parentNavigationController: UINavigationController?
 
-    private var viewItem: CoinDetailsViewModel.ViewItem?
+    private var viewItem: CoinAnalyticsViewModel.ViewItem?
 
-    init(viewModel: CoinDetailsViewModel) {
+    init(viewModel: CoinAnalyticsViewModel) {
         self.viewModel = viewModel
 
         super.init()
@@ -90,7 +90,7 @@ class CoinDetailsViewController: ThemeViewController {
         viewModel.onTapRetry()
     }
 
-    private func sync(viewItem: CoinDetailsViewModel.ViewItem?) {
+    private func sync(viewItem: CoinAnalyticsViewModel.ViewItem?) {
         self.viewItem = viewItem
 
         if viewItem != nil {
@@ -144,13 +144,13 @@ class CoinDetailsViewController: ThemeViewController {
 
 }
 
-extension CoinDetailsViewController: SectionsDataSource {
+extension CoinAnalyticsViewController: SectionsDataSource {
 
     private func hasCharts(items: [MarketCardView.ViewItem?]) -> Bool {
         !items.compactMap { $0 } .isEmpty
     }
 
-    private func liquiditySections(viewItem: CoinDetailsViewModel.ViewItem, isFirst: Bool) -> [SectionProtocol]? {
+    private func liquiditySections(viewItem: CoinAnalyticsViewModel.ViewItem, isFirst: Bool) -> [SectionProtocol]? {
         guard hasCharts(items: [viewItem.tokenLiquidity.liquidity, viewItem.tokenLiquidity.volume]) else {
             return nil
         }
@@ -194,7 +194,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         ]
     }
 
-    private func transactionCharts(viewItem: CoinDetailsViewModel.ViewItem) -> RowProtocol {
+    private func transactionCharts(viewItem: CoinAnalyticsViewModel.ViewItem) -> RowProtocol {
         Row<MarketCardCell>(
                 id: "transaction-charts",
                 height: MarketCardView.height,
@@ -215,7 +215,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         )
     }
 
-    private func addressChart(viewItem: CoinDetailsViewModel.ViewItem) -> RowProtocol {
+    private func addressChart(viewItem: CoinAnalyticsViewModel.ViewItem) -> RowProtocol {
         Row<MarketCardCell>(
                 id: "address-chart",
                 height: MarketCardView.height,
@@ -231,7 +231,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         )
     }
 
-    private func distributionCharts(viewItem: CoinDetailsViewModel.ViewItem, isLast: Bool) -> [SectionProtocol] {
+    private func distributionCharts(viewItem: CoinAnalyticsViewModel.ViewItem, isLast: Bool) -> [SectionProtocol] {
         let hasTxCharts = hasCharts(items: [viewItem.tokenDistribution.txCount, viewItem.tokenDistribution.txVolume])
         let hasAddresses = hasCharts(items: [viewItem.tokenDistribution.activeAddresses])
 
@@ -270,7 +270,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         return sections
     }
 
-    private func distributionSections(viewItem: CoinDetailsViewModel.ViewItem, isFirst: Bool) -> [SectionProtocol]? {
+    private func distributionSections(viewItem: CoinAnalyticsViewModel.ViewItem, isFirst: Bool) -> [SectionProtocol]? {
         var sections = distributionCharts(viewItem: viewItem, isLast: !viewItem.hasMajorHolders)
 
         if viewItem.hasMajorHolders {
@@ -313,7 +313,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         return sections
     }
 
-    private func tvlSections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
+    private func tvlSections(viewItem: CoinAnalyticsViewModel.ViewItem) -> [SectionProtocol]? {
         guard let tvlChart = viewItem.tvlChart else {
             return nil
         }
@@ -394,7 +394,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         return sections
     }
 
-    private func investorDataSections(viewItem: CoinDetailsViewModel.ViewItem, isFirst: Bool) -> [SectionProtocol]? {
+    private func investorDataSections(viewItem: CoinAnalyticsViewModel.ViewItem, isFirst: Bool) -> [SectionProtocol]? {
         let treasuries = viewItem.treasuries
         let fundsInvested = viewItem.fundsInvested
         let reportsCount = viewItem.reportsCount
@@ -468,7 +468,7 @@ extension CoinDetailsViewController: SectionsDataSource {
         }
     }
 
-    private func securitySections(viewItem: CoinDetailsViewModel.ViewItem) -> [SectionProtocol]? {
+    private func securitySections(viewItem: CoinAnalyticsViewModel.ViewItem) -> [SectionProtocol]? {
         let securityViewItems = viewItem.securityViewItems
         let auditAddresses = viewItem.auditAddresses
 
@@ -555,7 +555,7 @@ extension CoinDetailsViewController: SectionsDataSource {
 
 }
 
-extension CoinDetailsViewModel.SecurityGrade {
+extension CoinAnalyticsViewModel.SecurityGrade {
 
     var textColor: UIColor {
         switch self {

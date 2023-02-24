@@ -5,8 +5,8 @@ import RxCocoa
 import MarketKit
 import Chart
 
-class CoinDetailsViewModel {
-    private let service: CoinDetailsService
+class CoinAnalyticsViewModel {
+    private let service: CoinAnalyticsService
     private let disposeBag = DisposeBag()
 
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
@@ -22,7 +22,7 @@ class CoinDetailsViewModel {
         return formatter
     }()
 
-    init(service: CoinDetailsService) {
+    init(service: CoinAnalyticsService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
@@ -30,7 +30,7 @@ class CoinDetailsViewModel {
         sync(state: service.state)
     }
 
-    private func sync(state: DataStatus<CoinDetailsService.Item>) {
+    private func sync(state: DataStatus<CoinAnalyticsService.Item>) {
         switch state {
         case .loading:
             viewItemRelay.accept(nil)
@@ -47,7 +47,7 @@ class CoinDetailsViewModel {
         }
     }
 
-    private func chart(title: String, item: CoinDetailsService.ProData, description: String? = nil, currentValueType: CoinProChartModule.ChartValueType = .last, chartPreviewValuePostfix: ChartPreviewValuePostfix = .currency) -> MarketCardView.ViewItem? {
+    private func chart(title: String, item: CoinAnalyticsService.ProData, description: String? = nil, currentValueType: CoinProChartModule.ChartValueType = .last, chartPreviewValuePostfix: ChartPreviewValuePostfix = .currency) -> MarketCardView.ViewItem? {
         switch item {
         case .empty: return nil
         case .completed(let values):
@@ -93,14 +93,14 @@ class CoinDetailsViewModel {
         }
     }
 
-    private func tokenLiquidity(proFeatures: CoinDetailsService.AnalyticData) -> TokenLiquidityViewItem {
+    private func tokenLiquidity(proFeatures: CoinAnalyticsService.AnalyticData) -> TokenLiquidityViewItem {
         TokenLiquidityViewItem(
                 volume: chart(title: CoinProChartModule.ProChartType.volume.valueTitle, item: proFeatures.dexVolumes, currentValueType: .cumulative),
                 liquidity: chart(title: CoinProChartModule.ProChartType.liquidity.valueTitle, item: proFeatures.dexLiquidity, currentValueType: .last)
         )
     }
 
-    private func tokenDistribution(proFeatures: CoinDetailsService.AnalyticData) -> TokenDistributionViewItem {
+    private func tokenDistribution(proFeatures: CoinAnalyticsService.AnalyticData) -> TokenDistributionViewItem {
         TokenDistributionViewItem(
                 txCount: chart(title: CoinProChartModule.ProChartType.txCount.valueTitle, item: proFeatures.txCount, currentValueType: .cumulative, chartPreviewValuePostfix: .noPostfix),
                 txVolume: chart(title: CoinProChartModule.ProChartType.txVolume.valueTitle, item: proFeatures.txVolume, currentValueType: .cumulative, chartPreviewValuePostfix: .coin),
@@ -108,7 +108,7 @@ class CoinDetailsViewModel {
         )
     }
 
-    private func viewItem(item: CoinDetailsService.Item) -> ViewItem {
+    private func viewItem(item: CoinAnalyticsService.Item) -> ViewItem {
         ViewItem(
                 tokenLiquidity: tokenLiquidity(proFeatures: item.analytics),
                 tokenDistribution: tokenDistribution(proFeatures: item.analytics),
@@ -158,7 +158,7 @@ class CoinDetailsViewModel {
 
 }
 
-extension CoinDetailsViewModel {
+extension CoinAnalyticsViewModel {
 
     var viewItemDriver: Driver<ViewItem?> {
         viewItemRelay.asDriver()
@@ -186,7 +186,7 @@ extension CoinDetailsViewModel {
 
 }
 
-extension CoinDetailsViewModel {
+extension CoinAnalyticsViewModel {
 
     struct ViewItem {
         let tokenLiquidity: TokenLiquidityViewItem
