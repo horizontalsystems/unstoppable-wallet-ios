@@ -15,6 +15,7 @@ class FeeRateDataSource {
 
     weak var tableView: SectionsTableView?
     var onOpenInfo: ((String, String) -> ())? = nil
+    var present: ((UIViewController) -> ())? = nil
     var onUpdateAlteredState: (() -> ())? = nil
 
     init(feeViewModel: SendFeeViewModel, feeRateViewModel: FeeRateViewModel) {

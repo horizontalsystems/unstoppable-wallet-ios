@@ -62,6 +62,7 @@ class SendModule {
         let feeRateService = FeeRateService(provider: feeRateProvider)
         let feeFiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
         let feeService = SendFeeService(fiatService: feeFiatService, feeToken: token)
+        let inputOutputOrderService = InputOutputOrderService(itemsList: TransactionDataSortMode.allCases)
 
         // TimeLock
         var timeLockService: SendTimeLockService?
@@ -79,6 +80,7 @@ class SendModule {
                 feeRateService: feeRateService,
                 amountInputService: amountInputService,
                 addressService: addressService,
+                inputOutputOrderService: inputOutputOrderService,
                 timeLockService: timeLockService,
                 btcBlockchainManager: App.shared.btcBlockchainManager,
                 adapter: adapter
