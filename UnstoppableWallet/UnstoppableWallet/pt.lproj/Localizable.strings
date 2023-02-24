@@ -572,8 +572,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_page.roi.year1" = "1 Ano";
 
 "coin_page.tab.overview" = "Preço";
+"coin_page.tab.analytics" = "Analytics";
 "coin_page.tab.markets" = "Mercados";
-"coin_page.tab.details" = "Análises";
 "coin_page.tab.tweets" = "Tweets";
 
 "coin_page.market_cap" = "Capitalização de mercado";
