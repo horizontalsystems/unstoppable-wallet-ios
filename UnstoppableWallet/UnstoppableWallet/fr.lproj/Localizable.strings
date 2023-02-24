@@ -570,8 +570,8 @@
 "coin_page.roi.year1" = "1 An";
 
 "coin_page.tab.overview" = "Prix";
+"coin_page.tab.analytics" = "Analytics";
 "coin_page.tab.markets" = "Marchés";
-"coin_page.tab.details" = "Analytics";
 "coin_page.tab.tweets" = "Tweets";
 
 "coin_page.market_cap" = "Cap. marché";
