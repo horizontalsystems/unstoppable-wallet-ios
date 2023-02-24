@@ -988,6 +988,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Settings -> Appearance
 
 "appearance.title" = "Appearance";
+"address_book.title" = "Address Book";
 
 "appearance.theme" = "Theme";
 "appearance.theme.system" = "System";

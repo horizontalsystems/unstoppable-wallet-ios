@@ -21,6 +21,7 @@ class MainSettingsViewController: ThemeViewController {
     private let walletConnectCell = BaseSelectableThemeCell()
     private let securityCell = BaseSelectableThemeCell()
     private let appearanceCell = BaseSelectableThemeCell()
+    private let addressBookCell = BaseSelectableThemeCell()
     private let baseCurrencyCell = BaseSelectableThemeCell()
     private let languageCell = BaseSelectableThemeCell()
     private let themeModeCell = BaseSelectableThemeCell()
@@ -67,6 +68,9 @@ class MainSettingsViewController: ThemeViewController {
 
         appearanceCell.set(backgroundStyle: .lawrence)
         buildTitleValue(cell: appearanceCell, image: UIImage(named: "brush_24"), title: "appearance.title".localized)
+
+        addressBookCell.set(backgroundStyle: .lawrence)
+        buildTitleValue(cell: addressBookCell, image: UIImage(named: "user_24"), title: "address_book.title".localized)
 
         baseCurrencyCell.set(backgroundStyle: .lawrence)
         syncBaseCurrency()
@@ -235,6 +239,17 @@ class MainSettingsViewController: ThemeViewController {
                     height: .heightCell48,
                     action: { [weak self] in
                         self?.navigationController?.pushViewController(AppearanceModule.viewController(), animated: true)
+                    }
+            ),
+            StaticRow(
+                    cell: addressBookCell,
+                    id: "address-book",
+                    height: .heightCell48,
+                    action: { [weak self] in
+                        guard let viewController = AddressBookModule.viewController() else {
+                            return
+                        }
+                        self?.navigationController?.pushViewController(viewController, animated: true)
                     }
             ),
             StaticRow(
