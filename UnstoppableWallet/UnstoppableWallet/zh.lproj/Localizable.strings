@@ -572,8 +572,8 @@
 "coin_page.roi.year1" = "1 年";
 
 "coin_page.tab.overview" = "价格";
+"coin_page.tab.analytics" = "Analytics";
 "coin_page.tab.markets" = "市场";
-"coin_page.tab.details" = "分析";
 "coin_page.tab.tweets" = "推文";
 
 "coin_page.market_cap" = "市场价值";
