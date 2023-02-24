@@ -574,8 +574,8 @@
 "coin_page.roi.year1" = "1 Год";
 
 "coin_page.tab.overview" = "Цена";
+"coin_page.tab.analytics" = "Analytics";
 "coin_page.tab.markets" = "Рынки";
-"coin_page.tab.details" = "Аналитика";
 "coin_page.tab.tweets" = "Твиты";
 
 "coin_page.market_cap" = "Рын. капитализация";
