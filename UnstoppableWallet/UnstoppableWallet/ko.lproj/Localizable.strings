@@ -570,8 +570,8 @@
 "coin_page.roi.year1" = "1 Year";
 
 "coin_page.tab.overview" = "금액";
+"coin_page.tab.analytics" = "Analytics";
 "coin_page.tab.markets" = "Markets";
-"coin_page.tab.details" = "Analytics";
 "coin_page.tab.tweets" = "Tweets";
 
 "coin_page.market_cap" = "Market Cap";
