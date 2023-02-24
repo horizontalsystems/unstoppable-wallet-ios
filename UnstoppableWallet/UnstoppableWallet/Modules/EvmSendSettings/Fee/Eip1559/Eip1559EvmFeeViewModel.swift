@@ -148,10 +148,6 @@ extension Eip1559EvmFeeViewModel {
 
 extension Eip1559EvmFeeViewModel: IFeeViewModel {
 
-    var showInfoIcon: Bool {
-        true
-    }
-
     var valueDriver: Driver<FeeCell.Value?> {
         valueRelay.asDriver()
     }

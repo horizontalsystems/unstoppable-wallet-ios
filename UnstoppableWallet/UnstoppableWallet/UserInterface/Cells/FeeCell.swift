@@ -5,7 +5,6 @@ import ComponentKit
 import ThemeKit
 
 protocol IFeeViewModel {
-    var showInfoIcon: Bool { get }
     var valueDriver: Driver<FeeCell.Value?> { get }
     var spinnerVisibleDriver: Driver<Bool> { get }
 }
@@ -15,20 +14,22 @@ class FeeCell: BaseSelectableThemeCell {
 
     private let viewModel: IFeeViewModel
     private let title: String
+    private let showInfoIcon: Bool
 
     private var value: FeeCell.Value?
     private var spinnerVisible: Bool = false
 
-    init(viewModel: IFeeViewModel, title: String) {
+    init(viewModel: IFeeViewModel, title: String, showInfoIcon: Bool = true) {
         self.viewModel = viewModel
         self.title = title
+        self.showInfoIcon = showInfoIcon
 
         super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
         clipsToBounds = true
         set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        selectionStyle = viewModel.showInfoIcon ? .default : .none
+        selectionStyle = showInfoIcon ? .default : .none
         sync()
 
         subscribe(disposeBag, viewModel.valueDriver) { [weak self] value in
@@ -51,7 +52,7 @@ class FeeCell: BaseSelectableThemeCell {
         ]
 
         var infoElements = [CellBuilderNew.CellElement]()
-        if viewModel.showInfoIcon {
+        if showInfoIcon {
             infoElements.append(contentsOf: [
                 .margin8,
                 .imageElement(image: .local(UIImage(named: "circle_information_20")?.withTintColor(.themeGray)), size: .image20),

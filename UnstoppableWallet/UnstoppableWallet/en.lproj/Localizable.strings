@@ -1234,7 +1234,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "fee_settings" = "Advanced";
 "fee_settings.fee" = "Fee";
-"fee_settings.fee.info" = "The expected total fee for the given transaction.";
+"fee_settings.fee.info" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.";
 "fee_settings.fee_rate" = "Fee Rate";
 "fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
 "fee_settings.fee_rate.info" = "Here is the recommended value for hitting the next 2 blocks";
