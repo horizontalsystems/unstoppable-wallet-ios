@@ -7,7 +7,6 @@ import RxCocoa
 
 class SendBitcoinViewController: BaseSendViewController {
     private let disposeBag = DisposeBag()
-    private let feeSettingsFactory: ISendFeeSettingsFactory
 
     private let feeWarningViewModel: ITitledCautionViewModel
     private let timeLockViewModel: SendTimeLockViewModel?
@@ -29,7 +28,6 @@ class SendBitcoinViewController: BaseSendViewController {
          timeLockViewModel: SendTimeLockViewModel?
     ) {
 
-        self.feeSettingsFactory = feeSettingsFactory
         self.feeWarningViewModel = feeWarningViewModel
         self.timeLockViewModel = timeLockViewModel
 
@@ -44,6 +42,7 @@ class SendBitcoinViewController: BaseSendViewController {
 
         super.init(
                 confirmationFactory: confirmationFactory,
+                feeSettingsFactory: feeSettingsFactory,
                 viewModel: viewModel,
                 availableBalanceViewModel: availableBalanceViewModel,
                 amountInputViewModel: amountInputViewModel,
@@ -96,14 +95,6 @@ class SendBitcoinViewController: BaseSendViewController {
         reloadTable()
     }
 
-    private func openFeeSettings() {
-        guard let viewController = try? feeSettingsFactory.feeSettingsViewController() else {
-            return
-        }
-
-        present(ThemeNavigationController(rootViewController: viewController), animated: true)
-    }
-
     private func onTapLockTimeSelect() {
         guard let timeLockViewModel = timeLockViewModel else {
             return
@@ -127,11 +118,7 @@ class SendBitcoinViewController: BaseSendViewController {
                     StaticRow(
                             cell: feeCell,
                             id: "fee",
-                            height: .heightCell48,
-                            autoDeselect: true,
-                            action: { [weak self] in
-                                self?.openFeeSettings()
-                            }
+                            height: .heightCell48
                     )
                 ]
         )

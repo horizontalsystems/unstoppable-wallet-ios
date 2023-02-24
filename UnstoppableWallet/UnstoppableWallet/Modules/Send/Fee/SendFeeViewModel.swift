@@ -5,29 +5,20 @@ import RxCocoa
 class SendFeeViewModel {
     private let disposeBag = DisposeBag()
 
-    private let service: ISendFeeService
+    private let service: SendFeeService
 
     private let valueRelay = BehaviorRelay<FeeCell.Value?>(value: nil)
     private let spinnerVisibleRelay = BehaviorRelay<Bool>(value: false)
-    private let editButtonVisibleRelay = BehaviorRelay<Bool>(value: false)
-    private let editButtonHighlightedRelay = BehaviorRelay<Bool>(value: false)
 
     private var firstLoaded = false
 
-    init(service: ISendFeeService) {
+    init(service: SendFeeService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in
             self?.sync(state: $0)
         }
 
-        subscribe(disposeBag, service.editableObservable) { [weak self] in
-            self?.editButtonVisibleRelay.accept($0)
-        }
-
-        subscribe(disposeBag, service.defaultFeeObservable) { [weak self] in
-            self?.editButtonHighlightedRelay.accept(!$0)
-        }
     }
 
     private func sync(state: DataStatus<SendFeeService.State>) {
@@ -71,14 +62,6 @@ extension SendFeeViewModel: IFeeViewModel {
 
     var spinnerVisibleDriver: Driver<Bool> {
         spinnerVisibleRelay.asDriver()
-    }
-
-    var editButtonVisibleDriver: Driver<Bool> {
-        editButtonVisibleRelay.asDriver()
-    }
-
-    var editButtonHighlightedDriver: Driver<Bool> {
-        editButtonHighlightedRelay.asDriver()
     }
 
 }

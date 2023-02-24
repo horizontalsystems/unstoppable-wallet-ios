@@ -13,7 +13,7 @@ class SendBitcoinService {
     private let amountCautionService: SendAmountCautionService
     private let addressService: AddressService
     private let adapterService: SendBitcoinAdapterService
-    private let feeService: SendFeeRateService
+    private let feeRateService: FeeRateService
     private let timeLockErrorService: SendTimeLockErrorService?
 
     private let stateRelay = PublishRelay<SendBaseService.State>()
@@ -23,12 +23,12 @@ class SendBitcoinService {
         }
     }
 
-    init(amountService: IAmountInputService, amountCautionService: SendAmountCautionService, addressService: AddressService, adapterService: SendBitcoinAdapterService, feeService: SendFeeRateService, timeLockErrorService: SendTimeLockErrorService?, reachabilityManager: IReachabilityManager, token: Token) {
+    init(amountService: IAmountInputService, amountCautionService: SendAmountCautionService, addressService: AddressService, adapterService: SendBitcoinAdapterService, feeRateService: FeeRateService, timeLockErrorService: SendTimeLockErrorService?, reachabilityManager: IReachabilityManager, token: Token) {
         self.amountService = amountService
         self.amountCautionService = amountCautionService
         self.addressService = addressService
         self.adapterService = adapterService
-        self.feeService = feeService
+        self.feeRateService = feeRateService
         self.timeLockErrorService = timeLockErrorService
         self.token = token
 
@@ -41,7 +41,7 @@ class SendBitcoinService {
         subscribe(scheduler, disposeBag, amountService.amountObservable) { [weak self] _ in self?.syncState() }
         subscribe(scheduler, disposeBag, amountCautionService.amountCautionObservable) { [weak self] _ in self?.syncState() }
         subscribe(scheduler, disposeBag, addressService.stateObservable) { [weak self] _ in self?.syncState() }
-        subscribe(scheduler, disposeBag, feeService.feeRateObservable) { [weak self] _ in self?.syncState() }
+        subscribe(scheduler, disposeBag, feeRateService.statusObservable) { [weak self] _ in self?.syncState() }
 
         if let timeLockErrorService = timeLockErrorService {
             subscribe(scheduler, disposeBag, timeLockErrorService.errorObservable) { [weak self] _ in
@@ -58,7 +58,7 @@ class SendBitcoinService {
             return
         }
 
-        if addressService.state.isLoading || feeService.feeRate.isLoading {
+        if addressService.state.isLoading || feeRateService.status.isLoading {
             state = .loading
             return
         }
@@ -73,7 +73,7 @@ class SendBitcoinService {
             return
         }
 
-        if feeService.feeRate.data == nil {
+        if feeRateService.status.data == nil {
             state = .notReady
             return
         }

@@ -4,13 +4,7 @@ import RxRelay
 import RxCocoa
 import MarketKit
 
-protocol ISendFeeService {
-    var editableObservable: Observable<Bool> { get }
-    var defaultFeeObservable: Observable<Bool> { get }
-    var stateObservable: Observable<DataStatus<SendFeeService.State>> { get }
-}
-
-class SendFeeService: ISendFeeService {
+class SendFeeService {
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.send-fee-service")
 
     private let disposeBag = DisposeBag()
@@ -32,13 +26,6 @@ class SendFeeService: ISendFeeService {
         }
     }
 
-    private let editableRelay = BehaviorRelay<Bool>(value: false)
-    private(set) var editable: Bool = false {
-        didSet {
-            editableRelay.accept(editable)
-        }
-    }
-
     init(fiatService: FiatService, feeToken: Token) {
         self.fiatService = fiatService
         self.feeToken = feeToken
@@ -53,7 +40,6 @@ class SendFeeService: ISendFeeService {
     private func setFeeValueService() {
         feeRateDisposeBag = DisposeBag()
         if let feeValueService = feeValueService {
-            editable = feeValueService.editable
             subscribe(feeRateDisposeBag, feeValueService.feeStateObservable) { [weak self] in
                 self?.sync(feeState: $0)
             }
@@ -87,13 +73,9 @@ class SendFeeService: ISendFeeService {
         }
     }
 
-    var editableObservable: Observable<Bool> {
-        editableRelay.asObservable()
-    }
+}
 
-    var defaultFeeObservable: Observable<Bool> {
-        .just(true)
-    }
+extension SendFeeService {
 
     var stateObservable: Observable<DataStatus<State>> {
         stateRelay.asObservable()
