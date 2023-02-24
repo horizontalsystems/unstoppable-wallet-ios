@@ -87,13 +87,20 @@ class FeeCell: BaseSelectableThemeCell {
                 }
             }),
             .text({ [weak self] component in
-                if let value = self?.value, case let .error(text) = value {
+                switch self?.value {
+                case .error(let text):
                     component.isHidden = false
                     component.font = .subhead1
                     component.textColor = .themeLucian
                     component.text = text
                     component.textAlignment = .right
-                } else {
+                case .disabled(let text):
+                    component.isHidden = false
+                    component.font = .subhead1
+                    component.textColor = .themeGray
+                    component.text = text
+                    component.textAlignment = .right
+                default:
                     component.isHidden = true
                 }
             }),

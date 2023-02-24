@@ -10,7 +10,7 @@ class SendFeeWarningViewModel {
     private let cautionText: String
 
     private let cautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
-    private var caution: TitledCaution? {
+    var caution: TitledCaution? {
         didSet {
             if oldValue != caution {
                 cautionRelay.accept(caution)
@@ -24,6 +24,7 @@ class SendFeeWarningViewModel {
         self.cautionText = cautionText
 
         subscribe(disposeBag, service.statusObservable) { [weak self] _ in self?.sync() }
+        sync()
     }
 
     private func sync() {

@@ -16,6 +16,7 @@ class FeeRateViewModel {
 
         subscribe(disposeBag, service.statusObservable) { [weak self] in self?.sync(feeRateStatus: $0) }
         subscribe(disposeBag, service.usingRecommendedObservable) { [weak self] in self?.sync(usingRecommended: $0) }
+        sync(feeRateStatus: service.status)
     }
 
 

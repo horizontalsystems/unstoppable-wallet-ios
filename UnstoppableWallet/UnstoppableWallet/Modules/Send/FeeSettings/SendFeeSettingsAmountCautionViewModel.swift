@@ -21,9 +21,8 @@ class SendFeeSettingsAmountCautionViewModel {
         self.service = service
         self.feeToken = feeToken
 
-        subscribe(disposeBag, service.amountCautionObservable) { [weak self] in
-            self?.sync(amountCaution: $0)
-        }
+        subscribe(disposeBag, service.amountCautionObservable) { [weak self] in self?.sync(amountCaution: $0) }
+        sync(amountCaution: service.amountCaution)
     }
 
     private func sync(amountCaution: SendAmountCautionService.Caution?) {
