@@ -261,11 +261,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "send.network_fee" = "Taxa de Rede";
 "send.estimated_fee" = "Taxa estimada";
 "send.max_fee" = "Taxa máxima";
-"send.tx_speed" = "Velocidade da Transação";
-"send.tx_speed_low" = "Baixa";
-"send.tx_speed_recommended" = "Recomendado";
-"send.tx_speed_high" = "Alta";
-"send.tx_speed_custom" = "Personalizado";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
 "send.available_balance" = "Saldo Disponível";
@@ -279,15 +274,14 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "send.hodler_locktime_year" = "1 ano";
 "send.hodler_locktime_off" = "Desligado";
 "send.hodler_error.unsupported_address" = "O bloqueio de tempo só funciona com endereços P2PKH (iniciando com 1)";
-"send.fee_info.title" = "Velocidade da Transação";
-"send.fee_info.description" = "As ‘blockchains’ exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são maiores quando muitas transações acontecem na rede e são menores quando a ‘blockchain’ está menos ocupada.";
-"send.fee_info.header_slow" = "Baixa";
-"send.fee_info.content_slow" = "A seleção de um valor desse intervalo pode resultar na retenção de uma transação como pendente por horas ou acarretar rejeição. Quanto menor o valor, mais tempo levará para a confirmação da transação.";
-"send.fee_info.header_average" = "Recomendado";
-"send.fee_info.content_average" = "Normalmente, o valor de taxa recomendado deve ser suficiente para que uma transação seja processada em minutos ou uma hora para Bitcoin e em minutos para o Ethereum.";
-"send.fee_info.header_fast" = "Alta";
-"send.fee_info.content_fast" = "Para as operações em que a prioridade é importante, recomendamos a utilização do alto valor de taxa. É esperado que seja suficiente para concluir uma transação dentro de 10 minutos para o Bitcoin e dentro de 1 – 2 minutos para o Ethereum.";
-"send.fee_info.content_conclusion" = "A carteira Unstoppable faz uma estimativa estudada e baseada na atividade de rede e não pode garantir que os valores de taxas sugeridas sempre resultarão no comportamento esperado.";
+"send.fee_info.title" = "Taxa de tarifa";
+"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe Unstoppable wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
+"send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
+"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:";
+"send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
+"send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
+"send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
+"send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
 
 "send.confirmation.you_send" = "Enviar";
 "send.confirmation.to" = "Para";
@@ -873,8 +867,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "btc_blockchain_settings.restore_source" = "Restaurar Fonte";
 "btc_blockchain_settings.restore_source.description" = "Selecione uma fonte de dados para restaurar uma carteira com transações.";
 "btc_blockchain_settings.restore_source.alert" = "Após mudar a Restauração, a carteira terá que ressincronizar-se com a blockchain %@.";
-"btc_blockchain_settings.transaction_inputs_outputs" = "Entradas / Saídas de Transação";
-"btc_blockchain_settings.transaction_inputs_outputs.description" = "Torne suas %@ transações mais difíceis de rastrear, mudando a maneira como as transações são estruturadas.";
 
 "btc_restore_mode.recommended" = "Recomendado";
 "btc_restore_mode.more_private" = "Mais Privado";
@@ -886,8 +878,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "blockchain_settings.info.restore_source" = "Restaurar Fonte";
 "blockchain_settings.info.restore_source.content" = "Esta configuração só é relevante ao restaurar uma carteira existente. É um processo de obtenção de histórico de transações para uma determinada criptomoeda, então o aplicativo de carteira é capaz de exibir transações anteriores e calcular o saldo do usuário. Isto precisa acontecer apenas uma vez quando o usuário restaura as carteiras previamente criadas.\n\nNeste ponto, existem duas possíveis maneiras de uma carteira móvel como o Unstoppable de fazer isso:\n\n1. do Servidor API: Há um servidor predefinido por terceiros que hospeda toda a blockchain e tem todos os dados processados e otimizados para fornecer esses dados de forma rápida. Este método é rápido, mas potencialmente (não necessariamente) menos privado. É também um método centralizado para restaurar uma carteira, pois depende da disponibilidade de um servidor de terceiros. Esta opção é recomendada devido à velocidade de obtenção de dados (5-10 minutos).\n\n2. da Blockchain: O aplicativo tenta restaurar diretamente de uma rede de nós da blockchain. Essa é uma maneira descentralizada de restaurar o saldo das carteiras e transações anteriores. O aplicativo pança muitos dos nós da rede e solicita dados deles sem abordar alguns nós especificamente. Esta opção é lenta e pode levar facilmente 2-3 horas, o aplicativo precisa estar aberto enquanto a restauração está acontecendo. Este método de restauração não depende de nenhuma entidade e deve funcionar em todas as condições.";
-"blockchain_settings.info.transaction_inputs_outputs" = "Entradas / Saídas de Transação";
-"blockchain_settings.info.transaction_inputs_outputs.content" = "A maioria das transações do Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira Unstoppable implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários Unstoppable:\n\n1. Embaralhamento: A ordem de saídas da transação é randomizada em cada transação. Às vezes a mudança pode ser a primeira saída, às vezes pode ser a segunda. Se um usuário confia no desenvolvedor do aplicativo, considere esta opção recomendada.\n\n2. Determinístico: Há um padrão comumente acordado para encomendar saídas de transação (conhecido como BIP69). Nas carteiras de código aberto, que o padrão garante que os usuários de carteira não precisam confiar em como desenvolvedores do aplicativo implementam a ordenação das saídas. Como este padrão é novo, muitas carteiras ainda não o implementaram. Como resultado, é um pouco possível ver no blockchain se uma transação foi enviada de uma carteira que usa esse padrão ou não.";
 "blockchain_settings.info.rpc_source" = "Fonte RPC";
 "blockchain_settings.info.rpc_source.content" = "Esta configuração controla como este aplicativo interage com blockchains ao enviar ou receber transações.\n\nNo caso do Bitcoin, Bitcoin Cash, Litecoin e Dash, a comunicação com os nós da rede blockchain é totalmente peer-to-peer. Os pings Unstoppable são feitos em muitos nós e se comunicam com um deles. Cada vez que o aplicativo se conecta a um nó diferente.\n\nNo caso da Ethereum, da Binance Smart Chain e outras blockchains de EVM, não existem alternativas para as carteiras móveis para interagir com as respectivas blockchains que não sejam por provedores de serviços RPC de terceiros (ex. Infura.io) ou nós pessoais. Isso essencialmente significa que sua comunicação com essa blockchain não é descentralizada. Isso não afeta seus fundos de forma alguma, apenas a capacidade de se conectar à rede blockchain.\n\nFique tranquilo, vamos mantê-lo no radar e em breve tentaremos fornecer uma forma descentralizada para sincronizar. Paciência.";
 
@@ -1229,18 +1219,23 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "add_evm_sync_source.warning.url_exists" = "Fonte RPC com esta url já existe";
 "add_evm_sync_source.error.invalid_url" = "Url inserida é inválida. URL válida deve ter um dos seguintes esquemas: http, https, ws, wss";
 
-// EVM Send Settings
+// Send Settings
 
-"evm_send_settings.title" = "Avançado";
 "evm_send_settings.nonce" = "Transaction Nonce";
 "evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
 "evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
 "evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
 
-"fee_settings" = "Configurações de taxa";
+"fee_settings" = "Avançado";
 "fee_settings.fee" = "Taxa";
-"fee_settings.fee.info" = "A taxa total esperada para a determinada transação.";
+"fee_settings.fee.info" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.";
 "fee_settings.fee_rate" = "Taxa de tarifa";
+"fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
+"fee_settings.inputs_outputs" = "Inputs/Outputs";
+"fee_settings.transaction_settings" = "Transaction Settings";
+"fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
+"fee_settings.time_lock" = "TimeLock";
+"fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
 
 "fee_settings.max_fee" = "Taxa máxima";
 "fee_settings.max_fee.info" = "The maximum estimated transaction fee to be paid for this transaction, computed based on the gas limit, max fee rate and max priority fee values below. The actual fee paid will normally be lower.";
