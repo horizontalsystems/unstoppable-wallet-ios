@@ -1,7 +1,11 @@
 import RxSwift
 import RxCocoa
+import MarketKit
 
 class InputOutputOrderService {
+    private let blockchainType: BlockchainType
+    private let blockchainManager: BtcBlockchainManager
+
     var itemsList: [TransactionDataSortMode]
 
     private let selectedItemRelay = BehaviorSubject<TransactionDataSortMode>(value: .bip69)
@@ -11,8 +15,16 @@ class InputOutputOrderService {
         }
     }
 
-    init(itemsList: [TransactionDataSortMode]) {
+    init(blockchainType: BlockchainType, blockchainManager: BtcBlockchainManager, itemsList: [TransactionDataSortMode]) {
+        self.blockchainType = blockchainType
+        self.blockchainManager = blockchainManager
         self.itemsList = itemsList
+
+        setSelectedItemFromSettings()
+    }
+
+    private func setSelectedItemFromSettings() {
+        selectedItem = blockchainManager.transactionSortMode(blockchainType: blockchainType)
     }
 
 }
@@ -29,6 +41,7 @@ extension InputOutputOrderService {
         }
 
         selectedItem = itemsList[index]
+        blockchainManager.save(transactionSortMode: selectedItem, blockchainType: blockchainType)
     }
 
 }

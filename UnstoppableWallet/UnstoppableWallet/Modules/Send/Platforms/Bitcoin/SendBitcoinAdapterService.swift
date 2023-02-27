@@ -186,12 +186,13 @@ extension SendBitcoinAdapterService: ISendService {
             return Single.error(SendTransactionError.wrongAmount)
         }
 
+        let sortMode = btcBlockchainManager.transactionSortMode(blockchainType: adapter.blockchainType)
         return adapter.sendSingle(
                 amount: amountInputService.amount,
                 address: address.raw,
                 feeRate: feeRate,
                 pluginData: pluginData,
-                sortMode: inputOutputOrderService.selectedItem,
+                sortMode: sortMode,
                 logger: logger
         )
     }
