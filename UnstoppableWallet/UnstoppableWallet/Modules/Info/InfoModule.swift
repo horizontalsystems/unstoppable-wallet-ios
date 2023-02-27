@@ -24,15 +24,7 @@ extension InfoModule {
         viewController(
                 viewItems: [
                     .header2(text: "send.fee_info.title".localized),
-                    .text(text: "send.fee_info.description".localized),
-                    .header(text: "send.fee_info.header_slow".localized),
-                    .text(text: "send.fee_info.content_slow".localized),
-                    .header(text: "send.fee_info.header_average".localized),
-                    .text(text: "send.fee_info.content_average".localized),
-                    .header(text: "send.fee_info.header_fast".localized),
-                    .text(text: "send.fee_info.content_fast".localized),
-                    .margin(height: .margin24),
-                    .text(text: "send.fee_info.content_conclusion".localized)
+                    .text(text: "send.fee_info.description".localized)
                 ]
         )
     }
@@ -58,8 +50,12 @@ extension InfoModule {
     static var transactionInputsOutputsInfo: UIViewController {
         viewController(
                 viewItems: [
-                    .header2(text: "blockchain_settings.info.transaction_inputs_outputs".localized),
-                    .text(text: "blockchain_settings.info.transaction_inputs_outputs.content".localized),
+                    .header2(text: "send.transaction_inputs_outputs_info.title".localized),
+                    .text(text: "send.transaction_inputs_outputs_info.description".localized),
+                    .header(text: "send.transaction_inputs_outputs_info.shuffle.title".localized),
+                    .text(text: "send.transaction_inputs_outputs_info.shuffle.description".localized),
+                    .header(text: "send.transaction_inputs_outputs_info.deterministic.title".localized),
+                    .text(text: "send.transaction_inputs_outputs_info.deterministic.description".localized),
                 ]
         )
     }

@@ -35,8 +35,7 @@ class DropDownListCell: BaseSelectableThemeCell {
                 component.text = self?.title ?? "n/a".localized
             },
             .secondaryButton { component in
-                component.button.set(style: .default)
-                component.button.set(image: UIImage(named: "arrow_small_down_20"))
+                component.button.set(style: .default, image: UIImage(named: "arrow_small_down_20"))
                 component.button.setTitle(item, for: .normal)
                 component.onTap = { [weak self] in
                     self?.showList?()

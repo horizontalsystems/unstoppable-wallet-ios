@@ -28,6 +28,10 @@ class FeeRateDataSource {
     func viewDidLoad() {
         feeCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
+        feeCell.onOpenInfo = { [weak self] in
+            self?.onOpenInfo?("fee_settings.fee".localized, "fee_settings.fee.info".localized)
+        }
+
         subscribe(disposeBag, feeRateViewModel.feeRateDriver) { [weak self] in self?.feeRateCell.value = $0 }
         subscribe(disposeBag, feeRateViewModel.alteredStateSignal) { [weak self] in self?.onUpdateAlteredState?() }
 
@@ -55,11 +59,7 @@ extension FeeRateDataSource: ISendSettingsDataSource {
                         StaticRow(
                                 cell: feeCell,
                                 id: "fee-cell",
-                                height: .heightDoubleLineCell,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.onOpenInfo?("fee_settings.fee".localized, "fee_settings.fee.info".localized)
-                                }
+                                height: .heightDoubleLineCell
                         )
                     ]
             ),
@@ -68,7 +68,7 @@ extension FeeRateDataSource: ISendSettingsDataSource {
                     headerState: .margin(height: .margin24),
                     rows: [
                         tableView.subtitleWithInfoButtonRow(text: "fee_settings.fee_rate".localized + " (Sat/Byte)", uppercase: false)  { [weak self] in
-                            self?.onOpenInfo?("fee_settings.fee_rate".localized, "fee_settings.fee_rate.info".localized)
+                            self?.present?(InfoModule.feeInfo)
                         },
                         StaticRow(
                                 cell: feeRateCell,

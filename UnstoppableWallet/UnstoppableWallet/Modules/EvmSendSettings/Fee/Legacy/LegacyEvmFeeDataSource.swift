@@ -27,6 +27,10 @@ class LegacyEvmFeeDataSource {
     func viewDidLoad() {
         maxFeeCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
         gasLimitCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+
+        maxFeeCell.onOpenInfo = { [weak self] in
+            self?.onOpenInfo?("fee_settings.max_fee".localized, "fee_settings.max_fee.info".localized)
+        }
         syncGasLimitCell()
 
         subscribe(disposeBag, viewModel.gasLimitDriver) { [weak self] in self?.syncGasLimitCell(value: $0) }
@@ -73,11 +77,7 @@ extension LegacyEvmFeeDataSource: IEvmSendSettingsDataSource {
                         StaticRow(
                                 cell: maxFeeCell,
                                 id: "fee",
-                                height: .heightDoubleLineCell,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.onOpenInfo?("fee_settings.max_fee".localized, "fee_settings.max_fee.info".localized)
-                                }
+                                height: .heightDoubleLineCell
                         ),
                         StaticRow(
                                 cell: gasLimitCell,

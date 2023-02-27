@@ -60,6 +60,10 @@ class SendBitcoinViewController: BaseSendViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        feeCell.onOpenInfo = { [weak self] in
+            self?.openInfo(title: "fee_settings.fee".localized, description: "fee_settings.fee.info".localized)
+        }
+
         subscribe(disposeBag, feeWarningViewModel.cautionDriver) { [weak self] in
             self?.handle(caution: $0)
         }
@@ -123,11 +127,7 @@ class SendBitcoinViewController: BaseSendViewController {
                     StaticRow(
                             cell: feeCell,
                             id: "fee",
-                            height: .heightDoubleLineCell,
-                            autoDeselect: true,
-                            action: { [weak self] in
-                                self?.openInfo(title: "fee_settings.fee".localized, description: "fee_settings.fee.info".localized)
-                            }
+                            height: .heightDoubleLineCell
                     )
                 ]
         )

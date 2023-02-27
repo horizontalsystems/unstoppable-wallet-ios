@@ -29,14 +29,16 @@ class InputOutputOrderDataSource {
     }
 
     private func showList() {
-        let alertController: UIViewController = AlertRouter.module(
+        let viewController = SelectorModule.bottomSingleSelectorViewController(
+                image: .local(image: UIImage(named: "arrow_medium_2_up_right_24")?.withTintColor(.themeGray)),
                 title: "fee_settings.transaction_settings".localized,
-                viewItems: viewModel.itemsList
-        ) { [weak self] index in
-            self?.viewModel.onSelect(index)
-        }
+                viewItems: viewModel.itemsList,
+                onSelect: { [weak self] index in
+                    self?.viewModel.onSelect(index)
+                }
+        )
 
-        present?(alertController)
+        present?(viewController)
     }
 
 }
@@ -58,13 +60,12 @@ extension InputOutputOrderDataSource: ISendSettingsDataSource {
                     headerState: .margin(height: .margin24),
                     rows: [
                         tableView.subtitleWithInfoButtonRow(text: "fee_settings.transaction_settings".localized, uppercase: false)  { [weak self] in
-                            self?.onOpenInfo?("fee_settings.transaction_settings".localized, "fee_settings.transaction_settings.info".localized)
+                            self?.present?(InfoModule.transactionInputsOutputsInfo)
                         },
                         StaticRow(
                                 cell: orderCell,
                                 id: "input-order-cell",
-                                height: .heightDoubleLineCell,
-                                autoDeselect: true
+                                height: .heightDoubleLineCell
                         ),
                         tableView.descriptionRow(
                                 id: "input-order-description-cell",
