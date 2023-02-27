@@ -8,6 +8,7 @@ class InputOutputOrderViewModel {
 
     private let service: InputOutputOrderService
     private let selectedItemRelay = BehaviorRelay<String?>(value: nil)
+    private let alteredStateRelay = PublishRelay<Void>()
 
     init(service: InputOutputOrderService) {
         self.service = service
@@ -25,7 +26,11 @@ class InputOutputOrderViewModel {
 extension InputOutputOrderViewModel {
 
     var altered: Bool {
-        false
+        service.selectedItem != service.initialItem
+    }
+
+    var alteredStateSignal: Signal<Void> {
+        alteredStateRelay.asSignal()
     }
 
     var itemsList: [SelectorModule.ViewItem] {
@@ -43,10 +48,12 @@ extension InputOutputOrderViewModel {
 
     func onSelect(_ index: Int) {
         service.set(index: index)
+        alteredStateRelay.accept(())
     }
 
     func reset() {
-        // Reset
+        service.setSelectedItemFromSettings()
+        alteredStateRelay.accept(())
     }
 
 }

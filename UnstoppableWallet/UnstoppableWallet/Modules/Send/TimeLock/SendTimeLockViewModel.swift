@@ -6,16 +6,16 @@ import Hodler
 class SendTimeLockViewModel {
     private let disposeBag = DisposeBag()
 
-    private let service: SendTimeLockService
+    private let service: TimeLockService
     private let lockTimeRelay = BehaviorRelay<String?>(value: nil)
 
-    init(service: SendTimeLockService) {
+    init(service: TimeLockService) {
         self.service = service
 
         subscribe(disposeBag, service.lockTimeObservable) { [weak self] in self?.sync(lockTime: $0) }
     }
 
-    private func sync(lockTime: SendTimeLockService.Item) {
+    private func sync(lockTime: TimeLockService.Item) {
         lockTimeRelay.accept(lockTime.title)
     }
 

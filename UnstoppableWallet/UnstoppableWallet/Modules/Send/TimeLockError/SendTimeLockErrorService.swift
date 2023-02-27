@@ -5,7 +5,7 @@ import RxCocoa
 class SendTimeLockErrorService {
     private let disposeBag = DisposeBag()
 
-    private let timeLockService: SendTimeLockService
+    private let timeLockService: TimeLockService
     private let addressService: AddressService
     private let adapter: ISendBitcoinAdapter
 
@@ -16,7 +16,7 @@ class SendTimeLockErrorService {
         }
     }
 
-    init(timeLockService: SendTimeLockService, addressService: AddressService, adapter: ISendBitcoinAdapter) {
+    init(timeLockService: TimeLockService, addressService: AddressService, adapter: ISendBitcoinAdapter) {
         self.timeLockService = timeLockService
         self.addressService = addressService
         self.adapter = adapter

@@ -70,13 +70,13 @@ class SendBitcoinFactory: BaseSendFactory {
     private let feeService: SendFeeService
     private let feeRateService: FeeRateService
     private let addressService: AddressService
-    private let timeLockService: SendTimeLockService?
+    private let timeLockService: TimeLockService?
     private let adapterService: SendBitcoinAdapterService
     private let customFeeRateProvider: ICustomRangedFeeRateProvider?
     private let logger: Logger
     private let token: Token
 
-    init(fiatService: FiatService, amountCautionService: SendAmountCautionService, addressService: AddressService, feeFiatService: FiatService, feeService: SendFeeService, feeRateService: FeeRateService, timeLockService: SendTimeLockService?, adapterService: SendBitcoinAdapterService, customFeeRateProvider: ICustomRangedFeeRateProvider?, logger: Logger, token: Token) {
+    init(fiatService: FiatService, amountCautionService: SendAmountCautionService, addressService: AddressService, feeFiatService: FiatService, feeService: SendFeeService, feeRateService: FeeRateService, timeLockService: TimeLockService?, adapterService: SendBitcoinAdapterService, customFeeRateProvider: ICustomRangedFeeRateProvider?, logger: Logger, token: Token) {
         self.fiatService = fiatService
         self.amountCautionService = amountCautionService
         self.feeFiatService = feeFiatService
@@ -103,7 +103,7 @@ class SendBitcoinFactory: BaseSendFactory {
         viewItems.append(SendConfirmationAmountViewItem(coinValue: coinValue, currencyValue: currencyValue, receiver: address))
         viewItems.append(SendConfirmationFeeViewItem(coinValue: feeCoinValue, currencyValue: feeCurrencyValue))
 
-        if (timeLockService?.lockTime ?? .none) != SendTimeLockService.Item.none {
+        if (timeLockService?.lockTime ?? .none) != TimeLockService.Item.none {
             viewItems.append(SendConfirmationLockUntilViewItem(lockValue: timeLockService?.lockTime.title ?? "n/a".localized))
         }
 
@@ -139,6 +139,11 @@ extension SendBitcoinFactory: ISendFeeSettingsFactory {
 
         let inputOutputOrderViewModel = InputOutputOrderViewModel(service: adapterService.inputOutputOrderService)
         dataSources.append(InputOutputOrderDataSource(viewModel: inputOutputOrderViewModel))
+
+        if let timeLockService = timeLockService {
+            let timeLockViewModel = TimeLockViewModel(service: timeLockService)
+            dataSources.append(TimeLockDataSource(viewModel: timeLockViewModel))
+        }
 
         let feeCautionViewModel = SendFeeWarningViewModel(service: feeRateService)
         let amountCautionViewModel = SendFeeSettingsAmountCautionViewModel(service: amountCautionService, feeToken: token)
