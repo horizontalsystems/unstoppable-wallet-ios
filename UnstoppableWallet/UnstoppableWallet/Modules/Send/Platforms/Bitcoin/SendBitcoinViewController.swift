@@ -9,12 +9,9 @@ class SendBitcoinViewController: BaseSendViewController {
     private let disposeBag = DisposeBag()
 
     private let feeWarningViewModel: ITitledCautionViewModel
-    private let timeLockViewModel: SendTimeLockViewModel?
 
     private let feeCell: FeeCell
     private let feeCautionCell = TitledHighlightedDescriptionCell()
-
-    private var timeLockCell: BaseSelectableThemeCell?
 
     init(confirmationFactory: ISendConfirmationFactory,
          feeSettingsFactory: ISendFeeSettingsFactory,
@@ -24,21 +21,12 @@ class SendBitcoinViewController: BaseSendViewController {
          amountCautionViewModel: SendAmountCautionViewModel,
          recipientViewModel: RecipientAddressViewModel,
          feeViewModel: SendFeeViewModel,
-         feeWarningViewModel: ITitledCautionViewModel,
-         timeLockViewModel: SendTimeLockViewModel?
+         feeWarningViewModel: ITitledCautionViewModel
     ) {
 
         self.feeWarningViewModel = feeWarningViewModel
-        self.timeLockViewModel = timeLockViewModel
 
         feeCell = FeeCell(viewModel: feeViewModel, title: "fee_settings.fee".localized)
-
-        if timeLockViewModel != nil {
-            let timeLockCell = BaseSelectableThemeCell()
-
-            timeLockCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
-            self.timeLockCell = timeLockCell
-        }
 
         super.init(
                 confirmationFactory: confirmationFactory,
@@ -49,8 +37,6 @@ class SendBitcoinViewController: BaseSendViewController {
                 amountCautionViewModel: amountCautionViewModel,
                 recipientViewModel: recipientViewModel
         )
-
-        syncTimeLock()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -68,25 +54,7 @@ class SendBitcoinViewController: BaseSendViewController {
             self?.handle(caution: $0)
         }
 
-        if let timeLockViewModel = timeLockViewModel {
-            subscribe(disposeBag, timeLockViewModel.lockTimeDriver) { [weak self] priority in
-                self?.syncTimeLock(value: priority)
-            }
-        }
-
         didLoad()
-    }
-
-    private func syncTimeLock(value: String? = nil) {
-        guard let cell = timeLockCell else {
-            return
-        }
-        let elements = tableView.universalImage24Elements(
-                title: .subhead2("send.hodler_locktime".localized),
-                value: .subhead1(value),
-                accessoryType: .dropdown)
-
-        CellBuilderNew.buildStatic(cell: cell, rootElement: .hStack(elements))
     }
 
     private func handle(caution: TitledCaution?) {
@@ -97,21 +65,6 @@ class SendBitcoinViewController: BaseSendViewController {
         }
 
         reloadTable()
-    }
-
-    private func onTapLockTimeSelect() {
-        guard let timeLockViewModel = timeLockViewModel else {
-            return
-        }
-
-        let alertController = AlertRouter.module(
-                title: "send.hodler_locktime".localized,
-                viewItems: timeLockViewModel.lockTimeViewItems
-        ) { index in
-            timeLockViewModel.onSelect(index)
-        }
-
-        present(alertController, animated: true)
     }
 
     private func openInfo(title: String, description: String) {
@@ -133,25 +86,6 @@ class SendBitcoinViewController: BaseSendViewController {
         )
     }
 
-    var timeLockSection: SectionProtocol? {
-        timeLockCell.map { cell in
-            Section(
-                    id: "time-lock",
-                    rows: [
-                        StaticRow(
-                                cell: cell,
-                                id: "time_lock_cell",
-                                height: .heightSingleLineCell,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.onTapLockTimeSelect()
-                                }
-                        )
-                    ]
-            )
-        }
-    }
-
     var feeWarningSection: SectionProtocol {
         Section(
                 id: "fee-warning",
@@ -170,9 +104,6 @@ class SendBitcoinViewController: BaseSendViewController {
 
     override func buildSections() -> [SectionProtocol] {
         var sections = [availableBalanceSection, amountSection, recipientSection, feeSection]
-        if let timeLockSection = timeLockSection {
-            sections.append(timeLockSection)
-        }
         sections.append(contentsOf: [feeWarningSection, buttonSection])
 
         return sections

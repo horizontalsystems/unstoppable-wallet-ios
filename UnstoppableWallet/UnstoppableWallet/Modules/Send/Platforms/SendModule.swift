@@ -65,15 +65,13 @@ class SendModule {
         let inputOutputOrderService = InputOutputOrderService(blockchainType: adapter.blockchainType, blockchainManager: App.shared.btcBlockchainManager, itemsList: TransactionDataSortMode.allCases)
 
         // TimeLock
-        var timeLockService: SendTimeLockService?
+        var timeLockService: TimeLockService?
         var timeLockErrorService: SendTimeLockErrorService?
-        var timeLockViewModel: SendTimeLockViewModel?
 
         if App.shared.localStorage.lockTimeEnabled, adapter.blockchainType == .bitcoin {
-            let timeLockServiceInstance = SendTimeLockService()
+            let timeLockServiceInstance = TimeLockService()
             timeLockService = timeLockServiceInstance
             timeLockErrorService = SendTimeLockErrorService(timeLockService: timeLockServiceInstance, addressService: addressService, adapter: adapter)
-            timeLockViewModel = SendTimeLockViewModel(service: timeLockServiceInstance)
         }
 
         let bitcoinAdapterService = SendBitcoinAdapterService(
@@ -155,8 +153,7 @@ class SendModule {
                 amountCautionViewModel: amountCautionViewModel,
                 recipientViewModel: recipientViewModel,
                 feeViewModel: feeViewModel,
-                feeWarningViewModel: feeWarningViewModel,
-                timeLockViewModel: timeLockViewModel
+                feeWarningViewModel: feeWarningViewModel
         )
 
         return ThemeNavigationController(rootViewController: viewController)

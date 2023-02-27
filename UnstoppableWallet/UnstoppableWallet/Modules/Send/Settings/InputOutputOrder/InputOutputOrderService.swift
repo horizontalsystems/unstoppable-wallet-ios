@@ -7,11 +7,14 @@ class InputOutputOrderService {
     private let blockchainManager: BtcBlockchainManager
 
     var itemsList: [TransactionDataSortMode]
+    private(set) var initialItem: TransactionDataSortMode
 
     private let selectedItemRelay = BehaviorSubject<TransactionDataSortMode>(value: .bip69)
     private(set) var selectedItem: TransactionDataSortMode = .bip69 {
         didSet {
-            selectedItemRelay.onNext(selectedItem)
+            if (oldValue != selectedItem) {
+                selectedItemRelay.onNext(selectedItem)
+            }
         }
     }
 
@@ -19,12 +22,9 @@ class InputOutputOrderService {
         self.blockchainType = blockchainType
         self.blockchainManager = blockchainManager
         self.itemsList = itemsList
+        initialItem = blockchainManager.transactionSortMode(blockchainType: blockchainType)
 
         setSelectedItemFromSettings()
-    }
-
-    private func setSelectedItemFromSettings() {
-        selectedItem = blockchainManager.transactionSortMode(blockchainType: blockchainType)
     }
 
 }
@@ -42,6 +42,10 @@ extension InputOutputOrderService {
 
         selectedItem = itemsList[index]
         blockchainManager.save(transactionSortMode: selectedItem, blockchainType: blockchainType)
+    }
+
+    func setSelectedItemFromSettings() {
+        selectedItem = initialItem
     }
 
 }

@@ -27,7 +27,7 @@ class SendBitcoinAdapterService {
     private let feeRateService: FeeRateService
     private let amountInputService: IAmountInputService
     private let addressService: AddressService
-    private let timeLockService: SendTimeLockService?
+    private let timeLockService: TimeLockService?
     private let btcBlockchainManager: BtcBlockchainManager
     private let adapter: ISendBitcoinAdapter
 
@@ -71,7 +71,7 @@ class SendBitcoinAdapterService {
     }
 
     init(feeRateService: FeeRateService, amountInputService: IAmountInputService, addressService: AddressService,
-         inputOutputOrderService: InputOutputOrderService, timeLockService: SendTimeLockService?, btcBlockchainManager: BtcBlockchainManager, adapter: ISendBitcoinAdapter) {
+         inputOutputOrderService: InputOutputOrderService, timeLockService: TimeLockService?, btcBlockchainManager: BtcBlockchainManager, adapter: ISendBitcoinAdapter) {
         self.feeRateService = feeRateService
         self.amountInputService = amountInputService
         self.addressService = addressService

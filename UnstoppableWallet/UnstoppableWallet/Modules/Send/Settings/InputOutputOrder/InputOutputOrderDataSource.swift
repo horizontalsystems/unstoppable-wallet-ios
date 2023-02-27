@@ -26,6 +26,8 @@ class InputOutputOrderDataSource {
     func viewDidLoad() {
         orderCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
         orderCell.showList = { [weak self] in self?.showList() }
+
+        subscribe(disposeBag, viewModel.alteredStateSignal) { [weak self] in self?.onUpdateAlteredState?() }
     }
 
     private func showList() {
