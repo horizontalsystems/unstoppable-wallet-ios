@@ -9,7 +9,7 @@ protocol IFeeViewModel {
     var spinnerVisibleDriver: Driver<Bool> { get }
 }
 
-class FeeCell: BaseSelectableThemeCell {
+class FeeCell: BaseThemeCell {
     private let disposeBag = DisposeBag()
 
     private let viewModel: IFeeViewModel
@@ -18,6 +18,8 @@ class FeeCell: BaseSelectableThemeCell {
 
     private var value: FeeCell.Value?
     private var spinnerVisible: Bool = false
+
+    var onOpenInfo: (() -> ())? = nil
 
     init(viewModel: IFeeViewModel, title: String, showInfoIcon: Bool = true) {
         self.viewModel = viewModel
@@ -29,7 +31,6 @@ class FeeCell: BaseSelectableThemeCell {
         backgroundColor = .clear
         clipsToBounds = true
         set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-        selectionStyle = showInfoIcon ? .default : .none
         sync()
 
         subscribe(disposeBag, viewModel.valueDriver) { [weak self] value in
@@ -47,18 +48,22 @@ class FeeCell: BaseSelectableThemeCell {
     }
 
     private func sync() {
-        let titleElements: [CellBuilderNew.CellElement] = [
-            .textElement(text: .subhead2(title), parameters: .highHugging)
-        ]
+        var titleElements: [CellBuilderNew.CellElement] = []
 
-        var infoElements = [CellBuilderNew.CellElement]()
         if showInfoIcon {
-            infoElements.append(contentsOf: [
-                .margin8,
-                .imageElement(image: .local(UIImage(named: "circle_information_20")?.withTintColor(.themeGray)), size: .image20),
-                .margin0,
-                .text { _ in },
-            ])
+            titleElements.append(
+                    .secondaryButton { [weak self] component in
+                        component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
+                        component.button.setTitle(self?.title, for: .normal)
+                        component.onTap = { [weak self] in
+                            self?.onOpenInfo?()
+                        }
+                    }
+            )
+        } else {
+            titleElements.append(
+                .textElement(text: .subhead2(title), parameters: .highHugging)
+            )
         }
 
         let valueElements: [CellBuilderNew.CellElement] = [
@@ -110,7 +115,7 @@ class FeeCell: BaseSelectableThemeCell {
             }
         ]
 
-        CellBuilderNew.buildStatic(cell: self, rootElement: .hStack(titleElements + infoElements + valueElements))
+        CellBuilderNew.buildStatic(cell: self, rootElement: .hStack(titleElements + valueElements))
     }
 
 }

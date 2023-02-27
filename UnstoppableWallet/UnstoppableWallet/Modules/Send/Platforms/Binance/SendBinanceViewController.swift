@@ -48,6 +48,10 @@ class SendBinanceViewController: BaseSendViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        feeCell.onOpenInfo = { [weak self] in
+            self?.openInfo(title: "fee_settings.fee".localized, description: "fee_settings.fee.info".localized)
+        }
+
         subscribe(disposeBag, feeWarningViewModel.cautionDriver) { [weak self] in
             self?.handle(caution: $0)
         }
@@ -63,6 +67,11 @@ class SendBinanceViewController: BaseSendViewController {
         }
 
         reloadTable()
+    }
+
+    private func openInfo(title: String, description: String) {
+        let viewController = BottomSheetModule.description(title: title, text: description)
+        present(viewController, animated: true)
     }
 
     var memoSection: SectionProtocol {

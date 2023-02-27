@@ -28,9 +28,16 @@ extension InputOutputOrderViewModel {
         false
     }
 
-    var itemsList: [AlertViewItem] {
+    var itemsList: [SelectorModule.ViewItem] {
         service.itemsList.map { item in
-            AlertViewItem(text: item.title, selected: service.selectedItem == item)
+            SelectorModule.ViewItem(
+                image: nil,
+                title: item.title,
+                titleColor: .themeLeah,
+                subtitle: item.description,
+                badge: nil,
+                selected: service.selectedItem == item
+            )
         }
     }
 

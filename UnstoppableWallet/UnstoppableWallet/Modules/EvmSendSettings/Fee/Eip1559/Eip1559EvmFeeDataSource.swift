@@ -35,6 +35,9 @@ class Eip1559EvmFeeDataSource {
         gasLimitCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
         baseFeeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
 
+        maxFeeCell.onOpenInfo = { [weak self] in
+            self?.onOpenInfo?("fee_settings.max_fee".localized, "fee_settings.max_fee.info".localized)
+        }
         syncGasLimitCell()
         syncBaseFeeCell()
 
@@ -101,8 +104,7 @@ extension Eip1559EvmFeeDataSource: IEvmSendSettingsDataSource {
                         StaticRow(
                                 cell: maxFeeCell,
                                 id: "fee",
-                                height: .heightDoubleLineCell,
-                                autoDeselect: true
+                                height: .heightDoubleLineCell
                         ),
                         StaticRow(
                                 cell: gasLimitCell,

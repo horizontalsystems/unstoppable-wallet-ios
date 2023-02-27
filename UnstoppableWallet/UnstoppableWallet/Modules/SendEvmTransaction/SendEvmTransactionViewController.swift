@@ -47,6 +47,10 @@ class SendEvmTransactionViewController: ThemeViewController {
 
         nonceCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
+        maxFeeCell.onOpenInfo = { [weak self] in
+            self?.openInfo(title: "fee_settings.max_fee".localized, description: "fee_settings.max_fee.info".localized)
+        }
+
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
@@ -118,6 +122,11 @@ class SendEvmTransactionViewController: ThemeViewController {
 
     func handleSendSuccess(transactionHash: Data) {
         dismiss(animated: true)
+    }
+
+    private func openInfo(title: String, description: String) {
+        let viewController = BottomSheetModule.description(title: title, text: description)
+        present(viewController, animated: true)
     }
 
     @objc private func openFeeSettings() {
@@ -216,8 +225,7 @@ extension SendEvmTransactionViewController: SectionsDataSource {
                             StaticRow(
                                     cell: maxFeeCell,
                                     id: "fee",
-                                    height: .heightDoubleLineCell,
-                                    autoDeselect: true
+                                    height: .heightDoubleLineCell
                             )
                         ]
                 )
