@@ -66,4 +66,13 @@ extension BtcBlockchainManager {
         restoreModeUpdatedRelay.accept(blockchainType)
     }
 
+    func transactionSortMode(blockchainType: BlockchainType) -> TransactionDataSortMode {
+        storage.btcTransactionSortMode(blockchainType: blockchainType) ?? .shuffle
+    }
+
+    func save(transactionSortMode: TransactionDataSortMode, blockchainType: BlockchainType) {
+        storage.save(btcTransactionSortMode: transactionSortMode, blockchainType: blockchainType)
+        transactionSortModeUpdatedRelay.accept(blockchainType)
+    }
+
 }
