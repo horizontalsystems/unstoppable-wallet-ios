@@ -1305,7 +1305,6 @@
 		2FA5D0F37E1B46988A88DB29 /* CoinOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DA1F5A41E633A244DAD1 /* CoinOverviewViewController.swift */; };
 		2FA5D10288617C877FDA2522 /* InputOutputOrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6522540716BACE4AD09 /* InputOutputOrderViewModel.swift */; };
 		2FA5D10D571F6D9E3BECAF9E /* DropDownListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB591688EEA6116C8323 /* DropDownListCell.swift */; };
-		2FA5D17804ACD3B3CA4AB321 /* SendSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6FFA206C3950520AD9E /* SendSettingsViewModel.swift */; };
 		2FA5D17AB937C5C15BA3BAE0 /* ExperimentalFeaturesModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D106113680415EF6A168 /* ExperimentalFeaturesModule.swift */; };
 		2FA5D1897F90F77E6D9076AB /* LegacyEvmFeeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D735675BD26B75B7FFC7 /* LegacyEvmFeeDataSource.swift */; };
 		2FA5D18A57B386FD3A4384BA /* Eip1559EvmFeeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDF215D171796AA34FE /* Eip1559EvmFeeViewModel.swift */; };
@@ -1403,7 +1402,6 @@
 		2FA5DBE42827FF3D114DBF4B /* CoinOverviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D85022014B00241B6913 /* CoinOverviewService.swift */; };
 		2FA5DC0554CE24AE27663585 /* EvmTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D682FBA971A9D1A09B2D /* EvmTransactionRecord.swift */; };
 		2FA5DC0EF03C92C2125D433E /* BinanceChainOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF5B8B69876A526CCDDD /* BinanceChainOutgoingTransactionRecord.swift */; };
-		2FA5DC1BCBC4E58AC5DE87E1 /* SendSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D6FFA206C3950520AD9E /* SendSettingsViewModel.swift */; };
 		2FA5DC4BBDF469873662BDEE /* Eip1559EvmFeeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDF215D171796AA34FE /* Eip1559EvmFeeViewModel.swift */; };
 		2FA5DC6DC976D88C1E578403 /* UnknownSwapTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DF48D44BB409FB94CED9 /* UnknownSwapTransactionRecord.swift */; };
 		2FA5DC95B68FC21FD48CCB13 /* BinanceChainTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEEA5C3A80D310255459 /* BinanceChainTransactionRecord.swift */; };
@@ -2968,7 +2966,6 @@
 		2FA5D690E78A4568F9FD9554 /* LogRecordManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogRecordManager.swift; sourceTree = "<group>"; };
 		2FA5D6E7A21AAD357C6D8EEA /* TimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		2FA5D6FADA5ECA61D3011CDE /* HistoricalRateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoricalRateService.swift; sourceTree = "<group>"; };
-		2FA5D6FFA206C3950520AD9E /* SendSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendSettingsViewModel.swift; sourceTree = "<group>"; };
 		2FA5D735675BD26B75B7FFC7 /* LegacyEvmFeeDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyEvmFeeDataSource.swift; sourceTree = "<group>"; };
 		2FA5D73DA43455B86DF104FE /* LogRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogRecord.swift; sourceTree = "<group>"; };
 		2FA5D79CD6D86572DC629A57 /* StepperAmountInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepperAmountInputCell.swift; sourceTree = "<group>"; };
@@ -5195,7 +5192,6 @@
 				2FA5D04441C8926DBEB858AF /* InputOutputOrder */,
 				2FA5DBA036136CC1EA0DD0DD /* TimeLock */,
 				2FA5D1463A10D9A0E7156CEC /* SendSettingsModule.swift */,
-				2FA5D6FFA206C3950520AD9E /* SendSettingsViewModel.swift */,
 				2FA5D0F4DBA8FC1F917AA95B /* SendSettingsViewController.swift */,
 			);
 			path = Settings;
@@ -7787,7 +7783,6 @@
 				2FA5DF42271E59C1CE40B5DB /* FeeRateViewModel.swift in Sources */,
 				2FA5D2FA6FE5298D991A7248 /* FeeRateService.swift in Sources */,
 				2FA5D23275A198E9BA127168 /* SendSettingsModule.swift in Sources */,
-				2FA5DC1BCBC4E58AC5DE87E1 /* SendSettingsViewModel.swift in Sources */,
 				2FA5DF8F364E6B5BED14C0B4 /* SendSettingsViewController.swift in Sources */,
 				2FA5D1E33A714D64DDAFA119 /* SendFeeWarningViewModel.swift in Sources */,
 				2FA5DCCE2273577F8F12004F /* SendFeeSettingsAmountCautionViewModel.swift in Sources */,
@@ -8873,7 +8868,6 @@
 				2FA5DF43F20E03E94403555D /* FeeRateViewModel.swift in Sources */,
 				2FA5DF7570C7D9E33922CB03 /* FeeRateService.swift in Sources */,
 				2FA5D49426615DAE1FA9CE53 /* SendSettingsModule.swift in Sources */,
-				2FA5D17804ACD3B3CA4AB321 /* SendSettingsViewModel.swift in Sources */,
 				2FA5DD05ECC5501DC33050C6 /* SendSettingsViewController.swift in Sources */,
 				2FA5D37B3AD06F8249FA7959 /* SendFeeWarningViewModel.swift in Sources */,
 				2FA5D7CC1617FDF8D2EAFB56 /* SendFeeSettingsAmountCautionViewModel.swift in Sources */,

@@ -7,16 +7,37 @@ class FeeRateViewModel {
     private let disposeBag = DisposeBag()
 
     private let service: FeeRateService
+    private let feeCautionViewModel: SendFeeWarningViewModel
+    private let amountCautionViewModel: SendFeeSettingsAmountCautionViewModel
 
     private let alteredStateRelay = PublishRelay<Void>()
     private let feeRateRelay = BehaviorRelay<Decimal?>(value: nil)
+    private let cautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
 
-    init(service: FeeRateService) {
+    init(service: FeeRateService, feeCautionViewModel: SendFeeWarningViewModel, amountCautionViewModel: SendFeeSettingsAmountCautionViewModel) {
         self.service = service
+        self.feeCautionViewModel = feeCautionViewModel
+        self.amountCautionViewModel = amountCautionViewModel
+
+        subscribe(disposeBag, feeCautionViewModel.cautionDriver) { [weak self] _ in self?.syncCaution() }
+        subscribe(disposeBag, amountCautionViewModel.amountCautionDriver) { [weak self] _ in self?.syncCaution() }
 
         subscribe(disposeBag, service.statusObservable) { [weak self] in self?.sync(feeRateStatus: $0) }
         subscribe(disposeBag, service.usingRecommendedObservable) { [weak self] in self?.sync(usingRecommended: $0) }
         sync(feeRateStatus: service.status)
+        syncCaution()
+    }
+
+    private func syncCaution() {
+        var caution: TitledCaution? = nil
+
+        if let error = amountCautionViewModel.amountCaution {
+            caution = error
+        } else if let warning = feeCautionViewModel.caution {
+            caution = warning
+        }
+
+        cautionRelay.accept(caution)
     }
 
 
@@ -54,6 +75,10 @@ extension FeeRateViewModel {
 
     func reset() {
         service.setRecommendedFeeRate()
+    }
+
+    var cautionDriver: Driver<TitledCaution?> {
+        cautionRelay.asDriver()
     }
 
 }

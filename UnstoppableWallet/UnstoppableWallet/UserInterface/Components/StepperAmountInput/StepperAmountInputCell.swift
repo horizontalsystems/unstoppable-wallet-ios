@@ -47,4 +47,8 @@ extension StepperAmountInputCell {
         set { amountInputView.onChangeValue = newValue }
     }
 
+    func set(cautionType: CautionType?) {
+        formValidatedView.set(cautionType: cautionType)
+    }
+
 }

@@ -46,6 +46,10 @@ class Eip1559EvmFeeDataSource {
         subscribe(disposeBag, viewModel.maxGasPriceDriver) { [weak self] value in self?.maxGasPriceCell.value = value }
         subscribe(disposeBag, viewModel.tipsDriver) { [weak self] value in self?.tipsCell.value = value }
         subscribe(disposeBag, viewModel.alteredStateSignal) { [weak self] in self?.onUpdateAlteredState?() }
+        subscribe(disposeBag, viewModel.cautionTypeDriver) { [weak self] in
+            self?.maxGasPriceCell.set(cautionType: $0)
+            self?.tipsCell.set(cautionType: $0)
+        }
 
         maxGasPriceCell.onChangeValue = { [weak self] value in self?.viewModel.set(maxGasPrice: value) }
         tipsCell.onChangeValue = { [weak self] value in self?.viewModel.set(tips: value) }
