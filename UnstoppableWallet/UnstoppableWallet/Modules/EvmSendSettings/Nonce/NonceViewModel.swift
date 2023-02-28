@@ -8,7 +8,7 @@ class NonceViewModel {
 
     private let alteredStateRelay = PublishRelay<Void>()
     private let valueRelay = BehaviorRelay<Decimal?>(value: 0)
-    private let spinnerVisibleRelay = BehaviorRelay<Bool>(value: false)
+    private let cautionTypeRelay = BehaviorRelay<CautionType?>(value: nil)
 
     let frozen: Bool
 
@@ -22,23 +22,23 @@ class NonceViewModel {
     }
 
     private func sync(nonceStatus: DataStatus<FallibleData<Int>>) {
-        let spinnerVisible: Bool
-        let value: Decimal?
+        let cautionType: CautionType?
+        let nonce: Decimal?
 
         switch nonceStatus {
         case .loading:
-            spinnerVisible = true
-            value = nil
-        case .failed:
-            spinnerVisible = false
-            value = nil
-        case .completed(let fallibleNonce):
-            spinnerVisible = false
-            value = Decimal(fallibleNonce.data)
+            cautionType = nil
+            nonce = nil
+        case .failed(_):
+            cautionType = .error
+            nonce = nil
+        case .completed(let nonceData):
+            nonce = Decimal(nonceData.data)
+            cautionType = nonceData.cautionType
         }
 
-        spinnerVisibleRelay.accept(spinnerVisible)
-        valueRelay.accept(value)
+        cautionTypeRelay.accept(cautionType)
+        valueRelay.accept(nonce)
     }
 
     private func sync(usingRecommended: Bool) {
@@ -67,6 +67,10 @@ extension NonceViewModel {
 
     func reset() {
         service.resetNonce()
+    }
+
+    var cautionTypeDriver: Driver<CautionType?> {
+        cautionTypeRelay.asDriver()
     }
 
 }

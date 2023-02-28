@@ -17,6 +17,7 @@ class LegacyEvmFeeViewModel {
     private let spinnerVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let gasLimitRelay = BehaviorRelay<String>(value: "n/a")
     private let gasPriceRelay = BehaviorRelay<Decimal?>(value: nil)
+    private let cautionTypeRelay = BehaviorRelay<CautionType?>(value: nil)
 
     init(gasPriceService: LegacyGasPriceService, feeService: IEvmFeeService, coinService: CoinService, feeViewItemFactory: FeeViewItemFactory) {
         self.gasPriceService = gasPriceService
@@ -34,11 +35,29 @@ class LegacyEvmFeeViewModel {
     }
 
     private func sync(gasPriceStatus: DataStatus<FallibleData<EvmFeeModule.GasPrices>>) {
-        if case .completed(let fallibleGasPrice) = gasPriceStatus, case .legacy(let gasPrice) = fallibleGasPrice.data.userDefined {
-            gasPriceRelay.accept(feeViewItemFactory.decimalValue(value: gasPrice))
-        } else {
-            gasPriceRelay.accept(nil)
+        let gasPriceStatus = gasPriceStatus
+        let cautionType: CautionType?
+        let gasPrice: Decimal?
+
+        switch gasPriceStatus {
+        case .loading:
+            cautionType = nil
+            gasPrice = nil
+        case .failed(_):
+            cautionType = .error
+            gasPrice = nil
+        case .completed(let fallibleGasPrice):
+            if case .legacy(let _gasPrice) = fallibleGasPrice.data.userDefined {
+                gasPrice = feeViewItemFactory.decimalValue(value: _gasPrice)
+            } else {
+                gasPrice = nil
+            }
+
+            cautionType = fallibleGasPrice.cautionType
         }
+
+        cautionTypeRelay.accept(cautionType)
+        gasPriceRelay.accept(gasPrice)
     }
 
     private func sync(transactionStatus: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
@@ -104,6 +123,10 @@ extension LegacyEvmFeeViewModel {
 
     func reset() {
         gasPriceService.setRecommendedGasPrice()
+    }
+
+    var cautionTypeDriver: Driver<CautionType?> {
+        cautionTypeRelay.asDriver()
     }
 
 }

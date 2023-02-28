@@ -19,6 +19,7 @@ class Eip1559EvmFeeViewModel {
     private let currentBaseFeeRelay = BehaviorRelay<String>(value: "n/a")
     private let maxGasPriceRelay = BehaviorRelay<Decimal?>(value: nil)
     private let tipsRelay = BehaviorRelay<Decimal?>(value: nil)
+    private let cautionTypeRelay = BehaviorRelay<CautionType?>(value: nil)
 
     init(gasPriceService: Eip1559GasPriceService, feeService: IEvmFeeService, coinService: CoinService, feeViewItemFactory: FeeViewItemFactory) {
         self.gasPriceService = gasPriceService
@@ -85,15 +86,28 @@ class Eip1559EvmFeeViewModel {
 
     private func sync(gasPriceStatus: DataStatus<FallibleData<EvmFeeModule.GasPrices>>?) {
         let gasPriceStatus = gasPriceStatus ?? gasPriceService.status
+        let cautionType: CautionType?
+        let maxGasPrice: Decimal?
+        let tips: Decimal?
 
-        guard case .completed = gasPriceStatus else {
-            maxGasPriceRelay.accept(nil)
-            tipsRelay.accept(nil)
-            return
+        switch gasPriceStatus {
+        case .loading:
+            cautionType = nil
+            maxGasPrice = nil
+            tips = nil
+        case .failed(_):
+            cautionType = .error
+            maxGasPrice = nil
+            tips = nil
+        case .completed(let fallibleGasPrice):
+            maxGasPrice = feeViewItemFactory.decimalValue(value: gasPriceService.maxFee)
+            tips = feeViewItemFactory.decimalValue(value: gasPriceService.tips)
+            cautionType = fallibleGasPrice.cautionType
         }
 
-        maxGasPriceRelay.accept(feeViewItemFactory.decimalValue(value: gasPriceService.maxFee))
-        tipsRelay.accept(feeViewItemFactory.decimalValue(value: gasPriceService.tips))
+        cautionTypeRelay.accept(cautionType)
+        maxGasPriceRelay.accept(maxGasPrice)
+        tipsRelay.accept(tips)
     }
 
     private func sync(recommendedBaseFee: Int) {
@@ -144,6 +158,11 @@ extension Eip1559EvmFeeViewModel {
     func reset() {
         gasPriceService.setRecommendedGasPrice()
     }
+
+    var cautionTypeDriver: Driver<CautionType?> {
+        cautionTypeRelay.asDriver()
+    }
+
 }
 
 extension Eip1559EvmFeeViewModel: IFeeViewModel {

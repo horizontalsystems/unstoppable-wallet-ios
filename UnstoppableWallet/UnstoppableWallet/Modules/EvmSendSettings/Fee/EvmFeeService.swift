@@ -54,12 +54,11 @@ class EvmFeeService {
                     .gasDataSingle(gasPrice: fallibleGasPrices.data.recommended, transactionData: transactionData, stubAmount: 1)
                     .flatMap { adjustedGasData in
                         adjustedGasData.set(price: fallibleGasPrices.data.userDefined)
-                        let adjustedValue = transactionData.value - adjustedGasData.fee
 
-                        if adjustedValue <= 0 {
+                        if transactionData.value <= adjustedGasData.fee {
                             return Single.error(EvmFeeModule.GasDataError.insufficientBalance)
                         } else {
-                            let adjustedTransactionData = TransactionData(to: transactionData.to, value: adjustedValue, input: transactionData.input)
+                            let adjustedTransactionData = TransactionData(to: transactionData.to, value: transactionData.value - adjustedGasData.fee, input: transactionData.input)
                             return Single.just(EvmFeeModule.Transaction(transactionData: adjustedTransactionData, gasData: adjustedGasData))
                         }
                     }

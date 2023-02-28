@@ -9,15 +9,13 @@ import ComponentKit
 class SendSettingsViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
-    private let viewModel: SendSettingsViewModel
     private let dataSources: [ISendSettingsDataSource]
     private let tableView = SectionsTableView(style: .grouped)
     private let cautionCell = TitledHighlightedDescriptionCell()
 
     private var loaded = false
 
-    init(viewModel: SendSettingsViewModel, dataSources: [ISendSettingsDataSource]) {
-        self.viewModel = viewModel
+    init(dataSources: [ISendSettingsDataSource]) {
         self.dataSources = dataSources
 
         super.init()
@@ -35,6 +33,10 @@ class SendSettingsViewController: ThemeViewController {
 
             dataSource.onUpdateAlteredState = { [weak self] in
                 self?.syncResetButton()
+            }
+
+            dataSource.onCaution = { [weak self] caution in
+                self?.handle(caution: caution)
             }
         }
     }
@@ -75,8 +77,6 @@ class SendSettingsViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         dataSources.forEach { $0.viewDidLoad() }
-
-        subscribe(disposeBag, viewModel.cautionDriver) { [weak self] in self?.handle(caution: $0) }
 
         tableView.buildSections()
         syncResetButton()

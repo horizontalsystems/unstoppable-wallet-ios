@@ -132,7 +132,9 @@ extension SendBitcoinFactory: ISendFeeSettingsFactory {
         var dataSources: [ISendSettingsDataSource] = []
 
         let feeViewModel = SendFeeViewModel(service: feeService)
-        let feeRateViewModel = FeeRateViewModel(service: feeRateService)
+        let feeCautionViewModel = SendFeeWarningViewModel(service: feeRateService)
+        let amountCautionViewModel = SendFeeSettingsAmountCautionViewModel(service: amountCautionService, feeToken: token)
+        let feeRateViewModel = FeeRateViewModel(service: feeRateService, feeCautionViewModel: feeCautionViewModel, amountCautionViewModel: amountCautionViewModel)
         if token.blockchainType == .bitcoin {
             dataSources.append(FeeRateDataSource(feeViewModel: feeViewModel, feeRateViewModel: feeRateViewModel))
         }
@@ -145,10 +147,7 @@ extension SendBitcoinFactory: ISendFeeSettingsFactory {
             dataSources.append(TimeLockDataSource(viewModel: timeLockViewModel))
         }
 
-        let feeCautionViewModel = SendFeeWarningViewModel(service: feeRateService)
-        let amountCautionViewModel = SendFeeSettingsAmountCautionViewModel(service: amountCautionService, feeToken: token)
-        let viewModel = SendSettingsViewModel(feeCautionViewModel: feeCautionViewModel, amountCautionViewModel: amountCautionViewModel)
-        let viewController = SendSettingsViewController(viewModel: viewModel, dataSources: dataSources)
+        let viewController = SendSettingsViewController(dataSources: dataSources)
 
         return viewController
     }

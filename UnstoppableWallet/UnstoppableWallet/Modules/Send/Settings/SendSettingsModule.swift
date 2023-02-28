@@ -33,6 +33,7 @@ protocol ISendSettingsDataSource: AnyObject {
     var onOpenInfo: ((String, String) -> ())? { get set }
     var present: ((UIViewController) -> ())? { get set }
     var onUpdateAlteredState: (() -> ())? { get set }
+    var onCaution: ((TitledCaution?) -> ())? { get set }
 
     var altered: Bool { get }
     var buildSections: [SectionProtocol] { get }

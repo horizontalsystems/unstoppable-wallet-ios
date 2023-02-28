@@ -36,6 +36,7 @@ class LegacyEvmFeeDataSource {
         subscribe(disposeBag, viewModel.gasLimitDriver) { [weak self] in self?.syncGasLimitCell(value: $0) }
         subscribe(disposeBag, viewModel.gasPriceDriver) { [weak self] in self?.gasPriceCell.value = $0 }
         subscribe(disposeBag, viewModel.alteredStateSignal) { [weak self] in self?.onUpdateAlteredState?() }
+        subscribe(disposeBag, viewModel.cautionTypeDriver) { [weak self] in self?.gasPriceCell.set(cautionType: $0) }
 
         gasPriceCell.onChangeValue = { [weak self] value in self?.viewModel.set(value: value) }
     }

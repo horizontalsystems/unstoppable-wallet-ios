@@ -16,6 +16,7 @@ class TimeLockDataSource {
     var onOpenInfo: ((String, String) -> ())? = nil
     var present: ((UIViewController) -> ())? = nil
     var onUpdateAlteredState: (() -> ())? = nil
+    var onCaution: ((TitledCaution?) -> ())? = nil
 
     init(viewModel: TimeLockViewModel) {
         self.viewModel = viewModel

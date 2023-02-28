@@ -25,6 +25,7 @@ class NonceDataSource {
 
         subscribe(disposeBag, viewModel.alteredStateSignal) { [weak self] in self?.onUpdateAlteredState?() }
         subscribe(disposeBag, viewModel.valueDriver) { [weak self] in self?.nonceCell.value = $0 }
+        subscribe(disposeBag, viewModel.cautionTypeDriver) { [weak self] in self?.nonceCell.set(cautionType: $0) }
     }
 
 }
