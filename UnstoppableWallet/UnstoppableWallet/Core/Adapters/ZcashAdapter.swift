@@ -644,6 +644,24 @@ extension ZcashAdapter: ISendZcashAdapter {
 
 }
 
+class ZcashAddressValidator {
+    private let network: ZcashNetwork
+
+    init(network: ZcashNetwork) {
+        self.network = network
+    }
+
+    public func validate(address: String) throws {
+        do {
+            _ = try Recipient(address, network: network.networkType)
+        } catch {
+            //FIXME: Should this be handled another way? logged? how?
+            throw AppError.addressInvalid
+        }
+    }
+
+}
+
 private class ZcashLogger: ZcashLightClientKit.Logger {
 
     private let level: HsToolKit.Logger.Level

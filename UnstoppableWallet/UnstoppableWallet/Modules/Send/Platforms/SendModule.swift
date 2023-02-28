@@ -44,7 +44,7 @@ class SendModule {
         let amountCautionService = SendAmountCautionService(amountInputService: amountInputService)
 
         // Address
-        let bitcoinParserItem = BitcoinAddressParserItem(adapter: adapter)
+        let bitcoinParserItem = BitcoinAddressParserItem(parserType: .adapter(adapter))
         let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: bitcoinParserItem, coinCode: token.coin.code, token: token)
         let addressParserChain = AddressParserChain()
                 .append(handler: bitcoinParserItem)
@@ -56,7 +56,7 @@ class SendModule {
         }
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
-        let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain))
 
         // Fee
         let feeRateService = FeeRateService(provider: feeRateProvider)
@@ -171,12 +171,12 @@ class SendModule {
         let amountCautionService = SendAmountCautionService(amountInputService: amountInputService)
 
         // Address
-        let binanceParserItem = BinanceAddressParserItem(adapter: adapter)
+        let binanceParserItem = BinanceAddressParserItem(parserType: .adapter(adapter))
         let addressParserChain = AddressParserChain()
                 .append(handler: binanceParserItem)
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
-        let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain))
 
         let memoService = SendMemoInputService(maxSymbols: 120)
 
@@ -261,12 +261,12 @@ class SendModule {
         let amountCautionService = SendAmountCautionService(amountInputService: amountInputService)
 
         // Address
-        let zcashParserItem = ZcashAddressParserItem(adapter: adapter)
+        let zcashParserItem = ZcashAddressParserItem(parserType: .adapter(adapter))
         let addressParserChain = AddressParserChain()
                 .append(handler: zcashParserItem)
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
-        let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain)
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain))
 
         let memoService = SendMemoInputService(maxSymbols: 120)
 

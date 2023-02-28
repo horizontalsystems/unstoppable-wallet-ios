@@ -1817,7 +1817,6 @@
 		ABC9A4B643D98FB95F431401 /* SendBitcoinAmountInputService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACF1F55164BDFD049793 /* SendBitcoinAmountInputService.swift */; };
 		ABC9A4BD4CA7A7872CE6167E /* BaseSendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ABE97578DC667CBDC11A /* BaseSendViewController.swift */; };
 		ABC9A4CD35CF43C88EC13909 /* SendEip1155Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC6A0B950C0AABD5A93E /* SendEip1155Service.swift */; };
-		ABC9A4D7867973E5FAEBCF10 /* ContactStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC293B07FC8A980FE775 /* ContactStorage.swift */; };
 		ABC9A4D7867973E5FAEBCF10 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC293B07FC8A980FE775 /* ContactManager.swift */; };
 		ABC9A4E323FF7AAD86FA8E75 /* MarketCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A37521CD6E2CC5BA4E68 /* MarketCardView.swift */; };
 		ABC9A4F4B7F17169DC240A98 /* WalletConnectUriHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1C31F5343EB2BEA4540 /* WalletConnectUriHandler.swift */; };
@@ -7855,6 +7854,8 @@
 				ABC9ACD7D78ED573B97B0E52 /* FileStorageService.swift in Sources */,
 				ABC9A4D7867973E5FAEBCF10 /* ContactManager.swift in Sources */,
 				ABC9ACD7D78ED573B97B0E52 /* FileDataStorage.swift in Sources */,
+				ABC9A4D7867973E5FAEBCF10 /* ContactManager.swift in Sources */,
+				ABC9ACD7D78ED573B97B0E52 /* FileDataStorage.swift in Sources */,
 				ABC9AFA89983A9BCB78E4575 /* Contact.swift in Sources */,
 				ABC9A57DE6436FB8795F50E4 /* AddressBookViewController.swift in Sources */,
 				ABC9ACE1EDEA27A054EDC2C4 /* AddressBookService.swift in Sources */,
@@ -8953,6 +8954,8 @@
 				ABC9A3614B20DAACA817F588 /* Repository.swift in Sources */,
 				ABC9AC1DBFFBDE79C9B8EA2C /* ContactStorage.swift in Sources */,
 				ABC9A5459204AC334343A731 /* FileStorageService.swift in Sources */,
+				ABC9AC1DBFFBDE79C9B8EA2C /* ContactManager.swift in Sources */,
+				ABC9A5459204AC334343A731 /* FileDataStorage.swift in Sources */,
 				ABC9AC1DBFFBDE79C9B8EA2C /* ContactManager.swift in Sources */,
 				ABC9A5459204AC334343A731 /* FileDataStorage.swift in Sources */,
 				ABC9A06BE632BD33E5CA4106 /* Contact.swift in Sources */,
