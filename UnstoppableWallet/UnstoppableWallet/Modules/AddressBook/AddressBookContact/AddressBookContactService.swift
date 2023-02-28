@@ -31,7 +31,7 @@ class AddressBookContactService {
         }
     }
 
-    private var addresses: [ContactAddress] = []
+    private(set) var addresses: [ContactAddress] = []
 
     init(contactManager: ContactManager, marketKit: MarketKit.Kit, contact: Contact? = nil) {
         self.marketKit = marketKit

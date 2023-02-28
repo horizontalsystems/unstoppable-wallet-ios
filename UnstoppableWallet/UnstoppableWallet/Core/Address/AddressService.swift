@@ -1,6 +1,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import MarketKit
 
 protocol IAmountPublishService: AnyObject {
     var publishAmountRelay: PublishRelay<Decimal> { get }
@@ -13,8 +14,10 @@ class AddressService {
     private var addressParserDisposeBag = DisposeBag()
     private var customErrorDisposeBag = DisposeBag()
 
-    private let addressUriParser: AddressUriParser
-    private let addressParserChain: AddressParserChain
+    private var addressUriParser: AddressUriParser
+    private var addressParserChain: AddressParserChain
+
+    private var text: String = ""
 
     weak var amountPublishService: IAmountPublishService?
     weak var customErrorService: IErrorService? {
@@ -37,9 +40,15 @@ class AddressService {
         }
     }
 
-    init(addressUriParser: AddressUriParser, addressParserChain: AddressParserChain, initialAddress: Address? = nil) {
-        self.addressUriParser = addressUriParser
-        self.addressParserChain = addressParserChain
+    init(mode: Mode, initialAddress: Address? = nil) {
+        switch mode {
+        case .blockchainType(let blockchainType): ()
+            addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType)
+            addressParserChain = AddressParserFactory.parserChain(blockchainType: blockchainType)
+        case .parsers(let uriParser, let parserChain):
+            addressUriParser = uriParser
+            addressParserChain = parserChain
+        }
 
         if let initialAddress = initialAddress {
             state = .success(initialAddress)
@@ -96,6 +105,7 @@ extension AddressService {
     }
 
     func set(text: String) {
+        self.text = text
         guard !text.isEmpty else {
             state = .empty
             return
@@ -124,6 +134,13 @@ extension AddressService {
         set(text: addressData.address)
 
         return addressData.address
+    }
+
+    func change(blockchainType: BlockchainType) {
+        addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType)
+        addressParserChain = AddressParserFactory.parserChain(blockchainType: blockchainType)
+
+        set(text: text)
     }
 
 }
@@ -155,6 +172,11 @@ extension AddressService {
 
     enum AddressError: Error {
         case invalidAddress
+    }
+
+    enum Mode {
+        case blockchainType(BlockchainType)
+        case parsers(AddressUriParser, AddressParserChain)
     }
 
 }

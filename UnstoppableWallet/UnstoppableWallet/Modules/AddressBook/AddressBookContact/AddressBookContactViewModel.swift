@@ -57,6 +57,10 @@ class AddressBookContactViewModel {
 
 extension AddressBookContactViewModel {
 
+    var existAddresses: [ContactAddress] {
+        service.addresses
+    }
+
     var title: String {
         service.oldContact?.name ?? "New Contact".localized
     }

@@ -35,6 +35,7 @@ class AddressBookContactViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = viewModel.title
+        navigationItem.largeTitleDisplayMode = .never
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.save".localized, style: .done, target: self, action: #selector(onTapSaveButton))
         if presented {
@@ -88,7 +89,11 @@ class AddressBookContactViewController: ThemeViewController {
     }
 
     private func onTapAddAddress() {
+        guard let controller = AddressBookAddressModule.viewController(existAddresses: viewModel.existAddresses) else {
+            return
+        }
 
+        present(controller, animated: true)
     }
 
 }

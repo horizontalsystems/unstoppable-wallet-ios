@@ -2,14 +2,26 @@ import Foundation
 import RxSwift
 
 class ZcashAddressParserItem {
-    private let adapter: ISendZcashAdapter
+    private let parserType: ParserType
 
-    init(adapter: ISendZcashAdapter) {
-        self.adapter = adapter
+    init(parserType: ParserType) {
+        self.parserType = parserType
     }
 
-    func validate(address: String) throws -> ZcashAdapter.AddressType {
-        try adapter.validate(address: address)
+    private func validate(address: String) -> Single<Address> {
+        do {
+            switch parserType {
+            case .adapter(let adapter):
+                _ = try adapter.validate(address: address)
+                return Single.just(Address(raw: address, domain: nil))
+            case .validator(let validator):
+                try validator.validate(address: address)
+                return Single.just(Address(raw: address, domain: nil))
+            }
+
+        } catch {
+            return Single.error(error)
+        }
     }
 
 }
@@ -17,21 +29,22 @@ class ZcashAddressParserItem {
 extension ZcashAddressParserItem: IAddressParserItem {
 
     func handle(address: String) -> Single<Address> {
-        do {
-            _ = try validate(address: address)
-            return Single.just(Address(raw: address, domain: nil))
-        } catch {
-            return Single.error(error)
-        }
+        validate(address: address)
     }
 
     func isValid(address: String) -> Single<Bool> {
-        do {
-            _ = try adapter.validate(address: address)
-            return Single.just(true)
-        } catch {
-            return Single.just(false)
-        }
+        validate(address: address)
+                .map { _ in true }
+                .catchErrorJustReturn(false)
+    }
+
+}
+
+extension ZcashAddressParserItem {
+
+    enum ParserType {
+        case adapter(ISendZcashAdapter)
+        case validator(ZcashAddressValidator)
     }
 
 }

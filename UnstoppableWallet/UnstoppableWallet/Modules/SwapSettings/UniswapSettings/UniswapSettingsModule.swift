@@ -24,7 +24,7 @@ struct UniswapSettingsModule {
         }
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: ethereumToken.blockchainType)
-        let addressService = AddressService(addressUriParser: addressUriParser, addressParserChain: addressParserChain, initialAddress: tradeService.settings.recipient)
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), initialAddress: tradeService.settings.recipient)
 
         let service = UniswapSettingsService(tradeOptions: tradeService.settings, addressService: addressService)
         let viewModel = UniswapSettingsViewModel(service: service, tradeService: tradeService)

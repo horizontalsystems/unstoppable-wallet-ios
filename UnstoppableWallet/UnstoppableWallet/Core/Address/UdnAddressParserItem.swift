@@ -85,15 +85,24 @@ extension UdnAddressParserItem: IAddressParserItem {
 
 extension UdnAddressParserItem {
 
-    static func chainCoinCode(blockchainType: BlockchainType) -> String? {
+    static func chainCoinCode(blockchainType: BlockchainType) -> String {
         switch blockchainType {
+        case .bitcoin: return "BTC"
         case .ethereum: return "ETH"
+        case .ethereumGoerli: return "ETH"
         case .binanceSmartChain: return "ETH"
         case .polygon: return "ETH"
         case .avalanche: return "ETH"
         case .optimism: return "ETH"
         case .arbitrumOne: return "ETH"
-        default: return nil
+        case .litecoin: return "LTC"
+        case .dash: return "DASH"
+        case .bitcoinCash: return "BCH"
+        case .zcash: return "ZEC"
+        case .binanceChain: return "BNB"
+        case .gnosis: return "GNO"
+        case .solana: return "SOL"
+        case .unsupported(let uid): return uid
         }
     }
 

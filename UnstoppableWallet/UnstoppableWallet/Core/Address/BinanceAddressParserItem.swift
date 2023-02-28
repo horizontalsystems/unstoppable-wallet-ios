@@ -1,11 +1,29 @@
 import Foundation
 import RxSwift
+import BitcoinCore
+import BinanceChainKit
 
 class BinanceAddressParserItem {
-    private let adapter: ISendBinanceAdapter
+    private let parserType: ParserType
 
-    init(adapter: ISendBinanceAdapter) {
-        self.adapter = adapter
+    init(parserType: ParserType) {
+        self.parserType = parserType
+    }
+
+    private func validate(address: String) -> Single<Address> {
+        do {
+            switch parserType {
+            case .adapter(let adapter):
+                try adapter.validate(address: address)
+                return Single.just(Address(raw: address, domain: nil))
+            case .validator(let validator):
+                try validator.validate(address: address)
+                return Single.just(Address(raw: address, domain: nil))
+            }
+
+        } catch {
+            return Single.error(error)
+        }
     }
 
 }
@@ -13,21 +31,22 @@ class BinanceAddressParserItem {
 extension BinanceAddressParserItem: IAddressParserItem {
 
     func handle(address: String) -> Single<Address> {
-        do {
-            try adapter.validate(address: address)
-            return Single.just(Address(raw: address, domain: nil))
-        } catch {
-            return Single.error(error)
-        }
+        validate(address: address)
     }
 
     func isValid(address: String) -> Single<Bool> {
-        do {
-            try adapter.validate(address: address)
-            return Single.just(true)
-        } catch {
-            return Single.just(false)
-        }
+        validate(address: address)
+                .map { _ in true }
+                .catchErrorJustReturn(false)
+    }
+
+}
+
+extension BinanceAddressParserItem {
+
+    enum ParserType {
+        case adapter(ISendBinanceAdapter)
+        case validator(BinanceAddressValidator)
     }
 
 }

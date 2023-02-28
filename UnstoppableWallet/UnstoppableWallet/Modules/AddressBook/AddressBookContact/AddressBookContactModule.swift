@@ -13,6 +13,7 @@ class AddressBookContactModule {
                 contactManager: contactManager,
                 marketKit: App.shared.marketKit,
                 contact: contact)
+
         let viewModel = AddressBookContactViewModel(service: service)
 
         let controller = AddressBookContactViewController(viewModel: viewModel, presented: presented)
