@@ -6,6 +6,20 @@ import RxSwift
 import RxCocoa
 import ComponentKit
 
+protocol ISendSettingsDataSource: AnyObject {
+    var tableView: SectionsTableView? { get set }
+    var onOpenInfo: ((String, String) -> ())? { get set }
+    var present: ((UIViewController) -> ())? { get set }
+    var onUpdateAlteredState: (() -> ())? { get set }
+    var onCaution: ((TitledCaution?) -> ())? { get set }
+
+    var altered: Bool { get }
+    var buildSections: [SectionProtocol] { get }
+
+    func onTapReset()
+    func viewDidLoad()
+}
+
 class SendSettingsViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
 
@@ -80,6 +94,7 @@ class SendSettingsViewController: ThemeViewController {
 
         tableView.buildSections()
         syncResetButton()
+        handle(caution: nil)
 
         loaded = true
     }
