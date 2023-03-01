@@ -1161,7 +1161,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "manage_account.name" = "İsim";
 "manage_account.recovery_phrase" = "Kurtarma cümlesi";
 "manage_account.public_keys" = "Genel Anahtarlar";
-"manage_account.private_keys" = "Private Keys";
+"manage_account.private_keys" = "Özel Anahtar";
 "manage_account.backup_recovery_phrase" = "Yedekleme Kurtarma İfadesi";
 "manage_account.unlink" = "Ayır";
 
@@ -1175,7 +1175,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Manage Account -> Private Keys
 
-"private_keys.title" = "Private Keys";
+"private_keys.title" = "Özel Anahtar";
 "private_keys.evm_private_key" = "EVM Özel anahtar";
 "private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
