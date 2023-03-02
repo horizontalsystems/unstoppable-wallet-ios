@@ -259,7 +259,7 @@ class NftAssetOverviewViewController: ThemeViewController {
 extension NftAssetOverviewViewController: SectionsDataSource {
 
     private func headerRow(title: String) -> RowProtocol {
-        tableView.headerInfoRow(id: "header-\(title)", title: title, showInfo: false)
+        tableView.headerInfoRow(id: "header-\(title)", title: title)
     }
 
     private func imageSection(ratio: CGFloat) -> SectionProtocol {

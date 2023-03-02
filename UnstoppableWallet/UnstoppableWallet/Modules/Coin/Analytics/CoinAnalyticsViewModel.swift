@@ -38,6 +38,7 @@ class CoinAnalyticsViewModel {
             syncErrorRelay.accept(false)
         case .completed(let item):
             viewItemRelay.accept(viewItem(item: item))
+//            viewItemRelay.accept(lockedViewItem(item: item))
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
         case .failed:
@@ -47,8 +48,8 @@ class CoinAnalyticsViewModel {
         }
     }
 
-    private func chart(title: String, item: CoinAnalyticsService.ProData, description: String? = nil, currentValueType: CoinProChartModule.ChartValueType = .last, chartPreviewValuePostfix: ChartPreviewValuePostfix = .currency) -> MarketCardView.ViewItem? {
-        switch item {
+    private func chartViewItem(data: CoinAnalyticsService.ProData, currentValueType: CoinProChartModule.ChartValueType, chartPreviewValuePostfix: ChartPreviewValuePostfix) -> ChartViewItem? {
+        switch data {
         case .empty: return nil
         case .completed(let values):
             guard let first = values.first, let last = values.last else {
@@ -59,101 +60,123 @@ class CoinAnalyticsViewModel {
                 ChartItem(timestamp: $0.timestamp).added(name: .rate, value: $0.value)
             }
 
-            let diffValue = (last.value / first.value - 1) * 100
-            let diff = DiffLabel.formatted(value: diffValue)
-            let diffColor = DiffLabel.color(value: diffValue)
-
             let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
 
             var value: Decimal
-            var ignoreTrend = false
 
             switch currentValueType {
             case .last: value = last.value
-            case .cumulative:
-                value = values.map { $0.value }.reduce(0, +)
-                ignoreTrend = true                      // For cumulative value trend must be ignored
+            case .cumulative: value = values.map { $0.value }.reduce(0, +)
             }
 
             let valueString: String?
+
             switch chartPreviewValuePostfix {
             case .currency: valueString = ValueFormatter.instance.formatShort(currency: service.currency, value: value)
             case .coin: valueString = ValueFormatter.instance.formatShort(value: value).map { [$0, coin.code].joined(separator: " ") }
             case .noPostfix: valueString = ValueFormatter.instance.formatShort(value: value)
             }
 
-            return MarketCardView.ViewItem(
-                    title: title,
-                    value: valueString,
-                    description: ignoreTrend ? nil : diff,
-                    descriptionColor: ignoreTrend ? nil : diffColor,
-                    chartData: chartData,
-                    movementTrend: ignoreTrend ? .ignore : (diffValue.isSignMinus ? .down : .up)
-            )
+            guard let valueString else {
+                return nil
+            }
+
+            return ChartViewItem(value: valueString, chartData: chartData)
         }
     }
 
-    private func tokenLiquidity(proFeatures: CoinAnalyticsService.AnalyticData) -> TokenLiquidityViewItem {
-        TokenLiquidityViewItem(
-                volume: chart(title: CoinProChartModule.ProChartType.volume.valueTitle, item: proFeatures.dexVolumes, currentValueType: .cumulative),
-                liquidity: chart(title: CoinProChartModule.ProChartType.liquidity.valueTitle, item: proFeatures.dexLiquidity, currentValueType: .last)
-        )
+    private func rankCardViewItem(data: CoinAnalyticsService.ProData, type: CoinProChartModule.ChartValueType, postfix: ChartPreviewValuePostfix, rank: Int?) -> Lockable<RankCardViewItem>? {
+        guard let chartViewItem = chartViewItem(data: data, currentValueType: type, chartPreviewValuePostfix: postfix), let rank else {
+            return nil
+        }
+
+        return .unlocked(value: RankCardViewItem(chart: chartViewItem, rank: "#\(rank)"))
     }
 
-    private func tokenDistribution(proFeatures: CoinAnalyticsService.AnalyticData) -> TokenDistributionViewItem {
-        TokenDistributionViewItem(
-                txCount: chart(title: CoinProChartModule.ProChartType.txCount.valueTitle, item: proFeatures.txCount, currentValueType: .cumulative, chartPreviewValuePostfix: .noPostfix),
-                txVolume: chart(title: CoinProChartModule.ProChartType.txVolume.valueTitle, item: proFeatures.txVolume, currentValueType: .cumulative, chartPreviewValuePostfix: .coin),
-                activeAddresses: chart(title: CoinProChartModule.ProChartType.activeAddresses.valueTitle, item: proFeatures.activeAddresses, currentValueType: .last, chartPreviewValuePostfix: .noPostfix)
-        )
+    private func transactionCountViewItem(data: CoinAnalyticsService.ProData, volumeData: CoinAnalyticsService.ProData, rank: Int?) -> Lockable<TransactionCountViewItem>? {
+        guard let chartViewItem = chartViewItem(data: data, currentValueType: .cumulative, chartPreviewValuePostfix: .noPostfix),
+              let volumeChartViewItem = self.chartViewItem(data: volumeData, currentValueType: .cumulative, chartPreviewValuePostfix: .coin),
+              let rank else {
+            return nil
+        }
+
+        return .unlocked(value: TransactionCountViewItem(chart: chartViewItem, rank: "#\(rank)", volume: volumeChartViewItem.value))
+    }
+
+    private func tvlViewItem(tvls: [ChartPoint]?, rank: Int?, ratio: Decimal?) -> Lockable<TvlViewItem>? {
+        guard let chartViewItem = chartViewItem(data: tvls.flatMap { .completed($0) } ?? .empty, currentValueType: .last, chartPreviewValuePostfix: .currency),
+              let ratio = ratio.flatMap({ ratioFormatter.string(from: $0 as NSNumber) }),
+              let rank else {
+            return nil
+        }
+
+        return .unlocked(value: TvlViewItem(chart: chartViewItem, rank: "#\(rank)", ratio: ratio))
     }
 
     private func viewItem(item: CoinAnalyticsService.Item) -> ViewItem {
         ViewItem(
-                tokenLiquidity: tokenLiquidity(proFeatures: item.analytics),
-                tokenDistribution: tokenDistribution(proFeatures: item.analytics),
-                hasMajorHolders: service.hasMajorHolders,
-                tvlChart: chart(title: "coin_page.chart_tvl".localized, item: item.tvls.flatMap { .completed($0) } ?? .empty),
-                tvlRank: item.marketInfoDetails.tvlRank.map { "#\($0)" },
-                tvlRatio: item.marketInfoDetails.tvlRatio.flatMap { ratioFormatter.string(from: $0 as NSNumber) },
-                treasuries: item.marketInfoDetails.totalTreasuries.flatMap { ValueFormatter.instance.formatShort(currency: service.currency, value: $0) },
-                fundsInvested: item.marketInfoDetails.totalFundsInvested.flatMap { ValueFormatter.instance.formatShort(currency: service.usdCurrency, value: $0) },
-                reportsCount: item.marketInfoDetails.reportsCount == 0 ? nil : "\(item.marketInfoDetails.reportsCount)",
-                securityViewItems: securityViewItems(info: item.marketInfoDetails),
-                auditAddresses: service.auditAddresses
+                lockInfo: false,
+                cexVolume: rankCardViewItem(
+                        data: item.analytics.dexVolumes,
+                        type: .cumulative,
+                        postfix: .currency,
+                        rank: 15
+                ),
+                dexVolume: rankCardViewItem(
+                        data: item.analytics.dexVolumes,
+                        type: .cumulative,
+                        postfix: .currency,
+                        rank: 25
+                ),
+                dexLiquidity: rankCardViewItem(
+                        data: item.analytics.dexLiquidity,
+                        type: .last,
+                        postfix: .currency,
+                        rank: 35
+                ),
+                activeAddresses: rankCardViewItem(
+                        data: item.analytics.activeAddresses,
+                        type: .cumulative,
+                        postfix: .noPostfix,
+                        rank: 45
+                ),
+                transactionCount: transactionCountViewItem(
+                        data: item.analytics.txCount,
+                        volumeData: item.analytics.txVolume,
+                        rank: 55
+                ),
+                tvl: tvlViewItem(
+                        tvls: item.tvls,
+                        rank: item.marketInfoDetails.tvlRank,
+                        ratio: item.marketInfoDetails.tvlRatio
+                ),
+                revenue: .unlocked(value: RevenueViewItem(value: "$2.46M", rank: "#3")),
+                investors: item.marketInfoDetails.totalFundsInvested
+                        .flatMap { ValueFormatter.instance.formatShort(currency: service.usdCurrency, value: $0) }
+                        .map { .unlocked(value: $0) },
+                treasuries: item.marketInfoDetails.totalTreasuries
+                        .flatMap { ValueFormatter.instance.formatShort(currency: service.currency, value: $0) }
+                        .map { .unlocked(value: $0) },
+                reports: item.marketInfoDetails.reportsCount == 0 ? nil : .unlocked(value: "\(item.marketInfoDetails.reportsCount)"),
+                auditAddresses: service.auditAddresses.count == 0 ? nil : .unlocked(value: service.auditAddresses)
         )
     }
 
-    private func securityViewItems(info: MarketInfoDetails) -> [SecurityViewItem] {
-        var viewItems = [SecurityViewItem]()
-
-        if let kitPrivacy = info.privacy {
-            let privacy: SecurityLevel
-            switch kitPrivacy {
-            case .low: privacy = .low
-            case .medium: privacy = .medium
-            case .high: privacy = .high
-            }
-
-            viewItems.append(SecurityViewItem(type: .privacy, value: privacy.title, valueGrade: privacy.grade))
-        }
-
-        if let kitIssuance = info.decentralizedIssuance {
-            let issuance: SecurityIssuance = kitIssuance ? .decentralized : .centralized
-            viewItems.append(SecurityViewItem(type: .issuance, value: issuance.title, valueGrade: issuance.grade))
-        }
-
-        if let kitResistant = info.confiscationResistant {
-            let resistance: SecurityConfiscationResistance = kitResistant ? .yes : .no
-            viewItems.append(SecurityViewItem(type: .confiscationResistance, value: resistance.title, valueGrade: resistance.grade))
-        }
-
-        if let kitResistant = info.censorshipResistant {
-            let resistance: SecurityCensorshipResistance = kitResistant ? .yes : .no
-            viewItems.append(SecurityViewItem(type: .censorshipResistance, value: resistance.title, valueGrade: resistance.grade))
-        }
-
-        return viewItems
+    private func lockedViewItem(item: CoinAnalyticsService.Item) -> ViewItem {
+        ViewItem(
+                lockInfo: true,
+                cexVolume: .locked,
+                dexVolume: .locked,
+                dexLiquidity: .locked,
+                activeAddresses: .locked,
+                transactionCount: .locked,
+                tvl: .locked,
+                revenue: .locked,
+                investors: .locked,
+                treasuries: .locked,
+                reports: .locked,
+                auditAddresses: .locked
+        )
     }
 
 }
@@ -189,174 +212,71 @@ extension CoinAnalyticsViewModel {
 extension CoinAnalyticsViewModel {
 
     struct ViewItem {
-        let tokenLiquidity: TokenLiquidityViewItem
-        let tokenDistribution: TokenDistributionViewItem
-        let hasMajorHolders: Bool
-        let tvlChart: MarketCardView.ViewItem?
-        let tvlRank: String?
-        let tvlRatio: String?
-        let treasuries: String?
-        let fundsInvested: String?
-        let reportsCount: String?
-        let securityViewItems: [SecurityViewItem]
-        let auditAddresses: [String]
-    }
-
-    struct TokenLiquidityViewItem {
-        let volume: MarketCardView.ViewItem?
-        let liquidity: MarketCardView.ViewItem?
-    }
-
-    struct TokenDistributionViewItem {
-        let txCount: MarketCardView.ViewItem?
-        let txVolume: MarketCardView.ViewItem?
-        let activeAddresses: MarketCardView.ViewItem?
-    }
-
-    struct SecurityViewItem {
-        let type: SecurityType
-        let value: String
-        let valueGrade: SecurityGrade
-    }
-
-    struct SecurityInfoViewItem {
-        let grade: SecurityGrade
-        let title: String
-        let text: String
-    }
-
-    enum SecurityLevel: String, CaseIterable {
-        case low
-        case medium
-        case high
-
-        var title: String {
-            "coin_page.security_parameters.level.\(rawValue)".localized
-        }
-
-        var description: String {
-            "coin_page.security_parameters.privacy.description.\(rawValue)".localized
-        }
-
-        var grade: SecurityGrade {
-            switch self {
-            case .low: return .low
-            case .medium: return .medium
-            case .high: return .high
-            }
-        }
-    }
-
-    enum SecurityIssuance: String, CaseIterable {
-        case decentralized
-        case centralized
-
-        var title: String {
-            "coin_page.security_parameters.issuance.\(rawValue)".localized
-        }
-
-        var description: String {
-            "coin_page.security_parameters.issuance.description.\(rawValue)".localized
-        }
-
-        var grade: SecurityGrade {
-            switch self {
-            case .decentralized: return .high
-            case .centralized: return .low
-            }
-        }
-    }
-
-    enum SecurityConfiscationResistance: String, CaseIterable {
-        case yes
-        case no
-
-        var title: String {
-            "coin_page.security_parameters.resistance.\(rawValue)".localized
-        }
-
-        var description: String {
-            "coin_page.security_parameters.confiscation_resistance.description.\(rawValue)".localized
-        }
-
-        var grade: SecurityGrade {
-            switch self {
-            case .yes: return .high
-            case .no: return .low
-            }
-        }
-    }
-
-    enum SecurityCensorshipResistance: String, CaseIterable {
-        case yes
-        case no
-
-        var title: String {
-            "coin_page.security_parameters.resistance.\(rawValue)".localized
-        }
-
-        var description: String {
-            "coin_page.security_parameters.censorship_resistance.description.\(rawValue)".localized
-        }
-
-        var grade: SecurityGrade {
-            switch self {
-            case .yes: return .high
-            case .no: return .low
-            }
-        }
-    }
-
-    enum SecurityGrade {
-        case low
-        case medium
-        case high
-    }
-
-    enum SecurityType {
-        case privacy
-        case issuance
-        case confiscationResistance
-        case censorshipResistance
-
-        var title: String {
-            switch self {
-            case .privacy: return "coin_page.security_parameters.privacy".localized
-            case .issuance: return "coin_page.security_parameters.issuance".localized
-            case .confiscationResistance: return "coin_page.security_parameters.confiscation_resistance".localized
-            case .censorshipResistance: return "coin_page.security_parameters.censorship_resistance".localized
-            }
-        }
+        let lockInfo: Bool
+        let cexVolume: Lockable<RankCardViewItem>?
+        let dexVolume: Lockable<RankCardViewItem>?
+        let dexLiquidity: Lockable<RankCardViewItem>?
+        let activeAddresses: Lockable<RankCardViewItem>?
+        let transactionCount: Lockable<TransactionCountViewItem>?
+        let tvl: Lockable<TvlViewItem>?
+        let revenue: Lockable<RevenueViewItem>?
+        let investors: Lockable<String>?
+        let treasuries: Lockable<String>?
+        let reports: Lockable<String>?
+        let auditAddresses: Lockable<[String]>?
     }
 
     struct ChartViewItem {
-        let value: String?
-        let diff: String
-        let diffColor: UIColor
-        let chartData: ChartData?
-        let chartTrend: MovementTrend
+        let value: String
+        let chartData: ChartData
+    }
+
+    struct RankCardViewItem {
+        let chart: ChartViewItem
+        let rank: String
+    }
+
+    struct TransactionCountViewItem {
+        let chart: ChartViewItem
+        let rank: String
+        let volume: String
+    }
+
+    struct TvlViewItem {
+        let chart: ChartViewItem
+        let rank: String
+        let ratio: String
+    }
+
+    struct RevenueViewItem {
+        let value: String
+        let rank: String
     }
 
     enum ChartPreviewValuePostfix {
-    case currency
-    case coin
-    case noPostfix
+        case currency
+        case coin
+        case noPostfix
     }
 
 }
 
-extension ChartData {
+enum Lockable<T> {
+    case locked
+    case unlocked(value: T)
 
-    static var placeholder: ChartData {
-        let chartItems = [
-            ChartItem(timestamp: 100).added(name: .rate, value: 2),
-            ChartItem(timestamp: 200).added(name: .rate, value: 2),
-            ChartItem(timestamp: 300).added(name: .rate, value: 1),
-            ChartItem(timestamp: 400).added(name: .rate, value: 3),
-            ChartItem(timestamp: 500).added(name: .rate, value: 2),
-            ChartItem(timestamp: 600).added(name: .rate, value: 2)
-        ]
-        return ChartData(items: chartItems, startTimestamp: 100, endTimestamp: 600)
+    var isLocked: Bool {
+        switch self {
+        case .locked: return true
+        case .unlocked: return false
+        }
+    }
+
+    func lockableValue<P>(mapper: (T) -> P) -> Lockable<P> {
+        switch self {
+        case .locked: return .locked
+        case .unlocked(let value): return .unlocked(value: mapper(value))
+        }
     }
 
 }

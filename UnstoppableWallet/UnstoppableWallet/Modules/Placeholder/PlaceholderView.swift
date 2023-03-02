@@ -59,7 +59,7 @@ class PlaceholderView: UIView {
 
         imageView.contentMode = .center
         imageView.cornerRadius = 50
-        imageView.backgroundColor = .themeRaina
+        imageView.backgroundColor = .themeSteel10
 
         stackView.addArrangedSubview(label)
 
