@@ -27,11 +27,13 @@ class AddressBookService {
         guard !filter.isEmpty else {
             return _contacts
         }
-        return _contacts.filter { contact in contact.name.contains(filter) }
+        return _contacts.filter { contact in contact.name.lowercased().contains(filter.lowercased()) }
     }
 
     init(contactManager: ContactManager) {
         self.contactManager = contactManager
+
+        subscribe(disposeBag, contactManager.stateObservable) { [weak self] _ in self?.sync() }
         sync()
     }
 
@@ -62,21 +64,21 @@ extension AddressBookService {
     }
 
     func update(contact: Contact) {
-//        do {
-//            try contactManager.update(contact: contact)
-//        } catch {
-//            // something wrong with store contact
-//            contactNotAvailable = true
-//        }
+        do {
+            try contactManager.update(contact: contact)
+        } catch {
+            // something wrong with store contact
+            contactNotAvailable = true
+        }
     }
 
-    func delete(contact: Contact) {
-//        do {
-//            try contactManager.update(contact: contact)
-//        } catch {
-//            // something wrong with store contact
-//            contactNotAvailable = true
-//        }
+    func delete(contactUid: String) {
+        do {
+            try contactManager.delete(contactUid)
+        } catch {
+            // something wrong with store contact
+            contactNotAvailable = true
+        }
     }
 
 }

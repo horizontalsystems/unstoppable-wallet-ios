@@ -99,8 +99,8 @@ extension UdnAddressParserItem {
         case .dash: return "DASH"
         case .bitcoinCash: return "BCH"
         case .zcash: return "ZEC"
-        case .binanceChain: return "BNB"
-        case .gnosis: return "GNO"
+        case .binanceChain: return "ETH"
+        case .gnosis: return "ETH"
         case .solana: return "SOL"
         case .unsupported(let uid): return uid
         }
@@ -109,7 +109,7 @@ extension UdnAddressParserItem {
     static func chain(token: Token) -> String? {
         switch (token.blockchainType, token.type) {
         case (.ethereum, .eip20), (.optimism, .eip20), (.arbitrumOne, .eip20), (.gnosis, .eip20): return "ERC20"
-        case (.binanceSmartChain, .eip20): return "BEP20"
+        case (.binanceSmartChain, .native), (.binanceSmartChain, .eip20): return "BEP20"
         case (.polygon, .native), (.polygon, .eip20): return "MATIC"
         case (.avalanche, .native), (.avalanche, .eip20): return "AVAX"
         default: return nil
@@ -132,10 +132,10 @@ extension UdnAddressParserItem {
         return item
     }
 
-    static func item(rawAddressParserItem: IAddressParserItem, blockchainType: BlockchainType, default: String = "ETH") -> UdnAddressParserItem {
+    static func item(rawAddressParserItem: IAddressParserItem, blockchainType: BlockchainType) -> UdnAddressParserItem {
         let item = UdnAddressParserItem(
                 rawAddressParserItem: rawAddressParserItem,
-                coinCode: chainCoinCode(blockchainType: blockchainType) ?? `default`,
+                coinCode: chainCoinCode(blockchainType: blockchainType),
                 platformCoinCode: nil,
                 chain: nil
         )

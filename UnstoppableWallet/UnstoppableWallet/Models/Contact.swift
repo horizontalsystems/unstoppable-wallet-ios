@@ -1,7 +1,7 @@
 import Foundation
 import ObjectMapper
 
-class ContactAddress: ImmutableMappable {
+class ContactAddress: ImmutableMappable, Hashable, Equatable {
     let blockchainUid: String
     let address: String
 
@@ -18,6 +18,24 @@ class ContactAddress: ImmutableMappable {
     func mapping(map: Map) {
         blockchainUid >>> map["blockchain_uid"]
         address       >>> map["address"]
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(blockchainUid)
+        hasher.combine(address)
+    }
+
+    static func ==(lhs: ContactAddress, rhs: ContactAddress) -> Bool {
+        lhs.address == rhs.address &&
+        lhs.blockchainUid == rhs.blockchainUid
+    }
+
+}
+
+extension Array where Element == ContactAddress {
+
+    static func ==(lhs: [ContactAddress], rhs: [ContactAddress]) -> Bool {
+        Set(lhs) == Set(rhs)
     }
 
 }

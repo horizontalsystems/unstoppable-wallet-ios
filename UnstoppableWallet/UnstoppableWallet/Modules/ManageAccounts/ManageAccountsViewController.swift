@@ -121,12 +121,11 @@ class ManageAccountsViewController: ThemeViewController {
     }
 
     private func onTapEdit(accountId: String) {
-        viewModel.onTapEdit(accountId: accountId)
-//        guard let viewController = ManageAccountModule.viewController(accountId: accountId, sourceViewController: self) else {
-//            return
-//        }
-//
-//        present(viewController, animated: true)
+        guard let viewController = ManageAccountModule.viewController(accountId: accountId, sourceViewController: self) else {
+            return
+        }
+
+        present(viewController, animated: true)
     }
 
     private func sync(viewState: ManageAccountsViewModel.ViewState) {

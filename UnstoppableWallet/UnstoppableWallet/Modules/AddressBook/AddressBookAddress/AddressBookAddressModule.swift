@@ -4,7 +4,7 @@ import MarketKit
 
 class AddressBookAddressModule {
 
-    static func viewController(existAddresses: [ContactAddress], currentAddress: ContactAddress? = nil) -> UIViewController? {
+    static func viewController(existAddresses: [ContactAddress], currentAddress: ContactAddress? = nil, onSaveAddress: @escaping (ContactAddress?) -> ()) -> UIViewController? {
         let service: AddressBookAddressService
         let addressService: AddressService
         if let currentAddress {
@@ -14,8 +14,15 @@ class AddressBookAddressModule {
             addressService = AddressService(mode: .blockchainType(blockchain.type))
             service = AddressBookAddressService(marketKit: App.shared.marketKit, addressService: addressService, mode: .edit(currentAddress), blockchain: blockchain)
         } else {
-            let blockchainUids = BlockchainType.supported.map { $0.uid }
-            let allBlockchains = ((try? App.shared.marketKit.blockchains(uids: blockchainUids)) ?? []).sorted { $0.type.order < $1.type.order }
+            let blockchainUids = BlockchainType
+                    .supported
+                    .map { $0.uid }
+                    .filter { uid in
+                        !existAddresses.contains(where: { address in address.blockchainUid == uid })
+                    }
+
+            let allBlockchains = ((try? App.shared.marketKit.blockchains(uids: blockchainUids)) ?? [])
+                    .sorted { $0.type.order < $1.type.order }
 
             guard let firstBlockchain = allBlockchains.first else {
                 return nil
@@ -26,7 +33,7 @@ class AddressBookAddressModule {
 
         let viewModel = AddressBookAddressViewModel(service: service)
         let addressViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
-        let controller = AddressBookAddressViewController(viewModel: viewModel, addressViewModel: addressViewModel)
+        let controller = AddressBookAddressViewController(viewModel: viewModel, addressViewModel: addressViewModel, onUpdateAddress: onSaveAddress)
         return ThemeNavigationController(rootViewController: controller)
     }
 

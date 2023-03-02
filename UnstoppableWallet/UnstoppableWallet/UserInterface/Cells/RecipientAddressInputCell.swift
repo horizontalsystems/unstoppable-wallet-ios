@@ -33,4 +33,9 @@ class RecipientAddressInputCell: AddressInputCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func set(inputText: String?) {
+        self.inputText = inputText ?? ""
+        viewModel.onChange(text: inputText)
+    }
+
 }

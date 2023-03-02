@@ -9,6 +9,7 @@ import ThemeKit
 class AddressBookAddressViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: AddressBookAddressViewModel
+    private let onUpdateAddress: (ContactAddress?) -> ()
 
     private let tableView = SectionsTableView(style: .grouped)
     private var isLoaded = false
@@ -19,10 +20,11 @@ class AddressBookAddressViewController: ThemeViewController {
     private var blockchainName: String = ""
     private var addAddressEnabled: Bool = true
 
-    init(viewModel: AddressBookAddressViewModel, addressViewModel: RecipientAddressViewModel) {
+    init(viewModel: AddressBookAddressViewModel, addressViewModel: RecipientAddressViewModel, onUpdateAddress: @escaping (ContactAddress?) -> ()) {
         self.viewModel = viewModel
         recipientCell = RecipientAddressInputCell(viewModel: addressViewModel)
         recipientCautionCell = RecipientAddressCautionCell(viewModel: addressViewModel)
+        self.onUpdateAddress = onUpdateAddress
 
         super.init()
     }
@@ -52,7 +54,7 @@ class AddressBookAddressViewController: ThemeViewController {
 
         tableView.buildSections()
 
-        recipientCell.inputText = viewModel.initialAddress
+        recipientCell.set(inputText: viewModel.initialAddress)
 
         recipientCell.onChangeHeight = { [weak self] in
             self?.onChangeHeight()
@@ -79,12 +81,22 @@ class AddressBookAddressViewController: ThemeViewController {
     }
 
     @objc private func onTapSaveButton() {
-        //
+        if let contactAddress = viewModel.contactAddress {
+            onUpdateAddress(contactAddress)
+            dismiss(animated: true)
+        }
     }
+
+    private func onTapDeleteAddress() {
+        onUpdateAddress(nil)
+
+        dismiss(animated: true)
+    }
+
 
     private func onTapBlockchain() {
         let viewController = SelectorModule.singleSelectorViewController(
-                title: "market.advanced_search.blockchains".localized,
+                title: "contacts.contact.address.blockchains".localized,
                 viewItems: viewModel.blockchainViewItems,
                 onSelect: { [weak self] in
                     print($0)
@@ -98,20 +110,21 @@ class AddressBookAddressViewController: ThemeViewController {
     private var blockchainRow: RowProtocol {
         tableView.universalRow48(
             id: "blockchain",
-            title: .subhead2("Blockchain"),
+            title: .subhead2("contacts.contact.address.blockchain".localized),
             value: .subhead1(blockchainName),
-            accessoryType: viewModel.readonly ? .none : .dropdown,
+            accessoryType: viewModel.existAddress ? .none : .dropdown,
             autoDeselect: true,
             isFirst: true,
             isLast: true,
-            action: viewModel.readonly ? nil : { [weak self] in self?.onTapBlockchain() })
+            action: viewModel.existAddress ? nil : { [weak self] in self?.onTapBlockchain() })
     }
+
 }
 
 extension AddressBookAddressViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [
+        var sections = [
             Section(id: "actions",
                     headerState: .margin(height: .margin12),
                     footerState: .margin(height: .margin32),
@@ -137,6 +150,26 @@ extension AddressBookAddressViewController: SectionsDataSource {
                     ]
             )
         ]
+        if viewModel.existAddress {
+            sections.append(
+                        Section(id: "actions",
+                        footerState: .margin(height: .margin32),
+                        rows: [
+                            tableView.universalRow48(
+                                    id: "delete_address",
+                                    image: .local(UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
+                                    title: .body("contacts.contact.address.delete_address".localized, color: .themeLucian),
+                                    autoDeselect: true,
+                                    isFirst: true,
+                                    isLast: true,
+                                    action: { [weak self] in
+                                        self?.onTapDeleteAddress()
+                                    }
+                            )
+                        ])
+            )
+        }
+        return sections
     }
 
 }
