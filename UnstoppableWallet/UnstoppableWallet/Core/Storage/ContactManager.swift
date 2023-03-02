@@ -73,14 +73,14 @@ class ContactManager {
     func sync() {
         state = .loading
 
-        print("=C-SERVICE> SYNC")
+//        print("=C-SERVICE> SYNC")
         fileStorage
                 .read(directoryUrl: localUrl, filename: filename)
                 .subscribe(onSuccess:  { [weak self] data in
-                    print("=C-SERVICE> Found data: \(data.hs.hex)")
+//                    print("=C-SERVICE> Found data: \(data.hs.hex)")
                     self?.sync(localData: data)
                 }, onError: { [weak self] error in
-                    print("=C-SERVICE> Found error: \(error)")
+//                    print("=C-SERVICE> Found error: \(error)")
                     self?.sync(localError: error)
                 })
                 .disposed(by: disposeBag)
@@ -89,9 +89,9 @@ class ContactManager {
     private func sync(localData: Data) {
         // use local data as base contact data. Parse contacts and store it in state if possible
         do {
-            print("=C-SERVICE> Parse data")
+//            print("=C-SERVICE> Parse data")
             let contactBook = try parse(data: localData)
-            print("=C-SERVICE> Found contacts: T = \(contactBook.timestamp) \(contactBook.contacts)")
+//            print("=C-SERVICE> Found contacts: T = \(contactBook.timestamp) \(contactBook.contacts)")
 
             if localStorage.remoteSync, let iCloudUrl {
                 print("=C-SERVICE> Try read remote book")
@@ -99,10 +99,10 @@ class ContactManager {
                 fileStorage
                         .read(directoryUrl: iCloudUrl, filename: filename)
                         .subscribe(onSuccess: { [weak self] data in
-                            print("=C-SERVICE> Found remote data: \(data.hs.hex)")
+//                            print("=C-SERVICE> Found remote data: \(data.hs.hex)")
                             self?.sync(iCloudData: data, contactBook: contactBook)
                         }, onError: { [weak self] error in
-                            print("=C-SERVICE> Found error: \(error)")
+//                            print("=C-SERVICE> Found error: \(error)")
                             self?.sync(iCloudError: error, contactBook: contactBook)
                         })
                         .disposed(by: disposeBag)
@@ -129,13 +129,13 @@ class ContactManager {
 
     private func sync(iCloudData: Data, contactBook: ContactBook) {
         do {
-            print("=C-SERVICE> Try to parse remote data")
+//            print("=C-SERVICE> Try to parse remote data")
             let remoteContactBook = try parse(data: iCloudData)
-            print("=C-SERVICE> Found remote contacts: T = \(remoteContactBook.timestamp) \(remoteContactBook.contacts)")
+//            print("=C-SERVICE> Found remote contacts: T = \(remoteContactBook.timestamp) \(remoteContactBook.contacts)")
 
             // check if iCloud data newer than local. Need to save iCloud book to local storage
             if remoteContactBook.timestamp > contactBook.timestamp {
-                print("Need to save remote to local")
+//                print("Need to save remote to local")
                 try save(url: localUrl, remoteContactBook)
                 state = .completed(remoteContactBook)
                 return
@@ -145,7 +145,7 @@ class ContactManager {
 
             // check if iCloud book older than local. Need to update remote book
             if let iCloudUrl, remoteContactBook.timestamp < contactBook.timestamp {
-                print("Need to save local to remote")
+//                print("Need to save local to remote")
                 try save(url: iCloudUrl, contactBook)
             }
         } catch {
@@ -173,7 +173,7 @@ class ContactManager {
     }
 
     private func updateRemoteStorage() {
-        print("remoteSync :", remoteSync)
+//        print("remoteSync :", remoteSync)
         if localStorage.remoteSync {
             //reload and update files if needed
             sync()
@@ -186,7 +186,7 @@ class ContactManager {
     }
 
     private func parse(data: Data) throws -> ContactBook {
-        print("Data = \(data.hs.hexString)")
+//        print("Data = \(data.hs.hexString)")
         // check empty data
         guard !data.isEmpty else {
             return .empty
@@ -216,10 +216,13 @@ class ContactManager {
             throw StorageError.cantParseData
         }
 
-        print("save book to storage : URL: \(url)")
+//        print("save book to storage : URL: \(url)")
         fileStorage
                 .write(directoryUrl: url, filename: filename, data: jsonData)
-                .subscribe()
+                .subscribe(
+                        onSuccess: { [weak self] in self?.state = .completed(book) },
+                        onError: { [weak self] in self?.state = .failed($0) }
+                )
                 .disposed(by: disposeBag)
     }
 
@@ -246,15 +249,15 @@ extension ContactManager {
 
         try save(url: localUrl, newContactBook)
         if remoteSync, let iCloudUrl {
-            print("save book to icloud storage")
+//            print("save book to icloud storage")
             try save(url: iCloudUrl, newContactBook)
         }
 
     }
 
-    func delete(_ contact: Contact, timestamp: TimeInterval? = nil) throws {
+    func delete(_ contactUid: String, timestamp: TimeInterval? = nil) throws {
         guard var contacts = state.data?.contacts,
-              let index = contacts.firstIndex(of: contact) else {
+              let index = contacts.firstIndex(where: { $0.uid == contactUid }) else {
 
             throw StorageError.notReady
         }
@@ -266,7 +269,7 @@ extension ContactManager {
 
         try save(url: localUrl, newContactBook)
         if remoteSync, let iCloudUrl {
-            print("save book to icloud storage")
+//            print("save book to icloud storage")
             try save(url: iCloudUrl, newContactBook)
         }
     }

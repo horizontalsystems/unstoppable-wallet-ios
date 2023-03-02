@@ -27,6 +27,9 @@ extension CellBuilderNew.CellElement {  // prepared cell elements for most frequ
                 if parameters.contains(.truncatingMiddle) {
                     component.lineBreakMode = .byTruncatingMiddle
                 }
+                if parameters.contains(.multiline) {
+                    component.numberOfLines = 0
+                }
             } else {
                 component.isHidden = true
             }
@@ -113,7 +116,7 @@ extension CellBuilderNew.CellElement {
 
     struct TextParameters: OptionSet {
         static let none = TextParameters([])
-        static let allCompression = TextParameters([.highResistance, .highResistance])
+        static let allCompression = TextParameters([.highResistance, .highHugging])
 
         let rawValue: UInt8
 
@@ -122,6 +125,7 @@ extension CellBuilderNew.CellElement {
         static let truncatingMiddle = TextParameters(rawValue: 1 << 2)
         static let rightAlignment = TextParameters(rawValue: 1 << 3)
         static let centerAlignment = TextParameters(rawValue: 1 << 4)
+        static let multiline = TextParameters(rawValue: 1 << 5)
     }
 
     class AccessoryType {

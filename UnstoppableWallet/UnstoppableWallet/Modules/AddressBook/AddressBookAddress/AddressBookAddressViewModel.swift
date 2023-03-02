@@ -17,8 +17,7 @@ class AddressBookAddressViewModel {
     }
     private let blockchainNameRelay = BehaviorRelay<String>(value: "")
 
-    private let doneEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let nameAlreadyExistErrorRelay = BehaviorRelay<Bool>(value: false)
+    private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
 
     init(service: AddressBookAddressService) {
         self.service = service
@@ -29,20 +28,17 @@ class AddressBookAddressViewModel {
     }
 
     private func sync(state: AddressBookAddressService.State) {
-        var doneEnabled = false
-        var addressWrong = false
+        var saveEnabled = false
 
         switch state {
         case .idle, .loading: ()
         case .valid(let item):
-            doneEnabled = true
+            saveEnabled = true
             viewItem = viewItem(item: item)
-        case .invalid:
-            addressWrong = true
+        case .invalid: ()
         }
 
-        doneEnabledRelay.accept(doneEnabled)
-        nameAlreadyExistErrorRelay.accept(addressWrong)
+        saveEnabledRelay.accept(saveEnabled)
     }
 
     private func sync(blockchain: Blockchain) {
@@ -57,7 +53,7 @@ class AddressBookAddressViewModel {
 
 extension AddressBookAddressViewModel {
 
-    var readonly: Bool {
+    var existAddress: Bool {
         switch service.mode {
         case .edit: return true
         case .create: return false
@@ -67,12 +63,19 @@ extension AddressBookAddressViewModel {
     var title: String {
         switch service.mode {
         case .edit: return service.selectedBlockchain.name
-        case .create: return "Add Address"
+        case .create: return "contacts.contact.add_address".localized
         }
     }
 
     var initialAddress: String? {
-        nil
+        service.initialAddress?.address
+    }
+
+    var contactAddress: ContactAddress? {
+        if case let .valid(item) = service.state {
+            return ContactAddress(blockchainUid: item.blockchainUid, address: item.address)
+        }
+        return nil
     }
 
     var blockchainViewItems: [SelectorModule.ViewItem] {
@@ -94,15 +97,7 @@ extension AddressBookAddressViewModel {
     }
 
     var saveEnabledDriver: Driver<Bool> {
-        doneEnabledRelay.asDriver()
-    }
-
-    var nameAlreadyExistErrorDriver: Driver<Bool> {
-        nameAlreadyExistErrorRelay.asDriver()
-    }
-
-    func onChange(address: String?) {
-        service.address = address ?? ""
+        saveEnabledRelay.asDriver()
     }
 
     func setBlockchain(index: Int) {
@@ -110,8 +105,4 @@ extension AddressBookAddressViewModel {
             service.selectedBlockchain = blockchain
         }
     }
-}
-
-extension AddressBookAddressViewModel {
-
 }

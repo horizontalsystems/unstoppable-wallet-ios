@@ -15,13 +15,21 @@ class AddressBookContactViewModel {
         }
     }
 
-    private let doneEnabledRelay = BehaviorRelay<Bool>(value: false)
+    private let addressViewItemsRelay = BehaviorRelay<[AddressViewItem]>(value: [])
+    private var addressViewItems: [AddressViewItem] = [] {
+        didSet {
+            addressViewItemsRelay.accept(addressViewItems)
+        }
+    }
+
+    private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let nameAlreadyExistErrorRelay = BehaviorRelay<Bool>(value: false)
 
     init(service: AddressBookContactService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(disposeBag, service.addressItemsObservable) { [weak self] in self?.sync(addressItems: $0) }
     }
 
     private func sync(state: AddressBookContactService.State) {
@@ -29,40 +37,53 @@ class AddressBookContactViewModel {
         var nameAlreadyExist = false
         switch state {
         case .idle: ()
-        case .filled(let item):
+        case .updated:
             doneEnabled = true
-            viewItem = viewItem(item: item)
         case .error:
             nameAlreadyExist = true
         }
 
-        doneEnabledRelay.accept(doneEnabled)
+        saveEnabledRelay.accept(doneEnabled)
         nameAlreadyExistErrorRelay.accept(nameAlreadyExist)
     }
 
-    private func viewItem(item: AddressBookContactService.Item) -> ViewItem {
-        let addresses = item.addresses.map { item in
-            AddressViewItem(
-                    blockchainImageUrl: item.blockchain.type.imageUrl,
-                    blockchainName: item.blockchain.name,
-                    address: item.address,
-                    edited: false
-            )
-        }
+    private func sync(addressItems: [AddressBookContactService.AddressItem]) {
+        addressViewItems = addressItems.map { viewItem(item: $0) }
+    }
 
-        return ViewItem(name: item.name, addresses: addresses)
+    private func viewItem(item: AddressBookContactService.AddressItem) -> AddressViewItem {
+        AddressViewItem(
+                blockchainUid: item.blockchain.uid,
+                blockchainImageUrl: item.blockchain.type.imageUrl,
+                blockchainName: item.blockchain.name,
+                address: item.address,
+                edited: item.edited
+        )
     }
 
 }
 
 extension AddressBookContactViewModel {
 
+    var contact: Contact? {
+        switch service.state {
+        case .updated:
+            let uid = service.oldContact?.uid ?? UUID().uuidString
+            return Contact(uid: uid, name: service.contactName, addresses: service.addresses)
+        default: return nil
+        }
+    }
+
     var existAddresses: [ContactAddress] {
         service.addresses
     }
 
+    var editExisting: Bool {
+        service.oldContact != nil
+    }
+
     var title: String {
-        service.oldContact?.name ?? "New Contact".localized
+        service.oldContact?.name ?? "contacts.contact.new.title".localized
     }
 
     var initialName: String? {
@@ -73,26 +94,40 @@ extension AddressBookContactViewModel {
         viewItemRelay.asDriver()
     }
 
+    var addressViewItemsDriver: Driver<[AddressViewItem]> {
+        addressViewItemsRelay.asDriver()
+    }
+
     var saveEnabledDriver: Driver<Bool> {
-        doneEnabledRelay.asDriver()
+        saveEnabledRelay.asDriver()
     }
 
     var nameAlreadyExistErrorDriver: Driver<Bool> {
         nameAlreadyExistErrorRelay.asDriver()
     }
 
-    var allAddressesUsedDriver: Driver<Bool> {
-        service.allAddressesUsedObservable.asDriver(onErrorJustReturn: true)
+    var hideAddAddressDriver: Driver<Bool> {
+        service.allAddressesUsedObservable.asDriver(onErrorJustReturn: false)
     }
 
     func onChange(name: String?) {
         service.contactName = name ?? ""
     }
+
+    func updateContact(address: ContactAddress) {
+        service.updateContact(address: address)
+    }
+
+    func removeContact(address: ContactAddress?) {
+        service.removeContact(address: address)
+    }
+
 }
 
 extension AddressBookContactViewModel {
 
     struct AddressViewItem {
+        let blockchainUid: String
         let blockchainImageUrl: String
         let blockchainName: String
         let address: String

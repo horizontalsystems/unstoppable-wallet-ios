@@ -11,12 +11,6 @@ class AddressBookContactService {
 
     let oldContact: Contact?
 
-    var contactName: String = "" {
-        didSet {
-            sync()
-        }
-    }
-
     private let stateRelay = BehaviorRelay<State>(value: .idle)
     var state: State = .idle {
         didSet {
@@ -24,14 +18,22 @@ class AddressBookContactService {
         }
     }
 
-    private let allAddressesUsedRelay = BehaviorRelay<Bool>(value: false)
-    private var allAddressesUsed = false {
+    private let allBlockchainsUsedRelay = BehaviorRelay<Bool>(value: false)
+
+    private let addressItemsRelay = BehaviorRelay<[AddressItem]>(value: [])
+    private(set) var addresses: [ContactAddress] = [] {
         didSet {
             syncAddresses()
+            sync()
+            syncAllUsedBlockchains()
         }
     }
 
-    private(set) var addresses: [ContactAddress] = []
+    var contactName: String = "" {
+        didSet {
+            sync()
+        }
+    }
 
     init(contactManager: ContactManager, marketKit: MarketKit.Kit, contact: Contact? = nil) {
         self.marketKit = marketKit
@@ -39,7 +41,10 @@ class AddressBookContactService {
         oldContact = contact
 
         restoreContainer()
+
         sync()
+        syncAddresses()
+        syncAllUsedBlockchains()
     }
 
     private func restoreContainer() {
@@ -51,44 +56,61 @@ class AddressBookContactService {
         try? marketKit.blockchain(uid: address.blockchainUid)
     }
 
-    private func sync() {
-        if contactName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+    private func syncAddresses() {
+        let addressItems = addresses.compactMap { address -> AddressItem? in
+                    var edited = true
+                    // check if old address same with new - set edited false
+                    if let oldAddresses = oldContact?.addresses,
+                        let oldAddress = oldAddresses.first(where: { $0.blockchainUid == address.blockchainUid  }) {
+                        edited = oldAddress.address != address.address
+                    }
+                    return blockchain(by: address).map { AddressItem(blockchain: $0, address: address.address, edited: edited) }
+                }.sorted { item, item2 in item.blockchain.type.order < item2.blockchain.type.order }
 
-            state = .idle
+
+        addressItemsRelay.accept(addressItems)
+    }
+
+    private func syncAllUsedBlockchains() {
+        let usedBlockchainTypes = addresses.compactMap { blockchain(by: $0)?.type }
+        guard !usedBlockchainTypes.isEmpty else {
             return
         }
 
+        // check if all blockchains has adresses
+        allBlockchainsUsedRelay.accept(
+                BlockchainType
+                   .supported
+                   .filter({ type in
+                       !usedBlockchainTypes.contains(type)
+                   }).count == 0
+        )
+    }
+
+    private func sync() {
+        // check if name already exist
         let otherContactNames = contactManager
                 .contacts?
                 .filter { (oldContact?.name ?? "") != $0.name }
                 .map { $0.name.lowercased() } ?? []
 
-        if otherContactNames.contains(contactName.lowercased()) || contactName == "Anton" {
+        if otherContactNames.contains(contactName.lowercased()) {
             state = .error(ValidationError.nameExist)
             return
         }
 
-        let addresses = addresses.compactMap { address -> AddressItem? in
-            blockchain(by: address).map { AddressItem(blockchain: $0, address: address.address) }
+        // check empty name or empty addresses
+        if contactName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || addresses.isEmpty {
+            state = .idle
+            return
         }
-
-        if addresses.isEmpty {
+        // check no changes with old contact
+        if let oldContact, contactName == oldContact.name, addresses == oldContact.addresses {
             state = .idle
             return
         }
 
-        state = .filled(Item(name: contactName, addresses: addresses))
-    }
-
-    private func syncAddresses() {
-        let usedBlockchainTypes = addresses.compactMap { blockchain(by: $0)?.type }
-
-        // check if all blockchains has adresses
-        allAddressesUsed = BlockchainType
-                   .supported
-                   .filter({ type in
-                       !usedBlockchainTypes.contains(type)
-                   }).count == 0
+        state = .updated
     }
 
 }
@@ -99,8 +121,26 @@ extension AddressBookContactService {
         stateRelay.asObservable()
     }
 
+    var addressItemsObservable: Observable<[AddressItem]> {
+        addressItemsRelay.asObservable()
+    }
+
     var allAddressesUsedObservable: Observable<Bool> {
-        allAddressesUsedRelay.asObservable()
+        allBlockchainsUsedRelay.asObservable()
+    }
+
+    func updateContact(address: ContactAddress) {
+        if let index = addresses.firstIndex(where: { $0.blockchainUid == address.blockchainUid }) {
+            addresses[index] = address
+        } else {
+            addresses.append(address)
+        }
+    }
+
+    func removeContact(address: ContactAddress?) {
+        if let address, let index = addresses.firstIndex(where: { $0.blockchainUid == address.blockchainUid }) {
+            addresses.remove(at: index)
+        }
     }
 
 }
@@ -110,6 +150,7 @@ extension AddressBookContactService {
     struct AddressItem {
         let blockchain: Blockchain
         let address: String
+        let edited: Bool
     }
 
     struct Item {
@@ -119,7 +160,7 @@ extension AddressBookContactService {
 
     enum State {
         case idle
-        case filled(Item)
+        case updated
         case error(Error)
     }
 

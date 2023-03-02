@@ -10,6 +10,8 @@ class AddressBookContactViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: AddressBookContactViewModel
     private let presented: Bool
+    private let onUpdateContact: (Contact?) -> ()
+    private let deleteContactHidden: Bool
 
     private let tableView = SectionsTableView(style: .grouped)
     private var viewItem: AddressBookContactViewModel.ViewItem?
@@ -18,11 +20,14 @@ class AddressBookContactViewController: ThemeViewController {
     private let nameCell = InputCell()
     private let nameCautionCell = FormCautionCell()
 
-    private var addAddressEnabled: Bool = true
+    private var addressViewItems: [AddressBookContactViewModel.AddressViewItem] = []
+    private var addAddressHidden: Bool = false
 
-    init(viewModel: AddressBookContactViewModel, presented: Bool) {
+    init(viewModel: AddressBookContactViewModel, presented: Bool, onUpdateContact: @escaping (Contact?) -> ()) {
         self.viewModel = viewModel
         self.presented = presented
+        self.onUpdateContact = onUpdateContact
+        deleteContactHidden = !viewModel.editExisting
 
         super.init()
     }
@@ -50,6 +55,7 @@ class AddressBookContactViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.sectionDataSource = self
+        tableView.keyboardDismissMode = .interactive
 
         tableView.buildSections()
 
@@ -64,32 +70,46 @@ class AddressBookContactViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.nameAlreadyExistErrorDriver) { [weak self] exist in
             self?.nameCell.set(cautionType: exist ? .error : nil)
-            self?.nameCautionCell.set(caution: exist ? Caution(text: "name already exist", type: .error) : nil)
+            self?.nameCautionCell.set(caution: exist ? Caution(text: "contacts.contact.update.error.name_already_exist".localized, type: .error) : nil)
         }
-        subscribe(disposeBag, viewModel.allAddressesUsedDriver) { [weak self] allUsed in
-            self?.addAddressEnabled = !allUsed
+        subscribe(disposeBag, viewModel.addressViewItemsDriver) { [weak self] viewItems in
+            self?.addressViewItems = viewItems
+            self?.tableView.reload()
+        }
+        subscribe(disposeBag, viewModel.hideAddAddressDriver) { [weak self] allUsed in
+            self?.addAddressHidden = allUsed
             self?.tableView.reload()
         }
 
         isLoaded = true
     }
 
-//    private func open(controller: UIViewController) {
-//        navigationItem.searchController?.dismiss(animated: true)
-//        present(controller, animated: true)
-//    }
-//
-
     @objc private func onTapCancelButton() {
         dismiss(animated: true)
     }
 
     @objc private func onTapSaveButton() {
-        //
+        if let contact = viewModel.contact {
+            onUpdateContact(contact)
+            dismiss(animated: true)
+        }
     }
 
-    private func onTapAddAddress() {
-        guard let controller = AddressBookAddressModule.viewController(existAddresses: viewModel.existAddresses) else {
+    private func onTapDeleteContact() {
+        onUpdateContact(nil)
+
+        dismiss(animated: true)
+    }
+
+    private func onTapUpdateAddress(address: ContactAddress? = nil) {
+        let onSaveAddress: (ContactAddress?) -> () = { [weak self] updatedAddress in
+            if let updatedAddress {
+                self?.viewModel.updateContact(address: updatedAddress)
+            } else {
+                self?.viewModel.removeContact(address: address)
+            }
+        }
+        guard let controller = AddressBookAddressModule.viewController(existAddresses: viewModel.existAddresses, currentAddress: address, onSaveAddress: onSaveAddress) else {
             return
         }
 
@@ -101,7 +121,7 @@ class AddressBookContactViewController: ThemeViewController {
 extension AddressBookContactViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [
+        var sections = [
             Section(
                     id: "name",
                     headerState: .margin(height: .margin12),
@@ -122,22 +142,67 @@ extension AddressBookContactViewController: SectionsDataSource {
                                 }
                         )
                     ]
-            ),
-            Section(id: "actions",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        tableView.universalRow48(
-                                id: "add_address",
-                                image: .local(UIImage(named: "plus_24")?.withTintColor(addAddressEnabled ? .themeJacob : .themeGray)),
-                                title: .body("Add Address", color: addAddressEnabled ? .themeJacob : .themeGray),
-                                autoDeselect: true,
-                                isFirst: true,
-                                isLast: true, action: addAddressEnabled ? { [weak self] in
+            )]
+        if !addressViewItems.isEmpty {
+            sections.append(
+                    Section(
+                        id: "addresses",
+                        footerState: .margin(height: .margin32),
+                        rows: addressViewItems.enumerated().map({ (index, viewItem) -> RowProtocol in
+                            CellComponent.blockchainAddress(
+                                    tableView: tableView,
+                                    rowInfo: RowInfo(index: index, count: addressViewItems.count),
+                                    imageUrl: viewItem.blockchainImageUrl,
+                                    title: viewItem.blockchainName,
+                                    value: viewItem.address,
+                                    editType: viewItem.edited ? .edited : .original
+                            ) { [weak self] in
+                                self?.onTapUpdateAddress(address: ContactAddress(blockchainUid: viewItem.blockchainUid, address: viewItem.address))
+                            }
+                        })
+                    )
+            )
+        }
+        var cells = [RowProtocol]()
+        if !addAddressHidden {
+            cells.append(
+                    tableView.universalRow48(
+                            id: "add_address",
+                            image: .local(UIImage(named: "plus_24")?.withTintColor(.themeJacob)),
+                            title: .body("contacts.contact.add_address".localized, color: .themeJacob),
+                            autoDeselect: true,
+                            isFirst: true,
+                            isLast: deleteContactHidden,
+                            action: { [weak self] in
+                                self?.onTapUpdateAddress()
+                            }
+                    )
+            )
+        }
+        if !deleteContactHidden {
+            cells.append(
+                    tableView.universalRow48(
+                            id: "delete_contact",
+                            image: .local(UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
+                            title: .body("contacts.contact.delete".localized, color: .themeLucian),
+                            autoDeselect: true,
+                            isFirst: addAddressHidden,
+                            isLast: true,
+                            action: { [weak self] in
+                                self?.onTapDeleteContact()
+                            }
+                    )
+            )
+        }
 
-                                self?.onTapAddAddress()
-                        } : nil)
-                    ])
-        ]
+        if !cells.isEmpty {
+            sections.append(Section(id: "actions",
+                    footerState: .margin(height: .margin32),
+                    rows: cells)
+            )
+        }
+
+        return sections
     }
 
 }

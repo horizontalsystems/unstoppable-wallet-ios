@@ -70,7 +70,7 @@ class MainSettingsViewController: ThemeViewController {
         buildTitleValue(cell: appearanceCell, image: UIImage(named: "brush_24"), title: "appearance.title".localized)
 
         addressBookCell.set(backgroundStyle: .lawrence)
-        buildTitleValue(cell: addressBookCell, image: UIImage(named: "user_24"), title: "address_book.title".localized)
+        buildTitleValue(cell: addressBookCell, image: UIImage(named: "user_24"), title: "contacts.title".localized)
 
         baseCurrencyCell.set(backgroundStyle: .lawrence)
         syncBaseCurrency()

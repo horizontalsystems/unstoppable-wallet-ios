@@ -22,12 +22,6 @@ class AddressBookAddressService {
         }
     }
 
-    var address: String = "" {
-        didSet {
-            sync()
-        }
-    }
-
     private let stateRelay = BehaviorRelay<State>(value: .idle)
     var state: State = .idle {
         didSet {
@@ -58,17 +52,15 @@ class AddressBookAddressService {
         }
 
         selectedBlockchain = blockchain
-        address = initialAddress?.address ?? ""
+
+        subscribe(disposeBag, addressService.stateObservable) { [weak self] _ in
+            self?.sync()
+        }
 
         sync()
     }
 
     private func sync() {
-        if address.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            state = .idle
-            return
-        }
-
         switch addressService.state {
         case .empty:
             state = .idle
@@ -77,6 +69,10 @@ class AddressBookAddressService {
         case .validationError, .fetchError:
             state = .invalid(ValidationError.invalidAddress)
         case .success(let address):
+            if let initialAddress, address.raw == initialAddress.address {
+                state = .idle
+                return
+            }
             state = .valid(ContactAddress(blockchainUid: selectedBlockchain.type.uid, address: address.raw))
         }
     }

@@ -208,12 +208,67 @@ struct CellComponent {
         )
     }
 
+    static func blockchainAddress(tableView: UITableView, rowInfo: RowInfo, imageUrl: String, title: String, value: String, editType: EditType, action: (()->())? = nil) -> RowProtocol {
+        let titleFont: UIFont = .subhead1
+        let valueFont: UIFont = .subhead2
+        let showEdit = editType != .none
+        let editColor: UIColor = editType == .original ? .themeGray : .themeJacob
+
+        var elements: [CellBuilderNew.CellElement] = [
+            .imageElement(image: .url(imageUrl, placeholder: "placeholder_rectangle_32"), size: .image32),
+            .vStackCentered([
+                .textElement(text: .subhead1(title), parameters: .allCompression),
+                .margin(1),
+                .textElement(text: .subhead2(value), parameters: .multiline)
+            ])
+        ]
+        if showEdit {
+            elements.append(
+                    .imageElement(image: .local(UIImage(named: "edit_20")?.withTintColor(editColor)), size: .image20)
+            )
+        }
+        return CellBuilderNew.row(
+                rootElement: .hStack(elements),
+                tableView: tableView,
+                id: "from-to-\(rowInfo.index)",
+                hash: title + value,
+                autoDeselect: action != nil,
+                dynamicHeight: { containerWidth in
+                    var textWidth = containerWidth - .margin16 - .iconSize32 - .margin16 - .margin16
+                    if showEdit {
+                        textWidth = textWidth - .margin16 - .iconSize20
+                    }
+                    var cellHeight: CGFloat = .margin12 + TextComponent.height(width: .greatestFiniteMagnitude, font: titleFont, text: title) + 1
+                    cellHeight += TextComponent.height(width: textWidth, font: valueFont, text: value) + .margin12
+
+                    return cellHeight
+                },
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+                },
+                action: action
+        )
+    }
+
 }
 
 struct RowInfo {
     let index: Int
     let isFirst: Bool
     let isLast: Bool
+
+    init(index: Int, isFirst: Bool, isLast: Bool) {
+        self.index = index
+        self.isFirst = isFirst
+        self.isLast = isLast
+    }
+
+    init(index: Int, count: Int) {
+        self.index = index
+        isFirst = index == 0
+        isLast = index == count - 1
+    }
+
 }
 
 enum AmountType {
@@ -252,6 +307,12 @@ enum AmountType {
         }
     }
 
+}
+
+enum EditType {
+    case none
+    case original
+    case edited
 }
 
 enum ValueType {

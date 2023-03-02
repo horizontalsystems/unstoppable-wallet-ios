@@ -30,7 +30,7 @@ class AddressBookViewModel {
                     uid: contact.uid,
                     title: contact.name,
                     tag: nil,
-                    subtitle: "Addresses: " + contact.addresses.count.description,
+                    subtitle: "contacts.list.addresses_count".localized(contact.addresses.count),
                     showDisclosure: false
             )
         }
@@ -49,6 +49,20 @@ extension AddressBookViewModel {
         notFoundVisibleRelay.asDriver()
     }
 
+    func updateContact(contact: Contact) {
+        service.update(contact: contact)
+    }
+
+    func removeContact(contactUid: String?) {
+        if let contactUid {
+            service.delete(contactUid: contactUid)
+        }
+    }
+
+    func onUpdate(filter: String?) {
+        service.set(filter: filter ?? "")
+    }
+
 }
 
 extension AddressBookViewModel {
@@ -59,6 +73,10 @@ extension AddressBookViewModel {
         let tag: String?
         let subtitle: String
         let showDisclosure: Bool
+
+        var descrtiption: String {
+            uid + title + (tag ?? "") + subtitle + showDisclosure.description
+        }
     }
 
 }
