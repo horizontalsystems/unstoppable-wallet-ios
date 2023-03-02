@@ -587,7 +587,6 @@
 "coin_page.dex_volume.description" = "The trading volume for the token on decentralized exchanges.";
 "coin_page.dex_liquidity" = "DEX Liquidity";
 "coin_page.dex_liquidity.description" = "The total amount of available liquidity for the token on decentralized exchanges.";
-"coin_page.chart.locked" = "Locked";
 
 "coin_page.token_distribution" = "Token Distribution";
 "coin_page.token_distribution.description" = "Onchain token parameters. Typically, healthy projects have an active on-chain user base and well-distributed token.";
@@ -687,6 +686,31 @@
 "coin_page.tweets.no_tweets_yet" = "No tweets yet";
 "coin_page.tweets.not_available" = "No twitter available";
 "coin_page.tweets.see_on_twitter" = "See on Twitter";
+
+// Coin Page -> Analytics
+
+"coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
+
+"coin_analytics.cex_volume" = "CEX Volume";
+"coin_analytics.dex_volume" = "DEX Volume";
+"coin_analytics.dex_liquidity" = "DEX Liquidity";
+"coin_analytics.active_addresses" = "Active Addresses";
+"coin_analytics.transaction_count" = "Transaction Count";
+"coin_analytics.holders" = "Holders";
+"coin_analytics.project_tvl" = "Project TVL";
+"coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
+"coin_analytics.project_revenue" = "Project Revenue";
+"coin_analytics.other_data" = "Other Data";
+"coin_analytics.reports" = "Reports";
+"coin_analytics.funding" = "Funding";
+"coin_analytics.treasuries" = "Treasuries";
+"coin_analytics.audits" = "Audits";
+
+"coin_analytics.last_30d" = "last 30d";
+"coin_analytics.current" = "current";
+"coin_analytics.rank" = "Rank";
+"coin_analytics.30_day_rank" = "30-Day Rank";
+"coin_analytics.30_day_volume" = "30-Day Volume";
 
 // Pro Features
 
