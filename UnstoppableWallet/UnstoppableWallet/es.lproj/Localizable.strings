@@ -586,7 +586,6 @@
 "coin_page.dex_volume.description" = "El volumen de negociación del token en los intercambios descentralizados.";
 "coin_page.dex_liquidity" = "Liquidez DEX";
 "coin_page.dex_liquidity.description" = "La cantidad total de liquidez disponible para la ficha de intercambio descentralizado.";
-"coin_page.chart.locked" = "Bloqueado";
 
 "coin_page.token_distribution" = "Distribución de Token";
 "coin_page.token_distribution.description" = "Parámetros de token de Onchain. Por lo general, los proyectos saludables tienen una base de usuario activa en la cadena y un token bien distribuido.";
@@ -686,6 +685,31 @@
 "coin_page.tweets.no_tweets_yet" = "Aún no hay tweets";
 "coin_page.tweets.not_available" = "Sin twitter disponible";
 "coin_page.tweets.see_on_twitter" = "Ver en Twitter";
+
+// Coin Page -> Analytics
+
+"coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
+
+"coin_analytics.cex_volume" = "CEX Volume";
+"coin_analytics.dex_volume" = "Volumen DEX";
+"coin_analytics.dex_liquidity" = "Liquidez DEX";
+"coin_analytics.active_addresses" = "Direcciones activas";
+"coin_analytics.transaction_count" = "Número de transacciones";
+"coin_analytics.holders" = "Holders";
+"coin_analytics.project_tvl" = "Project TVL";
+"coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
+"coin_analytics.project_revenue" = "Project Revenue";
+"coin_analytics.other_data" = "Other Data";
+"coin_analytics.reports" = "Reportar";
+"coin_analytics.funding" = "Funding";
+"coin_analytics.treasuries" = "Treasuries";
+"coin_analytics.audits" = "Auditorias";
+
+"coin_analytics.last_30d" = "last 30d";
+"coin_analytics.current" = "current";
+"coin_analytics.rank" = "Rank";
+"coin_analytics.30_day_rank" = "30-Day Rank";
+"coin_analytics.30_day_volume" = "30-Day Volume";
 
 // Pro Features
 
