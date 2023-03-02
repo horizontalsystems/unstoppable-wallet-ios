@@ -590,7 +590,6 @@
 "coin_page.dex_volume.description" = "Торговый объем для токена на децентрализованных биржах.";
 "coin_page.dex_liquidity" = "Ликвидность DEX";
 "coin_page.dex_liquidity.description" = "Общая сумма доступной ликвидности для токена на децентрализованных биржах.";
-"coin_page.chart.locked" = "Заблокирован";
 
 "coin_page.token_distribution" = "Распределение токенов";
 "coin_page.token_distribution.description" = "Параметры токена блокчейна. Обычно, нормальные проекты имеют активную базу пользователей и хорошо распределенный токен.";
@@ -690,6 +689,31 @@
 "coin_page.tweets.no_tweets_yet" = "Пока нет твитов";
 "coin_page.tweets.not_available" = "Twitter не доступен";
 "coin_page.tweets.see_on_twitter" = "Посмотреть в Twitter";
+
+// Coin Page -> Analytics
+
+"coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
+
+"coin_analytics.cex_volume" = "CEX Volume";
+"coin_analytics.dex_volume" = "Объем торгов DEX";
+"coin_analytics.dex_liquidity" = "Ликвидность DEX";
+"coin_analytics.active_addresses" = "Активные адреса";
+"coin_analytics.transaction_count" = "Количество транзакций";
+"coin_analytics.holders" = "Holders";
+"coin_analytics.project_tvl" = "Project TVL";
+"coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
+"coin_analytics.project_revenue" = "Project Revenue";
+"coin_analytics.other_data" = "Other Data";
+"coin_analytics.reports" = "Отчёты";
+"coin_analytics.funding" = "Funding";
+"coin_analytics.treasuries" = "Treasuries";
+"coin_analytics.audits" = "Аудиты";
+
+"coin_analytics.last_30d" = "last 30d";
+"coin_analytics.current" = "current";
+"coin_analytics.rank" = "Rank";
+"coin_analytics.30_day_rank" = "30-Day Rank";
+"coin_analytics.30_day_volume" = "30-Day Volume";
 
 // Pro Features
 
