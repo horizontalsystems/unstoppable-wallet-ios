@@ -241,7 +241,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                 id: "description",
                 footerState: .margin(height: .margin24),
                 rows: [
-                    tableView.headerInfoRow(id: "header_nft_collection.overview.description", title: "nft_collection.overview.description".localized, showInfo: false),
+                    tableView.headerInfoRow(id: "header_nft_collection.overview.description", title: "nft_collection.overview.description".localized),
                     descriptionRow,
                 ]
         )
@@ -253,7 +253,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                 headerState: .margin(height: .margin12),
                 footerState: .margin(height: .margin24),
                 rows: [
-                    tableView.headerInfoRow(id: "header.nft_collection.overview.contracts", title: "nft_collection.overview.contracts".localized, showInfo: false),
+                    tableView.headerInfoRow(id: "header.nft_collection.overview.contracts", title: "nft_collection.overview.contracts".localized),
                 ] + viewItems.enumerated().map { index, viewItem in
                     CellBuilderNew.row(
                             rootElement: .hStack([
@@ -317,7 +317,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
             Section(
                     id: "links-header",
                     rows: [
-                        tableView.headerInfoRow(id: "header.nft_collection.overview.links", title: "nft_collection.overview.links".localized, showInfo: false),
+                        tableView.headerInfoRow(id: "header.nft_collection.overview.links", title: "nft_collection.overview.links".localized),
                     ]
             ),
             Section(

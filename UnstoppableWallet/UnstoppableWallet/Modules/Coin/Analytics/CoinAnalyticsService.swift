@@ -5,7 +5,6 @@ import CurrencyKit
 import Chart
 
 class CoinAnalyticsService {
-    private let proFeaturesUpdateDisposeBag = DisposeBag()
     private var disposeBag = DisposeBag()
 
     private let fullCoin: FullCoin

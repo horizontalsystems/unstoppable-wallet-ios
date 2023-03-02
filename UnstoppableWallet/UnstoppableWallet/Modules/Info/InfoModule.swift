@@ -128,25 +128,4 @@ extension InfoModule {
         )
     }
 
-    static var securityParametersInfo: UIViewController {
-        viewController(
-                viewItems: [
-                    .header2(text: "coin_page.security_parameters".localized),
-                    .header(text: CoinAnalyticsViewModel.SecurityType.privacy.title),
-                    .text(text: CoinAnalyticsViewModel.SecurityLevel.high.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityLevel.high.description),
-                    .text(text: CoinAnalyticsViewModel.SecurityLevel.medium.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityLevel.medium.description),
-                    .text(text: CoinAnalyticsViewModel.SecurityLevel.low.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityLevel.low.description),
-                    .header(text: CoinAnalyticsViewModel.SecurityType.issuance.title),
-                    .text(text: CoinAnalyticsViewModel.SecurityIssuance.decentralized.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityIssuance.decentralized.description),
-                    .text(text: CoinAnalyticsViewModel.SecurityIssuance.centralized.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityIssuance.centralized.description),
-                    .header(text: CoinAnalyticsViewModel.SecurityType.confiscationResistance.title),
-                    .text(text: CoinAnalyticsViewModel.SecurityConfiscationResistance.yes.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityConfiscationResistance.yes.description),
-                    .text(text: CoinAnalyticsViewModel.SecurityConfiscationResistance.no.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityConfiscationResistance.no.description),
-                    .header(text: CoinAnalyticsViewModel.SecurityType.censorshipResistance.title),
-                    .text(text: CoinAnalyticsViewModel.SecurityCensorshipResistance.yes.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityCensorshipResistance.yes.description),
-                    .text(text: CoinAnalyticsViewModel.SecurityCensorshipResistance.no.title.uppercased() + ":\n" + CoinAnalyticsViewModel.SecurityCensorshipResistance.no.description)
-                ]
-        )
-    }
-
 }

@@ -39,33 +39,28 @@ extension SectionsTableView {
         )
     }
 
-    func headerInfoRow(id: String, title: String, showInfo: Bool = false, topSeparator: Bool = true, action: (() -> ())? = nil) -> RowProtocol {
-        var elements = [CellBuilderNew.CellElement]()
-        elements.append(
-                .text { (component: TextComponent) -> () in
-                    component.font = .body
-                    component.textColor = .themeLeah
-                    component.text = title
-                }
-        )
-        if showInfo {
-            elements.append(.margin8)
+    func headerInfoRow(id: String, title: String, topSeparator: Bool = true, infoAction: (() -> ())? = nil) -> RowProtocol {
+        var elements: [CellBuilderNew.CellElement] = [
+            .textElement(text: .body(title))
+        ]
+
+        if let infoAction {
             elements.append(
-                    .image20 { (component: ImageComponent) -> () in
-                        component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
+                    .secondaryCircleButton { component in
+                        component.button.set(image: UIImage(named: "circle_information_20"), style: .transparent)
+                        component.onTap = infoAction
                     }
             )
         }
+
         return CellBuilderNew.row(
                 rootElement: .hStack(elements),
                 tableView: self,
                 id: id,
                 height: .heightCell48,
-                autoDeselect: true,
                 bind: { cell in
                     cell.set(backgroundStyle: .transparent, isFirst: !topSeparator)
-                },
-                action: action
+                }
         )
     }
 
