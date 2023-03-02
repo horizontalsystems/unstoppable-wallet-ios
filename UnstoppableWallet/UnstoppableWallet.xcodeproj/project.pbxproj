@@ -7848,10 +7848,9 @@
 				2FA5DE46C61524144F406FDB /* TimeLockService.swift in Sources */,
 				11B3593B114BFE4B6CCD6E19 /* MarketWideCardCell.swift in Sources */,
 				11B351245348DFCE20EC6D4B /* PlaceholderCell.swift in Sources */,
+				ABC9A4D7867973E5FAEBCF10 /* ContactManager.swift in Sources */,
+				ABC9ACD7D78ED573B97B0E52 /* FileDataStorage.swift in Sources */,
 				11B352B8015606DD9D48A092 /* CoinAnalyticsHoldersCell.swift in Sources */,
-				ABC9AEDCFCC87FEDA76E5B8D /* Repository.swift in Sources */,
-				ABC9A4D7867973E5FAEBCF10 /* ContactStorage.swift in Sources */,
-				ABC9ACD7D78ED573B97B0E52 /* FileStorageService.swift in Sources */,
 				ABC9A4D7867973E5FAEBCF10 /* ContactManager.swift in Sources */,
 				ABC9ACD7D78ED573B97B0E52 /* FileDataStorage.swift in Sources */,
 				ABC9A4D7867973E5FAEBCF10 /* ContactManager.swift in Sources */,
@@ -8950,10 +8949,9 @@
 				2FA5D4AB0DEF37A103E1E130 /* TimeLockService.swift in Sources */,
 				11B35F594D24B0B55FD169D7 /* MarketWideCardCell.swift in Sources */,
 				11B355410F06EE3FC3A5DE26 /* PlaceholderCell.swift in Sources */,
+				ABC9AC1DBFFBDE79C9B8EA2C /* ContactManager.swift in Sources */,
+				ABC9A5459204AC334343A731 /* FileDataStorage.swift in Sources */,
 				11B35F3F123BFF155DA7F417 /* CoinAnalyticsHoldersCell.swift in Sources */,
-				ABC9A3614B20DAACA817F588 /* Repository.swift in Sources */,
-				ABC9AC1DBFFBDE79C9B8EA2C /* ContactStorage.swift in Sources */,
-				ABC9A5459204AC334343A731 /* FileStorageService.swift in Sources */,
 				ABC9AC1DBFFBDE79C9B8EA2C /* ContactManager.swift in Sources */,
 				ABC9A5459204AC334343A731 /* FileDataStorage.swift in Sources */,
 				ABC9AC1DBFFBDE79C9B8EA2C /* ContactManager.swift in Sources */,
@@ -9276,7 +9274,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.3;
+				version = 1.0.4;
 			};
 		};
 		D0C87E64298D17D5000CA9BE /* XCRemoteSwiftPackageReference "zcash-light-client-ffi" */ = {
@@ -9428,7 +9426,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BinanceChainKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.0;
+				version = 1.0.1;
 			};
 		};
 		D3604E8628F03D9E0066C366 /* XCRemoteSwiftPackageReference "DashKit.Swift" */ = {

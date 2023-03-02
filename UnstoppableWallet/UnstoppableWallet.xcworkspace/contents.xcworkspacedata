@@ -4,10 +4,4 @@
    <FileRef
       location = "container:UnstoppableWallet.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:../../BitcoinCore.Swift">
-   </FileRef>
-   <FileRef
-      location = "group:../../BinanceChainKit.Swift">
-   </FileRef>
 </Workspace>
