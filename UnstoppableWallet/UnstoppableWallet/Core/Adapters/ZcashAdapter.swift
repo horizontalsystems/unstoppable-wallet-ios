@@ -82,7 +82,7 @@ class ZcashAdapter {
         fee = network.constants.defaultFee().decimalValue.decimalValue
 
 //        let endPoint = "lightwalletd.testnet.electriccoin.co" // testnet
-        let endPoint = "lightwalletd.electriccoin.co" //"mainnet.lightwalletd.com"
+        let endPoint = "mainnet.lightwalletd.com"
 
         token = wallet.token
         transactionSource = wallet.transactionSource
@@ -107,16 +107,20 @@ class ZcashAdapter {
 
 
 
-        let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId, network: network),
-                dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId, network: network),
-                pendingDbURL: try! ZcashAdapter.pendingDbURL(uniqueId: uniqueId, network: network),
-                endpoint: LightWalletEndpoint(address: endPoint, port: 9067, singleCallTimeoutInMillis: 1000000, streamingCallTimeoutInMillis: 1000000),
-                network: network,
-                spendParamsURL: try! ZcashAdapter.spendParamsURL(uniqueId: uniqueId),
-                outputParamsURL: try! ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
-                viewingKeys: [unifiedViewingKey],
-                walletBirthday: birthday,
-                loggerProxy: loggingProxy)
+        let initializer = Initializer(
+            cacheDbURL: try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId, network: network),
+            fsBlockDbRoot: try! ZcashAdapter.fsBlockDbRootURL(uniqueId: uniqueId, network: network),
+            dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId, network: network),
+            pendingDbURL: try! ZcashAdapter.pendingDbURL(uniqueId: uniqueId, network: network),
+            endpoint: LightWalletEndpoint(address: endPoint, port: 9067, singleCallTimeoutInMillis: 1000000, streamingCallTimeoutInMillis: 1000000),
+            network: network,
+            spendParamsURL: try! ZcashAdapter.spendParamsURL(uniqueId: uniqueId),
+            outputParamsURL: try! ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
+            saplingParamsSourceURL: SaplingParamsSourceURL.default,
+            viewingKeys: [unifiedViewingKey],
+            walletBirthday: birthday,
+            loggerProxy: loggingProxy
+        )
 
         spendingKey = unifiedSpendingKey
 
@@ -169,9 +173,9 @@ class ZcashAdapter {
             center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: notificationName, object: synchronizer)
         }
 
-        center.addObserver(self, selector: #selector(blockProcessorUpdated(_:)), name: Notification.Name.blockProcessorUpdated, object: synchronizer)
-        center.addObserver(self, selector: #selector(blockProcessorFinished(_:)), name: Notification.Name.blockProcessorFinished, object: synchronizer)
-        center.addObserver(self, selector: #selector(blockProcessorStartedEnhancing(_:)), name: Notification.Name.blockProcessorFinished, object: synchronizer)
+//        center.addObserver(self, selector: #selector(blockProcessorUpdated(_:)), name: Notification.Name.blockProcessorUpdated, object: synchronizer)
+//        center.addObserver(self, selector: #selector(blockProcessorFinished(_:)), name: Notification.Name.blockProcessorFinished, object: synchronizer)
+//        center.addObserver(self, selector: #selector(blockProcessorStartedEnhancing(_:)), name: Notification.Name.blockProcessorFinished, object: synchronizer)
 
 //        center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: Notification.Name.synchronizerDisconnected, object: synchronizer)
 //        center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: Notification.Name.synchronizerStarted, object: synchronizer)
@@ -189,18 +193,18 @@ class ZcashAdapter {
 //        center.addObserver(self, selector: #selector(blockHeightUpdated(_:)), name: Notification.Name.blockProcessorUpdated, object: synchronizer.blockProcessor)
     }
 
-    @objc private func blockProcessorUpdated(_ notification: Notification) {
-        print("blockProcessorUpdated")
-    }
-
-    @objc private func blockProcessorFinished(_ notification: Notification) {
-        print("blockProcessorFinished")
-
-    }
-
-    @objc private func blockProcessorStartedEnhancing(_ notification: Notification) {
-        print("blockProcessorStartedEnhancing")
-    }
+//    @objc private func blockProcessorUpdated(_ notification: Notification) {
+//        print("blockProcessorUpdated")
+//    }
+//
+//    @objc private func blockProcessorFinished(_ notification: Notification) {
+//        print("blockProcessorFinished")
+//
+//    }
+//
+//    @objc private func blockProcessorStartedEnhancing(_ notification: Notification) {
+//        print("blockProcessorStartedEnhancing")
+//    }
 
     nonisolated private func subscribeDownloadService() {
         subscribe(disposeBag, saplingDownloader.stateObservable) { [weak self] in self?.downloaderStatusUpdated(state: $0) }
@@ -252,7 +256,7 @@ class ZcashAdapter {
             print("==> ==> Syncing")
             print("==> ==> ==> \n\(p)")
             var lastDownloaded = 0
-            if case let .downloadingBlocks(number, lastBlock) = state {
+            if case let .downloadingBlocks(number, _) = state {
                 lastDownloaded = number
             }
 
@@ -296,14 +300,14 @@ class ZcashAdapter {
         }
     }
 
-    @objc private func blockHeightUpdated(_ notification: Notification) {
-        if let userInfo = notification.userInfo,
-           let progress = userInfo[CompactBlockProcessorNotificationKey.progress] as? CompactBlockProgress,
-           let targetHeight = progress.targetHeight {
-            lastBlockHeight = targetHeight
-            lastBlockUpdatedSubject.onNext(())
-        }
-    }
+//    @objc private func blockHeightUpdated(_ notification: Notification) {
+//        if let userInfo = notification.userInfo,
+//           let progress = userInfo[CompactBlockProcessorNotificationKey.progress] as? CompactBlockProgress,
+//           let targetHeight = progress.targetHeight {
+//            lastBlockHeight = targetHeight
+//            lastBlockUpdatedSubject.onNext(())
+//        }
+//    }
 
     private func syncPending() async {
         let newTxs = transactionPool.sync(transactions: synchronizer.pendingTransactions)
@@ -460,6 +464,10 @@ extension ZcashAdapter {
 
     private static func cacheDbURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
         try dataDirectoryUrl().appendingPathComponent(network.constants.defaultDbNamePrefix + uniqueId + ZcashSDK.defaultCacheDbName, isDirectory: false)
+    }
+
+    private static func fsBlockDbRootURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(network.constants.defaultFsBlockDbRootName + uniqueId, isDirectory: true)
     }
 
     private static func dataDbURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
