@@ -550,7 +550,7 @@
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
 "market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance trending higher the rest of the crypto market trends down and vice versa.";
 "market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
-"market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
+"market.global.defi_cap.description" = "The historical change in the cumulative market value of tokens in the Decentralized Finance sector.";
 "market.global.tvl_in_defi.description" = "The historical change in the cumulative value of all cryptocurrency managed by decentralized protocols.";
 
 // Coin Page
@@ -607,7 +607,7 @@
 "coin_page.tvl_rank.description" = "The ranking among other protocols is based on the TVL value in USD terms.";
 "coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
 "coin_page.market_cap_tvl_ratio.description" = "The ratio of the project token's market cap over its TVL.";
-"coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
+"coin_page.tvl.description" = "Capital is deposited into the platform in the form of loan collateral or liquidity pool.";
 
 "coin_page.investor_data" = "Investor Data";
 
@@ -705,7 +705,7 @@
 "coin_analytics.treasuries" = "Treasuries";
 "coin_analytics.audits" = "Audits";
 
-"coin_analytics.last_30d" = "last 30d";
+"coin_analytics.last_30d" = "Last 30d";
 "coin_analytics.current" = "current";
 "coin_analytics.rank" = "Rank";
 "coin_analytics.30_day_rank" = "30-Day Rank";
