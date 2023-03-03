@@ -165,4 +165,16 @@ extension BlockchainType {
         }
     }
 
+    var brandColor: UIColor? {
+        switch self {
+        case .ethereum: return UIColor(hex: 0x6B7196)
+        case .binanceSmartChain: return UIColor(hex: 0xF3BA2F)
+        case .polygon: return UIColor(hex: 0x8247E5)
+        case .avalanche: return UIColor(hex: 0xD74F49)
+        case .optimism: return UIColor(hex: 0xEB3431)
+        case .arbitrumOne: return UIColor(hex: 0x96BEDC)
+        default: return nil
+        }
+    }
+
 }

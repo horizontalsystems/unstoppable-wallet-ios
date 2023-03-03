@@ -70,6 +70,7 @@ class CoinAnalyticsViewController: ThemeViewController {
         tableView.registerCell(forClass: PlaceholderCell.self)
         tableView.registerCell(forClass: MarketCardCell.self)
         tableView.registerCell(forClass: MarketWideCardCell.self)
+        tableView.registerCell(forClass: CoinAnalyticsHoldersCell.self)
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in
@@ -186,7 +187,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
 
         return Row<MarketWideCardCell>(
                 id: id,
-                height: MarketWideCardCell.height,
+                height: MarketWideCardCell.height(),
                 autoDeselect: true,
                 bind: { cell, _ in
                     cell.set(backgroundStyle: .lawrence, isFirst: true)
@@ -418,6 +419,91 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         )
     }
 
+    private func holdersSection(viewItem: Lockable<CoinAnalyticsViewModel.HoldersViewItem>) -> SectionProtocol {
+        struct Blockchain {
+            let imageUrl: String?
+            let name: String
+            let value: String
+            let action: (() -> ())?
+        }
+
+        let value: String
+        let blockchains: [Blockchain]
+        let chartItems: [(Decimal, UIColor?)]
+
+        switch viewItem {
+        case .locked:
+            value = placeholderText
+            blockchains = [
+                Blockchain(imageUrl: nil, name: "Blockchain 1", value: placeholderText, action: nil),
+                Blockchain(imageUrl: nil, name: "Blockchain 2", value: placeholderText, action: nil),
+                Blockchain(imageUrl: nil, name: "Blockchain 3", value: placeholderText, action: nil),
+            ]
+            chartItems = [
+                (50, UIColor.themeGray.withAlphaComponent(0.8)),
+                (35, UIColor.themeGray.withAlphaComponent(0.6)),
+                (15, UIColor.themeGray.withAlphaComponent(0.4))
+            ]
+        case .unlocked(let viewItem):
+            value = viewItem.value
+            blockchains = viewItem.holderViewItems.map { viewItem in
+                Blockchain(
+                        imageUrl: viewItem.imageUrl,
+                        name: viewItem.name,
+                        value: viewItem.value,
+                        action: {
+                            // todo
+                        }
+                )
+            }
+            chartItems = viewItem.holderViewItems.map { ($0.percent, $0.blockchainType.brandColor) }
+        }
+
+        return Section(
+                id: "holders",
+                headerState: .margin(height: .margin12),
+                rows: [
+                    Row<MarketWideCardCell>(
+                            id: "holders",
+                            height: MarketWideCardCell.height(hasChart: false, bottomMargin: .margin12),
+                            bind: { cell, _ in
+                                cell.set(backgroundStyle: .lawrence, isFirst: true)
+                                cell.selectionStyle = .none
+
+                                cell.bind(
+                                        title: "coin_analytics.holders".localized,
+                                        value: value,
+                                        valueInfo: viewItem.isLocked ? nil : "coin_analytics.current".localized,
+                                        onTapInfo: {
+                                            // todo
+                                        }
+                                )
+                            }
+                    ),
+                    Row<CoinAnalyticsHoldersCell>(
+                            id: "holders-pie",
+                            height: CoinAnalyticsHoldersCell.height,
+                            bind: { cell, _ in
+                                cell.set(backgroundStyle: .lawrence)
+                                cell.topSeparatorView.isHidden = true
+                                cell.bind(items: chartItems)
+                            }
+                    )
+                ] + blockchains.enumerated().map { index, blockchain in
+                    tableView.universalRow56(
+                            id: "holders-blockchain-\(index)",
+                            image: .url(blockchain.imageUrl, placeholder: "placeholder_rectangle_32"),
+                            title: .subhead2(blockchain.name),
+                            value: .subhead1(blockchain.value),
+                            accessoryType: .disclosure,
+                            autoDeselect: true,
+                            isLast: index == blockchains.count - 1,
+                            action: blockchain.action
+                    )
+                }
+        )
+    }
+
     private func tvlSection(viewItem: Lockable<CoinAnalyticsViewModel.TvlViewItem>) -> SectionProtocol {
         Section(
                 id: "tvl",
@@ -470,8 +556,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                 rows: [
                     Row<MarketWideCardCell>(
                             id: "revenue",
-                            height: MarketWideCardCell.compactHeight,
-                            autoDeselect: true,
+                            height: MarketWideCardCell.height(hasChart: false),
                             bind: { cell, _ in
                                 cell.set(backgroundStyle: .lawrence, isFirst: true)
                                 cell.selectionStyle = .none
@@ -610,6 +695,10 @@ extension CoinAnalyticsViewController: SectionsDataSource {
 
             if let viewItem = viewItem.transactionCount {
                 sections.append(txCountSection(viewItem: viewItem))
+            }
+
+            if let viewItem = viewItem.holders {
+                sections.append(holdersSection(viewItem: viewItem))
             }
 
             if let viewItem = viewItem.tvl {
