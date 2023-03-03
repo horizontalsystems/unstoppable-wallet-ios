@@ -103,6 +103,30 @@ class CoinAnalyticsViewModel {
         return .unlocked(value: TransactionCountViewItem(chart: chartViewItem, rank: "#\(rank)", volume: volumeChartViewItem.value))
     }
 
+    private func holderViewItem(blockchain: Blockchain, share: Decimal) -> HolderViewItem {
+        HolderViewItem(
+                blockchainType: blockchain.type,
+                imageUrl: blockchain.type.imageUrl,
+                name: blockchain.name,
+                value: "\(share)%",
+                percent: share
+        )
+    }
+
+    private func holdersViewItem() -> Lockable<HoldersViewItem>? {
+        let viewItem = HoldersViewItem(
+                value: "193.3K",
+                holderViewItems: [
+                    holderViewItem(blockchain: App.shared.evmBlockchainManager.blockchain(type: .ethereum)!, share: 40.25),
+                    holderViewItem(blockchain: App.shared.evmBlockchainManager.blockchain(type: .binanceSmartChain)!, share: 34.75),
+                    holderViewItem(blockchain: App.shared.evmBlockchainManager.blockchain(type: .polygon)!, share: 24.5),
+                    holderViewItem(blockchain: App.shared.evmBlockchainManager.blockchain(type: .avalanche)!, share: 0.5)
+                ]
+        )
+
+        return .unlocked(value: viewItem)
+    }
+
     private func tvlViewItem(tvls: [ChartPoint]?, rank: Int?, ratio: Decimal?) -> Lockable<TvlViewItem>? {
         guard let chartViewItem = chartViewItem(data: tvls.flatMap { .completed($0) } ?? .empty, currentValueType: .last, chartPreviewValuePostfix: .currency),
               let ratio = ratio.flatMap({ ratioFormatter.string(from: $0 as NSNumber) }),
@@ -145,6 +169,7 @@ class CoinAnalyticsViewModel {
                         volumeData: item.analytics.txVolume,
                         rank: 55
                 ),
+                holders: holdersViewItem(),
                 tvl: tvlViewItem(
                         tvls: item.tvls,
                         rank: item.marketInfoDetails.tvlRank,
@@ -170,6 +195,7 @@ class CoinAnalyticsViewModel {
                 dexLiquidity: .locked,
                 activeAddresses: .locked,
                 transactionCount: .locked,
+                holders: .locked,
                 tvl: .locked,
                 revenue: .locked,
                 investors: .locked,
@@ -218,6 +244,7 @@ extension CoinAnalyticsViewModel {
         let dexLiquidity: Lockable<RankCardViewItem>?
         let activeAddresses: Lockable<RankCardViewItem>?
         let transactionCount: Lockable<TransactionCountViewItem>?
+        let holders: Lockable<HoldersViewItem>?
         let tvl: Lockable<TvlViewItem>?
         let revenue: Lockable<RevenueViewItem>?
         let investors: Lockable<String>?
@@ -240,6 +267,19 @@ extension CoinAnalyticsViewModel {
         let chart: ChartViewItem
         let rank: String
         let volume: String
+    }
+
+    struct HoldersViewItem {
+        let value: String
+        let holderViewItems: [HolderViewItem]
+    }
+
+    struct HolderViewItem {
+        let blockchainType: BlockchainType
+        let imageUrl: String
+        let name: String
+        let value: String
+        let percent: Decimal
     }
 
     struct TvlViewItem {

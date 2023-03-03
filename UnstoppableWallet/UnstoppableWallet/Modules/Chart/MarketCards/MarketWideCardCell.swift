@@ -5,9 +5,6 @@ import ComponentKit
 import Chart
 
 class MarketWideCardCell: BaseSelectableThemeCell {
-    static let height: CGFloat = 152
-    static let compactHeight: CGFloat = 80
-
     private let titleLabel = UILabel()
     private let infoButton = SecondaryCircleButton()
     private let valueLabel = UILabel()
@@ -21,7 +18,8 @@ class MarketWideCardCell: BaseSelectableThemeCell {
 
         wrapperView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview().inset(CGFloat.margin12)
+            make.leading.equalToSuperview().inset(CGFloat.margin16)
+            make.top.equalToSuperview().inset(CGFloat.margin12)
         }
 
         titleLabel.font = .subhead2
@@ -30,8 +28,8 @@ class MarketWideCardCell: BaseSelectableThemeCell {
         wrapperView.addSubview(infoButton)
         infoButton.snp.makeConstraints { make in
             make.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin12)
-            make.top.equalToSuperview().inset(CGFloat.margin8)
-            make.trailing.equalToSuperview().inset(CGFloat.margin12)
+            make.top.equalToSuperview().inset(CGFloat.margin12)
+            make.trailing.equalToSuperview().inset(CGFloat.margin16)
         }
 
         infoButton.set(image: UIImage(named: "circle_information_20"), style: .transparent)
@@ -39,7 +37,7 @@ class MarketWideCardCell: BaseSelectableThemeCell {
 
         wrapperView.addSubview(valueLabel)
         valueLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(CGFloat.margin12)
+            make.leading.equalToSuperview().inset(CGFloat.margin16)
             make.top.equalTo(titleLabel.snp.bottom).offset(CGFloat.margin12)
         }
 
@@ -50,7 +48,7 @@ class MarketWideCardCell: BaseSelectableThemeCell {
         wrapperView.addSubview(valueInfoLabel)
         valueInfoLabel.snp.makeConstraints { make in
             make.leading.equalTo(valueLabel.snp.trailing).offset(CGFloat.margin8)
-            make.trailing.equalToSuperview().inset(CGFloat.margin12)
+            make.trailing.equalToSuperview().inset(CGFloat.margin16)
             make.lastBaseline.equalTo(valueLabel)
         }
 
@@ -59,7 +57,7 @@ class MarketWideCardCell: BaseSelectableThemeCell {
 
         wrapperView.addSubview(chartView)
         chartView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(CGFloat.margin12)
+            make.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
             make.top.equalTo(valueLabel.snp.bottom).offset(CGFloat.margin12)
             make.height.equalTo(60)
         }
@@ -92,6 +90,14 @@ class MarketWideCardCell: BaseSelectableThemeCell {
         }
 
         self.onTapInfo = onTapInfo
+    }
+
+}
+
+extension MarketWideCardCell {
+
+    static func height(hasChart: Bool = true, bottomMargin: CGFloat = .margin16) -> CGFloat {
+        64 + (hasChart ? 60 + .margin12 : 0) + bottomMargin
     }
 
 }
