@@ -85,7 +85,7 @@
 "number.trillion" = "%@ трл";
 "number.quadrillion" = "%@ квадрлн";
 
-"selector.any" = "Any";
+"selector.any" = "Любое";
 
 // Access Camera
 
@@ -277,13 +277,13 @@
 "send.hodler_locktime_off" = "Выкл.";
 "send.hodler_error.unsupported_address" = "Блокировка по времени работает только с адресами P2PKH (начиная с 1)";
 "send.fee_info.title" = "Комиссия";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe Unstoppable wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
-"send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
-"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:";
-"send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
-"send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
-"send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
-"send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
+"send.fee_info.description" = "Блокчейн требует от пользователей оплаты сетевых сборов при отправке транзакций. Комиссия выше, когда в сети проходит много транзакций.\n\nКошелек Unstoppable оценивает комиссию на основе текущей активности блокчейна и рекомендует оптимальное значение для того, чтобы транзакция была обработана в разумные сроки.\n\nРекомендованная ставка комиссии показана как количество сатоши, которое пользователь должен заплатить за один байт транзакции. Таким образом, общая сумма комиссии зависит от общего размера транзакции, который измеряется в байтах.\n\n\nПользователи могут использовать предусмотренные элементы управления, чтобы увеличить или уменьшить значение ставки комиссии. Изменение ставки комиссии изменяет общую плату за транзакцию, которую заплатит пользователь.\n\n\nУстановка ставки комиссии ниже рекомендуемого значения может привести к тому, что транзакция будет находиться в ожидании в течение нескольких часов или будет отклонена. Чем ниже значение, тем больше времени потребуется для подтверждения транзакции. Для транзакций, где важен приоритет, мы рекомендуем установить более высокую ставку комиссии.";
+"send.transaction_inputs_outputs_info.title" = "Вводы / выводы транзакций";
+"send.transaction_inputs_outputs_info.description" = "Большинство транзакций с биткоином, а также транзакций с подобными криптовалютами, включая Bitcoin Cash, Dash и Litecoin, генерируют два выхода. Один выход - это сумма, которая поступает получателю, а другой - это изменение, которое возвращается отправителю. То, как большинство кошельков строят транзакции, позволяет третьей стороне легко понять, какой из выходов достался получающей стороне, а какой - сумма сдачи, возвращенная отправителю. Поскольку сумма, возвращенная отправителю, впоследствии используется в будущих транзакциях, связь между этими двумя транзакциями становится очевидной.\n\nВ кошельке Unstoppable реализованы меры, чтобы затруднить кому-либо выяснение того, какой вывод куда идет.\n\nДля пользователей Unstoppable доступны два варианта:";
+"send.transaction_inputs_outputs_info.shuffle.title" = "1. Перемешать";
+"send.transaction_inputs_outputs_info.shuffle.description" = "Порядок выхода транзакций меняется случайным образом в каждой транзакции. Иногда изменение может быть первым выводом, иногда - вторым. Если пользователь доверяет разработчику приложения, то рекомендуем использовать этот вариант.";
+"send.transaction_inputs_outputs_info.deterministic.title" = "2. Детерминированный";
+"send.transaction_inputs_outputs_info.deterministic.description" = "Существует общепринятый стандарт упорядочивания выходов транзакций (известный как BIP69). В кошельках с открытым исходным кодом этот стандарт гарантирует, что пользователям кошелька не нужно доверять тому, как разработчики приложения реализуют упорядочивание выходов. Поскольку этот стандарт является новым, не многие кошельки его еще внедрили. В результате на блокчейне можно увидеть, была ли транзакция отправлена из кошелька, использующего этот стандарт, или нет.";
 
 "send.confirmation.you_send" = "Вы Отправляете";
 "send.confirmation.to" = "Кому";
@@ -568,7 +568,7 @@
 "coin_page.roi.year1" = "1 Год";
 
 "coin_page.tab.overview" = "Цена";
-"coin_page.tab.analytics" = "Analytics";
+"coin_page.tab.analytics" = "Аналитика";
 "coin_page.tab.markets" = "Рынки";
 "coin_page.tab.tweets" = "Твиты";
 
@@ -630,10 +630,10 @@
 "coin_page.category" = "Категория";
 
 "coin_page.blockchains" = "Блокчейны";
-"coin_page.bips" = "BIPs";
-"coin_page.coin_types" = "Coin Types";
+"coin_page.bips" = "BIPы";
+"coin_page.coin_types" = "Типы Токенов";
 "coin_page.show_more" = "Показать Ещё";
-"coin_page.show_less" = "Show Less";
+"coin_page.show_less" = "Свернуть";
 "coin_page.links" = "Ссылки";
 
 "coin_page.guide" = "Руководство";
@@ -692,28 +692,28 @@
 
 // Coin Page -> Analytics
 
-"coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked" = "Эта страница доступна только для премиум-пользователей Unstoppable Wallet";
 
-"coin_analytics.cex_volume" = "CEX Volume";
+"coin_analytics.cex_volume" = "Объем CEX";
 "coin_analytics.dex_volume" = "Объем торгов DEX";
 "coin_analytics.dex_liquidity" = "Ликвидность DEX";
 "coin_analytics.active_addresses" = "Активные адреса";
 "coin_analytics.transaction_count" = "Количество транзакций";
-"coin_analytics.holders" = "Holders";
-"coin_analytics.project_tvl" = "Project TVL";
-"coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
-"coin_analytics.project_revenue" = "Project Revenue";
-"coin_analytics.other_data" = "Other Data";
+"coin_analytics.holders" = "Владельцы";
+"coin_analytics.project_tvl" = "Проект TVL";
+"coin_analytics.tvl_ratio" = "Коэффициент M.Cap / TVL";
+"coin_analytics.project_revenue" = "Доходы по проекту";
+"coin_analytics.other_data" = "Прочие данные";
 "coin_analytics.reports" = "Отчёты";
-"coin_analytics.funding" = "Funding";
+"coin_analytics.funding" = "Финансирование";
 "coin_analytics.treasuries" = "Treasuries";
 "coin_analytics.audits" = "Аудиты";
 
-"coin_analytics.last_30d" = "last 30d";
-"coin_analytics.current" = "current";
-"coin_analytics.rank" = "Rank";
-"coin_analytics.30_day_rank" = "30-Day Rank";
-"coin_analytics.30_day_volume" = "30-Day Volume";
+"coin_analytics.last_30d" = "Последние 30 дн.";
+"coin_analytics.current" = "текущее";
+"coin_analytics.rank" = "Рейтинг";
+"coin_analytics.30_day_rank" = "30-дневный рейтинг";
+"coin_analytics.30_day_volume" = "30-дневный объем";
 
 // Pro Features
 
@@ -846,8 +846,8 @@
 "manage_wallets.not_found" = "Ничего не найдено. Попробуйте добавить токен вручную.";
 "manage_wallets.search_placeholder" = "Имя, код или адрес контракта";
 "manage_wallets.contract_address" = "Адрес контракта";
-"manage_wallets.derivation_description" = "There are 3 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (older)\n- BIP49 (newer)\n- BIP84 (newest)\n\nWhile Unstoppable wallet supports all 3 of them it recommends to use a %@ wallet operating in BIP84 format. The wallets operating in this format get to pay lowest fees when sending %@ transactions.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile Unstoppable wallet supports both of them it recommends to use a Bitcoin Cash wallet operating in TYPE 145 format.";
+"manage_wallets.derivation_description" = "Существует 3 распространенных формата адресов %@ кошельков для получения входящих платежей:\n\n- BIP44 (более старый)\n- BIP49 (более новый)\n- BIP84 (самый новый)\n\nХотя кошелек Unstoppable поддерживает все три формата, рекомендуется использовать %@ кошелек, работающий в формате BIP84. Кошельки, работающие в этом формате, платят наименьшую комиссию при отправке %@ транзакций.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Существует 2 формата адресов, которые кошельки Bitcoin Cash могут использовать для приема входящих платежей:\n\n- TYPE 0 (более старый)\n- TYPE 145 (более новый)\n\nХотя кошелек Unstoppable поддерживает оба формата, рекомендуется использовать кошелек Bitcoin Cash, работающий в формате TYPE 145.";
 
 // Settings -> Experimental Features
 
@@ -1115,8 +1115,8 @@
 "ethereum_transaction.error.lower_than_base_gas_limit" = "Выбранное значение комиссии слишком низкое и будет отклонено!";
 "ethereum_transaction.error.nonce_already_in_block" = "Транзакция уже в блоке!";
 "ethereum_transaction.error.replacement_transaction_underpriced" = "Недостаточно комиссии для замены транзакции";
-"ethereum_transaction.error.transaction_underpriced" = "Fee not enough to send the transaction";
-"ethereum_transaction.error.tips_higher_than_max_fee" = "Max fee cannot be lower than the tips, because Max fee includes the tips.";
+"ethereum_transaction.error.transaction_underpriced" = "Комиссия недостаточна для отправки транзакции";
+"ethereum_transaction.error.tips_higher_than_max_fee" = "Максимальное вознаграждение не может быть меньше чаевых, так как максимальное вознаграждение включает чаевые.";
 "ethereum_transaction.error.reverted" = "Транзакция не может быть выполнена: %@";
 "wallet_connect.request_title" = "Вызов Смарт Контракта";
 "wallet_connect.button.confirm" = "Подтвердить";
@@ -1187,7 +1187,7 @@
 "manage_account.name" = "По названию";
 "manage_account.recovery_phrase" = "Фраза восстановления";
 "manage_account.public_keys" = "Публичные ключи";
-"manage_account.private_keys" = "Private Keys";
+"manage_account.private_keys" = "Личные ключи";
 "manage_account.backup_recovery_phrase" = "Резервная копия";
 "manage_account.unlink" = "Отсоединить";
 
@@ -1195,19 +1195,19 @@
 
 "public_keys.title" = "Публичные ключи";
 "public_keys.evm_address" = "EVM адрес";
-"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM based blockchains.";
+"public_keys.evm_address.description" = "Позволяет отслеживать кошельки с активами на Ethereum, Binance Smart Chain и других блокчейнах на базе EVM только для чтения.";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
-"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
+"public_keys.account_extended_public_key.description" = "Позволяет осуществлять мониторинг кошельков, содержащих Bitcoin и другие криптовалюты на основе UTXO (например, Litecoin, Bitcoin Cash, Dash и т.д.), только для чтения.";
 
 // Manage Account -> Private Keys
 
-"private_keys.title" = "Private Keys";
+"private_keys.title" = "Личные ключи";
 "private_keys.evm_private_key" = "Приватный Ключ EVM";
-"private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
+"private_keys.evm_private_key.description" = "Предоставляет полный контроль над криптовалютами на базе EVM, т.е. Ethereum, Binance Smart Chain и т.д. в пределах соответствующего кошелька.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
-"private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
+"private_keys.bip32_root_key.description" = "Предоставляет полный контроль над активами на соответствующем кошельке.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
-"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within respective wallet.";
+"private_keys.account_extended_private_key.description" = "Предоставляет полный контроль над Bitcoin и другими криптовалютами на базе UTXO, такими как Litecoin, Bitcoin Cash, Dash и т.д. в пределах соответствующего кошелька.";
 
 // Manage Account -> EVM Address
 
@@ -1222,9 +1222,9 @@
 "birthday_input.title" = "Блок создания";
 "birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
 "birthday_input.new_wallet" = "Новый кошелек";
-"birthday_input.new_wallet.description" = "Doesn't have any transactions";
-"birthday_input.old_wallet" = "Existing Wallet";
-"birthday_input.old_wallet.description" = "Has transactions";
+"birthday_input.new_wallet.description" = "Не имеет транзакций";
+"birthday_input.old_wallet" = "Существующий кошелек";
+"birthday_input.old_wallet.description" = "Имеет транзакции";
 "birthday_input.input_placeholder" = "%@ (опционально)";
 
 "restore_setting.birthday_height" = "%@ Блок создания";
@@ -1247,31 +1247,36 @@
 
 // Send Settings
 
-"evm_send_settings.nonce" = "Transaction Nonce";
-"evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
-"evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
-"evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
+"evm_send_settings.nonce" = "Nonce транзакции";
+"evm_send_settings.nonce.info" = "Nonce - это уникальное целочисленное значение для транзакции в кошельке пользователя. Обычно оно увеличивается с каждой транзакцией и не нуждается в изменении. Продвинутые пользователи могут установить его равным nonce отложенной транзакции, чтобы отменить и заменить эту транзакцию, при условии, что новая транзакция имеет достаточно большую плату, чтобы старая не была подтверждена вместо нее (например, они могут захотеть ускорить ее подтверждение или полностью изменить параметры транзакции). Когда несколько ожидающих транзакций имеют одинаковый nonce, подтверждается только одна, обычно с наибольшей комиссией.
+";
+"evm_send_settings.nonce.errors.already_in_use" = "Исп. Nonce
+";
+"evm_send_settings.nonce.errors.already_in_use.info" = "Выполненная транзакция с таким nonce уже существует.";
 
 "fee_settings" = "Доп. настройки";
 "fee_settings.fee" = "Комиссия";
-"fee_settings.fee.info" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.";
+"fee_settings.fee.info" = "Блокчейн требует от пользователей оплаты сетевых сборов при отправке транзакций. Эти сборы выше, когда в сети происходит много транзакций.";
 "fee_settings.fee_rate" = "Комиссия";
-"fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
-"fee_settings.inputs_outputs" = "Inputs/Outputs";
-"fee_settings.transaction_settings" = "Transaction Settings";
-"fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
+"fee_settings.fee_rate.description" = "Вот рекомендуемое значение для попадания в следующие 2 блока
+";
+"fee_settings.inputs_outputs" = "Вводы/Выводы";
+"fee_settings.transaction_settings" = "Настройки транзакций";
+"fee_settings.transaction_settings.description" = "Сделайте ваши транзакции с Bitcoin более сложными для отслеживания, изменив способ структурирования транзакций.";
 "fee_settings.time_lock" = "TimeLock";
-"fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
+"fee_settings.time_lock.description" = "TimeLock работает только для отправки на адреса BIP44 (начиная с 1)
+";
 
 "fee_settings.max_fee" = "Макс. комиссия";
-"fee_settings.max_fee.info" = "The maximum estimated transaction fee to be paid for this transaction, computed based on the gas limit, max fee rate and max priority fee values below. The actual fee paid will normally be lower.";
+"fee_settings.max_fee.info" = "Максимальная предполагаемая комиссия за транзакцию, которая будет уплачена за данную транзакцию, рассчитанная на основе значений лимита газа, максимальной ставки комиссии и максимальной приоритетной комиссии, указанных ниже. Фактический размер комиссии обычно ниже.
+";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "Transaction complexity is measured in units called \"gas\". It varies depending on the smart contract being executed. The Gas Limit is the estimated maximum gas needed to execute it. The actual gas used will normally be lower.";
 
 "fee_settings.gas_price" = "Gas Price";
 "fee_settings.gas_price.info" = "Комиссия за сетевую транзакцию измеряется в единицах газа. Цена газа – это сумма, которую пользователь готов заплатить за единицу газа. Когда сеть занята, цены на газ повышаются, а во время простоя они наоборот снижаются. Слишком низкая цена газа зачастую является основанием для длительного сохранения отложенного статуса транзакции.";
 
-"fee_settings.base_fee" = "Base Fee";
+"fee_settings.base_fee" = "Базовая комиссия";
 "fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
 "fee_settings.max_fee_rate" = "Max Fee Rate";
 "fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
@@ -1285,7 +1290,8 @@
 "fee_settings.errors.nonce_already_in_block" = "Не удается заменить транзакцию";
 "fee_settings.errors.replacement_transaction_underpriced" = "Низкая комиссия на замену транзакции";
 "fee_settings.errors.transaction_underpriced" = "Low Fee for transaction";
-"fee_settings.errors.tips_higher_than_max_fee" = "Max Fee is too low";
+"fee_settings.errors.tips_higher_than_max_fee" = "Максимальное вознаграждение слишком низкое
+";
 "fee_settings.warning.risk_of_getting_stuck" = "Риски";
 "fee_settings.warning.risk_of_getting_stuck.info" = "Обработка транзакции может отложиться на некоторое время, или транзакцию могут полностью отклонить.";
 "fee_settings.warning.overpricing" = "Слишком Высокая Комиссия";
