@@ -22,6 +22,15 @@ class CoinAnalyticsViewModel {
         return formatter
     }()
 
+    private let holderShareFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .percent
+        formatter.roundingMode = .halfEven
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        return formatter
+    }()
+
     init(service: CoinAnalyticsService) {
         self.service = service
 
@@ -30,178 +39,227 @@ class CoinAnalyticsViewModel {
         sync(state: service.state)
     }
 
-    private func sync(state: DataStatus<CoinAnalyticsService.Item>) {
+    private func sync(state: CoinAnalyticsService.State) {
         switch state {
         case .loading:
             viewItemRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .completed(let item):
-            viewItemRelay.accept(viewItem(item: item))
-//            viewItemRelay.accept(lockedViewItem(item: item))
-            loadingRelay.accept(false)
-            syncErrorRelay.accept(false)
         case .failed:
             viewItemRelay.accept(nil)
             loadingRelay.accept(false)
             syncErrorRelay.accept(true)
+        case .locked(let lockedAnalytics):
+            viewItemRelay.accept(lockedViewItem(lockedAnalytics: lockedAnalytics))
+            loadingRelay.accept(false)
+            syncErrorRelay.accept(false)
+        case .success(let analytics):
+            viewItemRelay.accept(viewItem(analytics: analytics))
+            loadingRelay.accept(false)
+            syncErrorRelay.accept(false)
         }
     }
 
-    private func chartViewItem(data: CoinAnalyticsService.ProData, currentValueType: CoinProChartModule.ChartValueType, chartPreviewValuePostfix: ChartPreviewValuePostfix) -> ChartViewItem? {
-        switch data {
-        case .empty: return nil
-        case .completed(let values):
-            guard let first = values.first, let last = values.last else {
-                return nil
-            }
+    private func rankString(value: Int) -> String {
+        "#\(value)"
+    }
 
-            let chartItems = values.map {
-                ChartItem(timestamp: $0.timestamp).added(name: .rate, value: $0.value)
-            }
+    private func chartViewItem(points: [ChartPoint], customValue: Decimal? = nil, type: CoinProChartModule.ChartValueType, postfix: ChartPreviewValuePostfix) -> ChartViewItem? {
+        guard let first = points.first, let last = points.last else {
+            return nil
+        }
 
-            let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
+        let chartItems = points.map {
+            ChartItem(timestamp: $0.timestamp).added(name: .rate, value: $0.value)
+        }
 
-            var value: Decimal
+        let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
 
-            switch currentValueType {
+        var value: Decimal?
+
+        if let customValue {
+            value = customValue
+        } else {
+            switch type {
             case .last: value = last.value
-            case .cumulative: value = values.map { $0.value }.reduce(0, +)
+            case .cumulative: value = points.map { $0.value }.reduce(0, +)
             }
+        }
 
-            let valueString: String?
+        var valueString: String?
 
-            switch chartPreviewValuePostfix {
+        if let value {
+            switch postfix {
             case .currency: valueString = ValueFormatter.instance.formatShort(currency: service.currency, value: value)
             case .coin: valueString = ValueFormatter.instance.formatShort(value: value).map { [$0, coin.code].joined(separator: " ") }
             case .noPostfix: valueString = ValueFormatter.instance.formatShort(value: value)
             }
-
-            guard let valueString else {
-                return nil
-            }
-
-            return ChartViewItem(value: valueString, chartData: chartData)
         }
+
+        return ChartViewItem(value: valueString ?? "n/a".localized, chartData: chartData)
     }
 
-    private func rankCardViewItem(data: CoinAnalyticsService.ProData, type: CoinProChartModule.ChartValueType, postfix: ChartPreviewValuePostfix, rank: Int?) -> Lockable<RankCardViewItem>? {
-        guard let chartViewItem = chartViewItem(data: data, currentValueType: type, chartPreviewValuePostfix: postfix), let rank else {
+    private func rankCardViewItem(points: [ChartPoint]?, value: Int? = nil, type: CoinProChartModule.ChartValueType, postfix: ChartPreviewValuePostfix, rank: Int?) -> RankCardViewItem? {
+        guard let points, let chartViewItem = chartViewItem(points: points, customValue: value.map { Decimal($0) }, type: type, postfix: postfix) else {
             return nil
         }
 
-        return .unlocked(value: RankCardViewItem(chart: chartViewItem, rank: "#\(rank)"))
-    }
-
-    private func transactionCountViewItem(data: CoinAnalyticsService.ProData, volumeData: CoinAnalyticsService.ProData, rank: Int?) -> Lockable<TransactionCountViewItem>? {
-        guard let chartViewItem = chartViewItem(data: data, currentValueType: .cumulative, chartPreviewValuePostfix: .noPostfix),
-              let volumeChartViewItem = self.chartViewItem(data: volumeData, currentValueType: .cumulative, chartPreviewValuePostfix: .coin),
-              let rank else {
-            return nil
-        }
-
-        return .unlocked(value: TransactionCountViewItem(chart: chartViewItem, rank: "#\(rank)", volume: volumeChartViewItem.value))
-    }
-
-    private func holderViewItem(blockchain: Blockchain, share: Decimal) -> HolderViewItem {
-        HolderViewItem(
-                blockchainType: blockchain.type,
-                imageUrl: blockchain.type.imageUrl,
-                name: blockchain.name,
-                value: "\(share)%",
-                percent: share
+        return RankCardViewItem(
+                chart: .unlocked(value: chartViewItem),
+                rank: rank.map { .unlocked(value: rankString(value: $0)) }
         )
     }
 
-    private func holdersViewItem() -> Lockable<HoldersViewItem>? {
+    private func transactionCountViewItem(points: [ChartPoint]?, volume: Decimal?, rank: Int?) -> TransactionCountViewItem? {
+        guard let points, let chartViewItem = chartViewItem(points: points, type: .cumulative, postfix: .noPostfix) else {
+            return nil
+        }
+
+        return TransactionCountViewItem(
+                chart: .unlocked(value: chartViewItem),
+                volume: volume.flatMap { ValueFormatter.instance.formatShort(value: $0) }.map { .unlocked(value: [$0, coin.code].joined(separator: " ")) },
+                rank: rank.map { .unlocked(value: rankString(value: $0)) }
+        )
+    }
+
+    private func holdersViewItem(holderBlockchains: [AnalyticsResponse.HolderBlockchain]?) -> Lockable<HoldersViewItem>? {
+        struct Item {
+            let blockchain: Blockchain
+            let count: Int
+        }
+
+        guard let holderBlockchains else {
+            return nil
+        }
+
+        let blockchains = service.blockchains(uids: holderBlockchains.filter { $0.count > 0 }.map { $0.uid })
+
+        let items = holderBlockchains.compactMap { holderBlockchain -> Item? in
+            guard let blockchain = blockchains.first(where: { $0.uid == holderBlockchain.uid }) else {
+                return nil
+            }
+
+            return Item(blockchain: blockchain, count: holderBlockchain.count)
+        }
+
+        guard !items.isEmpty else {
+            return nil
+        }
+
+        let total = items.map { Decimal($0.count) }.reduce(0, +)
+
         let viewItem = HoldersViewItem(
-                value: "193.3K",
-                holderViewItems: [
-                    holderViewItem(blockchain: App.shared.evmBlockchainManager.blockchain(type: .ethereum)!, share: 40.25),
-                    holderViewItem(blockchain: App.shared.evmBlockchainManager.blockchain(type: .binanceSmartChain)!, share: 34.75),
-                    holderViewItem(blockchain: App.shared.evmBlockchainManager.blockchain(type: .polygon)!, share: 24.5),
-                    holderViewItem(blockchain: App.shared.evmBlockchainManager.blockchain(type: .avalanche)!, share: 0.5)
-                ]
+                value: ValueFormatter.instance.formatShort(value: total),
+                holderViewItems: items.map { item in
+                    let percent = Decimal(item.count) / total
+
+                    return HolderViewItem(
+                            blockchainType: item.blockchain.type,
+                            imageUrl: item.blockchain.type.imageUrl,
+                            name: item.blockchain.name,
+                            value: holderShareFormatter.string(from: percent as NSNumber),
+                            percent: percent
+                    )
+                }
         )
 
         return .unlocked(value: viewItem)
     }
 
-    private func tvlViewItem(tvls: [ChartPoint]?, rank: Int?, ratio: Decimal?) -> Lockable<TvlViewItem>? {
-        guard let chartViewItem = chartViewItem(data: tvls.flatMap { .completed($0) } ?? .empty, currentValueType: .last, chartPreviewValuePostfix: .currency),
-              let ratio = ratio.flatMap({ ratioFormatter.string(from: $0 as NSNumber) }),
-              let rank else {
+    private func tvlViewItem(points: [ChartPoint]?, rank: Int?, ratio: Decimal?) -> TvlViewItem? {
+        guard let points, let chartViewItem = chartViewItem(points: points, type: .last, postfix: .currency) else {
             return nil
         }
 
-        return .unlocked(value: TvlViewItem(chart: chartViewItem, rank: "#\(rank)", ratio: ratio))
-    }
-
-    private func viewItem(item: CoinAnalyticsService.Item) -> ViewItem {
-        ViewItem(
-                lockInfo: false,
-                cexVolume: rankCardViewItem(
-                        data: item.analytics.dexVolumes,
-                        type: .cumulative,
-                        postfix: .currency,
-                        rank: 15
-                ),
-                dexVolume: rankCardViewItem(
-                        data: item.analytics.dexVolumes,
-                        type: .cumulative,
-                        postfix: .currency,
-                        rank: 25
-                ),
-                dexLiquidity: rankCardViewItem(
-                        data: item.analytics.dexLiquidity,
-                        type: .last,
-                        postfix: .currency,
-                        rank: 35
-                ),
-                activeAddresses: rankCardViewItem(
-                        data: item.analytics.activeAddresses,
-                        type: .cumulative,
-                        postfix: .noPostfix,
-                        rank: 45
-                ),
-                transactionCount: transactionCountViewItem(
-                        data: item.analytics.txCount,
-                        volumeData: item.analytics.txVolume,
-                        rank: 55
-                ),
-                holders: holdersViewItem(),
-                tvl: tvlViewItem(
-                        tvls: item.tvls,
-                        rank: item.marketInfoDetails.tvlRank,
-                        ratio: item.marketInfoDetails.tvlRatio
-                ),
-                revenue: .unlocked(value: RevenueViewItem(value: "$2.46M", rank: "#3")),
-                investors: item.marketInfoDetails.totalFundsInvested
-                        .flatMap { ValueFormatter.instance.formatShort(currency: service.usdCurrency, value: $0) }
-                        .map { .unlocked(value: $0) },
-                treasuries: item.marketInfoDetails.totalTreasuries
-                        .flatMap { ValueFormatter.instance.formatShort(currency: service.currency, value: $0) }
-                        .map { .unlocked(value: $0) },
-                reports: item.marketInfoDetails.reportsCount == 0 ? nil : .unlocked(value: "\(item.marketInfoDetails.reportsCount)"),
-                auditAddresses: service.auditAddresses.count == 0 ? nil : .unlocked(value: service.auditAddresses)
+        return TvlViewItem(
+                chart: .unlocked(value: chartViewItem),
+                rank: rank.map { .unlocked(value: rankString(value: $0)) },
+                ratio: ratio.flatMap { ratioFormatter.string(from: $0 as NSNumber) }.map { .unlocked(value: $0) }
         )
     }
 
-    private func lockedViewItem(item: CoinAnalyticsService.Item) -> ViewItem {
+    private func revenueViewItem(value: Decimal?, rank: Int?) -> RevenueViewItem? {
+        guard let value, let formattedValue = ValueFormatter.instance.formatShort(currency: service.currency, value: value) else {
+            return nil
+        }
+
+        return RevenueViewItem(
+                value: .unlocked(value: formattedValue),
+                rank: rank.map { .unlocked(value: rankString(value: $0)) }
+        )
+    }
+
+    private func viewItem(analytics: AnalyticsResponse) -> ViewItem {
+        ViewItem(
+                lockInfo: false,
+                cexVolume: rankCardViewItem(
+                        points: analytics.cexVolume?.chartPoints,
+                        type: .cumulative,
+                        postfix: .currency,
+                        rank: analytics.cexVolume?.ranks?.month
+                ),
+                dexVolume: rankCardViewItem(
+                        points: analytics.dexVolume?.chartPoints,
+                        type: .cumulative,
+                        postfix: .currency,
+                        rank: analytics.dexVolume?.ranks?.month
+                ),
+                dexLiquidity: rankCardViewItem(
+                        points: analytics.dexLiquidity?.chartPoints,
+                        type: .last,
+                        postfix: .currency,
+                        rank: analytics.dexLiquidity?.rank
+                ),
+                activeAddresses: rankCardViewItem(
+                        points: analytics.addresses?.chartPoints,
+                        value: analytics.addresses?.counts?.month,
+                        type: .cumulative,
+                        postfix: .noPostfix,
+                        rank: analytics.addresses?.ranks?.month
+                ),
+                transactionCount: transactionCountViewItem(
+                        points: analytics.transactions?.chartPoints,
+                        volume: analytics.transactions?.volumes?.month,
+                        rank: analytics.transactions?.ranks?.month
+                ),
+                holders: holdersViewItem(holderBlockchains: analytics.holders),
+                tvl: tvlViewItem(
+                        points: analytics.tvl?.chartPoints,
+                        rank: analytics.tvl?.rank,
+                        ratio: analytics.tvl?.ratio
+                ),
+                revenue: revenueViewItem(
+                        value: analytics.revenue?.values?.month,
+                        rank: analytics.revenue?.ranks?.month
+                ),
+                reports: analytics.reports
+                        .map { .unlocked(value: "\($0)") },
+                investors: analytics.fundsInvested
+                        .flatMap { ValueFormatter.instance.formatShort(currency: service.currency, value: $0) }
+                        .map { .unlocked(value: $0) },
+                treasuries: analytics.treasuries
+                        .flatMap { ValueFormatter.instance.formatShort(currency: service.currency, value: $0) }
+                        .map { .unlocked(value: $0) },
+                auditAddresses: service.auditAddresses
+                        .map { .unlocked(value: $0) }
+        )
+    }
+
+    private func lockedViewItem(lockedAnalytics: LockedAnalyticsResponse) -> ViewItem {
         ViewItem(
                 lockInfo: true,
-                cexVolume: .locked,
-                dexVolume: .locked,
-                dexLiquidity: .locked,
-                activeAddresses: .locked,
-                transactionCount: .locked,
-                holders: .locked,
-                tvl: .locked,
-                revenue: .locked,
-                investors: .locked,
-                treasuries: .locked,
-                reports: .locked,
-                auditAddresses: .locked
+                cexVolume: lockedAnalytics.cexVolume ? RankCardViewItem(chart: .locked, rank: .locked) : nil,
+                dexVolume: lockedAnalytics.dexVolume ? RankCardViewItem(chart: .locked, rank: .locked) : nil,
+                dexLiquidity: lockedAnalytics.dexLiquidity ? RankCardViewItem(chart: .locked, rank: .locked) : nil,
+                activeAddresses: lockedAnalytics.addresses ? RankCardViewItem(chart: .locked, rank: .locked) : nil,
+                transactionCount: lockedAnalytics.transactions ? TransactionCountViewItem(chart: .locked, volume: .locked, rank: .locked) : nil,
+                holders: lockedAnalytics.holders ? .locked : nil,
+                tvl: lockedAnalytics.tvl ? TvlViewItem(chart: .locked, rank: .locked, ratio: .locked) : nil,
+                revenue: lockedAnalytics.revenue ? RevenueViewItem(value: .locked, rank: .locked) : nil,
+                reports: lockedAnalytics.reports ? .locked : nil,
+                investors: lockedAnalytics.fundsInvested ? .locked : nil,
+                treasuries: lockedAnalytics.treasuries ? .locked : nil,
+                auditAddresses: service.auditAddresses != nil ? .locked : nil
         )
     }
 
@@ -239,18 +297,23 @@ extension CoinAnalyticsViewModel {
 
     struct ViewItem {
         let lockInfo: Bool
-        let cexVolume: Lockable<RankCardViewItem>?
-        let dexVolume: Lockable<RankCardViewItem>?
-        let dexLiquidity: Lockable<RankCardViewItem>?
-        let activeAddresses: Lockable<RankCardViewItem>?
-        let transactionCount: Lockable<TransactionCountViewItem>?
+        let cexVolume: RankCardViewItem?
+        let dexVolume: RankCardViewItem?
+        let dexLiquidity: RankCardViewItem?
+        let activeAddresses: RankCardViewItem?
+        let transactionCount: TransactionCountViewItem?
         let holders: Lockable<HoldersViewItem>?
-        let tvl: Lockable<TvlViewItem>?
-        let revenue: Lockable<RevenueViewItem>?
+        let tvl: TvlViewItem?
+        let revenue: RevenueViewItem?
+        let reports: Lockable<String>?
         let investors: Lockable<String>?
         let treasuries: Lockable<String>?
-        let reports: Lockable<String>?
         let auditAddresses: Lockable<[String]>?
+
+        var isEmpty: Bool {
+            let items: [Any?] = [cexVolume, dexVolume, dexLiquidity, activeAddresses, transactionCount, holders, tvl, revenue, reports, investors, treasuries]
+            return items.compactMap { $0 }.isEmpty
+        }
     }
 
     struct ChartViewItem {
@@ -259,18 +322,18 @@ extension CoinAnalyticsViewModel {
     }
 
     struct RankCardViewItem {
-        let chart: ChartViewItem
-        let rank: String
+        let chart: Lockable<ChartViewItem>
+        let rank: Lockable<String>?
     }
 
     struct TransactionCountViewItem {
-        let chart: ChartViewItem
-        let rank: String
-        let volume: String
+        let chart: Lockable<ChartViewItem>
+        let volume: Lockable<String>?
+        let rank: Lockable<String>?
     }
 
     struct HoldersViewItem {
-        let value: String
+        let value: String?
         let holderViewItems: [HolderViewItem]
     }
 
@@ -278,19 +341,19 @@ extension CoinAnalyticsViewModel {
         let blockchainType: BlockchainType
         let imageUrl: String
         let name: String
-        let value: String
+        let value: String?
         let percent: Decimal
     }
 
     struct TvlViewItem {
-        let chart: ChartViewItem
-        let rank: String
-        let ratio: String
+        let chart: Lockable<ChartViewItem>
+        let rank: Lockable<String>?
+        let ratio: Lockable<String>?
     }
 
     struct RevenueViewItem {
-        let value: String
-        let rank: String
+        let value: Lockable<String>
+        let rank: Lockable<String>?
     }
 
     enum ChartPreviewValuePostfix {
