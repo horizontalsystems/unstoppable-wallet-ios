@@ -76,10 +76,10 @@ class MarketWideCardCell: BaseSelectableThemeCell {
         onTapInfo?()
     }
 
-    func bind(title: String, value: String, valueInfo: String?, chartData: ChartData? = nil, chartColorType: ChartColorType? = nil, onTapInfo: @escaping () -> ()) {
+    func bind(title: String, value: String?, valueInfo: String?, chartData: ChartData? = nil, chartColorType: ChartColorType? = nil, onTapInfo: @escaping () -> ()) {
         titleLabel.text = title
         valueLabel.text = value
-        valueInfoLabel.text = valueInfo
+        valueInfoLabel.text = value != nil ? valueInfo : nil
 
         if let chartData, let chartColorType {
             chartView.isHidden = false

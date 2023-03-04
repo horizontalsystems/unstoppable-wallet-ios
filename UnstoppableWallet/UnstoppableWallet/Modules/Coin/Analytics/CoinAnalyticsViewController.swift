@@ -172,8 +172,8 @@ class CoinAnalyticsViewController: ThemeViewController {
 
 extension CoinAnalyticsViewController: SectionsDataSource {
 
-    private func chartRow(id: String, title: String, valueInfo: String, viewItem: Lockable<CoinAnalyticsViewModel.ChartViewItem>, infoAction: @escaping () -> (), action: @escaping () -> ()) -> RowProtocol {
-        let value: String
+    private func chartRow(id: String, title: String, valueInfo: String, viewItem: Lockable<CoinAnalyticsViewModel.ChartViewItem>, isLast: Bool, infoAction: @escaping () -> (), action: @escaping () -> ()) -> RowProtocol {
+        let value: String?
         let chartData: ChartData
 
         switch viewItem {
@@ -190,7 +190,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                 height: MarketWideCardCell.height(),
                 autoDeselect: true,
                 bind: { cell, _ in
-                    cell.set(backgroundStyle: .lawrence, isFirst: true)
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: isLast)
                     cell.selectionStyle = viewItem.isLocked ? .none : .default
 
                     cell.bind(
@@ -259,163 +259,208 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         )
     }
 
-    private func cexVolumeSection(viewItem: Lockable<CoinAnalyticsViewModel.RankCardViewItem>) -> SectionProtocol {
-        Section(
-                id: "cex-volume",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    chartRow(
-                            id: "cex-volume",
-                            title: "coin_analytics.cex_volume".localized,
-                            valueInfo: "coin_analytics.last_30d".localized,
-                            viewItem: viewItem.lockableValue { $0.chart },
-                            infoAction: { [weak self] in
-                                self?.parentNavigationController?.present(InfoModule.tokenLiquidityInfo, animated: true)
-                            },
-                            action: { [weak self] in
-                                self?.openProDataChart(type: .volume)
-                            }
-                    ),
+    private func cexVolumeSection(viewItem: CoinAnalyticsViewModel.RankCardViewItem) -> SectionProtocol {
+        var rows: [RowProtocol] = [
+            chartRow(
+                    id: "cex-volume",
+                    title: "coin_analytics.cex_volume".localized,
+                    valueInfo: "coin_analytics.last_30d".localized,
+                    viewItem: viewItem.chart,
+                    isLast: viewItem.rank == nil,
+                    infoAction: { [weak self] in
+                        self?.parentNavigationController?.present(InfoModule.tokenLiquidityInfo, animated: true)
+                    },
+                    action: { [weak self] in
+                        self?.openProDataChart(type: .volume)
+                    }
+            )
+        ]
+
+        if let rank = viewItem.rank {
+            rows.append(
                     lockableRow(
                             id: "cex-volume-rank",
                             title: "coin_analytics.30_day_rank".localized,
-                            value: viewItem.lockableValue { $0.rank },
+                            value: rank,
                             accessoryType: .disclosure,
                             isLast: true,
-                            action: viewItem.lockableValue { _ in {
+                            action: rank.lockableValue { _ in {
                                 // todo
                             }}
                     )
-                ]
+            )
+        }
+
+        return Section(
+                id: "cex-volume",
+                headerState: .margin(height: .margin12),
+                rows: rows
         )
     }
 
-    private func dexVolumeSection(viewItem: Lockable<CoinAnalyticsViewModel.RankCardViewItem>) -> SectionProtocol {
-        Section(
-                id: "dex-volume",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    chartRow(
-                            id: "dex-volume",
-                            title: "coin_analytics.dex_volume".localized,
-                            valueInfo: "coin_analytics.last_30d".localized,
-                            viewItem: viewItem.lockableValue { $0.chart },
-                            infoAction: { [weak self] in
-                                self?.parentNavigationController?.present(InfoModule.tokenLiquidityInfo, animated: true)
-                            },
-                            action: { [weak self] in
-                                self?.openProDataChart(type: .volume)
-                            }
-                    ),
+    private func dexVolumeSection(viewItem: CoinAnalyticsViewModel.RankCardViewItem) -> SectionProtocol {
+        var rows: [RowProtocol] = [
+            chartRow(
+                    id: "dex-volume",
+                    title: "coin_analytics.dex_volume".localized,
+                    valueInfo: "coin_analytics.last_30d".localized,
+                    viewItem: viewItem.chart,
+                    isLast: viewItem.rank == nil,
+                    infoAction: { [weak self] in
+                        self?.parentNavigationController?.present(InfoModule.tokenLiquidityInfo, animated: true)
+                    },
+                    action: { [weak self] in
+                        self?.openProDataChart(type: .volume)
+                    }
+            )
+        ]
+
+        if let rank = viewItem.rank {
+            rows.append(
                     lockableRow(
                             id: "dex-volume-rank",
                             title: "coin_analytics.30_day_rank".localized,
-                            value: viewItem.lockableValue { $0.rank },
+                            value: rank,
                             accessoryType: .disclosure,
                             isLast: true,
-                            action: viewItem.lockableValue { _ in {
+                            action: rank.lockableValue { _ in {
                                 // todo
                             }}
                     )
-                ]
+            )
+        }
+
+        return Section(
+                id: "dex-volume",
+                headerState: .margin(height: .margin12),
+                rows: rows
         )
     }
 
-    private func dexLiquiditySection(viewItem: Lockable<CoinAnalyticsViewModel.RankCardViewItem>) -> SectionProtocol {
-        Section(
-                id: "dex-liquidity",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    chartRow(
-                            id: "dex-liquidity",
-                            title: "coin_analytics.dex_liquidity".localized,
-                            valueInfo: "coin_analytics.current".localized,
-                            viewItem: viewItem.lockableValue { $0.chart },
-                            infoAction: { [weak self] in
-                                self?.parentNavigationController?.present(InfoModule.tokenLiquidityInfo, animated: true)
-                            },
-                            action: { [weak self] in
-                                self?.openProDataChart(type: .liquidity)
-                            }
-                    ),
+    private func dexLiquiditySection(viewItem: CoinAnalyticsViewModel.RankCardViewItem) -> SectionProtocol {
+        var rows: [RowProtocol] = [
+            chartRow(
+                    id: "dex-liquidity",
+                    title: "coin_analytics.dex_liquidity".localized,
+                    valueInfo: "coin_analytics.current".localized,
+                    viewItem: viewItem.chart,
+                    isLast: viewItem.rank == nil,
+                    infoAction: { [weak self] in
+                        self?.parentNavigationController?.present(InfoModule.tokenLiquidityInfo, animated: true)
+                    },
+                    action: { [weak self] in
+                        self?.openProDataChart(type: .liquidity)
+                    }
+            )
+        ]
+
+        if let rank = viewItem.rank {
+            rows.append(
                     lockableRow(
                             id: "dex-liquidity-rank",
                             title: "coin_analytics.rank".localized,
-                            value: viewItem.lockableValue { $0.rank },
+                            value: rank,
                             accessoryType: .disclosure,
                             isLast: true,
-                            action: viewItem.lockableValue { _ in {
+                            action: rank.lockableValue { _ in {
                                 // todo
                             }}
                     )
-                ]
+            )
+        }
+
+        return Section(
+                id: "dex-liquidity",
+                headerState: .margin(height: .margin12),
+                rows: rows
         )
     }
 
-    private func addressesSection(viewItem: Lockable<CoinAnalyticsViewModel.RankCardViewItem>) -> SectionProtocol {
-        Section(
-                id: "addresses",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    chartRow(
-                            id: "addresses",
-                            title: "coin_analytics.active_addresses".localized,
-                            valueInfo: "coin_analytics.last_30d".localized,
-                            viewItem: viewItem.lockableValue { $0.chart },
-                            infoAction: { [weak self] in
-                                self?.parentNavigationController?.present(InfoModule.tokenDistributionInfo, animated: true)
-                            },
-                            action: { [weak self] in
-                                self?.openProDataChart(type: .activeAddresses)
-                            }
-                    ),
+    private func addressesSection(viewItem: CoinAnalyticsViewModel.RankCardViewItem) -> SectionProtocol {
+        var rows: [RowProtocol] = [
+            chartRow(
+                    id: "addresses",
+                    title: "coin_analytics.active_addresses".localized,
+                    valueInfo: "coin_analytics.last_30d".localized,
+                    viewItem: viewItem.chart,
+                    isLast: viewItem.rank == nil,
+                    infoAction: { [weak self] in
+                        self?.parentNavigationController?.present(InfoModule.tokenDistributionInfo, animated: true)
+                    },
+                    action: { [weak self] in
+                        self?.openProDataChart(type: .activeAddresses)
+                    }
+            )
+        ]
+
+        if let rank = viewItem.rank {
+            rows.append(
                     lockableRow(
                             id: "addresses-rank",
                             title: "coin_analytics.30_day_rank".localized,
-                            value: viewItem.lockableValue { $0.rank },
+                            value: rank,
                             accessoryType: .disclosure,
                             isLast: true,
-                            action: viewItem.lockableValue { _ in {
+                            action: rank.lockableValue { _ in {
                                 // todo
                             }}
                     )
-                ]
+            )
+        }
+
+        return Section(
+                id: "addresses",
+                headerState: .margin(height: .margin12),
+                rows: rows
         )
     }
 
-    private func txCountSection(viewItem: Lockable<CoinAnalyticsViewModel.TransactionCountViewItem>) -> SectionProtocol {
-        Section(
-                id: "tx-count",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    chartRow(
-                            id: "tx-count",
-                            title: "coin_analytics.transaction_count".localized,
-                            valueInfo: "coin_analytics.last_30d".localized,
-                            viewItem: viewItem.lockableValue { $0.chart },
-                            infoAction: { [weak self] in
-                                self?.parentNavigationController?.present(InfoModule.tokenDistributionInfo, animated: true)
-                            },
-                            action: { [weak self] in
-                                self?.openProDataChart(type: .txCount)
-                            }
-                    ),
+    private func txCountSection(viewItem: CoinAnalyticsViewModel.TransactionCountViewItem) -> SectionProtocol {
+        var rows: [RowProtocol] = [
+            chartRow(
+                    id: "tx-count",
+                    title: "coin_analytics.transaction_count".localized,
+                    valueInfo: "coin_analytics.last_30d".localized,
+                    viewItem: viewItem.chart,
+                    isLast: viewItem.volume == nil && viewItem.rank == nil,
+                    infoAction: { [weak self] in
+                        self?.parentNavigationController?.present(InfoModule.tokenDistributionInfo, animated: true)
+                    },
+                    action: { [weak self] in
+                        self?.openProDataChart(type: .txCount)
+                    }
+            )
+        ]
+
+        if let volume = viewItem.volume {
+            rows.append(
                     lockableRow(
                             id: "tx-volume",
                             title: "coin_analytics.30_day_volume".localized,
-                            value: viewItem.lockableValue { $0.volume }
-                    ),
+                            value: volume
+                    )
+            )
+        }
+
+        if let rank = viewItem.rank {
+            rows.append(
                     lockableRow(
                             id: "tx-count-rank",
                             title: "coin_analytics.30_day_rank".localized,
-                            value: viewItem.lockableValue { $0.rank },
+                            value: rank,
                             accessoryType: .disclosure,
                             isLast: true,
-                            action: viewItem.lockableValue { _ in {
+                            action: rank.lockableValue { _ in {
                                 // todo
                             }}
                     )
-                ]
+            )
+        }
+
+        return Section(
+                id: "tx-count",
+                headerState: .margin(height: .margin12),
+                rows: rows
         )
     }
 
@@ -423,11 +468,11 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         struct Blockchain {
             let imageUrl: String?
             let name: String
-            let value: String
+            let value: String?
             let action: (() -> ())?
         }
 
-        let value: String
+        let value: String?
         let blockchains: [Blockchain]
         let chartItems: [(Decimal, UIColor?)]
 
@@ -440,9 +485,9 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                 Blockchain(imageUrl: nil, name: "Blockchain 3", value: placeholderText, action: nil),
             ]
             chartItems = [
-                (50, UIColor.themeGray.withAlphaComponent(0.8)),
-                (35, UIColor.themeGray.withAlphaComponent(0.6)),
-                (15, UIColor.themeGray.withAlphaComponent(0.4))
+                (0.5, UIColor.themeGray.withAlphaComponent(0.8)),
+                (0.35, UIColor.themeGray.withAlphaComponent(0.6)),
+                (0.15, UIColor.themeGray.withAlphaComponent(0.4))
             ]
         case .unlocked(let viewItem):
             value = viewItem.value
@@ -504,84 +549,108 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         )
     }
 
-    private func tvlSection(viewItem: Lockable<CoinAnalyticsViewModel.TvlViewItem>) -> SectionProtocol {
-        Section(
-                id: "tvl",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    chartRow(
-                            id: "tvl",
-                            title: "coin_analytics.project_tvl".localized,
-                            valueInfo: "coin_analytics.current".localized,
-                            viewItem: viewItem.lockableValue { $0.chart },
-                            infoAction: { [weak self] in
-                                self?.parentNavigationController?.present(InfoModule.tokenTvlInfo, animated: true)
-                            },
-                            action: { [weak self] in
-                                self?.openTvl()
-                            }
-                    ),
+    private func tvlSection(viewItem: CoinAnalyticsViewModel.TvlViewItem) -> SectionProtocol {
+        var rows: [RowProtocol] = [
+            chartRow(
+                    id: "tvl",
+                    title: "coin_analytics.project_tvl".localized,
+                    valueInfo: "coin_analytics.current".localized,
+                    viewItem: viewItem.chart,
+                    isLast: viewItem.rank == nil && viewItem.ratio == nil,
+                    infoAction: { [weak self] in
+                        self?.parentNavigationController?.present(InfoModule.tokenTvlInfo, animated: true)
+                    },
+                    action: { [weak self] in
+                        self?.openTvl()
+                    }
+            )
+        ]
+
+        if let rank = viewItem.rank {
+            rows.append(
                     lockableRow(
                             id: "tvl-rank",
                             title: "coin_analytics.rank".localized,
-                            value: viewItem.lockableValue { $0.rank },
+                            value: rank,
                             accessoryType: .disclosure,
-                            action: viewItem.lockableValue { _ in { [weak self] in
+                            isLast: viewItem.ratio == nil,
+                            action: rank.lockableValue { _ in { [weak self] in
                                 self?.openTvlRank()
                             }}
-                    ),
+                    )
+            )
+        }
+
+        if let ratio = viewItem.ratio {
+            rows.append(
                     lockableRow(
                             id: "tvl-ratio",
                             title: "coin_analytics.tvl_ratio".localized,
-                            value: viewItem.lockableValue { $0.ratio },
+                            value: ratio,
                             isLast: true
                     )
-                ]
+            )
+        }
+
+        return Section(
+                id: "tvl",
+                headerState: .margin(height: .margin12),
+                rows: rows
         )
     }
 
-    private func revenueSection(viewItem: Lockable<CoinAnalyticsViewModel.RevenueViewItem>) -> SectionProtocol {
-        let value: String
+    private func revenueSection(viewItem: CoinAnalyticsViewModel.RevenueViewItem) -> SectionProtocol {
+        let value: String?
+        let valueInfo: String?
 
-        switch viewItem {
+        switch viewItem.value {
         case .locked:
             value = placeholderText
-        case .unlocked(let viewItem):
-            value = viewItem.value
+            valueInfo = nil
+        case .unlocked(let _value):
+            value = _value
+            valueInfo = "coin_analytics.last_30d".localized
+        }
+
+        var rows: [RowProtocol] = [
+            Row<MarketWideCardCell>(
+                    id: "revenue",
+                    height: MarketWideCardCell.height(hasChart: false),
+                    bind: { cell, _ in
+                        cell.set(backgroundStyle: .lawrence, isFirst: true)
+                        cell.selectionStyle = .none
+
+                        cell.bind(
+                                title: "coin_analytics.project_revenue".localized,
+                                value: value,
+                                valueInfo: valueInfo,
+                                onTapInfo: {
+                                    // todo
+                                }
+                        )
+                    }
+            )
+        ]
+
+        if let rank = viewItem.rank {
+            rows.append(
+                    lockableRow(
+                            id: "revenue-rank",
+                            title: "coin_analytics.30_day_rank".localized,
+                            value: rank,
+                            accessoryType: .disclosure,
+                            isLast: true,
+                            action: rank.lockableValue { _ in {
+                                // todo
+                            }}
+                    )
+            )
         }
 
         return Section(
                 id: "revenue",
                 headerState: .margin(height: .margin12),
-                rows: [
-                    Row<MarketWideCardCell>(
-                            id: "revenue",
-                            height: MarketWideCardCell.height(hasChart: false),
-                            bind: { cell, _ in
-                                cell.set(backgroundStyle: .lawrence, isFirst: true)
-                                cell.selectionStyle = .none
-
-                                cell.bind(
-                                        title: "coin_analytics.project_revenue".localized,
-                                        value: value,
-                                        valueInfo: viewItem.isLocked ? nil : "coin_analytics.last_30d".localized,
-                                        onTapInfo: {
-                                            // todo
-                                        }
-                                )
-                            }
-                    ),
-                    lockableRow(
-                            id: "revenue-rank",
-                            title: "coin_analytics.30_day_rank".localized,
-                            value: viewItem.lockableValue { $0.rank },
-                            accessoryType: .disclosure,
-                            isLast: true,
-                            action: viewItem.lockableValue { _ in {
-                                // todo
-                            }}
-                    )
-                ]
+                rows: rows
         )
     }
 
@@ -662,7 +731,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                 id: "investor-data",
                 headerState: .margin(height: .margin12),
                 rows: [
-                    tableView.headerInfoRow(id: "investor-data-header", title: "coin_analytics.other_data".localized) { [weak self] in
+                    tableView.headerInfoRow(id: "investor-data-header", title: "coin_analytics.other_data".localized) {
                         // todo
                     }
                 ] + rows
