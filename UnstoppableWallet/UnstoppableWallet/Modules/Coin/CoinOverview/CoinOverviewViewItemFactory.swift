@@ -62,14 +62,6 @@ class CoinOverviewViewItemFactory {
         return categories.isEmpty ? nil : categories.map { $0.name }
     }
 
-    private func explorerUrl(blockchain: Blockchain, reference: String?) -> String? {
-        guard let explorerUrl = blockchain.explorerUrl, let reference = reference else {
-            return nil
-        }
-
-        return explorerUrl.replacingOccurrences(of: "$ref", with: reference)
-    }
-
     private func typesTitle(coinUid: String) -> String {
         switch coinUid {
         case "bitcoin", "litecoin": return "coin_page.bips".localized
@@ -102,21 +94,26 @@ class CoinOverviewViewItemFactory {
                     title = blockchain.name
                     subtitle = "coin_platforms.native".localized
                 }
-            case .eip20(let address), .spl(let address):
+            case .eip20(let address):
                 title = blockchain.name
                 subtitle = address.shortened
                 reference = address
-                url = blockchain.explorerUrl(reference: address)
+                url = blockchain.eip20TokenUrl(address: address)
             case .bep2(let symbol):
                 title = blockchain.name
                 subtitle = symbol
                 reference = symbol
-                url = blockchain.explorerUrl(reference: symbol)
+                url = blockchain.bep2TokenUrl(symbol: symbol)
+            case .spl(let address):
+                title = blockchain.name
+                subtitle = address.shortened
+                reference = address
+                url = nil
             case let .unsupported(_, _reference):
                 title = blockchain.name
                 subtitle = _reference?.shortened
                 reference = _reference
-                url = blockchain.explorerUrl(reference: reference)
+                url = reference.flatMap { blockchain.eip20TokenUrl(address: $0) }
             }
 
             switch item.state {
