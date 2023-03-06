@@ -566,7 +566,7 @@
 "coin_page.tab.overview" = "Precio";
 "coin_page.tab.analytics" = "Analytics";
 "coin_page.tab.markets" = "Mercados";
-"coin_page.tab.tweets" = "Tweets";
+"coin_page.tab.tweets" = " Tweets";
 
 "coin_page.market_cap" = "Capitalización del Mercado";
 "coin_page.circulating_supply" = "En Circulación";
@@ -690,7 +690,7 @@
 
 "coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
 
-"coin_analytics.cex_volume" = "CEX Volume";
+"coin_analytics.cex_volume" = "Volumen CEX";
 "coin_analytics.dex_volume" = "Volumen DEX";
 "coin_analytics.dex_liquidity" = "Liquidez DEX";
 "coin_analytics.active_addresses" = "Direcciones activas";
@@ -1253,7 +1253,7 @@
 "fee_settings.fee.info" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.";
 "fee_settings.fee_rate" = "Tasa de comisión";
 "fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
-"fee_settings.inputs_outputs" = "Inputs/Outputs";
+"fee_settings.inputs_outputs" = "Entradas/Salidas";
 "fee_settings.transaction_settings" = "Transaction Settings";
 "fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
 "fee_settings.time_lock" = "TimeLock";
