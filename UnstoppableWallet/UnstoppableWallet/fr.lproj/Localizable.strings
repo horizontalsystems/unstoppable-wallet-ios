@@ -5,7 +5,7 @@
 "button.continue" = "Continuer";
 "button.done" = "Fait";
 "button.reset" = "Réinitialiser";
-"button.import" = "Import";
+"button.import" = "Importation";
 "button.next" = "Suivant";
 "button.share" = "Partager";
 "button.paste" = "Coller";
@@ -690,7 +690,7 @@
 
 "coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
 
-"coin_analytics.cex_volume" = "CEX Volume";
+"coin_analytics.cex_volume" = "Volume CEX";
 "coin_analytics.dex_volume" = "Volume DEX";
 "coin_analytics.dex_liquidity" = "Liquidité DEX";
 "coin_analytics.active_addresses" = "Adresses actives";
@@ -1218,7 +1218,7 @@
 "birthday_input.title" = "Hauteur de l'anniversaire";
 "birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
 "birthday_input.new_wallet" = "Nouveau porte-monnaie";
-"birthday_input.new_wallet.description" = "Doesn't have any transactions";
+"birthday_input.new_wallet.description" = "N'a aucune transaction";
 "birthday_input.old_wallet" = "Existing Wallet";
 "birthday_input.old_wallet.description" = "Has transactions";
 "birthday_input.input_placeholder" = "%@ (optionnel)";
@@ -1243,7 +1243,7 @@
 
 // Send Settings
 
-"evm_send_settings.nonce" = "Transaction Nonce";
+"evm_send_settings.nonce" = "Nonce de transaction";
 "evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
 "evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
 "evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
