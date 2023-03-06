@@ -108,7 +108,7 @@
 "restore.input.passphrase" = "Passphrase";
 "restore.passphrase_description" = "Geben Sie Ihre Passphrase ein, die Sie beim Erstellen dieser Eselsbrücke verwendet haben.";
 "restore.error.empty_passphrase" = "Die Passphrase darf nicht leer sein";
-"restore.non_standard_import" = "Non-Standard Import";
+"restore.non_standard_import" = "Nicht standardmäßige Wiederherstellung";
 "restore.non_standard_import.description" = "Diese Seite bietet einen speziellen Wallet-Wiederherstellungsmechanismus für Unstoppable-Benutzer, die ein nicht standardmäßiges Wallet haben. Im Allgemeinen könnten solche Wallets in der Unstoppable-Version 0.27–0.28 mit einer nicht-englischen mnemonischen Wortliste und/oder einem Sonderzeichen in der Wallet-Passphrase (d. h. einem diakritischen Symbol) erstellt worden sein.
 \n\nWenn Sie ein betroffener Benutzer sind, wird Ihr Wallet-Guthaben nach der Wiederherstellung eines solchen Wallets in Version 0.29 oder höher als 0 angezeigt.Auf dieser Seite können Sie den Zugriff auf Ihre nicht standardmäßige Brieftasche wiederherstellen. Nach der Wiederherstellung wird empfohlen, eine neue Brieftasche zu erstellen (die standardkonform ist) und Gelder dorthin zu verschieben.";
 "restore.warning.non_recommended.description" = "Diese Brieftasche scheint ein nicht standardmäßiges Zeichen in ihrer geheimen Wortliste und/oder einer Passphrase zu verwenden. Wenn Sie kein Guthaben oder Transaktionen sehen, lesen Sie bitte unten für Details.\n\nKLICKEN, UM WEITERE INFORMATIONEN ZU ERHALTEN";
