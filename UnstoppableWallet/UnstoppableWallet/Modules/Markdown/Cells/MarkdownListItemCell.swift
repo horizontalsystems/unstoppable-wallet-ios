@@ -29,7 +29,7 @@ class MarkdownListItemCell: UITableViewCell {
         }
 
         prefixLabel.font = .body
-        prefixLabel.textColor = .themeLeah
+        prefixLabel.textColor = .themeBran
 
         wrapperView.addSubview(textView)
         textView.snp.makeConstraints { maker in

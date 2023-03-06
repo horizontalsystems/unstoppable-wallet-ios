@@ -5,7 +5,7 @@ import ComponentKit
 import Chart
 
 class CoinAnalyticsHoldersCell: BaseThemeCell {
-    static let height: CGFloat = 56
+    static let chartHeight: CGFloat = 40
 
     var currentStackView: UIStackView?
 
@@ -63,7 +63,7 @@ class CoinAnalyticsHoldersCell: BaseThemeCell {
         stackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
             make.top.equalToSuperview()
-            make.height.equalTo(40)
+            make.height.equalTo(Self.chartHeight)
         }
 
         currentStackView = stackView
