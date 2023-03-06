@@ -167,7 +167,7 @@ class BottomSheetViewController: ThemeActionSheetController {
                             tableView: tableView,
                             id: "copyable-value-\(index)",
                             dynamicHeight: { width in
-                                CellBuilderNew.height(
+                                let height = CellBuilderNew.height(
                                         containerWidth: width,
                                         backgroundStyle: backgroundStyle,
                                         text: value,
@@ -175,6 +175,8 @@ class BottomSheetViewController: ThemeActionSheetController {
                                         verticalPadding: .margin12,
                                         elements: explorerUrl != nil ? [.fixed(width: .iconSize32), .multiline, .fixed(width: SecondaryCircleButton.size)] : [.fixed(width: .iconSize32), .multiline]
                                 )
+
+                                return max(height, .heightCell56)
                             },
                             bind: { cell in
                                 cell.set(backgroundStyle: backgroundStyle, isFirst: true, isLast: true)

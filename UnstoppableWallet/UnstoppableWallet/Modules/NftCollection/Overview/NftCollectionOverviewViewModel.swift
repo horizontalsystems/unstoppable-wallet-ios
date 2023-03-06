@@ -62,7 +62,7 @@ class NftCollectionOverviewViewModel {
                 name: contract.name,
                 schema: contract.schema,
                 reference: contract.address,
-                explorerUrl: service.blockchain?.explorerUrl.map { $0.replacingOccurrences(of: "$ref", with: contract.address) }
+                explorerUrl: service.blockchain?.eip20TokenUrl(address: contract.address)
         )
     }
 
