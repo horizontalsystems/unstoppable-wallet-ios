@@ -62,9 +62,6 @@ class MarketWideCardCell: BaseSelectableThemeCell {
             make.height.equalTo(60)
         }
 
-        let chartConfiguration = ChartConfiguration.cumulativeChartPreview
-        chartConfiguration.mainHeight = 60
-        chartView.apply(configuration: chartConfiguration)
         chartView.isUserInteractionEnabled = false
     }
 
@@ -76,13 +73,22 @@ class MarketWideCardCell: BaseSelectableThemeCell {
         onTapInfo?()
     }
 
-    func bind(title: String, value: String?, valueInfo: String?, chartData: ChartData? = nil, chartColorType: ChartColorType? = nil, onTapInfo: @escaping () -> ()) {
+    func bind(title: String, value: String?, valueInfo: String?, chartData: ChartData? = nil, chartColorType: ChartColorType? = nil, chartCurveType: ChartConfiguration.CurveType = .line, onTapInfo: @escaping () -> ()) {
         titleLabel.text = title
         valueLabel.text = value
         valueInfoLabel.text = value != nil ? valueInfo : nil
 
         if let chartData, let chartColorType {
             chartView.isHidden = false
+
+            let chartConfiguration: ChartConfiguration
+            switch chartCurveType {
+            case .line: chartConfiguration = .cumulativeChartPreview
+            case .bars: chartConfiguration = .cumulativeChartBarsPreview
+            }
+            chartConfiguration.mainHeight = 60
+            chartView.apply(configuration: chartConfiguration)
+
             chartView.setCurve(colorType: chartColorType)
             chartView.set(chartData: chartData, animated: false)
         } else {

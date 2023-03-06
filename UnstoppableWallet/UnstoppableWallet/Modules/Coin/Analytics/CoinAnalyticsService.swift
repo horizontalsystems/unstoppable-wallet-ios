@@ -2,6 +2,7 @@ import RxSwift
 import RxRelay
 import MarketKit
 import CurrencyKit
+import HsToolKit
 
 class CoinAnalyticsService {
     private let fullCoin: FullCoin
@@ -20,6 +21,21 @@ class CoinAnalyticsService {
         self.fullCoin = fullCoin
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+    }
+
+    private func handle(error: Error) {
+        if case let .invalidResponse(statusCode, _) = error as? NetworkManager.RequestError, statusCode == 401 {
+            marketKit.analyticsPreviewSingle(coinUid: fullCoin.coin.uid)
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .subscribe(onSuccess: { [weak self] analyticsPreview in
+                        self?.state = .preview(analyticsPreview)
+                    }, onError: { [weak self] error in
+                        self?.state = .failed(error)
+                    })
+                    .disposed(by: disposeBag)
+        } else {
+            state = .failed(error)
+        }
     }
 
 }
@@ -68,7 +84,7 @@ extension CoinAnalyticsService {
                 .subscribe(onSuccess: { [weak self] analytics in
                     self?.state = .success(analytics)
                 }, onError: { [weak self] error in
-                    self?.state = .failed(error)
+                    self?.handle(error: error)
                 })
                 .disposed(by: disposeBag)
     }
@@ -80,8 +96,8 @@ extension CoinAnalyticsService {
     enum State {
         case loading
         case failed(Error)
-        case locked(LockedAnalyticsResponse)
-        case success(AnalyticsResponse)
+        case preview(AnalyticsPreview)
+        case success(Analytics)
     }
 
 }

@@ -45,8 +45,16 @@ extension ChartConfiguration {
         ChartConfiguration().applyColors().applyPreview()
     }
 
+    static var chartBarsPreview: ChartConfiguration {
+        ChartConfiguration().applyColors().applyBarsPreview()
+    }
+
     static var cumulativeChartPreview: ChartConfiguration {
         ChartConfiguration().applyColors(trendIgnore: true).applyPreview()
+    }
+
+    static var cumulativeChartBarsPreview: ChartConfiguration {
+        ChartConfiguration().applyColors(trendIgnore: true).applyBarsPreview()
     }
 
     @discardableResult private func applyPreview() -> Self {
@@ -54,6 +62,30 @@ extension ChartConfiguration {
         indicatorHeight = 0
         timelineHeight = 0
         curvePadding = UIEdgeInsets(top: .margin2, left: 0, bottom: 10, right: 0)
+
+        showBorders = false
+        showIndicators = false
+        showLimits = false
+        showVerticalLines = false
+        isInteractive = false
+
+        let clear = [UIColor.clear]
+        trendUpGradient = clear
+        trendDownGradient = clear
+        pressedGradient = clear
+        neutralGradient = clear
+
+        return self
+    }
+
+    @discardableResult private func applyBarsPreview() -> Self {
+        curveType = .bars
+        curveWidth = 2
+
+        mainHeight = 60
+        indicatorHeight = 0
+        timelineHeight = 0
+        curvePadding = UIEdgeInsets(top: .margin2, left: 2, bottom: 4, right: 2)
 
         showBorders = false
         showIndicators = false

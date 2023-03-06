@@ -4,19 +4,23 @@ import MarketKit
 
 class CoinMajorHoldersService {
     private let coinUid: String
+    let blockchain: Blockchain
     private let marketKit: Kit
+    private let evmLabelManager: EvmLabelManager
     private var disposeBag = DisposeBag()
 
-    private let stateRelay = PublishRelay<DataStatus<[TokenHolder]>>()
-    private(set) var state: DataStatus<[TokenHolder]> = .loading {
+    private let stateRelay = PublishRelay<DataStatus<TokenHolders>>()
+    private(set) var state: DataStatus<TokenHolders> = .loading {
         didSet {
             stateRelay.accept(state)
         }
     }
 
-    init(coinUid: String, marketKit: Kit) {
+    init(coinUid: String, blockchain: Blockchain, marketKit: Kit, evmLabelManager: EvmLabelManager) {
         self.coinUid = coinUid
+        self.blockchain = blockchain
         self.marketKit = marketKit
+        self.evmLabelManager = evmLabelManager
 
         sync()
     }
@@ -26,7 +30,7 @@ class CoinMajorHoldersService {
 
         state = .loading
 
-        marketKit.topHoldersSingle(coinUid: coinUid)
+        marketKit.tokenHoldersSingle(coinUid: coinUid, blockchainUid: blockchain.uid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] holders in
                     self?.state = .completed(holders)
@@ -40,8 +44,12 @@ class CoinMajorHoldersService {
 
 extension CoinMajorHoldersService {
 
-    var stateObservable: Observable<DataStatus<[TokenHolder]>> {
+    var stateObservable: Observable<DataStatus<TokenHolders>> {
         stateRelay.asObservable()
+    }
+
+    func labeled(address: String) -> String {
+        evmLabelManager.mapped(address: address)
     }
 
     func refresh() {

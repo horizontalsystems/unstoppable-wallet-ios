@@ -16,7 +16,6 @@ class CoinMajorHoldersViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
     private let errorView = PlaceholderViewModule.reachabilityView()
-    private var chartCell = CoinMajorHolderChartCell()
 
     private var stateViewItem: CoinMajorHoldersViewModel.StateViewItem?
 
@@ -34,17 +33,9 @@ class CoinMajorHoldersViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "coin_page.major_holders".localized
-
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
-
-        tableView.sectionDataSource = self
-
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
+        title = viewModel.blockchainName
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
+        navigationItem.largeTitleDisplayMode = .never
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
@@ -60,6 +51,18 @@ class CoinMajorHoldersViewController: ThemeViewController {
 
         errorView.configureSyncError(action: { [weak self] in self?.onRetry() })
 
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        tableView.sectionDataSource = self
+        tableView.registerCell(forClass: CoinMajorHolderChartCell.self)
+        tableView.registerCell(forClass: CoinAnalyticsHoldersCell.self)
+
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+
         subscribe(disposeBag, viewModel.stateViewItemDriver) { [weak self] in
             self?.sync(stateViewItem: $0)
         }
@@ -71,6 +74,10 @@ class CoinMajorHoldersViewController: ThemeViewController {
         }
     }
 
+    @objc private func onTapClose() {
+        dismiss(animated: true)
+    }
+
     @objc private func onRetry() {
         viewModel.onTapRetry()
     }
@@ -78,18 +85,8 @@ class CoinMajorHoldersViewController: ThemeViewController {
     private func sync(stateViewItem: CoinMajorHoldersViewModel.StateViewItem?) {
         self.stateViewItem = stateViewItem
 
-        if let stateViewItem = stateViewItem {
-            tableView.bounces = true
-            chartCell.set(chartPercents: stateViewItem.chartPercents, percent: stateViewItem.percent)
-        } else {
-            tableView.bounces = false
-        }
-
+        tableView.isHidden = stateViewItem == nil
         tableView.reload()
-    }
-
-    private func open(address: String) {
-        urlManager.open(url: "https://etherscan.io/address/\(address)", from: self)
     }
 
 }
@@ -109,33 +106,22 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
                             maker.width.equalTo(24)
                         }
                     },
-                    .text { component in
-                        component.font = .body
-                        component.textColor = .themeJacob
-                        component.text = viewItem.percent
-                    },
+                    .vStackCentered([
+                        .textElement(text: .body(viewItem.percent)),
+                        .margin(1),
+                        .textElement(text: .subhead2(viewItem.quantity))
+                    ]),
                     .secondaryButton { component in
                         component.button.set(style: .default)
-                        component.button.setTitle(viewItem.address.shortened, for: .normal)
+                        component.button.setTitle(viewItem.labeledAddress, for: .normal)
                         component.onTap = {
                             CopyHelper.copyAndNotify(value: viewItem.address)
-                        }
-
-                        component.snp.remakeConstraints { maker in
-                            maker.width.equalTo(140)
-                        }
-                    },
-                    .margin8,
-                    .secondaryCircleButton { [weak self] component in
-                        component.button.set(image: UIImage(named: "globe_20"))
-                        component.onTap = {
-                            self?.open(address: viewItem.address)
                         }
                     }
                 ]),
                 tableView: tableView,
                 id: viewItem.order,
-                height: 52,
+                height: 62,
                 bind: { cell in
                     cell.set(backgroundStyle: .transparent, isLast: isLast)
                 }
@@ -143,36 +129,55 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-//        guard let stateViewItem = stateViewItem else {
-//            return []
-//        }
-        stateViewItem.map { stateViewItem in
-            [
-                Section(
-                        id: "chart",
-                        rows: [
-                            StaticRow(
-                                    cell: chartCell,
-                                    id: "chart",
-                                    dynamicHeight: { width in
-                                        CoinMajorHolderChartCell.height(containerWidth: width)
-                                    }
-                            )
-                        ]
-                ),
-                Section(
-                        id: "holders",
-                        footerState: .margin(height: .margin32),
-                        rows: [tableView.universalRow48(
-                                id: "top_ethereum_wallets",
-                                title: .body("coin_page.major_holders.top_ethereum_wallets".localized),
-                                backgroundStyle: .transparent
-                        )] + stateViewItem.viewItems.enumerated().map { index, viewItem in
-                            row(viewItem: viewItem, isLast: index == stateViewItem.viewItems.count - 1)
-                        }
-                ),
-            ]
-        } ?? []
+        guard let stateViewItem else {
+            return []
+        }
+
+        let chartColor = viewModel.blockchainType.brandColor ?? .themeJacob
+
+        return [
+            Section(
+                    id: "info",
+                    headerState: .margin(height: .margin16),
+                    footerState: .margin(height: .margin16),
+                    rows: [
+                        Row<CoinMajorHolderChartCell>(
+                                id: "info",
+                                height: CoinMajorHolderChartCell.height,
+                                bind: { cell, _ in
+                                    cell.set(backgroundStyle: .transparent, isFirst: true)
+                                    cell.bind(percent: stateViewItem.percent, count: stateViewItem.holdersCount)
+                                }
+                        ),
+
+                    ]
+            ),
+            Section(
+                    id: "chart",
+                    footerState: .margin(height: .margin24),
+                    rows: [
+                        Row<CoinAnalyticsHoldersCell>(
+                                id: "holders-pie",
+                                height: CoinAnalyticsHoldersCell.chartHeight,
+                                bind: { cell, _ in
+                                    cell.set(backgroundStyle: .transparent, isFirst: true)
+
+                                    cell.bind(items: [
+                                        (stateViewItem.totalPercent, chartColor),
+                                        (stateViewItem.remainingPercent, chartColor.withAlphaComponent(0.5))
+                                    ])
+                                }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "holders",
+                    footerState: .margin(height: .margin32),
+                    rows: stateViewItem.viewItems.enumerated().map { index, viewItem in
+                        row(viewItem: viewItem, isLast: index == stateViewItem.viewItems.count - 1)
+                    }
+            ),
+        ]
     }
 
 }

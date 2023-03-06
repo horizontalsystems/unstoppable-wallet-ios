@@ -12,6 +12,15 @@ class CoinMajorHoldersViewModel {
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
 
+    private let percentFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .percent
+        formatter.roundingMode = .halfEven
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 4
+        return formatter
+    }()
+
     init(service: CoinMajorHoldersService) {
         self.service = service
 
@@ -20,14 +29,14 @@ class CoinMajorHoldersViewModel {
         sync(state: service.state)
     }
 
-    private func sync(state: DataStatus<[TokenHolder]>) {
+    private func sync(state: DataStatus<TokenHolders>) {
         switch state {
         case .loading:
             stateViewItemRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
-        case .completed(let holders):
-            stateViewItemRelay.accept(stateViewItem(holders: holders))
+        case .completed(let tokenHolders):
+            stateViewItemRelay.accept(stateViewItem(tokenHolders: tokenHolders))
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
         case .failed:
@@ -37,18 +46,31 @@ class CoinMajorHoldersViewModel {
         }
     }
 
-    private func stateViewItem(holders: [TokenHolder]) -> StateViewItem {
-        let viewItems = holders.enumerated().map { index, item in
-            ViewItem(order: "\(index + 1)", percent: "\(item.share)%", address: item.address)
+    private func stateViewItem(tokenHolders: TokenHolders) -> StateViewItem {
+        percentFormatter.maximumFractionDigits = 4
+
+        let viewItems = tokenHolders.topHolders.enumerated().map { index, item in
+            ViewItem(
+                    order: "\(index + 1)",
+                    percent: percentFormatter.string(from: (item.percentage / 100) as NSNumber),
+                    quantity: ValueFormatter.instance.formatShort(value: item.balance),
+                    labeledAddress: service.labeled(address: item.address),
+                    address: item.address
+            )
         }
 
-        let totalPercentDecimal = holders.map { $0.share }.reduce(0, +)
-        let totalPercent = NSDecimalNumber(decimal: totalPercentDecimal).doubleValue
+        let totalPercent = tokenHolders.topHolders.map { $0.percentage }.reduce(0, +)
 
-        let chartPercents: [Double] = [totalPercent, 100.0 - totalPercent]
-        let percent = "\(Int(round(totalPercent)))%"
+        percentFormatter.maximumFractionDigits = 2
+        let percent = percentFormatter.string(from: (totalPercent / 100) as NSNumber)
 
-        return StateViewItem(chartPercents: chartPercents, percent: percent, viewItems: viewItems)
+        return StateViewItem(
+                holdersCount: ValueFormatter.instance.formatShort(value: tokenHolders.count),
+                totalPercent: totalPercent,
+                remainingPercent: 100.0 - totalPercent,
+                percent: percent,
+                viewItems: viewItems
+        )
     }
 
 }
@@ -67,6 +89,14 @@ extension CoinMajorHoldersViewModel {
         syncErrorRelay.asDriver()
     }
 
+    var blockchainName: String {
+        service.blockchain.name
+    }
+
+    var blockchainType: BlockchainType {
+        service.blockchain.type
+    }
+
     func onTapRetry() {
         service.refresh()
     }
@@ -77,13 +107,17 @@ extension CoinMajorHoldersViewModel {
 
     struct ViewItem {
         let order: String
-        let percent: String
+        let percent: String?
+        let quantity: String?
+        let labeledAddress: String
         let address: String
     }
 
     struct StateViewItem {
-        let chartPercents: [Double]
-        let percent: String
+        let holdersCount: String?
+        let totalPercent: Decimal
+        let remainingPercent: Decimal
+        let percent: String?
         let viewItems: [ViewItem]
     }
 
