@@ -278,7 +278,7 @@
 "send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
-"send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
+"send.transaction_inputs_outputs_info.deterministic.title" = "2. Déterministe";
 "send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
 
 "send.confirmation.you_send" = "Vous envoyez";
@@ -564,7 +564,7 @@
 "coin_page.roi.year1" = "1 An";
 
 "coin_page.tab.overview" = "Prix";
-"coin_page.tab.analytics" = "Analytics";
+"coin_page.tab.analytics" = "Analyses";
 "coin_page.tab.markets" = "Marchés";
 "coin_page.tab.tweets" = "Tweets";
 
@@ -599,7 +599,7 @@
 "coin_page.active_addresses.description" = "Le nombre d'adresses uniques de portefeuille impliquées dans les transactions sur différentes périodes.";
 
 "coin_page.chart_tvl" = "Token TVL";
-"coin_page.chart_volumes" = "Total Volume";
+"coin_page.chart_volumes" = "Volume Total";
 "coin_page.token_tvl" = "Token TVL";
 "coin_page.token_tvl.description" = "La valeur totale verrouillée (TVL) est une mesure qui indique la valeur totale des cryptomonnaies sous gestion automatisée par les contrats intelligents qui alimentent le protocole donné.";
 "coin_page.tvl" = "Valeur totale verrouillée";
@@ -707,7 +707,7 @@
 
 "coin_analytics.last_30d" = "last 30d";
 "coin_analytics.current" = "current";
-"coin_analytics.rank" = "Rank";
+"coin_analytics.rank" = "Rang";
 "coin_analytics.30_day_rank" = "30-Day Rank";
 "coin_analytics.30_day_volume" = "30-Day Volume";
 
@@ -1253,7 +1253,7 @@
 "fee_settings.fee.info" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.";
 "fee_settings.fee_rate" = "Taux de frais";
 "fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
-"fee_settings.inputs_outputs" = "Inputs/Outputs";
+"fee_settings.inputs_outputs" = "Entrées/Sorties";
 "fee_settings.transaction_settings" = "Transaction Settings";
 "fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
 "fee_settings.time_lock" = "TimeLock";
