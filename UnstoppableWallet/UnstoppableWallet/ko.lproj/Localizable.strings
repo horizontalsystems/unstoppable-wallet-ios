@@ -85,7 +85,7 @@
 "number.trillion" = "%@T";
 "number.quadrillion" = "%@Q";
 
-"selector.any" = "Any";
+"selector.any" = "어떤";
 
 // Access Camera
 
@@ -274,7 +274,7 @@
 "send.hodler_error.unsupported_address" = "P2PKH (1으로 시작하는) 주소만 시간 잠금이 가능합니다.";
 "send.fee_info.title" = "수수료율";
 "send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe Unstoppable wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
-"send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
+"send.transaction_inputs_outputs_info.title" = "트랜잭션 입력/출력";
 "send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
@@ -1183,7 +1183,7 @@
 "manage_account.name" = "이름";
 "manage_account.recovery_phrase" = "복구 문구";
 "manage_account.public_keys" = "공개 키";
-"manage_account.private_keys" = "Private Keys";
+"manage_account.private_keys" = "개인 암호";
 "manage_account.backup_recovery_phrase" = "백업 복구 문구";
 "manage_account.unlink" = "링크 해제";
 
@@ -1197,7 +1197,7 @@
 
 // Manage Account -> Private Keys
 
-"private_keys.title" = "Private Keys";
+"private_keys.title" = "개인 암호";
 "private_keys.evm_private_key" = "EVM 개인 키";
 "private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
