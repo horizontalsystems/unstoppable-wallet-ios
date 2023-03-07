@@ -165,7 +165,8 @@ platform :ios do
         compileBitcode: false,
         provisioningProfiles: {
             APP_ID => PROVISIONING_PROFILE_SPECIFIER_DEV
-        }
+        },
+        iCloudContainerEnvironment: "Development"
       }
     )
 
@@ -210,7 +211,8 @@ platform :ios do
         compileBitcode: false,
         provisioningProfiles: {
             APP_ID => PROVISIONING_PROFILE_SPECIFIER_APPSTORE
-        }
+        },
+        iCloudContainerEnvironment: "Production"
       }
     )
 
