@@ -85,7 +85,7 @@
 "number.trillion" = "%@T";
 "number.quadrillion" = "%@Q";
 
-"selector.any" = "Any";
+"selector.any" = "Qualquer";
 
 // Access Camera
 
