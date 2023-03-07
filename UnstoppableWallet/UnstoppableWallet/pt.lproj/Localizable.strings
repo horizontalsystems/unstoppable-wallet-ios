@@ -566,7 +566,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_page.roi.year1" = "1 Ano";
 
 "coin_page.tab.overview" = "Preço";
-"coin_page.tab.analytics" = "Analytics";
+"coin_page.tab.analytics" = "Análises";
 "coin_page.tab.markets" = "Mercados";
 "coin_page.tab.tweets" = "Tweets";
 
@@ -629,9 +629,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "coin_page.blockchains" = "Blockchains";
 "coin_page.bips" = "BIPs";
-"coin_page.coin_types" = "Coin Types";
+"coin_page.coin_types" = "Tipos de moeda";
 "coin_page.show_more" = "Mostrar Mais";
-"coin_page.show_less" = "Show Less";
+"coin_page.show_less" = "Mostrar menos";
 "coin_page.links" = "Links";
 
 "coin_page.guide" = "Guia";
@@ -688,7 +688,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.not_available" = "This project has no analytics data";
 "coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
 
-"coin_analytics.cex_volume" = "CEX Volume";
+"coin_analytics.cex_volume" = "Volume СEX";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
 "coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
@@ -1010,6 +1010,20 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "appearance.balance_value.coin_value" = "Valor da Moeda";
 "appearance.balance_value.fiat_value" = "Valor Fiat";
 
+// Settings -> Contacts
+"contacts.title" = "Contacts";
+"contacts.list.search_placeholder" = "Nome";
+"contacts.list.not_found" = "Contacts Not Found";
+"contacts.list.addresses_count" = "Addresses: %d";
+"contacts.contact.new.title" = "New Contact";
+"contacts.contact.update.error.name_already_exist" = "Name Already Exist";
+"contacts.contact.add_address" = "Add Address";
+"contacts.contact.delete" = "Delete Contact";
+"contacts.contact.address.blockchains" = "Blockchains";
+"contacts.contact.address.blockchain" = "Blockchain";
+"contacts.contact.address.delete_address" = "Delete Address";
+
+
 // Set PIN
 
 "set_pin.title" = "Senha";
@@ -1124,7 +1138,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "add_token.blockchain" = "Blockchain";
 "add_token.already_added" = "Este token já está na lista de moedas";
 "add_token.invalid_contract_address" = "Endereço do contrato inválido";
-"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
+"add_token.invalid_bep2_symbol" = "Símbolo BEP2 inválido";
 "add_token.contract_address_not_found" = "Endereço do contrato não encontrado em %@ blockchain";
 "add_token.bep2_symbol_not_found" = "Símbolo BEP2 não encontrado";
 "add_token.input_placeholder.contract_address" = "Endereço do Contrato";
@@ -1229,7 +1243,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "manage_account.name" = "Nome";
 "manage_account.recovery_phrase" = "Frase de Recuperação";
 "manage_account.public_keys" = "Chaves públicas";
-"manage_account.private_keys" = "Private Keys";
+"manage_account.private_keys" = "Chave Privada";
 "manage_account.backup_recovery_phrase" = "Backup da frase de recuperação";
 "manage_account.unlink" = "Desvincular";
 
@@ -1237,19 +1251,19 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "public_keys.title" = "Chaves públicas";
 "public_keys.evm_address" = "Endereço EVM";
-"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM based blockchains.";
+"public_keys.evm_address.description" = "Permite o monitoramento somente leitura de carteiras mantendo ativos na Ethereum, na Binance Smart Chain e em outras blockchains baseadas em EVM.";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
-"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
+"public_keys.account_extended_public_key.description" = "Permite monitoramento somente leitura das carteiras segurando Bitcoin e outras cripto baseadas em UTXO (ou seja, Litecoin, Bitcoin Cash, Dash etc.).";
 
 // Manage Account -> Private Keys
 
-"private_keys.title" = "Private Keys";
+"private_keys.title" = "Chave Privada";
 "private_keys.evm_private_key" = "Chave Privada EVM";
-"private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
+"private_keys.evm_private_key.description" = "Concede controle total sobre cripto baseado em EVM i.e Ethereum, Binance Smart Chain, etc. dentro da respectiva carteira.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
-"private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
+"private_keys.bip32_root_key.description" = "Concede controle total sobre os ativos da respectiva carteira.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
-"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within respective wallet.";
+"private_keys.account_extended_private_key.description" = "Concede controle total sobre Bitcoin e outras criptomoedas baseadas em UTXO, ou seja, Litecoin, Bitcoin Cash, Dash etc. dentro da respectiva carteira.";
 
 // Manage Account -> EVM Address
 
@@ -1262,11 +1276,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Birthday Input
 
 "birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
+"birthday_input.description" = "Insira a data da criação da carteira para uma sincronização mais rápida.";
 "birthday_input.new_wallet" = "Nova Carteira";
-"birthday_input.new_wallet.description" = "Doesn't have any transactions";
-"birthday_input.old_wallet" = "Existing Wallet";
-"birthday_input.old_wallet.description" = "Has transactions";
+"birthday_input.new_wallet.description" = "Não tem nenhuma transação";
+"birthday_input.old_wallet" = "Carteira existente";
+"birthday_input.old_wallet.description" = "Tem transações";
 "birthday_input.input_placeholder" = "%@ (opcional)";
 
 "restore_setting.birthday_height" = "%@ Birthday Height";
@@ -1289,34 +1303,34 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Send Settings
 
-"evm_send_settings.nonce" = "Transaction Nonce";
-"evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
-"evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
-"evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
+"evm_send_settings.nonce" = "Nonce de Transação";
+"evm_send_settings.nonce.info" = "O nonce é um valor inteiro exclusivo para uma transação dentro da carteira do usuário. Ele normalmente aumenta com cada transação enviada e não precisa ser alterado. Os usuários avançados podem defini-lo igual a um nonce de uma transação pendente para cancelar e substituir essa transação, desde que a nova transação tenha uma taxa suficientemente alta para evitar que a antiga seja confirmada (por exemplo, eles podem querer acelerar sua confirmação, ou alterar totalmente os parâmetros da transação). Quando várias transações pendentes têm o mesmo nonce, apenas uma é confirmada, geralmente aquela com a taxa mais alta.";
+"evm_send_settings.nonce.errors.already_in_use" = "Usado Nonce";
+"evm_send_settings.nonce.errors.already_in_use.info" = "Já existe uma transação executada agora.";
 
 "fee_settings" = "Avançado";
 "fee_settings.fee" = "Taxa";
-"fee_settings.fee.info" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.";
+"fee_settings.fee.info" = "Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são mais altas quando muitas transações estão ocorrendo na rede.";
 "fee_settings.fee_rate" = "Taxa de tarifa";
-"fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
-"fee_settings.inputs_outputs" = "Inputs/Outputs";
-"fee_settings.transaction_settings" = "Transaction Settings";
+"fee_settings.fee_rate.description" = "Aqui é o valor recomendado para atingir os próximos 2 blocos";
+"fee_settings.inputs_outputs" = "Entrada/Saída";
+"fee_settings.transaction_settings" = "Configurações de transação";
 "fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
 "fee_settings.time_lock" = "TimeLock";
-"fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
+"fee_settings.time_lock.description" = "TimeLock funciona apenas para enviar para endereços BIP44 (começando com 1)";
 
 "fee_settings.max_fee" = "Taxa máxima";
-"fee_settings.max_fee.info" = "The maximum estimated transaction fee to be paid for this transaction, computed based on the gas limit, max fee rate and max priority fee values below. The actual fee paid will normally be lower.";
+"fee_settings.max_fee.info" = "A taxa máxima estimada de transação a ser paga por esta transação, calculado com base no limite do gás, a taxa máxima e os valores da taxa máxima de prioridade abaixo. A taxa real paga normalmente será menor.";
 "fee_settings.gas_limit" = "Limite de gás";
-"fee_settings.gas_limit.info" = "Transaction complexity is measured in units called \"gas\". It varies depending on the smart contract being executed. The Gas Limit is the estimated maximum gas needed to execute it. The actual gas used will normally be lower.";
+"fee_settings.gas_limit.info" = "A complexidade da transação é medida em unidades chamadas \"gas\". Ela varia dependendo do contrato inteligente ser executado. O Limite de Gas é estimado o gas máximo necessário para o executar. O gas real utilizado normalmente será mais baixo.";
 
 "fee_settings.gas_price" = "Preço do Gás";
 "fee_settings.gas_price.info" = "A taxa para transação na rede é medida em unidades de gás. O preço do gás é a quantidade que um usuário está disposto a gastar por unidade de gás. Quando a rede está ocupada, os preços do gás são altos e baixos quando está inativa. Um preço de gás insuficiente é frequentemente uma razão para que uma transação permaneça pendente por um período prolongado.";
 
-"fee_settings.base_fee" = "Base Fee";
-"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
+"fee_settings.base_fee" = "Taxa Base";
+"fee_settings.base_fee.info" = "O protocolo de rede determina o preço base por gas para cada bloco, a taxa base. Varia de acordo com o nível de utilização da rede de bloco para bloco. Ele pode aumentar ou diminuir em não mais do que 12,5% no próximo bloco, tornando as taxas mais previsíveis. O valor mostrado aqui é a taxa base de taxa atual do bloco.";
 "fee_settings.max_fee_rate" = "Max Fee Rate";
-"fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
+"fee_settings.max_fee_rate.info" = "Este é o preço total máximo por gas que o usuário está disposto a pagar. Ela deve cobrir a taxa base da rede e a taxa máxima de prioridade. O valor mostrado aqui é sugerido com base em uma estimativa da taxa base do próximo bloco mais a taxa máxima de prioridade escolhida pelo usuário. A taxa real paga normalmente será menor. Definir isso mais baixo que a taxa base atual irá limitar a taxa paga, mas resultará em períodos de espera mais longos para que a transação seja confirmada, ou até mesmo em uma transação travada.";
 "fee_settings.tips" = "Max Priority Fee";
 "fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
 
