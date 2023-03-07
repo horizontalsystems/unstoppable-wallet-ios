@@ -51,15 +51,17 @@ class FeeCell: BaseThemeCell {
         var titleElements: [CellBuilderNew.CellElement] = []
 
         if showInfoIcon {
-            titleElements.append(
-                    .secondaryButton { [weak self] component in
-                        component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
-                        component.button.setTitle(self?.title, for: .normal)
-                        component.onTap = { [weak self] in
-                            self?.onOpenInfo?()
-                        }
+            titleElements.append(contentsOf: [
+                .secondaryButton { [weak self] component in
+                    component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
+                    component.button.setTitle(self?.title, for: .normal)
+                    component.onTap = { [weak self] in
+                        self?.onOpenInfo?()
                     }
-            )
+                },
+                .margin0,
+                .text { _ in }
+            ])
         } else {
             titleElements.append(
                 .textElement(text: .subhead2(title), parameters: .highHugging)
