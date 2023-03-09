@@ -687,7 +687,7 @@
 
 // Coin Page -> Analytics
 
-"coin_analytics.not_available" = "This project has no analytics data";
+"coin_analytics.not_available" = "В этом проекте нет аналитических данных";
 "coin_analytics.locked" = "Эта страница доступна только для премиум-пользователей Unstoppable Wallet";
 
 "coin_analytics.cex_volume" = "Объем CEX";
