@@ -12,9 +12,13 @@ class BottomSheetViewController: ThemeActionSheetController {
     private let tableView = SelfSizedSectionsTableView(style: .grouped)
     private let buttonStackView = UIStackView()
 
-    init(image: BottomSheetTitleView.Image?, title: String, subtitle: String?, items: [BottomSheetModule.Item], buttons: [BottomSheetModule.Button]) {
+    private weak var delegate: IBottomSheetDismissDelegate?
+    private var didTapAnyButton = false
+
+    init(image: BottomSheetTitleView.Image?, title: String, subtitle: String?, items: [BottomSheetModule.Item], buttons: [BottomSheetModule.Button], delegate: IBottomSheetDismissDelegate? = nil) {
         self.items = items
         self.buttons = buttons
+        self.delegate = delegate
 
         super.init()
 
@@ -60,6 +64,7 @@ class BottomSheetViewController: ThemeActionSheetController {
                 component.button.set(style: button.style)
                 component.button.setTitle(button.title, for: .normal)
                 component.onTap = { [weak self] in
+                    self?.didTapAnyButton = true
                     switch button.actionType {
                     case .regular:
                         button.action?()
@@ -83,6 +88,15 @@ class BottomSheetViewController: ThemeActionSheetController {
 
         tableView.buildSections()
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        if !didTapAnyButton {
+            delegate?.bottomSelectorOnDismiss()
+        }
+    }
+
 
     private func descriptionSection(index: Int, text: String) -> SectionProtocol {
         Section(

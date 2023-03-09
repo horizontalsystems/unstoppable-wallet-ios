@@ -40,7 +40,7 @@ extension Array where Element == ContactAddress {
 
 }
 
-class Contact: ImmutableMappable, Equatable {
+class Contact: ImmutableMappable, Hashable, Equatable {
     let uid: String
     let name: String
     let addresses: [ContactAddress]
@@ -65,6 +65,10 @@ class Contact: ImmutableMappable, Equatable {
 
     static func ==(lhs: Contact, rhs: Contact) -> Bool {
         lhs.uid == rhs.uid
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(uid)
     }
 
 }

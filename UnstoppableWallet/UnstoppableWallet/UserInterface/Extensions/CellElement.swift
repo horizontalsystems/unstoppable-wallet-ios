@@ -74,7 +74,7 @@ extension CellBuilderNew.CellElement {  // prepared cell elements for most frequ
             }
         case let accessoryType as SwitchAccessoryType:
             elements.append(.switch { (component: SwitchComponent) -> () in
-                component.switchView.isOn = accessoryType.isOn
+                component.switchView.setOn(accessoryType.isOn, animated: accessoryType.animated)
                 component.onSwitch = accessoryType.onSwitch
             })
         default: ()
@@ -133,7 +133,7 @@ extension CellBuilderNew.CellElement {
         static let disclosure: AccessoryType = ImageAccessoryType(image: UIImage(named: "arrow_big_forward_20")?.withTintColor(.themeGray))
         static let dropdown: AccessoryType = ImageAccessoryType(image: UIImage(named: "arrow_small_down_20")?.withTintColor(.themeGray))
         static func check(_ visible: Bool = true) -> AccessoryType { ImageAccessoryType(image: UIImage(named: "check_1_20")?.withTintColor(.themeJacob), visible: visible) }
-        static func `switch`(isOn: Bool = false, onSwitch: ((Bool) -> ())?) -> AccessoryType { SwitchAccessoryType(isOn: isOn, onSwitch: onSwitch) }
+        static func `switch`(isOn: Bool = false, animated: Bool = false, onSwitch: ((Bool) -> ())?) -> AccessoryType { SwitchAccessoryType(isOn: isOn, animated: animated, onSwitch: onSwitch) }
     }
 
     class ImageAccessoryType: AccessoryType {
@@ -150,10 +150,12 @@ extension CellBuilderNew.CellElement {
 
     class SwitchAccessoryType: AccessoryType {
         let isOn: Bool
+        let animated: Bool
         let onSwitch: ((Bool) -> ())?
 
-        init(isOn: Bool = false, onSwitch: ((Bool) -> ())?) {
+        init(isOn: Bool = false, animated: Bool, onSwitch: ((Bool) -> ())?) {
             self.isOn = isOn
+            self.animated = animated
             self.onSwitch = onSwitch
 
             super.init()

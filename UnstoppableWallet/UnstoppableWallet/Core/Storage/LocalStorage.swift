@@ -52,7 +52,7 @@ extension LocalStorage {
         set { storage.set(value: newValue, for: keyLockTimeEnabled) }
     }
 
-    var remoteSync: Bool {
+    var remoteContactsSync: Bool {
         get { storage.value(for: keyRemoteContactSync) ?? false }
         set { storage.set(value: newValue, for: keyRemoteContactSync) }
     }
