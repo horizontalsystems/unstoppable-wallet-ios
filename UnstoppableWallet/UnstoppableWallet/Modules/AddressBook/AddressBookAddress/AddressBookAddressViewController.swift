@@ -6,7 +6,7 @@ import SectionsTableView
 import ComponentKit
 import ThemeKit
 
-class AddressBookAddressViewController: ThemeViewController {
+class AddressBookAddressViewController: KeyboardAwareViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: AddressBookAddressViewModel
     private let onUpdateAddress: (ContactAddress?) -> ()
@@ -26,7 +26,7 @@ class AddressBookAddressViewController: ThemeViewController {
         recipientCautionCell = RecipientAddressCautionCell(viewModel: addressViewModel)
         self.onUpdateAddress = onUpdateAddress
 
-        super.init()
+        super.init(scrollViews: [tableView])
     }
 
     required init?(coder aDecoder: NSCoder) {

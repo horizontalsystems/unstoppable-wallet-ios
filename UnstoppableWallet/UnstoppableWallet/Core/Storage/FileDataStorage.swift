@@ -13,8 +13,8 @@ class FileDataStorage {
         return Single.create { [weak self] observer in
             self?.queue.async {
                 do {
-//                    print("Start reading file : \(fileUrl.path)")
-                    let data = try Data(contentsOf: fileUrl)
+                    print("=> FDStorage =>: Start reading file : \(fileUrl.path)")
+                    let data = try FileManager.default.contentsOfFile(coordinatingAccessAt: fileUrl)
                     observer(.success(data))
                 } catch {
                     observer(.error(error))
@@ -27,13 +27,10 @@ class FileDataStorage {
     func write(directoryUrl: URL, filename: String, data: Data) -> Single<()> {
         let fileUrl = directoryUrl.appendingPathComponent(filename)
 
-//        print("DIRECTORY \(directoryUrl.path) exist? \(FileManager.default.fileExists(atPath: directoryUrl.path, isDirectory: nil))")
         if !FileManager.default.fileExists(atPath: directoryUrl.path, isDirectory: nil) {
             do {
-                try FileManager.default.createDirectory(at: directoryUrl, withIntermediateDirectories: false, attributes: nil)
-//                print("Firectory created")
+                try FileManager.default.createDirectory(coordinatingAccessAt: directoryUrl, withIntermediateDirectories: false)
             } catch {
-//                print("Error: \(error)")
                 return .error(StorageError.cantCreateFile)
             }
         }
@@ -42,14 +39,8 @@ class FileDataStorage {
         let writeSingle = Single.create { [weak self] observer in
             self?.queue.async {
                 do {
-//                    print("Start writing file : \(fileUrl.path)")
-//                    print("Try to write data: \(data.hs.hex)")
-
-                    try data.write(to: fileUrl)
-//                    print("Wrote data: \(data.hs.hex)")
-
-                    let data2 = try Data(contentsOf: fileUrl)
-//                    print("Data2 SUCCESS: \(data2.hs.hexString)")
+                    try FileManager.default.write(data, coordinatingAccessTo: fileUrl)
+                    try print("=> FDStorage LOGS =>: After wrote", FileManager.default.contentsOfDirectory(atPath: directoryUrl.path))
                     observer(.success(()))
                 } catch {
                     observer(.error(error))
@@ -58,26 +49,27 @@ class FileDataStorage {
             return Disposables.create()
         }
 
-        return deleteFile(url: fileUrl).flatMap { writeSingle }
+        return writeSingle
+//        return deleteFile(url: fileUrl).flatMap { writeSingle }
     }
 
     func deleteFile(url: URL?) -> Single<()> {
-//        print("Try to delete file")
+        print("=> FDStorage =>: Try to delete file")
         guard let url,
-              FileManager.default.fileExists(atPath: url.path) else {
+              (try? FileManager.default.fileExists(coordinatingAccessAt: url).exists) ?? false else {
 
-//            print("Can't find file! no need to remove")
+            print("=> FDStorage =>: Can't find file! no need to remove")
             return .just(())
         }
 
         return Single.create { [weak self] observer in
             self?.queue.async {
                 do {
-                    try FileManager.default.removeItem(atPath: url.path)
-//                    print("File deleted!")
+                    try FileManager.default.removeItem(coordinatingAccessAt: url)
+                    print("=> FDStorage =>: File deleted!")
                     observer(.success(()))
                 } catch {
-//                    print("throw error: \(error)")
+                    print("=> FDStorage =>: throw error: \(error)")
                     observer(.error(error))
                 }
             }

@@ -209,42 +209,50 @@ struct CellComponent {
     }
 
     static func blockchainAddress(tableView: UITableView, rowInfo: RowInfo, imageUrl: String, title: String, value: String, editType: EditType, action: (()->())? = nil) -> RowProtocol {
+        let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
         let titleFont: UIFont = .subhead1
         let valueFont: UIFont = .subhead2
+        let titleValueMargin: CGFloat = 1
         let showEdit = editType != .none
         let editColor: UIColor = editType == .original ? .themeGray : .themeJacob
 
-        var elements: [CellBuilderNew.CellElement] = [
-            .imageElement(image: .url(imageUrl, placeholder: "placeholder_rectangle_32"), size: .image32),
-            .vStackCentered([
-                .textElement(text: .subhead1(title), parameters: .allCompression),
-                .margin(1),
-                .textElement(text: .subhead2(value), parameters: .multiline)
-            ])
-        ]
-        if showEdit {
-            elements.append(
-                    .imageElement(image: .local(UIImage(named: "edit_20")?.withTintColor(editColor)), size: .image20)
-            )
-        }
         return CellBuilderNew.row(
-                rootElement: .hStack(elements),
+                rootElement: .hStack([
+                    .imageElement(image: .url(imageUrl, placeholder: "placeholder_rectangle_32"), size: .image32),
+                    .vStackCentered([
+                        .textElement(text: .subhead1(title), parameters: .allCompression),
+                        .margin(titleValueMargin),
+                        .textElement(text: .subhead2(value), parameters: .multiline)
+                    ]),
+                    .imageElement(image: showEdit ? .local(UIImage(named: "edit_20")?.withTintColor(editColor)) : nil, size: .image20)
+                ]),
                 tableView: tableView,
                 id: "from-to-\(rowInfo.index)",
                 hash: title + value,
                 autoDeselect: action != nil,
                 dynamicHeight: { containerWidth in
-                    var textWidth = containerWidth - .margin16 - .iconSize32 - .margin16 - .margin16
-                    if showEdit {
-                        textWidth = textWidth - .margin16 - .iconSize20
-                    }
-                    var cellHeight: CGFloat = .margin12 + TextComponent.height(width: .greatestFiniteMagnitude, font: titleFont, text: title) + 1
-                    cellHeight += TextComponent.height(width: textWidth, font: valueFont, text: value) + .margin12
+                    var elements: [CellBuilderNew.LayoutElement] = [
+                        .fixed(width: .iconSize32),
+                        .multiline
+                    ]
 
-                    return cellHeight
+                    if showEdit {
+                        elements.append(.fixed(width: .iconSize20))
+                    }
+
+                    let height = CellBuilderNew.height(
+                            containerWidth: containerWidth,
+                            backgroundStyle: backgroundStyle,
+                            text: value,
+                            font: valueFont,
+                            verticalPadding: .margin12,
+                            elements: elements
+                    )
+
+                    return height + titleFont.lineHeight + titleValueMargin
                 },
                 bind: { cell in
-                    cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+                    cell.set(backgroundStyle: backgroundStyle, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
                 },
                 action: action
         )

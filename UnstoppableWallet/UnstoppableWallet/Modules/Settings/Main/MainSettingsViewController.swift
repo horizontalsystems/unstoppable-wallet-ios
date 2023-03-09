@@ -21,7 +21,8 @@ class MainSettingsViewController: ThemeViewController {
     private let walletConnectCell = BaseSelectableThemeCell()
     private let securityCell = BaseSelectableThemeCell()
     private let appearanceCell = BaseSelectableThemeCell()
-    private let addressBookCell = BaseSelectableThemeCell()
+    private let contactBookCell = BaseSelectableThemeCell()
+    private let iCloudSyncCell = BaseSelectableThemeCell()
     private let baseCurrencyCell = BaseSelectableThemeCell()
     private let languageCell = BaseSelectableThemeCell()
     private let themeModeCell = BaseSelectableThemeCell()
@@ -69,8 +70,11 @@ class MainSettingsViewController: ThemeViewController {
         appearanceCell.set(backgroundStyle: .lawrence)
         buildTitleValue(cell: appearanceCell, image: UIImage(named: "brush_24"), title: "appearance.title".localized)
 
-        addressBookCell.set(backgroundStyle: .lawrence)
-        buildTitleValue(cell: addressBookCell, image: UIImage(named: "user_24"), title: "contacts.title".localized)
+        contactBookCell.set(backgroundStyle: .lawrence)
+        buildTitleValue(cell: contactBookCell, image: UIImage(named: "user_24"), title: "contacts.title".localized)
+
+        iCloudSyncCell.set(backgroundStyle: .lawrence)
+        buildTitleValue(cell: iCloudSyncCell, image: UIImage(named: "icloud_24"), title: "icloud_sync.title".localized)
 
         baseCurrencyCell.set(backgroundStyle: .lawrence)
         syncBaseCurrency()
@@ -234,15 +238,7 @@ class MainSettingsViewController: ThemeViewController {
                     }
             ),
             StaticRow(
-                    cell: appearanceCell,
-                    id: "launch-screen",
-                    height: .heightCell48,
-                    action: { [weak self] in
-                        self?.navigationController?.pushViewController(AppearanceModule.viewController(), animated: true)
-                    }
-            ),
-            StaticRow(
-                    cell: addressBookCell,
+                    cell: contactBookCell,
                     id: "address-book",
                     height: .heightCell48,
                     action: { [weak self] in
@@ -250,6 +246,26 @@ class MainSettingsViewController: ThemeViewController {
                             return
                         }
                         self?.navigationController?.pushViewController(viewController, animated: true)
+                    }
+            ),
+            StaticRow(
+                    cell: iCloudSyncCell,
+                    id: "icloud-sync",
+                    height: .heightCell48,
+                    action: { [weak self] in
+                        guard let viewController = AddressBookSyncSettingsModule.viewController else {
+                            return
+                        }
+
+                        self?.navigationController?.pushViewController(viewController, animated: true)
+                    }
+            ),
+            StaticRow(
+                    cell: appearanceCell,
+                    id: "launch-screen",
+                    height: .heightCell48,
+                    action: { [weak self] in
+                        self?.navigationController?.pushViewController(AppearanceModule.viewController(), animated: true)
                     }
             ),
             StaticRow(

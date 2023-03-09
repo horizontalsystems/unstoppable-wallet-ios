@@ -3,10 +3,14 @@ import ThemeKit
 import ComponentKit
 import SectionsTableView
 
+protocol IBottomSheetDismissDelegate: AnyObject {
+    func bottomSelectorOnDismiss()
+}
+
 class BottomSheetModule {
 
-    static func viewController(image: BottomSheetTitleView.Image? = nil, title: String, subtitle: String? = nil, items: [Item] = [], buttons: [Button] = []) -> UIViewController {
-        let viewController = BottomSheetViewController(image: image, title: title, subtitle: subtitle, items: items, buttons: buttons)
+    static func viewController(image: BottomSheetTitleView.Image? = nil, title: String, subtitle: String? = nil, items: [Item] = [], buttons: [Button] = [], delegate: IBottomSheetDismissDelegate? = nil) -> UIViewController {
+        let viewController = BottomSheetViewController(image: image, title: title, subtitle: subtitle, items: items, buttons: buttons, delegate: delegate)
         return viewController.toBottomSheet
     }
 

@@ -12,7 +12,7 @@ class AddressBookViewController: ThemeSearchViewController {
 
     private let disposeBag = DisposeBag()
     private let tableView = SectionsTableView(style: .grouped)
-    private let notFoundPlaceholder = PlaceholderView(layoutType: .keyboard)
+    private let notFoundPlaceholder = PlaceholderView()
 
     private var viewItems: [AddressBookViewModel.ViewItem] = []
     private var isLoaded = false
@@ -55,6 +55,7 @@ class AddressBookViewController: ThemeSearchViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.sectionDataSource = self
+        tableView.keyboardDismissMode = .interactive
 
         view.addSubview(notFoundPlaceholder)
         notFoundPlaceholder.snp.makeConstraints { maker in
@@ -63,6 +64,15 @@ class AddressBookViewController: ThemeSearchViewController {
 
         notFoundPlaceholder.image = UIImage(named: "not_found_48")
         notFoundPlaceholder.text = "contacts.list.not_found".localized
+
+        notFoundPlaceholder.image = UIImage(named: "add_to_wallet_2_48")
+        notFoundPlaceholder.text = "balance.empty.description".localized
+        notFoundPlaceholder.addPrimaryButton(
+                style: .yellow,
+                title: "contacts.add_new_contact".localized,
+                target: self,
+                action: #selector(onCreateContact)
+        )
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.onUpdate(viewItems: $0) }
         subscribe(disposeBag, viewModel.notFoundVisibleDriver) { [weak self] in self?.setNotFound(visible: $0) }
@@ -108,6 +118,7 @@ class AddressBookViewController: ThemeSearchViewController {
 
     private func setNotFound(visible: Bool) {
         notFoundPlaceholder.isHidden = !visible
+        navigationItem.searchController?.searchBar.isUserInteractionEnabled = !visible
     }
 
     private func deleteRowAction(uid: String) -> RowAction {
