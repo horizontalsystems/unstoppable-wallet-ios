@@ -1058,7 +1058,7 @@
 "chart.market_cap" = "Cap. marché";
 "chart.volume" = "Volume(24h)";
 "chart.circulation" = "En circulation";
-"chart.selected.volume" = "Vol";
+"chart.selected.volume" = "Volume";
 "chart.price_indicator_range.day" = "Plage de 24h";
 "chart.price_indicator_range.year" = "Plage de 52s";
 
