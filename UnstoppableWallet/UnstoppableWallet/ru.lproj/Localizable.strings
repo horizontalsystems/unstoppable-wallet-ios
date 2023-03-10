@@ -1061,7 +1061,7 @@
 "chart.market_cap" = "Рын. капитализация";
 "chart.volume" = "Объём (за 24 ч)";
 "chart.circulation" = "В обороте";
-"chart.selected.volume" = "Объём";
+"chart.selected.volume" = "Volume";
 "chart.price_indicator_range.day" = "Диапазон за 24 ч";
 "chart.price_indicator_range.year" = "Диапазон за 52 недели";
 
