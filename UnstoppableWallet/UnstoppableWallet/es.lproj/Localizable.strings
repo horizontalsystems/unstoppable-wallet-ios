@@ -1057,7 +1057,7 @@
 "chart.market_cap" = "Capitalización del Mercado";
 "chart.volume" = "Volumen (24St)";
 "chart.circulation" = "En Circulación";
-"chart.selected.volume" = "Volumen";
+"chart.selected.volume" = "Volume";
 "chart.price_indicator_range.day" = "Rango de 24h";
 "chart.price_indicator_range.year" = "Rango de 52 semanas";
 
