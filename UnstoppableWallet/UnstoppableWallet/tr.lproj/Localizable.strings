@@ -1059,7 +1059,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "chart.market_cap" = "Market Cap";
 "chart.volume" = "Birim(24 saat)";
 "chart.circulation" = "In Circulation";
-"chart.selected.volume" = "Hacim";
+"chart.selected.volume" = "Volume";
 "chart.price_indicator_range.day" = "24h Range";
 "chart.price_indicator_range.year" = "52w Range";
 
