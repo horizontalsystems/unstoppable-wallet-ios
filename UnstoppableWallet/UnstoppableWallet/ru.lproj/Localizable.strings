@@ -865,7 +865,7 @@
 
 "settings.title" = "Настройки";
 "settings.tab_bar_item" = "Настройки";
-"settings.manage_accounts" = "Управление кошельками";
+"settings.manage_accounts" = "Кошельки";
 "settings.blockchain_settings" = "Настройки блокчейна";
 "settings.security" = "Безопасность";
 "settings.experimental_features" = "Экспериментальные функции";
@@ -959,7 +959,7 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Управление кошельками";
+"settings_manage_keys.title" = "Кошельки";
 "settings_manage_keys.delete" = "Удалить";
 "settings_manage_keys.backup" = "Резервная копия";
 "settings_manage_keys.delete.title" = "Удалить кошелек";
@@ -1124,9 +1124,9 @@
 
 "intro.unchain_assets.title" = "Освободите активы";
 "intro.unchain_assets.description" = "Распоряжайтесь активами свободно и без ограничений";
-"intro.go_borderless.title" = "Избавьтесь от Границ";
+"intro.go_borderless.title" = "Избавьтесь от границ";
 "intro.go_borderless.description" = "Преодолейте барьеры и получите доступ к рынкам";
-"intro.stay_private.title" = "Сохраняйте Конфиденциальность";
+"intro.stay_private.title" = "Сохраняйте конфиденциальность";
 "intro.stay_private.description" = "Не допускайте утечку личных и финансовых данных";
 
 // Guides
