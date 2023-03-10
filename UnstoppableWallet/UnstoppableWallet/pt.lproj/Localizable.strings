@@ -1059,7 +1059,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "chart.market_cap" = "Capitalização de mercado";
 "chart.volume" = "Volume (24h)";
 "chart.circulation" = "Em Circulação";
-"chart.selected.volume" = "Vol";
+"chart.selected.volume" = "Volume";
 "chart.price_indicator_range.day" = "Faixa em 24h";
 "chart.price_indicator_range.year" = "Faixa em 52s";
 
