@@ -1059,7 +1059,7 @@
 "chart.market_cap" = "市场价值";
 "chart.volume" = "量(24小时)";
 "chart.circulation" = "流通中";
-"chart.selected.volume" = "成交量";
+"chart.selected.volume" = "Volume";
 "chart.price_indicator_range.day" = "24小时范围";
 "chart.price_indicator_range.year" = "52星期范围";
 
