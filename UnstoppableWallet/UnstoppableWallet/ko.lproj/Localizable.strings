@@ -1057,7 +1057,7 @@
 "chart.market_cap" = "Market Cap";
 "chart.volume" = "볼륨 (24 시간)";
 "chart.circulation" = "In Circulation";
-"chart.selected.volume" = "Vol";
+"chart.selected.volume" = "Volume";
 "chart.price_indicator_range.day" = "24시간 범위";
 "chart.price_indicator_range.year" = "52w Range";
 
