@@ -31,7 +31,7 @@ class MarketCardCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func append(viewItem: MarketCardView.ViewItem, configuration: ChartConfiguration = .chartPreview, onTap: (() -> ())? = nil) {
+    func append(viewItem: MarketCardView.ViewItem, configuration: ChartConfiguration = .smallPreviewChart, onTap: (() -> ())? = nil) {
         let marketCardView = MarketCardView()
         marketCardView.onTap = onTap
 

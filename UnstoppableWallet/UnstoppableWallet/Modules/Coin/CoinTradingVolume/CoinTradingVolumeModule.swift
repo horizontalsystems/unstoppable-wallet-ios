@@ -13,7 +13,7 @@ class CoinTradingVolumeModule {
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
 
-        return MetricChartViewController(viewModel: chartViewModel, configuration: ChartConfiguration.chartWithoutIndicators).toBottomSheet
+        return MetricChartViewController(viewModel: chartViewModel, configuration: ChartConfiguration.baseChart).toBottomSheet
     }
 
 }

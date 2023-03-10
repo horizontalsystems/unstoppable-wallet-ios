@@ -19,10 +19,10 @@ class MetricChartViewController: ThemeActionSheetController {
     private let chartCell: ChartCell
     private let chartRow: StaticRow
 
-    init(viewModel: MetricChartViewModel, viewOptions: ChartCell.ChartViewOptions = ChartCell.metricChart, configuration: ChartConfiguration) {
+    init(viewModel: MetricChartViewModel, configuration: ChartConfiguration) {
         self.viewModel = viewModel
 
-        chartCell = ChartCell(viewModel: viewModel, touchDelegate: viewModel, viewOptions: viewOptions, configuration: configuration)
+        chartCell = ChartCell(viewModel: viewModel, configuration: configuration)
 
         chartRow = StaticRow(
                 cell: chartCell,

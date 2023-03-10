@@ -24,7 +24,7 @@ class MarketGlobalMetricViewController: MarketListViewController {
         self.chartViewModel = chartViewModel
         sortHeaderView = headerView
 
-        chartCell = ChartCell(viewModel: chartViewModel, touchDelegate: chartViewModel, viewOptions: ChartCell.metricChart, configuration: configuration)
+        chartCell = ChartCell(viewModel: chartViewModel, configuration: configuration)
         chartRow = StaticRow(
                 cell: chartCell,
                 id: "chartView",

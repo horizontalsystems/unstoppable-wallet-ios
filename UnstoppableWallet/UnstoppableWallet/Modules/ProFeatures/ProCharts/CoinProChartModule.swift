@@ -19,8 +19,8 @@ class CoinProChartModule {
 
         return MetricChartViewController(
                 viewModel: chartViewModel,
-                viewOptions: [type.hasDiff ? .currentValueWithDiff : .currentValue, .timePeriodAndSelectedValue, .chart, .timeline],
-                configuration: type.hasDiff ? .chartWithoutIndicators : .cumulativeChartWithoutIndicators).toBottomSheet
+                configuration: type.hasDiff ? .baseChart : .baseBarChart
+        ).toBottomSheet
     }
 
 }
@@ -70,7 +70,7 @@ extension CoinProChartModule {
             case .liquidity: return .last
             case .txCount: return .cumulative
             case .txVolume: return .cumulative
-            case .activeAddresses: return .last
+            case .activeAddresses: return .cumulative
             }
         }
 

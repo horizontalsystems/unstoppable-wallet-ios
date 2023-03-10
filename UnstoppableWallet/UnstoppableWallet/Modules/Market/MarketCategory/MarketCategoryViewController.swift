@@ -22,7 +22,7 @@ class MarketCategoryViewController: MarketListViewController {
         self.chartViewModel = chartViewModel
         multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel)
 
-        chartCell = ChartCell(viewModel: chartViewModel, touchDelegate: chartViewModel, viewOptions: ChartCell.metricChart, configuration: .chartWithoutIndicators)
+        chartCell = ChartCell(viewModel: chartViewModel, configuration: .baseChart)
         chartRow = StaticRow(
                 cell: chartCell,
                 id: "chartView",

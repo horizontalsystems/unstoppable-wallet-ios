@@ -155,7 +155,7 @@ class CoinAnalyticsViewModel {
 
         let blockchains = service.blockchains(uids: holderBlockchains.filter { $0.holdersCount > 0 }.map { $0.uid })
 
-        let items = holderBlockchains.compactMap { holderBlockchain -> Item? in
+        let items = holderBlockchains.sorted { $0.holdersCount > $1.holdersCount }.compactMap { holderBlockchain -> Item? in
             guard let blockchain = blockchains.first(where: { $0.uid == holderBlockchain.uid }) else {
                 return nil
             }

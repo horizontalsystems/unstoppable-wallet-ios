@@ -6,59 +6,50 @@ import ThemeKit
 
 extension ChartConfiguration {
 
-    static var fullChart: ChartConfiguration {
-        let configuration = ChartConfiguration().applyColors()
-
-        configuration.mainHeight = ChartCell.chartHeight
-        configuration.indicatorHeight = ChartCell.indicatorHeight
-        configuration.timelineHeight = ChartCell.timelineHeight
-
-        return configuration
+    static var baseChart: ChartConfiguration {
+        ChartConfiguration().applyColors().applyBase()
     }
 
-    static var chartWithoutIndicators: ChartConfiguration {
-        ChartConfiguration().applyColors().applyChartWithoutIndicators()
+    static var coinChart: ChartConfiguration {
+        baseChart.applyVolume()
     }
 
-    static var cumulativeChartWithoutIndicators: ChartConfiguration {
-        ChartConfiguration().applyColors(trendIgnore: true).applyChartWithoutIndicators()
+    static var marketCapChart: ChartConfiguration {
+        baseChart.applyDominance()
     }
 
-    @discardableResult private func applyChartWithoutIndicators() -> Self {
-        mainHeight = ChartCell.chartHeight
+    static var baseBarChart: ChartConfiguration {
+        ChartConfiguration().applyColors(trendIgnore: true).applyBase().applyBars()
+    }
+
+    static var smallPreviewChart: ChartConfiguration {
+        ChartConfiguration().applyColors().applyPreview(height: 25)
+    }
+
+    static var previewChart: ChartConfiguration {
+        ChartConfiguration().applyColors(trendIgnore: true).applyPreview(height: 60)
+    }
+
+    static var previewBarChart: ChartConfiguration {
+        ChartConfiguration().applyColors(trendIgnore: true).applyPreview(height: 60).applyBarsPreview()
+    }
+
+    @discardableResult private func applyBase() -> Self {
+        mainHeight = 160
+        timelineHeight = 0
+
+        showBorders = false
         showIndicators = false
-        indicatorHeight = 0
-        timelineHeight = ChartCell.timelineHeight
-        timelineInsets = UIEdgeInsets(top: 4, left: 8, bottom: 0, right: 8)
+        showVerticalLines = false
+
+        curveWidth = 2
+        curvePadding = UIEdgeInsets(top: 20, left: .margin8, bottom: 20, right: .margin8)
 
         return self
     }
 
-    static var chartWithDominance: ChartConfiguration {
-        let configuration = chartWithoutIndicators
-        configuration.showDominance = true
-
-        return configuration
-    }
-
-    static var chartPreview: ChartConfiguration {
-        ChartConfiguration().applyColors().applyPreview()
-    }
-
-    static var chartBarsPreview: ChartConfiguration {
-        ChartConfiguration().applyColors().applyBarsPreview()
-    }
-
-    static var cumulativeChartPreview: ChartConfiguration {
-        ChartConfiguration().applyColors(trendIgnore: true).applyPreview()
-    }
-
-    static var cumulativeChartBarsPreview: ChartConfiguration {
-        ChartConfiguration().applyColors(trendIgnore: true).applyBarsPreview()
-    }
-
-    @discardableResult private func applyPreview() -> Self {
-        mainHeight = 25
+    @discardableResult private func applyPreview(height: CGFloat) -> Self {
+        mainHeight = height
         indicatorHeight = 0
         timelineHeight = 0
         curvePadding = UIEdgeInsets(top: .margin2, left: 0, bottom: 10, right: 0)
@@ -78,26 +69,33 @@ extension ChartConfiguration {
         return self
     }
 
+    @discardableResult private func applyBars() -> Self {
+        curveType = .bars
+
+        trendUpGradient =  [.clear]
+        trendDownGradient =  [.clear]
+        pressedGradient =  [.clear]
+        neutralGradient =  [.clear]
+
+        return self
+    }
+
     @discardableResult private func applyBarsPreview() -> Self {
         curveType = .bars
-        curveWidth = 2
+        curvePadding = UIEdgeInsets(top: 2, left: 2, bottom: 4, right: 2)
 
-        mainHeight = 60
-        indicatorHeight = 0
-        timelineHeight = 0
-        curvePadding = UIEdgeInsets(top: .margin2, left: 2, bottom: 4, right: 2)
+        return self
+    }
 
-        showBorders = false
-        showIndicators = false
-        showLimits = false
-        showVerticalLines = false
-        isInteractive = false
+    @discardableResult private func applyVolume() -> Self {
+        indicatorHeight = 44
+        showIndicators = true
 
-        let clear = [UIColor.clear]
-        trendUpGradient = clear
-        trendDownGradient = clear
-        pressedGradient = clear
-        neutralGradient = clear
+        return self
+    }
+
+    @discardableResult private func applyDominance() -> Self {
+        showDominance = true
 
         return self
     }

@@ -44,11 +44,11 @@ struct MarketGlobalMetricModule {
 
         let configuration: ChartConfiguration
         switch type {
-        case .totalMarketCap: configuration = ChartConfiguration.chartWithDominance
-        default: configuration = ChartConfiguration.chartWithoutIndicators
+        case .totalMarketCap: configuration = .marketCapChart
+        default: configuration = .baseChart
         }
 
-        let headerView = MarketSingleSortHeaderView(viewModel: headerViewModel, hasTopSeparator: false)
+        let headerView = MarketSingleSortHeaderView(viewModel: headerViewModel)
         return MarketGlobalMetricViewController(listViewModel: listViewModel, headerView: headerView, chartViewModel: chartViewModel, configuration: configuration)
     }
 
@@ -76,8 +76,8 @@ struct MarketGlobalMetricModule {
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
 
-        let headerView = MarketSingleSortHeaderView(viewModel: headerViewModel, hasTopSeparator: false)
-        return MarketGlobalMetricViewController(listViewModel: listViewModel, headerView: headerView, chartViewModel: chartViewModel, configuration: ChartConfiguration.chartWithoutIndicators)
+        let headerView = MarketSingleSortHeaderView(viewModel: headerViewModel)
+        return MarketGlobalMetricViewController(listViewModel: listViewModel, headerView: headerView, chartViewModel: chartViewModel, configuration: .baseChart)
     }
 
     static func tvlInDefiViewController() -> UIViewController {
@@ -105,7 +105,7 @@ struct MarketGlobalMetricModule {
         let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
 
-        return MarketGlobalTvlMetricViewController(listViewModel: listViewModel, headerViewModel: headerViewModel, chartViewModel: chartViewModel, configuration: ChartConfiguration.chartWithoutIndicators)
+        return MarketGlobalTvlMetricViewController(listViewModel: listViewModel, headerViewModel: headerViewModel, chartViewModel: chartViewModel, configuration: .baseChart)
     }
 
 }

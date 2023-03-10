@@ -1,48 +1,39 @@
 import UIKit
-import Chart
-import HUD
 import SnapKit
 import RxSwift
+import ThemeKit
+import ComponentKit
+import Chart
+import HUD
 
 class ChartCell: UITableViewCell {
-    static let chartHeight: CGFloat = 161
-    static let indicatorHeight: CGFloat = 47
-    static let timelineHeight: CGFloat = 21
-
+    private let viewModel: IChartViewModel & IChartViewTouchDelegate
+    private let configuration: ChartConfiguration
     private let disposeBag = DisposeBag()
 
-    private let viewModel: IChartViewModel
-    private let viewOptions: ChartViewOptions
+    private let currentValueWrapper = UIView()
+    private let currentValueStackView = UIStackView()
+    private let currentValueLabel = UILabel()
+    private let currentDiffLabel = DiffLabel()
+    private let currentSecondaryTitleLabel = UILabel()
+    private let currentSecondaryValueLabel = UILabel()
+    private let currentSecondaryDiffLabel = DiffLabel()
 
-    private var currentValueView: ChartCurrentValueView?
-
-    private var intervalSelectView: FilterView?
-    private var selectedValueView: ChartPointInfoView?
+    private let chartInfoWrapper = UIStackView()
+    private let chartValueLabel = UILabel()
+    private let chartDiffLabel = DiffLabel()
+    private let chartTimeLabel = UILabel()
+    private let chartSecondaryTitleLabel = UILabel()
+    private let chartSecondaryValueLabel = UILabel()
+    private let chartSecondaryDiffLabel = DiffLabel()
 
     private let chartView: RateChartView
-
-    private var indicatorSelectorView: IndicatorSelectorView?
-
+    private let timePeriodView = FilterView(buttonStyle: .transparent, bottomSeparator: false)
     private let loadingView = HUDActivityView.create(with: .medium24)
-    private let bottomSeparator = UIView()
 
-    init(viewModel: IChartViewModel, touchDelegate: IChartViewTouchDelegate?, viewOptions: ChartViewOptions, configuration: ChartConfiguration, isLast: Bool = false) {
+    init(viewModel: IChartViewModel & IChartViewTouchDelegate, configuration: ChartConfiguration, isLast: Bool = false) {
         self.viewModel = viewModel
-        self.viewOptions = viewOptions
-
-        let showDiff = viewOptions.contains(.currentValueWithDiff)
-        if showDiff || viewOptions.contains(.currentValue) {
-            currentValueView = ChartCurrentValueView()
-            currentValueView?.showDiff = showDiff
-        }
-        if viewOptions.contains(.timePeriodAndSelectedValue) {
-            intervalSelectView = FilterView(buttonStyle: .transparent)
-            selectedValueView = ChartPointInfoView()
-        }
-        if viewOptions.contains(.indicatorSelector) {
-            indicatorSelectorView = IndicatorSelectorView()
-        }
-
+        self.configuration = configuration
         chartView = RateChartView(configuration: configuration)
 
         super.init(style: .default, reuseIdentifier: nil)
@@ -51,125 +42,158 @@ class ChartCell: UITableViewCell {
         contentView.backgroundColor = .clear
         selectionStyle = .none
 
-        var lastView = UIView()
-        contentView.addSubview(lastView)
-        lastView.snp.makeConstraints { maker in
-            maker.top.leading.trailing.equalToSuperview()
-            maker.height.equalTo(0)
+        contentView.addSubview(currentValueWrapper)
+        currentValueWrapper.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(CGFloat.heightDoubleLineCell)
         }
 
-        if let currentValueView = currentValueView {
-            contentView.addSubview(currentValueView)
-            currentValueView.snp.makeConstraints { maker in
-                maker.top.equalTo(lastView.snp.bottom)
-                maker.leading.trailing.equalToSuperview()
-                maker.height.equalTo(ChartViewOptions.currentValueWithDiff.elementHeight)
-            }
-
-            currentValueView.title = viewModel.chartTitle
-
-            let topSeparator = UIView()
-            contentView.addSubview(topSeparator)
-            topSeparator.snp.makeConstraints { maker in
-                maker.top.equalTo(currentValueView.snp.top)
-                maker.leading.trailing.equalToSuperview()
-                maker.height.equalTo(CGFloat.heightOneDp)
-            }
-
-            topSeparator.backgroundColor = .themeSteel10
-
-            lastView = currentValueView
+        currentValueWrapper.addSubview(currentValueStackView)
+        currentValueStackView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(CGFloat.margin16)
+            make.centerY.equalToSuperview()
         }
 
-        if let intervalSelectView = intervalSelectView {
-            if let selectedRateView = selectedValueView {
-                contentView.addSubview(selectedRateView)
-                selectedRateView.snp.makeConstraints { maker in
-                    maker.top.equalTo(lastView.snp.bottom)
-                    maker.leading.trailing.equalToSuperview()
-                    maker.height.equalTo(ChartViewOptions.timePeriodAndSelectedValue.elementHeight)
-                }
-            }
+        currentValueStackView.alignment = .firstBaseline
+        currentValueStackView.spacing = .margin4
 
-            contentView.addSubview(intervalSelectView)
-            intervalSelectView.snp.makeConstraints { maker in
-                maker.top.equalTo(lastView.snp.bottom)
-                maker.leading.trailing.equalToSuperview()
-                maker.height.equalTo(ChartViewOptions.timePeriodAndSelectedValue.elementHeight)
-            }
+        currentValueStackView.addArrangedSubview(currentValueLabel)
+        currentValueLabel.font = .title3
+        currentValueLabel.textColor = .themeLeah
 
-            intervalSelectView.backgroundColor = .clear
-            intervalSelectView.reload(filters: viewModel.intervals.map { .item(title: $0) })
+        currentValueStackView.addArrangedSubview(currentDiffLabel)
+        currentDiffLabel.font = .subhead1
 
-            let topSeparator = UIView()
-            contentView.addSubview(topSeparator)
-            topSeparator.snp.makeConstraints { maker in
-                maker.top.equalTo(intervalSelectView.snp.top)
-                maker.leading.trailing.equalToSuperview()
-                maker.height.equalTo(CGFloat.heightOneDp)
-            }
+        let currentSecondaryStackView = UIStackView()
 
-            topSeparator.backgroundColor = .themeSteel10
-
-            lastView = intervalSelectView
+        currentValueWrapper.addSubview(currentSecondaryStackView)
+        currentSecondaryStackView.snp.makeConstraints { make in
+            make.leading.equalTo(currentValueStackView.snp.trailing).offset(CGFloat.margin12)
+            make.trailing.equalToSuperview().inset(CGFloat.margin16)
+            make.centerY.equalToSuperview()
         }
+
+        currentSecondaryStackView.axis = .vertical
+        currentSecondaryStackView.alignment = .trailing
+        currentSecondaryStackView.spacing = 1
+
+        currentSecondaryStackView.addArrangedSubview(currentSecondaryTitleLabel)
+        currentSecondaryTitleLabel.font = .subhead2
+        currentSecondaryTitleLabel.textColor = .themeGray
+
+        let currentSecondaryValueStackView = UIStackView()
+
+        currentSecondaryStackView.addArrangedSubview(currentSecondaryValueStackView)
+        currentSecondaryValueStackView.spacing = .margin4
+
+        currentSecondaryValueStackView.addArrangedSubview(currentSecondaryValueLabel)
+        currentSecondaryValueLabel.font = .subhead2
+        currentSecondaryValueLabel.textColor = .themeJacob
+
+        currentSecondaryValueStackView.addArrangedSubview(currentSecondaryDiffLabel)
+        currentSecondaryDiffLabel.font = .subhead2
+
+        contentView.addSubview(chartInfoWrapper)
+        chartInfoWrapper.snp.makeConstraints { make in
+            make.edges.equalTo(currentValueWrapper)
+        }
+
+        let chartInfoStackView = UIStackView()
+
+        chartInfoWrapper.addSubview(chartInfoStackView)
+        chartInfoStackView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            make.centerY.equalToSuperview()
+        }
+
+        chartInfoStackView.axis = .vertical
+        chartInfoStackView.spacing = 1
+
+        let chartInfoTopStackView = UIStackView()
+
+        chartInfoStackView.addArrangedSubview(chartInfoTopStackView)
+        chartInfoTopStackView.spacing = .margin12
+        chartInfoTopStackView.alignment = .leading
+
+        let chartInfoValueStackView = UIStackView()
+
+        chartInfoTopStackView.addArrangedSubview(chartInfoValueStackView)
+        chartInfoValueStackView.spacing = .margin8
+        chartInfoValueStackView.alignment = .center
+
+        chartInfoValueStackView.addArrangedSubview(chartValueLabel)
+        chartValueLabel.font = .headline2
+        chartValueLabel.textColor = .themeLeah
+
+        chartInfoValueStackView.addArrangedSubview(chartDiffLabel)
+        chartDiffLabel.font = .subhead1
+
+        chartInfoTopStackView.addArrangedSubview(chartSecondaryTitleLabel)
+        chartSecondaryTitleLabel.textAlignment = .right
+        chartSecondaryTitleLabel.font = .subhead2
+        chartSecondaryTitleLabel.textColor = .themeGray
+
+        let chartInfoBottomStackView = UIStackView()
+
+        chartInfoStackView.addArrangedSubview(chartInfoBottomStackView)
+        chartInfoBottomStackView.spacing = .margin12
+        chartInfoBottomStackView.alignment = .trailing
+
+        chartInfoBottomStackView.addArrangedSubview(chartTimeLabel)
+        chartTimeLabel.font = .subhead2
+        chartTimeLabel.textColor = .themeGray
+
+        let chartInfoSecondaryValueStackView = UIStackView()
+
+        chartInfoBottomStackView.addArrangedSubview(chartInfoSecondaryValueStackView)
+        chartInfoSecondaryValueStackView.spacing = .margin4
+
+        chartInfoSecondaryValueStackView.addArrangedSubview(chartSecondaryValueLabel)
+        chartSecondaryValueLabel.font = .subhead2
+
+        chartInfoSecondaryValueStackView.addArrangedSubview(chartSecondaryDiffLabel)
+        chartSecondaryDiffLabel.font = .subhead2
 
         contentView.addSubview(chartView)
         chartView.snp.makeConstraints { maker in
-            maker.top.equalTo(lastView.snp.bottom)
+            maker.top.equalTo(currentValueWrapper.snp.bottom)
             maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(viewOptions.chartHeight)
-        }
-        lastView = chartView
-        chartView.delegate = touchDelegate
-
-        if let indicatorSelectorView = indicatorSelectorView {
-            contentView.addSubview(indicatorSelectorView)
-            indicatorSelectorView.snp.makeConstraints { maker in
-                maker.top.equalTo(lastView.snp.bottom)
-                maker.leading.trailing.equalToSuperview()
-                maker.height.equalTo(ChartViewOptions.indicatorSelector.elementHeight)
-            }
-
-            lastView = indicatorSelectorView
+            maker.height.equalTo(configuration.mainHeight + (configuration.showIndicators ? configuration.indicatorHeight : 0))
         }
 
-        contentView.addSubview(bottomSeparator)
-        bottomSeparator.snp.makeConstraints { maker in
-            maker.top.equalTo(lastView.snp.bottom).offset(-CGFloat.heightOneDp)
+        chartView.delegate = viewModel
+        chartView.setVolumes(hidden: !configuration.showIndicators)
+
+        contentView.addSubview(timePeriodView)
+        timePeriodView.snp.makeConstraints { maker in
+            maker.top.equalTo(chartView.snp.bottom).offset(CGFloat.margin8)
             maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOneDp)
+            maker.height.equalTo(CGFloat.heightCell48)
         }
 
-        bottomSeparator.backgroundColor = .themeSteel10
-        bottomSeparator.isHidden = !isLast
+        timePeriodView.backgroundColor = .clear
+        timePeriodView.reload(filters: viewModel.intervals.map { .item(title: $0) })
 
         contentView.addSubview(loadingView)
         loadingView.snp.makeConstraints { maker in
             maker.center.equalTo(chartView)
-            maker.centerY.equalTo(chartView)
         }
-    }
-
-    override init(style: CellStyle, reuseIdentifier: String?) {
-        fatalError()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // Chart ViewModel section
-
-    private func deactivateIndicators() {
-        ChartIndicatorSet.all.forEach { indicator in
-            indicatorSelectorView?.set(indicator: indicator, selected: false)
-            indicatorSelectorView?.set(indicator: indicator, disabled: true)
-        }
+    var cellHeight: CGFloat {
+        .heightDoubleLineCell + configuration.mainHeight + (configuration.showIndicators ? configuration.indicatorHeight : 0) + .margin8 + .heightCell48 + .margin8
     }
 
-    func set(data: ChartData, trend: MovementTrend, min: String?, max: String?, timeline: [ChartTimelineItem]) {
-        switch trend {
+    private func syncChart(viewItem: CoinChartViewModel.ViewItem?) {
+        guard let viewItem = viewItem else {
+            return
+        }
+
+        switch viewItem.chartTrend {
         case .neutral:
             chartView.setCurve(colorType: .neutral)
         case .ignore, .up:
@@ -178,110 +202,78 @@ class ChartCell: UITableViewCell {
             chartView.setCurve(colorType: .down)
         }
 
-        chartView.set(chartData: data)
-        chartView.set(timeline: timeline, start: data.startWindow, end: data.endWindow)
-        chartView.set(highLimitText: max, lowLimitText: min)
-    }
-
-    func setVolumes(hidden: Bool, limitHidden: Bool) {
-        chartView.setVolumes(hidden: hidden)
-        chartView.setLimits(hidden: limitHidden)
-    }
-
-
-    public func bind(indicator: ChartIndicatorSet, hidden: Bool) {
-        switch indicator {
-        case .rsi: chartView.setRsi(hidden: hidden)
-        case .macd: chartView.setMacd(hidden: hidden)
-        case .ema: chartView.setEma(hidden: hidden)
-        case .dominance: chartView.setDominance(hidden: false)
-        default: ()
-        }
-    }
-
-    private func syncChart(viewItem: CoinChartViewModel.ViewItem?) {
-        guard let viewItem = viewItem else {
-            return
-        }
-
-        set(
-            data: viewItem.chartData,
-            trend: viewItem.chartTrend,
-            min: viewItem.minValue,
-            max: viewItem.maxValue,
-            timeline: viewItem.timeline
-        )
-
-        guard let selectedIndicator = viewItem.selectedIndicator else {
-            setVolumes(hidden: false, limitHidden: false)
-            ChartIndicatorSet.all.forEach { indicator in
-                bind(indicator: indicator, hidden: true)
-            }
-            deactivateIndicators()
-
-            return
-        }
-
-        setVolumes(hidden: selectedIndicator.hideVolumes, limitHidden: false)
-
-        ChartIndicatorSet.all.forEach { indicator in
-            let show = selectedIndicator.contains(indicator)
-
-            bind(indicator: indicator, hidden: !show)
-
-            indicatorSelectorView?.set(indicator: indicator, disabled: false)
-            indicatorSelectorView?.set(indicator: indicator, selected: show)
-        }
+        chartView.set(chartData: viewItem.chartData)
+        chartView.set(highLimitText: viewItem.maxValue, lowLimitText: viewItem.minValue)
     }
 
     private func syncChart(selected: Bool) {
-        intervalSelectView?.isHidden = selected
-        selectedValueView?.isHidden = !selected
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut]) { [weak self] in
+            self?.currentValueWrapper.alpha = selected ? 0 : 1
+            self?.chartInfoWrapper.alpha = selected ? 1 : 0
+        }
     }
 
     private func syncChart(selectedViewItem: SelectedPointViewItem?) {
         guard let viewItem = selectedViewItem else {
             return
         }
-        selectedValueView?.bind(viewItem: viewItem)
+
+        chartValueLabel.text = viewItem.value
+        chartTimeLabel.text = viewItem.date
+
+        switch viewItem.rightSideMode {
+        case .none:
+            chartSecondaryTitleLabel.isHidden = true
+            chartSecondaryValueLabel.isHidden = true
+            chartSecondaryDiffLabel.isHidden = true
+        case .volume(let value):
+            if let value = value {
+                chartSecondaryTitleLabel.isHidden = false
+                chartSecondaryValueLabel.isHidden = false
+
+                chartSecondaryTitleLabel.text = "chart.selected.volume".localized
+                chartSecondaryValueLabel.text = value
+                chartSecondaryValueLabel.textColor = .themeGray
+            } else {
+                chartSecondaryTitleLabel.isHidden = true
+                chartSecondaryValueLabel.isHidden = true
+            }
+
+            chartSecondaryDiffLabel.isHidden = true
+        case .dominance(let value):
+            chartSecondaryTitleLabel.isHidden = false
+            chartSecondaryValueLabel.isHidden = false
+            chartSecondaryDiffLabel.isHidden = false
+
+            chartSecondaryTitleLabel.text = "BTC Dominance"
+            chartSecondaryValueLabel.text = value.flatMap { ValueFormatter.instance.format(percentValue: $0, showSign: false) }
+            chartSecondaryValueLabel.textColor = .themeJacob
+
+            chartSecondaryDiffLabel.set(value: 12.3)
+        }
     }
 
     private func syncChart(typeIndex: Int) {
-        intervalSelectView?.select(index: typeIndex)
+        timePeriodView.select(index: typeIndex)
     }
 
     private func syncIntervals(typeIndex: Int) {
-        intervalSelectView?.reload(filters: viewModel.intervals.map { .item(title: $0) })
+        timePeriodView.reload(filters: viewModel.intervals.map { .item(title: $0) })
         syncChart(typeIndex: typeIndex)
     }
 
-    private func showLoading() {
-        chartView.isHidden = true
-
-        loadingView.set(hidden: false)
-        loadingView.startAnimating()
-    }
-
-    private func hideLoading() {
-        chartView.isHidden = false
-
-        loadingView.set(hidden: true)
-        loadingView.stopAnimating()
-    }
-
-
     private func syncChart(loading: Bool) {
+        chartView.isHidden = loading
+        loadingView.set(hidden: !loading)
+
         if loading {
-            showLoading()
+            loadingView.startAnimating()
         } else {
-            hideLoading()
+            loadingView.stopAnimating()
         }
     }
 
     private func syncChart(error: String?) { //todo: check logic!
-        if error != nil {
-            deactivateIndicators()
-        }
     }
 
 }
@@ -289,8 +281,15 @@ class ChartCell: UITableViewCell {
 extension ChartCell {
 
     func onLoad() {
-        subscribe(disposeBag, viewModel.valueDriver) { [weak self] in self?.currentValueView?.value = $0 }
-        subscribe(disposeBag, viewModel.chartInfoDriver) { [weak self] in self?.currentValueView?.set(diff: $0?.chartDiff) }
+        subscribe(disposeBag, viewModel.valueDriver) { [weak self] in self?.currentValueLabel.text = $0 }
+        subscribe(disposeBag, viewModel.chartInfoDriver) { [weak self] in
+            if let value = $0?.chartDiff {
+                self?.currentDiffLabel.isHidden = false
+                self?.currentDiffLabel.set(value: value)
+            } else {
+                self?.currentDiffLabel.isHidden = true
+            }
+        }
 
         subscribe(disposeBag, viewModel.pointSelectModeEnabledDriver) { [weak self] in self?.syncChart(selected: $0) }
         subscribe(disposeBag, viewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
@@ -301,76 +300,9 @@ extension ChartCell {
         subscribe(disposeBag, viewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }
         subscribe(disposeBag, viewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }
 
-        intervalSelectView?.onSelect = { [weak self] index in
+        timePeriodView.onSelect = { [weak self] index in
             self?.viewModel.onSelectInterval(at: index)
         }
-
-        indicatorSelectorView?.onTapIndicator = { [weak self] indicator in
-            self?.viewModel.onTap(indicator: indicator)
-        }
-    }
-
-    var cellHeight: CGFloat {
-        viewOptions.cumulativeHeight
-    }
-
-    var showDiffValue: Bool {
-        get { currentValueView?.showDiff ?? false }
-        set { currentValueView?.showDiff = newValue }
-    }
-}
-
-extension ChartCell {
-    static let coinChart: ChartViewOptions = .all
-    static let metricChart: ChartViewOptions = [.currentValueWithDiff, .timePeriodAndSelectedValue, .chart, .timeline]
-    static let coinAnalyticsChart: ChartViewOptions = [.currentValue, .timePeriodAndSelectedValue, .chart, .timeline]
-    static let smallChart: ChartViewOptions = [.chart]
-
-    struct ChartViewOptions: OptionSet {
-        static let none: ChartViewOptions = []
-        static let all: ChartViewOptions = [.currentValueWithDiff, .timePeriodAndSelectedValue, .chart, .indicators, .timeline, .indicatorSelector]
-
-        static let currentValue = ChartViewOptions(rawValue: 1 << 0)
-        static let currentValueWithDiff = ChartViewOptions(rawValue: 1 << 1)
-        static let timePeriodAndSelectedValue = ChartViewOptions(rawValue: 1 << 2)
-        static let chart = ChartViewOptions(rawValue: 1 << 3)
-        static let indicators = ChartViewOptions(rawValue: 1 << 4)
-        static let timeline = ChartViewOptions(rawValue: 1 << 5)
-        static let indicatorSelector = ChartViewOptions(rawValue: 1 << 6)
-
-        let rawValue: Int8
-
-        var elementHeight: CGFloat {
-            switch self {
-            case .currentValueWithDiff, .currentValue: return .heightSingleLineCell
-            case .timePeriodAndSelectedValue: return .heightSingleLineCell
-            case .chart: return ChartCell.chartHeight
-            case .indicators: return ChartCell.indicatorHeight
-            case .timeline: return ChartCell.timelineHeight
-            case .indicatorSelector: return .heightSingleLineCell
-            default: return 0
-            }
-        }
-
-        var cumulativeHeight: CGFloat {
-            var height:CGFloat = 0
-
-            for index in 0..<7 {
-                let option = ChartViewOptions(rawValue: 1 << index)
-                if contains(option) {
-                    height += option.elementHeight
-                }
-            }
-
-            return height
-        }
-
-        var chartHeight: CGFloat {
-            let chartElements = [Self.chart, Self.indicators, Self.timeline]
-
-            return chartElements.reduce(0) { contains($1) ? ($0 + $1.elementHeight) : $0 }
-        }
-
     }
 
 }

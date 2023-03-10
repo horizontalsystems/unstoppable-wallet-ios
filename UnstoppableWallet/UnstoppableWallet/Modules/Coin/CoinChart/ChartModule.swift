@@ -45,7 +45,6 @@ struct SelectedPointViewItem {
     enum RightSideMode {
         case none
         case volume(value: String?)
-        case macd(macdInfo: MacdInfo)
         case dominance(value: Decimal?)
     }
 }

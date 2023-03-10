@@ -26,7 +26,7 @@ class FilterView: UIView {
         filters.isEmpty ? 0 : Self.height
     }
 
-    init(buttonStyle: SecondaryButton.Style) {
+    init(buttonStyle: SecondaryButton.Style, bottomSeparator: Bool = true) {
         self.buttonStyle = buttonStyle
 
         layout.scrollDirection = .horizontal
@@ -57,14 +57,16 @@ class FilterView: UIView {
 
         collectionView.registerCell(forClass: FilterHeaderCell.self)
 
-        let separator = UIView()
-        addSubview(separator)
-        separator.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightOneDp)
-        }
+        if bottomSeparator {
+            let separator = UIView()
+            addSubview(separator)
+            separator.snp.makeConstraints { maker in
+                maker.leading.trailing.bottom.equalToSuperview()
+                maker.height.equalTo(CGFloat.heightOneDp)
+            }
 
-        separator.backgroundColor = UIColor.themeSteel10
+            separator.backgroundColor = UIColor.themeSteel10
+        }
 
         collectionView.addSubview(selectedView)
         selectedView.snp.makeConstraints { maker in

@@ -29,7 +29,6 @@ struct CoinOverviewModule {
         return CoinOverviewViewController(
                 viewModel: viewModel,
                 chartViewModel: chartViewModel,
-                configuration: ChartConfiguration.fullChart,
                 markdownParser: CoinPageMarkdownParser(),
                 urlManager: UrlManager(inApp: true)
         )
