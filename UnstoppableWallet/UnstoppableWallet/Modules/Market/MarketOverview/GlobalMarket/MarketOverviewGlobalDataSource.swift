@@ -19,7 +19,7 @@ class MarketOverviewGlobalDataSource {
         self.viewModel = viewModel
         self.presentDelegate = presentDelegate
 
-        marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.chartPreview, presentDelegate: presentDelegate)
+        marketMetricsCell = MarketOverviewMetricsCell(chartConfiguration: ChartConfiguration.smallPreviewChart, presentDelegate: presentDelegate)
         marketMetricsRow = StaticRow(
                 cell: marketMetricsCell,
                 id: "metrics",

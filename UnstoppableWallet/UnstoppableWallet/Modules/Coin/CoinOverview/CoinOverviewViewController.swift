@@ -30,13 +30,13 @@ class CoinOverviewViewController: ThemeViewController {
 
     weak var parentNavigationController: UINavigationController?
 
-    init(viewModel: CoinOverviewViewModel, chartViewModel: CoinChartViewModel, configuration: ChartConfiguration, markdownParser: CoinPageMarkdownParser, urlManager: UrlManager) {
+    init(viewModel: CoinOverviewViewModel, chartViewModel: CoinChartViewModel, markdownParser: CoinPageMarkdownParser, urlManager: UrlManager) {
         self.viewModel = viewModel
         self.chartViewModel = chartViewModel
         self.markdownParser = markdownParser
         self.urlManager = urlManager
 
-        chartCell = ChartCell(viewModel: chartViewModel, touchDelegate: chartViewModel, viewOptions: ChartCell.coinChart, configuration: configuration)
+        chartCell = ChartCell(viewModel: chartViewModel, configuration: .coinChart)
         chartRow = StaticRow(
                 cell: chartCell,
                 id: "chartView",

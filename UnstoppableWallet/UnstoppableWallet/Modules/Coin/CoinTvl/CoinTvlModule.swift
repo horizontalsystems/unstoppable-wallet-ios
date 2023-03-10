@@ -17,7 +17,8 @@ class CoinTvlModule {
 
         return MetricChartViewController(
                 viewModel: chartViewModel,
-                configuration: ChartConfiguration.chartWithoutIndicators).toBottomSheet
+                configuration: .baseChart
+        ).toBottomSheet
     }
 
 }

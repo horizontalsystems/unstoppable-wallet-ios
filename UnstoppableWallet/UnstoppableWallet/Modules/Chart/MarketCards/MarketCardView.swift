@@ -132,7 +132,7 @@ class MarketCardView: UIView {
         set { descriptionView.textColor = newValue }
     }
 
-    func set(chartData data: ChartData?, trend: MovementTrend?, configuration: ChartConfiguration = ChartConfiguration.chartPreview) {
+    func set(chartData data: ChartData?, trend: MovementTrend?, configuration: ChartConfiguration = ChartConfiguration.smallPreviewChart) {
         chartView.isHidden = data == nil
         guard let data = data, let trend = trend else {
             alreadyHasData = false
@@ -154,7 +154,7 @@ class MarketCardView: UIView {
         alreadyHasData = true
     }
 
-    func set(viewItem: ViewItem, configuration: ChartConfiguration = .chartPreview) {
+    func set(viewItem: ViewItem, configuration: ChartConfiguration = .smallPreviewChart) {
         title = viewItem.title
         value = viewItem.value
         descriptionText = viewItem.description

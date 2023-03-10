@@ -83,10 +83,9 @@ class MarketWideCardCell: BaseSelectableThemeCell {
 
             let chartConfiguration: ChartConfiguration
             switch chartCurveType {
-            case .line: chartConfiguration = .cumulativeChartPreview
-            case .bars: chartConfiguration = .cumulativeChartBarsPreview
+            case .line: chartConfiguration = .previewChart
+            case .bars: chartConfiguration = .previewBarChart
             }
-            chartConfiguration.mainHeight = 60
             chartView.apply(configuration: chartConfiguration)
 
             chartView.setCurve(colorType: chartColorType)

@@ -77,7 +77,6 @@ class CoinAnalyticsViewController: ThemeViewController {
         tableView.showsVerticalScrollIndicator = false
 
         tableView.registerCell(forClass: PlaceholderCell.self)
-        tableView.registerCell(forClass: MarketCardCell.self)
         tableView.registerCell(forClass: MarketWideCardCell.self)
         tableView.registerCell(forClass: CoinAnalyticsHoldersCell.self)
         tableView.sectionDataSource = self

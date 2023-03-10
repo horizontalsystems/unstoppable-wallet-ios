@@ -178,18 +178,7 @@ class CoinChartFactory {
         let formattedDate = DateHelper.instance.formatFullTime(from: date)
         let formattedValue = ValueFormatter.instance.formatFull(currency: currency, value: rate)
 
-        var rightSideMode: SelectedPointViewItem.RightSideMode
-        if macdSelected {
-            let macd = macdFormat(value: chartItem.indicators[.macd])
-            let macdSignal = macdFormat(value: chartItem.indicators[.macdSignal])
-            let macdHistogram = macdFormat(value: chartItem.indicators[.macdHistogram])
-            let histogramDown = chartItem.indicators[.macdHistogram]?.isSignMinus
-
-            rightSideMode = .macd(macdInfo: MacdInfo(macd: macd, signal: macdSignal, histogram: macdHistogram, histogramDown: histogramDown))
-        } else {
-
-            rightSideMode = .volume(value: chartItem.indicators[.volume].flatMap { $0.isZero ? nil : ValueFormatter.instance.formatShort(currency: currency, value: $0) })
-        }
+        let rightSideMode: SelectedPointViewItem.RightSideMode = .volume(value: chartItem.indicators[.volume].flatMap { $0.isZero ? nil : ValueFormatter.instance.formatShort(currency: currency, value: $0) })
 
         return SelectedPointViewItem(date: formattedDate, value: formattedValue, rightSideMode: rightSideMode)
     }
