@@ -1058,7 +1058,7 @@
 "chart.market_cap" = "Market Cap";
 "chart.volume" = "Lautstärke(24 St.)";
 "chart.circulation" = "In Circulation";
-"chart.selected.volume" = "Vol";
+"chart.selected.volume" = "Volume";
 "chart.price_indicator_range.day" = "24h Range";
 "chart.price_indicator_range.year" = "52w Range";
 
