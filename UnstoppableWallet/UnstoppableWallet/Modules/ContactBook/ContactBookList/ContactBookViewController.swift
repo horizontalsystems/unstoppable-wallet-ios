@@ -6,18 +6,18 @@ import SectionsTableView
 import ComponentKit
 import ThemeKit
 
-class AddressBookViewController: ThemeSearchViewController {
-    private let viewModel: AddressBookViewModel
+class ContactBookViewController: ThemeSearchViewController {
+    private let viewModel: ContactBookViewModel
     private let presented: Bool
 
     private let disposeBag = DisposeBag()
     private let tableView = SectionsTableView(style: .grouped)
     private let notFoundPlaceholder = PlaceholderView()
 
-    private var viewItems: [AddressBookViewModel.ViewItem] = []
+    private var viewItems: [ContactBookViewModel.ViewItem] = []
     private var isLoaded = false
 
-    init(viewModel: AddressBookViewModel, presented: Bool) {
+    init(viewModel: ContactBookViewModel, presented: Bool) {
         self.viewModel = viewModel
         self.presented = presented
         super.init(scrollViews: [tableView])
@@ -62,11 +62,9 @@ class AddressBookViewController: ThemeSearchViewController {
             maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        notFoundPlaceholder.image = UIImage(named: "not_found_48")
+        notFoundPlaceholder.image = UIImage(named: "user_plus_48")
         notFoundPlaceholder.text = "contacts.list.not_found".localized
 
-        notFoundPlaceholder.image = UIImage(named: "add_to_wallet_2_48")
-        notFoundPlaceholder.text = "balance.empty.description".localized
         notFoundPlaceholder.addPrimaryButton(
                 style: .yellow,
                 title: "contacts.add_new_contact".localized,
@@ -102,14 +100,14 @@ class AddressBookViewController: ThemeSearchViewController {
                 self?.viewModel.removeContact(contactUid: contactUid)
             }
         }
-        guard let module = AddressBookContactModule.viewController(contactUid: contactUid, presented: true, onUpdateContact: onUpdateContact) else {
+        guard let module = ContactBookContactModule.viewController(contactUid: contactUid, presented: true, onUpdateContact: onUpdateContact) else {
             return
         }
 
         present(module, animated: true)
     }
 
-    private func onUpdate(viewItems: [AddressBookViewModel.ViewItem]) {
+    private func onUpdate(viewItems: [ContactBookViewModel.ViewItem]) {
         let animated = self.viewItems.map { $0.uid } == viewItems.map { $0.uid }
         self.viewItems = viewItems
 
@@ -136,9 +134,9 @@ class AddressBookViewController: ThemeSearchViewController {
 
 }
 
-extension AddressBookViewController: SectionsDataSource {
+extension ContactBookViewController: SectionsDataSource {
 
-    private func cell(viewItem: AddressBookViewModel.ViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
+    private func cell(viewItem: ContactBookViewModel.ViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
         let rowAction = deleteRowAction(uid: viewItem.uid)
 
         return tableView.universalRow62(

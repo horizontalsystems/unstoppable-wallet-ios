@@ -3,10 +3,10 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-class AddressBookContactViewModel {
+class ContactBookContactViewModel {
     private let disposeBag = DisposeBag()
 
-    private let service: AddressBookContactService
+    private let service: ContactBookContactService
 
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
     private var viewItem: ViewItem? {
@@ -25,14 +25,14 @@ class AddressBookContactViewModel {
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let nameAlreadyExistErrorRelay = BehaviorRelay<Bool>(value: false)
 
-    init(service: AddressBookContactService) {
+    init(service: ContactBookContactService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(disposeBag, service.addressItemsObservable) { [weak self] in self?.sync(addressItems: $0) }
     }
 
-    private func sync(state: AddressBookContactService.State) {
+    private func sync(state: ContactBookContactService.State) {
         var doneEnabled = false
         var nameAlreadyExist = false
         switch state {
@@ -47,11 +47,11 @@ class AddressBookContactViewModel {
         nameAlreadyExistErrorRelay.accept(nameAlreadyExist)
     }
 
-    private func sync(addressItems: [AddressBookContactService.AddressItem]) {
+    private func sync(addressItems: [ContactBookContactService.AddressItem]) {
         addressViewItems = addressItems.map { viewItem(item: $0) }
     }
 
-    private func viewItem(item: AddressBookContactService.AddressItem) -> AddressViewItem {
+    private func viewItem(item: ContactBookContactService.AddressItem) -> AddressViewItem {
         AddressViewItem(
                 blockchainUid: item.blockchain.uid,
                 blockchainImageUrl: item.blockchain.type.imageUrl,
@@ -63,13 +63,13 @@ class AddressBookContactViewModel {
 
 }
 
-extension AddressBookContactViewModel {
+extension ContactBookContactViewModel {
 
     var contact: Contact? {
         switch service.state {
         case .updated:
             let uid = service.oldContact?.uid ?? UUID().uuidString
-            return Contact(uid: uid, name: service.contactName, addresses: service.addresses)
+            return Contact(uid: uid, modifiedAt: Date().timeIntervalSince1970, name: service.contactName, addresses: service.addresses)
         default: return nil
         }
     }
@@ -124,7 +124,7 @@ extension AddressBookContactViewModel {
 
 }
 
-extension AddressBookContactViewModel {
+extension ContactBookContactViewModel {
 
     struct AddressViewItem {
         let blockchainUid: String

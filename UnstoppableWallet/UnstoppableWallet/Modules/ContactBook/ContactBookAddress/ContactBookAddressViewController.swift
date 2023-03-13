@@ -6,9 +6,9 @@ import SectionsTableView
 import ComponentKit
 import ThemeKit
 
-class AddressBookAddressViewController: KeyboardAwareViewController {
+class ContactBookAddressViewController: KeyboardAwareViewController {
     private let disposeBag = DisposeBag()
-    private let viewModel: AddressBookAddressViewModel
+    private let viewModel: ContactBookAddressViewModel
     private let onUpdateAddress: (ContactAddress?) -> ()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -20,7 +20,7 @@ class AddressBookAddressViewController: KeyboardAwareViewController {
     private var blockchainName: String = ""
     private var addAddressEnabled: Bool = true
 
-    init(viewModel: AddressBookAddressViewModel, addressViewModel: RecipientAddressViewModel, onUpdateAddress: @escaping (ContactAddress?) -> ()) {
+    init(viewModel: ContactBookAddressViewModel, addressViewModel: RecipientAddressViewModel, onUpdateAddress: @escaping (ContactAddress?) -> ()) {
         self.viewModel = viewModel
         recipientCell = RecipientAddressInputCell(viewModel: addressViewModel)
         recipientCautionCell = RecipientAddressCautionCell(viewModel: addressViewModel)
@@ -99,7 +99,6 @@ class AddressBookAddressViewController: KeyboardAwareViewController {
                 title: "contacts.contact.address.blockchains".localized,
                 viewItems: viewModel.blockchainViewItems,
                 onSelect: { [weak self] in
-                    print($0)
                     self?.viewModel.setBlockchain(index: $0)
                 }
         )
@@ -121,7 +120,7 @@ class AddressBookAddressViewController: KeyboardAwareViewController {
 
 }
 
-extension AddressBookAddressViewController: SectionsDataSource {
+extension ContactBookAddressViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections = [
@@ -174,7 +173,7 @@ extension AddressBookAddressViewController: SectionsDataSource {
 
 }
 
-extension AddressBookAddressViewController: IDynamicHeightCellDelegate {
+extension ContactBookAddressViewController: IDynamicHeightCellDelegate {
 
     func onChangeHeight() {
         guard isLoaded else {
