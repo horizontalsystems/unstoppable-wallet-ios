@@ -1013,7 +1013,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Settings -> Contacts
 "contacts.title" = "Contacts";
 "contacts.list.search_placeholder" = "İsim";
-"contacts.list.not_found" = "Contacts Not Found";
+"contacts.list.not_found" = "You do not have an added contact";
+"contacts.add_new_contact" = "Add New Contact";
 "contacts.list.addresses_count" = "Addresses: %d";
 "contacts.contact.new.title" = "New Contact";
 "contacts.contact.update.error.name_already_exist" = "Name Already Exist";
@@ -1023,6 +1024,13 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Delete Address";
 
+// Settings -> iCloud Sync
+
+"icloud_sync.title" = "iCloud Sync";
+"settings.icloud_sync.title" = "iCloud Sync";
+"settings.icloud_sync.contact_book" = "Sync Contacts";
+"settings.icloud_sync.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
+"settings.icloud_sync.merge_disclaimer" = "You have local contacts that will be merged with icloud contacts.";
 
 // Set PIN
 
