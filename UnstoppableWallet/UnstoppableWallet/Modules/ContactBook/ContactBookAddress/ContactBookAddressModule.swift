@@ -2,17 +2,17 @@ import UIKit
 import ThemeKit
 import MarketKit
 
-class AddressBookAddressModule {
+class ContactBookAddressModule {
 
     static func viewController(existAddresses: [ContactAddress], currentAddress: ContactAddress? = nil, onSaveAddress: @escaping (ContactAddress?) -> ()) -> UIViewController? {
-        let service: AddressBookAddressService
+        let service: ContactBookAddressService
         let addressService: AddressService
         if let currentAddress {
             guard let blockchain = try? App.shared.marketKit.blockchain(uid: currentAddress.blockchainUid) else {
                 return nil
             }
             addressService = AddressService(mode: .blockchainType(blockchain.type))
-            service = AddressBookAddressService(marketKit: App.shared.marketKit, addressService: addressService, mode: .edit(currentAddress), blockchain: blockchain)
+            service = ContactBookAddressService(marketKit: App.shared.marketKit, addressService: addressService, mode: .edit(currentAddress), blockchain: blockchain)
         } else {
             let blockchainUids = BlockchainType
                     .supported
@@ -28,18 +28,18 @@ class AddressBookAddressModule {
                 return nil
             }
             addressService = AddressService(mode: .blockchainType(firstBlockchain.type))
-            service = AddressBookAddressService(marketKit: App.shared.marketKit, addressService: addressService, mode: .create(existAddresses), blockchain: firstBlockchain)
+            service = ContactBookAddressService(marketKit: App.shared.marketKit, addressService: addressService, mode: .create(existAddresses), blockchain: firstBlockchain)
         }
 
-        let viewModel = AddressBookAddressViewModel(service: service)
+        let viewModel = ContactBookAddressViewModel(service: service)
         let addressViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
-        let controller = AddressBookAddressViewController(viewModel: viewModel, addressViewModel: addressViewModel, onUpdateAddress: onSaveAddress)
+        let controller = ContactBookAddressViewController(viewModel: viewModel, addressViewModel: addressViewModel, onUpdateAddress: onSaveAddress)
         return ThemeNavigationController(rootViewController: controller)
     }
 
 }
 
-extension AddressBookAddressModule {
+extension ContactBookAddressModule {
 
     enum Mode {
         case create([ContactAddress])

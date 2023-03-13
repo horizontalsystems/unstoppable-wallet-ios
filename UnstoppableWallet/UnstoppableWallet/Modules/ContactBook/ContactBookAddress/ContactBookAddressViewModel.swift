@@ -4,10 +4,10 @@ import RxRelay
 import RxCocoa
 import MarketKit
 
-class AddressBookAddressViewModel {
+class ContactBookAddressViewModel {
     private let disposeBag = DisposeBag()
 
-    private let service: AddressBookAddressService
+    private let service: ContactBookAddressService
 
     private let viewItemRelay = BehaviorRelay<String?>(value: nil)
     private var viewItem: String? {
@@ -19,7 +19,7 @@ class AddressBookAddressViewModel {
 
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
 
-    init(service: AddressBookAddressService) {
+    init(service: ContactBookAddressService) {
         self.service = service
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
@@ -27,7 +27,7 @@ class AddressBookAddressViewModel {
         sync(blockchain: service.selectedBlockchain)
     }
 
-    private func sync(state: AddressBookAddressService.State) {
+    private func sync(state: ContactBookAddressService.State) {
         var saveEnabled = false
 
         switch state {
@@ -51,7 +51,7 @@ class AddressBookAddressViewModel {
 
 }
 
-extension AddressBookAddressViewModel {
+extension ContactBookAddressViewModel {
 
     var existAddress: Bool {
         switch service.mode {

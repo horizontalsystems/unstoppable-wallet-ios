@@ -2,14 +2,14 @@ import RxRelay
 import RxSwift
 import RxCocoa
 
-class AddressBookSyncSettingsViewModel {
+class ContactBookSyncSettingsViewModel {
     private let disposeBag = DisposeBag()
-    private let service: AddressBookSyncSettingsService
+    private let service: ContactBookSyncSettingsService
 
     private let featureEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let showConfirmationRelay = PublishRelay<()>()
 
-    init(service: AddressBookSyncSettingsService) {
+    init(service: ContactBookSyncSettingsService) {
         self.service = service
 
         subscribe(disposeBag, service.activatedChangedObservable) { [weak self] in self?.sync(featureEnabled: $0) }
@@ -21,7 +21,7 @@ class AddressBookSyncSettingsViewModel {
     }
 
 }
-extension AddressBookSyncSettingsViewModel {
+extension ContactBookSyncSettingsViewModel {
 
     var featureEnabled: Bool {
         service.activated

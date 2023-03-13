@@ -3,12 +3,12 @@ import RxSwift
 import RxRelay
 import MarketKit
 
-class AddressBookAddressService {
+class ContactBookAddressService {
     private let disposeBag = DisposeBag()
 
     private let marketKit: MarketKit.Kit
     private let addressService: AddressService
-    let mode: AddressBookAddressModule.Mode
+    let mode: ContactBookAddressModule.Mode
 
     let unusedBlockchains: [Blockchain]
     let initialAddress: ContactAddress?
@@ -33,7 +33,7 @@ class AddressBookAddressService {
         try? marketKit.blockchain(uid: address.blockchainUid)
     }
 
-    init(marketKit: MarketKit.Kit, addressService: AddressService, mode: AddressBookAddressModule.Mode, blockchain: Blockchain) {
+    init(marketKit: MarketKit.Kit, addressService: AddressService, mode: ContactBookAddressModule.Mode, blockchain: Blockchain) {
         self.marketKit = marketKit
         self.addressService = addressService
         self.mode = mode
@@ -79,7 +79,7 @@ class AddressBookAddressService {
 
 }
 
-extension AddressBookAddressService {
+extension ContactBookAddressService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
@@ -91,7 +91,7 @@ extension AddressBookAddressService {
 
 }
 
-extension AddressBookAddressService {
+extension ContactBookAddressService {
 
     enum State {
         case idle

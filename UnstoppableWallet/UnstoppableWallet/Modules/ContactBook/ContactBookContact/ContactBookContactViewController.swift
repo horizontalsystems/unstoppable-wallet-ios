@@ -6,24 +6,24 @@ import SectionsTableView
 import ComponentKit
 import ThemeKit
 
-class AddressBookContactViewController: ThemeViewController {
+class ContactBookContactViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
-    private let viewModel: AddressBookContactViewModel
+    private let viewModel: ContactBookContactViewModel
     private let presented: Bool
     private let onUpdateContact: (Contact?) -> ()
     private let deleteContactHidden: Bool
 
     private let tableView = SectionsTableView(style: .grouped)
-    private var viewItem: AddressBookContactViewModel.ViewItem?
+    private var viewItem: ContactBookContactViewModel.ViewItem?
     private var isLoaded = false
 
     private let nameCell = InputCell()
     private let nameCautionCell = FormCautionCell()
 
-    private var addressViewItems: [AddressBookContactViewModel.AddressViewItem] = []
+    private var addressViewItems: [ContactBookContactViewModel.AddressViewItem] = []
     private var addAddressHidden: Bool = false
 
-    init(viewModel: AddressBookContactViewModel, presented: Bool, onUpdateContact: @escaping (Contact?) -> ()) {
+    init(viewModel: ContactBookContactViewModel, presented: Bool, onUpdateContact: @escaping (Contact?) -> ()) {
         self.viewModel = viewModel
         self.presented = presented
         self.onUpdateContact = onUpdateContact
@@ -60,6 +60,7 @@ class AddressBookContactViewController: ThemeViewController {
         tableView.buildSections()
 
         nameCell.inputText = viewModel.initialName
+        nameCell.autocapitalizationType = .words
         nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
 
         nameCautionCell.onChangeHeight = { [weak self] in self?.onChangeHeight() }
@@ -109,7 +110,7 @@ class AddressBookContactViewController: ThemeViewController {
                 self?.viewModel.removeContact(address: address)
             }
         }
-        guard let controller = AddressBookAddressModule.viewController(existAddresses: viewModel.existAddresses, currentAddress: address, onSaveAddress: onSaveAddress) else {
+        guard let controller = ContactBookAddressModule.viewController(existAddresses: viewModel.existAddresses, currentAddress: address, onSaveAddress: onSaveAddress) else {
             return
         }
 
@@ -118,7 +119,7 @@ class AddressBookContactViewController: ThemeViewController {
 
 }
 
-extension AddressBookContactViewController: SectionsDataSource {
+extension ContactBookContactViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections = [
@@ -207,7 +208,7 @@ extension AddressBookContactViewController: SectionsDataSource {
 
 }
 
-extension AddressBookContactViewController: IDynamicHeightCellDelegate {
+extension ContactBookContactViewController: IDynamicHeightCellDelegate {
 
     func onChangeHeight() {
         guard isLoaded else {

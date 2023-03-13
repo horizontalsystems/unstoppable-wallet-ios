@@ -4,13 +4,13 @@ import ThemeKit
 import ComponentKit
 import RxSwift
 
-class AddressBookSyncSettingsViewController: ThemeViewController {
+class ContactBookSyncSettingsViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
-    private let viewModel: AddressBookSyncSettingsViewModel
+    private let viewModel: ContactBookSyncSettingsViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    init(viewModel: AddressBookSyncSettingsViewModel) {
+    init(viewModel: ContactBookSyncSettingsViewModel) {
         self.viewModel = viewModel
 
         super.init()
@@ -83,7 +83,7 @@ class AddressBookSyncSettingsViewController: ThemeViewController {
 
 }
 
-extension AddressBookSyncSettingsViewController: SectionsDataSource {
+extension ContactBookSyncSettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         [
@@ -109,7 +109,7 @@ extension AddressBookSyncSettingsViewController: SectionsDataSource {
 
 }
 
-extension AddressBookSyncSettingsViewController: IBottomSheetDismissDelegate {
+extension ContactBookSyncSettingsViewController: IBottomSheetDismissDelegate {
 
     func bottomSelectorOnDismiss() {
         setToggle(on: false)

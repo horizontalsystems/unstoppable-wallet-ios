@@ -3,9 +3,9 @@ import RxRelay
 import MarketKit
 import EvmKit
 
-class AddressBookService {
+class ContactBookService {
     private let disposeBag = DisposeBag()
-    private let contactManager: ContactManager
+    private let contactManager: ContactBookManager
 
     private var filter: String = ""
 
@@ -26,11 +26,15 @@ class AddressBookService {
     var contacts: [Contact] {
         guard !filter.isEmpty else {
             return _contacts
+                    .sorted { contact, contact2 in contact.name < contact2.name }
         }
-        return _contacts.filter { contact in contact.name.lowercased().contains(filter.lowercased()) }
+
+        return _contacts
+                .filter { contact in contact.name.lowercased().contains(filter.lowercased()) }
+                .sorted { contact, contact2 in contact.name < contact2.name }
     }
 
-    init(contactManager: ContactManager) {
+    init(contactManager: ContactBookManager) {
         self.contactManager = contactManager
 
         subscribe(disposeBag, contactManager.stateObservable) { [weak self] _ in self?.sync() }
@@ -47,7 +51,7 @@ class AddressBookService {
 
 }
 
-extension AddressBookService {
+extension ContactBookService {
 
     var contactObservable: Observable<[Contact]> {
         contactRelay.asObservable()

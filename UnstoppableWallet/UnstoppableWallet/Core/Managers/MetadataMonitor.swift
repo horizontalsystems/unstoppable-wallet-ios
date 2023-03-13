@@ -1,6 +1,7 @@
 import Foundation
 import RxSwift
 import RxRelay
+import HsToolKit
 
 class MetadataMonitor {
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.metadata_monitor", qos: .userInitiated)
@@ -8,22 +9,26 @@ class MetadataMonitor {
     private let url: URL
     private let filename: String
     private let batchingInterval: TimeInterval
+    private let logger: Logger?
 
     private let itemUpdatedRelay = BehaviorRelay<Bool>(value: false)
     private let parsingErrorRelay = BehaviorRelay<Error?>(value: nil)
 
     private var metadataQuery: NSMetadataQuery?
+    private var fileChangedTime = [URL: Date]()
 
-    init(url: URL, filename: String, batchingInterval: TimeInterval) {
+    init(url: URL, filename: String, batchingInterval: TimeInterval, logger: Logger? = nil) {
         self.url = url
         self.filename = filename
         self.batchingInterval = batchingInterval
+        self.logger = logger
 
         start()
     }
 
     deinit {
         if metadataQuery != nil {
+            logger?.debug("STop Metadata Monitor")
             stop()
         }
     }
@@ -50,6 +55,16 @@ class MetadataMonitor {
         NotificationCenter.default.addObserver(self, selector: #selector(handle(_:)), name: .NSMetadataQueryDidFinishGathering, object: metadataQuery)
         NotificationCenter.default.addObserver(self, selector: #selector(handle(_:)), name: .NSMetadataQueryDidUpdate, object: metadataQuery)
 
+        logger?.debug("Check url : \(url.path)")
+        logger?.debug(try? FileManager.default.contentsOfDirectory(atPath: url.path))
+
+        // Try to copy icloud file to local icloud, if it's exist
+        do {
+            try FileManager.default.startDownloadingUbiquitousItem(at: url.appendingPathComponent(filename))
+        } catch {
+            logger?.debug("Can't download because : \(error)")
+        }
+
         DispatchQueue.main.async {
             metadataQuery.start()
         }
@@ -74,6 +89,7 @@ class MetadataMonitor {
     }
 
     @objc private func handle(_ notification: Notification) {
+        logger?.debug("=> META MONITOR: has notification!")
         queue.async { [weak self] in
             self?.initiateDownloads()
         }
@@ -87,10 +103,13 @@ class MetadataMonitor {
             return
         }
 
+        logger?.debug("=> META MONITOR: INITIAL DOWNLOAD for \(results.count)")
         for item in results {
             do {
+
                 try resolveConflicts(for: item)
                 guard let url = item.value(forAttribute: NSMetadataItemURLKey) as? URL else { continue }
+
                 try FileManager.default.startDownloadingUbiquitousItem(at: url)
             } catch {
                 parsingErrorRelay.accept(error)
@@ -98,11 +117,30 @@ class MetadataMonitor {
         }
 
         // Get the file URLs, to wait for them below.
-        let urls = results.compactMap { item in
-            item.value(forAttribute: NSMetadataItemURLKey) as? URL
+        let urls = results.compactMap { item -> URL? in
+            // check if file really changed in time because query returns 3 times same file
+            logger?.debug("=> MONITOR : url : \((item.value(forAttribute: NSMetadataItemURLKey) as? URL)?.path)")
+            if let url = item.value(forAttribute: NSMetadataItemURLKey) as? URL {
+                logger?.debug("=> MONITOR : changeTime : \(item.value(forAttribute: NSMetadataItemFSContentChangeDateKey) as? Date)")
+                let changeTime = item.value(forAttribute: NSMetadataItemFSContentChangeDateKey) as? Date
+                logger?.debug("=> MONITOR : lastChangeTime : \(fileChangedTime[url])")
+                if let changeTime,
+                   let lastChangeTime = fileChangedTime[url],
+                   changeTime == lastChangeTime {
+
+                    logger?.debug("IGNORE FILE")
+                    return nil
+                }
+
+                logger?.debug("UPDATE FILE TIME and handle URl")
+                fileChangedTime[url] = changeTime
+                return url
+            }
+
+            return nil
         }
 
-        self.metadataQuery?.enableUpdates()
+        metadataQuery?.enableUpdates()
 
         // Query existence of each file. This uses the file coordinator, and will
         // wait until they are available

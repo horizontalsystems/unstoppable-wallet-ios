@@ -7,13 +7,25 @@ import HsToolKit
 class FileDataStorage {
     private let queue: DispatchQueue = DispatchQueue(label: "io.horizontalsystems.unstoppable.file_storage.data", qos: .background)
 
+    private let logger: Logger?
+
+    init(logger: Logger? = nil) {
+        self.logger = logger
+    }
+
+    func prepareUbiquitousItem(url: URL, filename: String) throws {
+        let fileUrl = url.appendingPathComponent(filename)
+
+        try FileManager.default.startDownloadingUbiquitousItem(at: fileUrl)
+    }
+
     func read(directoryUrl: URL, filename: String) -> Single<Data> {
         let fileUrl = directoryUrl.appendingPathComponent(filename)
 
         return Single.create { [weak self] observer in
             self?.queue.async {
                 do {
-                    print("=> FDStorage =>: Start reading file : \(fileUrl.path)")
+                    self?.logger?.debug("=> FDStorage =>: Start reading file : \(fileUrl.path)")
                     let data = try FileManager.default.contentsOfFile(coordinatingAccessAt: fileUrl)
                     observer(.success(data))
                 } catch {
@@ -40,7 +52,6 @@ class FileDataStorage {
             self?.queue.async {
                 do {
                     try FileManager.default.write(data, coordinatingAccessTo: fileUrl)
-                    try print("=> FDStorage LOGS =>: After wrote", FileManager.default.contentsOfDirectory(atPath: directoryUrl.path))
                     observer(.success(()))
                 } catch {
                     observer(.error(error))
@@ -50,15 +61,14 @@ class FileDataStorage {
         }
 
         return writeSingle
-//        return deleteFile(url: fileUrl).flatMap { writeSingle }
     }
 
     func deleteFile(url: URL?) -> Single<()> {
-        print("=> FDStorage =>: Try to delete file")
+        logger?.debug("=> FDStorage =>: Try to delete file")
         guard let url,
               (try? FileManager.default.fileExists(coordinatingAccessAt: url).exists) ?? false else {
 
-            print("=> FDStorage =>: Can't find file! no need to remove")
+            logger?.debug("=> FDStorage =>: Can't find file! no need to remove")
             return .just(())
         }
 
@@ -66,10 +76,10 @@ class FileDataStorage {
             self?.queue.async {
                 do {
                     try FileManager.default.removeItem(coordinatingAccessAt: url)
-                    print("=> FDStorage =>: File deleted!")
+                    self?.logger?.debug("=> FDStorage =>: File deleted!")
                     observer(.success(()))
                 } catch {
-                    print("=> FDStorage =>: throw error: \(error)")
+                    self?.logger?.debug("=> FDStorage =>: throw error: \(error)")
                     observer(.error(error))
                 }
             }

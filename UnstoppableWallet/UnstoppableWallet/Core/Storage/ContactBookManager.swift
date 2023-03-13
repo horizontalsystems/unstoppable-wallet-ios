@@ -3,19 +3,23 @@ import CloudKit
 import RxSwift
 import RxRelay
 import ObjectMapper
+import HsToolKit
 
-class ContactManager {
+class ContactBookManager {
     static private let batchingInterval: TimeInterval = 1
+    static private let filename = "Contacts.json"
+
     static let localUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     static let iCloudUrl = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents")
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.contact_manager")
-    private let filename = "Contacts.json"
 
     let disposeBag = DisposeBag()
     private var monitorDisposeBag = DisposeBag()
 
     private let localStorage: LocalStorage
+    private let helper: ContactBookHelper
+    private let logger: Logger?
 
     private let remoteSyncRelay = PublishRelay<Bool>()
     var remoteSync: Bool {
@@ -41,7 +45,7 @@ class ContactManager {
     }
 
     private let stateRelay = PublishRelay<DataStatus<ContactBook>>()
-    private(set) var state: DataStatus<ContactBook> = .completed(.empty) {
+    private(set) var state: DataStatus<ContactBook> = .loading {
         didSet {
             stateRelay.accept(state)
         }
@@ -50,34 +54,44 @@ class ContactManager {
     private let fileStorage = FileDataStorage()
 
     private let localUrl: URL
-    private let iCloudUrl: URL? = ContactManager.iCloudUrl
+    private let iCloudUrl: URL? = ContactBookManager.iCloudUrl
 
-    init?(localStorage: LocalStorage) {
-        guard let localUrl = ContactManager.localUrl else {
+    private var needsToSyncRemote = false {
+        didSet {
+            logger?.debug("=C-MANAGER: set needsToRemoteUpdate \(needsToSyncRemote)))")
+        }
+    }
+
+    init?(localStorage: LocalStorage, helper: ContactBookHelper, logger: Logger? = nil) {
+        guard let localUrl = ContactBookManager.localUrl else {
             return nil
         }
 
-        print("=C-MANAGER> INIT")
+        logger?.debug("=C-MANAGER> INIT")
         self.localStorage = localStorage
+        self.helper = helper
         self.localUrl = localUrl
+        self.logger = logger
 
-        print("=C-MANAGER> Want to Sync LocalFile")
-        syncLocalFile()
+        logger?.debug("=C-MANAGER> Want to Sync LocalFile")
+
         updateRemoteStorage()
+        syncLocalFile()
     }
 
+//  ================================ LOCAL ==================================================== //
     func syncLocalFile() {
         state = .loading
 
-        print("=C-MANAGER> SYNC")
+        logger?.debug("=C-MANAGER> SYNC")
         fileStorage
-                .read(directoryUrl: localUrl, filename: filename)
+                .read(directoryUrl: localUrl, filename: Self.filename)
                 .observeOn(scheduler)
                 .subscribe(onSuccess:  { [weak self] data in
-                    print("=C-MANAGER> FOUND LOCAL: \(data.count)")
+                    self?.logger?.debug("=C-MANAGER> FOUND LOCAL: \(data.count)")
                     self?.sync(localData: data)
                 }, onError: { [weak self] error in
-                    print("=C-MANAGER> Found LOCAL ERROR: \(error)")
+                    self?.logger?.debug("=C-MANAGER> FOUND LOCAL ERROR: \(error)")
                     self?.sync(localError: error)
                 })
                 .disposed(by: disposeBag)
@@ -87,26 +101,48 @@ class ContactManager {
         // use local data as base contact data. Parse contacts and store it in state if possible
         do {
             let contactBook = try parse(data: localData)
-            print("=C-MANAGER> Found LOCAL CONTACTS: T = \(contactBook.timestamp) \(contactBook.contacts.count)")
+            logger?.debug("=C-MANAGER> Found LOCAL CONTACTS: \(contactBook.contacts.count)")
 
             state = .completed(contactBook)
+
+            if needsToSyncRemote {
+                needsToSyncRemote = false
+                syncRemoteStorage()
+            }
         } catch {
             state = .failed(error)
         }
     }
 
-    private func syncCloudFile(localBook: ContactBook?) {
+    private func sync(localError: Error) {
+        let localError = localError as NSError // code = 260 "No such file or directory"
+        if localError.domain == NSCocoaErrorDomain,
+           localError.code == 260 {
+
+            sync(localData: Data())
+
+            return
+        }
+
+        // todo. analyze if need check global data before failing
+        state = .failed(localError)
+    }
+
+// ================================== REMOTE =================================================== //
+    private func syncCloudFile(localBook: ContactBook) {
         if let iCloudUrl {
-            print("=C-MANAGER> Try read remote book")
+            logger?.debug("=C-MANAGER> Try read remote book")
             iCloudNotAvailable = nil
+            try? fileStorage.prepareUbiquitousItem(url: iCloudUrl, filename: Self.filename)
+
             fileStorage
-                    .read(directoryUrl: iCloudUrl, filename: filename)
+                    .read(directoryUrl: iCloudUrl, filename: Self.filename)
                     .observeOn(scheduler)
                     .subscribe(onSuccess: { [weak self] data in
-                        print("=C-MANAGER> Found remote data: \(data.count)")
+                        self?.logger?.debug("=C-MANAGER> Found remote data: \(data.count)")
                         self?.sync(iCloudData: data, localBook: localBook)
                     }, onError: { [weak self] error in
-                        print("=C-MANAGER> Found error: \(error)")
+                        self?.logger?.debug("=C-MANAGER> Found error: \(error)")
                         self?.sync(iCloudError: error, localBook: localBook)
                     })
                     .disposed(by: disposeBag)
@@ -116,82 +152,69 @@ class ContactManager {
         iCloudNotAvailable = StorageError.cloudUrlNotAvailable
     }
 
-
-    private func sync(localError: Error) {
-        let localError = localError as NSError // code = 260 "No such file or directory"
-        if localError.domain == NSCocoaErrorDomain,
-           localError.code == 260 {
-
-            sync(localData: Data())
+    private func saveToICloud(book: ContactBook) throws {
+        logger?.debug("=C-MANAGER> Save resolved to icloud")
+        guard let iCloudUrl else {
             return
         }
 
-        // todo. analyze if need check global data before failing
-        state = .failed(localError)
+        metadataMonitor?.disableUpdates()
+        try save(url: iCloudUrl, book)
+        metadataMonitor?.enableUpdates()
     }
 
-    private func sync(iCloudData: Data, localBook: ContactBook?) {
+    private func sync(iCloudData: Data, localBook: ContactBook) {
         do {
             // if there no local book yet, just get empty. When it's come from local - resync change localfile
-            let localBook = localBook ?? state.data ?? ContactBook(timestamp: 0, contacts: [])
-            print("=C-MANAGER> LOCAL BOOK T:\(localBook.timestamp) : \(localBook.contacts.count)")
+            logger?.debug("=C-MANAGER> LOCAL BOOK : \(localBook.contacts.count)")
 
-            print("=C-MANAGER> Try to parse remote data")
+            logger?.debug("=C-MANAGER> Try to parse remote data")
             let remoteContactBook = try parse(data: iCloudData)
-            print("=C-MANAGER> Found remote contacts: T = \(remoteContactBook.timestamp) \(remoteContactBook.contacts)")
+            logger?.debug("=C-MANAGER> Found remote contacts: \(remoteContactBook.contacts)")
 
             // if timestamps is equal we just use local book as cache
-            guard remoteContactBook.timestamp != localBook.timestamp else {
+            let result = helper.resolved(lhs: localBook, rhs: remoteContactBook)
+            switch result {
+            case .equal:
                 state = .completed(localBook)
-                print("=C-MANAGER> Same files no need to do")
+                logger?.debug("=C-MANAGER> Same files no need to do")
                 return
-            }
+            case .left:
+                logger?.debug("=C-MANAGER> Local book is up to date. Save to icloud")
+                state = .completed(localBook)
+                try saveToICloud(book: localBook)
+                return
+            case .right:
+                logger?.debug("=C-MANAGER> Remote book is up to date. Save to local")
+                try save(url: localUrl, remoteContactBook)
+                state = .completed(remoteContactBook)
+            case .merged(let book):
+                logger?.debug("=C-MANAGER> Merged. Save to both")
+                try save(url: localUrl, book)
+                state = .completed(book)
 
-            // else need resolve and save new book both to local and icloud storages
-            let resolvedBook = resolve(lhs: localBook, rhs: remoteContactBook)
-
-            print("=C-MANAGER> Save resolved to local")
-
-            try save(url: localUrl, resolvedBook)
-            state = .completed(remoteContactBook)
-
-            if let iCloudUrl {
-                print("=C-MANAGER> Save resolved to icloud")
-                metadataMonitor?.disableUpdates()
-                try save(url: iCloudUrl, localBook)
-                metadataMonitor?.enableUpdates()
+                try saveToICloud(book: book)
             }
         } catch {
             iCloudNotAvailable = error
         }
     }
 
-    private func resolve(lhs: ContactBook, rhs: ContactBook) -> ContactBook {
-        let leftIsNew = lhs.timestamp > rhs.timestamp
-        let newBook = leftIsNew ? lhs : rhs
-        let oldBook = leftIsNew ? rhs : lhs
-
-        let set = Set(newBook.contacts).union(oldBook.contacts)
-        return ContactBook(timestamp: max(lhs.timestamp, rhs.timestamp), contacts: Array(set))
-    }
-
-    private func sync(iCloudError: Error, localBook: ContactBook?) {
+    private func sync(iCloudError: Error, localBook: ContactBook) {
         // if there no local book yet, just get empty. When it's come from local - resync change localfile
-        let localBook = localBook ?? state.data ?? ContactBook(timestamp: 0, contacts: [])
-        print("=C-MANAGER> LOCAL BOOK T:\(localBook.timestamp) : \(localBook.contacts.count)")
+        logger?.debug("=C-MANAGER> LOCAL BOOK : \(localBook.contacts.count)")
 
         state = .completed(localBook)
 
         let iCloudError = iCloudError as NSError
 
-        if let iCloudUrl,
-            iCloudError.domain == NSCocoaErrorDomain,
+        if iCloudError.domain == NSCocoaErrorDomain,
             iCloudError.code == 260 {           // code = 260 "No such file or directory"
 
-            print("=C-MANAGER> no file in icloud. Try to save local to icloud")
+            logger?.debug("=C-MANAGER> no file in icloud. Try to save local to icloud")
             // we need to try save local contacts to iCloud file
             if !localBook.contacts.isEmpty {
-                try? save(url: iCloudUrl, localBook)
+                try? saveToICloud(book: localBook)
             }
             return
         }
@@ -200,48 +223,49 @@ class ContactManager {
     }
 
     private func syncRemoteStorage() {
-        syncCloudFile(localBook: nil)
+        guard let localBook = state.data else {
+            needsToSyncRemote = true
+            return
+        }
+
+        syncCloudFile(localBook: localBook)
     }
 
     private func updateRemoteStorage() {
-        print("=C-MANAGER> UPDATE REMOTE: \(remoteSync)")
+        logger?.debug("=C-MANAGER> UPDATE REMOTE: \(remoteSync)")
         monitorDisposeBag = DisposeBag()
 
         if localStorage.remoteContactsSync, let iCloudUrl {
 
             // create monitor and handle its events
-            let metadataMonitor = MetadataMonitor(url: iCloudUrl, filename: filename, batchingInterval: 5)
+            let metadataMonitor = MetadataMonitor(url: iCloudUrl, filename: Self.filename, batchingInterval: Self.batchingInterval, logger: logger)
             self.metadataMonitor = metadataMonitor
-            print("=C-MANAGER> Turn ON monitor")
+            logger?.debug("=C-MANAGER> Turn ON monitor")
             subscribe(scheduler, disposeBag, metadataMonitor.itemUpdatedObservable) { [weak self] updated in
                 if updated {
-                    print("=C-MANAGER> Monitor Want to Sync iCloudStorage")
+                    self?.logger?.debug("=C-MANAGER> Monitor Want to Sync iCloudStorage")
                     self?.syncRemoteStorage()
                 }
             }
-            syncRemoteStorage()
+
+            syncRemoteStorage() // sometimes monitor not ask to check icloud file, but we need to check it for first time
         } else {
+            logger?.debug("=C-MANAGER> Turn Off Monitor")
             metadataMonitor = nil
-            // just try to remove file from icloud. In other devices, local file will be uploaded again if needed
-            print("=C-MANAGER> Turn Off Monitor")
-            fileStorage.deleteFile(url: iCloudUrl)
-                    .observeOn(scheduler)
-                    .subscribe()
-                    .disposed(by: disposeBag)
         }
     }
 
     private func parse(data: Data) throws -> ContactBook {
-        print("=C-MANAGER> Parse Data to ContactBook")
+        logger?.debug("=C-MANAGER> Parse Data to ContactBook")
         // check empty data
         guard !data.isEmpty else {
-            print("=C-MANAGER> DataEmpty")
+            logger?.debug("=C-MANAGER> DataEmpty")
             return .empty
         }
 
         // try to create json with parsed data
         guard let json = try JSONSerialization.jsonObject(with: data) as? [String : Any] else {
-            print("=C-MANAGER> CANT PARSE")
+            logger?.debug("=C-MANAGER> CANT PARSE")
            throw StorageError.cantParseData
         }
 
@@ -264,9 +288,9 @@ class ContactManager {
             throw StorageError.cantParseData
         }
 
-        print("=C-MANAGER> Save Book to Url: \(url.path)")
+        logger?.debug("=C-MANAGER> Save Book to Url: \(url.path)")
         fileStorage
-                .write(directoryUrl: url, filename: filename, data: jsonData)
+                .write(directoryUrl: url, filename: Self.filename, data: jsonData)
                 .subscribe(
                         onSuccess: { [weak self] in self?.state = .completed(book) },
                         onError: { [weak self] in self?.state = .failed($0) }
@@ -276,7 +300,7 @@ class ContactManager {
 
 }
 
-extension ContactManager {
+extension ContactBookManager {
 
     var stateObservable: Observable<DataStatus<ContactBook>> {
         stateRelay.asObservable()
@@ -291,39 +315,31 @@ extension ContactManager {
             throw StorageError.notReady
         }
 
-        let newContactBook = ContactBook(
-                timestamp: Date().timeIntervalSince1970,
-                contacts: updatedContacts(contacts: contactBook.contacts, by: contact))
+        let newContactBook = helper.update(contact: contact, book: contactBook)
 
         try save(url: localUrl, newContactBook)
-        if remoteSync, let iCloudUrl {
-            print("save book to icloud storage")
-            try save(url: iCloudUrl, newContactBook)
+        if remoteSync {
+            try saveToICloud(book: newContactBook)
         }
 
     }
 
-    func delete(_ contactUid: String, timestamp: TimeInterval? = nil) throws {
-        guard var contacts = state.data?.contacts,
-              let index = contacts.firstIndex(where: { $0.uid == contactUid }) else {
-
+    func delete(_ contactUid: String) throws {
+        guard let contactBook = state.data else {
             throw StorageError.notReady
         }
-        contacts.remove(at: index)
 
-        let newContactBook = ContactBook(
-                timestamp: Date().timeIntervalSince1970,
-                contacts: contacts)
+        let newContactBook = helper.remove(contactUid: contactUid, book: contactBook)
 
         try save(url: localUrl, newContactBook)
-        if remoteSync, let iCloudUrl {
-            try save(url: iCloudUrl, newContactBook)
+        if remoteSync {
+            try saveToICloud(book: newContactBook)
         }
     }
 
 }
 
-extension ContactManager {
+extension ContactBookManager {
 
     enum StorageError: Error {
         case notInitialized

@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class AddressBookContactModule {
+class ContactBookContactModule {
 
     static func viewController(contactUid: String?, presented: Bool = true, onUpdateContact: @escaping (Contact?) -> ()) -> UIViewController? {
         guard let contactManager = App.shared.contactManager else {
@@ -9,14 +9,14 @@ class AddressBookContactModule {
         }
         let contact = contactUid.flatMap { uid in App.shared.contactManager?.contacts?.first(where: { $0.uid == uid }) }
 
-        let service = AddressBookContactService(
+        let service = ContactBookContactService(
                 contactManager: contactManager,
                 marketKit: App.shared.marketKit,
                 contact: contact)
 
-        let viewModel = AddressBookContactViewModel(service: service)
+        let viewModel = ContactBookContactViewModel(service: service)
 
-        let controller = AddressBookContactViewController(viewModel: viewModel, presented: presented, onUpdateContact: onUpdateContact)
+        let controller = ContactBookContactViewController(viewModel: viewModel, presented: presented, onUpdateContact: onUpdateContact)
         if presented {
             return ThemeNavigationController(rootViewController: controller)
         } else {

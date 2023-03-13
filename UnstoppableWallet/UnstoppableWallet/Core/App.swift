@@ -93,7 +93,7 @@ class App {
     let appIconManager = AppIconManager()
 
     let appManager: AppManager
-    let contactManager: ContactManager?
+    let contactManager: ContactBookManager?
 
     init() {
         appConfigProvider = AppConfigProvider()
@@ -277,7 +277,7 @@ class App {
         balanceHiddenManager = BalanceHiddenManager(localStorage: StorageKit.LocalStorage.default)
         balanceConversionManager = BalanceConversionManager(marketKit: marketKit, localStorage: StorageKit.LocalStorage.default)
 
-        contactManager = ContactManager(localStorage: localStorage)
+        contactManager = ContactBookManager(localStorage: localStorage, helper: ContactBookHelper(), logger: logger)
 
         appManager = AppManager(
                 accountManager: accountManager,

@@ -242,7 +242,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "address-book",
                     height: .heightCell48,
                     action: { [weak self] in
-                        guard let viewController = AddressBookModule.viewController() else {
+                        guard let viewController = ContactBookModule.viewController() else {
                             return
                         }
                         self?.navigationController?.pushViewController(viewController, animated: true)
@@ -253,7 +253,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "icloud-sync",
                     height: .heightCell48,
                     action: { [weak self] in
-                        guard let viewController = AddressBookSyncSettingsModule.viewController else {
+                        guard let viewController = ContactBookSyncSettingsModule.viewController else {
                             return
                         }
 

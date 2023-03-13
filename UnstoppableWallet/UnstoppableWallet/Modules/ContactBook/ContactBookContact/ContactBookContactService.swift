@@ -3,11 +3,11 @@ import RxSwift
 import RxRelay
 import MarketKit
 
-class AddressBookContactService {
+class ContactBookContactService {
     private let disposeBag = DisposeBag()
 
     private let marketKit: MarketKit.Kit
-    private let contactManager: ContactManager
+    private let contactManager: ContactBookManager
 
     let oldContact: Contact?
 
@@ -35,7 +35,7 @@ class AddressBookContactService {
         }
     }
 
-    init(contactManager: ContactManager, marketKit: MarketKit.Kit, contact: Contact? = nil) {
+    init(contactManager: ContactBookManager, marketKit: MarketKit.Kit, contact: Contact? = nil) {
         self.marketKit = marketKit
         self.contactManager = contactManager
         oldContact = contact
@@ -115,7 +115,7 @@ class AddressBookContactService {
 
 }
 
-extension AddressBookContactService {
+extension ContactBookContactService {
 
     var stateObservable: Observable<State> {
         stateRelay.asObservable()
@@ -145,7 +145,7 @@ extension AddressBookContactService {
 
 }
 
-extension AddressBookContactService {
+extension ContactBookContactService {
 
     struct AddressItem {
         let blockchain: Blockchain

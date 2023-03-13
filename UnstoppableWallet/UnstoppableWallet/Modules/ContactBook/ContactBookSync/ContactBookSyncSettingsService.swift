@@ -1,8 +1,8 @@
 import RxRelay
 import RxSwift
 
-class AddressBookSyncSettingsService {
-    private let contactManager: ContactManager
+class ContactBookSyncSettingsService {
+    private let contactManager: ContactBookManager
 
     private let activatedChangedRelay = BehaviorRelay<Bool>(value: false)
     private let confirmationRelay = PublishRelay<()>()
@@ -11,13 +11,13 @@ class AddressBookSyncSettingsService {
         !(contactManager.remoteSync || (contactManager.contacts?.isEmpty ?? true))
     }
 
-    init(contactManager: ContactManager) {
+    init(contactManager: ContactBookManager) {
         self.contactManager = contactManager
     }
 
 }
 
-extension AddressBookSyncSettingsService {
+extension ContactBookSyncSettingsService {
 
     var activated: Bool {
         get {
@@ -46,7 +46,6 @@ extension AddressBookSyncSettingsService {
     }
 
     func confirm() {
-        print("Confirmed action!")
         activated = true
     }
 

@@ -4,8 +4,8 @@ import RxRelay
 import RxCocoa
 import MarketKit
 
-class AddressBookViewModel {
-    private let service: AddressBookService
+class ContactBookViewModel {
+    private let service: ContactBookService
     private let disposeBag = DisposeBag()
 
     private let notFoundVisibleRelay = BehaviorRelay<Bool>(value: false)
@@ -17,7 +17,7 @@ class AddressBookViewModel {
         }
     }
 
-    init(service: AddressBookService) {
+    init(service: ContactBookService) {
         self.service = service
 
         subscribe(disposeBag, service.contactObservable) { [weak self] in self?.sync(contacts: $0) }
@@ -39,7 +39,7 @@ class AddressBookViewModel {
 
 }
 
-extension AddressBookViewModel {
+extension ContactBookViewModel {
 
     var viewItemsDriver: Driver<[ViewItem]> {
         viewItemsRelay.asDriver()
@@ -65,7 +65,7 @@ extension AddressBookViewModel {
 
 }
 
-extension AddressBookViewModel {
+extension ContactBookViewModel {
 
     struct ViewItem {
         let uid: String

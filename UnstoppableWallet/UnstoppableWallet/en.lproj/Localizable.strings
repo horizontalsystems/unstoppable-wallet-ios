@@ -1028,9 +1028,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "icloud_sync.title" = "iCloud Sync";
 "settings.icloud_sync.title" = "iCloud Sync";
-"settings.icloud_sync.contact_book" = "Contact Book";
-"settings.icloud_sync.description" = "Your contacts will be synced with icloud private storage. You can manage contacts use your ios devices.";
-"settings.icloud_sync.merge_disclaimer" = "You have local contacts which must be merge with icloud data, if you have contacts in icloud!";
+"settings.icloud_sync.contact_book" = "Sync Contacts";
+"settings.icloud_sync.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
+"settings.icloud_sync.merge_disclaimer" = "You have local contacts that will be merged with icloud contacts.";
 
 // Set PIN
 
