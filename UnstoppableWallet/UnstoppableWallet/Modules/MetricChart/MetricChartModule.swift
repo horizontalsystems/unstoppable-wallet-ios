@@ -15,7 +15,7 @@ protocol IMetricChartConfiguration {
 protocol IMetricChartFetcher {
     var intervals: [HsTimePeriod] { get }
     var needUpdateObservable: Observable<()> { get }
-    func fetchSingle(interval: HsTimePeriod) -> Single<[MetricChartModule.Item]>
+    func fetchSingle(interval: HsTimePeriod) -> Single<MetricChartModule.ItemData>
 }
 
 extension IMetricChartFetcher {
@@ -38,6 +38,16 @@ class MetricChartModule {
         case compactCoinValue(Coin)
         case compactCurrencyValue(Currency)
         case currencyValue(Currency)
+    }
+
+    struct ItemData {
+        let items: [Item]
+        let type: ItemType
+    }
+
+    enum ItemType {
+        case regular
+        case aggregated(value: Decimal?)
     }
 
     struct Item {

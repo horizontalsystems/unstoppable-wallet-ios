@@ -112,7 +112,6 @@ extension CoinOverviewViewModel {
         let circulatingSupply: String?
         let volume24h: String?
         let dilutedMarketCap: String?
-        let tvl: String?
         let genesisDate: String?
 
         let performance: [[PerformanceViewItem]]
@@ -135,8 +134,8 @@ extension CoinOverviewViewModel {
 
         var title: String {
             switch self {
-            case .showMore: return "coin_page.show_more".localized
-            case .showLess: return "coin_page.show_less".localized
+            case .showMore: return "coin_overview.show_more".localized
+            case .showLess: return "coin_overview.show_less".localized
             }
         }
     }

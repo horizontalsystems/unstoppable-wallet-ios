@@ -1,7 +1,37 @@
 import Foundation
 import UIKit
+import RxCocoa
 import CurrencyKit
 import Chart
+
+struct ChartModule {
+
+    struct ViewItem {
+        let value: String?
+        let rightSideMode: RightSideMode
+
+        let chartData: ChartData
+        let chartTrend: MovementTrend
+        let chartDiff: Decimal?
+
+        let minValue: String?
+        let maxValue: String?
+    }
+
+    struct SelectedPointViewItem {
+        let value: String?
+        let diff: Decimal?
+        let date: String
+        let rightSideMode: RightSideMode
+    }
+
+    enum RightSideMode {
+        case none
+        case volume(value: String?)
+        case dominance(value: Decimal?, diff: Decimal?)
+    }
+
+}
 
 enum MovementTrend {
     case ignore
@@ -10,68 +40,18 @@ enum MovementTrend {
     case up
 }
 
-struct ChartIndicatorSet: OptionSet, Hashable {
-    static let none = ChartIndicatorSet([])
+protocol IChartViewModel {
+    var chartTitle: String? { get }
+    var intervals: [String] { get }
+    var intervalsUpdatedWithCurrentIndexDriver: Driver<Int> { get }
+    var intervalIndexDriver: Driver<Int> { get }
+    var pointSelectModeEnabledDriver: Driver<Bool> { get }
+    var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> { get }
+    var loadingDriver: Driver<Bool> { get }
+    var chartInfoDriver: Driver<ChartModule.ViewItem?> { get }
+    var errorDriver: Driver<String?> { get }
 
-    let rawValue: UInt8
-
-    static let ema = ChartIndicatorSet(rawValue: 1 << 0)
-    static let macd = ChartIndicatorSet(rawValue: 1 << 1)
-    static let rsi = ChartIndicatorSet(rawValue: 1 << 2)
-    static let dominance = ChartIndicatorSet(rawValue: 1 << 3)
-
-    static let all: [ChartIndicatorSet] = [.macd, .rsi, .ema]
-
-    func toggle(indicator: ChartIndicatorSet) -> ChartIndicatorSet {
-        ChartIndicatorSet(rawValue: ~rawValue & indicator.rawValue)
-    }
-
-    var hideVolumes: Bool {
-        rawValue > 1
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(rawValue)
-    }
-
-}
-
-struct SelectedPointViewItem {
-    let date: String
-    let value: String?
-
-    let rightSideMode: RightSideMode
-
-    enum RightSideMode {
-        case none
-        case volume(value: String?)
-        case dominance(value: Decimal?)
-    }
-}
-
-struct MacdInfo {
-    let macd: String?
-    let signal: String?
-    let histogram: String?
-    let histogramDown: Bool?
-}
-
-struct PriceIndicatorViewItem: CustomStringConvertible {
-    enum Range {
-        case day
-        case year
-
-        var description: String {
-            switch self {
-            case .day: return "chart.price_indicator_range.day".localized
-            case .year: return "chart.price_indicator_range.year".localized
-            }
-        }
-
-    }
-
-    let low: String
-    let high: String
-    let range: Range
-    let currentPercentage: CGFloat
+    func onSelectInterval(at index: Int)
+    func start()
+    func retry()
 }

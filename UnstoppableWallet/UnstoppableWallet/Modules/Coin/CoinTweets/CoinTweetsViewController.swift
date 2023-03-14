@@ -185,7 +185,7 @@ extension CoinTweetsViewController: SectionsDataSource {
                             height: SecondaryButtonCell.height(style: .default),
                             bind: { [weak self] cell, _ in
                                 cell.set(style: .default)
-                                cell.title = "coin_page.tweets.see_on_twitter".localized
+                                cell.title = "coin_tweets.see_on_twitter".localized
                                 cell.onTap = {
                                     self?.onTapSeeOnTwitter()
                                 }

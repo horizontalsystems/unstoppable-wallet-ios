@@ -40,7 +40,7 @@ class CoinAuditsViewModel {
         AuditViewItem(
                 date: DateHelper.instance.formatFullDateOnly(from: report.date),
                 name: report.name,
-                issues: "coin_page.audits.issues".localized + ": \(report.issues)",
+                issues: "coin_analytics.audits.issues".localized + ": \(report.issues)",
                 reportUrl: report.link
         )
     }

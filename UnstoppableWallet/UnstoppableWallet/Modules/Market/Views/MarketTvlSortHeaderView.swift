@@ -77,7 +77,7 @@ class MarketTvlSortHeaderView: UITableViewHeaderFooterView {
 
     @objc private func onTapDropdownButton() {
         let alertController = AlertRouter.module(
-                title: "coin_page.tvl_rank.filter_by_chain".localized,
+                title: "market.global.tvl_in_defi.filter_by_chain".localized,
                 viewItems: viewModel.platformFieldViewItems
         ) { [weak self] index in
             self?.viewModel.onSelectMarketPlatformField(index: index)

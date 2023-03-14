@@ -14,12 +14,12 @@ class CoinOverviewViewItemFactory {
 
     private func roiTitle(timePeriod: HsTimePeriod) -> String {
         switch timePeriod {
-        case .day1: return "coin_page.roi.hour24".localized
-        case .week1: return "coin_page.roi.day7".localized
-        case .week2: return "coin_page.roi.day14".localized
-        case .month1: return "coin_page.roi.day30".localized
-        case .month6: return "coin_page.roi.day200".localized
-        case .year1: return "coin_page.roi.year1".localized
+        case .day1: return "coin_overview.roi.hour24".localized
+        case .week1: return "coin_overview.roi.day7".localized
+        case .week2: return "coin_overview.roi.day14".localized
+        case .month1: return "coin_overview.roi.day30".localized
+        case .month6: return "coin_overview.roi.day200".localized
+        case .year1: return "coin_overview.roi.year1".localized
         default: return "n/a".localized
         }
     }
@@ -64,9 +64,9 @@ class CoinOverviewViewItemFactory {
 
     private func typesTitle(coinUid: String) -> String {
         switch coinUid {
-        case "bitcoin", "litecoin": return "coin_page.bips".localized
-        case "bitcoin-cash": return "coin_page.coin_types".localized
-        default: return "coin_page.blockchains".localized
+        case "bitcoin", "litecoin": return "coin_overview.bips".localized
+        case "bitcoin-cash": return "coin_overview.coin_types".localized
+        default: return "coin_overview.blockchains".localized
         }
     }
 
@@ -140,9 +140,9 @@ class CoinOverviewViewItemFactory {
             if let url = URL(string: url), let host = url.host {
                 return host.stripping(prefix: "www.")
             } else {
-                return "coin_page.website".localized
+                return "coin_overview.website".localized
             }
-        case .whitepaper: return "coin_page.whitepaper".localized
+        case .whitepaper: return "coin_overview.whitepaper".localized
         case .reddit: return "Reddit"
         case .twitter: return url.stripping(prefix: "https://twitter.com/")
         case .telegram: return "Telegram"
@@ -234,7 +234,6 @@ extension CoinOverviewViewItemFactory {
                 circulatingSupply: roundedFormat(coinCode: coinCode, value: info.circulatingSupply),
                 volume24h: info.volume24h.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) },
                 dilutedMarketCap: info.dilutedMarketCap.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) },
-                tvl: info.tvl.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) },
                 genesisDate: info.genesisDate.map { DateHelper.instance.formatFullDateOnly(from: $0) },
 
                 performance: performanceViewItems(info: info),

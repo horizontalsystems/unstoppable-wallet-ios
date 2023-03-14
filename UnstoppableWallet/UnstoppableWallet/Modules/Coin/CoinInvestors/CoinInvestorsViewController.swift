@@ -33,7 +33,7 @@ class CoinInvestorsViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "coin_page.funds_invested".localized
+        title = "coin_analytics.funding".localized
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -109,7 +109,7 @@ extension CoinInvestorsViewController: SectionsDataSource {
                 id: fundViewItem.uid,
                 image: .url(fundViewItem.logoUrl, placeholder: "placeholder_circle_32"),
                 title: .body(fundViewItem.name),
-                value: fundViewItem.isLead ? .subhead1("coin_page.funds_invested.lead".localized, color: .themeRemus) : nil,
+                value: fundViewItem.isLead ? .subhead1("coin_analytics.funding.lead".localized, color: .themeRemus) : nil,
                 accessoryType: fundViewItem.url.isEmpty ? .none : .disclosure,
                 autoDeselect: true,
                 isFirst: isFirst,

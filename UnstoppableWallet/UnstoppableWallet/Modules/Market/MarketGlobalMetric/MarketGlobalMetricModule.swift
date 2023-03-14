@@ -39,7 +39,7 @@ struct MarketGlobalMetricModule {
                 interval: .day1
         )
 
-        let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
+        let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
 
         let configuration: ChartConfiguration
@@ -73,7 +73,7 @@ struct MarketGlobalMetricModule {
                 interval: .day1
         )
 
-        let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
+        let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
 
         let headerView = MarketSingleSortHeaderView(viewModel: headerViewModel)
@@ -102,7 +102,7 @@ struct MarketGlobalMetricModule {
         )
         service.chartService = chartService
 
-        let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
+        let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
 
         return MarketGlobalTvlMetricViewController(listViewModel: listViewModel, headerViewModel: headerViewModel, chartViewModel: chartViewModel, configuration: .baseChart)

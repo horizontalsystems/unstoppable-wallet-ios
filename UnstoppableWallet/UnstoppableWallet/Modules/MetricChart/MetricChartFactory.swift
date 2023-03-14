@@ -7,20 +7,15 @@ import Chart
 class MetricChartFactory {
     static private let noChangesLimitPercent: Decimal = 0.2
 
-    private let timelineHelper: ITimelineHelper
-    private let valueType: CoinProChartModule.ChartValueType
     private let dateFormatter = DateFormatter()
 
-    init(timelineHelper: ITimelineHelper, valueType: CoinProChartModule.ChartValueType = .last, currentLocale: Locale) {
-        self.timelineHelper = timelineHelper
-        self.valueType = valueType
-
+    init(currentLocale: Locale) {
         dateFormatter.locale = currentLocale
     }
 
-    private func chartData(points: [MetricChartModule.Item]) -> ChartData {
+    private func chartData(items: [MetricChartModule.Item]) -> ChartData {
         // fill items by points
-        let items = points.map { (point: MetricChartModule.Item) -> ChartItem in
+        let items = items.map { (point: MetricChartModule.Item) -> ChartItem in
             let item = ChartItem(timestamp: point.timestamp)
 
             item.added(name: .rate, value: point.value)
@@ -31,7 +26,7 @@ class MetricChartFactory {
             return item
         }
 
-        return ChartData(items: items, startTimestamp: points.first?.timestamp ?? 0, endTimestamp: points.last?.timestamp ?? 0)
+        return ChartData(items: items, startTimestamp: items.first?.timestamp ?? 0, endTimestamp: items.last?.timestamp ?? 0)
     }
 
     private func format(value: Decimal?, valueType: MetricChartModule.ValueType, exactlyValue: Bool = false) -> String? {
@@ -71,9 +66,9 @@ class MetricChartFactory {
 
 extension MetricChartFactory {
 
-    func convert(items: [MetricChartModule.Item], interval: HsTimePeriod, valueType: MetricChartModule.ValueType) -> MetricChartViewModel.ViewItem {
+    func convert(itemData: MetricChartModule.ItemData, interval: HsTimePeriod, valueType: MetricChartModule.ValueType) -> ChartModule.ViewItem {
         // build data with rates
-        let data = chartData(points: items)
+        let data = chartData(items: itemData.items)
 
         // calculate min and max limit texts
         let values = data.values(name: .rate)
@@ -91,48 +86,70 @@ extension MetricChartFactory {
 
         var valueDiff: Decimal?
         var value: String?
-        if let first = data.items.first(where: { ($0.indicators[.rate] ?? 0) != 0 }), let last = data.items.last, let firstValue = first.indicators[.rate], let lastValue = last.indicators[.rate] {
-            //check valueType
-            switch self.valueType {
-            case .last:
+        var rightSideMode: ChartModule.RightSideMode = .none
+
+        switch itemData.type {
+        case .regular:
+            if let first = data.items.first(where: { ($0.indicators[.rate] ?? 0) != 0 }), let last = data.items.last, let firstValue = first.indicators[.rate], let lastValue = last.indicators[.rate] {
                 value = format(value: lastValue, valueType: valueType)
                 chartTrend = (lastValue - firstValue).isSignMinus ? .down : .up
                 valueDiff = (lastValue - firstValue) / firstValue * 100
-            case .cumulative:
-                let valueDecimal = data.items.compactMap { $0.indicators[.rate] }.reduce(0, +)
-                value = format(value: valueDecimal, valueType: valueType)
-                chartTrend = .ignore
             }
 
+            if let first = data.items.first?.indicators[.dominance], let last = data.items.last?.indicators[.dominance] {
+                rightSideMode = .dominance(value: last, diff: (last - first) / first * 100)
+            }
+        case .aggregated(let aggregatedValue):
+            value = format(value: aggregatedValue, valueType: valueType)
+            chartTrend = .ignore
         }
 
-        // make timeline for chart
-
-        let gridInterval = ChartIntervalConverter.convert(interval: interval) // hours count
-        let timeline = timelineHelper
-                .timestamps(startTimestamp: data.startWindow, endTimestamp: data.endWindow, separateHourlyInterval: gridInterval)
-                .map {
-                    ChartTimelineItem(text: timelineHelper.text(timestamp: $0, separateHourlyInterval: gridInterval, dateFormatter: dateFormatter), timestamp: $0)
-                }
-
-        return MetricChartViewModel.ViewItem(currentValue: value, chartData: data, chartTrend: chartTrend, chartDiff: valueDiff, minValue: minString, maxValue: maxString, timeline: timeline, selectedIndicator: ChartIndicatorSet.none)
+        return ChartModule.ViewItem(
+                value: value,
+                rightSideMode: rightSideMode,
+                chartData: data,
+                chartTrend: chartTrend,
+                chartDiff: valueDiff,
+                minValue: minString,
+                maxValue: maxString
+        )
     }
 
-    func selectedPointViewItem(chartItem: ChartItem, valueType: MetricChartModule.ValueType) -> SelectedPointViewItem? {
+    func selectedPointViewItem(chartItem: ChartItem, firstChartItem: ChartItem?, valueType: MetricChartModule.ValueType) -> ChartModule.SelectedPointViewItem? {
         guard let value = chartItem.indicators[.rate] else {
             return nil
         }
 
         let date = Date(timeIntervalSince1970: chartItem.timestamp)
         let formattedDate = DateHelper.instance.formatFullTime(from: date)
-
         let formattedValue = format(value: value, valueType: valueType, exactlyValue: true)
 
-        var rightSideMode: SelectedPointViewItem.RightSideMode = .none
-        if let dominance = chartItem.indicators[.dominance] {
-            rightSideMode = .dominance(value: dominance)
+        var diff: Decimal?
+
+        if let firstChartItem, let firstValue = firstChartItem.indicators[.rate] {
+            diff = (value - firstValue) / firstValue * 100
         }
-        return SelectedPointViewItem(date: formattedDate, value: formattedValue, rightSideMode: rightSideMode)
+
+        var rightSideMode: ChartModule.RightSideMode = .none
+
+        if let dominance = chartItem.indicators[.dominance] {
+            var diff: Decimal?
+
+            if let firstChartItem, let firstDominance = firstChartItem.indicators[.dominance] {
+                diff = (dominance - firstDominance) / firstDominance * 100
+            }
+
+            rightSideMode = .dominance(value: dominance, diff: diff)
+        } else if let volume = chartItem.indicators[.volume] {
+            rightSideMode = .volume(value: format(value: volume, valueType: valueType))
+        }
+
+        return ChartModule.SelectedPointViewItem(
+                value: formattedValue,
+                diff: diff,
+                date: formattedDate,
+                rightSideMode: rightSideMode
+        )
     }
 
 }

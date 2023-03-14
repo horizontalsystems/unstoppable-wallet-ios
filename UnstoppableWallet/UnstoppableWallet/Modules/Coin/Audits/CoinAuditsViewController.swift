@@ -33,7 +33,7 @@ class CoinAuditsViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "coin_page.audits".localized
+        title = "coin_analytics.audits".localized
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -53,7 +53,7 @@ class CoinAuditsViewController: ThemeViewController {
         }
 
         emptyView.image = UIImage(named: "not_available_48")
-        emptyView.text = "coin_page.audits.no_reports".localized
+        emptyView.text = "coin_analytics.audits.no_reports".localized
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in

@@ -5,23 +5,10 @@ import LanguageKit
 import Chart
 
 class CoinChartFactory {
-    private let timelineHelper: ITimelineHelper
-    private let indicatorFactory: IIndicatorFactory
     private let dateFormatter = DateFormatter()
 
-    init(timelineHelper: ITimelineHelper, indicatorFactory: IIndicatorFactory, currentLocale: Locale) {
-        self.timelineHelper = timelineHelper
-        self.indicatorFactory = indicatorFactory
-
+    init(currentLocale: Locale) {
         dateFormatter.locale = currentLocale
-    }
-
-    private func macdFormat(value: Decimal?) -> String? {
-        guard let value = value, let formattedValue = ValueFormatter.instance.formatShort(value: value, decimalCount: 2, showSign: true) else {
-            return nil
-        }
-
-        return formattedValue
     }
 
     private func chartData(points: [ChartPoint], startTimestamp: TimeInterval, endTimestamp: TimeInterval) -> ChartData {
@@ -37,28 +24,12 @@ class CoinChartFactory {
             return item
         }
 
-        let chartData = ChartData(items: items, startTimestamp: startTimestamp, endTimestamp: endTimestamp)
-
-        // fill chart data with indicators data
-        let values = points.map { $0.value }
-
-        ChartIndicatorType.allCases.forEach { type in
-            chartData.append(indicators: indicatorFactory.indicatorData(type: type, values: values))
-        }
-
-        return chartData
+        return ChartData(items: items, startTimestamp: startTimestamp, endTimestamp: endTimestamp)
     }
 
-    private func chartItem(point: ChartPoint, previousValues: [Decimal]) -> ChartItem {
+    private func chartItem(point: ChartPoint) -> ChartItem {
         let chartItem = ChartItem(timestamp: point.timestamp)
         chartItem.added(name: .rate, value: point.value)
-
-        let values = previousValues + [point.value]
-
-        ChartIndicatorType.allCases.forEach { type in
-            chartItem.indicators.merge(indicatorFactory.indicatorLast(type: type, values: values)) { a, _ in a }
-        }
-
         return chartItem
     }
 
@@ -88,12 +59,12 @@ class CoinChartFactory {
         return .neutral
     }
 
-    func convert(item: CoinChartService.Item, periodType: HsPeriodType, currency: Currency, selectedIndicator: ChartIndicatorSet) -> CoinChartViewModel.ViewItem {
+    func convert(item: CoinChartService.Item, periodType: HsPeriodType, currency: Currency) -> ChartModule.ViewItem {
         var points = item.chartInfo.points
         var endTimestamp = item.chartInfo.endTimestamp
 
         var extendedPoint: ChartPoint?
-        var addCurrentRate = false
+
         if let lastPointTimestamp = item.chartInfo.points.last?.timestamp,
            let timestamp = item.timestamp,
            let rate = item.rate,
@@ -108,16 +79,13 @@ class CoinChartFactory {
                 let price24h = 100 * rate / (100 + rateDiff24)
                 extendedPoint = ChartPoint(timestamp: firstTimestamp, value: price24h)
             }
-
-            addCurrentRate = true
         }
         // build data with rates, volumes and indicators for points
         let data = chartData(points: points, startTimestamp: item.chartInfo.startTimestamp, endTimestamp: endTimestamp)
 
         // calculate item for 24h back point and add to data
         if let extendedPoint = extendedPoint {
-            let values = points.filter { $0.timestamp < extendedPoint.timestamp }.map { $0.value }
-            let extendedItem = chartItem(point: extendedPoint, previousValues: values)
+            let extendedItem = chartItem(point: extendedPoint)
 
             data.insert(item: extendedItem)
             // change start visible timestamp
@@ -140,13 +108,6 @@ class CoinChartFactory {
             chartTrend = (lastRate - firstRate).isSignMinus ? .down : .up
         }
 
-        let lastIndicatorPoint = addCurrentRate && data.items.count > 2 ? data.items[data.items.count - 2] : data.items.last
-
-        var trends = [ChartIndicatorSet: MovementTrend]()
-        trends[.ema] = calculateTrend(down: lastIndicatorPoint?.indicators[.emaLong], up: lastIndicatorPoint?.indicators[.emaShort])
-        trends[.macd] = calculateTrend(down: lastIndicatorPoint?.indicators[.macdSignal], up: lastIndicatorPoint?.indicators[.macd])
-        trends[.rsi] = calculateRsiTrend(rsi: lastIndicatorPoint?.indicators[.rsi])
-
         var minRateString: String?, maxRateString: String?
 
         if let minRate = minRate, let maxRate = maxRate {
@@ -154,22 +115,18 @@ class CoinChartFactory {
             maxRateString = ValueFormatter.instance.formatFull(currency: currency, value: maxRate)
         }
 
-        // make timeline for chart
-        //todo Fix it!
-        let gridInterval = periodType.gridInterval
-        let timeline = timelineHelper
-                .timestamps(startTimestamp: data.startWindow, endTimestamp: data.endWindow, separateHourlyInterval: gridInterval)
-                .map {
-                    ChartTimelineItem(text: timelineHelper.text(timestamp: $0, separateHourlyInterval: gridInterval, dateFormatter: dateFormatter), timestamp: $0)
-                }
-
-        // disable indicators if chart interval less than 7d
-        let correctedIndicator: ChartIndicatorSet? = periodType == .day1 ? nil : selectedIndicator
-
-        return CoinChartViewModel.ViewItem(chartData: data, chartTrend: chartTrend, chartDiff: chartDiff, minValue: minRateString, maxValue: maxRateString, timeline: timeline, selectedIndicator: correctedIndicator)
+        return ChartModule.ViewItem(
+                value: item.rate.flatMap { ValueFormatter.instance.formatFull(currencyValue: CurrencyValue(currency: currency, value: $0)) },
+                rightSideMode: .none,
+                chartData: data,
+                chartTrend: chartTrend,
+                chartDiff: chartDiff,
+                minValue: minRateString,
+                maxValue: maxRateString
+        )
     }
 
-    func selectedPointViewItem(chartItem: ChartItem, currency: Currency, macdSelected: Bool) -> SelectedPointViewItem? {
+    func selectedPointViewItem(chartItem: ChartItem, firstChartItem: ChartItem?, currency: Currency) -> ChartModule.SelectedPointViewItem? {
         guard let rate = chartItem.indicators[.rate] else {
             return nil
         }
@@ -178,9 +135,22 @@ class CoinChartFactory {
         let formattedDate = DateHelper.instance.formatFullTime(from: date)
         let formattedValue = ValueFormatter.instance.formatFull(currency: currency, value: rate)
 
-        let rightSideMode: SelectedPointViewItem.RightSideMode = .volume(value: chartItem.indicators[.volume].flatMap { $0.isZero ? nil : ValueFormatter.instance.formatShort(currency: currency, value: $0) })
+        var diff: Decimal?
 
-        return SelectedPointViewItem(date: formattedDate, value: formattedValue, rightSideMode: rightSideMode)
+        if let firstChartItem, let firstRate = firstChartItem.indicators[.rate] {
+            diff = (rate - firstRate) / firstRate * 100
+        }
+
+        let rightSideMode: ChartModule.RightSideMode = .volume(value: chartItem.indicators[.volume].flatMap {
+            $0.isZero ? nil : ValueFormatter.instance.formatShort(currency: currency, value: $0)
+        })
+
+        return ChartModule.SelectedPointViewItem(
+                value: formattedValue,
+                diff: diff,
+                date: formattedDate,
+                rightSideMode: rightSideMode
+        )
     }
 
     static func gridInterval(fromTimestamp: TimeInterval) -> Int {

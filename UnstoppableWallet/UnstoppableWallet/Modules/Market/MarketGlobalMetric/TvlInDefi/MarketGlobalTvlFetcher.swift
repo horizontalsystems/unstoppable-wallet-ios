@@ -29,8 +29,8 @@ class MarketGlobalTvlFetcher {
 
 extension MarketGlobalTvlFetcher: IMetricChartConfiguration {
     var title: String { MarketGlobalModule.MetricsType.tvlInDefi.title }
-    var description: String? { MarketGlobalModule.MetricsType.tvlInDefi.description }
-    var poweredBy: String? { "DefiLlama API" }
+    var description: String? { nil }
+    var poweredBy: String? { nil }
 
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue(currencyKit.baseCurrency)
@@ -44,13 +44,15 @@ extension MarketGlobalTvlFetcher: IMetricChartFetcher {
         needUpdateRelay.asObservable()
     }
 
-    func fetchSingle(interval: HsTimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
+    func fetchSingle(interval: HsTimePeriod) -> RxSwift.Single<MetricChartModule.ItemData> {
         marketKit
                 .marketInfoGlobalTvlSingle(platform: service.marketPlatformField.chain, currencyCode: currencyKit.baseCurrency.code, timePeriod: interval)
                 .map { points in
-                    points.map { point -> MetricChartModule.Item in
+                    let items = points.map { point -> MetricChartModule.Item in
                         MetricChartModule.Item(value: point.value, timestamp: point.timestamp)
                     }
+
+                    return MetricChartModule.ItemData(items: items, type: .regular)
                 }
     }
 

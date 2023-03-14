@@ -22,6 +22,10 @@ extension ChartConfiguration {
         ChartConfiguration().applyColors(trendIgnore: true).applyBase().applyBars()
     }
 
+    static var volumeBarChart: ChartConfiguration {
+        baseBarChart.applyVolume()
+    }
+
     static var smallPreviewChart: ChartConfiguration {
         ChartConfiguration().applyColors().applyPreview(height: 25)
     }
@@ -44,6 +48,7 @@ extension ChartConfiguration {
 
         curveWidth = 2
         curvePadding = UIEdgeInsets(top: 20, left: .margin8, bottom: 20, right: .margin8)
+        volumeBarsInsets = UIEdgeInsets(top: 8, left: .margin8, bottom: 0, right: .margin8)
 
         return self
     }
@@ -71,6 +76,7 @@ extension ChartConfiguration {
 
     @discardableResult private func applyBars() -> Self {
         curveType = .bars
+        curveBottomInset = 18
 
         trendUpGradient =  [.clear]
         trendDownGradient =  [.clear]
@@ -82,6 +88,7 @@ extension ChartConfiguration {
 
     @discardableResult private func applyBarsPreview() -> Self {
         curveType = .bars
+        curveWidth = 2
         curvePadding = UIEdgeInsets(top: 2, left: 2, bottom: 4, right: 2)
 
         return self
@@ -134,9 +141,6 @@ extension ChartConfiguration {
         rsiLineColor = UIColor.themeJacob.withAlphaComponent(0.5)
 
         dominanceLineColor = UIColor.themeJacob.withAlphaComponent(0.5)
-        dominanceTextColor = .themeJacob
-        dominanceDiffPositiveColor = .themeRemus
-        dominanceDiffNegativeColor = .themeLucian
 
         macdTextColor = .themeGray
         macdTextFont = .caption

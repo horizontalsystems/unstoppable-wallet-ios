@@ -7,24 +7,6 @@ import Chart
 import CurrencyKit
 import HUD
 
-protocol IChartViewModel {
-    var chartTitle: String? { get }
-    var intervals: [String] { get }
-    var intervalsUpdatedWithCurrentIndexDriver: Driver<Int> { get }
-    var intervalIndexDriver: Driver<Int> { get }
-    var pointSelectModeEnabledDriver: Driver<Bool> { get }
-    var pointSelectedItemDriver: Driver<SelectedPointViewItem?> { get }
-    var loadingDriver: Driver<Bool> { get }
-    var valueDriver: Driver<String?> { get }
-    var chartInfoDriver: Driver<CoinChartViewModel.ViewItem?> { get }
-    var errorDriver: Driver<String?> { get }
-
-    func onSelectInterval(at index: Int)
-    func onTap(indicator: ChartIndicatorSet)
-    func start()
-    func retry()
-}
-
 class CoinChartViewModel {
     private let service: CoinChartService
     private let factory: CoinChartFactory
@@ -34,13 +16,12 @@ class CoinChartViewModel {
 
     //todo: refactor!
     private let pointSelectModeEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let pointSelectedItemRelay = BehaviorRelay<SelectedPointViewItem?>(value: nil)
+    private let pointSelectedItemRelay = BehaviorRelay<ChartModule.SelectedPointViewItem?>(value: nil)
 
     private let intervalsUpdatedWithCurrentIndex = BehaviorRelay<Int>(value: 0)
     private let intervalIndexRelay = BehaviorRelay<Int>(value: 0)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let valueRelay = BehaviorRelay<String?>(value: nil)
-    private let chartInfoRelay = BehaviorRelay<CoinChartViewModel.ViewItem?>(value: nil)
+    private let chartInfoRelay = BehaviorRelay<ChartModule.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     var intervals: [String] {
@@ -77,22 +58,24 @@ class CoinChartViewModel {
     private func sync(state: DataStatus<CoinChartService.Item>) {
         loadingRelay.accept(state.isLoading)
         errorRelay.accept(state.error?.smartDescription)
-        if state.error != nil {
-            valueRelay.accept(nil)
-            chartInfoRelay.accept(nil)
 
+        if state.error != nil {
+            chartInfoRelay.accept(nil)
             return
         }
-
-        let rateValue = state.data?.rate.map { CurrencyValue(currency: service.currency, value: $0) }
-        valueRelay.accept(rateValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) })
 
         guard let item = state.data else {
             chartInfoRelay.accept(nil)
             return
         }
 
-        chartInfoRelay.accept(factory.convert(item: item, periodType: service.periodType, currency: service.currency, selectedIndicator: service.selectedIndicator))
+        chartInfoRelay.accept(
+                factory.convert(
+                        item: item,
+                        periodType: service.periodType,
+                        currency: service.currency
+                )
+        )
     }
 
 }
@@ -107,7 +90,7 @@ extension CoinChartViewModel: IChartViewModel {
         pointSelectModeEnabledRelay.asDriver()
     }
 
-    var pointSelectedItemDriver: Driver<SelectedPointViewItem?> {
+    var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> {
         pointSelectedItemRelay.asDriver()
     }
 
@@ -123,11 +106,7 @@ extension CoinChartViewModel: IChartViewModel {
         loadingRelay.asDriver()
     }
 
-    var valueDriver: Driver<String?> {
-        valueRelay.asDriver()
-    }
-
-    var chartInfoDriver: Driver<CoinChartViewModel.ViewItem?> {
+    var chartInfoDriver: Driver<ChartModule.ViewItem?> {
         chartInfoRelay.asDriver()
     }
 
@@ -150,10 +129,6 @@ extension CoinChartViewModel: IChartViewModel {
         service.setPeriod(interval: intervals[index])
     }
 
-    func onTap(indicator: ChartIndicatorSet) {
-        service.selectedIndicator = service.selectedIndicator.toggle(indicator: indicator)
-    }
-
     func start() {
         service.fetch()
     }
@@ -172,40 +147,18 @@ extension CoinChartViewModel: IChartViewTouchDelegate {
 
     public func select(item: ChartItem) {
         HapticGenerator.instance.notification(.feedback(.soft))
-        pointSelectedItemRelay.accept(factory.selectedPointViewItem(chartItem: item, currency: service.currency, macdSelected: service.selectedIndicator.contains(.macd)))
+
+        pointSelectedItemRelay.accept(
+                factory.selectedPointViewItem(
+                        chartItem: item,
+                        firstChartItem: chartInfoRelay.value?.chartData.items.first,
+                        currency: service.currency
+                )
+        )
     }
 
     public func touchUp() {
         pointSelectModeEnabledRelay.accept(false)
-    }
-
-}
-
-extension CoinChartViewModel {
-
-    class ViewItem {
-        let chartData: ChartData
-
-        let chartTrend: MovementTrend
-        let chartDiff: Decimal?
-
-        let minValue: String?
-        let maxValue: String?
-
-        let timeline: [ChartTimelineItem]
-
-        let selectedIndicator: ChartIndicatorSet?
-
-        init(chartData: ChartData, chartTrend: MovementTrend, chartDiff: Decimal?, minValue: String?, maxValue: String?, timeline: [ChartTimelineItem], selectedIndicator: ChartIndicatorSet?) {
-            self.chartData = chartData
-            self.chartTrend = chartTrend
-            self.chartDiff = chartDiff
-            self.minValue = minValue
-            self.maxValue = maxValue
-            self.timeline = timeline
-            self.selectedIndicator = selectedIndicator
-        }
-
     }
 
 }

@@ -544,144 +544,46 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "market.global.total_market_cap.title" = "Total Cap";
 "market.global.volume_24h.title" = "24h Volume";
 "market.global.defi_cap.title" = "DeFi Cap";
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
 
-"market.global.btc_dominance.title" = "Bitcoin Dominance";
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.defi_cap.title" = "DeFi Cap";
 "market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.btc_dominance.description" = "The historical change in ratio between the market cap of Bitcoin to the rest of the cryptocurrency markets. \n\nTypically, when Bitcoin dominance is trending higher, the rest of the crypto market trends downwards and vice versa.";
-"market.global.volume_24h.description" = "The historical change in daily aggregate trading market volume for all cryptocurrencies.";
-"market.global.defi_cap.description" = "The historical change in cumulative market value of tokens in Decentralized Finance sector.";
-"market.global.tvl_in_defi.description" = "The historical change in cumulative value of all cryptocurrency managed by decentralized protocols.";
+"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
+"market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
 
 // Coin Page
 
-"coin_page.roi.hour1" = "1 Hour";
-"coin_page.roi.hour24" = "1 Day";
-"coin_page.roi.day7" = "1 Week";
-"coin_page.roi.day14" = "2 Weeks";
-"coin_page.roi.day30" = "1 Month";
-"coin_page.roi.day200" = "6 Month";
-"coin_page.roi.year1" = "1 Year";
-
-"coin_page.tab.overview" = "Price";
-"coin_page.tab.analytics" = "Analytics";
-"coin_page.tab.markets" = "Markets";
-"coin_page.tab.tweets" = "Tweets";
-
-"coin_page.market_cap" = "Market Cap";
-"coin_page.circulating_supply" = "In Circulation";
-"coin_page.total_supply" = "Total Supply";
-"coin_page.diluted_market_cap" = "Diluted MCap";
-"coin_page.genesis_date" = "Inception Date";
-
-"coin_page.trading_volume" = "Trading Volume";
-"coin_page.trading_volume.description" = "The historical change in daily aggregate trading volume for %@";
+"coin_page.overview" = "Price";
+"coin_page.analytics" = "Analytics";
 "coin_page.markets" = "Markets";
-"coin_page.markets.empty" = "No data available";
+"coin_page.tweets" = "Tweets";
 
-"coin_page.token_liquidity" = "Token Liquidity";
-"coin_page.token_liquidity.description" = "The state of liquidity for the given asset on decentralized exchange markets.";
-"coin_page.dex_volume" = "DEX Volume (30d)";
-"coin_page.dex_volume.title" = "DEX Volume";
-"coin_page.dex_volume.description" = "The trading volume for the token on decentralized exchanges.";
-"coin_page.dex_liquidity" = "DEX Liquidity";
-"coin_page.dex_liquidity.description" = "The total amount of available liquidity for the token on decentralized exchanges.";
+// Coin Page -> Overview
 
-"coin_page.token_distribution" = "Token Distribution";
-"coin_page.token_distribution.description" = "Onchain token parameters. Typically, healthy projects have an active on-chain user base and well-distributed token.";
-"coin_page.tx_count" = "Tx Count (30d)";
-"coin_page.tx_count.title" = "Tx Count";
-"coin_page.tx_count.description" = "The number of token transactions recorded on-chain over various periods.";
-"coin_page.tx_volume" = "Tx Volume (30d)";
-"coin_page.tx_volume.title" = "Tx Volume";
-"coin_page.tx_volume.description" = "The aggregate token transaction volume is recorded on-chain. The volume is measured in the actual tokens (not USD).";
-"coin_page.active_addresses" = "Active Addresses";
-"coin_page.active_addresses.description" = "The number of unique wallet addresses involved in transactions over various periods.";
+"coin_overview.market_cap" = "Market Cap";
+"coin_overview.circulating_supply" = "In Circulation";
+"coin_overview.total_supply" = "Total Supply";
+"coin_overview.diluted_market_cap" = "Diluted MCap";
+"coin_overview.genesis_date" = "Inception Date";
+"coin_overview.trading_volume" = "Trading Volume";
 
-"coin_page.chart_tvl" = "Token TVL";
-"coin_page.chart_volumes" = "Total Volume";
-"coin_page.token_tvl" = "Token TVL";
-"coin_page.token_tvl.description" = "Total Value Locked (TVL) is a metric that shows the total value of crypto assets under automated management by the smart contracts powering the given protocol.";
-"coin_page.tvl" = "Total Value Locked";
-"coin_page.tvl_rank" = "TVL Rank";
-"coin_page.tvl_rank.description" = "The ranking among other protocols is based on the TVL value in USD terms.";
-"coin_page.market_cap_tvl_ratio" = "MCap / TVL Ratio";
-"coin_page.market_cap_tvl_ratio.description" = "The ratio of the project token's market cap over its TVL.";
-"coin_page.tvl.description" = "Capital deposited into the platform in the form of loan collateral or liquidity pool.";
+"coin_overview.roi.hour24" = "1 Day";
+"coin_overview.roi.day7" = "1 Week";
+"coin_overview.roi.day14" = "2 Weeks";
+"coin_overview.roi.day30" = "1 Month";
+"coin_overview.roi.day200" = "6 Month";
+"coin_overview.roi.year1" = "1 Year";
 
-"coin_page.investor_data" = "Investor Data";
+"coin_overview.category" = "Category";
 
-"coin_page.treasuries" = "Treasuries";
-"coin_page.treasuries.filters" = "Filters";
-"coin_page.treasuries.filter.all" = "All";
-"coin_page.treasuries.filter.public" = "Public";
-"coin_page.treasuries.filter.private" = "Private";
-"coin_page.treasuries.filter.etf" = "ETF";
+"coin_overview.blockchains" = "Blockchains";
+"coin_overview.bips" = "BIPs";
+"coin_overview.coin_types" = "Coin Types";
+"coin_overview.show_more" = "Show More";
+"coin_overview.show_less" = "Show Less";
+"coin_overview.links" = "Links";
 
-"coin_page.funds_invested" = "Funds Invested";
-"coin_page.funds_invested.lead" = "Lead";
-
-"coin_page.reports" = "Reports";
-
-"coin_page.category" = "Category";
-
-"coin_page.blockchains" = "Blockchains";
-"coin_page.bips" = "BIPs";
-"coin_page.coin_types" = "Coin Types";
-"coin_page.show_more" = "Show More";
-"coin_page.show_less" = "Show Less";
-"coin_page.links" = "Links";
-
-"coin_page.guide" = "Guide";
-"coin_page.website" = "Website";
-"coin_page.whitepaper" = "Whitepaper";
-
-"coin_page.favorited" = "Added To Watchlist";
-"coin_page.unfavorited" = "Removed from Watchlist";
-"coin_page.added_to_wallet" = "Added to wallet";
-"coin_page.already_added_to_wallet" = "Already added to wallet";
-
-"coin_page.tvl_rank.multi_chain" = "Multi-Chain";
-"coin_page.tvl_rank.filter_by_chain" = "Filter by chain";
-
-"coin_page.security_parameters" = "Security Parameters";
-"coin_page.security_parameters.privacy" = "Privacy";
-"coin_page.security_parameters.issuance" = "Issuance";
-"coin_page.security_parameters.confiscation_resistance" = "Confiscation-resistance";
-"coin_page.security_parameters.censorship_resistance" = "Censorship-resistance";
-
-"coin_page.security_parameters.level.low" = "Low";
-"coin_page.security_parameters.level.medium" = "Medium";
-"coin_page.security_parameters.level.high" = "High";
-"coin_page.security_parameters.issuance.decentralized" = "Decentralized";
-"coin_page.security_parameters.issuance.centralized" = "Centralized";
-"coin_page.security_parameters.resistance.yes" = "Yes";
-"coin_page.security_parameters.resistance.no" = "No";
-
-"coin_page.security_parameters.privacy.description.low" = "Transactions with this token are fully public allowing 3rd party services to link different transactions to the same entity, see amounts transacted, and view user balances.";
-"coin_page.security_parameters.privacy.description.medium" = "Transactions with this token are semi-anonymous. A 3rd party service is able to see the amounts transacted and partially link different transactions to the same entity.";
-"coin_page.security_parameters.privacy.description.high" = "Transactions with this token are anonymous by default or provide such capabilities. No entity is able to link different transactions to the same individual or see the amounts transacted.";
-"coin_page.security_parameters.issuance.description.decentralized" = "The number of tokens in circulation controlled by an algorithm and works in a deterministic manner outside of centralized influence.";
-"coin_page.security_parameters.issuance.description.centralized" = "The number of tokens in circulation can potentially be increased or decreased by a centralized entity at will.";
-"coin_page.security_parameters.confiscation_resistance.description.yes" = "The tokens can't be confiscated when kept in a non-custodial wallet.";
-"coin_page.security_parameters.confiscation_resistance.description.no" = "The tokens can be confiscated or tampered with by an issuing entity.";
-"coin_page.security_parameters.censorship_resistance.description.yes" = "The token holder can't be censored from transacting.";
-"coin_page.security_parameters.censorship_resistance.description.no" = "The token holder can be censored from transacting.";
-
-"coin_page.info" = "Info";
-
-"coin_page.audits" = "Audits";
-"coin_page.audits.issues" = "Issues";
-"coin_page.audits.no_reports" = "No audit reports";
-
-"coin_page.tweets.reference_type.retweeted" = "Retweeted @%@";
-"coin_page.tweets.reference_type.quoted" = "Quoted @%@";
-"coin_page.tweets.reference_type.replied" = "Replied to @%@";
-"coin_page.tweets.no_tweets_yet" = "No tweets yet";
-"coin_page.tweets.not_available" = "No twitter available";
-"coin_page.tweets.see_on_twitter" = "See on Twitter";
+"coin_overview.guide" = "Guide";
+"coin_overview.website" = "Website";
+"coin_overview.whitepaper" = "Whitepaper";
 
 // Coin Page -> Analytics
 
@@ -746,16 +648,41 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "coin_analytics.project_revenue.info3" = "List of all tokens ranked based on the revenue generated by the project's smart contracts over 24h / 7D / 1M intervals.";
 
 "coin_analytics.other_data" = "Other Data";
+
 "coin_analytics.reports" = "Reports";
+
 "coin_analytics.funding" = "Funding";
+"coin_analytics.funding.lead" = "Lead";
+
 "coin_analytics.treasuries" = "Treasuries";
+"coin_analytics.treasuries.filters" = "Filters";
+"coin_analytics.treasuries.filter.all" = "All";
+"coin_analytics.treasuries.filter.public" = "Public";
+"coin_analytics.treasuries.filter.private" = "Private";
+"coin_analytics.treasuries.filter.etf" = "ETF";
+
 "coin_analytics.audits" = "Audits";
+"coin_analytics.audits.issues" = "Issues";
+"coin_analytics.audits.no_reports" = "No audit reports";
 
 "coin_analytics.last_30d" = "last 30d";
 "coin_analytics.current" = "current";
 "coin_analytics.rank" = "Rank";
 "coin_analytics.30_day_rank" = "30-Day Rank";
 "coin_analytics.30_day_volume" = "30-Day Volume";
+
+// Coin Page -> Markets
+
+"coin_markets.empty" = "No data available";
+
+// Coin Page -> Tweets
+
+"coin_tweets.reference_type.retweeted" = "Retweeted @%@";
+"coin_tweets.reference_type.quoted" = "Quoted @%@";
+"coin_tweets.reference_type.replied" = "Replied to @%@";
+"coin_tweets.no_tweets_yet" = "No tweets yet";
+"coin_tweets.not_available" = "No twitter available";
+"coin_tweets.see_on_twitter" = "See on Twitter";
 
 // Pro Features
 
@@ -1068,8 +995,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "chart.volume" = "Volume (24h)";
 "chart.circulation" = "In Circulation";
 "chart.selected.volume" = "Volume";
-"chart.price_indicator_range.day" = "24h Range";
-"chart.price_indicator_range.year" = "52w Range";
 
 "chart.market.header" = "Market";
 "chart.market.market_cap" = "Market Cap";

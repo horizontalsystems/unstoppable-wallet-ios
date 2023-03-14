@@ -40,12 +40,6 @@ class CoinChartService {
     private var coinPrice: CoinPrice?
     private var chartInfo: ChartInfo?
 
-    var selectedIndicator = ChartIndicatorSet() {
-        didSet {
-            syncState()
-        }
-    }
-
     init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, coinUid: String) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
@@ -54,6 +48,7 @@ class CoinChartService {
 
     func fetch() {
         let genesisTimeSingle: Single<TimeInterval>
+
         if let startTime {
             genesisTimeSingle = .just(startTime)
         } else {
@@ -61,6 +56,7 @@ class CoinChartService {
         }
 
         disposeBag = DisposeBag()
+
         genesisTimeSingle
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] startTime in

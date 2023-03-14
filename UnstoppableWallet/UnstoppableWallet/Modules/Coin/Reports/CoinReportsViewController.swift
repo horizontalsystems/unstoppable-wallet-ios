@@ -30,7 +30,7 @@ class CoinReportsViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "coin_page.reports".localized
+        title = "coin_analytics.reports".localized
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in

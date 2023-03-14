@@ -31,6 +31,15 @@ class ChartCell: UITableViewCell {
     private let timePeriodView = FilterView(buttonStyle: .transparent, bottomSeparator: false)
     private let loadingView = HUDActivityView.create(with: .medium24)
 
+    private static let percentFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .percent
+        formatter.roundingMode = .halfEven
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 4
+        return formatter
+    }()
+
     init(viewModel: IChartViewModel & IChartViewTouchDelegate, configuration: ChartConfiguration, isLast: Bool = false) {
         self.viewModel = viewModel
         self.configuration = configuration
@@ -122,6 +131,7 @@ class ChartCell: UITableViewCell {
         chartInfoValueStackView.alignment = .center
 
         chartInfoValueStackView.addArrangedSubview(chartValueLabel)
+        chartValueLabel.setContentHuggingPriority(.required, for: .horizontal)
         chartValueLabel.font = .headline2
         chartValueLabel.textColor = .themeLeah
 
@@ -188,22 +198,55 @@ class ChartCell: UITableViewCell {
         .heightDoubleLineCell + configuration.mainHeight + (configuration.showIndicators ? configuration.indicatorHeight : 0) + .margin8 + .heightCell48 + .margin8
     }
 
-    private func syncChart(viewItem: CoinChartViewModel.ViewItem?) {
-        guard let viewItem = viewItem else {
-            return
+    private func syncChart(viewItem: ChartModule.ViewItem?) {
+        if let value = viewItem?.value {
+            currentValueLabel.isHidden = false
+            currentValueLabel.text = value
+        } else {
+            currentValueLabel.isHidden = true
         }
 
-        switch viewItem.chartTrend {
-        case .neutral:
-            chartView.setCurve(colorType: .neutral)
-        case .ignore, .up:
-            chartView.setCurve(colorType: .up)
-        case .down:
-            chartView.setCurve(colorType: .down)
+        if let value = viewItem?.chartDiff {
+            currentDiffLabel.isHidden = false
+            currentDiffLabel.set(value: value)
+        } else {
+            currentDiffLabel.isHidden = true
         }
 
-        chartView.set(chartData: viewItem.chartData)
-        chartView.set(highLimitText: viewItem.maxValue, lowLimitText: viewItem.minValue)
+        switch (viewItem?.rightSideMode ?? .none) {
+        case .none, .volume:
+            currentSecondaryTitleLabel.isHidden = true
+            currentSecondaryValueLabel.isHidden = true
+            currentSecondaryDiffLabel.isHidden = true
+        case .dominance(let value, let diff):
+            currentSecondaryTitleLabel.isHidden = false
+            currentSecondaryValueLabel.isHidden = false
+
+            currentSecondaryTitleLabel.text = "BTC Dominance"
+            currentSecondaryValueLabel.text = value.flatMap { Self.percentFormatter.string(from: ($0 / 100) as NSNumber) }
+            currentSecondaryValueLabel.textColor = .themeJacob
+
+            if let diff {
+                currentSecondaryDiffLabel.isHidden = false
+                currentSecondaryDiffLabel.set(value: diff)
+            } else {
+                currentSecondaryDiffLabel.isHidden = true
+            }
+        }
+
+        if let viewItem {
+            switch viewItem.chartTrend {
+            case .neutral:
+                chartView.setCurve(colorType: .neutral)
+            case .ignore, .up:
+                chartView.setCurve(colorType: .up)
+            case .down:
+                chartView.setCurve(colorType: .down)
+            }
+
+            chartView.set(chartData: viewItem.chartData)
+            chartView.set(highLimitText: viewItem.maxValue, lowLimitText: viewItem.minValue)
+        }
     }
 
     private func syncChart(selected: Bool) {
@@ -213,13 +256,20 @@ class ChartCell: UITableViewCell {
         }
     }
 
-    private func syncChart(selectedViewItem: SelectedPointViewItem?) {
+    private func syncChart(selectedViewItem: ChartModule.SelectedPointViewItem?) {
         guard let viewItem = selectedViewItem else {
             return
         }
 
         chartValueLabel.text = viewItem.value
         chartTimeLabel.text = viewItem.date
+
+        if let diff = viewItem.diff {
+            chartDiffLabel.isHidden = false
+            chartDiffLabel.set(value: diff)
+        } else {
+            chartDiffLabel.isHidden = true
+        }
 
         switch viewItem.rightSideMode {
         case .none:
@@ -240,16 +290,20 @@ class ChartCell: UITableViewCell {
             }
 
             chartSecondaryDiffLabel.isHidden = true
-        case .dominance(let value):
+        case .dominance(let value, let diff):
             chartSecondaryTitleLabel.isHidden = false
             chartSecondaryValueLabel.isHidden = false
-            chartSecondaryDiffLabel.isHidden = false
 
             chartSecondaryTitleLabel.text = "BTC Dominance"
-            chartSecondaryValueLabel.text = value.flatMap { ValueFormatter.instance.format(percentValue: $0, showSign: false) }
+            chartSecondaryValueLabel.text = value.flatMap { Self.percentFormatter.string(from: ($0 / 100) as NSNumber) }
             chartSecondaryValueLabel.textColor = .themeJacob
 
-            chartSecondaryDiffLabel.set(value: 12.3)
+            if let diff {
+                chartSecondaryDiffLabel.isHidden = false
+                chartSecondaryDiffLabel.set(value: diff)
+            } else {
+                chartSecondaryDiffLabel.isHidden = true
+            }
         }
     }
 
@@ -281,16 +335,6 @@ class ChartCell: UITableViewCell {
 extension ChartCell {
 
     func onLoad() {
-        subscribe(disposeBag, viewModel.valueDriver) { [weak self] in self?.currentValueLabel.text = $0 }
-        subscribe(disposeBag, viewModel.chartInfoDriver) { [weak self] in
-            if let value = $0?.chartDiff {
-                self?.currentDiffLabel.isHidden = false
-                self?.currentDiffLabel.set(value: value)
-            } else {
-                self?.currentDiffLabel.isHidden = true
-            }
-        }
-
         subscribe(disposeBag, viewModel.pointSelectModeEnabledDriver) { [weak self] in self?.syncChart(selected: $0) }
         subscribe(disposeBag, viewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
         subscribe(disposeBag, viewModel.intervalIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }

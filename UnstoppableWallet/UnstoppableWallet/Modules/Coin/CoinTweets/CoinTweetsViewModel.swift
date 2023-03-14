@@ -30,14 +30,14 @@ class CoinTweetsViewModel {
         case .completed(let tweets):
             viewItemsRelay.accept(tweets.map { viewItem(tweet: $0) })
             loadingRelay.accept(false)
-            infoRelay.accept(tweets.isEmpty ? "coin_page.tweets.no_tweets_yet".localized : nil)
+            infoRelay.accept(tweets.isEmpty ? "coin_tweets.no_tweets_yet".localized : nil)
             syncErrorRelay.accept(false)
         case .failed(let error):
             viewItemsRelay.accept(nil)
             loadingRelay.accept(false)
 
             if case CoinTweetsService.LoadError.tweeterUserNotFound = error {
-                infoRelay.accept("coin_page.tweets.not_available".localized)
+                infoRelay.accept("coin_tweets.not_available".localized)
                 syncErrorRelay.accept(false)
             } else {
                 infoRelay.accept(nil)
@@ -58,7 +58,7 @@ class CoinTweetsViewModel {
                 date: DateHelper.instance.formatFullTime(from: tweet.date),
                 referencedTweet: tweet.referencedTweet.map { referencedTweet in
                     ReferencedTweet(
-                            title: "coin_page.tweets.reference_type.\(referencedTweet.referenceType.rawValue)".localized(referencedTweet.tweet.user.username),
+                            title: "coin_tweets.reference_type.\(referencedTweet.referenceType.rawValue)".localized(referencedTweet.tweet.user.username),
                             text: referencedTweet.tweet.text
                     )
                 }
