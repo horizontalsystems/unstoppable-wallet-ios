@@ -347,7 +347,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Este serviço não permite embalagem/desagregação. Por favor, tente outro serviço de troca. 1Inch recomendado";
 "swap.button_error.insufficient_balance" = "Saldo insuficiente";
 "swap.switch_provider.title" = "Serviço de Troca";
-"swap.amount_type.coin" = "Coin";
+"swap.amount_type.coin" = "Moeda";
 
 "swap.price" = "Preço";
 "swap.buy_price" = "Preço de Compra";
@@ -546,33 +546,33 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.global.defi_cap.title" = "Mercado de DeFi";
 
 "market.global.tvl_in_defi.title" = "TVL no DeFi";
-"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
-"market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.global.tvl_in_defi.multi_chain" = "Multi-Cadeia";
+"market.global.tvl_in_defi.filter_by_chain" = "Filtrar por cadeia";
 
 // Coin Page
 
 "coin_page.overview" = "Preço";
-"coin_page.analytics" = "Analytics";
+"coin_page.analytics" = "Análises";
 "coin_page.markets" = "Mercados";
 "coin_page.tweets" = "Tweets";
 
 // Coin Page -> Overview
 
 "coin_overview.market_cap" = "Capitalização de mercado";
-"coin_overview.circulating_supply" = "In Circulation";
-"coin_overview.total_supply" = "Total Supply";
+"coin_overview.circulating_supply" = "Em Circulação";
+"coin_overview.total_supply" = "Fornecimento total";
 "coin_overview.diluted_market_cap" = "MCap Diludido";
-"coin_overview.genesis_date" = "Inception Date";
+"coin_overview.genesis_date" = "Data de Início";
 "coin_overview.trading_volume" = "Volume de Operações";
 
 "coin_overview.roi.hour24" = "1 Dia";
 "coin_overview.roi.day7" = "1 Semana";
 "coin_overview.roi.day14" = "2 Semanas";
 "coin_overview.roi.day30" = "1 Mês";
-"coin_overview.roi.day200" = "6 Month";
+"coin_overview.roi.day200" = "6 Meses";
 "coin_overview.roi.year1" = "1 Ano";
 
-"coin_overview.category" = "Category";
+"coin_overview.category" = "Categoria";
 
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
@@ -669,25 +669,25 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "coin_analytics.audits" = "Auditorias";
 "coin_analytics.audits.issues" = "Issues";
-"coin_analytics.audits.no_reports" = "No audit reports";
+"coin_analytics.audits.no_reports" = "Nenhum relatório de auditoria";
 
-"coin_analytics.last_30d" = "last 30d";
-"coin_analytics.current" = "current";
-"coin_analytics.rank" = "Rank";
-"coin_analytics.30_day_rank" = "30-Day Rank";
-"coin_analytics.30_day_volume" = "30-Day Volume";
+"coin_analytics.last_30d" = "últimos 30d";
+"coin_analytics.current" = "atual";
+"coin_analytics.rank" = "Classificação";
+"coin_analytics.30_day_rank" = "Classificação 30-Dias";
+"coin_analytics.30_day_volume" = "Volume 30 Dias";
 
 // Coin Page -> Markets
 
-"coin_markets.empty" = "No data available";
+"coin_markets.empty" = "Não há dados disponíveis";
 
 // Coin Page -> Tweets
 
 "coin_tweets.reference_type.retweeted" = "Retweetado @%@";
 "coin_tweets.reference_type.quoted" = "Citado @%@";
-"coin_tweets.reference_type.replied" = "Replied to @%@";
-"coin_tweets.no_tweets_yet" = "No tweets yet";
-"coin_tweets.not_available" = "No twitter available";
+"coin_tweets.reference_type.replied" = "Respondido a @%@";
+"coin_tweets.no_tweets_yet" = "Não há tweets ainda";
+"coin_tweets.not_available" = "Nenhum twitter disponível";
 "coin_tweets.see_on_twitter" = "Veja no Twitter";
 
 // Pro Features
@@ -999,14 +999,14 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "chart.market_cap" = "Capitalização de mercado";
 "chart.volume" = "Volume (24h)";
-"chart.circulation" = "In Circulation";
+"chart.circulation" = "Em Circulação";
 "chart.selected.volume" = "Volume";
 
 "chart.market.header" = "Mercado";
 "chart.market.market_cap" = "Capitalização de mercado";
 "chart.market.volume" = "Volume (24h)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.circulation" = "Em Circulação";
+"chart.market.total_supply" = "Fornecimento total";
 
 "chart.performance.week_changes" = "Alterações (1S)";
 "chart.performance.month_changes" = "Alterações (1M)";
@@ -1360,7 +1360,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "nft_collection.overview.floor_price" = "Preço Mínimo";
 "nft_collection.overview.all_time_average" = "Média de todo o período";
 "nft_collection.overview.royalty" = "Direitos Autorais";
-"nft_collection.overview.inception_date" = "Inception Date";
+"nft_collection.overview.inception_date" = "Data de Início";
 
 "nft.activity.contracts" = "Contratos";
 "nft.activity.empty_list" = "Sem atividade de item ainda";
