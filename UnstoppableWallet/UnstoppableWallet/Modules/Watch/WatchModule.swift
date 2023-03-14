@@ -19,7 +19,7 @@ struct WatchModule {
         }
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: .ethereum)
-        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain))
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), contactBookManager: nil, blockchainType: .ethereum)
 
         let evmAddressService = WatchEvmAddressService(addressService: addressService)
         let evmAddressViewModel = WatchEvmAddressViewModel(service: evmAddressService)

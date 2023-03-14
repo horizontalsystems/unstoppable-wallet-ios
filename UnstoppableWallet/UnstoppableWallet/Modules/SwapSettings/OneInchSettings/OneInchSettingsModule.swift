@@ -11,6 +11,7 @@ struct OneInchSettingsModule {
         let token = tradeService.tokenIn
 
         let coinCode = token?.coin.code ?? ethereumToken.coin.code
+        let blockchainType = token?.blockchainType ?? ethereumToken.blockchainType
 
         let evmAddressParserItem = EvmAddressParser()
         let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, coinCode: coinCode, token: token)
@@ -25,7 +26,7 @@ struct OneInchSettingsModule {
         }
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: ethereumToken.blockchainType)
-        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), initialAddress: tradeService.settings.recipient)
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), contactBookManager: App.shared.contactManager, blockchainType: blockchainType, initialAddress: tradeService.settings.recipient)
 
         let service = OneInchSettingsService(settings: tradeService.settings, addressService: addressService)
         let viewModel = OneInchSettingsViewModel(service: service, tradeService: tradeService)

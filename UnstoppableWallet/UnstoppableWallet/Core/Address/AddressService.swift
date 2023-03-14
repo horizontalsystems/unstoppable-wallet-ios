@@ -17,6 +17,18 @@ class AddressService {
     private var addressUriParser: AddressUriParser
     private var addressParserChain: AddressParserChain
 
+    private(set) var blockchainType: BlockchainType
+    private let contactBookManager: ContactBookManager?
+
+    private let showContactsRelay = PublishRelay<Bool>()
+    var showContacts: Bool {
+        guard let contactBookManager else {
+            return false
+        }
+
+        return !contactBookManager.contacts(blockchainType: blockchainType).isEmpty
+    }
+
     private var text: String = ""
 
     weak var amountPublishService: IAmountPublishService?
@@ -40,9 +52,12 @@ class AddressService {
         }
     }
 
-    init(mode: Mode, initialAddress: Address? = nil) {
+    init(mode: Mode, contactBookManager: ContactBookManager?, blockchainType: BlockchainType, initialAddress: Address? = nil) {
+        self.blockchainType = blockchainType
+        self.contactBookManager = contactBookManager
+
         switch mode {
-        case .blockchainType(let blockchainType): ()
+        case .blockchainType:
             addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType)
             addressParserChain = AddressParserFactory.parserChain(blockchainType: blockchainType)
         case .parsers(let uriParser, let parserChain):
@@ -54,6 +69,11 @@ class AddressService {
             state = .success(initialAddress)
         } else {
             state = .empty
+        }
+
+        if let contactBookManager {
+            subscribe(disposeBag, contactBookManager.stateObservable) { [weak self] _ in self?.showContactsRelay.accept(self?.showContacts ?? false) }
+            showContactsRelay.accept(showContacts)
         }
     }
 
@@ -104,6 +124,10 @@ extension AddressService {
         customErrorRelay.asObservable().observeOn(scheduler)
     }
 
+    var showContactsObservable: Observable<Bool> {
+        showContactsRelay.asObservable()
+    }
+
     func set(text: String) {
         self.text = text
         guard !text.isEmpty else {
@@ -137,6 +161,8 @@ extension AddressService {
     }
 
     func change(blockchainType: BlockchainType) {
+        self.blockchainType = blockchainType
+
         addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType)
         addressParserChain = AddressParserFactory.parserChain(blockchainType: blockchainType)
 
@@ -175,7 +201,7 @@ extension AddressService {
     }
 
     enum Mode {
-        case blockchainType(BlockchainType)
+        case blockchainType
         case parsers(AddressUriParser, AddressParserChain)
     }
 

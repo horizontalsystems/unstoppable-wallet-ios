@@ -9,6 +9,7 @@ import ThemeKit
 class ContactBookViewController: ThemeSearchViewController {
     private let viewModel: ContactBookViewModel
     private let presented: Bool
+    private weak var selectorDelegate: ContactBookSelectorDelegate?
 
     private let disposeBag = DisposeBag()
     private let tableView = SectionsTableView(style: .grouped)
@@ -17,9 +18,11 @@ class ContactBookViewController: ThemeSearchViewController {
     private var viewItems: [ContactBookViewModel.ViewItem] = []
     private var isLoaded = false
 
-    init(viewModel: ContactBookViewModel, presented: Bool) {
+    init(viewModel: ContactBookViewModel, presented: Bool, selectorDelegate: ContactBookSelectorDelegate? = nil) {
         self.viewModel = viewModel
         self.presented = presented
+        self.selectorDelegate = selectorDelegate
+
         super.init(scrollViews: [tableView])
 
         hidesBottomBarWhenPushed = true
@@ -35,16 +38,25 @@ class ContactBookViewController: ThemeSearchViewController {
         title = "contacts.title".localized
         navigationItem.searchController?.searchBar.placeholder = "contacts.list.search_placeholder".localized
 
-        if presented {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onTapDoneButton))
-        } else {
-            let settingsItem = UIBarButtonItem(image: UIImage(named: "manage_2_24"), style: .plain, target: self, action: #selector(onTapSettings))
+        // delegate means that viewController works as selector for contact
+        let editable = selectorDelegate == nil
+
+        if editable {
+            let settingsItem = UIBarButtonItem(image: UIImage(named: "share_1_24"), style: .plain, target: self, action: #selector(onTapSettings))
             settingsItem.tintColor = .themeJacob
 
             let addContact = UIBarButtonItem(image: UIImage(named: "user_plus_24"), style: .plain, target: self, action: #selector(onCreateContact))
             settingsItem.tintColor = .themeJacob
 
             navigationItem.rightBarButtonItems = [addContact, settingsItem]
+
+            if presented {
+                navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapDoneButton))
+            }
+        } else {
+            if presented {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapDoneButton))
+            }
         }
 
         view.addSubview(tableView)
@@ -65,14 +77,17 @@ class ContactBookViewController: ThemeSearchViewController {
         notFoundPlaceholder.image = UIImage(named: "user_plus_48")
         notFoundPlaceholder.text = "contacts.list.not_found".localized
 
-        notFoundPlaceholder.addPrimaryButton(
-                style: .yellow,
-                title: "contacts.add_new_contact".localized,
-                target: self,
-                action: #selector(onCreateContact)
-        )
+        if editable {
+            notFoundPlaceholder.addPrimaryButton(
+                    style: .yellow,
+                    title: "contacts.add_new_contact".localized,
+                    target: self,
+                    action: #selector(onCreateContact)
+            )
+        }
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.onUpdate(viewItems: $0) }
+        subscribe(disposeBag, viewModel.emptyDriver) { [weak self] in self?.set(empty: $0) }
         subscribe(disposeBag, viewModel.notFoundVisibleDriver) { [weak self] in self?.setNotFound(visible: $0) }
 
         tableView.buildSections()
@@ -91,6 +106,14 @@ class ContactBookViewController: ThemeSearchViewController {
         onUpdateContact()
     }
 
+    private func onTap(viewItem: ContactBookViewModel.ViewItem) {
+        if let viewItem = viewItem as? ContactBookViewModel.SelectorViewItem {
+            selectorDelegate?.onFetch(address: viewItem.address)
+            dismiss(animated: true)
+        } else {
+            onUpdateContact(contactUid: viewItem.uid)
+        }
+    }
 
     private func onUpdateContact(contactUid: String? = nil) {
         let onUpdateContact: (Contact?) -> () = { [weak self] updatedContact in
@@ -114,9 +137,13 @@ class ContactBookViewController: ThemeSearchViewController {
         tableView.reload(animated: isLoaded && animated)
     }
 
+    private func set(empty: Bool) {
+        navigationItem.searchController?.searchBar.isHidden = empty
+        notFoundPlaceholder.isHidden = !empty
+    }
+
     private func setNotFound(visible: Bool) {
         notFoundPlaceholder.isHidden = !visible
-        navigationItem.searchController?.searchBar.isUserInteractionEnabled = !visible
     }
 
     private func deleteRowAction(uid: String) -> RowAction {
@@ -144,12 +171,12 @@ extension ContactBookViewController: SectionsDataSource {
                 title: .body(viewItem.title),
                 description: .subhead2(viewItem.subtitle),
                 accessoryType: .disclosure,
-                hash: viewItem.descrtiption + isFirst.description + isLast.description,
+                hash: viewItem.description + isFirst.description + isLast.description,
                 autoDeselect: true,
                 rowActionProvider:  { [ rowAction ] },
                 isFirst: isFirst,
                 isLast: isLast) { [weak self] in
-            self?.onUpdateContact(contactUid: viewItem.uid)
+            self?.onTap(viewItem: viewItem)
         }
     }
 

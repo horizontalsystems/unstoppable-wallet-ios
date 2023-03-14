@@ -6,6 +6,7 @@ import EvmKit
 class ContactBookService {
     private let disposeBag = DisposeBag()
     private let contactManager: ContactBookManager
+    private let blockchainType: BlockchainType?
 
     private var filter: String = ""
 
@@ -16,33 +17,54 @@ class ContactBookService {
         }
     }
 
-    private let contactRelay = PublishRelay<[Contact]>()
+    private let emptyRelay = BehaviorRelay<Bool>(value: false)
+    private let itemsRelay = PublishRelay<[Item]>()
     private var _contacts: [Contact] = [] {
         didSet {
-            contactRelay.accept(contacts)
+            itemsRelay.accept(items)
+            emptyRelay.accept(_contacts.isEmpty)
         }
     }
 
-    var contacts: [Contact] {
-        guard !filter.isEmpty else {
-            return _contacts
-                    .sorted { contact, contact2 in contact.name < contact2.name }
+    var items: [Item] {
+        let contacts: [Contact]
+
+        // append filter by name
+        if !filter.isEmpty {
+            contacts = _contacts.filter { contact in contact.name.lowercased().contains(filter.lowercased()) }
+        } else {
+            contacts = _contacts
         }
 
-        return _contacts
-                .filter { contact in contact.name.lowercased().contains(filter.lowercased()) }
-                .sorted { contact, contact2 in contact.name < contact2.name }
+        // append readonly filter by blockchain (for select one of contact address)
+        let items: [Item]
+        if let blockchainType {
+            items = contacts.compactMap { contact -> Item? in
+                if let address = contact.addresses.first(where: { $0.blockchainUid == blockchainType.uid }) {
+                    return ReadOnlyItem(uid: contact.uid, name: contact.name, address: address.address)
+                }
+                return nil
+            }
+        } else {
+            items = contacts.map { contact -> Item in
+                EditableItem(uid: contact.uid, name: contact.name, addressCount: contact.addresses.count)
+            }
+        }
+
+        // sort items
+        return items.sorted()
     }
 
-    init(contactManager: ContactBookManager) {
+    init(contactManager: ContactBookManager, blockchainType: BlockchainType?) {
         self.contactManager = contactManager
+        self.blockchainType = blockchainType
 
         subscribe(disposeBag, contactManager.stateObservable) { [weak self] _ in self?.sync() }
         sync()
     }
 
     private func sync() {
-        if let contacts = contactManager.contacts {
+        if let contacts = contactManager.all {
             _contacts = contacts
         } else {
             contactNotAvailable = true
@@ -53,8 +75,12 @@ class ContactBookService {
 
 extension ContactBookService {
 
-    var contactObservable: Observable<[Contact]> {
-        contactRelay.asObservable()
+    var itemsObservable: Observable<[Item]> {
+        itemsRelay.asObservable()
+    }
+
+    var emptyObservable: Observable<Bool> {
+        emptyRelay.asObservable()
     }
 
     var contactNotAvailableObservable: Observable<Bool> {
@@ -64,7 +90,7 @@ extension ContactBookService {
     func set(filter: String) {
         self.filter = filter
 
-        contactRelay.accept(contacts)
+        itemsRelay.accept(items)
     }
 
     func update(contact: Contact) {
@@ -82,6 +108,46 @@ extension ContactBookService {
         } catch {
             // something wrong with store contact
             contactNotAvailable = true
+        }
+    }
+
+}
+
+extension ContactBookService {
+
+    class Item: Comparable {
+        let uid: String
+        let name: String
+
+        init(uid: String, name: String) {
+            self.uid = uid
+            self.name = name
+        }
+
+        static func <(lhs: Item, rhs: Item) -> Bool {
+            lhs.name < rhs.name
+        }
+
+        static func ==(lhs: Item, rhs: Item) -> Bool {
+            lhs.uid == rhs.uid
+        }
+    }
+
+    class ReadOnlyItem: Item {
+        let blockchainAddress: String
+
+        init(uid: String, name: String, address: String) {
+            self.blockchainAddress = address
+            super.init(uid: uid, name: name)
+        }
+    }
+
+    class EditableItem: Item {
+        let addressCount: Int
+
+        init(uid: String, name: String, addressCount: Int) {
+            self.addressCount = addressCount
+            super.init(uid: uid, name: name)
         }
     }
 

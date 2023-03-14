@@ -8,7 +8,7 @@ class ContactBookSyncSettingsService {
     private let confirmationRelay = PublishRelay<()>()
 
     private var needToMerge: Bool {     // when remote sync not enabled yet and user has contacts
-        !(contactManager.remoteSync || (contactManager.contacts?.isEmpty ?? true))
+        !(contactManager.remoteSync || (contactManager.all?.isEmpty ?? true))
     }
 
     init(contactManager: ContactBookManager) {

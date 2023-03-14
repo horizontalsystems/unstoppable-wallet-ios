@@ -8,6 +8,7 @@ class ContactBookViewModel {
     private let service: ContactBookService
     private let disposeBag = DisposeBag()
 
+    private let emptyRelay = BehaviorRelay<Bool>(value: false)
     private let notFoundVisibleRelay = BehaviorRelay<Bool>(value: false)
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
@@ -20,20 +21,34 @@ class ContactBookViewModel {
     init(service: ContactBookService) {
         self.service = service
 
-        subscribe(disposeBag, service.contactObservable) { [weak self] in self?.sync(contacts: $0) }
-        sync(contacts: service.contacts)
+        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
+        subscribe(disposeBag, service.emptyObservable) { [weak self] in self?.emptyRelay.accept($0) }
+        sync(items: service.items)
     }
 
-    private func sync(contacts: [Contact]) {
-        viewItems = contacts.map { contact in
-            ViewItem(
-                    uid: contact.uid,
-                    title: contact.name,
-                    tag: nil,
-                    subtitle: "contacts.list.addresses_count".localized(contact.addresses.count),
-                    showDisclosure: false
-            )
+    private func sync(items: [ContactBookService.Item]) {
+        viewItems = items.map { item in
+            switch item {
+            case let item as ContactBookService.ReadOnlyItem:
+                    return SelectorViewItem(
+                            uid: item.uid,
+                            title: item.name,
+                            subtitle: item.blockchainAddress.shortened,
+                            showDisclosure: false,
+                            address: item.blockchainAddress
+                    )
+            case let item as ContactBookService.EditableItem:
+                    return ViewItem(
+                            uid: item.uid,
+                            title: item.name,
+                            subtitle: item.addressCount.description,
+                            showDisclosure: false
+                    )
+            default:
+                return ViewItem(uid: item.uid, title: item.name, subtitle: "", showDisclosure: true)
+            }
         }
+
         notFoundVisibleRelay.accept(viewItems.isEmpty)
     }
 
@@ -43,6 +58,10 @@ extension ContactBookViewModel {
 
     var viewItemsDriver: Driver<[ViewItem]> {
         viewItemsRelay.asDriver()
+    }
+
+    var emptyDriver: Driver<Bool> {
+        emptyRelay.asDriver()
     }
 
     var notFoundVisibleDriver: Driver<Bool> {
@@ -67,15 +86,29 @@ extension ContactBookViewModel {
 
 extension ContactBookViewModel {
 
-    struct ViewItem {
+    class ViewItem {
         let uid: String
         let title: String
-        let tag: String?
         let subtitle: String
         let showDisclosure: Bool
 
-        var descrtiption: String {
-            uid + title + (tag ?? "") + subtitle + showDisclosure.description
+        init(uid: String, title: String, subtitle: String, showDisclosure: Bool) {
+            self.uid = uid
+            self.title = title
+            self.subtitle = subtitle
+            self.showDisclosure = showDisclosure
+        }
+
+        var description: String {
+            uid + title + subtitle + showDisclosure.description
+        }
+    }
+
+    class SelectorViewItem: ViewItem {
+        let address: String
+        init(uid: String, title: String, subtitle: String, showDisclosure: Bool, address: String) {
+            self.address = address
+            super.init(uid: uid, title: title, subtitle: subtitle, showDisclosure: showDisclosure)
         }
     }
 
