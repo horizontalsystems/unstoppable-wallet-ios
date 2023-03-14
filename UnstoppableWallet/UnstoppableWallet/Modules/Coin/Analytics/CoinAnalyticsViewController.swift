@@ -248,6 +248,11 @@ class CoinAnalyticsViewController: ThemeViewController {
         parentNavigationController?.present(viewController, animated: true)
     }
 
+    private func openRanks(type: CoinRankModule.RankType) {
+        let viewController = CoinRankModule.viewController(type: type)
+        parentNavigationController?.present(viewController, animated: true)
+    }
+
     private func placeholderChartData() -> ChartData {
         var chartItems = [ChartItem]()
 
@@ -388,8 +393,8 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             value: rank,
                             accessoryType: .disclosure,
                             isLast: true,
-                            action: rank.previewableValue { _ in {
-                                // todo
+                            action: rank.previewableValue { _ in { [weak self] in
+                                self?.openRanks(type: .cexVolume)
                             }}
                     )
             )
@@ -428,8 +433,8 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             value: rank,
                             accessoryType: .disclosure,
                             isLast: true,
-                            action: rank.previewableValue { _ in {
-                                // todo
+                            action: rank.previewableValue { _ in { [weak self] in
+                                self?.openRanks(type: .dexVolume)
                             }}
                     )
             )
@@ -468,8 +473,8 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             value: rank,
                             accessoryType: .disclosure,
                             isLast: true,
-                            action: rank.previewableValue { _ in {
-                                // todo
+                            action: rank.previewableValue { _ in { [weak self] in
+                                self?.openRanks(type: .dexLiquidity)
                             }}
                     )
             )
@@ -508,8 +513,8 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             value: rank,
                             accessoryType: .disclosure,
                             isLast: true,
-                            action: rank.previewableValue { _ in {
-                                // todo
+                            action: rank.previewableValue { _ in { [weak self] in
+                                self?.openRanks(type: .address)
                             }}
                     )
             )
@@ -558,8 +563,8 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             value: rank,
                             accessoryType: .disclosure,
                             isLast: true,
-                            action: rank.previewableValue { _ in {
-                                // todo
+                            action: rank.previewableValue { _ in { [weak self] in
+                                self?.openRanks(type: .txCount)
                             }}
                     )
             )
@@ -749,8 +754,8 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             value: rank,
                             accessoryType: .disclosure,
                             isLast: true,
-                            action: rank.previewableValue { _ in {
-                                // todo
+                            action: rank.previewableValue { _ in { [weak self] in
+                                self?.openRanks(type: .revenue)
                             }}
                     )
             )
