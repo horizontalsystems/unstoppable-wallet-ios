@@ -276,8 +276,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "send.hodler_error.unsupported_address" = "O bloqueio de tempo só funciona com endereços P2PKH (iniciando com 1)";
 "send.fee_info.title" = "Taxa de tarifa";
 "send.fee_info.description" = "As Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são maiores quando um monte de transações ocorrem na rede.\n\n A carteira Unstoppable estima a taxa com base na atividade atual da blockchain e recomenda o valor ideal para que a transação seja processada dentro de um período razoável de tempo.\n\n A taxa recomendada é mostrada como a quantidade de satoshi que o usuário precisa pagar por um único byte da transação. Assim, a taxa total depende do tamanho total da transação que é medida em bytes.\n\nUsuários podem utilizar os controles fornecidos para aumentar ou diminuir o custo. A mudança altera a taxa total para a transação que o usuário irá pagar.\n\nDefinir a taxa abaixo do valor recomendado pode resultar em uma transação ser realizada como pendente por horas, ou ser rejeitada. Quanto menor o valor, mais tempo levará a transação para confirmar. Para as transações onde a prioridade é importante, recomendamos definir uma taxa mais alta.";
-"send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
-"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:";
+"send.transaction_inputs_outputs_info.title" = "Entradas / Saídas de Transação";
+"send.transaction_inputs_outputs_info.description" = "A maioria das transações do Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira Unstoppable implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários Unstoppable:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
@@ -683,12 +683,12 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Coin Page -> Tweets
 
-"coin_tweets.reference_type.retweeted" = "Retweeted @%@";
-"coin_tweets.reference_type.quoted" = "Quoted @%@";
+"coin_tweets.reference_type.retweeted" = "Retweetado @%@";
+"coin_tweets.reference_type.quoted" = "Citado @%@";
 "coin_tweets.reference_type.replied" = "Replied to @%@";
 "coin_tweets.no_tweets_yet" = "No tweets yet";
 "coin_tweets.not_available" = "No twitter available";
-"coin_tweets.see_on_twitter" = "See on Twitter";
+"coin_tweets.see_on_twitter" = "Veja no Twitter";
 
 // Pro Features
 
@@ -822,7 +822,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "manage_wallets.search_placeholder" = "Nome, código ou endereço do contrato";
 "manage_wallets.contract_address" = "Endereço do Contrato";
 "manage_wallets.derivation_description" = "There are 3 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (older)\n- BIP49 (newer)\n- BIP84 (newest)\n\nWhile Unstoppable wallet supports all 3 of them it recommends to use a %@ wallet operating in BIP84 format. The wallets operating in this format get to pay lowest fees when sending %@ transactions.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile Unstoppable wallet supports both of them it recommends to use a Bitcoin Cash wallet operating in TYPE 145 format.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Existem 2 formatos de endereço que as carteiras Bitcoin Cash podem usar para receber pagamentos:\n\n- TYPE0 (antigo)\n- TYPE145 (mais recente)\n\nEmbora a carteira Unstoppable suporte ambos, recomenda-se usar uma carteira Bitcoin Cash operando no formato TYPE145.";
 
 // Settings -> Experimental Features
 
@@ -944,26 +944,26 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "appearance.balance_value.fiat_value" = "Valor Fiat";
 
 // Settings -> Contacts
-"contacts.title" = "Contacts";
+"contacts.title" = "Contatos";
 "contacts.list.search_placeholder" = "Nome";
-"contacts.list.not_found" = "You do not have an added contact";
-"contacts.add_new_contact" = "Add New Contact";
-"contacts.list.addresses_count" = "Addresses: %d";
-"contacts.contact.new.title" = "New Contact";
-"contacts.contact.update.error.name_already_exist" = "Name Already Exist";
-"contacts.contact.add_address" = "Add Address";
-"contacts.contact.delete" = "Delete Contact";
+"contacts.list.not_found" = "Você não tem nenhum contato adicionado";
+"contacts.add_new_contact" = "Adicionar um novo contato";
+"contacts.list.addresses_count" = "Endereços: %d";
+"contacts.contact.new.title" = "Novo Contato";
+"contacts.contact.update.error.name_already_exist" = "Nome já existe";
+"contacts.contact.add_address" = "Adicionar endereço";
+"contacts.contact.delete" = "Excluir contato";
 "contacts.contact.address.blockchains" = "Blockchains";
 "contacts.contact.address.blockchain" = "Blockchain";
-"contacts.contact.address.delete_address" = "Delete Address";
+"contacts.contact.address.delete_address" = "Excluir endereço";
 
 // Settings -> iCloud Sync
 
-"icloud_sync.title" = "iCloud Sync";
-"settings.icloud_sync.title" = "iCloud Sync";
-"settings.icloud_sync.contact_book" = "Sync Contacts";
-"settings.icloud_sync.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
-"settings.icloud_sync.merge_disclaimer" = "You have local contacts that will be merged with icloud contacts.";
+"icloud_sync.title" = "Sincronização com iCloud";
+"settings.icloud_sync.title" = "Sincronização com iCloud";
+"settings.icloud_sync.contact_book" = "Sincronizar contatos";
+"settings.icloud_sync.description" = "Sincronize os contatos de pagamento no iCloud para facilitar o backup e o acesso entre vários dispositivos.";
+"settings.icloud_sync.merge_disclaimer" = "Você tem contatos locais que serão mesclados com contatos iCloud";
 
 // Set PIN
 
@@ -1110,8 +1110,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "O valor da taxa selecionada é muito baixo e será rejeitado!";
 "ethereum_transaction.error.nonce_already_in_block" = "A transação já foi confirmada!";
 "ethereum_transaction.error.replacement_transaction_underpriced" = "Taxa insuficiente para substituir a transação";
-"ethereum_transaction.error.transaction_underpriced" = "Fee not enough to send the transaction";
-"ethereum_transaction.error.tips_higher_than_max_fee" = "Max fee cannot be lower than the tips, because Max fee includes the tips.";
+"ethereum_transaction.error.transaction_underpriced" = "Taxa insuficiente para realizar transação";
+"ethereum_transaction.error.tips_higher_than_max_fee" = "Taxa máxima não pode ser inferior à dica, porque a taxa máxima inclui as dicas.";
 "ethereum_transaction.error.reverted" = "A transação não pode ser executada: %@";
 "wallet_connect.request_title" = "Chamada de Contrato";
 "wallet_connect.button.confirm" = "Confirmar";
@@ -1210,11 +1210,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Birthday Height
 
-"birthday_height.title" = "Birthday Height";
+"birthday_height.title" = "Aniversário";
 
 // Birthday Input
 
-"birthday_input.title" = "Birthday Height";
+"birthday_input.title" = "Aniversário";
 "birthday_input.description" = "Insira a data da criação da carteira para uma sincronização mais rápida.";
 "birthday_input.new_wallet" = "Nova Carteira";
 "birthday_input.new_wallet.description" = "Não tem nenhuma transação";
@@ -1222,7 +1222,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "birthday_input.old_wallet.description" = "Tem transações";
 "birthday_input.input_placeholder" = "%@ (opcional)";
 
-"restore_setting.birthday_height" = "%@ Birthday Height";
+"restore_setting.birthday_height" = "%@ Aniversário";
 "restore_setting.download.disclaimer" = "A sincronização inicial com o blockchain pode consumir muito tráfego na internet.";
 
 // EVM Network
@@ -1254,7 +1254,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "fee_settings.fee_rate.description" = "Aqui é o valor recomendado para atingir os próximos 2 blocos";
 "fee_settings.inputs_outputs" = "Entrada/Saída";
 "fee_settings.transaction_settings" = "Configurações de transação";
-"fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
+"fee_settings.transaction_settings.description" = "Torne suas %@ transações mais difíceis de rastrear, mudando a maneira como as transações são estruturadas.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock funciona apenas para enviar para endereços BIP44 (começando com 1)";
 
@@ -1268,10 +1268,10 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "fee_settings.base_fee" = "Taxa Base";
 "fee_settings.base_fee.info" = "O protocolo de rede determina o preço base por gas para cada bloco, a taxa base. Varia de acordo com o nível de utilização da rede de bloco para bloco. Ele pode aumentar ou diminuir em não mais do que 12,5% no próximo bloco, tornando as taxas mais previsíveis. O valor mostrado aqui é a taxa base de taxa atual do bloco.";
-"fee_settings.max_fee_rate" = "Max Fee Rate";
+"fee_settings.max_fee_rate" = "Taxa Máxima";
 "fee_settings.max_fee_rate.info" = "Este é o preço total máximo por gas que o usuário está disposto a pagar. Ela deve cobrir a taxa base da rede e a taxa máxima de prioridade. O valor mostrado aqui é sugerido com base em uma estimativa da taxa base do próximo bloco mais a taxa máxima de prioridade escolhida pelo usuário. A taxa real paga normalmente será menor. Definir isso mais baixo que a taxa base atual irá limitar a taxa paga, mas resultará em períodos de espera mais longos para que a transação seja confirmada, ou até mesmo em uma transação travada.";
-"fee_settings.tips" = "Max Priority Fee";
-"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+"fee_settings.tips" = "Taxa de prioridade máxima";
+"fee_settings.tips.info" = "Os usuários pagam taxas de prioridade para incentivar uma transação a ser confirmada mais rapidamente. Às vezes são chamados de tips. A taxa máxima de prioridade é o preço adicional máximo por gas que o usuário está disposto a pagar acima da taxa base. O valor mostrado aqui é sugerido com base nas condições previstas de rede. A taxa de prioridade real normalmente será menor. Definir como zero pode resultar em um longo tempo de espera para que a transação seja confirmada, como é colocado no final da fila de transações pendentes de todos os usuários.";
 
 "fee_settings.errors.insufficient_balance" = "Saldo insuficiente";
 "fee_settings.errors.insufficient_balance.info" = "O saldo atual de %@ está abaixo do valor necessário para processar a transação, incluindo taxa de transação.";
@@ -1279,8 +1279,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "fee_settings.errors.low_max_fee.info" = "A taxa de transação definida é insuficiente para processar esta transação agora.";
 "fee_settings.errors.nonce_already_in_block" = "Não é possível substituir a transação.";
 "fee_settings.errors.replacement_transaction_underpriced" = "Taxa baixa para transação substituída";
-"fee_settings.errors.transaction_underpriced" = "Low Fee for transaction";
-"fee_settings.errors.tips_higher_than_max_fee" = "Max Fee is too low";
+"fee_settings.errors.transaction_underpriced" = "Taxa baixa para transação";
+"fee_settings.errors.tips_higher_than_max_fee" = "A taxa máxima é muito baixa";
 "fee_settings.warning.risk_of_getting_stuck" = "Arriscado";
 "fee_settings.warning.risk_of_getting_stuck.info" = "A transação pode permanecer pendente por um tempo ou falhar completamente.";
 "fee_settings.warning.overpricing" = "Taxa Muito Alta";
