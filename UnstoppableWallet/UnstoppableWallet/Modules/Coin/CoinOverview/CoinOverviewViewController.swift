@@ -215,7 +215,7 @@ extension CoinOverviewViewController {
             let guideRow = linkRow(
                     id: "guide",
                     image: "academy_1_24",
-                    title: "coin_page.guide".localized,
+                    title: "coin_overview.guide".localized,
                     isFirst: true,
                     isLast: isLast,
                     action: { [weak self] in
@@ -230,7 +230,7 @@ extension CoinOverviewViewController {
         return Section(
                 id: "links",
                 headerState: .margin(height: .margin12),
-                rows: [tableView.subtitleRow(text: "coin_page.links".localized)] + guideRows + links.enumerated().map { index, link in
+                rows: [tableView.subtitleRow(text: "coin_overview.links".localized)] + guideRows + links.enumerated().map { index, link in
                     linkRow(
                             id: link.title,
                             image: link.iconName,
@@ -301,7 +301,7 @@ extension CoinOverviewViewController {
                 id: "categories",
                 headerState: .margin(height: .margin12),
                 rows: [
-                    tableView.subtitleRow(text: "coin_page.category".localized),
+                    tableView.subtitleRow(text: "coin_overview.category".localized),
                     Row<TextCell>(
                             id: "categories",
                             dynamicHeight: { width in
@@ -438,25 +438,22 @@ extension CoinOverviewViewController {
     private func marketInfoSection(viewItem: CoinOverviewViewModel.ViewItem) -> SectionProtocol? {
         let datas = [
             viewItem.marketCap.map {
-                (id: "market_cap", title: "coin_page.market_cap".localized, badge: viewItem.marketCapRank, text: $0)
+                (id: "market_cap", title: "coin_overview.market_cap".localized, badge: viewItem.marketCapRank, text: $0)
             },
             viewItem.totalSupply.map {
-                (id: "total_supply", title: "coin_page.total_supply".localized, badge: nil, text: $0)
+                (id: "total_supply", title: "coin_overview.total_supply".localized, badge: nil, text: $0)
             },
             viewItem.circulatingSupply.map {
-                (id: "circulating_supply", title: "coin_page.circulating_supply".localized, badge: nil, text: $0)
+                (id: "circulating_supply", title: "coin_overview.circulating_supply".localized, badge: nil, text: $0)
             },
             viewItem.volume24h.map {
-                (id: "volume24", title: "coin_page.trading_volume".localized, badge: nil, text: $0)
+                (id: "volume24", title: "coin_overview.trading_volume".localized, badge: nil, text: $0)
             },
             viewItem.dilutedMarketCap.map {
-                (id: "diluted_m_cap", title: "coin_page.diluted_market_cap".localized, badge: nil, text: $0)
-            },
-            viewItem.tvl.map {
-                (id: "tvl", title: "coin_page.tvl".localized, badge: nil, text: $0)
+                (id: "diluted_m_cap", title: "coin_overview.diluted_market_cap".localized, badge: nil, text: $0)
             },
             viewItem.genesisDate.map {
-                (id: "genesis_date", title: "coin_page.genesis_date".localized, badge: nil, text: $0)
+                (id: "genesis_date", title: "coin_overview.genesis_date".localized, badge: nil, text: $0)
             }
         ].compactMap {
             $0

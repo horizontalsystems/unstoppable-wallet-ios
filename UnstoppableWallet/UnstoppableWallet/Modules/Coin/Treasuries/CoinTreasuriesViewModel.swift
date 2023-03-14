@@ -68,10 +68,10 @@ class CoinTreasuriesViewModel {
 
     private func title(typeFilter: CoinTreasuriesService.TypeFilter) -> String {
         switch typeFilter {
-        case .all: return "coin_page.treasuries.filter.all".localized
-        case .public: return "coin_page.treasuries.filter.public".localized
-        case .private: return "coin_page.treasuries.filter.private".localized
-        case .etf: return "coin_page.treasuries.filter.etf".localized
+        case .all: return "coin_analytics.treasuries.filter.all".localized
+        case .public: return "coin_analytics.treasuries.filter.public".localized
+        case .private: return "coin_analytics.treasuries.filter.private".localized
+        case .etf: return "coin_analytics.treasuries.filter.etf".localized
         }
     }
 }
@@ -79,7 +79,7 @@ class CoinTreasuriesViewModel {
 extension CoinTreasuriesViewModel: IDropdownSortHeaderViewModel {
 
     var dropdownTitle: String {
-        "coin_page.treasuries.filters".localized
+        "coin_analytics.treasuries.filters".localized
     }
 
     var dropdownViewItems: [AlertViewItem] {

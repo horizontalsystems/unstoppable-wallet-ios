@@ -218,11 +218,6 @@ class CoinAnalyticsViewController: ThemeViewController {
         parentNavigationController?.present(viewController, animated: true)
     }
 
-    private func openTvl() {
-        let viewController = CoinTvlModule.tvlViewController(coinUid: viewModel.coin.uid)
-        parentNavigationController?.present(viewController, animated: true)
-    }
-
     private func openTvlRank() {
         let viewController = MarketGlobalMetricModule.tvlInDefiViewController()
         parentNavigationController?.pushViewController(viewController, animated: true)
@@ -379,8 +374,8 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     infoAction: { [weak self] in
                         self?.openCexVolumeInfo()
                     },
-                    action: {
-                        // todo
+                    action: { [weak self] in
+                        self?.openProDataChart(type: .cexVolume)
                     }
             )
         ]
@@ -420,7 +415,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                         self?.openDexVolumeInfo()
                     },
                     action: { [weak self] in
-                        self?.openProDataChart(type: .volume)
+                        self?.openProDataChart(type: .dexVolume)
                     }
             )
         ]
@@ -460,7 +455,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                         self?.openDexLiquidityInfo()
                     },
                     action: { [weak self] in
-                        self?.openProDataChart(type: .liquidity)
+                        self?.openProDataChart(type: .dexLiquidity)
                     }
             )
         ]
@@ -675,7 +670,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                         self?.openTvlInfo()
                     },
                     action: { [weak self] in
-                        self?.openTvl()
+                        self?.openProDataChart(type: .tvl)
                     }
             )
         ]

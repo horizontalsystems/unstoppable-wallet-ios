@@ -21,8 +21,8 @@ class MetricChartService {
         }
     }
 
-    private let stateRelay = PublishRelay<DataStatus<[MetricChartModule.Item]>>()
-    private(set) var state: DataStatus<[MetricChartModule.Item]> = .loading {
+    private let stateRelay = PublishRelay<DataStatus<MetricChartModule.ItemData>>()
+    private(set) var state: DataStatus<MetricChartModule.ItemData> = .loading {
         didSet {
             stateRelay.accept(state)
         }
@@ -39,8 +39,7 @@ class MetricChartService {
         disposeBag = DisposeBag()
         state = .loading
 
-        chartFetcher
-            .fetchSingle(interval: interval)
+        chartFetcher.fetchSingle(interval: interval)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] items in
                 self?.state = .completed(items)
@@ -60,7 +59,7 @@ extension MetricChartService {
         intervalRelay.asObservable()
     }
 
-    var stateObservable: Observable<DataStatus<[MetricChartModule.Item]>> {
+    var stateObservable: Observable<DataStatus<MetricChartModule.ItemData>> {
         stateRelay.asObservable()
     }
 

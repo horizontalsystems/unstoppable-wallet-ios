@@ -45,10 +45,10 @@ extension CoinPageModule {
 
         var title: String {
             switch self {
-            case .overview: return "coin_page.tab.overview".localized
-            case .analytics: return "coin_page.tab.analytics".localized
-            case .markets: return "coin_page.tab.markets".localized
-            case .tweets: return "coin_page.tab.tweets".localized
+            case .overview: return "coin_page.overview".localized
+            case .analytics: return "coin_page.analytics".localized
+            case .markets: return "coin_page.markets".localized
+            case .tweets: return "coin_page.tweets".localized
             }
         }
     }

@@ -14,12 +14,12 @@ class MetricChartViewModel {
     private let disposeBag = DisposeBag()
 
     private let pointSelectModeEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let pointSelectedItemRelay = BehaviorRelay<SelectedPointViewItem?>(value: nil)
+    private let pointSelectedItemRelay = BehaviorRelay<ChartModule.SelectedPointViewItem?>(value: nil)
 
     private let intervalIndexRelay = BehaviorRelay<Int>(value: 0)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let valueRelay = BehaviorRelay<String?>(value: nil)
-    private let chartInfoRelay = BehaviorRelay<CoinChartViewModel.ViewItem?>(value: nil)
+    private let chartInfoRelay = BehaviorRelay<ChartModule.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
     var chartTitle: String? { nil }
@@ -44,23 +44,21 @@ class MetricChartViewModel {
         intervalIndexRelay.accept(service.intervals.firstIndex(of: interval) ?? 0)
     }
 
-    private func sync(state: DataStatus<[MetricChartModule.Item]>) {
+    private func sync(state: DataStatus<MetricChartModule.ItemData>) {
         loadingRelay.accept(state.isLoading)
         errorRelay.accept(state.error?.smartDescription)
+
         if state.error != nil {
-            valueRelay.accept(nil)
-            chartInfoRelay.accept(nil)
-
-            return
-        }
-
-        guard let items = state.data else {
             chartInfoRelay.accept(nil)
             return
         }
 
-        let viewItem = factory.convert(items: items, interval: service.interval, valueType: chartConfiguration.valueType)
-        valueRelay.accept(viewItem.currentValue)
+        guard let itemData = state.data else {
+            chartInfoRelay.accept(nil)
+            return
+        }
+
+        let viewItem = factory.convert(itemData: itemData, interval: service.interval, valueType: chartConfiguration.valueType)
 
         chartInfoRelay.accept(viewItem)
     }
@@ -73,7 +71,7 @@ extension MetricChartViewModel: IChartViewModel {
         pointSelectModeEnabledRelay.asDriver()
     }
 
-    var pointSelectedItemDriver: Driver<SelectedPointViewItem?> {
+    var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> {
         pointSelectedItemRelay.asDriver()
     }
 
@@ -89,7 +87,7 @@ extension MetricChartViewModel: IChartViewModel {
         loadingRelay.asDriver()
     }
 
-    var chartInfoDriver: Driver<CoinChartViewModel.ViewItem?> {
+    var chartInfoDriver: Driver<ChartModule.ViewItem?> {
         chartInfoRelay.asDriver()
     }
 
@@ -106,14 +104,6 @@ extension MetricChartViewModel: IChartViewModel {
         }
 
         service.interval = chartTypes[index]
-    }
-
-    var valueDriver: Driver<String?> {
-        valueRelay.asDriver()
-    }
-
-    func onTap(indicator: ChartIndicatorSet) {
-        // ignoring indicators
     }
 
     func start() {
@@ -134,24 +124,18 @@ extension MetricChartViewModel: IChartViewTouchDelegate {
 
     public func select(item: ChartItem) {
         HapticGenerator.instance.notification(.feedback(.soft))
-        pointSelectedItemRelay.accept(factory.selectedPointViewItem(chartItem: item, valueType: chartConfiguration.valueType))
+
+        pointSelectedItemRelay.accept(
+                factory.selectedPointViewItem(
+                        chartItem: item,
+                        firstChartItem: chartInfoRelay.value?.chartData.items.first,
+                        valueType: chartConfiguration.valueType
+                )
+        )
     }
 
     public func touchUp() {
         pointSelectModeEnabledRelay.accept(false)
-    }
-
-}
-
-extension MetricChartViewModel {
-
-    class ViewItem: CoinChartViewModel.ViewItem {
-        let currentValue: String?
-
-        init(currentValue: String?, chartData: ChartData, chartTrend: MovementTrend, chartDiff: Decimal?, minValue: String?, maxValue: String?, timeline: [ChartTimelineItem], selectedIndicator: ChartIndicatorSet?) {
-            self.currentValue = currentValue
-            super.init(chartData: chartData, chartTrend: chartTrend, chartDiff: chartDiff, minValue: minValue, maxValue: maxValue, timeline: timeline, selectedIndicator: selectedIndicator)
-        }
     }
 
 }

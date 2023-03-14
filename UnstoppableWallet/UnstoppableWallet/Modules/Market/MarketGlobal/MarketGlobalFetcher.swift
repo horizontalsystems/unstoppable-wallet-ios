@@ -19,8 +19,8 @@ class MarketGlobalFetcher {
 
 extension MarketGlobalFetcher: IMetricChartConfiguration {
     var title: String { metricsType.title }
-    var description: String? { metricsType.description }
-    var poweredBy: String? { "DefiLlama API" }
+    var description: String? { nil }
+    var poweredBy: String? { nil }
 
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue(currencyKit.baseCurrency)
@@ -30,11 +30,11 @@ extension MarketGlobalFetcher: IMetricChartConfiguration {
 
 extension MarketGlobalFetcher: IMetricChartFetcher {
 
-    func fetchSingle(interval: HsTimePeriod) -> RxSwift.Single<[MetricChartModule.Item]> {
+    func fetchSingle(interval: HsTimePeriod) -> RxSwift.Single<MetricChartModule.ItemData> {
         marketKit
                 .globalMarketPointsSingle(currencyCode: currencyKit.baseCurrency.code, timePeriod: interval)
                 .map { [weak self] points in
-                    let result = points.map { point -> MetricChartModule.Item in
+                    let items = points.map { point -> MetricChartModule.Item in
                         let value: Decimal
                         var additional = [ChartIndicatorName: Decimal]()
 
@@ -50,8 +50,7 @@ extension MarketGlobalFetcher: IMetricChartFetcher {
                         return MetricChartModule.Item(value: value, indicators: additional, timestamp: point.timestamp)
                     }
 
-
-                    return result
+                    return MetricChartModule.ItemData(items: items, type: .regular)
                 }
     }
 

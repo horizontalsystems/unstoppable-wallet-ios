@@ -14,12 +14,12 @@ class CoinProChartModule {
                 interval: .month1
         )
 
-        let factory = MetricChartFactory(timelineHelper: TimelineHelper(), valueType: type.valueType, currentLocale: LanguageManager.shared.currentLocale)
+        let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
 
         return MetricChartViewController(
                 viewModel: chartViewModel,
-                configuration: type.hasDiff ? .baseChart : .baseBarChart
+                configuration: type.chartConfiguration
         ).toBottomSheet
     }
 
@@ -28,61 +28,31 @@ class CoinProChartModule {
 extension CoinProChartModule {
 
     enum ProChartType {
-        case volume
-        case liquidity
-        case txCount
-        case txVolume
+        case cexVolume
+        case dexVolume
+        case dexLiquidity
         case activeAddresses
-
-        var valueTitle: String {
-            switch self {
-            case .volume: return "coin_page.dex_volume".localized
-            case .liquidity: return "coin_page.dex_liquidity".localized
-            case .txCount: return "coin_page.tx_count".localized
-            case .txVolume: return "coin_page.tx_volume".localized
-            case .activeAddresses: return "coin_page.active_addresses".localized
-            }
-        }
+        case txCount
+        case tvl
 
         var title: String {
             switch self {
-            case .volume: return "coin_page.dex_volume.title".localized
-            case .liquidity: return "coin_page.dex_liquidity".localized
-            case .txCount: return "coin_page.tx_count.title".localized
-            case .txVolume: return "coin_page.tx_volume.title".localized
-            case .activeAddresses: return "coin_page.active_addresses".localized
+            case .cexVolume: return "coin_analytics.cex_volume".localized
+            case .dexVolume: return "coin_analytics.dex_volume".localized
+            case .dexLiquidity: return "coin_analytics.dex_liquidity".localized
+            case .activeAddresses: return "coin_analytics.active_addresses".localized
+            case .txCount: return "coin_analytics.transaction_count".localized
+            case .tvl: return "coin_analytics.project_tvl".localized
             }
         }
 
-        var description: String {
+        var chartConfiguration: ChartConfiguration {
             switch self {
-            case .volume: return "coin_page.dex_volume.description".localized
-            case .liquidity: return "coin_page.dex_liquidity.description".localized
-            case .txCount: return "coin_page.tx_count.description".localized
-            case .txVolume: return "coin_page.tx_volume.description".localized
-            case .activeAddresses: return "coin_page.active_addresses.description".localized
+            case .cexVolume, .dexVolume, .activeAddresses: return .baseBarChart
+            case .txCount: return .volumeBarChart
+            case .dexLiquidity, .tvl: return .baseChart
             }
         }
-
-        var valueType: ChartValueType {
-            switch self {
-            case .volume: return .cumulative
-            case .liquidity: return .last
-            case .txCount: return .cumulative
-            case .txVolume: return .cumulative
-            case .activeAddresses: return .cumulative
-            }
-        }
-
-        var hasDiff: Bool {
-            valueType == .last
-        }
-
-    }
-
-    enum ChartValueType {
-        case cumulative
-        case last
     }
 
 }

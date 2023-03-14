@@ -23,7 +23,7 @@ struct CoinOverviewModule {
 
         let viewModel = CoinOverviewViewModel(service: service)
 
-        let chartFactory = CoinChartFactory(timelineHelper: TimelineHelper(), indicatorFactory: IndicatorFactory(), currentLocale: LanguageManager.shared.currentLocale)
+        let chartFactory = CoinChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = CoinChartViewModel(service: chartService, factory: chartFactory)
 
         return CoinOverviewViewController(

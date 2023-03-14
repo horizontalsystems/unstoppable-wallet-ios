@@ -14,7 +14,7 @@ struct TopPlatformModule {
 
         let marketCapFetcher = TopPlatformMarketCapFetcher(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, topPlatform: topPlatform)
         let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .day1)
-        let factory = MetricChartFactory(timelineHelper: TimelineHelper(), currentLocale: LanguageManager.shared.currentLocale)
+        let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         let chartViewModel = MarketCategoryMetricChartViewModel(service: chartService, chartConfiguration: marketCapFetcher, factory: factory)
 
         let decorator = MarketListMarketFieldDecorator(service: service)

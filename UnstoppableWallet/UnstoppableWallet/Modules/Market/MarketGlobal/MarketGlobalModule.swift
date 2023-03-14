@@ -17,15 +17,6 @@ struct MarketGlobalModule {
             }
         }
 
-        var description: String {
-            switch self {
-            case .totalMarketCap: return "market.global.btc_dominance.description".localized
-            case .volume24h: return "market.global.volume_24h.description".localized
-            case .defiCap: return "market.global.defi_cap.description".localized
-            case .tvlInDefi: return "market.global.tvl_in_defi.description".localized
-            }
-        }
-
         var marketField: MarketModule.MarketField {
             switch self {
             case .totalMarketCap: return .marketCap

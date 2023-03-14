@@ -69,7 +69,7 @@ extension MarketListTvlDecorator: IMarketListDecorator {
                 iconShape: .square,
                 iconPlaceholderName: iconPlaceholderName,
                 leftPrimaryValue: name,
-                leftSecondaryValue: defiCoin.chains.count == 1 ? defiCoin.chains[0] : "coin_page.tvl_rank.multi_chain".localized,
+                leftSecondaryValue: defiCoin.chains.count == 1 ? defiCoin.chains[0] : "market.global.tvl_in_defi.multi_chain".localized,
                 badge: "\(defiCoin.tvlRank)",
                 badgeSecondaryValue: nil,
                 rightPrimaryValue: tvl.flatMap { ValueFormatter.instance.formatShort(currency: currency, value: $0) } ?? "n/a".localized,

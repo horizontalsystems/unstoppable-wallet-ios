@@ -38,7 +38,7 @@ class CoinMarketsViewModel {
         case .loaded(let tickers, let reorder):
             viewItemsRelay.accept(viewItems(tickers: tickers))
             loadingRelay.accept(false)
-            infoRelay.accept(tickers.isEmpty ? "coin_page.markets.empty".localized : nil)
+            infoRelay.accept(tickers.isEmpty ? "coin_markets.empty".localized : nil)
             syncErrorRelay.accept(false)
 
             if reorder {
