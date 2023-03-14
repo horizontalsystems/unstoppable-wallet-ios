@@ -546,144 +546,46 @@
 "market.global.total_market_cap.title" = "Общая капитализация";
 "market.global.volume_24h.title" = "Объем торгов (24ч)";
 "market.global.defi_cap.title" = "Капитализация DeFi";
-"market.global.tvl_in_defi.title" = "TVL в DeFi";
 
-"market.global.btc_dominance.title" = "Доминирование Bitcoin";
-"market.global.volume_24h.title" = "Объем торгов (24ч)";
-"market.global.defi_cap.title" = "Капитализация DeFi";
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
-"market.global.btc_dominance.description" = "Историческое изменение соотношения рыночной капитализации биткойнов к остальным криптовалютным рынкам. \n\nОбычно, в этом случае биткойны доминируют над остальными тенденциями криптовалютного рынка и наоборот.";
-"market.global.volume_24h.description" = "Историческое изменение в ежедневном совокупном объеме торговли для всех криптовалют.";
-"market.global.defi_cap.description" = "Историческое изменение в совокупной рыночной стоимости токенов в Децентрализованном Финансовом Секторе.";
-"market.global.tvl_in_defi.description" = "Историческое изменение в совокупной стоимости всех криптовалют, управляемых децентрализованными протоколами.";
+"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
+"market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
 
 // Coin Page
 
-"coin_page.roi.hour1" = "1 Час";
-"coin_page.roi.hour24" = "1 День";
-"coin_page.roi.day7" = "1 Неделя";
-"coin_page.roi.day14" = "2 Недели";
-"coin_page.roi.day30" = "1 Месяц";
-"coin_page.roi.day200" = "6 Месяцев";
-"coin_page.roi.year1" = "1 Год";
-
-"coin_page.tab.overview" = "Цена";
-"coin_page.tab.analytics" = "Аналитика";
-"coin_page.tab.markets" = "Рынки";
-"coin_page.tab.tweets" = "Твиты";
-
-"coin_page.market_cap" = "Рын. капитализация";
-"coin_page.circulating_supply" = "В обороте";
-"coin_page.total_supply" = "Макс.выпуск";
-"coin_page.diluted_market_cap" = "Разводненная рын.кап.";
-"coin_page.genesis_date" = "Дата Старта";
-
-"coin_page.trading_volume" = "Объем торговли";
-"coin_page.trading_volume.description" = "Историческое изменение усредненного ежедневного объема торговли для %@";
+"coin_page.overview" = "Цена";
+"coin_page.analytics" = "Analytics";
 "coin_page.markets" = "Рынки";
-"coin_page.markets.empty" = "Данные отсутствуют";
+"coin_page.tweets" = "Tweets";
 
-"coin_page.token_liquidity" = "Ликвидность токена";
-"coin_page.token_liquidity.description" = "Состояние ликвидности для данного актива на децентрализованных валютных рынках.";
-"coin_page.dex_volume" = "Объем торг. DEX (30д)";
-"coin_page.dex_volume.title" = "Объем торгов DEX";
-"coin_page.dex_volume.description" = "Торговый объем для токена на децентрализованных биржах.";
-"coin_page.dex_liquidity" = "Ликвидность DEX";
-"coin_page.dex_liquidity.description" = "Общая сумма доступной ликвидности для токена на децентрализованных биржах.";
+// Coin Page -> Overview
 
-"coin_page.token_distribution" = "Распределение токенов";
-"coin_page.token_distribution.description" = "Параметры токена блокчейна. Обычно, нормальные проекты имеют активную базу пользователей и хорошо распределенный токен.";
-"coin_page.tx_count" = "Транзакций (30д):";
-"coin_page.tx_count.title" = "Транзакций:";
-"coin_page.tx_count.description" = "Количество транзакций токенов, зарегистрированных ончейн за различные периоды.";
-"coin_page.tx_volume" = "Объем транз. (30д)";
-"coin_page.tx_volume.title" = "Объем транзак.";
-"coin_page.tx_volume.description" = "Совокупный объем транзакций токенов регистрируется ончейн. Объем измеряется в токенах (а не в долларах США).";
-"coin_page.active_addresses" = "Активные адреса";
-"coin_page.active_addresses.description" = "Количество уникальных адресов кошельков, использованных для осуществления транзакций за различные периоды.";
+"coin_overview.market_cap" = "Рын. капитализация";
+"coin_overview.circulating_supply" = "In Circulation";
+"coin_overview.total_supply" = "Total Supply";
+"coin_overview.diluted_market_cap" = "Разводненная рын.кап.";
+"coin_overview.genesis_date" = "Inception Date";
+"coin_overview.trading_volume" = "Объем торговли";
 
-"coin_page.chart_tvl" = "Токен TVL";
-"coin_page.chart_volumes" = "Общий Объём";
-"coin_page.token_tvl" = "Токен TVL";
-"coin_page.token_tvl.description" = "Общее значение заблокированных активов (Total Value Locked или TVL) - это метрика, отражающая общую стоимость криптовалютных активов, подлежащих автоматическому управлению в рамках смарт-контрактов, поддерживающих данный протокол.";
-"coin_page.tvl" = "Всего Залоченных Активов";
-"coin_page.tvl_rank" = "Рейтинг TVL";
-"coin_page.tvl_rank.description" = "Рейтинг по отношению к другим протоколам основан на значении TVL в долларах США.";
-"coin_page.market_cap_tvl_ratio" = "Рын.кап / Соотношение TVL ";
-"coin_page.market_cap_tvl_ratio.description" = "Соотношение рыночной капитализации токена проекта и его значения TVL.";
-"coin_page.tvl.description" = "Капитал, внесенный в платформу в виде кредитного обеспечения или пула ликвидности.";
+"coin_overview.roi.hour24" = "1 День";
+"coin_overview.roi.day7" = "1 Неделя";
+"coin_overview.roi.day14" = "2 Недели";
+"coin_overview.roi.day30" = "1 Месяц";
+"coin_overview.roi.day200" = "6 Month";
+"coin_overview.roi.year1" = "1 Год";
 
-"coin_page.investor_data" = "Данные Инвестора";
+"coin_overview.category" = "Category";
 
-"coin_page.treasuries" = "Treasuries";
-"coin_page.treasuries.filters" = "Фильтры";
-"coin_page.treasuries.filter.all" = "Все";
-"coin_page.treasuries.filter.public" = "В открытом доступе";
-"coin_page.treasuries.filter.private" = "В закрытом доступе";
-"coin_page.treasuries.filter.etf" = "ETF";
+"coin_overview.blockchains" = "Блокчейны";
+"coin_overview.bips" = "BIPs";
+"coin_overview.coin_types" = "Coin Types";
+"coin_overview.show_more" = "Показать Ещё";
+"coin_overview.show_less" = "Show Less";
+"coin_overview.links" = "Links";
 
-"coin_page.funds_invested" = "Вложенные средства";
-"coin_page.funds_invested.lead" = "Лиды";
-
-"coin_page.reports" = "Отчёты";
-
-"coin_page.category" = "Категория";
-
-"coin_page.blockchains" = "Блокчейны";
-"coin_page.bips" = "BIPы";
-"coin_page.coin_types" = "Типы Токенов";
-"coin_page.show_more" = "Показать Ещё";
-"coin_page.show_less" = "Свернуть";
-"coin_page.links" = "Ссылки";
-
-"coin_page.guide" = "Руководство";
-"coin_page.website" = "Веб-сайт";
-"coin_page.whitepaper" = "Документ";
-
-"coin_page.favorited" = "Добавлено в избранное";
-"coin_page.unfavorited" = "Удалить из избранного";
-"coin_page.added_to_wallet" = "Добавлено в Кошелек";
-"coin_page.already_added_to_wallet" = "Уже добавлено в кошелек";
-
-"coin_page.tvl_rank.multi_chain" = "Мультичейн";
-"coin_page.tvl_rank.filter_by_chain" = "Сортировать по блокчейну";
-
-"coin_page.security_parameters" = "Параметры безопасности";
-"coin_page.security_parameters.privacy" = "Приватность";
-"coin_page.security_parameters.issuance" = "Выпуск";
-"coin_page.security_parameters.confiscation_resistance" = "Устойчивость к конфискации";
-"coin_page.security_parameters.censorship_resistance" = "Устойчивость к цензуре";
-
-"coin_page.security_parameters.level.low" = "Низкая";
-"coin_page.security_parameters.level.medium" = "Средняя";
-"coin_page.security_parameters.level.high" = "Высокая";
-"coin_page.security_parameters.issuance.decentralized" = "Децентрализовано";
-"coin_page.security_parameters.issuance.centralized" = "Централизовано";
-"coin_page.security_parameters.resistance.yes" = "Да";
-"coin_page.security_parameters.resistance.no" = "Нет";
-
-"coin_page.security_parameters.privacy.description.low" = "Транзакции с этим токеном полностью публичны и позволяют сторонним службам связывать различные транзакции с одной и той же сущностью, проверять суммы транзакций и просматривать пользовательские балансы.";
-"coin_page.security_parameters.privacy.description.medium" = "Транзакции с этим токеном являются полуанонимными. Сторонний сервис может видеть суммы транзакций и частично связывать различные сделки с той же самой сущностью.";
-"coin_page.security_parameters.privacy.description.high" = "Транзакции с этим токеном анонимны по умолчанию или предоставляют такие возможности. Ни одна сущность не может связать различные транзакции с одним и тем же лицом или увидеть суммы транзакций.";
-"coin_page.security_parameters.issuance.description.decentralized" = "Количество токенов в обороте, контролируемое алгоритмом и работающее детерминированным образом вне централизованного влияния.";
-"coin_page.security_parameters.issuance.description.centralized" = "Количество токенов в обороте может быть потенциально увеличено или уменьшено централизованной структурой по требованию.";
-"coin_page.security_parameters.confiscation_resistance.description.yes" = "Токены не могут быть конфискованы, если они хранятся в некастодиальном кошельке.";
-"coin_page.security_parameters.confiscation_resistance.description.no" = "Токены могут быть конфискованы или подделаны эмитентом.";
-"coin_page.security_parameters.censorship_resistance.description.yes" = "Владелец токена не подвергается цензуре во время транзакции.";
-"coin_page.security_parameters.censorship_resistance.description.no" = "Владелец токена может подвергаться цензуре во время транзакции.";
-
-"coin_page.info" = "Информация";
-
-"coin_page.audits" = "Аудиты";
-"coin_page.audits.issues" = "Запросы";
-"coin_page.audits.no_reports" = "Нет аудиторских отчетов";
-
-"coin_page.tweets.reference_type.retweeted" = "Ретвитнул @%@";
-"coin_page.tweets.reference_type.quoted" = "Процитировал @%@";
-"coin_page.tweets.reference_type.replied" = "Ответил @%@";
-"coin_page.tweets.no_tweets_yet" = "Пока нет твитов";
-"coin_page.tweets.not_available" = "Twitter не доступен";
-"coin_page.tweets.see_on_twitter" = "Посмотреть в Twitter";
+"coin_overview.guide" = "Guide";
+"coin_overview.website" = "Website";
+"coin_overview.whitepaper" = "Whitepaper";
 
 // Coin Page -> Analytics
 
@@ -748,16 +650,41 @@
 "coin_analytics.project_revenue.info3" = "List of all tokens ranked based on the revenue generated by the project's smart contracts over 24h / 7D / 1M intervals.";
 
 "coin_analytics.other_data" = "Прочие данные";
+
 "coin_analytics.reports" = "Отчёты";
+
 "coin_analytics.funding" = "Финансирование";
+"coin_analytics.funding.lead" = "Lead";
+
 "coin_analytics.treasuries" = "Treasuries";
+"coin_analytics.treasuries.filters" = "Фильтры";
+"coin_analytics.treasuries.filter.all" = "Все";
+"coin_analytics.treasuries.filter.public" = "Public";
+"coin_analytics.treasuries.filter.private" = "Private";
+"coin_analytics.treasuries.filter.etf" = "ETF";
+
 "coin_analytics.audits" = "Аудиты";
+"coin_analytics.audits.issues" = "Issues";
+"coin_analytics.audits.no_reports" = "No audit reports";
 
 "coin_analytics.last_30d" = "Последние 30 дн.";
 "coin_analytics.current" = "текущее";
 "coin_analytics.rank" = "Рейтинг";
 "coin_analytics.30_day_rank" = "30-дневный рейтинг";
 "coin_analytics.30_day_volume" = "30-дневный объем";
+
+// Coin Page -> Markets
+
+"coin_markets.empty" = "No data available";
+
+// Coin Page -> Tweets
+
+"coin_tweets.reference_type.retweeted" = "Retweeted @%@";
+"coin_tweets.reference_type.quoted" = "Quoted @%@";
+"coin_tweets.reference_type.replied" = "Replied to @%@";
+"coin_tweets.no_tweets_yet" = "No tweets yet";
+"coin_tweets.not_available" = "No twitter available";
+"coin_tweets.see_on_twitter" = "See on Twitter";
 
 // Pro Features
 
@@ -974,7 +901,7 @@
 "settings.about_app.app_name" = "Unstoppable Кошелек";
 "settings.about_app.description" = "Кошелек Unstoppable создан для тех, кто хочет инвестировать и хранить криптовалюты частным и независимым образом.\n\nЭто одноранговый кошелек, где только пользователь имеет контроль над средствами. Он не собирает никаких данных и обеспечивает независимость пользователя, не привязывая средства пользователя к определенному приложению.\n\nКошелек Unstoppable имеет полностью открытый исходный код, и любой может подтвердить, что приложение работает именно так, как заявлено.";
 "settings.about_app.whats_new" = "Что нового";
-"settings.about_app.website" = "Веб-сайт";
+"settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Kонтакты";
 "settings.about_app.rate_us" = "Оцените наше приложение";
 "settings.about_app.tell_friends" = "Рассказать друзьям";
@@ -1068,16 +995,14 @@
 
 "chart.market_cap" = "Рын. капитализация";
 "chart.volume" = "Объём (за 24 ч)";
-"chart.circulation" = "В обороте";
+"chart.circulation" = "In Circulation";
 "chart.selected.volume" = "Volume";
-"chart.price_indicator_range.day" = "Диапазон за 24 ч";
-"chart.price_indicator_range.year" = "Диапазон за 52 недели";
 
 "chart.market.header" = "Рынок";
 "chart.market.market_cap" = "Рын. капитализация";
 "chart.market.volume" = "Объём (за 24 ч)";
-"chart.market.circulation" = "В обороте";
-"chart.market.total_supply" = "Макс.выпуск";
+"chart.market.circulation" = "In Circulation";
+"chart.market.total_supply" = "Total Supply";
 
 "chart.performance.week_changes" = "Изменения (за 1Н)";
 "chart.performance.month_changes" = "Изменения (за 1М)";
@@ -1412,8 +1337,8 @@
 "nft_asset.details.token_id" = "ID токена";
 "nft_asset.details.token_standard" = "Стандарт Токена";
 "nft_asset.details.blockchain" = "Блокчейн";
-"nft_asset.links" = "Ссылки";
-"nft_asset.links.website" = "Веб-сайт";
+"nft_asset.links" = "Links";
+"nft_asset.links.website" = "Website";
 "nft_asset.options.save_to_photos" = "Сохранить в Фото";
 "nft_asset.options.set_as_watch_face" = "Установить как Watch Face";
 "nft_asset.save_to_photos.failed" = "Не удалось сохранить NFT-изображение";
@@ -1426,8 +1351,8 @@
 
 "nft_collection.overview.description" = "Описание";
 "nft_collection.overview.contracts" = "Контракты";
-"nft_collection.overview.links" = "Ссылки";
-"nft_collection.overview.links.website" = "Веб-сайт";
+"nft_collection.overview.links" = "Links";
+"nft_collection.overview.links.website" = "Website";
 
 
 "nft_collection.overview.owners" = "Владельцы";
@@ -1437,7 +1362,7 @@
 "nft_collection.overview.floor_price" = "Минимальная цена";
 "nft_collection.overview.all_time_average" = "Средняя оценка за все время";
 "nft_collection.overview.royalty" = "Вознаграждение";
-"nft_collection.overview.inception_date" = "Дата Старта";
+"nft_collection.overview.inception_date" = "Inception Date";
 
 "nft.activity.contracts" = "Контракты";
 "nft.activity.empty_list" = "Нет активности";
