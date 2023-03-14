@@ -4,6 +4,7 @@ import RxSwift
 import RxRelay
 import ObjectMapper
 import HsToolKit
+import MarketKit
 
 class ContactBookManager {
     static private let batchingInterval: TimeInterval = 1
@@ -14,7 +15,7 @@ class ContactBookManager {
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.contact_manager")
 
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     private var monitorDisposeBag = DisposeBag()
 
     private let localStorage: LocalStorage
@@ -306,8 +307,20 @@ extension ContactBookManager {
         stateRelay.asObservable()
     }
 
-    var contacts: [Contact]? {
+    var all: [Contact]? {
         state.data?.contacts
+    }
+
+    func contacts(blockchainType: BlockchainType) -> [Contact] {
+        guard let all else {
+            return []
+        }
+
+        return all.filter { contact in
+            !contact.addresses.filter({ address in
+                        address.blockchainUid == blockchainType.uid
+            }).isEmpty
+        }
     }
 
     func update(contact: Contact) throws {

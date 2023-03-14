@@ -19,7 +19,11 @@ class SendEvmModule {
         }
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
-        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain))
+        let addressService = AddressService(
+                mode: .parsers(addressUriParser, addressParserChain),
+                contactBookManager: App.shared.contactManager,
+                blockchainType: token.blockchainType
+        )
 
         let service = SendEvmService(token: token, adapter: adapter, addressService: addressService)
 

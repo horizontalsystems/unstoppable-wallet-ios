@@ -242,7 +242,7 @@ class MainSettingsViewController: ThemeViewController {
                     id: "address-book",
                     height: .heightCell48,
                     action: { [weak self] in
-                        guard let viewController = ContactBookModule.viewController() else {
+                        guard let viewController = ContactBookModule.viewController(mode: .edit) else {
                             return
                         }
                         self?.navigationController?.pushViewController(viewController, animated: true)

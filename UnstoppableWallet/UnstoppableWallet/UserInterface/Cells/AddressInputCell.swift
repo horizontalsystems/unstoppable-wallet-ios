@@ -52,6 +52,16 @@ extension AddressInputCell {
         addressInputView.set(isLoading: isLoading)
     }
 
+    var showContacts: Bool {
+        get { addressInputView.showContacts }
+        set { addressInputView.showContacts = newValue }
+    }
+
+    var onTapContacts: (() -> ())? {
+        get { addressInputView.onTapContacts }
+        set { addressInputView.onTapContacts = newValue }
+    }
+
     var onChangeText: ((String?) -> ())? {
         get { addressInputView.onChangeText }
         set { addressInputView.onChangeText = newValue }

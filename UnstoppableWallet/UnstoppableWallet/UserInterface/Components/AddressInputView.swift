@@ -10,12 +10,20 @@ class AddressInputView: UIView {
     private let stateView = InputStateWrapperView()
 
     private let deleteView = InputSecondaryCircleButtonWrapperView()
+    private let contactView = InputSecondaryCircleButtonWrapperView()
     private let scanView = InputSecondaryCircleButtonWrapperView()
     private let pasteView = InputSecondaryButtonWrapperView(style: .default)
 
     var onChangeText: ((String?) -> ())?
     var onFetchText: ((String?) -> ())?
     var onOpenViewController: ((UIViewController) -> ())?
+    var onTapContacts: (() -> ())?
+
+    var showContacts: Bool = false {
+        didSet {
+            syncButtonStates()
+        }
+    }
 
     init() {
         formValidatedView = FormValidatedView(contentView: inputStackView, padding: UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16))
@@ -35,6 +43,9 @@ class AddressInputView: UIView {
         deleteView.button.set(image: UIImage(named: "trash_20"))
         deleteView.onTapButton = { [weak self] in self?.onTapDelete() }
 
+        contactView.button.set(image: UIImage(named: "user_20"))
+        contactView.onTapButton = { [weak self] in self?.onTapContacts?() }
+
         scanView.button.set(image: UIImage(named: "qr_scan_20"))
         scanView.onTapButton = { [weak self] in self?.onTapScan() }
 
@@ -47,6 +58,7 @@ class AddressInputView: UIView {
 
         inputStackView.appendSubview(stateView)
         inputStackView.appendSubview(deleteView)
+        inputStackView.appendSubview(contactView)
         inputStackView.appendSubview(scanView)
         inputStackView.appendSubview(pasteView)
 
@@ -90,10 +102,12 @@ class AddressInputView: UIView {
             deleteView.isHidden = false
             pasteView.isHidden = true
             scanView.isHidden = true
+            contactView.isHidden = true
         } else {
             deleteView.isHidden = true
             pasteView.isHidden = false
             scanView.isHidden = false
+            contactView.isHidden = !showContacts
         }
     }
 

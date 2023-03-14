@@ -7,7 +7,7 @@ class ContactBookContactModule {
         guard let contactManager = App.shared.contactManager else {
             return nil
         }
-        let contact = contactUid.flatMap { uid in App.shared.contactManager?.contacts?.first(where: { $0.uid == uid }) }
+        let contact = contactUid.flatMap { uid in App.shared.contactManager?.all?.first(where: { $0.uid == uid }) }
 
         let service = ContactBookContactService(
                 contactManager: contactManager,

@@ -1,6 +1,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import MarketKit
 
 protocol IRecipientAddressService {
     var addressState: AddressService.State { get }
@@ -22,6 +23,7 @@ class RecipientAddressViewModel {
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
     private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let setTextRelay = BehaviorRelay<String?>(value: nil)
+    private let showContactsRelay = BehaviorRelay<Bool>(value: false)
 
     private var editing = false
 
@@ -36,7 +38,11 @@ class RecipientAddressViewModel {
         subscribeSerial(disposeBag, service.customErrorObservable) { [weak self] error in
             self?.serialSync()
         }
+        subscribe(disposeBag, service.showContactsObservable) { [weak self] showContacts in
+            self?.showContactsRelay.accept(showContacts)
+        }
 
+        showContactsRelay.accept(service.showContacts)
         serialSync(state: service.state)
     }
 
@@ -108,6 +114,14 @@ extension RecipientAddressViewModel {
 
     var setTextDriver: Driver<String?> {
         setTextRelay.asDriver()
+    }
+
+    var showContactsDriver: Driver<Bool> {
+        showContactsRelay.asDriver()
+    }
+
+    var contactBlockchainType: BlockchainType {
+        service.blockchainType
     }
 
     func onChange(text: String?) {

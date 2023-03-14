@@ -90,7 +90,7 @@ class ContactBookContactService {
     private func sync() {
         // check if name already exist
         let otherContactNames = contactManager
-                .contacts?
+                .all?
                 .filter { (oldContact?.name ?? "") != $0.name }
                 .map { $0.name.lowercased() } ?? []
 
