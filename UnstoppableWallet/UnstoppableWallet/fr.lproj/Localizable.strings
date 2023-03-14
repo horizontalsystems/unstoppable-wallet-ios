@@ -746,7 +746,7 @@
 
 "coin_analytics.other_data" = "Other Data";
 "coin_analytics.reports" = "Rapports";
-"coin_analytics.funding" = "Funding";
+"coin_analytics.funding" = "Financement";
 "coin_analytics.treasuries" = "Treasuries";
 "coin_analytics.audits" = "Audits";
 
@@ -808,7 +808,7 @@
 "transactions.to" = "A %@";
 "transactions.from" = "De %@";
 
-"transactions.multiple" = "Multiple";
+"transactions.multiple" = "Multiples";
 
 "transactions.value.unlimited" = " illimité";
 
@@ -871,7 +871,7 @@
 "settings.faq" = "FAQ";
 "settings.theme" = "Thème";
 "settings.info_title" = "UNSTOPPABLE";
-"settings.info_subtitle" = "decentralized app";
+"settings.info_subtitle" = "application décentralisée";
 
 // Settings -> Base Currency
 
