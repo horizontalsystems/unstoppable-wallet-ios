@@ -542,144 +542,46 @@
 "market.global.total_market_cap.title" = "Cap totale";
 "market.global.volume_24h.title" = "Volume des dernières 24h";
 "market.global.defi_cap.title" = "Cap DeFi";
-"market.global.tvl_in_defi.title" = "TVL en DeFi";
 
-"market.global.btc_dominance.title" = "Dominance Bitcoin";
-"market.global.volume_24h.title" = "Volume des dernières 24h";
-"market.global.defi_cap.title" = "Cap DeFi";
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
-"market.global.btc_dominance.description" = "Le changement historique du ratio entre la capitalisation boursière du Bitcoin et le reste des marchés de cryptomonnaies. \n\nGénéralement, lorsque la domination du Bitcoin tend à la hausse, le reste du marché des cryptomonnaies a une tendance à la baisse et vice versa.";
-"market.global.volume_24h.description" = "La variation historique du volume global quotidien du marché des transactions pour toutes les cryptomonnaies.";
-"market.global.defi_cap.description" = "L'évolution historique de la valeur de marché cumulée des tokens dans le secteur de la finance décentralisée.";
-"market.global.tvl_in_defi.description" = "L'évolution historique de la valeur cumulée de toutes les cryptomonnaies gérées par des protocoles décentralisés.";
+"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
+"market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
 
 // Coin Page
 
-"coin_page.roi.hour1" = "1 Heure";
-"coin_page.roi.hour24" = "1 Jour";
-"coin_page.roi.day7" = "1 Semaine";
-"coin_page.roi.day14" = "2 Semaines";
-"coin_page.roi.day30" = "1 Mois";
-"coin_page.roi.day200" = "6 Mois";
-"coin_page.roi.year1" = "1 An";
-
-"coin_page.tab.overview" = "Prix";
-"coin_page.tab.analytics" = "Analyses";
-"coin_page.tab.markets" = "Marchés";
-"coin_page.tab.tweets" = "Tweets";
-
-"coin_page.market_cap" = "Cap. marché";
-"coin_page.circulating_supply" = "En circulation";
-"coin_page.total_supply" = "Offre totale";
-"coin_page.diluted_market_cap" = "Cap. marché diluée";
-"coin_page.genesis_date" = "Date de création";
-
-"coin_page.trading_volume" = "Volume de trading";
-"coin_page.trading_volume.description" = "La variation historique du volume d'échange quotidien agrégé pour %@";
+"coin_page.overview" = "Prix";
+"coin_page.analytics" = "Analytics";
 "coin_page.markets" = "Marchés";
-"coin_page.markets.empty" = "Aucune donnée disponible";
+"coin_page.tweets" = "Tweets";
 
-"coin_page.token_liquidity" = "Liquidité du token";
-"coin_page.token_liquidity.description" = "L'état de la liquidité pour l'actif donné sur les marchés d'échange décentralisés.";
-"coin_page.dex_volume" = "Volume DEX (30d)";
-"coin_page.dex_volume.title" = "Volume DEX";
-"coin_page.dex_volume.description" = "Le volume de trading pour le token sur les échanges décentralisés.";
-"coin_page.dex_liquidity" = "Liquidité DEX";
-"coin_page.dex_liquidity.description" = "Le montant total des liquidités disponibles pour le token sur les échanges décentralisés.";
+// Coin Page -> Overview
 
-"coin_page.token_distribution" = "Distribution du token";
-"coin_page.token_distribution.description" = "Paramètres on-chain du token. En général, les projets sains ont une base d'utilisateurs on-chain active et un token bien distribué.";
-"coin_page.tx_count" = "Nombre de Tx (30d)";
-"coin_page.tx_count.title" = "Nombre de Tx";
-"coin_page.tx_count.description" = "Le nombre de transactions du token enregistrées on-chain sur différentes périodes.";
-"coin_page.tx_volume" = "Volume Tx (30d)";
-"coin_page.tx_volume.title" = "Volume Tx";
-"coin_page.tx_volume.description" = "Le volume global des transactions de tokens est enregistré on-chain. Le volume est mesuré en tokens réels (pas en USD).";
-"coin_page.active_addresses" = "Adresses actives";
-"coin_page.active_addresses.description" = "Le nombre d'adresses uniques de portefeuille impliquées dans les transactions sur différentes périodes.";
+"coin_overview.market_cap" = "Cap. marché";
+"coin_overview.circulating_supply" = "In Circulation";
+"coin_overview.total_supply" = "Total Supply";
+"coin_overview.diluted_market_cap" = "Cap. marché diluée";
+"coin_overview.genesis_date" = "Inception Date";
+"coin_overview.trading_volume" = "Volume de trading";
 
-"coin_page.chart_tvl" = "Token TVL";
-"coin_page.chart_volumes" = "Volume Total";
-"coin_page.token_tvl" = "Token TVL";
-"coin_page.token_tvl.description" = "La valeur totale verrouillée (TVL) est une mesure qui indique la valeur totale des cryptomonnaies sous gestion automatisée par les contrats intelligents qui alimentent le protocole donné.";
-"coin_page.tvl" = "Valeur totale verrouillée";
-"coin_page.tvl_rank" = "Rang TVL";
-"coin_page.tvl_rank.description" = "Le classement parmi les autres protocoles est basé sur la valeur de la TVL en USD.";
-"coin_page.market_cap_tvl_ratio" = "Ratio MCap / TVL";
-"coin_page.market_cap_tvl_ratio.description" = "Le ratio de la capitalisation boursière du token du projet par rapport à sa TVL.";
-"coin_page.tvl.description" = "Capital déposé sur la plateforme sous forme de collatéral de prêt ou de pool de liquidité.";
+"coin_overview.roi.hour24" = "1 Jour";
+"coin_overview.roi.day7" = "1 Semaine";
+"coin_overview.roi.day14" = "2 Semaines";
+"coin_overview.roi.day30" = "1 Mois";
+"coin_overview.roi.day200" = "6 Month";
+"coin_overview.roi.year1" = "1 An";
 
-"coin_page.investor_data" = "Données de l'investisseur";
+"coin_overview.category" = "Category";
 
-"coin_page.treasuries" = "Treasuries";
-"coin_page.treasuries.filters" = "Filtres";
-"coin_page.treasuries.filter.all" = "Tout";
-"coin_page.treasuries.filter.public" = "Public";
-"coin_page.treasuries.filter.private" = "Privé";
-"coin_page.treasuries.filter.etf" = "ETF";
+"coin_overview.blockchains" = "Blockchains";
+"coin_overview.bips" = "BIPs";
+"coin_overview.coin_types" = "Coin Types";
+"coin_overview.show_more" = "Afficher plus";
+"coin_overview.show_less" = "Show Less";
+"coin_overview.links" = "Links";
 
-"coin_page.funds_invested" = "Fonds investis";
-"coin_page.funds_invested.lead" = "En tête";
-
-"coin_page.reports" = "Rapports";
-
-"coin_page.category" = "Catégorie";
-
-"coin_page.blockchains" = "Blockchains";
-"coin_page.bips" = "BIPs";
-"coin_page.coin_types" = "Coin Types";
-"coin_page.show_more" = "Afficher plus";
-"coin_page.show_less" = "Show Less";
-"coin_page.links" = "Liens";
-
-"coin_page.guide" = "Guide";
-"coin_page.website" = "Site Web";
-"coin_page.whitepaper" = "Livre blanc";
-
-"coin_page.favorited" = "Ajouter à la liste de suivi";
-"coin_page.unfavorited" = "Retirer de la liste de suivi";
-"coin_page.added_to_wallet" = "Ajouté au portefeuille";
-"coin_page.already_added_to_wallet" = "Déjà ajouté au portefeuille";
-
-"coin_page.tvl_rank.multi_chain" = "Multi-chaîne";
-"coin_page.tvl_rank.filter_by_chain" = "Filtrer par chaîne";
-
-"coin_page.security_parameters" = "Paramètres de sécurité";
-"coin_page.security_parameters.privacy" = "Confidentialité";
-"coin_page.security_parameters.issuance" = "Émission";
-"coin_page.security_parameters.confiscation_resistance" = "Résistance à la saisie";
-"coin_page.security_parameters.censorship_resistance" = "Résistance à la censure";
-
-"coin_page.security_parameters.level.low" = "Faible";
-"coin_page.security_parameters.level.medium" = "Moyenne";
-"coin_page.security_parameters.level.high" = "Élevée";
-"coin_page.security_parameters.issuance.decentralized" = "Décentralisé";
-"coin_page.security_parameters.issuance.centralized" = "Centralisé";
-"coin_page.security_parameters.resistance.yes" = "Oui";
-"coin_page.security_parameters.resistance.no" = "Non";
-
-"coin_page.security_parameters.privacy.description.low" = "Les transactions effectuées avec ce token sont entièrement publiques, ce qui permet aux services tiers de relier différentes transactions à la même entité, de voir les montants négociés et les soldes des utilisateurs.";
-"coin_page.security_parameters.privacy.description.medium" = "Les transactions effectuées avec ce token sont semi-anonymes. Un service tiers est capable de voir les montants négociés et de relier partiellement différentes transactions à la même entité.";
-"coin_page.security_parameters.privacy.description.high" = "Les transactions effectuées avec ce token sont anonymes par défaut ou offrent cette possibilité. Aucune entité n'est capable de relier différentes transactions à la même personne ou de voir les montants négociés.";
-"coin_page.security_parameters.issuance.description.decentralized" = "La quantité de tokens en circulation est contrôlée par un algorithme et fonctionne de manière déterministe en dehors de toute influence centralisée.";
-"coin_page.security_parameters.issuance.description.centralized" = "La quantité de tokens en circulation peut être potentiellement augmentée ou diminuée par une entité centralisée à sa guise.";
-"coin_page.security_parameters.confiscation_resistance.description.yes" = "Les tokens ne peuvent pas être saisis s'ils sont conservés dans un portefeuille non privatif.";
-"coin_page.security_parameters.confiscation_resistance.description.no" = "Les tokens peuvent être saisis ou altérés par une entité émettrice.";
-"coin_page.security_parameters.censorship_resistance.description.yes" = "On peut empêcher le porteur du token d'effectuer des transactions.";
-"coin_page.security_parameters.censorship_resistance.description.no" = "On peut empêcher le porteur du token d'effectuer des transactions.";
-
-"coin_page.info" = "Infos";
-
-"coin_page.audits" = "Audits";
-"coin_page.audits.issues" = "Anomalies";
-"coin_page.audits.no_reports" = "Aucun rapport d'audit";
-
-"coin_page.tweets.reference_type.retweeted" = "A retweeté @%@";
-"coin_page.tweets.reference_type.quoted" = "Cité @%@";
-"coin_page.tweets.reference_type.replied" = "A répondu à @%@";
-"coin_page.tweets.no_tweets_yet" = "Pas encore de tweets";
-"coin_page.tweets.not_available" = "Twitter n'est pas disponible";
-"coin_page.tweets.see_on_twitter" = "Voir notre Twitter";
+"coin_overview.guide" = "Guide";
+"coin_overview.website" = "Website";
+"coin_overview.whitepaper" = "Whitepaper";
 
 // Coin Page -> Analytics
 
@@ -745,16 +647,41 @@
 "coin_analytics.project_revenue.info3" = "List of all tokens ranked based on the revenue generated by the project's smart contracts over 24h / 7D / 1M intervals.";
 
 "coin_analytics.other_data" = "Other Data";
+
 "coin_analytics.reports" = "Rapports";
+
 "coin_analytics.funding" = "Financement";
+"coin_analytics.funding.lead" = "Lead";
+
 "coin_analytics.treasuries" = "Treasuries";
+"coin_analytics.treasuries.filters" = "Filtres";
+"coin_analytics.treasuries.filter.all" = "Tout";
+"coin_analytics.treasuries.filter.public" = "Public";
+"coin_analytics.treasuries.filter.private" = "Private";
+"coin_analytics.treasuries.filter.etf" = "ETF";
+
 "coin_analytics.audits" = "Audits";
+"coin_analytics.audits.issues" = "Issues";
+"coin_analytics.audits.no_reports" = "No audit reports";
 
 "coin_analytics.last_30d" = "last 30d";
 "coin_analytics.current" = "current";
 "coin_analytics.rank" = "Rang";
 "coin_analytics.30_day_rank" = "30-Day Rank";
 "coin_analytics.30_day_volume" = "30-Day Volume";
+
+// Coin Page -> Markets
+
+"coin_markets.empty" = "No data available";
+
+// Coin Page -> Tweets
+
+"coin_tweets.reference_type.retweeted" = "Retweeted @%@";
+"coin_tweets.reference_type.quoted" = "Quoted @%@";
+"coin_tweets.reference_type.replied" = "Replied to @%@";
+"coin_tweets.no_tweets_yet" = "No tweets yet";
+"coin_tweets.not_available" = "No twitter available";
+"coin_tweets.see_on_twitter" = "See on Twitter";
 
 // Pro Features
 
@@ -971,7 +898,7 @@
 "settings.about_app.app_name" = "Portefeuille Unstoppable";
 "settings.about_app.description" = "Le portefeuille Unstoppable est conçu pour ceux qui cherchent à investir et à stocker des cryptomonnaies de manière privée et indépendante.\n\nC'est un portefeuille non-dépositaire, peer-to-peer où seul l'utilisateur a le contrôle sur les fonds. Il ne collecte aucune donnée et garde l'utilisateur indépendant en ne verrouillant pas les fonds de l'utilisateur sur une application spécifique de portefeuille.\n\nLe portefeuille Unstoppable est entièrement open-source et tout le monde peut confirmer que l'application fonctionne exactement comme il le prétend.";
 "settings.about_app.whats_new" = "Nouveautés";
-"settings.about_app.website" = "Site Web";
+"settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "Evaluez-nous";
 "settings.about_app.tell_friends" = "Partager avec ami";
@@ -1065,16 +992,14 @@
 
 "chart.market_cap" = "Cap. marché";
 "chart.volume" = "Volume(24h)";
-"chart.circulation" = "En circulation";
+"chart.circulation" = "In Circulation";
 "chart.selected.volume" = "Volume";
-"chart.price_indicator_range.day" = "Plage de 24h";
-"chart.price_indicator_range.year" = "Plage de 52s";
 
 "chart.market.header" = "Marché";
 "chart.market.market_cap" = "Cap. marché";
 "chart.market.volume" = "Volume(24h)";
-"chart.market.circulation" = "En circulation";
-"chart.market.total_supply" = "Offre totale";
+"chart.market.circulation" = "In Circulation";
+"chart.market.total_supply" = "Total Supply";
 
 "chart.performance.week_changes" = "Changes (1S)";
 "chart.performance.month_changes" = "Changements (1 m)";
@@ -1403,8 +1328,8 @@
 "nft_asset.details.token_id" = "Identifiant du token";
 "nft_asset.details.token_standard" = "Standard du token";
 "nft_asset.details.blockchain" = "Blockchain";
-"nft_asset.links" = "Liens";
-"nft_asset.links.website" = "Site Web";
+"nft_asset.links" = "Links";
+"nft_asset.links.website" = "Website";
 "nft_asset.options.save_to_photos" = "Enregistrer dans Photos";
 "nft_asset.options.set_as_watch_face" = "Créer un cadran";
 "nft_asset.save_to_photos.failed" = "Échec de la sauvegarde de l'image NFT";
@@ -1417,8 +1342,8 @@
 
 "nft_collection.overview.description" = "Libellé";
 "nft_collection.overview.contracts" = "Contrats";
-"nft_collection.overview.links" = "Liens";
-"nft_collection.overview.links.website" = "Site Web";
+"nft_collection.overview.links" = "Links";
+"nft_collection.overview.links.website" = "Website";
 
 
 "nft_collection.overview.owners" = "Propriétaires";
@@ -1428,7 +1353,7 @@
 "nft_collection.overview.floor_price" = "Prix plancher";
 "nft_collection.overview.all_time_average" = "Moyenne du temps";
 "nft_collection.overview.royalty" = "Redevance";
-"nft_collection.overview.inception_date" = "Date de création";
+"nft_collection.overview.inception_date" = "Inception Date";
 
 "nft.activity.contracts" = "Contrats";
 "nft.activity.empty_list" = "Aucune activité pour l'instant";
