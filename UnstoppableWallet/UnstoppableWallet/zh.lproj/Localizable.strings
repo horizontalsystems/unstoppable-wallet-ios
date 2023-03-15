@@ -686,7 +686,7 @@
 "coin_tweets.reference_type.retweeted" = "Retweeted @%@";
 "coin_tweets.reference_type.quoted" = "Quoted @%@";
 "coin_tweets.reference_type.replied" = "Replied to @%@";
-"coin_tweets.no_tweets_yet" = "No tweets yet";
+"coin_tweets.no_tweets_yet" = "暂无推文";
 "coin_tweets.not_available" = "No twitter available";
 "coin_tweets.see_on_twitter" = "See on Twitter";
 
@@ -1000,7 +1000,7 @@
 "chart.market_cap" = "市场价值";
 "chart.volume" = "量(24小时)";
 "chart.circulation" = "In Circulation";
-"chart.selected.volume" = "Volume";
+"chart.selected.volume" = "量";
 
 "chart.market.header" = "市场";
 "chart.market.market_cap" = "市场价值";
