@@ -658,18 +658,18 @@
 "coin_analytics.reports" = "报告";
 
 "coin_analytics.funding" = "Funding";
-"coin_analytics.funding.lead" = "Lead";
+"coin_analytics.funding.lead" = "领投";
 
 "coin_analytics.treasuries" = "国库券";
 "coin_analytics.treasuries.filters" = "过滤器";
 "coin_analytics.treasuries.filter.all" = "所有";
-"coin_analytics.treasuries.filter.public" = "Public";
-"coin_analytics.treasuries.filter.private" = "Private";
+"coin_analytics.treasuries.filter.public" = "公用";
+"coin_analytics.treasuries.filter.private" = "一对多";
 "coin_analytics.treasuries.filter.etf" = "ETF";
 
 "coin_analytics.audits" = "审计";
-"coin_analytics.audits.issues" = "Issues";
-"coin_analytics.audits.no_reports" = "No audit reports";
+"coin_analytics.audits.issues" = "问题";
+"coin_analytics.audits.no_reports" = "没有审计报告";
 
 "coin_analytics.last_30d" = "last 30d";
 "coin_analytics.current" = "current";
