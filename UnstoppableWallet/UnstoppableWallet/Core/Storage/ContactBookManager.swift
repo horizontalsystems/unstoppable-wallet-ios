@@ -323,6 +323,28 @@ extension ContactBookManager {
         }
     }
 
+    func name(blockchainType: BlockchainType, address: String) -> String? {
+        if let contact = all?.first(where: { contact in
+            !contact.addresses
+                .filter({ $0.blockchainUid == blockchainType.uid && $0.address.lowercased() == address.lowercased() }).isEmpty
+        }) {
+            return contact.name
+        }
+
+        return nil
+    }
+
+    func contactsWithout(blockchainType: BlockchainType) -> [Contact] {
+        guard let all else {
+            return []
+        }
+        return all.filter { contact in
+            contact.addresses.allSatisfy { address in
+                address.blockchainUid != blockchainType.uid
+            }
+        }
+    }
+
     func update(contact: Contact) throws {
         guard let contactBook = state.data else {
             throw StorageError.notReady

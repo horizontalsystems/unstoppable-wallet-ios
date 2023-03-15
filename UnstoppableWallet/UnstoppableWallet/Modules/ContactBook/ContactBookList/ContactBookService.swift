@@ -10,13 +10,6 @@ class ContactBookService {
 
     private var filter: String = ""
 
-    private let contactNotAvailableRelay = PublishRelay<Bool>()
-    private(set) var contactNotAvailable = false {
-        didSet {
-            contactNotAvailableRelay.accept(contactNotAvailable)
-        }
-    }
-
     private let emptyRelay = BehaviorRelay<Bool>(value: false)
     private let itemsRelay = PublishRelay<[Item]>()
     private var _contacts: [Contact] = [] {
@@ -67,7 +60,8 @@ class ContactBookService {
         if let contacts = contactManager.all {
             _contacts = contacts
         } else {
-            contactNotAvailable = true
+            // todo: show alert ?
+            print("Can't load contacts!")
         }
     }
 
@@ -83,32 +77,14 @@ extension ContactBookService {
         emptyRelay.asObservable()
     }
 
-    var contactNotAvailableObservable: Observable<Bool> {
-        contactNotAvailableRelay.asObservable()
-    }
-
     func set(filter: String) {
         self.filter = filter
 
         itemsRelay.accept(items)
     }
 
-    func update(contact: Contact) {
-        do {
-            try contactManager.update(contact: contact)
-        } catch {
-            // something wrong with store contact
-            contactNotAvailable = true
-        }
-    }
-
-    func delete(contactUid: String) {
-        do {
-            try contactManager.delete(contactUid)
-        } catch {
-            // something wrong with store contact
-            contactNotAvailable = true
-        }
+    func delete(contactUid: String) throws {
+        try contactManager.delete(contactUid)
     }
 
 }

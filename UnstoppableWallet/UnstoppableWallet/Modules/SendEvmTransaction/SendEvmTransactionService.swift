@@ -17,6 +17,7 @@ protocol ISendEvmTransactionService {
     var sendStateObservable: Observable<SendEvmTransactionService.SendState> { get }
 
     var ownAddress: EvmKit.Address { get }
+    var blockchainType: BlockchainType { get }
 
     func methodName(input: Data) -> String?
     func send()
@@ -115,6 +116,10 @@ extension SendEvmTransactionService: ISendEvmTransactionService {
 
     var ownAddress: EvmKit.Address {
         evmKit.receiveAddress
+    }
+
+    var blockchainType: BlockchainType {
+        evmKitWrapper.blockchainType
     }
 
     func methodName(input: Data) -> String? {

@@ -16,11 +16,36 @@ struct ContactBookModule {
         let service = ContactBookService(contactManager: contactManager, blockchainType: mode.blockchainType)
         let viewModel = ContactBookViewModel(service: service)
 
-        let viewController = ContactBookViewController(viewModel: viewModel, presented: presented, selectorDelegate: mode.delegate)
+        let viewController = ContactBookViewController(viewModel: viewModel, presented: presented, mode: mode)
         if presented {
             return ThemeNavigationController(rootViewController: viewController)
         } else {
             return viewController
+        }
+    }
+
+    static func isAddToContactAvailable(blockchainType: BlockchainType) -> Bool {
+        guard let contactManager = App.shared.contactManager else {
+            return false
+        }
+        return !contactManager.contactsWithout(blockchainType: blockchainType).isEmpty
+    }
+
+    static func chooseAddContactMode(resultAfterClose: Bool, action: ((AddContactMode) -> ())?) -> UIViewController {
+        let alertViewItems = [
+            AlertViewItem(text: "contacts.add_address.create_new".localized, selected: false),
+            AlertViewItem(text: "contacts.add_address.add_to_contact".localized, selected: false)
+        ]
+
+        return AlertRouter.module(
+                title: "contacts.add_address.title".localized,
+                viewItems: alertViewItems,
+                afterClose: resultAfterClose
+        ) { index in
+            switch index {
+            case 0: action?(.new)
+            default: action?(.exist)
+            }
         }
     }
 
@@ -30,6 +55,7 @@ extension ContactBookModule {
 
     enum Mode {
         case select(BlockchainType, ContactBookSelectorDelegate)
+        case addToContact(ContactAddress)
         case edit
 
         var blockchainType: BlockchainType? {
@@ -45,6 +71,18 @@ extension ContactBookModule {
             default: return nil
             }
         }
+
+        var editable: Bool {
+            if case .edit = self {
+                return true
+            }
+            return false
+        }
+    }
+
+    enum AddContactMode {
+        case new
+        case exist
     }
 
 }

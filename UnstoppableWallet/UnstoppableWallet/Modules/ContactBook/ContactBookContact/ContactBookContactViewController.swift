@@ -10,7 +10,7 @@ class ContactBookContactViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: ContactBookContactViewModel
     private let presented: Bool
-    private let onUpdateContact: (Contact?) -> ()
+    private let onUpdateContact: (() -> ())?
     private let deleteContactHidden: Bool
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -23,7 +23,7 @@ class ContactBookContactViewController: ThemeViewController {
     private var addressViewItems: [ContactBookContactViewModel.AddressViewItem] = []
     private var addAddressHidden: Bool = false
 
-    init(viewModel: ContactBookContactViewModel, presented: Bool, onUpdateContact: @escaping (Contact?) -> ()) {
+    init(viewModel: ContactBookContactViewModel, presented: Bool, onUpdateContact: (() -> ())? = nil) {
         self.viewModel = viewModel
         self.presented = presented
         self.onUpdateContact = onUpdateContact
@@ -34,6 +34,10 @@ class ContactBookContactViewController: ThemeViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        print("Deinit \(self)")
     }
 
     override func viewDidLoad() {
@@ -85,21 +89,46 @@ class ContactBookContactViewController: ThemeViewController {
         isLoaded = true
     }
 
+    private func close() {
+        if presented {
+            dismiss(animated: true)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
+    }
+
     @objc private func onTapCancelButton() {
         dismiss(animated: true)
     }
 
     @objc private func onTapSaveButton() {
-        if let contact = viewModel.contact {
-            onUpdateContact(contact)
-            dismiss(animated: true)
+        do {
+            try viewModel.save()
+
+            if let onUpdateContact {
+                onUpdateContact()
+            } else {
+                close()
+            }
+        } catch {
+            print("Can't update \(error)")
+            // todo: show error alert!
         }
     }
 
     private func onTapDeleteContact() {
-        onUpdateContact(nil)
+        do {
+            try viewModel.delete()
 
-        dismiss(animated: true)
+            if let onUpdateContact {
+                onUpdateContact()
+            } else {
+                close()
+            }
+        } catch {
+            print("Can't remove \(error)")
+            // todo: show error alert!
+        }
     }
 
     private func onTapUpdateAddress(address: ContactAddress? = nil) {
