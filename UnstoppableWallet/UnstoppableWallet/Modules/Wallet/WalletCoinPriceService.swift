@@ -87,7 +87,9 @@ extension WalletCoinPriceService {
     }
 
     func itemMap(tokens: [Token]) -> [String: Item] {
-        return marketKit.coinPriceMap(coinUids: Array(filteredIds(tokens: tokens)), currencyCode: currency.code).mapValues { item(coinPrice: $0) }
+        marketKit.coinPriceMap(coinUids: Array(filteredIds(tokens: tokens)), currencyCode: currency.code).mapValues {
+            item(coinPrice: $0)
+        }
     }
 
     func item(token: Token) -> Item? {
@@ -104,7 +106,7 @@ extension WalletCoinPriceService {
 
     struct Item {
         let price: CurrencyValue
-        let diff: Decimal
+        let diff: Decimal?
         let expired: Bool
     }
 

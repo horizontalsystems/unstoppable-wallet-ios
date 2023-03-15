@@ -27,7 +27,7 @@ struct MarketCategoryModule {
         let marketCapFetcher = MarketCategoryMarketCapFetcher(currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit, category: category.uid)
         let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .day1)
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
-        let chartViewModel = MarketCategoryMetricChartViewModel(service: chartService, chartConfiguration: marketCapFetcher, factory: factory)
+        let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: marketCapFetcher, factory: factory)
 
         let decorator = MarketListMarketFieldDecorator(service: service)
         let viewModel = MarketCategoryViewModel(service: service)

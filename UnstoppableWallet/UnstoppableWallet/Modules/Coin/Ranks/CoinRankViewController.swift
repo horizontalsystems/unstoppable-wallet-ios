@@ -129,7 +129,7 @@ extension CoinRankViewController: SectionsDataSource {
                 },
                 action: { [weak self] in
                     if let viewController = CoinPageModule.viewController(coinUid: viewItem.uid) {
-                        self?.navigationController?.pushViewController(viewController, animated: true)
+                        self?.present(viewController, animated: true)
                     }
                 }
         )

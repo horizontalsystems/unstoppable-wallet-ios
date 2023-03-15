@@ -82,10 +82,6 @@ class CoinChartViewModel {
 
 extension CoinChartViewModel: IChartViewModel {
 
-    var chartTitle: String? {
-        nil
-    }
-
     var pointSelectModeEnabledDriver: Driver<Bool> {
         pointSelectModeEnabledRelay.asDriver()
     }
@@ -167,7 +163,6 @@ extension HsTimePeriod {
 
     var title: String {
         switch self {
-//        case .today: return "chart.time_duration.today".localized
         case .day1: return "chart.time_duration.day".localized
         case .week1: return "chart.time_duration.week".localized
         case .week2: return "chart.time_duration.week2".localized

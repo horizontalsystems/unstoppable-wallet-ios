@@ -69,7 +69,8 @@ class CoinMajorHoldersViewModel {
                 totalPercent: totalPercent,
                 remainingPercent: 100.0 - totalPercent,
                 percent: percent,
-                viewItems: viewItems
+                viewItems: viewItems,
+                holdersUrl: tokenHolders.holdersUrl
         )
     }
 
@@ -119,6 +120,7 @@ extension CoinMajorHoldersViewModel {
         let remainingPercent: Decimal
         let percent: String?
         let viewItems: [ViewItem]
+        let holdersUrl: String?
     }
 
 }
