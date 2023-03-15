@@ -65,15 +65,6 @@ class ContactBookContactViewModel {
 
 extension ContactBookContactViewModel {
 
-    var contact: Contact? {
-        switch service.state {
-        case .updated:
-            let uid = service.oldContact?.uid ?? UUID().uuidString
-            return Contact(uid: uid, modifiedAt: Date().timeIntervalSince1970, name: service.contactName, addresses: service.addresses)
-        default: return nil
-        }
-    }
-
     var existAddresses: [ContactAddress] {
         service.addresses
     }
@@ -120,6 +111,14 @@ extension ContactBookContactViewModel {
 
     func removeContact(address: ContactAddress?) {
         service.removeContact(address: address)
+    }
+
+    func save() throws {
+        try service.save()
+    }
+
+    func delete() throws {
+        try service.delete()
     }
 
 }

@@ -17,6 +17,7 @@ class SendEvmTransactionViewModel {
     private let coinServiceFactory: EvmCoinServiceFactory
     private let cautionsFactory: SendEvmCautionsFactory
     private let evmLabelManager: EvmLabelManager
+    private let contactManager: ContactBookManager?
 
     private let sectionViewItemsRelay = BehaviorRelay<[SectionViewItem]>(value: [])
 
@@ -27,17 +28,27 @@ class SendEvmTransactionViewModel {
     private let sendSuccessRelay = PublishRelay<Data>()
     private let sendFailedRelay = PublishRelay<String>()
 
-    init(service: ISendEvmTransactionService, coinServiceFactory: EvmCoinServiceFactory, cautionsFactory: SendEvmCautionsFactory, evmLabelManager: EvmLabelManager) {
+    init(service: ISendEvmTransactionService, coinServiceFactory: EvmCoinServiceFactory, cautionsFactory: SendEvmCautionsFactory, evmLabelManager: EvmLabelManager, contactManager: ContactBookManager?) {
         self.service = service
         self.coinServiceFactory = coinServiceFactory
         self.cautionsFactory = cautionsFactory
         self.evmLabelManager = evmLabelManager
+        self.contactManager = contactManager
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(disposeBag, service.sendStateObservable) { [weak self] in self?.sync(sendState: $0) }
+        if let contactManager = contactManager {
+            subscribe(disposeBag, contactManager.stateObservable) { [weak self] _ in
+                self?.reSyncServiceState()
+            }
+        }
 
         sync(state: service.state)
         sync(sendState: service.sendState)
+    }
+
+    private func reSyncServiceState() {
+        sync(state: service.state)
     }
 
     private func sync(state: SendEvmTransactionService.State) {
@@ -239,6 +250,8 @@ class SendEvmTransactionViewModel {
 
     private func sendBaseCoinItems(to: EvmKit.Address, value: BigUInt, sendInfo: SendEvmData.SendInfo?, nonce: Int?) -> [SectionViewItem] {
         let toValue = to.eip55
+        let contactName = contactManager?.name(blockchainType: service.blockchainType, address: toValue)
+        let inContacts = contactName != nil
 
         var viewItems: [ViewItem] = [
                 .subhead(
@@ -254,9 +267,14 @@ class SendEvmTransactionViewModel {
                 .address(
                         title: "send.confirmation.to".localized,
                         value: toValue,
-                        valueTitle: sendInfo?.domain ?? evmLabelManager.addressLabel(address: toValue)
+                        valueTitle: sendInfo?.domain ?? evmLabelManager.addressLabel(address: toValue),
+                        contactStatus: inContacts ? .already : .notExist(service.blockchainType)
                 ),
             ]
+
+        if let contactName {
+            viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
+        }
 
         if let nonce = nonce {
             viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
@@ -285,7 +303,20 @@ class SendEvmTransactionViewModel {
 
         let addressValue = to.eip55
         let addressTitle = sendInfo?.domain ?? evmLabelManager.addressLabel(address: addressValue)
-        viewItems.append(.address(title: "send.confirmation.to".localized, value: addressValue, valueTitle: addressTitle))
+
+        let contactName = contactManager?.name(blockchainType: service.blockchainType, address: addressValue)
+        let inContacts = contactName != nil
+
+        viewItems.append(.address(
+                title: "send.confirmation.to".localized,
+                value: addressValue,
+                valueTitle: addressTitle,
+                contactStatus: inContacts ? .already : .notExist(service.blockchainType)
+            )
+        )
+        if let contactName {
+            viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
+        }
         if let nonce = nonce {
             viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
         }
@@ -306,7 +337,19 @@ class SendEvmTransactionViewModel {
 
         let addressValue = to.eip55
         let addressTitle = sendInfo?.domain ?? evmLabelManager.addressLabel(address: addressValue)
-        viewItems.append(.address(title: "send.confirmation.to".localized, value: addressValue, valueTitle: addressTitle))
+        let contactName = contactManager?.name(blockchainType: service.blockchainType, address: addressValue)
+        let inContacts = contactName != nil
+
+        viewItems.append(.address(
+                title: "send.confirmation.to".localized,
+                value: addressValue,
+                valueTitle: addressTitle,
+                contactStatus: inContacts ? .already : .notExist(service.blockchainType)
+            )
+        )
+        if let contactName {
+            viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
+        }
         if let nonce = nonce {
             viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
         }
@@ -338,6 +381,8 @@ class SendEvmTransactionViewModel {
         }
         let addressValue = spender.eip55
         let addressTitle = evmLabelManager.addressLabel(address: addressValue)
+        let contactName = contactManager?.name(blockchainType: service.blockchainType, address: addressValue)
+        let inContacts = contactName != nil
 
         var viewItems: [ViewItem] = [
             .subhead(
@@ -349,9 +394,14 @@ class SendEvmTransactionViewModel {
             .address(
                     title: "approve.confirmation.spender".localized,
                     value: addressValue,
-                    valueTitle: addressTitle
+                    valueTitle: addressTitle,
+                    contactStatus: inContacts ? .already : .notExist(service.blockchainType)
             )
         ]
+
+        if let contactName {
+            viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
+        }
 
         if let nonce = nonce {
             viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
@@ -409,7 +459,19 @@ class SendEvmTransactionViewModel {
         if let recipient = recipient {
             let addressValue = recipient.eip55
             let addressTitle = swapInfo?.recipientDomain ?? evmLabelManager.addressLabel(address: addressValue)
-            otherViewItems.append(.address(title: "swap.advanced_settings.recipient_address".localized, value: addressValue, valueTitle: addressTitle))
+            let contactName = contactManager?.name(blockchainType: service.blockchainType, address: addressValue)
+            let inContacts = contactName != nil
+
+            otherViewItems.append(.address(
+                    title: "swap.advanced_settings.recipient_address".localized,
+                    value: addressValue,
+                    valueTitle: addressTitle,
+                    contactStatus: inContacts ? .already : .notExist(service.blockchainType)
+                )
+            )
+            if let contactName {
+                otherViewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
+            }
         }
 
         if let price = swapInfo?.price {
@@ -552,7 +614,19 @@ class SendEvmTransactionViewModel {
         if let recipient = recipient {
             let addressValue = recipient.eip55
             let addressTitle = oneInchSwapInfo?.recipient?.domain ?? evmLabelManager.addressLabel(address: addressValue)
-            viewItems.append(.address(title: "swap.advanced_settings.recipient_address".localized, value: addressValue, valueTitle: addressTitle))
+            let contactName = contactManager?.name(blockchainType: service.blockchainType, address: addressValue)
+            let inContacts = contactName != nil
+
+            viewItems.append(.address(
+                    title: "swap.advanced_settings.recipient_address".localized,
+                    value: addressValue,
+                    valueTitle: addressTitle,
+                    contactStatus: inContacts ? .already : .notExist(service.blockchainType)
+                )
+            )
+            if let contactName {
+                viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
+            }
         }
 
         return viewItems
@@ -560,6 +634,8 @@ class SendEvmTransactionViewModel {
 
     private func unknownMethodItems(transactionData: TransactionData, dAppInfo: SendEvmData.DAppInfo?, nonce: Int?) -> [SectionViewItem] {
         let toValue = transactionData.to.eip55
+        let contactName = contactManager?.name(blockchainType: service.blockchainType, address: toValue)
+        let inContacts = contactName != nil
 
         var viewItems: [ViewItem] = [
             amountViewItem(
@@ -570,9 +646,14 @@ class SendEvmTransactionViewModel {
             .address(
                     title: "send.confirmation.to".localized,
                     value: toValue,
-                    valueTitle: evmLabelManager.addressLabel(address: toValue)
+                    valueTitle: evmLabelManager.addressLabel(address: toValue),
+                    contactStatus: inContacts ? .already : .notExist(service.blockchainType)
             )
         ]
+
+        if let contactName {
+            viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
+        }
 
         if let nonce = nonce {
             viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
@@ -656,9 +737,21 @@ extension SendEvmTransactionViewModel {
         case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
         case nftAmount(iconUrl: String?, iconPlaceholderImageName: String, nftAmount: String, type: AmountType)
         case doubleAmount(title: String, coinAmount: String, currencyAmount: String?)
-        case address(title: String, value: String, valueTitle: String?)
+        case address(title: String, value: String, valueTitle: String?, contactStatus: ContactStatus)
         case value(title: String, value: String, type: ValueType)
         case input(value: String)
+    }
+
+    enum ContactStatus {
+        case already
+        case notExist(BlockchainType)
+
+        var blockchainType: BlockchainType? {
+            switch self {
+            case .notExist(let type): return type
+            default: return nil
+            }
+        }
     }
 
 }

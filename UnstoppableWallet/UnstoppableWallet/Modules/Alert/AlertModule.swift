@@ -8,7 +8,7 @@ protocol IAlertViewDelegate {
 }
 
 protocol IAlertRouter {
-    func close()
+    func close(completion: (() -> Void)?)
 }
 
 struct AlertViewItem {

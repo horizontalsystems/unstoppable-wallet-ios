@@ -27,7 +27,7 @@ class ContactBookAddressModule {
             guard let firstBlockchain = allBlockchains.first else {
                 return nil
             }
-            addressService = AddressService(mode: .blockchainType, contactBookManager: App.shared.contactManager, blockchainType: firstBlockchain.type)
+            addressService = AddressService(mode: .blockchainType, contactBookManager: nil, blockchainType: firstBlockchain.type)
             service = ContactBookAddressService(marketKit: App.shared.marketKit, addressService: addressService, mode: .create(existAddresses), blockchain: firstBlockchain)
         }
 

@@ -29,7 +29,7 @@ struct SwapApproveConfirmationModule {
         }
 
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
-        let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
+        let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager, contactManager: App.shared.contactManager)
 
         if revokeAllowance {
             return SwapRevokeConfirmationViewController(transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel, delegate: delegate)

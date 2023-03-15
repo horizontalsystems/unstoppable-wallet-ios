@@ -35,12 +35,14 @@ class ContactBookContactService {
         }
     }
 
-    init(contactManager: ContactBookManager, marketKit: MarketKit.Kit, contact: Contact? = nil) {
+    init(contactManager: ContactBookManager, marketKit: MarketKit.Kit, contact: Contact? = nil, newAddresses: [ContactAddress] = []) {
         self.marketKit = marketKit
         self.contactManager = contactManager
-        oldContact = contact
 
+        oldContact = contact
         restoreContainer()
+
+        addresses.append(contentsOf: newAddresses)
 
         sync()
         syncAddresses()
@@ -141,6 +143,24 @@ extension ContactBookContactService {
         if let address, let index = addresses.firstIndex(where: { $0.blockchainUid == address.blockchainUid }) {
             addresses.remove(at: index)
         }
+    }
+
+    func save() throws {
+        guard case .updated = state else {
+            return
+        }
+
+        let uid = oldContact?.uid ?? UUID().uuidString
+        let contact = Contact(uid: uid, modifiedAt: Date().timeIntervalSince1970, name: contactName, addresses: addresses)
+
+        try contactManager.update(contact: contact)
+    }
+
+    func delete() throws {
+        guard let uid = oldContact?.uid else {
+            return
+        }
+        try contactManager.delete(uid)
     }
 
 }

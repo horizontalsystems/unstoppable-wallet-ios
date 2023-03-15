@@ -105,6 +105,10 @@ extension OneInchSendEvmTransactionService: ISendEvmTransactionService {
         evmKit.receiveAddress
     }
 
+    var blockchainType: BlockchainType {
+        evmKitWrapper.blockchainType
+    }
+
     func methodName(input: Data) -> String? {
         nil
     }

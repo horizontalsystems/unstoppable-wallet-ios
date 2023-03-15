@@ -28,7 +28,7 @@ struct SwapConfirmationModule {
         }
 
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
-        let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
+        let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager, contactManager: App.shared.contactManager)
 
         return SwapConfirmationViewController(transactionViewModel: viewModel, settingsViewModel: settingsViewModel)
     }
@@ -79,7 +79,7 @@ struct SwapConfirmationModule {
         }
 
         let transactionSettings = OneInchSendEvmTransactionService(evmKitWrapper: evmKitWrapper, oneInchFeeService: feeService, settingsService: settingsService)
-        let transactionViewModel = SendEvmTransactionViewModel(service: transactionSettings, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager)
+        let transactionViewModel = SendEvmTransactionViewModel(service: transactionSettings, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager, contactManager: App.shared.contactManager)
 
         return SwapConfirmationViewController(transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)
     }

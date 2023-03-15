@@ -9,7 +9,7 @@ import ThemeKit
 class ContactBookViewController: ThemeSearchViewController {
     private let viewModel: ContactBookViewModel
     private let presented: Bool
-    private weak var selectorDelegate: ContactBookSelectorDelegate?
+    private let mode: ContactBookModule.Mode
 
     private let disposeBag = DisposeBag()
     private let tableView = SectionsTableView(style: .grouped)
@@ -18,10 +18,10 @@ class ContactBookViewController: ThemeSearchViewController {
     private var viewItems: [ContactBookViewModel.ViewItem] = []
     private var isLoaded = false
 
-    init(viewModel: ContactBookViewModel, presented: Bool, selectorDelegate: ContactBookSelectorDelegate? = nil) {
+    init(viewModel: ContactBookViewModel, presented: Bool, mode: ContactBookModule.Mode) {
         self.viewModel = viewModel
         self.presented = presented
-        self.selectorDelegate = selectorDelegate
+        self.mode = mode
 
         super.init(scrollViews: [tableView])
 
@@ -39,9 +39,7 @@ class ContactBookViewController: ThemeSearchViewController {
         navigationItem.searchController?.searchBar.placeholder = "contacts.list.search_placeholder".localized
 
         // delegate means that viewController works as selector for contact
-        let editable = selectorDelegate == nil
-
-        if editable {
+        if mode.editable {
             let settingsItem = UIBarButtonItem(image: UIImage(named: "share_1_24"), style: .plain, target: self, action: #selector(onTapSettings))
             settingsItem.tintColor = .themeJacob
 
@@ -77,7 +75,7 @@ class ContactBookViewController: ThemeSearchViewController {
         notFoundPlaceholder.image = UIImage(named: "user_plus_48")
         notFoundPlaceholder.text = "contacts.list.not_found".localized
 
-        if editable {
+        if mode.editable {
             notFoundPlaceholder.addPrimaryButton(
                     style: .yellow,
                     title: "contacts.add_new_contact".localized,
@@ -107,27 +105,39 @@ class ContactBookViewController: ThemeSearchViewController {
     }
 
     private func onTap(viewItem: ContactBookViewModel.ViewItem) {
-        if let viewItem = viewItem as? ContactBookViewModel.SelectorViewItem {
-            selectorDelegate?.onFetch(address: viewItem.address)
+        switch mode {
+        case .edit:
+            onUpdateContact(contactUid: viewItem.uid, presented: false)
+        case .select(_, let delegate):
+            if let viewItem = viewItem as? ContactBookViewModel.SelectorViewItem {
+                delegate.onFetch(address: viewItem.address)
+            }
             dismiss(animated: true)
-        } else {
-            onUpdateContact(contactUid: viewItem.uid)
+        case .addToContact(let address):
+            let successAction: (() -> ())? = { [weak self] in
+                self?.onTapDoneButton()
+            }
+            onUpdateContact(contactUid: viewItem.uid, newAddress: address, presented: false, onUpdateContact: successAction)
         }
     }
 
-    private func onUpdateContact(contactUid: String? = nil) {
-        let onUpdateContact: (Contact?) -> () = { [weak self] updatedContact in
-            if let updatedContact {
-                self?.viewModel.updateContact(contact: updatedContact)
-            } else {
-                self?.viewModel.removeContact(contactUid: contactUid)
-            }
+    private func onUpdateContact(contactUid: String? = nil, newAddress: ContactAddress? = nil, presented: Bool = true, onUpdateContact: (() -> ())? = nil) {
+        let mode: ContactBookContactModule.Mode
+        let newAddresses = [newAddress].compactMap { $0 }
+        if let contactUid {
+            mode = .exist(contactUid, newAddresses)
+        } else {
+            mode = .new
         }
-        guard let module = ContactBookContactModule.viewController(contactUid: contactUid, presented: true, onUpdateContact: onUpdateContact) else {
+        guard let module = ContactBookContactModule.viewController(mode: mode, presented: presented, onUpdateContact: onUpdateContact) else {
             return
         }
 
-        present(module, animated: true)
+        if presented {
+            present(module, animated: true)
+        } else {
+            navigationController?.pushViewController(module, animated: true)
+        }
     }
 
     private func onUpdate(viewItems: [ContactBookViewModel.ViewItem]) {
@@ -151,8 +161,16 @@ class ContactBookViewController: ThemeSearchViewController {
                 image: UIImage(named: "circle_minus_shifted_24"),
                 background: UIColor(red: 0, green: 0, blue: 0, alpha: 0)
         ), action: { [weak self] cell in
-            self?.viewModel.removeContact(contactUid: uid)
+            self?.removeContact(uid: uid)
         })
+    }
+
+    private func removeContact(uid: String) {
+        do {
+            try viewModel.removeContact(contactUid: uid)
+        } catch {
+            print("Can't remove contact \(error)")
+        }
     }
 
     override func onUpdate(filter: String?) {

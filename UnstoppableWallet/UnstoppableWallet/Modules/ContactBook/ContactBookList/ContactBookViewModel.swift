@@ -68,13 +68,9 @@ extension ContactBookViewModel {
         notFoundVisibleRelay.asDriver()
     }
 
-    func updateContact(contact: Contact) {
-        service.update(contact: contact)
-    }
-
-    func removeContact(contactUid: String?) {
+    func removeContact(contactUid: String?) throws {
         if let contactUid {
-            service.delete(contactUid: contactUid)
+            try service.delete(contactUid: contactUid)
         }
     }
 
