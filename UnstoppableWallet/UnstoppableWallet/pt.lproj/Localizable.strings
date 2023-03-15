@@ -475,7 +475,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market_discovery.browse_categories" = "Navegar nas categorias";
 "market_discovery.top_coins" = "TOP Moedas";
 "market_discovery.not_found" = "Nenhum resultado encontrado";
-"market_discovery.category.chart.title" = "Valor total de mercado";
 
 "market_watchlist.empty.caption" = "Seu catálogo está vazio.";
 
@@ -636,7 +635,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
 "coin_analytics.holders.in_top_10_addresses" = "in top 10 addresses";
-"coin_analytics.holders.count" = "%@ holders";
+"coin_analytics.holders.count" = "Holders: %@";
+"coin_analytics.holders.see_all" = "Ver tudo";
 
 "coin_analytics.project_tvl" = "Project TVL";
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
@@ -986,7 +986,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Key Types
 
-"chart.time_duration.today" = "HOJE";
 "chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2S";
