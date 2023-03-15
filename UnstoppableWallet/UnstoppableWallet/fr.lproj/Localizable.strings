@@ -657,18 +657,18 @@
 "coin_analytics.reports" = "Rapports";
 
 "coin_analytics.funding" = "Financement";
-"coin_analytics.funding.lead" = "Lead";
+"coin_analytics.funding.lead" = "En tête";
 
 "coin_analytics.treasuries" = "Treasuries";
 "coin_analytics.treasuries.filters" = "Filtres";
 "coin_analytics.treasuries.filter.all" = "Tout";
 "coin_analytics.treasuries.filter.public" = "Public";
-"coin_analytics.treasuries.filter.private" = "Private";
+"coin_analytics.treasuries.filter.private" = "Privé";
 "coin_analytics.treasuries.filter.etf" = "ETF";
 
 "coin_analytics.audits" = "Audits";
-"coin_analytics.audits.issues" = "Issues";
-"coin_analytics.audits.no_reports" = "No audit reports";
+"coin_analytics.audits.issues" = "Anomalies";
+"coin_analytics.audits.no_reports" = "Aucun rapport d'audit";
 
 "coin_analytics.last_30d" = "last 30d";
 "coin_analytics.current" = "current";
@@ -683,9 +683,9 @@
 // Coin Page -> Tweets
 
 "coin_tweets.reference_type.retweeted" = "Retweeted @%@";
-"coin_tweets.reference_type.quoted" = "Quoted @%@";
-"coin_tweets.reference_type.replied" = "Replied to @%@";
-"coin_tweets.no_tweets_yet" = "No tweets yet";
+"coin_tweets.reference_type.quoted" = "Cité @%@";
+"coin_tweets.reference_type.replied" = "A répondu à @%@";
+"coin_tweets.no_tweets_yet" = "Pas encore de tweets";
 "coin_tweets.not_available" = "No twitter available";
 "coin_tweets.see_on_twitter" = "See on Twitter";
 
