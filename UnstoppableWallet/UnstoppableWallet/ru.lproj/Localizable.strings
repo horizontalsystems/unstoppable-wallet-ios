@@ -477,7 +477,6 @@
 "market_discovery.browse_categories" = "Обзор категорий";
 "market_discovery.top_coins" = "Лучшие токены";
 "market_discovery.not_found" = "Ничего не найдено";
-"market_discovery.category.chart.title" = "Общая капитализация";
 
 "market_watchlist.empty.caption" = "У вас нет токенов в избранном.";
 
@@ -638,7 +637,8 @@
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
 "coin_analytics.holders.in_top_10_addresses" = "in top 10 addresses";
-"coin_analytics.holders.count" = "%@ holders";
+"coin_analytics.holders.count" = "Holders: %@";
+"coin_analytics.holders.see_all" = "Посмотреть всё";
 
 "coin_analytics.project_tvl" = "Проект TVL";
 "coin_analytics.tvl_ratio" = "Коэффициент M.Cap / TVL";
@@ -988,7 +988,6 @@
 
 // Key Types
 
-"chart.time_duration.today" = "СГД";
 "chart.time_duration.day" = "24Ч";
 "chart.time_duration.week" = "7Д";
 "chart.time_duration.week2" = "2Н";
