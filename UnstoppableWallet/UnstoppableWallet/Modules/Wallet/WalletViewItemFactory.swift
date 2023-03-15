@@ -114,11 +114,9 @@ class WalletViewItemFactory {
     }
 
     private func diff(rateItem: WalletCoinPriceService.Item?) -> (text: String, type: BalanceDiffType)? {
-        guard let rateItem = rateItem else {
+        guard let rateItem, let value = rateItem.diff else {
             return nil
         }
-
-        let value = rateItem.diff
 
         guard let formattedValue = ValueFormatter.instance.format(percentValue: value, showSign: true) else {
             return nil

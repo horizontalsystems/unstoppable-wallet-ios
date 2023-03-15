@@ -135,7 +135,7 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
 
         let chartColor = viewModel.blockchainType.brandColor ?? .themeJacob
 
-        return [
+        var sections: [SectionProtocol] = [
             Section(
                     id: "info",
                     headerState: .margin(height: .margin16),
@@ -176,8 +176,32 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
                     rows: stateViewItem.viewItems.enumerated().map { index, viewItem in
                         row(viewItem: viewItem, isLast: index == stateViewItem.viewItems.count - 1)
                     }
-            ),
+            )
         ]
+
+        if let url = stateViewItem.holdersUrl {
+            sections.append(
+                    Section(
+                            id: "url",
+                            footerState: .margin(height: .margin32),
+                            rows: [
+                                tableView.universalRow48(
+                                        id: "url",
+                                        title: .body("coin_analytics.holders.see_all".localized),
+                                        accessoryType: .disclosure,
+                                        autoDeselect: true,
+                                        isFirst: true,
+                                        isLast: true,
+                                        action: { [weak self] in
+                                            self?.urlManager.open(url: url, from: self)
+                                        }
+                                )
+                            ]
+                    )
+            )
+        }
+
+        return sections
     }
 
 }

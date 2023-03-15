@@ -22,8 +22,6 @@ class MetricChartViewModel {
     private let chartInfoRelay = BehaviorRelay<ChartModule.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<String?>(value: nil)
 
-    var chartTitle: String? { nil }
-
     var title: String { chartConfiguration.title }
     var description: String? { chartConfiguration.description }
     var poweredBy: String? { chartConfiguration.poweredBy }

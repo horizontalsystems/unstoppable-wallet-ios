@@ -41,7 +41,6 @@ enum MovementTrend {
 }
 
 protocol IChartViewModel {
-    var chartTitle: String? { get }
     var intervals: [String] { get }
     var intervalsUpdatedWithCurrentIndexDriver: Driver<Int> { get }
     var intervalIndexDriver: Driver<Int> { get }
