@@ -473,7 +473,6 @@
 "market_discovery.browse_categories" = "Navegar Categorías";
 "market_discovery.top_coins" = "TOP Coins";
 "market_discovery.not_found" = "No se han encontrado resultados";
-"market_discovery.category.chart.title" = "Total Cap";
 
 "market_watchlist.empty.caption" = "Tu Watchlist está vacía.";
 
@@ -634,7 +633,8 @@
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
 "coin_analytics.holders.in_top_10_addresses" = "in top 10 addresses";
-"coin_analytics.holders.count" = "%@ holders";
+"coin_analytics.holders.count" = "Holders: %@";
+"coin_analytics.holders.see_all" = "Ver Todos";
 
 "coin_analytics.project_tvl" = "Project TVL";
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
@@ -984,7 +984,6 @@
 
 // Key Types
 
-"chart.time_duration.today" = "Hoy";
 "chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2 S";
