@@ -590,19 +590,19 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.not_available" = "Este projeto não tem dados de análise";
 "coin_analytics.locked" = "Esta página disponível apenas para usuários Premium da Carteira Unstoppable";
 
-"coin_analytics.cex_volume" = "Volume СEX";
+"coin_analytics.cex_volume" = "CEX Volume";
 "coin_analytics.cex_volume_rank" = "Ranking do Volume CEX";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
 "coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
 
-"coin_analytics.dex_volume" = "Volume DEX";
+"coin_analytics.dex_volume" = "DEX Volume";
 "coin_analytics.dex_volume_rank" = "Ranking do Volume DEX";
 "coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
 "coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
-"coin_analytics.dex_volume.info4" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
+"coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
 "coin_analytics.dex_volume.tracked_dexes" = "DEXes that are being tracked:";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Sushiswap";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
@@ -699,7 +699,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "pro_features.lock_info.title" = "Senha Unstoppable";
 "pro_features.lock_info.coin_details.description" = "Para ativar estes dados, você deve ter o passe NFT da Unstoppable no seu saldo\n\nVocê também pode obter acesso aos dados abaixo:";
-"pro_features.lock_info.coin_details.volume" = "Volume DEX";
+"pro_features.lock_info.coin_details.volume" = "DEX Volume";
 "pro_features.lock_info.coin_details.liquidity" = "Liquidez DEX";
 "pro_features.lock_info.coin_details.active_addresses" = "Endereços ativos";
 "pro_features.lock_info.coin_details.transaction_count" = "Contagem de transações";
