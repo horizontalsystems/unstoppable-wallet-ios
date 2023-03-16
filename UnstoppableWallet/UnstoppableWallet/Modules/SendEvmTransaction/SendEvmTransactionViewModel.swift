@@ -606,8 +606,8 @@ class SendEvmTransactionViewModel {
             viewItems.append(.value(title: "swap.advanced_settings.slippage".localized, value: formattedSlippage, type: .regular))
         }
 
-        if let recipient = recipient {
-            let addressValue = recipient.eip55
+        let addressValue = recipient?.eip55 ?? oneInchSwapInfo?.recipient?.raw
+        if let addressValue {
             let addressTitle = oneInchSwapInfo?.recipient?.domain ?? evmLabelManager.addressLabel(address: addressValue)
             let contactData = contactLabelService.contactData(for: addressValue)
 

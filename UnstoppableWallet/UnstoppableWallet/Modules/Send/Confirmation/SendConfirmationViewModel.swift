@@ -5,6 +5,7 @@ import RxCocoa
 class SendConfirmationViewModel {
     private let disposeBag = DisposeBag()
     private let service: SendConfirmationService
+    private let contactLabelService: ContactLabelService
 
     private let viewItemRelay = BehaviorRelay<[[ViewItem]]>(value: [])
     private var viewItems = [[ViewItem]]() {
@@ -18,10 +19,14 @@ class SendConfirmationViewModel {
     private let sendSuccessRelay = PublishRelay<()>()
     private let sendFailedRelay = PublishRelay<String>()
 
-    init(service: SendConfirmationService) {
+    init(service: SendConfirmationService, contactLabelService: ContactLabelService) {
         self.service = service
+        self.contactLabelService = contactLabelService
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in
+            self?.syncViewItems()
+        }
 
         syncViewItems()
     }
@@ -51,13 +56,25 @@ class SendConfirmationViewModel {
                         )
                 )
 
+                let contactData = contactLabelService.contactData(for: item.receiver.raw)
+
                 primaryViewItems.append(
                         .address(
                                 title: "send.confirmation.to".localized,
                                 value: item.receiver.raw,
-                                valueTitle: item.receiver.title
+                                valueTitle: item.receiver.title,
+                                contactAddress: contactData.contactAddress
                         )
                 )
+                if let contactName = contactData.name {
+                    primaryViewItems.append(
+                            .value(
+                                    iconName: nil,
+                                    title: "send.confirmation.contact_name".localized,
+                                    value: contactName,
+                                    type: .regular)
+                    )
+                }
             case let item as SendConfirmationMemoViewItem:
                 primaryViewItems.append(
                         .value(
@@ -147,7 +164,7 @@ extension SendConfirmationViewModel {
     enum ViewItem {
         case subhead(iconName: String, title: String, value: String)
         case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
-        case address(title: String, value: String, valueTitle: String?)
+        case address(title: String, value: String, valueTitle: String?, contactAddress: ContactAddress?)
         case value(iconName: String?, title: String, value: String, type: ValueType)
     }
 
