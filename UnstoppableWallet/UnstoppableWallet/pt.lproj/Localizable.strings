@@ -285,6 +285,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "send.confirmation.you_send" = "Enviar";
 "send.confirmation.to" = "Para";
+"send.confirmation.contact_name" = "Contact Name";
 "send.confirmation.domain" = "Domínio";
 "send.confirmation.address" = "Endereço";
 "send.confirmation.account" = "Conta";
@@ -944,6 +945,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "appearance.balance_value.fiat_value" = "Valor Fiat";
 
 // Settings -> Contacts
+
 "contacts.title" = "Contatos";
 "contacts.list.search_placeholder" = "Nome";
 "contacts.list.not_found" = "Você não tem nenhum contato adicionado";
@@ -956,6 +958,10 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "contacts.contact.address.blockchains" = "Blockchains";
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Excluir endereço";
+
+"contacts.add_address.title" = "Adicionar endereço";
+"contacts.add_address.create_new" = "Create New Contact";
+"contacts.add_address.add_to_contact" = "Add to Existing Contact";
 
 // Settings -> iCloud Sync
 
