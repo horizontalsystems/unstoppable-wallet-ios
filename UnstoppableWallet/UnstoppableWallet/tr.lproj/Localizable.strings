@@ -285,6 +285,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "send.confirmation.you_send" = "Gönderdiğiniz";
 "send.confirmation.to" = "Alan";
+"send.confirmation.contact_name" = "Contact Name";
 "send.confirmation.domain" = "Domain";
 "send.confirmation.address" = "Adres";
 "send.confirmation.account" = "Account";
@@ -944,6 +945,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "appearance.balance_value.fiat_value" = "Fiat Değeri";
 
 // Settings -> Contacts
+
 "contacts.title" = "Contacts";
 "contacts.list.search_placeholder" = "İsim";
 "contacts.list.not_found" = "You do not have an added contact";
@@ -956,6 +958,10 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "contacts.contact.address.blockchains" = "Blockchains";
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Delete Address";
+
+"contacts.add_address.title" = "Add Address";
+"contacts.add_address.create_new" = "Create New Contact";
+"contacts.add_address.add_to_contact" = "Add to Existing Contact";
 
 // Settings -> iCloud Sync
 
