@@ -118,7 +118,8 @@ extension SendBitcoinFactory: ISendConfirmationFactory {
         let items = try items()
 
         let service = SendConfirmationService(sendService: adapterService, logger: logger, token: token, items: items)
-        let viewModel = SendConfirmationViewModel(service: service)
+        let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: token.blockchainType)
+        let viewModel = SendConfirmationViewModel(service: service, contactLabelService: contactLabelService)
         let viewController = SendConfirmationViewController(viewModel: viewModel)
 
         return viewController
