@@ -769,6 +769,7 @@
 "tx_info.transaction_id" = "거래 ID";
 "tx_info.to_hash" = "에게";
 "tx_info.spender" = "스펜더";
+"tx_info.contact_name" = "Contact Name";
 "tx_info.button_explorer" = "%@에서 보기";
 "tx_info.rate" = "과거 환율";
 "tx_info.options.speed_up" = "가속";
