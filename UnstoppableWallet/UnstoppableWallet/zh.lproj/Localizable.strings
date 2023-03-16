@@ -771,6 +771,7 @@
 "tx_info.transaction_id" = "交易ID";
 "tx_info.to_hash" = "接收人";
 "tx_info.spender" = "消费人";
+"tx_info.contact_name" = "Contact Name";
 "tx_info.button_explorer" = "查看于%@";
 "tx_info.rate" = "历史价格";
 "tx_info.options.speed_up" = "加速";
