@@ -8,8 +8,8 @@ import ThemeKit
 
 class ContactBookViewController: ThemeSearchViewController {
     private let viewModel: ContactBookViewModel
-    private let presented: Bool
     private let mode: ContactBookModule.Mode
+    private let presented: Bool
 
     private let disposeBag = DisposeBag()
     private let tableView = SectionsTableView(style: .grouped)
@@ -18,10 +18,10 @@ class ContactBookViewController: ThemeSearchViewController {
     private var viewItems: [ContactBookViewModel.ViewItem] = []
     private var isLoaded = false
 
-    init(viewModel: ContactBookViewModel, presented: Bool, mode: ContactBookModule.Mode) {
+    init(viewModel: ContactBookViewModel, mode: ContactBookModule.Mode, presented: Bool) {
         self.viewModel = viewModel
-        self.presented = presented
         self.mode = mode
+        self.presented = presented
 
         super.init(scrollViews: [tableView])
 
@@ -38,7 +38,7 @@ class ContactBookViewController: ThemeSearchViewController {
         title = "contacts.title".localized
         navigationItem.searchController?.searchBar.placeholder = "contacts.list.search_placeholder".localized
 
-        // delegate means that viewController works as selector for contact
+        // add editable buttons (Add Contact + Share)
         if mode.editable {
             let settingsItem = UIBarButtonItem(image: UIImage(named: "share_1_24"), style: .plain, target: self, action: #selector(onTapSettings))
             settingsItem.tintColor = .themeJacob
@@ -47,13 +47,15 @@ class ContactBookViewController: ThemeSearchViewController {
             settingsItem.tintColor = .themeJacob
 
             navigationItem.rightBarButtonItems = [addContact, settingsItem]
+        }
 
-            if presented {
-                navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapDoneButton))
-            }
-        } else {
-            if presented {
-                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapDoneButton))
+        // add cancel button if vc was presented
+        if presented {
+            let item = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onClose))
+            if mode.editable {
+                navigationItem.leftBarButtonItem = item
+            } else {
+                navigationItem.rightBarButtonItem = item
             }
         }
 
@@ -75,6 +77,7 @@ class ContactBookViewController: ThemeSearchViewController {
         notFoundPlaceholder.image = UIImage(named: "user_plus_48")
         notFoundPlaceholder.text = "contacts.list.not_found".localized
 
+        // show add button on empty screen only for edit mode
         if mode.editable {
             notFoundPlaceholder.addPrimaryButton(
                     style: .yellow,
@@ -93,8 +96,12 @@ class ContactBookViewController: ThemeSearchViewController {
         isLoaded = true
     }
 
-    @objc private func onTapDoneButton() {
-        dismiss(animated: true)
+    @objc private func onClose() {
+        if presented {
+            dismiss(animated: true)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
     }
 
     @objc private func onTapSettings() {
@@ -112,10 +119,10 @@ class ContactBookViewController: ThemeSearchViewController {
             if let viewItem = viewItem as? ContactBookViewModel.SelectorViewItem {
                 delegate.onFetch(address: viewItem.address)
             }
-            dismiss(animated: true)
+            onClose()
         case .addToContact(let address):
             let successAction: (() -> ())? = { [weak self] in
-                self?.onTapDoneButton()
+                self?.onClose()
             }
             onUpdateContact(contactUid: viewItem.uid, newAddress: address, presented: false, onUpdateContact: successAction)
         }
