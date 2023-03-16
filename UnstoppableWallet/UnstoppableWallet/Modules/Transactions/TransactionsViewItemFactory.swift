@@ -5,9 +5,11 @@ import ComponentKit
 
 class TransactionsViewItemFactory {
     private let evmLabelManager: EvmLabelManager
+    private let contactLabelService: TransactionsContactLabelService
 
-    init(evmLabelManager: EvmLabelManager) {
+    init(evmLabelManager: EvmLabelManager, contactLabelService: TransactionsContactLabelService) {
         self.evmLabelManager = evmLabelManager
+        self.contactLabelService = contactLabelService
     }
 
     func typeFilterViewItems(typeFilters: [TransactionTypeFilter]) -> [FilterView.ViewItem] {
@@ -18,6 +20,10 @@ class TransactionsViewItemFactory {
                 return .item(title: "transactions.types.\($0.rawValue)".localized)
             }
         }
+    }
+
+    private func mapped(address: String, blockchainType: BlockchainType) -> String {
+        contactLabelService.contactData(for: address, blockchainType: blockchainType).name ?? evmLabelManager.mapped(address: address)
     }
 
     private func coinString(from transactionValue: TransactionValue, showSign: Bool = true) -> String {
@@ -173,7 +179,7 @@ class TransactionsViewItemFactory {
         case let record as EvmIncomingTransactionRecord:
             iconType = singleValueIconType(source: record.source, value: record.value)
             title = "transactions.receive".localized
-            subTitle = "transactions.from".localized(evmLabelManager.mapped(address: record.from))
+            subTitle = "transactions.from".localized(mapped(address: record.from, blockchainType: item.record.source.blockchainType))
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
 
@@ -184,7 +190,7 @@ class TransactionsViewItemFactory {
         case let record as EvmOutgoingTransactionRecord:
             iconType = singleValueIconType(source: record.source, value: record.value, nftMetadata: item.nftMetadata)
             title = "transactions.send".localized
-            subTitle = "transactions.to".localized(evmLabelManager.mapped(address: record.to))
+            subTitle = "transactions.to".localized(mapped(address: record.to, blockchainType: item.record.source.blockchainType))
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
             secondaryValue = singleValueSecondaryValue(value: record.value, currencyValue: item.currencyValue, nftMetadata: item.nftMetadata)
@@ -194,7 +200,7 @@ class TransactionsViewItemFactory {
         case let record as SwapTransactionRecord:
             iconType = doubleValueIconType(source: record.source, primaryValue: record.valueOut, secondaryValue: record.valueIn)
             title = "transactions.swap".localized
-            subTitle = evmLabelManager.mapped(address: record.exchangeAddress)
+            subTitle = mapped(address: record.exchangeAddress, blockchainType: item.record.source.blockchainType)
 
             if let valueOut = record.valueOut {
                 primaryValue = TransactionsViewModel.Value(text: coinString(from: valueOut), type: type(value: valueOut, condition: record.recipient != nil, .secondary, .incoming))
@@ -205,7 +211,7 @@ class TransactionsViewItemFactory {
         case let record as UnknownSwapTransactionRecord:
             iconType = doubleValueIconType(source: record.source, primaryValue: record.valueOut, secondaryValue: record.valueIn)
             title = "transactions.swap".localized
-            subTitle = evmLabelManager.mapped(address: record.exchangeAddress)
+            subTitle = mapped(address: record.exchangeAddress, blockchainType: item.record.source.blockchainType)
 
             if let valueOut = record.valueOut {
                 primaryValue = TransactionsViewModel.Value(text: coinString(from: valueOut), type: type(value: valueOut, .incoming))
@@ -217,7 +223,7 @@ class TransactionsViewItemFactory {
         case let record as ApproveTransactionRecord:
             iconType = singleValueIconType(source: record.source, value: record.value)
             title = "transactions.approve".localized
-            subTitle = evmLabelManager.mapped(address: record.spender)
+            subTitle = mapped(address: record.spender, blockchainType: item.record.source.blockchainType)
 
             if record.value.isMaxValue {
                 primaryValue = TransactionsViewModel.Value(text: "∞ \(record.value.coinCode)", type: .neutral)
@@ -235,7 +241,7 @@ class TransactionsViewItemFactory {
 
             iconType = self.iconType(source: record.source, incomingValues: incomingValues, outgoingValues: outgoingValues, nftMetadata: item.nftMetadata)
             title = record.method ?? "transactions.contract_call".localized
-            subTitle = evmLabelManager.mapped(address: record.contractAddress)
+            subTitle = mapped(address: record.contractAddress, blockchainType: item.record.source.blockchainType)
 
             (primaryValue, secondaryValue) = values(incomingValues: incomingValues, outgoingValues: outgoingValues, currencyValue: item.currencyValue, nftMetadata: item.nftMetadata)
 
@@ -248,7 +254,7 @@ class TransactionsViewItemFactory {
                 title = "transactions.receive".localized
                 let addresses = Array(Set(record.incomingEvents.map { $0.address }))
                 if addresses.count == 1 {
-                    subTitle = "transactions.from".localized(evmLabelManager.mapped(address: addresses[0]))
+                    subTitle = "transactions.from".localized(mapped(address: addresses[0], blockchainType: item.record.source.blockchainType))
                 } else {
                     subTitle = "transactions.multiple".localized
                 }
@@ -267,7 +273,7 @@ class TransactionsViewItemFactory {
         case let record as BitcoinIncomingTransactionRecord:
             iconType = singleValueIconType(source: record.source, value: record.value)
             title = "transactions.receive".localized
-            subTitle = record.from.flatMap { "transactions.from".localized(evmLabelManager.mapped(address: $0)) } ?? "---"
+            subTitle = record.from.flatMap { "transactions.from".localized(mapped(address: $0, blockchainType: item.record.source.blockchainType)) } ?? "---"
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
             if let currencyValue = item.currencyValue {
@@ -281,7 +287,7 @@ class TransactionsViewItemFactory {
         case let record as BitcoinOutgoingTransactionRecord:
             iconType = singleValueIconType(source: record.source, value: record.value)
             title = "transactions.send".localized
-            subTitle =  record.to.flatMap { "transactions.to".localized(evmLabelManager.mapped(address: $0)) } ?? "---"
+            subTitle =  record.to.flatMap { "transactions.to".localized(mapped(address: $0, blockchainType: item.record.source.blockchainType)) } ?? "---"
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
 
@@ -297,7 +303,7 @@ class TransactionsViewItemFactory {
         case let record as BinanceChainIncomingTransactionRecord:
             iconType = singleValueIconType(source: record.source, value: record.value)
             title = "transactions.receive".localized
-            subTitle = "transactions.from".localized(evmLabelManager.mapped(address: record.from))
+            subTitle = "transactions.from".localized(mapped(address: record.from, blockchainType: item.record.source.blockchainType))
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
             if let currencyValue = item.currencyValue {
@@ -307,7 +313,7 @@ class TransactionsViewItemFactory {
         case let record as BinanceChainOutgoingTransactionRecord:
             iconType = singleValueIconType(source: record.source, value: record.value)
             title = "transactions.send".localized
-            subTitle = "transactions.to".localized(evmLabelManager.mapped(address: record.to))
+            subTitle = "transactions.to".localized(mapped(address: record.to, blockchainType: item.record.source.blockchainType))
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, showSign: !record.sentToSelf), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
 

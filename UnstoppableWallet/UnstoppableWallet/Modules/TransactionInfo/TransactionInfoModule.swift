@@ -12,8 +12,9 @@ struct TransactionInfoModule {
         let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
 
         let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, currencyKit: App.shared.currencyKit, rateService: rateService, nftMetadataService: nftMetadataService)
-        let factory = TransactionInfoViewItemFactory(evmLabelManager: App.shared.evmLabelManager, actionEnabled: transactionRecord.source.blockchainType.resendable)
-        let viewModel = TransactionInfoViewModel(service: service, factory: factory)
+        let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: transactionRecord.source.blockchainType)
+        let factory = TransactionInfoViewItemFactory(evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService, actionEnabled: transactionRecord.source.blockchainType.resendable)
+        let viewModel = TransactionInfoViewModel(service: service, factory: factory, contactLabelService: contactLabelService)
         let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
 
         return viewController
@@ -34,10 +35,11 @@ extension TransactionInfoModule {
         case status(status: TransactionStatus)
         case option(option: Option)
         case date(date: Date)
-        case from(value: String, valueTitle: String?)
-        case to(value: String, valueTitle: String?)
-        case spender(value: String, valueTitle: String?)
-        case recipient(value: String, valueTitle: String?)
+        case from(value: String, valueTitle: String?, contactAddress: ContactAddress?)
+        case to(value: String, valueTitle: String?, contactAddress: ContactAddress?)
+        case spender(value: String, valueTitle: String?, contactAddress: ContactAddress?)
+        case recipient(value: String, valueTitle: String?, contactAddress: ContactAddress?)
+        case contactName(name: String)
         case id(value: String)
         case rate(value: String)
         case fee(title: String, value: String)

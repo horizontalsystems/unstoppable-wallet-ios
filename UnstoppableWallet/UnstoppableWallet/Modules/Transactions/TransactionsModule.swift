@@ -16,8 +16,9 @@ struct TransactionsModule {
                 nftMetadataService: nftMetadataService
         )
 
-        let viewItemFactory = TransactionsViewItemFactory(evmLabelManager: App.shared.evmLabelManager)
-        let viewModel = TransactionsViewModel(service: service, factory: viewItemFactory)
+        let contactLabelService = TransactionsContactLabelService(contactManager: App.shared.contactManager)
+        let viewItemFactory = TransactionsViewItemFactory(evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService)
+        let viewModel = TransactionsViewModel(service: service, contactLabelService: contactLabelService, factory: viewItemFactory)
         let viewController = TransactionsViewController(viewModel: viewModel)
 
         return viewController

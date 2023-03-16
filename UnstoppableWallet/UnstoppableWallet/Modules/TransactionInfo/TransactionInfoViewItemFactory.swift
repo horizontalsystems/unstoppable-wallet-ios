@@ -7,11 +7,14 @@ class TransactionInfoViewItemFactory {
     private let zeroAddress = "0x0000000000000000000000000000000000000000"
 
     private let evmLabelManager: EvmLabelManager
+    private let contactLabelService: ContactLabelService
+
     private let actionEnabled: Bool
 
-    init(evmLabelManager: EvmLabelManager, actionEnabled: Bool) {
+    init(evmLabelManager: EvmLabelManager, contactLabelService: ContactLabelService, actionEnabled: Bool) {
         self.evmLabelManager = evmLabelManager
         self.actionEnabled = actionEnabled
+        self.contactLabelService = contactLabelService
     }
 
     private func amount(source: TransactionSource, transactionValue: TransactionValue, rate: CurrencyValue?, type: AmountType) -> TransactionInfoModule.ViewItem {
@@ -130,6 +133,7 @@ class TransactionInfoViewItemFactory {
         let subTitle: String
         let amountViewItem: TransactionInfoModule.ViewItem
         var toViewItem: TransactionInfoModule.ViewItem?
+        var contactNameViewItem: TransactionInfoModule.ViewItem?
         var rateViewItem: TransactionInfoModule.ViewItem?
 
         switch transactionValue {
@@ -158,7 +162,10 @@ class TransactionInfoViewItemFactory {
         }
 
         if !burn, let to = to {
-            toViewItem = .to(value: to, valueTitle: evmLabelManager.addressLabel(address: to))
+            let contactData = contactLabelService.contactData(for: to)
+            let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: to) : nil
+            toViewItem = .to(value: to, valueTitle: valueTitle, contactAddress: contactData.contactAddress)
+            contactNameViewItem = contactData.name.flatMap { .contactName(name: $0) }
         }
 
         let viewItems: [TransactionInfoModule.ViewItem?] = [
@@ -170,6 +177,7 @@ class TransactionInfoViewItemFactory {
             ),
             amountViewItem,
             toViewItem,
+            contactNameViewItem,
             rateViewItem
         ]
 
@@ -189,6 +197,7 @@ class TransactionInfoViewItemFactory {
         let subTitle: String
         let amountViewItem: TransactionInfoModule.ViewItem
         var fromViewItem: TransactionInfoModule.ViewItem?
+        var contactNameViewItem: TransactionInfoModule.ViewItem?
         var rateViewItem: TransactionInfoModule.ViewItem?
 
         switch transactionValue {
@@ -218,7 +227,10 @@ class TransactionInfoViewItemFactory {
         }
 
         if !mint, let from = from {
-            fromViewItem = .from(value: from, valueTitle: evmLabelManager.addressLabel(address: from))
+            let contactData = contactLabelService.contactData(for: from)
+            let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: from) : nil
+            fromViewItem = .from(value: from, valueTitle: valueTitle, contactAddress: contactData.contactAddress)
+            contactNameViewItem = contactData.name.flatMap { .contactName(name: $0) }
         }
 
         let viewItems: [TransactionInfoModule.ViewItem?] = [
@@ -230,6 +242,7 @@ class TransactionInfoViewItemFactory {
             ),
             amountViewItem,
             fromViewItem,
+            contactNameViewItem,
             rateViewItem
         ]
 
@@ -289,8 +302,13 @@ class TransactionInfoViewItemFactory {
             var viewItems: [TransactionInfoModule.ViewItem] = [
                 .actionTitle(iconName: "check_2_24", iconDimmed: true, title: "transactions.approve".localized, subTitle: transactionValue.fullName),
                 amount(source: record.source, transactionValue: transactionValue, rate: rate, type: .neutral),
-                .spender(value: record.spender, valueTitle: evmLabelManager.addressLabel(address: record.spender))
             ]
+            let contactData = contactLabelService.contactData(for: record.spender)
+            let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: record.spender) : nil
+            viewItems.append(.spender(value: record.spender, valueTitle: valueTitle, contactAddress: contactData.contactAddress))
+            if let name = contactData.name {
+                viewItems.append(.contactName(name: name))
+            }
 
             viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code)))
 
@@ -309,14 +327,27 @@ class TransactionInfoViewItemFactory {
                 ]
 
                 if let recipient = record.recipient {
-                    viewItems.append(.recipient(value: recipient, valueTitle: evmLabelManager.addressLabel(address: recipient)))
+                    let contactData = contactLabelService.contactData(for: recipient)
+                    let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: recipient) : nil
+                    viewItems.append(.recipient(value: recipient, valueTitle: valueTitle, contactAddress: contactData.contactAddress))
+                    if let name = contactData.name {
+                        viewItems.append(.contactName(name: name))
+                    }
                 }
 
                 sections.append(viewItems)
             } else if let recipient = record.recipient {
-                sections.append([
-                    .recipient(value: recipient, valueTitle: evmLabelManager.addressLabel(address: recipient))
-                ])
+                let contactData = contactLabelService.contactData(for: recipient)
+                let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: recipient) : nil
+                var viewItems: [TransactionInfoModule.ViewItem] = [
+                    .recipient(value: recipient, valueTitle: valueTitle, contactAddress: contactData.contactAddress)
+                ]
+
+                if let name = contactData.name {
+                    viewItems.append(.contactName(name: name))
+                }
+
+                sections.append(viewItems)
             }
 
             var viewItems: [TransactionInfoModule.ViewItem] = [

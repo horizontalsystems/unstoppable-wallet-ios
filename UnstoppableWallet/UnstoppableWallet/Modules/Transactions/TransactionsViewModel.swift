@@ -6,6 +6,7 @@ import ComponentKit
 
 class TransactionsViewModel {
     private let service: TransactionsService
+    private let contactLabelService: TransactionsContactLabelService
     private let factory: TransactionsViewItemFactory
     private let disposeBag = DisposeBag()
 
@@ -21,9 +22,10 @@ class TransactionsViewModel {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions_view_model", qos: .userInitiated)
 
-    init(service: TransactionsService, factory: TransactionsViewItemFactory) {
+    init(service: TransactionsService, contactLabelService: TransactionsContactLabelService, factory: TransactionsViewItemFactory) {
         self.service = service
         self.factory = factory
+        self.contactLabelService = contactLabelService
 
         subscribe(disposeBag, service.typeFilterObservable) { [weak self] in self?.sync(typeFilter: $0) }
         subscribe(disposeBag, service.blockchainObservable) { [weak self] in self?.syncBlockchainTitle(blockchain: $0) }
@@ -32,12 +34,17 @@ class TransactionsViewModel {
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
         subscribe(disposeBag, service.syncingObservable) { [weak self] in self?.syncViewStatus(syncing: $0) }
         subscribe(disposeBag, service.canResetObservable) { [weak self] in self?.sync(canReset: $0) }
+        subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in self?.reSyncViewItems() }
 
         syncBlockchainTitle(blockchain: service.blockchain)
         syncTokenTitle(configuredToken: service.configuredToken)
         _sync(itemData: service.itemData)
         _syncViewStatus(syncing: service.syncing)
         sync(canReset: service.canReset)
+    }
+
+    private func reSyncViewItems() {
+        _sync(itemData: service.itemData)
     }
 
     private func sync(canReset: Bool) {
