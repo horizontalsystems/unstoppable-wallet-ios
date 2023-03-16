@@ -771,6 +771,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "tx_info.transaction_id" = "ID";
 "tx_info.to_hash" = "Para";
 "tx_info.spender" = "Gastador";
+"tx_info.contact_name" = "Contact Name";
 "tx_info.button_explorer" = "Ver no %@";
 "tx_info.rate" = "Dados históricos";
 "tx_info.options.speed_up" = "Acelerar";
