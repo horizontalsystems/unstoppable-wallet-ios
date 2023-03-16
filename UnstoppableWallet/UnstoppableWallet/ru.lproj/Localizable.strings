@@ -773,6 +773,7 @@
 "tx_info.transaction_id" = "ID Транзакции";
 "tx_info.to_hash" = "Кому";
 "tx_info.spender" = "Покупатель";
+"tx_info.contact_name" = "Contact Name";
 "tx_info.button_explorer" = "Посмотреть на %@";
 "tx_info.rate" = "Исторический курс";
 "tx_info.options.speed_up" = "Ускорить";
