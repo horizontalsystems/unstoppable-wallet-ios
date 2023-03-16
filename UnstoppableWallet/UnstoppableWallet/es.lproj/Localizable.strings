@@ -283,6 +283,7 @@
 
 "send.confirmation.you_send" = "Usted envía";
 "send.confirmation.to" = "Para";
+"send.confirmation.contact_name" = "Contact Name";
 "send.confirmation.domain" = "Dominio";
 "send.confirmation.address" = "Dirección";
 "send.confirmation.account" = "Account";
@@ -942,6 +943,7 @@
 "appearance.balance_value.fiat_value" = "Valor Fiat";
 
 // Settings -> Contacts
+
 "contacts.title" = "Contacts";
 "contacts.list.search_placeholder" = "Nombre";
 "contacts.list.not_found" = "You do not have an added contact";
@@ -954,6 +956,10 @@
 "contacts.contact.address.blockchains" = "Blockchains";
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Delete Address";
+
+"contacts.add_address.title" = "Add Address";
+"contacts.add_address.create_new" = "Create New Contact";
+"contacts.add_address.add_to_contact" = "Add to Existing Contact";
 
 // Settings -> iCloud Sync
 
