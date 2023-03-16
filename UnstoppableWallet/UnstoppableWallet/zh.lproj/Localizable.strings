@@ -285,6 +285,7 @@
 
 "send.confirmation.you_send" = "您发送";
 "send.confirmation.to" = "接收人";
+"send.confirmation.contact_name" = "Contact Name";
 "send.confirmation.domain" = "域名";
 "send.confirmation.address" = "地址";
 "send.confirmation.account" = "账户";
@@ -944,6 +945,7 @@
 "appearance.balance_value.fiat_value" = "纤维值";
 
 // Settings -> Contacts
+
 "contacts.title" = "Contacts";
 "contacts.list.search_placeholder" = "名称";
 "contacts.list.not_found" = "You do not have an added contact";
@@ -956,6 +958,10 @@
 "contacts.contact.address.blockchains" = "区块链";
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Delete Address";
+
+"contacts.add_address.title" = "Add Address";
+"contacts.add_address.create_new" = "Create New Contact";
+"contacts.add_address.add_to_contact" = "Add to Existing Contact";
 
 // Settings -> iCloud Sync
 
