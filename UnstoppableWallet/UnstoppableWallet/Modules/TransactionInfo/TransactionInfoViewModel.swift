@@ -8,14 +8,23 @@ class TransactionInfoViewModel {
 
     private let service: TransactionInfoService
     private let factory: TransactionInfoViewItemFactory
+    private let contactLabelService: ContactLabelService
 
     private var viewItemsRelay = PublishRelay<[[TransactionInfoModule.ViewItem]]>()
 
-    init(service: TransactionInfoService, factory: TransactionInfoViewItemFactory) {
+    init(service: TransactionInfoService, factory: TransactionInfoViewItemFactory, contactLabelService: ContactLabelService) {
         self.service = service
         self.factory = factory
+        self.contactLabelService = contactLabelService
 
         subscribe(disposeBag, service.transactionItemUpdatedObserver) { [weak self] in self?.updateTransactionItem(item: $0) }
+        subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in
+            self?.reSyncServiceItem()
+        }
+    }
+
+    private func reSyncServiceItem() {
+        updateTransactionItem(item: service.item)
     }
 
     private func updateTransactionItem(item: TransactionInfoService.Item) {

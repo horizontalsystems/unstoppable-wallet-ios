@@ -184,20 +184,44 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func fromRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
-        CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.from_hash".localized, value: value, valueTitle: valueTitle)
+    private func fromRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
+        var onAddToContact: (() -> ())? = nil
+        if let contactAddress {
+            onAddToContact = { [weak self] in
+                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
+            }
+        }
+        return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.from_hash".localized, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
     }
 
-    private func toRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
-        CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.to_hash".localized, value: value, valueTitle: valueTitle)
+    private func toRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
+        var onAddToContact: (() -> ())? = nil
+        if let contactAddress {
+            onAddToContact = { [weak self] in
+                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
+            }
+        }
+        return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.to_hash".localized, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
     }
 
-    private func spenderRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
-        CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.spender".localized, value: value, valueTitle: valueTitle)
+    private func spenderRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
+        var onAddToContact: (() -> ())? = nil
+        if let contactAddress {
+            onAddToContact = { [weak self] in
+                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
+            }
+        }
+        return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.spender".localized, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
     }
 
-    private func recipientRow(rowInfo: RowInfo, value: String, valueTitle: String?) -> RowProtocol {
-        CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.recipient_hash".localized, value: value, valueTitle: valueTitle)
+    private func recipientRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
+        var onAddToContact: (() -> ())? = nil
+        if let contactAddress {
+            onAddToContact = { [weak self] in
+                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
+            }
+        }
+        return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.recipient_hash".localized, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
     }
 
     private func idRow(rowInfo: RowInfo, value: String) -> RowProtocol {
@@ -445,14 +469,16 @@ class TransactionInfoViewController: ThemeViewController {
             return optionRow(rowInfo: rowInfo, option: option)
         case let .date(date):
             return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: "tx_info.date".localized, value: DateHelper.instance.formatFullTime(from: date))
-        case let .from(value, valueTitle):
-            return fromRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
-        case let .to(value, valueTitle):
-            return toRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
-        case let .spender(value, valueTitle):
-            return spenderRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
-        case let .recipient(value, valueTitle):
-            return recipientRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle)
+        case let .from(value, valueTitle, contactAddress):
+            return fromRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle, contactAddress: contactAddress)
+        case let .to(value, valueTitle, contactAddress):
+            return toRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle, contactAddress: contactAddress)
+        case let .spender(value, valueTitle, contactAddress):
+            return spenderRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle, contactAddress: contactAddress)
+        case let .recipient(value, valueTitle, contactAddress):
+            return recipientRow(rowInfo: rowInfo, value: value, valueTitle: valueTitle, contactAddress: contactAddress)
+        case let .contactName(name):
+            return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: "tx_info.contact_name".localized, value: name)
         case let .id(value):
             return idRow(rowInfo: rowInfo, value: value)
         case let .rate(value):
