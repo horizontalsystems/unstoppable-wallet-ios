@@ -8,30 +8,24 @@ protocol ContactBookSelectorDelegate: AnyObject {
 
 struct ContactBookModule {
 
-    static func viewController(mode: Mode, presented: Bool = false) -> UIViewController? {
-        guard let contactManager = App.shared.contactManager else {
-            return nil
-        }
+    private static func showAddContact(mode: ContactBookModule.AddContactMode, contactAddress: ContactAddress, parentViewController: UIViewController?) {
+        switch mode {
+        case .new:
+            guard let module = ContactBookContactModule.viewController(mode: .add(contactAddress)) else {
+                return
+            }
 
-        let service = ContactBookService(contactManager: contactManager, blockchainType: mode.blockchainType)
-        let viewModel = ContactBookViewModel(service: service)
+            parentViewController?.present(module, animated: true)
+        case .exist:
+            guard let module = ContactBookModule.viewController(mode: .addToContact(contactAddress), presented: true) else {
+                return
+            }
 
-        let viewController = ContactBookViewController(viewModel: viewModel, presented: presented, mode: mode)
-        if presented {
-            return ThemeNavigationController(rootViewController: viewController)
-        } else {
-            return viewController
+            parentViewController?.present(module, animated: true)
         }
     }
 
-    static func isAddToContactAvailable(blockchainType: BlockchainType) -> Bool {
-        guard let contactManager = App.shared.contactManager else {
-            return false
-        }
-        return !contactManager.contactsWithout(blockchainType: blockchainType).isEmpty
-    }
-
-    static func chooseAddContactMode(resultAfterClose: Bool, action: ((AddContactMode) -> ())?) -> UIViewController {
+    private static func chooseAddContactMode(resultAfterClose: Bool, action: ((AddContactMode) -> ())?) -> UIViewController {
         let alertViewItems = [
             AlertViewItem(text: "contacts.add_address.create_new".localized, selected: false),
             AlertViewItem(text: "contacts.add_address.add_to_contact".localized, selected: false)
@@ -53,10 +47,49 @@ struct ContactBookModule {
 
 extension ContactBookModule {
 
+    static func viewController(mode: Mode, presented: Bool = false) -> UIViewController? {
+        guard let contactManager = App.shared.contactManager else {
+            return nil
+        }
+
+        let service = ContactBookService(contactManager: contactManager, blockchainType: mode.blockchainType)
+        let viewModel = ContactBookViewModel(service: service)
+
+        let viewController = ContactBookViewController(viewModel: viewModel, mode: mode, presented: presented)
+        if presented {
+            return ThemeNavigationController(rootViewController: viewController)
+        } else {
+            return viewController
+        }
+    }
+
+    static func showAddition(contactAddress: ContactAddress, parentViewController: UIViewController?) {
+        guard let contactManager = App.shared.contactManager else {
+            return
+        }
+
+        // if all contacts has address for blockchain just show add-new controller
+        if contactManager.contactsWithout(blockchainUid: contactAddress.blockchainUid).isEmpty {
+            showAddContact(mode: .new, contactAddress: contactAddress, parentViewController: parentViewController)
+            return
+        }
+
+        // show alert and choose make new contact or add to existed
+        let alertController = ContactBookModule.chooseAddContactMode(resultAfterClose: true) { [weak parentViewController] mode in
+            showAddContact(mode: mode, contactAddress: contactAddress, parentViewController: parentViewController)
+        }
+
+        parentViewController?.present(alertController, animated: true)
+    }
+
+}
+
+extension ContactBookModule {
+
     enum Mode {
+        case edit
         case select(BlockchainType, ContactBookSelectorDelegate)
         case addToContact(ContactAddress)
-        case edit
 
         var blockchainType: BlockchainType? {
             switch self {

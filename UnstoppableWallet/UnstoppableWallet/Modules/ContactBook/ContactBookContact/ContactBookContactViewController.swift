@@ -17,7 +17,7 @@ class ContactBookContactViewController: ThemeViewController {
     private var viewItem: ContactBookContactViewModel.ViewItem?
     private var isLoaded = false
 
-    private let nameCell = InputCell()
+    private let nameCell = InputCell(singleLine: true)
     private let nameCautionCell = FormCautionCell()
 
     private var addressViewItems: [ContactBookContactViewModel.AddressViewItem] = []
@@ -48,7 +48,7 @@ class ContactBookContactViewController: ThemeViewController {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.save".localized, style: .done, target: self, action: #selector(onTapSaveButton))
         if presented {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancelButton))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onClose))
         }
 
         view.addSubview(tableView)
@@ -89,7 +89,7 @@ class ContactBookContactViewController: ThemeViewController {
         isLoaded = true
     }
 
-    private func close() {
+    @objc private func onClose() {
         if presented {
             dismiss(animated: true)
         } else {
@@ -97,19 +97,19 @@ class ContactBookContactViewController: ThemeViewController {
         }
     }
 
-    @objc private func onTapCancelButton() {
-        dismiss(animated: true)
+    // if controller has onUpdateContact block, closing controller must handle parentViewController, else just close VC
+    private func onUpdate() {
+        if let onUpdateContact {
+            onUpdateContact()
+        } else {
+            onClose()
+        }
     }
 
     @objc private func onTapSaveButton() {
         do {
             try viewModel.save()
-
-            if let onUpdateContact {
-                onUpdateContact()
-            } else {
-                close()
-            }
+            onUpdate()
         } catch {
             print("Can't update \(error)")
             // todo: show error alert!
@@ -119,12 +119,7 @@ class ContactBookContactViewController: ThemeViewController {
     private func onTapDeleteContact() {
         do {
             try viewModel.delete()
-
-            if let onUpdateContact {
-                onUpdateContact()
-            } else {
-                close()
-            }
+            onUpdate()
         } catch {
             print("Can't remove \(error)")
             // todo: show error alert!

@@ -138,36 +138,6 @@ class SendEvmTransactionViewController: ThemeViewController {
         present(controller, animated: true)
     }
 
-    private func onTapAddToContacts(address: String, blockchainType: BlockchainType) {
-        guard ContactBookModule.isAddToContactAvailable(blockchainType: blockchainType) else {
-            showAddContact(mode: .new, address: address, blockchainType: blockchainType)
-            return
-        }
-
-        let alertController = ContactBookModule.chooseAddContactMode(resultAfterClose: true) { [weak self] mode in
-            self?.showAddContact(mode: mode, address: address, blockchainType: blockchainType)
-        }
-        present(alertController, animated: true)
-    }
-
-    private func showAddContact(mode: ContactBookModule.AddContactMode, address: String, blockchainType: BlockchainType) {
-        let contactAddress = ContactAddress(blockchainUid: blockchainType.uid, address: address)
-        switch mode {
-        case .new:
-            guard let module = ContactBookContactModule.viewController(mode: .add(contactAddress)) else {
-                return
-            }
-
-            present(module, animated: true)
-        case .exist:
-            guard let module = ContactBookModule.viewController(mode: .addToContact(contactAddress), presented: true) else {
-                return
-            }
-
-            present(module, animated: true)
-        }
-    }
-
     private func handleSendFailed(error: String) {
         HudHelper.instance.show(banner: .error(string: error))
     }
@@ -195,11 +165,11 @@ class SendEvmTransactionViewController: ThemeViewController {
             return CellComponent.nftAmountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, nftAmount: nftAmount, type: type, onTapOpenNft: nil)
         case let .doubleAmount(title, coinValue, currencyValue):
             return CellComponent.doubleAmountRow(tableView: tableView, rowInfo: rowInfo, title: title, coinValue: coinValue, currencyValue: currencyValue)
-        case let .address(title, value, valueTitle, contactStatus):
+        case let .address(title, value, valueTitle, contactAddress):
             var onAddToContact: (() -> ())? = nil
-            if let blockchainType = contactStatus.blockchainType {
+            if let contactAddress {
                 onAddToContact = { [weak self] in
-                    self?.onTapAddToContacts(address: value, blockchainType: blockchainType)
+                    ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self)
                 }
             }
             return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: title, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)

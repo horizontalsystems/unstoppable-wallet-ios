@@ -334,13 +334,13 @@ extension ContactBookManager {
         return nil
     }
 
-    func contactsWithout(blockchainType: BlockchainType) -> [Contact] {
+    func contactsWithout(blockchainUid: String) -> [Contact] {
         guard let all else {
             return []
         }
         return all.filter { contact in
             contact.addresses.allSatisfy { address in
-                address.blockchainUid != blockchainType.uid
+                address.blockchainUid != blockchainUid
             }
         }
     }
