@@ -771,6 +771,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "tx_info.transaction_id" = "İşlem ID'si";
 "tx_info.to_hash" = "Alan";
 "tx_info.spender" = "Harcayan";
+"tx_info.contact_name" = "Contact Name";
 "tx_info.button_explorer" = "%@ ile görüntüle";
 "tx_info.rate" = "Geçmiş Kur";
 "tx_info.options.speed_up" = "Hızlandır";
