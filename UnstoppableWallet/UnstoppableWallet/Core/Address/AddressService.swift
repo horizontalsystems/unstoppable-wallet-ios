@@ -26,7 +26,7 @@ class AddressService {
             return false
         }
 
-        return !contactBookManager.contacts(blockchainType: blockchainType).isEmpty
+        return !contactBookManager.contacts(blockchainUid: blockchainType.uid).isEmpty
     }
 
     private var text: String = ""

@@ -12,7 +12,13 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
     private let onUpdateAddress: (ContactAddress?) -> ()
 
     private let tableView = SectionsTableView(style: .grouped)
+
     private var isLoaded = false
+    private var addressWasChanged = false {
+        didSet {
+            handleChangeAddress()
+        }
+    }
 
     private let recipientCell: RecipientAddressInputCell
     private let recipientCautionCell: RecipientAddressCautionCell
@@ -40,7 +46,7 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
         navigationItem.largeTitleDisplayMode = .never
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.save".localized, style: .done, target: self, action: #selector(onTapSaveButton))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onTapCancelButton))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onCloseConfirmation))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -66,7 +72,7 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
         recipientCautionCell.onChangeHeight = { [weak self] in self?.onChangeHeight() }
 
         subscribe(disposeBag, viewModel.saveEnabledDriver) { [weak self] enabled in
-            self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
+            self?.addressWasChanged = enabled
         }
         subscribe(disposeBag, viewModel.blockchainNameDriver) { [weak self] name in
             self?.blockchainName = name
@@ -76,23 +82,66 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
         isLoaded = true
     }
 
-    @objc private func onTapCancelButton() {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        isModalInPresentation = addressWasChanged
+    }
+
+    private func handleChangeAddress() {
+        navigationItem.rightBarButtonItem?.isEnabled = addressWasChanged
+        isModalInPresentation = addressWasChanged
+    }
+
+    @objc private func onClose() {
         dismiss(animated: true)
+    }
+
+    @objc private func onCloseConfirmation() {
+        if addressWasChanged {
+            let viewController = BottomSheetModule.viewController(
+                    image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                    title: "alert.warning".localized,
+                    items: [
+                        .highlightedDescription(text: "contacts.contact.dismiss_changes.description".localized)
+                    ],
+                    buttons: [
+                        .init(style: .red, title: "contacts.contact.dismiss_changes.discard_changes".localized, actionType: .afterClose) { [ weak self] in
+                            self?.onClose()
+                        },
+                        .init(style: .transparent, title: "contacts.contact.dismiss_changes.keep_editing".localized)
+                    ]
+            )
+            present(viewController, animated: true)
+        } else {
+            onClose()
+        }
     }
 
     @objc private func onTapSaveButton() {
         if let contactAddress = viewModel.contactAddress {
             onUpdateAddress(contactAddress)
-            dismiss(animated: true)
+            onClose()
         }
     }
 
     private func onTapDeleteAddress() {
-        onUpdateAddress(nil)
+        let viewController = BottomSheetModule.viewController(
+                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                title: "contacts.add_address.delete_alert.title".localized,
+                items: [
+                    .highlightedDescription(text: "contacts.add_address.delete_alert.description".localized)
+                ],
+                buttons: [
+                    .init(style: .red, title: "contacts.add_address.delete_alert.delete".localized, actionType: .afterClose) { [ weak self] in
+                        self?.onUpdateAddress(nil)
+                        self?.dismiss(animated: true)
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized)
+                ]
+        )
 
-        dismiss(animated: true)
+        present(viewController, animated: true)
     }
-
 
     private func onTapBlockchain() {
         let viewController = SelectorModule.singleSelectorViewController(

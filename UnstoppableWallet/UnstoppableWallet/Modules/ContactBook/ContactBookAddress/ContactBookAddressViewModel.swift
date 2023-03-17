@@ -16,7 +16,7 @@ class ContactBookAddressViewModel {
         }
     }
     private let blockchainNameRelay = BehaviorRelay<String>(value: "")
-
+    private let addressCautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
 
     init(service: ContactBookAddressService) {
@@ -35,7 +35,8 @@ class ContactBookAddressViewModel {
         case .valid(let item):
             saveEnabled = true
             viewItem = viewItem(item: item)
-        case .invalid: ()
+        case .invalid:
+            addressCautionRelay.accept(Caution(text: "contacts.contact.add_address.already_in_use", type: .error))
         }
 
         saveEnabledRelay.accept(saveEnabled)
@@ -96,6 +97,10 @@ extension ContactBookAddressViewModel {
         blockchainNameRelay.asDriver()
     }
 
+    var addressCautionDriver: Driver<Caution?> {
+        addressCautionRelay.asDriver()
+    }
+
     var saveEnabledDriver: Driver<Bool> {
         saveEnabledRelay.asDriver()
     }
@@ -103,6 +108,15 @@ extension ContactBookAddressViewModel {
     func setBlockchain(index: Int) {
         if let blockchain = service.unusedBlockchains.at(index: index) {
             service.selectedBlockchain = blockchain
+        }
+    }
+}
+
+extension ContactBookAddressService.ValidationError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .duplicate(let contact): return "contacts.add_address.exist_address".localized(contact.name)
+        case .invalidAddress: return nil
         }
     }
 }
