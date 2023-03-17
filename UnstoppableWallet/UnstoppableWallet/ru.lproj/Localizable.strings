@@ -584,7 +584,7 @@
 "coin_overview.links" = "Links";
 
 "coin_overview.guide" = "Guide";
-"coin_overview.website" = "Website";
+"coin_overview.website" = "Веб-сайт";
 "coin_overview.whitepaper" = "Whitepaper";
 
 // Coin Page -> Analytics
@@ -909,7 +909,7 @@
 "settings.about_app.app_name" = "Unstoppable Кошелек";
 "settings.about_app.description" = "Кошелек Unstoppable создан для тех, кто хочет инвестировать и хранить криптовалюты частным и независимым образом.\n\nЭто одноранговый кошелек, где только пользователь имеет контроль над средствами. Он не собирает никаких данных и обеспечивает независимость пользователя, не привязывая средства пользователя к определенному приложению.\n\nКошелек Unstoppable имеет полностью открытый исходный код, и любой может подтвердить, что приложение работает именно так, как заявлено.";
 "settings.about_app.whats_new" = "Что нового";
-"settings.about_app.website" = "Website";
+"settings.about_app.website" = "Веб-сайт";
 "settings.about_app.contact" = "Kонтакты";
 "settings.about_app.rate_us" = "Оцените наше приложение";
 "settings.about_app.tell_friends" = "Рассказать друзьям";
@@ -1350,7 +1350,7 @@
 "nft_asset.details.token_standard" = "Стандарт Токена";
 "nft_asset.details.blockchain" = "Блокчейн";
 "nft_asset.links" = "Links";
-"nft_asset.links.website" = "Website";
+"nft_asset.links.website" = "Веб-сайт";
 "nft_asset.options.save_to_photos" = "Сохранить в Фото";
 "nft_asset.options.set_as_watch_face" = "Установить как Watch Face";
 "nft_asset.save_to_photos.failed" = "Не удалось сохранить NFT-изображение";
@@ -1364,7 +1364,7 @@
 "nft_collection.overview.description" = "Описание";
 "nft_collection.overview.contracts" = "Контракты";
 "nft_collection.overview.links" = "Links";
-"nft_collection.overview.links.website" = "Website";
+"nft_collection.overview.links.website" = "Веб-сайт";
 
 
 "nft_collection.overview.owners" = "Владельцы";
