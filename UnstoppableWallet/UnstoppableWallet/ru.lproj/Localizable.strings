@@ -556,7 +556,7 @@
 "coin_page.overview" = "Цена";
 "coin_page.analytics" = "Analytics";
 "coin_page.markets" = "Рынки";
-"coin_page.tweets" = "Tweets";
+"coin_page.tweets" = "Твиты";
 
 // Coin Page -> Overview
 
@@ -574,10 +574,10 @@
 "coin_overview.roi.day200" = "6 Month";
 "coin_overview.roi.year1" = "1 Год";
 
-"coin_overview.category" = "Category";
+"coin_overview.category" = "Категория";
 
 "coin_overview.blockchains" = "Блокчейны";
-"coin_overview.bips" = "BIPs";
+"coin_overview.bips" = "BIPы";
 "coin_overview.coin_types" = "Coin Types";
 "coin_overview.show_more" = "Показать Ещё";
 "coin_overview.show_less" = "Show Less";
