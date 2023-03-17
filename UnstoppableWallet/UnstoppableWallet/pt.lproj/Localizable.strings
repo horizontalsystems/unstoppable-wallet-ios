@@ -950,9 +950,13 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "contacts.title" = "Contatos";
 "contacts.list.search_placeholder" = "Nome";
 "contacts.list.not_found" = "Você não tem nenhum contato adicionado";
+"contacts.list.not_found_search" = "Nenhum resultado encontrado";
 "contacts.add_new_contact" = "Adicionar um novo contato";
+"contacts.update_contact.already_has_address" = "This contact already has an address on this blockchain. Do you want to replace the address %@ with the %@?";
+"contacts.update_contact.replace" = "Replace";
 "contacts.list.addresses_count" = "Endereços: %d";
 "contacts.contact.new.title" = "Novo Contato";
+"contacts.contact.name.placeholder" = "Nome";
 "contacts.contact.update.error.name_already_exist" = "Nome já existe";
 "contacts.contact.add_address" = "Adicionar endereço";
 "contacts.contact.delete" = "Excluir contato";
@@ -963,6 +967,20 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "contacts.add_address.title" = "Adicionar endereço";
 "contacts.add_address.create_new" = "Create New Contact";
 "contacts.add_address.add_to_contact" = "Add to Existing Contact";
+"contacts.add_address.exist_address" = "This address is already used for %@";
+
+"contacts.contact.delete_alert.title" = "Excluir contato";
+"contacts.contact.delete_alert.description" = "Are you sure you want to delete this contact?";
+"contacts.contact.delete_alert.delete" = "Deletar";
+
+"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard this new changes?";
+"contacts.contact.dismiss_changes.discard_changes" = "Discard Changes";
+"contacts.contact.dismiss_changes.keep_editing" = "Keep Editing";
+
+
+"contacts.add_address.delete_alert.title" = "Excluir endereço";
+"contacts.add_address.delete_alert.description" = "Are you sure you want to delete this address?";
+"contacts.add_address.delete_alert.delete" = "Deletar";
 
 // Settings -> iCloud Sync
 
