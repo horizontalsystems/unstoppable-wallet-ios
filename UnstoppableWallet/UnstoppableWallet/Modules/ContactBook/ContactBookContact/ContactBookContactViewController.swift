@@ -9,13 +9,18 @@ import ThemeKit
 class ContactBookContactViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: ContactBookContactViewModel
-    private let presented: Bool
     private let onUpdateContact: (() -> ())?
     private let deleteContactHidden: Bool
 
     private let tableView = SectionsTableView(style: .grouped)
     private var viewItem: ContactBookContactViewModel.ViewItem?
+
     private var isLoaded = false
+    private var contactWasChanged = false {
+        didSet {
+            handleChangeContact()
+        }
+    }
 
     private let nameCell = InputCell(singleLine: true)
     private let nameCautionCell = FormCautionCell()
@@ -23,9 +28,8 @@ class ContactBookContactViewController: ThemeViewController {
     private var addressViewItems: [ContactBookContactViewModel.AddressViewItem] = []
     private var addAddressHidden: Bool = false
 
-    init(viewModel: ContactBookContactViewModel, presented: Bool, onUpdateContact: (() -> ())? = nil) {
+    init(viewModel: ContactBookContactViewModel, onUpdateContact: (() -> ())? = nil) {
         self.viewModel = viewModel
-        self.presented = presented
         self.onUpdateContact = onUpdateContact
         deleteContactHidden = !viewModel.editExisting
 
@@ -36,10 +40,6 @@ class ContactBookContactViewController: ThemeViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        print("Deinit \(self)")
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,9 +47,7 @@ class ContactBookContactViewController: ThemeViewController {
         navigationItem.largeTitleDisplayMode = .never
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.save".localized, style: .done, target: self, action: #selector(onTapSaveButton))
-        if presented {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onClose))
-        }
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onCloseConfirmation))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -63,6 +61,7 @@ class ContactBookContactViewController: ThemeViewController {
 
         tableView.buildSections()
 
+        nameCell.inputPlaceholder = "contacts.contact.name.placeholder".localized
         nameCell.inputText = viewModel.initialName
         nameCell.autocapitalizationType = .words
         nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
@@ -70,7 +69,7 @@ class ContactBookContactViewController: ThemeViewController {
         nameCautionCell.onChangeHeight = { [weak self] in self?.onChangeHeight() }
 
         subscribe(disposeBag, viewModel.saveEnabledDriver) { [weak self] enabled in
-            self?.navigationItem.rightBarButtonItem?.isEnabled = enabled
+            self?.contactWasChanged = enabled
         }
 
         subscribe(disposeBag, viewModel.nameAlreadyExistErrorDriver) { [weak self] exist in
@@ -89,20 +88,45 @@ class ContactBookContactViewController: ThemeViewController {
         isLoaded = true
     }
 
-    @objc private func onClose() {
-        if presented {
-            dismiss(animated: true)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        isModalInPresentation = contactWasChanged
+    }
+
+    private func handleChangeContact() {
+        navigationItem.rightBarButtonItem?.isEnabled = contactWasChanged
+        isModalInPresentation = contactWasChanged
+    }
+
+    private func onClose() {
+        dismiss(animated: true)
+    }
+
+    @objc private func onCloseConfirmation() {
+        if contactWasChanged {
+            let viewController = BottomSheetModule.viewController(
+                    image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                    title: "alert.warning".localized,
+                    items: [
+                        .highlightedDescription(text: "contacts.contact.dismiss_changes.description".localized)
+                    ],
+                    buttons: [
+                        .init(style: .red, title: "contacts.contact.dismiss_changes.discard_changes".localized, actionType: .afterClose) { [ weak self] in
+                            self?.onClose()
+                        },
+                        .init(style: .transparent, title: "contacts.contact.dismiss_changes.keep_editing".localized)
+                    ]
+            )
+            present(viewController, animated: true)
         } else {
-            navigationController?.popViewController(animated: true)
+            onClose()
         }
     }
 
     // if controller has onUpdateContact block, closing controller must handle parentViewController, else just close VC
     private func onUpdate() {
-        if let onUpdateContact {
-            onUpdateContact()
-        } else {
-            onClose()
+        dismiss(animated: true) { [weak self] in
+            self?.onUpdateContact?()
         }
     }
 
@@ -117,6 +141,24 @@ class ContactBookContactViewController: ThemeViewController {
     }
 
     private func onTapDeleteContact() {
+        let viewController = BottomSheetModule.viewController(
+                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                title: "contacts.contact.delete_alert.title".localized,
+                items: [
+                    .highlightedDescription(text: "contacts.contact.delete_alert.description".localized)
+                ],
+                buttons: [
+                    .init(style: .red, title: "contacts.contact.delete_alert.delete".localized, actionType: .afterClose) { [ weak self] in
+                        self?.acceptDeleteContact()
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized)
+                ]
+        )
+
+        present(viewController, animated: true)
+    }
+
+    private func acceptDeleteContact() {
         do {
             try viewModel.delete()
             onUpdate()
@@ -134,7 +176,7 @@ class ContactBookContactViewController: ThemeViewController {
                 self?.viewModel.removeContact(address: address)
             }
         }
-        guard let controller = ContactBookAddressModule.viewController(existAddresses: viewModel.existAddresses, currentAddress: address, onSaveAddress: onSaveAddress) else {
+        guard let controller = ContactBookAddressModule.viewController(contactUid: viewModel.contactUid, existAddresses: viewModel.existAddresses, currentAddress: address, onSaveAddress: onSaveAddress) else {
             return
         }
 

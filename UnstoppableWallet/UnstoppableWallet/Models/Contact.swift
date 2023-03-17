@@ -22,11 +22,11 @@ class ContactAddress: ImmutableMappable, Hashable, Equatable {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(blockchainUid)
-        hasher.combine(address)
+        hasher.combine(address.lowercased())
     }
 
     static func ==(lhs: ContactAddress, rhs: ContactAddress) -> Bool {
-        lhs.address == rhs.address &&
+        lhs.address.lowercased() == rhs.address.lowercased() &&
         lhs.blockchainUid == rhs.blockchainUid
     }
 
@@ -73,6 +73,10 @@ class Contact: ImmutableMappable, Hashable, Equatable {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(uid)
+    }
+
+    func address(blockchainUid: String) -> ContactAddress? {
+        addresses.first { $0.blockchainUid == blockchainUid  }
     }
 
 }

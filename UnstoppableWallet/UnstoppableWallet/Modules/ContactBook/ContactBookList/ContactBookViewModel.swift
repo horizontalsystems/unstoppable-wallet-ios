@@ -8,8 +8,7 @@ class ContactBookViewModel {
     private let service: ContactBookService
     private let disposeBag = DisposeBag()
 
-    private let emptyRelay = BehaviorRelay<Bool>(value: false)
-    private let notFoundVisibleRelay = BehaviorRelay<Bool>(value: false)
+    private let emptyListRelay = BehaviorRelay<ViewItemListType?>(value: nil)
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
     private var viewItems: [ViewItem] = [] {
@@ -22,7 +21,6 @@ class ContactBookViewModel {
         self.service = service
 
         subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
-        subscribe(disposeBag, service.emptyObservable) { [weak self] in self?.emptyRelay.accept($0) }
         sync(items: service.items)
     }
 
@@ -41,7 +39,7 @@ class ContactBookViewModel {
                     return ViewItem(
                             uid: item.uid,
                             title: item.name,
-                            subtitle: item.addressCount.description,
+                            subtitle: "contacts.list.addresses_count".localized(item.addressCount),
                             showDisclosure: false
                     )
             default:
@@ -49,7 +47,11 @@ class ContactBookViewModel {
             }
         }
 
-        notFoundVisibleRelay.accept(viewItems.isEmpty)
+        if viewItems.isEmpty {
+            emptyListRelay.accept(service.emptyBook ? .emptyBook : .emptySearch)
+        } else {
+            emptyListRelay.accept(nil)
+        }
     }
 
 }
@@ -60,12 +62,12 @@ extension ContactBookViewModel {
         viewItemsRelay.asDriver()
     }
 
-    var emptyDriver: Driver<Bool> {
-        emptyRelay.asDriver()
+    var emptyListDriver: Driver<ViewItemListType?> {
+        emptyListRelay.asDriver()
     }
 
-    var notFoundVisibleDriver: Driver<Bool> {
-        notFoundVisibleRelay.asDriver()
+    func contactAddress(contactUid: String, blockchainUid: String) -> ContactAddress? {
+        service.contactAddress(contactUid: contactUid, blockchainUid: blockchainUid)
     }
 
     func removeContact(contactUid: String?) throws {
@@ -106,6 +108,11 @@ extension ContactBookViewModel {
             self.address = address
             super.init(uid: uid, title: title, subtitle: subtitle, showDisclosure: showDisclosure)
         }
+    }
+
+    enum ViewItemListType {
+        case emptyBook
+        case emptySearch
     }
 
 }

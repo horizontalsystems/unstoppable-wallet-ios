@@ -74,8 +74,7 @@ class ContactBookViewController: ThemeSearchViewController {
             maker.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
-        notFoundPlaceholder.image = UIImage(named: "user_plus_48")
-        notFoundPlaceholder.text = "contacts.list.not_found".localized
+        syncPlaceholder()
 
         // show add button on empty screen only for edit mode
         if mode.editable {
@@ -88,12 +87,16 @@ class ContactBookViewController: ThemeSearchViewController {
         }
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.onUpdate(viewItems: $0) }
-        subscribe(disposeBag, viewModel.emptyDriver) { [weak self] in self?.set(empty: $0) }
-        subscribe(disposeBag, viewModel.notFoundVisibleDriver) { [weak self] in self?.setNotFound(visible: $0) }
+        subscribe(disposeBag, viewModel.emptyListDriver) { [weak self] in self?.set(emptyList: $0) }
 
         tableView.buildSections()
 
         isLoaded = true
+    }
+
+    private func syncPlaceholder() {
+        notFoundPlaceholder.image = UIImage(named: "user_plus_48")
+        notFoundPlaceholder.text = "contacts.list.not_found".localized
     }
 
     @objc private func onClose() {
@@ -114,21 +117,46 @@ class ContactBookViewController: ThemeSearchViewController {
     private func onTap(viewItem: ContactBookViewModel.ViewItem) {
         switch mode {
         case .edit:
-            onUpdateContact(contactUid: viewItem.uid, presented: false)
+            onUpdateContact(contactUid: viewItem.uid)
         case .select(_, let delegate):
             if let viewItem = viewItem as? ContactBookViewModel.SelectorViewItem {
                 delegate.onFetch(address: viewItem.address)
             }
             onClose()
         case .addToContact(let address):
-            let successAction: (() -> ())? = { [weak self] in
-                self?.onClose()
+            let updateContact: () -> () = { [weak self] in
+                let successAction: (() -> ())? = { [weak self] in
+                    self?.onClose()
+                }
+                self?.onUpdateContact(contactUid: viewItem.uid, newAddress: address, onUpdateContact: successAction)
             }
-            onUpdateContact(contactUid: viewItem.uid, newAddress: address, presented: false, onUpdateContact: successAction)
+
+            if let currentAddress = viewModel.contactAddress(contactUid: viewItem.uid, blockchainUid: address.blockchainUid) {
+                updateAfterAlert(new: address, old: currentAddress, onSuccess: updateContact)
+            } else {
+               updateContact()
+            }
         }
     }
 
-    private func onUpdateContact(contactUid: String? = nil, newAddress: ContactAddress? = nil, presented: Bool = true, onUpdateContact: (() -> ())? = nil) {
+    private func updateAfterAlert(new: ContactAddress, old: ContactAddress, onSuccess: (() -> ())?) {
+        let viewController = BottomSheetModule.viewController(
+                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                title: "alert.warning".localized,
+                items: [
+                    .highlightedDescription(text: "contacts.update_contact.already_has_address".localized(old.address.shortened, new.address.shortened))
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "contacts.update_contact.replace".localized, actionType: .afterClose) {
+                        onSuccess?()
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized)
+                ]
+        )
+        present(viewController, animated: true)
+    }
+
+    private func onUpdateContact(contactUid: String? = nil, newAddress: ContactAddress? = nil, onUpdateContact: (() -> ())? = nil) {
         let mode: ContactBookContactModule.Mode
         let newAddresses = [newAddress].compactMap { $0 }
         if let contactUid {
@@ -136,15 +164,11 @@ class ContactBookViewController: ThemeSearchViewController {
         } else {
             mode = .new
         }
-        guard let module = ContactBookContactModule.viewController(mode: mode, presented: presented, onUpdateContact: onUpdateContact) else {
+        guard let module = ContactBookContactModule.viewController(mode: mode, onUpdateContact: onUpdateContact) else {
             return
         }
 
-        if presented {
-            present(module, animated: true)
-        } else {
-            navigationController?.pushViewController(module, animated: true)
-        }
+        present(module, animated: true)
     }
 
     private func onUpdate(viewItems: [ContactBookViewModel.ViewItem]) {
@@ -154,13 +178,22 @@ class ContactBookViewController: ThemeSearchViewController {
         tableView.reload(animated: isLoaded && animated)
     }
 
-    private func set(empty: Bool) {
-        navigationItem.searchController?.searchBar.isHidden = empty
-        notFoundPlaceholder.isHidden = !empty
-    }
+    private func set(emptyList: ContactBookViewModel.ViewItemListType?) {
+        navigationItem.searchController?.searchBar.isHidden = false
+        switch emptyList {
+        case .emptyBook:
+            navigationItem.searchController?.searchBar.isHidden = true
+            notFoundPlaceholder.image = UIImage(named: "user_plus_48")
+            notFoundPlaceholder.text = "contacts.list.not_found".localized
+            notFoundPlaceholder.isHidden = false
+        case .emptySearch:
+            notFoundPlaceholder.image = UIImage(named: "not_found_48")
+            notFoundPlaceholder.text = "contacts.list.not_found_search".localized
+            notFoundPlaceholder.isHidden = false
+        case .none:
+            notFoundPlaceholder.isHidden = true
+        }
 
-    private func setNotFound(visible: Bool) {
-        notFoundPlaceholder.isHidden = !visible
     }
 
     private func deleteRowAction(uid: String) -> RowAction {

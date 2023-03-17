@@ -69,7 +69,7 @@ extension ContactBookModule {
         }
 
         // if all contacts has address for blockchain just show add-new controller
-        if contactManager.contactsWithout(blockchainUid: contactAddress.blockchainUid).isEmpty {
+        if contactManager.all?.isEmpty ?? true {
             showAddContact(mode: .new, contactAddress: contactAddress, parentViewController: parentViewController)
             return
         }

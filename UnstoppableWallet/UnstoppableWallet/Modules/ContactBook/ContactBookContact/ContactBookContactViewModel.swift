@@ -48,7 +48,13 @@ class ContactBookContactViewModel {
     }
 
     private func sync(addressItems: [ContactBookContactService.AddressItem]) {
-        addressViewItems = addressItems.map { viewItem(item: $0) }
+        addressViewItems = addressItems.sorted { item, item2 in
+                    if item.edited != item2.edited {
+                        return item.edited
+                    }
+                    return item.blockchain.type.order < item2.blockchain.type.order
+                }
+                .map { viewItem(item: $0) }
     }
 
     private func viewItem(item: ContactBookContactService.AddressItem) -> AddressViewItem {
@@ -75,6 +81,10 @@ extension ContactBookContactViewModel {
 
     var title: String {
         service.oldContact?.name ?? "contacts.contact.new.title".localized
+    }
+
+    var contactUid: String? {
+        service.oldContact?.uid
     }
 
     var initialName: String? {

@@ -42,7 +42,9 @@ class ContactBookContactService {
         oldContact = contact
         restoreContainer()
 
-        addresses.append(contentsOf: newAddresses)
+        newAddresses.forEach { address in
+            updateContact(address: address)
+        }
 
         sync()
         syncAddresses()
@@ -79,7 +81,7 @@ class ContactBookContactService {
             return
         }
 
-        // check if all blockchains has adresses
+        // check if all blockchains has addresses
         allBlockchainsUsedRelay.accept(
                 BlockchainType
                    .supported

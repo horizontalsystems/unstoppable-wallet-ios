@@ -311,16 +311,12 @@ extension ContactBookManager {
         state.data?.contacts
     }
 
-    func contacts(blockchainType: BlockchainType) -> [Contact] {
+    func contacts(blockchainUid: String) -> [Contact] {
         guard let all else {
             return []
         }
 
-        return all.filter { contact in
-            !contact.addresses.filter({ address in
-                        address.blockchainUid == blockchainType.uid
-            }).isEmpty
-        }
+        return all.filter { $0.address(blockchainUid: blockchainUid) != nil }
     }
 
     func name(blockchainType: BlockchainType, address: String) -> String? {
@@ -332,17 +328,6 @@ extension ContactBookManager {
         }
 
         return nil
-    }
-
-    func contactsWithout(blockchainUid: String) -> [Contact] {
-        guard let all else {
-            return []
-        }
-        return all.filter { contact in
-            contact.addresses.allSatisfy { address in
-                address.blockchainUid != blockchainUid
-            }
-        }
     }
 
     func update(contact: Contact) throws {

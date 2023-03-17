@@ -10,13 +10,15 @@ class ContactBookService {
 
     private var filter: String = ""
 
-    private let emptyRelay = BehaviorRelay<Bool>(value: false)
     private let itemsRelay = PublishRelay<[Item]>()
     private var _contacts: [Contact] = [] {
         didSet {
             itemsRelay.accept(items)
-            emptyRelay.accept(_contacts.isEmpty)
         }
+    }
+
+    var emptyBook: Bool {
+        _contacts.isEmpty
     }
 
     var items: [Item] {
@@ -73,14 +75,16 @@ extension ContactBookService {
         itemsRelay.asObservable()
     }
 
-    var emptyObservable: Observable<Bool> {
-        emptyRelay.asObservable()
-    }
-
     func set(filter: String) {
         self.filter = filter
 
         itemsRelay.accept(items)
+    }
+
+    func contactAddress(contactUid: String, blockchainUid: String) -> ContactAddress? {
+        _contacts
+                .first(where: { contact in contact.uid == contactUid })?
+                .address(blockchainUid: blockchainUid)
     }
 
     func delete(contactUid: String) throws {

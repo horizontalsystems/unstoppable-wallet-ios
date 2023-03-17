@@ -4,7 +4,11 @@ import MarketKit
 
 class ContactBookAddressModule {
 
-    static func viewController(existAddresses: [ContactAddress], currentAddress: ContactAddress? = nil, onSaveAddress: @escaping (ContactAddress?) -> ()) -> UIViewController? {
+    static func viewController(contactUid: String?, existAddresses: [ContactAddress], currentAddress: ContactAddress? = nil, onSaveAddress: @escaping (ContactAddress?) -> ()) -> UIViewController? {
+        guard let contactManager = App.shared.contactManager else {
+            return nil
+        }
+
         let service: ContactBookAddressService
         let addressService: AddressService
         if let currentAddress {
@@ -12,7 +16,7 @@ class ContactBookAddressModule {
                 return nil
             }
             addressService = AddressService(mode: .blockchainType, contactBookManager: App.shared.contactManager, blockchainType: blockchain.type)
-            service = ContactBookAddressService(marketKit: App.shared.marketKit, addressService: addressService, mode: .edit(currentAddress), blockchain: blockchain)
+            service = ContactBookAddressService(marketKit: App.shared.marketKit, addressService: addressService, contactBookManager: contactManager, currentContactUid: contactUid, mode: .edit(currentAddress), blockchain: blockchain)
         } else {
             let blockchainUids = BlockchainType
                     .supported
@@ -28,7 +32,7 @@ class ContactBookAddressModule {
                 return nil
             }
             addressService = AddressService(mode: .blockchainType, contactBookManager: nil, blockchainType: firstBlockchain.type)
-            service = ContactBookAddressService(marketKit: App.shared.marketKit, addressService: addressService, mode: .create(existAddresses), blockchain: firstBlockchain)
+            service = ContactBookAddressService(marketKit: App.shared.marketKit, addressService: addressService, contactBookManager: contactManager, currentContactUid: contactUid, mode: .create(existAddresses), blockchain: firstBlockchain)
         }
 
         let viewModel = ContactBookAddressViewModel(service: service)

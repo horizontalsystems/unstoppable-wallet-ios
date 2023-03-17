@@ -3,7 +3,7 @@ import ThemeKit
 
 class ContactBookContactModule {
 
-    static func viewController(mode: Mode, presented: Bool = true, onUpdateContact: (() -> ())? = nil) -> UIViewController? {
+    static func viewController(mode: Mode, onUpdateContact: (() -> ())? = nil) -> UIViewController? {
         guard let contactManager = App.shared.contactManager else {
             return nil
         }
@@ -35,13 +35,8 @@ class ContactBookContactModule {
 
         let viewModel = ContactBookContactViewModel(service: service)
 
-        let controller = ContactBookContactViewController(viewModel: viewModel, presented: presented, onUpdateContact: onUpdateContact)
-
-        if presented {
-            return ThemeNavigationController(rootViewController: controller)
-        } else {
-            return controller
-        }
+        let controller = ContactBookContactViewController(viewModel: viewModel, onUpdateContact: onUpdateContact)
+        return ThemeNavigationController(rootViewController: controller)
     }
 
 }
