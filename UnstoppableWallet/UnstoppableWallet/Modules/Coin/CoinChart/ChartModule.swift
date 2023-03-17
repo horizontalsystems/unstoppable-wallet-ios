@@ -48,7 +48,7 @@ protocol IChartViewModel {
     var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> { get }
     var loadingDriver: Driver<Bool> { get }
     var chartInfoDriver: Driver<ChartModule.ViewItem?> { get }
-    var errorDriver: Driver<String?> { get }
+    var errorDriver: Driver<Bool> { get }
 
     func onSelectInterval(at index: Int)
     func start()

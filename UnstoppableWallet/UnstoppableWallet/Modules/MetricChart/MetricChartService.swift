@@ -28,6 +28,8 @@ class MetricChartService {
         }
     }
 
+    private var itemDataMap = [HsTimePeriod: MetricChartModule.ItemData]()
+
     init(chartFetcher: IMetricChartFetcher, interval: HsTimePeriod) {
         self.chartFetcher = chartFetcher
         self.interval = interval
@@ -37,12 +39,21 @@ class MetricChartService {
 
     func fetchChartData() {
         disposeBag = DisposeBag()
+
+        if let itemData = itemDataMap[interval] {
+            state = .completed(itemData)
+            return
+        }
+
         state = .loading
+
+        let interval = interval
 
         chartFetcher.fetchSingle(interval: interval)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onSuccess: { [weak self] items in
-                self?.state = .completed(items)
+            .subscribe(onSuccess: { [weak self] itemData in
+                self?.itemDataMap[interval] = itemData
+                self?.state = .completed(itemData)
             }, onError: { [weak self] error in
                 self?.state = .failed(error)
             })
