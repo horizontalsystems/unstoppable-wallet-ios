@@ -18,9 +18,8 @@ class MetricChartViewModel {
 
     private let intervalIndexRelay = BehaviorRelay<Int>(value: 0)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let valueRelay = BehaviorRelay<String?>(value: nil)
     private let chartInfoRelay = BehaviorRelay<ChartModule.ViewItem?>(value: nil)
-    private let errorRelay = BehaviorRelay<String?>(value: nil)
+    private let errorRelay = BehaviorRelay<Bool>(value: false)
 
     var title: String { chartConfiguration.title }
     var description: String? { chartConfiguration.description }
@@ -43,22 +42,19 @@ class MetricChartViewModel {
     }
 
     private func sync(state: DataStatus<MetricChartModule.ItemData>) {
-        loadingRelay.accept(state.isLoading)
-        errorRelay.accept(state.error?.smartDescription)
-
-        if state.error != nil {
+        switch state {
+        case .loading:
+            loadingRelay.accept(true)
+            errorRelay.accept(false)
+        case .failed:
+            loadingRelay.accept(false)
+            errorRelay.accept(true)
             chartInfoRelay.accept(nil)
-            return
+        case .completed(let itemData):
+            loadingRelay.accept(false)
+            errorRelay.accept(false)
+            chartInfoRelay.accept(factory.convert(itemData: itemData, interval: service.interval, valueType: chartConfiguration.valueType))
         }
-
-        guard let itemData = state.data else {
-            chartInfoRelay.accept(nil)
-            return
-        }
-
-        let viewItem = factory.convert(itemData: itemData, interval: service.interval, valueType: chartConfiguration.valueType)
-
-        chartInfoRelay.accept(viewItem)
     }
 
 }
@@ -89,7 +85,7 @@ extension MetricChartViewModel: IChartViewModel {
         chartInfoRelay.asDriver()
     }
 
-    var errorDriver: Driver<String?> {
+    var errorDriver: Driver<Bool> {
         errorRelay.asDriver()
     }
 

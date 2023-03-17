@@ -6,6 +6,7 @@ import CurrencyKit
 
 class CoinChartService {
     private var disposeBag = DisposeBag()
+    private var coinPriceDisposeBag = DisposeBag()
 
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
@@ -38,7 +39,7 @@ class CoinChartService {
     }
 
     private var coinPrice: CoinPrice?
-    private var chartInfo: ChartInfo?
+    private var chartInfoMap = [HsPeriodType: ChartInfo]()
 
     init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, coinUid: String) {
         self.marketKit = marketKit
@@ -46,62 +47,33 @@ class CoinChartService {
         self.coinUid = coinUid
     }
 
-    func fetch() {
-        let genesisTimeSingle: Single<TimeInterval>
-
-        if let startTime {
-            genesisTimeSingle = .just(startTime)
-        } else {
-            genesisTimeSingle = marketKit.chartPriceStart(coinUid: coinUid)
-        }
-
-        disposeBag = DisposeBag()
-
-        genesisTimeSingle
+    private func fetchStartTime() {
+        marketKit.chartPriceStart(coinUid: coinUid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] startTime in
                     self?.startTime = startTime
-                    self?.fetchChartData()
                 }, onError: { [weak self] error in
                     self?.state = .failed(error)
                 })
                 .disposed(by: disposeBag)
     }
 
-    private func fetchChartData() {
-        disposeBag = DisposeBag()
-        state = .loading
+    func fetchChartInfo() {
+        let periodType = periodType
 
-        coinPrice = marketKit.coinPrice(coinUid: coinUid, currencyCode: currency.code)
-        chartInfo = marketKit.chartInfo(coinUid: coinUid, currencyCode: currency.code, periodType: periodType)
-
-        marketKit
-                .coinPriceObservable(coinUid: coinUid, currencyCode: currency.code)
+        marketKit.chartInfoSingle(coinUid: coinUid, currencyCode: currency.code, periodType: periodType)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] coinPrice in
-                    self?.coinPrice = coinPrice
+                .subscribe(onSuccess: { [weak self] chartInfo in
+                    self?.chartInfoMap[periodType] = chartInfo
                     self?.syncState()
                 }, onError: { [weak self] error in
                     self?.state = .failed(error)
                 })
                 .disposed(by: disposeBag)
-
-        marketKit
-                .chartInfoObservable(coinUid: coinUid, currencyCode: currency.code, periodType: periodType)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] chartInfo in
-                    self?.chartInfo = chartInfo
-                    self?.syncState()
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error)
-                })
-                .disposed(by: disposeBag)
-
-        syncState()
     }
 
     private func syncState() {
-        guard let chartInfo = chartInfo, let coinPrice = coinPrice else {
+        guard let chartInfo = chartInfoMap[periodType], let coinPrice else {
             return
         }
 
@@ -146,6 +118,35 @@ extension CoinChartService {
 
     func setPeriod(interval: HsTimePeriod) {
         periodType = .byPeriod(interval)
+    }
+
+    func start() {
+        coinPrice = marketKit.coinPrice(coinUid: coinUid, currencyCode: currency.code)
+
+        marketKit.coinPriceObservable(coinUid: coinUid, currencyCode: currency.code)
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] coinPrice in
+                    self?.coinPrice = coinPrice
+                    self?.syncState()
+                })
+                .disposed(by: coinPriceDisposeBag)
+
+        fetch()
+    }
+
+    func fetch() {
+        disposeBag = DisposeBag()
+        state = .loading
+
+        if startTime == nil {
+            fetchStartTime()
+        }
+
+        if chartInfoMap[periodType] != nil {
+            syncState()
+        } else {
+            fetchChartInfo()
+        }
     }
 
 }

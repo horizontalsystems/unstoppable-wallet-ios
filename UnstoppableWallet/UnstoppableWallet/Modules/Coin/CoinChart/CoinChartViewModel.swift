@@ -22,7 +22,7 @@ class CoinChartViewModel {
     private let intervalIndexRelay = BehaviorRelay<Int>(value: 0)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let chartInfoRelay = BehaviorRelay<ChartModule.ViewItem?>(value: nil)
-    private let errorRelay = BehaviorRelay<String?>(value: nil)
+    private let errorRelay = BehaviorRelay<Bool>(value: false)
 
     var intervals: [String] {
         service.validIntervals.map { $0.title } + ["chart.time_duration.all".localized]
@@ -56,26 +56,19 @@ class CoinChartViewModel {
     }
 
     private func sync(state: DataStatus<CoinChartService.Item>) {
-        loadingRelay.accept(state.isLoading)
-        errorRelay.accept(state.error?.smartDescription)
-
-        if state.error != nil {
+        switch state {
+        case .loading:
+            loadingRelay.accept(true)
+            errorRelay.accept(false)
+        case .failed:
+            loadingRelay.accept(false)
+            errorRelay.accept(true)
             chartInfoRelay.accept(nil)
-            return
+        case .completed(let item):
+            loadingRelay.accept(false)
+            errorRelay.accept(false)
+            chartInfoRelay.accept(factory.convert(item: item, periodType: service.periodType, currency: service.currency))
         }
-
-        guard let item = state.data else {
-            chartInfoRelay.accept(nil)
-            return
-        }
-
-        chartInfoRelay.accept(
-                factory.convert(
-                        item: item,
-                        periodType: service.periodType,
-                        currency: service.currency
-                )
-        )
     }
 
 }
@@ -106,7 +99,7 @@ extension CoinChartViewModel: IChartViewModel {
         chartInfoRelay.asDriver()
     }
 
-    var errorDriver: Driver<String?> {
+    var errorDriver: Driver<Bool> {
         errorRelay.asDriver()
     }
 
@@ -126,7 +119,7 @@ extension CoinChartViewModel: IChartViewModel {
     }
 
     func start() {
-        service.fetch()
+        service.start()
     }
 
     func retry() {

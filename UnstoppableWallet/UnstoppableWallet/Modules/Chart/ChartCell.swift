@@ -30,6 +30,7 @@ class ChartCell: UITableViewCell {
     private let chartView: RateChartView
     private let timePeriodView = FilterView(buttonStyle: .transparent, bottomSeparator: false)
     private let loadingView = HUDActivityView.create(with: .medium24)
+    private let errorView = PlaceholderView()
 
     private static let percentFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -53,7 +54,7 @@ class ChartCell: UITableViewCell {
 
         contentView.addSubview(currentValueWrapper)
         currentValueWrapper.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
+            make.leading.top.trailing.equalToSuperview()
             make.height.equalTo(CGFloat.heightDoubleLineCell)
         }
 
@@ -188,6 +189,15 @@ class ChartCell: UITableViewCell {
         loadingView.snp.makeConstraints { maker in
             maker.center.equalTo(chartView)
         }
+
+        contentView.addSubview(errorView)
+        errorView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.bottom.equalTo(chartView)
+        }
+
+        errorView.image = UIImage(named: "sync_error_48")
+        errorView.text = "sync_error".localized
     }
 
     required init?(coder: NSCoder) {
@@ -199,42 +209,45 @@ class ChartCell: UITableViewCell {
     }
 
     private func syncChart(viewItem: ChartModule.ViewItem?) {
-        if let value = viewItem?.value {
-            currentValueLabel.isHidden = false
-            currentValueLabel.text = value
-        } else {
-            currentValueLabel.isHidden = true
-        }
-
-        if let value = viewItem?.chartDiff {
-            currentDiffLabel.isHidden = false
-            currentDiffLabel.set(value: value)
-        } else {
-            currentDiffLabel.isHidden = true
-        }
-
-        switch (viewItem?.rightSideMode ?? .none) {
-        case .none, .volume:
-            currentSecondaryTitleLabel.isHidden = true
-            currentSecondaryValueLabel.isHidden = true
-            currentSecondaryDiffLabel.isHidden = true
-        case .dominance(let value, let diff):
-            currentSecondaryTitleLabel.isHidden = false
-            currentSecondaryValueLabel.isHidden = false
-
-            currentSecondaryTitleLabel.text = "BTC Dominance"
-            currentSecondaryValueLabel.text = value.flatMap { Self.percentFormatter.string(from: ($0 / 100) as NSNumber) }
-            currentSecondaryValueLabel.textColor = .themeJacob
-
-            if let diff {
-                currentSecondaryDiffLabel.isHidden = false
-                currentSecondaryDiffLabel.set(value: diff)
-            } else {
-                currentSecondaryDiffLabel.isHidden = true
-            }
-        }
-
         if let viewItem {
+            currentValueWrapper.isHidden = false
+            chartView.isHidden = false
+
+            if let value = viewItem.value {
+                currentValueLabel.isHidden = false
+                currentValueLabel.text = value
+            } else {
+                currentValueLabel.isHidden = true
+            }
+
+            if let value = viewItem.chartDiff {
+                currentDiffLabel.isHidden = false
+                currentDiffLabel.set(value: value)
+            } else {
+                currentDiffLabel.isHidden = true
+            }
+
+            switch viewItem.rightSideMode {
+            case .none, .volume:
+                currentSecondaryTitleLabel.isHidden = true
+                currentSecondaryValueLabel.isHidden = true
+                currentSecondaryDiffLabel.isHidden = true
+            case .dominance(let value, let diff):
+                currentSecondaryTitleLabel.isHidden = false
+                currentSecondaryValueLabel.isHidden = false
+
+                currentSecondaryTitleLabel.text = "BTC Dominance"
+                currentSecondaryValueLabel.text = value.flatMap { Self.percentFormatter.string(from: ($0 / 100) as NSNumber) }
+                currentSecondaryValueLabel.textColor = .themeJacob
+
+                if let diff {
+                    currentSecondaryDiffLabel.isHidden = false
+                    currentSecondaryDiffLabel.set(value: diff)
+                } else {
+                    currentSecondaryDiffLabel.isHidden = true
+                }
+            }
+
             switch viewItem.chartTrend {
             case .neutral:
                 chartView.setCurve(colorType: .neutral)
@@ -244,8 +257,11 @@ class ChartCell: UITableViewCell {
                 chartView.setCurve(colorType: .down)
             }
 
-            chartView.set(chartData: viewItem.chartData)
+            chartView.set(chartData: viewItem.chartData, animated: true)
             chartView.set(highLimitText: viewItem.maxValue, lowLimitText: viewItem.minValue)
+        } else {
+            currentValueWrapper.isHidden = true
+            chartView.isHidden = true
         }
     }
 
@@ -317,8 +333,8 @@ class ChartCell: UITableViewCell {
     }
 
     private func syncChart(loading: Bool) {
-        chartView.isHidden = loading
-        loadingView.set(hidden: !loading)
+        chartView.isUserInteractionEnabled = !loading
+        loadingView.isHidden = !loading
 
         if loading {
             loadingView.startAnimating()
@@ -327,7 +343,8 @@ class ChartCell: UITableViewCell {
         }
     }
 
-    private func syncChart(error: String?) { //todo: check logic!
+    private func syncChart(error: Bool) {
+        errorView.isHidden = !error
     }
 
 }
