@@ -65,6 +65,7 @@ extension Token {
         case .optimism: return true
         case .arbitrumOne: return true
         case .gnosis: return true
+        case .fantom: return true
         default: return false
         }
     }

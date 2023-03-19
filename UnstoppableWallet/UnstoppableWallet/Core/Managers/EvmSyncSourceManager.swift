@@ -28,6 +28,7 @@ class EvmSyncSourceManager {
         case .optimism: return .optimisticEtherscan(apiKey: appConfigProvider.optimismEtherscanKey)
         case .arbitrumOne: return .arbiscan(apiKey: appConfigProvider.arbiscanKey)
         case .gnosis: return .gnosis(apiKey: appConfigProvider.gnosisscanKey)
+        case .fantom: return .fantom(apiKey: appConfigProvider.ftmscanKey)
         default: fatalError("Non-supported EVM blockchain")
         }
     }
@@ -157,6 +158,19 @@ extension EvmSyncSourceManager {
                 EvmSyncSource(
                         name: "Ankr",
                         rpcSource: .http(urls: [URL(string: "https://rpc.ankr.com/gnosis")!], auth: nil),
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                )
+            ]
+        case .fantom:
+            return [
+                EvmSyncSource(
+                        name: "Fantom Chain",
+                        rpcSource: .fantomRpcHttp(),
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
+                        name: "Ankr",
+                        rpcSource: .http(urls: [URL(string: "https://rpc.ankr.com/fantom")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 )
             ]

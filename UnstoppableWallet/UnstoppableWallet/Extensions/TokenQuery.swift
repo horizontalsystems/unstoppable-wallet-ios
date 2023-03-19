@@ -19,6 +19,7 @@ extension TokenQuery {
         case (.optimism, .native), (.optimism, .eip20): return true
         case (.arbitrumOne, .native), (.arbitrumOne, .eip20): return true
         case (.gnosis, .native), (.gnosis, .eip20): return true
+        case (.fantom, .native), (.fantom, .eip20): return true
         case (.binanceSmartChain, .native), (.binanceSmartChain, .eip20): return true
         case (.polygon, .native), (.polygon, .eip20): return true
         case (.avalanche, .native), (.avalanche, .eip20): return true

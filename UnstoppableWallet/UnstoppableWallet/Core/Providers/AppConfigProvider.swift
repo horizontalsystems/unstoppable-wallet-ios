@@ -36,6 +36,10 @@ class AppConfigProvider {
         (Bundle.main.object(forInfoDictionaryKey: "GnosisscanApiKey") as? String) ?? ""
     }
 
+    var ftmscanKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "FtmscanApiKey") as? String) ?? ""
+    }
+
     var optimismEtherscanKey: String {
         (Bundle.main.object(forInfoDictionaryKey: "OptimismEtherscanApiKey") as? String) ?? ""
     }

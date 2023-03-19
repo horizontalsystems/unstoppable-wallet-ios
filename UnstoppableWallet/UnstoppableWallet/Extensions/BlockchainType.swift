@@ -16,6 +16,7 @@ extension BlockchainType {
         .optimism,
         .arbitrumOne,
         .gnosis,
+        .fantom,
         .binanceSmartChain,
         .binanceChain,
     ]
@@ -79,9 +80,10 @@ extension BlockchainType {
         case .dash: return 9
         case .binanceChain: return 10
         case .gnosis: return 11
-        case .arbitrumOne: return 12
-        case .optimism: return 13
-        case .ethereumGoerli: return 14
+        case .fantom: return 12
+        case .arbitrumOne: return 13
+        case .optimism: return 14
+        case .ethereumGoerli: return 15
         default: return Int.max
         }
     }
@@ -139,7 +141,7 @@ extension BlockchainType {
             }
         case .evmPrivateKey, .evmAddress:
             switch self {
-            case .ethereum, .ethereumGoerli, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis: return true
+            case .ethereum, .ethereumGoerli, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom: return true
             default: return false
             }
         }
@@ -169,6 +171,7 @@ extension BlockchainType {
         case .polygon: return "MATIC, ERC20 tokens"
         case .avalanche: return "AVAX, ERC20 tokens"
         case .gnosis: return "xDAI, ERC20 tokens"
+        case .fantom: return "FTM, ERC20 tokens"
         case .optimism: return "L2 chain"
         case .arbitrumOne: return "L2 chain"
         case .zcash: return "ZEC"
