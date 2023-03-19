@@ -101,6 +101,7 @@ extension UdnAddressParserItem {
         case .zcash: return "ZEC"
         case .binanceChain: return "ETH"
         case .gnosis: return "ETH"
+        case .fantom: return "ETH"
         case .solana: return "SOL"
         case .unsupported(let uid): return uid
         }
@@ -108,7 +109,7 @@ extension UdnAddressParserItem {
 
     static func chain(token: Token) -> String? {
         switch (token.blockchainType, token.type) {
-        case (.ethereum, .eip20), (.optimism, .eip20), (.arbitrumOne, .eip20), (.gnosis, .eip20): return "ERC20"
+        case (.ethereum, .eip20), (.optimism, .eip20), (.arbitrumOne, .eip20), (.gnosis, .eip20), (.fantom, .eip20): return "ERC20"
         case (.binanceSmartChain, .native), (.binanceSmartChain, .eip20): return "BEP20"
         case (.polygon, .native), (.polygon, .eip20): return "MATIC"
         case (.avalanche, .native), (.avalanche, .eip20): return "AVAX"

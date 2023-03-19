@@ -12,7 +12,7 @@ class MarketAdvancedSearchService {
         .arbitrumOne,
         .avalanche,
         .gnosis,
-        .unsupported(uid: "fantom"),
+        .fantom,
         .unsupported(uid: "harmony"),
         .unsupported(uid: "huobi-token"),
         .unsupported(uid: "iotex"),
