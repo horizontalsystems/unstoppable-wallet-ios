@@ -4,12 +4,12 @@
 "button.close" = "Fechar";
 "button.continue" = "Continuar";
 "button.done" = "Concluído";
-"button.reset" = "Redefinir";
+"button.reset" = "Resetar";
 "button.import" = "Importar";
 "button.next" = "Próximo";
 "button.share" = "Compartilhar";
 "button.paste" = "Colar";
-"button.backup" = "‘Backup’";
+"button.backup" = "Backup";
 "button.copy" = "Copiar";
 "button.retry" = "Tentar de novo";
 "button.report" = "Reportar";
@@ -42,14 +42,14 @@
 "alert.copied" = "Copiado";
 "alert.created" = "Criado";
 "alert.imported" = "Importado";
-"alert.wallet_added" = "Carteira adicionada";
+"alert.wallet_added" = "Carteira Adicionada";
 "alert.deleted" = "Excluído";
 "alert.waiting_for_session" = "Aguardando sessão";
-"alert.try_again" = "Tentar Novamente";
+"alert.try_again" = "Tentar novamente";
 "alert.disconnecting" = "Desconectando";
 "alert.disconnected" = "Desconectado";
 "alert.enabling" = "Ativando";
-"alert.enabled_coins" = "%@ Moedas a mais ativadas";
+"alert.enabled_coins" = "Moedas a mais ativadas %@";
 "alert.sending" = "Enviando";
 "alert.sent" = "Enviado";
 "alert.swapping" = "Trocando";
@@ -188,7 +188,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "backup_prompt.title" = "Carteira de Backup";
 "backup_prompt.warning" = "Fazer backup desta carteira criando uma cópia de sua frase de recuperação. Será necessário para acessar a carteira se seu telefone for perdido, roubado, quebrado, etc.";
-"backup_prompt.backup" = "‘Backup’";
+"backup_prompt.backup" = "Backup";
 "backup_prompt.later" = "Mais tarde";
 
 // Errors
@@ -275,16 +275,17 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "send.hodler_locktime_off" = "Desligado";
 "send.hodler_error.unsupported_address" = "O bloqueio de tempo só funciona com endereços P2PKH (iniciando com 1)";
 "send.fee_info.title" = "Taxa de tarifa";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe Unstoppable wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
-"send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
-"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:";
+"send.fee_info.description" = "As Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são maiores quando um monte de transações ocorrem na rede.\n\n A carteira Unstoppable estima a taxa com base na atividade atual da blockchain e recomenda o valor ideal para que a transação seja processada dentro de um período razoável de tempo.\n\n A taxa recomendada é mostrada como a quantidade de satoshi que o usuário precisa pagar por um único byte da transação. Assim, a taxa total depende do tamanho total da transação que é medida em bytes.\n\nUsuários podem utilizar os controles fornecidos para aumentar ou diminuir o custo. A mudança altera a taxa total para a transação que o usuário irá pagar.\n\nDefinir a taxa abaixo do valor recomendado pode resultar em uma transação ser realizada como pendente por horas, ou ser rejeitada. Quanto menor o valor, mais tempo levará a transação para confirmar. Para as transações onde a prioridade é importante, recomendamos definir uma taxa mais alta.";
+"send.transaction_inputs_outputs_info.title" = "Entradas / Saídas de Transação";
+"send.transaction_inputs_outputs_info.description" = "A maioria das transações do Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira Unstoppable implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários Unstoppable:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
-"send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
+"send.transaction_inputs_outputs_info.shuffle.description" = "A ordem das saídas da transação é aleatória em cada transação. Às vezes, a mudança pode ser a primeira saída, às vezes pode ser a segunda. Se um usuário confiar no desenvolvedor do aplicativo, considere essa uma opção recomendada.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
-"send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
+"send.transaction_inputs_outputs_info.deterministic.description" = "Existe um padrão comumente aceitado para ordenar saídas de transações (conhecido como BIP69). Em carteiras de código aberto, esse padrão garante que os usuários de carteiras não precisem confiar em como os desenvolvedores do aplicativo implementam a ordem das saídas. Como esse padrão é novo, poucas carteiras o implementaram ainda. Como resultado, é possível ver no blockchain se uma transação foi enviada de uma carteira que usa esse padrão ou não.";
 
 "send.confirmation.you_send" = "Enviar";
 "send.confirmation.to" = "Para";
+"send.confirmation.contact_name" = "Nome do Contato";
 "send.confirmation.domain" = "Domínio";
 "send.confirmation.address" = "Endereço";
 "send.confirmation.account" = "Conta";
@@ -347,7 +348,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "swap.trade_error.wrap_unwrap_not_allowed" = "Este serviço não permite embalagem/desagregação. Por favor, tente outro serviço de troca. 1Inch recomendado";
 "swap.button_error.insufficient_balance" = "Saldo insuficiente";
 "swap.switch_provider.title" = "Serviço de Troca";
-"swap.amount_type.coin" = "Coin";
+"swap.amount_type.coin" = "Moeda";
 
 "swap.price" = "Preço";
 "swap.buy_price" = "Preço de Compra";
@@ -475,7 +476,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market_discovery.browse_categories" = "Navegar nas categorias";
 "market_discovery.top_coins" = "TOP Moedas";
 "market_discovery.not_found" = "Nenhum resultado encontrado";
-"market_discovery.category.chart.title" = "Valor total de mercado";
 
 "market_watchlist.empty.caption" = "Seu catálogo está vazio.";
 
@@ -506,7 +506,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.advanced_search.price_close_to_atl" = "Preço próximo a ATL";
 
 "market.advanced_search.top" = "Primeiros %d";
-"market.advanced_search.reset_all" = "Redefinir";
+"market.advanced_search.reset_all" = "Resetar";
 
 "market.advanced_search.less_5_m" = "< 5M";
 "market.advanced_search.less_10_m" = "< 10M";
@@ -544,218 +544,152 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.global.total_market_cap.title" = "Valor total de mercado";
 "market.global.volume_24h.title" = "Volume em 24h";
 "market.global.defi_cap.title" = "Mercado de DeFi";
-"market.global.tvl_in_defi.title" = "TVL no DeFi";
 
-"market.global.btc_dominance.title" = "Dominação Bitcoin";
-"market.global.volume_24h.title" = "Volume em 24h";
-"market.global.defi_cap.title" = "Mercado de DeFi";
 "market.global.tvl_in_defi.title" = "TVL no DeFi";
-"market.global.btc_dominance.description" = "A mudança histórica na relação entre o capital de mercado do Bitcoin e o resto dos mercados de criptomoedas. \n\nNormalmente, quando o domínio do Bitcoin está tendendo à alta, o resto das tendências do mercado cripto para baixo e vice-versa.";
-"market.global.volume_24h.description" = "A mudança histórica no volume diário do mercado de trading agregado para todas as criptomoedas.";
-"market.global.defi_cap.description" = "A mudança histórica no valor cumulativo do mercado dos tokens no setor DeFi.";
-"market.global.tvl_in_defi.description" = "A mudança histórica no valor cumulativo de toda a criptomoeda gerenciada por protocolos descentralizados.";
+"market.global.tvl_in_defi.multi_chain" = "Multi-Cadeia";
+"market.global.tvl_in_defi.filter_by_chain" = "Filtrar por cadeia";
 
 // Coin Page
 
-"coin_page.roi.hour1" = "1 Hora";
-"coin_page.roi.hour24" = "1 Dia";
-"coin_page.roi.day7" = "1 Semana";
-"coin_page.roi.day14" = "2 Semanas";
-"coin_page.roi.day30" = "1 Mês";
-"coin_page.roi.day200" = "6 Meses";
-"coin_page.roi.year1" = "1 Ano";
-
-"coin_page.tab.overview" = "Preço";
-"coin_page.tab.analytics" = "Análises";
-"coin_page.tab.markets" = "Mercados";
-"coin_page.tab.tweets" = "Tweets";
-
-"coin_page.market_cap" = "Capitalização de mercado";
-"coin_page.circulating_supply" = "Em Circulação";
-"coin_page.total_supply" = "Fornecimento total";
-"coin_page.diluted_market_cap" = "MCap Diludido";
-"coin_page.genesis_date" = "Data de Início";
-
-"coin_page.trading_volume" = "Volume de Operações";
-"coin_page.trading_volume.description" = "A mudança histórica no volume diário de negociação agregada para %@";
+"coin_page.overview" = "Preço";
+"coin_page.analytics" = "Análises";
 "coin_page.markets" = "Mercados";
-"coin_page.markets.empty" = "Não há dados disponíveis";
+"coin_page.tweets" = "Tweets";
 
-"coin_page.token_liquidity" = "Liquidez dos Tokens";
-"coin_page.token_liquidity.description" = "O estado de liquidez do ativo determinado em mercados de câmbio descentralizados.";
-"coin_page.dex_volume" = "Volume DEX (30d)";
-"coin_page.dex_volume.title" = "Volume DEX";
-"coin_page.dex_volume.description" = "O volume de operaç~ies para o token em corretoras descentralizadas.";
-"coin_page.dex_liquidity" = "Liquidez DEX";
-"coin_page.dex_liquidity.description" = "A quantidade total de liquidez disponível para o token em corretoras descentralizadas.";
+// Coin Page -> Overview
 
-"coin_page.token_distribution" = "Distribuição de Tokens";
-"coin_page.token_distribution.description" = "Parâmetros do token on-chain. Normalmente, projetos saudáveis possuem uma base de usuários ativa na cadeia e um token bem distribuído.";
-"coin_page.tx_count" = "Contagem de Tx (30d)";
-"coin_page.tx_count.title" = "Contagem de Tx";
-"coin_page.tx_count.description" = "O número de transações de token registradas na cadeia durante vários períodos.";
-"coin_page.tx_volume" = "Volume de Tx (30d)";
-"coin_page.tx_volume.title" = "Volume Tx";
-"coin_page.tx_volume.description" = "O volume do token de transação agregada é registrado on-chain. O volume é medido nos tokens reais (não em USD).";
-"coin_page.active_addresses" = "Endereços ativos";
-"coin_page.active_addresses.description" = "O número de endereços únicos da carteira envolvidos nas transações em vários períodos.";
+"coin_overview.market_cap" = "Capitalização de mercado";
+"coin_overview.circulating_supply" = "Em Circulação";
+"coin_overview.total_supply" = "Fornecimento total";
+"coin_overview.diluted_market_cap" = "MCap Diludido";
+"coin_overview.genesis_date" = "Data de Início";
+"coin_overview.trading_volume" = "Volume de Operações";
 
-"coin_page.chart_tvl" = "Token TVL";
-"coin_page.chart_volumes" = "Volume Total";
-"coin_page.token_tvl" = "Token TVL";
-"coin_page.token_tvl.description" = "Valor total bloqueado (TVL) é uma métrica que mostra o valor total dos ativos cripto sob gerenciamento automatizado pelos contratos inteligentes que ligam o determinado protocolo.";
-"coin_page.tvl" = "Valor Total Bloqueado";
-"coin_page.tvl_rank" = "Rank TVL";
-"coin_page.tvl_rank.description" = "A classificação entre outros protocolos baseia-se no valor da TVL em termos USD.";
-"coin_page.market_cap_tvl_ratio" = "Proporção de Capital de M. / TVL";
-"coin_page.market_cap_tvl_ratio.description" = "A proporção do limite de mercado do token do projeto sobre sua TVL.";
-"coin_page.tvl.description" = "Capital depositado na plataforma sob a forma de garantia de empréstimo ou liquidez de empréstimos.";
+"coin_overview.roi.hour24" = "1 Dia";
+"coin_overview.roi.day7" = "1 Semana";
+"coin_overview.roi.day14" = "2 Semanas";
+"coin_overview.roi.day30" = "1 Mês";
+"coin_overview.roi.day200" = "6 Meses";
+"coin_overview.roi.year1" = "1 Ano";
 
-"coin_page.investor_data" = "Dados do investidor";
+"coin_overview.category" = "Categoria";
 
-"coin_page.treasuries" = "Treasuries";
-"coin_page.treasuries.filters" = "Filtros";
-"coin_page.treasuries.filter.all" = "Todos";
-"coin_page.treasuries.filter.public" = "Público";
-"coin_page.treasuries.filter.private" = "Privado";
-"coin_page.treasuries.filter.etf" = "ETF";
+"coin_overview.blockchains" = "Blockchains";
+"coin_overview.bips" = "BIPs";
+"coin_overview.coin_types" = "Tipos de moeda";
+"coin_overview.show_more" = "Mostrar Mais";
+"coin_overview.show_less" = "Mostrar menos";
+"coin_overview.links" = "Links";
 
-"coin_page.funds_invested" = "Fundos Investidos";
-"coin_page.funds_invested.lead" = "Conduzir";
-
-"coin_page.reports" = "Relatórios";
-
-"coin_page.category" = "Categoria";
-
-"coin_page.blockchains" = "Blockchains";
-"coin_page.bips" = "BIPs";
-"coin_page.coin_types" = "Tipos de moeda";
-"coin_page.show_more" = "Mostrar Mais";
-"coin_page.show_less" = "Mostrar menos";
-"coin_page.links" = "Links";
-
-"coin_page.guide" = "Guia";
-"coin_page.website" = "Site";
-"coin_page.whitepaper" = "Whitepaper";
-
-"coin_page.favorited" = "Adicionado à Lista";
-"coin_page.unfavorited" = "Removido da Lista";
-"coin_page.added_to_wallet" = "Adicionado à Carteira";
-"coin_page.already_added_to_wallet" = "Já adicionado à carteira";
-
-"coin_page.tvl_rank.multi_chain" = "Multi-Cadeia";
-"coin_page.tvl_rank.filter_by_chain" = "Filtrar por cadeia";
-
-"coin_page.security_parameters" = "Parâmetros de segurança";
-"coin_page.security_parameters.privacy" = "Privacidade";
-"coin_page.security_parameters.issuance" = "Emissão";
-"coin_page.security_parameters.confiscation_resistance" = "Resistente a confisco";
-"coin_page.security_parameters.censorship_resistance" = "Resistente à censura";
-
-"coin_page.security_parameters.level.low" = "Baixa";
-"coin_page.security_parameters.level.medium" = "Médio";
-"coin_page.security_parameters.level.high" = "Alta";
-"coin_page.security_parameters.issuance.decentralized" = "Descentralizada";
-"coin_page.security_parameters.issuance.centralized" = "Centralizado";
-"coin_page.security_parameters.resistance.yes" = "Sim";
-"coin_page.security_parameters.resistance.no" = "Não";
-
-"coin_page.security_parameters.privacy.description.low" = "Transações com este token são totalmente públicas, permitindo serviços de terceiro vincular transações diferentes para a mesma entidade, ver os valores transacionados e ver os saldos dos usuários.";
-"coin_page.security_parameters.privacy.description.medium" = "Transações com este token são semi-anônimas. Um serviço de terceiros pode ver os valores transacionados e vincular parcialmente transações diferentes à mesma entidade.";
-"coin_page.security_parameters.privacy.description.high" = "Transações com este token são anônimas por padrão ou fornecem tais recursos. Nenhuma entidade é capaz de ligar transações diferentes para o mesmo indivíduo ou ver os valores transados.";
-"coin_page.security_parameters.issuance.description.decentralized" = "O número de tokens em circulação controlado por um algoritmo e funciona de forma determinística fora da influência centralizada.";
-"coin_page.security_parameters.issuance.description.centralized" = "O número de tokens em circulação pode ser potencialmente aumentado ou diminuído por uma entidade centralizada à vontade.";
-"coin_page.security_parameters.confiscation_resistance.description.yes" = "Os tokens não podem ser confiscados quando guardados em uma carteira não privativa.";
-"coin_page.security_parameters.confiscation_resistance.description.no" = "Os tokens podem ser confiscados ou adulterados por uma entidade emissora.";
-"coin_page.security_parameters.censorship_resistance.description.yes" = "O titular do token não pode ser censurado pela transação.";
-"coin_page.security_parameters.censorship_resistance.description.no" = "O titular do token não pode ser censurado pela transação.";
-
-"coin_page.info" = "Informação";
-
-"coin_page.audits" = "Auditorias";
-"coin_page.audits.issues" = "Ocorrências";
-"coin_page.audits.no_reports" = "Nenhum relatório de auditoria";
-
-"coin_page.tweets.reference_type.retweeted" = "Retweetado @%@";
-"coin_page.tweets.reference_type.quoted" = "Citação @%@";
-"coin_page.tweets.reference_type.replied" = "Responder a @%@";
-"coin_page.tweets.no_tweets_yet" = "Não há tweets ainda";
-"coin_page.tweets.not_available" = "Nenhum twitter disponível";
-"coin_page.tweets.see_on_twitter" = "Veja no Twitter";
+"coin_overview.guide" = "Guia";
+"coin_overview.website" = "Site";
+"coin_overview.whitepaper" = "Whitepaper";
 
 // Coin Page -> Analytics
 
-"coin_analytics.not_available" = "This project has no analytics data";
-"coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.not_available" = "Este projeto não tem dados de análise";
+"coin_analytics.locked" = "Esta página disponível apenas para usuários Premium da Carteira Unstoppable";
 
-"coin_analytics.cex_volume" = "Volume СEX";
-"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
-"coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
-"coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
-"coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
+"coin_analytics.cex_volume" = "Volume CEX";
+"coin_analytics.cex_volume_rank" = "Ranking do Volume CEX";
+"coin_analytics.cex_volume.info1" = "Volume total de trading para o token em corretoras centralizadas durante um período de 30 dias.";
+"coin_analytics.cex_volume.info2" = "Gráfico mostrando a variação no volume diário de negociação do token nas principais corretoras centralizadas durante um período de 1 ano.";
+"coin_analytics.cex_volume.info3" = "Classificação do Token baseada no volume de trading em principais corretoras centralizadas durante um período de 30 dias.";
+"coin_analytics.cex_volume.info4" = "Lista de todos os tokens com base no volume de trading em corretoras centralizadas ao longo de 24H / 7D / 1M.";
 
 "coin_analytics.dex_volume" = "Volume DEX";
-"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over 30-day period.";
-"coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
-"coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
-"coin_analytics.dex_volume.tracked_dexes" = "DEXes that are being tracked:";
+"coin_analytics.dex_volume_rank" = "Ranking do Volume DEX";
+"coin_analytics.dex_volume.info1" = "Volume total de trading para o token em corretoras centralizadas durante um período de 30 dias.";
+"coin_analytics.dex_volume.info2" = "Gráfico mostrando a variação no volume diário de negociação do token nas principais corretoras centralizadas durante um período de 1 ano.";
+"coin_analytics.dex_volume.info3" = "Classificação do Token baseada no volume de trading em principais corretoras centralizadas durante um período de 30 dias.";
+"coin_analytics.dex_volume.info4" = "Lista de todos os tokens com base no volume de trading em corretoras descentralizadas ao longo de 24H / 7D / 1M.";
+"coin_analytics.dex_volume.tracked_dexes" = "DEXes que estão sendo rastreados:";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Sushiswap";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
 
 "coin_analytics.dex_liquidity" = "Liquidez DEX";
-"coin_analytics.dex_liquidity.info1" = "Total currently available liquidity for the token on leading decentralized exchanges.";
-"coin_analytics.dex_liquidity.info2" = "Chart showing variation in available liquidity for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_liquidity.info3" = "List of all tokens ranked based on available liquidity for the token on leading decentralized exchanges.";
-"coin_analytics.dex_liquidity.tracked_dexes" = "DEXes that are being tracked:";
+"coin_analytics.dex_liquidity_rank" = "Ranking de Liquidez DEX";
+"coin_analytics.dex_liquidity.info1" = "Quantidade total de liquidez disponível para o token em corretoras descentralizadas.";
+"coin_analytics.dex_liquidity.info2" = "Gráfico mostrando a variação na liquidez disponível para o token nas principais corretoras descentralizadas durante o período de 1 ano.";
+"coin_analytics.dex_liquidity.info3" = "Lista de todos os tokens com base na liquidez disponível para o token nas principais exchanges descentralizadas.";
+"coin_analytics.dex_liquidity.tracked_dexes" = "DEXes que estão sendo rastreados:";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
 "coin_analytics.active_addresses" = "Endereços ativos";
-"coin_analytics.active_addresses.info1" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
-"coin_analytics.active_addresses.info4" = "List of all tokens ranked based on the number of active wallets transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses_rank" = "Ranking de Endereços Ativos";
+"coin_analytics.active_addresses.info1" = "Número total de endereços de blockchain exclusivos que realizam transações com token em um período de 30 dias.";
+"coin_analytics.active_addresses.info2" = "Gráfico mostrando a variação na contagem de endereços ativos no período de 1 ano.";
+"coin_analytics.active_addresses.info3" = "Ranking do token com base no número de carteiras ativas que realizam transações com o período de 30 dias do token.";
+"coin_analytics.active_addresses.info4" = "Lista de todos os tokens com base no número de carteiras ativas que realizam transações com o token em intervalos de 24h / 7D / 1M.";
 
 "coin_analytics.transaction_count" = "Contagem de transações";
-"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
-"coin_analytics.transaction_count.info2" = "Chart showing variation in transaction count over 1 year period.";
-"coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
-"coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
-"coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
+"coin_analytics.transaction_count_rank" = "Ranking de Contador Tx";
+"coin_analytics.transaction_count.info1" = "Número total de transações únicas na blockchain com token em um período de 30 dias.";
+"coin_analytics.transaction_count.info2" = "Gráfico mostrando a variação na contagem de transações no período de 1 ano.";
+"coin_analytics.transaction_count.info3" = "Ranking do token com base no número de transações com o período de 30 dias do token.";
+"coin_analytics.transaction_count.info4" = "Lista de todos os tokens classificados com base no número de transações com o token em intervalos de 24h / 7D / 1M.";
+"coin_analytics.transaction_count.info5" = "O número total de tokens transferidos sobre a blockchain ao longo do período de 30 dias.";
 
 "coin_analytics.holders" = "Holders";
-"coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
-"coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
-"coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
-"coin_analytics.holders.in_top_10_addresses" = "in top 10 addresses";
-"coin_analytics.holders.count" = "%@ holders";
+"coin_analytics.holders.info1" = "Número total de endereços únicos que contêm o token em várias blockchains.";
+"coin_analytics.holders.info2" = "As 10 principais carteiras que possuem o token em cada blockchain.";
+"coin_analytics.holders.tracked_blockchains" = "Blockchains rastreadas: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
+"coin_analytics.holders.in_top_10_addresses" = "nos 10 melhores endereços";
+"coin_analytics.holders.count" = "Holders: %@";
+"coin_analytics.holders.see_all" = "Ver tudo";
 
-"coin_analytics.project_tvl" = "Project TVL";
-"coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
-"coin_analytics.project_tvl.info_title" = "Project TVL (Total Value Locked)";
+"coin_analytics.project_tvl" = "Projeto TVL";
+"coin_analytics.tvl_ratio" = "Proporção de Capital de M. / TVB";
+"coin_analytics.project_tvl.info_title" = "Projeto TVB (Total de Valor Bloqueado)";
 "coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
 "coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
 "coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
 "coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
 "coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
 
-"coin_analytics.project_revenue" = "Project Revenue";
-"coin_analytics.project_revenue.info1" = "Total revenue generated by the project's smart contracts over 30-day period.";
-"coin_analytics.project_revenue.info2" = "Token's rank based on the revenue generated by the project's smart contracts over 30-day period.";
-"coin_analytics.project_revenue.info3" = "List of all tokens ranked based on the revenue generated by the project's smart contracts over 24h / 7D / 1M intervals.";
+"coin_analytics.project_revenue" = "Receita do Projeto";
+"coin_analytics.project_revenue_rank" = "Ranking da Receita do Projeto";
+"coin_analytics.project_revenue.info1" = "Total revenue generated for the token holders over 30-day period. Typically, fees are collected by token stakers or though a token burn mechanism.";
+"coin_analytics.project_revenue.info2" = "Token's rank based on the revenue generated over 30-day period for token stakers.";
+"coin_analytics.project_revenue.info3" = "List of all tokens ranked based on the revenue generated for token stakers over 24h / 7D / 1M intervals.";
 
-"coin_analytics.other_data" = "Other Data";
+"coin_analytics.other_data" = "Outros dados";
+
 "coin_analytics.reports" = "Relatórios";
-"coin_analytics.funding" = "Funding";
-"coin_analytics.treasuries" = "Treasuries";
-"coin_analytics.audits" = "Auditorias";
 
-"coin_analytics.last_30d" = "last 30d";
-"coin_analytics.current" = "current";
-"coin_analytics.rank" = "Rank";
-"coin_analytics.30_day_rank" = "30-Day Rank";
-"coin_analytics.30_day_volume" = "30-Day Volume";
+"coin_analytics.funding" = "Financiamento";
+"coin_analytics.funding.lead" = "Conduzir";
+
+"coin_analytics.treasuries" = "Treasuries";
+"coin_analytics.treasuries.filters" = "Filtros";
+"coin_analytics.treasuries.filter.all" = "Todos";
+"coin_analytics.treasuries.filter.public" = "Público";
+"coin_analytics.treasuries.filter.private" = "Privado";
+"coin_analytics.treasuries.filter.etf" = "ETF";
+
+"coin_analytics.audits" = "Auditorias";
+"coin_analytics.audits.issues" = "Ocorrências";
+"coin_analytics.audits.no_reports" = "Nenhum relatório de auditoria";
+
+"coin_analytics.last_30d" = "últimos 30d";
+"coin_analytics.current" = "atual";
+"coin_analytics.rank" = "Classificação";
+"coin_analytics.30_day_rank" = "Classificação 30-Dias";
+"coin_analytics.30_day_volume" = "Volume 30 Dias";
+
+// Coin Page -> Markets
+
+"coin_markets.empty" = "Não há dados disponíveis";
+
+// Coin Page -> Tweets
+
+"coin_tweets.reference_type.retweeted" = "Retweetado @%@";
+"coin_tweets.reference_type.quoted" = "Citado @%@";
+"coin_tweets.reference_type.replied" = "Respondido a @%@";
+"coin_tweets.no_tweets_yet" = "Não há tweets ainda";
+"coin_tweets.not_available" = "Nenhum twitter disponível";
+"coin_tweets.see_on_twitter" = "Veja no Twitter";
 
 // Pro Features
 
@@ -837,6 +771,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "tx_info.transaction_id" = "ID";
 "tx_info.to_hash" = "Para";
 "tx_info.spender" = "Gastador";
+"tx_info.contact_name" = "Nome do Contato";
 "tx_info.button_explorer" = "Ver no %@";
 "tx_info.rate" = "Dados históricos";
 "tx_info.options.speed_up" = "Acelerar";
@@ -888,8 +823,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "manage_wallets.not_found" = "Nenhum resultado encontrado. Tente adicionar token manualmente.";
 "manage_wallets.search_placeholder" = "Nome, código ou endereço do contrato";
 "manage_wallets.contract_address" = "Endereço do Contrato";
-"manage_wallets.derivation_description" = "There are 3 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (older)\n- BIP49 (newer)\n- BIP84 (newest)\n\nWhile Unstoppable wallet supports all 3 of them it recommends to use a %@ wallet operating in BIP84 format. The wallets operating in this format get to pay lowest fees when sending %@ transactions.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile Unstoppable wallet supports both of them it recommends to use a Bitcoin Cash wallet operating in TYPE 145 format.";
+"manage_wallets.derivation_description" = "Existem 3 formatos de endereço comuns %@ que as carteiras podem usar para receber pagamentos:\n\n- BIP44 (mais antigo)\n- BIP49 (recente)\n- BIP84 (mais recente)\n\nEnquanto a Unstoppable wallet suporta todos os 3, recomendamos usar uma %@ carteira operando no formato BIP84. As carteiras que operam neste formato pagam taxas mais baixas ao enviar %@ transações.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Existem 2 formatos de endereço que as carteiras Bitcoin Cash podem usar para receber pagamentos:\n\n- TYPE0 (antigo)\n- TYPE145 (mais recente)\n\nEmbora a carteira Unstoppable suporte ambos, recomenda-se usar uma carteira Bitcoin Cash operando no formato TYPE145.";
 
 // Settings -> Experimental Features
 
@@ -959,7 +894,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "settings_manage_keys.title" = "Gerenciar carteiras";
 "settings_manage_keys.delete" = "Deletar";
-"settings_manage_keys.backup" = "‘Backup’";
+"settings_manage_keys.backup" = "Backup";
 "settings_manage_keys.delete.title" = "Excluir Carteira";
 "settings_manage_keys.delete.confirmation_remove" = "A ação irá apagar esta carteira do dispositivo.";
 "settings_manage_keys.delete.confirmation_loose" = "Se você não fizer o backup da chave privada desta carteira, perderá o acesso aos seus fundos.";
@@ -1011,18 +946,49 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "appearance.balance_value.fiat_value" = "Valor Fiat";
 
 // Settings -> Contacts
-"contacts.title" = "Contacts";
+
+"contacts.title" = "Contatos";
 "contacts.list.search_placeholder" = "Nome";
-"contacts.list.not_found" = "Contacts Not Found";
-"contacts.list.addresses_count" = "Addresses: %d";
-"contacts.contact.new.title" = "New Contact";
-"contacts.contact.update.error.name_already_exist" = "Name Already Exist";
-"contacts.contact.add_address" = "Add Address";
-"contacts.contact.delete" = "Delete Contact";
+"contacts.list.not_found" = "Você não tem nenhum contato adicionado";
+"contacts.list.not_found_search" = "Nenhum resultado encontrado";
+"contacts.add_new_contact" = "Adicionar um novo contato";
+"contacts.update_contact.already_has_address" = "Este contato já possui um endereço nesta blockchain. Deseja substituir o endereço %@ pelo %@?";
+"contacts.update_contact.replace" = "Substituir";
+"contacts.list.addresses_count" = "Endereços: %d";
+"contacts.contact.new.title" = "Novo Contato";
+"contacts.contact.name.placeholder" = "Nome";
+"contacts.contact.update.error.name_already_exist" = "Nome já existe";
+"contacts.contact.add_address" = "Adicionar endereço";
+"contacts.contact.delete" = "Excluir contato";
 "contacts.contact.address.blockchains" = "Blockchains";
 "contacts.contact.address.blockchain" = "Blockchain";
-"contacts.contact.address.delete_address" = "Delete Address";
+"contacts.contact.address.delete_address" = "Excluir endereço";
 
+"contacts.add_address.title" = "Adicionar endereço";
+"contacts.add_address.create_new" = "Criar Novo Contato";
+"contacts.add_address.add_to_contact" = "Adicionar ao Contato Existente";
+"contacts.add_address.exist_address" = "Este endereço já está em uso para %@";
+
+"contacts.contact.delete_alert.title" = "Excluir contato";
+"contacts.contact.delete_alert.description" = "Você tem certeza que deseja excluir este contato?";
+"contacts.contact.delete_alert.delete" = "Deletar";
+
+"contacts.contact.dismiss_changes.description" = "Tem certeza de que deseja descartar as novas alterações?";
+"contacts.contact.dismiss_changes.discard_changes" = "Descartar Alterações";
+"contacts.contact.dismiss_changes.keep_editing" = "Continuar Editando";
+
+
+"contacts.add_address.delete_alert.title" = "Excluir endereço";
+"contacts.add_address.delete_alert.description" = "Você tem certeza que deseja excluir este endereço?";
+"contacts.add_address.delete_alert.delete" = "Deletar";
+
+// Settings -> iCloud Sync
+
+"icloud_sync.title" = "Sincronização com iCloud";
+"settings.icloud_sync.title" = "Sincronização com iCloud";
+"settings.icloud_sync.contact_book" = "Sincronizar contatos";
+"settings.icloud_sync.description" = "Sincronize os contatos de pagamento no iCloud para facilitar o backup e o acesso entre vários dispositivos.";
+"settings.icloud_sync.merge_disclaimer" = "Você tem contatos locais que serão mesclados com contatos iCloud";
 
 // Set PIN
 
@@ -1045,7 +1011,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Key Types
 
-"chart.time_duration.today" = "HOJE";
 "chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7D";
 "chart.time_duration.week2" = "2S";
@@ -1059,9 +1024,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "chart.market_cap" = "Capitalização de mercado";
 "chart.volume" = "Volume (24h)";
 "chart.circulation" = "Em Circulação";
-"chart.selected.volume" = "Vol";
-"chart.price_indicator_range.day" = "Faixa em 24h";
-"chart.price_indicator_range.year" = "Faixa em 52s";
+"chart.selected.volume" = "Volume";
 
 "chart.market.header" = "Mercado";
 "chart.market.market_cap" = "Capitalização de mercado";
@@ -1171,8 +1134,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "O valor da taxa selecionada é muito baixo e será rejeitado!";
 "ethereum_transaction.error.nonce_already_in_block" = "A transação já foi confirmada!";
 "ethereum_transaction.error.replacement_transaction_underpriced" = "Taxa insuficiente para substituir a transação";
-"ethereum_transaction.error.transaction_underpriced" = "Fee not enough to send the transaction";
-"ethereum_transaction.error.tips_higher_than_max_fee" = "Max fee cannot be lower than the tips, because Max fee includes the tips.";
+"ethereum_transaction.error.transaction_underpriced" = "Taxa insuficiente para realizar transação";
+"ethereum_transaction.error.tips_higher_than_max_fee" = "Taxa máxima não pode ser inferior à dica, porque a taxa máxima inclui as dicas.";
 "ethereum_transaction.error.reverted" = "A transação não pode ser executada: %@";
 "wallet_connect.request_title" = "Chamada de Contrato";
 "wallet_connect.button.confirm" = "Confirmar";
@@ -1271,11 +1234,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Birthday Height
 
-"birthday_height.title" = "Birthday Height";
+"birthday_height.title" = "Aniversário";
 
 // Birthday Input
 
-"birthday_input.title" = "Birthday Height";
+"birthday_input.title" = "Aniversário";
 "birthday_input.description" = "Insira a data da criação da carteira para uma sincronização mais rápida.";
 "birthday_input.new_wallet" = "Nova Carteira";
 "birthday_input.new_wallet.description" = "Não tem nenhuma transação";
@@ -1283,7 +1246,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "birthday_input.old_wallet.description" = "Tem transações";
 "birthday_input.input_placeholder" = "%@ (opcional)";
 
-"restore_setting.birthday_height" = "%@ Birthday Height";
+"restore_setting.birthday_height" = "%@ Aniversário";
 "restore_setting.download.disclaimer" = "A sincronização inicial com o blockchain pode consumir muito tráfego na internet.";
 
 // EVM Network
@@ -1315,7 +1278,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "fee_settings.fee_rate.description" = "Aqui é o valor recomendado para atingir os próximos 2 blocos";
 "fee_settings.inputs_outputs" = "Entrada/Saída";
 "fee_settings.transaction_settings" = "Configurações de transação";
-"fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
+"fee_settings.transaction_settings.description" = "Torne suas %@ transações mais difíceis de rastrear, mudando a maneira como as transações são estruturadas.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock funciona apenas para enviar para endereços BIP44 (começando com 1)";
 
@@ -1329,10 +1292,10 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "fee_settings.base_fee" = "Taxa Base";
 "fee_settings.base_fee.info" = "O protocolo de rede determina o preço base por gas para cada bloco, a taxa base. Varia de acordo com o nível de utilização da rede de bloco para bloco. Ele pode aumentar ou diminuir em não mais do que 12,5% no próximo bloco, tornando as taxas mais previsíveis. O valor mostrado aqui é a taxa base de taxa atual do bloco.";
-"fee_settings.max_fee_rate" = "Max Fee Rate";
+"fee_settings.max_fee_rate" = "Taxa Máxima";
 "fee_settings.max_fee_rate.info" = "Este é o preço total máximo por gas que o usuário está disposto a pagar. Ela deve cobrir a taxa base da rede e a taxa máxima de prioridade. O valor mostrado aqui é sugerido com base em uma estimativa da taxa base do próximo bloco mais a taxa máxima de prioridade escolhida pelo usuário. A taxa real paga normalmente será menor. Definir isso mais baixo que a taxa base atual irá limitar a taxa paga, mas resultará em períodos de espera mais longos para que a transação seja confirmada, ou até mesmo em uma transação travada.";
-"fee_settings.tips" = "Max Priority Fee";
-"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+"fee_settings.tips" = "Taxa de prioridade máxima";
+"fee_settings.tips.info" = "Os usuários pagam taxas de prioridade para incentivar uma transação a ser confirmada mais rapidamente. Às vezes são chamados de tips. A taxa máxima de prioridade é o preço adicional máximo por gas que o usuário está disposto a pagar acima da taxa base. O valor mostrado aqui é sugerido com base nas condições previstas de rede. A taxa de prioridade real normalmente será menor. Definir como zero pode resultar em um longo tempo de espera para que a transação seja confirmada, como é colocado no final da fila de transações pendentes de todos os usuários.";
 
 "fee_settings.errors.insufficient_balance" = "Saldo insuficiente";
 "fee_settings.errors.insufficient_balance.info" = "O saldo atual de %@ está abaixo do valor necessário para processar a transação, incluindo taxa de transação.";
@@ -1340,8 +1303,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "fee_settings.errors.low_max_fee.info" = "A taxa de transação definida é insuficiente para processar esta transação agora.";
 "fee_settings.errors.nonce_already_in_block" = "Não é possível substituir a transação.";
 "fee_settings.errors.replacement_transaction_underpriced" = "Taxa baixa para transação substituída";
-"fee_settings.errors.transaction_underpriced" = "Low Fee for transaction";
-"fee_settings.errors.tips_higher_than_max_fee" = "Max Fee is too low";
+"fee_settings.errors.transaction_underpriced" = "Taxa baixa para transação";
+"fee_settings.errors.tips_higher_than_max_fee" = "A taxa máxima é muito baixa";
 "fee_settings.warning.risk_of_getting_stuck" = "Arriscado";
 "fee_settings.warning.risk_of_getting_stuck.info" = "A transação pode permanecer pendente por um tempo ou falhar completamente.";
 "fee_settings.warning.overpricing" = "Taxa Muito Alta";
