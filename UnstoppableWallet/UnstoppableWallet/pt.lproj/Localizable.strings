@@ -650,9 +650,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "coin_analytics.project_revenue" = "Receita do Projeto";
 "coin_analytics.project_revenue_rank" = "Ranking da Receita do Projeto";
-"coin_analytics.project_revenue.info1" = "Receita total gerada pelos contratos inteligentes do projeto durante um período de 30 dias.";
-"coin_analytics.project_revenue.info2" = "Classificação do token com base na receita gerada pelos contratos inteligentes do projeto durante um período de 30 dias.";
-"coin_analytics.project_revenue.info3" = "Lista de todos os tokens classificados com base na receita gerada pelos contratos inteligentes do projeto ao longo de 24h / 7D / 1M intervalos.";
+"coin_analytics.project_revenue.info1" = "Total revenue generated for the token holders over 30-day period. Typically, fees are collected by token stakers or though a token burn mechanism.";
+"coin_analytics.project_revenue.info2" = "Token's rank based on the revenue generated over 30-day period for token stakers.";
+"coin_analytics.project_revenue.info3" = "List of all tokens ranked based on the revenue generated for token stakers over 24h / 7D / 1M intervals.";
 
 "coin_analytics.other_data" = "Outros dados";
 
