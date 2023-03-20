@@ -53,7 +53,7 @@
 "alert.sending" = "Wird gesendet";
 "alert.sent" = "Gesendet";
 "alert.swapping" = "Swapping";
-"alert.swapped" = "Getauscht";
+"alert.swapped" = "Swapped";
 "alert.approving" = "Wird bestätigt";
 "alert.approved" = "Bestätigt";
 "alert.revoking" = "Widerrufen";
@@ -202,7 +202,7 @@
 "balance.title" = "Guthaben";
 "balance.tab_bar_item" = "Guthaben";
 "balance.send" = "Senden";
-"balance.swap" = "Tauschen";
+"balance.swap" = "Swap";
 "balance.deposit" = "Anfordern";
 "balance.address" = "Adresse";
 "balance.rate_per_coin" = "%@ pro %@";
@@ -327,7 +327,7 @@
 
 // Swap
 
-"swap.title" = "Tauschen";
+"swap.title" = "Swap";
 "swap.you_pay" = "Sie bezahlen";
 "swap.estimated" = "geschätzt";
 "swap.balance" = "Guthaben";
@@ -336,7 +336,7 @@
 "swap.token" = "Auswählen";
 "swap.advanced_settings" = "Swap-Einstellungen";
 "swap.proceed_button" = "Weiter";
-"swap.approve.title" = "Tausch genehmigen";
+"swap.approve.title" = "Swap Approve";
 "swap.approve.description" = "Sie sollten einem intelligenten Vertrag die Erlaubnis erteilen, in Ihrem Namen gegebene Token einzutauschen. Diese Erlaubnis legt einen Betrag fest, der von einem intelligenten Vertrag verwendet werden kann. Sie wirkt sich nicht auf Ihr Guthaben aus, erfordert jedoch eine geringe Gebühr für die Ausführung der Genehmigungstransaktion.\n\nEs kann zwar vor jedem Handel auf Anfrage erfolgen, es ist jedoch günstiger, bei zukünftigen Handelsgeschäften einen höheren Betrag im Voraus für uns zu genehmigen.";
 "swap.approve.amount_error.already_approved" = "Sie haben bereits eine Vergütung für diesen Betrag";
 "swap.approving_button" = "Wird bestätigt...";
@@ -386,11 +386,11 @@
 
 // Swap Approving
 
-"swap.approve.subtitle" = "Tauschen";
+"swap.approve.subtitle" = "Swap";
 
 // Swap Confirmation
 
-"swap.confirmation.swap_button" = "Tauschen";
+"swap.confirmation.swap_button" = "Swap";
 "swap.confirmation.impact_too_high" = "Die Differenz zwischen dem Marktpreis und dem erwarteten Abrechnungspreis ist zu hoch.";
 "swap.confirmation.minimum_received" = "Mindestens erhalten";
 "swap.confirmation.maximum_sent" = "Maximale Ausgaben";
@@ -734,7 +734,7 @@
 "transactions.burn" = "Burn";
 "transactions.mint" = "Mint";
 "transactions.approve" = "Genehmigen";
-"transactions.swap" = "Tauschen";
+"transactions.swap" = "Swap";
 "transactions.contract_call" = "Vertragsaufruf";
 "transactions.contract_creation" = "Vertragserstellung";
 "transactions.external_call" = "Externe Anrufe";
@@ -752,7 +752,7 @@
 "transactions.types.all" = "All";
 "transactions.types.incoming" = "Erhalten";
 "transactions.types.outgoing" = "Gesendet";
-"transactions.types.swap" = "Wechsel";
+"transactions.types.swap" = "Swaps";
 "transactions.types.approve" = "Genehmigungen";
 
 "transactions.unknown_transaction.title" = "Unbekannte Transaktion";
@@ -762,7 +762,7 @@
 
 "tx_info.title" = "Transaktionsdaten";
 "tx_info.date" = "Datum";
-"tx_info.title_approval" = "Tausch-Genehmigung";
+"tx_info.title_approval" = "Swap Approval";
 "tx_info.status.pending" = "In Bearbeitung";
 "tx_info.status.completed" = "Abgeschlossen";
 "tx_info.status.failed" = "Fehlgeschlagen";
