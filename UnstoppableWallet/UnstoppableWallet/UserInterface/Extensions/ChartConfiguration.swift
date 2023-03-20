@@ -27,7 +27,7 @@ extension ChartConfiguration {
     }
 
     static var smallPreviewChart: ChartConfiguration {
-        ChartConfiguration().applyColors().applyPreview(height: 25)
+        ChartConfiguration().applyColors().applyPreview(height: 25, curveWidth: 1)
     }
 
     static var previewChart: ChartConfiguration {
@@ -53,10 +53,11 @@ extension ChartConfiguration {
         return self
     }
 
-    @discardableResult private func applyPreview(height: CGFloat) -> Self {
+    @discardableResult private func applyPreview(height: CGFloat, curveWidth: CGFloat = 2) -> Self {
         mainHeight = height
         indicatorHeight = 0
         timelineHeight = 0
+        self.curveWidth = curveWidth
         curvePadding = UIEdgeInsets(top: .margin2, left: 0, bottom: 10, right: 0)
 
         showBorders = false
@@ -88,7 +89,6 @@ extension ChartConfiguration {
 
     @discardableResult private func applyBarsPreview() -> Self {
         curveType = .bars
-        curveWidth = 2
         curvePadding = UIEdgeInsets(top: 2, left: 2, bottom: 4, right: 2)
 
         return self

@@ -85,7 +85,7 @@ class ChartCell: UITableViewCell {
 
         currentSecondaryStackView.axis = .vertical
         currentSecondaryStackView.alignment = .trailing
-        currentSecondaryStackView.spacing = 1
+        currentSecondaryStackView.spacing = .margin4
 
         currentSecondaryStackView.addArrangedSubview(currentSecondaryTitleLabel)
         currentSecondaryTitleLabel.font = .subhead2
@@ -128,7 +128,7 @@ class ChartCell: UITableViewCell {
         let chartInfoValueStackView = UIStackView()
 
         chartInfoTopStackView.addArrangedSubview(chartInfoValueStackView)
-        chartInfoValueStackView.spacing = .margin8
+        chartInfoValueStackView.spacing = .margin4
         chartInfoValueStackView.alignment = .center
 
         chartInfoValueStackView.addArrangedSubview(chartValueLabel)
@@ -266,8 +266,10 @@ class ChartCell: UITableViewCell {
     }
 
     private func syncChart(selected: Bool) {
-        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut]) { [weak self] in
+        UIView.animate(withDuration: 0.3, delay: 0, options: [selected ? .curveEaseOut : .curveEaseIn]) { [weak self] in
             self?.currentValueWrapper.alpha = selected ? 0 : 1
+        }
+        UIView.animate(withDuration: 0.3, delay: 0, options: [selected ? .curveEaseIn : .curveEaseOut]) { [weak self] in
             self?.chartInfoWrapper.alpha = selected ? 1 : 0
         }
     }
