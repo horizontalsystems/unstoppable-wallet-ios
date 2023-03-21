@@ -359,4 +359,16 @@ extension MarketModule {  // ViewModel Items
 
     }
 
+    struct HeaderViewItem {
+        let name: String
+        let description: String?
+        let imageUrl: String
+        let imageMode: ImageMode
+
+        enum ImageMode {
+            case large
+            case small
+        }
+    }
+
 }

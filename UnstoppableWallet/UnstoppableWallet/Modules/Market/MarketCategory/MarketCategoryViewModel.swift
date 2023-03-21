@@ -1,34 +1,23 @@
-import MarketKit
-
 class MarketCategoryViewModel {
     private let service: MarketCategoryService
-    let viewItem: ViewItem
 
     init(service: MarketCategoryService) {
         self.service = service
-
-        viewItem = ViewItem(
-                name: service.name,
-                description: service.categoryDescription,
-                imageUrl: service.imageUrl,
-                imageMode: service.imageMode
-        )
     }
 
 }
 
-extension MarketCategoryViewModel {
+extension MarketCategoryViewModel: IMarketFilteredListViewModel {
 
-    struct ViewItem {
-        let name: String
-        let description: String?
-        let imageUrl: String
-        let imageMode: ImageMode
+    var headerViewItem: MarketModule.HeaderViewItem {
+        let category = service.category
 
-        enum ImageMode {
-            case large
-            case small
-        }
+        return MarketModule.HeaderViewItem(
+                name: category.name,
+                description: category.descriptions[service.currentLanguage] ?? category.descriptions.first?.value,
+                imageUrl: category.imageUrl,
+                imageMode: .large
+        )
     }
 
 }

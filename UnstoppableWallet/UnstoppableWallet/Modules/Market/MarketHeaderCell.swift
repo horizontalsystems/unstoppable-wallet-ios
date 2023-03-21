@@ -1,11 +1,11 @@
 import UIKit
 
-class MarketCategoryHeaderCell: UITableViewCell {
+class MarketHeaderCell: UITableViewCell {
     static let height: CGFloat = 108
 
     private let nameLabel = UILabel()
     private let descriptionLabel = UILabel()
-    private let categoryImageView = UIImageView()
+    private let rightImageView = UIImageView()
 
     private let topPlatformImageHolder = UIView()
     private let topPlatformImageView = UIImageView()
@@ -41,8 +41,8 @@ class MarketCategoryHeaderCell: UITableViewCell {
 
         stackView.addArrangedSubview(textContainer)
 
-        stackView.addArrangedSubview(categoryImageView)
-        categoryImageView.snp.makeConstraints { maker in
+        stackView.addArrangedSubview(rightImageView)
+        rightImageView.snp.makeConstraints { maker in
             maker.width.equalTo(76)
         }
 
@@ -78,14 +78,14 @@ class MarketCategoryHeaderCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func set(viewItem: MarketCategoryViewModel.ViewItem) {
+    func set(viewItem: MarketModule.HeaderViewItem) {
         switch viewItem.imageMode {
         case .large:
-            categoryImageView.setImage(withUrlString: viewItem.imageUrl, placeholder: nil)
+            rightImageView.setImage(withUrlString: viewItem.imageUrl, placeholder: nil)
             topPlatformImageHolder.isHidden = true
         case .small:
             topPlatformImageView.setImage(withUrlString: viewItem.imageUrl, placeholder: nil)
-            categoryImageView.isHidden = true
+            rightImageView.isHidden = true
         }
 
         nameLabel.text = viewItem.name
