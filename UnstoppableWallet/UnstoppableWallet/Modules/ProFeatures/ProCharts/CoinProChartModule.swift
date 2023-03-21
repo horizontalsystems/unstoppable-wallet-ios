@@ -15,9 +15,10 @@ class CoinProChartModule {
         )
 
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
-        let chartViewModel = MetricChartViewModel(service: chartService, chartConfiguration: chartFetcher, factory: factory)
+        let chartViewModel = MetricChartViewModel(service: chartService, factory: factory)
 
         return MetricChartViewController(
+                title: type.title,
                 viewModel: chartViewModel,
                 configuration: type.chartConfiguration
         ).toBottomSheet

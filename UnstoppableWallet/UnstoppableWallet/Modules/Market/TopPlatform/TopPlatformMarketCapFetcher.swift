@@ -15,27 +15,11 @@ class TopPlatformMarketCapFetcher {
 
 }
 
-extension TopPlatformMarketCapFetcher: IMetricChartConfiguration {
-
-    var title: String {
-        topPlatform.blockchain.name
-    }
-
-    var description: String? {
-        "some description"
-    }
-
-    var poweredBy: String? {
-        "HorizontalSystems API"
-    }
+extension TopPlatformMarketCapFetcher: IMetricChartFetcher {
 
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue(currencyKit.baseCurrency)
     }
-
-}
-
-extension TopPlatformMarketCapFetcher: IMetricChartFetcher {
 
     var intervals: [HsTimePeriod] {
         [.day1, .week1, .month1]

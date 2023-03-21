@@ -3,12 +3,8 @@ import SnapKit
 import ThemeKit
 import SectionsTableView
 
-protocol IMarketFilteredListViewModel {
-    var headerViewItem: MarketModule.HeaderViewItem { get }
-}
-
-class MarketFilteredListViewController: MarketListViewController {
-    private let viewModel: IMarketFilteredListViewModel
+class MarketCategoryViewController: MarketListViewController {
+    private let viewModel: MarketCategoryViewModel
     private let multiSortHeaderView: MarketMultiSortHeaderView
 
     override var viewController: UIViewController? { self }
@@ -21,7 +17,7 @@ class MarketFilteredListViewController: MarketListViewController {
     private let chartCell: ChartCell
     private let chartRow: StaticRow
 
-    init(viewModel: IMarketFilteredListViewModel, chartViewModel: MetricChartViewModel, listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
+    init(viewModel: MarketCategoryViewModel, chartViewModel: MetricChartViewModel, listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
         self.viewModel = viewModel
         self.chartViewModel = chartViewModel
         multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel)
@@ -80,7 +76,11 @@ class MarketFilteredListViewController: MarketListViewController {
     }
 
     private func bind(cell: MarketHeaderCell) {
-        cell.set(viewItem: viewModel.headerViewItem)
+        cell.set(
+                title: viewModel.title,
+                description: viewModel.description,
+                imageMode: .remote(imageUrl: viewModel.imageUrl)
+        )
     }
 
 }

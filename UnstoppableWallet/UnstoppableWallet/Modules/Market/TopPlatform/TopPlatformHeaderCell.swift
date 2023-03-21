@@ -1,6 +1,6 @@
 import UIKit
 
-class MarketHeaderCell: UITableViewCell {
+class TopPlatformHeaderCell: UITableViewCell {
     static let height: CGFloat = 108
 
     private let titleLabel = UILabel()
@@ -34,9 +34,10 @@ class MarketHeaderCell: UITableViewCell {
 
         contentView.addSubview(rightImageView)
         rightImageView.snp.makeConstraints { make in
-            make.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin16)
-            make.top.trailing.bottom.equalToSuperview()
-            make.width.equalTo(76)
+            make.leading.equalTo(titleLabel.snp.trailing).offset(CGFloat.margin24)
+            make.trailing.equalToSuperview().inset(CGFloat.margin24)
+            make.centerY.equalToSuperview()
+            make.size.equalTo(CGFloat.iconSize32)
         }
     }
 
@@ -44,25 +45,10 @@ class MarketHeaderCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func set(title: String, description: String?, imageMode: ImageMode) {
+    func set(title: String, description: String, imageUrl: String) {
         titleLabel.text = title
         descriptionLabel.text = description
-
-        switch imageMode {
-        case .local(let image):
-            rightImageView.image = image
-        case .remote(let imageUrl):
-            rightImageView.setImage(withUrlString: imageUrl, placeholder: nil)
-        }
-    }
-
-}
-
-extension MarketHeaderCell {
-
-    enum ImageMode {
-        case local(image: UIImage?)
-        case remote(imageUrl: String)
+        rightImageView.setImage(withUrlString: imageUrl, placeholder: nil)
     }
 
 }

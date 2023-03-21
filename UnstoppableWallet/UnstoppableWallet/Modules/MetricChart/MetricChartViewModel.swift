@@ -9,7 +9,6 @@ import HUD
 
 class MetricChartViewModel {
     private let service: MetricChartService
-    private let chartConfiguration: IMetricChartConfiguration
     private let factory: MetricChartFactory
     private let disposeBag = DisposeBag()
 
@@ -21,13 +20,8 @@ class MetricChartViewModel {
     private let chartInfoRelay = BehaviorRelay<ChartModule.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<Bool>(value: false)
 
-    var title: String { chartConfiguration.title }
-    var description: String? { chartConfiguration.description }
-    var poweredBy: String? { chartConfiguration.poweredBy }
-
-    init(service: MetricChartService, chartConfiguration: IMetricChartConfiguration, factory: MetricChartFactory) {
+    init(service: MetricChartService, factory: MetricChartFactory) {
         self.service = service
-        self.chartConfiguration = chartConfiguration
         self.factory = factory
 
         subscribe(disposeBag, service.intervalObservable) { [weak self] in self?.sync(interval: $0) }
@@ -53,7 +47,7 @@ class MetricChartViewModel {
         case .completed(let itemData):
             loadingRelay.accept(false)
             errorRelay.accept(false)
-            chartInfoRelay.accept(factory.convert(itemData: itemData, interval: service.interval, valueType: chartConfiguration.valueType))
+            chartInfoRelay.accept(factory.convert(itemData: itemData, interval: service.interval, valueType: service.valueType))
         }
     }
 
@@ -123,7 +117,7 @@ extension MetricChartViewModel: IChartViewTouchDelegate {
                 factory.selectedPointViewItem(
                         chartItem: item,
                         firstChartItem: chartInfoRelay.value?.chartData.items.first,
-                        valueType: chartConfiguration.valueType
+                        valueType: service.valueType
                 )
         )
     }

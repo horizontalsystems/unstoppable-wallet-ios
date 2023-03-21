@@ -28,7 +28,7 @@ class MarketTopViewController: MarketListViewController {
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
-        tableView.registerCell(forClass: MarketTopHeaderCell.self)
+        tableView.registerCell(forClass: MarketHeaderCell.self)
     }
 
     @objc private func onTapClose() {
@@ -40,9 +40,16 @@ class MarketTopViewController: MarketListViewController {
             Section(
                     id: "header",
                     rows: [
-                        Row<MarketTopHeaderCell>(
+                        Row<MarketHeaderCell>(
                                 id: "header",
-                                height: MarketTopHeaderCell.height
+                                height: MarketHeaderCell.height,
+                                bind: { cell, _ in
+                                    cell.set(
+                                            title: "market.top.title".localized,
+                                            description: "market.top.description".localized,
+                                            imageMode: .local(image: UIImage(named: "header_top_coins"))
+                                    )
+                                }
                         )
                     ]
             )

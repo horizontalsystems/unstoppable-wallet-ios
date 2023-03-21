@@ -7,17 +7,18 @@ class MarketCategoryViewModel {
 
 }
 
-extension MarketCategoryViewModel: IMarketFilteredListViewModel {
+extension MarketCategoryViewModel {
 
-    var headerViewItem: MarketModule.HeaderViewItem {
-        let category = service.category
+    var title: String {
+        service.category.name
+    }
 
-        return MarketModule.HeaderViewItem(
-                name: category.name,
-                description: category.descriptions[service.currentLanguage] ?? category.descriptions.first?.value,
-                imageUrl: category.imageUrl,
-                imageMode: .large
-        )
+    var description: String? {
+        service.category.descriptions[service.currentLanguage] ?? service.category.descriptions.first?.value
+    }
+
+    var imageUrl: String {
+        service.category.imageUrl
     }
 
 }
