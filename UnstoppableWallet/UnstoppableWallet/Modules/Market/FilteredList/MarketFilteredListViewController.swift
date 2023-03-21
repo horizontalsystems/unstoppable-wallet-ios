@@ -3,8 +3,12 @@ import SnapKit
 import ThemeKit
 import SectionsTableView
 
-class MarketCategoryViewController: MarketListViewController {
-    private let viewModel: MarketCategoryViewModel
+protocol IMarketFilteredListViewModel {
+    var headerViewItem: MarketModule.HeaderViewItem { get }
+}
+
+class MarketFilteredListViewController: MarketListViewController {
+    private let viewModel: IMarketFilteredListViewModel
     private let multiSortHeaderView: MarketMultiSortHeaderView
 
     override var viewController: UIViewController? { self }
@@ -17,7 +21,7 @@ class MarketCategoryViewController: MarketListViewController {
     private let chartCell: ChartCell
     private let chartRow: StaticRow
 
-    init(viewModel: MarketCategoryViewModel, chartViewModel: MetricChartViewModel, listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
+    init(viewModel: IMarketFilteredListViewModel, chartViewModel: MetricChartViewModel, listViewModel: IMarketListViewModel, headerViewModel: MarketMultiSortHeaderViewModel) {
         self.viewModel = viewModel
         self.chartViewModel = chartViewModel
         multiSortHeaderView = MarketMultiSortHeaderView(viewModel: headerViewModel)
@@ -44,7 +48,7 @@ class MarketCategoryViewController: MarketListViewController {
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
-        tableView.registerCell(forClass: MarketCategoryHeaderCell.self)
+        tableView.registerCell(forClass: MarketHeaderCell.self)
 
         chartRow.onReady = { [weak chartCell] in chartCell?.onLoad() }
         chartViewModel.start()
@@ -58,9 +62,9 @@ class MarketCategoryViewController: MarketListViewController {
         var sections = [Section(
                 id: "header",
                 rows: [
-                    Row<MarketCategoryHeaderCell>(
+                    Row<MarketHeaderCell>(
                             id: "header",
-                            height: MarketCategoryHeaderCell.height,
+                            height: MarketHeaderCell.height,
                             bind: { [weak self] cell, _ in
                                 self?.bind(cell: cell)
                             }
@@ -75,8 +79,8 @@ class MarketCategoryViewController: MarketListViewController {
         return sections
     }
 
-    private func bind(cell: MarketCategoryHeaderCell) {
-        cell.set(viewItem: viewModel.viewItem)
+    private func bind(cell: MarketHeaderCell) {
+        cell.set(viewItem: viewModel.headerViewItem)
     }
 
 }
