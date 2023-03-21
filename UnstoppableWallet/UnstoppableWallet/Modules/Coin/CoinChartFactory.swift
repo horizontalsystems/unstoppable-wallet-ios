@@ -135,19 +135,13 @@ class CoinChartFactory {
         let formattedDate = DateHelper.instance.formatFullTime(from: date)
         let formattedValue = ValueFormatter.instance.formatFull(currency: currency, value: rate)
 
-        var diff: Decimal?
-
-        if let firstChartItem, let firstRate = firstChartItem.indicators[.rate] {
-            diff = (rate - firstRate) / firstRate * 100
-        }
-
         let rightSideMode: ChartModule.RightSideMode = .volume(value: chartItem.indicators[.volume].flatMap {
             $0.isZero ? nil : ValueFormatter.instance.formatShort(currency: currency, value: $0)
         })
 
         return ChartModule.SelectedPointViewItem(
                 value: formattedValue,
-                diff: diff,
+                diff: nil,
                 date: formattedDate,
                 rightSideMode: rightSideMode
         )

@@ -44,7 +44,6 @@ protocol IChartViewModel {
     var intervals: [String] { get }
     var intervalsUpdatedWithCurrentIndexDriver: Driver<Int> { get }
     var intervalIndexDriver: Driver<Int> { get }
-    var pointSelectModeEnabledDriver: Driver<Bool> { get }
     var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> { get }
     var loadingDriver: Driver<Bool> { get }
     var chartInfoDriver: Driver<ChartModule.ViewItem?> { get }

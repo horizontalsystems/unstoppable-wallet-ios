@@ -265,17 +265,14 @@ class ChartCell: UITableViewCell {
         }
     }
 
-    private func syncChart(selected: Bool) {
-        UIView.animate(withDuration: 0.3, delay: 0, options: [selected ? .curveEaseOut : .curveEaseIn]) { [weak self] in
-            self?.currentValueWrapper.alpha = selected ? 0 : 1
-        }
-        UIView.animate(withDuration: 0.3, delay: 0, options: [selected ? .curveEaseIn : .curveEaseOut]) { [weak self] in
-            self?.chartInfoWrapper.alpha = selected ? 1 : 0
-        }
-    }
-
     private func syncChart(selectedViewItem: ChartModule.SelectedPointViewItem?) {
         guard let viewItem = selectedViewItem else {
+            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseIn]) { [weak self] in
+                self?.currentValueWrapper.alpha = 1
+            }
+            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut]) { [weak self] in
+                self?.chartInfoWrapper.alpha = 0
+            }
             return
         }
 
@@ -323,6 +320,13 @@ class ChartCell: UITableViewCell {
                 chartSecondaryDiffLabel.isHidden = true
             }
         }
+
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut]) { [weak self] in
+            self?.currentValueWrapper.alpha = 0
+        }
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseIn]) { [weak self] in
+            self?.chartInfoWrapper.alpha = 1
+        }
     }
 
     private func syncChart(typeIndex: Int) {
@@ -354,7 +358,6 @@ class ChartCell: UITableViewCell {
 extension ChartCell {
 
     func onLoad() {
-        subscribe(disposeBag, viewModel.pointSelectModeEnabledDriver) { [weak self] in self?.syncChart(selected: $0) }
         subscribe(disposeBag, viewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
         subscribe(disposeBag, viewModel.intervalIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
         subscribe(disposeBag, viewModel.intervalsUpdatedWithCurrentIndexDriver) { [weak self] in self?.syncIntervals(typeIndex: $0) }
