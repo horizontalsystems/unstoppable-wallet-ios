@@ -122,31 +122,19 @@ extension MetricChartFactory {
 
         let date = Date(timeIntervalSince1970: chartItem.timestamp)
         let formattedDate = DateHelper.instance.formatFullTime(from: date)
-        let formattedValue = format(value: value, valueType: valueType, exactlyValue: true)
-
-        var diff: Decimal?
-
-        if let firstChartItem, let firstValue = firstChartItem.indicators[.rate] {
-            diff = (value - firstValue) / firstValue * 100
-        }
+        let formattedValue = format(value: value, valueType: valueType)
 
         var rightSideMode: ChartModule.RightSideMode = .none
 
         if let dominance = chartItem.indicators[.dominance] {
-            var diff: Decimal?
-
-            if let firstChartItem, let firstDominance = firstChartItem.indicators[.dominance] {
-                diff = (dominance - firstDominance) / firstDominance * 100
-            }
-
-            rightSideMode = .dominance(value: dominance, diff: diff)
+            rightSideMode = .dominance(value: dominance, diff: nil)
         } else if let volume = chartItem.indicators[.volume] {
             rightSideMode = .volume(value: format(value: volume, valueType: valueType))
         }
 
         return ChartModule.SelectedPointViewItem(
                 value: formattedValue,
-                diff: diff,
+                diff: nil,
                 date: formattedDate,
                 rightSideMode: rightSideMode
         )

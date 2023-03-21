@@ -12,7 +12,6 @@ class MetricChartViewModel {
     private let factory: MetricChartFactory
     private let disposeBag = DisposeBag()
 
-    private let pointSelectModeEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let pointSelectedItemRelay = BehaviorRelay<ChartModule.SelectedPointViewItem?>(value: nil)
 
     private let intervalIndexRelay = BehaviorRelay<Int>(value: 0)
@@ -54,10 +53,6 @@ class MetricChartViewModel {
 }
 
 extension MetricChartViewModel: IChartViewModel {
-
-    var pointSelectModeEnabledDriver: Driver<Bool> {
-        pointSelectModeEnabledRelay.asDriver()
-    }
 
     var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> {
         pointSelectedItemRelay.asDriver()
@@ -107,7 +102,6 @@ extension MetricChartViewModel: IChartViewModel {
 extension MetricChartViewModel: IChartViewTouchDelegate {
 
     public func touchDown() {
-        pointSelectModeEnabledRelay.accept(true)
     }
 
     public func select(item: ChartItem) {
@@ -123,7 +117,7 @@ extension MetricChartViewModel: IChartViewTouchDelegate {
     }
 
     public func touchUp() {
-        pointSelectModeEnabledRelay.accept(false)
+        pointSelectedItemRelay.accept(nil)
     }
 
 }

@@ -14,8 +14,6 @@ class CoinChartViewModel {
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.coin-chart-view-model")
 
-    //todo: refactor!
-    private let pointSelectModeEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let pointSelectedItemRelay = BehaviorRelay<ChartModule.SelectedPointViewItem?>(value: nil)
 
     private let intervalsUpdatedWithCurrentIndex = BehaviorRelay<Int>(value: 0)
@@ -75,10 +73,6 @@ class CoinChartViewModel {
 
 extension CoinChartViewModel: IChartViewModel {
 
-    var pointSelectModeEnabledDriver: Driver<Bool> {
-        pointSelectModeEnabledRelay.asDriver()
-    }
-
     var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> {
         pointSelectedItemRelay.asDriver()
     }
@@ -131,7 +125,6 @@ extension CoinChartViewModel: IChartViewModel {
 extension CoinChartViewModel: IChartViewTouchDelegate {
 
     public func touchDown() {
-        pointSelectModeEnabledRelay.accept(true)
     }
 
     public func select(item: ChartItem) {
@@ -147,7 +140,7 @@ extension CoinChartViewModel: IChartViewTouchDelegate {
     }
 
     public func touchUp() {
-        pointSelectModeEnabledRelay.accept(false)
+        pointSelectedItemRelay.accept(nil)
     }
 
 }
