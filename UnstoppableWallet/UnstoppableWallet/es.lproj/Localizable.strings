@@ -539,11 +539,17 @@
 
 "market.advanced_search_results.title" = "Resultados";
 
-"market.global.total_market_cap.title" = "Total Cap";
+"market.global.total_market_cap.title" = "Total Market Cap";
+"market.global.total_market_cap.description" = "The total value of all cryptocurrencies in circulation";
+
 "market.global.volume_24h.title" = "Volumen de 24 horas";
+"market.global.volume_24h.description" = "Total trading volume of all cryptocurrencies in circulation";
+
 "market.global.defi_cap.title" = "DeFi Cap";
+"market.global.defi_cap.description" = "The total value of all cryptocurrencies in the decentralized finance market";
 
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
+"market.global.tvl_in_defi.description" = "Total value of cryptocurrencies blocked in various DeFi smart contracts";
 "market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
 "market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
 
