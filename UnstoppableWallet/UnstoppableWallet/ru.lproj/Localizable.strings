@@ -427,7 +427,7 @@
 "market.category.overview" = "Обзор";
 "market.category.posts" = "Новости";
 "market.category.watchlist" = "Избранное";
-"market.total_market_cap" = "Общая капитализация";
+"market.total_market_cap" = "Total M.Cap";
 "market.24h_volume" = "Объем торгов (24ч)";
 "market.defi_cap" = "Капитализация DeFi";
 "market.defi_tvl" = "TVL в DeFi";
