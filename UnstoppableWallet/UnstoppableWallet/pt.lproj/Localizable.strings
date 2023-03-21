@@ -425,7 +425,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.category.overview" = "Visão geral";
 "market.category.posts" = "Notícias";
 "market.category.watchlist" = "Lista de observação";
-"market.total_market_cap" = "Valor total de mercado";
+"market.total_market_cap" = "Total M.Cap";
 "market.24h_volume" = "Volume em 24h";
 "market.defi_cap" = "Mercado de DeFi";
 "market.defi_tvl" = "TVL no DeFi";
