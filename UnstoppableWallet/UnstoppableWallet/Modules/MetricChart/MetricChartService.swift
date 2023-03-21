@@ -64,6 +64,10 @@ class MetricChartService {
 
 extension MetricChartService {
 
+    var valueType: MetricChartModule.ValueType {
+        chartFetcher.valueType
+    }
+
     var intervals: [HsTimePeriod] { chartFetcher.intervals }
 
     var intervalObservable: Observable<HsTimePeriod> {

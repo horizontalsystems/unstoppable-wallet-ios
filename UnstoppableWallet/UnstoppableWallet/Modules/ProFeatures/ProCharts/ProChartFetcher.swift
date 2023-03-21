@@ -19,10 +19,7 @@ class ProChartFetcher {
 
 }
 
-extension ProChartFetcher: IMetricChartConfiguration {
-    var title: String { type.title }
-    var description: String? { nil }
-    var poweredBy: String? { nil }
+extension ProChartFetcher: IMetricChartFetcher {
 
     var valueType: MetricChartModule.ValueType {
         switch type {
@@ -30,10 +27,6 @@ extension ProChartFetcher: IMetricChartConfiguration {
         default: return .compactCurrencyValue(currencyKit.baseCurrency)
         }
     }
-
-}
-
-extension ProChartFetcher: IMetricChartFetcher {
 
     func fetchSingle(interval: HsTimePeriod) -> RxSwift.Single<MetricChartModule.ItemData> {
         switch type {

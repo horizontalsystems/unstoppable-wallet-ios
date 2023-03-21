@@ -17,18 +17,11 @@ class MarketCategoryMarketCapFetcher {
 
 }
 
-extension MarketCategoryMarketCapFetcher: IMetricChartConfiguration {
-    var title: String { category }
-    var description: String? { nil }
-    var poweredBy: String? { "HorizontalSystems API" }
+extension MarketCategoryMarketCapFetcher: IMetricChartFetcher {
 
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue(currencyKit.baseCurrency)
     }
-
-}
-
-extension MarketCategoryMarketCapFetcher: IMetricChartFetcher {
 
     var intervals: [HsTimePeriod] {
         [.day1, .week1, .month1]

@@ -17,18 +17,11 @@ class MarketGlobalFetcher {
 
 }
 
-extension MarketGlobalFetcher: IMetricChartConfiguration {
-    var title: String { metricsType.title }
-    var description: String? { nil }
-    var poweredBy: String? { nil }
+extension MarketGlobalFetcher: IMetricChartFetcher {
 
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue(currencyKit.baseCurrency)
     }
-
-}
-
-extension MarketGlobalFetcher: IMetricChartFetcher {
 
     func fetchSingle(interval: HsTimePeriod) -> RxSwift.Single<MetricChartModule.ItemData> {
         marketKit

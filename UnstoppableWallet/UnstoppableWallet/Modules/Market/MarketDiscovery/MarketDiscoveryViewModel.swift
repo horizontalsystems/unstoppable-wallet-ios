@@ -81,7 +81,7 @@ class MarketDiscoveryViewModel {
         case .topCoins:
             return DiscoveryViewItem(
                     type: .topCoins,
-                    imageType: .local(name: "Categories - Top Coins"),
+                    imageType: .local(name: "header_top_coins"),
                     name: "market_discovery.top_coins".localized,
                     marketCap: nil,
                     diff: nil,

@@ -7,7 +7,6 @@ import ComponentKit
 import RxSwift
 
 class MarketGlobalTvlMetricViewController: MarketListViewController {
-    private let chartViewModel: MetricChartViewModel
     private let disposeBag = DisposeBag()
 
     private let headerViewModel: MarketTvlSortHeaderViewModel
@@ -18,17 +17,17 @@ class MarketGlobalTvlMetricViewController: MarketListViewController {
     override var viewController: UIViewController? { self }
     override var refreshEnabled: Bool { false }
 
-    /* Chart section */
+    private let chartViewModel: MetricChartViewModel
     private let chartCell: ChartCell
     private let chartRow: StaticRow
 
-    init(listViewModel: IMarketListViewModel, headerViewModel: MarketTvlSortHeaderViewModel, chartViewModel: MetricChartViewModel, configuration: ChartConfiguration) {
+    init(listViewModel: IMarketListViewModel, headerViewModel: MarketTvlSortHeaderViewModel, chartViewModel: MetricChartViewModel) {
         self.chartViewModel = chartViewModel
         self.headerViewModel = headerViewModel
 
         sortHeaderView = MarketTvlSortHeaderView(viewModel: headerViewModel)
 
-        chartCell = ChartCell(viewModel: chartViewModel, configuration: configuration)
+        chartCell = ChartCell(viewModel: chartViewModel, configuration: .baseChart)
         chartRow = StaticRow(
                 cell: chartCell,
                 id: "chartView",
@@ -47,9 +46,10 @@ class MarketGlobalTvlMetricViewController: MarketListViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = chartViewModel.title.localized
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
+
+        tableView.registerCell(forClass: MarketHeaderCell.self)
 
         chartRow.onReady = { [weak chartCell] in chartCell?.onLoad() }
 
@@ -68,10 +68,32 @@ class MarketGlobalTvlMetricViewController: MarketListViewController {
 
         return [
             Section(
+                    id: "header",
+                    rows: [
+                        Row<MarketHeaderCell>(
+                                id: "header",
+                                height: MarketHeaderCell.height,
+                                bind: { [weak self] cell, _ in
+                                    self?.bind(cell: cell)
+                                }
+                        )
+                    ]
+            ),
+            Section(
                     id: "chart",
                     rows: [chartRow]
             )
         ]
+    }
+
+    private func bind(cell: MarketHeaderCell) {
+        let metricsType: MarketGlobalModule.MetricsType = .tvlInDefi
+
+        cell.set(
+                title: metricsType.title,
+                description: metricsType.description,
+                imageMode: .local(image: metricsType.image)
+        )
     }
 
 }

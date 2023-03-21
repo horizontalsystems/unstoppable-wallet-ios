@@ -5,14 +5,8 @@ import LanguageKit
 import MarketKit
 import CurrencyKit
 
-protocol IMetricChartConfiguration {
-    var title: String { get }
-    var description: String? { get }
-    var poweredBy: String? { get }
-    var valueType: MetricChartModule.ValueType { get }
-}
-
 protocol IMetricChartFetcher {
+    var valueType: MetricChartModule.ValueType { get }
     var intervals: [HsTimePeriod] { get }
     var needUpdateObservable: Observable<()> { get }
     func fetchSingle(interval: HsTimePeriod) -> Single<MetricChartModule.ItemData>

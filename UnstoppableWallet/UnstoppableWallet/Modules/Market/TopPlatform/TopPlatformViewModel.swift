@@ -7,17 +7,18 @@ class TopPlatformViewModel {
 
 }
 
-extension TopPlatformViewModel: IMarketFilteredListViewModel {
+extension TopPlatformViewModel {
 
-    var headerViewItem: MarketModule.HeaderViewItem {
-        let topPlatform = service.topPlatform
+    var title: String {
+        "top_platform.title".localized(service.topPlatform.blockchain.name)
+    }
 
-        return MarketModule.HeaderViewItem(
-                name: "top_platform.title".localized(topPlatform.blockchain.name),
-                description: "top_platform.description".localized(topPlatform.blockchain.name),
-                imageUrl: topPlatform.blockchain.type.imageUrl,
-                imageMode: .small
-        )
+    var description: String {
+        "top_platform.description".localized(service.topPlatform.blockchain.name)
+    }
+
+    var imageUrl: String {
+        service.topPlatform.blockchain.type.imageUrl
     }
 
 }

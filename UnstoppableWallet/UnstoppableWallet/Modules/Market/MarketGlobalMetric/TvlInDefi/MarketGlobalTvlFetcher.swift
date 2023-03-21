@@ -27,18 +27,11 @@ class MarketGlobalTvlFetcher {
 
 }
 
-extension MarketGlobalTvlFetcher: IMetricChartConfiguration {
-    var title: String { MarketGlobalModule.MetricsType.tvlInDefi.title }
-    var description: String? { nil }
-    var poweredBy: String? { nil }
+extension MarketGlobalTvlFetcher: IMetricChartFetcher {
 
     var valueType: MetricChartModule.ValueType {
         .compactCurrencyValue(currencyKit.baseCurrency)
     }
-
-}
-
-extension MarketGlobalTvlFetcher: IMetricChartFetcher {
 
     var needUpdateObservable: Observable<()> {
         needUpdateRelay.asObservable()

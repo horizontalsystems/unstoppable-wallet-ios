@@ -30,7 +30,7 @@ class MarketTopPlatformsViewController: MarketListViewController {
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
-        tableView.registerCell(forClass: MarketTopHeaderCell.self)
+        tableView.registerCell(forClass: MarketHeaderCell.self)
     }
 
     @objc private func onTapClose() {
@@ -38,16 +38,19 @@ class MarketTopPlatformsViewController: MarketListViewController {
     }
 
     override func topSections(loaded: Bool) -> [SectionProtocol] {
-        let viewModel = viewModel
-        return [
+        [
             Section(
                     id: "header",
                     rows: [
-                        Row<MarketTopHeaderCell>(
+                        Row<MarketHeaderCell>(
                                 id: "header",
-                                height: MarketTopHeaderCell.height,
+                                height: MarketHeaderCell.height,
                                 bind: { cell, _ in
-                                    cell.set(title: viewModel.title, description: viewModel.description, imageName: viewModel.imageName)
+                                    cell.set(
+                                            title: "top_platforms.title".localized,
+                                            description: "top_platforms.description".localized,
+                                            imageMode: .local(image: UIImage(named: "header_top_platforms"))
+                                    )
                                 }
                         )
                     ]
