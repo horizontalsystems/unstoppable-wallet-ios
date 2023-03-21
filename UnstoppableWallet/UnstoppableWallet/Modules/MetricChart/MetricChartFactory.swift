@@ -66,7 +66,7 @@ class MetricChartFactory {
 
 extension MetricChartFactory {
 
-    func convert(itemData: MetricChartModule.ItemData, interval: HsTimePeriod, valueType: MetricChartModule.ValueType) -> ChartModule.ViewItem {
+    func convert(itemData: MetricChartModule.ItemData, overriddenValue: MetricChartModule.OverriddenValue?, valueType: MetricChartModule.ValueType) -> ChartModule.ViewItem {
         // build data with rates
         let data = chartData(items: itemData.items)
 
@@ -84,28 +84,29 @@ extension MetricChartFactory {
         // determine chart growing state. when chart not full - it's nil
         var chartTrend: MovementTrend = .neutral
 
-        var valueDiff: Decimal?
         var value: String?
+        var valueDiff: Decimal?
         var rightSideMode: ChartModule.RightSideMode = .none
 
         switch itemData.type {
         case .regular:
             if let first = data.items.first(where: { ($0.indicators[.rate] ?? 0) != 0 }), let last = data.items.last, let firstValue = first.indicators[.rate], let lastValue = last.indicators[.rate] {
-                value = format(value: lastValue, valueType: valueType)
+                value = overriddenValue?.value ?? format(value: lastValue, valueType: valueType)
                 chartTrend = (lastValue - firstValue).isSignMinus ? .down : .up
-                valueDiff = (lastValue - firstValue) / firstValue * 100
+                valueDiff = overriddenValue == nil ? (lastValue - firstValue) / firstValue * 100 : nil
             }
 
             if let first = data.items.first?.indicators[.dominance], let last = data.items.last?.indicators[.dominance] {
                 rightSideMode = .dominance(value: last, diff: (last - first) / first * 100)
             }
         case .aggregated(let aggregatedValue):
-            value = format(value: aggregatedValue, valueType: valueType)
+            value = overriddenValue?.value ?? format(value: aggregatedValue, valueType: valueType)
             chartTrend = .ignore
         }
 
         return ChartModule.ViewItem(
                 value: value,
+                valueDescription: overriddenValue?.description,
                 rightSideMode: rightSideMode,
                 chartData: data,
                 chartTrend: chartTrend,
@@ -134,7 +135,6 @@ extension MetricChartFactory {
 
         return ChartModule.SelectedPointViewItem(
                 value: formattedValue,
-                diff: nil,
                 date: formattedDate,
                 rightSideMode: rightSideMode
         )

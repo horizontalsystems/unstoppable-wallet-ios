@@ -243,8 +243,8 @@ class CoinAnalyticsViewController: ThemeViewController {
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func openProDataChart(type: CoinProChartModule.ProChartType) {
-        let viewController = CoinProChartModule.viewController(coin: viewModel.coin, type: type)
+    private func openProDataChart(type: CoinProChartModule.ProChartType, overriddenValue: MetricChartModule.OverriddenValue? = nil) {
+        let viewController = CoinProChartModule.viewController(coin: viewModel.coin, type: type, overriddenValue: overriddenValue)
         parentNavigationController?.present(viewController, animated: true)
     }
 
@@ -488,6 +488,9 @@ extension CoinAnalyticsViewController: SectionsDataSource {
     }
 
     private func addressesSection(viewItem: CoinAnalyticsViewModel.RankCardViewItem) -> SectionProtocol {
+        let chartValue = viewItem.chart.value { $0.value }
+        let overriddenValue = chartValue.map { MetricChartModule.OverriddenValue(value: $0, description: "coin_analytics.last_30d".localized) }
+
         var rows: [RowProtocol] = [
             chartRow(
                     id: "addresses",
@@ -500,7 +503,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                         self?.openAddressesInfo()
                     },
                     action: { [weak self] in
-                        self?.openProDataChart(type: .activeAddresses)
+                        self?.openProDataChart(type: .activeAddresses, overriddenValue: overriddenValue)
                     }
             )
         ]

@@ -8,6 +8,7 @@ struct ChartModule {
 
     struct ViewItem {
         let value: String?
+        let valueDescription: String?
         let rightSideMode: RightSideMode
 
         let chartData: ChartData
@@ -23,6 +24,13 @@ struct ChartModule {
         let diff: Decimal?
         let date: String
         let rightSideMode: RightSideMode
+
+        init(value: String?, diff: Decimal? = nil, date: String, rightSideMode: RightSideMode) {
+            self.value = value
+            self.diff = diff
+            self.date = date
+            self.rightSideMode = rightSideMode
+        }
     }
 
     enum RightSideMode {

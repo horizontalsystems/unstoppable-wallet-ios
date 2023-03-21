@@ -117,6 +117,7 @@ class CoinChartFactory {
 
         return ChartModule.ViewItem(
                 value: item.rate.flatMap { ValueFormatter.instance.formatFull(currencyValue: CurrencyValue(currency: currency, value: $0)) },
+                valueDescription: nil,
                 rightSideMode: .none,
                 chartData: data,
                 chartTrend: chartTrend,
@@ -141,7 +142,6 @@ class CoinChartFactory {
 
         return ChartModule.SelectedPointViewItem(
                 value: formattedValue,
-                diff: nil,
                 date: formattedDate,
                 rightSideMode: rightSideMode
         )

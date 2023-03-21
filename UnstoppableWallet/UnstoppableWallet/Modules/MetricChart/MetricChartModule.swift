@@ -57,4 +57,9 @@ class MetricChartModule {
 
     }
 
+    struct OverriddenValue {
+        let value: String
+        let description: String?
+    }
+
 }
