@@ -14,6 +14,7 @@ class ChartCell: UITableViewCell {
     private let currentValueWrapper = UIView()
     private let currentValueStackView = UIStackView()
     private let currentValueLabel = UILabel()
+    private let currentValueDescriptionLabel = DiffLabel()
     private let currentDiffLabel = DiffLabel()
     private let currentSecondaryTitleLabel = UILabel()
     private let currentSecondaryValueLabel = UILabel()
@@ -70,6 +71,10 @@ class ChartCell: UITableViewCell {
         currentValueStackView.addArrangedSubview(currentValueLabel)
         currentValueLabel.font = .title3
         currentValueLabel.textColor = .themeLeah
+
+        currentValueStackView.addArrangedSubview(currentValueDescriptionLabel)
+        currentValueDescriptionLabel.font = .subhead1
+        currentValueDescriptionLabel.textColor = .themeGray
 
         currentValueStackView.addArrangedSubview(currentDiffLabel)
         currentDiffLabel.font = .subhead1
@@ -218,6 +223,13 @@ class ChartCell: UITableViewCell {
                 currentValueLabel.text = value
             } else {
                 currentValueLabel.isHidden = true
+            }
+
+            if let valueDescription = viewItem.valueDescription {
+                currentValueDescriptionLabel.isHidden = false
+                currentValueDescriptionLabel.text = valueDescription
+            } else {
+                currentValueDescriptionLabel.isHidden = true
             }
 
             if let value = viewItem.chartDiff {

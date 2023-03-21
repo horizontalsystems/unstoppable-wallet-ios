@@ -400,4 +400,11 @@ enum Previewable<T> {
         }
     }
 
+    func value<P>(mapper: (T) -> P) -> P? {
+        switch self {
+        case .preview: return nil
+        case .regular(let value): return mapper(value)
+        }
+    }
+
 }

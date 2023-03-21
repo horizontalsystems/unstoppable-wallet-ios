@@ -10,6 +10,7 @@ import HUD
 class MetricChartViewModel {
     private let service: MetricChartService
     private let factory: MetricChartFactory
+    private let overriddenValue: MetricChartModule.OverriddenValue?
     private let disposeBag = DisposeBag()
 
     private let pointSelectedItemRelay = BehaviorRelay<ChartModule.SelectedPointViewItem?>(value: nil)
@@ -19,9 +20,10 @@ class MetricChartViewModel {
     private let chartInfoRelay = BehaviorRelay<ChartModule.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<Bool>(value: false)
 
-    init(service: MetricChartService, factory: MetricChartFactory) {
+    init(service: MetricChartService, factory: MetricChartFactory, overriddenValue: MetricChartModule.OverriddenValue? = nil) {
         self.service = service
         self.factory = factory
+        self.overriddenValue = overriddenValue
 
         subscribe(disposeBag, service.intervalObservable) { [weak self] in self?.sync(interval: $0) }
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
@@ -46,7 +48,7 @@ class MetricChartViewModel {
         case .completed(let itemData):
             loadingRelay.accept(false)
             errorRelay.accept(false)
-            chartInfoRelay.accept(factory.convert(itemData: itemData, interval: service.interval, valueType: service.valueType))
+            chartInfoRelay.accept(factory.convert(itemData: itemData, overriddenValue: overriddenValue, valueType: service.valueType))
         }
     }
 
