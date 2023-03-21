@@ -423,7 +423,7 @@
 "market.category.overview" = "Synthèse";
 "market.category.posts" = "Infos";
 "market.category.watchlist" = "Liste de suivi";
-"market.total_market_cap" = "Cap totale";
+"market.total_market_cap" = "Total M.Cap";
 "market.24h_volume" = "Volume des dernières 24h";
 "market.defi_cap" = "Cap DeFi";
 "market.defi_tvl" = "TVL en DeFi";
