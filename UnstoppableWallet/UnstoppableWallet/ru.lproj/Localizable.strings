@@ -287,7 +287,7 @@
 
 "send.confirmation.you_send" = "Вы Отправляете";
 "send.confirmation.to" = "Кому";
-"send.confirmation.contact_name" = "Contact Name";
+"send.confirmation.contact_name" = "Имя контакта";
 "send.confirmation.domain" = "Домен";
 "send.confirmation.address" = "Адрес";
 "send.confirmation.account" = "Account";
@@ -427,7 +427,7 @@
 "market.category.overview" = "Обзор";
 "market.category.posts" = "Новости";
 "market.category.watchlist" = "Избранное";
-"market.total_market_cap" = "Total M.Cap";
+"market.total_market_cap" = "Общая капитализация";
 "market.24h_volume" = "Объем торгов (24ч)";
 "market.defi_cap" = "Капитализация DeFi";
 "market.defi_tvl" = "TVL в DeFi";
@@ -543,7 +543,7 @@
 
 "market.advanced_search_results.title" = "Результаты";
 
-"market.global.total_market_cap.title" = "Total Market Cap";
+"market.global.total_market_cap.title" = "Полная Рын. Кап.";
 "market.global.total_market_cap.description" = "Total market value of all cryptocurrencies";
 
 "market.global.volume_24h.title" = "Объем торгов (24ч)";
@@ -554,44 +554,44 @@
 
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
 "market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
-"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
-"market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.global.tvl_in_defi.multi_chain" = "Мультичейн";
+"market.global.tvl_in_defi.filter_by_chain" = "Сортировать по блокчейну";
 
 // Coin Page
 
 "coin_page.overview" = "Цена";
-"coin_page.analytics" = "Analytics";
+"coin_page.analytics" = "Аналитика";
 "coin_page.markets" = "Рынки";
 "coin_page.tweets" = "Твиты";
 
 // Coin Page -> Overview
 
 "coin_overview.market_cap" = "Рын. капитализация";
-"coin_overview.circulating_supply" = "In Circulation";
-"coin_overview.total_supply" = "Total Supply";
+"coin_overview.circulating_supply" = "В Обороте";
+"coin_overview.total_supply" = "Макс.выпуск";
 "coin_overview.diluted_market_cap" = "Разводненная рын.кап.";
-"coin_overview.genesis_date" = "Inception Date";
+"coin_overview.genesis_date" = "Дата старта";
 "coin_overview.trading_volume" = "Объем торговли";
 
 "coin_overview.roi.hour24" = "1 День";
 "coin_overview.roi.day7" = "1 Неделя";
 "coin_overview.roi.day14" = "2 Недели";
 "coin_overview.roi.day30" = "1 Месяц";
-"coin_overview.roi.day200" = "6 Month";
+"coin_overview.roi.day200" = "6 месяцев";
 "coin_overview.roi.year1" = "1 Год";
 
 "coin_overview.category" = "Категория";
 
 "coin_overview.blockchains" = "Блокчейны";
 "coin_overview.bips" = "BIPы";
-"coin_overview.coin_types" = "Coin Types";
+"coin_overview.coin_types" = "Типы токенов";
 "coin_overview.show_more" = "Показать Ещё";
-"coin_overview.show_less" = "Show Less";
-"coin_overview.links" = "Links";
+"coin_overview.show_less" = "Свернуть";
+"coin_overview.links" = "Ссылки";
 
 "coin_overview.guide" = "Guide";
 "coin_overview.website" = "Веб-сайт";
-"coin_overview.whitepaper" = "Whitepaper";
+"coin_overview.whitepaper" = "Тех. описание (whitepaper)";
 
 // Coin Page -> Analytics
 
@@ -738,12 +738,12 @@
 "transactions.completed" = "Завершено";
 "transactions.failed" = "Не удалось";
 
-"transactions.receive" = "Получить";
-"transactions.send" = "Отправить";
+"transactions.receive" = "Перевод";
+"transactions.send" = "Перевод";
 "transactions.burn" = "Сжечь";
 "transactions.mint" = "Минт";
 "transactions.approve" = "Разрешить";
-"transactions.swap" = "Обменять";
+"transactions.swap" = "Обмен";
 "transactions.contract_call" = "Вызов Смарт Контракта";
 "transactions.contract_creation" = "Создание Контракта";
 "transactions.external_call" = "Внешний Вызов";
@@ -779,7 +779,7 @@
 "tx_info.transaction_id" = "ID Транзакции";
 "tx_info.to_hash" = "Кому";
 "tx_info.spender" = "Покупатель";
-"tx_info.contact_name" = "Contact Name";
+"tx_info.contact_name" = "Имя контакта";
 "tx_info.button_explorer" = "Посмотреть на %@";
 "tx_info.rate" = "Исторический курс";
 "tx_info.options.speed_up" = "Ускорить";
@@ -1031,14 +1031,14 @@
 
 "chart.market_cap" = "Рын. капитализация";
 "chart.volume" = "Объём (за 24 ч)";
-"chart.circulation" = "In Circulation";
+"chart.circulation" = "В Обороте";
 "chart.selected.volume" = "Volume";
 
 "chart.market.header" = "Рынок";
 "chart.market.market_cap" = "Рын. капитализация";
 "chart.market.volume" = "Объём (за 24 ч)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.circulation" = "В Обороте";
+"chart.market.total_supply" = "Макс.выпуск";
 
 "chart.performance.week_changes" = "Изменения (за 1Н)";
 "chart.performance.month_changes" = "Изменения (за 1М)";
@@ -1373,7 +1373,7 @@
 "nft_asset.details.token_id" = "ID токена";
 "nft_asset.details.token_standard" = "Стандарт Токена";
 "nft_asset.details.blockchain" = "Блокчейн";
-"nft_asset.links" = "Links";
+"nft_asset.links" = "Ссылки";
 "nft_asset.links.website" = "Веб-сайт";
 "nft_asset.options.save_to_photos" = "Сохранить в Фото";
 "nft_asset.options.set_as_watch_face" = "Установить как Watch Face";
@@ -1387,7 +1387,7 @@
 
 "nft_collection.overview.description" = "Описание";
 "nft_collection.overview.contracts" = "Контракты";
-"nft_collection.overview.links" = "Links";
+"nft_collection.overview.links" = "Ссылки";
 "nft_collection.overview.links.website" = "Веб-сайт";
 
 
@@ -1398,7 +1398,7 @@
 "nft_collection.overview.floor_price" = "Минимальная цена";
 "nft_collection.overview.all_time_average" = "Средняя оценка за все время";
 "nft_collection.overview.royalty" = "Вознаграждение";
-"nft_collection.overview.inception_date" = "Inception Date";
+"nft_collection.overview.inception_date" = "Дата старта";
 
 "nft.activity.contracts" = "Контракты";
 "nft.activity.empty_list" = "Нет активности";
