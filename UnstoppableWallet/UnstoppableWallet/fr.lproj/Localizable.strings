@@ -274,7 +274,7 @@
 "send.hodler_error.unsupported_address" = "Time lock ne fonctionne qu'avec les adresses P2PKH (commençant par 1)";
 "send.fee_info.title" = "Taux de frais";
 "send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe Unstoppable wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
-"send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
+"send.transaction_inputs_outputs_info.title" = "Entrées / Sorties de transaction";
 "send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
@@ -550,44 +550,44 @@
 
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
-"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
-"market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.global.tvl_in_defi.multi_chain" = "Multi-chaîne";
+"market.global.tvl_in_defi.filter_by_chain" = "Filtrer par chaîne";
 
 // Coin Page
 
 "coin_page.overview" = "Prix";
-"coin_page.analytics" = "Analytics";
+"coin_page.analytics" = "Analyses";
 "coin_page.markets" = "Marchés";
 "coin_page.tweets" = "Tweets";
 
 // Coin Page -> Overview
 
 "coin_overview.market_cap" = "Cap. marché";
-"coin_overview.circulating_supply" = "In Circulation";
-"coin_overview.total_supply" = "Total Supply";
+"coin_overview.circulating_supply" = "En circulation";
+"coin_overview.total_supply" = "Offre totale";
 "coin_overview.diluted_market_cap" = "Cap. marché diluée";
-"coin_overview.genesis_date" = "Inception Date";
+"coin_overview.genesis_date" = "Date de création";
 "coin_overview.trading_volume" = "Volume de trading";
 
 "coin_overview.roi.hour24" = "1 Jour";
 "coin_overview.roi.day7" = "1 Semaine";
 "coin_overview.roi.day14" = "2 Semaines";
 "coin_overview.roi.day30" = "1 Mois";
-"coin_overview.roi.day200" = "6 Month";
+"coin_overview.roi.day200" = "6 Mois";
 "coin_overview.roi.year1" = "1 An";
 
-"coin_overview.category" = "Category";
+"coin_overview.category" = "Catégorie";
 
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
-"coin_overview.coin_types" = "Coin Types";
+"coin_overview.coin_types" = "Types de pièces";
 "coin_overview.show_more" = "Afficher plus";
 "coin_overview.show_less" = "Show Less";
-"coin_overview.links" = "Links";
+"coin_overview.links" = "Liens";
 
-"coin_overview.guide" = "Guide";
-"coin_overview.website" = "Website";
-"coin_overview.whitepaper" = "Whitepaper";
+"coin_overview.guide" = "Tutoriel";
+"coin_overview.website" = "Site Web";
+"coin_overview.whitepaper" = "Livre blanc";
 
 // Coin Page -> Analytics
 
@@ -595,14 +595,14 @@
 "coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
 
 "coin_analytics.cex_volume" = "Volume CEX";
-"coin_analytics.cex_volume_rank" = "CEX Volume Rank";
+"coin_analytics.cex_volume_rank" = "Rang de volume CEX";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
 "coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
 
 "coin_analytics.dex_volume" = "Volume DEX";
-"coin_analytics.dex_volume_rank" = "DEX Volume Rank";
+"coin_analytics.dex_volume_rank" = "Rang de volume DEX";
 "coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over a 30-day period.";
 "coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
 "coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
@@ -912,7 +912,7 @@
 "settings.about_app.app_name" = "Portefeuille Unstoppable";
 "settings.about_app.description" = "Le portefeuille Unstoppable est conçu pour ceux qui cherchent à investir et à stocker des cryptomonnaies de manière privée et indépendante.\n\nC'est un portefeuille non-dépositaire, peer-to-peer où seul l'utilisateur a le contrôle sur les fonds. Il ne collecte aucune donnée et garde l'utilisateur indépendant en ne verrouillant pas les fonds de l'utilisateur sur une application spécifique de portefeuille.\n\nLe portefeuille Unstoppable est entièrement open-source et tout le monde peut confirmer que l'application fonctionne exactement comme il le prétend.";
 "settings.about_app.whats_new" = "Nouveautés";
-"settings.about_app.website" = "Website";
+"settings.about_app.website" = "Site Web";
 "settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "Evaluez-nous";
 "settings.about_app.tell_friends" = "Partager avec ami";
@@ -958,8 +958,8 @@
 "contacts.list.not_found_search" = "Aucun résultat";
 "contacts.add_new_contact" = "Add New Contact";
 "contacts.update_contact.already_has_address" = "This contact already has an address on this blockchain. Do you want to replace the address %@ with the %@?";
-"contacts.update_contact.replace" = "Replace";
-"contacts.list.addresses_count" = "Addresses: %d";
+"contacts.update_contact.replace" = "Remplacer";
+"contacts.list.addresses_count" = "Adresses : %d";
 "contacts.contact.new.title" = "New Contact";
 "contacts.contact.name.placeholder" = "Nom";
 "contacts.contact.update.error.name_already_exist" = "Name Already Exist";
@@ -970,8 +970,8 @@
 "contacts.contact.address.delete_address" = "Delete Address";
 
 "contacts.add_address.title" = "Add Address";
-"contacts.add_address.create_new" = "Create New Contact";
-"contacts.add_address.add_to_contact" = "Add to Existing Contact";
+"contacts.add_address.create_new" = "Créer un nouveau contact";
+"contacts.add_address.add_to_contact" = "Ajouter au contact existant";
 "contacts.add_address.exist_address" = "This address is already used for %@";
 
 "contacts.contact.delete_alert.title" = "Delete Contact";
@@ -1028,14 +1028,14 @@
 
 "chart.market_cap" = "Cap. marché";
 "chart.volume" = "Volume(24h)";
-"chart.circulation" = "In Circulation";
+"chart.circulation" = "En circulation";
 "chart.selected.volume" = "Volume";
 
 "chart.market.header" = "Marché";
 "chart.market.market_cap" = "Cap. marché";
 "chart.market.volume" = "Volume(24h)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.circulation" = "En circulation";
+"chart.market.total_supply" = "Offre totale";
 
 "chart.performance.week_changes" = "Changes (1S)";
 "chart.performance.month_changes" = "Changements (1 m)";
@@ -1364,8 +1364,8 @@
 "nft_asset.details.token_id" = "Identifiant du token";
 "nft_asset.details.token_standard" = "Standard du token";
 "nft_asset.details.blockchain" = "Blockchain";
-"nft_asset.links" = "Links";
-"nft_asset.links.website" = "Website";
+"nft_asset.links" = "Liens";
+"nft_asset.links.website" = "Site Web";
 "nft_asset.options.save_to_photos" = "Enregistrer dans Photos";
 "nft_asset.options.set_as_watch_face" = "Créer un cadran";
 "nft_asset.save_to_photos.failed" = "Échec de la sauvegarde de l'image NFT";
@@ -1378,8 +1378,8 @@
 
 "nft_collection.overview.description" = "Libellé";
 "nft_collection.overview.contracts" = "Contrats";
-"nft_collection.overview.links" = "Links";
-"nft_collection.overview.links.website" = "Website";
+"nft_collection.overview.links" = "Liens";
+"nft_collection.overview.links.website" = "Site Web";
 
 
 "nft_collection.overview.owners" = "Propriétaires";
@@ -1389,7 +1389,7 @@
 "nft_collection.overview.floor_price" = "Prix plancher";
 "nft_collection.overview.all_time_average" = "Moyenne du temps";
 "nft_collection.overview.royalty" = "Redevance";
-"nft_collection.overview.inception_date" = "Inception Date";
+"nft_collection.overview.inception_date" = "Date de création";
 
 "nft.activity.contracts" = "Contrats";
 "nft.activity.empty_list" = "Aucune activité pour l'instant";
