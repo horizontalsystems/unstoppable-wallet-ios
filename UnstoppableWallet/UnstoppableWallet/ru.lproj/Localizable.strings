@@ -769,7 +769,7 @@
 
 // Transaction Info
 
-"tx_info.title" = "Детали Транзакции";
+"tx_info.title" = "Детали транзакции";
 "tx_info.date" = "Дата";
 "tx_info.title_approval" = "Разрешение Обмена";
 "tx_info.status.pending" = "В обработке";
