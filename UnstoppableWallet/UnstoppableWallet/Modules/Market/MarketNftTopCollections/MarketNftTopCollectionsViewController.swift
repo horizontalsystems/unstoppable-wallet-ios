@@ -49,7 +49,7 @@ class MarketNftTopCollectionsViewController: MarketListViewController {
                                     cell.set(
                                             title: "top_nft_collections.title".localized,
                                             description: "top_nft_collections.description".localized,
-                                            imageMode: .local(image: UIImage(named: "header_top_collections"))
+                                            imageMode: .remote(imageUrl: "nft".headerImageUrl)
                                     )
                                 }
                         )

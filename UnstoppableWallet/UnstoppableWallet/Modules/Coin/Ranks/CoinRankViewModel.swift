@@ -14,10 +14,12 @@ class CoinRankViewModel {
     private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
+    private let sortDirectionRelay: BehaviorRelay<Bool>
     private let scrollToTopRelay = PublishRelay<()>()
 
     init(service: CoinRankService) {
         self.service = service
+        sortDirectionRelay = BehaviorRelay(value: service.sortDirectionAscending)
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
 
@@ -45,17 +47,17 @@ class CoinRankViewModel {
         }
     }
 
-    private func viewItems(items: [CoinRankService.Item]) -> [ViewItem] {
+    private func viewItems(items: [CoinRankService.IndexedItem]) -> [ViewItem] {
         let currency = service.currency
         return items.enumerated().map { index, item in
             viewItem(index: index, item: item, currency: currency)
         }
     }
 
-    private func viewItem(index: Int, item: CoinRankService.Item, currency: Currency) -> ViewItem {
+    private func viewItem(index: Int, item: CoinRankService.IndexedItem, currency: Currency) -> ViewItem {
         ViewItem(
                 uid: item.coin.uid,
-                rank: "\(index + 1)",
+                rank: "\(item.index)",
                 imageUrl: item.coin.imageUrl,
                 code: item.coin.code,
                 name: item.coin.name,
@@ -103,15 +105,42 @@ extension CoinRankViewModel {
         }
     }
 
-    var headerVisible: Bool {
+    var description: String {
         switch service.type {
-        case .cexVolume, .dexVolume, .address, .txCount, .revenue: return true
-        case .dexLiquidity: return false
+        case .cexVolume: return "coin_analytics.cex_volume_rank.description".localized
+        case .dexVolume: return "coin_analytics.dex_volume_rank.description".localized
+        case .dexLiquidity: return "coin_analytics.dex_liquidity_rank.description".localized
+        case .address: return "coin_analytics.active_addresses_rank.description".localized
+        case .txCount: return "coin_analytics.transaction_count_rank.description".localized
+        case .revenue: return "coin_analytics.project_revenue_rank.description".localized
         }
     }
 
-    var selectorItems: [String] {
-        timePeriods.map { $0.title }
+    var imageUid: String {
+        switch service.type {
+        case .cexVolume: return "cex_volume"
+        case .dexVolume: return "dex_volume"
+        case .dexLiquidity: return "dex_liquidity"
+        case .address: return "active_addresses"
+        case .txCount: return "trx_count"
+        case .revenue: return "revenue"
+        }
+    }
+
+    var sortDirectionDriver: Driver<Bool> {
+        sortDirectionRelay.asDriver()
+    }
+
+    func onToggleSortDirection() {
+        service.sortDirectionAscending = !service.sortDirectionAscending
+        sortDirectionRelay.accept(service.sortDirectionAscending)
+    }
+
+    var selectorItems: [String]? {
+        switch service.type {
+        case .cexVolume, .dexVolume, .address, .txCount, .revenue: return timePeriods.map { $0.title }
+        case .dexLiquidity: return nil
+        }
     }
 
     var selectorIndex: Int {

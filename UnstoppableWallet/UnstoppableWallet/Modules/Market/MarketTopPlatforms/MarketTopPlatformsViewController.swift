@@ -49,7 +49,7 @@ class MarketTopPlatformsViewController: MarketListViewController {
                                     cell.set(
                                             title: "top_platforms.title".localized,
                                             description: "top_platforms.description".localized,
-                                            imageMode: .local(image: UIImage(named: "header_top_platforms"))
+                                            imageMode: .remote(imageUrl: "top_platforms".headerImageUrl)
                                     )
                                 }
                         )
