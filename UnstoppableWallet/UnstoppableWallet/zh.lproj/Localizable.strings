@@ -85,7 +85,7 @@
 "number.trillion" = "%@万亿";
 "number.quadrillion" = "%@千萬億";
 
-"selector.any" = "Any";
+"selector.any" = "任何";
 
 // Access Camera
 
@@ -552,44 +552,44 @@
 
 "market.global.tvl_in_defi.title" = "DeFi中的TVL";
 "market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
-"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
-"market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.global.tvl_in_defi.multi_chain" = "多链";
+"market.global.tvl_in_defi.filter_by_chain" = "通过区块链过滤";
 
 // Coin Page
 
 "coin_page.overview" = "价格";
-"coin_page.analytics" = "Analytics";
+"coin_page.analytics" = "分析";
 "coin_page.markets" = "市场";
-"coin_page.tweets" = "Tweets";
+"coin_page.tweets" = "推文";
 
 // Coin Page -> Overview
 
 "coin_overview.market_cap" = "市场价值";
-"coin_overview.circulating_supply" = "In Circulation";
-"coin_overview.total_supply" = "Total Supply";
+"coin_overview.circulating_supply" = "流通量";
+"coin_overview.total_supply" = "总供应";
 "coin_overview.diluted_market_cap" = "稀释市值";
-"coin_overview.genesis_date" = "Inception Date";
+"coin_overview.genesis_date" = "起始日期";
 "coin_overview.trading_volume" = "成交量";
 
 "coin_overview.roi.hour24" = "1天";
 "coin_overview.roi.day7" = "1周";
 "coin_overview.roi.day14" = "2周";
 "coin_overview.roi.day30" = "1月";
-"coin_overview.roi.day200" = "6 Month";
+"coin_overview.roi.day200" = "6月";
 "coin_overview.roi.year1" = "1 年";
 
-"coin_overview.category" = "Category";
+"coin_overview.category" = "分类";
 
 "coin_overview.blockchains" = "区块链";
 "coin_overview.bips" = "BIPs";
-"coin_overview.coin_types" = "Coin Types";
+"coin_overview.coin_types" = "代币平台选择";
 "coin_overview.show_more" = "显示更多";
 "coin_overview.show_less" = "Show Less";
-"coin_overview.links" = "Links";
+"coin_overview.links" = "链接";
 
-"coin_overview.guide" = "Guide";
+"coin_overview.guide" = "指南";
 "coin_overview.website" = "Website";
-"coin_overview.whitepaper" = "Whitepaper";
+"coin_overview.whitepaper" = "白皮书";
 
 // Coin Page -> Analytics
 
@@ -690,12 +690,12 @@
 
 // Coin Page -> Tweets
 
-"coin_tweets.reference_type.retweeted" = "Retweeted @%@";
-"coin_tweets.reference_type.quoted" = "Quoted @%@";
-"coin_tweets.reference_type.replied" = "Replied to @%@";
+"coin_tweets.reference_type.retweeted" = "转发 @%@";
+"coin_tweets.reference_type.quoted" = "引用 @%@";
+"coin_tweets.reference_type.replied" = "回复到 @%@";
 "coin_tweets.no_tweets_yet" = "暂无推文";
-"coin_tweets.not_available" = "No twitter available";
-"coin_tweets.see_on_twitter" = "See on Twitter";
+"coin_tweets.not_available" = "没有twitter";
+"coin_tweets.see_on_twitter" = "打开Twitter";
 
 // Pro Features
 
@@ -1029,14 +1029,14 @@
 
 "chart.market_cap" = "市场价值";
 "chart.volume" = "量(24小时)";
-"chart.circulation" = "In Circulation";
+"chart.circulation" = "流通量";
 "chart.selected.volume" = "量";
 
 "chart.market.header" = "市场";
 "chart.market.market_cap" = "市场价值";
 "chart.market.volume" = "量(24小时)";
-"chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.circulation" = "流通量";
+"chart.market.total_supply" = "总供应";
 
 "chart.performance.week_changes" = "变更（1周）";
 "chart.performance.month_changes" = "变更（1月）";
@@ -1365,7 +1365,7 @@
 "nft_asset.details.token_id" = "代币 ID";
 "nft_asset.details.token_standard" = "代币标准";
 "nft_asset.details.blockchain" = "Blockchain";
-"nft_asset.links" = "Links";
+"nft_asset.links" = "链接";
 "nft_asset.links.website" = "Website";
 "nft_asset.options.save_to_photos" = "保存到照片";
 "nft_asset.options.set_as_watch_face" = "设为表盘";
@@ -1379,7 +1379,7 @@
 
 "nft_collection.overview.description" = "描述";
 "nft_collection.overview.contracts" = "合约";
-"nft_collection.overview.links" = "Links";
+"nft_collection.overview.links" = "链接";
 "nft_collection.overview.links.website" = "Website";
 
 
@@ -1390,7 +1390,7 @@
 "nft_collection.overview.floor_price" = "底价";
 "nft_collection.overview.all_time_average" = "全部时间平均值";
 "nft_collection.overview.royalty" = "荣耀";
-"nft_collection.overview.inception_date" = "Inception Date";
+"nft_collection.overview.inception_date" = "起始日期";
 
 "nft.activity.contracts" = "合约";
 "nft.activity.empty_list" = "还没有项目活动";
