@@ -11,119 +11,51 @@ class CoinChartFactory {
         dateFormatter.locale = currentLocale
     }
 
-    private func chartData(points: [ChartPoint], startTimestamp: TimeInterval, endTimestamp: TimeInterval) -> ChartData {
-        // fill items by points
-        let items = points.map { (point: ChartPoint) -> ChartItem in
-            let item = ChartItem(timestamp: point.timestamp)
+    func convert(item: CoinChartService.Item, periodType: HsPeriodType, currency: Currency) -> ChartModule.ViewItem {
+        var points = item.chartPointsItem.points
+        var firstPoint = item.chartPointsItem.firstPoint
+        var lastPoint = item.chartPointsItem.lastPoint
 
-            item.added(name: .rate, value: point.value)
-            if let volume = point.extra[ChartPoint.volume] {
+        if item.timestamp > lastPoint.timestamp {
+            let point = ChartPoint(timestamp: item.timestamp, value: item.rate)
+
+            points.append(point)
+            lastPoint = point
+        }
+
+        if periodType == .day1, let rateDiff24 = item.rateDiff24h {
+            let timestamp = item.timestamp - 24 * 60 * 60
+            let value = 100 * item.rate / (100 + rateDiff24)
+
+            let point = ChartPoint(timestamp: timestamp, value: value)
+
+            points = points.filter { $0.timestamp > timestamp }
+
+            points.insert(point, at: 0)
+            firstPoint = point
+        }
+
+        let items = points.map { point in
+            let item = ChartItem(timestamp: point.timestamp).added(name: .rate, value: point.value)
+
+            if let volume = point.volume {
                 item.added(name: .volume, value: volume)
             }
 
             return item
         }
 
-        return ChartData(items: items, startTimestamp: startTimestamp, endTimestamp: endTimestamp)
-    }
-
-    private func chartItem(point: ChartPoint) -> ChartItem {
-        let chartItem = ChartItem(timestamp: point.timestamp)
-        chartItem.added(name: .rate, value: point.value)
-        return chartItem
-    }
-
-    private func calculateTrend(down: Decimal?, up: Decimal?) -> MovementTrend {
-        guard let down = down, let up = up else {
-            return .neutral
-        }
-
-        if up > down {
-            return .up
-        } else if up < down {
-            return .down
-        }
-        return .neutral
-    }
-
-    private func calculateRsiTrend(rsi: Decimal?) -> MovementTrend {
-        guard let rsi = rsi else {
-            return .neutral
-        }
-
-        if rsi > 70 {
-            return .down
-        } else if rsi < 30 {
-            return .up
-        }
-        return .neutral
-    }
-
-    func convert(item: CoinChartService.Item, periodType: HsPeriodType, currency: Currency) -> ChartModule.ViewItem {
-        var points = item.chartInfo.points
-        var endTimestamp = item.chartInfo.endTimestamp
-
-        var extendedPoint: ChartPoint?
-
-        if let lastPointTimestamp = item.chartInfo.points.last?.timestamp,
-           let timestamp = item.timestamp,
-           let rate = item.rate,
-           timestamp > lastPointTimestamp {
-            // add current rate in data
-            endTimestamp = max(timestamp, endTimestamp)
-            points.append(ChartPoint(timestamp: timestamp, value: rate))
-
-            // create extended point for 24h ago
-            if periodType == .day1, let rateDiff24 = item.rateDiff24h {
-                let firstTimestamp = timestamp - 24 * 60 * 60
-                let price24h = 100 * rate / (100 + rateDiff24)
-                extendedPoint = ChartPoint(timestamp: firstTimestamp, value: price24h)
-            }
-        }
-        // build data with rates, volumes and indicators for points
-        let data = chartData(points: points, startTimestamp: item.chartInfo.startTimestamp, endTimestamp: endTimestamp)
-
-        // calculate item for 24h back point and add to data
-        if let extendedPoint = extendedPoint {
-            let extendedItem = chartItem(point: extendedPoint)
-
-            data.insert(item: extendedItem)
-            // change start visible timestamp
-            data.startWindow = extendedItem.timestamp
-        }
-
-        // remove non-visible items
-        data.items = data.items.filter { item in item.timestamp >= data.startWindow }
-
-        // calculate min and max limit texts
-        let rates = data.values(name: .rate)
-        let minRate = rates.min()
-        let maxRate = rates.max()
-
-        // determine chart growing state. when chart not full - it's nil
-        var chartTrend: MovementTrend = .neutral
-        var chartDiff: Decimal?
-        if let first = data.items.first(where: { ($0.indicators[.rate] ?? 0) != 0 }), let last = data.items.last, !item.chartInfo.expired, let firstRate = first.indicators[.rate], let lastRate = last.indicators[.rate] {
-            chartDiff = (lastRate - firstRate) / firstRate * 100
-            chartTrend = (lastRate - firstRate).isSignMinus ? .down : .up
-        }
-
-        var minRateString: String?, maxRateString: String?
-
-        if let minRate = minRate, let maxRate = maxRate {
-            minRateString = ValueFormatter.instance.formatFull(currency: currency, value: minRate)
-            maxRateString = ValueFormatter.instance.formatFull(currency: currency, value: maxRate)
-        }
+        let values = points.map { $0.value }
 
         return ChartModule.ViewItem(
-                value: item.rate.flatMap { ValueFormatter.instance.formatFull(currencyValue: CurrencyValue(currency: currency, value: $0)) },
+                value: ValueFormatter.instance.formatFull(currencyValue: CurrencyValue(currency: currency, value: item.rate)),
                 valueDescription: nil,
                 rightSideMode: .none,
-                chartData: data,
-                chartTrend: chartTrend,
-                chartDiff: chartDiff,
-                minValue: minRateString,
-                maxValue: maxRateString
+                chartData: ChartData(items: items, startTimestamp: firstPoint.timestamp, endTimestamp: lastPoint.timestamp),
+                chartTrend: lastPoint.value > firstPoint.value ? .up : .down,
+                chartDiff: (lastPoint.value - firstPoint.value) / firstPoint.value * 100,
+                minValue: values.min().flatMap { ValueFormatter.instance.formatFull(currency: currency, value: $0) },
+                maxValue: values.max().flatMap { ValueFormatter.instance.formatFull(currency: currency, value: $0) }
         )
     }
 
