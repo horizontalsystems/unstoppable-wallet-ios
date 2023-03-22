@@ -39,7 +39,7 @@ class CoinChartService {
     }
 
     private var coinPrice: CoinPrice?
-    private var chartInfoMap = [HsPeriodType: ChartInfo]()
+    private var chartPointsMap = [HsPeriodType: ChartPointsItem]()
 
     init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, coinUid: String) {
         self.marketKit = marketKit
@@ -61,19 +61,28 @@ class CoinChartService {
     func fetchChartInfo() {
         let periodType = periodType
 
-        marketKit.chartInfoSingle(coinUid: coinUid, currencyCode: currency.code, periodType: periodType)
+        marketKit.chartPointsSingle(coinUid: coinUid, currencyCode: currency.code, periodType: periodType)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] chartInfo in
-                    self?.chartInfoMap[periodType] = chartInfo
-                    self?.syncState()
+                .subscribe(onSuccess: { [weak self] chartPoints in
+                    self?.handle(chartPoints: chartPoints, periodType: periodType)
                 }, onError: { [weak self] error in
                     self?.state = .failed(error)
                 })
                 .disposed(by: disposeBag)
     }
 
+    private func handle(chartPoints: [ChartPoint], periodType: HsPeriodType) {
+        guard chartPoints.count >= 2, let firstPoint = chartPoints.first, let lastPoint = chartPoints.last else {
+            state = .failed(ChartError.notEnoughPoints)
+            return
+        }
+
+        chartPointsMap[periodType] = ChartPointsItem(points: chartPoints, firstPoint: firstPoint, lastPoint: lastPoint)
+        syncState()
+    }
+
     private func syncState() {
-        guard let chartInfo = chartInfoMap[periodType], let coinPrice else {
+        guard let chartPointsItem = chartPointsMap[periodType], let coinPrice else {
             return
         }
 
@@ -82,7 +91,7 @@ class CoinChartService {
                 rate: coinPrice.value,
                 rateDiff24h: coinPrice.diff,
                 timestamp: coinPrice.timestamp,
-                chartInfo: chartInfo
+                chartPointsItem: chartPointsItem
         )
 
         state = .completed(item)
@@ -142,7 +151,7 @@ extension CoinChartService {
             fetchStartTime()
         }
 
-        if chartInfoMap[periodType] != nil {
+        if chartPointsMap[periodType] != nil {
             syncState()
         } else {
             fetchChartInfo()
@@ -155,10 +164,20 @@ extension CoinChartService {
 
     struct Item {
         let coinUid: String
-        let rate: Decimal?
+        let rate: Decimal
         let rateDiff24h: Decimal?
-        let timestamp: TimeInterval?
-        let chartInfo: ChartInfo
+        let timestamp: TimeInterval
+        let chartPointsItem: ChartPointsItem
+    }
+
+    struct ChartPointsItem {
+        let points: [ChartPoint]
+        let firstPoint: ChartPoint
+        let lastPoint: ChartPoint
+    }
+
+    enum ChartError: Error {
+        case notEnoughPoints
     }
 
 }
