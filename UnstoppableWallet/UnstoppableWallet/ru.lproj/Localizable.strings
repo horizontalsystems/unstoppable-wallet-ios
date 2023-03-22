@@ -544,16 +544,16 @@
 "market.advanced_search_results.title" = "Результаты";
 
 "market.global.total_market_cap.title" = "Total Market Cap";
-"market.global.total_market_cap.description" = "The total value of all cryptocurrencies in circulation";
+"market.global.total_market_cap.description" = "Total market value of all cryptocurrencies";
 
 "market.global.volume_24h.title" = "Объем торгов (24ч)";
-"market.global.volume_24h.description" = "Total trading volume of all cryptocurrencies in circulation";
+"market.global.volume_24h.description" = "The 24h trading volume of crypto market";
 
 "market.global.defi_cap.title" = "Капитализация DeFi";
-"market.global.defi_cap.description" = "The total value of all cryptocurrencies in the decentralized finance market";
+"market.global.defi_cap.description" = "Total market value of DeFi projects";
 
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
-"market.global.tvl_in_defi.description" = "Total value of cryptocurrencies blocked in various DeFi smart contracts";
+"market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
 "market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
 "market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
 
