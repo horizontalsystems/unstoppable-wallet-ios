@@ -47,7 +47,7 @@ class MarketTopViewController: MarketListViewController {
                                     cell.set(
                                             title: "market.top.title".localized,
                                             description: "market.top.description".localized,
-                                            imageMode: .local(image: UIImage(named: "header_top_coins"))
+                                            imageMode: .remote(imageUrl: "top_coins".headerImageUrl)
                                     )
                                 }
                         )

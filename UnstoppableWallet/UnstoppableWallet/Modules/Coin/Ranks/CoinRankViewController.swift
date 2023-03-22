@@ -30,8 +30,6 @@ class CoinRankViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = viewModel.title
-
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
 
@@ -46,6 +44,8 @@ class CoinRankViewController: ThemeViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
+
+        tableView.registerCell(forClass: MarketHeaderCell.self)
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
@@ -135,6 +135,14 @@ extension CoinRankViewController: SectionsDataSource {
         )
     }
 
+    private func bind(cell: MarketHeaderCell) {
+        cell.set(
+                title: viewModel.title,
+                description: viewModel.description,
+                imageMode: .remote(imageUrl: viewModel.imageUid.headerImageUrl)
+        )
+    }
+
     func buildSections() -> [SectionProtocol] {
         guard let viewItems else {
             return []
@@ -142,8 +150,20 @@ extension CoinRankViewController: SectionsDataSource {
 
         return [
             Section(
+                    id: "header",
+                    rows: [
+                        Row<MarketHeaderCell>(
+                                id: "header",
+                                height: MarketHeaderCell.height,
+                                bind: { [weak self] cell, _ in
+                                    self?.bind(cell: cell)
+                                }
+                        )
+                    ]
+            ),
+            Section(
                     id: "coins",
-                    headerState: viewModel.headerVisible ? .static(view: headerView, height: CoinRankHeaderView.height) : .marginColor(height: .margin12, color: .clear),
+                    headerState: .static(view: headerView, height: CoinRankHeaderView.height),
                     footerState: .marginColor(height: .margin32, color: .clear),
                     rows: viewItems.enumerated().map { index, viewItem in
                         row(viewItem: viewItem, index: index, isLast: index == viewItems.count - 1)

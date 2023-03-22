@@ -17,6 +17,12 @@ class CoinRankService {
         }
     }
 
+    var sortDirectionAscending: Bool = false {
+        didSet {
+            syncIfPossible(reorder: true)
+        }
+    }
+
     var timePeriod: HsTimePeriod = .month1 {
         didSet {
             syncIfPossible(reorder: true)
@@ -108,9 +114,14 @@ class CoinRankService {
             return Item(coin: internalItem.coin, value: resolvedValue)
         }
 
-        let sortedItems = items.sorted { $0.value > $1.value }
+        let filteredItems = items.sorted { $0.value > $1.value }.prefix(300)
+        let indexedItems = filteredItems.enumerated().map { index, item in
+            IndexedItem(index: index + 1, coin: item.coin, value: item.value)
+        }
 
-        state = .loaded(items: sortedItems, reorder: reorder)
+        let sortedIndexedItems = sortDirectionAscending ? indexedItems.sorted { $0.value < $1.value } : indexedItems
+
+        state = .loaded(items: sortedIndexedItems, reorder: reorder)
     }
 
 }
@@ -148,11 +159,17 @@ extension CoinRankService {
 
     enum State {
         case loading
-        case loaded(items: [Item], reorder: Bool)
+        case loaded(items: [IndexedItem], reorder: Bool)
         case failed(error: Error)
     }
 
-    struct Item {
+    private struct Item {
+        let coin: Coin
+        let value: Decimal
+    }
+
+    struct IndexedItem {
+        let index: Int
         let coin: Coin
         let value: Decimal
     }

@@ -26,12 +26,12 @@ struct MarketGlobalModule {
             }
         }
 
-        var image: UIImage? {
+        var imageUid: String {
             switch self {
-            case .totalMarketCap: return UIImage(named: "header_total_market_cap")
-            case .volume24h: return UIImage(named: "header_volume")
-            case .defiCap: return UIImage(named: "header_defi_cap")
-            case .tvlInDefi: return UIImage(named: "header_tvl_in_defi")
+            case .totalMarketCap: return "total_mcap"
+            case .volume24h: return "total_volume"
+            case .defiCap: return "defi_cap"
+            case .tvlInDefi: return "tvl"
             }
         }
 

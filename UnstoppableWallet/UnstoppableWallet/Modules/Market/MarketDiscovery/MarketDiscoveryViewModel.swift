@@ -81,7 +81,7 @@ class MarketDiscoveryViewModel {
         case .topCoins:
             return DiscoveryViewItem(
                     type: .topCoins,
-                    imageType: .local(name: "header_top_coins"),
+                    imageUrl: "top_coins".headerImageUrl,
                     name: "market_discovery.top_coins".localized,
                     marketCap: nil,
                     diff: nil,
@@ -92,7 +92,7 @@ class MarketDiscoveryViewModel {
 
             return DiscoveryViewItem(
                     type: .category(category: category),
-                    imageType: .remote(url: category.imageUrl),
+                    imageUrl: category.imageUrl,
                     name: category.name,
                     marketCap: marketCap,
                     diff: diffString,
@@ -170,7 +170,7 @@ extension MarketDiscoveryViewModel {
 
     struct DiscoveryViewItem {
         let type: Type
-        let imageType: ImageType
+        let imageUrl: String
         let name: String
         let marketCap: String?
         let diff: String?
@@ -180,12 +180,6 @@ extension MarketDiscoveryViewModel {
             case topCoins
             case category(category: CoinCategory)
         }
-
-        enum ImageType {
-            case local(name: String)
-            case remote(url: String)
-        }
-
     }
 
     struct SearchViewItem {

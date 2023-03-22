@@ -92,7 +92,7 @@ class MarketGlobalTvlMetricViewController: MarketListViewController {
         cell.set(
                 title: metricsType.title,
                 description: metricsType.description,
-                imageMode: .local(image: metricsType.image)
+                imageMode: .remote(imageUrl: metricsType.imageUid.headerImageUrl)
         )
     }
 

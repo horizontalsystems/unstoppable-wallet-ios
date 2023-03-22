@@ -52,12 +52,7 @@ class MarketDiscoveryCell: UICollectionViewCell {
     }
 
     func set(viewItem: MarketDiscoveryViewModel.DiscoveryViewItem) {
-        switch viewItem.imageType {
-        case .local(let name):
-            imageView.image = UIImage(named: name)
-        case .remote(let url):
-            imageView.setImage(withUrlString: url, placeholder: nil)
-        }
+        imageView.setImage(withUrlString: viewItem.imageUrl, placeholder: nil)
 
         nameLabel.text = viewItem.name
 
