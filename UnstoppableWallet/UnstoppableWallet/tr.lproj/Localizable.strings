@@ -1315,7 +1315,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "fee_settings.errors.low_max_fee.info" = "Belirlenen işlem ücreti, bu işlemin şimdi işlenmesi için yetersiz.";
 "fee_settings.errors.nonce_already_in_block" = "İşlem değiştirilemiyor";
 "fee_settings.errors.replacement_transaction_underpriced" = "Değiştirme işlemi için Düşük Ücret";
-"fee_settings.errors.transaction_underpriced" = "Low Fee for transaction";
+"fee_settings.errors.transaction_underpriced" = "İşlem Ücreti Düşük";
 "fee_settings.errors.tips_higher_than_max_fee" = "Max Fee çok düşük";
 "fee_settings.warning.risk_of_getting_stuck" = "Riskli";
 "fee_settings.warning.risk_of_getting_stuck.info" = "İşlem bir süre beklemede kalabilir veya tamamen başarısız olabilir.";
