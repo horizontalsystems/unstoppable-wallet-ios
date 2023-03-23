@@ -92,9 +92,12 @@ extension ContactBookService {
         try contactManager.delete(contactUid)
     }
 
-    func restore(url: URL) throws {
-        // try to parse contacts, show alert if needed to replace and create new book
-        try contactManager.restore(url: url)
+    func backupContacts(from url: URL) throws -> [BackupContact] {
+        try contactManager.backupContacts(from: url)
+    }
+
+    func replace(contacts: [BackupContact]) {
+        try? contactManager.restore(contacts: contacts)
     }
 
 }

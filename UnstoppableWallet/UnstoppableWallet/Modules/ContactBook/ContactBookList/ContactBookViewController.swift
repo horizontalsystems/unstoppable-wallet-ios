@@ -88,6 +88,7 @@ class ContactBookViewController: ThemeSearchViewController {
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.onUpdate(viewItems: $0) }
         subscribe(disposeBag, viewModel.emptyListDriver) { [weak self] in self?.set(emptyList: $0) }
+        subscribe(disposeBag, viewModel.showRestoreAlertSignal) { [weak self] in self?.showRestoreAlert(contacts: $0) }
         subscribe(disposeBag, viewModel.showSuccessfulRestoreSignal) { HudHelper.instance.showSuccessBanner() }
         subscribe(disposeBag, viewModel.showParsingErrorSignal) { [weak self] in self?.showParsingError() }
         subscribe(disposeBag, viewModel.showStorageErrorSignal) { [weak self] in self?.showStorageError() }
@@ -108,6 +109,23 @@ class ContactBookViewController: ThemeSearchViewController {
         } else {
             navigationController?.popViewController(animated: true)
         }
+    }
+
+    private func showRestoreAlert(contacts: [BackupContact]) {
+        let viewController = BottomSheetModule.viewController(
+                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                title: "alert.warning".localized,
+                items: [
+                    .highlightedDescription(text: "contacts.restore.overwrite_alert.description".localized)
+                ],
+                buttons: [
+                    .init(style: .red, title: "contacts.restore.overwrite_alert.replace".localized, actionType: .afterClose) { [weak self] in
+                        self?.viewModel.replace(contacts: contacts)
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized)
+                ]
+        )
+        present(viewController, animated: true)
     }
 
     private func showParsingError() {

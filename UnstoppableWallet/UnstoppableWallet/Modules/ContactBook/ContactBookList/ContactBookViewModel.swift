@@ -17,6 +17,7 @@ class ContactBookViewModel {
         }
     }
 
+    private let showRestoreAlertRelay = PublishRelay<[BackupContact]>()
     private let showSuccessfulRestoreRelay = PublishRelay<()>()
     private let showParsingErrorRelay = PublishRelay<()>()
     private let showStorageErrorRelay = PublishRelay<()>()
@@ -70,6 +71,10 @@ extension ContactBookViewModel {
         emptyListRelay.asDriver()
     }
 
+    var showRestoreAlertSignal: Signal<[BackupContact]> {
+        showRestoreAlertRelay.asSignal()
+    }
+
     var showSuccessfulRestoreSignal: Signal<()> {
         showSuccessfulRestoreRelay.asSignal()
     }
@@ -98,16 +103,17 @@ extension ContactBookViewModel {
 
     func didPick(url: URL) {
         do {
-            try service.restore(url: url)
-            showSuccessfulRestoreRelay.accept(())
+            let backupContacts = try service.backupContacts(from: url)
+            showRestoreAlertRelay.accept(backupContacts)
         } catch {
-            if case .cantParseData = error as? ContactBookManager.StorageError {    // Can't parse contact book data
-                showParsingErrorRelay.accept(())
-            } else {
-                showStorageErrorRelay.accept(())
-            }
+            showParsingErrorRelay.accept(())
         }
     }
+
+    func replace(contacts: [BackupContact]) {
+        service.replace(contacts: contacts)
+    }
+
 
 }
 
