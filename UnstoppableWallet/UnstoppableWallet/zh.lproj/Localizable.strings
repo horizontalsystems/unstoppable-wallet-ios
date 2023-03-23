@@ -926,6 +926,7 @@
 
 // Settings -> Privacy
 
+"settings.privacy" = "Privacy";
 "settings.privacy.description" = "不可阻挡不会收集任何数据，也不会使用可能会暴露任何用户数据的分析工具。 钱包的设计是为了确保用户高度的隐私。";
 "settings.privacy.statement.user_data_storage" = "用户数据总是保留在用户的设备上。";
 "settings.privacy.statement.data_usage" = "钱包没有收集任何有关用户的数据。";
