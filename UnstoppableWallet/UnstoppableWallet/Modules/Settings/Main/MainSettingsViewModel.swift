@@ -10,6 +10,7 @@ class MainSettingsViewModel {
 
     private let manageWalletsAlertRelay: BehaviorRelay<Bool>
     private let securityCenterAlertRelay: BehaviorRelay<Bool>
+    private let iCloudSyncAlertRelay: BehaviorRelay<Bool>
     private let walletConnectCountRelay: BehaviorRelay<(highlighted: Bool,text: String)?>
     private let baseCurrencyRelay: BehaviorRelay<String>
     private let aboutAlertRelay: BehaviorRelay<Bool>
@@ -21,6 +22,7 @@ class MainSettingsViewModel {
 
         manageWalletsAlertRelay = BehaviorRelay(value: !service.noWalletRequiredActions)
         securityCenterAlertRelay = BehaviorRelay(value: !service.isPinSet)
+        iCloudSyncAlertRelay = BehaviorRelay(value: service.isCloudAvailableError)
         walletConnectCountRelay = BehaviorRelay(value: Self.convert(walletConnectSessionCount: service.walletConnectSessionCount, walletConnectPendingRequestCount: service.walletConnectPendingRequestCount))
         baseCurrencyRelay = BehaviorRelay(value: service.baseCurrency.code)
         aboutAlertRelay = BehaviorRelay(value: !service.termsAccepted)
@@ -36,6 +38,13 @@ class MainSettingsViewModel {
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onNext: { [weak self] isPinSet in
                     self?.securityCenterAlertRelay.accept(!isPinSet)
+                })
+                .disposed(by: disposeBag)
+
+        service.iCloudAvailableErrorObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .subscribe(onNext: { [weak self] hasError in
+                    self?.iCloudSyncAlertRelay.accept(hasError)
                 })
                 .disposed(by: disposeBag)
 
@@ -93,6 +102,10 @@ extension MainSettingsViewModel {
 
     var securityCenterAlertDriver: Driver<Bool> {
         securityCenterAlertRelay.asDriver()
+    }
+
+    var iCloudSyncAlertDriver: Driver<Bool> {
+        iCloudSyncAlertRelay.asDriver()
     }
 
     var walletConnectCountDriver: Driver<(highlighted: Bool,text: String)?> {

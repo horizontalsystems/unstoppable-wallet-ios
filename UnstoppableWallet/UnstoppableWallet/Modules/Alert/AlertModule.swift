@@ -14,4 +14,12 @@ protocol IAlertRouter {
 struct AlertViewItem {
     let text: String
     let selected: Bool
+    let disabled: Bool
+
+    init(text: String, selected: Bool, disabled: Bool = false) {
+        self.text = text
+        self.selected = selected
+        self.disabled = disabled
+    }
+
 }

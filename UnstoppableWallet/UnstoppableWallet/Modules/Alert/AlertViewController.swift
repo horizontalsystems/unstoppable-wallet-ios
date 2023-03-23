@@ -59,6 +59,7 @@ class AlertViewController: ThemeActionSheetController {
                     cell.set(backgroundStyle: .transparent)
                     cell.title = viewItem.text
                     cell.isSelected = viewItem.selected
+                    cell.isEnabled = !viewItem.disabled
                     cell.onSelect = {
                         self?.delegate?.onTapViewItem(index: index)
                     }

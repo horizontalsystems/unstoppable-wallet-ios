@@ -21,6 +21,7 @@ class AlertItemCell: BaseThemeCell {
         button.setTitleColor(.themeJacob, for: .selected)
         button.setTitleColor(.themeJacob, for: [.highlighted, .selected])
         button.setTitleColor(.themeLeah, for: .normal)
+        button.setTitleColor(.themeGray50, for: .disabled)
         button.setBackgroundColor(color: .themeLawrencePressed, forState: .highlighted)
         button.setBackgroundColor(color: .themeLawrencePressed, forState: [.highlighted, .selected])
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
@@ -32,6 +33,11 @@ class AlertItemCell: BaseThemeCell {
 
     @objc private func onTapButton() {
         onSelect?()
+    }
+
+    var isEnabled: Bool {
+        get { button.isEnabled }
+        set { button.isEnabled = newValue }
     }
 
     var title: String? {

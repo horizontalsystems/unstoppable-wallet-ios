@@ -9,6 +9,7 @@ class ContactBookSyncSettingsViewController: ThemeViewController {
     private let viewModel: ContactBookSyncSettingsViewModel
 
     private let tableView = SectionsTableView(style: .grouped)
+    private var viewAppeared = false
 
     init(viewModel: ContactBookSyncSettingsViewModel) {
         self.viewModel = viewModel
@@ -39,10 +40,20 @@ class ContactBookSyncSettingsViewController: ThemeViewController {
 
         tableView.buildSections()
 
-        subscribe(disposeBag, viewModel.showConfirmationSignal) { [weak self] in self?.showConfirmation() }
+        subscribe(disposeBag, viewModel.showConfirmationSignal) { [weak self] in self?.showMergeConfirmation() }
+        subscribe(disposeBag, viewModel.showSyncErrorSignal) { [weak self] in self?.showCloudAlert(syncingOn: $0) }
     }
 
-    private func showConfirmation() {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if !viewAppeared {
+            viewModel.onViewAppeared()
+            viewAppeared = true
+        }
+    }
+
+    private func showMergeConfirmation() {
         let viewController = BottomSheetModule.viewController(
                 image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
                 title: "alert.warning".localized,
@@ -59,6 +70,32 @@ class ContactBookSyncSettingsViewController: ThemeViewController {
         present(viewController, animated: true)
     }
 
+    private func showCloudAlert(syncingOn: Bool) {
+        let viewController = BottomSheetModule.viewController(
+                image: .local(image: UIImage(named: "no_internet_24")?.withTintColor(.themeJacob)),
+                title: syncingOn ? "settings.icloud_sync.alert.title".localized : "settings.icloud_sync.alert_error.title".localized,
+                items: [
+                    .highlightedDescription(text: syncingOn ? "settings.icloud_sync.alert.description".localized : "settings.icloud_sync.alert_error.description".localized)
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "button.continue".localized, action: !syncingOn ? { [weak self] in self?.setToggle(on: false) } : nil),
+                ],
+                delegate: !syncingOn ? self : nil
+        )
+
+        present(viewController, animated: true)
+    }
+
+    private func goToSettings() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
+        }
+    }
+
+    private func checkICloudAvailable() {
+
+    }
+
     private func rootElement(on: Bool, animated: Bool = false) -> CellBuilderNew.CellElement {
         .hStack(
                 tableView.universalImage24Elements(
@@ -67,7 +104,7 @@ class ContactBookSyncSettingsViewController: ThemeViewController {
                                 isOn: on,
                                 animated: animated
                         ) { [weak self] isOn in
-                            self?.viewModel.onToggle()
+                            self?.viewModel.onToggle(isOn: isOn)
                         }
                 )
         )

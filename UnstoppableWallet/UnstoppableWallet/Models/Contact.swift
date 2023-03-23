@@ -42,11 +42,11 @@ extension Array where Element == ContactAddress {
 
 class Contact: ImmutableMappable, Hashable, Equatable {
     let uid: String
-    let modifiedAt: TimeInterval
+    let modifiedAt: Int
     let name: String
     let addresses: [ContactAddress]
 
-    init(uid: String, modifiedAt: TimeInterval, name: String, addresses: [ContactAddress]) {
+    init(uid: String, modifiedAt: Int, name: String, addresses: [ContactAddress]) {
         self.uid = uid
         self.modifiedAt = modifiedAt
         self.name = name
@@ -61,10 +61,10 @@ class Contact: ImmutableMappable, Hashable, Equatable {
     }
 
     func mapping(map: Map) {
-        uid         >>> map["uid"]
-        modifiedAt  >>> map["modified_at"]
-        name        >>> map["name"]
-        addresses   >>> map["addresses"]
+        uid              >>> map["uid"]
+        modifiedAt       >>> map["modified_at"]
+        name             >>> map["name"]
+        addresses        >>> map["addresses"]
     }
 
     static func ==(lhs: Contact, rhs: Contact) -> Bool {
@@ -83,9 +83,9 @@ class Contact: ImmutableMappable, Hashable, Equatable {
 
 class DeletedContact: ImmutableMappable, Hashable, Equatable {
     let uid: String
-    let deletedAt: TimeInterval
+    let deletedAt: Int
 
-    init(uid: String, deletedAt: TimeInterval) {
+    init(uid: String, deletedAt: Int) {
         self.uid = uid
         self.deletedAt = deletedAt
     }
@@ -112,20 +112,24 @@ class DeletedContact: ImmutableMappable, Hashable, Equatable {
 
 class ContactBook: ImmutableMappable {
     static let empty = ContactBook(contacts: [], deletedContacts: [])
+    let version: Int
     let contacts: [Contact]
     let deleted: [DeletedContact]
 
-    init(contacts: [Contact], deletedContacts: [DeletedContact]) {
+    init(version: Int? = nil, contacts: [Contact], deletedContacts: [DeletedContact]) {
+        self.version = version ?? 0
         self.contacts = contacts
-        self.deleted = deletedContacts
+        deleted = deletedContacts
     }
 
     required init(map: Map) throws {
+        version = (try? map.value("version")) ?? 0
         contacts = try map.value("contacts")
         deleted = try map.value("deleted")
     }
 
     func mapping(map: Map) {
+        version         >>> map["version"]
         contacts        >>> map["contacts"]
         deleted         >>> map["deleted"]
     }

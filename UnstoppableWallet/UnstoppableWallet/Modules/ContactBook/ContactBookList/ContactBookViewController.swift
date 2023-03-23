@@ -40,13 +40,13 @@ class ContactBookViewController: ThemeSearchViewController {
 
         // add editable buttons (Add Contact + Share)
         if mode.editable {
-            let settingsItem = UIBarButtonItem(image: UIImage(named: "share_1_24"), style: .plain, target: self, action: #selector(onTapSettings))
+            let settingsItem = UIBarButtonItem(image: UIImage(named: "morevert_24"), style: .plain, target: self, action: #selector(onTapMore))
             settingsItem.tintColor = .themeJacob
 
             let addContact = UIBarButtonItem(image: UIImage(named: "user_plus_24"), style: .plain, target: self, action: #selector(onCreateContact))
-            settingsItem.tintColor = .themeJacob
+            addContact.tintColor = .themeJacob
 
-            navigationItem.rightBarButtonItems = [addContact, settingsItem]
+            navigationItem.rightBarButtonItems = [settingsItem, addContact]
         }
 
         // add cancel button if vc was presented
@@ -88,6 +88,9 @@ class ContactBookViewController: ThemeSearchViewController {
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.onUpdate(viewItems: $0) }
         subscribe(disposeBag, viewModel.emptyListDriver) { [weak self] in self?.set(emptyList: $0) }
+        subscribe(disposeBag, viewModel.showSuccessfulRestoreSignal) { HudHelper.instance.showSuccessBanner() }
+        subscribe(disposeBag, viewModel.showParsingErrorSignal) { [weak self] in self?.showParsingError() }
+        subscribe(disposeBag, viewModel.showStorageErrorSignal) { [weak self] in self?.showStorageError() }
 
         tableView.buildSections()
 
@@ -107,7 +110,16 @@ class ContactBookViewController: ThemeSearchViewController {
         }
     }
 
-    @objc private func onTapSettings() {
+    private func showParsingError() {
+        HudHelper.instance.show(banner: .error(string: "contacts.restore.parsing_error".localized))
+    }
+
+    private func showStorageError() {
+        HudHelper.instance.show(banner: .error(string: "contacts.restore.storage_error".localized))
+    }
+
+    @objc private func onTapMore() {
+        ContactBookModule.showMore(parentViewController: self)
     }
 
     @objc private func onCreateContact() {
@@ -250,6 +262,16 @@ extension ContactBookViewController: SectionsDataSource {
                     }
             )
         ]
+    }
+
+}
+
+extension ContactBookViewController: UIDocumentPickerDelegate {
+
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        if let jsonUrl = urls.first {
+            viewModel.didPick(url: jsonUrl)
+        }
     }
 
 }

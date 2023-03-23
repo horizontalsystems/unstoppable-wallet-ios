@@ -1,4 +1,5 @@
 import RxSwift
+import RxRelay
 import LanguageKit
 import ThemeKit
 import CurrencyKit
@@ -7,9 +8,12 @@ import WalletConnectV1
 import ThemeKit
 
 class MainSettingsService {
+    private let disposeBag = DisposeBag()
+
     private let backupManager: BackupManager
     private let accountRestoreWarningManager: AccountRestoreWarningManager
     private let accountManager: AccountManager
+    private let contactBookManager: ContactBookManager?
     private let pinKit: IPinKit
     private let termsManager: TermsManager
     private let systemInfoManager: SystemInfoManager
@@ -18,12 +22,15 @@ class MainSettingsService {
     private let walletConnectSessionManager: WalletConnectSessionManager
     private let walletConnectV2SessionManager: WalletConnectV2SessionManager
 
-    init(backupManager: BackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, pinKit: IPinKit, termsManager: TermsManager,
+    private let iCloudAvailableErrorRelay = BehaviorRelay<Bool>(value: false)
+
+    init(backupManager: BackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager?, pinKit: IPinKit, termsManager: TermsManager,
          systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit, appConfigProvider: AppConfigProvider,
          walletConnectSessionManager: WalletConnectSessionManager, walletConnectV2SessionManager: WalletConnectV2SessionManager) {
         self.backupManager = backupManager
         self.accountRestoreWarningManager = accountRestoreWarningManager
         self.accountManager = accountManager
+        self.contactBookManager = contactBookManager
         self.pinKit = pinKit
         self.termsManager = termsManager
         self.systemInfoManager = systemInfoManager
@@ -31,6 +38,16 @@ class MainSettingsService {
         self.appConfigProvider = appConfigProvider
         self.walletConnectSessionManager = walletConnectSessionManager
         self.walletConnectV2SessionManager = walletConnectV2SessionManager
+
+        if let contactBookManager {
+            subscribe(disposeBag, contactBookManager.iCloudErrorObservable) { [weak self] error in
+                if error != nil, (self?.contactBookManager?.remoteSync ?? false) {
+                    self?.iCloudAvailableErrorRelay.accept(true)
+                } else {
+                    self?.iCloudAvailableErrorRelay.accept(false)
+                }
+            }
+        }
     }
 
 }
@@ -57,6 +74,14 @@ extension MainSettingsService {
 
     var isPinSetObservable: Observable<Bool> {
         pinKit.isPinSetObservable
+    }
+
+    var isCloudAvailableError: Bool {
+        (contactBookManager?.remoteSync ?? false) && (contactBookManager?.iCloudError != nil)
+    }
+
+    var iCloudAvailableErrorObservable: Observable<Bool> {
+        iCloudAvailableErrorRelay.asObservable()
     }
 
     var termsAccepted: Bool {

@@ -74,7 +74,7 @@ class MainSettingsViewController: ThemeViewController {
         buildTitleValue(cell: contactBookCell, image: UIImage(named: "user_24"), title: "contacts.title".localized)
 
         iCloudSyncCell.set(backgroundStyle: .lawrence)
-        buildTitleValue(cell: iCloudSyncCell, image: UIImage(named: "icloud_24"), title: "icloud_sync.title".localized)
+        syncICloudCell()
 
         baseCurrencyCell.set(backgroundStyle: .lawrence)
         syncBaseCurrency()
@@ -92,6 +92,7 @@ class MainSettingsViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.manageWalletsAlertDriver) { [weak self] in self?.syncManageAccountCell(alert: $0) }
         subscribe(disposeBag, viewModel.securityCenterAlertDriver) { [weak self] in self?.syncSecurityCell(alert: $0) }
+        subscribe(disposeBag, viewModel.iCloudSyncAlertDriver) { [weak self] in self?.syncICloudCell(alert: $0) }
 
         subscribe(disposeBag, viewModel.walletConnectCountDriver) { [weak self] tuple in
             self?.syncWalletConnectCell(text: tuple?.text, highlighted: tuple?.highlighted ?? false)
@@ -119,6 +120,11 @@ class MainSettingsViewController: ThemeViewController {
     private func syncSecurityCell(alert: Bool = false) {
         let alertImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
         buildTitleImage(cell: securityCell, image: UIImage(named: "shield_24"), title: "settings.security".localized, alertImage: alertImage)
+    }
+
+    private func syncICloudCell(alert: Bool = false) {
+        let alertImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
+        buildTitleImage(cell: iCloudSyncCell, image: UIImage(named: "icloud_24"), title: "icloud_sync.title".localized, alertImage: alertImage)
     }
 
     private func syncAboutCell(alert: Bool = false) {
