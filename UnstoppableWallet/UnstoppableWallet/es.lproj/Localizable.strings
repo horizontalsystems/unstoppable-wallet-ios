@@ -550,13 +550,13 @@
 
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
 "market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
-"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
-"market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
+"market.global.tvl_in_defi.multi_chain" = "Cadena múltiple";
+"market.global.tvl_in_defi.filter_by_chain" = "Filtrar por cadena";
 
 // Coin Page
 
 "coin_page.overview" = "Precio";
-"coin_page.analytics" = "Analytics";
+"coin_page.analytics" = "Estadísticas";
 "coin_page.markets" = "Mercados";
 "coin_page.tweets" = "Tweets";
 
@@ -564,7 +564,7 @@
 
 "coin_overview.market_cap" = "Capitalización del Mercado";
 "coin_overview.circulating_supply" = "In Circulation";
-"coin_overview.total_supply" = "Total Supply";
+"coin_overview.total_supply" = "Suminstro Total";
 "coin_overview.diluted_market_cap" = "Capitalización de Mercado Diliuída";
 "coin_overview.genesis_date" = "Inception Date";
 "coin_overview.trading_volume" = "Volumen de Comercio";
@@ -576,14 +576,14 @@
 "coin_overview.roi.day200" = "6 Month";
 "coin_overview.roi.year1" = "1 Año";
 
-"coin_overview.category" = "Category";
+"coin_overview.category" = "Categoría";
 
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Coin Types";
 "coin_overview.show_more" = "Mostrar más";
 "coin_overview.show_less" = "Show Less";
-"coin_overview.links" = "Links";
+"coin_overview.links" = "Enlaces";
 
 "coin_overview.guide" = "Guide";
 "coin_overview.website" = "Website";
@@ -1055,7 +1055,7 @@
 "chart.market.market_cap" = "Capitalización del Mercado";
 "chart.market.volume" = "Volumen (24St)";
 "chart.market.circulation" = "In Circulation";
-"chart.market.total_supply" = "Total Supply";
+"chart.market.total_supply" = "Suminstro Total";
 
 "chart.performance.week_changes" = "Cambios (1 Semana)";
 "chart.performance.month_changes" = "Cambios (1 Mes)";
@@ -1384,7 +1384,7 @@
 "nft_asset.details.token_id" = "ID del token";
 "nft_asset.details.token_standard" = "Token estándar";
 "nft_asset.details.blockchain" = "Blockchain";
-"nft_asset.links" = "Links";
+"nft_asset.links" = "Enlaces";
 "nft_asset.links.website" = "Website";
 "nft_asset.options.save_to_photos" = "Guardar a Fotos";
 "nft_asset.options.set_as_watch_face" = "Establecer como Watch Face";
@@ -1398,7 +1398,7 @@
 
 "nft_collection.overview.description" = "Descripción";
 "nft_collection.overview.contracts" = "Contratos";
-"nft_collection.overview.links" = "Links";
+"nft_collection.overview.links" = "Enlaces";
 "nft_collection.overview.links.website" = "Website";
 
 
