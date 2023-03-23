@@ -35,14 +35,11 @@ class PrivacyPolicyViewController: ThemeViewController {
 
         tableView.registerCell(forClass: MarkdownTextCell.self)
         tableView.registerCell(forClass: MarkdownListItemCell.self)
-        tableView.registerCell(forClass: BrandFooterCell.self)
 
         tableView.buildSections()
     }
 
     private var privacySections: [SectionProtocol] {
-        var sections = [SectionProtocol]()
-
         var infoRows = [RowProtocol]()
 
         let descriptionString = NSAttributedString(string: config.description, attributes: [.font: UIFont.body, .foregroundColor: UIColor.themeBran])
@@ -53,33 +50,13 @@ class PrivacyPolicyViewController: ThemeViewController {
             infoRows.append(MarkdownViewController.listItemRow(id: "\(viewItem)-cell", attributedString: viewItemString, prefix: "•", tightTop: false, tightBottom: false))
         }
 
-        sections.append(
-                Section(
-                        id: "privacy-section",
-                        footerState: .margin(height: .margin32),
-                        rows: infoRows
-                )
-        )
-
-        sections.append(
-                Section(
-                        id: "brand",
-                        headerState: .margin(height: .margin32),
-                        rows: [
-                            Row<BrandFooterCell>(
-                                    id: "brand",
-                                    dynamicHeight: { containerWidth in
-                                        BrandFooterCell.height(containerWidth: containerWidth, title: BrandFooterCell.brandText)
-                                    },
-                                    bind: { cell, _ in
-                                        cell.title = BrandFooterCell.brandText
-                                    }
-                            )
-                        ]
-                )
-        )
-
-        return sections
+        return [
+            Section(
+                    id: "privacy-section",
+                    footerState: .margin(height: .margin32),
+                    rows: infoRows
+            )
+        ]
     }
 
 }
@@ -100,7 +77,7 @@ extension PrivacyPolicyViewController {
 
         static var privacy: Config {
             Config(
-                    title: "coin_page.security_parameters.privacy".localized,
+                    title: "settings.privacy".localized,
                     description: "settings.privacy.description".localized,
                     viewItems: [
                         "settings.privacy.statement.user_data_storage".localized,
