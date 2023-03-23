@@ -382,26 +382,28 @@ extension ContactBookManager {
         }
     }
 
-    func restore(url: URL) throws {
+    // Backup and restore section
+
+    func backupContacts(from url: URL) throws -> [BackupContact] {
         let data = try FileManager.default.contentsOfFile(coordinatingAccessAt: url)
-        guard let json = try JSONSerialization.jsonObject(with: data) as? [[String : Any]] else {
+
+        guard let json = try? JSONSerialization.jsonObject(with: data) as? [[String : Any]],
+              let contacts = try? json.map({ try Mapper<BackupContact>().map(JSON: $0) }) else {
+
             throw StorageError.cantParseData
         }
-        do {
-            let contacts = try json.map { try Mapper<BackupContact>().map(JSON: $0) }
 
-            let newContactBook = helper.contactBook(contacts: contacts, lastVersion: state.data?.version)
-
-            try save(url: localUrl, newContactBook)
-            if remoteSync {
-                try? saveToICloud(book: newContactBook)
-            }
-        } catch {
-            throw StorageError.cantParseData
-        }
+        return contacts
     }
 
-    // Backup and restore section
+    func restore(contacts:[BackupContact]) throws {
+        let newContactBook = helper.contactBook(contacts: contacts, lastVersion: state.data?.version)
+
+        try save(url: localUrl, newContactBook)
+        if remoteSync {
+            try? saveToICloud(book: newContactBook)
+        }
+    }
 
     var backupContactBook: BackupContactBook? {
         state.data.map { helper.backupContactBook(contactBook: $0) }
