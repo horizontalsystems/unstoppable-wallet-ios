@@ -191,7 +191,7 @@ extension AboutViewController: SectionsDataSource {
                         row(
                                 id: "privacy",
                                 image: "user_24",
-                                title: "coin_page.security_parameters.privacy".localized,
+                                title: "settings.privacy".localized,
                                 isLast: true,
                                 action: { [weak self] in
                                     self?.navigationController?.pushViewController(PrivacyPolicyViewController(config: .privacy), animated: true)
