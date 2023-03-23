@@ -924,6 +924,7 @@
 
 // Settings -> Privacy
 
+"settings.privacy" = "Privacy";
 "settings.privacy.description" = "Unstoppable no recopila ningún dato o utiliza herramientas de análisis que puedan exponer cualquier dato sobre sus usuarios. La cartera está diseñada para asegurar un alto nivel de privacidad para sus usuarios.";
 "settings.privacy.statement.user_data_storage" = "Los datos del usuario siempre permanecen en el dispositivo del usuario.";
 "settings.privacy.statement.data_usage" = "La cartera no recopila ningún dato sobre los usuarios.";
