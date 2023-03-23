@@ -970,10 +970,10 @@
 "contacts.contact.name.placeholder" = "Nom";
 "contacts.contact.update.error.name_already_exist" = "Name Already Exist";
 "contacts.contact.add_address" = "Add Address";
-"contacts.contact.delete" = "Delete Contact";
+"contacts.contact.delete" = "Supprimer le contact";
 "contacts.contact.address.blockchains" = "Blockchains";
 "contacts.contact.address.blockchain" = "Blockchain";
-"contacts.contact.address.delete_address" = "Delete Address";
+"contacts.contact.address.delete_address" = "Supprimer l'adresse";
 
 "contacts.restore.parsing_error" = "File has wrong data!";
 "contacts.restore.storage_error" = "Can't save contacts!";
@@ -990,7 +990,7 @@
 "contacts.more.import" = "Restore";
 "contacts.more.export" = "Sauvegarde";
 
-"contacts.contact.delete_alert.title" = "Delete Contact";
+"contacts.contact.delete_alert.title" = "Supprimer le contact";
 "contacts.contact.delete_alert.description" = "Are you sure you want to delete this contact?";
 "contacts.contact.delete_alert.delete" = "Supprimer";
 
@@ -998,7 +998,7 @@
 "contacts.contact.dismiss_changes.discard_changes" = "Discard Changes";
 "contacts.contact.dismiss_changes.keep_editing" = "Keep Editing";
 
-"contacts.add_address.delete_alert.title" = "Delete Address";
+"contacts.add_address.delete_alert.title" = "Supprimer l'adresse";
 "contacts.add_address.delete_alert.description" = "Are you sure you want to delete this address?";
 "contacts.add_address.delete_alert.delete" = "Supprimer";
 
@@ -1303,8 +1303,8 @@
 "fee_settings.fee_rate" = "Taux de frais";
 "fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
 "fee_settings.inputs_outputs" = "Entrées/Sorties";
-"fee_settings.transaction_settings" = "Transaction Settings";
-"fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
+"fee_settings.transaction_settings" = "Paramètres de transaction";
+"fee_settings.transaction_settings.description" = "Rendez vos Bitcoin transactions plus difficiles à suivre en modifiant la façon dont les transactions sont structurées.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
 
@@ -1316,12 +1316,13 @@
 "fee_settings.gas_price" = "Gas Price";
 "fee_settings.gas_price.info" = "Les frais pour effectuer des transactions sur le réseau sont mesurés en unités de gas. Le prix du gas est le montant qu'un utilisateur est prêt à dépenser par unité de gas. Le prix du gas est élevé lorsque le réseau est encombré, et faible lorsqu'il est inactif. Souvent, une transaction reste en suspens pendant une période prolongée si le montant du gas est insuffisant.";
 
-"fee_settings.base_fee" = "Base Fee";
+"fee_settings.base_fee" = "Frais de base";
 "fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
-"fee_settings.max_fee_rate" = "Max Fee Rate";
+"fee_settings.max_fee_rate" = "Taux de frais max";
 "fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
-"fee_settings.tips" = "Max Priority Fee";
-"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+"fee_settings.tips" = "Frais de priorité max";
+"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.
+";
 
 "fee_settings.errors.insufficient_balance" = "Solde insuffisant";
 "fee_settings.errors.insufficient_balance.info" = "Le solde actuel des ETH est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
