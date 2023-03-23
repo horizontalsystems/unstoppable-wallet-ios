@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import RxRelay
 import MarketKit
@@ -89,6 +90,11 @@ extension ContactBookService {
 
     func delete(contactUid: String) throws {
         try contactManager.delete(contactUid)
+    }
+
+    func restore(url: URL) throws {
+        // try to parse contacts, show alert if needed to replace and create new book
+        try contactManager.restore(url: url)
     }
 
 }

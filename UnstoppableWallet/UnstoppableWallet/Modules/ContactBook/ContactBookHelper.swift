@@ -85,7 +85,7 @@ extension ContactBookHelper {
             contacts.append(contact)
         }
 
-        return ContactBook(contacts: contacts, deletedContacts: book.deleted)
+        return ContactBook(version: book.version, contacts: contacts, deletedContacts: book.deleted)
     }
 
     func remove(contactUid: String, book: ContactBook) -> ContactBook {
@@ -94,9 +94,9 @@ extension ContactBookHelper {
             let removed = contacts.remove(at: index)
 
             var deleted = book.deleted
-            deleted.append(DeletedContact(uid: removed.uid, deletedAt: Date().timeIntervalSince1970))
+            deleted.append(DeletedContact(uid: removed.uid, deletedAt: Int(Date().timeIntervalSince1970)))
 
-            return ContactBook(contacts: contacts, deletedContacts: deleted)
+            return ContactBook(version: book.version, contacts: contacts, deletedContacts: deleted)
         }
 
         return book
@@ -105,11 +105,18 @@ extension ContactBookHelper {
     // try resolve contact book. If one of them not changed - return it, else return new one
     func resolved(lhs: ContactBook, rhs: ContactBook) -> ResolveResult {
 
+        if lhs.version > rhs.version {
+            return .left
+        }
+        if lhs.version < rhs.version {
+            return .right
+        }
+
         let contacts = mergeNewer(lhs: lhs.contacts, rhs: rhs.contacts)
         let deleted = mergeNewer(lhs: lhs.deleted, rhs: rhs.deleted)
 
         let resolved = filter(contacts: contacts, deleted: deleted)
-        let newBook = ContactBook(contacts: resolved.newContacts, deletedContacts: resolved.newDeleted)
+        let newBook = ContactBook(version: lhs.version, contacts: resolved.newContacts, deletedContacts: resolved.newDeleted)
 
         let likeLhs = identical(lhs: lhs, rhs: newBook)
         let likeRhs = identical(lhs: rhs, rhs: newBook)
@@ -129,13 +136,34 @@ extension ContactBookHelper {
         return .merged(newBook)
     }
 
+    func backupContactBook(contactBook: ContactBook) -> BackupContactBook {
+        BackupContactBook(
+                contacts: contactBook
+                        .contacts
+                        .map { BackupContact(uid: $0.uid, name: $0.name, addresses: $0.addresses) }
+        )
+    }
+
+    func contactBook(contacts: [BackupContact], lastVersion: Int?) -> ContactBook {
+        // we need increase version and create new book with latest timestamps for all contacts
+        ContactBook(
+                version: (lastVersion ?? 0) + 1,
+                contacts: contacts
+                        .map { Contact(uid: $0.uid,
+                                modifiedAt: Int(Date().timeIntervalSince1970),
+                                name: $0.name,
+                                addresses: $0.addresses)
+                        },
+                deletedContacts: [])
+    }
+
 }
 
 extension ContactBookHelper {
 
     private struct EqualContactData: Equatable, Hashable {
         let uid: String
-        let timestamp: TimeInterval
+        let timestamp: Int
 
         static func ==(lhs: EqualContactData, rhs: EqualContactData) -> Bool {
             lhs.uid == rhs.uid && lhs.timestamp == rhs.timestamp

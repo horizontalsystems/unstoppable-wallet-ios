@@ -7,6 +7,7 @@ struct MainSettingsModule {
                 backupManager: App.shared.backupManager,
                 accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
                 accountManager: App.shared.accountManager,
+                contactBookManager: App.shared.contactManager,
                 pinKit: App.shared.pinKit,
                 termsManager: App.shared.termsManager,
                 systemInfoManager: App.shared.systemInfoManager,

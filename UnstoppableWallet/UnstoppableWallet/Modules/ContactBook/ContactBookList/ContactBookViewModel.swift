@@ -17,6 +17,10 @@ class ContactBookViewModel {
         }
     }
 
+    private let showSuccessfulRestoreRelay = PublishRelay<()>()
+    private let showParsingErrorRelay = PublishRelay<()>()
+    private let showStorageErrorRelay = PublishRelay<()>()
+
     init(service: ContactBookService) {
         self.service = service
 
@@ -66,6 +70,18 @@ extension ContactBookViewModel {
         emptyListRelay.asDriver()
     }
 
+    var showSuccessfulRestoreSignal: Signal<()> {
+        showSuccessfulRestoreRelay.asSignal()
+    }
+
+    var showParsingErrorSignal: Signal<()> {
+        showParsingErrorRelay.asSignal()
+    }
+
+    var showStorageErrorSignal: Signal<()> {
+        showStorageErrorRelay.asSignal()
+    }
+
     func contactAddress(contactUid: String, blockchainUid: String) -> ContactAddress? {
         service.contactAddress(contactUid: contactUid, blockchainUid: blockchainUid)
     }
@@ -78,6 +94,19 @@ extension ContactBookViewModel {
 
     func onUpdate(filter: String?) {
         service.set(filter: filter ?? "")
+    }
+
+    func didPick(url: URL) {
+        do {
+            try service.restore(url: url)
+            showSuccessfulRestoreRelay.accept(())
+        } catch {
+            if case .cantParseData = error as? ContactBookManager.StorageError {    // Can't parse contact book data
+                showParsingErrorRelay.accept(())
+            } else {
+                showStorageErrorRelay.accept(())
+            }
+        }
     }
 
 }
