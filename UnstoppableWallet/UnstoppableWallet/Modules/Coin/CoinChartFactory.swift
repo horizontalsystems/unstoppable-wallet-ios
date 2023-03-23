@@ -21,18 +21,18 @@ class CoinChartFactory {
 
             points.append(point)
             lastPoint = point
-        }
 
-        if periodType == .day1, let rateDiff24 = item.rateDiff24h {
-            let timestamp = item.timestamp - 24 * 60 * 60
-            let value = 100 * item.rate / (100 + rateDiff24)
+            if periodType == .day1, let rateDiff24 = item.rateDiff24h {
+                let timestamp = item.timestamp - 24 * 60 * 60
+                let value = 100 * item.rate / (100 + rateDiff24)
 
-            let point = ChartPoint(timestamp: timestamp, value: value)
+                let point = ChartPoint(timestamp: timestamp, value: value)
 
-            points = points.filter { $0.timestamp > timestamp }
+                points = points.filter { $0.timestamp > timestamp }
 
-            points.insert(point, at: 0)
-            firstPoint = point
+                points.insert(point, at: 0)
+                firstPoint = point
+            }
         }
 
         let items = points.map { point in
