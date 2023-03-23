@@ -976,10 +976,20 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Excluir endereço";
 
+"contacts.restore.parsing_error" = "File has wrong data!";
+"contacts.restore.storage_error" = "Can't save contacts!";
+"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts.";
+"contacts.restore.overwrite_alert.replace" = "Substituir";
+
+
 "contacts.add_address.title" = "Adicionar endereço";
 "contacts.add_address.create_new" = "Criar Novo Contato";
 "contacts.add_address.add_to_contact" = "Adicionar ao Contato Existente";
 "contacts.add_address.exist_address" = "Este endereço já está em uso para %@";
+
+"contacts.more.title" = "More";
+"contacts.more.import" = "Restore";
+"contacts.more.export" = "Backup";
 
 "contacts.contact.delete_alert.title" = "Excluir contato";
 "contacts.contact.delete_alert.description" = "Você tem certeza que deseja excluir este contato?";
@@ -988,7 +998,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "contacts.contact.dismiss_changes.description" = "Tem certeza de que deseja descartar as novas alterações?";
 "contacts.contact.dismiss_changes.discard_changes" = "Descartar Alterações";
 "contacts.contact.dismiss_changes.keep_editing" = "Continuar Editando";
-
 
 "contacts.add_address.delete_alert.title" = "Excluir endereço";
 "contacts.add_address.delete_alert.description" = "Você tem certeza que deseja excluir este endereço?";
@@ -1000,7 +1009,13 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "settings.icloud_sync.title" = "Sincronização com iCloud";
 "settings.icloud_sync.contact_book" = "Sincronizar contatos";
 "settings.icloud_sync.description" = "Sincronize os contatos de pagamento no iCloud para facilitar o backup e o acesso entre vários dispositivos.";
-"settings.icloud_sync.merge_disclaimer" = "Você tem contatos locais que serão mesclados com contatos iCloud";
+"settings.icloud_sync.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+
+"settings.icloud_sync.alert.title" = "Sincronização com iCloud";
+"settings.icloud_sync.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+
+"settings.icloud_sync.alert_error.title" = "iCloud Error";
+"settings.icloud_sync.alert_error.description" = "Cannot connect to iCloud, this may be because iCloud storage not available on your device, or disabled for Unstoppable app";
 
 // Set PIN
 
