@@ -925,6 +925,7 @@
 
 // Settings -> Privacy
 
+"settings.privacy" = "Privacy";
 "settings.privacy.description" = "Unaufhaltsam sammelt keine Daten oder verwendet Analysewerkzeuge, die möglicherweise Daten über ihre Nutzer enthüllen. Die Brieftasche ist so konzipiert, dass sie den Benutzern ein hohes Maß an Privatsphäre garantiert.";
 "settings.privacy.statement.user_data_storage" = "Benutzerdaten bleiben immer auf dem Gerät des Benutzers.";
 "settings.privacy.statement.data_usage" = "Das Wallet sammelt keine Daten über Benutzer.";
