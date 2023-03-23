@@ -926,6 +926,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Settings -> Privacy
 
+"settings.privacy" = "Privacy";
 "settings.privacy.description" = "A Unstoppable não coleta dados nem usa ferramentas analíticas que possam expor dados sobre seus usuários. A carteira foi projetada para garantir um alto nível de privacidade para seus usuários.";
 "settings.privacy.statement.user_data_storage" = "Os dados do usuário sempre permanecem em seu dispositivo.";
 "settings.privacy.statement.data_usage" = "A carteira não coleta nenhum dado sobre os usuários.";
