@@ -198,7 +198,7 @@ extension NftCollectionOverviewViewModel {
     struct ContractViewItem {
         let iconUrl: String
         let name: String
-        let schema: String
+        let schema: String?
         let reference: String
         let explorerUrl: String?
     }

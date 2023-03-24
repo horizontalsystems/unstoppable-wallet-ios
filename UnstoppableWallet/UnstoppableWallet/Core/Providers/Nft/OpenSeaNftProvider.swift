@@ -529,12 +529,12 @@ extension OpenSeaNftProvider {
     private struct AssetContractResponse: ImmutableMappable {
         let address: String
         let name: String
-        let schemaName: String
+        let schemaName: String?
 
         init(map: Map) throws {
             address = try map.value("address")
             name = try map.value("name")
-            schemaName = try map.value("schema_name")
+            schemaName = try? map.value("schema_name")
         }
     }
 

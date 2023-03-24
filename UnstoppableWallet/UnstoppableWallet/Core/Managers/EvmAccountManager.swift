@@ -94,6 +94,14 @@ class EvmAccountManager {
                     }
                 }
 
+            case let decoration as OneInchUnknownSwapDecoration:
+                if let tokenOut = decoration.tokenAmountOut?.token {
+                    switch tokenOut {
+                    case .eip20Coin(let address, _): foundTokens.insert(FoundToken(tokenType: .eip20(address: address.hex), tokenInfo: tokenOut.tokenInfo))
+                    default: ()
+                    }
+                }
+
             case let decoration as UnknownTransactionDecoration:
                 if decoration.internalTransactions.contains(where: { $0.to == address }) {
                     foundTokens.insert(FoundToken(tokenType: .native))
