@@ -6,6 +6,7 @@ import HdWalletKit
 import HsToolKit
 import MarketKit
 import HsExtensions
+import Combine
 
 
 class ZcashAdapter {
@@ -22,7 +23,7 @@ class ZcashAdapter {
     private var saplingAddress: SaplingAddress // This should be replaced by unified address.
     private let uniqueId: String
     private let spendingKey: UnifiedSpendingKey // this being a single account does not need to be an array
-    private let loggingProxy = ZcashLogger(logLevel: .error)
+    private let loggingProxy = ZcashLogger(logLevel: .debug)
 
     private(set) var network: ZcashNetwork
     private(set) var fee: Decimal
@@ -37,8 +38,11 @@ class ZcashAdapter {
     private var lastBlockHeight: Int = 0
     private var synchronizerState: SDKSynchronizer.SynchronizerState? {
         didSet {
+            print("Did set syncState: \(synchronizerState)")
             let latestScannedBlock = synchronizerState?.latestScannedHeight ?? 0
+            print(" let latestScannedBlock = \(synchronizerState?.latestScannedHeight ?? 0)")
             lastBlockHeight = max(lastBlockHeight, latestScannedBlock)
+            print("lastBlockHeight = max(lastBlockHeight, latestScannedBlock) = \(lastBlockHeight)")
             lastBlockUpdatedSubject.onNext(())
 
             balanceSubject.onNext(_balanceData)
@@ -55,6 +59,8 @@ class ZcashAdapter {
     var balanceState: AdapterState {
         state.adapterState
     }
+
+    private var cancellables: [AnyCancellable] = []
 
     private(set) var syncing: Bool = true
 
@@ -105,15 +111,15 @@ class ZcashAdapter {
             throw AppError.ZcashError.noReceiveAddress
         }
 
-
-
-        let initializer = Initializer(cacheDbURL:try! ZcashAdapter.cacheDbURL(uniqueId: uniqueId, network: network),
-                dataDbURL: try! ZcashAdapter.dataDbURL(uniqueId: uniqueId, network: network),
-                pendingDbURL: try! ZcashAdapter.pendingDbURL(uniqueId: uniqueId, network: network),
+        let initializer = Initializer(
+                fsBlockDbRoot: try ZcashAdapter.fsBlockDbRootURL(uniqueId: uniqueId, network: network),
+                dataDbURL: try ZcashAdapter.dataDbURL(uniqueId: uniqueId, network: network),
+                pendingDbURL: try ZcashAdapter.pendingDbURL(uniqueId: uniqueId, network: network),
                 endpoint: LightWalletEndpoint(address: endPoint, port: 9067, singleCallTimeoutInMillis: 1000000, streamingCallTimeoutInMillis: 1000000),
                 network: network,
-                spendParamsURL: try! ZcashAdapter.spendParamsURL(uniqueId: uniqueId),
-                outputParamsURL: try! ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
+                spendParamsURL: try ZcashAdapter.spendParamsURL(uniqueId: uniqueId),
+                outputParamsURL: try ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
+                saplingParamsSourceURL: SaplingParamsSourceURL.default,
                 viewingKeys: [unifiedViewingKey],
                 walletBirthday: birthday,
                 loggerProxy: loggingProxy)
@@ -147,6 +153,7 @@ class ZcashAdapter {
                 balance: shieldedVerified,
                 balanceLocked: shielded - shieldedVerified
         ))
+
     }
 
     nonisolated private func subscribeSynchronizerNotifications() {
@@ -169,24 +176,11 @@ class ZcashAdapter {
             center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: notificationName, object: synchronizer)
         }
 
-        center.addObserver(self, selector: #selector(blockProcessorUpdated(_:)), name: Notification.Name.blockProcessorUpdated, object: synchronizer)
-        center.addObserver(self, selector: #selector(blockProcessorFinished(_:)), name: Notification.Name.blockProcessorFinished, object: synchronizer)
-        center.addObserver(self, selector: #selector(blockProcessorStartedEnhancing(_:)), name: Notification.Name.blockProcessorFinished, object: synchronizer)
-
-//        center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: Notification.Name.synchronizerDisconnected, object: synchronizer)
-//        center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: Notification.Name.synchronizerStarted, object: synchronizer)
-//        center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: Notification.Name.synchronizerSynced, object: synchronizer)
-//        center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: Notification.Name.synchronizerDisconnected, object: synchronizer)
-//        center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: Notification.Name.synchronizerFailed, object: synchronizer)
-
         // sync progress changing
         center.addObserver(self, selector: #selector(processorNotificationUpdated(_:)), name: Notification.Name.synchronizerProgressUpdated, object: synchronizer)
 
         //found new transactions
         center.addObserver(self, selector: #selector(transactionsUpdated(_:)), name: Notification.Name.synchronizerFoundTransactions, object: synchronizer)
-
-//        //latestHeight
-//        center.addObserver(self, selector: #selector(blockHeightUpdated(_:)), name: Notification.Name.blockProcessorUpdated, object: synchronizer.blockProcessor)
     }
 
     @objc private func blockProcessorUpdated(_ notification: Notification) {
@@ -232,11 +226,6 @@ class ZcashAdapter {
         print("Old State: \(state)")
         var newState = state
 
-//        var blockDate: Date? = nil
-//        if let blockTime = notification.userInfo?[SDKSynchronizer.NotificationKeys.blockDate] as? Date {
-//            blockDate = blockTime
-//        }
-
         switch synchronizer.status {
         case .disconnected:
             print("==> ==> Disconnected")
@@ -251,8 +240,15 @@ class ZcashAdapter {
         case .syncing(let p):
             print("==> ==> Syncing")
             print("==> ==> ==> \n\(p)")
+            if let blockHeight = notification.userInfo?[SDKSynchronizer.NotificationKeys.blockHeight] as? BlockHeight {
+                print("Update BlockHeight = \(blockHeight)")
+
+                lastBlockHeight = max(blockHeight, lastBlockHeight)
+                lastBlockUpdatedSubject.onNext(())
+            }
+
             var lastDownloaded = 0
-            if case let .downloadingBlocks(number, lastBlock) = state {
+            if case let .downloadingBlocks(number, _) = state {
                 lastDownloaded = number
             }
 
@@ -267,13 +263,6 @@ class ZcashAdapter {
             newState = .enhancingTransactions(number: p.enhancedTransactions, count: p.totalTransactions)
         case .unprepared:
             newState = .notSynced(error: AppError.unknownError)
-//        case .scanning(let p):
-//            let diff = p.targetHeight - p.progressHeight
-//            if !state.isScanning ||
-//                       (diff < Self.limitShowingDownloadBlockCount) ||
-//                       (diff % Self.limitShowingDownloadBlockCount) == 0 { // show first changing state, every 100 blocks and last 100 blocks
-//                newState = .scanningBlocks(number: p.progressHeight, lastBlock: p.targetHeight)
-//            }
         case .fetching:
             print("==> ==> Fetching")
             newState = .syncing(progress: 0, lastBlockDate: nil)
@@ -293,15 +282,6 @@ class ZcashAdapter {
             transactionRecordsSubject.onNext(newTxs.map {
                 transactionRecord(fromTransaction: $0)
             })
-        }
-    }
-
-    @objc private func blockHeightUpdated(_ notification: Notification) {
-        if let userInfo = notification.userInfo,
-           let progress = userInfo[CompactBlockProcessorNotificationKey.progress] as? CompactBlockProgress,
-           let targetHeight = progress.targetHeight {
-            lastBlockHeight = targetHeight
-            lastBlockUpdatedSubject.onNext(())
         }
     }
 
@@ -456,6 +436,10 @@ extension ZcashAdapter {
         try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
 
         return url
+    }
+
+    private static func fsBlockDbRootURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(network.networkType.chainName + uniqueId + ZcashSDK.defaultFsCacheName, isDirectory: true)
     }
 
     private static func cacheDbURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
