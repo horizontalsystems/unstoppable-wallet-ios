@@ -932,7 +932,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Settings -> Privacy
 
-"settings.privacy" = "Privacy";
+"settings.privacy" = "Gizlilik";
 "settings.privacy.description" = "Unstoppable herhangi bir veri toplamaz veya kullanıcıları hakkında herhangi bir veriyi ifşa edebilecek analiz araçları kullanmaz. Unstoppable cüzdanı kullanıcıları için yüksek düzeyde gizlilik sağlamak üzere tasarlanmıştır.";
 "settings.privacy.statement.user_data_storage" = "Kullanıcı verileri her zaman kullanıcının cihazında kalır.";
 "settings.privacy.statement.data_usage" = "Bu cüzdan, kullanıcılar hakkında herhangi bir veri toplamaz.";
@@ -1016,13 +1016,13 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "settings.icloud_sync.title" = "iCloud Eşitleme";
 "settings.icloud_sync.contact_book" = "Kişileri Eşitle";
 "settings.icloud_sync.description" = "Birden fazla aygıtta kolay yedekleme ve erişim için ödeme kişilerini iCloud ile eşzamanlayın.";
-"settings.icloud_sync.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+"settings.icloud_sync.merge_disclaimer" = "Aygıtta bulunan kişileriniz iCloud'da saklananlarla birleştirilir.";
 
 "settings.icloud_sync.alert.title" = "iCloud Eşitleme";
-"settings.icloud_sync.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+"settings.icloud_sync.alert.description" = "Cihazınızda iCloud Saklama Alanı'nın etkin olup olmadığını kontrol edin.";
 
-"settings.icloud_sync.alert_error.title" = "iCloud Error";
-"settings.icloud_sync.alert_error.description" = "Cannot connect to iCloud, this may be because iCloud storage not available on your device, or disabled for Unstoppable app";
+"settings.icloud_sync.alert_error.title" = "iCloud Hatası";
+"settings.icloud_sync.alert_error.description" = "iCloud'a bağlanılamıyor, bunun nedeni iCloud saklama alanının aygıtınızda kullanılamaması veya Unstoppable uygulaması için devre dışı bırakılması olabilir";
 
 // Set PIN
 
