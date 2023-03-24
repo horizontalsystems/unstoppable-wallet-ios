@@ -21,6 +21,15 @@ class ProChartFetcher {
 
 extension ProChartFetcher: IMetricChartFetcher {
 
+    var intervals: [HsTimePeriod] {
+        switch type {
+        case .dexLiquidity:
+            return [.month1, .month3, .month6, .year1]
+        default:
+            return [.day1, .week1, .week2, .month1, .month3, .month6, .year1]
+        }
+    }
+
     var valueType: MetricChartModule.ValueType {
         switch type {
         case .activeAddresses, .txCount: return .counter
