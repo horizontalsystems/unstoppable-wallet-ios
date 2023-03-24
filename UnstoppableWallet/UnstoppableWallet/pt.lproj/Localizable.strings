@@ -541,8 +541,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "market.advanced_search_results.title" = "Resultados";
 
-"market.global.total_market_cap.title" = "Total Market Cap";
-"market.global.total_market_cap.description" = "Total market value of all cryptocurrencies";
+"market.global.total_market_cap.title" = "Capitalização Total de Mercado";
+"market.global.total_market_cap.description" = "Valor total de mercado de todas as criptomoedas";
 
 "market.global.volume_24h.title" = "Volume em 24h";
 "market.global.volume_24h.description" = "The 24h trading volume of crypto market";
@@ -988,7 +988,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "contacts.add_address.add_to_contact" = "Adicionar ao Contato Existente";
 "contacts.add_address.exist_address" = "Este endereço já está em uso para %@";
 
-"contacts.more.title" = "More";
+"contacts.more.title" = "Mais";
 "contacts.more.import" = "Restore";
 "contacts.more.export" = "Backup";
 
