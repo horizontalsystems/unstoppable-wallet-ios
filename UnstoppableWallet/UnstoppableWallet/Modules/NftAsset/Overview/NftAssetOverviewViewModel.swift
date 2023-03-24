@@ -231,7 +231,7 @@ extension NftAssetOverviewViewModel {
         let description: String?
         let contractAddress: String
         let tokenId: String
-        let schemaName: String
+        let schemaName: String?
         let blockchain: String
         let links: [LinkViewItem]
         let sendVisible: Bool

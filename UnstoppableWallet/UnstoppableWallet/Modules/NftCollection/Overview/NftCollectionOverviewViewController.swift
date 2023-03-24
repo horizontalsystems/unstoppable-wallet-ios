@@ -270,6 +270,7 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
                                         },
                                         .margin8,
                                         .badge { component in
+                                            component.isHidden = viewItem.schema == nil
                                             component.badgeView.set(style: .small)
                                             component.badgeView.text = viewItem.schema
                                         },

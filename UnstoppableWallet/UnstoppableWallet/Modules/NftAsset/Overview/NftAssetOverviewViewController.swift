@@ -594,7 +594,18 @@ extension NftAssetOverviewViewController: SectionsDataSource {
     }
 
     private func detailsSections(viewItem: NftAssetOverviewViewModel.ViewItem) -> [SectionProtocol] {
-        [
+        var rows: [RowProtocol] = [
+            contractAddressRow(value: viewItem.contractAddress),
+            detailRow(title: "nft_asset.details.token_id".localized, value: viewItem.tokenId)
+        ]
+
+        if let schemaName = viewItem.schemaName {
+            rows.append(detailRow(title: "nft_asset.details.token_standard".localized, value: schemaName))
+        }
+
+        rows.append(detailRow(title: "nft_asset.details.blockchain".localized, value: viewItem.blockchain, isLast: true))
+
+        return [
             Section(
                     id: "details-header",
                     rows: [
@@ -605,12 +616,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                     id: "details",
                     headerState: .margin(height: .margin12),
                     footerState: .margin(height: .margin24),
-                    rows: [
-                        contractAddressRow(value: viewItem.contractAddress),
-                        detailRow(title: "nft_asset.details.token_id".localized, value: viewItem.tokenId),
-                        detailRow(title: "nft_asset.details.token_standard".localized, value: viewItem.schemaName),
-                        detailRow(title: "nft_asset.details.blockchain".localized, value: viewItem.blockchain, isLast: true)
-                    ]
+                    rows: rows
             )
         ]
     }
