@@ -9310,8 +9310,9 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/zcash-hackworks/zcash-light-client-ffi";
 			requirement = {
-				kind = exactVersion;
-				version = 0.1.1;
+				kind = versionRange;
+				maximumVersion = 1.0.0;
+				minimumVersion = 0.2.0;
 			};
 		};
 		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */ = {
@@ -9487,7 +9488,7 @@
 			repositoryURL = "https://github.com/zcash/ZcashLightClientKit";
 			requirement = {
 				kind = exactVersion;
-				version = "0.18.0-beta";
+				version = "0.19.1-beta";
 			};
 		};
 		D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */ = {
