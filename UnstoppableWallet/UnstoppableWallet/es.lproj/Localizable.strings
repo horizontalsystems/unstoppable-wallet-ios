@@ -680,24 +680,24 @@
 
 "coin_analytics.audits" = "Auditorias";
 "coin_analytics.audits.issues" = "Issues";
-"coin_analytics.audits.no_reports" = "No audit reports";
+"coin_analytics.audits.no_reports" = "No hay reportes de auditoría";
 
 "coin_analytics.last_30d" = "last 30d";
 "coin_analytics.current" = "current";
-"coin_analytics.rank" = "Rank";
-"coin_analytics.30_day_rank" = "30-Day Rank";
-"coin_analytics.30_day_volume" = "30-Day Volume";
+"coin_analytics.rank" = "Puesto";
+"coin_analytics.30_day_rank" = "Rango de 30 días";
+"coin_analytics.30_day_volume" = "Volumen de 30 días";
 
 // Coin Page -> Markets
 
-"coin_markets.empty" = "No data available";
+"coin_markets.empty" = "No hay datos disponibles";
 
 // Coin Page -> Tweets
 
-"coin_tweets.reference_type.retweeted" = "Retweeted @%@";
-"coin_tweets.reference_type.quoted" = "Quoted @%@";
-"coin_tweets.reference_type.replied" = "Replied to @%@";
-"coin_tweets.no_tweets_yet" = "No tweets yet";
+"coin_tweets.reference_type.retweeted" = "Retwitteado por %@";
+"coin_tweets.reference_type.quoted" = "Cotizado %@";
+"coin_tweets.reference_type.replied" = "Respondió a @%@";
+"coin_tweets.no_tweets_yet" = "Aún no hay tweets";
 "coin_tweets.not_available" = "No twitter available";
 "coin_tweets.see_on_twitter" = "See on Twitter";
 
@@ -1050,7 +1050,7 @@
 "chart.market_cap" = "Capitalización del Mercado";
 "chart.volume" = "Volumen (24St)";
 "chart.circulation" = "In Circulation";
-"chart.selected.volume" = "Volume";
+"chart.selected.volume" = "Volumen";
 
 "chart.market.header" = "Mercado";
 "chart.market.market_cap" = "Capitalización del Mercado";
@@ -1232,7 +1232,7 @@
 "manage_account.name" = "Nombre";
 "manage_account.recovery_phrase" = "Frase de Recuperación";
 "manage_account.public_keys" = "Claves públicas";
-"manage_account.private_keys" = "Private Keys";
+"manage_account.private_keys" = "Claves privadas";
 "manage_account.backup_recovery_phrase" = "Respaldar Frase de Recuperación";
 "manage_account.unlink" = "Desenlazar";
 
@@ -1246,7 +1246,7 @@
 
 // Manage Account -> Private Keys
 
-"private_keys.title" = "Private Keys";
+"private_keys.title" = "Claves privadas";
 "private_keys.evm_private_key" = "Clave Privada EVM";
 "private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
@@ -1268,7 +1268,7 @@
 "birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
 "birthday_input.new_wallet" = "Nuevo Monedero";
 "birthday_input.new_wallet.description" = "Doesn't have any transactions";
-"birthday_input.old_wallet" = "Existing Wallet";
+"birthday_input.old_wallet" = "Cartera existente";
 "birthday_input.old_wallet.description" = "Has transactions";
 "birthday_input.input_placeholder" = "%@ (opcional)";
 
@@ -1292,7 +1292,7 @@
 
 // Send Settings
 
-"evm_send_settings.nonce" = "Transaction Nonce";
+"evm_send_settings.nonce" = "Transacción Nonce";
 "evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
 "evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
 "evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
