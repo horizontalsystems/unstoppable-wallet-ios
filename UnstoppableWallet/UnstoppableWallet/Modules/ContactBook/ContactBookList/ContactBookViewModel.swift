@@ -114,6 +114,9 @@ extension ContactBookViewModel {
         service.replace(contacts: contacts)
     }
 
+    func blockchainName(blockchainUid: String) -> String? {
+        service.blockchainName(blockchainUid: blockchainUid)
+    }
 
 }
 

@@ -132,7 +132,7 @@ class BirthdayInputViewController: KeyboardAwareViewController {
                     .highlightedDescription(text: "restore_setting.download.disclaimer".localized)
                 ],
                 buttons: [
-                    .init(style: .yellow, title: "button.continue".localized) { [ weak self] in self?.setOldTypeActive(showKeyboard: showKeyboard) },
+                    .init(style: .yellow, title: "button.continue".localized, actionType: .afterClose) { [ weak self] in self?.setOldTypeActive(showKeyboard: showKeyboard) },
                     .init(style: .transparent, title: "button.cancel".localized)
                 ]
         )

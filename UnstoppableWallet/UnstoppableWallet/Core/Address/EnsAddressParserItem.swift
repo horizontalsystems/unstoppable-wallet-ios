@@ -35,7 +35,7 @@ extension EnsAddressParserItem: IAddressParserItem {
                     let address = Address(raw: resolvedAddress.hex, domain: address)
                     return self?.rawAddressHandle(address: address) ?? Single.just(address)
                 }.catchError { _ in
-                    .error(AddressService.AddressError.invalidAddress)
+                    .error(AddressService.AddressError.invalidAddress(blockchainName: nil))
                 }
     }
 

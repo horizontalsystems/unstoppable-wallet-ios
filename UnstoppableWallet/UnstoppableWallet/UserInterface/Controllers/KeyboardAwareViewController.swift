@@ -2,6 +2,7 @@ import ThemeKit
 import UIKit
 import RxSwift
 import RxCocoa
+import UIExtensions
 
 class KeyboardAwareViewController: ThemeViewController {
     private let scrollViews: [UIScrollView]
@@ -220,12 +221,11 @@ class KeyboardAwareViewController: ThemeViewController {
             view.endEditing(true)
         }
 
-        if let programmaticallyDismissedViewController = viewControllerToPresent as? IDismissDelegate {
-            programmaticallyDismissedViewController.onUserDismissed = { [weak self] in
+        if let programmaticallyDismissedViewController = viewControllerToPresent as? IDeinitDelegate {
+            programmaticallyDismissedViewController.onDeinit = { [weak self] in
                 self?.observeKeyboard(true)
             }
         }
-        
         viewControllerToPresent.presentationController?.delegate = self
 
         let awaitClosingKeyboardTime: TimeInterval = keyboardFrame == nil ? 0 : 0.05
@@ -305,4 +305,3 @@ extension KeyboardAwareViewController: UIGestureRecognizerDelegate {
     }
 
 }
-
