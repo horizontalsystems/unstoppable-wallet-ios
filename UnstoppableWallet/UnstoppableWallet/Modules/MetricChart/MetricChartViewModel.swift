@@ -47,8 +47,14 @@ class MetricChartViewModel {
             chartInfoRelay.accept(nil)
         case .completed(let itemData):
             loadingRelay.accept(false)
-            errorRelay.accept(false)
-            chartInfoRelay.accept(factory.convert(itemData: itemData, overriddenValue: overriddenValue, valueType: service.valueType))
+
+            if let viewItem = factory.convert(itemData: itemData, overriddenValue: overriddenValue, valueType: service.valueType) {
+                errorRelay.accept(false)
+                chartInfoRelay.accept(viewItem)
+            } else {
+                errorRelay.accept(true)
+                chartInfoRelay.accept(nil)
+            }
         }
     }
 
