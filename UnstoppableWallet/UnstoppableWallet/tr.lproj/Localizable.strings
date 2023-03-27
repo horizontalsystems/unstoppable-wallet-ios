@@ -266,7 +266,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "send.available_balance" = "Mevcut Bakiye";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
-"send.error.invalid" = "Invalid";
+"send.error.invalid" = "Geçersiz";
 "send.error.address" = "Adres";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 saat";
@@ -968,7 +968,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Settings -> Contacts
 
 "contacts.title" = "Kişiler";
-"contacts.list.search_placeholder" = "Search by name";
+"contacts.list.search_placeholder" = "İsme göre ara";
 "contacts.list.not_found" = "Eklenmiş bir kişiniz yok";
 "contacts.list.not_found_search" = "No results found";
 "contacts.add_new_contact" = "Yeni Kişi Ekle";
