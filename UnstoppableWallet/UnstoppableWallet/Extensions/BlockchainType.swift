@@ -49,7 +49,11 @@ extension BlockchainType {
             case .mnemonic:
                 return [[.derivation: MnemonicDerivation.bip84.rawValue]]
             case .hdExtendedKey(let key):
-                return [[.derivation: key.info.purpose.mnemonicDerivation.rawValue]]
+                if let purpose = key.purposes.first {
+                    return [[.derivation: purpose.mnemonicDerivation.rawValue]]
+                } else {
+                    return []
+                }
             default:
                 return []
             }
@@ -124,19 +128,10 @@ extension BlockchainType {
         case .mnemonic:
             return true
         case .hdExtendedKey(let key):
-            let info = key.info
-
-            switch (self, info.coinType, info.purpose) {
-            case (.bitcoin, .bitcoin, .bip44): return true
-            case (.bitcoin, .bitcoin, .bip49): return true
-            case (.bitcoin, .bitcoin, .bip84): return true
-            case (.bitcoinCash, .bitcoin, .bip44): return true
-            case (.litecoin, .bitcoin, .bip44): return true
-            case (.litecoin, .bitcoin, .bip49): return true
-            case (.litecoin, .bitcoin, .bip84): return true
-            case (.litecoin, .litecoin, .bip44): return true
-            case (.litecoin, .litecoin, .bip49): return true
-            case (.dash, .bitcoin, .bip44): return true
+            switch self {
+            case .bitcoin: return key.coinTypes.contains(where: { $0 == .bitcoin })
+            case .litecoin: return key.coinTypes.contains(where: { $0 == .litecoin })
+            case .bitcoinCash, .dash: return key.coinTypes.contains(where: { $0 == .bitcoin }) && key.purposes.contains(where: { $0 == .bip44 })
             default: return false
             }
         case .evmPrivateKey, .evmAddress:
@@ -165,7 +160,7 @@ extension BlockchainType {
 
     var description: String {
         switch self {
-        case .bitcoin: return "BTC (BIP44, BIP49, BIP84)"
+        case .bitcoin: return "BTC (BIP44, BIP49, BIP84, BIP86)"
         case .ethereum: return "ETH, ERC20 tokens"
         case .binanceSmartChain: return "BNB, BEP20 tokens"
         case .polygon: return "MATIC, ERC20 tokens"
@@ -177,7 +172,7 @@ extension BlockchainType {
         case .zcash: return "ZEC"
         case .dash: return "DASH"
         case .bitcoinCash: return "BCH (Legacy, CashAddress)"
-        case .litecoin: return "LTC (BIP44, BIP49, BIP84)"
+        case .litecoin: return "LTC (BIP44, BIP49, BIP84, BIP86)"
         case .binanceChain: return "BNB, BEP2 tokens"
         default: return ""
         }
