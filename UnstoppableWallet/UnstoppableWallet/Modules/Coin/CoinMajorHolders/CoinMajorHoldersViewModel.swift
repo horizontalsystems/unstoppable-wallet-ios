@@ -53,7 +53,7 @@ class CoinMajorHoldersViewModel {
             ViewItem(
                     order: "\(index + 1)",
                     percent: percentFormatter.string(from: (item.percentage / 100) as NSNumber),
-                    quantity: ValueFormatter.instance.formatShort(value: item.balance),
+                    quantity: ValueFormatter.instance.formatShort(value: item.balance, decimalCount: 0, symbol: service.coin.code),
                     labeledAddress: service.labeled(address: item.address),
                     address: item.address
             )
