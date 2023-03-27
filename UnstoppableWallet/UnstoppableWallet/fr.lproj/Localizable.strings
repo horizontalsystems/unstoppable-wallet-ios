@@ -85,7 +85,7 @@
 "number.trillion" = "%@T";
 "number.quadrillion" = "%@P";
 
-"selector.any" = "Any";
+"selector.any" = "N'importe lequel";
 
 // Access Camera
 
@@ -264,7 +264,7 @@
 "send.available_balance" = "Solde disponible";
 "send.max_button" = "Max";
 "send.next_button" = "Suivant";
-"send.error.invalid" = "Invalid";
+"send.error.invalid" = "Invalide";
 "send.error.address" = "Adresses";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 heure";
@@ -284,7 +284,7 @@
 
 "send.confirmation.you_send" = "Vous envoyez";
 "send.confirmation.to" = "À";
-"send.confirmation.contact_name" = "Contact Name";
+"send.confirmation.contact_name" = "Nom du contact";
 "send.confirmation.domain" = "Domaine";
 "send.confirmation.address" = "Adresses";
 "send.confirmation.account" = "Compte";
@@ -424,7 +424,7 @@
 "market.category.overview" = "Synthèse";
 "market.category.posts" = "Infos";
 "market.category.watchlist" = "Liste de suivi";
-"market.total_market_cap" = "Total M.Cap";
+"market.total_market_cap" = "Cap Totale";
 "market.24h_volume" = "Volume des dernières 24h";
 "market.defi_cap" = "Cap DeFi";
 "market.defi_tvl" = "TVL en DeFi";
@@ -540,17 +540,17 @@
 
 "market.advanced_search_results.title" = "Résultat";
 
-"market.global.total_market_cap.title" = "Total Market Cap";
-"market.global.total_market_cap.description" = "Total market value of all cryptocurrencies";
+"market.global.total_market_cap.title" = "Capitalisation de marché totale";
+"market.global.total_market_cap.description" = "Valeur de marché totale de toutes les cryptomonnaies";
 
 "market.global.volume_24h.title" = "Volume des dernières 24h";
-"market.global.volume_24h.description" = "The 24h trading volume of crypto market";
+"market.global.volume_24h.description" = "Le volume de trading de 24h du marché des cryptomonnaies";
 
 "market.global.defi_cap.title" = "Cap DeFi";
-"market.global.defi_cap.description" = "Total market value of DeFi projects";
+"market.global.defi_cap.description" = "Valeur de marché totale des projets DeFi";
 
 "market.global.tvl_in_defi.title" = "TVL en DeFi";
-"market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.global.tvl_in_defi.description" = "Valeur totale verrouillée (TVL) dans DeFi";
 "market.global.tvl_in_defi.multi_chain" = "Multi-chaîne";
 "market.global.tvl_in_defi.filter_by_chain" = "Filtrer par chaîne";
 
@@ -583,7 +583,7 @@
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Types de pièces";
 "coin_overview.show_more" = "Afficher plus";
-"coin_overview.show_less" = "Show Less";
+"coin_overview.show_less" = "Afficher moins";
 "coin_overview.links" = "Liens";
 
 "coin_overview.guide" = "Tutoriel";
@@ -592,12 +592,12 @@
 
 // Coin Page -> Analytics
 
-"coin_analytics.not_available" = "This project has no analytics data";
-"coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.not_available" = "Ce projet n'a pas de données d'analyse";
+"coin_analytics.locked" = "Cette page n'est disponible que pour les utilisateurs Premium Unstoppable Wallet";
 
 "coin_analytics.cex_volume" = "Volume CEX";
 "coin_analytics.cex_volume_rank" = "Rang de volume CEX";
-"coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
+"coin_analytics.cex_volume_rank.description" = "Les tokens classés en fonction du volume de trading du token sur les exchanges centralisés.";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
 "coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
@@ -605,7 +605,7 @@
 
 "coin_analytics.dex_volume" = "Volume DEX";
 "coin_analytics.dex_volume_rank" = "Rang de volume DEX";
-"coin_analytics.dex_volume_rank.description" = "Tokens ranked by trading volume for the token on decentralized exchanges.";
+"coin_analytics.dex_volume_rank.description" = "Les tokens classés en fonction du volume de trading du token sur les exchanges décentralisés.";
 "coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over a 30-day period.";
 "coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
 "coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
@@ -615,8 +615,8 @@
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
 
 "coin_analytics.dex_liquidity" = "Liquidité DEX";
-"coin_analytics.dex_liquidity_rank" = "DEX Liquidity Rank";
-"coin_analytics.dex_liquidity_rank.description" = "Tokens ranked by available liquidity on decentralized exchanges.";
+"coin_analytics.dex_liquidity_rank" = "Classement de liquidité DEX";
+"coin_analytics.dex_liquidity_rank.description" = "Les tokens classés par liquidité disponible sur les exchanges décentralisés.";
 "coin_analytics.dex_liquidity.info1" = "Total currently available liquidity for the token on leading decentralized exchanges.";
 "coin_analytics.dex_liquidity.info2" = "Chart showing variation in available liquidity for the token on leading decentralized exchanges over 1 year period.";
 "coin_analytics.dex_liquidity.info3" = "List of all tokens ranked based on available liquidity for the token on leading decentralized exchanges.";
@@ -625,8 +625,8 @@
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
 "coin_analytics.active_addresses" = "Adresses actives";
-"coin_analytics.active_addresses_rank" = "Active Addresses Rank";
-"coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
+"coin_analytics.active_addresses_rank" = "Classement des adresses actives";
+"coin_analytics.active_addresses_rank.description" = "Tokens classés par nombre d'adresses uniques effectuant des transactions avec le token.";
 "coin_analytics.active_addresses.info1" = "Total number of unique blockchain addresses transacting with token over 30-day period.
 ";
 "coin_analytics.active_addresses.info2" = "Chart showing variation in active address count over 1 year period.";
@@ -634,8 +634,8 @@
 "coin_analytics.active_addresses.info4" = "List of all tokens ranked based on the number of active wallets transacting with the token over 24h / 7D / 1M intervals.";
 
 "coin_analytics.transaction_count" = "Nombre de transactions";
-"coin_analytics.transaction_count_rank" = "Tx Count Rank";
-"coin_analytics.transaction_count_rank.description" = "Tokens ranked by number of transactions on a blockchain.";
+"coin_analytics.transaction_count_rank" = "Classement par nombre de tr.";
+"coin_analytics.transaction_count_rank.description" = "Tokens classés en fonction du nombre de transactions sur une blockchain.";
 "coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
 "coin_analytics.transaction_count.info2" = "Chart showing variation in transaction count over 1 year period.";
 "coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
@@ -646,27 +646,27 @@
 "coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
-"coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
-"coin_analytics.holders.count" = "Total Holders: %@";
+"coin_analytics.holders.in_top_10_addresses" = "dans les 10 premiers détenteurs";
+"coin_analytics.holders.count" = "Nombre total de détenteurs : %@";
 "coin_analytics.holders.see_all" = "Tout Afficher";
 
 "coin_analytics.project_tvl" = "Project TVL";
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
 "coin_analytics.project_tvl.info_title" = "Project TVL (Total Value Locked)";
 "coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
-"coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
-"coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
+"coin_analytics.project_tvl.info2" = "Graphique montrant la variation valeur totale verrouillée dans les contrats intelligents du projet sur une période de 1 an.";
+"coin_analytics.project_tvl.info3" = "Rang du token en fonction de la valeur totale verrouillée actuelle.";
+"coin_analytics.project_tvl.info4" = "Liste de tous les tokens classés en fonction de la valeur totale verrouillée.";
+"coin_analytics.project_tvl.info5" = "Rapport entre la capitalisation boursière et la capacité de production du projet.";
 
-"coin_analytics.project_revenue" = "Project Revenue";
-"coin_analytics.project_revenue_rank" = "Project Revenue Rank";
-"coin_analytics.project_revenue_rank.description" = "Tokens ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
-"coin_analytics.project_revenue.info1" = "Total revenue generated for the token holders over 30-day period. Typically, fees are collected by token stakers or though a token burn mechanism.";
-"coin_analytics.project_revenue.info2" = "Token's rank based on the revenue generated over 30-day period for token stakers.";
-"coin_analytics.project_revenue.info3" = "List of all tokens ranked based on the revenue generated for token stakers over 24h / 7D / 1M intervals.";
+"coin_analytics.project_revenue" = "Revenus du projet";
+"coin_analytics.project_revenue_rank" = "Classement en fonction des revenus du projet";
+"coin_analytics.project_revenue_rank.description" = "Tokens classés en fonction des revenus générés pour les détenteurs via des mécanismes i.e. staking ou token burns.";
+"coin_analytics.project_revenue.info1" = "Total des revenus générés pour les détenteurs de tokens sur une période de 30 jours. Généralement, les frais sont perçus par les détenteurs de tokens ou bien par le biais d'un mécanisme de brûlage de tokens.";
+"coin_analytics.project_revenue.info2" = "Classement du token basé sur les revenus générés sur une période de 30 jours pour les stakers de token.";
+"coin_analytics.project_revenue.info3" = "Liste de tous les tokens classés en fonction des revenus générés pour les stakers de tokens sur des intervalles de 24h / 7J / 1M.";
 
-"coin_analytics.other_data" = "Other Data";
+"coin_analytics.other_data" = "Autres données";
 
 "coin_analytics.reports" = "Rapports";
 
@@ -684,11 +684,11 @@
 "coin_analytics.audits.issues" = "Anomalies";
 "coin_analytics.audits.no_reports" = "Aucun rapport d'audit";
 
-"coin_analytics.last_30d" = "last 30d";
-"coin_analytics.current" = "current";
+"coin_analytics.last_30d" = "30 derniers j.";
+"coin_analytics.current" = "actuel";
 "coin_analytics.rank" = "Rang";
-"coin_analytics.30_day_rank" = "30-Day Rank";
-"coin_analytics.30_day_volume" = "30-Day Volume";
+"coin_analytics.30_day_rank" = "Classement sur 30 jours";
+"coin_analytics.30_day_volume" = "Volume sur 30 jours";
 
 // Coin Page -> Markets
 
@@ -783,7 +783,7 @@
 "tx_info.transaction_id" = "ID de transaction";
 "tx_info.to_hash" = "À";
 "tx_info.spender" = "Dépendant";
-"tx_info.contact_name" = "Contact Name";
+"tx_info.contact_name" = "Nom du contact";
 "tx_info.button_explorer" = "Afficher sur %@";
 "tx_info.rate" = "Taux historique";
 "tx_info.options.speed_up" = "Accélérer";
