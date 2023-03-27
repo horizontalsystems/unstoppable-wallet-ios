@@ -266,7 +266,7 @@
 "send.available_balance" = "可用余额";
 "send.max_button" = "最多";
 "send.next_button" = "下一步";
-"send.error.invalid" = "Invalid";
+"send.error.invalid" = "无效";
 "send.error.address" = "地址";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 小时";
@@ -287,7 +287,7 @@
 
 "send.confirmation.you_send" = "您发送";
 "send.confirmation.to" = "接收人";
-"send.confirmation.contact_name" = "Contact Name";
+"send.confirmation.contact_name" = "联系人姓名";
 "send.confirmation.domain" = "域名";
 "send.confirmation.address" = "地址";
 "send.confirmation.account" = "账户";
@@ -427,7 +427,7 @@
 "market.category.overview" = "行情";
 "market.category.posts" = "发现";
 "market.category.watchlist" = "关注";
-"market.total_market_cap" = "Total M.Cap";
+"market.total_market_cap" = "总市值";
 "market.24h_volume" = "24h成交量";
 "market.defi_cap" = "DeFi市场价值";
 "market.defi_tvl" = "DeFi中的TVL";
@@ -543,7 +543,7 @@
 
 "market.advanced_search_results.title" = "搜索结果";
 
-"market.global.total_market_cap.title" = "Total Market Cap";
+"market.global.total_market_cap.title" = "总市场价值";
 "market.global.total_market_cap.description" = "Total market value of all cryptocurrencies";
 
 "market.global.volume_24h.title" = "24h成交量";
@@ -648,8 +648,8 @@
 "coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
-"coin_analytics.holders.in_top_10_addresses" = "in top 10 addresses";
-"coin_analytics.holders.count" = "Holders: %@";
+"coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
+"coin_analytics.holders.count" = "Total Holders: %@";
 "coin_analytics.holders.see_all" = "查看全部";
 
 "coin_analytics.project_tvl" = "Project TVL";
@@ -785,7 +785,7 @@
 "tx_info.transaction_id" = "交易ID";
 "tx_info.to_hash" = "接收人";
 "tx_info.spender" = "消费人";
-"tx_info.contact_name" = "Contact Name";
+"tx_info.contact_name" = "联系人姓名";
 "tx_info.button_explorer" = "查看于%@";
 "tx_info.rate" = "历史价格";
 "tx_info.options.speed_up" = "加速";
