@@ -31,8 +31,13 @@ class BitcoinAdapter: BitcoinBaseAdapter {
                     logger: logger
             )
         case let .hdExtendedKey(key):
+            guard let derivation = wallet.coinSettings.derivation else {
+                throw AdapterError.wrongParameters
+            }
+
             bitcoinKit = try BitcoinKit.Kit(
                     extendedKey: key,
+                    purpose: derivation.purpose,
                     walletId: wallet.account.id,
                     syncMode: syncMode,
                     networkType: networkType,

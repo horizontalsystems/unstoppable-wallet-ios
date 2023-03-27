@@ -25,9 +25,9 @@ enum AccountType {
     var supportedDerivations: [MnemonicDerivation] {
         switch self {
         case .mnemonic:
-            return [.bip44, .bip49, .bip84]
+            return [.bip44, .bip49, .bip84, .bip86]
         case .hdExtendedKey(let key):
-            return [key.info.purpose.mnemonicDerivation]
+            return key.purposes.map { $0.mnemonicDerivation }
         default:
             return []
         }
@@ -57,26 +57,17 @@ enum AccountType {
         case .hdExtendedKey(let key):
             switch configuredToken.blockchainType {
             case .bitcoin, .litecoin:
-                guard let derivation = configuredToken.coinSettings.derivation, key.info.purpose.mnemonicDerivation == derivation else {
+                guard let derivation = configuredToken.coinSettings.derivation, key.purposes.contains(where: { $0.mnemonicDerivation == derivation }) else {
                     return false
                 }
 
-                switch configuredToken.blockchainType {
-                case .bitcoin:
-                    return key.info.coinType == .bitcoin
-                case .litecoin:
-                    switch (key.info.coinType, derivation) {
-                    case (.bitcoin, .bip44): return true
-                    case (.bitcoin, .bip49): return true
-                    case (.bitcoin, .bip84): return true
-                    case (.litecoin, .bip44): return true
-                    case (.litecoin, .bip49): return true
-                    default: return false
-                    }
-                default: return false
+                if configuredToken.blockchainType == .bitcoin {
+                    return key.coinTypes.contains(where: { $0 == .bitcoin })
                 }
+
+                return key.coinTypes.contains(where: { $0 == .litecoin })
             case .bitcoinCash, .dash:
-                return key.info.purpose == .bip44
+                return key.purposes.contains(where: { $0 == .bip44 })
             default:
                 return false
             }
