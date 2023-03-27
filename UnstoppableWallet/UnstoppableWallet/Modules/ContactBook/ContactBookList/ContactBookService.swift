@@ -6,6 +6,7 @@ import EvmKit
 
 class ContactBookService {
     private let disposeBag = DisposeBag()
+    private let marketKit: MarketKit.Kit
     private let contactManager: ContactBookManager
     private let blockchainType: BlockchainType?
 
@@ -51,7 +52,8 @@ class ContactBookService {
         return items.sorted()
     }
 
-    init(contactManager: ContactBookManager, blockchainType: BlockchainType?) {
+    init(marketKit: MarketKit.Kit, contactManager: ContactBookManager, blockchainType: BlockchainType?) {
+        self.marketKit = marketKit
         self.contactManager = contactManager
         self.blockchainType = blockchainType
 
@@ -98,6 +100,10 @@ extension ContactBookService {
 
     func replace(contacts: [BackupContact]) {
         try? contactManager.restore(contacts: contacts)
+    }
+
+    func blockchainName(blockchainUid: String) -> String? {
+        try? marketKit.blockchain(uid: blockchainUid)?.name
     }
 
 }

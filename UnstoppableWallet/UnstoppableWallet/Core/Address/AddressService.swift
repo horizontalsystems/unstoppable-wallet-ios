@@ -11,6 +11,7 @@ class AddressService {
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.address-service")
 
     private let disposeBag = DisposeBag()
+    private let marketKit: MarketKit.Kit
     private var addressParserDisposeBag = DisposeBag()
     private var customErrorDisposeBag = DisposeBag()
 
@@ -52,7 +53,8 @@ class AddressService {
         }
     }
 
-    init(mode: Mode, contactBookManager: ContactBookManager?, blockchainType: BlockchainType, initialAddress: Address? = nil) {
+    init(mode: Mode, marketKit: MarketKit.Kit, contactBookManager: ContactBookManager?, blockchainType: BlockchainType, initialAddress: Address? = nil) {
+        self.marketKit = marketKit
         self.blockchainType = blockchainType
         self.contactBookManager = contactBookManager
 
@@ -107,7 +109,7 @@ class AddressService {
         }
 
         switch error {
-        case .validationError: state = .validationError
+        case .validationError: state = .validationError(blockchainName: try? marketKit.blockchain(uid: blockchainType.uid)?.name)
         case .fetchError(let error): state = .fetchError(error)
         }
     }
@@ -177,7 +179,7 @@ extension AddressService {
         case loading
         case empty
         case success(Address)
-        case validationError
+        case validationError(blockchainName: String?)
         case fetchError(Error)
 
         var address: Address? {
@@ -197,7 +199,7 @@ extension AddressService {
     }
 
     enum AddressError: Error {
-        case invalidAddress
+        case invalidAddress(blockchainName: String?)
     }
 
     enum Mode {

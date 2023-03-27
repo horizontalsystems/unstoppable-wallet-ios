@@ -147,10 +147,6 @@ extension IPresentDelegate {
 
 }
 
-protocol IDismissDelegate: AnyObject {      // for controllers with programmatically dismiss methods. (Ex. if need to handle keyboard in parent vc)
-    var onUserDismissed: (() -> ())? { get set }
-}
-
 protocol Warning {}
 
 protocol IErrorService: AnyObject {

@@ -8,15 +8,13 @@ protocol IScanQrViewControllerDelegate: AnyObject {
     func didFetch(string: String)
 }
 
-class ScanQrViewController: ThemeViewController, IDismissDelegate {
+class ScanQrViewController: ThemeViewController {
     weak var delegate: IScanQrViewControllerDelegate?
 
     private let scanView: ScanQrView
 
     private let reportAfterDismiss: Bool
     private let pasteEnabled: Bool
-
-    var onUserDismissed: (() -> ())?
 
     init(reportAfterDismiss: Bool = false, pasteEnabled: Bool = false) {
         self.reportAfterDismiss = reportAfterDismiss
@@ -84,7 +82,6 @@ class ScanQrViewController: ThemeViewController, IDismissDelegate {
     }
 
     @objc private func onCancel() {
-        onUserDismissed?()
         dismiss(animated: true)
     }
 
@@ -93,7 +90,6 @@ class ScanQrViewController: ThemeViewController, IDismissDelegate {
     }
 
     private func onFetch(string: String) {
-        onUserDismissed?()
         if reportAfterDismiss {
             dismiss(animated: true) { [weak self] in
                 self?.delegate?.didFetch(string: string)

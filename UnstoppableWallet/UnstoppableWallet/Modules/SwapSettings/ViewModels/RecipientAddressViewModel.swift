@@ -73,8 +73,11 @@ class RecipientAddressViewModel {
             isLoadingRelay.accept(true)
 
             handlerDelegate?.set(address: nil)
-        case .validationError:
-            cautionRelay.accept(editing ? nil : Caution(text: AddressService.AddressError.invalidAddress.smartDescription, type: .error))
+        case .validationError(let blockchainName):
+            cautionRelay.accept(editing ? nil : Caution(
+                    text: AddressService.AddressError.invalidAddress(blockchainName: blockchainName).smartDescription,
+                    type: .error)
+            )
             isSuccessRelay.accept(false)
             isLoadingRelay.accept(false)
 
@@ -144,7 +147,10 @@ extension AddressService.AddressError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .invalidAddress: return "send.error.invalid_address".localized
+        case .invalidAddress(let blockchainName):
+            return ["send.error.invalid".localized, blockchainName, "send.error.address".localized]
+                    .compactMap { $0 }
+                    .joined(separator: " ")
         }
     }
 

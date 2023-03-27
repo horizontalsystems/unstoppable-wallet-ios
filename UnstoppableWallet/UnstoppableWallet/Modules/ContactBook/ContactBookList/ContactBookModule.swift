@@ -120,7 +120,7 @@ extension ContactBookModule {
             return nil
         }
 
-        let service = ContactBookService(contactManager: contactManager, blockchainType: mode.blockchainType)
+        let service = ContactBookService(marketKit: App.shared.marketKit, contactManager: contactManager, blockchainType: mode.blockchainType)
         let viewModel = ContactBookViewModel(service: service)
 
         let viewController = ContactBookViewController(viewModel: viewModel, mode: mode, presented: presented)

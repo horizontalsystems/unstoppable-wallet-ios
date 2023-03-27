@@ -19,7 +19,7 @@ class UdnAddressParserItem {
     }
 
     private func resolve(index: Int = 0, singles: [Single<Result<String, Error>>]) -> Single<Result<String, Error>> {
-        let failure = Single.just(Result<String, Error>.failure(AddressService.AddressError.invalidAddress))
+        let failure = Single.just(Result<String, Error>.failure(AddressService.AddressError.invalidAddress(blockchainName: nil)))
 
         guard index < singles.count else {
             return failure

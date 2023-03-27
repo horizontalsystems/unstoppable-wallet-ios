@@ -5,11 +5,13 @@ import RxCocoa
 import SectionsTableView
 import ComponentKit
 import ThemeKit
+import UIExtensions
 
 class ContactBookAddressViewController: KeyboardAwareViewController {
-    private let disposeBag = DisposeBag()
+    private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
     private let viewModel: ContactBookAddressViewModel
     private let onUpdateAddress: (ContactAddress?) -> ()
+    private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -23,6 +25,9 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
     private let recipientCell: RecipientAddressInputCell
     private let recipientCautionCell: RecipientAddressCautionCell
 
+    private let gradientWrapperView: GradientView?
+    private let doneButton: PrimaryButton?
+
     private var blockchainName: String = ""
     private var addAddressEnabled: Bool = true
 
@@ -32,7 +37,15 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
         recipientCautionCell = RecipientAddressCautionCell(viewModel: addressViewModel)
         self.onUpdateAddress = onUpdateAddress
 
-        super.init(scrollViews: [tableView])
+        if !viewModel.existAddress {
+            gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+            doneButton = PrimaryButton()
+        } else {
+            gradientWrapperView = nil
+            doneButton = nil
+        }
+
+        super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -45,8 +58,8 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
         title = viewModel.title
         navigationItem.largeTitleDisplayMode = .never
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.save".localized, style: .done, target: self, action: #selector(onTapSaveButton))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onCloseConfirmation))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapSaveButton))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onCloseConfirmation))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -58,6 +71,27 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
         tableView.sectionDataSource = self
         tableView.keyboardDismissMode = .interactive
 
+        if let gradientWrapperView {
+            view.addSubview(gradientWrapperView)
+            gradientWrapperView.snp.makeConstraints { maker in
+                maker.height.equalTo(wrapperViewHeight).priority(.high)
+                maker.leading.trailing.bottom.equalToSuperview()
+            }
+            gradientWrapperView.isHidden = viewModel.existAddress
+        }
+
+        if let doneButton {
+            gradientWrapperView?.addSubview(doneButton)
+            doneButton.snp.makeConstraints { maker in
+                maker.top.equalToSuperview().inset(CGFloat.margin32)
+                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+                maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
+            }
+
+            doneButton.set(style: .yellow)
+            doneButton.setTitle("button.done".localized, for: .normal)
+            doneButton.addTarget(self, action: #selector(onTapSaveButton), for: .touchUpInside)
+        }
         tableView.buildSections()
 
         recipientCell.set(inputText: viewModel.initialAddress)
@@ -73,6 +107,7 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
 
         subscribe(disposeBag, viewModel.saveEnabledDriver) { [weak self] enabled in
             self?.addressWasChanged = enabled
+            self?.doneButton?.isEnabled = enabled
         }
         subscribe(disposeBag, viewModel.blockchainNameDriver) { [weak self] name in
             self?.blockchainName = name
@@ -85,6 +120,8 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         isModalInPresentation = addressWasChanged
+
+        setInitialState(bottomPadding: gradientWrapperView?.height ?? 0)
     }
 
     private func handleChangeAddress() {

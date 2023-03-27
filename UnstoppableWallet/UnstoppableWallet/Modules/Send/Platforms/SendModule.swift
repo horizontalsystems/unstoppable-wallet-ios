@@ -56,7 +56,7 @@ class SendModule {
         }
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
-        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), contactBookManager: App.shared.contactManager, blockchainType: token.blockchainType)
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: token.blockchainType)
 
         // Fee
         let feeRateService = FeeRateService(provider: feeRateProvider)
@@ -176,7 +176,7 @@ class SendModule {
                 .append(handler: binanceParserItem)
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
-        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), contactBookManager: App.shared.contactManager, blockchainType: token.blockchainType)
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: token.blockchainType)
 
         let memoService = SendMemoInputService(maxSymbols: 120)
 
@@ -266,7 +266,7 @@ class SendModule {
                 .append(handler: zcashParserItem)
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType)
-        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), contactBookManager: App.shared.contactManager, blockchainType: token.blockchainType)
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: token.blockchainType)
 
         let memoService = SendMemoInputService(maxSymbols: 120)
 
