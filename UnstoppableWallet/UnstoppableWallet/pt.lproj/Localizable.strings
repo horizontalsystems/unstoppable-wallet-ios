@@ -266,7 +266,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "send.available_balance" = "Saldo Disponível";
 "send.max_button" = "Máximo";
 "send.next_button" = "Próximo";
-"send.error.invalid_address" = "Endereço Inválido";
+"send.error.invalid" = "Invalid";
+"send.error.address" = "Endereço";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 hora";
 "send.hodler_locktime_month" = "1 mês";
@@ -425,7 +426,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.category.overview" = "Visão geral";
 "market.category.posts" = "Notícias";
 "market.category.watchlist" = "Lista de observação";
-"market.total_market_cap" = "Valor total de mercado";
+"market.total_market_cap" = "Total M.Cap";
 "market.24h_volume" = "Volume em 24h";
 "market.defi_cap" = "Mercado de DeFi";
 "market.defi_tvl" = "TVL no DeFi";
@@ -541,11 +542,17 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "market.advanced_search_results.title" = "Resultados";
 
-"market.global.total_market_cap.title" = "Valor total de mercado";
+"market.global.total_market_cap.title" = "Capitalização Total de Mercado";
+"market.global.total_market_cap.description" = "Valor total de mercado de todas as criptomoedas";
+
 "market.global.volume_24h.title" = "Volume em 24h";
+"market.global.volume_24h.description" = "The 24h trading volume of crypto market";
+
 "market.global.defi_cap.title" = "Mercado de DeFi";
+"market.global.defi_cap.description" = "Total market value of DeFi projects";
 
 "market.global.tvl_in_defi.title" = "TVL no DeFi";
+"market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
 "market.global.tvl_in_defi.multi_chain" = "Multi-Cadeia";
 "market.global.tvl_in_defi.filter_by_chain" = "Filtrar por cadeia";
 
@@ -592,6 +599,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "coin_analytics.cex_volume" = "Volume CEX";
 "coin_analytics.cex_volume_rank" = "Ranking do Volume CEX";
+"coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
 "coin_analytics.cex_volume.info1" = "Volume total de trading para o token em corretoras centralizadas durante um período de 30 dias.";
 "coin_analytics.cex_volume.info2" = "Gráfico mostrando a variação no volume diário de negociação do token nas principais corretoras centralizadas durante um período de 1 ano.";
 "coin_analytics.cex_volume.info3" = "Classificação do Token baseada no volume de trading em principais corretoras centralizadas durante um período de 30 dias.";
@@ -599,6 +607,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "coin_analytics.dex_volume" = "Volume DEX";
 "coin_analytics.dex_volume_rank" = "Ranking do Volume DEX";
+"coin_analytics.dex_volume_rank.description" = "Tokens ranked by trading volume for the token on decentralized exchanges.";
 "coin_analytics.dex_volume.info1" = "Volume total de trading para o token em corretoras centralizadas durante um período de 30 dias.";
 "coin_analytics.dex_volume.info2" = "Gráfico mostrando a variação no volume diário de negociação do token nas principais corretoras centralizadas durante um período de 1 ano.";
 "coin_analytics.dex_volume.info3" = "Classificação do Token baseada no volume de trading em principais corretoras centralizadas durante um período de 30 dias.";
@@ -609,6 +618,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "coin_analytics.dex_liquidity" = "Liquidez DEX";
 "coin_analytics.dex_liquidity_rank" = "Ranking de Liquidez DEX";
+"coin_analytics.dex_liquidity_rank.description" = "Tokens ranked by available liquidity on decentralized exchanges.";
 "coin_analytics.dex_liquidity.info1" = "Quantidade total de liquidez disponível para o token em corretoras descentralizadas.";
 "coin_analytics.dex_liquidity.info2" = "Gráfico mostrando a variação na liquidez disponível para o token nas principais corretoras descentralizadas durante o período de 1 ano.";
 "coin_analytics.dex_liquidity.info3" = "Lista de todos os tokens com base na liquidez disponível para o token nas principais exchanges descentralizadas.";
@@ -618,6 +628,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "coin_analytics.active_addresses" = "Endereços ativos";
 "coin_analytics.active_addresses_rank" = "Ranking de Endereços Ativos";
+"coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
 "coin_analytics.active_addresses.info1" = "Número total de endereços de blockchain exclusivos que realizam transações com token em um período de 30 dias.";
 "coin_analytics.active_addresses.info2" = "Gráfico mostrando a variação na contagem de endereços ativos no período de 1 ano.";
 "coin_analytics.active_addresses.info3" = "Ranking do token com base no número de carteiras ativas que realizam transações com o período de 30 dias do token.";
@@ -625,6 +636,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "coin_analytics.transaction_count" = "Contagem de transações";
 "coin_analytics.transaction_count_rank" = "Ranking de Contador Tx";
+"coin_analytics.transaction_count_rank.description" = "Tokens ranked by number of transactions on a blockchain.";
 "coin_analytics.transaction_count.info1" = "Número total de transações únicas na blockchain com token em um período de 30 dias.";
 "coin_analytics.transaction_count.info2" = "Gráfico mostrando a variação na contagem de transações no período de 1 ano.";
 "coin_analytics.transaction_count.info3" = "Ranking do token com base no número de transações com o período de 30 dias do token.";
@@ -635,8 +647,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.holders.info1" = "Número total de endereços únicos que contêm o token em várias blockchains.";
 "coin_analytics.holders.info2" = "As 10 principais carteiras que possuem o token em cada blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Blockchains rastreadas: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
-"coin_analytics.holders.in_top_10_addresses" = "nos 10 melhores endereços";
-"coin_analytics.holders.count" = "Holders: %@";
+"coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
+"coin_analytics.holders.count" = "Total Holders: %@";
 "coin_analytics.holders.see_all" = "Ver tudo";
 
 "coin_analytics.project_tvl" = "Projeto TVL";
@@ -650,9 +662,10 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "coin_analytics.project_revenue" = "Receita do Projeto";
 "coin_analytics.project_revenue_rank" = "Ranking da Receita do Projeto";
-"coin_analytics.project_revenue.info1" = "Total revenue generated for the token holders over 30-day period. Typically, fees are collected by token stakers or though a token burn mechanism.";
-"coin_analytics.project_revenue.info2" = "Token's rank based on the revenue generated over 30-day period for token stakers.";
-"coin_analytics.project_revenue.info3" = "List of all tokens ranked based on the revenue generated for token stakers over 24h / 7D / 1M intervals.";
+"coin_analytics.project_revenue_rank.description" = "Tokens ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
+"coin_analytics.project_revenue.info1" = "Receita total gerada para holders do token em um período de 30 dias. Normalmente, as taxas são coletadas por stakers do token ou por meio de um mecanismo de queima de token.";
+"coin_analytics.project_revenue.info2" = "Classificação do token com base na receita gerada ao longo de um período de 30 dias para stakers do token.";
+"coin_analytics.project_revenue.info3" = "Lista de todos os tokens classificados com base na receita gerada para stakers do token em intervalos de 24h / 7D / 1M.";
 
 "coin_analytics.other_data" = "Outros dados";
 
@@ -914,6 +927,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Settings -> Privacy
 
+"settings.privacy" = "Privacidade";
 "settings.privacy.description" = "A Unstoppable não coleta dados nem usa ferramentas analíticas que possam expor dados sobre seus usuários. A carteira foi projetada para garantir um alto nível de privacidade para seus usuários.";
 "settings.privacy.statement.user_data_storage" = "Os dados do usuário sempre permanecem em seu dispositivo.";
 "settings.privacy.statement.data_usage" = "A carteira não coleta nenhum dado sobre os usuários.";
@@ -948,11 +962,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Settings -> Contacts
 
 "contacts.title" = "Contatos";
-"contacts.list.search_placeholder" = "Nome";
+"contacts.list.search_placeholder" = "Search by name";
 "contacts.list.not_found" = "Você não tem nenhum contato adicionado";
 "contacts.list.not_found_search" = "Nenhum resultado encontrado";
 "contacts.add_new_contact" = "Adicionar um novo contato";
-"contacts.update_contact.already_has_address" = "Este contato já possui um endereço nesta blockchain. Deseja substituir o endereço %@ pelo %@?";
+"contacts.update_contact.already_has_address" = "Selected contact already has an address on %@. This action will replace the address %@ with %@.";
 "contacts.update_contact.replace" = "Substituir";
 "contacts.list.addresses_count" = "Endereços: %d";
 "contacts.contact.new.title" = "Novo Contato";
@@ -964,10 +978,20 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Excluir endereço";
 
+"contacts.restore.parsing_error" = "File has wrong data!";
+"contacts.restore.storage_error" = "Can't save contacts!";
+"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one).";
+"contacts.restore.overwrite_alert.replace" = "Substituir";
+
+
 "contacts.add_address.title" = "Adicionar endereço";
 "contacts.add_address.create_new" = "Criar Novo Contato";
 "contacts.add_address.add_to_contact" = "Adicionar ao Contato Existente";
 "contacts.add_address.exist_address" = "Este endereço já está em uso para %@";
+
+"contacts.more.title" = "Mais";
+"contacts.more.import" = "Restaurar";
+"contacts.more.export" = "Backup";
 
 "contacts.contact.delete_alert.title" = "Excluir contato";
 "contacts.contact.delete_alert.description" = "Você tem certeza que deseja excluir este contato?";
@@ -976,7 +1000,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "contacts.contact.dismiss_changes.description" = "Tem certeza de que deseja descartar as novas alterações?";
 "contacts.contact.dismiss_changes.discard_changes" = "Descartar Alterações";
 "contacts.contact.dismiss_changes.keep_editing" = "Continuar Editando";
-
 
 "contacts.add_address.delete_alert.title" = "Excluir endereço";
 "contacts.add_address.delete_alert.description" = "Você tem certeza que deseja excluir este endereço?";
@@ -988,7 +1011,13 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "settings.icloud_sync.title" = "Sincronização com iCloud";
 "settings.icloud_sync.contact_book" = "Sincronizar contatos";
 "settings.icloud_sync.description" = "Sincronize os contatos de pagamento no iCloud para facilitar o backup e o acesso entre vários dispositivos.";
-"settings.icloud_sync.merge_disclaimer" = "Você tem contatos locais que serão mesclados com contatos iCloud";
+"settings.icloud_sync.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+
+"settings.icloud_sync.alert.title" = "Sincronização com iCloud";
+"settings.icloud_sync.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+
+"settings.icloud_sync.alert_error.title" = "iCloud Error";
+"settings.icloud_sync.alert_error.description" = "Cannot connect to iCloud, this may be because iCloud storage not available on your device, or disabled for Unstoppable app";
 
 // Set PIN
 
