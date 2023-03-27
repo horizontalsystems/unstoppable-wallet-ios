@@ -79,7 +79,7 @@
 
 "sync_error" = "Erreur de synchronisation. Réessayez.";
 
-"number.thousand" = "%@K";
+"number.thousand" = "%@k";
 "number.million" = "%@M";
 "number.billion" = "%@G";
 "number.trillion" = "%@T";
@@ -646,8 +646,8 @@
 "coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
-"coin_analytics.holders.in_top_10_addresses" = "in top 10 addresses";
-"coin_analytics.holders.count" = "Holders: %@";
+"coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
+"coin_analytics.holders.count" = "Total Holders: %@";
 "coin_analytics.holders.see_all" = "Tout Afficher";
 
 "coin_analytics.project_tvl" = "Project TVL";
@@ -1252,9 +1252,9 @@
 "private_keys.evm_private_key" = "Clé privée EVM";
 "private_keys.evm_private_key.description" = "Permet un contrôle total des crypto-monnaies basées sur l'EVM, c'est-à-dire Ethereum, Binance Smart Chain, etc. dans leur portefeuille respectif.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
-"private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
+"private_keys.bip32_root_key.description" = "Permet d'exercer un contrôle total sur les actifs du portefeuille correspondant.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
-"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within respective wallet.";
+"private_keys.account_extended_private_key.description" = "Permet un contrôle total du Bitcoin et des autres crypto-monnaies basées sur l'UTXO, c'est-à-dire Litecoin, Bitcoin Cash, Dash, etc. dans leur portefeuille respectif.";
 
 // Manage Account -> EVM Address
 
@@ -1267,11 +1267,11 @@
 // Birthday Input
 
 "birthday_input.title" = "Hauteur de l'anniversaire";
-"birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
+"birthday_input.description" = "Saisissez la hauteur de l'anniversaire du portefeuille pour une synchronisation plus rapide.";
 "birthday_input.new_wallet" = "Nouveau porte-monnaie";
 "birthday_input.new_wallet.description" = "N'a aucune transaction";
-"birthday_input.old_wallet" = "Existing Wallet";
-"birthday_input.old_wallet.description" = "Has transactions";
+"birthday_input.old_wallet" = "Portefeuille existant";
+"birthday_input.old_wallet.description" = "A des transactions";
 "birthday_input.input_placeholder" = "%@ (optionnel)";
 
 "restore_setting.birthday_height" = "Hauteur de l'anniversaire %@";
@@ -1295,25 +1295,25 @@
 // Send Settings
 
 "evm_send_settings.nonce" = "Nonce de transaction";
-"evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
-"evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
-"evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
+"evm_send_settings.nonce.info" = "Le nonce est une valeur entière unique pour une transaction dans le portefeuille de l'usager. Il s'incrémente automatiquement à chaque transaction effectuée et n'a pas besoin d'être modifié. Les usagers confirmés peuvent fixer le nonce d'une transaction en attente afin d'annuler et de remplacer cette transaction, à condition que la nouvelle transaction soit assortie de frais suffisamment élevés pour empêcher l'ancienne d'être confirmée à sa place (par exemple, l'usager souhaite accélérer la confirmation de la transaction, ou en modifier entièrement les paramètres). Lorsque plusieurs transactions en attente ont le même nonce, une seule est confirmée, typiquement celle dont les frais sont les plus élevés.";
+"evm_send_settings.nonce.errors.already_in_use" = "Nonce utilisé";
+"evm_send_settings.nonce.errors.already_in_use.info" = "Une transaction exécutée avec ce nonce existe déjà.";
 
 "fee_settings" = "Avancé";
 "fee_settings.fee" = "Frais";
-"fee_settings.fee.info" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.";
+"fee_settings.fee.info" = "Les blockchains requièrent que les usagers paient des frais de réseau lorsqu'ils envoient des transactions. Ces frais sont plus élevés lorsque de nombreuses transactions empruntent le réseau.";
 "fee_settings.fee_rate" = "Taux de frais";
-"fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
+"fee_settings.fee_rate.description" = "Voici la valeur recommandée pour les 2 blocs suivants";
 "fee_settings.inputs_outputs" = "Entrées/Sorties";
 "fee_settings.transaction_settings" = "Paramètres de transaction";
 "fee_settings.transaction_settings.description" = "Rendez vos Bitcoin transactions plus difficiles à suivre en modifiant la façon dont les transactions sont structurées.";
 "fee_settings.time_lock" = "TimeLock";
-"fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
+"fee_settings.time_lock.description" = "Le TimeLock ne fonctionne que pour les envois vers les adresses du BIP44 (commençant par 1)";
 
 "fee_settings.max_fee" = "Frais Max";
-"fee_settings.max_fee.info" = "The maximum estimated transaction fee to be paid for this transaction, computed based on the gas limit, max fee rate and max priority fee values below. The actual fee paid will normally be lower.";
+"fee_settings.max_fee.info" = "Le montant maximum estimé des frais à payer pour cette transaction, calculé sur la base des valeurs de limite de gas, de taux de frais maximum et de frais de priorité maximum ci-dessous. Les frais réels payés sont généralement inférieurs.";
 "fee_settings.gas_limit" = "Gas Limit";
-"fee_settings.gas_limit.info" = "Transaction complexity is measured in units called \"gas\". It varies depending on the smart contract being executed. The Gas Limit is the estimated maximum gas needed to execute it. The actual gas used will normally be lower.";
+"fee_settings.gas_limit.info" = "La complexité des transactions est mesurée en unités appelées \"gas\". Elles varient en fonction du contrat intelligent en cours d'exécution. La limite de gas est le volume maximum estimé de gas nécessaire pour son exécution. Le volume de gaz réellement utilisé est généralement inférieur.";
 
 "fee_settings.gas_price" = "Gas Price";
 "fee_settings.gas_price.info" = "Les frais pour effectuer des transactions sur le réseau sont mesurés en unités de gas. Le prix du gas est le montant qu'un utilisateur est prêt à dépenser par unité de gas. Le prix du gas est élevé lorsque le réseau est encombré, et faible lorsqu'il est inactif. Souvent, une transaction reste en suspens pendant une période prolongée si le montant du gas est insuffisant.";
@@ -1332,8 +1332,8 @@
 "fee_settings.errors.low_max_fee.info" = "Le montant des frais de transaction défini est insuffisant pour traiter cette transaction immédiatement.";
 "fee_settings.errors.nonce_already_in_block" = "Impossible de remplacer la transaction.";
 "fee_settings.errors.replacement_transaction_underpriced" = "Frais bas pour la transaction de remplacement";
-"fee_settings.errors.transaction_underpriced" = "Low Fee for transaction";
-"fee_settings.errors.tips_higher_than_max_fee" = "Max Fee is too low";
+"fee_settings.errors.transaction_underpriced" = "Frais de transaction réduits";
+"fee_settings.errors.tips_higher_than_max_fee" = "Les frais maximums sont trop bas";
 "fee_settings.warning.risk_of_getting_stuck" = "Risqué";
 "fee_settings.warning.risk_of_getting_stuck.info" = "La transaction risque de rester en attente pendant un certain temps ou d'échouer complètement.";
 "fee_settings.warning.overpricing" = "Frais trop élevés";
