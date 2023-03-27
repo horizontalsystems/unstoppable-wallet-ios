@@ -642,12 +642,12 @@
 "coin_analytics.transaction_count.info2" = "显示1年周期的交易计数变化的图表。";
 "coin_analytics.transaction_count.info3" = "基于30天周期与代币交易的数量的代币排名。";
 "coin_analytics.transaction_count.info4" = "基于24时 / 7天 / 1月间隔的交易数量排名的所有代币的列表。";
-"coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
+"coin_analytics.transaction_count.info5" = "30天周期内在区块链上传输的代币总数。";
 
-"coin_analytics.holders" = "Holders";
-"coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
-"coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
-"coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
+"coin_analytics.holders" = "持有者";
+"coin_analytics.holders.info1" = "在各种区块链上持有代币的唯一地址的总数。";
+"coin_analytics.holders.info2" = "在每一个区块链上持有代币的前10大钱包。";
+"coin_analytics.holders.tracked_blockchains" = "已追踪区块链：以太坊、币安智能链、Optimism、Arbitrum、Celo、Cronos、Avalanche、Fantom、Polygon";
 "coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
 "coin_analytics.holders.count" = "Total Holders: %@";
 "coin_analytics.holders.see_all" = "查看全部";
