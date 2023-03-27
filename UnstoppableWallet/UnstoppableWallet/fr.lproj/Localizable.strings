@@ -657,7 +657,7 @@
 "coin_analytics.project_tvl.info2" = "Graphique montrant la variation valeur totale verrouillée dans les contrats intelligents du projet sur une période de 1 an.";
 "coin_analytics.project_tvl.info3" = "Rang du token en fonction de la valeur totale verrouillée actuelle.";
 "coin_analytics.project_tvl.info4" = "Liste de tous les tokens classés en fonction de la valeur totale verrouillée.";
-"coin_analytics.project_tvl.info5" = "Rapport entre la capitalisation boursière et la capacité de production du projet.";
+"coin_analytics.project_tvl.info5" = "Rapport entre la capitalisation du marché et la TVL du projet.";
 
 "coin_analytics.project_revenue" = "Revenus du projet";
 "coin_analytics.project_revenue_rank" = "Classement en fonction des revenus du projet";
@@ -835,8 +835,8 @@
 "manage_wallets.not_found" = "Aucun résultat trouvé. Essayez d'ajouter le token manuellement.";
 "manage_wallets.search_placeholder" = "Nom, code ou adresse du contrat";
 "manage_wallets.contract_address" = "Adresse du contrat";
-"manage_wallets.derivation_description" = "There are 3 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (older)\n- BIP49 (newer)\n- BIP84 (newest)\n\nWhile Unstoppable wallet supports all 3 of them it recommends to use a %@ wallet operating in BIP84 format. The wallets operating in this format get to pay lowest fees when sending %@ transactions.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile Unstoppable wallet supports both of them it recommends to use a Bitcoin Cash wallet operating in TYPE 145 format.";
+"manage_wallets.derivation_description" = "Les portefeuilles %@ peuvent utiliser trois formats d'adresse courants pour recevoir des paiements : \n\n- BIP44 (plus ancien)\n- BIP49 (plus récent)\n- BIP84 (plus récent)\n\n. Bien que le portefeuille Unstoppable prenne en charge ces trois formats, il est recommandé d'utiliser un portefeuille %@ opérant au format BIP84. Les portefeuilles qui utilisent ce format bénéficient des frais les plus bas lors de l'envoi de transactions %@.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Les portefeuilles Bitcoin Cash peuvent utiliser deux formats d'adresse pour recevoir les paiements entrants : \n\n- TYPE 0 (plus ancien)\n- TYPE 145 (plus récent)\n\n. Bien que le portefeuille Unstoppable soit compatible avec les deux formats, l'utilisation d'un portefeuille Bitcoin Cash utilisant le format TYPE 145 est recommandée.";
 
 // Settings -> Experimental Features
 
@@ -926,7 +926,7 @@
 
 // Settings -> Privacy
 
-"settings.privacy" = "Privacy";
+"settings.privacy" = "Confidentialité";
 "settings.privacy.description" = "Unstoppable ne collecte aucune donnée et n'utilise aucun outil d'analyse susceptible d'exposer des données sur ses utilisateurs. Le portefeuille est conçu pour assurer un haut niveau de confidentialité à ses utilisateurs.";
 "settings.privacy.statement.user_data_storage" = "Les données de l'utilisateur restent toujours sur l'appareil de l'utilisateur.";
 "settings.privacy.statement.data_usage" = "Le portefeuille ne collecte aucune donnée sur les utilisateurs.";
@@ -961,29 +961,29 @@
 // Settings -> Contacts
 
 "contacts.title" = "Contacts";
-"contacts.list.search_placeholder" = "Search by name";
-"contacts.list.not_found" = "You do not have an added contact";
+"contacts.list.search_placeholder" = "Rechercher par nom";
+"contacts.list.not_found" = "Vous n'avez pas ajouté de contact";
 "contacts.list.not_found_search" = "Aucun résultat";
-"contacts.add_new_contact" = "Add New Contact";
-"contacts.update_contact.already_has_address" = "Selected contact already has an address on %@. This action will replace the address %@ with %@.";
+"contacts.add_new_contact" = "Ajouter un nouveau contact";
+"contacts.update_contact.already_has_address" = "Le contact sélectionné possède déjà une adresse sur %@. Cette action remplacera l'adresse %@ par %@.";
 "contacts.update_contact.replace" = "Remplacer";
 "contacts.list.addresses_count" = "Adresses : %d";
-"contacts.contact.new.title" = "New Contact";
+"contacts.contact.new.title" = "Nouveau Contact";
 "contacts.contact.name.placeholder" = "Nom";
-"contacts.contact.update.error.name_already_exist" = "Name Already Exist";
-"contacts.contact.add_address" = "Add Address";
+"contacts.contact.update.error.name_already_exist" = "Ce nom existe déjà";
+"contacts.contact.add_address" = "Ajouter une adresse";
 "contacts.contact.delete" = "Supprimer le contact";
 "contacts.contact.address.blockchains" = "Blockchains";
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Supprimer l'adresse";
 
-"contacts.restore.parsing_error" = "File has wrong data!";
+"contacts.restore.parsing_error" = "Le fichier contient des données incorrectes !";
 "contacts.restore.storage_error" = "Impossible d'enregistrer les contacts !";
-"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one).";
+"contacts.restore.overwrite_alert.description" = "Cette action écrasera vos contacts de paiement locaux ainsi que la copie iCloud (s'il y en a une).";
 "contacts.restore.overwrite_alert.replace" = "Remplacer";
 
 
-"contacts.add_address.title" = "Add Address";
+"contacts.add_address.title" = "Ajouter une adresse";
 "contacts.add_address.create_new" = "Créer un nouveau contact";
 "contacts.add_address.add_to_contact" = "Ajouter au contact existant";
 "contacts.add_address.exist_address" = "Cette adresse est déjà utilisée pour %@";
