@@ -13,29 +13,13 @@ class MetricChartFactory {
         dateFormatter.locale = currentLocale
     }
 
-    private func chartData(items: [MetricChartModule.Item]) -> ChartData {
-        // fill items by points
-        let items = items.map { (point: MetricChartModule.Item) -> ChartItem in
-            let item = ChartItem(timestamp: point.timestamp)
-
-            item.added(name: .rate, value: point.value)
-            point.indicators?.forEach { key, value in
-                item.added(name: key, value: value)
-            }
-
-            return item
-        }
-
-        return ChartData(items: items, startTimestamp: items.first?.timestamp ?? 0, endTimestamp: items.last?.timestamp ?? 0)
-    }
-
     private func format(value: Decimal?, valueType: MetricChartModule.ValueType, exactlyValue: Bool = false) -> String? {
         guard let value = value else {
             return nil
         }
 
         switch valueType {
-        case .percent:         // values in percent
+        case .percent:
             return ValueFormatter.instance.format(percentValue: value, showSign: false)
         case .currencyValue(let currency):
             return ValueFormatter.instance.formatFull(currency: currency, value: value)
@@ -53,7 +37,7 @@ class MetricChartFactory {
                 valueString = ValueFormatter.instance.formatShort(value: value)
             }
             return [valueString, coin.code].compactMap { $0 }.joined(separator: " ")
-        case .compactCurrencyValue(let currency):                   // others in compact forms
+        case .compactCurrencyValue(let currency):
             if exactlyValue {
                 return ValueFormatter.instance.formatFull(currency: currency, value: value)
             } else {
@@ -66,37 +50,43 @@ class MetricChartFactory {
 
 extension MetricChartFactory {
 
-    func convert(itemData: MetricChartModule.ItemData, overriddenValue: MetricChartModule.OverriddenValue?, valueType: MetricChartModule.ValueType) -> ChartModule.ViewItem {
-        // build data with rates
-        let data = chartData(items: itemData.items)
+    func convert(itemData: MetricChartModule.ItemData, overriddenValue: MetricChartModule.OverriddenValue?, valueType: MetricChartModule.ValueType) -> ChartModule.ViewItem? {
+        guard let firstItem = itemData.items.first, let lastItem = itemData.items.last else {
+            return nil
+        }
 
-        // calculate min and max limit texts
-        let values = data.values(name: .rate)
+        let startTimestamp: TimeInterval
+        let endTimestamp: TimeInterval
+
+        if itemData.items.count == 1 {
+            startTimestamp = firstItem.timestamp - 3600
+            endTimestamp = firstItem.timestamp + 3600
+        } else {
+            startTimestamp = firstItem.timestamp
+            endTimestamp = lastItem.timestamp
+        }
+
+        let values = itemData.items.map { $0.value }
         var min = values.min()
         var max = values.max()
+
         if let minValue = min, let maxValue = max, minValue == maxValue {
             min = minValue * (1 - Self.noChangesLimitPercent)
             max = maxValue * (1 + Self.noChangesLimitPercent)
         }
-        let minString = format(value: min, valueType: valueType)
-        let maxString = format(value: max, valueType: valueType)
 
-        // determine chart growing state. when chart not full - it's nil
-        var chartTrend: MovementTrend = .neutral
-
+        let chartTrend: MovementTrend
         var value: String?
         var valueDiff: Decimal?
         var rightSideMode: ChartModule.RightSideMode = .none
 
         switch itemData.type {
         case .regular:
-            if let first = data.items.first(where: { ($0.indicators[.rate] ?? 0) != 0 }), let last = data.items.last, let firstValue = first.indicators[.rate], let lastValue = last.indicators[.rate] {
-                value = overriddenValue?.value ?? format(value: lastValue, valueType: valueType)
-                chartTrend = (lastValue - firstValue).isSignMinus ? .down : .up
-                valueDiff = overriddenValue == nil ? (lastValue - firstValue) / firstValue * 100 : nil
-            }
+            value = overriddenValue?.value ?? format(value: lastItem.value, valueType: valueType)
+            chartTrend = (lastItem.value - firstItem.value).isSignMinus ? .down : .up
+            valueDiff = overriddenValue == nil ? (lastItem.value - firstItem.value) / firstItem.value * 100 : nil
 
-            if let first = data.items.first?.indicators[.dominance], let last = data.items.last?.indicators[.dominance] {
+            if let first = firstItem.indicators?[.dominance], let last = lastItem.indicators?[.dominance] {
                 rightSideMode = .dominance(value: last, diff: (last - first) / first * 100)
             }
         case .aggregated(let aggregatedValue):
@@ -104,15 +94,26 @@ extension MetricChartFactory {
             chartTrend = .ignore
         }
 
+        let chartItems = itemData.items.map { item -> ChartItem in
+            let chartItem = ChartItem(timestamp: item.timestamp)
+
+            chartItem.added(name: .rate, value: item.value)
+            item.indicators?.forEach { key, value in
+                chartItem.added(name: key, value: value)
+            }
+
+            return chartItem
+        }
+
         return ChartModule.ViewItem(
                 value: value,
                 valueDescription: overriddenValue?.description,
                 rightSideMode: rightSideMode,
-                chartData: data,
+                chartData: ChartData(items: chartItems, startTimestamp: startTimestamp, endTimestamp: endTimestamp),
                 chartTrend: chartTrend,
                 chartDiff: valueDiff,
-                minValue: minString,
-                maxValue: maxString
+                minValue: format(value: min, valueType: valueType),
+                maxValue: format(value: max, valueType: valueType)
         )
     }
 

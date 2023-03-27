@@ -29,18 +29,18 @@ extension MarketGlobalFetcher: IMetricChartFetcher {
                 .map { [weak self] points in
                     let items = points.map { point -> MetricChartModule.Item in
                         let value: Decimal
-                        var additional = [ChartIndicatorName: Decimal]()
+                        var indicators = [ChartIndicatorName: Decimal]()
 
                         switch self?.metricsType {
                         case .defiCap: value = point.defiMarketCap
                         case .totalMarketCap:
                             value = point.marketCap
-                            additional[.dominance] = point.btcDominance
+                            indicators[.dominance] = point.btcDominance
                         case .tvlInDefi: value = point.tvl
                         case .none, .volume24h: value = point.volume24h
                         }
 
-                        return MetricChartModule.Item(value: value, indicators: additional, timestamp: point.timestamp)
+                        return MetricChartModule.Item(value: value, indicators: indicators, timestamp: point.timestamp)
                     }
 
                     return MetricChartModule.ItemData(items: items, type: .regular)
