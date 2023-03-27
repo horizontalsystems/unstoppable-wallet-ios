@@ -550,10 +550,10 @@
 "market.global.volume_24h.description" = "加密货币市场24小时交易量";
 
 "market.global.defi_cap.title" = "DeFi市场价值";
-"market.global.defi_cap.description" = "Total market value of DeFi projects";
+"market.global.defi_cap.description" = "去中心化金融（DeFi）项目的总市场价值";
 
 "market.global.tvl_in_defi.title" = "DeFi中的TVL";
-"market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.global.tvl_in_defi.description" = "去中心金融（DeFi）中的锁定总价值（TVL）";
 "market.global.tvl_in_defi.multi_chain" = "多链";
 "market.global.tvl_in_defi.filter_by_chain" = "通过区块链过滤";
 
@@ -590,58 +590,58 @@
 "coin_overview.links" = "链接";
 
 "coin_overview.guide" = "指南";
-"coin_overview.website" = "Website";
+"coin_overview.website" = "网站";
 "coin_overview.whitepaper" = "白皮书";
 
 // Coin Page -> Analytics
 
-"coin_analytics.not_available" = "This project has no analytics data";
-"coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.not_available" = "此项目没有分析数据";
+"coin_analytics.locked" = "此页面仅对Unstoppable钱包的高级用户开放";
 
-"coin_analytics.cex_volume" = "CEX Volume";
-"coin_analytics.cex_volume_rank" = "CEX Volume Rank";
-"coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
+"coin_analytics.cex_volume" = "CEX交易量";
+"coin_analytics.cex_volume_rank" = "CEX交易量排名";
+"coin_analytics.cex_volume_rank.description" = "对中心化交易所的代币按交易量排名的代币。";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
 "coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
 
 "coin_analytics.dex_volume" = "DEX交易量";
-"coin_analytics.dex_volume_rank" = "DEX Volume Rank";
-"coin_analytics.dex_volume_rank.description" = "Tokens ranked by trading volume for the token on decentralized exchanges.";
+"coin_analytics.dex_volume_rank" = "DEX交易量排名";
+"coin_analytics.dex_volume_rank.description" = "对去中心化交易所的代币按交易量排名的代币。";
 "coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
 "coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
-"coin_analytics.dex_volume.tracked_dexes" = "DEXes that are being tracked:";
+"coin_analytics.dex_volume.tracked_dexes" = "正在追踪的DEX：";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Sushiswap";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
 
 "coin_analytics.dex_liquidity" = "DEX流动性";
-"coin_analytics.dex_liquidity_rank" = "DEX Liquidity Rank";
-"coin_analytics.dex_liquidity_rank.description" = "Tokens ranked by available liquidity on decentralized exchanges.";
+"coin_analytics.dex_liquidity_rank" = "DEX流通性排名";
+"coin_analytics.dex_liquidity_rank.description" = "对去中心化交易所上按可用流通性排名的代币。";
 "coin_analytics.dex_liquidity.info1" = "Total currently available liquidity for the token on leading decentralized exchanges.";
 "coin_analytics.dex_liquidity.info2" = "Chart showing variation in available liquidity for the token on leading decentralized exchanges over 1 year period.";
 "coin_analytics.dex_liquidity.info3" = "List of all tokens ranked based on available liquidity for the token on leading decentralized exchanges.";
-"coin_analytics.dex_liquidity.tracked_dexes" = "DEXes that are being tracked:";
+"coin_analytics.dex_liquidity.tracked_dexes" = "正在追踪的DEX：";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
 "coin_analytics.active_addresses" = "活跃地址";
-"coin_analytics.active_addresses_rank" = "Active Addresses Rank";
-"coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
+"coin_analytics.active_addresses_rank" = "活跃地址排名";
+"coin_analytics.active_addresses_rank.description" = "按与代币交易的唯一地址的数量排名的代币。";
 "coin_analytics.active_addresses.info1" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
 "coin_analytics.active_addresses.info2" = "Chart showing variation in active address count over 1 year period.";
 "coin_analytics.active_addresses.info3" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
 "coin_analytics.active_addresses.info4" = "List of all tokens ranked based on the number of active wallets transacting with the token over 24h / 7D / 1M intervals.";
 
 "coin_analytics.transaction_count" = "交易数";
-"coin_analytics.transaction_count_rank" = "Tx Count Rank";
-"coin_analytics.transaction_count_rank.description" = "Tokens ranked by number of transactions on a blockchain.";
+"coin_analytics.transaction_count_rank" = "Tx计数排名";
+"coin_analytics.transaction_count_rank.description" = "按区块链上交易的数量排名的代币。";
 "coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
-"coin_analytics.transaction_count.info2" = "Chart showing variation in transaction count over 1 year period.";
-"coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
-"coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.transaction_count.info2" = "显示1年周期的交易计数变化的图表。";
+"coin_analytics.transaction_count.info3" = "基于30天周期与代币交易的数量的代币排名。";
+"coin_analytics.transaction_count.info4" = "基于24时 / 7天 / 1月间隔的交易数量排名的所有代币的列表。";
 "coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
 
 "coin_analytics.holders" = "Holders";
@@ -921,7 +921,7 @@
 "settings.about_app.app_name" = "Unstoppable钱包";
 "settings.about_app.description" = "不可阻挡的钱包是为那些寻求投资和以私人和独立方式存储加密货币的人建造的。\n\n它是一个非保管的、对等的钱包，在那里只有用户能够控制资金。 它不收集任何数据，并且通过不将用户的资金锁定到特定的钱包应用程序来保持用户独立。\n\n不可阻挡的钱包是完全开源的，任何人都可以确认应用程序正像它所声称的那样工作。";
 "settings.about_app.whats_new" = "新增内容";
-"settings.about_app.website" = "Website";
+"settings.about_app.website" = "网站";
 "settings.about_app.contact" = "联系";
 "settings.about_app.rate_us" = "评价我们";
 "settings.about_app.tell_friends" = "分享给好友";
@@ -1390,7 +1390,7 @@
 "nft_asset.details.token_standard" = "代币标准";
 "nft_asset.details.blockchain" = "Blockchain";
 "nft_asset.links" = "链接";
-"nft_asset.links.website" = "Website";
+"nft_asset.links.website" = "网站";
 "nft_asset.options.save_to_photos" = "保存到照片";
 "nft_asset.options.set_as_watch_face" = "设为表盘";
 "nft_asset.save_to_photos.failed" = "无法保存保存NFT图像";
@@ -1404,7 +1404,7 @@
 "nft_collection.overview.description" = "描述";
 "nft_collection.overview.contracts" = "合约";
 "nft_collection.overview.links" = "链接";
-"nft_collection.overview.links.website" = "Website";
+"nft_collection.overview.links.website" = "网站";
 
 
 "nft_collection.overview.owners" = "所有者";
