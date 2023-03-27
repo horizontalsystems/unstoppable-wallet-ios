@@ -961,7 +961,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Settings -> Contacts
 
 "contacts.title" = "Contacts";
-"contacts.list.search_placeholder" = "Name";
+"contacts.list.search_placeholder" = "Search by name";
 "contacts.list.not_found" = "You do not have an added contact";
 "contacts.list.not_found_search" = "No results found";
 "contacts.add_new_contact" = "Add New Contact";
@@ -979,7 +979,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "contacts.restore.parsing_error" = "File has wrong data!";
 "contacts.restore.storage_error" = "Can't save contacts!";
-"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts.";
+"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one).";
 "contacts.restore.overwrite_alert.replace" = "Replace";
 
 
