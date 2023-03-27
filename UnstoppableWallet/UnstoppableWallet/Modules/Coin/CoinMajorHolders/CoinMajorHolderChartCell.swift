@@ -13,10 +13,19 @@ class CoinMajorHolderChartCell: BaseThemeCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
+        wrapperView.addSubview(countLabel)
+        countLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalToSuperview()
+        }
+
+        countLabel.font = .subhead2
+        countLabel.textColor = .themeGray
+
         wrapperView.addSubview(percentLabel)
         percentLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalToSuperview()
+            maker.top.equalTo(countLabel.snp.bottom).offset(CGFloat.margin12)
         }
 
         percentLabel.font = .headline1
@@ -31,15 +40,6 @@ class CoinMajorHolderChartCell: BaseThemeCell {
         descriptionLabel.font = .subhead1
         descriptionLabel.textColor = .themeGray
         descriptionLabel.text = "coin_analytics.holders.in_top_10_addresses".localized
-
-        wrapperView.addSubview(countLabel)
-        countLabel.snp.makeConstraints { maker in
-            maker.leading.equalToSuperview().inset(CGFloat.margin16)
-            maker.top.equalTo(percentLabel.snp.bottom).offset(CGFloat.margin12)
-        }
-
-        countLabel.font = .subhead2
-        countLabel.textColor = .themeGray
     }
 
     required init?(coder aDecoder: NSCoder) {

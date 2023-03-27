@@ -138,8 +138,8 @@ extension CoinMajorHoldersViewController: SectionsDataSource {
         var sections: [SectionProtocol] = [
             Section(
                     id: "info",
-                    headerState: .margin(height: .margin16),
-                    footerState: .margin(height: .margin16),
+                    headerState: .margin(height: .margin12),
+                    footerState: .margin(height: .margin12),
                     rows: [
                         Row<CoinMajorHolderChartCell>(
                                 id: "info",

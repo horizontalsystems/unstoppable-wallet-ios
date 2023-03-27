@@ -3,7 +3,7 @@ import RxRelay
 import MarketKit
 
 class CoinMajorHoldersService {
-    private let coinUid: String
+    let coin: Coin
     let blockchain: Blockchain
     private let marketKit: Kit
     private let evmLabelManager: EvmLabelManager
@@ -16,8 +16,8 @@ class CoinMajorHoldersService {
         }
     }
 
-    init(coinUid: String, blockchain: Blockchain, marketKit: Kit, evmLabelManager: EvmLabelManager) {
-        self.coinUid = coinUid
+    init(coin: Coin, blockchain: Blockchain, marketKit: Kit, evmLabelManager: EvmLabelManager) {
+        self.coin = coin
         self.blockchain = blockchain
         self.marketKit = marketKit
         self.evmLabelManager = evmLabelManager
@@ -30,7 +30,7 @@ class CoinMajorHoldersService {
 
         state = .loading
 
-        marketKit.tokenHoldersSingle(coinUid: coinUid, blockchainUid: blockchain.uid)
+        marketKit.tokenHoldersSingle(coinUid: coin.uid, blockchainUid: blockchain.uid)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] holders in
                     self?.state = .completed(holders)

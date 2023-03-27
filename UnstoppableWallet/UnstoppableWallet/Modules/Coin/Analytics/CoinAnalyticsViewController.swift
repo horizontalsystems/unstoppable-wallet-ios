@@ -214,7 +214,7 @@ class CoinAnalyticsViewController: ThemeViewController {
     }
 
     private func openMajorHolders(blockchain: Blockchain) {
-        let viewController = CoinMajorHoldersModule.viewController(coinUid: viewModel.coin.uid, blockchain: blockchain)
+        let viewController = CoinMajorHoldersModule.viewController(coin: viewModel.coin, blockchain: blockchain)
         parentNavigationController?.present(viewController, animated: true)
     }
 
