@@ -85,7 +85,7 @@
 "number.trillion" = "%@T";
 "number.quadrillion" = "%@Q";
 
-"selector.any" = "Any";
+"selector.any" = "Beliebig";
 
 // Access Camera
 
@@ -265,7 +265,8 @@
 "send.available_balance" = "Verfügbares Guthaben";
 "send.max_button" = "Max.";
 "send.next_button" = "Weiter";
-"send.error.invalid_address" = "Ungültige Adresse";
+"send.error.invalid" = "Invalid";
+"send.error.address" = "Adresse";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 Stunde";
 "send.hodler_locktime_month" = "1 Monat";
@@ -276,15 +277,15 @@
 "send.fee_info.title" = "Gebührenrate";
 "send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe Unstoppable wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
 "send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
-"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:";
+"send.transaction_inputs_outputs_info.description" = "Die meisten Bitcoin-Transaktionen sowie Transaktionen in Kryptowährungen wie Bitcoin-Cash, Dash, und Litecoin erzeugen zwei Ausgänge. Die eine Ausgabe ist der Betrag, der an den Empfänger geht, die andere ist die Umstellausgabe, die an den Absender zurückgegeben wird. Die Art und Weise, wie die meisten Brieftaschen Transaktionen erstellen, macht es für einen Dritten leicht zu verstehen, welche der Ausgaben an den Empfänger gingen und welcher der Änderungsbetrag an den Absender zurückgegeben wurde. Da die an den Absender zurückgegebene Ausgabe später bei zukünftigen Transaktionen verwendet wird, zeigt sich eine Verbindung zwischen diesen beiden Transaktionen.\n\nDie unaufhaltsame Brieftasche implementiert Maßnahmen, um es jemandem zu erschweren, herauszufinden, welche Ausgabe wohin geht.\n\nEs gibt zwei Optionen für unaufhaltsame Benutzer:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
-"send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
+"send.transaction_inputs_outputs_info.shuffle.description" = "Die Reihenfolge der Transaktionsausgänge wird bei jeder Transaktion zufällig. Manchmal können Änderungen die erste Ausgabe sein, manchmal kann es die zweite sein. Wenn ein Benutzer dem Entwickler der App vertraut, dann erwäge dies eine empfohlene Option.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
-"send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
+"send.transaction_inputs_outputs_info.deterministic.description" = "Es gibt einen allgemein vereinbarten Standard für die Bestellung von Transaktionsausgängen (bekannt als BIP69). In Open-Source-Brieftaschen stellt dieser Standard sicher, dass Wallet-Benutzer nicht darauf vertrauen müssen, wie Entwickler der App die Reihenfolge der Ausgaben implementieren. Da dieser Standard neu ist, haben noch nicht viele Brieftaschen ihn implementiert. Infolgedessen ist es einigermaßen möglich, auf der Blockchain zu sehen, ob eine Transaktion von einer Brieftasche gesendet wurde, die diesen Standard verwendet hat oder nicht.";
 
 "send.confirmation.you_send" = "Sie Senden";
 "send.confirmation.to" = "An";
-"send.confirmation.contact_name" = "Contact Name";
+"send.confirmation.contact_name" = "Kontaktname";
 "send.confirmation.domain" = "Domäne";
 "send.confirmation.address" = "Adresse";
 "send.confirmation.account" = "Account";
@@ -782,7 +783,7 @@
 "tx_info.transaction_id" = "Transaktion ID";
 "tx_info.to_hash" = "An";
 "tx_info.spender" = "Spender";
-"tx_info.contact_name" = "Contact Name";
+"tx_info.contact_name" = "Kontaktname";
 "tx_info.button_explorer" = "Auf %@ ansehen";
 "tx_info.rate" = "Historischer Rate";
 "tx_info.options.speed_up" = "Beschleunigen";
@@ -834,8 +835,8 @@
 "manage_wallets.not_found" = "Keine Ergebnisse gefunden. Versuchen Sie, Token manuell hinzuzufügen.";
 "manage_wallets.search_placeholder" = "Name, Code oder Vertragsadresse";
 "manage_wallets.contract_address" = "Vertragsadresse";
-"manage_wallets.derivation_description" = "There are 3 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (older)\n- BIP49 (newer)\n- BIP84 (newest)\n\nWhile Unstoppable wallet supports all 3 of them it recommends to use a %@ wallet operating in BIP84 format. The wallets operating in this format get to pay lowest fees when sending %@ transactions.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile Unstoppable wallet supports both of them it recommends to use a Bitcoin Cash wallet operating in TYPE 145 format.";
+"manage_wallets.derivation_description" = "Es gibt 3 gängige Adressformate %@ Brieftaschen können verwendet werden, um eingehende Zahlungen zu erhalten:\n\n- BIP44 (älter)\n- BIP49 (neuer)\n- BIP84 (neueste)\n\nWährend unaufhaltsame Brieftasche alle 3 unterstützt, empfiehlt es eine %@ Brieftasche im BIP84-Format zu verwenden. Die Brieftaschen in diesem Format zahlen die niedrigsten Gebühren beim Versenden von %@ Transaktionen.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Es gibt 2 Adressformate Bitcoin Cash Wallets zum Empfang eingehender Zahlungen:\n\n- TYPE 0 (älter)\n- TYPE 145 (neuer)\n\nWährend unaufhaltsame Brieftaschen beide unterstützt, empfiehlt es sich, ein Bitcoin Cash Wallet im TYPE 145 Format zu verwenden.";
 
 // Settings -> Experimental Features
 
@@ -925,7 +926,7 @@
 
 // Settings -> Privacy
 
-"settings.privacy" = "Privacy";
+"settings.privacy" = "Privatsphäre";
 "settings.privacy.description" = "Unaufhaltsam sammelt keine Daten oder verwendet Analysewerkzeuge, die möglicherweise Daten über ihre Nutzer enthüllen. Die Brieftasche ist so konzipiert, dass sie den Benutzern ein hohes Maß an Privatsphäre garantiert.";
 "settings.privacy.statement.user_data_storage" = "Benutzerdaten bleiben immer auf dem Gerät des Benutzers.";
 "settings.privacy.statement.data_usage" = "Das Wallet sammelt keine Daten über Benutzer.";
@@ -959,63 +960,63 @@
 
 // Settings -> Contacts
 
-"contacts.title" = "Contacts";
-"contacts.list.search_placeholder" = "Name";
-"contacts.list.not_found" = "You do not have an added contact";
+"contacts.title" = "Kontakte";
+"contacts.list.search_placeholder" = "Search by name";
+"contacts.list.not_found" = "Sie haben keinen neuen Kontakt";
 "contacts.list.not_found_search" = "No results found";
-"contacts.add_new_contact" = "Add New Contact";
-"contacts.update_contact.already_has_address" = "This contact already has an address on this blockchain. Do you want to replace the address %@ with the %@?";
-"contacts.update_contact.replace" = "Replace";
-"contacts.list.addresses_count" = "Addresses: %d";
-"contacts.contact.new.title" = "New Contact";
+"contacts.add_new_contact" = "Neuer Kontakt";
+"contacts.update_contact.already_has_address" = "Selected contact already has an address on %@. This action will replace the address %@ with %@.";
+"contacts.update_contact.replace" = "Ersetzen";
+"contacts.list.addresses_count" = "Adresse: %d";
+"contacts.contact.new.title" = "Neuer Kontakt";
 "contacts.contact.name.placeholder" = "Name";
-"contacts.contact.update.error.name_already_exist" = "Name Already Exist";
-"contacts.contact.add_address" = "Add Address";
-"contacts.contact.delete" = "Delete Contact";
+"contacts.contact.update.error.name_already_exist" = "Name existiert bereits";
+"contacts.contact.add_address" = "Adresse hinzufügen";
+"contacts.contact.delete" = "Kontakt löschen";
 "contacts.contact.address.blockchains" = "Blockchains";
 "contacts.contact.address.blockchain" = "Blockchain";
-"contacts.contact.address.delete_address" = "Delete Address";
+"contacts.contact.address.delete_address" = "Adresse löschen";
 
-"contacts.restore.parsing_error" = "File has wrong data!";
-"contacts.restore.storage_error" = "Can't save contacts!";
-"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts.";
-"contacts.restore.overwrite_alert.replace" = "Replace";
+"contacts.restore.parsing_error" = "Datei hat falsche Daten!";
+"contacts.restore.storage_error" = "Kontakte können nicht gespeichert werden!";
+"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one).";
+"contacts.restore.overwrite_alert.replace" = "Ersetzen";
 
 
-"contacts.add_address.title" = "Add Address";
-"contacts.add_address.create_new" = "Create New Contact";
-"contacts.add_address.add_to_contact" = "Add to Existing Contact";
-"contacts.add_address.exist_address" = "This address is already used for %@";
+"contacts.add_address.title" = "Adresse hinzufügen";
+"contacts.add_address.create_new" = "Neuen Kontakt erstellen";
+"contacts.add_address.add_to_contact" = "Zu vorhandenem Kontakt hinzufügen";
+"contacts.add_address.exist_address" = "Diese Adresse wird bereits für %@ verwendet";
 
 "contacts.more.title" = "Mehr";
-"contacts.more.import" = "Restore";
+"contacts.more.import" = "Wiederherstellen";
 "contacts.more.export" = "Sicherung";
 
-"contacts.contact.delete_alert.title" = "Delete Contact";
-"contacts.contact.delete_alert.description" = "Are you sure you want to delete this contact?";
+"contacts.contact.delete_alert.title" = "Kontakt löschen";
+"contacts.contact.delete_alert.description" = "Sind Sie sicher, dass Sie diesen Kontakt löschen möchten?";
 "contacts.contact.delete_alert.delete" = "Löschen";
 
-"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard this new changes?";
-"contacts.contact.dismiss_changes.discard_changes" = "Discard Changes";
-"contacts.contact.dismiss_changes.keep_editing" = "Keep Editing";
+"contacts.contact.dismiss_changes.description" = "Sind Sie sicher, dass Sie diese neuen Änderungen verwerfen möchten?";
+"contacts.contact.dismiss_changes.discard_changes" = "Änderungen verwerfen";
+"contacts.contact.dismiss_changes.keep_editing" = "Weiter bearbeiten";
 
-"contacts.add_address.delete_alert.title" = "Delete Address";
-"contacts.add_address.delete_alert.description" = "Are you sure you want to delete this address?";
+"contacts.add_address.delete_alert.title" = "Adresse löschen";
+"contacts.add_address.delete_alert.description" = "Sind Sie sicher, dass Sie diese Adresse löschen wollen?";
 "contacts.add_address.delete_alert.delete" = "Löschen";
 
 // Settings -> iCloud Sync
 
 "icloud_sync.title" = "iCloud Sync";
 "settings.icloud_sync.title" = "iCloud Sync";
-"settings.icloud_sync.contact_book" = "Sync Contacts";
-"settings.icloud_sync.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
-"settings.icloud_sync.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+"settings.icloud_sync.contact_book" = "Kontakte synchronisieren";
+"settings.icloud_sync.description" = "Synchronisiere Zahlungskontakte mit iCloud für einfache Sicherung und Zugriff auf mehrere Geräte.";
+"settings.icloud_sync.merge_disclaimer" = "Ihre lokalen Zahlungskontakte werden mit den in iCloud gespeicherten zusammengeführt.";
 
 "settings.icloud_sync.alert.title" = "iCloud Sync";
-"settings.icloud_sync.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+"settings.icloud_sync.alert.description" = "Bitte überprüfen Sie, dass der iCloud-Speicher auf Ihrem Gerät aktiviert ist.";
 
 "settings.icloud_sync.alert_error.title" = "iCloud Error";
-"settings.icloud_sync.alert_error.description" = "Cannot connect to iCloud, this may be because iCloud storage not available on your device, or disabled for Unstoppable app";
+"settings.icloud_sync.alert_error.description" = "Keine Verbindung zu iCloud, dies könnte daran liegen, dass iCloud-Speicher auf Ihrem Gerät nicht verfügbar ist oder für unaufhaltsame App deaktiviert";
 
 // Set PIN
 
@@ -1161,8 +1162,8 @@
 "ethereum_transaction.error.lower_than_base_gas_limit" = "Der gewählte Gebührenwert ist zu niedrig und wird abgelehnt!";
 "ethereum_transaction.error.nonce_already_in_block" = "Transaktion bereits im Block!";
 "ethereum_transaction.error.replacement_transaction_underpriced" = "Gebühr nicht ausreichend, um die Transaktion zu ersetzen";
-"ethereum_transaction.error.transaction_underpriced" = "Fee not enough to send the transaction";
-"ethereum_transaction.error.tips_higher_than_max_fee" = "Max fee cannot be lower than the tips, because Max fee includes the tips.";
+"ethereum_transaction.error.transaction_underpriced" = "Gebühr nicht ausreichend, um die Transaktion zu ersetzen";
+"ethereum_transaction.error.tips_higher_than_max_fee" = "Maximale Gebühr kann nicht niedriger sein als die Tipps, da die Max-Gebühr die Tipps enthält.";
 "ethereum_transaction.error.reverted" = "Die Transaktion kann nicht ausgeführt werden: %@";
 "wallet_connect.request_title" = "Vertragsaufruf";
 "wallet_connect.button.confirm" = "Bestätigen";
@@ -1233,7 +1234,7 @@
 "manage_account.name" = "Name";
 "manage_account.recovery_phrase" = "Wiederherstellungsphrase";
 "manage_account.public_keys" = "Öffentliche Schlüssel";
-"manage_account.private_keys" = "Private Keys";
+"manage_account.private_keys" = "Private Schlüssel";
 "manage_account.backup_recovery_phrase" = "Wiederherstellungsphrase sichern";
 "manage_account.unlink" = "Verknüpfung trennen";
 
@@ -1241,19 +1242,19 @@
 
 "public_keys.title" = "Öffentliche Schlüssel";
 "public_keys.evm_address" = "EVM-Adresse";
-"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM based blockchains.";
+"public_keys.evm_address.description" = "Ermöglicht die bloße Überwachung von Brieftaschen mit Assets auf Ethereum, Binance Smart Chain und anderen EVM-basierten Blockchains.";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
-"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
+"public_keys.account_extended_public_key.description" = "Ermöglicht die schreibgeschützte Überwachung von Brieftaschen mit Bitcoin und anderen auf UTXO basierenden Verschlüsselungen (z.B. Litecoin, Bitcoin Cash, Dash, etc.).";
 
 // Manage Account -> Private Keys
 
-"private_keys.title" = "Private Keys";
+"private_keys.title" = "Private Schlüssel";
 "private_keys.evm_private_key" = "EVM privater Schlüssel";
-"private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
+"private_keys.evm_private_key.description" = "Gewährt volle Kontrolle über EVM-basierte Kryptos, d.h. Ethereum, Binance Smart Chain etc innerhalb der jeweiligen Wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
-"private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
+"private_keys.bip32_root_key.description" = "Gewährt die volle Kontrolle über die Vermögenswerte auf der jeweiligen Brieftasche.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
-"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within respective wallet.";
+"private_keys.account_extended_private_key.description" = "Gewährt volle Kontrolle über Bitcoin und andere auf UTXO basierende Kryptos, z.B. Litecoin, Bitcoin Cash, Dash, etc. innerhalb der jeweiligen Wallet.";
 
 // Manage Account -> EVM Address
 
@@ -1266,11 +1267,11 @@
 // Birthday Input
 
 "birthday_input.title" = "Geburtstagshöhe";
-"birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
+"birthday_input.description" = "Geben Sie die Geburtstagshöhe der Brieftasche für eine schnellere Synchronisierung ein.";
 "birthday_input.new_wallet" = "Neues Wallet";
-"birthday_input.new_wallet.description" = "Doesn't have any transactions";
-"birthday_input.old_wallet" = "Existing Wallet";
-"birthday_input.old_wallet.description" = "Has transactions";
+"birthday_input.new_wallet.description" = "Keine Transaktionen vorhanden";
+"birthday_input.old_wallet" = "Vorhandene Wallet";
+"birthday_input.old_wallet.description" = "Hat Transaktionen";
 "birthday_input.input_placeholder" = "%@ (optional)";
 
 "restore_setting.birthday_height" = "%@ Geburtstagshöhe";
@@ -1293,36 +1294,36 @@
 
 // Send Settings
 
-"evm_send_settings.nonce" = "Transaction Nonce";
-"evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
-"evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
-"evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
+"evm_send_settings.nonce" = "Transaktion Nonce";
+"evm_send_settings.nonce.info" = "Das nonce ist ein eindeutiger Integer-Wert für eine Transaktion innerhalb der Wallet des Benutzers. Sie erhöht sich normalerweise mit jeder abgeschlossenen Transaktion und muss sich nicht ändern. Fortgeschrittene Benutzer können es einem Nonce einer ausstehenden Transaktion gleichen, um diese Transaktion zu stornieren und zu ersetzen solange die neue Transaktion eine ausreichend höhere Gebühr hat, um zu verhindern, dass die alte statt dessen bestätigt wird (zum Beispiel Sie möchten möglicherweise die Bestätigung beschleunigen oder die Transaktionsparameter vollständig ändern). Wenn mehrere ausstehende Transaktionen die gleiche Nonce haben, wird nur eine bestätigt, typischerweise die mit der höchsten Gebühr.";
+"evm_send_settings.nonce.errors.already_in_use" = "Nonce verwendet";
+"evm_send_settings.nonce.errors.already_in_use.info" = "Eine ausgeführte Transaktion mit diesem nonce existiert bereits.";
 
 "fee_settings" = "Erweitert";
 "fee_settings.fee" = "Gebühr";
-"fee_settings.fee.info" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.";
+"fee_settings.fee.info" = "Blockchains verlangen, dass Nutzer Netzwerkgebühren beim Versenden von Transaktionen bezahlen. Die Gebühren sind höher, wenn viele Transaktionen im Netzwerk stattfinden.";
 "fee_settings.fee_rate" = "Gebührenrate";
-"fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
-"fee_settings.inputs_outputs" = "Inputs/Outputs";
-"fee_settings.transaction_settings" = "Transaction Settings";
-"fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
+"fee_settings.fee_rate.description" = "Hier ist der empfohlene Wert, um die nächsten 2 Blöcke zu treffen";
+"fee_settings.inputs_outputs" = "Ein-/Ausgänge";
+"fee_settings.transaction_settings" = "Transaktionseinstellungen";
+"fee_settings.transaction_settings.description" = "Machen Sie Ihre Bitcoin-Transaktionen schwieriger nachvollziehbar, indem Sie die Transaktionsstruktur verändern.";
 "fee_settings.time_lock" = "TimeLock";
-"fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
+"fee_settings.time_lock.description" = "TimeLock funktioniert nur beim Senden an BIP44 Adressen (ab 1)";
 
 "fee_settings.max_fee" = "Max Gebühr";
-"fee_settings.max_fee.info" = "The maximum estimated transaction fee to be paid for this transaction, computed based on the gas limit, max fee rate and max priority fee values below. The actual fee paid will normally be lower.";
+"fee_settings.max_fee.info" = "Die geschätzte Transaktionsgebühr, die für diese Transaktion gezahlt werden soll berechnet anhand des Gaslimits, der maximalen Gebührenrate und der unten angegebenen Maximalpriorität. Die tatsächlich gezahlte Gebühr ist in der Regel niedriger.";
 "fee_settings.gas_limit" = "Gaslimit";
-"fee_settings.gas_limit.info" = "Transaction complexity is measured in units called \"gas\". It varies depending on the smart contract being executed. The Gas Limit is the estimated maximum gas needed to execute it. The actual gas used will normally be lower.";
+"fee_settings.gas_limit.info" = "Die Transaktionskomplexität wird in Einheiten mit dem Namen \"Gas\" gemessen, die je nach ausgeführten intelligenten Verträgen variieren. Das Gaslimit ist das geschätzte Höchstgas, das benötigt wird, um es auszuführen. Das tatsächliche Gas wird normalerweise niedriger sein.";
 
 "fee_settings.gas_price" = "Gas Price";
 "fee_settings.gas_price.info" = "Die Gebühr für Transaktionen im Netzwerk wird in Gaseinheiten gemessen. Der Gaspreis ist der Betrag, den ein Nutzer für eine Einheit Gas auszugeben bereit ist. Wenn das Netzwerk ausgelastet ist, sind die Gaspreise hoch, und niedrig, wenn es nicht genutzt wird. Ein unzureichender Gaspreis ist oft ein Grund dafür, dass eine Transaktion über einen längeren Zeitraum aussteht.";
 
-"fee_settings.base_fee" = "Base Fee";
-"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
-"fee_settings.max_fee_rate" = "Max Fee Rate";
-"fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
-"fee_settings.tips" = "Max Priority Fee";
-"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+"fee_settings.base_fee" = "Basisgebühr";
+"fee_settings.base_fee.info" = "Das Netzwerkprotokoll bestimmt den Basispreis pro Gas für jeden Block, sogenannte Basisgebühren. Sie variiert je nach Netzwerkauslastung von Block zu Block. Sie kann im nächsten Block um nicht mehr als 12,5% steigen oder sinken, was die Gebühren berechenbarer macht. Der hier angezeigte Wert ist die Basisgebühr des aktuellen Blocks.";
+"fee_settings.max_fee_rate" = "Max Gebührenrate";
+"fee_settings.max_fee_rate.info" = "Dies ist der maximale Gesamtpreis pro Gas, den der Nutzer zu zahlen bereit ist. Es muss den Basistarif des Netzwerks und den maximalen Prioritätstarif abdecken. Der hier angezeigte Wert wird anhand einer Schätzung der Basisgebühr des nächsten Blocks plus der vom Nutzer gewählten Maximalgebührengebühr vorgeschlagen. Der tatsächlich gezahlte Gebührensatz ist normalerweise niedriger. Wenn diese Einstellung niedriger als die aktuelle Basisgebühr ist, wird die gezahlte Gebühr begrenzt aber führt zu längeren Wartezeiten für die Bestätigung der Transaktion oder sogar zu einer festgefahrenen Transaktion.";
+"fee_settings.tips" = "Max Prioritätsgebühr";
+"fee_settings.tips.info" = "Benutzer zahlen Prioritätsgebühren, um eine Transaktion schneller zu bestätigen. Sie werden manchmal als Tipps bezeichnet. Die maximale Prioritätsgebühr ist der maximale Zusatzpreis pro Gas, den der Nutzer zusätzlich zur Basisgebühr zahlen möchte. Der hier angezeigte Wert wird basierend auf vorausgesagten Netzwerkbedingungen vorgeschlagen. Die tatsächliche Prioritätsgebühr wird normalerweise niedriger sein. Die Einstellung auf Null kann zu einer langen Wartezeit führen, bis die Transaktion bestätigt wird, , da er am Ende der Warteschlange aller Benutzer platziert ist.";
 
 "fee_settings.errors.insufficient_balance" = "Unzureichendes Guthaben";
 "fee_settings.errors.insufficient_balance.info" = "Das aktuelle %@-Guthaben liegt unter dem für die Abwicklung dieser Transaktion erforderlichen Betrag einschließlich der Transaktionsgebühr.";
@@ -1330,8 +1331,8 @@
 "fee_settings.errors.low_max_fee.info" = "Der eingestellte Betrag der Transaktionsgebühr reicht nicht aus, um diese Transaktion jetzt zu bearbeiten.";
 "fee_settings.errors.nonce_already_in_block" = "Transaktion kann nicht ersetzt werden.";
 "fee_settings.errors.replacement_transaction_underpriced" = "Niedrige Gebühr für Ersatztransaktionen";
-"fee_settings.errors.transaction_underpriced" = "Low Fee for transaction";
-"fee_settings.errors.tips_higher_than_max_fee" = "Max Fee is too low";
+"fee_settings.errors.transaction_underpriced" = "Niedrige Transaktionsgebühr";
+"fee_settings.errors.tips_higher_than_max_fee" = "Max Gebühr ist zu niedrig";
 "fee_settings.warning.risk_of_getting_stuck" = "Riskant";
 "fee_settings.warning.risk_of_getting_stuck.info" = "Die Transaktion kann eine Zeit lang ausstehend bleiben oder ganz fehlschlagen.";
 "fee_settings.warning.overpricing" = "Gebühr zu hoch";
@@ -1354,7 +1355,7 @@
 // Nft Collections
 
 "nft_collections.title" = "NFTs";
-"nft_collections.price_mode" = "Price Mode";
+"nft_collections.price_mode" = "Preismodus";
 "nft_collections.last_sale" = "Letzter Verkauf";
 "nft_collections.average_7d" = "Durchschnitt 7D";
 "nft_collections.average_30d" = "Durchschnitt 30D";
@@ -1399,7 +1400,7 @@
 "nft_collection.tab.activity" = "Aktivität";
 
 "nft_collection.overview.description" = "Beschreibung";
-"nft_collection.overview.contracts" = "Contracts";
+"nft_collection.overview.contracts" = "Verträge";
 "nft_collection.overview.links" = "Links";
 "nft_collection.overview.links.website" = "Website";
 
@@ -1413,7 +1414,7 @@
 "nft_collection.overview.royalty" = "Royalty";
 "nft_collection.overview.inception_date" = "Inception Date";
 
-"nft.activity.contracts" = "Contracts";
+"nft.activity.contracts" = "Verträge";
 "nft.activity.empty_list" = "Noch keine Artikel-Aktivität";
 "nft.activity.event_types" = "Ereignistypen";
 "nft.activity.event_type.all" = "Alle Ereignisse";
