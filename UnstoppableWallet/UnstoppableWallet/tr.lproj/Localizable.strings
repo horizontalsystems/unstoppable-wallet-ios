@@ -647,8 +647,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
-"coin_analytics.holders.in_top_10_addresses" = "in top 10 addresses";
-"coin_analytics.holders.count" = "Holders: %@";
+"coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
+"coin_analytics.holders.count" = "Total Holders: %@";
 "coin_analytics.holders.see_all" = "See All";
 
 "coin_analytics.project_tvl" = "Project TVL";
