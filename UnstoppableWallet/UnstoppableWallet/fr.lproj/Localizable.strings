@@ -264,7 +264,8 @@
 "send.available_balance" = "Solde disponible";
 "send.max_button" = "Max";
 "send.next_button" = "Suivant";
-"send.error.invalid_address" = "Addresse invalide";
+"send.error.invalid" = "Invalid";
+"send.error.address" = "Adresses";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 heure";
 "send.hodler_locktime_month" = "1 mois";
@@ -691,16 +692,16 @@
 
 // Coin Page -> Markets
 
-"coin_markets.empty" = "No data available";
+"coin_markets.empty" = "Aucune donnée disponible";
 
 // Coin Page -> Tweets
 
-"coin_tweets.reference_type.retweeted" = "Retweeted @%@";
+"coin_tweets.reference_type.retweeted" = "A retweeté @%@";
 "coin_tweets.reference_type.quoted" = "Cité @%@";
 "coin_tweets.reference_type.replied" = "A répondu à @%@";
 "coin_tweets.no_tweets_yet" = "Pas encore de tweets";
-"coin_tweets.not_available" = "No twitter available";
-"coin_tweets.see_on_twitter" = "See on Twitter";
+"coin_tweets.not_available" = "Twitter n'est pas disponible";
+"coin_tweets.see_on_twitter" = "Voir notre Twitter";
 
 // Pro Features
 
@@ -960,11 +961,11 @@
 // Settings -> Contacts
 
 "contacts.title" = "Contacts";
-"contacts.list.search_placeholder" = "Nom";
+"contacts.list.search_placeholder" = "Search by name";
 "contacts.list.not_found" = "You do not have an added contact";
 "contacts.list.not_found_search" = "Aucun résultat";
 "contacts.add_new_contact" = "Add New Contact";
-"contacts.update_contact.already_has_address" = "This contact already has an address on this blockchain. Do you want to replace the address %@ with the %@?";
+"contacts.update_contact.already_has_address" = "Selected contact already has an address on %@. This action will replace the address %@ with %@.";
 "contacts.update_contact.replace" = "Remplacer";
 "contacts.list.addresses_count" = "Adresses : %d";
 "contacts.contact.new.title" = "New Contact";
@@ -977,45 +978,45 @@
 "contacts.contact.address.delete_address" = "Supprimer l'adresse";
 
 "contacts.restore.parsing_error" = "File has wrong data!";
-"contacts.restore.storage_error" = "Can't save contacts!";
-"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts.";
+"contacts.restore.storage_error" = "Impossible d'enregistrer les contacts !";
+"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one).";
 "contacts.restore.overwrite_alert.replace" = "Remplacer";
 
 
 "contacts.add_address.title" = "Add Address";
 "contacts.add_address.create_new" = "Créer un nouveau contact";
 "contacts.add_address.add_to_contact" = "Ajouter au contact existant";
-"contacts.add_address.exist_address" = "This address is already used for %@";
+"contacts.add_address.exist_address" = "Cette adresse est déjà utilisée pour %@";
 
-"contacts.more.title" = "More";
-"contacts.more.import" = "Restore";
+"contacts.more.title" = "Plus";
+"contacts.more.import" = "Restaurer";
 "contacts.more.export" = "Sauvegarde";
 
 "contacts.contact.delete_alert.title" = "Supprimer le contact";
-"contacts.contact.delete_alert.description" = "Are you sure you want to delete this contact?";
+"contacts.contact.delete_alert.description" = "Êtes-vous certain de vouloir supprimer ce contact?";
 "contacts.contact.delete_alert.delete" = "Supprimer";
 
-"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard this new changes?";
-"contacts.contact.dismiss_changes.discard_changes" = "Discard Changes";
-"contacts.contact.dismiss_changes.keep_editing" = "Keep Editing";
+"contacts.contact.dismiss_changes.description" = "Êtes-vous sûr de vouloir annuler ces modifications ?";
+"contacts.contact.dismiss_changes.discard_changes" = "Annuler les modifications";
+"contacts.contact.dismiss_changes.keep_editing" = "Poursuivre les modifications";
 
 "contacts.add_address.delete_alert.title" = "Supprimer l'adresse";
-"contacts.add_address.delete_alert.description" = "Are you sure you want to delete this address?";
+"contacts.add_address.delete_alert.description" = "Etes-vous sûr de vouloir supprimer cette adresse ?";
 "contacts.add_address.delete_alert.delete" = "Supprimer";
 
 // Settings -> iCloud Sync
 
 "icloud_sync.title" = "iCloud Sync";
 "settings.icloud_sync.title" = "iCloud Sync";
-"settings.icloud_sync.contact_book" = "Sync Contacts";
-"settings.icloud_sync.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
-"settings.icloud_sync.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+"settings.icloud_sync.contact_book" = "Synchroniser les contacts";
+"settings.icloud_sync.description" = "Synchroniser les contacts de paiement sur iCloud pour faciliter la sauvegarde et l'accès sur plusieurs appareils.";
+"settings.icloud_sync.merge_disclaimer" = "Vos contacts de paiement locaux seront fusionnés avec ceux stockés sur iCloud.";
 
 "settings.icloud_sync.alert.title" = "iCloud Sync";
-"settings.icloud_sync.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+"settings.icloud_sync.alert.description" = "Veuillez vérifier que le stockage iCloud est activé sur votre appareil.";
 
-"settings.icloud_sync.alert_error.title" = "iCloud Error";
-"settings.icloud_sync.alert_error.description" = "Cannot connect to iCloud, this may be because iCloud storage not available on your device, or disabled for Unstoppable app";
+"settings.icloud_sync.alert_error.title" = "Erreur iCloud";
+"settings.icloud_sync.alert_error.description" = "Impossible de se connecter à iCloud, il se peut que le stockage iCloud ne soit pas disponible sur votre appareil, ou qu'il soit désactivé pour l'appli Unstoppable.";
 
 // Set PIN
 
@@ -1161,8 +1162,8 @@
 "ethereum_transaction.error.lower_than_base_gas_limit" = "La valeur de frais sélectionnée est trop faible et sera rejetée !";
 "ethereum_transaction.error.nonce_already_in_block" = "Transaction déjà dans le block!";
 "ethereum_transaction.error.replacement_transaction_underpriced" = "Frais insuffisants pour remplacer la transaction";
-"ethereum_transaction.error.transaction_underpriced" = "Fee not enough to send the transaction";
-"ethereum_transaction.error.tips_higher_than_max_fee" = "Max fee cannot be lower than the tips, because Max fee includes the tips.";
+"ethereum_transaction.error.transaction_underpriced" = "Frais insuffisants pour envoyer la transaction";
+"ethereum_transaction.error.tips_higher_than_max_fee" = "Les frais maximaux ne peuvent pas être inférieurs aux pourboires (tips), car les pourboires sont inclus dans les frais maximaux.";
 "ethereum_transaction.error.reverted" = "La transaction ne peut être exécutée : %@";
 "wallet_connect.request_title" = "Appel de contrat";
 "wallet_connect.button.confirm" = "Confirmer";
@@ -1241,15 +1242,15 @@
 
 "public_keys.title" = "Clés publiques";
 "public_keys.evm_address" = "Adresse EVM";
-"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM based blockchains.";
+"public_keys.evm_address.description" = "Permet de contrôler en lecture seule les portefeuilles détenant des actifs sur Ethereum, Binance Smart Chain et d'autres blockchains basées sur l'EVM.";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
-"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
+"public_keys.account_extended_public_key.description" = "Permet de contrôler en lecture seule les portefeuilles contenant du Bitcoin et d'autres crypto-monnaies basées sur l'UTXO (c'est-à-dire Litecoin, Bitcoin Cash, Dash, etc.).";
 
 // Manage Account -> Private Keys
 
 "private_keys.title" = "Clés privées";
 "private_keys.evm_private_key" = "Clé privée EVM";
-"private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
+"private_keys.evm_private_key.description" = "Permet un contrôle total des crypto-monnaies basées sur l'EVM, c'est-à-dire Ethereum, Binance Smart Chain, etc. dans leur portefeuille respectif.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
