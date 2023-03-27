@@ -544,10 +544,10 @@
 "market.advanced_search_results.title" = "搜索结果";
 
 "market.global.total_market_cap.title" = "总市场价值";
-"market.global.total_market_cap.description" = "Total market value of all cryptocurrencies";
+"market.global.total_market_cap.description" = "所有加密货币的总市场价值";
 
 "market.global.volume_24h.title" = "24h成交量";
-"market.global.volume_24h.description" = "The 24h trading volume of crypto market";
+"market.global.volume_24h.description" = "加密货币市场24小时交易量";
 
 "market.global.defi_cap.title" = "DeFi市场价值";
 "market.global.defi_cap.description" = "Total market value of DeFi projects";
