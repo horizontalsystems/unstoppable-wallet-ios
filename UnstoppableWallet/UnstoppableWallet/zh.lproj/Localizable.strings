@@ -266,7 +266,8 @@
 "send.available_balance" = "可用余额";
 "send.max_button" = "最多";
 "send.next_button" = "下一步";
-"send.error.invalid_address" = "错误地址";
+"send.error.invalid" = "Invalid";
+"send.error.address" = "地址";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 小时";
 "send.hodler_locktime_month" = "1 个月";
@@ -275,8 +276,9 @@
 "send.hodler_locktime_off" = "关";
 "send.hodler_error.unsupported_address" = "时间锁定只能和P2PKH地址（以1开头）一起使用";
 "send.fee_info.title" = "费率";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe Unstoppable wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
-"send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
+"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe Unstoppable wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.
+";
+"send.transaction_inputs_outputs_info.title" = "交易输入 / 输出";
 "send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
@@ -584,7 +586,7 @@
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "代币平台选择";
 "coin_overview.show_more" = "显示更多";
-"coin_overview.show_less" = "Show Less";
+"coin_overview.show_less" = "显示更多";
 "coin_overview.links" = "链接";
 
 "coin_overview.guide" = "指南";
@@ -692,7 +694,7 @@
 
 // Coin Page -> Markets
 
-"coin_markets.empty" = "No data available";
+"coin_markets.empty" = "没有可用数据";
 
 // Coin Page -> Tweets
 
@@ -926,7 +928,7 @@
 
 // Settings -> Privacy
 
-"settings.privacy" = "Privacy";
+"settings.privacy" = "隐私保护";
 "settings.privacy.description" = "不可阻挡不会收集任何数据，也不会使用可能会暴露任何用户数据的分析工具。 钱包的设计是为了确保用户高度的隐私。";
 "settings.privacy.statement.user_data_storage" = "用户数据总是保留在用户的设备上。";
 "settings.privacy.statement.data_usage" = "钱包没有收集任何有关用户的数据。";
@@ -961,11 +963,11 @@
 // Settings -> Contacts
 
 "contacts.title" = "Contacts";
-"contacts.list.search_placeholder" = "名称";
+"contacts.list.search_placeholder" = "Search by name";
 "contacts.list.not_found" = "You do not have an added contact";
 "contacts.list.not_found_search" = "未发现结果";
 "contacts.add_new_contact" = "Add New Contact";
-"contacts.update_contact.already_has_address" = "This contact already has an address on this blockchain. Do you want to replace the address %@ with the %@?";
+"contacts.update_contact.already_has_address" = "Selected contact already has an address on %@. This action will replace the address %@ with %@.";
 "contacts.update_contact.replace" = "Replace";
 "contacts.list.addresses_count" = "Addresses: %d";
 "contacts.contact.new.title" = "New Contact";
@@ -979,7 +981,7 @@
 
 "contacts.restore.parsing_error" = "File has wrong data!";
 "contacts.restore.storage_error" = "Can't save contacts!";
-"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts.";
+"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one).";
 "contacts.restore.overwrite_alert.replace" = "Replace";
 
 
@@ -988,8 +990,8 @@
 "contacts.add_address.add_to_contact" = "Add to Existing Contact";
 "contacts.add_address.exist_address" = "This address is already used for %@";
 
-"contacts.more.title" = "More";
-"contacts.more.import" = "Restore";
+"contacts.more.title" = "更多";
+"contacts.more.import" = "恢复自";
 "contacts.more.export" = "备份";
 
 "contacts.contact.delete_alert.title" = "Delete Contact";
