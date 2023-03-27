@@ -581,7 +581,7 @@
 
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
-"coin_overview.coin_types" = "Coin Types";
+"coin_overview.coin_types" = "Coin Type";
 "coin_overview.show_more" = "Mehr anzeigen";
 "coin_overview.show_less" = "Show Less";
 "coin_overview.links" = "Links";
@@ -987,7 +987,7 @@
 "contacts.add_address.add_to_contact" = "Add to Existing Contact";
 "contacts.add_address.exist_address" = "This address is already used for %@";
 
-"contacts.more.title" = "More";
+"contacts.more.title" = "Mehr";
 "contacts.more.import" = "Restore";
 "contacts.more.export" = "Sicherung";
 
