@@ -991,14 +991,14 @@
 "contacts.add_address.exist_address" = "Diese Adresse wird bereits für %@ verwendet";
 
 "contacts.more.title" = "Mehr";
-"contacts.more.import" = "Wiederherstellen";
-"contacts.more.export" = "Sicherung";
+"contacts.more.import" = "Restore Contacts";
+"contacts.more.export" = "Backup Contacts";
 
 "contacts.contact.delete_alert.title" = "Kontakt löschen";
 "contacts.contact.delete_alert.description" = "Sind Sie sicher, dass Sie diesen Kontakt löschen möchten?";
 "contacts.contact.delete_alert.delete" = "Löschen";
 
-"contacts.contact.dismiss_changes.description" = "Sind Sie sicher, dass Sie diese neuen Änderungen verwerfen möchten?";
+"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
 "contacts.contact.dismiss_changes.discard_changes" = "Änderungen verwerfen";
 "contacts.contact.dismiss_changes.keep_editing" = "Weiter bearbeiten";
 
