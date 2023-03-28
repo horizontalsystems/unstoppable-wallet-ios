@@ -69,7 +69,6 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.sectionDataSource = self
-        tableView.keyboardDismissMode = .interactive
 
         if let gradientWrapperView {
             view.addSubview(gradientWrapperView)

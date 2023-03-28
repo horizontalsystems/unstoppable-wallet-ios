@@ -6,7 +6,7 @@ import SectionsTableView
 import ComponentKit
 import ThemeKit
 
-class ContactBookContactViewController: ThemeViewController {
+class ContactBookContactViewController: KeyboardAwareViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: ContactBookContactViewModel
     private let onUpdateContact: (() -> ())?
@@ -33,7 +33,7 @@ class ContactBookContactViewController: ThemeViewController {
         self.onUpdateContact = onUpdateContact
         deleteContactHidden = !viewModel.editExisting
 
-        super.init()
+        super.init(scrollViews: [tableView])
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -57,7 +57,6 @@ class ContactBookContactViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.sectionDataSource = self
-        tableView.keyboardDismissMode = .interactive
 
         tableView.buildSections()
 

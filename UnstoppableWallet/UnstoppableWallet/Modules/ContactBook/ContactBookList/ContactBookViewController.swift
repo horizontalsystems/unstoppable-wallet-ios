@@ -67,7 +67,6 @@ class ContactBookViewController: ThemeSearchViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.sectionDataSource = self
-        tableView.keyboardDismissMode = .interactive
 
         view.addSubview(notFoundPlaceholder)
         notFoundPlaceholder.snp.makeConstraints { maker in
