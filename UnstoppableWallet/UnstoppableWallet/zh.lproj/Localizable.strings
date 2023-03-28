@@ -837,8 +837,8 @@
 "manage_wallets.not_found" = "未找到任何结果。请尝试手动添加令牌。";
 "manage_wallets.search_placeholder" = "姓名、代码或合同地址";
 "manage_wallets.contract_address" = "智能合约地址";
-"manage_wallets.derivation_description" = "There are 3 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (older)\n- BIP49 (newer)\n- BIP84 (newest)\n\nWhile Unstoppable wallet supports all 3 of them it recommends to use a %@ wallet operating in BIP84 format. The wallets operating in this format get to pay lowest fees when sending %@ transactions.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile Unstoppable wallet supports both of them it recommends to use a Bitcoin Cash wallet operating in TYPE 145 format.";
+"manage_wallets.derivation_description" = "有3种%@钱包可用于接收应收款的常见地址格式：\n\n- BIP44（较旧）\n- BIP49（较新）\n- BIP84（最新）\n\n虽然Unstoppable钱包支持全部3种格式，但是我们建议使用以BIP84格式运作的%@钱包。在发送%@交易时，以此格式运作的钱包只需支付较低的费用。";
+"manage_wallets.bitcoin_cash_coin_type_description" = "有2种比特币现金钱包可用于接收应收款的常见地址格式：\n\n- TYPE 0（较旧）\n- TYPE 145（较新）\n\n虽然Unstoppable钱包支持全部两种格式，但是我们建议使用以TYPE 145格式运作的比特币现金钱包。";
 
 // Settings -> Experimental Features
 
@@ -1296,10 +1296,10 @@
 
 // Send Settings
 
-"evm_send_settings.nonce" = "交易随机数";
-"evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
-"evm_send_settings.nonce.errors.already_in_use" = "已用随机数";
-"evm_send_settings.nonce.errors.already_in_use.info" = "使用此随机数执行的交易已存在。";
+"evm_send_settings.nonce" = "交易nonce";
+"evm_send_settings.nonce.info" = "Nonce是用于用户钱包内的交易的一个唯一的整数值。它通常随着每一个提交的交易而增加且不需要更改。高级用户可以将其设置为等于一个待定交易的nonce，以便取消和取代该交易，只要新的交易具备足够高的费用来防止旧的交易得到确认即可（例如，他们可能需要加快其确认，或者完全更改交易参数）。当多个待定交易具有相同的nonce时，只有一个会得到确认，通常是具有最高费用的那一个。";
+"evm_send_settings.nonce.errors.already_in_use" = "已用nonce";
+"evm_send_settings.nonce.errors.already_in_use.info" = "使用此nonce执行的交易已存在。";
 
 "fee_settings" = "高级";
 "fee_settings.fee" = "费用";
@@ -1321,11 +1321,11 @@
 "fee_settings.gas_price.info" = "网上交易费用将按燃料单位计量。燃料价格是用户愿意按单位消费的金额。 当网络忙碌时，燃料价格就高，空闲时价格就低。 燃料价格不足常常是交易被长期搁置的一个原因。";
 
 "fee_settings.base_fee" = "基础费用";
-"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
+"fee_settings.base_fee.info" = "网络协议将决定每一个区块的每一燃料（gas）的基础价格，称为基础费率。它根据不同区块的网络利用水平而变化。它可能会在下一个区块中增加或减少不多于12.5%，使得费用更具有可预测性。这里显示的值为当前区块的基础费率。";
 "fee_settings.max_fee_rate" = "最大费率";
-"fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
+"fee_settings.max_fee_rate.info" = "这是用户愿意支付的每一燃料（gas）的最高总价。它必须涵盖网络的基础费率和最高优先费率。这里显示的值是基于下一个区块的基础费率加上用户选择的最大优先费率的估计值。实际支付的费率通常会较低。如果将此设置为低于当前的基础费率，将限制所支付的费用，但会导致更长的交易确认等待时间，甚至导致交易被冻结。";
 "fee_settings.tips" = "最高优先费用";
-"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+"fee_settings.tips.info" = "用户支付优先费用以激励交易更快地得到确认。这些费用有时被称为小费。最高优先费率是用户在基础费率基础上愿意支付的每一燃料（gas）的最高额外价格。这里显示的值是基于预测的网络条件的建议值。实际的优先费用通常会更低。将此设置为零可能会导致交易确认的等待时间很长，因为它被放置在所有用户的待定交易队列的末尾。";
 
 "fee_settings.errors.insufficient_balance" = "余额不足";
 "fee_settings.errors.insufficient_balance.info" = "當前%@餘額低於處理此交易所需的金額，包括交易費用。";
