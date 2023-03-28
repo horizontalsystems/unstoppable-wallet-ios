@@ -627,13 +627,15 @@
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
-"coin_analytics.active_addresses" = "活跃地址";
+"coin_analytics.active_addresses" = "Daily Active Addresses";
+"coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
 "coin_analytics.active_addresses_rank" = "活跃地址排名";
 "coin_analytics.active_addresses_rank.description" = "按与代币交易的唯一地址的数量排名的代币。";
-"coin_analytics.active_addresses.info1" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
-"coin_analytics.active_addresses.info4" = "List of all tokens ranked based on the number of active wallets transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
+"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
+"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
+"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
+"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
 
 "coin_analytics.transaction_count" = "交易数";
 "coin_analytics.transaction_count_rank" = "Tx计数排名";
