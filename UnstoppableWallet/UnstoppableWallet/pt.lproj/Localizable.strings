@@ -626,8 +626,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
-"coin_analytics.active_addresses" = "Daily Active Addresses";
-"coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
+"coin_analytics.active_addresses" = "Endereços ativos diários";
+"coin_analytics.active_addresses.30_day_unique_addresses" = "30 Dias Endereços Únicos";
 "coin_analytics.active_addresses_rank" = "Ranking de Endereços Ativos";
 "coin_analytics.active_addresses_rank.description" = "Tokens classificados pelo número de endereços exclusivos que realizam transações com o token.";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
@@ -992,14 +992,14 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "contacts.add_address.exist_address" = "Este endereço já está em uso para %@";
 
 "contacts.more.title" = "Mais";
-"contacts.more.import" = "Restore Contacts";
-"contacts.more.export" = "Backup Contacts";
+"contacts.more.import" = "Restaurar contatos";
+"contacts.more.export" = "Backup de contatos";
 
 "contacts.contact.delete_alert.title" = "Excluir contato";
 "contacts.contact.delete_alert.description" = "Você tem certeza que deseja excluir este contato?";
 "contacts.contact.delete_alert.delete" = "Deletar";
 
-"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
+"contacts.contact.dismiss_changes.description" = "Tem certeza de que deseja descartar as novas alterações?";
 "contacts.contact.dismiss_changes.discard_changes" = "Descartar Alterações";
 "contacts.contact.dismiss_changes.keep_editing" = "Continuar Editando";
 
