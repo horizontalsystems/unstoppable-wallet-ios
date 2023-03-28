@@ -554,7 +554,7 @@
 "market.global.defi_cap.description" = "Общая рыночная стоимость проектов DeFi";
 
 "market.global.tvl_in_defi.title" = "TVL в DeFi";
-"market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.global.tvl_in_defi.description" = "Всего заблокировано (TVL) в DeFi";
 "market.global.tvl_in_defi.multi_chain" = "Мультичейн";
 "market.global.tvl_in_defi.filter_by_chain" = "Сортировать по блокчейну";
 
@@ -600,16 +600,16 @@
 "coin_analytics.locked" = "Эта страница доступна только для премиум-пользователей Unstoppable Wallet";
 
 "coin_analytics.cex_volume" = "Объем CEX";
-"coin_analytics.cex_volume_rank" = "CEX Volume Rank";
-"coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
+"coin_analytics.cex_volume_rank" = "Рейтинг объема CEX";
+"coin_analytics.cex_volume_rank.description" = "Торговый объем токена на централизованных биржах.";
 "coin_analytics.cex_volume.info1" = "Общий объем торгов по токену на ведущих централизованных биржах за 30-дневный период.";
 "coin_analytics.cex_volume.info2" = "График, показывающий колебания дневного объема торговли токеном на ведущих централизованных биржах за 1 год.";
 "coin_analytics.cex_volume.info3" = "Рейтинг токена основан на объеме торговли на ведущих централизованных биржах за 30-дневный период.";
-"coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
+"coin_analytics.cex_volume.info4" = "Список всех токенов, ранжированных по объему торговли на децентрализованных биржах более 24ч/7дн/1мес.";
 
 "coin_analytics.dex_volume" = "Объем торгов DEX";
 "coin_analytics.dex_volume_rank" = "Рейтинг объема DEX";
-"coin_analytics.dex_volume_rank.description" = "Tokens ranked by trading volume for the token on decentralized exchanges.";
+"coin_analytics.dex_volume_rank.description" = "Торговый объем токена на децентрализованных биржах.";
 "coin_analytics.dex_volume.info1" = "Общий объем торгов по токену на ведущих децентрализованных биржах за 30-дневный период.";
 "coin_analytics.dex_volume.info2" = "График, показывающий колебания дневного объема торговли токеном на ведущих децентрализованных биржах за 1 год.";
 "coin_analytics.dex_volume.info3" = "Рейтинг токена основан на объеме торговли на ведущих децентрализованных биржах за 30-дневный период.";
@@ -628,11 +628,11 @@
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
-"coin_analytics.active_addresses" = "Daily Active Addresses";
+"coin_analytics.active_addresses" = "Ежедневные активные адреса";
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
 "coin_analytics.active_addresses_rank" = "Рейтинг активных адресов";
 "coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
+"coin_analytics.active_addresses.info1" = "Общее количество уникальных ежедневных активных адресов за 24 часа.";
 "coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
 "coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
 "coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
@@ -644,15 +644,15 @@
 "coin_analytics.transaction_count.info1" = "Общее количество уникальных транзакций блокчейна с токеном более 30 дней.";
 "coin_analytics.transaction_count.info2" = "Chart showing variation in transaction count over 1 year period.";
 "coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
-"coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.transaction_count.info4" = "Список всех токенов, ранжированных на основе количества транзакций с интервалом более 24ч / 7D / 1М.";
 "coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
 
 "coin_analytics.holders" = "Владельцы";
 "coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
-"coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
-"coin_analytics.holders.count" = "Total Holders: %@";
+"coin_analytics.holders.in_top_10_addresses" = "в топ-10 держателей";
+"coin_analytics.holders.count" = "Всего держателей: %@";
 "coin_analytics.holders.see_all" = "Посмотреть всё";
 
 "coin_analytics.project_tvl" = "Проект TVL";
@@ -994,14 +994,14 @@
 "contacts.add_address.exist_address" = "Этот адрес уже используется для %@";
 
 "contacts.more.title" = "Ещё";
-"contacts.more.import" = "Restore Contacts";
-"contacts.more.export" = "Backup Contacts";
+"contacts.more.import" = "Восстановить контакты";
+"contacts.more.export" = "Резерв. копирование контактов";
 
 "contacts.contact.delete_alert.title" = "Удалить контакт";
 "contacts.contact.delete_alert.description" = "Вы действительно хотите удалить этот контакт?";
 "contacts.contact.delete_alert.delete" = "Удалить";
 
-"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
+"contacts.contact.dismiss_changes.description" = "Вы уверены, что хотите отменить эти изменения?";
 "contacts.contact.dismiss_changes.discard_changes" = "Отменить изменения";
 "contacts.contact.dismiss_changes.keep_editing" = "Продолжить редактирование";
 
@@ -1015,13 +1015,13 @@
 "settings.icloud_sync.title" = "iCloud синхр.";
 "settings.icloud_sync.contact_book" = "Синхронизировать контакты";
 "settings.icloud_sync.description" = "Синхронизируйте платежные контакты с iCloud для легкого резервного копирования и доступа к ним на нескольких устройствах.";
-"settings.icloud_sync.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+"settings.icloud_sync.merge_disclaimer" = "Ваши локальные платежные контакты будут объединены с данными, хранящимися в iCloud.";
 
 "settings.icloud_sync.alert.title" = "iCloud синхр.";
-"settings.icloud_sync.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+"settings.icloud_sync.alert.description" = "Пожалуйста, убедитесь, что iCloud хранилище включено на вашем устройстве.";
 
 "settings.icloud_sync.alert_error.title" = "Ошибка iCloud";
-"settings.icloud_sync.alert_error.description" = "Cannot connect to iCloud, this may be because iCloud storage not available on your device, or disabled for Unstoppable app";
+"settings.icloud_sync.alert_error.description" = "Не удается подключиться к iCloud, это может быть потому, что iCloud не доступен на вашем устройстве или отключен для Unstoppable приложения";
 
 // Set PIN
 
@@ -1330,7 +1330,7 @@
 
 "fee_settings.base_fee" = "Базовая комиссия";
 "fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
-"fee_settings.max_fee_rate" = "Max Fee Rate";
+"fee_settings.max_fee_rate" = "Макс. комиссия";
 "fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
 "fee_settings.tips" = "Max Priority Fee";
 "fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
