@@ -626,13 +626,15 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
-"coin_analytics.active_addresses" = "Endereços ativos";
+"coin_analytics.active_addresses" = "Daily Active Addresses";
+"coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
 "coin_analytics.active_addresses_rank" = "Ranking de Endereços Ativos";
 "coin_analytics.active_addresses_rank.description" = "Tokens classificados pelo número de endereços exclusivos que realizam transações com o token.";
-"coin_analytics.active_addresses.info1" = "Número total de endereços de blockchain exclusivos que realizam transações com token em um período de 30 dias.";
-"coin_analytics.active_addresses.info2" = "Gráfico mostrando a variação na contagem de endereços ativos no período de 1 ano.";
-"coin_analytics.active_addresses.info3" = "Ranking do token com base no número de carteiras ativas que realizam transações com o período de 30 dias do token.";
-"coin_analytics.active_addresses.info4" = "Lista de todos os tokens com base no número de carteiras ativas que realizam transações com o token em intervalos de 24h / 7D / 1M.";
+"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
+"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
+"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
+"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
+"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
 
 "coin_analytics.transaction_count" = "Contagem de transações";
 "coin_analytics.transaction_count_rank" = "Ranking de Contador Tx";
