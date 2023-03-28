@@ -990,14 +990,14 @@
 "contacts.add_address.exist_address" = "Esta dirección ya está en uso para %@";
 
 "contacts.more.title" = "Más";
-"contacts.more.import" = "Restaurar";
-"contacts.more.export" = "Copia de seguridad";
+"contacts.more.import" = "Restore Contacts";
+"contacts.more.export" = "Backup Contacts";
 
 "contacts.contact.delete_alert.title" = "Eliminar contacto";
 "contacts.contact.delete_alert.description" = "¿Está seguro de que desea eliminar este contacto?";
 "contacts.contact.delete_alert.delete" = "Eliminar";
 
-"contacts.contact.dismiss_changes.description" = "¿Estás seguro de que quieres descartar estos nuevos cambios?";
+"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
 "contacts.contact.dismiss_changes.discard_changes" = "Descartar cambios";
 "contacts.contact.dismiss_changes.keep_editing" = "Sigue editando";
 
