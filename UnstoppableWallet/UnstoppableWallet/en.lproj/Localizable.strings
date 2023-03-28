@@ -992,14 +992,14 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "contacts.add_address.exist_address" = "This address is already used for %@";
 
 "contacts.more.title" = "More";
-"contacts.more.import" = "Restore";
-"contacts.more.export" = "Backup";
+"contacts.more.import" = "Restore Contacts";
+"contacts.more.export" = "Backup Contacts";
 
 "contacts.contact.delete_alert.title" = "Delete Contact";
 "contacts.contact.delete_alert.description" = "Are you sure you want to delete this contact?";
 "contacts.contact.delete_alert.delete" = "Delete";
 
-"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard this new changes?";
+"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
 "contacts.contact.dismiss_changes.discard_changes" = "Discard Changes";
 "contacts.contact.dismiss_changes.keep_editing" = "Keep Editing";
 
