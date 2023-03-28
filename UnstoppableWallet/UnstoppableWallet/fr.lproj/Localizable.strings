@@ -629,7 +629,7 @@
 "coin_analytics.active_addresses_rank" = "Classement des adresses actives";
 "coin_analytics.active_addresses_rank.description" = "Tokens classés par nombre d'adresses uniques effectuant des transactions avec le token.";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
+"coin_analytics.active_addresses.info2" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
 "coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
 "coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
@@ -990,14 +990,14 @@
 "contacts.add_address.exist_address" = "Cette adresse est déjà utilisée pour %@";
 
 "contacts.more.title" = "Plus";
-"contacts.more.import" = "Restaurer";
-"contacts.more.export" = "Sauvegarde";
+"contacts.more.import" = "Restore Contacts";
+"contacts.more.export" = "Backup Contacts";
 
 "contacts.contact.delete_alert.title" = "Supprimer le contact";
 "contacts.contact.delete_alert.description" = "Êtes-vous certain de vouloir supprimer ce contact?";
 "contacts.contact.delete_alert.delete" = "Supprimer";
 
-"contacts.contact.dismiss_changes.description" = "Êtes-vous sûr de vouloir annuler ces modifications ?";
+"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
 "contacts.contact.dismiss_changes.discard_changes" = "Annuler les modifications";
 "contacts.contact.dismiss_changes.keep_editing" = "Poursuivre les modifications";
 
