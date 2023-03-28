@@ -159,7 +159,8 @@ class CoinAnalyticsViewController: ThemeViewController {
             .listItem(text: "coin_analytics.active_addresses.info1".localized),
             .listItem(text: "coin_analytics.active_addresses.info2".localized),
             .listItem(text: "coin_analytics.active_addresses.info3".localized),
-            .listItem(text: "coin_analytics.active_addresses.info4".localized)
+            .listItem(text: "coin_analytics.active_addresses.info4".localized),
+            .listItem(text: "coin_analytics.active_addresses.info5".localized)
         ])
 
         parentNavigationController?.present(viewController, animated: true)
@@ -243,8 +244,8 @@ class CoinAnalyticsViewController: ThemeViewController {
         parentNavigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func openProDataChart(type: CoinProChartModule.ProChartType, overriddenValue: MetricChartModule.OverriddenValue? = nil) {
-        let viewController = CoinProChartModule.viewController(coin: viewModel.coin, type: type, overriddenValue: overriddenValue)
+    private func openProDataChart(type: CoinProChartModule.ProChartType) {
+        let viewController = CoinProChartModule.viewController(coin: viewModel.coin, type: type)
         parentNavigationController?.present(viewController, animated: true)
     }
 
@@ -282,14 +283,21 @@ extension CoinAnalyticsViewController: SectionsDataSource {
     private func chartRow(id: String, title: String, valueInfo: String, chartCurveType: ChartConfiguration.CurveType, viewItem: Previewable<CoinAnalyticsViewModel.ChartViewItem>, isLast: Bool, infoAction: @escaping () -> (), action: @escaping () -> ()) -> RowProtocol {
         let value: String?
         let chartData: ChartData
+        let chartTrend: MovementTrend
 
         switch viewItem {
         case .preview:
             value = placeholderText
             chartData = placeholderChartData()
+            chartTrend = .ignored
         case .regular(let viewItem):
             value = viewItem.value
             chartData = viewItem.chartData
+
+            switch chartCurveType {
+            case .line: chartTrend = viewItem.chartTrend
+            case .bars: chartTrend = .neutral
+            }
         }
 
         return Row<MarketWideCardCell>(
@@ -305,7 +313,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             value: value,
                             valueInfo: viewItem.isPreview ? nil : valueInfo,
                             chartData: chartData,
-                            chartColorType: viewItem.isPreview ? .neutral : .up,
+                            chartTrend: chartTrend,
                             chartCurveType: chartCurveType,
                             onTapInfo: infoAction
                     )
@@ -487,26 +495,37 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         )
     }
 
-    private func addressesSection(viewItem: CoinAnalyticsViewModel.RankCardViewItem) -> SectionProtocol {
-        let chartValue = viewItem.chart.value { $0.value }
-        let overriddenValue = chartValue.map { MetricChartModule.OverriddenValue(value: $0, description: "coin_analytics.last_30d".localized) }
+    private func addressesSection(viewItem: CoinAnalyticsViewModel.ActiveAddressesViewItem) -> SectionProtocol {
+        let items: [Any?] = [true, viewItem.count30d, viewItem.rank]
+        let itemCount = items.compactMap { $0 }.count
 
         var rows: [RowProtocol] = [
             chartRow(
                     id: "addresses",
                     title: "coin_analytics.active_addresses".localized,
-                    valueInfo: "coin_analytics.last_30d".localized,
-                    chartCurveType: .bars,
+                    valueInfo: "coin_analytics.current".localized,
+                    chartCurveType: .line,
                     viewItem: viewItem.chart,
-                    isLast: viewItem.rank == nil,
+                    isLast: itemCount == 1,
                     infoAction: { [weak self] in
                         self?.openAddressesInfo()
                     },
                     action: { [weak self] in
-                        self?.openProDataChart(type: .activeAddresses, overriddenValue: overriddenValue)
+                        self?.openProDataChart(type: .activeAddresses)
                     }
             )
         ]
+
+        if let count30d = viewItem.count30d {
+            rows.append(
+                    previewableRow(
+                            id: "addresses-count-30d",
+                            title: "coin_analytics.active_addresses.30_day_unique_addresses".localized,
+                            value: count30d,
+                            isLast: rows.count + 1 == itemCount
+                    )
+            )
+        }
 
         if let rank = viewItem.rank {
             rows.append(
@@ -515,7 +534,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             title: "coin_analytics.30_day_rank".localized,
                             value: rank,
                             accessoryType: .disclosure,
-                            isLast: true,
+                            isLast: rows.count + 1 == itemCount,
                             action: rank.previewableValue { _ in { [weak self] in
                                 self?.openRanks(type: .address)
                             }}
@@ -531,6 +550,9 @@ extension CoinAnalyticsViewController: SectionsDataSource {
     }
 
     private func txCountSection(viewItem: CoinAnalyticsViewModel.TransactionCountViewItem) -> SectionProtocol {
+        let items: [Any?] = [true, viewItem.volume, viewItem.rank]
+        let itemCount = items.compactMap { $0 }.count
+
         var rows: [RowProtocol] = [
             chartRow(
                     id: "tx-count",
@@ -538,7 +560,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     valueInfo: "coin_analytics.last_30d".localized,
                     chartCurveType: .bars,
                     viewItem: viewItem.chart,
-                    isLast: viewItem.volume == nil && viewItem.rank == nil,
+                    isLast: itemCount == 1,
                     infoAction: { [weak self] in
                         self?.openTransactionCountInfo()
                     },
@@ -553,7 +575,8 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     previewableRow(
                             id: "tx-volume",
                             title: "coin_analytics.30_day_volume".localized,
-                            value: volume
+                            value: volume,
+                            isLast: rows.count + 1 == itemCount
                     )
             )
         }
@@ -565,7 +588,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             title: "coin_analytics.30_day_rank".localized,
                             value: rank,
                             accessoryType: .disclosure,
-                            isLast: true,
+                            isLast: rows.count + 1 == itemCount,
                             action: rank.previewableValue { _ in { [weak self] in
                                 self?.openRanks(type: .txCount)
                             }}

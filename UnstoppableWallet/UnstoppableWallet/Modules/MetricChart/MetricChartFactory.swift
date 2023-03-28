@@ -50,7 +50,7 @@ class MetricChartFactory {
 
 extension MetricChartFactory {
 
-    func convert(itemData: MetricChartModule.ItemData, overriddenValue: MetricChartModule.OverriddenValue?, valueType: MetricChartModule.ValueType) -> ChartModule.ViewItem? {
+    func convert(itemData: MetricChartModule.ItemData, valueType: MetricChartModule.ValueType) -> ChartModule.ViewItem? {
         guard let firstItem = itemData.items.first, let lastItem = itemData.items.last else {
             return nil
         }
@@ -82,16 +82,16 @@ extension MetricChartFactory {
 
         switch itemData.type {
         case .regular:
-            value = overriddenValue?.value ?? format(value: lastItem.value, valueType: valueType)
+            value = format(value: lastItem.value, valueType: valueType)
             chartTrend = (lastItem.value - firstItem.value).isSignMinus ? .down : .up
-            valueDiff = overriddenValue == nil ? (lastItem.value - firstItem.value) / firstItem.value * 100 : nil
+            valueDiff = (lastItem.value - firstItem.value) / firstItem.value * 100
 
             if let first = firstItem.indicators?[.dominance], let last = lastItem.indicators?[.dominance] {
                 rightSideMode = .dominance(value: last, diff: (last - first) / first * 100)
             }
         case .aggregated(let aggregatedValue):
-            value = overriddenValue?.value ?? format(value: aggregatedValue, valueType: valueType)
-            chartTrend = .ignore
+            value = format(value: aggregatedValue, valueType: valueType)
+            chartTrend = .neutral
         }
 
         let chartItems = itemData.items.map { item -> ChartItem in
@@ -107,7 +107,7 @@ extension MetricChartFactory {
 
         return ChartModule.ViewItem(
                 value: value,
-                valueDescription: overriddenValue?.description,
+                valueDescription: nil,
                 rightSideMode: rightSideMode,
                 chartData: ChartData(items: chartItems, startTimestamp: startTimestamp, endTimestamp: endTimestamp),
                 chartTrend: chartTrend,

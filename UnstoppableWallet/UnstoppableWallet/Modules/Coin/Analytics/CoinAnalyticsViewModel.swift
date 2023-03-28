@@ -85,7 +85,7 @@ class CoinAnalyticsViewModel {
         "#\(value)"
     }
 
-    private func chartViewItem(points: [ChartPoint], value: Decimal? = nil, chartConfiguration: ChartConfiguration, postfix: ChartPreviewValuePostfix) -> ChartViewItem? {
+    private func chartViewItem(points: [ChartPoint], value: Decimal? = nil, postfix: ChartPreviewValuePostfix) -> ChartViewItem? {
         guard let first = points.first, let last = points.last else {
             return nil
         }
@@ -106,11 +106,15 @@ class CoinAnalyticsViewModel {
             }
         }
 
-        return ChartViewItem(value: valueString ?? "n/a".localized, chartData: chartData)
+        return ChartViewItem(
+                value: valueString ?? "n/a".localized,
+                chartData: chartData,
+                chartTrend: first.value < last.value ? .up : .down
+        )
     }
 
-    private func rankCardViewItem(points: [ChartPoint]?, value: Decimal?, chartConfiguration: ChartConfiguration, postfix: ChartPreviewValuePostfix, rank: Int?) -> RankCardViewItem? {
-        guard let points, let chartViewItem = chartViewItem(points: points, value: value, chartConfiguration: chartConfiguration, postfix: postfix) else {
+    private func rankCardViewItem(points: [ChartPoint]?, value: Decimal?, postfix: ChartPreviewValuePostfix, rank: Int?) -> RankCardViewItem? {
+        guard let points, let chartViewItem = chartViewItem(points: points, value: value, postfix: postfix) else {
             return nil
         }
 
@@ -120,8 +124,20 @@ class CoinAnalyticsViewModel {
         )
     }
 
+    private func activeAddressesViewItem(points: [ChartPoint]?, value: Decimal?, count30d: Int?, rank: Int?) -> ActiveAddressesViewItem? {
+        guard let points, let chartViewItem = chartViewItem(points: points, value: value, postfix: .noPostfix) else {
+            return nil
+        }
+
+        return ActiveAddressesViewItem(
+                chart: .regular(value: chartViewItem),
+                count30d: count30d.flatMap { ValueFormatter.instance.formatShort(value: Decimal($0)) }.map { .regular(value: $0) },
+                rank: rank.map { .regular(value: rankString(value: $0)) }
+        )
+    }
+
     private func transactionCountViewItem(points: [ChartPoint]?, value: Decimal?, volume: Decimal?, rank: Int?) -> TransactionCountViewItem? {
-        guard let points, let chartViewItem = chartViewItem(points: points, value: value, chartConfiguration: .baseBarChart, postfix: .noPostfix) else {
+        guard let points, let chartViewItem = chartViewItem(points: points, value: value, postfix: .noPostfix) else {
             return nil
         }
 
@@ -177,7 +193,7 @@ class CoinAnalyticsViewModel {
     }
 
     private func tvlViewItem(points: [ChartPoint]?, rank: Int?, ratio: Decimal?) -> TvlViewItem? {
-        guard let points, let chartViewItem = chartViewItem(points: points, value: points.last?.value, chartConfiguration: .baseChart, postfix: .currency) else {
+        guard let points, let chartViewItem = chartViewItem(points: points, value: points.last?.value, postfix: .currency) else {
             return nil
         }
 
@@ -205,29 +221,25 @@ class CoinAnalyticsViewModel {
                 cexVolume: rankCardViewItem(
                         points: analytics.cexVolume?.aggregatedChartPoints.points,
                         value: analytics.cexVolume?.aggregatedChartPoints.aggregatedValue,
-                        chartConfiguration: .baseBarChart,
                         postfix: .currency,
                         rank: analytics.cexVolume?.rank30d
                 ),
                 dexVolume: rankCardViewItem(
                         points: analytics.dexVolume?.aggregatedChartPoints.points,
                         value: analytics.dexVolume?.aggregatedChartPoints.aggregatedValue,
-                        chartConfiguration: .baseBarChart,
                         postfix: .currency,
                         rank: analytics.dexVolume?.rank30d
                 ),
                 dexLiquidity: rankCardViewItem(
                         points: analytics.dexLiquidity?.chartPoints,
                         value: analytics.dexLiquidity?.chartPoints.last?.value,
-                        chartConfiguration: .baseChart,
                         postfix: .currency,
                         rank: analytics.dexLiquidity?.rank
                 ),
-                activeAddresses: rankCardViewItem(
-                        points: analytics.addresses?.aggregatedChartPoints.points,
-                        value: analytics.addresses?.aggregatedChartPoints.aggregatedValue,
-                        chartConfiguration: .baseBarChart,
-                        postfix: .noPostfix,
+                activeAddresses: activeAddressesViewItem(
+                        points: analytics.addresses?.chartPoints,
+                        value: analytics.addresses?.chartPoints.last?.value,
+                        count30d: analytics.addresses?.count30d,
                         rank: analytics.addresses?.rank30d
                 ),
                 transactionCount: transactionCountViewItem(
@@ -265,7 +277,7 @@ class CoinAnalyticsViewModel {
                 cexVolume: data.cexVolume ? RankCardViewItem(chart: .preview, rank: data.cexVolumeRank30d ? .preview : nil) : nil,
                 dexVolume: data.dexVolume ? RankCardViewItem(chart: .preview, rank: data.dexVolumeRank30d ? .preview : nil) : nil,
                 dexLiquidity: data.dexLiquidity ? RankCardViewItem(chart: .preview, rank: data.dexLiquidityRank ? .preview : nil) : nil,
-                activeAddresses: data.addresses ? RankCardViewItem(chart: .preview, rank: data.addressesRank30d ? .preview : nil) : nil,
+                activeAddresses: data.addresses ? ActiveAddressesViewItem(chart: .preview, count30d: data.addressesCount30d ? .preview : nil, rank: data.addressesRank30d ? .preview : nil) : nil,
                 transactionCount: data.transactions ? TransactionCountViewItem(chart: .preview, volume: data.transactionsVolume30d ? .preview : nil, rank: data.transactionsRank30d ? .preview : nil) : nil,
                 holders: data.holders ? .preview : nil,
                 tvl: data.tvl ? TvlViewItem(chart: .preview, rank: data.tvlRank ? .preview : nil, ratio: data.tvlRatio ? .preview : nil) : nil,
@@ -318,7 +330,7 @@ extension CoinAnalyticsViewModel {
         let cexVolume: RankCardViewItem?
         let dexVolume: RankCardViewItem?
         let dexLiquidity: RankCardViewItem?
-        let activeAddresses: RankCardViewItem?
+        let activeAddresses: ActiveAddressesViewItem?
         let transactionCount: TransactionCountViewItem?
         let holders: Previewable<HoldersViewItem>?
         let tvl: TvlViewItem?
@@ -337,10 +349,17 @@ extension CoinAnalyticsViewModel {
     struct ChartViewItem {
         let value: String
         let chartData: ChartData
+        let chartTrend: MovementTrend
     }
 
     struct RankCardViewItem {
         let chart: Previewable<ChartViewItem>
+        let rank: Previewable<String>?
+    }
+
+    struct ActiveAddressesViewItem {
+        let chart: Previewable<ChartViewItem>
+        let count30d: Previewable<String>?
         let rank: Previewable<String>?
     }
 

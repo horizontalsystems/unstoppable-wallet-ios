@@ -23,9 +23,9 @@ extension ProChartFetcher: IMetricChartFetcher {
 
     var intervals: [HsTimePeriod] {
         switch type {
-        case .dexLiquidity:
-            return [.month1, .month3, .month6, .year1]
-        default:
+        case .cexVolume, .dexVolume, .dexLiquidity, .activeAddresses, .txCount:
+            return [.week1, .week2, .month1, .month3, .month6, .year1]
+        case .tvl:
             return [.day1, .week1, .week2, .month1, .month3, .month6, .year1]
         }
     }
@@ -65,10 +65,10 @@ extension ProChartFetcher: IMetricChartFetcher {
                     }
         case .activeAddresses:
             return marketKit.activeAddressesSingle(coinUid: coin.uid, timePeriod: interval)
-                    .map { data in
+                    .map { points in
                         MetricChartModule.ItemData(
-                                items: data.points.map { MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp) },
-                                type: .aggregated(value: data.aggregatedValue)
+                                items: points.map { MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp) },
+                                type: .regular
                         )
                     }
         case .txCount:
