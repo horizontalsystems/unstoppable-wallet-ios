@@ -265,7 +265,7 @@
 "send.available_balance" = "Verfügbares Guthaben";
 "send.max_button" = "Max.";
 "send.next_button" = "Weiter";
-"send.error.invalid" = "Invalid";
+"send.error.invalid" = "Ungültig";
 "send.error.address" = "Adresse";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 Stunde";
@@ -625,13 +625,15 @@
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
-"coin_analytics.active_addresses" = "Active Addresses";
+"coin_analytics.active_addresses" = "Daily Active Addresses";
+"coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
 "coin_analytics.active_addresses_rank" = "Active Addresses Rank";
 "coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
-"coin_analytics.active_addresses.info4" = "List of all tokens ranked based on the number of active wallets transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
+"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
+"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
+"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
+"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
 
 "coin_analytics.transaction_count" = "Transaction Count";
 "coin_analytics.transaction_count_rank" = "Tx Count Rank";
@@ -961,11 +963,11 @@
 // Settings -> Contacts
 
 "contacts.title" = "Kontakte";
-"contacts.list.search_placeholder" = "Search by name";
+"contacts.list.search_placeholder" = "Nach Namen suchen";
 "contacts.list.not_found" = "Sie haben keinen neuen Kontakt";
 "contacts.list.not_found_search" = "No results found";
 "contacts.add_new_contact" = "Neuer Kontakt";
-"contacts.update_contact.already_has_address" = "Selected contact already has an address on %@. This action will replace the address %@ with %@.";
+"contacts.update_contact.already_has_address" = "Der ausgewählte Kontakt hat bereits eine Adresse auf %@. Diese Aktion wird die Adresse %@ durch %@ ersetzen.";
 "contacts.update_contact.replace" = "Ersetzen";
 "contacts.list.addresses_count" = "Adresse: %d";
 "contacts.contact.new.title" = "Neuer Kontakt";
@@ -979,7 +981,7 @@
 
 "contacts.restore.parsing_error" = "Datei hat falsche Daten!";
 "contacts.restore.storage_error" = "Kontakte können nicht gespeichert werden!";
-"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one).";
+"contacts.restore.overwrite_alert.description" = "Diese Aktion wird Ihre lokalen Zahlungskontakte sowie die iCloud-Kopie (falls vorhanden) überschreiben.";
 "contacts.restore.overwrite_alert.replace" = "Ersetzen";
 
 
