@@ -994,14 +994,14 @@
 "contacts.add_address.exist_address" = "Этот адрес уже используется для %@";
 
 "contacts.more.title" = "Ещё";
-"contacts.more.import" = "Восстановить";
-"contacts.more.export" = "Резервная копия";
+"contacts.more.import" = "Restore Contacts";
+"contacts.more.export" = "Backup Contacts";
 
 "contacts.contact.delete_alert.title" = "Удалить контакт";
 "contacts.contact.delete_alert.description" = "Вы действительно хотите удалить этот контакт?";
 "contacts.contact.delete_alert.delete" = "Удалить";
 
-"contacts.contact.dismiss_changes.description" = "Вы уверены, что хотите отменить эти изменения?";
+"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
 "contacts.contact.dismiss_changes.discard_changes" = "Отменить изменения";
 "contacts.contact.dismiss_changes.keep_editing" = "Продолжить редактирование";
 
