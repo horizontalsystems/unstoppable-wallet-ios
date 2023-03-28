@@ -624,13 +624,15 @@
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
-"coin_analytics.active_addresses" = "Active Addresses";
+"coin_analytics.active_addresses" = "Daily Active Addresses";
+"coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
 "coin_analytics.active_addresses_rank" = "Active Addresses Rank";
 "coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
-"coin_analytics.active_addresses.info4" = "List of all tokens ranked based on the number of active wallets transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
+"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
+"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
+"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
+"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
 
 "coin_analytics.transaction_count" = "트랜잭션 수";
 "coin_analytics.transaction_count_rank" = "Tx Count Rank";
@@ -987,20 +989,20 @@
 "contacts.add_address.add_to_contact" = "Add to Existing Contact";
 "contacts.add_address.exist_address" = "This address is already used for %@";
 
-"contacts.more.title" = "More";
-"contacts.more.import" = "Restore";
-"contacts.more.export" = "백업";
+"contacts.more.title" = "보다";
+"contacts.more.import" = "Restore Contacts";
+"contacts.more.export" = "Backup Contacts";
 
 "contacts.contact.delete_alert.title" = "Delete Contact";
-"contacts.contact.delete_alert.description" = "Are you sure you want to delete this contact?";
+"contacts.contact.delete_alert.description" = "이 연락처를 삭제하시겠습니까?";
 "contacts.contact.delete_alert.delete" = "삭제";
 
-"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard this new changes?";
-"contacts.contact.dismiss_changes.discard_changes" = "Discard Changes";
-"contacts.contact.dismiss_changes.keep_editing" = "Keep Editing";
+"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
+"contacts.contact.dismiss_changes.discard_changes" = "변경 내용 취소";
+"contacts.contact.dismiss_changes.keep_editing" = "편집 계속하기";
 
 "contacts.add_address.delete_alert.title" = "Delete Address";
-"contacts.add_address.delete_alert.description" = "Are you sure you want to delete this address?";
+"contacts.add_address.delete_alert.description" = "이 주소를 정말 삭제하시겠습니까?";
 "contacts.add_address.delete_alert.delete" = "삭제";
 
 // Settings -> iCloud Sync
@@ -1051,7 +1053,7 @@
 "chart.market_cap" = "Market Cap";
 "chart.volume" = "볼륨 (24 시간)";
 "chart.circulation" = "In Circulation";
-"chart.selected.volume" = "Volume";
+"chart.selected.volume" = "음량";
 
 "chart.market.header" = "Market";
 "chart.market.market_cap" = "Market Cap";
@@ -1261,11 +1263,11 @@
 
 // Birthday Height
 
-"birthday_height.title" = "Birthday Height";
+"birthday_height.title" = "생일 신장";
 
 // Birthday Input
 
-"birthday_input.title" = "Birthday Height";
+"birthday_input.title" = "생일 신장";
 "birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
 "birthday_input.new_wallet" = "새 지갑";
 "birthday_input.new_wallet.description" = "Doesn't have any transactions";
@@ -1303,9 +1305,9 @@
 "fee_settings.fee.info" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.";
 "fee_settings.fee_rate" = "수수료율";
 "fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
-"fee_settings.inputs_outputs" = "Inputs/Outputs";
+"fee_settings.inputs_outputs" = "입력/출력";
 "fee_settings.transaction_settings" = "Transaction Settings";
-"fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
+"fee_settings.transaction_settings.description" = "트랜잭션이 구조화되는 방식을 변경하여 Bitcoin 트랜잭션을 추적하기 어렵게 만드십시오.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
 

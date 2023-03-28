@@ -266,7 +266,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "send.available_balance" = "Mevcut Bakiye";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
-"send.error.invalid" = "Invalid";
+"send.error.invalid" = "Geçersiz";
 "send.error.address" = "Adres";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 saat";
@@ -626,13 +626,15 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
-"coin_analytics.active_addresses" = "Active Addresses";
+"coin_analytics.active_addresses" = "Günlük Aktif Adresler";
+"coin_analytics.active_addresses.30_day_unique_addresses" = "30 Günlük Unique Adresler";
 "coin_analytics.active_addresses_rank" = "Active Addresses Rank";
 "coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
-"coin_analytics.active_addresses.info4" = "List of all tokens ranked based on the number of active wallets transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses.info1" = "24 saatlik süre boyunca unique, günlük, etkin adreslerin toplam sayısı.";
+"coin_analytics.active_addresses.info2" = "1 yıllık süre boyunca günlük etkin adres sayısındaki değişimi gösteren grafik.";
+"coin_analytics.active_addresses.info3" = "30 günlük süre boyunca token işlem yapan unique blok zinciri adreslerinin toplam sayısı.";
+"coin_analytics.active_addresses.info4" = "Token sıralaması, 30 günlük jetonla işlem yapan aktif cüzdan sayısına bağlıdır.";
+"coin_analytics.active_addresses.info5" = "24 saat / 7 gün / 1 milyon aralıklarla tokenle işlem yapan günlük aktif adreslerin sayısına göre sıralanan tüm token listesi.";
 
 "coin_analytics.transaction_count" = "Transaction Count";
 "coin_analytics.transaction_count_rank" = "Tx Count Rank";
@@ -647,8 +649,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
-"coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
-"coin_analytics.holders.count" = "Total Holders: %@";
+"coin_analytics.holders.in_top_10_addresses" = "ilk 10 sahibinde";
+"coin_analytics.holders.count" = "Toplam Sahip: %@";
 "coin_analytics.holders.see_all" = "See All";
 
 "coin_analytics.project_tvl" = "Project TVL";
@@ -968,11 +970,11 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Settings -> Contacts
 
 "contacts.title" = "Kişiler";
-"contacts.list.search_placeholder" = "Search by name";
+"contacts.list.search_placeholder" = "İsme göre ara";
 "contacts.list.not_found" = "Eklenmiş bir kişiniz yok";
 "contacts.list.not_found_search" = "No results found";
 "contacts.add_new_contact" = "Yeni Kişi Ekle";
-"contacts.update_contact.already_has_address" = "Selected contact already has an address on %@. This action will replace the address %@ with %@.";
+"contacts.update_contact.already_has_address" = "Seçilen kişinin zaten %@ üzerinde bir adresi var. Bu eylem, %@ adresini %@ ile değiştirecek.";
 "contacts.update_contact.replace" = "Değiştir";
 "contacts.list.addresses_count" = "Adresler: %d";
 "contacts.contact.new.title" = "Yeni Kişi";
@@ -986,7 +988,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "contacts.restore.parsing_error" = "Dosyada yanlış veriler var!";
 "contacts.restore.storage_error" = "Kişiler kaydedilemiyor!";
-"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one).";
+"contacts.restore.overwrite_alert.description" = "Bu işlem, cihazdaki ödeme kişilerinizin yanı sıra iCloud kopyasının (varsa) üzerine yazacaktır.";
 "contacts.restore.overwrite_alert.replace" = "Değiştir";
 
 
@@ -996,14 +998,14 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "contacts.add_address.exist_address" = "Bu adres %@ için zaten kullanılıyor";
 
 "contacts.more.title" = "Daha fazlası";
-"contacts.more.import" = "Geri Yükle";
-"contacts.more.export" = "Yedekle";
+"contacts.more.import" = "Restore Contacts";
+"contacts.more.export" = "Backup Contacts";
 
 "contacts.contact.delete_alert.title" = "Kişiyi Sil";
 "contacts.contact.delete_alert.description" = "Bu kişi silmek istediğine emin misin?";
 "contacts.contact.delete_alert.delete" = "Sil";
 
-"contacts.contact.dismiss_changes.description" = "Değişiklikleri silmek istediğinizden emin misiniz?";
+"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
 "contacts.contact.dismiss_changes.discard_changes" = "Değişiklikleri İptal Et";
 "contacts.contact.dismiss_changes.keep_editing" = "Düzenlemeyi sürdür";
 
