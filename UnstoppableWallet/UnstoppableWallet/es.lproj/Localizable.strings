@@ -647,8 +647,8 @@
 "coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Blockchains seguidos: Ethereum, Binance Smart Chain, Optismo, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polígono";
-"coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
-"coin_analytics.holders.count" = "Total Holders: %@";
+"coin_analytics.holders.in_top_10_addresses" = "en los 10 mejores poseedores";
+"coin_analytics.holders.count" = "Total de tenedores: %@";
 "coin_analytics.holders.see_all" = "Ver Todos";
 
 "coin_analytics.project_tvl" = "Proyecto TVL";
@@ -990,14 +990,14 @@
 "contacts.add_address.exist_address" = "Esta dirección ya está en uso para %@";
 
 "contacts.more.title" = "Más";
-"contacts.more.import" = "Restore Contacts";
-"contacts.more.export" = "Backup Contacts";
+"contacts.more.import" = "Restaurar contactos";
+"contacts.more.export" = "Copiar contactos";
 
 "contacts.contact.delete_alert.title" = "Eliminar contacto";
 "contacts.contact.delete_alert.description" = "¿Está seguro de que desea eliminar este contacto?";
 "contacts.contact.delete_alert.delete" = "Eliminar";
 
-"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
+"contacts.contact.dismiss_changes.description" = "¿Estás seguro de que quieres descartar estos nuevos cambios?";
 "contacts.contact.dismiss_changes.discard_changes" = "Descartar cambios";
 "contacts.contact.dismiss_changes.keep_editing" = "Sigue editando";
 
