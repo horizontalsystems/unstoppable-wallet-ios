@@ -648,21 +648,21 @@
 "coin_analytics.holders.info1" = "在各种区块链上持有代币的唯一地址的总数。";
 "coin_analytics.holders.info2" = "在每一个区块链上持有代币的前10大钱包。";
 "coin_analytics.holders.tracked_blockchains" = "已追踪区块链：以太坊、币安智能链、Optimism、Arbitrum、Celo、Cronos、Avalanche、Fantom、Polygon";
-"coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
-"coin_analytics.holders.count" = "Total Holders: %@";
+"coin_analytics.holders.in_top_10_addresses" = "在前10名持有者中";
+"coin_analytics.holders.count" = "持有者总数：%@";
 "coin_analytics.holders.see_all" = "查看全部";
 
-"coin_analytics.project_tvl" = "Project TVL";
-"coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
-"coin_analytics.project_tvl.info_title" = "Project TVL (Total Value Locked)";
+"coin_analytics.project_tvl" = "项目TVL";
+"coin_analytics.tvl_ratio" = "市值 / TVL比率";
+"coin_analytics.project_tvl.info_title" = "项目TVL（锁定总价值）";
 "coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
 "coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
-"coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
+"coin_analytics.project_tvl.info3" = "基于当前锁定总价值的代币排名。";
+"coin_analytics.project_tvl.info4" = "基于当前锁定总价值排名的所有代币的列表。";
 "coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
 
-"coin_analytics.project_revenue" = "Project Revenue";
-"coin_analytics.project_revenue_rank" = "Project Revenue Rank";
+"coin_analytics.project_revenue" = "项目收入";
+"coin_analytics.project_revenue_rank" = "项目收入排名";
 "coin_analytics.project_revenue_rank.description" = "Tokens ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
 "coin_analytics.project_revenue.info1" = "Total revenue generated for the token holders over 30-day period. Typically, fees are collected by token stakers or though a token burn mechanism.";
 "coin_analytics.project_revenue.info2" = "Token's rank based on the revenue generated over 30-day period for token stakers.";
