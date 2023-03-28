@@ -624,13 +624,15 @@
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
-"coin_analytics.active_addresses" = "Direcciones activas";
+"coin_analytics.active_addresses" = "Daily Active Addresses";
+"coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
 "coin_analytics.active_addresses_rank" = "Rango de direcciones activas";
 "coin_analytics.active_addresses_rank.description" = "Tokens clasificados por el número de direcciones únicas que transaccionan con el token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
-"coin_analytics.active_addresses.info4" = "List of all tokens ranked based on the number of active wallets transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
+"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
+"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
+"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
+"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
 
 "coin_analytics.transaction_count" = "Número de transacciones";
 "coin_analytics.transaction_count_rank" = "Rango de conteo Tx";
