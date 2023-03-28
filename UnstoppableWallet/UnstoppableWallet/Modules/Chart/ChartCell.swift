@@ -260,15 +260,7 @@ class ChartCell: UITableViewCell {
                 }
             }
 
-            switch viewItem.chartTrend {
-            case .neutral:
-                chartView.setCurve(colorType: .neutral)
-            case .ignore, .up:
-                chartView.setCurve(colorType: .up)
-            case .down:
-                chartView.setCurve(colorType: .down)
-            }
-
+            chartView.setCurve(colorType: viewItem.chartTrend.chartColorType)
             chartView.set(chartData: viewItem.chartData, animated: true)
             chartView.set(highLimitText: viewItem.maxValue, lowLimitText: viewItem.minValue)
         } else {

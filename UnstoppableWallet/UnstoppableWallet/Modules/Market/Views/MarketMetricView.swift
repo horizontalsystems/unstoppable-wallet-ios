@@ -150,14 +150,7 @@ extension MarketMetricView {
 
         diffLabel.set(value: diff)
 
-        let colorType: ChartColorType
-        switch trend {
-        case .neutral: colorType = .neutral
-        case .up, .ignore: colorType = .up
-        case .down: colorType = .down
-        }
-
-        chartView.setCurve(colorType: colorType)
+        chartView.setCurve(colorType: trend.chartColorType)
         if let chartData = chartData {
             chartView.set(chartData: chartData, animated: alreadyHasData)
             alreadyHasData = true
@@ -173,14 +166,7 @@ extension MarketMetricView {
 
         diffLabel.set(text: diff, color: diffColor)
 
-        let colorType: ChartColorType
-        switch trend {
-        case .neutral: colorType = .neutral
-        case .up, .ignore: colorType = .up
-        case .down: colorType = .down
-        }
-
-        chartView.setCurve(colorType: colorType)
+        chartView.setCurve(colorType: trend.chartColorType)
         if let chartData = chartData {
             chartView.set(chartData: chartData, animated: alreadyHasData)
             alreadyHasData = true

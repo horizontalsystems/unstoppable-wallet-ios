@@ -6,7 +6,7 @@ import MarketKit
 
 class CoinProChartModule {
 
-    static func viewController(coin: Coin, type: ProChartType, overriddenValue: MetricChartModule.OverriddenValue? = nil) -> UIViewController {
+    static func viewController(coin: Coin, type: ProChartType) -> UIViewController {
         let chartFetcher = ProChartFetcher(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit, coin: coin, type: type)
 
         let chartService = MetricChartService(
@@ -15,7 +15,7 @@ class CoinProChartModule {
         )
 
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
-        let chartViewModel = MetricChartViewModel(service: chartService, factory: factory, overriddenValue: overriddenValue)
+        let chartViewModel = MetricChartViewModel(service: chartService, factory: factory)
 
         return MetricChartViewController(
                 title: type.title,
@@ -49,9 +49,9 @@ extension CoinProChartModule {
 
         var chartConfiguration: ChartConfiguration {
             switch self {
-            case .cexVolume, .dexVolume, .activeAddresses: return .baseBarChart
+            case .cexVolume, .dexVolume: return .baseBarChart
             case .txCount: return .volumeBarChart
-            case .dexLiquidity, .tvl: return .baseChart
+            case .dexLiquidity, .activeAddresses, .tvl: return .baseChart
             }
         }
     }

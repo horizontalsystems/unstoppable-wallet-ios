@@ -42,10 +42,19 @@ struct ChartModule {
 }
 
 enum MovementTrend {
-    case ignore
-    case neutral
-    case down
     case up
+    case down
+    case neutral
+    case ignored
+
+    var chartColorType: ChartColorType {
+        switch self {
+        case .up: return .up
+        case .down: return .down
+        case .neutral: return .neutral
+        case .ignored: return .pressed
+        }
+    }
 }
 
 protocol IChartViewModel {

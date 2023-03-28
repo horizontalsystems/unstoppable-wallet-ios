@@ -140,16 +140,7 @@ class MarketCardView: UIView {
         }
 
         chartView.apply(configuration: configuration)
-
-        let colorType: ChartColorType
-        switch trend {
-        case .ignore: colorType = .up
-        case .neutral: colorType = .neutral
-        case .up: colorType = .up
-        case .down: colorType = .down
-        }
-
-        chartView.setCurve(colorType: colorType)
+        chartView.setCurve(colorType: trend.chartColorType)
         chartView.set(chartData: data, animated: alreadyHasData)
         alreadyHasData = true
     }

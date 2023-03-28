@@ -19,7 +19,7 @@ extension ChartConfiguration {
     }
 
     static var baseBarChart: ChartConfiguration {
-        ChartConfiguration().applyColors(trendIgnore: true).applyBase().applyBars()
+        ChartConfiguration().applyColors().applyBase().applyBars()
     }
 
     static var volumeBarChart: ChartConfiguration {
@@ -31,11 +31,11 @@ extension ChartConfiguration {
     }
 
     static var previewChart: ChartConfiguration {
-        ChartConfiguration().applyColors(trendIgnore: true).applyPreview(height: 60)
+        ChartConfiguration().applyColors().applyPreview(height: 60)
     }
 
     static var previewBarChart: ChartConfiguration {
-        ChartConfiguration().applyColors(trendIgnore: true).applyPreview(height: 60).applyBarsPreview()
+        ChartConfiguration().applyColors().applyPreview(height: 60).applyBarsPreview()
     }
 
     @discardableResult private func applyBase() -> Self {
@@ -111,15 +111,15 @@ extension ChartConfiguration {
         borderColor = .themeSteel20
         backgroundColor = .clear
 
-        trendUpColor = trendIgnore ? UIColor.themeJacob : UIColor.themeGreenD
-        trendDownColor = trendIgnore ? UIColor.themeJacob : UIColor.themeRedD
+        trendUpColor = UIColor.themeGreenD
+        trendDownColor = UIColor.themeRedD
         pressedColor = .themeNina
-        outdatedColor = .themeNina
+        outdatedColor = .themeJacob
 
-        trendUpGradient = [UIColor](repeatElement(UIColor(hex: trendIgnore ? 0xFFa800 : 0x13D670), count: 3))
+        trendUpGradient = [UIColor](repeatElement(UIColor(hex: 0x13D670), count: 3))
         trendDownGradient = [UIColor(hex: 0x7413D6), UIColor(hex: 0x7413D6), UIColor(hex: 0xFF0303)]
         pressedGradient = [UIColor](repeatElement(.themeLeah, count: 3))
-        neutralGradient = [UIColor](repeatElement(.themeGray50, count: 3))
+        neutralGradient = [UIColor](repeatElement(UIColor(hex: 0xFFa800), count: 3))
         gradientLocations = [0, 0.05, 1]
         gradientAlphas = [0, 0, 0.3]
 
