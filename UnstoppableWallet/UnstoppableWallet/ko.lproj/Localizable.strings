@@ -264,7 +264,7 @@
 "send.available_balance" = "사용 가능한 잔액";
 "send.max_button" = "최대";
 "send.next_button" = "다음";
-"send.error.invalid" = "Invalid";
+"send.error.invalid" = "무효";
 "send.error.address" = "주소";
 "send.hodler_locktime" = "시간 자물쇠";
 "send.hodler_locktime_hour" = "1시간";
