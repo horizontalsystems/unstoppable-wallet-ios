@@ -624,8 +624,8 @@
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
-"coin_analytics.active_addresses" = "Daily Active Addresses";
-"coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
+"coin_analytics.active_addresses" = "Adresses actives quotidiennes";
+"coin_analytics.active_addresses.30_day_unique_addresses" = "Adresses uniques de 30 jours";
 "coin_analytics.active_addresses_rank" = "Classement des adresses actives";
 "coin_analytics.active_addresses_rank.description" = "Tokens classés par nombre d'adresses uniques effectuant des transactions avec le token.";
 "coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
@@ -655,17 +655,17 @@
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
 "coin_analytics.project_tvl.info_title" = "Project TVL (Total Value Locked)";
 "coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
-"coin_analytics.project_tvl.info2" = "Graphique montrant la variation valeur totale verrouillée dans les contrats intelligents du projet sur une période de 1 an.";
-"coin_analytics.project_tvl.info3" = "Rang du token en fonction de la valeur totale verrouillée actuelle.";
-"coin_analytics.project_tvl.info4" = "Liste de tous les tokens classés en fonction de la valeur totale verrouillée.";
-"coin_analytics.project_tvl.info5" = "Rapport entre la capitalisation du marché et la TVL du projet.";
+"coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
+"coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
+"coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
+"coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
 
 "coin_analytics.project_revenue" = "Revenus du projet";
 "coin_analytics.project_revenue_rank" = "Classement en fonction des revenus du projet";
-"coin_analytics.project_revenue_rank.description" = "Tokens classés en fonction des revenus générés pour les détenteurs via des mécanismes i.e. staking ou token burns.";
-"coin_analytics.project_revenue.info1" = "Total des revenus générés pour les détenteurs de tokens sur une période de 30 jours. Généralement, les frais sont perçus par les détenteurs de tokens ou bien par le biais d'un mécanisme de brûlage de tokens.";
-"coin_analytics.project_revenue.info2" = "Classement du token basé sur les revenus générés sur une période de 30 jours pour les stakers de token.";
-"coin_analytics.project_revenue.info3" = "Liste de tous les tokens classés en fonction des revenus générés pour les stakers de tokens sur des intervalles de 24h / 7J / 1M.";
+"coin_analytics.project_revenue_rank.description" = "Tokens ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
+"coin_analytics.project_revenue.info1" = "Total revenue generated for the token holders over 30-day period. Typically, fees are collected by token stakers or though a token burn mechanism.";
+"coin_analytics.project_revenue.info2" = "Token's rank based on the revenue generated over 30-day period for token stakers.";
+"coin_analytics.project_revenue.info3" = "List of all tokens ranked based on the revenue generated for token stakers over 24h / 7D / 1M intervals.";
 
 "coin_analytics.other_data" = "Autres données";
 
