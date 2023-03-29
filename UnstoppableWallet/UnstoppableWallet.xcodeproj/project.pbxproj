@@ -2072,7 +2072,6 @@
 		D09200C6293F21720091981A /* RestoreNonStandardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C0293F21710091981A /* RestoreNonStandardViewModel.swift */; };
 		D09200C8293F21720091981A /* RestoreNonStandardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C1293F21720091981A /* RestoreNonStandardModule.swift */; };
 		D09200C9293F21720091981A /* RestoreNonStandardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C1293F21720091981A /* RestoreNonStandardModule.swift */; };
-		D09200CA293F21720091981A /* RestoreNonStandardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C1293F21720091981A /* RestoreNonStandardModule.swift */; };
 		D0C87E66298D17D5000CA9BE /* libzcashlc in Frameworks */ = {isa = PBXBuildFile; productRef = D0C87E65298D17D5000CA9BE /* libzcashlc */; };
 		D0D5BCBC2976CB9F00587FDB /* PasswordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */; };
 		D0D5BCBD2976CB9F00587FDB /* PasswordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */; };
@@ -9072,7 +9071,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.31;
+				MARKETING_VERSION = 0.32;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OfficeMode = true;
@@ -9144,7 +9143,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.31;
+				MARKETING_VERSION = 0.32;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OfficeMode = false;
 				SDKROOT = iphoneos;
@@ -9272,14 +9271,6 @@
 			requirement = {
 				kind = exactVersion;
 				version = 1.0.4;
-			};
-		};
-		D0C87E64298D17D5000CA9BE /* XCRemoteSwiftPackageReference "zcash-light-client-ffi" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/zcash-hackworks/zcash-light-client-ffi";
-			requirement = {
-				kind = exactVersion;
-				version = 0.1.1;
 			};
 		};
 		D0C87E64298D17D5000CA9BE /* XCRemoteSwiftPackageReference "zcash-light-client-ffi" */ = {
