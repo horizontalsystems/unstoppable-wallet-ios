@@ -264,7 +264,7 @@
 "send.available_balance" = "사용 가능한 잔액";
 "send.max_button" = "최대";
 "send.next_button" = "다음";
-"send.error.invalid" = "Invalid";
+"send.error.invalid" = "무효";
 "send.error.address" = "주소";
 "send.hodler_locktime" = "시간 자물쇠";
 "send.hodler_locktime_hour" = "1시간";
@@ -284,7 +284,7 @@
 
 "send.confirmation.you_send" = "보냅니다";
 "send.confirmation.to" = "에게";
-"send.confirmation.contact_name" = "Contact Name";
+"send.confirmation.contact_name" = "담당자 이름";
 "send.confirmation.domain" = "도메인";
 "send.confirmation.address" = "주소";
 "send.confirmation.account" = "계정";
@@ -784,7 +784,7 @@
 "tx_info.transaction_id" = "거래 ID";
 "tx_info.to_hash" = "에게";
 "tx_info.spender" = "스펜더";
-"tx_info.contact_name" = "Contact Name";
+"tx_info.contact_name" = "담당자 이름";
 "tx_info.button_explorer" = "%@에서 보기";
 "tx_info.rate" = "과거 환율";
 "tx_info.options.speed_up" = "가속";
@@ -836,8 +836,8 @@
 "manage_wallets.not_found" = "검색 결과가 없습니다. 토큰을 수동으로 추가해 보십시오.";
 "manage_wallets.search_placeholder" = "이름, 코드 또는 계약 주소";
 "manage_wallets.contract_address" = "계약 주소";
-"manage_wallets.derivation_description" = "There are 3 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (older)\n- BIP49 (newer)\n- BIP84 (newest)\n\nWhile Unstoppable wallet supports all 3 of them it recommends to use a %@ wallet operating in BIP84 format. The wallets operating in this format get to pay lowest fees when sending %@ transactions.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile Unstoppable wallet supports both of them it recommends to use a Bitcoin Cash wallet operating in TYPE 145 format.";
+"manage_wallets.derivation_description" = "%@ 지갑이 입금을 받는 데 사용할 수 있는 3가지 일반적인 주소 형식이 있습니다.\n\n- BIP44(이전)\n- BIP49(최신)\n- BIP84(최신)\n\nUnstoppable 지갑은 이 3가지 모두를 지원합니다. BIP84 형식으로 작동하는 %@ 지갑을 사용하는 것이 좋습니다. 이 형식으로 작동하는 지갑은 %@ 거래를 보낼 때 가장 낮은 수수료를 지불합니다.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "비트코인 캐시 지갑이 수신 지불을 받는 데 사용할 수 있는 2가지 주소 형식이 있습니다.\n\n- 유형 0(이전)\n- 유형 145(최신)\n\nUnstoppable 지갑은 두 가지를 모두 지원하지만 비트코인 캐시를 사용하는 것이 좋습니다. TYPE 145 형식으로 작동하는 지갑.";
 
 // Settings -> Experimental Features
 
@@ -927,7 +927,7 @@
 
 // Settings -> Privacy
 
-"settings.privacy" = "Privacy";
+"settings.privacy" = "개인정보";
 "settings.privacy.description" = "Unstoppable은 사용자에 대한 데이터를 노출할 수 있는 데이터를 수집하거나 분석 도구를 사용하지 않습니다. 지갑은 사용자에게 높은 수준의 개인 정보를 보장하도록 설계되었습니다.";
 "settings.privacy.statement.user_data_storage" = "사용자 데이터는 항상 사용자의 장치에 남아 있습니다.";
 "settings.privacy.statement.data_usage" = "지갑은 사용자에 대한 데이터를 수집하지 않습니다.";
@@ -961,63 +961,63 @@
 
 // Settings -> Contacts
 
-"contacts.title" = "Contacts";
-"contacts.list.search_placeholder" = "Search by name";
-"contacts.list.not_found" = "You do not have an added contact";
+"contacts.title" = "연락처";
+"contacts.list.search_placeholder" = "이름별 검색";
+"contacts.list.not_found" = "추가된 연락처가 없습니다";
 "contacts.list.not_found_search" = "No results found";
-"contacts.add_new_contact" = "Add New Contact";
-"contacts.update_contact.already_has_address" = "Selected contact already has an address on %@. This action will replace the address %@ with %@.";
-"contacts.update_contact.replace" = "Replace";
-"contacts.list.addresses_count" = "Addresses: %d";
-"contacts.contact.new.title" = "New Contact";
+"contacts.add_new_contact" = "새 연락처 추가";
+"contacts.update_contact.already_has_address" = "선택된 연락처는 이미 %@에 주소가 있습니다. 이 작업은 %@ 주소를 %@로 대체합니다.";
+"contacts.update_contact.replace" = "위젯 변경";
+"contacts.list.addresses_count" = "구애: %d";
+"contacts.contact.new.title" = "새로운 연락처";
 "contacts.contact.name.placeholder" = "이름";
-"contacts.contact.update.error.name_already_exist" = "Name Already Exist";
-"contacts.contact.add_address" = "Add Address";
-"contacts.contact.delete" = "Delete Contact";
+"contacts.contact.update.error.name_already_exist" = "이름이 이미 존재합니다";
+"contacts.contact.add_address" = "주소 추가";
+"contacts.contact.delete" = "연락처 삭제";
 "contacts.contact.address.blockchains" = "Blockchains";
 "contacts.contact.address.blockchain" = "Blockchain";
-"contacts.contact.address.delete_address" = "Delete Address";
+"contacts.contact.address.delete_address" = "주소 삭제 ";
 
-"contacts.restore.parsing_error" = "File has wrong data!";
-"contacts.restore.storage_error" = "Can't save contacts!";
-"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one).";
-"contacts.restore.overwrite_alert.replace" = "Replace";
+"contacts.restore.parsing_error" = "파일에 잘못된 데이터가 있습니다!";
+"contacts.restore.storage_error" = "연락처를 저장할 수 없습니다!";
+"contacts.restore.overwrite_alert.description" = "이 작업은 로컬 결제 연락처와 iCloud 복사본(있는 경우)을 덮어씁니다.";
+"contacts.restore.overwrite_alert.replace" = "위젯 변경";
 
 
-"contacts.add_address.title" = "Add Address";
-"contacts.add_address.create_new" = "Create New Contact";
-"contacts.add_address.add_to_contact" = "Add to Existing Contact";
-"contacts.add_address.exist_address" = "This address is already used for %@";
+"contacts.add_address.title" = "주소 추가";
+"contacts.add_address.create_new" = "새 연락처 등록";
+"contacts.add_address.add_to_contact" = "기존 연락처에 추가";
+"contacts.add_address.exist_address" = "이 주소는 이미 %@에 사용되었습니다";
 
 "contacts.more.title" = "보다";
-"contacts.more.import" = "Restore Contacts";
-"contacts.more.export" = "Backup Contacts";
+"contacts.more.import" = "연락처 복원";
+"contacts.more.export" = "백업 연락처";
 
-"contacts.contact.delete_alert.title" = "Delete Contact";
+"contacts.contact.delete_alert.title" = "연락처 삭제";
 "contacts.contact.delete_alert.description" = "이 연락처를 삭제하시겠습니까?";
 "contacts.contact.delete_alert.delete" = "삭제";
 
-"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
+"contacts.contact.dismiss_changes.description" = "변경 사항을 취소하시겠습니까?";
 "contacts.contact.dismiss_changes.discard_changes" = "변경 내용 취소";
 "contacts.contact.dismiss_changes.keep_editing" = "편집 계속하기";
 
-"contacts.add_address.delete_alert.title" = "Delete Address";
+"contacts.add_address.delete_alert.title" = "주소 삭제 ";
 "contacts.add_address.delete_alert.description" = "이 주소를 정말 삭제하시겠습니까?";
 "contacts.add_address.delete_alert.delete" = "삭제";
 
 // Settings -> iCloud Sync
 
-"icloud_sync.title" = "iCloud Sync";
-"settings.icloud_sync.title" = "iCloud Sync";
-"settings.icloud_sync.contact_book" = "Sync Contacts";
-"settings.icloud_sync.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
-"settings.icloud_sync.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+"icloud_sync.title" = "iCloud 동기화";
+"settings.icloud_sync.title" = "iCloud 동기화";
+"settings.icloud_sync.contact_book" = "연락처 동기화";
+"settings.icloud_sync.description" = "결제 연락처를 iCloud에 동기화하여 여러 기기에서 쉽게 백업하고 액세스할 수 있습니다.";
+"settings.icloud_sync.merge_disclaimer" = "로컬 결제 연락처가 iCloud에 저장된 연락처와 병합됩니다.";
 
-"settings.icloud_sync.alert.title" = "iCloud Sync";
-"settings.icloud_sync.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+"settings.icloud_sync.alert.title" = "iCloud 동기화";
+"settings.icloud_sync.alert.description" = "기기에서 iCloud 저장소가 활성화되어 있는지 확인하세요.";
 
-"settings.icloud_sync.alert_error.title" = "iCloud Error";
-"settings.icloud_sync.alert_error.description" = "Cannot connect to iCloud, this may be because iCloud storage not available on your device, or disabled for Unstoppable app";
+"settings.icloud_sync.alert_error.title" = "iCloud 오류";
+"settings.icloud_sync.alert_error.description" = "iCloud에 연결할 수 없습니다. 기기에서 iCloud 저장소를 사용할 수 없거나 Unstoppable 앱이 비활성화되었기 때문일 수 있습니다.";
 
 // Set PIN
 
@@ -1163,8 +1163,8 @@
 "ethereum_transaction.error.lower_than_base_gas_limit" = "선택한 수수료 값이 너무 낮아 거부됩니다!";
 "ethereum_transaction.error.nonce_already_in_block" = "이미 차단된 거래!";
 "ethereum_transaction.error.replacement_transaction_underpriced" = "거래를 대체하기에 충분하지 않은 수수료";
-"ethereum_transaction.error.transaction_underpriced" = "Fee not enough to send the transaction";
-"ethereum_transaction.error.tips_higher_than_max_fee" = "Max fee cannot be lower than the tips, because Max fee includes the tips.";
+"ethereum_transaction.error.transaction_underpriced" = "거래를 보내기에 수수료가 충분하지 않음";
+"ethereum_transaction.error.tips_higher_than_max_fee" = "최대 수수료에는 팁이 포함되어 있으므로 최대 수수료는 팁보다 낮을 수 없습니다.";
 "ethereum_transaction.error.reverted" = "거래를 실행할 수 없습니다: %@";
 "wallet_connect.request_title" = "계약 콜";
 "wallet_connect.button.confirm" = "확인";
@@ -1243,19 +1243,19 @@
 
 "public_keys.title" = "공개 키";
 "public_keys.evm_address" = "EVM 주소";
-"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM based blockchains.";
+"public_keys.evm_address.description" = "Ethereum, Binance Smart Chain 및 기타 EVM 기반 블록체인에 자산을 보유하고 있는 지갑의 읽기 전용 모니터링을 허용합니다.";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
-"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
+"public_keys.account_extended_public_key.description" = "Bitcoin 및 기타 UTXO 기반 암호화폐(예: Litecoin, Bitcoin Cash, Dash 등)를 보유한 지갑의 읽기 전용 모니터링을 허용합니다.";
 
 // Manage Account -> Private Keys
 
 "private_keys.title" = "개인 암호";
 "private_keys.evm_private_key" = "EVM 개인 키";
-"private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
+"private_keys.evm_private_key.description" = "각 지갑 내에서 EVM 기반 암호화, 즉 이더리움, 바이낸스 스마트 체인 등에 대한 완전한 제어 권한을 부여합니다.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
-"private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
+"private_keys.bip32_root_key.description" = "각 지갑의 자산에 대한 모든 권한을 부여합니다.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
-"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within respective wallet.";
+"private_keys.account_extended_private_key.description" = "각 지갑 내에서 비트코인 및 기타 UTXO 기반 암호화, 즉 라이트코인, 비트코인 캐시, 대시 등을 완벽하게 제어할 수 있습니다.";
 
 // Manage Account -> EVM Address
 
@@ -1268,11 +1268,11 @@
 // Birthday Input
 
 "birthday_input.title" = "생일 신장";
-"birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
+"birthday_input.description" = "더 빠른 동기화를 위해 지갑의 생일 키를 입력하세요.";
 "birthday_input.new_wallet" = "새 지갑";
-"birthday_input.new_wallet.description" = "Doesn't have any transactions";
-"birthday_input.old_wallet" = "Existing Wallet";
-"birthday_input.old_wallet.description" = "Has transactions";
+"birthday_input.new_wallet.description" = "거래 내역이 없습니다";
+"birthday_input.old_wallet" = "기존 지갑";
+"birthday_input.old_wallet.description" = "거래 있음";
 "birthday_input.input_placeholder" = "%@ (선택사항)";
 
 "restore_setting.birthday_height" = "생일 높이 %@";
@@ -1295,21 +1295,21 @@
 
 // Send Settings
 
-"evm_send_settings.nonce" = "Transaction Nonce";
+"evm_send_settings.nonce" = "트랜잭션 Nonce";
 "evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
-"evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
-"evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
+"evm_send_settings.nonce.errors.already_in_use" = "중고 Nonce";
+"evm_send_settings.nonce.errors.already_in_use.info" = "이 nonce를 사용하여 실행된 트랜잭션이 이미 존재합니다.";
 
 "fee_settings" = "고급의";
 "fee_settings.fee" = "수수료";
 "fee_settings.fee.info" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.";
 "fee_settings.fee_rate" = "수수료율";
-"fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
+"fee_settings.fee_rate.description" = "다음 2 블록 타격에 대한 권장 값은 다음과 같습니다.";
 "fee_settings.inputs_outputs" = "입력/출력";
-"fee_settings.transaction_settings" = "Transaction Settings";
+"fee_settings.transaction_settings" = "거래 설정";
 "fee_settings.transaction_settings.description" = "트랜잭션이 구조화되는 방식을 변경하여 Bitcoin 트랜잭션을 추적하기 어렵게 만드십시오.";
 "fee_settings.time_lock" = "TimeLock";
-"fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
+"fee_settings.time_lock.description" = "TimeLock은 BIP44 주소(1부터 시작)로 전송하는 경우에만 작동합니다.";
 
 "fee_settings.max_fee" = "최대 수수료";
 "fee_settings.max_fee.info" = "The maximum estimated transaction fee to be paid for this transaction, computed based on the gas limit, max fee rate and max priority fee values below. The actual fee paid will normally be lower.";
@@ -1319,11 +1319,11 @@
 "fee_settings.gas_price" = "Gas Used";
 "fee_settings.gas_price.info" = "네트워크 거래 수수료는 가스 단위로 측정됩니다. 가스 가격은 사용자가 가스 단위당 지출할 의향이 있는 금액입니다. 네트워크가 사용 중일 때는 가스 가격이 높고 유휴 상태일 때는 가스 가격이 낮습니다. 가스 가격이 충분하지 않아 거래가 장기간 보류 상태로 남아 있는 경우가 많습니다.";
 
-"fee_settings.base_fee" = "Base Fee";
+"fee_settings.base_fee" = "기본 수수료";
 "fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
-"fee_settings.max_fee_rate" = "Max Fee Rate";
+"fee_settings.max_fee_rate" = "최대 수수료율";
 "fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
-"fee_settings.tips" = "Max Priority Fee";
+"fee_settings.tips" = "최대 우선 가스비";
 "fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
 
 "fee_settings.errors.insufficient_balance" = "잔액이 부족합니다";
@@ -1332,8 +1332,8 @@
 "fee_settings.errors.low_max_fee.info" = "설정된 거래 수수료 금액이 현재 이 거래를 처리하기에 충분하지 않습니다.";
 "fee_settings.errors.nonce_already_in_block" = "트랜잭션을 대체할 수 없습니다.";
 "fee_settings.errors.replacement_transaction_underpriced" = "교체 거래에 대한 낮은 수수료";
-"fee_settings.errors.transaction_underpriced" = "Low Fee for transaction";
-"fee_settings.errors.tips_higher_than_max_fee" = "Max Fee is too low";
+"fee_settings.errors.transaction_underpriced" = "낮은 거래 수수료";
+"fee_settings.errors.tips_higher_than_max_fee" = "최대 수수료가 너무 낮습니다.";
 "fee_settings.warning.risk_of_getting_stuck" = "위험";
 "fee_settings.warning.risk_of_getting_stuck.info" = "트랜잭션이 잠시 동안 보류 상태로 유지되거나 완전히 실패할 수 있습니다.";
 "fee_settings.warning.overpricing" = "수수료가 너무 높음";

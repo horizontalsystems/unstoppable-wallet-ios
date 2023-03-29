@@ -998,14 +998,14 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "contacts.add_address.exist_address" = "Bu adres %@ için zaten kullanılıyor";
 
 "contacts.more.title" = "Daha fazlası";
-"contacts.more.import" = "Restore Contacts";
-"contacts.more.export" = "Backup Contacts";
+"contacts.more.import" = "Kişileri Geri Yükle";
+"contacts.more.export" = "Kişileri Yedekle";
 
 "contacts.contact.delete_alert.title" = "Kişiyi Sil";
 "contacts.contact.delete_alert.description" = "Bu kişi silmek istediğine emin misin?";
 "contacts.contact.delete_alert.delete" = "Sil";
 
-"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
+"contacts.contact.dismiss_changes.description" = "Değişiklikleri silmek istediğinizden emin misiniz?";
 "contacts.contact.dismiss_changes.discard_changes" = "Değişiklikleri İptal Et";
 "contacts.contact.dismiss_changes.keep_editing" = "Düzenlemeyi sürdür";
 

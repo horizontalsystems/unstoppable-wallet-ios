@@ -993,14 +993,14 @@
 "contacts.add_address.exist_address" = "此地址已用于 %@";
 
 "contacts.more.title" = "更多";
-"contacts.more.import" = "Restore Contacts";
-"contacts.more.export" = "Backup Contacts";
+"contacts.more.import" = "恢复联系人";
+"contacts.more.export" = "备份联系人";
 
 "contacts.contact.delete_alert.title" = "删除联系人";
 "contacts.contact.delete_alert.description" = "您确认要删除此联系人吗？";
 "contacts.contact.delete_alert.delete" = "删除";
 
-"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
+"contacts.contact.dismiss_changes.description" = "您确定要放弃此新更改吗？";
 "contacts.contact.dismiss_changes.discard_changes" = "放弃更改";
 "contacts.contact.dismiss_changes.keep_editing" = "继续编辑";
 
