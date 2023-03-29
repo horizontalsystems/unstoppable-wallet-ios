@@ -276,9 +276,9 @@
 "send.hodler_locktime_half_year" = "6 месяцев";
 "send.hodler_locktime_year" = "1 год";
 "send.hodler_locktime_off" = "Выкл.";
-"send.hodler_error.unsupported_address" = "Time locking works only when sending to payment addresses starting with 1... (aka BIP44 addresses)";
+"send.hodler_error.unsupported_address" = "TimeLock работает только при отправке на платёжные адреса, начинающиеся с 1... (также известных как BIP44 адреса)";
 "send.fee_info.title" = "Комиссия";
-"send.fee_info.description" = "Блокчейн требует от пользователей оплаты сетевых сборов при отправке транзакций. Комиссия выше, когда в сети проходит много транзакций.\n\nКошелек Unstoppable оценивает комиссию на основе текущей активности блокчейна и рекомендует оптимальное значение для того, чтобы транзакция была обработана в разумные сроки.\n\nРекомендованная ставка комиссии показана как количество сатоши, которое пользователь должен заплатить за один байт транзакции. Таким образом, общая сумма комиссии зависит от общего размера транзакции, который измеряется в байтах.\n\n\nПользователи могут использовать предусмотренные элементы управления, чтобы увеличить или уменьшить значение ставки комиссии. Изменение ставки комиссии изменяет общую плату за транзакцию, которую заплатит пользователь.\n\n\nУстановка ставки комиссии ниже рекомендуемого значения может привести к тому, что транзакция будет находиться в ожидании в течение нескольких часов или будет отклонена. Чем ниже значение, тем больше времени потребуется для подтверждения транзакции. Для транзакций, где важен приоритет, мы рекомендуем установить более высокую ставку комиссии.";
+"send.fee_info.description" = "Блокчейн требует от пользователей оплаты сетевых сборов при отправке транзакций. Комиссия выше, когда в сети проходит много транзакций.\n\nКошелек Unstoppable оценивает комиссию на основе текущей активности блокчейна и рекомендует оптимальное значение для того, чтобы транзакция была обработана в разумные сроки.\n\nРекомендованная ставка комиссии показана как количество сатоши, которое пользователь должен заплатить за один байт транзакции. Таким образом, общая сумма комиссии зависит от общего размера транзакции, который измеряется в байтах.\n\n\nПользователи могут использовать предусмотренные элементы управления, чтобы увеличить или уменьшить значение ставки комиссии. Изменение ставки комиссии изменяет общую плату за транзакцию, которую заплатит пользователь.\n\n\nУстановка комиссии ниже рекомендуемого значения может привести к тому, что транзакция будет находиться в ожидании в течение нескольких часов или будет отклонена. Чем ниже значение, тем больше времени потребуется для подтверждения транзакции. Для транзакций, где важен приоритет, мы рекомендуем установить более высокую ставку комиссии.";
 "send.transaction_inputs_outputs_info.title" = "Вводы / выводы транзакций";
 "send.transaction_inputs_outputs_info.description" = "Большинство транзакций с биткоином, а также транзакций с подобными криптовалютами, включая Bitcoin Cash, Dash и Litecoin, генерируют два выхода. Один выход - это сумма, которая поступает получателю, а другой - это изменение, которое возвращается отправителю. То, как большинство кошельков строят транзакции, позволяет третьей стороне легко понять, какой из выходов достался получающей стороне, а какой - сумма сдачи, возвращенная отправителю. Поскольку сумма, возвращенная отправителю, впоследствии используется в будущих транзакциях, связь между этими двумя транзакциями становится очевидной.\n\nВ кошельке Unstoppable реализованы меры, чтобы затруднить кому-либо выяснение того, какой вывод куда идет.\n\nДля пользователей Unstoppable доступны два варианта:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
@@ -374,15 +374,15 @@
 "swap.advanced_settings.recipient_address" = "Адрес получателя";
 "swap.advanced_settings.warning.unusual_slippage" = "Ваша транзакция может быть подвержена фронтраннингу.";
 "swap.advanced_settings.service_fee_description" = "Комиссия за услугу обмена на платформе обычно 0.3% или 0.6%";
-"swap.advanced_settings.error.lower_slippage" = "Ваша транзакция, скорее всего, не удастся.";
+"swap.advanced_settings.error.lower_slippage" = "Возможно, ваша транзакция не удалась.";
 "swap.advanced_settings.error.higher_slippage" = "Сопротивление скольжению не может превышать %@%%";
 "swap.advanced_settings.error.invalid_address" = "Неверный адрес";
-"swap.advanced_settings.error.invalid_slippage" = "Неверное Отклонение";
-"swap.advanced_settings.error.invalid_deadline" = "Недопустимый Срок";
+"swap.advanced_settings.error.invalid_slippage" = "Неверное отклонение";
+"swap.advanced_settings.error.invalid_deadline" = "Недопустимый срок";
 
-"swap.one_inch.error.cannot_estimate" = "Ошибка Оценки";
+"swap.one_inch.error.cannot_estimate" = "Ошибка оценки";
 "swap.one_inch.error.cannot_estimate.info" = "Проверьте баланс и убедитесь, что на нем достаточно %@ для покрытия комиссии. Или попробуйте увеличить предел скольжения цены и повторите попытку снова. Следующая попытка через 3 секунды...";
-"swap.one_inch.error.insufficient_liquidity" = "Недостаточно Ликвидности";
+"swap.one_inch.error.insufficient_liquidity" = "Недостаточно ликвидности";
 "swap.one_inch.error.insufficient_liquidity.info" = "Кажется, для этой сделки не хватает ликвидности. Попробуйте уменьшить сумму сделки.";
 
 "swap.service" = "Сервис";
@@ -396,12 +396,12 @@
 
 "swap.confirmation.swap_button" = "Обменять";
 "swap.confirmation.impact_too_high" = "Разница между рыночной ценой и ожидаемой расчетной ценой слишком высока.";
-"swap.confirmation.minimum_received" = "Получено Минимум";
-"swap.confirmation.maximum_sent" = "Максимальная Трата";
+"swap.confirmation.minimum_received" = "Получено минимум";
+"swap.confirmation.maximum_sent" = "Максимальная трата";
 
 "swap.dex_info.description" = "Этот обменный сервис работает при поддержке %@ - децентрализованного протокола обмена токенов, созданного в блокчейне %@.\n\n%@ полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без осуществления каких-либо махинаций.";
 
-"swap.dex_info.header_dex_related" = "o %@";
+"swap.dex_info.header_dex_related" = "%@";
 "swap.dex_info.header_allowance" = "Разрешение";
 "swap.dex_info.content_allowance" = "Сумма, которую exchange может потратить от имени пользователя при выполнении обмена токенов. Действующая транзакция, устанавливающая достаточный уровень допустимости, необходима для того, чтобы транзакция обмена была осуществлена.";
 "swap.dex_info.header_price_impact" = "Отклонение от рын. цены";
@@ -410,7 +410,7 @@
 "swap.dex_info.content_swap_fee" = "Плата за услугу обмена на платформе, показана в валюте, в которой продает пользователь. Для большинства заказов составляет или 0,3% или 0,6%.";
 "swap.dex_info.header_guaranteed_amount" = "Гарантированная сумма";
 "swap.dex_info.content_guaranteed_amount" = "Минимальная сумма, которую получит пользователь в результате обмена.";
-"swap.dex_info.header_maximum_spend" = "Максимальная Трата";
+"swap.dex_info.header_maximum_spend" = "Максимальная трата";
 "swap.dex_info.content_maximum_spend" = "Максимальная сумма, которую получит пользователь в результате обмена.";
 
 "swap.dex_info.header_other" = "Другое";
@@ -419,7 +419,7 @@
 "swap.dex_info.header_transaction_speed" = "Скорость транзакции";
 "swap.dex_info.content_transaction_speed" = "Обработка транзакций с более высокой комиссией будет ускорена. Также вено и обратное.";
 
-"swap.dex_info.link_button" = "%@ Сайт";
+"swap.dex_info.link_button" = "%@ сайт";
 
 // Market
 
@@ -605,7 +605,7 @@
 "coin_analytics.cex_volume.info1" = "Общий объем торгов по токену на ведущих централизованных биржах за 30-дневный период.";
 "coin_analytics.cex_volume.info2" = "График, показывающий колебания дневного объема торговли токеном на ведущих централизованных биржах за 1 год.";
 "coin_analytics.cex_volume.info3" = "Рейтинг токена основан на объеме торговли на ведущих централизованных биржах за 30-дневный период.";
-"coin_analytics.cex_volume.info4" = "Список всех токенов, ранжированных по объему торговли на децентрализованных биржах более 24ч/7дн/1мес.";
+"coin_analytics.cex_volume.info4" = "Список всех токенов, ранжированных по объему торговли на децентрализованных биржах за 24ч/7дн/1мес.";
 
 "coin_analytics.dex_volume" = "Объем DEX";
 "coin_analytics.dex_volume_rank" = "Рейтинг объема DEX";
@@ -613,17 +613,17 @@
 "coin_analytics.dex_volume.info1" = "Общий объем торгов по токену на ведущих децентрализованных биржах за 30-дневный период.";
 "coin_analytics.dex_volume.info2" = "График, показывающий колебания дневного объема торговли токеном на ведущих децентрализованных биржах за 1 год.";
 "coin_analytics.dex_volume.info3" = "Рейтинг токена основан на объеме торговли на ведущих децентрализованных биржах за 30-дневный период.";
-"coin_analytics.dex_volume.info4" = "Список всех токенов, ранжированных по объему торговли на децентрализованных биржах более 24ч/7дн/1мес.";
+"coin_analytics.dex_volume.info4" = "Список всех токенов, ранжированных по объему торговли на децентрализованных биржах за 24ч/7дн/1мес.";
 "coin_analytics.dex_volume.tracked_dexes" = "Отслеживаемые DEX биржи:";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Sushiswap";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
 
 "coin_analytics.dex_liquidity" = "Ликвидность DEX";
 "coin_analytics.dex_liquidity_rank" = "Рейтинг ликвидности DEX";
-"coin_analytics.dex_liquidity_rank.description" = "Список токенов, ранжированных по доступной ликвидности на децентрализованных биржах.";
+"coin_analytics.dex_liquidity_rank.description" = "Рейтинг токенов основан по доступной ликвидности на децентрализованных биржах.";
 "coin_analytics.dex_liquidity.info1" = "Общая ликвидность, доступная в настоящий момент для токена на ведущих децентрализованных биржах.";
 "coin_analytics.dex_liquidity.info2" = "График, отражающий колебания доступной ликвидности для токена на ведущих децентрализованных биржах за 1 год.";
-"coin_analytics.dex_liquidity.info3" = "Список всех токенов, ранжированных по доступной ликвидности для токена на ведущих децентрализованных биржах.";
+"coin_analytics.dex_liquidity.info3" = "Список всех токенов, ранжированных по доступной ликвидности на ведущих децентрализованных биржах.";
 "coin_analytics.dex_liquidity.tracked_dexes" = "Отслеживаемые DEX биржи:";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
@@ -633,8 +633,8 @@
 "coin_analytics.active_addresses_rank" = "Рейтинг активных адресов";
 "coin_analytics.active_addresses_rank.description" = "Список токенов, ранжированных по количеству уникальных адресов транзакций с токеном.";
 "coin_analytics.active_addresses.info1" = "Общее количество уникальных ежедневных активных адресов за 24 часа.";
-"coin_analytics.active_addresses.info2" = "График, отражающий колебания ежедневного количества активных адресов за 1 год.";
-"coin_analytics.active_addresses.info3" = "Общее количество уникальных адресов блокчейна, с которых проводились транзакции с токеном за срок, превышающий 30 дней.";
+"coin_analytics.active_addresses.info2" = "График, показывающий вариацию количества ежедневных активных адресов в течение 1 года.";
+"coin_analytics.active_addresses.info3" = "Общее количество уникальных адресов блокчейна, с которых проводились транзакции с токеном за 30 дней.";
 "coin_analytics.active_addresses.info4" = "Рейтинг токена основан на количестве активных кошельков, используемых для транзакций с токеном за 30-дневный период.";
 "coin_analytics.active_addresses.info5" = "Список всех токенов, ранжированных по ежедневному количеству активных адресов транзакций с токеном с интервалом более 24ч. / 7 дн. / 1 мес.";
 
@@ -644,8 +644,8 @@
 "coin_analytics.transaction_count.info1" = "Общее количество уникальных транзакций блокчейна с токеном более 30 дней.";
 "coin_analytics.transaction_count.info2" = "График, отражающий колебания количества транзакций за 1 год.";
 "coin_analytics.transaction_count.info3" = "Рейтинг токена основан на количестве транзакций с токеном за 30-дневный период.";
-"coin_analytics.transaction_count.info4" = "Список всех токенов, ранжированных на основе количества транзакций с интервалом более 24ч / 7D / 1М.";
-"coin_analytics.transaction_count.info5" = "Общее количество токенов, переданных через блокчейн за 30-дневный период.";
+"coin_analytics.transaction_count.info4" = "Список всех токенов, ранжированных на основе количества транзакций с интервалом 24ч / 7D / 1М.";
+"coin_analytics.transaction_count.info5" = "Общее количество токенов, отправленных через блокчейн за 30-дневный период.";
 
 "coin_analytics.holders" = "Держатели";
 "coin_analytics.holders.info1" = "Общее количество уникальных адресов с токенами в различных блокчейнах.";
@@ -657,21 +657,21 @@
 
 "coin_analytics.project_tvl" = "Проект TVL";
 "coin_analytics.tvl_ratio" = "Рын.кап / Соотношение TVL ";
-"coin_analytics.project_tvl.info_title" = "Проект TVL (полная стоимость заблокирована)";
+"coin_analytics.project_tvl.info_title" = "Проект TVL (совокупная сумма средств заблокирована)";
 "coin_analytics.project_tvl.info1" = "TVL (или Активы под управлением) в проектных смарт-контрактах.";
 "coin_analytics.project_tvl.info2" = "График, отражающий колебания TVL в проектных смарт-контрактах за период, превышающий 1 год.";
 "coin_analytics.project_tvl.info3" = "Рейтинг токена по текущему TVL.";
 "coin_analytics.project_tvl.info4" = "Список всех токенов, ранжированных по текущему TVL.";
 "coin_analytics.project_tvl.info5" = "Соотношение рыночной капитализации/TVL в рамках проекта.";
 
-"coin_analytics.project_revenue" = "Доходы по проекту";
-"coin_analytics.project_revenue_rank" = "Объем доходов по проекту";
+"coin_analytics.project_revenue" = "Доход от проекта";
+"coin_analytics.project_revenue_rank" = "Рейтигнг доходов от проекта";
 "coin_analytics.project_revenue_rank.description" = "Токены ранжируются по пассивному доходу владельцев, получаемому через стекинг или сжигание токенов.";
-"coin_analytics.project_revenue.info1" = "Общая прибыль, полученная владельцами токенов за 30-дневный период. Как правило, плата взимается стейкерами токенов или посредством механизма сжигания токенов.";
+"coin_analytics.project_revenue.info1" = "Общая прибыль, полученная владельцами токенов за 30-дневный период. Как правило, плата взимается стейкерами токенов или посредством сжигания токенов.";
 "coin_analytics.project_revenue.info2" = "Рейтинг токена основан на доходе, полученном стейкерами токенов за 30-дневный период.";
-"coin_analytics.project_revenue.info3" = "Список всех токенов, ранжированных на основе пассивного дохода стейкеров токенов с интервалом более 24ч. / 7 дн. / 1 мес.";
+"coin_analytics.project_revenue.info3" = "Список всех токенов, ранжированных на основе пассивного дохода стейкеров токенов с интервалом 24ч. / 7 дн. / 1 мес.";
 
-"coin_analytics.other_data" = "Прочие данные";
+"coin_analytics.other_data" = "Другие данные";
 
 "coin_analytics.reports" = "Отчёты";
 
@@ -754,13 +754,13 @@
 "transactions.approve" = "Разрешить";
 "transactions.swap" = "Обмен";
 "transactions.contract_call" = "Вызов контракта";
-"transactions.contract_creation" = "Создание Контракта";
-"transactions.external_call" = "Внешний Вызов";
+"transactions.contract_creation" = "Создание контракта";
+"transactions.external_call" = "Внешний вызов";
 
 "transactions.to" = "Кому %@";
 "transactions.from" = "От %@";
 
-"transactions.multiple" = "Несколько";
+"transactions.multiple" = "Множество";
 
 "transactions.value.unlimited" = "безлимитный";
 
@@ -780,12 +780,12 @@
 
 "tx_info.title" = "Детали транзакции";
 "tx_info.date" = "Дата";
-"tx_info.title_approval" = "Разрешение Обмена";
+"tx_info.title_approval" = "Разрешение обмена";
 "tx_info.status.pending" = "В обработке";
 "tx_info.status.completed" = "Завершено";
 "tx_info.status.failed" = "Не удалось";
 "tx_info.from_hash" = "От";
-"tx_info.transaction_id" = "ID Транзакции";
+"tx_info.transaction_id" = "ID";
 "tx_info.to_hash" = "Кому";
 "tx_info.spender" = "Покупатель";
 "tx_info.contact_name" = "Имя контакта";
@@ -801,14 +801,14 @@
 "tx_info.locked_until" = "Заблокировано до %@";
 "tx_info.unlocked_at" = "Разблокировано %@";
 "tx_info.recipient_hash" = "Получатель";
-"tx_info.raw_transaction" = "Неподтвержденная Транзакция";
+"tx_info.raw_transaction" = "Неподтвержденная транзакция";
 "tx_info.memo" = "Memo";
 "tx_info.service" = "Сервис";
 "tx_info.view_on" = "Посмотреть на %@";
 "tx_info.you_pay" = "Платите";
 "tx_info.you_get" = "Получите";
-"tx_info.you_paid" = "Вы Заплатили";
-"tx_info.you_got" = "Вы Получили";
+"tx_info.you_paid" = "Вы заплатили";
+"tx_info.you_got" = "Вы получили";
 "tx_info.price" = "Цена";
 
 // Settings
@@ -832,7 +832,7 @@
 "settings.base_currency.other" = "Другое";
 "settings.base_currency.disclaimer" = "Отказ от ответственности";
 "settings.base_currency.disclaimer.description" = "Данные об обменном курсе предоставлены третьим лицом Coingecko.сom\n\n Приложение Unstoppable Wallet не гарантирует, что эти данные всегда верны и соответствуют рыночным. Шанс на несоответствие повышается при выборе базовой валюты, отличающейся от %@.";
-"settings.base_currency.disclaimer.set" = "Задать";
+"settings.base_currency.disclaimer.set" = "Установить";
 
 // Settings -> Manage Wallet
 
@@ -984,7 +984,7 @@
 
 "contacts.restore.parsing_error" = "Файл имеет неправильные данные!";
 "contacts.restore.storage_error" = "Не удается сохранить контакты!";
-"contacts.restore.overwrite_alert.description" = "Это действие перезапишет ваши местные платежные договоры, а также их копии в iCloud (при наличии таковых).";
+"contacts.restore.overwrite_alert.description" = "Это действие перезапишет ваши локальные платежные контакты, а также их копии в iCloud (при наличии таковых).";
 "contacts.restore.overwrite_alert.replace" = "Заменить";
 
 
@@ -1247,7 +1247,7 @@
 
 "public_keys.title" = "Публичные ключи";
 "public_keys.evm_address" = "EVM адрес";
-"public_keys.evm_address.description" = "Позволяет отслеживать кошельки с активами на Ethereum, Binance Smart Chain и других блокчейнах на базе EVM только для чтения.";
+"public_keys.evm_address.description" = "Позволяет отслеживать кошельки с активами на Ethereum, Binance Smart Chain и других блокчейнах на базе EVM, только для чтения.";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
 "public_keys.account_extended_public_key.description" = "Позволяет осуществлять мониторинг кошельков, содержащих Bitcoin и другие криптовалюты на основе UTXO (например, Litecoin, Bitcoin Cash, Dash и т.д.), только для чтения.";
 
@@ -1302,19 +1302,17 @@
 "evm_send_settings.nonce" = "Nonce транзакции";
 "evm_send_settings.nonce.info" = "Nonce - это уникальное целочисленное значение для транзакции в кошельке пользователя. Обычно оно увеличивается с каждой транзакцией и не нуждается в изменении. Продвинутые пользователи могут установить его равным nonce отложенной транзакции, чтобы отменить и заменить эту транзакцию, при условии, что новая транзакция имеет достаточно большую плату, чтобы старая не была подтверждена вместо нее (например, они могут захотеть ускорить ее подтверждение или полностью изменить параметры транзакции). Когда несколько ожидающих транзакций имеют одинаковый nonce, подтверждается только одна, обычно с наибольшей комиссией.
 ";
-"evm_send_settings.nonce.errors.already_in_use" = "Исп. Nonce
-";
+"evm_send_settings.nonce.errors.already_in_use" = "Использованый Nonce";
 "evm_send_settings.nonce.errors.already_in_use.info" = "Выполненная транзакция с таким nonce уже существует.";
 
 "fee_settings" = "Доп. настройки";
 "fee_settings.fee" = "Комиссия";
 "fee_settings.fee.info" = "Блокчейн требует от пользователей оплаты сетевых сборов при отправке транзакций. Эти сборы выше, когда в сети происходит много транзакций.";
 "fee_settings.fee_rate" = "Комиссия";
-"fee_settings.fee_rate.description" = "Вот рекомендуемое значение для попадания в следующие 2 блока
-";
+"fee_settings.fee_rate.description" = "Это рекомендуемое значение для попадания в следующие 2 блока";
 "fee_settings.inputs_outputs" = "Вводы/Выводы";
 "fee_settings.transaction_settings" = "Настройки транзакций";
-"fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
+"fee_settings.transaction_settings.description" = "Затрудните отслеживание Биткойн-транзакций, изменив их структурирование.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock работает только для отправки на адреса BIP44 (начинаются с 1)
 ";
@@ -1323,30 +1321,29 @@
 "fee_settings.max_fee.info" = "Максимальная предполагаемая комиссия за транзакцию, которая будет уплачена за данную транзакцию, рассчитанная на основе значений лимита газа, максимальной ставки комиссии и максимальной приоритетной комиссии, указанных ниже. Фактический размер комиссии обычно ниже.
 ";
 "fee_settings.gas_limit" = "Gas Limit";
-"fee_settings.gas_limit.info" = "Transaction complexity is measured in units called \"gas\". It varies depending on the smart contract being executed. The Gas Limit is the estimated maximum gas needed to execute it. The actual gas used will normally be lower.";
+"fee_settings.gas_limit.info" = "Единица сложности транзакций - газ, она варьирует в зависимости от выполняемого смарт-контракта. Лимит газа - это предполагаемый максимальный размер газа, необходимый для выполнения смарт-контракта. Обычно используется меньшее количество газа.";
 
 "fee_settings.gas_price" = "Gas Price";
 "fee_settings.gas_price.info" = "Комиссия за сетевую транзакцию измеряется в единицах газа. Цена газа – это сумма, которую пользователь готов заплатить за единицу газа. Когда сеть занята, цены на газ повышаются, а во время простоя они наоборот снижаются. Слишком низкая цена газа зачастую является основанием для длительного сохранения отложенного статуса транзакции.";
 
 "fee_settings.base_fee" = "Базовая комиссия";
-"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
-"fee_settings.max_fee_rate" = "Макс. комиссия";
-"fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
-"fee_settings.tips" = "Max Priority Fee";
-"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+"fee_settings.base_fee.info" = "Сетевой протокол определяет базовую стоимость газа для каждого блока, которая называется базовый тариф. Он варьирует в зависимости от уровня загрузки сети от блока к блоку. В следующем блоке он может увеличиться или уменьшиться не более чем на 12.5%, что делает взимаемый тариф более предсказуемым. Здесь отражен базовый тариф текущего блока.";
+"fee_settings.max_fee_rate" = "Макс. ставка комиссии";
+"fee_settings.max_fee_rate.info" = "Это максимальная общая цена газа, которую пользователь готов заплатить. Она должна покрывать базовую тарифную ставку сети и максимальный приоритетный тариф. Указанное здесь значение предлагается на основе оценки суммы базовой тарифной ставки следующего блока и максимального приоритетного тарифа, выбранного пользователем. Фактический размер платёжного тарифа обычно меньше. Снижение настройки текущего базового тарифа ограничит оплачиваемую сумму тарифа, но приведет к удлинению периода ожидания подтверждения транзакции или даже к ее подвисанию.";
+"fee_settings.tips" = "Максимальный приоритетный тариф";
+"fee_settings.tips.info" = "Пользователи платят приоритетные тарифы, в целях ускорения процесса подтверждения транзакции. Иногда эти тарифы называются чаевыми. Максимальный размер приоритетного сбора -- это максимальная дополнительная цена за газ, которую пользователь готов оплатить поверх базового тарифа. Приведенная здесь стоимость определяется исходя из прогнозируемых сетевых условий. Фактический размер приоритетного тарифа будет меньше. Обнуление этого тарифа может привести к удлинению периода ожидания подтверждения транзакции ввиду её размещения в конце очереди незавершенных транзакций ото всех пользователей.";
 
 "fee_settings.errors.insufficient_balance" = "Недостаточный баланс";
 "fee_settings.errors.insufficient_balance.info" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
-"fee_settings.errors.low_max_fee" = "Низкая Комиссия";
+"fee_settings.errors.low_max_fee" = "Низкая комиссия";
 "fee_settings.errors.low_max_fee.info" = "Установленная сумма комиссии недостаточно для обработки этой транзакции.";
 "fee_settings.errors.nonce_already_in_block" = "Не удается заменить транзакцию";
 "fee_settings.errors.replacement_transaction_underpriced" = "Низкая комиссия на замену транзакции";
 "fee_settings.errors.transaction_underpriced" = "Низкая комиссия за транзакцию";
-"fee_settings.errors.tips_higher_than_max_fee" = "Максимальное вознаграждение слишком низкое
-";
+"fee_settings.errors.tips_higher_than_max_fee" = "Слишком низкая макс. комиссия";
 "fee_settings.warning.risk_of_getting_stuck" = "Риски";
 "fee_settings.warning.risk_of_getting_stuck.info" = "Обработка транзакции может отложиться на некоторое время, или транзакцию могут полностью отклонить.";
-"fee_settings.warning.overpricing" = "Слишком Высокая Комиссия";
+"fee_settings.warning.overpricing" = "Слишком высокая комиссия";
 "fee_settings.warning.overpricing.info" = "Установленная комиссия за транзакцию больше чем требуется для обработки этой транзакции.";
 
 // Watch Address
