@@ -1718,6 +1718,9 @@
 		58AAAFE644C1B236B9714B47 /* CoinSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB692B7C326319D186E4 /* CoinSelectViewModel.swift */; };
 		58AAAFEB4507E7459BED2F28 /* CoinPageModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA331E9A43EB0C7F186B1 /* CoinPageModule.swift */; };
 		6B423FD42913785800EE5E70 /* BitcoinCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6B423FD32913785800EE5E70 /* BitcoinCore */; };
+		6BDA29AB29D6F37C003847ED /* ECashKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDA29AA29D6F37C003847ED /* ECashKit */; };
+		6BDA29AD29D6F384003847ED /* ECashKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDA29AC29D6F384003847ED /* ECashKit */; };
+		6BDA29B029D6F934003847ED /* HsToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDA29AF29D6F934003847ED /* HsToolKit */; };
 		ABC9A001F335B695CD066218 /* NftAssetModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD35D41AEEBD38AA08B5 /* NftAssetModule.swift */; };
 		ABC9A01AE17801DE7100B10B /* WalletConnectSessionKiller.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1667330B8DBC1A8FE52 /* WalletConnectSessionKiller.swift */; };
 		ABC9A0248195A85CA00D6A13 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7FC41B9F98871246E0E /* ImageCell.swift */; };
@@ -1984,6 +1987,7 @@
 		ABC9AE014EA06F26956138FA /* SendBinanceFeeWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2C2D1331E91D666AB3E /* SendBinanceFeeWarningViewModel.swift */; };
 		ABC9AE03528F37BF2C3B75DF /* IntegerAmountInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A88E126AB21F856522A7 /* IntegerAmountInputView.swift */; };
 		ABC9AE042D6A3D70CA64F959 /* ContactBookModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A5518367F0DDDB94D320 /* ContactBookModule.swift */; };
+		ABC9AE0D23A7B54521E77052 /* ECashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4C563432A34A634B82A /* ECashAdapter.swift */; };
 		ABC9AE18DE62E4DDDD44916D /* SwapInputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAD55B8932EE75E3C037 /* SwapInputModule.swift */; };
 		ABC9AE223619E13A296BED51 /* MarketCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2B7FBA735A76083990C /* MarketCardCell.swift */; };
 		ABC9AE2C026D04B679644279 /* IntegerAmountInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA527E63E18179CB689A /* IntegerAmountInputCell.swift */; };
@@ -2005,6 +2009,7 @@
 		ABC9AEDA6111C0A603807E85 /* ContactBookAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A12529DC8DE5D46D9776 /* ContactBookAddressViewModel.swift */; };
 		ABC9AEDCDECE827D610F025A /* ProFeaturesAuthorizationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8D3446ABE98F4D1C0CC /* ProFeaturesAuthorizationAdapter.swift */; };
 		ABC9AEE0716153FBCA28A7F4 /* CheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6B2EF46FF7EDA4728D3 /* CheckboxView.swift */; };
+		ABC9AEF0A2ECD0E627AF065B /* ECashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4C563432A34A634B82A /* ECashAdapter.swift */; };
 		ABC9AEF62C857F322FFA87E4 /* ContactBookAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC8CCF3B57FDFC817356 /* ContactBookAddressService.swift */; };
 		ABC9AF1729BA19223BB39E06 /* SendEip721ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7C3BC5FC664BBF14C4F /* SendEip721ViewModel.swift */; };
 		ABC9AF4D82ACDFBFBDC2D23C /* MarketCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A37521CD6E2CC5BA4E68 /* MarketCardView.swift */; };
@@ -3228,6 +3233,7 @@
 		ABC9A4544AB5CA22ADE16417 /* WalletConnectV2Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2Session.swift; sourceTree = "<group>"; };
 		ABC9A4674CCDED7C12EB5C09 /* ContactBookAddressModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactBookAddressModule.swift; sourceTree = "<group>"; };
 		ABC9A48552CF0C90E22686A9 /* SendBaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBaseService.swift; sourceTree = "<group>"; };
+		ABC9A4C563432A34A634B82A /* ECashAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ECashAdapter.swift; sourceTree = "<group>"; };
 		ABC9A4FCDC5085002DF35C17 /* MarketCardValueView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketCardValueView.swift; sourceTree = "<group>"; };
 		ABC9A52AC277ED7563F2707F /* WalletConnectListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectListViewModel.swift; sourceTree = "<group>"; };
 		ABC9A5518367F0DDDB94D320 /* ContactBookModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactBookModule.swift; sourceTree = "<group>"; };
@@ -3425,6 +3431,7 @@
 				D3C187E8290FD00E00FE1900 /* SectionsTableView in Frameworks */,
 				D3993DAE28F4256F008720FB /* WalletConnectV1 in Frameworks */,
 				500F1D1327AA87D1002AA419 /* AlignedCollectionViewFlowLayout in Frameworks */,
+				6BDA29AB29D6F37C003847ED /* ECashKit in Frameworks */,
 				D3604E8C28F03DBF0066C366 /* BitcoinCashKit in Frameworks */,
 				D3993DC428F429AA008720FB /* UnstoppableDomainsResolution in Frameworks */,
 				D3604E9E28F03DC00066C366 /* BinanceChainKit in Frameworks */,
@@ -3476,6 +3483,7 @@
 				D3993DC228F42992008720FB /* UnstoppableDomainsResolution in Frameworks */,
 				D3604E8528F03CDC0066C366 /* BinanceChainKit in Frameworks */,
 				D3C187BA2907CFAB00FE1900 /* Checkpoints in Frameworks */,
+				6BDA29AD29D6F384003847ED /* ECashKit in Frameworks */,
 				D3604E4D28F02AB40066C366 /* NftKit in Frameworks */,
 				D3C187CF290FCF2D00FE1900 /* ThemeKit in Frameworks */,
 				D0DA740F272A6EFC0072BE86 /* UnicodeURL in Frameworks */,
@@ -3505,6 +3513,7 @@
 				D3604E8228F03C6B0066C366 /* FeeRateKit in Frameworks */,
 				D3C187D2290FCF3D00FE1900 /* ComponentKit in Frameworks */,
 				D3E1D00B2990D9BE00C68F00 /* Hodler in Frameworks */,
+				6BDA29B029D6F934003847ED /* HsToolKit in Frameworks */,
 				D3604E7628F03B5E0066C366 /* PinKit in Frameworks */,
 				6B423FD42913785800EE5E70 /* BitcoinCore in Frameworks */,
 				D339A93D29126D0F00B895BE /* HsCryptoKit in Frameworks */,
@@ -4868,6 +4877,7 @@
 				3AF9F617253EF555000626A8 /* ZcashTransactionPool.swift */,
 				2FA5DD29DAF03BC6C13B0076 /* EvmTransactionConverter.swift */,
 				2FA5DD0A8C1E757651F3CA3B /* EvmTransactionsAdapter.swift */,
+				ABC9A4C563432A34A634B82A /* ECashAdapter.swift */,
 				11B3583EB648C6F867BD9C1A /* Nft */,
 			);
 			path = Adapters;
@@ -6585,6 +6595,7 @@
 				D3C187E9290FD00E00FE1900 /* StorageKit */,
 				D339A93E29126D2A00B895BE /* HsCryptoKit */,
 				D3E1D00C2990DA0400C68F00 /* Hodler */,
+				6BDA29AA29D6F37C003847ED /* ECashKit */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -6643,6 +6654,8 @@
 				D339A93C29126D0F00B895BE /* HsCryptoKit */,
 				6B423FD32913785800EE5E70 /* BitcoinCore */,
 				D0C87E65298D17D5000CA9BE /* libzcashlc */,
+				6BDA29AC29D6F384003847ED /* ECashKit */,
+				6BDA29AF29D6F934003847ED /* HsToolKit */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -6723,6 +6736,8 @@
 				D339A93B29126D0E00B895BE /* XCRemoteSwiftPackageReference "HsCryptoKit" */,
 				6B423FD22913785800EE5E70 /* XCRemoteSwiftPackageReference "BitcoinCore" */,
 				D0C87E64298D17D5000CA9BE /* XCRemoteSwiftPackageReference "zcash-light-client-ffi" */,
+				6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */,
+				6BDA29AE29D6F934003847ED /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */,
 			);
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
@@ -7863,6 +7878,7 @@
 				11B35C83BC2D0EA7FF5B4832 /* MarketCategoryViewController.swift in Sources */,
 				11B356F39BE75B7663BBA399 /* Misc.swift in Sources */,
 				ABC9A2746046C136F98F970A /* BackupContact.swift in Sources */,
+				ABC9AE0D23A7B54521E77052 /* ECashAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8965,6 +8981,7 @@
 				11B353E15F4A208D393C7262 /* MarketCategoryViewController.swift in Sources */,
 				11B3511A2036EBD9611B3434 /* Misc.swift in Sources */,
 				ABC9A074995C051E714FAFAB /* BackupContact.swift in Sources */,
+				ABC9AEF0A2ECD0E627AF065B /* ECashAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9270,7 +9287,23 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.1.1;
+				version = 1.1.2;
+			};
+		};
+		6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/ECashKit.Swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.0;
+			};
+		};
+		6BDA29AE29D6F934003847ED /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/HsToolKit.Swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.2;
 			};
 		};
 		D0C87E64298D17D5000CA9BE /* XCRemoteSwiftPackageReference "zcash-light-client-ffi" */ = {
@@ -9350,7 +9383,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCashKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.2;
+				version = 1.0.3;
 			};
 		};
 		D3604E6A28F02E3F0066C366 /* XCRemoteSwiftPackageReference "LitecoinKit" */ = {
@@ -9366,7 +9399,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.3.3;
+				version = 1.3.4;
 			};
 		};
 		D3604E7128F03B0A0066C366 /* XCRemoteSwiftPackageReference "ScanQrKit" */ = {
@@ -9510,7 +9543,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/Checkpoints";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.7;
+				version = 1.0.9;
 			};
 		};
 		D3C187CD290FCF2D00FE1900 /* XCRemoteSwiftPackageReference "ThemeKit" */ = {
@@ -9586,6 +9619,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6B423FD22913785800EE5E70 /* XCRemoteSwiftPackageReference "BitcoinCore" */;
 			productName = BitcoinCore;
+		};
+		6BDA29AA29D6F37C003847ED /* ECashKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */;
+			productName = ECashKit;
+		};
+		6BDA29AC29D6F384003847ED /* ECashKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */;
+			productName = ECashKit;
+		};
+		6BDA29AF29D6F934003847ED /* HsToolKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BDA29AE29D6F934003847ED /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */;
+			productName = HsToolKit;
 		};
 		D0C87E65298D17D5000CA9BE /* libzcashlc */ = {
 			isa = XCSwiftPackageProductDependency;

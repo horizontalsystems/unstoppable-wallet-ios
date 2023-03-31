@@ -75,6 +75,10 @@ extension AdapterFactory {
             let syncMode = btcBlockchainManager.syncMode(blockchainType: .bitcoinCash, accountOrigin: wallet.account.origin)
             return try? BitcoinCashAdapter(wallet: wallet, syncMode: syncMode)
 
+        case (.native, .ecash):
+            let syncMode = btcBlockchainManager.syncMode(blockchainType: .ecash, accountOrigin: wallet.account.origin)
+            return try? ECashAdapter(wallet: wallet, syncMode: syncMode)
+
         case (.native, .litecoin):
             let syncMode = btcBlockchainManager.syncMode(blockchainType: .litecoin, accountOrigin: wallet.account.origin)
             return try? LitecoinAdapter(wallet: wallet, syncMode: syncMode)

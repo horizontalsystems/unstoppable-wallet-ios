@@ -7,6 +7,7 @@ extension BlockchainType {
     static let supported: [BlockchainType] = [
         .bitcoin,
         .bitcoinCash,
+        .ecash,
         .litecoin,
         .dash,
         .zcash,
@@ -80,14 +81,15 @@ extension BlockchainType {
         case .avalanche: return 5
         case .zcash: return 6
         case .bitcoinCash: return 7
-        case .litecoin: return 8
-        case .dash: return 9
-        case .binanceChain: return 10
-        case .gnosis: return 11
-        case .fantom: return 12
-        case .arbitrumOne: return 13
-        case .optimism: return 14
-        case .ethereumGoerli: return 15
+        case .ecash: return 8
+        case .litecoin: return 9
+        case .dash: return 10
+        case .binanceChain: return 11
+        case .gnosis: return 12
+        case .fantom: return 13
+        case .arbitrumOne: return 14
+        case .optimism: return 15
+        case .ethereumGoerli: return 16
         default: return Int.max
         }
     }
@@ -131,7 +133,7 @@ extension BlockchainType {
             switch self {
             case .bitcoin: return key.coinTypes.contains(where: { $0 == .bitcoin })
             case .litecoin: return key.coinTypes.contains(where: { $0 == .litecoin })
-            case .bitcoinCash, .dash: return key.coinTypes.contains(where: { $0 == .bitcoin }) && key.purposes.contains(where: { $0 == .bip44 })
+            case .bitcoinCash, .ecash, .dash: return key.coinTypes.contains(where: { $0 == .bitcoin }) && key.purposes.contains(where: { $0 == .bip44 })
             default: return false
             }
         case .evmPrivateKey, .evmAddress:
@@ -172,6 +174,7 @@ extension BlockchainType {
         case .zcash: return "ZEC"
         case .dash: return "DASH"
         case .bitcoinCash: return "BCH (Legacy, CashAddress)"
+        case .ecash: return "XEC"
         case .litecoin: return "LTC (BIP44, BIP49, BIP84, BIP86)"
         case .binanceChain: return "BNB, BEP2 tokens"
         default: return ""

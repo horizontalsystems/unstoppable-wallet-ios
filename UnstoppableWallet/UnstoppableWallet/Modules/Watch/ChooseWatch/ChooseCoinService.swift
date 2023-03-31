@@ -26,7 +26,7 @@ class ChooseCoinService {
             return []
         }
 
-        let blockchainTypes: [BlockchainType] = [.bitcoin, .bitcoinCash, .litecoin, .dash]
+        let blockchainTypes: [BlockchainType] = [.bitcoin, .bitcoinCash, .ecash, .litecoin, .dash]
         let tokenQueries = blockchainTypes.map { TokenQuery(blockchainType: $0, tokenType: .native)}
         guard let tokens = try? marketKit.tokens(queries: tokenQueries) else {
             return []
