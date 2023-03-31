@@ -8,9 +8,9 @@ import HdWalletKit
 
 class BitcoinBaseAdapter {
     static let confirmationsThreshold = 3
-
     private let abstractKit: AbstractKit
-    private let coinRate: Decimal = pow(10, 8)
+
+    var coinRate: Decimal { 100_000_000 } //pow(10, 8)
 
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()

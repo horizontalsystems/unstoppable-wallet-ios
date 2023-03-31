@@ -39,6 +39,7 @@ enum AccountType {
             switch (configuredToken.blockchainType, configuredToken.token.type) {
             case (.bitcoin, .native): return true
             case (.bitcoinCash, .native): return true
+            case (.ecash, .native): return true
             case (.litecoin, .native): return true
             case (.dash, .native): return true
             case (.zcash, .native): return true
@@ -66,7 +67,7 @@ enum AccountType {
                 }
 
                 return key.coinTypes.contains(where: { $0 == .litecoin })
-            case .bitcoinCash, .dash:
+            case .bitcoinCash, .ecash, .dash:
                 return key.purposes.contains(where: { $0 == .bip44 })
             default:
                 return false

@@ -74,7 +74,7 @@ class AppStatusManager {
             let blockchain = wallet.token.blockchain
 
             switch blockchain.type {
-            case .bitcoin, .bitcoinCash, .litecoin, .dash, .zcash:
+            case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash, .zcash:
                 if let adapter = adapterManager.adapter(for: wallet) {
                     status.append((blockchain.name, adapter.statusInfo))
                 }

@@ -98,6 +98,7 @@ extension UdnAddressParserItem {
         case .litecoin: return "LTC"
         case .dash: return "DASH"
         case .bitcoinCash: return "BCH"
+        case .ecash: return "XEC"
         case .zcash: return "ZEC"
         case .binanceChain: return "ETH"
         case .gnosis: return "ETH"
