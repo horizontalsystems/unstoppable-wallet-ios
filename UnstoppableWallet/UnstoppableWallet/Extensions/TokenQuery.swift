@@ -11,6 +11,7 @@ extension TokenQuery {
         switch (blockchainType, tokenType) {
         case (.bitcoin, .native): return true
         case (.bitcoinCash, .native): return true
+        case (.ecash, .native): return true
         case (.litecoin, .native): return true
         case (.dash, .native): return true
         case (.zcash, .native): return true

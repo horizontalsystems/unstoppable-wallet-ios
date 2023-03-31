@@ -7,6 +7,7 @@ class BtcBlockchainManager {
     private let blockchainTypes: [BlockchainType] = [
         .bitcoin,
         .bitcoinCash,
+        .ecash,
         .litecoin,
         .dash
     ]

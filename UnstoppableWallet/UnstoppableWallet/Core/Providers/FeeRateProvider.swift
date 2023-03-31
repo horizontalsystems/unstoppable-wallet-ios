@@ -82,6 +82,10 @@ class BitcoinCashFeeRateProvider: IFeeRateProvider {
 
 }
 
+class ECashFeeRateProvider: IFeeRateProvider {
+    var recommendedFeeRate: Single<Int> { .just(1) }
+}
+
 class DashFeeRateProvider: IFeeRateProvider {
     private let feeRateProvider: FeeRateProvider
 

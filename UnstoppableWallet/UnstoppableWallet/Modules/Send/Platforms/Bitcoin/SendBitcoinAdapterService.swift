@@ -96,6 +96,7 @@ class SendBitcoinAdapterService {
         subscribe(disposeBag, feeRateService.statusObservable) { [weak self] in
             self?.sync(feeRate: $0)
         }
+        sync(feeRate: feeRateService.status)
 
         minimumSendAmount = adapter.minimumSendAmount(address: addressService.state.address?.raw)
         maximumSendAmount = adapter.maximumSendAmount(pluginData: pluginData)
