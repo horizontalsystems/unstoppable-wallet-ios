@@ -86,7 +86,7 @@ extension SendZcashService: ISendBaseService {
 
 extension SendZcashService: ISendService {
 
-    func sendSingle(logger: HsToolKit.Logger) -> Single<Void> {
+    func sendSingle(logger: HsToolKit.Logger) -> RxSwift.Single<Void> {
         let address: Address
         switch addressService.state {
         case .success(let sendAddress): address = sendAddress
