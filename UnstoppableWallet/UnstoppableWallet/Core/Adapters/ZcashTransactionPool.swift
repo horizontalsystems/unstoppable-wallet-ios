@@ -5,11 +5,9 @@ import RxSwift
 class ZcashTransactionPool {
     private var confirmedTransactions = Set<ZcashTransactionWrapper>()
     private var pendingTransactions = Set<ZcashTransactionWrapper>()
-    private let synchronizer: SDKSynchronizer
     private let receiveAddress: SaplingAddress
 
-    init(synchronizer: SDKSynchronizer, receiveAddress: SaplingAddress) {
-        self.synchronizer = synchronizer
+    init(receiveAddress: SaplingAddress) {
         self.receiveAddress = receiveAddress
     }
 
@@ -71,7 +69,7 @@ class ZcashTransactionPool {
 
 extension ZcashTransactionPool {
 
-    func transactionsSingle(from: TransactionRecord?, filter: TransactionTypeFilter, limit: Int) -> Single<[ZcashTransactionWrapper]> {
+    func transactionsSingle(from: TransactionRecord?, filter: TransactionTypeFilter, limit: Int) -> RxSwift.Single<[ZcashTransactionWrapper]> {
         let transactions = transactions(filter: filter)
 
         guard let transaction = from else {
