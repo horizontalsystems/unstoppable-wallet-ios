@@ -22,7 +22,7 @@ class ZcashTransactionWrapper {
         transactionHash = confirmedTransaction.rawID.hs.reversedHex
         transactionIndex = confirmedTransaction.index ?? 0
         toAddress = nil
-        isSentTransaction = confirmedTransaction.isSentTransaction
+        isSentTransaction = confirmedTransaction.value < Zatoshi(0)
         minedHeight = confirmedTransaction.minedHeight
         expiryHeight = confirmedTransaction.expiryHeight
         timestamp = confirmedTransaction.blockTime ?? 0
