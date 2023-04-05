@@ -160,8 +160,12 @@ class WalletConnectV2MainService {
             throw WalletConnectMainModule.SessionError.unsupportedChainId
         }
 
+        guard let chains = eip155.chains else {
+            throw WalletConnectMainModule.SessionError.unsupportedChainId
+        }
+
         // get chainIds
-        let chainIds = eip155.chains.compactMap { Int($0.reference) }
+        let chainIds = chains.compactMap { Int($0.reference) }
 
         // get addresses
         var blockchainItems = Set<WalletConnectMainModule.BlockchainItem>()
