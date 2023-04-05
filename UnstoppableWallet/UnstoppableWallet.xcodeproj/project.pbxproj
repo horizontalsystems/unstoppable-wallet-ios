@@ -9471,7 +9471,7 @@
 			repositoryURL = "https://github.com/Coeur/CollectionViewCenteredFlowLayout";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.0.4;
 			};
 		};
 		D3993D9C28F41F5C008720FB /* XCRemoteSwiftPackageReference "wallet-connect-swift" */ = {
@@ -9495,7 +9495,7 @@
 			repositoryURL = "https://github.com/WalletConnect/WalletConnectSwiftV2";
 			requirement = {
 				kind = exactVersion;
-				version = 1.2.0;
+				version = 1.5.7;
 			};
 		};
 		D3993DB928F4277E008720FB /* XCRemoteSwiftPackageReference "ActionSheet" */ = {
@@ -9511,7 +9511,7 @@
 			repositoryURL = "https://github.com/unstoppabledomains/resolution-swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				minimumVersion = 5.2.1;
 			};
 		};
 		D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */ = {
@@ -9519,7 +9519,7 @@
 			repositoryURL = "https://github.com/johnxnguyen/Down";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.5;
+				minimumVersion = 0.11.0;
 			};
 		};
 		D3BF1E61274CBBCE00229A00 /* XCRemoteSwiftPackageReference "DeepDiff" */ = {
@@ -9527,7 +9527,7 @@
 			repositoryURL = "https://github.com/onmyway133/DeepDiff";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.3.0;
+				minimumVersion = 2.3.3;
 			};
 		};
 		D3C187B12907A60700FE1900 /* XCRemoteSwiftPackageReference "HdWalletKit" */ = {

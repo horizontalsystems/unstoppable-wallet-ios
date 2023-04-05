@@ -251,8 +251,7 @@ extension WalletConnectV2Service {
                 let eip155 = WalletConnectSign.SessionNamespace(
                         accounts: accounts,
                         methods: methods,
-                        events: events,
-                        extensions: []
+                        events: events
                 )
                 try await Sign.instance.approve(proposalId: proposal.id, namespaces: ["eip155": eip155])
             } catch {
