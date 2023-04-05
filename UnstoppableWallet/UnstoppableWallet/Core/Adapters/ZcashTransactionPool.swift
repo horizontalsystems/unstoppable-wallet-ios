@@ -5,10 +5,13 @@ import RxSwift
 class ZcashTransactionPool {
     private var confirmedTransactions = Set<ZcashTransactionWrapper>()
     private var pendingTransactions = Set<ZcashTransactionWrapper>()
+    private let closureSynchronizer: ClosureSynchronizer
     private let receiveAddress: SaplingAddress
 
-    init(receiveAddress: SaplingAddress) {
+
+    init(receiveAddress: SaplingAddress, closureSynchronizer: ClosureSynchronizer) {
         self.receiveAddress = receiveAddress
+        self.closureSynchronizer = closureSynchronizer
     }
 
     private func transactions(filter: TransactionTypeFilter) -> [ZcashTransactionWrapper] {
@@ -69,6 +72,10 @@ class ZcashTransactionPool {
 
 extension ZcashTransactionPool {
 
+    var all: [ZcashTransactionWrapper] {
+        transactions(filter: .all)
+    }
+
     func transactionsSingle(from: TransactionRecord?, filter: TransactionTypeFilter, limit: Int) -> RxSwift.Single<[ZcashTransactionWrapper]> {
         let transactions = transactions(filter: filter)
 
@@ -83,26 +90,3 @@ extension ZcashTransactionPool {
     }
 
 }
-
-//extension PendingTransactionEntity {
-//
-//    func transactionEntity(defaultFee: Zatoshi) -> ZcashTransaction.Overview {
-//        ZcashTransaction.Overview(
-//                blockTime: createTime,
-//                expiryHeight: expiryHeight,
-//                fee: fee,
-//                id: id ?? -1,
-//                index: nil,
-//                isWalletInternal: false,
-//                hasChange: false,
-//                memoCount: 0,
-//                minedHeight: minedHeight,
-//                raw: raw,
-//                rawID: rawTransactionId ?? Data(),
-//                receivedNoteCount: 0,
-//                sentNoteCount: 0,
-//                value: value
-//        )
-//    }
-//
-//}
