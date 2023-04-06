@@ -313,9 +313,9 @@ class ZcashAdapter {
     private func reSyncPending() {
         Task {
             let pending = await synchronizer.pendingTransactions
-            logger?.log(level: .debug, message: "Found pending txs: \(pending.count)")
+            logger?.log(level: .debug, message: "Resync pending txs: \(pending.count)")
             pending.forEach { entity in
-                logger?.log(level: .debug, message: "TX: \(entity.createTime) : \(entity.value.decimalValue.description) : \(entity.recipient.asString ?? "")")
+                logger?.log(level: .debug, message: "TX: \(entity.createTime) : \(entity.value.decimalValue.description) : \(entity.recipient.asString ?? ""): \(entity.memo?.encodedString ?? "NoMemo")")
             }
             if !pending.isEmpty {
                 update(transactions: pending)
@@ -405,8 +405,7 @@ class ZcashAdapter {
     }
 
     func fixPendingTransactionsIfNeeded(completion: (() -> ())? = nil) {
-//         check if we need to perform the fix or leave
-
+        // check if we need to perform the fix or leave
         // get all the pending transactions
         guard !App.shared.localStorage.zcashAlwaysPendingRewind else {
             completion?()
@@ -745,7 +744,7 @@ extension ZcashAdapter: ISendZcashAdapter {
                             zatoshi: Zatoshi.from(decimal: amount),
                             toAddress: address,
                             memo: memo)
-                    self.logger?.log(level: .debug, message: "Successful send TX: \(pendingEntity.createTime) : \(pendingEntity.value.decimalValue.description) : \(pendingEntity.recipient.asString ?? "")")
+                    self.logger?.log(level: .debug, message: "Successful send TX: \(pendingEntity.createTime) : \(pendingEntity.value.decimalValue.description) : \(pendingEntity.recipient.asString ?? "") : \(pendingEntity.memo?.encodedString ?? "NoMemo")")
                     self.reSyncPending()
                 } catch {
                     observer(.error(error))
@@ -823,7 +822,7 @@ enum ZCashAdapterState: Equatable {
         case .downloadingSapling(let progress):
             return .customSyncing(main: "Downloading Sapling... \(progress)%", secondary: nil, progress: progress)
         case .downloadingBlocks(let number, let lastBlock):
-            return .customSyncing(main: "Downloading Blocks", secondary: "\(number)/\(lastBlock)", progress: nil)
+            return .customSyncing(main: "Downloading Blocks", secondary: lastBlock == 0 ? nil : "\(number)/\(lastBlock)", progress: nil)
         case .scanningBlocks(let number, let lastBlock):
             return .customSyncing(main: "Scanning Blocks", secondary: "\(number)/\(lastBlock)", progress: nil)
         case .enhancingTransactions(let number, let count):
