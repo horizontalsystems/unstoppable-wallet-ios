@@ -11,7 +11,7 @@
 "button.paste" = "Colar";
 "button.backup" = "Backup";
 "button.copy" = "Copiar";
-"button.retry" = "Tentar de novo";
+"button.retry" = "Tentar de Novo";
 "button.report" = "Reportar";
 "button.add" = "Adicionar";
 "button.approve" = "Aprovar";
@@ -152,8 +152,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Extended Key
 
 "extended_key.bip32_root_key" = "BIP32 Root Key";
-"extended_key.account_extended_private_key" = "Account Extended Private Key";
-"extended_key.account_extended_public_key" = "Account Extended Public Key";
+"extended_key.account_extended_private_key" = "Chave Privada Estendida da Conta";
+"extended_key.account_extended_public_key" = "Chave Pública Estendida da Conta";
 "extended_key.purpose" = "Propósito";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "Conta";
@@ -279,9 +279,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "send.fee_info.description" = "As Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são maiores quando um monte de transações ocorrem na rede.\n\n A carteira Unstoppable estima a taxa com base na atividade atual da blockchain e recomenda o valor ideal para que a transação seja processada dentro de um período razoável de tempo.\n\n A taxa recomendada é mostrada como a quantidade de satoshi que o usuário precisa pagar por um único byte da transação. Assim, a taxa total depende do tamanho total da transação que é medida em bytes.\n\nUsuários podem utilizar os controles fornecidos para aumentar ou diminuir o custo. A mudança altera a taxa total para a transação que o usuário irá pagar.\n\nDefinir a taxa abaixo do valor recomendado pode resultar em uma transação ser realizada como pendente por horas, ou ser rejeitada. Quanto menor o valor, mais tempo levará a transação para confirmar. Para as transações onde a prioridade é importante, recomendamos definir uma taxa mais alta.";
 "send.transaction_inputs_outputs_info.title" = "Entradas / Saídas de Transação";
 "send.transaction_inputs_outputs_info.description" = "A maioria das transações do Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira Unstoppable implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários Unstoppable:";
-"send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
+"send.transaction_inputs_outputs_info.shuffle.title" = "1. Embaralhar";
 "send.transaction_inputs_outputs_info.shuffle.description" = "A ordem das saídas da transação é aleatória em cada transação. Às vezes, a mudança pode ser a primeira saída, às vezes pode ser a segunda. Se um usuário confiar no desenvolvedor do aplicativo, considere essa uma opção recomendada.";
-"send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
+"send.transaction_inputs_outputs_info.deterministic.title" = "2. Determinístico";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Existe um padrão comumente aceitado para ordenar saídas de transações (conhecido como BIP69). Em carteiras de código aberto, esse padrão garante que os usuários de carteiras não precisem confiar em como os desenvolvedores do aplicativo implementam a ordem das saídas. Como esse padrão é novo, poucas carteiras o implementaram ainda. Como resultado, é possível ver no blockchain se uma transação foi enviada de uma carteira que usa esse padrão ou não.";
 
 "send.confirmation.you_send" = "Enviar";
@@ -630,11 +630,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30 Dias Endereços Únicos";
 "coin_analytics.active_addresses_rank" = "Ranking de Endereços Ativos";
 "coin_analytics.active_addresses_rank.description" = "Tokens classificados pelo número de endereços exclusivos que realizam transações com o token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
-"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
-"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses.info1" = "Número total de endereços únicos ativos diariamente em um período de 24 horas.";
+"coin_analytics.active_addresses.info2" = "Gráfico mostrando a variação na contagem diária de endereços ativos durante o período de 1 ano.";
+"coin_analytics.active_addresses.info3" = "Número total de endereços de blockchain únicos que realizam transações com token em um período de 30 dias.";
+"coin_analytics.active_addresses.info4" = "Classificação do token com base no número de carteiras ativas que realizam transações com o período de 30 dias do token.";
+"coin_analytics.active_addresses.info5" = "Lista de todos os tokens classificados com base no número de endereços ativos diários que realizam transações com o token em intervalos de 24h / 7D / 1M.";
 
 "coin_analytics.transaction_count" = "Contagem de transações";
 "coin_analytics.transaction_count_rank" = "Ranking de Contador Tx";
@@ -656,9 +656,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.project_tvl" = "Projeto TVL";
 "coin_analytics.tvl_ratio" = "Proporção de Capital de M. / TVB";
 "coin_analytics.project_tvl.info_title" = "Projeto TVB (Total de Valor Bloqueado)";
-"coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
-"coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
-"coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
+"coin_analytics.project_tvl.info1" = "Valor-Total-Bloqueado (ou Ativos Sob Gerenciamento) nos contratos inteligentes do projeto.";
+"coin_analytics.project_tvl.info2" = "Gráfico mostrando a variação Valor-Total-Bloqueado nos contratos inteligentes do projeto durante o período de 1 ano.";
+"coin_analytics.project_tvl.info3" = "Classificação do token com base no Valor-Total-Bloqueado atual.";
 "coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
 "coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
 
@@ -1246,7 +1246,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "public_keys.title" = "Chaves públicas";
 "public_keys.evm_address" = "Endereço EVM";
 "public_keys.evm_address.description" = "Permite o monitoramento somente leitura de carteiras mantendo ativos na Ethereum, na Binance Smart Chain e em outras blockchains baseadas em EVM.";
-"public_keys.account_extended_public_key" = "Account Extended Public Key";
+"public_keys.account_extended_public_key" = "Chave Pública Estendida da Conta";
 "public_keys.account_extended_public_key.description" = "Permite monitoramento somente leitura das carteiras segurando Bitcoin e outras cripto baseadas em UTXO (ou seja, Litecoin, Bitcoin Cash, Dash etc.).";
 
 // Manage Account -> Private Keys
@@ -1256,7 +1256,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "private_keys.evm_private_key.description" = "Concede controle total sobre cripto baseado em EVM i.e Ethereum, Binance Smart Chain, etc. dentro da respectiva carteira.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "Concede controle total sobre os ativos da respectiva carteira.";
-"private_keys.account_extended_private_key" = "Account Extended Private Key";
+"private_keys.account_extended_private_key" = "Chave Privada Estendida da Conta";
 "private_keys.account_extended_private_key.description" = "Concede controle total sobre Bitcoin e outras criptomoedas baseadas em UTXO, ou seja, Litecoin, Bitcoin Cash, Dash etc. dentro da respectiva carteira.";
 
 // Manage Account -> EVM Address
