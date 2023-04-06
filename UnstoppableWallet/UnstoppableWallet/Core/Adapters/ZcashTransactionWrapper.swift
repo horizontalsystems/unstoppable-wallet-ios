@@ -16,7 +16,7 @@ class ZcashTransactionWrapper {
     let memo: String?
     let failed: Bool
 
-    init?(confirmedTransaction: ZcashTransaction.Overview) {
+    init?(confirmedTransaction: ZcashTransaction.Overview, memo: Memo?) {
         id = confirmedTransaction.id.description
         raw = confirmedTransaction.raw
         transactionHash = confirmedTransaction.rawID.hs.reversedHex
@@ -27,7 +27,7 @@ class ZcashTransactionWrapper {
         expiryHeight = confirmedTransaction.expiryHeight
         timestamp = confirmedTransaction.blockTime ?? 0
         value = confirmedTransaction.value
-        memo = nil // confirmedTransaction.memo.flatMap { String(bytes: $0, encoding: .utf8) }
+        self.memo = memo.flatMap { $0.toString() }
         failed = false
     }
 
@@ -41,7 +41,9 @@ class ZcashTransactionWrapper {
         transactionHash = rawTransactionId.hs.reversedHex
         transactionIndex = -1
         toAddress = pendingTransaction.recipient.asString
-        isSentTransaction = pendingTransaction.value < Zatoshi(0)
+
+        // if has toAddress - we must mark tx as sent
+        isSentTransaction = toAddress == nil ? pendingTransaction.value < Zatoshi(0) : true
         minedHeight = nil
         expiryHeight = pendingTransaction.expiryHeight
         timestamp = pendingTransaction.createTime
@@ -50,15 +52,8 @@ class ZcashTransactionWrapper {
         failed = pendingTransaction.isFailure
     }
 
-    func sentTo(address: String) -> Bool {
-        if let toAddress = toAddress, toAddress != address {
-            return false
-        }
-
-        return true
-    }
-
 }
+
 /// This would mean that a pending transaction with nil `toAddress` is a shielding transaction to the user's own account
 extension PendingTransactionRecipient {
     var asString: String? {
