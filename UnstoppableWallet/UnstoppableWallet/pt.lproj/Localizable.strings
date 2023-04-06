@@ -659,8 +659,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.project_tvl.info1" = "Valor-Total-Bloqueado (ou Ativos Sob Gerenciamento) nos contratos inteligentes do projeto.";
 "coin_analytics.project_tvl.info2" = "Gráfico mostrando a variação Valor-Total-Bloqueado nos contratos inteligentes do projeto durante o período de 1 ano.";
 "coin_analytics.project_tvl.info3" = "Classificação do token com base no Valor-Total-Bloqueado atual.";
-"coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
+"coin_analytics.project_tvl.info4" = "Lista de todos os tokens classificados com base no Valor-Total-Bloqueado atual.";
+"coin_analytics.project_tvl.info5" = "Valor de Mercado / proporção VTB para o projeto.";
 
 "coin_analytics.project_revenue" = "Receita do Projeto";
 "coin_analytics.project_revenue_rank" = "Ranking da Receita do Projeto";
@@ -676,7 +676,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.funding" = "Financiamento";
 "coin_analytics.funding.lead" = "Conduzir";
 
-"coin_analytics.treasuries" = "Treasuries";
+"coin_analytics.treasuries" = "Tesouros";
 "coin_analytics.treasuries.filters" = "Filtros";
 "coin_analytics.treasuries.filter.all" = "Todos";
 "coin_analytics.treasuries.filter.public" = "Público";
@@ -708,7 +708,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Pro Features
 
-"pro_features.authorize.wallet_passes.title" = "Unstoppable NFT";
+"pro_features.authorize.wallet_passes.title" = "NFT Unstoppable";
 "pro_features.authorize.wallet_passes.subtitle" = "Obtenha acesso aos recursos avançados de carteira\nFazendo Holdin NFTs Unstoppable.";
 
 "pro_features.lock_info.go_to_mint" = "Em Breve";
@@ -1290,7 +1290,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "add_evm_sync_source.title" = "Adicionar fonte RPC";
 "add_evm_sync_source.name" = "Nome";
-"add_evm_sync_source.rpc_url" = "RPC URL";
+"add_evm_sync_source.rpc_url" = "URL RPC";
 "add_evm_sync_source.basic_auth" = "Autenticação básica (opcional)";
 "add_evm_sync_source.warning.url_exists" = "Fonte RPC com esta url já existe";
 "add_evm_sync_source.error.invalid_url" = "Url inserida é inválida. URL válida deve ter um dos seguintes esquemas: http, https, ws, wss";
@@ -1349,7 +1349,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "watch_address.by" = "Por";
 "watch_address.watch_by" = "Assistir Por";
 "watch_address.evm_address" = "Endereço EVM";
-"watch_address.public_key" = "Account xPubKey";
+"watch_address.public_key" = "Conta xPubKey";
 "watch_address.public_key.placeholder" = "Insira a chave pública estendida da conta ";
 "watch_address.public_key.invalid_key" = "Chave Inválida";
 "watch_address.choose_blockchain" = "Escolha Blockchain";
