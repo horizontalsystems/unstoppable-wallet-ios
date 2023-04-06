@@ -5,13 +5,13 @@ import RxSwift
 class ZcashTransactionPool {
     private var confirmedTransactions = Set<ZcashTransactionWrapper>()
     private var pendingTransactions = Set<ZcashTransactionWrapper>()
-    private let closureSynchronizer: ClosureSynchronizer
+    private let synchronizer: Synchronizer
     private let receiveAddress: SaplingAddress
 
 
-    init(receiveAddress: SaplingAddress, closureSynchronizer: ClosureSynchronizer) {
+    init(receiveAddress: SaplingAddress, synchronizer: Synchronizer) {
         self.receiveAddress = receiveAddress
-        self.closureSynchronizer = closureSynchronizer
+        self.synchronizer = synchronizer
     }
 
     private func transactions(filter: TransactionTypeFilter) -> [ZcashTransactionWrapper] {
@@ -37,8 +37,19 @@ class ZcashTransactionPool {
         transactions.compactMap { ZcashTransactionWrapper(pendingTransaction: $0) }
     }
 
-    private func zcashTransactions(_ transactions: [ZcashTransaction.Overview]) -> [ZcashTransactionWrapper] {
-        transactions.compactMap { ZcashTransactionWrapper(confirmedTransaction: $0) }
+    private func zcashTransactions(_ transactions: [ZcashTransaction.Overview]) async -> [ZcashTransactionWrapper] {
+        var wrapped = [ZcashTransactionWrapper]()
+        for tx in transactions {
+            if let tx = try? await transactionWithMemo(confirmedTransaction: tx) {
+                wrapped.append(tx)
+            }
+        }
+        return wrapped
+    }
+
+    private func transactionWithMemo(confirmedTransaction: ZcashTransaction.Overview) async throws -> ZcashTransactionWrapper? {
+        let memos: [Memo] = (try? await synchronizer.getMemos(for: confirmedTransaction)) ?? []
+        return ZcashTransactionWrapper(confirmedTransaction: confirmedTransaction, memo: memos.first)
     }
 
     @discardableResult private func sync(own: inout Set<ZcashTransactionWrapper>, incoming: [ZcashTransactionWrapper]) -> [ZcashTransactionWrapper] {
@@ -51,17 +62,18 @@ class ZcashTransactionPool {
         return newTxs
     }
 
-    func store(confirmedTransactions: [ZcashTransaction.Overview], pendingTransactions: [PendingTransactionEntity]) {
+    func store(confirmedTransactions: [ZcashTransaction.Overview], pendingTransactions: [PendingTransactionEntity]) async {
         self.pendingTransactions = Set(zcashTransactions(pendingTransactions))
-        self.confirmedTransactions = Set(zcashTransactions(confirmedTransactions))
+        self.confirmedTransactions = Set(await zcashTransactions(confirmedTransactions))
     }
 
     func sync(transactions: [PendingTransactionEntity]) -> [ZcashTransactionWrapper] {
         sync(own: &pendingTransactions, incoming: zcashTransactions(transactions))
     }
 
-    func sync(transactions: [ZcashTransaction.Overview]) -> [ZcashTransactionWrapper] {
-        sync(own: &confirmedTransactions, incoming: zcashTransactions(transactions))
+    func sync(transactions: [ZcashTransaction.Overview]) async -> [ZcashTransactionWrapper] {
+        let txs = await zcashTransactions(transactions)
+        return sync(own: &confirmedTransactions, incoming: txs)
     }
 
     func transaction(by hash: String) -> ZcashTransactionWrapper? {
