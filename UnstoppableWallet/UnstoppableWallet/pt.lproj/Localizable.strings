@@ -838,7 +838,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "manage_wallets.not_found" = "Nenhum resultado encontrado. Tente adicionar token manualmente.";
 "manage_wallets.search_placeholder" = "Nome, código ou endereço do contrato";
 "manage_wallets.contract_address" = "Endereço do Contrato";
-"manage_wallets.derivation_description" = "Existem 3 formatos de endereço comuns %@ que as carteiras podem usar para receber pagamentos:\n\n- BIP44 (mais antigo)\n- BIP49 (recente)\n- BIP84 (mais recente)\n\nEnquanto a Unstoppable wallet suporta todos os 3, recomendamos usar uma %@ carteira operando no formato BIP84. As carteiras que operam neste formato pagam taxas mais baixas ao enviar %@ transações.";
+"manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile Unstoppable wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Existem 2 formatos de endereço que as carteiras Bitcoin Cash podem usar para receber pagamentos:\n\n- TYPE0 (antigo)\n- TYPE145 (mais recente)\n\nEmbora a carteira Unstoppable suporte ambos, recomenda-se usar uma carteira Bitcoin Cash operando no formato TYPE145.";
 
 // Settings -> Experimental Features
