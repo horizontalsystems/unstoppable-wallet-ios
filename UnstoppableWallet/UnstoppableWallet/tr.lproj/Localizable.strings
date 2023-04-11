@@ -838,10 +838,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "manage_wallets.not_found" = "Sonuç bulunamadı. Belirteci manuel olarak eklemeyi deneyin.";
 "manage_wallets.search_placeholder" = "Ad, kod veya sözleşme adresi";
 "manage_wallets.contract_address" = "Sözleşme Adresi";
-"manage_wallets.derivation_description" = "%@ cüzdanlarının gelen ödemeleri almak için kullanabileceği 3 yaygın adres biçimi vardır:\n \n- BIP-44 (eski)
-\n- BIP-49 (daha yeni) 
-\n- BIP-84 (en yeni) 
-\n \nUnstoppable cüzdan 3'ünü de desteklerken, BIP-84 formatında çalışan bir %@ cüzdanı kullanmanızı önerir. Bu formatta çalışan cüzdanlar, %@ işlemleri gönderirken en düşük ücretleri öderler.";
+"manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile Unstoppable wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Bitcoin Cash cüzdanlarının gelen ödemeleri almak için kullanabileceği 2 adres formatı vardır: 
 \n \n- TYPE0 (eski) 
 \n- TYPE145 (daha yeni) 
