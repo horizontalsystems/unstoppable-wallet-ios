@@ -836,7 +836,7 @@
 "manage_wallets.not_found" = "Aucun résultat trouvé. Essayez d'ajouter le token manuellement.";
 "manage_wallets.search_placeholder" = "Nom, code ou adresse du contrat";
 "manage_wallets.contract_address" = "Adresse du contrat";
-"manage_wallets.derivation_description" = "Les portefeuilles %@ peuvent utiliser trois formats d'adresse courants pour recevoir des paiements : \n\n- BIP44 (plus ancien)\n- BIP49 (plus récent)\n- BIP84 (plus récent)\n\n. Bien que le portefeuille Unstoppable prenne en charge ces trois formats, il est recommandé d'utiliser un portefeuille %@ opérant au format BIP84. Les portefeuilles qui utilisent ce format bénéficient des frais les plus bas lors de l'envoi de transactions %@.";
+"manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile Unstoppable wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Les portefeuilles Bitcoin Cash peuvent utiliser deux formats d'adresse pour recevoir les paiements entrants : \n\n- TYPE 0 (plus ancien)\n- TYPE 145 (plus récent)\n\n. Bien que le portefeuille Unstoppable soit compatible avec les deux formats, l'utilisation d'un portefeuille Bitcoin Cash utilisant le format TYPE 145 est recommandée.";
 
 // Settings -> Experimental Features
