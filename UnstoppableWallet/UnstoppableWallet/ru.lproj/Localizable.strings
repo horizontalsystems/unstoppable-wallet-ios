@@ -840,7 +840,7 @@
 "manage_wallets.not_found" = "Ничего не найдено. Попробуйте добавить токен вручную.";
 "manage_wallets.search_placeholder" = "Имя, код или адрес контракта";
 "manage_wallets.contract_address" = "Адрес контракта";
-"manage_wallets.derivation_description" = "Существует 3 распространенных формата адресов %@ кошельков для получения входящих платежей:\n\n- BIP44 (более старый)\n- BIP49 (более новый)\n- BIP84 (самый новый)\n\nХотя кошелек Unstoppable поддерживает все три формата, рекомендуется использовать %@ кошелек, работающий в формате BIP84. Кошельки, работающие в этом формате, платят наименьшую комиссию при отправке %@ транзакций.";
+"manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile Unstoppable wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Существует 2 формата адресов, которые кошельки Bitcoin Cash могут использовать для приема входящих платежей:\n\n- TYPE 0 (более старый)\n- TYPE 145 (более новый)\n\nХотя кошелек Unstoppable поддерживает оба формата, рекомендуется использовать кошелек Bitcoin Cash, работающий в формате TYPE 145.";
 
 // Settings -> Experimental Features
