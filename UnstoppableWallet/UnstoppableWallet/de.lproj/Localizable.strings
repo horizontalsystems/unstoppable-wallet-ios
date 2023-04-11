@@ -837,7 +837,7 @@
 "manage_wallets.not_found" = "Keine Ergebnisse gefunden. Versuchen Sie, Token manuell hinzuzufügen.";
 "manage_wallets.search_placeholder" = "Name, Code oder Vertragsadresse";
 "manage_wallets.contract_address" = "Vertragsadresse";
-"manage_wallets.derivation_description" = "Es gibt 3 gängige Adressformate %@ Brieftaschen können verwendet werden, um eingehende Zahlungen zu erhalten:\n\n- BIP44 (älter)\n- BIP49 (neuer)\n- BIP84 (neueste)\n\nWährend unaufhaltsame Brieftasche alle 3 unterstützt, empfiehlt es eine %@ Brieftasche im BIP84-Format zu verwenden. Die Brieftaschen in diesem Format zahlen die niedrigsten Gebühren beim Versenden von %@ Transaktionen.";
+"manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile Unstoppable wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Es gibt 2 Adressformate Bitcoin Cash Wallets zum Empfang eingehender Zahlungen:\n\n- TYPE 0 (älter)\n- TYPE 145 (neuer)\n\nWährend unaufhaltsame Brieftaschen beide unterstützt, empfiehlt es sich, ein Bitcoin Cash Wallet im TYPE 145 Format zu verwenden.";
 
 // Settings -> Experimental Features
