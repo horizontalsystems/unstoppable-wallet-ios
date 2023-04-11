@@ -839,7 +839,7 @@
 "manage_wallets.not_found" = "未找到任何结果。请尝试手动添加令牌。";
 "manage_wallets.search_placeholder" = "姓名、代码或合同地址";
 "manage_wallets.contract_address" = "智能合约地址";
-"manage_wallets.derivation_description" = "有3种%@钱包可用于接收应收款的常见地址格式：\n\n- BIP44（较旧）\n- BIP49（较新）\n- BIP84（最新）\n\n虽然Unstoppable钱包支持全部3种格式，但是我们建议使用以BIP84格式运作的%@钱包。在发送%@交易时，以此格式运作的钱包只需支付较低的费用。";
+"manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile Unstoppable wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "有2种比特币现金钱包可用于接收应收款的常见地址格式：\n\n- TYPE 0（较旧）\n- TYPE 145（较新）\n\n虽然Unstoppable钱包支持全部两种格式，但是我们建议使用以TYPE 145格式运作的比特币现金钱包。";
 
 // Settings -> Experimental Features
