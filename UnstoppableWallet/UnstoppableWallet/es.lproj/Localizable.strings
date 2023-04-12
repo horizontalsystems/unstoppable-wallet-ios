@@ -836,7 +836,7 @@
 "manage_wallets.not_found" = "No se han encontrado resultados. Intente añadir el token manualmente.";
 "manage_wallets.search_placeholder" = "Nombre, código o dirección del contrato";
 "manage_wallets.contract_address" = "Dirección del contrato";
-"manage_wallets.derivation_description" = "Hay 3 formatos de dirección comunes que %@ monederos pueden usar para recibir pagos entrantes:\n\n- BIP44 (más antiguo)\n- BIP49 (más reciente)\n- BIP84 (más reciente)\n\nMientras que el monedero imparable soporta todos los 3 se recomienda usar un monedero %@ que opere en formato BIP84. Las billeteras que operan en este formato pagan las tarifas más bajas al enviar %@ transacciones.";
+"manage_wallets.derivation_description" = "Hay 4 formatos de dirección comunes que %@ monederos pueden usar para recibir pagos entrantes:\n\n- BIP44 (más antiguo)\n- BIP49\n- BIP84 (recomendado)\n- BIP86 (más reciente)\n\nMientras que el monedero imparable soporta todos los 4 se recomienda usar un monedero %@ que opere en formato BIP84.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Hay 2 formatos de dirección de las carteras Bitcoin Cash pueden usar para recibir pagos entrantes:\n\n- TYPE 0 (más antiguo)\n- TYPE 145 (más reciente)\n\nMientras que el monedero imparable soporta ambos se recomienda usar un monedero Bitcoin Cash que funcione en formato TYPE 145.";
 
 // Settings -> Experimental Features
