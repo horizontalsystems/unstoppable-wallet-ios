@@ -89,7 +89,7 @@
 
 // Access Camera
 
-"access_camera.message" = "A Unstoppable precisa acessar sua câmera para escanear o código QR.
+"access_camera.message" = "A Unstoppable precisa acessar sua câmera para escanear o QR Code.
 
 Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "access_camera.settings" = "Configurações";
@@ -111,7 +111,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "restore.passphrase_description" = "Digite a senha que você usou ao criar esta frase mnemônica.";
 "restore.error.empty_passphrase" = "O senha não pode estar em branco";
 "restore.non_standard_import" = "Restauração Não-Padrão";
-"restore.non_standard_import.description" = "Esta página fornece um mecanismo especial de recuperação de carteira para usuários da Unstoppable que possuem uma carteira Não Padrão.  Geralmente, essas carteiras podem ter sido criadas na versão Unstoppable 0.27 - 0.28 usando uma lista de palavras mnemônicas não inglesas e/ou um caractere especial na senha da carteira (ou seja, símbolo diacrítico).\n\nSe você for um usuário afetado, o saldo da sua carteira será mostrado como 0 após a atualização para a versão 0.29.  Esta página permitirá que você restaure o acesso à sua carteira não padrão.  Uma vez restaurado, é recomendável criar uma nova carteira (que será compatível com o padrão) e mover fundos para lá.";
+"restore.non_standard_import.description" = "Esta página fornece um mecanismo especial de recuperação de carteira para usuários da Unstoppable que possuem uma carteira Não-Padrão. Geralmente, essas carteiras podem ter sido criadas na versão Unstoppable 0.27 - 0.28 usando uma lista de palavras mnemônicas não inglesas e/ou um caractere especial na senha da carteira (ou seja, símbolo diacrítico).\n\nSe você for um usuário afetado, o saldo da sua carteira será mostrado como 0 após a atualização para a versão 0.29. Esta página permitirá que você restaure o acesso à sua carteira Não-Padrão. Uma vez restaurada, é recomendável criar uma nova carteira (que será compatível com o padrão) e mover fundos para lá.";
 "restore.warning.non_recommended.description" = "Esta carteira parece usar um caractere não padrão em sua lista de palavras secretas e/ou uma frase secreta.  Se você não ver um saldo ou transações, leia abaixo para obter detalhes.\n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
 "restore.error.non_standard.description" = "Esta é uma carteira não padrão. \n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
 
@@ -138,7 +138,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Recovery Phrase
 
 "recovery_phrase.title" = "Frase de Recuperação";
-"recovery_phrase.warning" = "Nunca compartilhe sua frase de recuperação com ninguém. A equipe Unstoppable nunca pedirá a sua frase de recuperação.";
+"recovery_phrase.warning" = "Nunca compartilhe sua frase de recuperação com ninguém. A equipe Unstoppable nunca irá pedir a sua frase de recuperação.";
 "recovery_phrase.tap_to_show" = "Toque para mostrar a frase de recuperação";
 "recovery_phrase.passphrase" = "Senha";
 "recovery_phrase.copy_warning.title" = "Risco ao copiar a frase de recuperação";
@@ -276,9 +276,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "send.hodler_locktime_off" = "Desligado";
 "send.hodler_error.unsupported_address" = "O bloqueio de tempo só funciona com endereços P2PKH (iniciando com 1)";
 "send.fee_info.title" = "Taxa de tarifa";
-"send.fee_info.description" = "As Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são maiores quando um monte de transações ocorrem na rede.\n\n A carteira Unstoppable estima a taxa com base na atividade atual da blockchain e recomenda o valor ideal para que a transação seja processada dentro de um período razoável de tempo.\n\n A taxa recomendada é mostrada como a quantidade de satoshi que o usuário precisa pagar por um único byte da transação. Assim, a taxa total depende do tamanho total da transação que é medida em bytes.\n\nUsuários podem utilizar os controles fornecidos para aumentar ou diminuir o custo. A mudança altera a taxa total para a transação que o usuário irá pagar.\n\nDefinir a taxa abaixo do valor recomendado pode resultar em uma transação ser realizada como pendente por horas, ou ser rejeitada. Quanto menor o valor, mais tempo levará a transação para confirmar. Para as transações onde a prioridade é importante, recomendamos definir uma taxa mais alta.";
+"send.fee_info.description" = "As Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são maiores quando muitas transações ocorrem na rede.\n\n A carteira Unstoppable estima a taxa com base na atividade atual da blockchain e recomenda o valor ideal para que a transação seja processada dentro de um período razoável de tempo.\n\n A taxa recomendada é mostrada como a quantidade de satoshi que o usuário precisa pagar por um único byte da transação. Assim, a taxa total depende do tamanho total da transação que é medida em bytes.\n\nUsuários podem utilizar os controles fornecidos para aumentar ou diminuir o custo. A mudança altera a taxa total para a transação que o usuário irá pagar.\n\nDefinir a taxa abaixo do valor recomendado pode resultar em uma transação ser realizada como pendente por horas, ou ser rejeitada. Quanto menor o valor, mais tempo levará a transação para confirmar. Para as transações onde a prioridade é importante, recomendamos definir uma taxa mais alta.";
 "send.transaction_inputs_outputs_info.title" = "Entradas / Saídas de Transação";
-"send.transaction_inputs_outputs_info.description" = "A maioria das transações do Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira Unstoppable implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários Unstoppable:";
+"send.transaction_inputs_outputs_info.description" = "A maioria das transações em Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira Unstoppable implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários Unstoppable:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Embaralhar";
 "send.transaction_inputs_outputs_info.shuffle.description" = "A ordem das saídas da transação é aleatória em cada transação. Às vezes, a mudança pode ser a primeira saída, às vezes pode ser a segunda. Se um usuário confiar no desenvolvedor do aplicativo, considere essa uma opção recomendada.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Determinístico";
@@ -370,8 +370,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "swap.advanced_settings.recipient.footer" = "Após a operação de câmbio, o valor será transferido para o endereço especificado";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Endereço do Destinatário";
-"swap.advanced_settings.warning.unusual_slippage" = "Sua operação pode ser de front-running";
-"swap.advanced_settings.service_fee_description" = "Uma taxa de serviço para a ação de troca na plataforma normalmente 0,3% ou 0,6%";
+"swap.advanced_settings.warning.unusual_slippage" = "Sua operação pode ser de Front running";
+"swap.advanced_settings.service_fee_description" = "Uma taxa de serviço para a ação de troca na plataforma é tipicamente 0,3% ou 0,6%";
 "swap.advanced_settings.error.lower_slippage" = "É provável que sua transação falhe.";
 "swap.advanced_settings.error.higher_slippage" = "Tolerância do Slippage não pode ser maior que %@%%";
 "swap.advanced_settings.error.invalid_address" = "Endereço Inválido";
@@ -595,7 +595,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "Este projeto não tem dados de análise";
-"coin_analytics.locked" = "Esta página disponível apenas para usuários Premium da Carteira Unstoppable";
+"coin_analytics.locked" = "Esta página disponível apenas para usuários premium da Carteira Unstoppable";
 
 "coin_analytics.cex_volume" = "Volume CEX";
 "coin_analytics.cex_volume_rank" = "Ranking do Volume CEX";
