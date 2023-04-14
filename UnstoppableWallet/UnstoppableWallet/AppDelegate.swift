@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = ThemeWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
 
-        window?.rootViewController = LaunchRouter.module()
+        window?.rootViewController = LaunchModule.viewController()
 
         return true
     }

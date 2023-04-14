@@ -18,17 +18,21 @@ class KeychainKitDelegate {
 
 extension KeychainKitDelegate: IKeychainKitDelegate {
 
-    func onInitialLock() {
+    func onSecureStorageInvalidation() {
         accountManager.clear()
         walletManager.clearWallets()
     }
 
-    public func onLock() {
+    func onPasscodeSet() {
+        show(viewController: LaunchModule.viewController())
+    }
+
+    func onPasscodeNotSet() {
         show(viewController: NoPasscodeViewController(mode: .noPasscode))
     }
 
-    public func onUnlock() {
-        show(viewController: LaunchRouter.module())
+    func onCannotCheckPasscode() {
+        show(viewController: NoPasscodeViewController(mode: .cannotCheckPasscode))
     }
 
 }
