@@ -2182,13 +2182,11 @@
 		D38404E8218317DF007D50AD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8820CA40DC005A9F80 /* MainViewController.swift */; };
 		D38404F9218317DF007D50AD /* MainModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B96D2BC5994AC8EC794 /* MainModule.swift */; };
 		D3840502218317DF007D50AD /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A5DE20DD6DD486FAFC0 /* Protocols.swift */; };
-		D3840505218317DF007D50AD /* LaunchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C7DCF9B7894F7600623 /* LaunchRouter.swift */; };
+		D3840505218317DF007D50AD /* LaunchModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C7DCF9B7894F7600623 /* LaunchModule.swift */; };
 		D3840525218317DF007D50AD /* DepositModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E1FBBCCA45BCDA557F4 /* DepositModule.swift */; };
 		D3840526218317DF007D50AD /* DepositService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648DA32EA5FC27E4CEF64 /* DepositService.swift */; };
 		D3840527218317DF007D50AD /* DepositViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645371B2FC499500DCA93 /* DepositViewModel.swift */; };
-		D384057E218317DF007D50AD /* LaunchModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56408C8281C80FD365E5BE /* LaunchModule.swift */; };
-		D384057F218317DF007D50AD /* LaunchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56458C7C29504755A09E00 /* LaunchInteractor.swift */; };
-		D3840580218317DF007D50AD /* LaunchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F627224BDD3E99C582B /* LaunchPresenter.swift */; };
+		D384057F218317DF007D50AD /* LaunchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56458C7C29504755A09E00 /* LaunchService.swift */; };
 		D3840581218317DF007D50AD /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646D49060C3EFF06D0479 /* App.swift */; };
 		D3840583218317DF007D50AD /* BlurManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BB88BF3ED779F8C21DC /* BlurManager.swift */; };
 		D3840585218317DF007D50AD /* MainSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647AD7481B36F20D4DDF9 /* MainSettingsModule.swift */; };
@@ -2217,13 +2215,11 @@
 		D38405D721831B3D007D50AD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B62A8820CA40DC005A9F80 /* MainViewController.swift */; };
 		D38405E821831B3D007D50AD /* MainModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B96D2BC5994AC8EC794 /* MainModule.swift */; };
 		D38405F121831B3D007D50AD /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A5DE20DD6DD486FAFC0 /* Protocols.swift */; };
-		D38405F421831B3D007D50AD /* LaunchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C7DCF9B7894F7600623 /* LaunchRouter.swift */; };
+		D38405F421831B3D007D50AD /* LaunchModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C7DCF9B7894F7600623 /* LaunchModule.swift */; };
 		D384061421831B3D007D50AD /* DepositModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E1FBBCCA45BCDA557F4 /* DepositModule.swift */; };
 		D384061521831B3D007D50AD /* DepositService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648DA32EA5FC27E4CEF64 /* DepositService.swift */; };
 		D384061621831B3D007D50AD /* DepositViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5645371B2FC499500DCA93 /* DepositViewModel.swift */; };
-		D384066D21831B3D007D50AD /* LaunchModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56408C8281C80FD365E5BE /* LaunchModule.swift */; };
-		D384066E21831B3D007D50AD /* LaunchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56458C7C29504755A09E00 /* LaunchInteractor.swift */; };
-		D384066F21831B3D007D50AD /* LaunchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564F627224BDD3E99C582B /* LaunchPresenter.swift */; };
+		D384066E21831B3D007D50AD /* LaunchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56458C7C29504755A09E00 /* LaunchService.swift */; };
 		D384067021831B3D007D50AD /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646D49060C3EFF06D0479 /* App.swift */; };
 		D384067221831B3D007D50AD /* BlurManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BB88BF3ED779F8C21DC /* BlurManager.swift */; };
 		D384067421831B3D007D50AD /* MainSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647AD7481B36F20D4DDF9 /* MainSettingsModule.swift */; };
@@ -2736,7 +2732,7 @@
 		11B35C4FFB99D10A8F343E9C /* LanguageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		11B35C6498078B1AFF406256 /* CoinMajorHoldersService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinMajorHoldersService.swift; sourceTree = "<group>"; };
 		11B35C7B8BA65E9AA3BB7AFB /* FavoriteCoinRecordStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteCoinRecordStorage.swift; sourceTree = "<group>"; };
-		11B35C7DCF9B7894F7600623 /* LaunchRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchRouter.swift; sourceTree = "<group>"; };
+		11B35C7DCF9B7894F7600623 /* LaunchModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchModule.swift; sourceTree = "<group>"; };
 		11B35C7F043B6C41E53D43BC /* SendEvmTransactionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEvmTransactionService.swift; sourceTree = "<group>"; };
 		11B35C7FCEFE15A50EB5C6E0 /* CoinReportsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinReportsViewController.swift; sourceTree = "<group>"; };
 		11B35C996B6E9B084C05A087 /* TextFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
@@ -2849,7 +2845,6 @@
 		1A56404C1C16B85434117DB7 /* AppStatusModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStatusModule.swift; sourceTree = "<group>"; };
 		1A5640528EFD15137E218EA3 /* MainSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsViewModel.swift; sourceTree = "<group>"; };
 		1A564082B28C17265B23D88A /* SecuritySettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsService.swift; sourceTree = "<group>"; };
-		1A56408C8281C80FD365E5BE /* LaunchModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchModule.swift; sourceTree = "<group>"; };
 		1A5640B4F6298D9F326C5EDE /* MarketOverviewTopCoinsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewTopCoinsViewModel.swift; sourceTree = "<group>"; };
 		1A5641572B6E46E18B52A6A9 /* SecuritySettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsModule.swift; sourceTree = "<group>"; };
 		1A5641679DC88BE355F0F3A0 /* Development.template.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Development.template.xcconfig; sourceTree = "<group>"; };
@@ -2884,7 +2879,7 @@
 		1A5645371B2FC499500DCA93 /* DepositViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositViewModel.swift; sourceTree = "<group>"; };
 		1A564555A67E4DC1DC935A04 /* MarketListWatchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketListWatchViewModel.swift; sourceTree = "<group>"; };
 		1A564580B3F739DAC59C623F /* DeepLinkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkManager.swift; sourceTree = "<group>"; };
-		1A56458C7C29504755A09E00 /* LaunchInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchInteractor.swift; sourceTree = "<group>"; };
+		1A56458C7C29504755A09E00 /* LaunchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchService.swift; sourceTree = "<group>"; };
 		1A56459D85D4859D8A0F4D5A /* MarketTopPlatformsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketTopPlatformsModule.swift; sourceTree = "<group>"; };
 		1A5645B1C5FD344967B1F4B7 /* MarketOverviewCategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewCategoryCell.swift; sourceTree = "<group>"; };
 		1A5646218714BA81DE9B5631 /* MarketOverviewTopCoinsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewTopCoinsDataSource.swift; sourceTree = "<group>"; };
@@ -2969,7 +2964,6 @@
 		1A564EDF0FD6A1D1575D1EFB /* MarketOverviewGlobalService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewGlobalService.swift; sourceTree = "<group>"; };
 		1A564F2CD07DBA5B054590A2 /* FilterCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCard.swift; sourceTree = "<group>"; };
 		1A564F434F772A01B92379B5 /* MarketOverviewNftCollectionsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewNftCollectionsDataSource.swift; sourceTree = "<group>"; };
-		1A564F627224BDD3E99C582B /* LaunchPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchPresenter.swift; sourceTree = "<group>"; };
 		1A564FF31C5E879781A2D5E0 /* TraitsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraitsCell.swift; sourceTree = "<group>"; };
 		2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KitCleaner.swift; sourceTree = "<group>"; };
 		2FA5D0F4DBA8FC1F917AA95B /* SendSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendSettingsViewController.swift; sourceTree = "<group>"; };
@@ -3806,10 +3800,8 @@
 		11B35344CEA8CF35257A6975 /* Launch */ = {
 			isa = PBXGroup;
 			children = (
-				11B35C7DCF9B7894F7600623 /* LaunchRouter.swift */,
-				1A56408C8281C80FD365E5BE /* LaunchModule.swift */,
-				1A56458C7C29504755A09E00 /* LaunchInteractor.swift */,
-				1A564F627224BDD3E99C582B /* LaunchPresenter.swift */,
+				11B35C7DCF9B7894F7600623 /* LaunchModule.swift */,
+				1A56458C7C29504755A09E00 /* LaunchService.swift */,
 			);
 			path = Launch;
 			sourceTree = "<group>";
@@ -6787,7 +6779,7 @@
 				D38404E8218317DF007D50AD /* MainViewController.swift in Sources */,
 				D38404F9218317DF007D50AD /* MainModule.swift in Sources */,
 				D3840502218317DF007D50AD /* Protocols.swift in Sources */,
-				D3840505218317DF007D50AD /* LaunchRouter.swift in Sources */,
+				D3840505218317DF007D50AD /* LaunchModule.swift in Sources */,
 				D3840525218317DF007D50AD /* DepositModule.swift in Sources */,
 				D3840526218317DF007D50AD /* DepositService.swift in Sources */,
 				D3840527218317DF007D50AD /* DepositViewModel.swift in Sources */,
@@ -6798,9 +6790,7 @@
 				D04D98EB268055A2001A3135 /* TransactionRecord.swift in Sources */,
 				D36DE0FD272FD92F000BC916 /* SwapSelectProviderService.swift in Sources */,
 				D008CA67267C8E1800001E0A /* ApproveTransactionRecord.swift in Sources */,
-				D384057E218317DF007D50AD /* LaunchModule.swift in Sources */,
-				D384057F218317DF007D50AD /* LaunchInteractor.swift in Sources */,
-				D3840580218317DF007D50AD /* LaunchPresenter.swift in Sources */,
+				D384057F218317DF007D50AD /* LaunchService.swift in Sources */,
 				D3840581218317DF007D50AD /* App.swift in Sources */,
 				D3840583218317DF007D50AD /* BlurManager.swift in Sources */,
 				D3840585218317DF007D50AD /* MainSettingsModule.swift in Sources */,
@@ -7891,7 +7881,7 @@
 				D38405D721831B3D007D50AD /* MainViewController.swift in Sources */,
 				D38405E821831B3D007D50AD /* MainModule.swift in Sources */,
 				D38405F121831B3D007D50AD /* Protocols.swift in Sources */,
-				D38405F421831B3D007D50AD /* LaunchRouter.swift in Sources */,
+				D38405F421831B3D007D50AD /* LaunchModule.swift in Sources */,
 				D384061421831B3D007D50AD /* DepositModule.swift in Sources */,
 				D384061521831B3D007D50AD /* DepositService.swift in Sources */,
 				D087628429826E3100E6FFD4 /* WatchService.swift in Sources */,
@@ -7900,9 +7890,7 @@
 				D35B518C21942E7A00504FBA /* TermsViewController.swift in Sources */,
 				D04D98EA268055A2001A3135 /* TransactionRecord.swift in Sources */,
 				D008CA66267C8E1800001E0A /* ApproveTransactionRecord.swift in Sources */,
-				D384066D21831B3D007D50AD /* LaunchModule.swift in Sources */,
-				D384066E21831B3D007D50AD /* LaunchInteractor.swift in Sources */,
-				D384066F21831B3D007D50AD /* LaunchPresenter.swift in Sources */,
+				D384066E21831B3D007D50AD /* LaunchService.swift in Sources */,
 				D384067021831B3D007D50AD /* App.swift in Sources */,
 				D384067221831B3D007D50AD /* BlurManager.swift in Sources */,
 				D384067421831B3D007D50AD /* MainSettingsModule.swift in Sources */,
@@ -9592,7 +9580,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/StorageKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.0;
+				version = 1.0.1;
 			};
 		};
 		D3E1D0092990D9BE00C68F00 /* XCRemoteSwiftPackageReference "Hodler.Swift" */ = {
