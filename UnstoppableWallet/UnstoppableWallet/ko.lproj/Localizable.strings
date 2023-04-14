@@ -959,6 +959,8 @@
 "appearance.balance_value.coin_value" = "코인 가치";
 "appearance.balance_value.fiat_value" = "법정 가치";
 
+"appearance.balance_auto_hide" = "Balance Auto Hide";
+
 // Settings -> Contacts
 
 "contacts.title" = "연락처";
