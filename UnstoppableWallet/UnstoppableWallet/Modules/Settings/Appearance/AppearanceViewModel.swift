@@ -115,6 +115,10 @@ extension AppearanceViewModel {
         service.showMarketTab
     }
 
+    var balanceAutoHide: Bool {
+        service.balanceAutoHide
+    }
+
     func onSelectThemeMode(index: Int) {
         service.setThemeMode(index: index)
     }
@@ -137,6 +141,10 @@ extension AppearanceViewModel {
 
     func onSelectBalanceValue(index: Int) {
         service.setBalancePrimaryValue(index: index)
+    }
+
+    func onSet(balanceAutoHide: Bool) {
+        service.set(balanceAutoHide: balanceAutoHide)
     }
 
 }
