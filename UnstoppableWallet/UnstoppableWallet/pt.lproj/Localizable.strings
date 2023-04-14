@@ -961,6 +961,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "appearance.balance_value.coin_value" = "Valor da Moeda";
 "appearance.balance_value.fiat_value" = "Valor Fiat";
 
+"appearance.balance_auto_hide" = "Balance Auto Hide";
+
 // Settings -> Contacts
 
 "contacts.title" = "Contatos";
