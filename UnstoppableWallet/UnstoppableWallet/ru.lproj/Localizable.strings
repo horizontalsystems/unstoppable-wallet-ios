@@ -963,6 +963,8 @@
 "appearance.balance_value.coin_value" = "Токен значение";
 "appearance.balance_value.fiat_value" = "Фиатное значение";
 
+"appearance.balance_auto_hide" = "Balance Auto Hide";
+
 // Settings -> Contacts
 
 "contacts.title" = "Контакты";
