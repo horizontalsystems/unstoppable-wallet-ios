@@ -962,6 +962,8 @@
 "appearance.balance_value.coin_value" = "币值";
 "appearance.balance_value.fiat_value" = "纤维值";
 
+"appearance.balance_auto_hide" = "Balance Auto Hide";
+
 // Settings -> Contacts
 
 "contacts.title" = "联系人";
