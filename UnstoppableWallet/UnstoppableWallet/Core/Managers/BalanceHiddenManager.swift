@@ -4,6 +4,7 @@ import StorageKit
 
 class BalanceHiddenManager {
     private let keyBalanceHidden = "wallet-balance-hidden"
+    private let keyBalanceAutoHide = "wallet-balance-auto-hide"
 
     private let localStorage: StorageKit.ILocalStorage
 
@@ -13,6 +14,8 @@ class BalanceHiddenManager {
             balanceHiddenRelay.accept(balanceHidden)
         }
     }
+
+    private(set) var balanceAutoHide: Bool
 
     init(localStorage: StorageKit.ILocalStorage) {
         self.localStorage = localStorage
@@ -25,6 +28,17 @@ class BalanceHiddenManager {
         } else {
             balanceHidden = false
         }
+
+        balanceAutoHide = localStorage.value(for: keyBalanceAutoHide) ?? false
+
+        if balanceAutoHide {
+            set(balanceHidden: true)
+        }
+    }
+
+    private func set(balanceHidden: Bool) {
+        self.balanceHidden = balanceHidden
+        localStorage.set(value: balanceHidden, for: keyBalanceHidden)
     }
 
 }
@@ -36,8 +50,18 @@ extension BalanceHiddenManager {
     }
 
     func toggleBalanceHidden() {
-        balanceHidden = !balanceHidden
-        localStorage.set(value: balanceHidden, for: keyBalanceHidden)
+        set(balanceHidden: !balanceHidden)
+    }
+
+    func set(balanceAutoHide: Bool) {
+        self.balanceAutoHide = balanceAutoHide
+        localStorage.set(value: balanceAutoHide, for: keyBalanceAutoHide)
+    }
+
+    func didEnterBackground() {
+        if balanceAutoHide {
+            set(balanceHidden: true)
+        }
     }
 
 }

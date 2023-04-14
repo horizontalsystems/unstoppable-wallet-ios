@@ -9,7 +9,8 @@ struct AppearanceModule {
                 launchScreenManager: App.shared.launchScreenManager,
                 appIconManager: App.shared.appIconManager,
                 balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
-                balanceConversionManager: App.shared.balanceConversionManager
+                balanceConversionManager: App.shared.balanceConversionManager,
+                balanceHiddenManager: App.shared.balanceHiddenManager
         )
 
         let viewModel = AppearanceViewModel(service: service)

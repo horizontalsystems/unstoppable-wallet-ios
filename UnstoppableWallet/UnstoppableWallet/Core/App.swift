@@ -293,6 +293,7 @@ class App {
                 logRecordManager: logRecordManager,
                 deepLinkManager: deepLinkManager,
                 evmLabelManager: evmLabelManager,
+                balanceHiddenManager: balanceHiddenManager,
                 walletConnectV2SocketConnectionService: walletConnectV2SocketConnectionService,
                 nftMetadataSyncer: nftMetadataSyncer
         )
