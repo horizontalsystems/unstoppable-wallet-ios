@@ -49,6 +49,7 @@ class AppearanceAppIconsCell: BaseThemeCell {
         self.onSelect = onSelect
 
         collectionView.reloadData()
+        collectionView.layoutIfNeeded()
     }
 
     static func height(viewItemsCount: Int) -> CGFloat {

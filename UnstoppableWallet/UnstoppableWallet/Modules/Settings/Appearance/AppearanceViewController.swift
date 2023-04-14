@@ -175,7 +175,7 @@ extension AppearanceViewController: SectionsDataSource {
         Section(
                 id: "app-icon",
                 headerState: tableView.sectionHeader(text: "appearance.app_icon".localized),
-                footerState: .margin(height: .margin24),
+                footerState: .margin(height: .margin32),
                 rows: [
                     Row<AppearanceAppIconsCell>(
                             id: "app-icon",
@@ -239,6 +239,24 @@ extension AppearanceViewController: SectionsDataSource {
         )
     }
 
+    private func balanceAutoHideSection() -> SectionProtocol {
+        Section(
+                id: "balance-auto-hide",
+                footerState: .margin(height: .margin24),
+                rows: [
+                    tableView.universalRow48(
+                            id: "balance-auto-hide",
+                            image: .local(UIImage(named: "eye_off_24")),
+                            title: .body("appearance.balance_auto_hide".localized),
+                            accessoryType: .switch(isOn: viewModel.balanceAutoHide) { [weak self] in self?.viewModel.onSet(balanceAutoHide: $0) },
+                            hash: "\(viewModel.balanceAutoHide)",
+                            isFirst: true,
+                            isLast: true
+                    )
+                ]
+        )
+    }
+
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
             Section(id: "top-margin", headerState: .margin(height: .margin12)),
@@ -249,9 +267,10 @@ extension AppearanceViewController: SectionsDataSource {
             sections.append(launchScreenSection)
         }
         sections.append(contentsOf: [
-            appIconSection(viewItems: appIconViewItems),
             conversionSection(viewItems: conversionViewItems),
-            balanceValueSection(viewItems: balanceValueViewItems)
+            balanceValueSection(viewItems: balanceValueViewItems),
+            balanceAutoHideSection(),
+            appIconSection(viewItems: appIconViewItems)
         ])
         return sections
     }

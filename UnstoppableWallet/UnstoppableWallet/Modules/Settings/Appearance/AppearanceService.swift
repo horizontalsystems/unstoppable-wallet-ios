@@ -11,6 +11,7 @@ class AppearanceService {
     private let appIconManager: AppIconManager
     private let balancePrimaryValueManager: BalancePrimaryValueManager
     private let balanceConversionManager: BalanceConversionManager
+    private let balanceHiddenManager: BalanceHiddenManager
     private let disposeBag = DisposeBag()
 
     private let themeModeItemsRelay = PublishRelay<[ThemeModeItem]>()
@@ -53,12 +54,13 @@ class AppearanceService {
         launchScreenManager.showMarket
     }
 
-    init(themeManager: ThemeManager, launchScreenManager: LaunchScreenManager, appIconManager: AppIconManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceConversionManager: BalanceConversionManager) {
+    init(themeManager: ThemeManager, launchScreenManager: LaunchScreenManager, appIconManager: AppIconManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceConversionManager: BalanceConversionManager, balanceHiddenManager: BalanceHiddenManager) {
         self.themeManager = themeManager
         self.launchScreenManager = launchScreenManager
         self.appIconManager = appIconManager
         self.balancePrimaryValueManager = balancePrimaryValueManager
         self.balanceConversionManager = balanceConversionManager
+        self.balanceHiddenManager = balanceHiddenManager
 
         subscribe(disposeBag, launchScreenManager.launchScreenObservable) { [weak self] in self?.syncLaunchScreenItems(current: $0) }
         subscribe(disposeBag, appIconManager.appIconObservable) { [weak self] in self?.syncAppIconItems(current: $0) }
@@ -131,6 +133,10 @@ extension AppearanceService {
         balancePrimaryValueItemsRelay.asObservable()
     }
 
+    var balanceAutoHide: Bool {
+        balanceHiddenManager.balanceAutoHide
+    }
+
     var showMarketTabObservable: Observable<Bool> {
         showMarketTabRelay.asObservable()
     }
@@ -159,6 +165,10 @@ extension AppearanceService {
 
     func setBalancePrimaryValue(index: Int) {
         balancePrimaryValueManager.balancePrimaryValue = BalancePrimaryValue.allCases[index]
+    }
+
+    func set(balanceAutoHide: Bool) {
+        balanceHiddenManager.set(balanceAutoHide: balanceAutoHide)
     }
 
 }
