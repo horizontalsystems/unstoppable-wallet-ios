@@ -13,43 +13,78 @@ class ZcashTransactionWrapper {
     let minedHeight: Int?
     let timestamp: TimeInterval
     let value: Zatoshi
+    let fee: Zatoshi?
     let memo: String?
     let failed: Bool
 
-    init?(confirmedTransaction: ZcashTransaction.Overview, memo: Memo?) {
-        id = confirmedTransaction.id.description
-        raw = confirmedTransaction.raw
-        transactionHash = confirmedTransaction.rawID.hs.reversedHex
-        transactionIndex = confirmedTransaction.index ?? 0
-        toAddress = nil
-        isSentTransaction = confirmedTransaction.value < Zatoshi(0)
-        minedHeight = confirmedTransaction.minedHeight
-        expiryHeight = confirmedTransaction.expiryHeight
-        timestamp = confirmedTransaction.blockTime ?? 0
-        value = confirmedTransaction.value
+    init?(tx: ZcashTransaction.Overview, memo: Memo?, recipient: TransactionRecipient?) {
+        id = tx.id.description
+        raw = tx.raw
+        transactionHash = tx.rawID.hs.reversedHex
+        transactionIndex = tx.index ?? 0
+        toAddress = recipient?.asString
+        isSentTransaction = tx.value < Zatoshi(0)
+        minedHeight = tx.minedHeight
+        expiryHeight = tx.expiryHeight
+        timestamp = tx.blockTime ?? 0
+        value = tx.value
+        fee = tx.fee
         self.memo = memo.flatMap { $0.toString() }
         failed = false
     }
 
-    init?(pendingTransaction: PendingTransactionEntity) {
-        guard let rawTransactionId = pendingTransaction.rawTransactionId else {
+    init?(tx: ZcashTransaction.Sent, memo: Memo?, recipient: TransactionRecipient?) {
+        id = tx.id.description
+        raw = tx.raw
+        transactionHash = tx.rawID?.hs.reversedHex ?? "n/a".localized
+        transactionIndex = tx.index ?? 0
+        toAddress = recipient?.asString
+        isSentTransaction = tx.value < Zatoshi(0)
+        minedHeight = tx.minedHeight
+        expiryHeight = tx.expiryHeight
+        timestamp = tx.blockTime ?? 0
+        value = tx.value
+        fee = nil // ?? todo : how to?
+        self.memo = memo.flatMap { $0.toString() }
+        failed = false
+    }
+
+    init?(tx: ZcashTransaction.Received, memo: Memo?, recipient: TransactionRecipient?) {
+        id = tx.id.description
+        raw = tx.raw
+        transactionHash = tx.rawID?.hs.reversedHex ?? "n/a".localized
+        transactionIndex = tx.index
+        toAddress = recipient?.asString
+        isSentTransaction = tx.value < Zatoshi(0)
+        minedHeight = tx.minedHeight
+        expiryHeight = tx.expiryHeight
+        timestamp = tx.blockTime
+        value = tx.value
+        fee = nil // ?? todo: how to?
+        self.memo = memo.flatMap { $0.toString() }
+        failed = false
+    }
+
+    init?(tx: PendingTransactionEntity) {
+        guard let rawTransactionId = tx.rawTransactionId else {
             return nil
         }
 
-        id = pendingTransaction.id?.description
-        raw = pendingTransaction.raw
+        id = tx.id?.description
+        raw = tx.raw
         transactionHash = rawTransactionId.hs.reversedHex
         transactionIndex = -1
-        toAddress = pendingTransaction.recipient.asString
+        toAddress = tx.recipient.asString
 
         // if has toAddress - we must mark tx as sent
-        isSentTransaction = toAddress == nil ? pendingTransaction.value < Zatoshi(0) : true
+        isSentTransaction = toAddress == nil ? tx.value < Zatoshi(0) : true
         minedHeight = nil
-        expiryHeight = pendingTransaction.expiryHeight
-        timestamp = pendingTransaction.createTime
-        value = pendingTransaction.value
-        memo = pendingTransaction.memo.flatMap { String(bytes: $0, encoding: .utf8) }
-        failed = pendingTransaction.isFailure
+        expiryHeight = tx.expiryHeight
+        timestamp = tx.createTime
+        value = tx.value
+        fee = tx.fee
+        memo = tx.memo.flatMap { String(bytes: $0, encoding: .utf8) }
+        failed = tx.isFailure
     }
 
 }
