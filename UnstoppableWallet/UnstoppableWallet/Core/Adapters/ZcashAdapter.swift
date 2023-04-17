@@ -22,7 +22,7 @@ class ZcashAdapter {
 
     private let synchronizer: Synchronizer
 
-    private var address: UnifiedAddress?
+    private var zAddress: String?
     private var transactionPool: ZcashTransactionPool?
 
     private let uniqueId: String
@@ -45,7 +45,7 @@ class ZcashAdapter {
 
     private var waitForStart: Bool = false {
         didSet {
-            if waitForStart && address != nil {     // already prepared and has address
+            if waitForStart && zAddress != nil {     // already prepared and has address
                 syncMain()
             }
         }
@@ -173,22 +173,18 @@ class ZcashAdapter {
                     throw AppError.ZcashError.seedRequired
                 }
                 logger?.log(level: .debug, message: "Successful prepared!")
-                guard let address = await synchronizer.getUnifiedAddress(accountIndex: 0),
-                        let saplingAddress = address.saplingReceiver() else {
+                guard let address = try? await synchronizer.getUnifiedAddress(accountIndex: 0),
+                        let saplingAddress = try? address.saplingReceiver() else {
                     throw AppError.ZcashError.noReceiveAddress
                 }
-                self.address = address
+                zAddress = saplingAddress.stringEncoded
                 logger?.log(level: .debug, message: "Successful get address for 0 account! \(saplingAddress.stringEncoded)")
 
                 let transactionPool = ZcashTransactionPool(receiveAddress: saplingAddress, synchronizer: synchronizer)
                 self.transactionPool = transactionPool
 
                 logger?.log(level: .debug, message: "Starting fetch transactions.")
-                let overviews = await synchronizer.clearedTransactions
-                let pending = await synchronizer.pendingTransactions
-                logger?.log(level: .debug, message: "Successful fetch \(overviews.count) txs and \(pending.count) pending txs")
-
-                await transactionPool.store(confirmedTransactions: overviews, pendingTransactions: pending)
+                await transactionPool.initTransactions()
                 let wrapped = transactionPool.all
 
                 if !wrapped.isEmpty {
@@ -198,8 +194,8 @@ class ZcashAdapter {
                     })
                 }
 
-                let shielded = synchronizer.getShieldedBalance(accountIndex: 0).decimalValue.decimalValue
-                let shieldedVerified = synchronizer.getShieldedVerifiedBalance(accountIndex: 0).decimalValue.decimalValue
+                let shielded = await (try? synchronizer.getShieldedBalance(accountIndex: 0).decimalValue.decimalValue) ?? 0
+                let shieldedVerified = await (try? synchronizer.getShieldedVerifiedBalance(accountIndex: 0).decimalValue.decimalValue) ?? 0
                 balanceSubject.onNext(BalanceData(
                         balance: shieldedVerified,
                         balanceLocked: shielded - shieldedVerified
@@ -296,6 +292,9 @@ class ZcashAdapter {
         switch event {
         case .foundTransactions(let transactions, let inRange):
             logger?.log(level: .debug, message: "found \(transactions.count) mined txs in range: \(inRange)")
+            transactions.forEach { overview in
+                logger?.log(level: .debug, message: "tx: \(overview.value.decimalValue.decimalString) : \(overview.fee?.decimalString()) : \(overview.raw?.hs.hex)")
+            }
             Task {
                 let newTxs = await transactionPool?.sync(transactions: transactions) ?? []
                 transactionRecordsSubject.onNext(newTxs.map {
@@ -449,6 +448,7 @@ class ZcashAdapter {
                         switch result {
                         case .finished:
                             App.shared.localStorage.zcashAlwaysPendingRewind = true
+                            self?.logger?.log(level: .debug, message: "rewind Successful")
                             completion?()
                         case let .failure(error):
                             self?.state = .notSynced(error: error)
@@ -553,7 +553,7 @@ extension ZcashAdapter: IAdapter {
             return
         }
 
-        guard address != nil else {         // else we need to try prepare library again
+        guard zAddress != nil else {         // else we need to try prepare library again
             logger?.log(level: .debug, message: "No address, try to prepare kit again!")
             prepare(seedData: seedData, viewingKeys: [viewingKey], walletBirthday: birthday)
             return
@@ -603,15 +603,14 @@ extension ZcashAdapter: IAdapter {
     }
 
     var debugInfo: String {
-        let tAddress = self.address?.transparentReceiver()?.stringEncoded ?? "No Info"
-        let zAddress = self.address?.saplingReceiver()?.stringEncoded ?? "No Info"
+        let zAddress = zAddress ?? "No Info"
         var balanceState = "No Balance Information yet"
 
         if let status = self.synchronizerState {
             balanceState = """
                            shielded balance
-                             total:  \(synchronizer.getShieldedBalance(accountIndex: 0).decimalValue.decimalValue)
-                           verified:  \(synchronizer.getShieldedVerifiedBalance(accountIndex: 0).decimalValue.decimalValue)
+                             total:  \(balanceData.balanceTotal.description)
+                           verified:  \(balanceData.balance)
                            transparent balance
                                 total: \(String(describing: status.transparentBalance.total))
                              verified: \(String(describing: status.transparentBalance.verified))
@@ -620,7 +619,6 @@ extension ZcashAdapter: IAdapter {
         return """
                ZcashAdapter
                z-address: \(String(describing: zAddress))
-               t-address: \(String(describing: tAddress))
                spendingKeys: \(spendingKey.description)
                balanceState: \(balanceState)
                """
@@ -697,7 +695,7 @@ extension ZcashAdapter: IDepositAdapter {
 
     var receiveAddress: String {
         // only first account
-        address?.saplingReceiver()?.stringEncoded ?? "n/a".localized
+        zAddress ?? "n/a".localized
     }
 
 }
@@ -709,7 +707,7 @@ extension ZcashAdapter: ISendZcashAdapter {
     }
 
     var availableBalance: Decimal {
-        max(0, synchronizer.getShieldedVerifiedBalance(accountIndex: 0).decimalValue.decimalValue - fee)
+        max(0, balanceData.balance - fee) //TODO: check
     }
 
     func validate(address: String) throws -> AddressType {
