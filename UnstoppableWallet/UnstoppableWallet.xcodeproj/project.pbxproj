@@ -9475,8 +9475,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/zcash/ZcashLightClientKit";
 			requirement = {
-				kind = exactVersion;
-				version = "0.20.1-beta";
+				kind = revision;
+				revision = 690b5aa67f67dfa414f1b4aea07a1bf11fa9687e;
 			};
 		};
 		D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */ = {
