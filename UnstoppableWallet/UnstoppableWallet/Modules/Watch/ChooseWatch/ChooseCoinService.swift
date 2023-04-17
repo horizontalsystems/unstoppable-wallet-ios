@@ -43,7 +43,7 @@ class ChooseCoinService {
                 case .derivation:
                     for purpose in key.purposes {
                         let coinSettings: CoinSettings = [.derivation: purpose.mnemonicDerivation.rawValue]
-                        items.append(.coin(uid: "\(index)", token: token, coinSettings: coinSettings))
+                        items.append(.coin(uid: "\(index)_\(purpose.mnemonicDerivation.rawValue)", token: token, coinSettings: coinSettings))
                     }
 
                 case .bitcoinCashCoinType:
