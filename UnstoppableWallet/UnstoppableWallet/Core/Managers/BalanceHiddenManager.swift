@@ -56,6 +56,10 @@ extension BalanceHiddenManager {
     func set(balanceAutoHide: Bool) {
         self.balanceAutoHide = balanceAutoHide
         localStorage.set(value: balanceAutoHide, for: keyBalanceAutoHide)
+
+        if balanceAutoHide {
+            set(balanceHidden: true)
+        }
     }
 
     func didEnterBackground() {
