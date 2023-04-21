@@ -47,59 +47,10 @@ class ZcashTransactionPool {
         return wrapped
     }
 
-    private func zcashTransactions(_ transactions: [ZcashTransaction.Sent]) async -> [ZcashTransactionWrapper] {
-        var wrapped = [ZcashTransactionWrapper]()
-        for tx in transactions {
-            if let tx = try? await transactionWithAdditional(tx: tx) {
-                wrapped.append(tx)
-            }
-        }
-        return wrapped
-    }
-
-    private func zcashTransactions(_ transactions: [ZcashTransaction.Received]) async -> [ZcashTransactionWrapper] {
-        var wrapped = [ZcashTransactionWrapper]()
-        for tx in transactions {
-            if let tx = try? await transactionWithAdditional(tx: tx) {
-                wrapped.append(tx)
-            }
-        }
-        return wrapped
-    }
-
     private func transactionWithAdditional(tx: ZcashTransaction.Overview) async throws -> ZcashTransactionWrapper? {
         let memos: [Memo] = (try? await synchronizer.getMemos(for: tx)) ?? []
         let recipients = await synchronizer.getRecipients(for: tx)
-        print("OVERVIEW TX: TXID: \(tx.id) \(tx.value.decimalString())")
-        memos.forEach { memo in
-            print("Found Memo: \(memo)")
-        }
-        recipients.forEach { recipient in
-            print("Found Recipient: \(recipient)")
-        }
         return ZcashTransactionWrapper(tx: tx, memo: memos.first, recipient: recipients.first)
-    }
-
-    private func transactionWithAdditional(tx: ZcashTransaction.Sent) async throws -> ZcashTransactionWrapper? {
-        let memos: [Memo] = (try? await synchronizer.getMemos(for: tx)) ?? []
-        let recipients = await synchronizer.getRecipients(for: tx)
-        print("OVERVIEW TX: TXID: \(tx.id) \(tx.value.decimalString())")
-        memos.forEach { memo in
-            print("Found Memo: \(memo)")
-        }
-        recipients.forEach { recipient in
-            print("Found Recipient: \(recipient)")
-        }
-        return ZcashTransactionWrapper(tx: tx, memo: memos.first, recipient: recipients.first)
-    }
-
-    private func transactionWithAdditional(tx: ZcashTransaction.Received) async throws -> ZcashTransactionWrapper? {
-        let memos: [Memo] = (try? await synchronizer.getMemos(for: tx)) ?? []
-        print("OVERVIEW TX: TXID: \(tx.id) \(tx.value.decimalString())")
-        memos.forEach { memo in
-            print("Found Memo: \(memo)")
-        }
-        return ZcashTransactionWrapper(tx: tx, memo: memos.first, recipient: nil)
     }
 
     @discardableResult private func sync(own: inout Set<ZcashTransactionWrapper>, incoming: [ZcashTransactionWrapper]) -> [ZcashTransactionWrapper] {
@@ -115,30 +66,9 @@ class ZcashTransactionPool {
     func initTransactions() async {
         let overviews = await synchronizer.clearedTransactions
         let pending = await synchronizer.pendingTransactions
-        let sent = await synchronizer.sentTransactions
-        let received = await synchronizer.receivedTransactions
-        print("Found | overviews: \(overviews.count) | pending: \(pending.count) | sent: \(sent.count) | received: \(received.count)")
 
         pendingTransactions = Set(zcashTransactions(pending))
         confirmedTransactions = Set(await zcashTransactions(overviews))
-
-        let sentWrapped = await zcashTransactions(sent)
-        let receivedWrapped = await zcashTransactions(received)
-
-        print("===> Overviews:")
-        confirmedTransactions.forEach { tx in
-            print("ID: \(tx.id ?? "N/A") | Value: \(tx.value) | Fee: \(tx.fee?.decimalString() ?? "N/A") | Recipient: \(tx.toAddress ?? "N/A")")
-        }
-
-        print("===> Sent:")
-        sentWrapped.forEach { tx in
-            print("ID: \(tx.id ?? "N/A") | Value: \(tx.value) | Fee: \(tx.fee?.decimalString() ?? "N/A") | Recipient: \(tx.toAddress ?? "N/A")")
-        }
-
-        print("===> received:")
-        receivedWrapped.forEach { tx in
-            print("ID: \(tx.id ?? "N/A") | Value: \(tx.value) | Fee: \(tx.fee?.decimalString() ?? "N/A") | Recipient: \(tx.toAddress ?? "N/A")")
-        }
     }
 
     func sync(transactions: [PendingTransactionEntity]) -> [ZcashTransactionWrapper] {
