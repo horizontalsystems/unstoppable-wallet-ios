@@ -21,6 +21,7 @@ enum AppError: Error {
 
     enum ZcashError: Error {
         case sendToSelf
+        case cantCreateKeys
         case noReceiveAddress
         case seedRequired
     }
@@ -59,7 +60,7 @@ extension AppError: LocalizedError {
             switch reason {
             case .sendToSelf: return "error.send.self_transfer".localized
             case .noReceiveAddress: return "send.error.invalid_address".localized
-            case .seedRequired: return "Seed Required"
+            case .seedRequired, .cantCreateKeys: return "Seed Required"
             }
         case .ethereum(let reason):
             switch reason {

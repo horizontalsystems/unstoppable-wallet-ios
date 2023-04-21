@@ -119,11 +119,11 @@ class MetadataMonitor {
         // Get the file URLs, to wait for them below.
         let urls = results.compactMap { item -> URL? in
             // check if file really changed in time because query returns 3 times same file
-            logger?.debug("=> MONITOR : url : \((item.value(forAttribute: NSMetadataItemURLKey) as? URL)?.path)")
+            logger?.debug("=> MONITOR : url : \((item.value(forAttribute: NSMetadataItemURLKey) as? URL)?.path ?? "N/A")")
             if let url = item.value(forAttribute: NSMetadataItemURLKey) as? URL {
-                logger?.debug("=> MONITOR : changeTime : \(item.value(forAttribute: NSMetadataItemFSContentChangeDateKey) as? Date)")
+                logger?.debug("=> MONITOR : changeTime : \(String(describing: item.value(forAttribute: NSMetadataItemFSContentChangeDateKey) as? Date))")
                 let changeTime = item.value(forAttribute: NSMetadataItemFSContentChangeDateKey) as? Date
-                logger?.debug("=> MONITOR : lastChangeTime : \(fileChangedTime[url])")
+                logger?.debug("=> MONITOR : lastChangeTime : \(String(describing: fileChangedTime[url]))")
                 if let changeTime,
                    let lastChangeTime = fileChangedTime[url],
                    changeTime == lastChangeTime {

@@ -10,6 +10,7 @@ import HsExtensions
 import Combine
 
 class ZcashAdapter {
+    private static let endPoint = "lightwalletd.electriccoin.co" //"mainnet.lightwalletd.com"
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.zcash-adapter", qos: .userInitiated)
 
     private let disposeBag = DisposeBag()
@@ -28,9 +29,9 @@ class ZcashAdapter {
     private let uniqueId: String
     private let seedData: [UInt8]
     private let birthday: BlockHeight
-    private let viewingKey: UnifiedFullViewingKey // this being a single account does not need to be an array
-    private let spendingKey: UnifiedSpendingKey
-    private let logger: HsToolKit.Logger?
+    private var viewingKey: UnifiedFullViewingKey? // this being a single account does not need to be an array
+    private var spendingKey: UnifiedSpendingKey?
+    private var logger: HsToolKit.Logger?
 
     private(set) var network: ZcashNetwork
     private(set) var fee: Decimal
@@ -86,7 +87,7 @@ class ZcashAdapter {
     }
 
     init(wallet: Wallet, restoreSettings: RestoreSettings) throws {
-        logger = /*App.shared.logger.scoped(with: "ZCashKit")*/HsToolKit.Logger(minLogLevel: .debug)//
+        logger = App.shared.logger.scoped(with: "ZCashKit") //HsToolKit.Logger(minLogLevel: .debug)
 
         guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
@@ -94,8 +95,6 @@ class ZcashAdapter {
 
         network = ZcashNetworkBuilder.network(for: .mainnet)
         fee = network.constants.defaultFee().decimalValue.decimalValue
-
-        let endPoint = "lightwalletd.electriccoin.co" //"mainnet.lightwalletd.com"
 
         token = wallet.token
         transactionSource = wallet.transactionSource
@@ -115,30 +114,8 @@ class ZcashAdapter {
 
         let seedData = [UInt8](seed)
         self.seedData = seedData
-        let derivationTool = DerivationTool(networkType: network.networkType)
 
-        guard let unifiedSpendingKey =  try? derivationTool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: 0),
-              let unifiedViewingKey = try? unifiedSpendingKey.deriveFullViewingKey() else {
-            throw AppError.ZcashError.noReceiveAddress
-        }
-
-        let initializer = Initializer(
-                cacheDbURL: nil,
-                fsBlockDbRoot: try ZcashAdapter.fsBlockDbRootURL(uniqueId: uniqueId, network: network),
-                dataDbURL: try ZcashAdapter.dataDbURL(uniqueId: uniqueId, network: network),
-                pendingDbURL: try ZcashAdapter.pendingDbURL(uniqueId: uniqueId, network: network),
-                endpoint: LightWalletEndpoint(address: endPoint, port: 9067, secure: true, streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000),
-                network: network,
-                spendParamsURL: try ZcashAdapter.spendParamsURL(uniqueId: uniqueId),
-                outputParamsURL: try ZcashAdapter.outputParamsURL(uniqueId: uniqueId),
-                saplingParamsSourceURL: SaplingParamsSourceURL.default,
-                alias: .custom(uniqueId),
-                logLevel: .error
-        )
-
-        spendingKey = unifiedSpendingKey
-        viewingKey = unifiedViewingKey
-
+        let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId)
         synchronizer = SDKSynchronizer(initializer: initializer)
 
         // subscribe on sync states
@@ -159,16 +136,27 @@ class ZcashAdapter {
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         subscribe(disposeBag, saplingDownloader.stateObservable) { [weak self] in self?.downloaderStatusUpdated(state: $0) }
 
-        prepare(seedData: seedData, viewingKeys: [unifiedViewingKey], walletBirthday: birthday)
+        prepare(initializer: initializer, seedData: seedData, walletBirthday: birthday)
     }
 
-    private func prepare(seedData: [UInt8]?, viewingKeys: [UnifiedFullViewingKey], walletBirthday: BlockHeight) {
+    private func prepare(initializer: Initializer, seedData: [UInt8], walletBirthday: BlockHeight) {
         preparing = true
         state = .preparing
 
         Task {
             do {
-                let result = try await synchronizer.prepare(with: seedData, viewingKeys: viewingKeys, walletBirthday: walletBirthday)
+                let tool = initializer.makeDerivationTool()
+                guard let unifiedSpendingKey = try? await tool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: 0),
+                      let unifiedViewingKey = try? await tool.deriveUnifiedFullViewingKey(from: unifiedSpendingKey) else {
+
+                    throw AppError.ZcashError.cantCreateKeys
+                }
+
+                spendingKey = unifiedSpendingKey
+                viewingKey = unifiedViewingKey
+
+
+                let result = try await synchronizer.prepare(with: seedData, viewingKeys: [unifiedViewingKey], walletBirthday: walletBirthday)
                 if case .seedRequired = result {
                     throw AppError.ZcashError.seedRequired
                 }
@@ -293,7 +281,7 @@ class ZcashAdapter {
         case .foundTransactions(let transactions, let inRange):
             logger?.log(level: .debug, message: "found \(transactions.count) mined txs in range: \(inRange)")
             transactions.forEach { overview in
-                logger?.log(level: .debug, message: "tx: \(overview.value.decimalValue.decimalString) : \(overview.fee?.decimalString()) : \(overview.raw?.hs.hex)")
+                logger?.log(level: .debug, message: "tx: v =\(overview.value.decimalValue.decimalString) : fee = \(overview.fee?.decimalString() ?? "N/A") : height = \(overview.minedHeight?.description ?? "N/A")")
             }
             Task {
                 let newTxs = await transactionPool?.sync(transactions: transactions) ?? []
@@ -302,7 +290,7 @@ class ZcashAdapter {
                 })
             }
         case .minedTransaction(let pendingEntity):
-            logger?.log(level: .debug, message: "found pending tx")
+            logger?.log(level: .debug, message: "found pending tx: v =\(pendingEntity.value.decimalValue.decimalString) : fee = \(pendingEntity.fee?.decimalString() ?? "N/A")")
             update(transactions: [pendingEntity])
         default:
             logger?.log(level: .debug, message: "Event: \(event)")
@@ -478,9 +466,9 @@ class ZcashAdapter {
 
     deinit {
         NotificationCenter.default.removeObserver(self)
-        Task {
-            await synchronizer.stop()
-            logger?.log(level: .debug, message: "Synchronizer Was Stopped")
+        Task { [weak self] in
+            await self?.synchronizer.stop()
+            self?.logger?.log(level: .debug, message: "Synchronizer Was Stopped")
         }
     }
 
@@ -489,6 +477,22 @@ class ZcashAdapter {
 extension ZcashAdapter {
     public static func newBirthdayHeight(network: ZcashNetwork) -> Int {
         BlockHeight.ofLatestCheckpoint(network: network)
+    }
+
+    static func initializer(network: ZcashNetwork, uniqueId: String) throws -> Initializer {
+        Initializer(
+                cacheDbURL: nil,
+                fsBlockDbRoot: try fsBlockDbRootURL(uniqueId: uniqueId, network: network),
+                dataDbURL: try dataDbURL(uniqueId: uniqueId, network: network),
+                pendingDbURL: try pendingDbURL(uniqueId: uniqueId, network: network),
+                endpoint: LightWalletEndpoint(address: endPoint, port: 9067, secure: true, streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000),
+                network: network,
+                spendParamsURL: try spendParamsURL(uniqueId: uniqueId),
+                outputParamsURL: try outputParamsURL(uniqueId: uniqueId),
+                saplingParamsSourceURL: SaplingParamsSourceURL.default,
+                alias: .custom(uniqueId),
+                logLevel: .error
+        )
     }
 
     private static func dataDirectoryUrl() throws -> URL {
@@ -553,9 +557,15 @@ extension ZcashAdapter: IAdapter {
             return
         }
 
-        guard zAddress != nil else {         // else we need to try prepare library again
+        if zAddress == nil {         // else we need to try prepare library again
             logger?.log(level: .debug, message: "No address, try to prepare kit again!")
-            prepare(seedData: seedData, viewingKeys: [viewingKey], walletBirthday: birthday)
+            do {
+                let initializer = try Self.initializer(network: network, uniqueId: uniqueId)
+                prepare(initializer: initializer, seedData: seedData, walletBirthday: birthday)
+            } catch {
+                logger?.log(level: .error, message: "Can't start adapter: \(error.localizedDescription)")
+            }
+
             return
         }
 
@@ -619,7 +629,7 @@ extension ZcashAdapter: IAdapter {
         return """
                ZcashAdapter
                z-address: \(String(describing: zAddress))
-               spendingKeys: \(spendingKey.description)
+               spendingKeys: \(spendingKey?.description ?? "N/A")
                balanceState: \(balanceState)
                """
     }
@@ -729,7 +739,10 @@ extension ZcashAdapter: ISendZcashAdapter {
     }
 
     func sendSingle(amount: Decimal, address: Recipient, memo: Memo?) -> Single<()> {
-        let spendingKey = spendingKey
+        guard let spendingKey else {
+            return .error(AppError.ZcashError.noReceiveAddress)
+        }
+
         return Single.create { [weak self] observer in
             guard let self else {
                 observer(.error(AppError.unknownError))
@@ -744,6 +757,7 @@ extension ZcashAdapter: ISendZcashAdapter {
                             memo: memo)
                     self.logger?.log(level: .debug, message: "Successful send TX: \(pendingEntity.createTime) : \(pendingEntity.value.decimalValue.description) : \(pendingEntity.recipient.asString ?? "") : \(pendingEntity.memo?.encodedString ?? "NoMemo")")
                     self.reSyncPending()
+                    observer(.success(()))
                 } catch {
                     observer(.error(error))
                 }
