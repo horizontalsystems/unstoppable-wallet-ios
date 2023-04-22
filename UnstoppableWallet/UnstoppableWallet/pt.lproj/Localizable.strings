@@ -434,8 +434,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.project_has_no_coin" = "Esse projeto não tem uma moeda";
 
 "market.top.section.header.see_all" = "Ver tudo";
-"market.top.section.header.top_gainers" = "Top ganhadores";
-"market.top.section.header.top_losers" = "Top Perdedores";
+"market.top.section.header.top_gainers" = "Maiores Altas";
+"market.top.section.header.top_losers" = "Maiores Baixas";
 "market.top.section.header.top_sectors" = "Principais Setores";
 "market.top.section.header.news" = "Notícias";
 "market.top.volume.title" = "Vol";
@@ -459,8 +459,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.top.lowest_cap" = "Menor capitalização";
 "market.top.highest_volume" = "Maior volume";
 "market.top.lowest_volume" = "Menor volume";
-"market.top.top_gainers" = "Top ganhadores";
-"market.top.top_losers" = "Top Perdedores";
+"market.top.top_gainers" = "Maiores Altas";
+"market.top.top_losers" = "Maiores Baixas";
 "market.top.top_collections" = "Principais Coleções NFT";
 "market.top.floor_price" = "Andar:";
 "market.top.top_platforms" = "Melhores Plataformas";
@@ -493,7 +493,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.advanced_search.network_parameters" = "Parâmetros de rede";
 "market.advanced_search.price_parameters" = "Parâmetros de preço";
 "market.advanced_search.choose_set" = "Escolha o Conjunto";
-"market.advanced_search.market_cap" = "Capitalização de mercado";
+"market.advanced_search.market_cap" = "Capitalização de Mercado";
 "market.advanced_search.volume" = "Volume de Operações";
 "market.advanced_search.liquidity" = "Liquidez DEX";
 "market.advanced_search.blockchains" = "Blockchains";
@@ -565,7 +565,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Coin Page -> Overview
 
-"coin_overview.market_cap" = "Capitalização de mercado";
+"coin_overview.market_cap" = "Capitalização de Mercado";
 "coin_overview.circulating_supply" = "Em Circulação";
 "coin_overview.total_supply" = "Fornecimento total";
 "coin_overview.diluted_market_cap" = "MCap Diludido";
@@ -961,7 +961,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "appearance.balance_value.coin_value" = "Valor da Moeda";
 "appearance.balance_value.fiat_value" = "Valor Fiat";
 
-"appearance.balance_auto_hide" = "Balance Auto Hide";
+"appearance.balance_auto_hide" = "Ocultar Saldo";
 
 // Settings -> Contacts
 
@@ -1054,13 +1054,13 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "chart.time_duration.year2" = "2A";
 "chart.time_duration.all" = "TODOS";
 
-"chart.market_cap" = "Capitalização de mercado";
+"chart.market_cap" = "Capitalização de Mercado";
 "chart.volume" = "Volume (24h)";
 "chart.circulation" = "Em Circulação";
 "chart.selected.volume" = "Volume";
 
 "chart.market.header" = "Mercado";
-"chart.market.market_cap" = "Capitalização de mercado";
+"chart.market.market_cap" = "Capitalização de Mercado";
 "chart.market.volume" = "Volume (24h)";
 "chart.market.circulation" = "Em Circulação";
 "chart.market.total_supply" = "Fornecimento total";
