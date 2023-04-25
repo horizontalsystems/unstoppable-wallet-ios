@@ -747,12 +747,12 @@
 "transactions.completed" = "Завершено";
 "transactions.failed" = "Не удалось";
 
-"transactions.receive" = "Получено";
-"transactions.send" = "Отправлено";
+"transactions.receive" = "Получить";
+"transactions.send" = "Отправить";
 "transactions.burn" = "Сжечь";
 "transactions.mint" = "Минт";
 "transactions.approve" = "Разрешить";
-"transactions.swap" = "Обмен";
+"transactions.swap" = "Обменять";
 "transactions.contract_call" = "Вызов контракта";
 "transactions.contract_creation" = "Создание контракта";
 "transactions.external_call" = "Внешний вызов";
@@ -872,7 +872,7 @@
 
 // Settings -> Blockchain Settings
 
-"blockchain_settings.title" = "Настройки";
+"blockchain_settings.title" = "Настройки блокчейна";
 
 // Settings -> Security
 
@@ -962,6 +962,8 @@
 "appearance.balance_value" = "Значение баланса";
 "appearance.balance_value.coin_value" = "Токен значение";
 "appearance.balance_value.fiat_value" = "Фиатное значение";
+
+"appearance.balance_auto_hide" = "Balance Auto Hide";
 
 // Settings -> Contacts
 
