@@ -960,6 +960,8 @@
 "appearance.balance_value.coin_value" = "Coin Value";
 "appearance.balance_value.fiat_value" = "Fiat Value";
 
+"appearance.balance_auto_hide" = "Balance Auto Hide";
+
 // Settings -> Contacts
 
 "contacts.title" = "Kontakte";
