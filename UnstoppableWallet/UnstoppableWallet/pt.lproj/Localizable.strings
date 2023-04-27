@@ -151,9 +151,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Extended Key
 
-"extended_key.bip32_root_key" = "BIP32 Root Key";
-"extended_key.account_extended_private_key" = "Account Extended Private Key";
-"extended_key.account_extended_public_key" = "Account Extended Public Key";
+"extended_key.bip32_root_key" = "Chave Raiz BIP32";
+"extended_key.account_extended_private_key" = "Chave Privada Estendida da Conta";
+"extended_key.account_extended_public_key" = "Chave Pública Estendida da Conta";
 "extended_key.purpose" = "Propósito";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "Conta";
@@ -268,7 +268,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "send.next_button" = "Próximo";
 "send.error.invalid" = "Inválido";
 "send.error.address" = "Endereço";
-"send.hodler_locktime" = "TimeLock";
+"send.hodler_locktime" = "TravaTempo";
 "send.hodler_locktime_hour" = "1 hora";
 "send.hodler_locktime_month" = "1 mês";
 "send.hodler_locktime_half_year" = "6 meses";
@@ -279,9 +279,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "send.fee_info.description" = "As Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são maiores quando um monte de transações ocorrem na rede.\n\n A carteira Unstoppable estima a taxa com base na atividade atual da blockchain e recomenda o valor ideal para que a transação seja processada dentro de um período razoável de tempo.\n\n A taxa recomendada é mostrada como a quantidade de satoshi que o usuário precisa pagar por um único byte da transação. Assim, a taxa total depende do tamanho total da transação que é medida em bytes.\n\nUsuários podem utilizar os controles fornecidos para aumentar ou diminuir o custo. A mudança altera a taxa total para a transação que o usuário irá pagar.\n\nDefinir a taxa abaixo do valor recomendado pode resultar em uma transação ser realizada como pendente por horas, ou ser rejeitada. Quanto menor o valor, mais tempo levará a transação para confirmar. Para as transações onde a prioridade é importante, recomendamos definir uma taxa mais alta.";
 "send.transaction_inputs_outputs_info.title" = "Entradas / Saídas de Transação";
 "send.transaction_inputs_outputs_info.description" = "A maioria das transações do Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira Unstoppable implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários Unstoppable:";
-"send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
+"send.transaction_inputs_outputs_info.shuffle.title" = "1. Embaralhar";
 "send.transaction_inputs_outputs_info.shuffle.description" = "A ordem das saídas da transação é aleatória em cada transação. Às vezes, a mudança pode ser a primeira saída, às vezes pode ser a segunda. Se um usuário confiar no desenvolvedor do aplicativo, considere essa uma opção recomendada.";
-"send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
+"send.transaction_inputs_outputs_info.deterministic.title" = "2. Determinístico";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Existe um padrão comumente aceitado para ordenar saídas de transações (conhecido como BIP69). Em carteiras de código aberto, esse padrão garante que os usuários de carteiras não precisem confiar em como os desenvolvedores do aplicativo implementam a ordem das saídas. Como esse padrão é novo, poucas carteiras o implementaram ainda. Como resultado, é possível ver no blockchain se uma transação foi enviada de uma carteira que usa esse padrão ou não.";
 
 "send.confirmation.you_send" = "Enviar";
@@ -317,7 +317,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "send.stuck_warning" = "Atenção! Risco de ficar preso";
 
-"send.lock_time" = "TimeLock";
+"send.lock_time" = "TravaTempo";
 
 "approve.confirmation.you_approve" = "Você concorda";
 "approve.confirmation.you_revoke" = "Você revoga";
@@ -845,11 +845,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "Os recursos abaixo são experimentais e devem ser usados com cautela. Enquanto nós testamos minuciosamente esses recursos usando nossos próprios fundos cripto, nós não podemos garantir que eles funcionarão como esperado em todos os casos possíveis.";
-"settings.experimental_features.bitcoin_hodling" = "TimeLock";
+"settings.experimental_features.bitcoin_hodling" = "TravaTempo";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "TimeLock";
+"settings.bitcoin_hodling.title" = "TravaTempo";
 "settings.bitcoin_hodling.lock_time" = "Ativar";
 "settings.bitcoin_hodling.description" = "Isso permite que você envie Bitcoins que não podem ser gastos até uma data especificada. \n\nO destinatário de tais transações deve usar o aplicativo de carteira Unstoppable versão 0.10 ou mais recente, com o formato de endereço BIP44 para Bitcoin. \n\nSomente a carteira Unstoppable pode identificar corretamente tais transações na rede Bitcoin, bem como permitir que o receptor gaste esses Bitcoins após o período de bloqueio expirar. \n\nSe você é um HOLDER, você pode usar este recurso para se forçar a manter seus Bitcoins enviando tais transações para si mesmo. \n\nSendo um recurso experimental, o valor máximo por transação é limitado a 0,5 BTC.";
 
@@ -1099,7 +1099,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Lock Info
 
-"lock_info.title" = "TimeLock";
+"lock_info.title" = "TravaTempo";
 "lock_info.text" = "O remetente enviou esses fundos com um fechamento de gastos que expirará na data mostrada. \n\nNão se preocupe, o Bitcoin recebido já é seu, mas até que o período de bloqueio expire, você não pode gastá-los na rede Bitcoin.";
 
 // Double Spend Info
@@ -1248,7 +1248,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "public_keys.title" = "Chaves públicas";
 "public_keys.evm_address" = "Endereço EVM";
 "public_keys.evm_address.description" = "Permite o monitoramento somente leitura de carteiras mantendo ativos na Ethereum, na Binance Smart Chain e em outras blockchains baseadas em EVM.";
-"public_keys.account_extended_public_key" = "Account Extended Public Key";
+"public_keys.account_extended_public_key" = "Chave Pública Estendida da Conta";
 "public_keys.account_extended_public_key.description" = "Permite monitoramento somente leitura das carteiras segurando Bitcoin e outras cripto baseadas em UTXO (ou seja, Litecoin, Bitcoin Cash, Dash etc.).";
 
 // Manage Account -> Private Keys
@@ -1256,9 +1256,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "private_keys.title" = "Chave Privada";
 "private_keys.evm_private_key" = "Chave Privada EVM";
 "private_keys.evm_private_key.description" = "Concede controle total sobre cripto baseado em EVM i.e Ethereum, Binance Smart Chain, etc. dentro da respectiva carteira.";
-"private_keys.bip32_root_key" = "BIP32 Root Key";
+"private_keys.bip32_root_key" = "Chave Raiz BIP32";
 "private_keys.bip32_root_key.description" = "Concede controle total sobre os ativos da respectiva carteira.";
-"private_keys.account_extended_private_key" = "Account Extended Private Key";
+"private_keys.account_extended_private_key" = "Chave Privada Estendida da Conta";
 "private_keys.account_extended_private_key.description" = "Concede controle total sobre Bitcoin e outras criptomoedas baseadas em UTXO, ou seja, Litecoin, Bitcoin Cash, Dash etc. dentro da respectiva carteira.";
 
 // Manage Account -> EVM Address
