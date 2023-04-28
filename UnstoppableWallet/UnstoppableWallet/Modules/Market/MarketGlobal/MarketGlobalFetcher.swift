@@ -1,4 +1,3 @@
-import RxSwift
 import Foundation
 import MarketKit
 import CurrencyKit
@@ -23,28 +22,26 @@ extension MarketGlobalFetcher: IMetricChartFetcher {
         .compactCurrencyValue(currencyKit.baseCurrency)
     }
 
-    func fetchSingle(interval: HsTimePeriod) -> RxSwift.Single<MetricChartModule.ItemData> {
-        marketKit
-                .globalMarketPointsSingle(currencyCode: currencyKit.baseCurrency.code, timePeriod: interval)
-                .map { [weak self] points in
-                    let items = points.map { point -> MetricChartModule.Item in
-                        let value: Decimal
-                        var indicators = [ChartIndicatorName: Decimal]()
+    func fetch(interval: HsTimePeriod) async throws -> MetricChartModule.ItemData {
+        let points = try await marketKit.globalMarketPoints(currencyCode: currencyKit.baseCurrency.code, timePeriod: interval)
 
-                        switch self?.metricsType {
-                        case .defiCap: value = point.defiMarketCap
-                        case .totalMarketCap:
-                            value = point.marketCap
-                            indicators[.dominance] = point.btcDominance
-                        case .tvlInDefi: value = point.tvl
-                        case .none, .volume24h: value = point.volume24h
-                        }
+        let items = points.map { point -> MetricChartModule.Item in
+            let value: Decimal
+            var indicators = [ChartIndicatorName: Decimal]()
 
-                        return MetricChartModule.Item(value: value, indicators: indicators, timestamp: point.timestamp)
-                    }
+            switch metricsType {
+            case .defiCap: value = point.defiMarketCap
+            case .totalMarketCap:
+                value = point.marketCap
+                indicators[.dominance] = point.btcDominance
+            case .tvlInDefi: value = point.tvl
+            case .volume24h: value = point.volume24h
+            }
 
-                    return MetricChartModule.ItemData(items: items, type: .regular)
-                }
+            return MetricChartModule.Item(value: value, indicators: indicators, timestamp: point.timestamp)
+        }
+
+        return MetricChartModule.ItemData(items: items, type: .regular)
     }
 
 }

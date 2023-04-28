@@ -1,5 +1,5 @@
+import Combine
 import UIKit
-import RxSwift
 import Chart
 import LanguageKit
 import MarketKit
@@ -8,8 +8,8 @@ import CurrencyKit
 protocol IMetricChartFetcher {
     var valueType: MetricChartModule.ValueType { get }
     var intervals: [HsTimePeriod] { get }
-    var needUpdateObservable: Observable<()> { get }
-    func fetchSingle(interval: HsTimePeriod) -> Single<MetricChartModule.ItemData>
+    var needUpdatePublisher: AnyPublisher<Void, Never> { get }
+    func fetch(interval: HsTimePeriod) async throws -> MetricChartModule.ItemData
 }
 
 extension IMetricChartFetcher {
@@ -18,8 +18,8 @@ extension IMetricChartFetcher {
         [.day1, .week1, .week2, .month1, .month3, .month6, .year1]
     }
 
-    var needUpdateObservable: Observable<()> {
-        Observable.just(())
+    var needUpdatePublisher: AnyPublisher<Void, Never> {
+        Empty().eraseToAnyPublisher()
     }
 
 }

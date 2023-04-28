@@ -1,5 +1,4 @@
 import Foundation
-import RxSwift
 import HsToolKit
 import ObjectMapper
 import Alamofire
@@ -16,7 +15,7 @@ class TweetsProvider {
         self.bearerToken = bearerToken
     }
 
-    func userRequestSingle(username: String) -> Single<TwitterUser?> {
+    func userRequest(username: String) async throws -> TwitterUser? {
         let parameters: Parameters = [
             "usernames": username,
             "user.fields": "profile_image_url"
@@ -24,14 +23,11 @@ class TweetsProvider {
 
         let headers = bearerToken.map { HTTPHeaders([HTTPHeader.authorization(bearerToken: $0)]) }
 
-        return networkManager
-                .single(url: "\(baseUrl)/users/by", method: .get, parameters: parameters, headers: headers)
-                .map { (usersResponse: TwitterUsersResponse) -> TwitterUser? in
-                    usersResponse.users.first
-                }
+        let usersResponse: TwitterUsersResponse = try await networkManager.fetch(url: "\(baseUrl)/users/by", method: .get, parameters: parameters, headers: headers)
+        return usersResponse.users.first
     }
 
-    func tweetsSingle(user: TwitterUser, paginationToken: String? = nil, sinceId: String? = nil) -> Single<TweetsPage> {
+    func tweets(user: TwitterUser, paginationToken: String? = nil, sinceId: String? = nil) async throws -> TweetsPage {
         var parameters: Parameters = [
             "max_results": 50,
             "expansions": "attachments.poll_ids,attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id",
@@ -50,11 +46,8 @@ class TweetsProvider {
 
         let headers = bearerToken.map { HTTPHeaders([HTTPHeader.authorization(bearerToken: $0)]) }
 
-        return networkManager
-                .single(url: "\(baseUrl)/users/\(user.id)/tweets", method: .get, parameters: parameters, headers: headers)
-                .map { (tweetsResponse: TweetsPageResponse) -> TweetsPage in
-                    (tweets: tweetsResponse.tweets(user: user), nextToken: tweetsResponse.nextToken)
-                }
+        let tweetsResponse: TweetsPageResponse = try await networkManager.fetch(url: "\(baseUrl)/users/\(user.id)/tweets", method: .get, parameters: parameters, headers: headers)
+        return (tweets: tweetsResponse.tweets(user: user), nextToken: tweetsResponse.nextToken)
     }
 
 }

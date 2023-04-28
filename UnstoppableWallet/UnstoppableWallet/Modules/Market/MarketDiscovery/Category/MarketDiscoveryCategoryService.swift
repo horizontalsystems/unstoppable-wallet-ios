@@ -4,23 +4,19 @@ import RxRelay
 import MarketKit
 import CurrencyKit
 import HsToolKit
+import HsExtensions
 
 class MarketDiscoveryCategoryService: IMarketSingleSortHeaderService {
     private static let allowedTimePeriods: [HsTimePeriod] = [.day1, .week1, .month1]
     private let reachabilityDisposeBag = DisposeBag()
-    private var disposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
 
     private var categories = [CoinCategory]()
 
-    private let stateRelay = PublishRelay<State>()
-    private(set) var state: State = .loading {
-        didSet {
-            stateRelay.accept(state)
-        }
-    }
+    @PostPublished private(set) var state: State = .loading
 
     public var currency: Currency {
         currencyKit.baseCurrency
@@ -76,20 +72,19 @@ class MarketDiscoveryCategoryService: IMarketSingleSortHeaderService {
 
     private func sync() {
         if categories.isEmpty {
-            self.state = .loading
+            state = .loading
         }
 
-        disposeBag = DisposeBag()
+        tasks = Set()
 
-        marketKit.coinCategoriesSingle(currencyCode: currencyKit.baseCurrency.code)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] categories in
-                    self?.sync(categories: categories)
-                }, onError: { error in
-                    self.sync(error: error)
-                })
-                .disposed(by: disposeBag)
+        Task { [weak self, marketKit, currencyKit] in
+            do {
+                let categories = try await marketKit.coinCategories(currencyCode: currencyKit.baseCurrency.code)
+                self?.sync(categories: categories)
+            } catch {
+                self?.sync(error: error)
+            }
+        }.store(in: &tasks)
     }
 
     private func sync(categories: [CoinCategory]) {
@@ -125,10 +120,6 @@ class MarketDiscoveryCategoryService: IMarketSingleSortHeaderService {
 }
 
 extension MarketDiscoveryCategoryService {
-
-    var stateObservable: Observable<State> {
-        stateRelay.asObservable()
-    }
 
     func refresh() {
         if state.isEmpty {

@@ -1,4 +1,3 @@
-import RxSwift
 import MarketKit
 import LanguageKit
 
@@ -25,8 +24,8 @@ extension MarketCategoryService {
 
 extension MarketCategoryService: IMarketFilteredListProvider {
 
-    func marketInfoSingle(currencyCode: String) -> Single<[MarketInfo]> {
-        marketKit.marketInfosSingle(categoryUid: category.uid, currencyCode: currencyCode)
+    func marketInfo(currencyCode: String) async throws -> [MarketInfo] {
+        try await marketKit.marketInfos(categoryUid: category.uid, currencyCode: currencyCode)
     }
 
 }

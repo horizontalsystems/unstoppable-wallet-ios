@@ -1,21 +1,15 @@
 import Foundation
 import MarketKit
-import RxSwift
-import RxRelay
 import CurrencyKit
+import HsExtensions
 
 class CoinMarketsService: IMarketSingleSortHeaderService {
     private let coin: Coin
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
-    private var disposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
-    private let stateRelay = PublishRelay<State>()
-    private(set) var state: State = .loading {
-        didSet {
-            stateRelay.accept(state)
-        }
-    }
+    @PostPublished private(set) var state: State = .loading
 
     var sortDirectionAscending: Bool = false {
         didSet {
@@ -30,20 +24,20 @@ class CoinMarketsService: IMarketSingleSortHeaderService {
     }
 
     private func syncTickers() {
-        disposeBag = DisposeBag()
+        tasks = Set()
 
         if case .failed = state {
             state = .loading
         }
 
-        marketKit.marketTickersSingle(coinUid: coin.uid)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] tickers in
-                    self?.sync(tickers: tickers)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error: error)
-                })
-                .disposed(by: disposeBag)
+        Task { [weak self, marketKit, coin] in
+            do {
+                let tickers = try await marketKit.marketTickers(coinUid: coin.uid)
+                self?.sync(tickers: tickers)
+            } catch {
+                self?.state = .failed(error: error)
+            }
+        }.store(in: &tasks)
     }
 
     private func sync(tickers: [MarketTicker], reorder: Bool = false) {
@@ -65,10 +59,6 @@ class CoinMarketsService: IMarketSingleSortHeaderService {
 }
 
 extension CoinMarketsService {
-
-    var stateObservable: Observable<State> {
-        stateRelay.asObservable()
-    }
 
     var currency: Currency {
         currencyKit.baseCurrency

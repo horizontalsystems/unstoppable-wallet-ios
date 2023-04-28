@@ -1,4 +1,3 @@
-import RxSwift
 import MarketKit
 import CurrencyKit
 
@@ -25,16 +24,14 @@ extension TopPlatformMarketCapFetcher: IMetricChartFetcher {
         [.day1, .week1, .month1]
     }
 
-    func fetchSingle(interval: HsTimePeriod) -> RxSwift.Single<MetricChartModule.ItemData> {
-        marketKit
-                .topPlatformMarketCapChartSingle(platform: topPlatform.blockchain.uid, currencyCode: currencyKit.baseCurrency.code, timePeriod: interval)
-                .map { points in
-                    let items = points.map { point -> MetricChartModule.Item in
-                        MetricChartModule.Item(value: point.marketCap, timestamp: point.timestamp)
-                    }
+    func fetch(interval: HsTimePeriod) async throws -> MetricChartModule.ItemData {
+        let points = try await marketKit.topPlatformMarketCapChart(platform: topPlatform.blockchain.uid, currencyCode: currencyKit.baseCurrency.code, timePeriod: interval)
 
-                    return MetricChartModule.ItemData(items: items, type: .regular)
-                }
+        let items = points.map { point -> MetricChartModule.Item in
+            MetricChartModule.Item(value: point.marketCap, timestamp: point.timestamp)
+        }
+
+        return MetricChartModule.ItemData(items: items, type: .regular)
     }
 
 }

@@ -1,8 +1,8 @@
 import Foundation
-import RxSwift
-import RxRelay
+import Combine
 import MarketKit
 import CurrencyKit
+import HsExtensions
 
 class MarketGlobalTvlMetricService {
     typealias Item = DefiCoin
@@ -10,8 +10,8 @@ class MarketGlobalTvlMetricService {
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
 
-    private var syncDisposeBag = DisposeBag()
-    private var chartDisposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
+    private var cancellables = Set<AnyCancellable>()
 
     weak var chartService: MetricChartService? {
         didSet {
@@ -25,12 +25,7 @@ class MarketGlobalTvlMetricService {
         }
     }
 
-    private let stateRelay = PublishRelay<MarketListServiceState<DefiCoin>>()
-    private(set) var state: MarketListServiceState<DefiCoin> = .loading {
-        didSet {
-            stateRelay.accept(state)
-        }
-    }
+    @PostPublished private(set) var state: MarketListServiceState<DefiCoin> = .loading
 
     var sortDirectionAscending: Bool = false {
         didSet {
@@ -38,10 +33,8 @@ class MarketGlobalTvlMetricService {
         }
     }
 
-    private let marketPlatformRelay = PublishRelay<MarketModule.MarketPlatformField>()
-    var marketPlatformField: MarketModule.MarketPlatformField = .all {
+    @PostPublished var marketPlatformField: MarketModule.MarketPlatformField = .all {
         didSet {
-            marketPlatformRelay.accept(marketPlatformField)
             syncIfPossible(reorder: true)
         }
     }
@@ -66,20 +59,20 @@ class MarketGlobalTvlMetricService {
     }
 
     private func syncDefiCoins() {
-        syncDisposeBag = DisposeBag()
+        tasks = Set()
 
         if case .failed = state {
             internalState = .loading
         }
 
-        marketKit.defiCoinsSingle(currencyCode: currency.code)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] defiCoins in
-                    self?.internalState = .loaded(defiCoins: defiCoins)
-                }, onError: { [weak self] error in
-                    self?.internalState = .failed(error: error)
-                })
-                .disposed(by: syncDisposeBag)
+        Task { [weak self, marketKit, currency] in
+            do {
+                let defiCoins = try await marketKit.defiCoins(currencyCode: currency.code)
+                self?.internalState = .loaded(defiCoins: defiCoins)
+            } catch {
+                self?.internalState = .failed(error: error)
+            }
+        }.store(in: &tasks)
     }
 
     private func syncState(reorder: Bool = false) {
@@ -114,12 +107,15 @@ class MarketGlobalTvlMetricService {
     }
 
     private func subscribeChart() {
-        chartDisposeBag = DisposeBag()
+        cancellables = Set()
+
         guard let chartService = chartService else {
             return
         }
 
-        subscribe(chartDisposeBag, chartService.intervalObservable) { [weak self] in self?.priceChangePeriod = $0 }
+        chartService.$interval
+                .sink { [weak self] in self?.priceChangePeriod = $0 }
+                .store(in: &cancellables)
     }
 
 }
@@ -132,18 +128,10 @@ extension MarketGlobalTvlMetricService {
 
 }
 
-extension MarketGlobalTvlMetricService {
-
-    var marketPlatformObservable: Observable<MarketModule.MarketPlatformField> {
-        marketPlatformRelay.asObservable()
-    }
-
-}
-
 extension MarketGlobalTvlMetricService: IMarketListService {
 
-    var stateObservable: Observable<MarketListServiceState<DefiCoin>> {
-        stateRelay.asObservable()
+    var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> {
+        $state
     }
 
     func refresh() {

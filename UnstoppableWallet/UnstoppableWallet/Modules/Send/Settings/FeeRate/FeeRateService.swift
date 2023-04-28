@@ -1,9 +1,10 @@
 import RxSwift
 import RxRelay
 import RxCocoa
+import HsExtensions
 
 class FeeRateService {
-    private var disposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
     private let provider: IFeeRateProvider
 
@@ -48,22 +49,21 @@ extension FeeRateService {
     }
 
     func setRecommendedFeeRate() {
-        disposeBag = DisposeBag()
+        tasks = Set()
 
         status = .loading
 
-        provider.recommendedFeeRate
-                .subscribe(
-                        onSuccess: { [weak self] feeRate in
-                            self?.recommendedFeeRate = feeRate
-                            self?.feeRate = feeRate
-                            self?.usingRecommended = true
-                        },
-                        onError: { [weak self] error in
-                            self?.status = .failed(error)
-                        }
-                )
-                .disposed(by: disposeBag)
+        Task { [weak self, provider] in
+            do {
+                let feeRate = try await provider.recommendedFeeRate()
+
+                self?.recommendedFeeRate = feeRate
+                self?.feeRate = feeRate
+                self?.usingRecommended = true
+            } catch {
+                self?.status = .failed(error)
+            }
+        }.store(in: &tasks)
     }
 
 }

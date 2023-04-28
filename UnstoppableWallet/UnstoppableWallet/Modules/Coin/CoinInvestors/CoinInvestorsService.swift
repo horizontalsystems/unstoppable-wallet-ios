@@ -2,19 +2,15 @@ import RxSwift
 import RxRelay
 import MarketKit
 import CurrencyKit
+import HsExtensions
 
 class CoinInvestorsService {
     private let coinUid: String
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
-    private var disposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
-    private let stateRelay = PublishRelay<DataStatus<[CoinInvestment]>>()
-    private(set) var state: DataStatus<[CoinInvestment]> = .loading {
-        didSet {
-            stateRelay.accept(state)
-        }
-    }
+    @PostPublished private(set) var state: DataStatus<[CoinInvestment]> = .loading
 
     init(coinUid: String, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
         self.coinUid = coinUid
@@ -25,27 +21,23 @@ class CoinInvestorsService {
     }
 
     private func sync() {
-        disposeBag = DisposeBag()
+        tasks = Set()
 
         state = .loading
 
-        marketKit.investmentsSingle(coinUid: coinUid)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] investments in
-                    self?.state = .completed(investments)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error)
-                })
-                .disposed(by: disposeBag)
+        Task { [weak self, marketKit, coinUid] in
+            do {
+                let investments = try await marketKit.investments(coinUid: coinUid)
+                self?.state = .completed(investments)
+            } catch {
+                self?.state = .failed(error)
+            }
+        }.store(in: &tasks)
     }
 
 }
 
 extension CoinInvestorsService {
-
-    var stateObservable: Observable<DataStatus<[CoinInvestment]>> {
-        stateRelay.asObservable()
-    }
 
     var usdCurrency: Currency {
         let currencies = currencyKit.currencies

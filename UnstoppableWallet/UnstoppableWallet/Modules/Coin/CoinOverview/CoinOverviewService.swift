@@ -4,9 +4,10 @@ import RxCocoa
 import MarketKit
 import CurrencyKit
 import LanguageKit
+import HsExtensions
 
 class CoinOverviewService {
-    private var disposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
     private let coinUid: String
     private let marketKit: MarketKit.Kit
@@ -128,18 +129,18 @@ extension CoinOverviewService {
     }
 
     func sync() {
-        disposeBag = DisposeBag()
+        tasks = Set()
 
         state = .loading
 
-        marketKit.marketInfoOverviewSingle(coinUid: coinUid, currencyCode: currencyKit.baseCurrency.code, languageCode: languageManager.currentLanguage)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onSuccess: { [weak self] info in
-                    self?.sync(info: info)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error)
-                })
-                .disposed(by: disposeBag)
+        Task { [weak self, marketKit, coinUid, currencyKit, languageManager] in
+            do {
+                let info = try await marketKit.marketInfoOverview(coinUid: coinUid, currencyCode: currencyKit.baseCurrency.code, languageCode: languageManager.currentLanguage)
+                self?.sync(info: info)
+            } catch {
+                self?.state = .failed(error)
+            }
+        }.store(in: &tasks)
     }
 
     func addToWallet(index: Int) throws {

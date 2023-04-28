@@ -4,13 +4,14 @@ import UniswapKit
 import RxSwift
 import RxRelay
 import MarketKit
+import HsExtensions
 
 class UniswapTradeService {
     private static let timerFramePerSecond = 30
 
     private var disposeBag = DisposeBag()
     private var refreshTimerDisposeBag = DisposeBag()
-    private var swapDataDisposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
     private static let warningPriceImpact: Decimal = 1
     private static let forbiddenPriceImpact: Decimal = 5
@@ -130,25 +131,25 @@ class UniswapTradeService {
             return
         }
 
-        swapDataDisposeBag = DisposeBag()
+        tasks = Set()
         syncTimer()
 
 //        if swapData == nil {
             state = .loading
 //        }
 
-        uniswapProvider
-                .swapDataSingle(tokenIn: tokenIn, tokenOut: tokenOut)
-                .subscribe(onSuccess: { [weak self] swapData in
-                    self?.swapData = swapData
-                    _ = self?.syncTradeData()
-                }, onError: { [weak self] error in
-                    self?.state = .notReady(errors: [error])
-                })
-                .disposed(by: swapDataDisposeBag)
+        Task { [weak self, uniswapProvider] in
+            do {
+                let swapData = try await uniswapProvider.swapData(tokenIn: tokenIn, tokenOut: tokenOut)
+                self?.swapData = swapData
+                self?.syncTradeData()
+            } catch {
+                self?.state = .notReady(errors: [error])
+            }
+        }.store(in: &tasks)
     }
 
-    private func syncTradeData() -> Bool {
+    @discardableResult private func syncTradeData() -> Bool {
         guard let swapData = swapData else {
             return false
         }

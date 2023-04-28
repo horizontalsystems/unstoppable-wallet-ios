@@ -1,7 +1,9 @@
+import Combine
 import RxSwift
 import RxRelay
 import MarketKit
 import CurrencyKit
+import HsExtensions
 
 class MarketGlobalDefiMetricService: IMarketSingleSortHeaderService {
     typealias Item = DefiItem
@@ -9,14 +11,10 @@ class MarketGlobalDefiMetricService: IMarketSingleSortHeaderService {
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private let disposeBag = DisposeBag()
-    private var syncDisposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
-    private let stateRelay = PublishRelay<MarketListServiceState<DefiItem>>()
-    private(set) var state: MarketListServiceState<DefiItem> = .loading {
-        didSet {
-            stateRelay.accept(state)
-        }
-    }
+    @PostPublished private(set) var state: MarketListServiceState<DefiItem> = .loading
+
     var sortDirectionAscending: Bool = false {
         didSet {
             syncIfPossible()
@@ -33,23 +31,25 @@ class MarketGlobalDefiMetricService: IMarketSingleSortHeaderService {
     }
 
     private func syncMarketInfos() {
-        syncDisposeBag = DisposeBag()
+        tasks = Set()
 
         if case .failed = state {
             state = .loading
         }
 
-        marketKit.marketInfosSingle(top: MarketModule.MarketTop.top100.rawValue, currencyCode: currency.code, defi: true)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] marketInfos in
-                    let rankedItems = marketInfos.enumerated().map { index, info in
-                        Item(marketInfo: info, tvlRank: index + 1)
-                    }
-                    self?.sync(items: rankedItems)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error: error)
-                })
-                .disposed(by: syncDisposeBag)
+        Task { [weak self, marketKit, currency] in
+            do {
+                let marketInfos = try await marketKit.marketInfos(top: MarketModule.MarketTop.top100.rawValue, currencyCode: currency.code, defi: true)
+
+                let rankedItems = marketInfos.enumerated().map { index, info in
+                    Item(marketInfo: info, tvlRank: index + 1)
+                }
+
+                self?.sync(items: rankedItems)
+            } catch {
+                self?.state = .failed(error: error)
+            }
+        }.store(in: &tasks)
     }
 
     private func sync(items: [Item], reorder: Bool = false) {
@@ -78,8 +78,8 @@ class MarketGlobalDefiMetricService: IMarketSingleSortHeaderService {
 
 extension MarketGlobalDefiMetricService: IMarketListService {
 
-    var stateObservable: Observable<MarketListServiceState<DefiItem>> {
-        stateRelay.asObservable()
+    var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> {
+        $state
     }
 
     func refresh() {
@@ -112,7 +112,7 @@ extension MarketGlobalDefiMetricService: IMarketListDecoratorService {
 
     func onUpdate(marketFieldIndex: Int) {
         if case .loaded(let items, _, _) = state {
-            stateRelay.accept(.loaded(items: items, softUpdate: false, reorder: false))
+            state = .loaded(items: items, softUpdate: false, reorder: false)
         }
     }
 

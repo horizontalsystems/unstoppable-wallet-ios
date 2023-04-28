@@ -1,8 +1,10 @@
 import Foundation
+import Combine
 import RxSwift
 import RxRelay
 import CurrencyKit
 import MarketKit
+import HsExtensions
 
 class MarketTopPlatformsService {
     typealias Item = TopPlatform
@@ -10,19 +12,14 @@ class MarketTopPlatformsService {
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private var disposeBag = DisposeBag()
-    private var syncDisposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
     var sortType: MarketTopPlatformsModule.SortType = .highestCap { didSet { syncIfPossible() } }
     var timePeriod: MarketKit.HsTimePeriod { didSet { syncIfPossible() } }
 
     private var internalState: MarketListServiceState<TopPlatform> = .loading
 
-    private let stateRelay = BehaviorRelay<MarketListServiceState<TopPlatform>>(value: .loading)
-    private(set) var state: MarketListServiceState<TopPlatform> = .loading {
-        didSet {
-            stateRelay.accept(state)
-        }
-    }
+    @PostPublished private(set) var state: MarketListServiceState<TopPlatform> = .loading
 
     init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, appManager: IAppManager, timePeriod: HsTimePeriod) {
         self.marketKit = marketKit
@@ -36,21 +33,21 @@ class MarketTopPlatformsService {
     }
 
     private func sync() {
-        syncDisposeBag = DisposeBag()
+        tasks = Set()
 
-        if case .failed = stateRelay.value {
+        if case .failed = state {
             internalState = .loading
         }
 
-        marketKit.topPlatformsSingle(currencyCode: currency.code)
-                .subscribe(onSuccess: { [weak self] topPlatforms in
-                    self?.internalState = .loaded(items: topPlatforms, softUpdate: false, reorder: false)
-
-                    self?.sync(topPlatforms: topPlatforms)
-                }, onError: { [weak self] error in
-                    self?.internalState = .failed(error: error)
-                })
-                .disposed(by: syncDisposeBag)
+        Task { [weak self, marketKit, currency] in
+            do {
+                let topPlatforms = try await marketKit.topPlatforms(currencyCode: currency.code)
+                self?.internalState = .loaded(items: topPlatforms, softUpdate: false, reorder: false)
+                self?.sync(topPlatforms: topPlatforms)
+            } catch {
+                self?.internalState = .failed(error: error)
+            }
+        }.store(in: &tasks)
     }
 
     private func sync(topPlatforms: [TopPlatform], reorder: Bool = false) {
@@ -84,8 +81,8 @@ extension MarketTopPlatformsService {
 
 extension MarketTopPlatformsService: IMarketListService {
 
-    var stateObservable: Observable<MarketListServiceState<TopPlatform>> {
-        stateRelay.asObservable()
+    var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> {
+        $state
     }
 
     func refresh() {

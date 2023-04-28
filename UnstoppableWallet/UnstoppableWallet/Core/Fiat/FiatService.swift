@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import CurrencyKit
 import RxSwift
 import RxRelay
@@ -6,7 +7,7 @@ import MarketKit
 
 class FiatService {
     private var disposeBag = DisposeBag()
-    private var coinPriceDisposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.fiat-service", qos: .userInitiated)
 
     private let switchService: AmountTypeSwitchService
@@ -146,18 +147,17 @@ extension FiatService {
     func set(token: Token?) {
         self.token = token
 
-        coinPriceDisposeBag = DisposeBag()
+        cancellables = Set()
 
         if let token = token {
             sync(coinPrice: marketKit.coinPrice(coinUid: token.coin.uid, currencyCode: currency.code))
 
             if !token.isCustom {
-                marketKit.coinPriceObservable(coinUid: token.coin.uid, currencyCode: currency.code)
-                        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                        .subscribe(onNext: { [weak self] coinPrice in
+                marketKit.coinPricePublisher(coinUid: token.coin.uid, currencyCode: currency.code)
+                        .sink { [weak self] coinPrice in
                             self?.sync(coinPrice: coinPrice)
-                        })
-                        .disposed(by: coinPriceDisposeBag)
+                        }
+                        .store(in: &cancellables)
             }
         } else {
             price = nil
