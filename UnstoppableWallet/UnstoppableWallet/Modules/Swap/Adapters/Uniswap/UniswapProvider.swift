@@ -1,7 +1,6 @@
-import UniswapKit
-import RxSwift
-import EvmKit
 import Foundation
+import UniswapKit
+import EvmKit
 import MarketKit
 
 class UniswapProvider {
@@ -31,15 +30,11 @@ extension UniswapProvider {
         swapKit.etherToken.address
     }
 
-    func swapDataSingle(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Single<SwapData> {
-        do {
-            let uniswapTokenIn = try uniswapToken(token: tokenIn)
-            let uniswapTokenOut = try uniswapToken(token: tokenOut)
+    func swapData(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) async throws -> SwapData {
+        let uniswapTokenIn = try uniswapToken(token: tokenIn)
+        let uniswapTokenOut = try uniswapToken(token: tokenOut)
 
-            return swapKit.swapDataSingle(tokenIn: uniswapTokenIn, tokenOut: uniswapTokenOut)
-        } catch {
-            return Single.error(error)
-        }
+        return try await swapKit.swapData(tokenIn: uniswapTokenIn, tokenOut: uniswapTokenOut)
     }
 
     func tradeData(swapData: SwapData, amount: Decimal, tradeType: TradeType, tradeOptions: TradeOptions) throws -> TradeData {

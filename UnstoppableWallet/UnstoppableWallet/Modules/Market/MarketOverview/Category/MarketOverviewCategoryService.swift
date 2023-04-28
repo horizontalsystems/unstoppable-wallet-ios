@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import RxSwift
 import RxRelay
 import CurrencyKit
@@ -6,7 +7,7 @@ import MarketKit
 
 class MarketOverviewCategoryService {
     private let baseService: MarketOverviewService
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let categoriesRelay = PublishRelay<[CoinCategory]?>()
     private(set) var categories: [CoinCategory]? {
@@ -18,7 +19,9 @@ class MarketOverviewCategoryService {
     init(baseService: MarketOverviewService) {
         self.baseService = baseService
 
-        subscribe(disposeBag, baseService.stateObservable) { [weak self] in self?.sync(state: $0) }
+        baseService.$state
+                .sink { [weak self] in self?.sync(state: $0) }
+                .store(in: &cancellables)
 
         sync()
     }

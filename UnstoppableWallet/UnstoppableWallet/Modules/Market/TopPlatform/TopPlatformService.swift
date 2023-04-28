@@ -1,4 +1,3 @@
-import RxSwift
 import MarketKit
 
 class TopPlatformService {
@@ -14,8 +13,8 @@ class TopPlatformService {
 
 extension TopPlatformService: IMarketFilteredListProvider {
 
-    func marketInfoSingle(currencyCode: String) -> Single<[MarketInfo]> {
-        marketKit.topPlatformMarketInfosSingle(blockchain: topPlatform.blockchain.uid, currencyCode: currencyCode)
+    func marketInfo(currencyCode: String) async throws -> [MarketInfo] {
+        try await marketKit.topPlatformMarketInfos(blockchain: topPlatform.blockchain.uid, currencyCode: currencyCode)
     }
 
 }

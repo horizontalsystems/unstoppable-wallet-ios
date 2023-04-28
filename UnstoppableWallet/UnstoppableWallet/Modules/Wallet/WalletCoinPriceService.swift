@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import RxSwift
 import RxRelay
 import CurrencyKit
@@ -15,7 +16,7 @@ class WalletCoinPriceService {
     private let currencyKit: CurrencyKit.Kit
     private let marketKit: MarketKit.Kit
     private let disposeBag = DisposeBag()
-    private var coinPriceDisposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private(set) var currency: Currency
     private var coinUids = Set<String>()
@@ -38,11 +39,13 @@ class WalletCoinPriceService {
     }
 
     private func subscribeToCoinPrices() {
-        coinPriceDisposeBag = DisposeBag()
+        cancellables = Set()
 
-        subscribe(coinPriceDisposeBag, marketKit.coinPriceMapObservable(coinUids: Array(coinUids), currencyCode: currencyKit.baseCurrency.code)) { [weak self] in
-            self?.onUpdate(coinPriceMap: $0)
-        }
+        marketKit.coinPriceMapPublisher(coinUids: Array(coinUids), currencyCode: currencyKit.baseCurrency.code)
+                .sink { [weak self] in
+                    self?.onUpdate(coinPriceMap: $0)
+                }
+                .store(in: &cancellables)
     }
 
     private func onUpdate(coinPriceMap: [String: CoinPrice]) {

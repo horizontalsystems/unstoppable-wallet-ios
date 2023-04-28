@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -9,7 +10,7 @@ class CoinRankViewModel {
     private let timePeriods: [HsTimePeriod] = [.day1, .week1, .month1]
 
     private let service: CoinRankService
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
@@ -21,7 +22,9 @@ class CoinRankViewModel {
         self.service = service
         sortDirectionRelay = BehaviorRelay(value: service.sortDirectionAscending)
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        service.$state
+                .sink { [weak self] in self?.sync(state: $0) }
+                .store(in: &cancellables)
 
         sync(state: service.state)
     }

@@ -1,12 +1,14 @@
+import Combine
 import UIKit
 import RxSwift
 import RxCocoa
 import MarketKit
 import CurrencyKit
+import HsExtensions
 
 class CoinChartService {
-    private var disposeBag = DisposeBag()
-    private var coinPriceDisposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
+    private var cancellables = Set<AnyCancellable>()
 
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
@@ -48,27 +50,24 @@ class CoinChartService {
     }
 
     private func fetchStartTime() {
-        marketKit.chartPriceStart(coinUid: coinUid)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] startTime in
-                    self?.startTime = startTime
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error)
-                })
-                .disposed(by: disposeBag)
+        Task { [weak self, marketKit, coinUid] in
+            do {
+                self?.startTime = try await marketKit.chartPriceStart(coinUid: coinUid)
+            } catch {
+                self?.state = .failed(error)
+            }
+        }.store(in: &tasks)
     }
 
-    func fetchChartInfo() {
-        let periodType = periodType
-
-        marketKit.chartPointsSingle(coinUid: coinUid, currencyCode: currency.code, periodType: periodType)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] chartPoints in
-                    self?.handle(chartPoints: chartPoints, periodType: periodType)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error)
-                })
-                .disposed(by: disposeBag)
+    private func fetchChartInfo() {
+        Task { [weak self, marketKit, coinUid, currency, periodType] in
+            do {
+                let chartPoints = try await marketKit.chartPoints(coinUid: coinUid, currencyCode: currency.code, periodType: periodType)
+                self?.handle(chartPoints: chartPoints, periodType: periodType)
+            } catch {
+                self?.state = .failed(error)
+            }
+        }.store(in: &tasks)
     }
 
     private func handle(chartPoints: [ChartPoint], periodType: HsPeriodType) {
@@ -132,19 +131,18 @@ extension CoinChartService {
     func start() {
         coinPrice = marketKit.coinPrice(coinUid: coinUid, currencyCode: currency.code)
 
-        marketKit.coinPriceObservable(coinUid: coinUid, currencyCode: currency.code)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onNext: { [weak self] coinPrice in
+        marketKit.coinPricePublisher(coinUid: coinUid, currencyCode: currency.code)
+                .sink { [weak self] coinPrice in
                     self?.coinPrice = coinPrice
                     self?.syncState()
-                })
-                .disposed(by: coinPriceDisposeBag)
+                }
+                .store(in: &cancellables)
 
         fetch()
     }
 
     func fetch() {
-        disposeBag = DisposeBag()
+        tasks = Set()
         state = .loading
 
         if startTime == nil {

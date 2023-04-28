@@ -1,19 +1,13 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
+import HsExtensions
 
 class CoinAuditsService {
     private let addresses: [String]
     private let marketKit: Kit
-    private var disposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
-    private let stateRelay = PublishRelay<DataStatus<[Item]>>()
-    private(set) var state: DataStatus<[Item]> = .loading {
-        didSet {
-            stateRelay.accept(state)
-        }
-    }
+    @PostPublished private(set) var state: DataStatus<[Item]> = .loading
 
     init(addresses: [String], marketKit: Kit) {
         self.addresses = addresses
@@ -23,18 +17,18 @@ class CoinAuditsService {
     }
 
     private func sync() {
-        disposeBag = DisposeBag()
+        tasks = Set()
 
         state = .loading
 
-        marketKit.auditReportsSingle(addresses: addresses)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] auditors in
-                    self?.handle(auditors: auditors)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error)
-                })
-                .disposed(by: disposeBag)
+        Task { [weak self, marketKit, addresses] in
+            do {
+                let auditors = try await marketKit.auditReports(addresses: addresses)
+                self?.handle(auditors: auditors)
+            } catch {
+                self?.state = .failed(error)
+            }
+        }.store(in: &tasks)
     }
 
     private func handle(auditors: [Auditor]) {
@@ -55,10 +49,6 @@ class CoinAuditsService {
 }
 
 extension CoinAuditsService {
-
-    var stateObservable: Observable<DataStatus<[Item]>> {
-        stateRelay.asObservable()
-    }
 
     func refresh() {
         sync()

@@ -1,7 +1,9 @@
+import Combine
 import RxSwift
 import RxRelay
 import MarketKit
 import CurrencyKit
+import HsExtensions
 
 class MarketGlobalMetricService: IMarketSingleSortHeaderService {
     typealias Item = MarketInfo
@@ -9,14 +11,10 @@ class MarketGlobalMetricService: IMarketSingleSortHeaderService {
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private let disposeBag = DisposeBag()
-    private var syncDisposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
-    private let stateRelay = PublishRelay<MarketListServiceState<MarketInfo>>()
-    private(set) var state: MarketListServiceState<MarketInfo> = .loading {
-        didSet {
-            stateRelay.accept(state)
-        }
-    }
+    @PostPublished private(set) var state: MarketListServiceState<MarketInfo> = .loading
+
     var sortDirectionAscending: Bool = false {
         didSet {
             syncIfPossible()
@@ -36,20 +34,20 @@ class MarketGlobalMetricService: IMarketSingleSortHeaderService {
     }
 
     private func syncMarketInfos() {
-        syncDisposeBag = DisposeBag()
+        tasks = Set()
 
         if case .failed = state {
             state = .loading
         }
 
-        marketKit.marketInfosSingle(top: MarketModule.MarketTop.top100.rawValue, currencyCode: currency.code)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] marketInfos in
-                    self?.sync(marketInfos: marketInfos)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error: error)
-                })
-                .disposed(by: syncDisposeBag)
+        Task { [weak self, marketKit, currency] in
+            do {
+                let marketInfos = try await marketKit.marketInfos(top: MarketModule.MarketTop.top100.rawValue, currencyCode: currency.code)
+                self?.sync(marketInfos: marketInfos)
+            } catch {
+                self?.state = .failed(error: error)
+            }
+        }.store(in: &tasks)
     }
 
     private var sortingField: MarketModule.SortingField {
@@ -75,8 +73,8 @@ class MarketGlobalMetricService: IMarketSingleSortHeaderService {
 
 extension MarketGlobalMetricService: IMarketListService {
 
-    var stateObservable: Observable<MarketListServiceState<MarketInfo>> {
-        stateRelay.asObservable()
+    var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> {
+        $state
     }
 
     func refresh() {
@@ -109,7 +107,7 @@ extension MarketGlobalMetricService: IMarketListDecoratorService {
 
     func onUpdate(marketFieldIndex: Int) {
         if case .loaded(let marketInfos, _, _) = state {
-            stateRelay.accept(.loaded(items: marketInfos, softUpdate: false, reorder: false))
+            state = .loaded(items: marketInfos, softUpdate: false, reorder: false)
         }
     }
 

@@ -1,20 +1,14 @@
-import RxSwift
-import RxRelay
 import MarketKit
+import HsExtensions
 
 class CoinMajorHoldersService {
     let coin: Coin
     let blockchain: Blockchain
     private let marketKit: Kit
     private let evmLabelManager: EvmLabelManager
-    private var disposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
-    private let stateRelay = PublishRelay<DataStatus<TokenHolders>>()
-    private(set) var state: DataStatus<TokenHolders> = .loading {
-        didSet {
-            stateRelay.accept(state)
-        }
-    }
+    @PostPublished private(set) var state: DataStatus<TokenHolders> = .loading
 
     init(coin: Coin, blockchain: Blockchain, marketKit: Kit, evmLabelManager: EvmLabelManager) {
         self.coin = coin
@@ -26,27 +20,23 @@ class CoinMajorHoldersService {
     }
 
     private func sync() {
-        disposeBag = DisposeBag()
+        tasks = Set()
 
         state = .loading
 
-        marketKit.tokenHoldersSingle(coinUid: coin.uid, blockchainUid: blockchain.uid)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] holders in
-                    self?.state = .completed(holders)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error)
-                })
-                .disposed(by: disposeBag)
+        Task { [weak self, marketKit, coin, blockchain] in
+            do {
+                let holders = try await marketKit.tokenHolders(coinUid: coin.uid, blockchainUid: blockchain.uid)
+                self?.state = .completed(holders)
+            } catch {
+                self?.state = .failed(error)
+            }
+        }.store(in: &tasks)
     }
 
 }
 
 extension CoinMajorHoldersService {
-
-    var stateObservable: Observable<DataStatus<TokenHolders>> {
-        stateRelay.asObservable()
-    }
 
     func labeled(address: String) -> String {
         evmLabelManager.mapped(address: address)

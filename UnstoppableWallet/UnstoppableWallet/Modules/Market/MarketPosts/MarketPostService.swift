@@ -1,10 +1,11 @@
 import RxSwift
 import RxRelay
 import MarketKit
+import HsExtensions
 
 class MarketPostService {
     private let marketKit: Kit
-    private var disposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .loading {
@@ -18,20 +19,20 @@ class MarketPostService {
     }
 
     private func fetch() {
-        disposeBag = DisposeBag()
+        tasks = Set()
 
         if case .failed = state {
             state = .loading
         }
 
-        marketKit.postsSingle()
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onSuccess: { [weak self] posts in
-                    self?.state = .loaded(posts: posts)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error: error)
-                })
-                .disposed(by: disposeBag)
+        Task { [weak self, marketKit] in
+            do {
+                let posts = try await marketKit.posts()
+                self?.state = .loaded(posts: posts)
+            } catch {
+                self?.state = .failed(error: error)
+            }
+        }.store(in: &tasks)
     }
 
 }

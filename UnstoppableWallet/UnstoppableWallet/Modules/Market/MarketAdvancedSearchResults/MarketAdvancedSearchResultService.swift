@@ -1,7 +1,9 @@
+import Combine
 import RxSwift
 import RxRelay
 import MarketKit
 import CurrencyKit
+import HsExtensions
 
 class MarketAdvancedSearchResultService: IMarketMultiSortHeaderService {
     typealias Item = MarketInfo
@@ -10,12 +12,7 @@ class MarketAdvancedSearchResultService: IMarketMultiSortHeaderService {
     private let currencyKit: CurrencyKit.Kit
     let priceChangeType: MarketModule.PriceChangeType
 
-    private let stateRelay = PublishRelay<MarketListServiceState<MarketInfo>>()
-    private(set) var state: MarketListServiceState<MarketInfo> = .loading {
-        didSet {
-            stateRelay.accept(state)
-        }
-    }
+    @PostPublished private(set) var state: MarketListServiceState<MarketInfo> = .loading
 
     var sortingField: MarketModule.SortingField = .highestCap {
         didSet {
@@ -39,8 +36,8 @@ class MarketAdvancedSearchResultService: IMarketMultiSortHeaderService {
 
 extension MarketAdvancedSearchResultService: IMarketListService {
 
-    var stateObservable: Observable<MarketListServiceState<MarketInfo>> {
-        stateRelay.asObservable()
+    var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> {
+        $state
     }
 
     func refresh() {
@@ -72,7 +69,7 @@ extension MarketAdvancedSearchResultService: IMarketListDecoratorService {
 
     func onUpdate(marketFieldIndex: Int) {
         if case .loaded(let marketInfos, _, _) = state {
-            stateRelay.accept(.loaded(items: marketInfos, softUpdate: false, reorder: false))
+            state = .loaded(items: marketInfos, softUpdate: false, reorder: false)
         }
     }
 

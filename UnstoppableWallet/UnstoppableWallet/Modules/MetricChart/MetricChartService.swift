@@ -1,32 +1,24 @@
+import Combine
 import UIKit
-import RxSwift
-import RxCocoa
 import MarketKit
 import CurrencyKit
+import HsExtensions
 
 class MetricChartService {
-    private var disposeBag = DisposeBag()
-    private var fetcherDisposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
+    private var cancellables = Set<AnyCancellable>()
 
     private var chartFetcher: IMetricChartFetcher
 
-    private let intervalRelay = PublishRelay<HsTimePeriod>()
-    var interval: HsTimePeriod {
+    @DistinctPublished var interval: HsTimePeriod {
         didSet {
-            guard interval != oldValue else {
-                return
+            if interval != oldValue {
+                fetchChartData()
             }
-            intervalRelay.accept(interval)
-            fetchChartData()
         }
     }
 
-    private let stateRelay = PublishRelay<DataStatus<MetricChartModule.ItemData>>()
-    private(set) var state: DataStatus<MetricChartModule.ItemData> = .loading {
-        didSet {
-            stateRelay.accept(state)
-        }
-    }
+    @PostPublished private(set) var state: DataStatus<MetricChartModule.ItemData> = .loading
 
     private var itemDataMap = [HsTimePeriod: MetricChartModule.ItemData]()
 
@@ -34,11 +26,13 @@ class MetricChartService {
         self.chartFetcher = chartFetcher
         self.interval = interval
 
-        subscribe(fetcherDisposeBag, chartFetcher.needUpdateObservable) { [weak self] in self?.fetchChartData() }
+        chartFetcher.needUpdatePublisher
+                .sink { [weak self] in self?.fetchChartData() }
+                .store(in: &cancellables)
     }
 
     func fetchChartData() {
-        disposeBag = DisposeBag()
+        tasks = Set()
 
         if let itemData = itemDataMap[interval] {
             state = .completed(itemData)
@@ -47,17 +41,15 @@ class MetricChartService {
 
         state = .loading
 
-        let interval = interval
-
-        chartFetcher.fetchSingle(interval: interval)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onSuccess: { [weak self] itemData in
+        Task { [weak self, chartFetcher, interval] in
+            do {
+                let itemData = try await chartFetcher.fetch(interval: interval)
                 self?.itemDataMap[interval] = itemData
                 self?.state = .completed(itemData)
-            }, onError: { [weak self] error in
+            } catch {
                 self?.state = .failed(error)
-            })
-            .disposed(by: disposeBag)
+            }
+        }.store(in: &tasks)
     }
 
 }
@@ -69,13 +61,5 @@ extension MetricChartService {
     }
 
     var intervals: [HsTimePeriod] { chartFetcher.intervals }
-
-    var intervalObservable: Observable<HsTimePeriod> {
-        intervalRelay.asObservable()
-    }
-
-    var stateObservable: Observable<DataStatus<MetricChartModule.ItemData>> {
-        stateRelay.asObservable()
-    }
 
 }

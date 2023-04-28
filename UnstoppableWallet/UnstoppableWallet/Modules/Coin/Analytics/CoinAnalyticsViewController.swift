@@ -650,7 +650,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     Row<MarketWideCardCell>(
                             id: "holders",
                             height: MarketWideCardCell.height(hasChart: false, bottomMargin: .margin12),
-                            bind: { cell, _ in
+                            bind: { [weak self] cell, _ in
                                 cell.set(backgroundStyle: .lawrence, isFirst: true)
                                 cell.selectionStyle = .none
 
@@ -658,7 +658,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                                         title: "coin_analytics.holders".localized,
                                         value: value,
                                         valueInfo: viewItem.isPreview ? nil : "coin_analytics.current".localized,
-                                        onTapInfo: { [weak self] in
+                                        onTapInfo: {
                                             self?.openHoldersInfo()
                                         }
                                 )
@@ -756,7 +756,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
             Row<MarketWideCardCell>(
                     id: "revenue",
                     height: MarketWideCardCell.height(hasChart: false),
-                    bind: { cell, _ in
+                    bind: { [weak self] cell, _ in
                         cell.set(backgroundStyle: .lawrence, isFirst: true)
                         cell.selectionStyle = .none
 
@@ -764,7 +764,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                                 title: "coin_analytics.project_revenue".localized,
                                 value: value,
                                 valueInfo: valueInfo,
-                                onTapInfo: { [weak self] in
+                                onTapInfo: {
                                     self?.openRevenueInfo()
                                 }
                         )

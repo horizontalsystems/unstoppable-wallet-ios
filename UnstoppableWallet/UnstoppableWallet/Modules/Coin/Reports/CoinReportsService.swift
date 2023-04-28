@@ -1,11 +1,12 @@
 import RxSwift
 import RxRelay
 import MarketKit
+import HsExtensions
 
 class CoinReportsService {
     private let coinUid: String
     private let marketKit: Kit
-    private var disposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
     private let stateRelay = PublishRelay<DataStatus<[CoinReport]>>()
     private(set) var state: DataStatus<[CoinReport]> = .loading {
@@ -22,19 +23,20 @@ class CoinReportsService {
     }
 
     private func fetch() {
-        disposeBag = DisposeBag()
+        tasks = Set()
 
         if case .failed = state {
             state = .loading
         }
 
-        marketKit.coinReportsSingle(coinUid: coinUid)
-                .subscribe(onSuccess: { [weak self] reports in
-                    self?.state = .completed(reports)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error)
-                })
-                .disposed(by: disposeBag)
+        Task { [weak self, marketKit, coinUid] in
+            do {
+                let reports = try await marketKit.coinReports(coinUid: coinUid)
+                self?.state = .completed(reports)
+            } catch {
+                self?.state = .failed(error)
+            }
+        }.store(in: &tasks)
     }
 
 }

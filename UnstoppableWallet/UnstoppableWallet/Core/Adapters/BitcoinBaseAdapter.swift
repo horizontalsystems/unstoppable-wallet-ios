@@ -363,12 +363,12 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
         default: return Single.just([])
         }
 
-        return abstractKit.transactions(fromUid: from?.uid, type: bitcoinFilter, limit: limit)
-                .map { [weak self] transactions -> [TransactionRecord] in
-                    transactions.compactMap {
-                        self?.transactionRecord(fromTransaction: $0)
-                    }
+        let transactions = abstractKit.transactions(fromUid: from?.uid, type: bitcoinFilter, limit: limit)
+                .map {
+                    transactionRecord(fromTransaction: $0)
                 }
+
+        return Single.just(transactions)
     }
 
     func rawTransaction(hash: String) -> String? {

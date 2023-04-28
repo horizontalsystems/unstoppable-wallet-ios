@@ -121,7 +121,7 @@ protocol INftEventProvider {
 }
 
 protocol IFeeRateProvider {
-    var recommendedFeeRate: Single<Int> { get }
+    func recommendedFeeRate() async throws -> Int
 }
 
 protocol ICustomRangedFeeRateProvider: IFeeRateProvider {

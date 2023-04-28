@@ -1,7 +1,9 @@
+import Combine
 import RxSwift
 import RxRelay
 import CurrencyKit
 import MarketKit
+import HsExtensions
 
 struct NftCollectionItem {
     let index: Int
@@ -12,19 +14,14 @@ class MarketNftTopCollectionsService {
     typealias Item = NftCollectionItem
 
     private let disposeBag = DisposeBag()
-    private var syncDisposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
 
     private var internalState: MarketListServiceState<NftTopCollection> = .loading
 
-    private let stateRelay = PublishRelay<MarketListServiceState<NftCollectionItem>>()
-    private(set) var state: MarketListServiceState<NftCollectionItem> = .loading {
-        didSet {
-            stateRelay.accept(state)
-        }
-    }
+    @PostPublished private(set) var state: MarketListServiceState<NftCollectionItem> = .loading
 
     var sortType: MarketNftTopCollectionsModule.SortType = .highestVolume { didSet { syncIfPossible() } }
     var timePeriod: HsTimePeriod { didSet { syncIfPossible() } }
@@ -38,22 +35,21 @@ class MarketNftTopCollectionsService {
     }
 
     private func sync() {
-        syncDisposeBag = DisposeBag()
+        tasks = Set()
 
         if case .failed = state {
             state = .loading
         }
 
-        marketKit.nftTopCollectionsSingle()
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] collections in
-                    self?.internalState = .loaded(items: collections, softUpdate: false, reorder: false)
-
-                    self?.sync(collections: collections)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error: error)
-                })
-                .disposed(by: syncDisposeBag)
+        Task { [weak self, marketKit] in
+            do {
+                let collections = try await marketKit.nftTopCollections()
+                self?.internalState = .loaded(items: collections, softUpdate: false, reorder: false)
+                self?.sync(collections: collections)
+            } catch {
+                self?.state = .failed(error: error)
+            }
+        }.store(in: &tasks)
     }
 
     private func sync(collections: [NftTopCollection], reorder: Bool = false) {
@@ -74,8 +70,8 @@ class MarketNftTopCollectionsService {
 
 extension MarketNftTopCollectionsService: IMarketListService {
 
-    var stateObservable: Observable<MarketListServiceState<NftCollectionItem>> {
-        stateRelay.asObservable()
+    var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> {
+        $state
     }
 
     func topCollection(uid: String) -> NftTopCollection? {

@@ -1,21 +1,15 @@
 import Foundation
-import RxSwift
-import RxRelay
 import MarketKit
 import CurrencyKit
+import HsExtensions
 
 class CoinRankService {
     let type: CoinRankModule.RankType
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
-    private var disposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
-    private let stateRelay = PublishRelay<State>()
-    private(set) var state: State = .loading {
-        didSet {
-            stateRelay.accept(state)
-        }
-    }
+    @PostPublished private(set) var state: State = .loading
 
     var sortDirectionAscending: Bool = false {
         didSet {
@@ -39,32 +33,30 @@ class CoinRankService {
         sync()
     }
 
-    private func valuesSingle() -> Single<[Value]> {
-        let currencyCode = currencyKit.baseCurrency.code
-
-        switch type {
-        case .cexVolume: return marketKit.cexVolumeRanksSingle(currencyCode: currencyCode).map { $0.map { .multi(value: $0) } }
-        case .dexVolume: return marketKit.dexVolumeRanksSingle(currencyCode: currencyCode).map { $0.map { .multi(value: $0) } }
-        case .dexLiquidity: return marketKit.dexLiquidityRanksSingle().map { $0.map { .single(value: $0) } }
-        case .address: return marketKit.activeAddressRanksSingle().map { $0.map { .multi(value: $0) } }
-        case .txCount: return marketKit.transactionCountRanksSingle().map { $0.map { .multi(value: $0) } }
-        case .revenue: return marketKit.revenueRanksSingle(currencyCode: currencyCode).map { $0.map { .multi(value: $0) } }
-        }
-    }
-
     func sync() {
-        disposeBag = DisposeBag()
+        tasks = Set()
 
         state = .loading
 
-        valuesSingle()
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] values in
-                    self?.handle(values: values)
-                }, onError: { [weak self] error in
-                    self?.state = .failed(error: error)
-                })
-                .disposed(by: disposeBag)
+        Task { [weak self, marketKit, currencyKit, type] in
+            do {
+                let currencyCode = currencyKit.baseCurrency.code
+                let values: [Value]
+
+                switch type {
+                case .cexVolume: values = try await marketKit.cexVolumeRanks(currencyCode: currencyCode).map { .multi(value: $0) }
+                case .dexVolume: values = try await marketKit.dexVolumeRanks(currencyCode: currencyCode).map { .multi(value: $0) }
+                case .dexLiquidity: values = try await marketKit.dexLiquidityRanks().map { .single(value: $0) }
+                case .address: values = try await marketKit.activeAddressRanks().map { .multi(value: $0) }
+                case .txCount: values = try await marketKit.transactionCountRanks().map { .multi(value: $0) }
+                case .revenue: values = try await marketKit.revenueRanks(currencyCode: currencyCode).map { .multi(value: $0) }
+                }
+
+                self?.handle(values: values)
+            } catch {
+                self?.state = .failed(error: error)
+            }
+        }.store(in: &tasks)
     }
 
     private func handle(values: [Value]) {
@@ -127,10 +119,6 @@ class CoinRankService {
 }
 
 extension CoinRankService {
-
-    var stateObservable: Observable<State> {
-        stateRelay.asObservable()
-    }
 
     var currency: Currency {
         currencyKit.baseCurrency

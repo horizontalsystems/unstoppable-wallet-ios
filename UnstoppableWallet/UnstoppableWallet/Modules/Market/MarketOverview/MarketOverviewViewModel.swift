@@ -1,10 +1,11 @@
+import Combine
 import RxSwift
 import RxRelay
 import RxCocoa
 
 class MarketOverviewViewModel {
     private let service: MarketOverviewService
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let successRelay = BehaviorRelay<Bool>(value: false)
     private let loadingRelay = BehaviorRelay<Bool>(value: true)
@@ -13,7 +14,9 @@ class MarketOverviewViewModel {
     init(service: MarketOverviewService) {
         self.service = service
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        service.$state
+                .sink { [weak self] in self?.sync(state: $0) }
+                .store(in: &cancellables)
 
         sync(state: service.state)
     }

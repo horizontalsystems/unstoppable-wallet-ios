@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -11,6 +12,7 @@ class MarketDiscoveryViewModel {
     private let categoryService: MarketDiscoveryCategoryService
     private let filterService: MarketDiscoveryFilterService
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let discoveryViewItemsRelay = BehaviorRelay<[DiscoveryViewItem]?>(value: nil)
     private let discoveryLoadingRelay = BehaviorRelay<Bool>(value: false)
@@ -24,7 +26,10 @@ class MarketDiscoveryViewModel {
         self.categoryService = categoryService
         self.filterService = filterService
 
-        subscribe(disposeBag, categoryService.stateObservable) { [weak self] in self?.sync(categoryState: $0) }
+        categoryService.$state
+                .sink { [weak self] in self?.sync(categoryState: $0) }
+                .store(in: &cancellables)
+
         subscribe(disposeBag, filterService.stateObservable) { [weak self] in self?.sync(filterState: $0) }
         subscribe(disposeBag, filterService.resultObservable) { [weak self] in self?.sync(result: $0) }
 

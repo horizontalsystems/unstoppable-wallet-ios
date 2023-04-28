@@ -3,11 +3,12 @@ import RxSwift
 import RxRelay
 import MarketKit
 import CurrencyKit
+import HsExtensions
 
 class HistoricalRateService {
     private let marketKit: MarketKit.Kit
     private let disposeBag = DisposeBag()
-    private var ratesDisposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
     private var currency: Currency
     private var rates = [RateKey: CurrencyValue]()
@@ -25,7 +26,7 @@ class HistoricalRateService {
     }
 
     private func handleUpdated(currency: Currency) {
-        ratesDisposeBag = DisposeBag()
+        tasks = Set()
         ratesChangedRelay.accept(())
 
         queue.async {
@@ -42,13 +43,11 @@ class HistoricalRateService {
         }
     }
 
-    private func _fetchRate(key: RateKey) {
-        marketKit.coinHistoricalPriceValueSingle(coinUid: key.token.coin.uid, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-            .subscribe(onSuccess: { [weak self] decimal in
-                self?.handle(key: key, rate: decimal)
-            })
-            .disposed(by: ratesDisposeBag)
+    private func fetch(key: RateKey) {
+        Task { [weak self, marketKit, currency] in
+            let rate = try await marketKit.coinHistoricalPriceValue(coinUid: key.token.coin.uid, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970)
+            self?.handle(key: key, rate: rate)
+        }.store(in: &tasks)
     }
 
 }
@@ -73,7 +72,7 @@ extension HistoricalRateService {
                 return nil
             }
 
-            if let value = marketKit.coinHistoricalPriceValue(coinUid: key.token.coin.uid, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970) {
+            if let value = marketKit.cachedCoinHistoricalPriceValue(coinUid: key.token.coin.uid, currencyCode: currency.code, timestamp: key.date.timeIntervalSince1970) {
                 let currencyValue = CurrencyValue(currency: currency, value: value)
                 rates[key]  = currencyValue
                 return currencyValue
@@ -90,7 +89,7 @@ extension HistoricalRateService {
 
         queue.async {
             if self.rates[key] == nil {
-                self._fetchRate(key: key)
+                self.fetch(key: key)
             }
         }
     }

@@ -2,12 +2,13 @@ import RxSwift
 import RxRelay
 import MarketKit
 import CurrencyKit
+import HsExtensions
 
 class CoinTreasuriesService {
     private let coin: Coin
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
-    private var disposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
 
     private var internalState: DataStatus<[CoinTreasury]> = .loading {
         didSet {
@@ -71,20 +72,20 @@ class CoinTreasuriesService {
     }
 
     private func syncTreasuries() {
-        disposeBag = DisposeBag()
+        tasks = Set()
 
         if case .failed = state {
             internalState = .loading
         }
 
-        marketKit.treasuriesSingle(coinUid: coin.uid, currencyCode: currencyKit.baseCurrency.code)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] treasuries in
-                    self?.internalState = .completed(treasuries)
-                }, onError: { [weak self] error in
-                    self?.internalState = .failed(error)
-                })
-                .disposed(by: disposeBag)
+        Task { [weak self, marketKit, coin, currencyKit] in
+            do {
+                let treasuries  = try await marketKit.treasuries(coinUid: coin.uid, currencyCode: currencyKit.baseCurrency.code)
+                self?.internalState = .completed(treasuries)
+            } catch {
+                self?.internalState = .failed(error)
+            }
+        }.store(in: &tasks)
     }
 
     private func syncIfPossible(reorder: Bool = false) {

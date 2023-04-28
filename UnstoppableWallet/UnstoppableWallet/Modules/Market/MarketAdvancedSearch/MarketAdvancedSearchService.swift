@@ -3,6 +3,7 @@ import RxSwift
 import RxRelay
 import CurrencyKit
 import MarketKit
+import HsExtensions
 
 class MarketAdvancedSearchService {
     private let blockchainTypes: [BlockchainType] = [
@@ -26,7 +27,7 @@ class MarketAdvancedSearchService {
         .unsupported(uid: "xdai"),
     ]
 
-    private var disposeBag = DisposeBag()
+    private var tasks = Set<AnyTask>()
     private let allTimeDeltaPercent: Decimal = 10
 
     private let marketKit: MarketKit.Kit
@@ -190,18 +191,18 @@ class MarketAdvancedSearchService {
     }
 
     private func syncMarketInfos() {
-        disposeBag = DisposeBag()
+        tasks = Set()
 
         internalState = .loading
 
-        marketKit.advancedMarketInfosSingle(top: coinListCount.rawValue, currencyCode: currencyKit.baseCurrency.code)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                .subscribe(onSuccess: { [weak self] marketInfos in
-                    self?.internalState = .loaded(marketInfos: marketInfos)
-                }, onError: { [weak self] error in
-                    self?.internalState = .failed(error: error)
-                })
-                .disposed(by: disposeBag)
+        Task { [weak self, marketKit, coinListCount, currencyKit] in
+            do {
+                let marketInfos = try await marketKit.advancedMarketInfos(top: coinListCount.rawValue, currencyCode: currencyKit.baseCurrency.code)
+                self?.internalState = .loaded(marketInfos: marketInfos)
+            } catch {
+                self?.internalState = .failed(error: error)
+            }
+        }.store(in: &tasks)
     }
 
     private func syncState() {

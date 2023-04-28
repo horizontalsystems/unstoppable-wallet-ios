@@ -1,3 +1,4 @@
+import Combine
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -5,7 +6,7 @@ import MarketKit
 
 class CoinAuditsViewModel {
     private let service: CoinAuditsService
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
@@ -14,7 +15,9 @@ class CoinAuditsViewModel {
     init(service: CoinAuditsService) {
         self.service = service
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        service.$state
+                .sink { [weak self] in self?.sync(state: $0) }
+                .store(in: &cancellables)
 
         sync(state: service.state)
     }

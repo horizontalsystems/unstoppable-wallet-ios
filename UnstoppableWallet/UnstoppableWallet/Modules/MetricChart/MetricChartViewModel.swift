@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -10,7 +11,7 @@ import HUD
 class MetricChartViewModel {
     private let service: MetricChartService
     private let factory: MetricChartFactory
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let pointSelectedItemRelay = BehaviorRelay<ChartModule.SelectedPointViewItem?>(value: nil)
 
@@ -23,8 +24,13 @@ class MetricChartViewModel {
         self.service = service
         self.factory = factory
 
-        subscribe(disposeBag, service.intervalObservable) { [weak self] in self?.sync(interval: $0) }
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        service.$interval
+                .sink { [weak self] in self?.sync(interval: $0) }
+                .store(in: &cancellables)
+
+        service.$state
+                .sink { [weak self] in self?.sync(state: $0) }
+                .store(in: &cancellables)
 
         sync(interval: service.interval)
         sync(state: service.state)

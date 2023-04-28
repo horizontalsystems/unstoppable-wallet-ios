@@ -1,14 +1,16 @@
+import Combine
 import RxSwift
 import RxRelay
 import RxCocoa
 import CurrencyKit
 import MarketKit
+import HsExtensions
 
 protocol IMarketListService {
     associatedtype Item
 
     var state: MarketListServiceState<Item> { get }
-    var stateObservable: Observable<MarketListServiceState<Item>> { get }
+    var statePublisher: AnyPublisher<MarketListServiceState<Item>, Never> { get }
     func refresh()
 }
 
@@ -39,7 +41,7 @@ class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDec
     private let service: Service
     private let decorator: Decorator
     private let itemLimit: Int?
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let viewItemDataRelay = BehaviorRelay<MarketModule.ListViewItemData?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
@@ -51,7 +53,9 @@ class MarketListViewModel<Service: IMarketListService, Decorator: IMarketListDec
         self.decorator = decorator
         self.itemLimit = itemLimit
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        service.statePublisher
+                .sink { [weak self] in self?.sync(state: $0) }
+                .store(in: &cancellables)
 
         sync(state: service.state)
     }
