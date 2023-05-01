@@ -9072,7 +9072,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.32;
+				MARKETING_VERSION = 0.32.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OfficeMode = true;
@@ -9144,7 +9144,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.32;
+				MARKETING_VERSION = 0.32.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OfficeMode = false;
 				SDKROOT = iphoneos;
@@ -9271,7 +9271,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.1.5;
+				version = 1.1.6;
 			};
 		};
 		6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */ = {
