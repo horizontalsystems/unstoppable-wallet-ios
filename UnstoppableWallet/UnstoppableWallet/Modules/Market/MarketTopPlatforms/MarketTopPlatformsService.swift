@@ -12,6 +12,7 @@ class MarketTopPlatformsService {
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private var disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
     var sortType: MarketTopPlatformsModule.SortType = .highestCap { didSet { syncIfPossible() } }
@@ -26,7 +27,12 @@ class MarketTopPlatformsService {
         self.currencyKit = currencyKit
         self.timePeriod = timePeriod
 
-        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] _ in self?.sync() }
+        currencyKit.baseCurrencyUpdatedPublisher
+                .sink { [weak self] _ in
+                    self?.sync()
+                }
+                .store(in: &cancellables)
+
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.sync() }
 
         sync()

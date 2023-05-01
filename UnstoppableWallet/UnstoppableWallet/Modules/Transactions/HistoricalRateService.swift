@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import RxSwift
 import RxRelay
 import MarketKit
@@ -7,7 +8,7 @@ import HsExtensions
 
 class HistoricalRateService {
     private let marketKit: MarketKit.Kit
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
     private var currency: Currency
@@ -22,7 +23,11 @@ class HistoricalRateService {
         self.marketKit = marketKit
         currency = currencyKit.baseCurrency
 
-        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] in self?.handleUpdated(currency: $0) }
+        currencyKit.baseCurrencyUpdatedPublisher
+                .sink { [weak self] currency in
+                    self?.handleUpdated(currency: currency)
+                }
+                .store(in: &cancellables)
     }
 
     private func handleUpdated(currency: Currency) {

@@ -7,7 +7,7 @@ class AppManager {
     private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let adapterManager: AdapterManager
-    private let pinKit: IPinKit
+    private let pinKit: PinKit.Kit
     private let keychainKit: IKeychainKit
     private let blurManager: BlurManager
     private let kitCleaner: KitCleaner
@@ -24,7 +24,7 @@ class AppManager {
     private let didBecomeActiveSubject = PublishSubject<()>()
     private let willEnterForegroundSubject = PublishSubject<()>()
 
-    init(accountManager: AccountManager, walletManager: WalletManager, adapterManager: AdapterManager, pinKit: IPinKit,
+    init(accountManager: AccountManager, walletManager: WalletManager, adapterManager: AdapterManager, pinKit: PinKit.Kit,
          keychainKit: IKeychainKit, blurManager: BlurManager,
          kitCleaner: KitCleaner, debugLogger: DebugLogger?,
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,

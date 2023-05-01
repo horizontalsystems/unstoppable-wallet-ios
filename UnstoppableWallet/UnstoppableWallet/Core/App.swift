@@ -11,7 +11,7 @@ class App {
     static let shared = App()
 
     let keychainKit: IKeychainKit
-    let pinKit: IPinKit
+    let pinKit: PinKit.Kit
 
     let currencyKit: CurrencyKit.Kit
 

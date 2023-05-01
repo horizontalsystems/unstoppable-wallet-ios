@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import RxSwift
 import RxRelay
 import CurrencyKit
@@ -10,6 +11,7 @@ class MarketOverviewService {
     private let currencyKit: CurrencyKit.Kit
     private let appManager: IAppManager
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
     @PostPublished private(set) var state: DataStatus<Item> = .loading
@@ -51,7 +53,12 @@ extension MarketOverviewService {
     }
 
     func load() {
-        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] _ in self?.syncState() }
+        currencyKit.baseCurrencyUpdatedPublisher
+                .sink { [weak self] _ in
+                    self?.syncState()
+                }
+                .store(in: &cancellables)
+
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.syncState() }
 
         syncState()

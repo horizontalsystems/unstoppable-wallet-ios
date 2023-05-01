@@ -1,3 +1,4 @@
+import Combine
 import RxSwift
 import RxRelay
 import LanguageKit
@@ -14,7 +15,7 @@ class MainSettingsService {
     private let accountRestoreWarningManager: AccountRestoreWarningManager
     private let accountManager: AccountManager
     private let contactBookManager: ContactBookManager?
-    private let pinKit: IPinKit
+    private let pinKit: PinKit.Kit
     private let termsManager: TermsManager
     private let systemInfoManager: SystemInfoManager
     private let currencyKit: CurrencyKit.Kit
@@ -24,7 +25,7 @@ class MainSettingsService {
 
     private let iCloudAvailableErrorRelay = BehaviorRelay<Bool>(value: false)
 
-    init(backupManager: BackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager?, pinKit: IPinKit, termsManager: TermsManager,
+    init(backupManager: BackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager?, pinKit: PinKit.Kit, termsManager: TermsManager,
          systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit, appConfigProvider: AppConfigProvider,
          walletConnectSessionManager: WalletConnectSessionManager, walletConnectV2SessionManager: WalletConnectV2SessionManager) {
         self.backupManager = backupManager
@@ -72,8 +73,8 @@ extension MainSettingsService {
         pinKit.isPinSet
     }
 
-    var isPinSetObservable: Observable<Bool> {
-        pinKit.isPinSetObservable
+    var isPinSetPublisher: AnyPublisher<Bool, Never> {
+        pinKit.isPinSetPublisher
     }
 
     var isCloudAvailableError: Bool {
@@ -119,8 +120,8 @@ extension MainSettingsService {
         currencyKit.baseCurrency
     }
 
-    var baseCurrencyObservable: Observable<Currency> {
-        currencyKit.baseCurrencyUpdatedObservable
+    var baseCurrencyPublisher: AnyPublisher<Currency, Never> {
+        currencyKit.baseCurrencyUpdatedPublisher
     }
 
     var appVersion: String {

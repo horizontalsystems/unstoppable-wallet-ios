@@ -11,7 +11,7 @@ class MainService {
     private let storage: StorageKit.ILocalStorage
     private let launchScreenManager: LaunchScreenManager
     private let accountManager: AccountManager
-    private let pinKit: IPinKit
+    private let pinKit: PinKit.Kit
     private let presetTab: MainModule.Tab?
     private let disposeBag = DisposeBag()
 
@@ -38,7 +38,7 @@ class MainService {
 
     private var isColdStart: Bool = true
 
-    init(localStorage: LocalStorage, storage: StorageKit.ILocalStorage, launchScreenManager: LaunchScreenManager, accountManager: AccountManager, walletManager: WalletManager, appManager: IAppManager, pinKit: IPinKit, presetTab: MainModule.Tab?) {
+    init(localStorage: LocalStorage, storage: StorageKit.ILocalStorage, launchScreenManager: LaunchScreenManager, accountManager: AccountManager, walletManager: WalletManager, appManager: IAppManager, pinKit: PinKit.Kit, presetTab: MainModule.Tab?) {
         self.localStorage = localStorage
         self.storage = storage
         self.launchScreenManager = launchScreenManager

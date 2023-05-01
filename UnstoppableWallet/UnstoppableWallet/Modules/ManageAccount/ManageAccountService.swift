@@ -12,7 +12,7 @@ class ManageAccountService {
     }
 
     private let accountManager: AccountManager
-    private let pinKit: IPinKit
+    private let pinKit: PinKit.Kit
     private let disposeBag = DisposeBag()
 
     private let stateRelay = PublishRelay<State>()
@@ -26,7 +26,7 @@ class ManageAccountService {
 
     private var newName: String
 
-    init?(accountId: String, accountManager: AccountManager, pinKit: IPinKit) {
+    init?(accountId: String, accountManager: AccountManager, pinKit: PinKit.Kit) {
         guard let account = accountManager.account(id: accountId) else {
             return nil
         }
