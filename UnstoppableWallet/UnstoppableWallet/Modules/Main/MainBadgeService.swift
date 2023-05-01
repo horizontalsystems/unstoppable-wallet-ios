@@ -1,20 +1,22 @@
+import Combine
 import RxSwift
 import RxRelay
 import PinKit
 
 class MainBadgeService {
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let backupManager: BackupManager
     private let accountRestoreWarningManager: AccountRestoreWarningManager
 
-    private let pinKit: IPinKit
+    private let pinKit: PinKit.Kit
     private let termsManager: TermsManager
     private let walletConnectV2SessionManager: WalletConnectV2SessionManager
 
     private let settingsBadgeRelay = BehaviorRelay<(Bool, Int)>(value: (false, 0))
 
-    init(backupManager: BackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, pinKit: IPinKit, termsManager: TermsManager, walletConnectV2SessionManager: WalletConnectV2SessionManager) {
+    init(backupManager: BackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, pinKit: PinKit.Kit, termsManager: TermsManager, walletConnectV2SessionManager: WalletConnectV2SessionManager) {
         self.backupManager = backupManager
         self.accountRestoreWarningManager = accountRestoreWarningManager
         self.pinKit = pinKit
@@ -37,13 +39,11 @@ class MainBadgeService {
                 })
                 .disposed(by: disposeBag)
 
-        pinKit.isPinSetObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-                .subscribe(onNext: { [weak self] _ in
+        pinKit.isPinSetPublisher
+                .sink { [weak self] _ in
                     self?.syncSettingsBadge()
-                })
-                .disposed(by: disposeBag)
+                }
+                .store(in: &cancellables)
 
         termsManager.termsAcceptedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))

@@ -2,9 +2,9 @@ import PinKit
 
 class PrivateKeysService {
     private let account: Account
-    private let pinKit: IPinKit
+    private let pinKit: PinKit.Kit
 
-    init(account: Account, pinKit: IPinKit) {
+    init(account: Account, pinKit: PinKit.Kit) {
         self.account = account
         self.pinKit = pinKit
     }

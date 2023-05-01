@@ -11,7 +11,7 @@ class LockScreenRouter: ILockScreenRouter {
 
 extension LockScreenRouter {
 
-    static func module(pinKit: IPinKit, appStart: Bool) -> UIViewController {
+    static func module(pinKit: PinKit.Kit, appStart: Bool) -> UIViewController {
         let router = LockScreenRouter()
         let presenter = LockScreenPresenter(router: router, appStart: appStart)
 

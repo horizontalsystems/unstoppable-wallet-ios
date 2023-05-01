@@ -18,6 +18,7 @@ class MarketWatchlistService: IMarketMultiSortHeaderService {
     private let appManager: IAppManager
     private let storage: StorageKit.ILocalStorage
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
     @PostPublished private(set) var state: MarketListServiceState<MarketInfo> = .loading
@@ -105,8 +106,13 @@ extension MarketWatchlistService: IMarketListService {
     }
 
     func load() {
+        currencyKit.baseCurrencyUpdatedPublisher
+                .sink { [weak self] _ in
+                    self?.syncMarketInfos()
+                }
+                .store(in: &cancellables)
+
         subscribe(disposeBag, favoritesManager.coinUidsUpdatedObservable) { [weak self] in self?.syncCoinUids() }
-        subscribe(disposeBag, currencyKit.baseCurrencyUpdatedObservable) { [weak self] _ in self?.syncMarketInfos() }
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in self?.syncMarketInfos() }
 
         syncCoinUids()

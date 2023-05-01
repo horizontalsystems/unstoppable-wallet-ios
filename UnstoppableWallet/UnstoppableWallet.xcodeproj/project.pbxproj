@@ -2275,6 +2275,12 @@
 		D3993DBD28F4278F008720FB /* ActionSheet in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DBC28F4278F008720FB /* ActionSheet */; };
 		D3993DC228F42992008720FB /* UnstoppableDomainsResolution in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DC128F42992008720FB /* UnstoppableDomainsResolution */; };
 		D3993DC428F429AA008720FB /* UnstoppableDomainsResolution in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DC328F429AA008720FB /* UnstoppableDomainsResolution */; };
+		D3AF5A8929FFD85800C1399E /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A8829FFD85800C1399E /* RxCocoa */; };
+		D3AF5A8B29FFD85800C1399E /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A8A29FFD85800C1399E /* RxRelay */; };
+		D3AF5A8D29FFD85800C1399E /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A8C29FFD85800C1399E /* RxSwift */; };
+		D3AF5A8F29FFD87400C1399E /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A8E29FFD87400C1399E /* RxCocoa */; };
+		D3AF5A9129FFD87500C1399E /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A9029FFD87500C1399E /* RxRelay */; };
+		D3AF5A9329FFD87500C1399E /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D3AF5A9229FFD87500C1399E /* RxSwift */; };
 		D3BF1E5C274BC29D00229A00 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E5B274BC29D00229A00 /* Down */; };
 		D3BF1E5E274CAF1C00229A00 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E5D274CAF1C00229A00 /* Down */; };
 		D3BF1E63274CBBCE00229A00 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E62274CBBCE00229A00 /* DeepDiff */; };
@@ -3441,6 +3447,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3AF5A9129FFD87500C1399E /* RxRelay in Frameworks */,
 				D3993DB028F4256F008720FB /* WalletConnect in Frameworks */,
 				D3C187E8290FD00E00FE1900 /* SectionsTableView in Frameworks */,
 				D3993DAE28F4256F008720FB /* WalletConnectV1 in Frameworks */,
@@ -3450,6 +3457,7 @@
 				D3993DC428F429AA008720FB /* UnstoppableDomainsResolution in Frameworks */,
 				D3604E9E28F03DC00066C366 /* BinanceChainKit in Frameworks */,
 				D3C187BC2907CFC200FE1900 /* Checkpoints in Frameworks */,
+				D3AF5A9329FFD87500C1399E /* RxSwift in Frameworks */,
 				D3604E5728F02B280066C366 /* NftKit in Frameworks */,
 				D3C187E0290FD00E00FE1900 /* ThemeKit in Frameworks */,
 				D0DA7413272A6F180072BE86 /* UnicodeURL in Frameworks */,
@@ -3465,6 +3473,7 @@
 				D3E1D00D2990DA0400C68F00 /* Hodler in Frameworks */,
 				D3604E9A28F03DC00066C366 /* Chart in Frameworks */,
 				D3604E8E28F03DBF0066C366 /* LitecoinKit in Frameworks */,
+				D3AF5A8F29FFD87400C1399E /* RxCocoa in Frameworks */,
 				D38405B9218317DF007D50AD /* AVFoundation.framework in Frameworks */,
 				D3604E5B28F02B280066C366 /* OneInchKit in Frameworks */,
 				D3604EA028F03DC00066C366 /* DashKit in Frameworks */,
@@ -3489,8 +3498,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3AF5A8B29FFD85800C1399E /* RxRelay in Frameworks */,
 				D3993DB828F42595008720FB /* WalletConnect in Frameworks */,
 				D3C187DB290FCFBC00FE1900 /* SectionsTableView in Frameworks */,
+				D3AF5A8929FFD85800C1399E /* RxCocoa in Frameworks */,
 				D3993DB628F42595008720FB /* WalletConnectV1 in Frameworks */,
 				500F1D1127AA87BC002AA419 /* AlignedCollectionViewFlowLayout in Frameworks */,
 				D3604E6928F02DF30066C366 /* BitcoinCashKit in Frameworks */,
@@ -3511,6 +3522,7 @@
 				D36E0C2A28D084AB00B622B9 /* CollectionViewCenteredFlowLayout in Frameworks */,
 				D3604E6628F02D9A0066C366 /* BitcoinKit in Frameworks */,
 				D3604E7F28F03C1D0066C366 /* Chart in Frameworks */,
+				D3AF5A8D29FFD85800C1399E /* RxSwift in Frameworks */,
 				D3604E6C28F02E3F0066C366 /* LitecoinKit in Frameworks */,
 				D38406A821831B3D007D50AD /* AVFoundation.framework in Frameworks */,
 				D3604E5328F02B150066C366 /* OneInchKit in Frameworks */,
@@ -6622,6 +6634,9 @@
 				D339A93E29126D2A00B895BE /* HsCryptoKit */,
 				D3E1D00C2990DA0400C68F00 /* Hodler */,
 				6BDA29AA29D6F37C003847ED /* ECashKit */,
+				D3AF5A8E29FFD87400C1399E /* RxCocoa */,
+				D3AF5A9029FFD87500C1399E /* RxRelay */,
+				D3AF5A9229FFD87500C1399E /* RxSwift */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -6681,6 +6696,9 @@
 				6B423FD32913785800EE5E70 /* BitcoinCore */,
 				6BDA29AC29D6F384003847ED /* ECashKit */,
 				6BDA29AF29D6F934003847ED /* HsToolKit */,
+				D3AF5A8829FFD85800C1399E /* RxCocoa */,
+				D3AF5A8A29FFD85800C1399E /* RxRelay */,
+				D3AF5A8C29FFD85800C1399E /* RxSwift */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -6762,6 +6780,7 @@
 				6B423FD22913785800EE5E70 /* XCRemoteSwiftPackageReference "BitcoinCore.Swift" */,
 				6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */,
 				6BDA29AE29D6F934003847ED /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */,
+				D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
@@ -9433,7 +9452,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ScanQrKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.1;
+				version = 2.0.0;
 			};
 		};
 		D3604E7428F03B5E0066C366 /* XCRemoteSwiftPackageReference "PinKit.Swift" */ = {
@@ -9441,7 +9460,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/PinKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.0;
+				version = 2.0.0;
 			};
 		};
 		D3604E7728F03B9F0066C366 /* XCRemoteSwiftPackageReference "ModuleKit.Swift" */ = {
@@ -9449,7 +9468,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ModuleKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.4;
+				version = 2.0.0;
 			};
 		};
 		D3604E7A28F03BD20066C366 /* XCRemoteSwiftPackageReference "CurrencyKit.Swift" */ = {
@@ -9457,7 +9476,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/CurrencyKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.3;
+				version = 2.0.0;
 			};
 		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart.Swift" */ = {
@@ -9529,7 +9548,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ActionSheet.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.2;
+				version = 1.0.3;
 			};
 		};
 		D3993DC028F42992008720FB /* XCRemoteSwiftPackageReference "resolution-swift" */ = {
@@ -9538,6 +9557,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.2.1;
+			};
+		};
+		D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.3;
 			};
 		};
 		D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */ = {
@@ -9577,7 +9604,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ThemeKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.3;
+				version = 2.0.0;
 			};
 		};
 		D3C187D0290FCF3D00FE1900 /* XCRemoteSwiftPackageReference "ComponentKit.Swift" */ = {
@@ -9585,7 +9612,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ComponentKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.8;
+				version = 2.0.0;
 			};
 		};
 		D3C187D3290FCF7D00FE1900 /* XCRemoteSwiftPackageReference "HUD.Swift" */ = {
@@ -9593,7 +9620,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/HUD.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.1;
+				version = 2.0.0;
 			};
 		};
 		D3C187D6290FCF9C00FE1900 /* XCRemoteSwiftPackageReference "LanguageKit.Swift" */ = {
@@ -9617,7 +9644,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/StorageKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.1;
+				version = 2.0.0;
 			};
 		};
 		D3E1D0092990D9BE00C68F00 /* XCRemoteSwiftPackageReference "Hodler.Swift" */ = {
@@ -9920,6 +9947,36 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3993DC028F42992008720FB /* XCRemoteSwiftPackageReference "resolution-swift" */;
 			productName = UnstoppableDomainsResolution;
+		};
+		D3AF5A8829FFD85800C1399E /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		D3AF5A8A29FFD85800C1399E /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		D3AF5A8C29FFD85800C1399E /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		D3AF5A8E29FFD87400C1399E /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		D3AF5A9029FFD87500C1399E /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		D3AF5A9229FFD87500C1399E /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
 		};
 		D3BF1E5B274BC29D00229A00 /* Down */ = {
 			isa = XCSwiftPackageProductDependency;

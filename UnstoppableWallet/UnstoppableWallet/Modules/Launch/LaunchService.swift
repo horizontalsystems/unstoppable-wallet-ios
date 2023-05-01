@@ -3,11 +3,11 @@ import PinKit
 
 class LaunchService {
     private let accountManager: AccountManager
-    private let pinKit: IPinKit
+    private let pinKit: PinKit.Kit
     private let keychainKit: IKeychainKit
     private let localStorage: LocalStorage
 
-    init(accountManager: AccountManager, pinKit: IPinKit, keychainKit: IKeychainKit, localStorage: LocalStorage) {
+    init(accountManager: AccountManager, pinKit: PinKit.Kit, keychainKit: IKeychainKit, localStorage: LocalStorage) {
         self.accountManager = accountManager
         self.pinKit = pinKit
         self.keychainKit = keychainKit

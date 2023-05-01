@@ -1,10 +1,11 @@
+import Combine
 import RxSwift
 import RxRelay
 import PinKit
 
 class SecuritySettingsService {
-    private let pinKit: IPinKit
-    private let disposeBag = DisposeBag()
+    private let pinKit: PinKit.Kit
+    private var cancellables = Set<AnyCancellable>()
 
     private let pinItemRelay = PublishRelay<PinItem>()
     private(set) var pinItem: PinItem = PinItem(enabled: false, biometryEnabled: false, biometryType: nil) {
@@ -13,11 +14,16 @@ class SecuritySettingsService {
         }
     }
 
-    init(pinKit: IPinKit) {
+    init(pinKit: PinKit.Kit) {
         self.pinKit = pinKit
 
-        subscribe(disposeBag, pinKit.isPinSetObservable) { [weak self] _ in self?.syncPinItem() }
-        subscribe(disposeBag, pinKit.biometryTypeObservable) { [weak self] _ in self?.syncPinItem() }
+        pinKit.isPinSetPublisher
+                .sink { [weak self] _ in self?.syncPinItem() }
+                .store(in: &cancellables)
+
+        pinKit.biometryTypePublisher
+                .sink { [weak self] _ in self?.syncPinItem() }
+                .store(in: &cancellables)
 
         syncPinItem()
     }

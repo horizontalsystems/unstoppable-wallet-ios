@@ -7,12 +7,12 @@ class WalletConnectV2AppShowService {
     private let disposeBag = DisposeBag()
     private let walletConnectV2Manager: WalletConnectV2SessionManager
     private let accountManager: AccountManager
-    private let pinKit: IPinKit
+    private let pinKit: PinKit.Kit
 
     private let showSessionProposalRelay = PublishRelay<WalletConnectSign.Session.Proposal>()
     private let showSessionRequestRelay = PublishRelay<WalletConnectRequest>()
 
-    init(walletConnectV2Manager: WalletConnectV2SessionManager, accountManager: AccountManager, pinKit: IPinKit) {
+    init(walletConnectV2Manager: WalletConnectV2SessionManager, accountManager: AccountManager, pinKit: PinKit.Kit) {
         self.walletConnectV2Manager = walletConnectV2Manager
         self.accountManager = accountManager
         self.pinKit = pinKit
