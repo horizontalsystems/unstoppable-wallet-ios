@@ -5,11 +5,11 @@ import UniswapKit
 import CurrencyKit
 import EvmKit
 
-class UniswapViewModel {
+class UniswapV3ViewModel {
     private let disposeBag = DisposeBag()
 
-    public let service: UniswapService
-    public let tradeService: UniswapTradeService
+    public let service: UniswapV3Service
+    public let tradeService: UniswapV3TradeService
     public let switchService: AmountTypeSwitchService
     private let currencyKit: CurrencyKit.Kit
     private let allowanceService: SwapAllowanceService
@@ -39,7 +39,7 @@ class UniswapViewModel {
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.swap_view_model")
 
-    init(service: UniswapService, tradeService: UniswapTradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, currencyKit: CurrencyKit.Kit, viewItemHelper: SwapViewItemHelper) {
+    init(service: UniswapV3Service, tradeService: UniswapV3TradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, currencyKit: CurrencyKit.Kit, viewItemHelper: SwapViewItemHelper) {
         self.service = service
         self.tradeService = tradeService
         self.switchService = switchService
@@ -72,7 +72,7 @@ class UniswapViewModel {
         sync(toggleAvailable: switchService.toggleAvailable)
     }
 
-    private func sync(state: UniswapService.State? = nil) {
+    private func sync(state: UniswapV3Service.State? = nil) {
         let state = state ?? service.state
 
         isLoadingRelay.accept(state == .loading)
@@ -117,7 +117,7 @@ class UniswapViewModel {
         swapErrorRelay.accept(filtered.first?.convertedError.smartDescription)
     }
 
-    private func sync(tradeState: UniswapTradeService.State) {
+    private func sync(tradeState: UniswapV3TradeService.State) {
         var loading = false
         switch tradeState {
         case .loading:
@@ -132,7 +132,7 @@ class UniswapViewModel {
             } else {
                 buyPriceRelay.accept(nil)
             }
-            priceImpactRelay.accept(viewItemHelper.priceImpactViewItem(priceImpact: trade.tradeData.priceImpact, impactLevel: trade.impactLevel))
+            priceImpactRelay.accept(viewItemHelper.priceImpactViewItem(priceImpact: nil, impactLevel: trade.impactLevel))
         case .notReady:
             buyPriceRelay.accept(nil)
             priceImpactRelay.accept(nil)
@@ -232,7 +232,7 @@ class UniswapViewModel {
 
 }
 
-extension UniswapViewModel {
+extension UniswapV3ViewModel {
 
     var amountTypeSelectorItems: [String] {
         ["swap.amount_type.coin".localized, currencyKit.baseCurrency.code]
@@ -375,7 +375,7 @@ extension UniswapViewModel {
 
 }
 
-extension UniswapViewModel {
+extension UniswapV3ViewModel {
 
     struct TradeViewItem {
         let executionPrice: String?
