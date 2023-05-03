@@ -205,6 +205,103 @@ class SwapToCoinCardService: ISwapCoinCardService, IAmountInputService {
 
 }
 
+class SwapV3FromCoinCardService: ISwapCoinCardService, IAmountInputService {
+    private let service: UniswapV3Service
+    private let tradeService: UniswapV3TradeService
+
+    init(service: UniswapV3Service, tradeService: UniswapV3TradeService) {
+        self.service = service
+        self.tradeService = tradeService
+    }
+
+    var dex: SwapModule.Dex { service.dex }
+    var isEstimated: Bool { tradeService.tradeType != .exactIn }
+    var amount: Decimal { tradeService.amountIn }
+    var token: MarketKit.Token? { tradeService.tokenIn }
+    var balance: Decimal? { service.balanceIn }
+
+    var isEstimatedObservable: Observable<Bool> { tradeService.tradeTypeObservable.map { $0 != .exactIn } }
+    var amountObservable: Observable<Decimal> { tradeService.amountInObservable }
+    var tokenObservable: Observable<MarketKit.Token?> { tradeService.tokenInObservable }
+    var balanceObservable: Observable<Decimal?> { service.balanceInObservable }
+    var errorObservable: Observable<Error?> {
+        service.errorsObservable.map {
+            $0.first(where: { .insufficientBalanceIn == $0 as? SwapModule.SwapError })
+        }
+    }
+    var isLoading: Observable<Bool> {
+        tradeService.stateObservable.map { state in
+            switch state {
+            case .loading: return true
+            default: return false
+            }
+        }
+    }
+
+    func onChange(amount: Decimal) {
+        tradeService.set(amountIn: amount)
+    }
+
+    func onChange(token: MarketKit.Token) {
+        tradeService.set(tokenIn: token)
+    }
+
+}
+
+class SwapV3ToCoinCardService: ISwapCoinCardService, IAmountInputService {
+    private let service: UniswapV3Service
+    private let tradeService: UniswapV3TradeService
+
+    init(service: UniswapV3Service, tradeService: UniswapV3TradeService) {
+        self.service = service
+        self.tradeService = tradeService
+    }
+
+    var dex: SwapModule.Dex { service.dex }
+    var isEstimated: Bool { tradeService.tradeType != .exactOut }
+    var amount: Decimal { tradeService.amountOut }
+    var token: MarketKit.Token? { tradeService.tokenOut }
+    var balance: Decimal? { service.balanceOut }
+
+    var isEstimatedObservable: Observable<Bool> { tradeService.tradeTypeObservable.map { $0 != .exactOut } }
+    var amountObservable: Observable<Decimal> { tradeService.amountOutObservable }
+    var tokenObservable: Observable<MarketKit.Token?> { tradeService.tokenOutObservable }
+    var balanceObservable: Observable<Decimal?> { service.balanceOutObservable }
+    var errorObservable: Observable<Error?> {
+        Observable<Error?>.just(nil)
+    }
+    var isLoading: Observable<Bool> {
+        tradeService.stateObservable.map { state in
+            switch state {
+            case .loading: return true
+            default: return false
+            }
+        }
+    }
+
+    var amountWarningObservable: Observable<AmountInputViewModel.AmountWarning?> {
+        tradeService.stateObservable.map { state in
+            guard case .ready(let trade) = state,
+                  let impactLevel = trade.impactLevel,
+                  case .forbidden = impactLevel,
+                  let priceImpact = trade.tradeData.priceImpact else {
+                return nil
+            }
+
+            return .highPriceImpact(priceImpact: priceImpact)
+        }
+    }
+
+    func onChange(amount: Decimal) {
+        tradeService.set(amountOut: amount)
+    }
+
+    func onChange(token: MarketKit.Token) {
+        tradeService.set(tokenOut: token)
+    }
+
+}
+
 class SwapFromCoinCardOneInchService: ISwapCoinCardService, IAmountInputService {
     private let service: OneInchService
     private let tradeService: OneInchTradeService
