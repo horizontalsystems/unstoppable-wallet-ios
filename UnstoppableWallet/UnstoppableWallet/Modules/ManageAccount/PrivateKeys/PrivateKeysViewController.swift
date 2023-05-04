@@ -58,7 +58,7 @@ class PrivateKeysViewController: ThemeViewController {
 
     private func openUnlock() {
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: .margin48, right: 0)
-        let viewController = App.shared.pinKit.unlockPinModule(delegate: self, biometryUnlockMode: .disabled, insets: insets, cancellable: true, autoDismiss: true)
+        let viewController = App.shared.pinKit.unlockPinModule(delegate: self, biometryUnlockMode: .auto, insets: insets, cancellable: true, autoDismiss: true)
         present(viewController, animated: true)
     }
 

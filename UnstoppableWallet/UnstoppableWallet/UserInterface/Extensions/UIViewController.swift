@@ -11,4 +11,10 @@ extension UIViewController {
         return controller
     }
 
+    static var visibleController: UIViewController? {
+        let keyWindow = UIApplication.shared.windows.filter { $0.isKeyWindow }.first
+
+        return keyWindow?.rootViewController?.visibleController
+    }
+
 }

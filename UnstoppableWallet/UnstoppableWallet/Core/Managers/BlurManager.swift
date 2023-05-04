@@ -62,12 +62,16 @@ class BlurManager {
         shown = true
     }
 
+    private var unlockShown: Bool {
+        (UIViewController.visibleController as? PinViewController) != nil
+    }
+
 }
 
 extension BlurManager {
 
     func willResignActive() {
-        if !pinKit.isLocked {
+        if !pinKit.isLocked && !unlockShown {
             show()
         }
     }
