@@ -85,8 +85,7 @@ struct SendEvmConfirmationModule {
         }
 
         guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
-                evmKit: evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory,
-                gasLimitSurchargePercent: sendData.transactionData.input.isEmpty ? 0 : 20
+                evmKit: evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory
         ) else {
             return nil
         }
@@ -140,7 +139,7 @@ struct SendEvmConfirmationModule {
 
         guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
                 evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory,
-                previousTransaction: transaction, gasLimit: gasLimit
+                previousTransaction: transaction, predefinedGasLimit: gasLimit
         ) else {
             throw CreateModuleError.cantCreateFeeSettingsModule
         }

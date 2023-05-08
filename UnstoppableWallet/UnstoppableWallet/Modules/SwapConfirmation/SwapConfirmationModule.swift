@@ -21,8 +21,7 @@ struct SwapConfirmationModule {
         }
 
         guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
-                evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory,
-                gasLimitSurchargePercent: 20
+                evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory
         ) else {
             return nil
         }

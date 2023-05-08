@@ -6,6 +6,11 @@ import RxCocoa
 import ThemeKit
 
 struct EvmFeeModule {
+    private static let surchargePercent: Double = 10
+
+    static func surcharged(gasLimit: Int) -> Int {
+        gasLimit + Int(Double(gasLimit) / 100.0 * surchargePercent)
+    }
 
     static func gasPriceService(evmKit: EvmKit.Kit, gasPrice: GasPrice? = nil, previousTransaction: EvmKit.Transaction? = nil) -> IGasPriceService {
         if evmKit.chain.isEIP1559Supported {
@@ -60,15 +65,25 @@ extension EvmFeeModule {
 
     class GasData {
         let limit: Int
+        let estimatedLimit: Int
         private(set) var price: GasPrice
 
-        init(limit: Int, price: GasPrice) {
+        init(limit: Int, estimatedLimit: Int? = nil, price: GasPrice) {
             self.limit = limit
+            self.estimatedLimit = estimatedLimit ?? limit
             self.price = price
         }
 
         var fee: BigUInt {
             BigUInt(limit * price.max)
+        }
+
+        var estimatedFee: BigUInt {
+            BigUInt(estimatedLimit * price.max)
+        }
+
+        var isSurcharged: Bool {
+            limit != estimatedLimit
         }
 
         var description: String {
@@ -83,13 +98,17 @@ extension EvmFeeModule {
     class RollupGasData: GasData {
         let additionalFee: BigUInt
 
-        init(additionalFee: BigUInt, limit: Int, price: GasPrice) {
+        init(additionalFee: BigUInt, limit: Int, estimatedLimit: Int? = nil, price: GasPrice) {
             self.additionalFee = additionalFee
-            super.init(limit: limit, price: price)
+            super.init(limit: limit, estimatedLimit: estimatedLimit, price: price)
         }
 
         override var fee: BigUInt {
             super.fee + additionalFee
+        }
+
+        override var estimatedFee: BigUInt {
+            super.estimatedFee + additionalFee
         }
 
         override var description: String {
@@ -100,10 +119,6 @@ extension EvmFeeModule {
     struct Transaction {
         let transactionData: TransactionData
         let gasData: GasData
-
-        var totalAmount: BigUInt {
-            transactionData.value + gasData.fee
-        }
     }
 
 }

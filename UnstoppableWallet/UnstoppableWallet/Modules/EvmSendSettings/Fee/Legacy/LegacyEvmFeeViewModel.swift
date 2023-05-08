@@ -62,34 +62,38 @@ class LegacyEvmFeeViewModel {
 
     private func sync(transactionStatus: DataStatus<FallibleData<EvmFeeModule.Transaction>>) {
         let spinnerVisible: Bool
-        let maxFeeValue: FeeCell.Value?
+        let feeValue: FeeCell.Value?
         let gasLimit: String
 
         switch transactionStatus {
         case .loading:
             spinnerVisible = true
-            maxFeeValue = nil
+            feeValue = nil
             gasLimit = "n/a".localized
         case .failed(_):
             spinnerVisible = false
-            maxFeeValue = .error(text: "n/a".localized)
+            feeValue = .error(text: "n/a".localized)
             gasLimit = "n/a".localized
         case .completed(let fallibleTransaction):
             spinnerVisible = false
 
             let gasData = fallibleTransaction.data.gasData
-            let amountData = coinService.amountData(value: gasData.fee)
+            let amountData = coinService.amountData(value: gasData.estimatedFee)
+            let tilda = gasData.isSurcharged
             if fallibleTransaction.errors.isEmpty, let coinValue = amountData.coinValue.formattedFull {
-                maxFeeValue = .regular(text: coinValue, secondaryText: amountData.currencyValue?.formattedFull)
+                feeValue = .regular(
+                        text: "\(tilda ? "~" : "")\(coinValue)",
+                        secondaryText: amountData.currencyValue?.formattedFull.map { "\(tilda ? "~" : "")\($0)" }
+                )
             } else {
-                maxFeeValue = .error(text: "n/a".localized)
+                feeValue = .error(text: "n/a".localized)
             }
 
             gasLimit = gasData.limit.description
         }
 
         spinnerVisibleRelay.accept(spinnerVisible)
-        valueRelay.accept(maxFeeValue)
+        valueRelay.accept(feeValue)
         gasLimitRelay.accept(gasLimit)
     }
 

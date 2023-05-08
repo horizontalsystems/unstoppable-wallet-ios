@@ -7,42 +7,44 @@ import RxSwift
 
 class EvmCommonGasDataService {
     private let evmKit: EvmKit.Kit
-    private let gasLimitSurchargePercent: Int
-
     private(set) var predefinedGasLimit: Int?
 
-    init(evmKit: EvmKit.Kit, gasLimit: Int? = nil, gasLimitSurchargePercent: Int = 0) {
+    init(evmKit: EvmKit.Kit, predefinedGasLimit: Int?) {
         self.evmKit = evmKit
-        predefinedGasLimit = gasLimit
-        self.gasLimitSurchargePercent = gasLimitSurchargePercent
-    }
-
-    private func surchargedGasLimit(estimatedGasLimit: Int) -> Int {
-        estimatedGasLimit + Int(Double(estimatedGasLimit) / 100.0 * Double(gasLimitSurchargePercent))
+        self.predefinedGasLimit = predefinedGasLimit
     }
 
     func gasDataSingle(gasPrice: GasPrice, transactionData: TransactionData, stubAmount: BigUInt? = nil) -> Single<EvmFeeModule.GasData> {
-        if let gasLimit = predefinedGasLimit {
-            return .just(EvmFeeModule.GasData(limit: gasLimit, price: gasPrice))
+        if let predefinedGasLimit {
+            return .just(EvmFeeModule.GasData(limit: predefinedGasLimit, price: gasPrice))
         }
+
+        let surchargeRequired = !transactionData.input.isEmpty
 
         let adjustedTransactionData = stubAmount.map { TransactionData(to: transactionData.to, value: $0, input: transactionData.input) } ?? transactionData
 
-        return evmKit.estimateGas(transactionData: adjustedTransactionData, gasPrice: gasPrice).map { [weak self] estimatedGasLimit in
-            let gasLimit = self?.surchargedGasLimit(estimatedGasLimit: estimatedGasLimit) ?? estimatedGasLimit
+        return evmKit.estimateGas(transactionData: adjustedTransactionData, gasPrice: gasPrice)
+                .map { estimatedGasLimit in
+                    let limit = surchargeRequired ? EvmFeeModule.surcharged(gasLimit: estimatedGasLimit) : estimatedGasLimit
 
-            return EvmFeeModule.GasData(limit: gasLimit, price: gasPrice)
-        }
+                    return EvmFeeModule.GasData(
+                            limit: limit,
+                            estimatedLimit: estimatedGasLimit,
+                            price: gasPrice
+                    )
+                }
     }
 
 }
 
 extension EvmCommonGasDataService {
-    static func instance(evmKit: EvmKit.Kit, blockchainType: BlockchainType, gasLimit: Int? = nil, gasLimitSurchargePercent: Int = 0) -> EvmCommonGasDataService {
-        guard let rollupFeeContractAddress = blockchainType.rollupFeeContractAddress else {
-            return EvmCommonGasDataService(evmKit: evmKit, gasLimit: gasLimit, gasLimitSurchargePercent: gasLimitSurchargePercent)
+
+    static func instance(evmKit: EvmKit.Kit, blockchainType: BlockchainType, predefinedGasLimit: Int?) -> EvmCommonGasDataService {
+        if let rollupFeeContractAddress = blockchainType.rollupFeeContractAddress {
+            return EvmRollupGasDataService(evmKit: evmKit, l1GasFeeContractAddress: rollupFeeContractAddress, predefinedGasLimit: predefinedGasLimit)
         }
 
-        return EvmRollupGasDataService(evmKit: evmKit, l1GasFeeContractAddress: rollupFeeContractAddress, gasLimitSurchargePercent: gasLimitSurchargePercent)
+        return EvmCommonGasDataService(evmKit: evmKit, predefinedGasLimit: predefinedGasLimit)
     }
+
 }
