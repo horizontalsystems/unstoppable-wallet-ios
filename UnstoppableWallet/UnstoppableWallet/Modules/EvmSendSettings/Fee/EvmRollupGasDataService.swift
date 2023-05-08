@@ -7,10 +7,10 @@ import RxSwift
 class EvmRollupGasDataService: EvmCommonGasDataService {
     private let l1FeeProvider: L1FeeProvider
 
-    init(evmKit: EvmKit.Kit, l1GasFeeContractAddress: EvmKit.Address, gasLimit: Int? = nil, gasLimitSurchargePercent: Int = 0) {
+    init(evmKit: EvmKit.Kit, l1GasFeeContractAddress: EvmKit.Address, predefinedGasLimit: Int?) {
         l1FeeProvider = L1FeeProvider.instance(evmKit: evmKit, contractAddress: l1GasFeeContractAddress, minLogLevel: .error)
 
-        super.init(evmKit: evmKit, gasLimit: gasLimit, gasLimitSurchargePercent: gasLimitSurchargePercent)
+        super.init(evmKit: evmKit, predefinedGasLimit: predefinedGasLimit)
     }
 
     private func l1GasFeeSingle(transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int) -> Single<BigUInt> {
@@ -25,9 +25,9 @@ class EvmRollupGasDataService: EvmCommonGasDataService {
     }
 
     override func gasDataSingle(gasPrice: GasPrice, transactionData: TransactionData, stubAmount: BigUInt?) -> Single<EvmFeeModule.GasData> {
-        if let gasLimit = predefinedGasLimit {
-            return l1GasFeeSingle(transactionData: transactionData, gasPrice: gasPrice, gasLimit: gasLimit).map { l1GasFee in
-                EvmFeeModule.RollupGasData(additionalFee: l1GasFee, limit: gasLimit, price: gasPrice)
+        if let predefinedGasLimit {
+            return l1GasFeeSingle(transactionData: transactionData, gasPrice: gasPrice, gasLimit: predefinedGasLimit).map { l1GasFee in
+                EvmFeeModule.RollupGasData(additionalFee: l1GasFee, limit: predefinedGasLimit, price: gasPrice)
             }
         }
 

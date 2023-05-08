@@ -34,7 +34,7 @@ struct WalletConnectSendEthereumTransactionRequestModule {
 
         guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
                 evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendEvmData, coinServiceFactory: coinServiceFactory,
-                gasPrice: service.gasPrice, gasLimit: request.transaction.gasLimit, gasLimitSurchargePercent: 10
+                gasPrice: service.gasPrice, predefinedGasLimit: request.transaction.gasLimit
         ) else {
             return nil
         }

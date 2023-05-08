@@ -34,8 +34,6 @@ class OneInchFeeService {
     private var disposeBag = DisposeBag()
     private var retryDisposeBag = DisposeBag()
 
-    private static let gasLimitSurchargePercent = 25
-
     private let evmKit: EvmKit.Kit
     private let provider: OneInchProvider
 
@@ -113,10 +111,7 @@ class OneInchFeeService {
 
     private func sync(swap: OneInchKit.Swap, fallibleGasPrice: FallibleData<EvmFeeModule.GasPrices>) {
         let tx = swap.transaction
-        let gasData = EvmFeeModule.GasData(
-                limit: surchargedGasLimit(gasLimit: surchargedGasLimit(gasLimit: tx.gasLimit)),
-                price: fallibleGasPrice.data.userDefined
-        )
+        let gasData = EvmFeeModule.GasData(limit: tx.gasLimit, price: fallibleGasPrice.data.userDefined)
 
         parameters.amountTo = swap.amountOut ?? 0
         let transactionData = EvmKit.TransactionData(to: tx.to, value: tx.value, input: tx.data)
@@ -134,20 +129,12 @@ class OneInchFeeService {
         ))
     }
 
-    private func surchargedGasLimit(gasLimit: Int) -> Int {
-        gasLimit * (100 + Self.gasLimitSurchargePercent) / 100
-    }
-
 }
 
 extension OneInchFeeService: IEvmFeeService {
 
     var statusObservable: Observable<DataStatus<FallibleData<EvmFeeModule.Transaction>>> {
         transactionStatusRelay.asObservable()
-    }
-
-    var hasEstimatedFee: Bool {
-        Self.gasLimitSurchargePercent != 0
     }
 
 }

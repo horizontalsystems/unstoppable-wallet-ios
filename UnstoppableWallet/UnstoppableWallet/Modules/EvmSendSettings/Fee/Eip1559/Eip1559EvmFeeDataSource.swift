@@ -10,7 +10,7 @@ class Eip1559EvmFeeDataSource {
     private let viewModel: Eip1559EvmFeeViewModel
     private let disposeBag = DisposeBag()
 
-    private let maxFeeCell: FeeCell
+    private let feeCell: FeeCell
     private var gasLimitCell = BaseThemeCell()
     private var baseFeeCell = BaseThemeCell()
     private var maxGasPriceCell = StepperAmountInputCell(allowFractionalNumbers: true)
@@ -23,7 +23,7 @@ class Eip1559EvmFeeDataSource {
     init(viewModel: Eip1559EvmFeeViewModel) {
         self.viewModel = viewModel
 
-        maxFeeCell = FeeCell(viewModel: viewModel, title: "fee_settings.max_fee".localized)
+        feeCell = FeeCell(viewModel: viewModel, title: "fee_settings.network_fee".localized)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -31,12 +31,12 @@ class Eip1559EvmFeeDataSource {
     }
 
     func viewDidLoad() {
-        maxFeeCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
+        feeCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
         gasLimitCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: false)
         baseFeeCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
 
-        maxFeeCell.onOpenInfo = { [weak self] in
-            self?.onOpenInfo?("fee_settings.max_fee".localized, "fee_settings.max_fee.info".localized)
+        feeCell.onOpenInfo = { [weak self] in
+            self?.onOpenInfo?("fee_settings.network_fee".localized, "fee_settings.network_fee.info".localized)
         }
         syncGasLimitCell()
         syncBaseFeeCell()
@@ -106,7 +106,7 @@ extension Eip1559EvmFeeDataSource: IEvmSendSettingsDataSource {
                     headerState: .margin(height: .margin12),
                     rows: [
                         StaticRow(
-                                cell: maxFeeCell,
+                                cell: feeCell,
                                 id: "fee",
                                 height: .heightDoubleLineCell
                         ),

@@ -18,7 +18,7 @@ class SendEvmTransactionViewController: ThemeViewController {
     let bottomWrapper = BottomGradientHolder()
 
     private let nonceCell = BaseThemeCell()
-    private let maxFeeCell: FeeCell
+    private let feeCell: FeeCell
 
     private var sectionViewItems = [SendEvmTransactionViewModel.SectionViewItem]()
     private let caution1Cell = TitledHighlightedDescriptionCell()
@@ -31,7 +31,7 @@ class SendEvmTransactionViewController: ThemeViewController {
         self.transactionViewModel = transactionViewModel
         self.settingsViewModel = settingsViewModel
 
-        maxFeeCell = FeeCell(viewModel: settingsViewModel.feeViewModel, title: "fee_settings.max_fee".localized)
+        feeCell = FeeCell(viewModel: settingsViewModel.feeViewModel, title: "fee_settings.network_fee".localized)
 
         super.init()
     }
@@ -48,8 +48,8 @@ class SendEvmTransactionViewController: ThemeViewController {
 
         nonceCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
 
-        maxFeeCell.onOpenInfo = { [weak self] in
-            self?.openInfo(title: "fee_settings.max_fee".localized, description: "fee_settings.max_fee.info".localized)
+        feeCell.onOpenInfo = { [weak self] in
+            self?.openInfo(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
         }
 
         view.addSubview(tableView)
@@ -230,7 +230,7 @@ extension SendEvmTransactionViewController: SectionsDataSource {
                         headerState: .margin(height: .margin16),
                         rows: [
                             StaticRow(
-                                    cell: maxFeeCell,
+                                    cell: feeCell,
                                     id: "fee",
                                     height: .heightDoubleLineCell
                             )
