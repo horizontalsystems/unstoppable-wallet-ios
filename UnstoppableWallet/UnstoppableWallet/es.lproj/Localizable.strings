@@ -1313,8 +1313,8 @@
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock sólo funciona para enviar a direcciones BIP44 (comenzando con 1)";
 
-"fee_settings.max_fee" = "Comisión Máx.";
-"fee_settings.max_fee.info" = "La cuota máxima estimada de transacción a pagar por esta transacción, calculado en base al límite de gas, tasa máxima de comisión y valores máximos de tarifa de prioridad debajo. La tarifa real pagada normalmente será menor.";
+"fee_settings.network_fee" = "Cuota de transferencia";
+"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "La complejidad de la transacción se mide en unidades llamadas \"gas\". El límite de gas es el máximo estimado de gas necesario para ejecutarlo. El gas utilizado será normalmente más bajo.";
 
