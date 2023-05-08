@@ -1316,8 +1316,8 @@
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "时间锁（TimeLock）只适用于发送到BIP44地址（从1开始）";
 
-"fee_settings.max_fee" = "最大手续费";
-"fee_settings.max_fee.info" = "需为此交易支付的最高估计交易费用是根据以下燃料限制（gas limit）、最高费率和最高优先级费用价值计算得出。支付的实际费用通常会较低。";
+"fee_settings.network_fee" = "网络费";
+"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
 "fee_settings.gas_limit" = "燃料限制";
 "fee_settings.gas_limit.info" = "交易复杂度以被称为“gas”（燃料）的单位度量。它将根据被执行的智能合同而变化。Gas Limit（燃料限制）是执行它所需要的估计最大燃料。使用的实际燃料通常会较低。";
 
