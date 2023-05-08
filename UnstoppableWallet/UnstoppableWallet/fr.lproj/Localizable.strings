@@ -1313,8 +1313,8 @@
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "Le TimeLock ne fonctionne que pour les envois vers les adresses du BIP44 (commençant par 1)";
 
-"fee_settings.max_fee" = "Frais Max";
-"fee_settings.max_fee.info" = "Le montant maximum estimé des frais à payer pour cette transaction, calculé sur la base des valeurs de limite de gas, de taux de frais maximum et de frais de priorité maximum ci-dessous. Les frais réels payés sont généralement inférieurs.";
+"fee_settings.network_fee" = "Frais de réseau";
+"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "La complexité des transactions est mesurée en unités appelées \"gas\". Elles varient en fonction du contrat intelligent en cours d'exécution. La limite de gas est le volume maximum estimé de gas nécessaire pour son exécution. Le volume de gaz réellement utilisé est généralement inférieur.";
 
