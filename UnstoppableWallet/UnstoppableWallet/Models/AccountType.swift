@@ -3,6 +3,7 @@ import HdWalletKit
 import EvmKit
 import BitcoinCore
 import MarketKit
+import Crypto
 
 enum AccountType {
     case mnemonic(words: [String], salt: String, bip39Compliant: Bool)
@@ -19,6 +20,23 @@ enum AccountType {
 
         default: return nil
         }
+    }
+
+    var uniqueId: Data {
+        let privateData: Data
+        switch self {
+        case let .mnemonic(words, salt, bip39Compliant):
+            let description = words + [salt, bip39Compliant.description]
+            privateData = description.joined(separator: "|").data(using: .utf8) ?? Data() // always non-null
+        case let .evmPrivateKey(data):
+            privateData = data
+        case let .evmAddress(address):
+            privateData = address.raw
+        case let .hdExtendedKey(key):
+            privateData = key.serialized
+        }
+
+        return Data(SHA512.hash(data: privateData))
     }
 
     // todo: remove this method
