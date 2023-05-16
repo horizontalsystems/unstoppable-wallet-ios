@@ -1829,7 +1829,6 @@
 		ABC9A47196E46F6A336590EC /* SwapInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A90E8831B7B909124AB2 /* SwapInputCell.swift */; };
 		ABC9A47781ECAC34ADE55B41 /* SendConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2FD4A59DB53631435BA /* SendConfirmationService.swift */; };
 		ABC9A4801E4964F6AED1E667 /* WalletConnectMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AEA1D717D8CED8462AB0 /* WalletConnectMainViewModel.swift */; };
-		ABC9A4B6351EDD6C5BAF15EA /* ApprovingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF4A3D991A9C9FDCCD73 /* ApprovingView.swift */; };
 		ABC9A4B643D98FB95F431401 /* SendBitcoinAmountInputService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACF1F55164BDFD049793 /* SendBitcoinAmountInputService.swift */; };
 		ABC9A4BD4CA7A7872CE6167E /* BaseSendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ABE97578DC667CBDC11A /* BaseSendViewController.swift */; };
 		ABC9A4CD35CF43C88EC13909 /* SendEip1155Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC6A0B950C0AABD5A93E /* SendEip1155Service.swift */; };
@@ -1878,7 +1877,6 @@
 		ABC9A6E939BDC0269313A66D /* SendModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD1F2311CC6425CF9D90 /* SendModule.swift */; };
 		ABC9A6EF732968778F9FCB1F /* SimpleActivateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A785F86A11CA6BCE2190 /* SimpleActivateViewModel.swift */; };
 		ABC9A6F88E51293F2605CACD /* ContactBookContactModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB2ED4E48D4FCEDBE769 /* ContactBookContactModule.swift */; };
-		ABC9A708691FFEDC618A9F54 /* ApprovingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF4A3D991A9C9FDCCD73 /* ApprovingView.swift */; };
 		ABC9A70AE588307EA1D3A414 /* SendConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2FD4A59DB53631435BA /* SendConfirmationService.swift */; };
 		ABC9A7219A4F94D981558DC2 /* WalletConnectV2ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AFE16BDDA2ECBE8729CA /* WalletConnectV2ListView.swift */; };
 		ABC9A727EC8A3C74C9C1A31A /* WalletConnectMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3A694467493C6F4AACE /* WalletConnectMainViewController.swift */; };
@@ -3372,7 +3370,6 @@
 		ABC9AEC034DE5784F55BD5F3 /* PseudoAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PseudoAccessoryView.swift; sourceTree = "<group>"; };
 		ABC9AF15BD67548E6D755CA0 /* SendBinanceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBinanceViewController.swift; sourceTree = "<group>"; };
 		ABC9AF26FDCB363793BF66E1 /* Integer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Integer.swift; sourceTree = "<group>"; };
-		ABC9AF4A3D991A9C9FDCCD73 /* ApprovingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApprovingView.swift; sourceTree = "<group>"; };
 		ABC9AF574F7957C169129905 /* WalletConnectV2MainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2MainService.swift; sourceTree = "<group>"; };
 		ABC9AF8E8DE67732371A00E0 /* FeePriceScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeePriceScale.swift; sourceTree = "<group>"; };
 		ABC9AF9AABCDDAE5E7D0244C /* SimpleActivateModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleActivateModule.swift; sourceTree = "<group>"; };
@@ -5970,7 +5967,6 @@
 			children = (
 				ABC9A35EBE2AA1A07619F607 /* InputCard */,
 				ABC9AE67921B3AE4F6C6A5E2 /* PriceView */,
-				ABC9AF4A3D991A9C9FDCCD73 /* ApprovingView.swift */,
 			);
 			path = SwapNew;
 			sourceTree = "<group>";
@@ -7820,7 +7816,6 @@
 				ABC9AAA26F0215D41AE50C57 /* SwapInputCell.swift in Sources */,
 				ABC9A2876CBE0C74849C9AC4 /* SwapInputModule.swift in Sources */,
 				ABC9A0E743DDE8F4ADA483EB /* SwapPriceCell.swift in Sources */,
-				ABC9A708691FFEDC618A9F54 /* ApprovingView.swift in Sources */,
 				ABC9AD05E7B986179310D6D7 /* SwapInputAccessoryView.swift in Sources */,
 				ABC9A75CF08214FBE3B327E5 /* SimpleActivateModule.swift in Sources */,
 				ABC9A0FE58CC65114E2B296F /* SimpleActivateService.swift in Sources */,
@@ -8936,7 +8931,6 @@
 				ABC9A47196E46F6A336590EC /* SwapInputCell.swift in Sources */,
 				ABC9AE18DE62E4DDDD44916D /* SwapInputModule.swift in Sources */,
 				ABC9A60350DF10E0E2534216 /* SwapPriceCell.swift in Sources */,
-				ABC9A4B6351EDD6C5BAF15EA /* ApprovingView.swift in Sources */,
 				ABC9AEAA851D9BB91E8338D1 /* SwapInputAccessoryView.swift in Sources */,
 				ABC9AD12C685D7260D65F914 /* SimpleActivateModule.swift in Sources */,
 				ABC9AD6BA73798EF248D7311 /* SimpleActivateService.swift in Sources */,
@@ -9656,7 +9650,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ComponentKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.0;
+				version = 2.0.2;
 			};
 		};
 		D3C187D3290FCF7D00FE1900 /* XCRemoteSwiftPackageReference "HUD.Swift" */ = {

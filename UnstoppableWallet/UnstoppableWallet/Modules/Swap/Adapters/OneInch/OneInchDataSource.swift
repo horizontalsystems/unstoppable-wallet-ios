@@ -28,9 +28,9 @@ class OneInchDataSource {
     private let errorCell = TitledHighlightedDescriptionCell()
     private let buttonStackCell = StackViewCell()
     private let revokeButton = PrimaryButton()
-    private let approveButton = PrimaryButton()
+    private let approve1Button = PrimaryButton()
     private let proceedButton = PrimaryButton()
-    private let approvingView = ApprovingView(title: "swap.approving_button".localized)
+    private let proceed2Button = PrimaryButton()
 
     var onOpen: ((_ viewController: UIViewController, _ viaPush: Bool) -> ())? = nil
     var onOpenSelectProvider: (() -> ())? = nil
@@ -77,26 +77,18 @@ class OneInchDataSource {
         revokeButton.addTarget(self, action: #selector((onTapRevokeButton)), for: .touchUpInside)
         buttonStackCell.add(view: revokeButton)
 
-        approveButton.set(style: .gray)
-        approveButton.setImage(UIImage(named: "numbers_1_20"), for: .normal)
-        approveButton.setImage(UIImage(named: "numbers_1_disabled_20"), for: .disabled)
-        approveButton.syncInsets()
-
-        approveButton.addTarget(self, action: #selector((onTapApproveButton)), for: .touchUpInside)
-
-        approveButton.addSubview(approvingView)
-        approvingView.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.centerY.equalToSuperview()
-        }
-        approvingView.isHidden = true
+        approve1Button.addTarget(self, action: #selector((onTapApproveButton)), for: .touchUpInside)
+        buttonStackCell.add(view: approve1Button)
 
         errorCell.set(backgroundStyle: .transparent, isFirst: true)
-        buttonStackCell.add(view: approveButton)
 
         proceedButton.set(style: .yellow)
         proceedButton.addTarget(self, action: #selector((onTapProceedButton)), for: .touchUpInside)
         buttonStackCell.add(view: proceedButton)
+
+        proceed2Button.set(style: .yellow, accessoryType: .icon(image: UIImage(named: "numbers_2_24")))
+        proceed2Button.addTarget(self, action: #selector((onTapProceedButton)), for: .touchUpInside)
+        buttonStackCell.add(view: proceed2Button)
 
         subscribeToViewModel()
     }
@@ -201,10 +193,11 @@ class OneInchDataSource {
 
     private func handle(proceedActionState: OneInchViewModel.ActionState) {
         handle(actionState: proceedActionState, button: proceedButton)
+        handle(actionState: proceedActionState, button: proceed2Button)
     }
 
     private func handle(approveActionState: OneInchViewModel.ActionState) {
-        handle(actionState: approveActionState, button: approveButton)
+        handle(actionState: approveActionState, button: approve1Button)
     }
 
     private func handle(actionState: OneInchViewModel.ActionState, button: PrimaryButton) {
@@ -224,22 +217,16 @@ class OneInchDataSource {
 
     private func handle(approveStepState: SwapModule.ApproveStepState) {
         let isApproving = approveStepState == .approving
-        approvingView.isHidden = !isApproving
-        approvingView.startAnimating(isApproving)
 
-        approveButton.setImage(isApproving ? nil : UIImage(named: "numbers_1_20"), for: .normal)
-        approveButton.setImage(isApproving ? nil : UIImage(named: "numbers_1_disabled_20"), for: .disabled)
-        approveButton.syncInsets()
+        approve1Button.set(style: .gray, accessoryType: isApproving ? .spinner : .icon(image: UIImage(named: "numbers_1_24")))
 
         switch approveStepState {
         case .notApproved, .revokeRequired, .revoking:
-            proceedButton.setImage(nil, for: .normal)
-            proceedButton.setImage(nil, for: .disabled)
-            proceedButton.syncInsets()
+            proceedButton.isHidden = false
+            proceed2Button.isHidden = true
         default:
-            proceedButton.setImage(UIImage(named: "numbers_2_20"), for: .normal)
-            proceedButton.setImage(UIImage(named: "numbers_2_disabled_20"), for: .disabled)
-            proceedButton.syncInsets()
+            proceedButton.isHidden = true
+            proceed2Button.isHidden = false
         }
 
         onReload?()
