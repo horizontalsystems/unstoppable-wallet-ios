@@ -182,7 +182,7 @@ class UniswapViewModel {
         }
         if case .pending = pendingAllowanceService.state {
             revokeWarning = nil
-            approveAction = .disabled(title: "")    // UI will show custom approvingView
+            approveAction = .disabled(title: "swap.approving_button".localized)
             approveStep = .approving
         } else if case .revoking = pendingAllowanceService.state {
             revokeWarning = nil

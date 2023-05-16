@@ -5,12 +5,12 @@
       "scale" : "1x"
     },
     {
-      "filename" : "numbers ios@2x-2.png",
+      "filename" : "numbers 1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "numbers ios@3x-2.png",
+      "filename" : "numbers 1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
