@@ -6,7 +6,7 @@ import RxRelay
 import MarketKit
 import HsExtensions
 
-class UniswapTradeService {
+class UniswapTradeService: ISwapSettingProvider {
     private static let timerFramePerSecond = 30
 
     private var disposeBag = DisposeBag()

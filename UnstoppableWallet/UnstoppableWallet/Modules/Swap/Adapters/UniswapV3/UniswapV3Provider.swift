@@ -36,9 +36,9 @@ extension UniswapV3Provider {
 
         switch tradeType {
         case .exactIn:
-            return try await swapKit.bestTradeExactIn(tokenIn: uniswapTokenIn, tokenOut: uniswapTokenOut, amountIn: amount)
+            return try await swapKit.bestTradeExactIn(tokenIn: uniswapTokenIn, tokenOut: uniswapTokenOut, amountIn: amount, options: tradeOptions)
         case .exactOut:
-            return try await swapKit.bestTradeExactOut(tokenIn: uniswapTokenIn, tokenOut: uniswapTokenOut, amountOut: amount)
+            return try await swapKit.bestTradeExactOut(tokenIn: uniswapTokenIn, tokenOut: uniswapTokenOut, amountOut: amount, options: tradeOptions)
         }
     }
 

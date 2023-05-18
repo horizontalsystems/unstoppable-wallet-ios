@@ -7,7 +7,7 @@ import MarketKit
 import HsExtensions
 import Combine
 
-class UniswapV3TradeService {
+class UniswapV3TradeService: ISwapSettingProvider {
     private static let timerFramePerSecond: Int = 30
 
     private var disposeBag = DisposeBag()
@@ -19,8 +19,8 @@ class UniswapV3TradeService {
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
-    private static let warningPriceImpact: Decimal = 1
-    private static let forbiddenPriceImpact: Decimal = 5
+    private static let warningPriceImpact: Decimal = -1
+    private static let forbiddenPriceImpact: Decimal = -5
 
     private let uniswapProvider: UniswapV3Provider
     let syncInterval: TimeInterval
@@ -150,21 +150,21 @@ class UniswapV3TradeService {
                 let bestTrade = try await uniswapProvider.bestTrade(tokenIn: tokenIn, tokenOut: tokenOut, amount: amount, tradeType: tradeType, tradeOptions: settings.tradeOptions)
                 self?.handle(tradeData: bestTrade)
             } catch {
-                var error = error
+                var convertedError = error
 
-//                if case UniswapKit.Kit.TradeError.tradeNotFound = error {
-//                    let wethAddressString = uniswapProvider.wethAddress.hex
-//
-//                    if case .native = tokenIn?.type, case .eip20(let address) = tokenOut?.type, address == wethAddressString {
-//                        error = UniswapModule.TradeError.wrapUnwrapNotAllowed
-//                    }
-//
-//                    if case .native = tokenOut?.type, case .eip20(let address) = tokenIn?.type, address == wethAddressString {
-//                        error = UniswapModule.TradeError.wrapUnwrapNotAllowed
-//                    }
-//                }
-//
-                self?.state = .notReady(errors: [error])
+                if case UniswapKit.KitV3.TradeError.tradeNotFound = error {
+                    let wethAddressString = uniswapProvider.wethAddress.hex
+
+                    if case .native = tokenIn.type, case .eip20(let address) = tokenOut.type, address == wethAddressString {
+                        convertedError = UniswapModule.TradeError.wrapUnwrapNotAllowed
+                    }
+
+                    if case .native = tokenOut.type, case .eip20(let address) = tokenIn.type, address == wethAddressString {
+                        convertedError = UniswapModule.TradeError.wrapUnwrapNotAllowed
+                    }
+                }
+
+                self?.state = .notReady(errors: [convertedError])
             }
         }.store(in: &tasks)
 
@@ -174,13 +174,11 @@ class UniswapV3TradeService {
     private func handle(tradeData: TradeDataV3) {
         bestTrade = tradeData
 
-        let estimatedAmount = tradeData.tradeType == .exactIn ? tradeData.tradeAmountOut : tradeData.tradeAmountIn
-
-        switch tradeData.tradeType {
+        switch tradeData.type {
         case .exactIn:
-            amountOut = estimatedAmount ?? 0
+            amountOut = tradeData.amountOut ?? 0
         case .exactOut:
-            amountIn = estimatedAmount ?? 0
+            amountIn = tradeData.amountIn ?? 0
         }
 
         let trade = Trade(tradeData: tradeData)
@@ -326,14 +324,15 @@ extension UniswapV3TradeService {
         init(tradeData: TradeDataV3) {
             self.tradeData = tradeData
 
-            impactLevel = .normal
-//            tradeData.priceImpact.map { priceImpact in
-//                switch priceImpact {
-//                case 0..<UniswapV3TradeService.warningPriceImpact: return .normal
-//                case UniswapV3TradeService.warningPriceImpact..<UniswapV3TradeService.forbiddenPriceImpact: return .warning
-//                default: return .forbidden
-//                }
-//            }
+            impactLevel = tradeData.priceImpact.map { priceImpact in
+                if priceImpact > UniswapV3TradeService.warningPriceImpact {
+                    return .normal
+                }
+                if priceImpact > UniswapV3TradeService.forbiddenPriceImpact {
+                    return .warning
+                }
+                return .forbidden
+            }
         }
     }
 

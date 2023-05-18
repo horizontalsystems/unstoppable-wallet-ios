@@ -2,13 +2,18 @@ import UIKit
 import ThemeKit
 import MarketKit
 
+protocol ISwapSettingProvider: AnyObject {
+    var tokenIn: Token? { get }
+    var settings: UniswapSettings { get set }
+}
+
 struct UniswapSettingsModule {
 
-    static func dataSource(tradeService: UniswapTradeService) -> ISwapSettingsDataSource? {
+    static func dataSource(settingProvider: ISwapSettingProvider, showDeadline: Bool) -> ISwapSettingsDataSource? {
         guard let ethereumToken = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: .ethereum, tokenType: .native)) else {
             return nil
         }
-        let token = tradeService.tokenIn
+        let token = settingProvider.tokenIn
 
         let coinCode = token?.coin.code ?? ethereumToken.coin.code
         let blockchainType = token?.blockchainType ?? ethereumToken.blockchainType
@@ -25,14 +30,17 @@ struct UniswapSettingsModule {
         }
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: ethereumToken.blockchainType)
-        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: blockchainType, initialAddress: tradeService.settings.recipient)
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: blockchainType, initialAddress: settingProvider.settings.recipient)
 
-        let service = UniswapSettingsService(tradeOptions: tradeService.settings, addressService: addressService)
-        let viewModel = UniswapSettingsViewModel(service: service, tradeService: tradeService)
+        let service = UniswapSettingsService(tradeOptions: settingProvider.settings, addressService: addressService)
+        let viewModel = UniswapSettingsViewModel(service: service, settingProvider: settingProvider)
 
         let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
         let slippageViewModel = SwapSlippageViewModel(service: service, decimalParser: AmountDecimalParser())
-        let deadlineViewModel = SwapDeadlineViewModel(service: service, decimalParser: AmountDecimalParser())
+
+        let deadlineViewModel: SwapDeadlineViewModel? = showDeadline ?
+                .init(service: service, decimalParser: AmountDecimalParser()) :
+                nil
 
         return UniswapSettingsDataSource(
                 viewModel: viewModel,
@@ -43,3 +51,4 @@ struct UniswapSettingsModule {
     }
 
 }
+

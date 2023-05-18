@@ -67,9 +67,7 @@ extension UniswapV3Module: ISwapProvider {
     }
 
     var settingsDataSource: ISwapSettingsDataSource? {
-// todo:
-//        UniswapSettingsModule.dataSource(tradeService: tradeService)
-        nil
+        UniswapSettingsModule.dataSource(settingProvider: tradeService, showDeadline: false)
     }
 
     var swapState: SwapModule.DataSourceState {
