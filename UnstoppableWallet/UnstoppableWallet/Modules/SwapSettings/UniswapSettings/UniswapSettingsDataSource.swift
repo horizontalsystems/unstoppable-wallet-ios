@@ -10,7 +10,7 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
 
     private let viewModel: UniswapSettingsViewModel
     private let slippageViewModel: SwapSlippageViewModel
-    private let deadlineViewModel: SwapDeadlineViewModel
+    private let deadlineViewModel: SwapDeadlineViewModel?
 
     private let recipientCell: RecipientAddressInputCell
     private let recipientCautionCell: RecipientAddressCautionCell
@@ -27,7 +27,7 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
     var onReload: (() -> ())?
     var onChangeButtonState: ((Bool, String) -> ())?
 
-    init(viewModel: UniswapSettingsViewModel, recipientViewModel: RecipientAddressViewModel, slippageViewModel: SwapSlippageViewModel, deadlineViewModel: SwapDeadlineViewModel) {
+    init(viewModel: UniswapSettingsViewModel, recipientViewModel: RecipientAddressViewModel, slippageViewModel: SwapSlippageViewModel, deadlineViewModel: SwapDeadlineViewModel?) {
         self.viewModel = viewModel
         self.slippageViewModel = slippageViewModel
         self.deadlineViewModel = deadlineViewModel
@@ -56,14 +56,21 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
 
         slippageCautionCell.onChangeHeight = { [weak self] in self?.onReload?() }
 
-        deadlineCell.inputPlaceholder = deadlineViewModel.placeholder
-        deadlineCell.inputText = deadlineViewModel.initialValue
-        deadlineCell.set(shortcuts: deadlineViewModel.shortcuts)
-        deadlineCell.keyboardType = .numberPad
-        deadlineCell.isValidText = { [weak self] text in self?.deadlineViewModel.isValid(text: text) ?? true }
-        deadlineCell.onChangeHeight = { [weak self] in self?.onReload?() }
-        deadlineCell.onChangeText = { [weak self] text in self?.deadlineViewModel.onChange(text: text) }
-
+        if let deadlineViewModel {
+            deadlineCell.inputPlaceholder = deadlineViewModel.placeholder
+            deadlineCell.inputText = deadlineViewModel.initialValue
+            deadlineCell.set(shortcuts: deadlineViewModel.shortcuts)
+            deadlineCell.keyboardType = .numberPad
+            deadlineCell.isValidText = { text in
+                deadlineViewModel.isValid(text: text)
+            }
+            deadlineCell.onChangeHeight = { [weak self] in
+                self?.onReload?()
+            }
+            deadlineCell.onChangeText = { text in
+                deadlineViewModel.onChange(text: text)
+            }
+        }
         serviceFeeNoteCell.descriptionText = "swap.advanced_settings.service_fee_description".localized
 
         subscribe(disposeBag, slippageViewModel.cautionDriver) { [weak self] in
@@ -94,7 +101,7 @@ class UniswapSettingsDataSource: ISwapSettingsDataSource {
 extension UniswapSettingsDataSource {
 
     func buildSections(tableView: SectionsTableView) -> [SectionProtocol] {
-        [
+        var sections = [
             Section(
                     id: "top-margin",
                     headerState: .margin(height: .margin12)
@@ -143,8 +150,9 @@ extension UniswapSettingsDataSource {
                         )
                     ]
             ),
-
-            Section(
+        ]
+        if let deadlineViewModel {
+            sections.append(Section(
                     id: "deadline",
                     headerState: tableView.sectionHeader(text: "swap.advanced_settings.deadline".localized),
                     footerState: tableView.sectionFooter(text: "swap.advanced_settings.deadline.footer".localized),
@@ -157,21 +165,22 @@ extension UniswapSettingsDataSource {
                                 }
                         )
                     ]
-            ),
-
-            Section(
-                    id: "service-fee",
-                    rows: [
-                        StaticRow(
-                                cell: serviceFeeNoteCell,
-                                id: "service-fee-cell",
-                                dynamicHeight: { [weak self] width in
-                                    self?.serviceFeeNoteCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+            ))
+        }
+        sections.append(Section(
+                id: "service-fee",
+                rows: [
+                    StaticRow(
+                            cell: serviceFeeNoteCell,
+                            id: "service-fee-cell",
+                            dynamicHeight: { [weak self] width in
+                                self?.serviceFeeNoteCell.height(containerWidth: width) ?? 0
+                            }
+                    )
+                ]
             )
-        ]
+        )
+        return sections
     }
 
 }

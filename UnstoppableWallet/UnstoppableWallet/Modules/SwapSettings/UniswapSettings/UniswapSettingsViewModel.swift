@@ -5,13 +5,13 @@ class UniswapSettingsViewModel {
     private let disposeBag = DisposeBag()
 
     private let service: UniswapSettingsService
-    private let tradeService: UniswapTradeService
+    private let settingProvider: ISwapSettingProvider
 
     private let actionRelay = BehaviorRelay<ActionState>(value: .enabled)
 
-    init(service: UniswapSettingsService, tradeService: UniswapTradeService) {
+    init(service: UniswapSettingsService, settingProvider: ISwapSettingProvider) {
         self.service = service
-        self.tradeService = tradeService
+        self.settingProvider = settingProvider
 
         service.stateObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -52,7 +52,7 @@ extension UniswapSettingsViewModel {
 
     public func doneDidTap() -> Bool {
         if case let .valid(tradeOptions) = service.state {
-            tradeService.settings = tradeOptions
+            settingProvider.settings = tradeOptions
             return true
         }
         return false
