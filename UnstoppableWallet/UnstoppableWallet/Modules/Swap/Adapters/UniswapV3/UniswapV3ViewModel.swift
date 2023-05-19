@@ -4,6 +4,7 @@ import RxCocoa
 import UniswapKit
 import CurrencyKit
 import EvmKit
+import HsToolKit
 
 class UniswapV3ViewModel {
     private let disposeBag = DisposeBag()
@@ -104,10 +105,13 @@ class UniswapV3ViewModel {
 
     private func sync(errors: [Error]? = nil) {
         let errors = errors ?? service.errors
-
         let filtered = errors.filter { error in
+            if error.isExplicitlyCancelled {
+                return false
+            }
+
             switch error {
-            case let error as UniswapKit.Kit.TradeError: return error != .zeroAmount
+            case let error as UniswapKit.KitV3.TradeError: return error != .zeroAmount
             case _ as EvmFeeModule.GasDataError: return false
             case _ as SwapModule.SwapError: return false
             default: return true
@@ -132,7 +136,7 @@ class UniswapV3ViewModel {
             } else {
                 buyPriceRelay.accept(nil)
             }
-            priceImpactRelay.accept(viewItemHelper.priceImpactViewItem(priceImpact: nil, impactLevel: trade.impactLevel))
+            priceImpactRelay.accept(viewItemHelper.priceImpactViewItem(priceImpact: trade.tradeData.priceImpact, impactLevel: trade.impactLevel))
         case .notReady:
             buyPriceRelay.accept(nil)
             priceImpactRelay.accept(nil)

@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import EvmKit
 import UniswapKit
@@ -5,7 +6,6 @@ import RxSwift
 import RxRelay
 import MarketKit
 import HsExtensions
-import Combine
 
 class UniswapV3TradeService: ISwapSettingProvider {
     private static let timerFramePerSecond: Int = 30
@@ -19,8 +19,8 @@ class UniswapV3TradeService: ISwapSettingProvider {
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
-    private static let warningPriceImpact: Decimal = -1
-    private static let forbiddenPriceImpact: Decimal = -5
+    private static let warningPriceImpact: Decimal = 1
+    private static let forbiddenPriceImpact: Decimal = 5
 
     private let uniswapProvider: UniswapV3Provider
     let syncInterval: TimeInterval
@@ -325,10 +325,10 @@ extension UniswapV3TradeService {
             self.tradeData = tradeData
 
             impactLevel = tradeData.priceImpact.map { priceImpact in
-                if priceImpact > UniswapV3TradeService.warningPriceImpact {
+                if priceImpact < UniswapV3TradeService.warningPriceImpact {
                     return .normal
                 }
-                if priceImpact > UniswapV3TradeService.forbiddenPriceImpact {
+                if priceImpact < UniswapV3TradeService.forbiddenPriceImpact {
                     return .warning
                 }
                 return .forbidden
