@@ -17,7 +17,8 @@ class ContactLabelService {
         }
     }
 
-    var observedAddress: String = ""
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.contact-label-service", qos: .userInitiated)
+    private var observedAddress: String = ""
 
     init(contactManager: ContactBookManager?, blockchainType: BlockchainType) {
         self.contactManager = contactManager
@@ -29,15 +30,17 @@ class ContactLabelService {
     }
 
     private func sync() {
-        guard contactManager?.state.data != nil, !observedAddress.isEmpty else {
-            state = .idle
-            return
-        }
+        queue.sync {
+            guard contactManager?.state.data != nil, !observedAddress.isEmpty else {
+                state = .idle
+                return
+            }
 
-        if contactManager?.name(blockchainType: blockchainType, address: observedAddress) != nil {
-            state = .exist
-        } else {
-            state = .notExist
+            if contactManager?.name(blockchainType: blockchainType, address: observedAddress) != nil {
+                state = .exist
+            } else {
+                state = .notExist
+            }
         }
     }
 
@@ -50,7 +53,9 @@ extension ContactLabelService {
     }
 
     func contactData(for address: String) -> ContactData {
-        observedAddress = address
+        queue.sync {
+            observedAddress = address
+        }
 
         if let name = contactManager?.name(blockchainType: blockchainType, address: address) {
             return ContactData(name: name, contactAddress: nil)
