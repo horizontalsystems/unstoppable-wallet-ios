@@ -1,0 +1,256 @@
+import Combine
+import SnapKit
+import ThemeKit
+import UIKit
+import ComponentKit
+import SectionsTableView
+import UIExtensions
+
+class ICloudBackupPassphraseViewController: KeyboardAwareViewController {
+    private let wrapperViewHeight: CGFloat = .margin16 + .heightButton + .margin32
+
+    private let viewModel: ICloudBackupPassphraseViewModel
+    private var cancellables = Set<AnyCancellable>()
+
+    private let tableView = SectionsTableView(style: .grouped)
+
+    private let passphraseCell = PasswordInputCell()
+    private let passphraseCautionCell = FormCautionCell()
+
+    private let passphraseConfirmationCell = PasswordInputCell()
+    private let passphraseConfirmationCautionCell = FormCautionCell()
+
+    private let passphraseDescriptionCell = HighlightedDescriptionCell()
+
+    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    private let saveButton = PrimaryButton()
+
+    private var keyboardShown = false
+    private var isLoaded = false
+
+    init(viewModel: ICloudBackupPassphraseViewModel) {
+        self.viewModel = viewModel
+
+        super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        title = "backup.cloud.password.title".localized
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onTapCancel))
+        navigationItem.largeTitleDisplayMode = .never
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+
+        tableView.sectionDataSource = self
+
+        view.addSubview(gradientWrapperView)
+        gradientWrapperView.snp.makeConstraints { maker in
+            maker.height.equalTo(wrapperViewHeight).priority(.high)
+            maker.leading.trailing.bottom.equalToSuperview()
+        }
+
+        gradientWrapperView.addSubview(saveButton)
+        saveButton.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(CGFloat.margin32)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
+        }
+
+        saveButton.set(style: .yellow)
+        saveButton.setTitle("backup.cloud.password.save".localized, for: .normal)
+        saveButton.addTarget(self, action: #selector(onTapCreate), for: .touchUpInside)
+
+        passphraseCell.set(textSecure: true)
+        passphraseCell.onTextSecurityChange = { [weak self] in self?.passphraseCell.set(textSecure: $0) }
+        passphraseCell.inputPlaceholder = "backup.cloud.password.placeholder".localized
+        passphraseCell.onChangeText = { [weak self] in self?.viewModel.onChange(passphrase: $0 ?? "") }
+        passphraseCell.isValidText = { [weak self] in self?.viewModel.validatePassphrase(text: $0) ?? true }
+
+        passphraseConfirmationCell.set(textSecure: true)
+        passphraseConfirmationCell.onTextSecurityChange = { [weak self] in self?.passphraseConfirmationCell.set(textSecure: $0) }
+        passphraseConfirmationCell.inputPlaceholder = "backup.cloud.password.confirm.placeholder".localized
+        passphraseConfirmationCell.onChangeText = { [weak self] in self?.viewModel.onChange(passphraseConfirmation: $0 ?? "") }
+        passphraseConfirmationCell.isValidText = { [weak self] in self?.viewModel.validatePassphraseConfirmation(text: $0) ?? true }
+
+        passphraseCautionCell.onChangeHeight = { [weak self] in self?.onChangeHeight() }
+        passphraseConfirmationCautionCell.onChangeHeight = { [weak self] in self?.onChangeHeight() }
+
+        passphraseDescriptionCell.descriptionText = "restore.passphrase_description".localized
+
+        viewModel.$passphraseCaution
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] caution in
+                    self?.passphraseCell.set(cautionType: caution?.type)
+                    self?.passphraseCautionCell.set(caution: caution)
+                }
+                .store(in: &cancellables)
+
+        viewModel.$passphraseConfirmationCaution
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] caution in
+                    self?.passphraseConfirmationCell.set(cautionType: caution?.type)
+                    self?.passphraseConfirmationCautionCell.set(caution: caution)
+                }
+                .store(in: &cancellables)
+
+        viewModel.clearInputsPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.passphraseCell.inputText = nil
+                    self?.passphraseConfirmationCell.inputText = nil
+                }
+                .store(in: &cancellables)
+
+        viewModel.showErrorPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.show(error: $0)
+                }
+                .store(in: &cancellables)
+
+        viewModel.finishPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.finish()
+                }
+                .store(in: &cancellables)
+
+        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: wrapperViewHeight - .margin16, right: 0)
+
+        tableView.buildSections()
+        isLoaded = true
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if !keyboardShown {
+            keyboardShown = true
+            _ = passphraseCell.becomeFirstResponder()
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        setInitialState(bottomPadding: gradientWrapperView.height)
+    }
+
+    @objc private func onTapCancel() {
+        dismiss(animated: true)
+    }
+
+    @objc private func onTapCreate() {
+        viewModel.onTapCreate()
+    }
+
+    private func show(error: String) {
+        HudHelper.instance.show(banner: .error(string: error))
+    }
+
+    private func finish() {
+        HudHelper.instance.show(banner: .savedToCloud)
+
+        dismiss(animated: true)
+    }
+
+}
+
+extension ICloudBackupPassphraseViewController: SectionsDataSource {
+
+    func buildSections() -> [SectionProtocol] {
+        [
+            Section(
+                    id: "description-section",
+                    headerState: .margin(height: .margin12),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        tableView.descriptionRow(
+                                id: "description",
+                                text: "backup.cloud.password.description".localized,
+                                font: .subhead2,
+                                textColor: .gray,
+                                ignoreBottomMargin: true
+                        )
+                    ]
+            ),
+            Section(
+                    id: "passphrase",
+                    footerState: .margin(height: .margin16),
+                    rows: [
+                        StaticRow(
+                                cell: passphraseCell,
+                                id: "passphrase",
+                                height: .heightSingleLineCell
+                        ),
+                        StaticRow(
+                                cell: passphraseCautionCell,
+                                id: "passphrase-caution",
+                                dynamicHeight: { [weak self] width in
+                                    self?.passphraseCautionCell.height(containerWidth: width) ?? 0
+                                }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "confirm",
+                    footerState: .margin(height: .margin24),
+                    rows: [
+                        StaticRow(
+                                cell: passphraseConfirmationCell,
+                                id: "confirm",
+                                height: .heightSingleLineCell
+                        ),
+                        StaticRow(
+                                cell: passphraseConfirmationCautionCell,
+                                id: "confirm-caution",
+                                dynamicHeight: { [weak self] width in
+                                    self?.passphraseConfirmationCautionCell.height(containerWidth: width) ?? 0
+                                }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "highlighted-description",
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        StaticRow(
+                                cell: passphraseDescriptionCell,
+                                id: "passphrase-description",
+                                dynamicHeight: { [weak self] width in
+                                    self?.passphraseDescriptionCell.height(containerWidth: width) ?? 0
+                                }
+                        )
+                    ]
+            ),
+        ]
+    }
+
+}
+
+extension ICloudBackupPassphraseViewController: IDynamicHeightCellDelegate {
+
+    func onChangeHeight() {
+        guard isLoaded else {
+            return
+        }
+
+        UIView.animate(withDuration: 0.2) { [weak self] in
+            self?.tableView.beginUpdates()
+            self?.tableView.endUpdates()
+        }
+    }
+
+}

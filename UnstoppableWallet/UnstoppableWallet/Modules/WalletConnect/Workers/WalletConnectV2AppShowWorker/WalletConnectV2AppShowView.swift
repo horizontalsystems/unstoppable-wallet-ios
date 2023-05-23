@@ -132,7 +132,7 @@ extension WalletConnectV2AppShowView {
                     ],
                     buttons: [
                         .init(style: .yellow, title: "backup_prompt.backup".localized, actionType: .afterClose) { [ weak sourceViewController] in
-                            guard let viewController = BackupModule.viewController(account: account) else {
+                            guard let viewController = BackupModule.manualViewController(account: account) else {
                                 return
                             }
 

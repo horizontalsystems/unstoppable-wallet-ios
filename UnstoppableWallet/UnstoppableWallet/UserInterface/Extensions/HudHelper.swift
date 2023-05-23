@@ -13,6 +13,7 @@ extension HudHelper {
         case notSupportedYet
         case copied
         case saved
+        case savedToCloud
         case done
         case created
         case imported
@@ -46,6 +47,7 @@ extension HudHelper {
             case .notSupportedYet: image = UIImage(named: "warning_2_24")
             case .copied: image = UIImage(named: "copy_24")
             case .saved: image = UIImage(named: "download_24")
+            case .savedToCloud: image = UIImage(named: "icloud_24")
             case .done: image = UIImage(named: "circle_check_24")
             case .created: image = UIImage(named: "add_to_wallet_24")
             case .imported: image = UIImage(named: "add_to_wallet_2_24")
@@ -70,7 +72,7 @@ extension HudHelper {
             switch self {
             case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .revoked, .attention: return .themeJacob
             case .removedFromWatchlist,  .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
-            case .addedToWallet, .copied, .saved, .done, .created, .imported, .walletAdded, .enabled, .success: return .themeRemus
+            case .addedToWallet, .copied, .saved, .savedToCloud, .done, .created, .imported, .walletAdded, .enabled, .success: return .themeRemus
             case .waitingForSession, .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return .themeGray
             }
         }
@@ -84,6 +86,7 @@ extension HudHelper {
             case .notSupportedYet: return "alert.not_supported_yet".localized
             case .copied: return "alert.copied".localized
             case .saved: return "alert.saved".localized
+            case .savedToCloud: return "alert.saved_to_icloud".localized
             case .done: return "alert.success_action".localized
             case .created: return "alert.created".localized
             case .imported: return "alert.imported".localized
