@@ -596,7 +596,10 @@
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "此项目没有分析数据";
-"coin_analytics.locked" = "此页面仅对Unstoppable钱包的高级用户开放";
+"coin_analytics.locked.not_subscribed" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked.learn_more" = "Learn More";
+"coin_analytics.locked.not_activated" = "Activate yor subscription for getting access to analytics";
+"coin_analytics.locked.activate" = "激活";
 
 "coin_analytics.cex_volume" = "CEX交易量";
 "coin_analytics.cex_volume_rank" = "CEX交易量排名";
@@ -1431,3 +1434,14 @@
 "nft.activity.event_type.listCancel" = "取消列表";
 "nft.activity.event_type.offer" = "报价";
 "nft.activity.event_type.offerCancel" = "取消报价";
+
+// Activate Subscription
+
+"activate_subscription.title" = "激活";
+"activate_subscription.wallet" = "Wallet";
+"activate_subscription.address" = "地址";
+"activate_subscription.message" = "Message to Sign";
+"activate_subscription.sign" = "签名";
+"activate_subscription.activating" = "Activating...";
+"activate_subscription.description" = "You need to sign this message to activate your subscription";
+"activate_subscription.failed_to_activate" = "Failed to activate subscription";
