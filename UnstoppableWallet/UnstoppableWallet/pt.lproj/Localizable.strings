@@ -595,7 +595,10 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "Este projeto não tem dados de análise";
-"coin_analytics.locked" = "Esta página disponível apenas para usuários Premium da Carteira Unstoppable";
+"coin_analytics.locked.not_subscribed" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked.learn_more" = "Learn More";
+"coin_analytics.locked.not_activated" = "Activate yor subscription for getting access to analytics";
+"coin_analytics.locked.activate" = "Ativar";
 
 "coin_analytics.cex_volume" = "Volume CEX";
 "coin_analytics.cex_volume_rank" = "Ranking do Volume CEX";
@@ -1430,3 +1433,14 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "nft.activity.event_type.listCancel" = "Lista De Cancelar";
 "nft.activity.event_type.offer" = "Oferta";
 "nft.activity.event_type.offerCancel" = "Cancelar oferta";
+
+// Activate Subscription
+
+"activate_subscription.title" = "Ativar";
+"activate_subscription.wallet" = "Wallet";
+"activate_subscription.address" = "Endereço";
+"activate_subscription.message" = "Message to Sign";
+"activate_subscription.sign" = "Assinar";
+"activate_subscription.activating" = "Activating...";
+"activate_subscription.description" = "You need to sign this message to activate your subscription";
+"activate_subscription.failed_to_activate" = "Failed to activate subscription";
