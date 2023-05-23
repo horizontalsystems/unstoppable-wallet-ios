@@ -19,6 +19,8 @@ class TransactionInfoViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
 
+    private var isLoaded = false
+
     init(adapter: ITransactionsAdapter, viewModel: TransactionInfoViewModel, pageTitle: String, urlManager: UrlManager) {
         self.adapter = adapter
         self.viewModel = viewModel
@@ -52,10 +54,20 @@ class TransactionInfoViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] viewItems in
             self?.viewItems = viewItems
-            self?.tableView.reload()
+            self?.reloadTableView()
         }
 
-        tableView.reload()
+        reloadTableView()
+
+        isLoaded = true
+    }
+
+    private func reloadTableView() {
+        if isLoaded {
+            tableView.reload()
+        } else {
+            tableView.buildSections()
+        }
     }
 
     @objc private func onTapCloseButton() {
