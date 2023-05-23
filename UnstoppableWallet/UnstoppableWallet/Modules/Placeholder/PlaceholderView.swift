@@ -98,7 +98,7 @@ class PlaceholderView: UIView {
         stackView.setCustomSpacing(.margin16, after: button)
     }
 
-    func configureSyncError(action: (() -> ())? = nil) {
+    func configureSyncError(title: String = "sync_error".localized, action: (() -> ())? = nil) {
         retryAction = action
 
         if let driver = reachabilityViewModel?.retryDriver {
@@ -108,7 +108,7 @@ class PlaceholderView: UIView {
         }
 
         image = UIImage(named: "sync_error_48")
-        text = "sync_error".localized
+        text = title
 
         addPrimaryButton(
                 style: .yellow,

@@ -16,7 +16,6 @@ extension TokenQuery {
         case (.dash, .native): return true
         case (.zcash, .native): return true
         case (.ethereum, .native), (.ethereum, .eip20): return true
-        case (.ethereumGoerli, .native), (.ethereumGoerli, .eip20): return true
         case (.optimism, .native), (.optimism, .eip20): return true
         case (.arbitrumOne, .native), (.arbitrumOne, .eip20): return true
         case (.gnosis, .native), (.gnosis, .eip20): return true

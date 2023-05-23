@@ -29,9 +29,13 @@ class MainSettingsViewController: ThemeViewController {
     private let aboutCell = BaseSelectableThemeCell()
     private let footerCell = MainSettingsFooterCell()
 
+    private let showTestNetSwitcher: Bool
+
     init(viewModel: MainSettingsViewModel, urlManager: UrlManager) {
         self.viewModel = viewModel
         self.urlManager = urlManager
+
+        showTestNetSwitcher = Bundle.main.object(forInfoDictionaryKey: "ShowTestNetSwitcher") as? String == "true"
 
         super.init()
 
@@ -372,7 +376,7 @@ class MainSettingsViewController: ThemeViewController {
 extension MainSettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [
+        var sections: [SectionProtocol] = [
             Section(id: "account", headerState: .margin(height: .margin12), rows: accountRows),
             Section(id: "wallet_connect", headerState: .margin(height: .margin32), rows: walletConnectRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
@@ -381,6 +385,31 @@ extension MainSettingsViewController: SectionsDataSource {
             Section(id: "about", headerState: .margin(height: .margin32), rows: aboutRows),
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows)
         ]
+
+        if showTestNetSwitcher {
+            sections.append(
+                    Section(
+                            id: "test-net-switcher",
+                            footerState: .margin(height: .margin32),
+                            rows: [
+                                tableView.universalRow48(
+                                        id: "test-net-switcher",
+                                        title: .body("TestNet Enabled"),
+                                        accessoryType: .switch(
+                                                isOn: App.shared.testNetManager.testNetEnabled,
+                                                onSwitch: { enabled in
+                                                    App.shared.testNetManager.set(testNetEnabled: enabled)
+                                                }
+                                        ),
+                                        isFirst: true,
+                                        isLast: true
+                                )
+                            ]
+                    )
+            )
+        }
+
+        return sections
     }
 
 }

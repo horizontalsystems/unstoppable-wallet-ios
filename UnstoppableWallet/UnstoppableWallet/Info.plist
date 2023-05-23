@@ -41,10 +41,10 @@
 	<string>$(defiyield_api_key)</string>
 	<key>EtherscanApiKey</key>
 	<string>${etherscan_api_key}</string>
-	<key>GnosisscanApiKey</key>
-	<string>${gnosisscan_api_key}</string>
 	<key>FtmscanApiKey</key>
 	<string>${ftmscan_api_key}</string>
+	<key>GnosisscanApiKey</key>
+	<string>${gnosisscan_api_key}</string>
 	<key>HsProviderApiKey</key>
 	<string>$(hs_provider_api_key)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
@@ -79,6 +79,8 @@
 	<string>${polygonscan_api_key}</string>
 	<key>ShowBuildNumber</key>
 	<string>${ShowBuildNumber}</string>
+	<key>ShowTestNetSwitcher</key>
+	<string>${ShowTestNetSwitcher}</string>
 	<key>SnowtraceApiKey</key>
 	<string>${snowtrace_api_key}</string>
 	<key>TwitterBearerToken</key>

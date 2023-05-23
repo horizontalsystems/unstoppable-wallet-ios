@@ -112,6 +112,18 @@ class CoinAnalyticsViewController: ThemeViewController {
         tableView.reload()
     }
 
+    private func openSubscriptionInfo() {
+        UrlManager.open(url: viewModel.analyticsLink, inAppController: parentNavigationController)
+    }
+
+    private func openActivateSubscription(address: String) {
+        guard let viewController = ActivateSubscriptionModule.viewController(address: address) else {
+            return
+        }
+
+        parentNavigationController?.present(viewController, animated: true)
+    }
+
     private func openCexVolumeInfo() {
         let viewController = InfoModule.viewController(viewItems: [
             .header1(text: "coin_analytics.cex_volume".localized),
@@ -353,8 +365,27 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         )
     }
 
-    private func lockInfoSection() -> SectionProtocol {
-        let text = "coin_analytics.locked".localized
+    private func lockInfoSection(lockInfo: CoinAnalyticsViewModel.LockInfo) -> SectionProtocol {
+        let icon: UIImage?
+        let text: String
+        let buttonTitle: String
+        let buttonStyle: PrimaryButton.Style
+        let onTapButton: () -> ()
+
+        switch lockInfo {
+        case .notSubscribed:
+            icon = UIImage(named: "lock_48")?.withTintColor(.themeJacob)
+            text = "coin_analytics.locked.not_subscribed".localized
+            buttonTitle = "coin_analytics.locked.learn_more".localized
+            buttonStyle = .gray
+            onTapButton = { [weak self] in self?.openSubscriptionInfo() }
+        case .notActivated(let address):
+            icon = UIImage(named: "unlock_48")?.withTintColor(.themeJacob)
+            text = "coin_analytics.locked.not_activated".localized
+            buttonTitle = "coin_analytics.locked.activate".localized
+            buttonStyle = .yellow
+            onTapButton = { [weak self] in self?.openActivateSubscription(address: address) }
+        }
 
         return Section(
                 id: "lock-info",
@@ -366,8 +397,11 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             bind: { cell, _ in
                                 cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
                                 cell.bind(
-                                        icon: UIImage(named: "lock_48")?.withTintColor(.themeJacob),
-                                        text: text
+                                        icon: icon,
+                                        text: text,
+                                        buttonTitle: buttonTitle,
+                                        buttonStyle: buttonStyle,
+                                        onTapButton: onTapButton
                                 )
                             }
                     )
@@ -880,8 +914,8 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let viewItem {
-            if viewItem.lockInfo {
-                sections.append(lockInfoSection())
+            if let lockInfo = viewItem.lockInfo {
+                sections.append(lockInfoSection(lockInfo: lockInfo))
             }
 
             if let viewItem = viewItem.cexVolume {
