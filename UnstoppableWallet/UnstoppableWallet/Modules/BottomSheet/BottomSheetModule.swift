@@ -43,12 +43,15 @@ extension BottomSheetModule {
                     .highlightedDescription(text: "backup_prompt.warning".localized)
                 ],
                 buttons: [
-                    .init(style: .yellow, title: "backup_prompt.backup".localized, actionType: .afterClose) { [weak sourceViewController] in
-                        guard let viewController = BackupModule.viewController(account: account) else {
+                    .init(style: .yellow, title: "backup_prompt.backup_manual".localized, imageName: "edit_24", actionType: .afterClose) { [weak sourceViewController] in
+                        guard let viewController = BackupModule.manualViewController(account: account) else {
                             return
                         }
 
                         sourceViewController?.present(viewController, animated: true)
+                    },
+                    .init(style: .gray, title: "backup_prompt.backup_cloud".localized, imageName: "icloud_24", actionType: .afterClose) { [weak sourceViewController] in
+                        sourceViewController?.present(BackupModule.cloudViewController(account: account), animated: true)
                     },
                     .init(style: .transparent, title: "backup_prompt.later".localized)
                 ]
@@ -79,12 +82,14 @@ extension BottomSheetModule {
     struct Button {
         let style: PrimaryButton.Style
         let title: String
+        let imageName: String?
         let actionType: ActionType
         let action: (() -> ())?
 
-        init(style: PrimaryButton.Style, title: String, actionType: ActionType = .regular, action: (() -> ())? = nil) {
+        init(style: PrimaryButton.Style, title: String, imageName: String? = nil, actionType: ActionType = .regular, action: (() -> ())? = nil) {
             self.style = style
             self.title = title
+            self.imageName = imageName
             self.actionType = actionType
             self.action = action
         }

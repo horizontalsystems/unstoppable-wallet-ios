@@ -70,7 +70,7 @@ extension SectionsTableView {
         return Row<DescriptionCell>(
                 id: id,
                 dynamicHeight: { containerWidth in
-                    DescriptionCell.height(containerWidth: containerWidth, text: text, font: font, ignoreBottomMargin: true)
+                    DescriptionCell.height(containerWidth: containerWidth, text: text, font: font, ignoreBottomMargin: ignoreBottomMargin)
                 },
                 bind: { cell, _ in
                     cell.label.text = text

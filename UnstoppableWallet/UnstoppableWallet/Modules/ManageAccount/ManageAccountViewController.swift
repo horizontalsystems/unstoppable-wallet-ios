@@ -116,7 +116,7 @@ class ManageAccountViewController: KeyboardAwareViewController {
     }
 
     private func openBackup(account: Account) {
-        guard let viewController = BackupModule.viewController(account: account) else {
+        guard let viewController = BackupModule.manualViewController(account: account) else {
             return
         }
 

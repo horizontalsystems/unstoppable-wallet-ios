@@ -26,6 +26,7 @@
 "alert" = "Alert";
 "alert.copied" = "Copied";
 "alert.saved" = "Saved";
+"alert.saved_to_icloud" = "Saved to iCloud";
 "alert.no_internet" = "No Internet";
 "alert.wrong_amount" = "Wrong Amount";
 "alert.no_fee" = "Wrong Fee";
@@ -186,10 +187,39 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Backup Prompt
 
-"backup_prompt.title" = "Backup Wallet";
-"backup_prompt.warning" = "Backup this wallet by creating a copy of its recovery phrase. It will be required in order to access the wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.title" = "Backup Recovery Phrase ";
+"backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
 "backup_prompt.backup" = "Backup";
+"backup_prompt.backup_manual" = "Manual Backup";
+"backup_prompt.backup_cloud" = "Backup to iCloud";
 "backup_prompt.later" = "Later";
+
+// Backup to iCloud
+
+"backup.cloud.title" = "Backup to iCloud";
+"backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
+
+"backup.cloud.terms.item.1" = "I understand that by using iCloud backup, I am transferring my data to third party storage";
+"backup.cloud.terms.item.2" = "I understand that if I lose access to my iCloud, I will lose access to my wallet backup copy ";
+
+"backup.cloud.name.title" = "Backup Name";
+"backup.cloud.name.description" = "Add a name for the recovery phrase backup to distinguish it from other backups";
+"backup.cloud.name.empty" = "Backup name can't be empty!";
+"backup.cloud.name.error.empty" = "Name";
+"backup.cloud.name.error.already_exist" = "Backup name already exist!";
+"backup.cloud.name.placeholder" = "Name";
+
+"backup.cloud.password.title" = "Set Password";
+"backup.cloud.password.description" = "Password-protect your backup to encrypt it on iCloud.";
+"backup.cloud.password.highlighted_description" = "Don't forget this password! It is separate from your Apple iCloud password, and it cannot be recovered or reset.";
+"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.confirm.placeholder" = "Confirm";
+"backup.cloud.password.save" = "Save and Backup";
+
+"backup.cloud.password.error.empty_passphrase" = "Passphrase cannot be empty";
+"backup.cloud.password.error.forbidden_symbols" = "Please use only supported symbols:A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_required" = "The password must be minimum 8 characters";
+"backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
 
 // Errors
 

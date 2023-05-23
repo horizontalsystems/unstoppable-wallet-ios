@@ -347,7 +347,7 @@ class WalletViewController: ThemeViewController {
                 ],
                 buttons: [
                     .init(style: .yellow, title: "settings_manage_keys.backup".localized, actionType: .afterClose) { [ weak self] in
-                        guard let viewController = BackupModule.viewController(account: wallet.account) else {
+                        guard let viewController = BackupModule.manualViewController(account: wallet.account) else {
                             return
                         }
 
