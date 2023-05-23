@@ -55,8 +55,8 @@ class CoinAnalyticsViewModel {
             loadingRelay.accept(false)
             syncErrorRelay.accept(true)
             emptyViewRelay.accept(false)
-        case .preview(let analyticsPreview):
-            let viewItem = previewViewItem(analyticsPreview: analyticsPreview)
+        case .preview(let analyticsPreview, let subscriptionAddress):
+            let viewItem = previewViewItem(analyticsPreview: analyticsPreview, subscriptionAddress: subscriptionAddress)
 
             if viewItem.isEmpty {
                 viewItemRelay.accept(nil)
@@ -220,7 +220,7 @@ class CoinAnalyticsViewModel {
 
     private func viewItem(analytics: Analytics) -> ViewItem {
         ViewItem(
-                lockInfo: false,
+                lockInfo: nil,
                 cexVolume: rankCardViewItem(
                         points: analytics.cexVolume?.aggregatedChartPoints.points,
                         value: analytics.cexVolume?.aggregatedChartPoints.aggregatedValue,
@@ -274,9 +274,9 @@ class CoinAnalyticsViewModel {
         )
     }
 
-    private func previewViewItem(analyticsPreview data: AnalyticsPreview) -> ViewItem {
+    private func previewViewItem(analyticsPreview data: AnalyticsPreview, subscriptionAddress: String?) -> ViewItem {
         ViewItem(
-                lockInfo: true,
+                lockInfo: subscriptionAddress.map { .notActivated(address: $0) } ?? .notSubscribed,
                 cexVolume: data.cexVolume ? RankCardViewItem(chart: .preview, rank: data.cexVolumeRank30d ? .preview : nil) : nil,
                 dexVolume: data.dexVolume ? RankCardViewItem(chart: .preview, rank: data.dexVolumeRank30d ? .preview : nil) : nil,
                 dexLiquidity: data.dexLiquidity ? RankCardViewItem(chart: .preview, rank: data.dexLiquidityRank ? .preview : nil) : nil,
@@ -316,6 +316,10 @@ extension CoinAnalyticsViewModel {
         service.coin
     }
 
+    var analyticsLink: String {
+        service.analyticsLink
+    }
+
     func onLoad() {
         service.sync()
     }
@@ -329,7 +333,7 @@ extension CoinAnalyticsViewModel {
 extension CoinAnalyticsViewModel {
 
     struct ViewItem {
-        let lockInfo: Bool
+        let lockInfo: LockInfo?
         let cexVolume: RankCardViewItem?
         let dexVolume: RankCardViewItem?
         let dexLiquidity: RankCardViewItem?
@@ -347,6 +351,11 @@ extension CoinAnalyticsViewModel {
             let items: [Any?] = [cexVolume, dexVolume, dexLiquidity, activeAddresses, transactionCount, holders, tvl, revenue, reports, investors, treasuries]
             return items.compactMap { $0 }.isEmpty
         }
+    }
+
+    enum LockInfo {
+        case notSubscribed
+        case notActivated(address: String)
     }
 
     struct ChartViewItem {

@@ -67,6 +67,7 @@ class App {
     let appStatusManager: AppStatusManager
     let appVersionManager: AppVersionManager
 
+    let testNetManager: TestNetManager
     let btcBlockchainManager: BtcBlockchainManager
 
     let kitCleaner: KitCleaner
@@ -91,6 +92,8 @@ class App {
     let balanceConversionManager: BalanceConversionManager
 
     let appIconManager = AppIconManager()
+
+    let subscriptionManager: SubscriptionManager
 
     let appManager: AppManager
     let contactManager: ContactBookManager?
@@ -157,14 +160,16 @@ class App {
         let blockchainSettingsStorage = BlockchainSettingsStorage(storage: blockchainSettingRecordStorage)
         btcBlockchainManager = BtcBlockchainManager(marketKit: marketKit, storage: blockchainSettingsStorage)
 
+        testNetManager = TestNetManager(localStorage: StorageKit.LocalStorage.default)
+
         let evmSyncSourceStorage = EvmSyncSourceStorage(dbPool: dbPool)
-        evmSyncSourceManager = EvmSyncSourceManager(appConfigProvider: appConfigProvider, blockchainSettingsStorage: blockchainSettingsStorage, evmSyncSourceStorage: evmSyncSourceStorage)
+        evmSyncSourceManager = EvmSyncSourceManager(appConfigProvider: appConfigProvider, testNetManager: testNetManager, blockchainSettingsStorage: blockchainSettingsStorage, evmSyncSourceStorage: evmSyncSourceStorage)
 
         let evmAccountRestoreStateStorage = EvmAccountRestoreStateStorage(dbPool: dbPool)
         evmAccountRestoreStateManager = EvmAccountRestoreStateManager(storage: evmAccountRestoreStateStorage)
 
         let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, evmAccountRestoreStateManager: evmAccountRestoreStateManager, marketKit: marketKit)
-        evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
+        evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, testNetManager: testNetManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
 
         let binanceKitManager = BinanceKitManager()
 
@@ -278,6 +283,8 @@ class App {
         balanceConversionManager = BalanceConversionManager(marketKit: marketKit, localStorage: StorageKit.LocalStorage.default)
 
         contactManager = ContactBookManager(localStorage: localStorage, helper: ContactBookHelper(), logger: logger)
+
+        subscriptionManager = SubscriptionManager(localStorage: StorageKit.LocalStorage.default)
 
         appManager = AppManager(
                 accountManager: accountManager,

@@ -89,7 +89,6 @@ extension BlockchainType {
         case .fantom: return 13
         case .arbitrumOne: return 14
         case .optimism: return 15
-        case .ethereumGoerli: return 16
         default: return Int.max
         }
     }
@@ -138,7 +137,7 @@ extension BlockchainType {
             }
         case .evmPrivateKey, .evmAddress:
             switch self {
-            case .ethereum, .ethereumGoerli, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom: return true
+            case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom: return true
             default: return false
             }
         }

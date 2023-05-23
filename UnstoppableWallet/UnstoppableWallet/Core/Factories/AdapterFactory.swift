@@ -97,10 +97,10 @@ extension AdapterFactory {
                 return BinanceAdapter(binanceKit: binanceKit, feeToken: feeToken, wallet: wallet)
             }
 
-        case (.native, .ethereum), (.native, .ethereumGoerli), (.native, .binanceSmartChain), (.native, .polygon), (.native, .avalanche), (.native, .optimism), (.native, .arbitrumOne), (.native, .gnosis), (.native, .fantom):
+        case (.native, .ethereum), (.native, .binanceSmartChain), (.native, .polygon), (.native, .avalanche), (.native, .optimism), (.native, .arbitrumOne), (.native, .gnosis), (.native, .fantom):
             return evmAdapter(wallet: wallet)
 
-        case (.eip20(let address), .ethereum), (.eip20(let address), .ethereumGoerli), (.eip20(let address), .binanceSmartChain), (.eip20(let address), .polygon), (.eip20(let address), .avalanche), (.eip20(let address), .optimism), (.eip20(let address), .arbitrumOne), (.eip20(let address), .gnosis), (.eip20(let address), .fantom):
+        case (.eip20(let address), .ethereum), (.eip20(let address), .binanceSmartChain), (.eip20(let address), .polygon), (.eip20(let address), .avalanche), (.eip20(let address), .optimism), (.eip20(let address), .arbitrumOne), (.eip20(let address), .gnosis), (.eip20(let address), .fantom):
             return eip20Adapter(address: address, wallet: wallet, coinManager: coinManager)
 
         default: ()

@@ -70,7 +70,6 @@ enum AccountType {
             case (.fantom, .native), (.fantom, .eip20): return true
             case (.arbitrumOne, .native), (.arbitrumOne, .eip20): return true
             case (.optimism, .native), (.optimism, .eip20): return true
-            case (.ethereumGoerli, .native), (.ethereumGoerli, .eip20): return true
             default: return false
             }
         case .hdExtendedKey(let key):
@@ -100,7 +99,6 @@ enum AccountType {
             case (.fantom, .native), (.fantom, .eip20): return true
             case (.arbitrumOne, .native), (.arbitrumOne, .eip20): return true
             case (.optimism, .native), (.optimism, .eip20): return true
-            case (.ethereumGoerli, .native), (.ethereumGoerli, .eip20): return true
             default: return false
             }
         }
@@ -158,6 +156,40 @@ enum AccountType {
         case .evmAddress(let address):
             return address.eip55.shortened
         default: return description
+        }
+    }
+
+    func evmAddress(chain: Chain) -> EvmKit.Address? {
+        switch self {
+        case .mnemonic:
+            guard let mnemonicSeed else {
+                return nil
+            }
+
+            return try? Signer.address(seed: mnemonicSeed, chain: chain)
+        case .evmPrivateKey(let data):
+            return Signer.address(privateKey: data)
+        default:
+            return nil
+        }
+    }
+
+    func sign(message: Data, isLegacy: Bool = false) -> Data? {
+        switch self {
+        case .mnemonic:
+            guard let mnemonicSeed else {
+                return nil
+            }
+
+            guard let privateKey = try? Signer.privateKey(seed: mnemonicSeed, chain: App.shared.evmBlockchainManager.chain(blockchainType: .ethereum)) else {
+                return nil
+            }
+
+            return try? EvmKit.Kit.sign(message: message, privateKey: privateKey, isLegacy: isLegacy)
+        case .evmPrivateKey(let data):
+            return try? EvmKit.Kit.sign(message: message, privateKey: data, isLegacy: isLegacy)
+        default:
+            return nil
         }
     }
 

@@ -6,14 +6,16 @@ import MarketKit
 
 class EvmSyncSourceManager {
     private let appConfigProvider: AppConfigProvider
+    private let testNetManager: TestNetManager
     private let blockchainSettingsStorage: BlockchainSettingsStorage
     private let evmSyncSourceStorage: EvmSyncSourceStorage
 
     private let syncSourceRelay = PublishRelay<BlockchainType>()
     private let syncSourcesUpdatedRelay = PublishRelay<BlockchainType>()
 
-    init(appConfigProvider: AppConfigProvider, blockchainSettingsStorage: BlockchainSettingsStorage, evmSyncSourceStorage: EvmSyncSourceStorage) {
+    init(appConfigProvider: AppConfigProvider, testNetManager: TestNetManager, blockchainSettingsStorage: BlockchainSettingsStorage, evmSyncSourceStorage: EvmSyncSourceStorage) {
         self.appConfigProvider = appConfigProvider
+        self.testNetManager = testNetManager
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.evmSyncSourceStorage = evmSyncSourceStorage
     }
@@ -21,7 +23,6 @@ class EvmSyncSourceManager {
     private func defaultTransactionSource(blockchainType: BlockchainType) -> EvmKit.TransactionSource {
         switch blockchainType {
         case .ethereum: return .ethereumEtherscan(apiKey: appConfigProvider.etherscanKey)
-        case .ethereumGoerli: return .goerliEtherscan(apiKey: appConfigProvider.etherscanKey)
         case .binanceSmartChain: return .bscscan(apiKey: appConfigProvider.bscscanKey)
         case .polygon: return .polygonscan(apiKey: appConfigProvider.polygonscanKey)
         case .avalanche: return .snowtrace(apiKey: appConfigProvider.snowtraceKey)
@@ -48,54 +49,67 @@ extension EvmSyncSourceManager {
     func defaultSyncSources(blockchainType: BlockchainType) -> [EvmSyncSource] {
         switch blockchainType {
         case .ethereum:
-            return [
-                EvmSyncSource(
-                        name: "Infura",
-                        rpcSource: .ethereumInfuraWebsocket(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
-                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
-                ),
-                EvmSyncSource(
-                        name: "Infura",
-                        rpcSource: .ethereumInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
-                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
-                ),
-                EvmSyncSource(
-                        name: "LlamaNodes",
-                        rpcSource: .http(urls: [URL(string: "https://eth.llamarpc.com")!], auth: nil),
-                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
-                )
-            ]
-        case .ethereumGoerli:
-            return [
-                EvmSyncSource(
-                        name: "Infura",
-                        rpcSource: .goerliInfuraWebsocket(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
-                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
-                ),
-                EvmSyncSource(
-                        name: "Infura",
-                        rpcSource: .goerliInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
-                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
-                )
-            ]
+            if testNetManager.testNetEnabled {
+                return [
+                    EvmSyncSource(
+                            name: "Infura Sepolia",
+                            rpcSource: .http(urls: [URL(string: "https://sepolia.infura.io/v3/\(appConfigProvider.infuraCredentials.id)")!], auth: appConfigProvider.infuraCredentials.secret),
+                            transactionSource: EvmKit.TransactionSource(
+                                    name: "sepolia.etherscan.io",
+                                    type: .etherscan(apiBaseUrl: "https://api-sepolia.etherscan.io", txBaseUrl: "https://sepiloa.etherscan.io", apiKey: appConfigProvider.etherscanKey)
+                            )
+                    )
+                ]
+            } else {
+                return [
+                    EvmSyncSource(
+                            name: "Infura",
+                            rpcSource: .ethereumInfuraWebsocket(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
+                            transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                    ),
+                    EvmSyncSource(
+                            name: "Infura",
+                            rpcSource: .ethereumInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
+                            transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                    ),
+                    EvmSyncSource(
+                            name: "LlamaNodes",
+                            rpcSource: .http(urls: [URL(string: "https://eth.llamarpc.com")!], auth: nil),
+                            transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                    )
+                ]
+            }
         case .binanceSmartChain:
-            return [
-                EvmSyncSource(
-                        name: "Binance",
-                        rpcSource: .binanceSmartChainHttp(),
-                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
-                ),
-                EvmSyncSource(
-                        name: "BSC RPC",
-                        rpcSource: .bscRpcHttp(),
-                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
-                ),
-                EvmSyncSource(
-                        name: "Omnia",
-                        rpcSource: .http(urls: [URL(string: "https://endpoints.omniatech.io/v1/bsc/mainnet/public")!], auth: nil),
-                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
-                )
-            ]
+            if testNetManager.testNetEnabled {
+                return [
+                    EvmSyncSource(
+                            name: "Binance TestNet",
+                            rpcSource: .http(urls: [URL(string: "https://data-seed-prebsc-1-s1.binance.org:8545")!], auth: nil),
+                            transactionSource: EvmKit.TransactionSource(
+                                    name: "testnet.bscscan.com",
+                                    type: .etherscan(apiBaseUrl: "https://api-testnet.bscscan.com", txBaseUrl: "https://testnet.bscscan.com", apiKey: appConfigProvider.bscscanKey)
+                            )
+                    )
+                ]
+            } else {
+                return [
+                    EvmSyncSource(
+                            name: "Binance",
+                            rpcSource: .binanceSmartChainHttp(),
+                            transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                    ),
+                    EvmSyncSource(
+                            name: "BSC RPC",
+                            rpcSource: .bscRpcHttp(),
+                            transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                    ),
+                    EvmSyncSource(
+                            name: "Omnia",
+                            rpcSource: .http(urls: [URL(string: "https://endpoints.omniatech.io/v1/bsc/mainnet/public")!], auth: nil),
+                            transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                    )
+                ]
+            }
         case .polygon:
             return [
                 EvmSyncSource(

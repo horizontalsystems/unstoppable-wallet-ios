@@ -72,7 +72,7 @@ class AddressParserFactory {
             }
 
             return addressParserChain
-        case .ethereum, .gnosis, .fantom, .polygon, .arbitrumOne, .avalanche, .optimism, .binanceSmartChain, .ethereumGoerli:
+        case .ethereum, .gnosis, .fantom, .polygon, .arbitrumOne, .avalanche, .optimism, .binanceSmartChain:
             let evmAddressParserItem = EvmAddressParser()
 
             let udnAddressParserItem = UdnAddressParserItem.item(

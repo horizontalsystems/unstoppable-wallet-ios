@@ -105,9 +105,7 @@ class EvmKitManager {
         }
 
         UniswapKit.Kit.addDecorators(to: evmKit)
-
-        try KitV3.addDecorators(to: evmKit)
-
+        try? KitV3.addDecorators(to: evmKit)
         OneInchKit.Kit.addDecorators(to: evmKit)
 
         evmKit.start()

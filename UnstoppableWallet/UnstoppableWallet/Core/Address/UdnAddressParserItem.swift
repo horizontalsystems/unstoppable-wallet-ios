@@ -89,7 +89,6 @@ extension UdnAddressParserItem {
         switch blockchainType {
         case .bitcoin: return "BTC"
         case .ethereum: return "ETH"
-        case .ethereumGoerli: return "ETH"
         case .binanceSmartChain: return "ETH"
         case .polygon: return "ETH"
         case .avalanche: return "ETH"

@@ -15,6 +15,7 @@ class EvmBlockchainManager {
     ]
 
     private let syncSourceManager: EvmSyncSourceManager
+    private let testNetManager: TestNetManager
     private let marketKit: MarketKit.Kit
     private let accountManagerFactory: EvmAccountManagerFactory
 
@@ -29,8 +30,9 @@ class EvmBlockchainManager {
         }
     }
 
-    init(syncSourceManager: EvmSyncSourceManager, marketKit: MarketKit.Kit, accountManagerFactory: EvmAccountManagerFactory) {
+    init(syncSourceManager: EvmSyncSourceManager, testNetManager: TestNetManager, marketKit: MarketKit.Kit, accountManagerFactory: EvmAccountManagerFactory) {
         self.syncSourceManager = syncSourceManager
+        self.testNetManager = testNetManager
         self.marketKit = marketKit
         self.accountManagerFactory = accountManagerFactory
     }
@@ -71,9 +73,28 @@ extension EvmBlockchainManager {
 
     func chain(blockchainType: BlockchainType) -> Chain {
         switch blockchainType {
-        case .ethereum: return .ethereum
-        case .ethereumGoerli: return .ethereumGoerli
-        case .binanceSmartChain: return .binanceSmartChain
+        case .ethereum:
+            if testNetManager.testNetEnabled {
+                return Chain(
+                        id: 11155111,
+                        coinType: 1,
+                        syncInterval: 15,
+                        isEIP1559Supported: true
+                )
+            } else {
+                return .ethereum
+            }
+        case .binanceSmartChain:
+            if testNetManager.testNetEnabled {
+                return Chain(
+                        id: 97,
+                        coinType: 1,
+                        syncInterval: 15,
+                        isEIP1559Supported: false
+                )
+            } else {
+                return .binanceSmartChain
+            }
         case .polygon: return .polygon
         case .avalanche: return .avalanche
         case .optimism: return .optimism

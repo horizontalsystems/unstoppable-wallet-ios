@@ -1,3 +1,5 @@
+import Combine
+import EvmKit
 import MarketKit
 import CurrencyKit
 import HsToolKit
@@ -7,14 +9,50 @@ class CoinAnalyticsService {
     private let fullCoin: FullCoin
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
+    private let subscriptionManager: SubscriptionManager
+    private let accountManager: AccountManager
+    private let appConfigProvider: AppConfigProvider
     private var tasks = Set<AnyTask>()
+    private var cancellables = Set<AnyCancellable>()
 
     @PostPublished private(set) var state: State = .loading
 
-    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
+    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, subscriptionManager: SubscriptionManager, accountManager: AccountManager, appConfigProvider: AppConfigProvider) {
         self.fullCoin = fullCoin
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+        self.subscriptionManager = subscriptionManager
+        self.accountManager = accountManager
+        self.appConfigProvider = appConfigProvider
+
+        subscriptionManager.$authToken
+                .sink { [weak self] token in
+                    if token != nil {
+                        self?.sync()
+                    }
+                }
+                .store(in: &cancellables)
+    }
+
+    private func resolveAddresses() -> [String] {
+        accountManager.accounts
+                .compactMap { $0.type.evmAddress(chain: App.shared.evmBlockchainManager.chain(blockchainType: .ethereum)) }
+                .map { $0.hex }
+    }
+
+    private func loadPreview() {
+        let addresses = resolveAddresses()
+
+        Task { [weak self, marketKit, fullCoin] in
+            do {
+                let analyticsPreview = try await marketKit.analyticsPreview(coinUid: fullCoin.coin.uid, addresses: addresses)
+                let subscriptionAddress = analyticsPreview.subscriptions.sorted { lhs, rhs in lhs.deadline > rhs.deadline }.first?.address
+                self?.state = .preview(analyticsPreview: analyticsPreview, subscriptionAddress: subscriptionAddress)
+//                self?.state = .preview(analyticsPreview: analyticsPreview, subscriptionAddress: "0x0bdab86aff88cec5e745425c344c64c073af0dc4")
+            } catch {
+                self?.state = .failed(error)
+            }
+        }.store(in: &tasks)
     }
 
 }
@@ -27,6 +65,10 @@ extension CoinAnalyticsService {
 
     var coin: Coin {
         fullCoin.coin
+    }
+
+    var analyticsLink: String {
+        appConfigProvider.analyticsLink
     }
 
     var auditAddresses: [String]? {
@@ -54,23 +96,23 @@ extension CoinAnalyticsService {
 
         state = .loading
 
-        Task { [weak self, marketKit, fullCoin, currency] in
-            do {
-                let analytics = try await marketKit.analytics(coinUid: fullCoin.coin.uid, currencyCode: currency.code)
-                self?.state = .success(analytics)
-            } catch {
-                if let responseError = error as? NetworkManager.ResponseError, responseError.statusCode == 401 {
-                    do {
-                        let analyticsPreview = try await marketKit.analyticsPreview(coinUid: fullCoin.coin.uid)
-                        self?.state = .preview(analyticsPreview)
-                    } catch {
+        if let authToken = subscriptionManager.authToken {
+            Task { [weak self, marketKit, fullCoin, currency] in
+                do {
+                    let analytics = try await marketKit.analytics(coinUid: fullCoin.coin.uid, currencyCode: currency.code, authToken: authToken)
+                    self?.state = .success(analytics: analytics)
+                } catch {
+                    if let responseError = error as? NetworkManager.ResponseError, responseError.statusCode == 401 {
+                        self?.subscriptionManager.invalidateAuthToken()
+                        self?.loadPreview()
+                    } else {
                         self?.state = .failed(error)
                     }
-                } else {
-                    self?.state = .failed(error)
                 }
-            }
-        }.store(in: &tasks)
+            }.store(in: &tasks)
+        } else {
+            loadPreview()
+        }
     }
 
 }
@@ -80,8 +122,8 @@ extension CoinAnalyticsService {
     enum State {
         case loading
         case failed(Error)
-        case preview(AnalyticsPreview)
-        case success(Analytics)
+        case preview(analyticsPreview: AnalyticsPreview, subscriptionAddress: String?)
+        case success(analytics: Analytics)
     }
 
 }
