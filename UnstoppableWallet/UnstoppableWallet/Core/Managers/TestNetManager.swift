@@ -12,7 +12,7 @@ class TestNetManager {
     init(localStorage: StorageKit.ILocalStorage) {
         self.localStorage = localStorage
 
-        testNetEnabled = localStorage.value(for: keyTestNetEnabled) ?? true
+        testNetEnabled = localStorage.value(for: keyTestNetEnabled) ?? false
     }
 
 }
