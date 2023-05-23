@@ -8,7 +8,15 @@ import HsToolKit
 import MarketKit
 
 class App {
-    static let shared = App()
+    static var instance: App? = nil
+
+    static func initApp() throws {
+        instance = try App()
+    }
+
+    static var shared: App {
+        instance!
+    }
 
     let keychainKit: IKeychainKit
     let pinKit: PinKit.Kit
@@ -98,24 +106,24 @@ class App {
     let appManager: AppManager
     let contactManager: ContactBookManager?
 
-    init() {
+    init() throws {
         appConfigProvider = AppConfigProvider()
 
         localStorage = LocalStorage(storage: StorageKit.LocalStorage.default)
 
-        let databaseURL = try! FileManager.default
+        let databaseURL = try FileManager.default
                 .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
                 .appendingPathComponent("bank.sqlite")
-        let dbPool = try! DatabasePool(path: databaseURL.path)
+        let dbPool = try DatabasePool(path: databaseURL.path)
 
-        try! StorageMigrator.migrate(dbPool: dbPool)
+        try StorageMigrator.migrate(dbPool: dbPool)
 
         let logRecordStorage = LogRecordStorage(dbPool: dbPool)
         logRecordManager = LogRecordManager(storage: logRecordStorage)
 
         currencyKit = CurrencyKit.Kit(localStorage: StorageKit.LocalStorage.default)
 
-        marketKit = try! MarketKit.Kit.instance(
+        marketKit = try MarketKit.Kit.instance(
                 hsApiBaseUrl: appConfigProvider.marketApiUrl,
                 cryptoCompareApiKey: appConfigProvider.cryptoCompareApiKey,
                 defiYieldApiKey: appConfigProvider.defiYieldApiKey,
@@ -156,7 +164,7 @@ class App {
 
         coinManager = CoinManager(marketKit: marketKit, walletManager: walletManager)
 
-        let blockchainSettingRecordStorage = try! BlockchainSettingRecordStorage(dbPool: dbPool)
+        let blockchainSettingRecordStorage = try BlockchainSettingRecordStorage(dbPool: dbPool)
         let blockchainSettingsStorage = BlockchainSettingsStorage(storage: blockchainSettingRecordStorage)
         btcBlockchainManager = BtcBlockchainManager(marketKit: marketKit, storage: blockchainSettingsStorage)
 
@@ -203,7 +211,7 @@ class App {
                 adapterFactory: adapterFactory
         )
 
-        let nftDatabaseStorage = try! NftDatabaseStorage(dbPool: dbPool)
+        let nftDatabaseStorage = try NftDatabaseStorage(dbPool: dbPool)
         let nftStorage = NftStorage(marketKit: marketKit, storage: nftDatabaseStorage)
         nftMetadataManager = NftMetadataManager(networkManager: networkManager, marketKit: marketKit, storage: nftStorage)
         nftAdapterManager = NftAdapterManager(

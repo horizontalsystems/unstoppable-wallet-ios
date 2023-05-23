@@ -8,27 +8,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        App.shared.appManager.didFinishLaunching()
         Theme.updateNavigationBarTheme()
 
         window = ThemeWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
 
-        window?.rootViewController = LaunchModule.viewController()
+        do {
+            try App.initApp()
+            App.instance?.appManager.didFinishLaunching()
+            window?.rootViewController = LaunchModule.viewController()
+        } catch {
+            window?.rootViewController = LaunchErrorViewController(error: error)
+        }
 
         return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        App.shared.appManager.willResignActive()
+        App.instance?.appManager.willResignActive()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        App.shared.appManager.didBecomeActive()
+        App.instance?.appManager.didBecomeActive()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        App.shared.appManager.didEnterBackground()
+        App.instance?.appManager.didEnterBackground()
 
         backgroundTask = UIApplication.shared.beginBackgroundTask {
             UIApplication.shared.endBackgroundTask(self.backgroundTask)
@@ -37,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        App.shared.appManager.willEnterForeground()
+        App.instance?.appManager.willEnterForeground()
 
         if backgroundTask != UIBackgroundTaskIdentifier.invalid {
             UIApplication.shared.endBackgroundTask(backgroundTask)
@@ -46,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        App.shared.appManager.willTerminate()
+        App.instance?.appManager.willTerminate()
     }
 
     func application(_ application: UIApplication, shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplication.ExtensionPointIdentifier) -> Bool {
@@ -61,12 +66,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
-        App.shared.appManager.didReceive(url: url)
+        App.instance?.appManager.didReceive(url: url) ?? false
     }
 
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> ()) -> Bool {
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL {
-            return App.shared.appManager.didReceive(url: url)
+            return App.instance?.appManager.didReceive(url: url) ?? false
         }
 
         return false
