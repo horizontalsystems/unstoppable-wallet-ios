@@ -595,7 +595,10 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "This project has no analytical data";
-"coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked.not_subscribed" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked.learn_more" = "Learn More";
+"coin_analytics.locked.not_activated" = "Activate yor subscription for getting access to analytics";
+"coin_analytics.locked.activate" = "Activate";
 
 "coin_analytics.cex_volume" = "CEX Volume";
 "coin_analytics.cex_volume_rank" = "CEX Volume Rank";
@@ -1430,3 +1433,14 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "nft.activity.event_type.listCancel" = "Liste İptal";
 "nft.activity.event_type.offer" = "Teklif";
 "nft.activity.event_type.offerCancel" = "Teklif İptal";
+
+// Activate Subscription
+
+"activate_subscription.title" = "Activate";
+"activate_subscription.wallet" = "Wallet";
+"activate_subscription.address" = "Adres";
+"activate_subscription.message" = "Message to Sign";
+"activate_subscription.sign" = "kaydol";
+"activate_subscription.activating" = "Activating...";
+"activate_subscription.description" = "You need to sign this message to activate your subscription";
+"activate_subscription.failed_to_activate" = "Failed to activate subscription";
