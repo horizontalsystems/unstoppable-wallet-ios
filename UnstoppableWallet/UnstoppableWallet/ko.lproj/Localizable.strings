@@ -593,7 +593,10 @@
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "This project has no analytics data";
-"coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked.not_subscribed" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked.learn_more" = "Learn More";
+"coin_analytics.locked.not_activated" = "Activate yor subscription for getting access to analytics";
+"coin_analytics.locked.activate" = "활성화";
 
 "coin_analytics.cex_volume" = "CEX Volume";
 "coin_analytics.cex_volume_rank" = "CEX Volume Rank";
@@ -1428,3 +1431,14 @@
 "nft.activity.event_type.listCancel" = "목록 취소";
 "nft.activity.event_type.offer" = "제안";
 "nft.activity.event_type.offerCancel" = "제안 취소";
+
+// Activate Subscription
+
+"activate_subscription.title" = "활성화";
+"activate_subscription.wallet" = "Wallet";
+"activate_subscription.address" = "주소";
+"activate_subscription.message" = "Message to Sign";
+"activate_subscription.sign" = "가입";
+"activate_subscription.activating" = "Activating...";
+"activate_subscription.description" = "You need to sign this message to activate your subscription";
+"activate_subscription.failed_to_activate" = "Failed to activate subscription";
