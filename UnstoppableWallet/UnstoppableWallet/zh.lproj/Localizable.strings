@@ -596,7 +596,7 @@
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "此项目没有分析数据";
-"coin_analytics.locked.not_subscribed" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked.not_subscribed" = "此页面仅对Unstoppable钱包的高级用户开放";
 "coin_analytics.locked.learn_more" = "Learn More";
 "coin_analytics.locked.not_activated" = "Activate yor subscription for getting access to analytics";
 "coin_analytics.locked.activate" = "激活";
