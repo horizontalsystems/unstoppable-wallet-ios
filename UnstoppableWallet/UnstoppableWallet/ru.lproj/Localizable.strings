@@ -597,8 +597,8 @@
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "В этом проекте нет аналитических данных";
-"coin_analytics.locked.not_subscribed" = "This page available only for Unstoppable Wallet premium users";
-"coin_analytics.locked.learn_more" = "Learn More";
+"coin_analytics.locked.not_subscribed" = "Эта страница доступна только для премиум-пользователей Unstoppable Wallet";
+"coin_analytics.locked.learn_more" = "Подробнее";
 "coin_analytics.locked.not_activated" = "Activate yor subscription for getting access to analytics";
 "coin_analytics.locked.activate" = "Активировать";
 
@@ -1441,11 +1441,11 @@
 // Activate Subscription
 
 "activate_subscription.title" = "Активировать";
-"activate_subscription.wallet" = "Wallet";
+"activate_subscription.wallet" = "Кошелек";
 "activate_subscription.address" = "Адрес";
 "activate_subscription.message" = "Message to Sign";
 "activate_subscription.sign" = "Подписать";
-"activate_subscription.activating" = "Activating...";
+"activate_subscription.activating" = "Активация...";
 "activate_subscription.description" = "You need to sign this message to activate your subscription";
 "activate_subscription.failed_to_activate" = "Failed to activate subscription";
 
