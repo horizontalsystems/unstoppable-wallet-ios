@@ -206,7 +206,7 @@ extension ICloudBackupPassphraseViewController: SectionsDataSource {
             ),
             Section(
                     id: "confirm",
-                    footerState: .margin(height: .margin24),
+                    footerState: .margin(height: 20),
                     rows: [
                         StaticRow(
                                 cell: passphraseConfirmationCell,

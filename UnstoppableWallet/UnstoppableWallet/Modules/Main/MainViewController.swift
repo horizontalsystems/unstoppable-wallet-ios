@@ -3,6 +3,7 @@ import ThemeKit
 import RxSwift
 import RxCocoa
 import StorageKit
+import HsToolKit
 
 class MainViewController: ThemeTabBarController {
     private let disposeBag = DisposeBag()
@@ -46,6 +47,38 @@ class MainViewController: ThemeTabBarController {
         subscribe(disposeBag, viewModel.showDeepLinkDriver) { [weak self] in self?.handle(deepLink: $0) }
 
         viewModel.onLoad()
+
+        testAES()
+    }
+
+    func testAES() {
+        let manager = CloudAccountBackupManager(ubiquityContainerIdentifier: "iCloud.io.horizontalsystems.bank-wallet.shared.dev", logger: Logger(minLogLevel: .debug))
+
+        let message = "manage perfect gas ensure dog race involve reunion wave aisle deliver vocal"
+        let pass = "12345678"
+
+        let accountType = AccountType.mnemonic(
+                words: message.split(separator: " ").map(String.init),
+                salt: "Hey",
+                bip39Compliant: false
+        )
+
+        Task {
+            try await manager.save(accountType: accountType, passphrase: pass, name: "testWalletBackup.json")
+        }
+//
+//        do {
+//            let encoded = try WalletBackupConverter.encode(accountType: accountType, passphrase: pass)
+//            print("JSON: \n")
+//            print(encoded.hs.to(type: String.self))
+//
+//            print("================================")
+//            let decoded = try WalletBackupConverter.decode(json: encoded, passphrase: pass)
+//            print("DECODED: \n")
+//            print(decoded)
+//        } catch {
+//            print("ERROR: \(error)")
+//        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
