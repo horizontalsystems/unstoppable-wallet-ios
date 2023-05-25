@@ -22,12 +22,19 @@ enum AccountType {
         }
     }
 
-    var uniqueId: Data {
+    func uniqueId(hashed: Bool = true) -> Data {
         let privateData: Data
         switch self {
         case let .mnemonic(words, salt, bip39Compliant):
-            let description = words + [salt, bip39Compliant.description]
-            privateData = description.joined(separator: "|").data(using: .utf8) ?? Data() // always non-null
+            var description = words.joined(separator: " ")
+            if !bip39Compliant {
+                description += "&nonBip39Compliant"
+            }
+            if !salt.isEmpty {
+                description += "@" + salt
+            }
+
+            privateData = description.data(using: .utf8) ?? Data() // always non-null
         case let .evmPrivateKey(data):
             privateData = data
         case let .evmAddress(address):
@@ -36,7 +43,11 @@ enum AccountType {
             privateData = key.serialized
         }
 
-        return Data(SHA512.hash(data: privateData))
+        if hashed {
+            return Data(SHA512.hash(data: privateData))
+        } else {
+            return privateData
+        }
     }
 
     // todo: remove this method
@@ -190,6 +201,56 @@ enum AccountType {
             return try? EvmKit.Kit.sign(message: message, privateKey: data, isLegacy: isLegacy)
         default:
             return nil
+        }
+    }
+
+}
+
+extension AccountType {
+
+    static func decode(uniqueId: Data, type: Abstract) -> AccountType? {
+        let string = String(decoding: uniqueId, as: UTF8.self)
+
+        switch type {
+        case .mnemonic:
+            guard let index = string.firstIndex(of: Character("@")) else {
+                let words = string.split(separator: " ").map(String.init)
+                return AccountType.mnemonic(words: words, salt: "", bip39Compliant: true)
+            }
+            var words = string.prefix(upTo: index).split(separator: "&").map(String.init)
+            let salt = String(string.suffix(from: string.index(after: index)))
+            var bip39Compliant = true
+
+            if words.count == 2 {
+                words = words[0].split(separator: " ").map(String.init)
+                bip39Compliant = false
+            }
+            return AccountType.mnemonic(words: words, salt: salt, bip39Compliant: bip39Compliant)
+        case .evmPrivateKey:
+            return AccountType.evmPrivateKey(data: uniqueId)
+        case .hdExtendedKey:
+            do {
+                return AccountType.hdExtendedKey(key: try HDExtendedKey(data: uniqueId))
+            } catch {
+                return nil
+            }
+        case .evmAddress: return nil
+        }
+    }
+
+    enum Abstract: String, Codable {
+        case mnemonic
+        case evmPrivateKey
+        case evmAddress
+        case hdExtendedKey
+
+        init(_ type: AccountType) {
+            switch type {
+            case .mnemonic: self = .mnemonic
+            case .evmPrivateKey: self = .evmPrivateKey
+            case .evmAddress: self = .evmAddress
+            case .hdExtendedKey: self = .hdExtendedKey
+            }
         }
     }
 

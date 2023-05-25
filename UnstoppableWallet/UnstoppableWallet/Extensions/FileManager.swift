@@ -38,7 +38,7 @@ extension FileManager {
     }
 
     func contentsOfFile(coordinatingAccessAt url: URL) throws -> Data {
-        var data: Data = .init()
+        var data = Data()
         try coordinate(readingItemAt: url) { url in
             data = try Data(contentsOf: url)
         }

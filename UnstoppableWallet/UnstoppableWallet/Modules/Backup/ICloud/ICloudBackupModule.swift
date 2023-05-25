@@ -1,5 +1,6 @@
 import UIKit
 import ThemeKit
+import HsToolKit
 
 class ICloudBackupModule {
 
@@ -12,7 +13,7 @@ class ICloudBackupModule {
     }
 
     static func backupName(account: Account) -> UIViewController {
-        let iCloudManager = CloudAccountBackupManager()
+        let iCloudManager = CloudAccountBackupManager(ubiquityContainerIdentifier: "iCloud.io.horizontalsystems.bank-wallet.shared.dev", logger: Logger(minLogLevel: .debug))
         let service = ICloudBackupNameService(iCloudManager: iCloudManager, account: account)
         let viewModel = ICloudBackupNameViewModel(service: service)
         let controller = ICloudBackupNameViewController(viewModel: viewModel)
