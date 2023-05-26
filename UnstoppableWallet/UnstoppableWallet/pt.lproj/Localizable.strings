@@ -595,8 +595,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "Este projeto não tem dados de análise";
-"coin_analytics.locked.not_subscribed" = "This page available only for Unstoppable Wallet premium users";
-"coin_analytics.locked.learn_more" = "Learn More";
+"coin_analytics.locked.not_subscribed" = "Esta página está disponível apenas para usuários premium da Carteira Unstoppable";
+"coin_analytics.locked.learn_more" = "Saiba Mais";
 "coin_analytics.locked.not_activated" = "Activate yor subscription for getting access to analytics";
 "coin_analytics.locked.activate" = "Ativar";
 
