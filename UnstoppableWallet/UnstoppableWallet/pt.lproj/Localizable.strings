@@ -597,7 +597,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.not_available" = "Este projeto não tem dados de análise";
 "coin_analytics.locked.not_subscribed" = "Esta página está disponível apenas para usuários premium da Carteira Unstoppable";
 "coin_analytics.locked.learn_more" = "Saiba Mais";
-"coin_analytics.locked.not_activated" = "Activate yor subscription for getting access to analytics";
+"coin_analytics.locked.not_activated" = "Ativar sua assinatura para ter acesso ao Analytics";
 "coin_analytics.locked.activate" = "Ativar";
 
 "coin_analytics.cex_volume" = "Volume CEX";
@@ -633,11 +633,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30 Dias Endereços Únicos";
 "coin_analytics.active_addresses_rank" = "Ranking de Endereços Ativos";
 "coin_analytics.active_addresses_rank.description" = "Tokens classificados pelo número de endereços exclusivos que realizam transações com o token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
-"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
-"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses.info1" = "Número total de endereços únicos ativos diariamente em um período de 24 horas.";
+"coin_analytics.active_addresses.info2" = "Gráfico mostrando a variação na contagem diária de endereços ativos durante o período de 1 ano.";
+"coin_analytics.active_addresses.info3" = "Número total de endereços de blockchain únicos realizando transações com token em um período de 30 dias.";
+"coin_analytics.active_addresses.info4" = "Classificação do token com base no número de carteiras ativas realizando transações no período de 30 dias do token.";
+"coin_analytics.active_addresses.info5" = "Lista de todos os tokens classificados com base no número de endereços ativos diários que realizam transações com o token em intervalos de 24h / 7D / 1M.";
 
 "coin_analytics.transaction_count" = "Contagem de transações";
 "coin_analytics.transaction_count_rank" = "Ranking de Contador Tx";
@@ -659,11 +659,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.project_tvl" = "Projeto TVL";
 "coin_analytics.tvl_ratio" = "Proporção de Capital de M. / TVB";
 "coin_analytics.project_tvl.info_title" = "Projeto TVB (Total de Valor Bloqueado)";
-"coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
-"coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
-"coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
+"coin_analytics.project_tvl.info1" = "Valor-Total-Bloqueado (ou Ativos Sob Gerenciamento) nos contratos inteligentes do projeto.";
+"coin_analytics.project_tvl.info2" = "Gráfico mostrando a variação Valor-Total-Bloqueado nos contratos inteligentes do projeto durante o período de 1 ano.";
+"coin_analytics.project_tvl.info3" = "Classificação do token com base no Valor-Total-Bloqueado atual.";
+"coin_analytics.project_tvl.info4" = "Lista de todos os tokens classificados com base no Valor-Total-Bloqueado atual.";
+"coin_analytics.project_tvl.info5" = "Valor de Mercado / proporção VTB para o projeto.";
 
 "coin_analytics.project_revenue" = "Receita do Projeto";
 "coin_analytics.project_revenue_rank" = "Ranking da Receita do Projeto";
@@ -679,7 +679,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.funding" = "Financiamento";
 "coin_analytics.funding.lead" = "Conduzir";
 
-"coin_analytics.treasuries" = "Treasuries";
+"coin_analytics.treasuries" = "Tesouros";
 "coin_analytics.treasuries.filters" = "Filtros";
 "coin_analytics.treasuries.filter.all" = "Todos";
 "coin_analytics.treasuries.filter.public" = "Público";
@@ -711,7 +711,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Pro Features
 
-"pro_features.authorize.wallet_passes.title" = "Unstoppable NFT";
+"pro_features.authorize.wallet_passes.title" = "NFT Unstoppable";
 "pro_features.authorize.wallet_passes.subtitle" = "Obtenha acesso aos recursos avançados de carteira\nFazendo Holdin NFTs Unstoppable.";
 
 "pro_features.lock_info.go_to_mint" = "Em Breve";
@@ -964,7 +964,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "appearance.balance_value.coin_value" = "Valor da Moeda";
 "appearance.balance_value.fiat_value" = "Valor Fiat";
 
-"appearance.balance_auto_hide" = "Balance Auto Hide";
+"appearance.balance_auto_hide" = "Ocultar Saldo Automaticamente";
 
 // Settings -> Contacts
 
@@ -1295,7 +1295,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "add_evm_sync_source.title" = "Adicionar fonte RPC";
 "add_evm_sync_source.name" = "Nome";
-"add_evm_sync_source.rpc_url" = "RPC URL";
+"add_evm_sync_source.rpc_url" = "URL RPC";
 "add_evm_sync_source.basic_auth" = "Autenticação básica (opcional)";
 "add_evm_sync_source.warning.url_exists" = "Fonte RPC com esta url já existe";
 "add_evm_sync_source.error.invalid_url" = "Url inserida é inválida. URL válida deve ter um dos seguintes esquemas: http, https, ws, wss";
@@ -1319,7 +1319,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "fee_settings.time_lock.description" = "TimeLock funciona apenas para enviar para endereços BIP44 (começando com 1)";
 
 "fee_settings.network_fee" = "Taxa de Rede";
-"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
+"fee_settings.network_fee.info" = "O custo estimado do envio de determinada transação na rede.";
 "fee_settings.gas_limit" = "Limite de gás";
 "fee_settings.gas_limit.info" = "A complexidade da transação é medida em unidades chamadas \"gas\". Ela varia dependendo do contrato inteligente ser executado. O Limite de Gas é estimado o gas máximo necessário para o executar. O gas real utilizado normalmente será mais baixo.";
 
@@ -1354,7 +1354,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "watch_address.by" = "Por";
 "watch_address.watch_by" = "Assistir Por";
 "watch_address.evm_address" = "Endereço EVM";
-"watch_address.public_key" = "Account xPubKey";
+"watch_address.public_key" = "xPubKey da Conta";
 "watch_address.public_key.placeholder" = "Insira a chave pública estendida da conta ";
 "watch_address.public_key.invalid_key" = "Chave Inválida";
 "watch_address.choose_blockchain" = "Escolha Blockchain";
@@ -1437,16 +1437,16 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Activate Subscription
 
 "activate_subscription.title" = "Ativar";
-"activate_subscription.wallet" = "Wallet";
+"activate_subscription.wallet" = "Carteira";
 "activate_subscription.address" = "Endereço";
-"activate_subscription.message" = "Message to Sign";
+"activate_subscription.message" = "Mensagem para Assinar";
 "activate_subscription.sign" = "Assinar";
-"activate_subscription.activating" = "Activating...";
-"activate_subscription.description" = "You need to sign this message to activate your subscription";
-"activate_subscription.failed_to_activate" = "Failed to activate subscription";
+"activate_subscription.activating" = "Ativando...";
+"activate_subscription.description" = "Você precisa assinar esta mensagem para ativar sua assinatura";
+"activate_subscription.failed_to_activate" = "Falha ao ativar a assinatura";
 
 
 // Launch
 
-"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting app or report the error to our support team.";
+"launch.failed_to_launch" = "Falha ao iniciar o aplicativo devido a um erro interno. Tente reiniciar o aplicativo ou relate o erro à nossa equipe de suporte.";
 "launch.failed_to_launch.report" = "Reportar";
