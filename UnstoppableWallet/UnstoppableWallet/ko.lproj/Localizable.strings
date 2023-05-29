@@ -7,6 +7,7 @@
 "button.reset" = "초기화";
 "button.import" = "복구";
 "button.next" = "다음";
+"button.delete" = "삭제";
 "button.share" = "공유";
 "button.paste" = "불여넣기";
 "button.backup" = "백업";
@@ -26,6 +27,7 @@
 "alert" = "알림";
 "alert.copied" = "복사됨";
 "alert.saved" = "저장";
+"alert.saved_to_icloud" = "Saved to iCloud";
 "alert.no_internet" = "인터넷에 연결되지 않음";
 "alert.wrong_amount" = "잘못된 금액";
 "alert.no_fee" = "잘못된 요금";
@@ -184,10 +186,43 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "백업용 지갑";
-"backup_prompt.warning" = "복구 문구의 복사본을 생성하여 이 지갑을 백업하십시오. 휴대폰 분실, 도난, 파손 등의 경우 지갑에 액세스하기 위해 필요합니다.";
+"backup_prompt.title" = "Backup Recovery Phrase ";
+"backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
 "backup_prompt.backup" = "백업";
+"backup_prompt.backup_manual" = "Manual Backup";
+"backup_prompt.backup_cloud" = "Backup to iCloud";
 "backup_prompt.later" = "나중에";
+
+// Backup to iCloud
+
+"backup.cloud.title" = "Backup to iCloud";
+"backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
+
+"backup.cloud.terms.item.1" = "I understand that by using iCloud backup, I am transferring my data to third party storage";
+"backup.cloud.terms.item.2" = "I understand that if I lose access to my iCloud, I will lose access to my wallet backup copy ";
+
+"backup.cloud.name.title" = "Backup Name";
+"backup.cloud.name.description" = "Add a name for the recovery phrase backup to distinguish it from other backups";
+"backup.cloud.name.empty" = "Backup name can't be empty!";
+"backup.cloud.name.error.empty" = "Backup name must be not empty";
+"backup.cloud.name.error.already_exist" = "Backup name already exist!";
+"backup.cloud.name.placeholder" = "이름";
+
+"backup.cloud.password.title" = "Set Password";
+"backup.cloud.password.description" = "Password-protect your backup to encrypt it on iCloud.";
+"backup.cloud.password.highlighted_description" = "Don't forget this password! It is separate from your Apple iCloud password, and it cannot be recovered or reset.";
+"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.confirm.placeholder" = "확인";
+"backup.cloud.password.save" = "Save and Backup";
+
+"backup.cloud.password.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
+"backup.cloud.password.error.forbidden_symbols" = "지원되는 기호만 사용하세요: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_required" = "The password must be minimum 8 characters";
+"backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
+"backup.cloud.not_available" = "iCloud nit Available";
+"backup.cloud.cant_create_file" = "Can't save File to iCloud";
+"backup.cloud.cant_delete_file" = "Can't delete from iCloud";
+
 
 // Errors
 
@@ -1242,8 +1277,11 @@
 "manage_account.public_keys" = "공개 키";
 "manage_account.private_keys" = "개인 암호";
 "manage_account.backup_recovery_phrase" = "백업 복구 문구";
+"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
 "manage_account.unlink" = "링크 해제";
 
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "공개 키";
