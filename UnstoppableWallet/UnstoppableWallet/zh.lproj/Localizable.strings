@@ -685,6 +685,8 @@
 "coin_analytics.transaction_count.info5" = "30天周期内在区块链上传输的代币总数。";
 
 "coin_analytics.holders" = "持有者";
+"coin_analytics.holders_rank" = "Holders Rank";
+"coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
 "coin_analytics.holders.info1" = "在各种区块链上持有代币的唯一地址的总数。";
 "coin_analytics.holders.info2" = "在每一个区块链上持有代币的前10大钱包。";
 "coin_analytics.holders.tracked_blockchains" = "已追踪区块链：以太坊、币安智能链、Optimism、Arbitrum、Celo、Cronos、Avalanche、Fantom、Polygon";
