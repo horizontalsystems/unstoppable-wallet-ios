@@ -17,6 +17,10 @@ class FileStorage {
         try FileManager.default.startDownloadingUbiquitousItem(at: fileUrl)
     }
 
+    func fileList(url: URL) throws -> [String] {
+        try FileManager.default.contentsOfDirectory(atPath: url.path)
+    }
+
     func read(directoryUrl: URL, filename: String) async throws -> Data {
         let fileUrl = directoryUrl.appendingPathComponent(filename)
 

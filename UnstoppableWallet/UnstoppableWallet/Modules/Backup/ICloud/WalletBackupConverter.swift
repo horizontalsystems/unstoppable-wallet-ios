@@ -32,14 +32,15 @@ class WalletBackupConverter {
                 crypto: crypto,
                 id: accountType.uniqueId().hs.hex,
                 type: AccountType.Abstract(accountType),
-                version: Self.version
+                version: Self.version,
+                timestamp: Date().timeIntervalSince1970
         )
         return try JSONEncoder().encode(backup)
 
     }
 
-    static func decode(json: Data, passphrase: String) throws -> AccountType {
-        let backup = try JSONDecoder().decode(WalletBackup.self, from: json)
+    static func decode(data: Data, passphrase: String) throws -> AccountType {
+        let backup = try JSONDecoder().decode(WalletBackup.self, from: data)
 
         guard let message = Data(base64Encoded: backup.crypto.cipherText) else {
             throw CodingError.cantDecodeCipherText

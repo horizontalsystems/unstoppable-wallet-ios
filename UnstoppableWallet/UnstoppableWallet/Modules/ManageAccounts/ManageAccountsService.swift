@@ -1,9 +1,12 @@
 import RxSwift
 import RxRelay
+import Combine
 
 class ManageAccountsService {
     private let accountManager: AccountManager
+    private let cloudBackupManager: CloudAccountBackupManager
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let itemsRelay = PublishRelay<[Item]>()
     private(set) var items = [Item]() {
@@ -12,11 +15,18 @@ class ManageAccountsService {
         }
     }
 
-    init(accountManager: AccountManager) {
+    init(accountManager: AccountManager, cloudBackupManager: CloudAccountBackupManager) {
         self.accountManager = accountManager
+        self.cloudBackupManager = cloudBackupManager
 
         subscribe(disposeBag, accountManager.accountsObservable) { [weak self] _ in self?.syncItems() }
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] _ in self?.syncItems() }
+
+        cloudBackupManager.$items
+                .sink { [weak self] _ in
+                    self?.syncItems()
+                }
+                .store(in: &cancellables)
 
         syncItems()
     }
@@ -24,7 +34,8 @@ class ManageAccountsService {
     private func syncItems() {
         let activeAccount = accountManager.activeAccount
         items = accountManager.accounts.map { account in
-            Item(account: account, isActive: account == activeAccount)
+            let cloudBackedUp = cloudBackupManager.backedUp(uniqueId: account.type.uniqueId())
+            return Item(account: account, cloudBackedUp: cloudBackedUp, isActive: account == activeAccount)
         }
     }
 
@@ -54,7 +65,12 @@ extension ManageAccountsService {
 
     struct Item {
         let account: Account
+        let cloudBackedUp: Bool
         let isActive: Bool
+
+        var hasBackup: Bool {
+            account.backedUp || cloudBackedUp
+        }
     }
 
 }

@@ -24,6 +24,7 @@ class MainSettingsService {
     private let walletConnectV2SessionManager: WalletConnectV2SessionManager
 
     private let iCloudAvailableErrorRelay = BehaviorRelay<Bool>(value: false)
+    private let noWalletRequiredActionsRelay = BehaviorRelay<Bool>(value: false)
 
     init(backupManager: BackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager?, pinKit: PinKit.Kit, termsManager: TermsManager,
          systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit, appConfigProvider: AppConfigProvider,
@@ -49,6 +50,13 @@ class MainSettingsService {
                 }
             }
         }
+
+        subscribe(disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncWalletRequiredActions() }
+        subscribe(disposeBag, accountRestoreWarningManager.hasNonStandardObservable) { [weak self] _ in self?.syncWalletRequiredActions() }
+    }
+
+    private func syncWalletRequiredActions() {
+        noWalletRequiredActionsRelay.accept(backupManager.allBackedUp && !accountRestoreWarningManager.hasNonStandard)
     }
 
 }
@@ -64,9 +72,7 @@ extension MainSettingsService {
     }
 
     var noWalletRequiredActionsObservable: Observable<Bool> {
-        Observable.combineLatest(backupManager.allBackedUpObservable, accountRestoreWarningManager.hasNonStandardObservable) { allBackedUp, hasNonStandard in
-            allBackedUp && !hasNonStandard
-        }
+        noWalletRequiredActionsRelay.asObservable()
     }
 
     var isPinSet: Bool {

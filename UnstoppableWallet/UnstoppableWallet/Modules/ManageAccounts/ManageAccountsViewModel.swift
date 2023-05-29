@@ -34,11 +34,11 @@ class ManageAccountsViewModel {
         var alertSubtitle: String?
         if item.account.nonStandard {
             alertSubtitle = "manage_accounts.migration_required".localized
-        } else if !item.account.backedUp {
+        } else if !item.hasBackup {
             alertSubtitle = "manage_accounts.backup_required".localized
         }
 
-        let showAlert = item.account.nonStandard || item.account.nonRecommended || !item.account.backedUp
+        let showAlert = item.account.nonStandard || item.account.nonRecommended || !item.hasBackup
         return ViewItem(
                 accountId: item.account.id,
                 title: item.account.name,

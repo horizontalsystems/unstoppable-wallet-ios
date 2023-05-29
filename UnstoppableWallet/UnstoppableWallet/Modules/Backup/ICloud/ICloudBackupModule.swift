@@ -13,8 +13,7 @@ class ICloudBackupModule {
     }
 
     static func backupName(account: Account) -> UIViewController {
-        let iCloudManager = CloudAccountBackupManager(ubiquityContainerIdentifier: "iCloud.io.horizontalsystems.bank-wallet.shared.dev", logger: Logger(minLogLevel: .debug))
-        let service = ICloudBackupNameService(iCloudManager: iCloudManager, account: account)
+        let service = ICloudBackupNameService(iCloudManager: App.shared.cloudAccountBackupManager, account: account)
         let viewModel = ICloudBackupNameViewModel(service: service)
         let controller = ICloudBackupNameViewController(viewModel: viewModel)
 
@@ -22,7 +21,7 @@ class ICloudBackupModule {
     }
 
     static func backupPassword(account: Account, name: String) -> UIViewController {
-        let service = ICloudBackupPassphraseService(account: account, name: name)
+        let service = ICloudBackupPassphraseService(iCloudManager: App.shared.cloudAccountBackupManager, account: account, name: name)
         let viewModel = ICloudBackupPassphraseViewModel(service: service)
         let controller = ICloudBackupPassphraseViewController(viewModel: viewModel)
 

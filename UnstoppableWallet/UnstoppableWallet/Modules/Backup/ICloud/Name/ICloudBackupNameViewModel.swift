@@ -23,6 +23,7 @@ class ICloudBackupNameViewModel {
         switch state {
         case .failure(let error):
             nameError = error.localizedDescription
+            nextAvailable = false
         case .success:
             nameError = nil
             nextAvailable = true

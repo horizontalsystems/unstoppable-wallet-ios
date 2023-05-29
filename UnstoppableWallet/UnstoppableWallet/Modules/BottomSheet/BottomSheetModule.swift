@@ -68,6 +68,22 @@ extension BottomSheetModule {
         )
     }
 
+    static func confirmDeleteCloudBackupController(action: (() -> ())?) -> UIViewController {
+        viewController(
+                image: .local(image: UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
+                title: "manage_account.cloud_delete_backup_recovery_phrase".localized,
+                items: [
+                    .highlightedDescription(text: "manage_account.cloud_delete_backup_recovery_phrase.description".localized)
+                ],
+                buttons: [
+                    .init(style: .red, title: "button.delete".localized, actionType: .afterClose) {
+                        action?()
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized)
+                ]
+        )
+    }
+
 }
 
 extension BottomSheetModule {

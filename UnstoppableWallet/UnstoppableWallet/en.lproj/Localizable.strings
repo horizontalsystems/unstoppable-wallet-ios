@@ -7,6 +7,7 @@
 "button.reset" = "Reset";
 "button.import" = "Import";
 "button.next" = "Next";
+"button.delete" = "Delete";
 "button.share" = "Share";
 "button.paste" = "Paste";
 "button.backup" = "Backup";
@@ -205,7 +206,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "backup.cloud.name.title" = "Backup Name";
 "backup.cloud.name.description" = "Add a name for the recovery phrase backup to distinguish it from other backups";
 "backup.cloud.name.empty" = "Backup name can't be empty!";
-"backup.cloud.name.error.empty" = "Name";
+"backup.cloud.name.error.empty" = "Backup name must be not empty";
 "backup.cloud.name.error.already_exist" = "Backup name already exist!";
 "backup.cloud.name.placeholder" = "Name";
 
@@ -220,6 +221,10 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "backup.cloud.password.error.forbidden_symbols" = "Please use only supported symbols:A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_required" = "The password must be minimum 8 characters";
 "backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
+"backup.cloud.not_available" = "iCloud nit Available";
+"backup.cloud.cant_create_file" = "Can't save File to iCloud";
+"backup.cloud.cant_delete_file" = "Can't delete from iCloud";
+
 
 // Errors
 
@@ -1274,8 +1279,11 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "manage_account.public_keys" = "Public Keys";
 "manage_account.private_keys" = "Private Keys";
 "manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
+"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
 "manage_account.unlink" = "Unlink";
 
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "Public Keys";
