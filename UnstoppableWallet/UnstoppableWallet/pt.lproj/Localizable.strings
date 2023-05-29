@@ -684,6 +684,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.transaction_count.info5" = "O número total de tokens transferidos sobre a blockchain ao longo do período de 30 dias.";
 
 "coin_analytics.holders" = "Holders";
+"coin_analytics.holders_rank" = "Holders Rank";
+"coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
 "coin_analytics.holders.info1" = "Número total de endereços únicos que contêm o token em várias blockchains.";
 "coin_analytics.holders.info2" = "As 10 principais carteiras que possuem o token em cada blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Blockchains rastreadas: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
