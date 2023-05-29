@@ -7,6 +7,7 @@
 "button.reset" = "Sıfırla";
 "button.import" = "Geri Yükle";
 "button.next" = "İleri";
+"button.delete" = "Sil";
 "button.share" = "Paylaş";
 "button.paste" = "Yapıştır";
 "button.backup" = "Yedekle";
@@ -26,6 +27,7 @@
 "alert" = "Uyarı";
 "alert.copied" = "Kopyalandı";
 "alert.saved" = "Kaydet";
+"alert.saved_to_icloud" = "Saved to iCloud";
 "alert.no_internet" = "Internet Bağlantısı Yok";
 "alert.wrong_amount" = "Yanlış Tutar";
 "alert.no_fee" = "Yanlış Masraf";
@@ -186,10 +188,43 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Backup Prompt
 
-"backup_prompt.title" = "Cüzdanı yedekle";
-"backup_prompt.warning" = "Kurtarma ifadesinin bir kopyasını oluşturarak bu cüzdanı yedekleyin. Telefonunuzun kaybolması, çalınması, kırılması vb. durumlarda cüzdana erişmek için gerekli olacaktır.";
+"backup_prompt.title" = "Backup Recovery Phrase ";
+"backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
 "backup_prompt.backup" = "Yedekle";
+"backup_prompt.backup_manual" = "Manual Backup";
+"backup_prompt.backup_cloud" = "Backup to iCloud";
 "backup_prompt.later" = "Sonra";
+
+// Backup to iCloud
+
+"backup.cloud.title" = "Backup to iCloud";
+"backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
+
+"backup.cloud.terms.item.1" = "I understand that by using iCloud backup, I am transferring my data to third party storage";
+"backup.cloud.terms.item.2" = "I understand that if I lose access to my iCloud, I will lose access to my wallet backup copy ";
+
+"backup.cloud.name.title" = "Backup Name";
+"backup.cloud.name.description" = "Add a name for the recovery phrase backup to distinguish it from other backups";
+"backup.cloud.name.empty" = "Backup name can't be empty!";
+"backup.cloud.name.error.empty" = "Backup name must be not empty";
+"backup.cloud.name.error.already_exist" = "Backup name already exist!";
+"backup.cloud.name.placeholder" = "İsim";
+
+"backup.cloud.password.title" = "Set Password";
+"backup.cloud.password.description" = "Password-protect your backup to encrypt it on iCloud.";
+"backup.cloud.password.highlighted_description" = "Don't forget this password! It is separate from your Apple iCloud password, and it cannot be recovered or reset.";
+"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.confirm.placeholder" = "Onayla";
+"backup.cloud.password.save" = "Save and Backup";
+
+"backup.cloud.password.error.empty_passphrase" = "Parola boş olamaz";
+"backup.cloud.password.error.forbidden_symbols" = "Lütfen yalnızca desteklenen sembolleri kullanın:  A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_required" = "The password must be minimum 8 characters";
+"backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
+"backup.cloud.not_available" = "iCloud nit Available";
+"backup.cloud.cant_create_file" = "Can't save File to iCloud";
+"backup.cloud.cant_delete_file" = "Can't delete from iCloud";
+
 
 // Errors
 
@@ -1244,8 +1279,11 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "manage_account.public_keys" = "Genel Anahtarlar";
 "manage_account.private_keys" = "Özel Anahtar";
 "manage_account.backup_recovery_phrase" = "Yedekleme Kurtarma İfadesi";
+"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
 "manage_account.unlink" = "Ayır";
 
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "Genel Anahtarlar";
