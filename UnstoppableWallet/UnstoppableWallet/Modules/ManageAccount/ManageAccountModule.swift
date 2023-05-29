@@ -9,6 +9,7 @@ struct ManageAccountModule {
         guard let service = ManageAccountService(
                 accountId: accountId,
                 accountManager: App.shared.accountManager,
+                cloudBackupManager: App.shared.cloudAccountBackupManager,
                 pinKit: App.shared.pinKit
         ) else {
             return nil
@@ -17,8 +18,12 @@ struct ManageAccountModule {
         let accountRestoreWarningFactory = AccountRestoreWarningFactory(
                 appConfigProvider: App.shared.appConfigProvider,
                 localStorage: StorageKit.LocalStorage.default,
-                languageManager: LanguageManager.shared)
-        let viewModel = ManageAccountViewModel(service: service, accountRestoreWarningFactory: accountRestoreWarningFactory)
+                languageManager: LanguageManager.shared
+        )
+        let viewModel = ManageAccountViewModel(
+                service: service,
+                accountRestoreWarningFactory: accountRestoreWarningFactory
+        )
         let viewController = ManageAccountViewController(viewModel: viewModel, sourceViewController: sourceViewController)
 
         return ThemeNavigationController(rootViewController: viewController)

@@ -2,6 +2,7 @@ import RxSwift
 import RxRelay
 import MarketKit
 import PinKit
+import Combine
 
 class ManageAccountService {
     private let accountRelay = PublishRelay<Account>()
@@ -12,8 +13,10 @@ class ManageAccountService {
     }
 
     private let accountManager: AccountManager
+    private let cloudBackupManager: CloudAccountBackupManager
     private let pinKit: PinKit.Kit
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let stateRelay = PublishRelay<State>()
     private(set) var state: State = .cannotSave {
@@ -23,22 +26,31 @@ class ManageAccountService {
     }
 
     private let accountDeletedRelay = PublishRelay<()>()
+    private let cloudBackedUpRelay = PublishRelay<()>()
 
     private var newName: String
 
-    init?(accountId: String, accountManager: AccountManager, pinKit: PinKit.Kit) {
+    init?(accountId: String, accountManager: AccountManager, cloudBackupManager: CloudAccountBackupManager, pinKit: PinKit.Kit) {
         guard let account = accountManager.account(id: accountId) else {
             return nil
         }
 
         self.account = account
         self.accountManager = accountManager
+        self.cloudBackupManager = cloudBackupManager
+
         self.pinKit = pinKit
 
         newName = account.name
 
         subscribe(disposeBag, accountManager.accountUpdatedObservable) { [weak self] in self?.handleUpdated(account: $0) }
         subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.handleDeleted(account: $0) }
+
+        cloudBackupManager.$items
+                .sink { [weak self] _ in
+                    self?.cloudBackedUpRelay.accept(())
+                }
+                .store(in: &cancellables)
 
         syncState()
     }
@@ -79,6 +91,14 @@ extension ManageAccountService {
         accountDeletedRelay.asObservable()
     }
 
+    var cloudBackedUpObservable: Observable<()> {
+        cloudBackedUpRelay.asObservable()
+    }
+
+    var isCloudBackedUp: Bool {
+        cloudBackupManager.backedUp(uniqueId: account.type.uniqueId())
+    }
+
     var isPinSet: Bool {
         pinKit.isPinSet
     }
@@ -91,6 +111,10 @@ extension ManageAccountService {
     func saveAccount() {
         account.name = newName
         accountManager.update(account: account)
+    }
+
+    func deleteCloudBackup() async throws {
+        try await cloudBackupManager.delete(uniqueId: account.type.uniqueId())
     }
 
 }

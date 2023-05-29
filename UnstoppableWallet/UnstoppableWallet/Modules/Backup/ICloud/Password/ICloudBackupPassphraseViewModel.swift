@@ -73,18 +73,26 @@ extension ICloudBackupPassphraseViewModel {
     func onTapCreate() {
         passphraseCaution = nil
         passphraseConfirmationCaution = nil
-        do {
-            try service.createBackup()
-            finishSubject.send(())
-        } catch {
-            if case ICloudBackupPassphraseService.CreateError.emptyPassphrase = error {
-                passphraseCaution = Caution(text: "backup.cloud.password.error.empty_passphrase".localized, type: .error)
-            } else if case ICloudBackupPassphraseService.CreateError.tooShort = error {
-                passphraseCaution = Caution(text: "backup.cloud.password.error.minimum_required".localized, type: .error)
-            } else if case ICloudBackupPassphraseService.CreateError.invalidConfirmation = error {
-                passphraseConfirmationCaution = Caution(text: "backup.cloud.password.confirm.error.doesnt_match".localized, type: .error)
-            } else {
-                showErrorSubject.send(error.smartDescription)
+        Task {
+            do {
+                try await service.createBackup()
+                finishSubject.send(())
+            } catch {
+                switch (error as? ICloudBackupPassphraseService.CreateError) {
+                case .emptyPassphrase:
+                    passphraseCaution = Caution(text: "backup.cloud.password.error.empty_passphrase".localized, type: .error)
+                case .tooShort:
+                    passphraseCaution = Caution(text: "backup.cloud.password.error.minimum_required".localized, type: .error)
+                case .invalidConfirmation:
+                    passphraseConfirmationCaution = Caution(text: "backup.cloud.password.confirm.error.doesnt_match".localized, type: .error)
+                case .urlNotAvailable:
+                    showErrorSubject.send("backup.cloud.not_available".localized)
+                case .cantSaveFile(let error):
+                    showErrorSubject.send("backup.cloud.cant_create_file".localized)
+                    print("Has Error while try save file: \(error)")
+                case .none:
+                    showErrorSubject.send(error.smartDescription)
+                }
             }
         }
     }

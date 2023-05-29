@@ -8,12 +8,15 @@ class ManageAccountViewModel {
     private let accountRestoreWarningFactory: AccountRestoreWarningFactory
     private let disposeBag = DisposeBag()
 
-    private let keyActionsRelay = BehaviorRelay<[KeyAction]>(value: [])
+    private let keyActionsRelay = BehaviorRelay<[[KeyAction]]>(value: [])
     private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let openUnlockRelay = PublishRelay<()>()
     private let openRecoveryPhraseRelay = PublishRelay<Account>()
     private let openBackupRelay = PublishRelay<Account>()
+    private let openCloudBackupRelay = PublishRelay<Account>()
+    private let confirmDeleteCloudBackupRelay = PublishRelay<()>()
+    private let cloudBackupDeletedRelay = PublishRelay<Bool>()
     private let openUnlinkRelay = PublishRelay<Account>()
     private let finishRelay = PublishRelay<()>()
 
@@ -25,10 +28,11 @@ class ManageAccountViewModel {
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(disposeBag, service.accountObservable) { [weak self] in self?.sync(account: $0) }
+        subscribe(disposeBag, service.cloudBackedUpObservable) { [weak self] in self?.sync() }
         subscribe(disposeBag, service.accountDeletedObservable) { [weak self] in self?.finishRelay.accept(()) }
 
         sync(state: service.state)
-        sync(account: service.account)
+        sync()
     }
 
     private func sync(state: ManageAccountService.State) {
@@ -38,26 +42,37 @@ class ManageAccountViewModel {
         }
     }
 
-    private func keyActions(account: Account) -> [KeyAction] {
-        guard account.backedUp else {
-            return [.backup]
+    private func keyActions(account: Account, isCloudBackedUp: Bool) -> [[KeyAction]] {
+        var backupActions = [KeyAction]()
+        if !account.backedUp {
+            backupActions.append(.backup(isCloudBackedUp: isCloudBackedUp))
         }
 
+        backupActions.append(.cloudBackedUp(isCloudBackedUp, manualBackedUp: account.backedUp))
+
+        guard account.backedUp || isCloudBackedUp else {
+            return [backupActions]
+        }
+
+        var keyActions = [KeyAction]()
         switch account.type {
-        case .mnemonic: return [.recoveryPhrase, .privateKeys, .publicKeys]
-        case .evmPrivateKey: return [.privateKeys, .publicKeys]
-        case .evmAddress: return [.publicKeys]
+        case .mnemonic: keyActions.append(contentsOf: [.recoveryPhrase, .privateKeys, .publicKeys])
+        case .evmPrivateKey: keyActions.append(contentsOf: [.privateKeys, .publicKeys])
+        case .evmAddress: keyActions.append(contentsOf: [.publicKeys])
         case .hdExtendedKey(let key):
             switch key {
-            case .private: return [.privateKeys, .publicKeys]
-            case .public: return [.publicKeys]
+            case .private: keyActions.append(contentsOf: [.privateKeys, .publicKeys])
+            case .public: keyActions.append(contentsOf: [.publicKeys])
             }
         }
+
+        return [keyActions, backupActions]
     }
 
-    private func sync(account: Account) {
+    private func sync(account: Account? = nil) {
+        let account = account ?? service.account
         showWarningRelay.accept(accountRestoreWarningFactory.caution(account: account, canIgnoreActiveAccountWarning: false))
-        keyActionsRelay.accept(keyActions(account: account))
+        keyActionsRelay.accept(keyActions(account: account, isCloudBackedUp: service.isCloudBackedUp))
     }
 
 }
@@ -68,7 +83,7 @@ extension ManageAccountViewModel {
         saveEnabledRelay.asDriver()
     }
 
-    var keyActionsDriver: Driver<[KeyAction]> {
+    var keyActionsDriver: Driver<[[KeyAction]]> {
         keyActionsRelay.asDriver()
     }
 
@@ -90,6 +105,18 @@ extension ManageAccountViewModel {
 
     var openBackupSignal: Signal<Account> {
         openBackupRelay.asSignal()
+    }
+
+    var openCloudBackupSignal: Signal<Account> {
+        openCloudBackupRelay.asSignal()
+    }
+
+    var confirmDeleteCloudBackupSignal: Signal<()> {
+        confirmDeleteCloudBackupRelay.asSignal()
+    }
+
+    var cloudBackupDeletedSignal: Signal<Bool> {
+        cloudBackupDeletedRelay.asSignal()
     }
 
     var openUnlinkSignal: Signal<Account> {
@@ -133,6 +160,25 @@ extension ManageAccountViewModel {
         }
     }
 
+    func onTapDeleteCloudBackup() {
+        confirmDeleteCloudBackupRelay.accept(())
+    }
+
+    func deleteCloudBackup() {
+        Task { [weak self] in
+            do {
+                try await service.deleteCloudBackup()
+                self?.cloudBackupDeletedRelay.accept(true)
+            } catch {
+                self?.cloudBackupDeletedRelay.accept(false)
+            }
+        }
+    }
+
+    func onTapCloudBackup() {
+        openCloudBackupRelay.accept(service.account)
+    }
+
     func onTapBackup() {
         if service.isPinSet {
             unlockRequest = .backup
@@ -159,7 +205,8 @@ extension ManageAccountViewModel {
         case recoveryPhrase
         case publicKeys
         case privateKeys
-        case backup
+        case backup(isCloudBackedUp: Bool)
+        case cloudBackedUp(Bool, manualBackedUp: Bool)
     }
 
 }

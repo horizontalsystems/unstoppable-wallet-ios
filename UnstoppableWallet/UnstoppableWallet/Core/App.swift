@@ -105,6 +105,7 @@ class App {
 
     let appManager: AppManager
     let contactManager: ContactBookManager?
+    let cloudAccountBackupManager: CloudAccountBackupManager
 
     init() throws {
         appConfigProvider = AppConfigProvider()
@@ -154,7 +155,9 @@ class App {
         accountManager = AccountManager(storage: accountCachedStorage)
         accountRestoreWarningManager = AccountRestoreWarningManager(accountManager: accountManager, localStorage: StorageKit.LocalStorage.default)
         accountFactory = AccountFactory(accountManager: accountManager)
-        backupManager = BackupManager(accountManager: accountManager)
+
+        cloudAccountBackupManager = CloudAccountBackupManager(ubiquityContainerIdentifier: CloudAccountBackupManager.iCloudSharedContainer, logger: Logger(minLogLevel: .error))
+        backupManager = BackupManager(accountManager: accountManager, cloudBackupManager: cloudAccountBackupManager)
 
         kitCleaner = KitCleaner(accountManager: accountManager)
 

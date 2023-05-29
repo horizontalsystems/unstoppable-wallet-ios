@@ -16,7 +16,7 @@ class ManageAccountViewController: KeyboardAwareViewController {
     private let nameCell = TextFieldCell()
 
     private var warningViewItem: CancellableTitledCaution?
-    private var keyActions: [ManageAccountViewModel.KeyAction] = []
+    private var keyActions: [[ManageAccountViewModel.KeyAction]] = []
     private var isLoaded = false
 
     private weak var sourceViewController: ManageAccountsViewController?
@@ -67,6 +67,9 @@ class ManageAccountViewController: KeyboardAwareViewController {
         subscribe(disposeBag, viewModel.openUnlockSignal) { [weak self] in self?.openUnlock() }
         subscribe(disposeBag, viewModel.openRecoveryPhraseSignal) { [weak self] in self?.openRecoveryPhrase(account: $0) }
         subscribe(disposeBag, viewModel.openBackupSignal) { [weak self] in self?.openBackup(account: $0) }
+        subscribe(disposeBag, viewModel.openCloudBackupSignal) { [weak self] in self?.openCloudBackup(account: $0) }
+        subscribe(disposeBag, viewModel.confirmDeleteCloudBackupSignal) { [weak self] in self?.confirmDeleteCloudBackup() }
+        subscribe(disposeBag, viewModel.cloudBackupDeletedSignal) { [weak self] in self?.cloudBackupDeleted($0) }
         subscribe(disposeBag, viewModel.openUnlinkSignal) { [weak self] in self?.openUnlink(account: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
             self?.dismiss(animated: true) { [weak self] in
@@ -121,6 +124,26 @@ class ManageAccountViewController: KeyboardAwareViewController {
         }
 
         present(viewController, animated: true)
+    }
+
+    private func openCloudBackup(account: Account) {
+        let viewController = BackupModule.cloudViewController(account: account)
+        present(viewController, animated: true)
+    }
+
+    private func confirmDeleteCloudBackup() {
+        let viewController = BottomSheetModule.confirmDeleteCloudBackupController { [weak self] in
+            self?.viewModel.deleteCloudBackup()
+        }
+        present(viewController, animated: true)
+    }
+
+    private func cloudBackupDeleted(_ successful: Bool) {
+        if successful {
+            HudHelper.instance.show(banner: .deleted)
+        } else {
+            HudHelper.instance.show(banner: .error(string: "backup.cloud.cant_delete_file".localized))
+        }
     }
 
     private func onTapUnlink() {
@@ -196,16 +219,48 @@ extension ManageAccountViewController: SectionsDataSource {
             ) { [weak self] in
                 self?.openPublicKeys()
             }
-        case .backup:
+        case .backup(let isCloudBackedUp):
             return tableView.universalRow48(
                     id: "backup-recovery-phrase",
-                    image: .local(UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)),
-                    title: .body("manage_account.backup_recovery_phrase".localized, color: .themeLucian),
+                    image: .local(UIImage(named: "edit_24")?.withTintColor(.themeJacob)),
+                    title: .body("manage_account.backup_recovery_phrase".localized, color: .themeJacob),
+                    accessoryType: CellBuilderNew.CellElement.ImageAccessoryType(
+                            image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian),
+                            visible: !isCloudBackedUp
+                    ),
                     autoDeselect: true,
                     isFirst: isFirst,
                     isLast: isLast
             ) { [weak self] in
                 self?.viewModel.onTapBackup()
+            }
+        case .cloudBackedUp(let isBackedUp, manualBackedUp: let manualBackedUp):
+            if isBackedUp {
+                return tableView.universalRow48(
+                        id: "cloud-backup-recovery",
+                        image: .local(UIImage(named: "no_internet_24")?.withTintColor(.themeLucian)),
+                        title: .body("manage_account.cloud_delete_backup_recovery_phrase".localized, color: .themeLucian),
+                        autoDeselect: true,
+                        isFirst: isFirst,
+                        isLast: isLast
+                ) { [weak self] in
+                    self?.viewModel.onTapDeleteCloudBackup()
+                }
+            }
+
+            return tableView.universalRow48(
+                    id: "cloud-backup-recovery",
+                    image: .local(UIImage(named: "icloud_24")?.withTintColor(.themeJacob)),
+                    title: .body("manage_account.cloud_backup_recovery_phrase".localized, color: .themeJacob),
+                    accessoryType: CellBuilderNew.CellElement.ImageAccessoryType(
+                            image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian),
+                            visible: !manualBackedUp
+                    ),
+                    autoDeselect: true,
+                    isFirst: isFirst,
+                    isLast: isLast
+            ) { [weak self] in
+                self?.viewModel.onTapCloudBackup()
             }
         }
     }
@@ -253,14 +308,16 @@ extension ManageAccountViewController: SectionsDataSource {
             )
         }
 
-        sections.append(
+        sections.append(contentsOf:
+            keyActions.enumerated().map { (index, section) in
                 Section(
-                        id: "actions",
+                        id: "actions-\(index)",
                         footerState: .margin(height: .margin32),
-                        rows: keyActions.enumerated().map { index, keyAction in
-                            row(keyAction: keyAction, isFirst: index == 0, isLast: index == keyActions.count - 1)
+                        rows: section.enumerated().map { index, keyAction in
+                            row(keyAction: keyAction, isFirst: index == 0, isLast: index == section.count - 1)
                         }
                 )
+            }
         )
 
         sections.append(
