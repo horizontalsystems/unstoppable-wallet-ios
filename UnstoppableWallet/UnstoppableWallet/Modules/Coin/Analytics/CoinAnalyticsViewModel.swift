@@ -252,6 +252,7 @@ class CoinAnalyticsViewModel {
                         rank: analytics.transactions?.rank30d
                 ),
                 holders: holdersViewItem(holderBlockchains: analytics.holders),
+                holdersRank: analytics.holdersRank.map { .regular(value: rankString(value: $0)) },
                 tvl: tvlViewItem(
                         points: analytics.tvl?.chartPoints,
                         rank: analytics.tvl?.rank,
@@ -283,6 +284,7 @@ class CoinAnalyticsViewModel {
                 activeAddresses: data.addresses ? ActiveAddressesViewItem(chart: .preview, count30d: data.addressesCount30d ? .preview : nil, rank: data.addressesRank30d ? .preview : nil) : nil,
                 transactionCount: data.transactions ? TransactionCountViewItem(chart: .preview, volume: data.transactionsVolume30d ? .preview : nil, rank: data.transactionsRank30d ? .preview : nil) : nil,
                 holders: data.holders ? .preview : nil,
+                holdersRank: data.holdersRank ? .preview : nil,
                 tvl: data.tvl ? TvlViewItem(chart: .preview, rank: data.tvlRank ? .preview : nil, ratio: data.tvlRatio ? .preview : nil) : nil,
                 revenue: data.revenue ? RevenueViewItem(value: .preview, rank: data.revenueRank30d ? .preview : nil) : nil,
                 reports: data.reports ? .preview : nil,
@@ -340,6 +342,7 @@ extension CoinAnalyticsViewModel {
         let activeAddresses: ActiveAddressesViewItem?
         let transactionCount: TransactionCountViewItem?
         let holders: Previewable<HoldersViewItem>?
+        let holdersRank: Previewable<String>?
         let tvl: TvlViewItem?
         let revenue: RevenueViewItem?
         let reports: Previewable<String>?

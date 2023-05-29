@@ -20,13 +20,11 @@ class SubscriptionManager {
 extension SubscriptionManager {
 
     func set(authToken: String) {
-        print("SET: \(authToken)")
         self.authToken = authToken
         localStorage.set(value: authToken, for: keyAuthToken)
     }
 
     func invalidateAuthToken() {
-        print("INVALIDATE: \(authToken)")
         authToken = nil
         localStorage.set(value: authToken, for: keyAuthToken)
     }

@@ -72,7 +72,7 @@ class CoinRankViewModel {
         switch service.type {
         case .cexVolume, .dexVolume, .dexLiquidity, .revenue:
             return ValueFormatter.instance.formatShort(currencyValue: CurrencyValue(currency: currency, value: value))
-        case .address, .txCount:
+        case .address, .txCount, .holders:
             return ValueFormatter.instance.formatShort(value: value)
         }
     }
@@ -104,6 +104,7 @@ extension CoinRankViewModel {
         case .dexLiquidity: return "coin_analytics.dex_liquidity_rank".localized
         case .address: return "coin_analytics.active_addresses_rank".localized
         case .txCount: return "coin_analytics.transaction_count_rank".localized
+        case .holders: return "coin_analytics.holders_rank".localized
         case .revenue: return "coin_analytics.project_revenue_rank".localized
         }
     }
@@ -115,6 +116,7 @@ extension CoinRankViewModel {
         case .dexLiquidity: return "coin_analytics.dex_liquidity_rank.description".localized
         case .address: return "coin_analytics.active_addresses_rank.description".localized
         case .txCount: return "coin_analytics.transaction_count_rank.description".localized
+        case .holders: return "coin_analytics.holders_rank.description".localized
         case .revenue: return "coin_analytics.project_revenue_rank.description".localized
         }
     }
@@ -126,6 +128,7 @@ extension CoinRankViewModel {
         case .dexLiquidity: return "dex_liquidity"
         case .address: return "active_addresses"
         case .txCount: return "trx_count"
+        case .holders: return "holders"
         case .revenue: return "revenue"
         }
     }
@@ -142,7 +145,7 @@ extension CoinRankViewModel {
     var selectorItems: [String]? {
         switch service.type {
         case .cexVolume, .dexVolume, .address, .txCount, .revenue: return timePeriods.map { $0.title }
-        case .dexLiquidity: return nil
+        case .dexLiquidity, .holders: return nil
         }
     }
 
