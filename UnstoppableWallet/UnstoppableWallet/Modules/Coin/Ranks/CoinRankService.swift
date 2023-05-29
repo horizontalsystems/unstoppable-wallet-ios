@@ -49,6 +49,7 @@ class CoinRankService {
                 case .dexLiquidity: values = try await marketKit.dexLiquidityRanks().map { .single(value: $0) }
                 case .address: values = try await marketKit.activeAddressRanks().map { .multi(value: $0) }
                 case .txCount: values = try await marketKit.transactionCountRanks().map { .multi(value: $0) }
+                case .holders: values = try await marketKit.holdersRanks().map { .single(value: $0) }
                 case .revenue: values = try await marketKit.revenueRanks(currencyCode: currencyCode).map { .multi(value: $0) }
                 }
 

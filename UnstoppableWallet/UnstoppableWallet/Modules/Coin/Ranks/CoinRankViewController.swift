@@ -78,12 +78,7 @@ class CoinRankViewController: ThemeViewController {
     private func sync(viewItems: [CoinRankViewModel.ViewItem]?) {
         self.viewItems = viewItems
 
-        if let viewItems, !viewItems.isEmpty {
-            tableView.isHidden = false
-        } else {
-            tableView.isHidden = true
-        }
-
+        tableView.isHidden = viewItems == nil
         tableView.reload()
     }
 

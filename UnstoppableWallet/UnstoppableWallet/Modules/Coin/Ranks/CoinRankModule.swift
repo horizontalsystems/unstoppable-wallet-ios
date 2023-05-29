@@ -26,6 +26,7 @@ extension CoinRankModule {
         case dexLiquidity
         case address
         case txCount
+        case holders
         case revenue
     }
 
