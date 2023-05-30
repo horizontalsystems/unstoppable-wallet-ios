@@ -117,6 +117,18 @@
 "restore.warning.non_recommended.description" = "这个钱包似乎在其密码列表和/或密码短语中使用了非标准字符。 如果您没有看到余额或交易，请阅读下面的详细信息。\n\n点击获取更多信息";
 "restore.error.non_standard.description" = "这是一个不符合标准的钱包。 详情请阅读下文。\n\n点击获取更多信息";
 
+// Restore Type
+
+"restore_type.title" = "恢复自";
+
+"restore_type.cloud.title" = "Import from iCloud";
+"restore_type.recovery.title" = "Import from Recovery Phrase or Private Key";
+"restore_type.watch.title" = "Watch Address";
+
+"restore_type.cloud.description" = "Import a recovery phrase from a backup file in your keychain";
+"restore_type.recovery.description" = "Manually add a recovery phrase or private key to recover a crypto wallet";
+"restore_type.watch.description" = "Observing mode of EVM-Chain and BTC, LTC, DASH addresses";
+
 // Coin Settings
 
 "coin_settings.title" = "区块链设置";
@@ -1284,6 +1296,9 @@
 "manage_account.backup_recovery_phrase" = "备份恢复词";
 "manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
+"manage_account.manual_backup_required" = "Manual Backup Required";
+"manage_account.manual_backup_required.description" = "In order to securely delete your backup on iCloud, you will need to manually backup your recovery phrase first.";
+"manage_account.manual_backup_required.button" = "Backup Now";
 "manage_account.unlink" = "取消链接";
 
 "manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
