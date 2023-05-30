@@ -102,11 +102,6 @@ class ManageAccountsViewController: ThemeViewController {
         present(viewController, animated: true)
     }
 
-    private func onTapWatch() {
-        let viewController = WatchModule.viewController(sourceViewController: createAccountListener)
-        present(viewController, animated: true)
-    }
-
     private func onTapEdit(accountId: String) {
         guard let viewController = ManageAccountModule.viewController(accountId: accountId, sourceViewController: self) else {
             return
