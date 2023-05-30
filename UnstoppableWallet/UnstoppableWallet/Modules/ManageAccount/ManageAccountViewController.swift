@@ -68,7 +68,7 @@ class ManageAccountViewController: KeyboardAwareViewController {
         subscribe(disposeBag, viewModel.openRecoveryPhraseSignal) { [weak self] in self?.openRecoveryPhrase(account: $0) }
         subscribe(disposeBag, viewModel.openBackupSignal) { [weak self] in self?.openBackup(account: $0) }
         subscribe(disposeBag, viewModel.openCloudBackupSignal) { [weak self] in self?.openCloudBackup(account: $0) }
-        subscribe(disposeBag, viewModel.confirmDeleteCloudBackupSignal) { [weak self] in self?.confirmDeleteCloudBackup() }
+        subscribe(disposeBag, viewModel.confirmDeleteCloudBackupSignal) { [weak self] in self?.confirmDeleteCloudBackup(manualBackedUp: $0) }
         subscribe(disposeBag, viewModel.cloudBackupDeletedSignal) { [weak self] in self?.cloudBackupDeleted($0) }
         subscribe(disposeBag, viewModel.openUnlinkSignal) { [weak self] in self?.openUnlink(account: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
@@ -126,7 +126,7 @@ class ManageAccountViewController: KeyboardAwareViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func openBackup(account: Account) {
+    private func openBackup(account: Account, onComplete: (() -> ())? = nil) {
         guard let viewController = BackupModule.manualViewController(account: account) else {
             return
         }
@@ -139,11 +139,18 @@ class ManageAccountViewController: KeyboardAwareViewController {
         present(viewController, animated: true)
     }
 
-    private func confirmDeleteCloudBackup() {
-        let viewController = BottomSheetModule.confirmDeleteCloudBackupController { [weak self] in
-            self?.viewModel.deleteCloudBackup()
+    private func confirmDeleteCloudBackup(manualBackedUp: Bool) {
+        if manualBackedUp {
+            let viewController = BottomSheetModule.confirmDeleteCloudBackupController { [weak self] in
+                self?.viewModel.deleteCloudBackup()
+            }
+            present(viewController, animated: true)
+        } else {
+            let viewController = BottomSheetModule.deleteCloudBackupAfterManualBackupController { [weak self] in
+                self?.viewModel.deleteCloudBackupAfterManualBackup()
+            }
+            present(viewController, animated: true)
         }
-        present(viewController, animated: true)
     }
 
     private func cloudBackupDeleted(_ successful: Bool) {

@@ -14,7 +14,6 @@ class ManageAccountsViewController: ThemeViewController {
 
     private let createCell = BaseSelectableThemeCell()
     private let restoreCell = BaseSelectableThemeCell()
-    private let watchCell = BaseSelectableThemeCell()
 
     private var viewState = ManageAccountsViewModel.ViewState.empty
     private var isLoaded = false
@@ -65,7 +64,7 @@ class ManageAccountsViewController: ThemeViewController {
             }
         ]))
 
-        restoreCell.set(backgroundStyle: .lawrence)
+        restoreCell.set(backgroundStyle: .lawrence, isLast: true)
         CellBuilderNew.buildStatic(cell: restoreCell, rootElement: .hStack([
             .image24 { (component: ImageComponent) -> () in
                 component.imageView.image = UIImage(named: "download_24")?.withTintColor(.themeJacob)
@@ -74,18 +73,6 @@ class ManageAccountsViewController: ThemeViewController {
                 component.font = .body
                 component.textColor = .themeJacob
                 component.text = "onboarding.balance.import".localized
-            }
-        ]))
-
-        watchCell.set(backgroundStyle: .lawrence, isLast: true)
-        CellBuilderNew.buildStatic(cell: watchCell, rootElement: .hStack([
-            .image24 { (component: ImageComponent) -> () in
-                component.imageView.image = UIImage(named: "binocule_24")?.withTintColor(.themeJacob)
-            },
-            .text { (component: TextComponent) -> () in
-                component.font = .body
-                component.textColor = .themeJacob
-                component.text = "onboarding.balance.watch".localized
             }
         ]))
 
@@ -111,7 +98,7 @@ class ManageAccountsViewController: ThemeViewController {
     }
 
     private func onTapRestore() {
-        let viewController = RestoreModule.viewController(sourceViewController: self, returnViewController: createAccountListener)
+        let viewController = RestoreTypeModule.viewController(sourceViewController: self, returnViewController: createAccountListener)
         present(viewController, animated: true)
     }
 
@@ -256,15 +243,6 @@ extension ManageAccountsViewController: SectionsDataSource {
                                     self?.onTapRestore()
                                 }
                         ),
-                        StaticRow(
-                                cell: watchCell,
-                                id: "watch",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.onTapWatch()
-                                }
-                        )
                     ]
             )
         ]

@@ -6,6 +6,7 @@ import ComponentKit
 
 class BackupViewController: ThemeViewController {
     private let viewModel: BackupViewModel
+    var onComplete: (() -> ())?
 
     private let tableView = SectionsTableView(style: .grouped)
 

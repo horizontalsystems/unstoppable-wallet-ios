@@ -138,6 +138,10 @@ extension WalletConnectV2AppShowView {
 
                             sourceViewController?.present(viewController, animated: true)
                         },
+                        .init(style: .gray, title: "backup_prompt.backup_cloud".localized, imageName: "icloud_24", actionType: .afterClose) { [ weak sourceViewController] in
+                            let viewController = BackupModule.cloudViewController(account: account)
+                            sourceViewController?.present(viewController, animated: true)
+                        },
                         .init(style: .transparent, title: "button.cancel".localized)
                     ]
             )

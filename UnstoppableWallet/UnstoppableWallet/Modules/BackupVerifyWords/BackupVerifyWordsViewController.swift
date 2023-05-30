@@ -16,6 +16,8 @@ class BackupVerifyWordsViewController: ThemeViewController {
     private var isLoaded = false
     private var didAppear = false
 
+    var onComplete: (() -> ())?
+
     init(viewModel: BackupVerifyWordsViewModel) {
         self.viewModel = viewModel
 
@@ -55,6 +57,7 @@ class BackupVerifyWordsViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.successSignal) { [weak self] in
             HudHelper.instance.show(banner: .success(string: "backup.verified".localized))
             self?.dismiss(animated: true)
+            self?.onComplete?()
         }
 
         tableView.buildSections()

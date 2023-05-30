@@ -106,16 +106,12 @@ class ICloudBackupNameViewController: KeyboardAwareViewController {
         isLoaded = true
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
+    override func viewDidAppear(_ animated: Bool) {
         if !keyboardShown {
             keyboardShown = true
             _ = nameCell.becomeFirstResponder()
         }
-    }
 
-    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         setInitialState(bottomPadding: gradientWrapperView.height)

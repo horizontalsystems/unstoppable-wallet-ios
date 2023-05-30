@@ -15,6 +15,7 @@ class WalletService {
     private let cacheManager: EnabledWalletCacheManager
     private let accountManager: AccountManager
     private let accountRestoreWarningManager: AccountRestoreWarningManager
+    private let cloudAccountBackupManager: CloudAccountBackupManager
     private let walletManager: WalletManager
     private let marketKit: MarketKit.Kit
     private let localStorage: StorageKit.ILocalStorage
@@ -70,12 +71,13 @@ class WalletService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
-    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: AccountManager, accountRestoreWarningManager: AccountRestoreWarningManager, walletManager: WalletManager, marketKit: MarketKit.Kit, localStorage: StorageKit.ILocalStorage, rateAppManager: RateAppManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider, reachabilityManager: IReachabilityManager) {
+    init(adapterService: WalletAdapterService, coinPriceService: WalletCoinPriceService, cacheManager: EnabledWalletCacheManager, accountManager: AccountManager, accountRestoreWarningManager: AccountRestoreWarningManager, cloudAccountBackupManager: CloudAccountBackupManager, walletManager: WalletManager, marketKit: MarketKit.Kit, localStorage: StorageKit.ILocalStorage, rateAppManager: RateAppManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider, reachabilityManager: IReachabilityManager) {
         self.adapterService = adapterService
         self.coinPriceService = coinPriceService
         self.cacheManager = cacheManager
         self.accountManager = accountManager
         self.accountRestoreWarningManager = accountRestoreWarningManager
+        self.cloudAccountBackupManager = cloudAccountBackupManager
         self.walletManager = walletManager
         self.marketKit = marketKit
         self.localStorage = localStorage
@@ -386,6 +388,10 @@ extension WalletService {
 
     var activeAccount: Account? {
         accountManager.activeAccount
+    }
+
+    func isCloudBackedUp(account: Account) -> Bool {
+        cloudAccountBackupManager.backedUp(uniqueId: account.type.uniqueId())
     }
 
     var isReachable: Bool {
