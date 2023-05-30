@@ -7,8 +7,8 @@ class PinKitDelegate {
 
 extension PinKitDelegate: IPinKitDelegate {
 
-    func onLock(delegate: IUnlockDelegate) {
-        viewController?.visibleController.present(LockScreenRouter.module(pinKit: App.shared.pinKit, appStart: false), animated: false)
+    func onLock() {
+        viewController?.visibleController.present(LockScreenModule.viewController(pinKit: App.shared.pinKit, appStart: false), animated: false)
     }
 
 }
