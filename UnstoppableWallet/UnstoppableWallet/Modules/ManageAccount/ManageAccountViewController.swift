@@ -96,7 +96,15 @@ class ManageAccountViewController: KeyboardAwareViewController {
 
     private func openUnlock() {
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: .margin48, right: 0)
-        let viewController = App.shared.pinKit.unlockPinModule(delegate: self, biometryUnlockMode: .auto, insets: insets, cancellable: true, autoDismiss: true)
+        let viewController = App.shared.pinKit.unlockPinModule(
+                biometryUnlockMode: .auto,
+                insets: insets,
+                cancellable: true,
+                autoDismiss: true,
+                onUnlock: { [weak self] in
+                    self?.viewModel.onUnlock()
+                }
+        )
         present(viewController, animated: true)
     }
 
@@ -340,17 +348,6 @@ extension ManageAccountViewController: SectionsDataSource {
         )
 
         return sections
-    }
-
-}
-
-extension ManageAccountViewController: IUnlockDelegate {
-
-    func onUnlock() {
-        viewModel.onUnlock()
-    }
-
-    func onCancelUnlock() {
     }
 
 }

@@ -1,7 +1,7 @@
 import UIKit
 import ThemeKit
 
-class LockScreenController: ThemeViewController {
+class LockScreenViewController: ThemeViewController {
     private let unlockViewController: UIViewController
 
     init(unlockViewController: UIViewController) {

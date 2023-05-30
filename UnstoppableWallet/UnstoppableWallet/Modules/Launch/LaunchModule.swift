@@ -15,7 +15,7 @@ class LaunchModule {
         case .passcodeNotSet: return NoPasscodeViewController(mode: .noPasscode)
         case .cannotCheckPasscode: return NoPasscodeViewController(mode: .cannotCheckPasscode)
         case .intro: return WelcomeScreenViewController()
-        case .unlock: return LockScreenRouter.module(pinKit: App.shared.pinKit, appStart: true)
+        case .unlock: return LockScreenModule.viewController(pinKit: App.shared.pinKit, appStart: true)
         case .main: return MainModule.instance()
         }
     }
