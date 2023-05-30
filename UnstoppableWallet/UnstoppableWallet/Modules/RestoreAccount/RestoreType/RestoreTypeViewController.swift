@@ -109,9 +109,12 @@ class RestoreTypeViewController: ThemeViewController {
         switch type {
         case .cloudRestore: return
         case .recoveryOrPrivateKey:
-            let viewController = RestoreModule.viewController(sourceViewController: self, returnViewController: returnViewController ?? self)
-            present(viewController, animated: true)
-        case .watchAddress: return
+            let viewController = RestoreModule.viewController(sourceViewController: self, returnViewController: returnViewController, viaPush: true)
+            navigationController?.pushViewController(viewController, animated: true)
+        case .watchAddress:
+            let viewController = WatchModule.viewController(sourceViewController: returnViewController)
+            navigationController?.pushViewController(viewController, animated: true)
+
         }
     }
 

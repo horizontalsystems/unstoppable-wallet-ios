@@ -36,14 +36,12 @@ struct WatchModule {
 
         let addressViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
 
-        let viewController = WatchViewController(
+        return WatchViewController(
                 viewModel: viewModel,
                 addressViewModel: addressViewModel,
                 publicKeyViewModel: publicKeyViewModel,
                 sourceViewController: sourceViewController
         )
-
-        return ThemeNavigationController(rootViewController: viewController)
     }
 
     static func viewController(sourceViewController: UIViewController? = nil, watchType: WatchType, accountType: AccountType, name: String) -> UIViewController {
