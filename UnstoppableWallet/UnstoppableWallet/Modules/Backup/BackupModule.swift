@@ -3,12 +3,13 @@ import ThemeKit
 
 struct BackupModule {
 
-    static func manualViewController(account: Account) -> UIViewController? {
+    static func manualViewController(account: Account, onComplete: (() -> ())? = nil) -> UIViewController? {
         guard let service = BackupService(account: account) else {
             return nil
         }
         let viewModel = BackupViewModel(service: service)
         let viewController = BackupViewController(viewModel: viewModel)
+        viewController.onComplete = onComplete
 
         return ThemeNavigationController(rootViewController: viewController)
     }

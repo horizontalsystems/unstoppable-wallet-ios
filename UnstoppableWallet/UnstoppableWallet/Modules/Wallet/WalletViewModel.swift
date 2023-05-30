@@ -237,7 +237,7 @@ extension WalletViewModel {
     }
 
     func onTapReceive(wallet: Wallet) {
-        if wallet.account.backedUp {
+        if wallet.account.backedUp || service.isCloudBackedUp(account: wallet.account) {
             openReceiveRelay.accept(wallet)
         } else {
             openBackupRequiredRelay.accept(wallet)

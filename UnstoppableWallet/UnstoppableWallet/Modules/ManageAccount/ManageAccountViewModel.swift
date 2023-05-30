@@ -15,7 +15,7 @@ class ManageAccountViewModel {
     private let openRecoveryPhraseRelay = PublishRelay<Account>()
     private let openBackupRelay = PublishRelay<Account>()
     private let openCloudBackupRelay = PublishRelay<Account>()
-    private let confirmDeleteCloudBackupRelay = PublishRelay<()>()
+    private let confirmDeleteCloudBackupRelay = PublishRelay<Bool>()
     private let cloudBackupDeletedRelay = PublishRelay<Bool>()
     private let openUnlinkRelay = PublishRelay<Account>()
     private let finishRelay = PublishRelay<()>()
@@ -111,7 +111,7 @@ extension ManageAccountViewModel {
         openCloudBackupRelay.asSignal()
     }
 
-    var confirmDeleteCloudBackupSignal: Signal<()> {
+    var confirmDeleteCloudBackupSignal: Signal<Bool> {
         confirmDeleteCloudBackupRelay.asSignal()
     }
 
@@ -161,7 +161,7 @@ extension ManageAccountViewModel {
     }
 
     func onTapDeleteCloudBackup() {
-        confirmDeleteCloudBackupRelay.accept(())
+        confirmDeleteCloudBackupRelay.accept(service.account.backedUp)
     }
 
     func deleteCloudBackup() {
@@ -174,6 +174,11 @@ extension ManageAccountViewModel {
             }
         }
     }
+
+    func deleteCloudBackupAfterManualBackup() {
+        onTapBackup()
+    }
+
 
     func onTapCloudBackup() {
         openCloudBackupRelay.accept(service.account)

@@ -346,11 +346,15 @@ class WalletViewController: ThemeViewController {
                     .highlightedDescription(text: "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name))
                 ],
                 buttons: [
-                    .init(style: .yellow, title: "settings_manage_keys.backup".localized, actionType: .afterClose) { [ weak self] in
+                    .init(style: .yellow, title: "backup_prompt.backup_manual".localized, imageName: "edit_24", actionType: .afterClose) { [ weak self] in
                         guard let viewController = BackupModule.manualViewController(account: wallet.account) else {
                             return
                         }
 
+                        self?.present(viewController, animated: true)
+                    },
+                    .init(style: .gray, title: "backup_prompt.backup_cloud".localized, imageName: "icloud_24", actionType: .afterClose) { [ weak self] in
+                        let viewController = BackupModule.cloudViewController(account: wallet.account)
                         self?.present(viewController, animated: true)
                     },
                     .init(style: .transparent, title: "button.cancel".localized)

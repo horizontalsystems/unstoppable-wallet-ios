@@ -30,7 +30,6 @@ class BackupManager {
     }
 
     private func updateAllBackedUp() {
-        print("Check UpdateAll BackedUp: \(allBackedUp))")
         allBackedUpRelay.accept(allBackedUp)
     }
 

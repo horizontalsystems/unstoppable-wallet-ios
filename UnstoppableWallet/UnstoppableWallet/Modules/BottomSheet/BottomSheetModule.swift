@@ -40,7 +40,7 @@ extension BottomSheetModule {
                 image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
                 title: "backup_prompt.title".localized,
                 items: [
-                    .highlightedDescription(text: "backup_prompt.warning".localized)
+                    .highlightedDescription(text: "F".localized)
                 ],
                 buttons: [
                     .init(style: .yellow, title: "backup_prompt.backup_manual".localized, imageName: "edit_24", actionType: .afterClose) { [weak sourceViewController] in
@@ -77,6 +77,22 @@ extension BottomSheetModule {
                 ],
                 buttons: [
                     .init(style: .red, title: "button.delete".localized, actionType: .afterClose) {
+                        action?()
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized)
+                ]
+        )
+    }
+
+    static func deleteCloudBackupAfterManualBackupController(action: (() -> ())?) -> UIViewController {
+        viewController(
+                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                title: "manage_account.manual_backup_required".localized,
+                items: [
+                    .highlightedDescription(text: "manage_account.manual_backup_required.description".localized)
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "manage_account.manual_backup_required.button".localized, actionType: .afterClose) {
                         action?()
                     },
                     .init(style: .transparent, title: "button.cancel".localized)
