@@ -97,20 +97,20 @@ class BalanceButtonsView: UIView {
         fatalError("not implemented")
     }
 
-    func bind(viewItem: BalanceButtonsViewItem, sendAction: @escaping () -> (), receiveAction: @escaping () -> (), swapAction: @escaping () -> (), chartAction: @escaping () -> ()) {
-        sendButton.isEnabled = viewItem.sendButtonState == .enabled
-        receiveButton.isEnabled = viewItem.receiveButtonState == .enabled
-        receiveCircleButton.isEnabled = viewItem.receiveButtonState == .enabled
-        addressButton.isEnabled = viewItem.addressButtonState == .enabled
-        swapButton.isEnabled = viewItem.swapButtonState == .enabled
-        chartButton.isEnabled = viewItem.chartButtonState == .enabled
+    func bind(buttons: [WalletModule.Button: ButtonState], sendAction: @escaping () -> (), receiveAction: @escaping () -> (), swapAction: @escaping () -> (), chartAction: @escaping () -> ()) {
+        sendButton.isEnabled = buttons[.send] == .enabled
+        receiveButton.isEnabled = buttons[.receive] == .enabled
+        receiveCircleButton.isEnabled = buttons[.receive] == .enabled
+        addressButton.isEnabled = buttons[.address] == .enabled
+        swapButton.isEnabled = buttons[.swap] == .enabled
+        chartButton.isEnabled = buttons[.chart] == .enabled
 
-        sendButtonWrapper.isHidden = viewItem.sendButtonState == .hidden
-        receiveButton.isHidden = viewItem.receiveButtonState == .hidden || viewItem.swapButtonState != .hidden
-        receiveCircleButton.isHidden = viewItem.receiveButtonState == .hidden || viewItem.swapButtonState == .hidden
-        addressButton.isHidden = viewItem.addressButtonState == .hidden
-        swapButtonWrapper.isHidden = viewItem.swapButtonState == .hidden
-        chartButtonWrapper.isHidden = viewItem.chartButtonState == .hidden
+        sendButtonWrapper.isHidden = (buttons[.send] ?? .hidden) == .hidden
+        receiveButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttons.count > 3
+        receiveCircleButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttons.count <= 3
+        addressButton.isHidden = (buttons[.address] ?? .hidden) == .hidden
+        swapButtonWrapper.isHidden = (buttons[.swap] ?? .hidden) == .hidden
+        chartButtonWrapper.isHidden = (buttons[.chart] ?? .hidden) == .hidden
 
         onTapSend = sendAction
         onTapReceive = receiveAction

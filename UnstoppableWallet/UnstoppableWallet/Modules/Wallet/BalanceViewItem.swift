@@ -3,11 +3,11 @@ import DeepDiff
 import MarketKit
 
 struct BalanceViewItem {
-    let wallet: Wallet
+    let item: WalletModule.Item
 
     let topViewItem: BalanceTopViewItem
     let lockedAmountViewItem: BalanceLockedAmountViewItem?
-    let buttonsViewItem: BalanceButtonsViewItem?
+    let buttons: [WalletModule.Button: ButtonState]?
 }
 
 struct BalanceTopViewItem {
@@ -115,32 +115,19 @@ extension BalanceLockedAmountViewItem: Equatable {
 
 }
 
-extension BalanceButtonsViewItem: Equatable {
-
-    static func ==(lhs: BalanceButtonsViewItem, rhs: BalanceButtonsViewItem) -> Bool {
-        lhs.sendButtonState == rhs.sendButtonState &&
-                lhs.receiveButtonState == rhs.receiveButtonState &&
-                lhs.addressButtonState == rhs.addressButtonState &&
-                lhs.swapButtonState == rhs.swapButtonState &&
-                lhs.chartButtonState == rhs.chartButtonState
-    }
-
-}
-
 extension BalanceViewItem: DiffAware {
 
-    public var diffId: Wallet {
-        wallet
+    public var diffId: WalletModule.Item {
+        item
     }
 
     static func compareContent(_ a: BalanceViewItem, _ b: BalanceViewItem) -> Bool {
         a.topViewItem == b.topViewItem &&
                 a.lockedAmountViewItem == b.lockedAmountViewItem &&
-                a.buttonsViewItem == b.buttonsViewItem
+                a.buttons == b.buttons
     }
 
 }
-
 
 extension BalanceViewItem: CustomStringConvertible {
 

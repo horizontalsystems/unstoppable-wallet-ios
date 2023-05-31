@@ -2,39 +2,40 @@ import Foundation
 
 class WalletSorter {
 
-    private let descending: (WalletService.Item, WalletService.Item) -> Bool = { item, item2 in
-        let balance = item.balanceData.balance
-        let balance2 = item2.balanceData.balance
-        let hasPrice = item.priceItem != nil
-        let hasPrice2 = item2.priceItem != nil
+    private let descending: (IBalanceItem, IBalanceItem) -> Bool = { lhsBalanceItem, rhsBalanceItem in
+        let lhsBalance = lhsBalanceItem.balanceData.balance
+        let rhsBalance = rhsBalanceItem.balanceData.balance
+        let lhsHasPrice = lhsBalanceItem.priceItem != nil
+        let rhsHasPrice = rhsBalanceItem.priceItem != nil
 
-        if hasPrice == hasPrice2 {
-            guard let price = item.priceItem?.price.value, let price2 = item2.priceItem?.price.value else {
-                return balance > balance2
+        if lhsHasPrice == rhsHasPrice {
+            guard let lhsPrice = lhsBalanceItem.priceItem?.price.value, let rhsPrice = rhsBalanceItem.priceItem?.price.value else {
+                return lhsBalance > rhsBalance
             }
-            return balance * price > balance2 * price2
+            return lhsBalance * lhsPrice > rhsBalance * rhsPrice
         }
-        return hasPrice
+
+        return lhsHasPrice
     }
 
-    func sort(items: [WalletService.Item], sortType: WalletModule.SortType) -> [WalletService.Item] {
+    func sort<T: IBalanceItem>(balanceItems: [T], sortType: WalletModule.SortType) -> [T] {
         switch sortType {
         case .balance:
-            let nonZeroItems = items.filter { !$0.balanceData.balance.isZero }
-            let zeroItems = items.filter { $0.balanceData.balance.isZero }
+            let nonZeroItems = balanceItems.filter { !$0.balanceData.balance.isZero }
+            let zeroItems = balanceItems.filter { $0.balanceData.balance.isZero }
 
             return nonZeroItems.sorted(by: descending) + zeroItems.sorted(by: descending)
         case .name:
-            return items.sorted { item, item2 in
-                item.wallet.coin.code.caseInsensitiveCompare(item2.wallet.coin.code) == .orderedAscending
+            return balanceItems.sorted { lhsBalanceItem, rhsBalanceItem in
+                lhsBalanceItem.item.coin.code.caseInsensitiveCompare(rhsBalanceItem.item.coin.code) == .orderedAscending
             }
         case .percentGrowth:
-            return items.sorted { item, item2 in
-                guard let diff = item.priceItem?.diff, let diff2 = item2.priceItem?.diff else {
-                    return item.priceItem?.diff != nil
+            return balanceItems.sorted { lhsBalanceItem, rhsBalanceItem in
+                guard let lhsDiff = lhsBalanceItem.priceItem?.diff, let rhsDiff = rhsBalanceItem.priceItem?.diff else {
+                    return lhsBalanceItem.priceItem?.diff != nil
                 }
 
-                return diff > diff2
+                return lhsDiff > rhsDiff
             }
         }
     }

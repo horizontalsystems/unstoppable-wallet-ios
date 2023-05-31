@@ -62,7 +62,7 @@ class BalanceCell: UITableViewCell {
         topView.bind(viewItem: viewItem.topViewItem, onTapError: onTapError)
         topView.layoutIfNeeded()
 
-        separatorView.set(hidden: viewItem.buttonsViewItem == nil, animated: animated, duration: duration)
+        separatorView.set(hidden: viewItem.buttons == nil, animated: animated, duration: duration)
 
         if let viewItem = viewItem.lockedAmountViewItem {
             lockedAmountView.bind(viewItem: viewItem)
@@ -80,10 +80,10 @@ class BalanceCell: UITableViewCell {
             }
         }
 
-        if let viewItem = viewItem.buttonsViewItem {
-            buttonsView.bind(viewItem: viewItem, sendAction: onSend, receiveAction: onReceive, swapAction: onSwap, chartAction: onChart)
+        if let buttons = viewItem.buttons {
+            buttonsView.bind(buttons: buttons, sendAction: onSend, receiveAction: onReceive, swapAction: onSwap, chartAction: onChart)
         }
-        buttonsView.set(hidden: viewItem.buttonsViewItem == nil, animated: animated, duration: duration)
+        buttonsView.set(hidden: viewItem.buttons == nil, animated: animated, duration: duration)
     }
 
     static func height(viewItem: BalanceViewItem) -> CGFloat {
@@ -95,7 +95,7 @@ class BalanceCell: UITableViewCell {
             height += BalanceLockedAmountView.height
         }
 
-        if viewItem.buttonsViewItem != nil {
+        if viewItem.buttons != nil {
             height += BalanceTopView.expandedMargin
             height += BalanceButtonsView.height
         }
