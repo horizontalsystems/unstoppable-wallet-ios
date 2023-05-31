@@ -5,35 +5,19 @@ import RxCocoa
 import MarketKit
 
 protocol IWalletService: AnyObject {
-    var isReachable: Bool { get }
-    var activeAccount: Account? { get }
     var totalItem: WalletModule.TotalItem? { get }
     var balanceItems: [IBalanceItem] { get }
-    var sortType: WalletModule.SortType { get set }
-    var balancePrimaryValue: BalancePrimaryValue { get }
-    var balanceHidden: Bool { get }
-    var watchAccount: Bool { get }
-    var lastCreatedAccount: Account? { get }
-    var activeAccountObservable: Observable<Account?> { get }
-    var balanceHiddenObservable: Observable<Bool> { get }
     var totalItemObservable: Observable<WalletModule.TotalItem?> { get }
     var balanceItemUpdatedObservable: Observable<IBalanceItem> { get }
     var balanceItemsObservable: Observable<[IBalanceItem]> { get }
-    var sortTypeObservable: Observable<WalletModule.SortType> { get }
-    var balancePrimaryValueObservable: Observable<BalancePrimaryValue> { get }
-    var accountsLostObservable: Observable<()> { get }
     func balanceItem(item: WalletModule.Item) -> IBalanceItem?
     func disable(item: WalletModule.Item)
-    func toggleBalanceHidden()
     func toggleConversionCoin()
-    func isCloudBackedUp(account: Account) -> Bool
-    func notifyAppear()
-    func notifyDisappear()
     func refresh()
-    func didIgnoreAccountWarning()
 }
 
 class WalletViewModel {
+    private let commonService: WalletCommonService
     private let service: IWalletService
     private let factory: WalletViewItemFactory
     private let accountRestoreWarningFactory: AccountRestoreWarningFactory
@@ -58,23 +42,24 @@ class WalletViewModel {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-view-model", qos: .userInitiated)
 
-    init(service: IWalletService, factory: WalletViewItemFactory, accountRestoreWarningFactory: AccountRestoreWarningFactory) {
+    init(commonService: WalletCommonService, service: IWalletService, factory: WalletViewItemFactory, accountRestoreWarningFactory: AccountRestoreWarningFactory) {
+        self.commonService = commonService
         self.service = service
         self.factory = factory
         self.accountRestoreWarningFactory = accountRestoreWarningFactory
 
-        subscribe(disposeBag, service.activeAccountObservable) { [weak self] in self?.sync(activeAccount: $0) }
-        subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.onUpdateBalanceHidden() }
+        subscribe(disposeBag, commonService.activeAccountObservable) { [weak self] in self?.sync(activeAccount: $0) }
+        subscribe(disposeBag, commonService.balanceHiddenObservable) { [weak self] _ in self?.onUpdateBalanceHidden() }
         subscribe(disposeBag, service.totalItemObservable) { [weak self] in self?.sync(totalItem: $0) }
         subscribe(disposeBag, service.balanceItemUpdatedObservable) { [weak self] in self?.syncUpdated(balanceItem: $0) }
         subscribe(disposeBag, service.balanceItemsObservable) { [weak self] in self?.sync(balanceItems: $0) }
-        subscribe(disposeBag, service.sortTypeObservable) { [weak self] in self?.sync(sortType: $0, scrollToTop: true) }
-        subscribe(disposeBag, service.balancePrimaryValueObservable) { [weak self] _ in self?.onUpdateBalancePrimaryValue() }
+        subscribe(disposeBag, commonService.sortTypeObservable) { [weak self] in self?.sync(sortType: $0, scrollToTop: true) }
+        subscribe(disposeBag, commonService.balancePrimaryValueObservable) { [weak self] _ in self?.onUpdateBalancePrimaryValue() }
 
-        sync(activeAccount: service.activeAccount)
+        sync(activeAccount: commonService.activeAccount)
         sync(totalItem: service.totalItem)
         sync(balanceItems: service.balanceItems)
-        sync(sortType: service.sortType, scrollToTop: false)
+        sync(sortType: commonService.sortType, scrollToTop: false)
     }
 
     private func sync(activeAccount: Account?) {
@@ -95,7 +80,7 @@ class WalletViewModel {
     }
 
     private func sync(totalItem: WalletModule.TotalItem?) {
-        let headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, watchAccount: service.watchAccount) }
+        let headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: commonService.balanceHidden, watchAccount: commonService.watchAccount) }
         headerViewItemRelay.accept(headerViewItem)
     }
 
@@ -126,14 +111,14 @@ class WalletViewModel {
             self.viewItemsRelay.accept(self.viewItems)
         }
 
-        displayModeRelay.accept(balanceItems.isEmpty ? (service.watchAccount ? .watchEmpty : .empty) : .list)
+        displayModeRelay.accept(balanceItems.isEmpty ? (commonService.watchAccount ? .watchEmpty : .empty) : .list)
     }
 
     private func viewItem(balanceItem: IBalanceItem) -> BalanceViewItem {
         factory.viewItem(
                 balanceItem: balanceItem,
-                balancePrimaryValue: service.balancePrimaryValue,
-                balanceHidden: service.balanceHidden,
+                balancePrimaryValue: commonService.balancePrimaryValue,
+                balanceHidden: commonService.balanceHidden,
                 expanded: balanceItem.item == expandedItem
         )
     }
@@ -195,7 +180,7 @@ extension WalletViewModel {
     }
 
     var showAccountsLostSignal: Signal<()> {
-        service.accountsLostObservable.asSignal(onErrorJustReturn: ())
+        commonService.accountsLostObservable.asSignal(onErrorJustReturn: ())
     }
 
     var playHapticSignal: Signal<()> {
@@ -210,21 +195,21 @@ extension WalletViewModel {
         WalletModule.SortType.allCases.map { sortType in
             AlertViewItem(
                     text: sortType.title,
-                    selected: sortType == service.sortType
+                    selected: sortType == commonService.sortType
             )
         }
     }
 
     var swipeActionsEnabled: Bool {
-        !service.watchAccount
+        !commonService.watchAccount
     }
 
     var lastCreatedAccount: Account? {
-        service.lastCreatedAccount
+        commonService.lastCreatedAccount
     }
 
     var warningUrl: URL? {
-        guard let account = service.activeAccount else {
+        guard let account = commonService.activeAccount else {
             return nil
         }
 
@@ -232,11 +217,11 @@ extension WalletViewModel {
     }
 
     func onSelectSortType(index: Int) {
-        service.sortType = WalletModule.SortType.allCases[index]
+        commonService.sortType = WalletModule.SortType.allCases[index]
     }
 
     func onTapTotalAmount() {
-        service.toggleBalanceHidden()
+        commonService.toggleBalanceHidden()
         playHapticRelay.accept(())
     }
 
@@ -265,7 +250,7 @@ extension WalletViewModel {
     }
 
     func onTapReceive(wallet: Wallet) {
-        if wallet.account.backedUp || service.isCloudBackedUp(account: wallet.account) {
+        if wallet.account.backedUp || commonService.isCloudBackedUp(account: wallet.account) {
             openReceiveRelay.accept(wallet)
         } else {
             openBackupRequiredRelay.accept(wallet)
@@ -281,7 +266,7 @@ extension WalletViewModel {
     }
 
     func onTapFailedIcon(item: WalletModule.Item) {
-        guard service.isReachable else {
+        guard commonService.isReachable else {
             noConnectionErrorRelay.accept(())
             return
         }
@@ -302,11 +287,11 @@ extension WalletViewModel {
     }
 
     func onAppear() {
-        service.notifyAppear()
+        commonService.notifyAppear()
     }
 
     func onDisappear() {
-        service.notifyDisappear()
+        commonService.notifyDisappear()
     }
 
     func onTriggerRefresh() {
@@ -322,7 +307,7 @@ extension WalletViewModel {
     }
 
     func onCloseWarning() {
-        service.didIgnoreAccountWarning()
+        commonService.didIgnoreAccountWarning()
     }
 
 }
