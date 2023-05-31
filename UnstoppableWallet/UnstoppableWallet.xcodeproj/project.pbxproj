@@ -153,6 +153,7 @@
 		11B351FC393EDD17C3487796 /* SelectorModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353C09FE554834C760777 /* SelectorModule.swift */; };
 		11B351FD918D612D27EB6D08 /* NftCollectionAssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35340910590E6FCF05A90 /* NftCollectionAssetsViewController.swift */; };
 		11B351FF652F0F7BCEB682A9 /* InputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35977188C93500A2CC6B0 /* InputCell.swift */; };
+		11B352006084CC499F31CD70 /* WalletCommonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A5B004015DEA52AD5C9 /* WalletCommonService.swift */; };
 		11B35200EAF9BCA70CE8DD1A /* FullCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356DFC42182B4C06D069C /* FullCoin.swift */; };
 		11B35201583EC6E1EB476ADB /* WalletConnectSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CC3319F0D16C6E6E5C0 /* WalletConnectSession.swift */; };
 		11B35205EDD1A11067E1AC91 /* CoinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359C5AF7EE92A5756CCFF /* CoinManager.swift */; };
@@ -976,6 +977,7 @@
 		11B35E24B2F98C74E95DA3BE /* WalletAdapterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35D1E91C730437BA69676 /* WalletAdapterService.swift */; };
 		11B35E24FD61B2799C191811 /* MarkdownTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3536DB4D3D3D7771B3EA4 /* MarkdownTextCell.swift */; };
 		11B35E255AF804AEE43FF46A /* MarketAdvancedSearchResultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358C7505D0DE60CD03B22 /* MarketAdvancedSearchResultService.swift */; };
+		11B35E276D1C91193B687718 /* WalletCommonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A5B004015DEA52AD5C9 /* WalletCommonService.swift */; };
 		11B35E2DA9242EAAAA9D99FC /* HsLabelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EDE31BA3EF80F78859A /* HsLabelProvider.swift */; };
 		11B35E34B9E95819B9EA1764 /* OpenSeaNftProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C1DF4F98D814CFE3951 /* OpenSeaNftProvider.swift */; };
 		11B35E37D8831B262A58D0D3 /* BalancePrimaryValueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566DC3A97A5CC3E2C729 /* BalancePrimaryValueManager.swift */; };
@@ -2776,6 +2778,7 @@
 		11B35A4096D259C9B1540D10 /* LaunchErrorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchErrorViewController.swift; sourceTree = "<group>"; };
 		11B35A47AB0887477EDB200C /* NftDatabaseStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftDatabaseStorage.swift; sourceTree = "<group>"; };
 		11B35A4E49ED2D2BF8E60863 /* AdapterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterManager.swift; sourceTree = "<group>"; };
+		11B35A5B004015DEA52AD5C9 /* WalletCommonService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletCommonService.swift; sourceTree = "<group>"; };
 		11B35A5DE20DD6DD486FAFC0 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		11B35A6399E5264BFFA32F08 /* BackupVerifyWordsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupVerifyWordsViewController.swift; sourceTree = "<group>"; };
 		11B35A686DD5BA335FEB6BEB /* BarsProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarsProgressView.swift; sourceTree = "<group>"; };
@@ -4355,6 +4358,7 @@
 				11B3591AD106DAC0D18FEDD7 /* BalanceViewItem.swift */,
 				11B35D1E91C730437BA69676 /* WalletAdapterService.swift */,
 				11B3566B18FBFBA85D98D824 /* EnabledWalletCacheManager.swift */,
+				11B35A5B004015DEA52AD5C9 /* WalletCommonService.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -8222,6 +8226,7 @@
 				ABC9AEF4FDD9B4C16E87DBDA /* RestoreCloudPassphraseService.swift in Sources */,
 				ABC9A806CB34CB9A5E27A0A3 /* RestoreCloudPassphraseViewController.swift in Sources */,
 				ABC9A0034DFBD65A7A8C4D65 /* RestoreCloudPassphraseModule.swift in Sources */,
+				11B352006084CC499F31CD70 /* WalletCommonService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9371,6 +9376,7 @@
 				ABC9A446EF71E1DB4FA7D353 /* RestoreCloudPassphraseService.swift in Sources */,
 				ABC9A6C65416E7F4F3830962 /* RestoreCloudPassphraseViewController.swift in Sources */,
 				ABC9AC1B69C1E03F4035A8FB /* RestoreCloudPassphraseModule.swift in Sources */,
+				11B35E276D1C91193B687718 /* WalletCommonService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

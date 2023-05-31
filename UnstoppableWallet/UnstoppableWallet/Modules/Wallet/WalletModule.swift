@@ -16,23 +16,27 @@ struct WalletModule {
                 marketKit: App.shared.marketKit
         )
 
+        let commonService = WalletCommonService(
+                accountManager: App.shared.accountManager,
+                accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
+                reachabilityManager: App.shared.reachabilityManager,
+                balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+                balanceHiddenManager: App.shared.balanceHiddenManager,
+                cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
+                rateAppManager: App.shared.rateAppManager,
+                localStorage: StorageKit.LocalStorage.default
+        )
+
         let service = WalletService(
+                commonService: commonService,
                 adapterService: adapterService,
                 coinPriceService: coinPriceService,
                 cacheManager: App.shared.enabledWalletCacheManager,
-                accountManager: App.shared.accountManager,
-                accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
-                cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
                 walletManager: App.shared.walletManager,
                 marketKit: App.shared.marketKit,
-                localStorage: StorageKit.LocalStorage.default,
-                rateAppManager: App.shared.rateAppManager,
-                balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
-                balanceHiddenManager: App.shared.balanceHiddenManager,
                 balanceConversionManager: App.shared.balanceConversionManager,
                 appManager: App.shared.appManager,
-                feeCoinProvider: App.shared.feeCoinProvider,
-                reachabilityManager: App.shared.reachabilityManager
+                feeCoinProvider: App.shared.feeCoinProvider
         )
 
         adapterService.delegate = service
@@ -41,8 +45,11 @@ struct WalletModule {
         let accountRestoreWarningFactory = AccountRestoreWarningFactory(
                 appConfigProvider: App.shared.appConfigProvider,
                 localStorage: StorageKit.LocalStorage.default,
-                languageManager: LanguageManager.shared)
+                languageManager: LanguageManager.shared
+        )
+
         let viewModel = WalletViewModel(
+                commonService: commonService,
                 service: service,
                 factory: WalletViewItemFactory(),
                 accountRestoreWarningFactory: accountRestoreWarningFactory
