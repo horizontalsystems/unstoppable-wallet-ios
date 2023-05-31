@@ -79,7 +79,7 @@ class RestoreTypeViewController: ThemeViewController {
                 id: item.description,
                 autoDeselect: true,
                 dynamicHeight: { containerWidth in
-                    CellBuilderNew.height(
+                    let size = CellBuilderNew.height(
                             containerWidth: containerWidth,
                             backgroundStyle: backgroundStyle,
                             text: item.title,
@@ -95,6 +95,8 @@ class RestoreTypeViewController: ThemeViewController {
                             verticalPadding: 0,
                             elements: [.fixed(width: .iconSize24), .multiline]
                     )
+
+                    return max(106, size)   // usually cells will have 3 lines
                 },
                 bind: { cell in
                     cell.set(backgroundStyle: backgroundStyle, isFirst: true, isLast: true)
@@ -107,14 +109,12 @@ class RestoreTypeViewController: ThemeViewController {
 
     private func onTap(type: RestoreTypeViewModel.RestoreType) {
         switch type {
-        case .cloudRestore: return
+        case .cloudRestore:
+            let viewController = RestoreCloudModule.viewController(returnViewController: returnViewController)
+            navigationController?.pushViewController(viewController, animated: true)
         case .recoveryOrPrivateKey:
-            let viewController = RestoreModule.viewController(sourceViewController: self, returnViewController: returnViewController, viaPush: true)
+            let viewController = RestoreModule.viewController(sourceViewController: self, returnViewController: returnViewController)
             navigationController?.pushViewController(viewController, animated: true)
-        case .watchAddress:
-            let viewController = WatchModule.viewController(sourceViewController: returnViewController)
-            navigationController?.pushViewController(viewController, animated: true)
-
         }
     }
 

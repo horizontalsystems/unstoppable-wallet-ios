@@ -6,10 +6,10 @@ import ComponentKit
 import SectionsTableView
 import UIExtensions
 
-class ICloudBackupPassphraseViewController: KeyboardAwareViewController {
+class BackupCloudPassphraseViewController: KeyboardAwareViewController {
     private let wrapperViewHeight: CGFloat = .margin16 + .heightButton + .margin32
 
-    private let viewModel: ICloudBackupPassphraseViewModel
+    private let viewModel: BackupCloudPassphraseViewModel
     private var cancellables = Set<AnyCancellable>()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -28,7 +28,7 @@ class ICloudBackupPassphraseViewController: KeyboardAwareViewController {
     private var keyboardShown = false
     private var isLoaded = false
 
-    init(viewModel: ICloudBackupPassphraseViewModel) {
+    init(viewModel: BackupCloudPassphraseViewModel) {
         self.viewModel = viewModel
 
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
@@ -164,7 +164,7 @@ class ICloudBackupPassphraseViewController: KeyboardAwareViewController {
 
 }
 
-extension ICloudBackupPassphraseViewController: SectionsDataSource {
+extension BackupCloudPassphraseViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         [
@@ -236,7 +236,7 @@ extension ICloudBackupPassphraseViewController: SectionsDataSource {
 
 }
 
-extension ICloudBackupPassphraseViewController: IDynamicHeightCellDelegate {
+extension BackupCloudPassphraseViewController: IDynamicHeightCellDelegate {
 
     func onChangeHeight() {
         guard isLoaded else {

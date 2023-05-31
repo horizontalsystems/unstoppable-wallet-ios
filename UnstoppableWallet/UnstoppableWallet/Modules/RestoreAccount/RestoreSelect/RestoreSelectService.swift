@@ -6,6 +6,7 @@ class RestoreSelectService {
 
     private let accountName: String
     private let accountType: AccountType
+    private let cloudBackedUp: Bool
     private let accountFactory: AccountFactory
     private let accountManager: AccountManager
     private let walletManager: WalletManager
@@ -29,9 +30,10 @@ class RestoreSelectService {
         }
     }
 
-    init(accountName: String, accountType: AccountType, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, evmAccountRestoreStateManager: EvmAccountRestoreStateManager, marketKit: MarketKit.Kit, enableCoinService: EnableCoinService) {
+    init(accountName: String, accountType: AccountType, cloudBackedUp: Bool, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, evmAccountRestoreStateManager: EvmAccountRestoreStateManager, marketKit: MarketKit.Kit, enableCoinService: EnableCoinService) {
         self.accountName = accountName
         self.accountType = accountType
+        self.cloudBackedUp = cloudBackedUp
         self.accountFactory = accountFactory
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -189,7 +191,7 @@ extension RestoreSelectService {
     }
 
     func restore() {
-        let account = accountFactory.account(type: accountType, origin: .restored, name: accountName)
+        let account = accountFactory.account(type: accountType, origin: cloudBackedUp ? .created : .restored, name: accountName)
         accountManager.save(account: account)
 
         for (token, settings) in restoreSettingsMap {

@@ -4,7 +4,7 @@ import LanguageKit
 
 struct RestoreModule {
 
-    static func viewController(advanced: Bool = false, sourceViewController: UIViewController? = nil, returnViewController: UIViewController? = nil, viaPush: Bool = false) -> UIViewController {
+    static func viewController(advanced: Bool = false, sourceViewController: UIViewController? = nil, returnViewController: UIViewController? = nil) -> UIViewController {
         let mnemonicService = RestoreMnemonicService(languageManager: LanguageManager.shared)
         let mnemonicViewModel = RestoreMnemonicViewModel(service: mnemonicService)
 
@@ -22,17 +22,7 @@ struct RestoreModule {
                 returnViewController: returnViewController
         )
 
-        if advanced {
-            return viewController
-        } else {
-            let module = viaPush ? viewController : ThemeNavigationController(rootViewController: viewController)
-
-            if App.shared.termsManager.termsAccepted {
-                return module
-            } else {
-                return TermsModule.viewController(sourceViewController: sourceViewController, moduleToOpen: module)
-            }
-        }
+        return viewController
     }
 
 }

@@ -87,7 +87,7 @@ class ICloudBackupTermsViewController: ThemeViewController {
     }
 
     @objc private func onTapContinue() {
-        let controller = ICloudBackupModule.backupName(account: viewModel.account)
+        let controller = BackupCloudModule.backupName(account: viewModel.account)
         navigationController?.pushViewController(controller, animated: true)
     }
 

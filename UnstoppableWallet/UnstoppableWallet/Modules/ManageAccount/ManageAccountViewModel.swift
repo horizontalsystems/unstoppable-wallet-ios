@@ -14,6 +14,7 @@ class ManageAccountViewModel {
     private let openUnlockRelay = PublishRelay<()>()
     private let openRecoveryPhraseRelay = PublishRelay<Account>()
     private let openBackupRelay = PublishRelay<Account>()
+    private let openBackupAndDeleteCloudRelay = PublishRelay<Account>()
     private let openCloudBackupRelay = PublishRelay<Account>()
     private let confirmDeleteCloudBackupRelay = PublishRelay<Bool>()
     private let cloudBackupDeletedRelay = PublishRelay<Bool>()
@@ -48,7 +49,9 @@ class ManageAccountViewModel {
             backupActions.append(.backup(isCloudBackedUp: isCloudBackedUp))
         }
 
-        backupActions.append(.cloudBackedUp(isCloudBackedUp, manualBackedUp: account.backedUp))
+        if !account.watchAccount {
+            backupActions.append(.cloudBackedUp(isCloudBackedUp, manualBackedUp: account.backedUp))
+        }
 
         guard account.backedUp || isCloudBackedUp else {
             return [backupActions]
@@ -107,6 +110,10 @@ extension ManageAccountViewModel {
         openBackupRelay.asSignal()
     }
 
+    var openBackupAndDeleteCloudSignal: Signal<Account> {
+        openBackupAndDeleteCloudRelay.asSignal()
+    }
+
     var openCloudBackupSignal: Signal<Account> {
         openCloudBackupRelay.asSignal()
     }
@@ -139,6 +146,7 @@ extension ManageAccountViewModel {
         switch unlockRequest {
         case .recoveryPhrase: openRecoveryPhraseRelay.accept(service.account)
         case .backup: openBackupRelay.accept(service.account)
+        case .backupAndDeleteCloud: openBackupAndDeleteCloudRelay.accept(service.account)
         }
     }
 
@@ -176,7 +184,13 @@ extension ManageAccountViewModel {
     }
 
     func deleteCloudBackupAfterManualBackup() {
-        onTapBackup()
+        if service.isPinSet {
+            unlockRequest = .backupAndDeleteCloud
+            openUnlockRelay.accept(())
+        } else {
+            openBackupAndDeleteCloudRelay.accept(service.account)
+        }
+
     }
 
 
@@ -204,6 +218,7 @@ extension ManageAccountViewModel {
     enum UnlockRequest {
         case recoveryPhrase
         case backup
+        case backupAndDeleteCloud
     }
 
     enum KeyAction {

@@ -4,12 +4,13 @@ import MarketKit
 
 struct RestoreSelectModule {
 
-    static func viewController(accountName: String, accountType: AccountType, returnViewController: UIViewController?) -> UIViewController {
+    static func viewController(accountName: String, accountType: AccountType, cloudBackedUp: Bool = false, returnViewController: UIViewController?) -> UIViewController {
         let (enableCoinService, enableCoinView) = EnableCoinModule.module()
 
         let service = RestoreSelectService(
                 accountName: accountName,
                 accountType: accountType,
+                cloudBackedUp: cloudBackedUp,
                 accountFactory: App.shared.accountFactory,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
