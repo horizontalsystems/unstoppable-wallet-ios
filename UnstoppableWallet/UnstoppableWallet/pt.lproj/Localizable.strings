@@ -123,11 +123,19 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "restore_type.cloud.title" = "Import from iCloud";
 "restore_type.recovery.title" = "Import from Recovery Phrase or Private Key";
-"restore_type.watch.title" = "Watch Address";
 
 "restore_type.cloud.description" = "Import a recovery phrase from a backup file in your keychain";
 "restore_type.recovery.description" = "Manually add a recovery phrase or private key to recover a crypto wallet";
-"restore_type.watch.description" = "Observing mode of EVM-Chain and BTC, LTC, DASH addresses";
+
+// Restore Cloud
+
+"restore.cloud.title" = "Select Backup";
+"restore.cloud.description" = "Select the backup copy of the wallet you want to restore.";
+"restore.cloud.empty" = "No backups found.";
+"restore.cloud.imported" = "Imported wallets";
+
+"restore.cloud.password.title" = "Enter Password";
+"restore.cloud.password.description" = "Enter the backup password to import your wallet from iCloud.";
 
 // Coin Settings
 
@@ -200,7 +208,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Backup Prompt
 
-"backup_prompt.title" = "Backup Recovery Phrase ";
+"backup_prompt.title" = "Backup da frase de recuperação";
 "backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
 "backup_prompt.backup" = "Backup";
 "backup_prompt.backup_manual" = "Manual Backup";
@@ -230,10 +238,12 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "backup.cloud.password.save" = "Save and Backup";
 
 "backup.cloud.password.error.empty_passphrase" = "A senha não pode estar vazia";
-"backup.cloud.password.error.forbidden_symbols" = "Por favor, use apenas símbolos suportados: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"backup.cloud.password.error.minimum_required" = "The password must be minimum 8 characters";
+"backup.cloud.password.error.forbidden_symbols" = "Please use only supported symbols: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_requirement" = "At least 8 characters, including one uppercase letter, one lowercase letter, one number, and one symbol";
+"backup.cloud.password.error.invalid_password" = "Incorrect Password";
+"backup.cloud.password.error.invalid_backup" = "Backup is corrupted";
 "backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
-"backup.cloud.not_available" = "iCloud nit Available";
+"backup.cloud.not_available" = "iCloud not Available";
 "backup.cloud.cant_create_file" = "Can't save File to iCloud";
 "backup.cloud.cant_delete_file" = "Can't delete from iCloud";
 
