@@ -32,30 +32,30 @@ class WalletService {
     private let activeAccountRelay = PublishRelay<Account?>()
     private let accountsLostRelay = PublishRelay<()>()
 
-    private let totalItemRelay = PublishRelay<TotalItem?>()
-    private(set) var totalItem: TotalItem? {
+    private let totalItemRelay = PublishRelay<WalletModule.TotalItem?>()
+    private(set) var totalItem: WalletModule.TotalItem? {
         didSet {
             totalItemRelay.accept(totalItem)
         }
     }
 
-    private let itemUpdatedRelay = PublishRelay<Item>()
+    private let balanceItemUpdatedRelay = PublishRelay<IBalanceItem>()
 
-    private let itemsRelay = PublishRelay<[Item]>()
-    private(set) var items: [Item] = [] {
+    private let balanceItemsRelay = PublishRelay<[IBalanceItem]>()
+    private(set) var balanceItems: [IBalanceItem] = [] {
         didSet {
-            itemsRelay.accept(items)
+            balanceItemsRelay.accept(balanceItems)
         }
     }
 
-    private(set) var allItems: [Item] = [] {
+    private var items: [Item] = [] {
         didSet {
             let hideZeroBalances = accountManager.activeAccount?.type.hideZeroBalances ?? false
 
             if hideZeroBalances {
-                items = allItems.filter { $0.balanceData.balanceTotal != 0 || $0.wallet.token.type == .native }
+                balanceItems = items.filter { $0.balanceData.balanceTotal != 0 || $0.wallet.token.type == .native }
             } else {
-                items = allItems
+                balanceItems = items
             }
         }
     }
@@ -136,7 +136,7 @@ class WalletService {
 
     private func handleUpdateSortType() {
         queue.async {
-            self.allItems = self.sorter.sort(items: self.allItems, sortType: self.sortType)
+            self.items = self.sorter.sort(balanceItems: self.items, sortType: self.sortType)
         }
     }
 
@@ -147,11 +147,13 @@ class WalletService {
     private func _sync(wallets: [Wallet]) {
         let cacheContainer = accountManager.activeAccount.map { cacheManager.cacheContainer(accountId: $0.id) }
         let priceItemMap = coinPriceService.itemMap(tokens: wallets.map { $0.token })
+        let watchAccount = watchAccount
 
         let items: [Item] = wallets.map { wallet in
             let item = Item(
                     wallet: wallet,
                     isMainNet: adapterService.isMainNet(wallet: wallet) ?? fallbackIsMainNet,
+                    watchAccount: watchAccount,
                     balanceData: adapterService.balanceData(wallet: wallet) ?? cacheContainer?.balanceData(wallet: wallet) ?? fallbackBalanceData,
                     state: adapterService.state(wallet: wallet)  ?? fallbackAdapterState
             )
@@ -161,7 +163,7 @@ class WalletService {
             return item
         }
 
-        allItems = sorter.sort(items: items, sortType: sortType)
+        self.items = sorter.sort(balanceItems: items, sortType: sortType)
         syncTotalItem()
 
         let tokens = Set(wallets.map { $0.token })
@@ -171,14 +173,14 @@ class WalletService {
     }
 
     private func items(coinUid: String) -> [Item] {
-        allItems.filter { $0.wallet.coin.uid == coinUid }
+        items.filter { $0.wallet.coin.uid == coinUid }
     }
 
     private func syncTotalItem() {
         var total: Decimal = 0
         var expired = false
 
-        items.forEach { item in
+        balanceItems.forEach { item in
             if let rateItem = item.priceItem {
                 total += item.balanceData.balanceTotal * rateItem.price.value
 
@@ -202,7 +204,7 @@ class WalletService {
             convertedValueExpired = priceItem.expired
         }
 
-        totalItem = TotalItem(
+        totalItem = WalletModule.TotalItem(
                 currencyValue: CurrencyValue(currency: coinPriceService.currency, value: total),
                 expired: expired,
                 convertedValue: convertedValue,
@@ -211,7 +213,7 @@ class WalletService {
     }
 
     private func _item(wallet: Wallet) -> Item? {
-        allItems.first { $0.wallet == wallet }
+        items.first { $0.wallet == wallet }
     }
 
     private var fallbackIsMainNet: Bool {
@@ -234,7 +236,7 @@ extension WalletService: IWalletAdapterServiceDelegate {
         queue.async {
             var balanceDataMap = [Wallet: BalanceData]()
 
-            for item in self.allItems {
+            for item in self.items {
                 let balanceData = self.adapterService.balanceData(wallet: item.wallet) ?? self.fallbackBalanceData
 
                 item.isMainNet = self.adapterService.isMainNet(wallet: item.wallet) ?? self.fallbackIsMainNet
@@ -244,7 +246,7 @@ extension WalletService: IWalletAdapterServiceDelegate {
                 balanceDataMap[item.wallet] = balanceData
             }
 
-            self.allItems = self.sorter.sort(items: self.allItems, sortType: self.sortType)
+            self.items = self.sorter.sort(balanceItems: self.items, sortType: self.sortType)
             self.syncTotalItem()
 
             self.cacheManager.set(balanceDataMap: balanceDataMap)
@@ -259,7 +261,7 @@ extension WalletService: IWalletAdapterServiceDelegate {
 
             item.isMainNet = isMainNet
 
-            self.itemUpdatedRelay.accept(item)
+            self.balanceItemUpdatedRelay.accept(item)
         }
     }
 
@@ -271,10 +273,10 @@ extension WalletService: IWalletAdapterServiceDelegate {
 
             item.balanceData = balanceData
 
-            if self.sortType == .balance, self.allItems.allSatisfy({ $0.state.isSynced }) {
-                self.allItems = self.sorter.sort(items: self.allItems, sortType: self.sortType)
+            if self.sortType == .balance, self.items.allSatisfy({ $0.state.isSynced }) {
+                self.items = self.sorter.sort(balanceItems: self.items, sortType: self.sortType)
             } else {
-                self.itemUpdatedRelay.accept(item)
+                self.balanceItemUpdatedRelay.accept(item)
             }
 
             self.syncTotalItem()
@@ -292,10 +294,10 @@ extension WalletService: IWalletAdapterServiceDelegate {
             let oldState = item.state
             item.state = state
 
-            if self.sortType == .balance, self.allItems.allSatisfy({ $0.state.isSynced }) {
-                self.allItems = self.sorter.sort(items: self.allItems, sortType: self.sortType)
+            if self.sortType == .balance, self.items.allSatisfy({ $0.state.isSynced }) {
+                self.items = self.sorter.sort(balanceItems: self.items, sortType: self.sortType)
             } else {
-                self.itemUpdatedRelay.accept(item)
+                self.balanceItemUpdatedRelay.accept(item)
             }
 
             if oldState.isSynced != state.isSynced {
@@ -318,17 +320,17 @@ extension WalletService: IWalletAdapterServiceDelegate {
 extension WalletService: IWalletCoinPriceServiceDelegate {
 
     private func handleUpdated(priceItemMap: [String: WalletCoinPriceService.Item]) {
-        for item in allItems {
+        for item in items {
             item.priceItem = priceItemMap[item.wallet.coin.uid]
         }
 
-        allItems = sorter.sort(items: allItems, sortType: sortType)
+        items = sorter.sort(balanceItems: items, sortType: sortType)
         syncTotalItem()
     }
 
     func didUpdateBaseCurrency() {
         queue.async {
-            self.handleUpdated(priceItemMap: self.coinPriceService.itemMap(tokens: self.allItems.map { $0.wallet.token }))
+            self.handleUpdated(priceItemMap: self.coinPriceService.itemMap(tokens: self.items.map { $0.wallet.token }))
         }
     }
 
@@ -340,7 +342,7 @@ extension WalletService: IWalletCoinPriceServiceDelegate {
 
 }
 
-extension WalletService {
+extension WalletService: IWalletService {
 
     var activeAccountObservable: Observable<Account?> {
         activeAccountRelay.asObservable()
@@ -354,16 +356,16 @@ extension WalletService {
         accountsLostRelay.asObservable()
     }
 
-    var totalItemObservable: Observable<TotalItem?> {
+    var totalItemObservable: Observable<WalletModule.TotalItem?> {
         totalItemRelay.asObservable()
     }
 
-    var itemUpdatedObservable: Observable<Item> {
-        itemUpdatedRelay.asObservable()
+    var balanceItemUpdatedObservable: Observable<IBalanceItem> {
+        balanceItemUpdatedRelay.asObservable()
     }
 
-    var itemsObservable: Observable<[Item]> {
-        itemsRelay.asObservable()
+    var balanceItemsObservable: Observable<[IBalanceItem]> {
+        balanceItemsRelay.asObservable()
     }
 
     var sortTypeObservable: Observable<WalletModule.SortType> {
@@ -390,10 +392,6 @@ extension WalletService {
         accountManager.activeAccount
     }
 
-    func isCloudBackedUp(account: Account) -> Bool {
-        cloudAccountBackupManager.backedUp(uniqueId: account.type.uniqueId())
-    }
-
     var isReachable: Bool {
         reachabilityManager.isReachable
     }
@@ -402,8 +400,16 @@ extension WalletService {
         accountManager.popLastCreatedAccount()
     }
 
-    func item(wallet: Wallet) -> Item? {
-        queue.sync { _item(wallet: wallet) }
+    func balanceItem(item: WalletModule.Item) -> IBalanceItem? {
+        guard let wallet = item.wallet else {
+            return nil
+        }
+
+        return queue.sync { _item(wallet: wallet) }
+    }
+
+    func isCloudBackedUp(account: Account) -> Bool {
+        cloudAccountBackupManager.backedUp(uniqueId: account.type.uniqueId())
     }
 
     func notifyAppear() {
@@ -419,7 +425,11 @@ extension WalletService {
         coinPriceService.refresh()
     }
 
-    func disable(wallet: Wallet) {
+    func disable(item: WalletModule.Item) {
+        guard let wallet = item.wallet else {
+            return
+        }
+
         walletManager.delete(wallets: [wallet])
     }
 
@@ -435,27 +445,46 @@ extension WalletService {
 
 extension WalletService {
 
-    class Item {
+    class Item: IBalanceItem {
         let wallet: Wallet
-
         var isMainNet: Bool
+        var watchAccount: Bool
         var balanceData: BalanceData
         var state: AdapterState
         var priceItem: WalletCoinPriceService.Item?
 
-        init(wallet: Wallet, isMainNet: Bool, balanceData: BalanceData, state: AdapterState) {
+        init(wallet: Wallet, isMainNet: Bool, watchAccount: Bool, balanceData: BalanceData, state: AdapterState) {
             self.wallet = wallet
             self.isMainNet = isMainNet
+            self.watchAccount = watchAccount
             self.balanceData = balanceData
             self.state = state
         }
-    }
 
-    struct TotalItem {
-        let currencyValue: CurrencyValue
-        let expired: Bool
-        let convertedValue: CoinValue?
-        let convertedValueExpired: Bool
+        var item: WalletModule.Item {
+            ._wallet(wallet: wallet)
+        }
+
+        var buttons: [WalletModule.Button: ButtonState] {
+            var buttons = [WalletModule.Button: ButtonState]()
+
+            if watchAccount {
+                buttons[.address] = .enabled
+            } else {
+                let sendButtonState: ButtonState = state == .synced ? .enabled : .disabled
+
+                buttons[.send] = sendButtonState
+                buttons[.receive] = .enabled
+
+                if wallet.token.swappable {
+                    buttons[.swap] = sendButtonState
+                }
+            }
+
+            buttons[.chart] = priceItem != nil ? .enabled : .disabled
+
+            return buttons
+        }
     }
 
 }
