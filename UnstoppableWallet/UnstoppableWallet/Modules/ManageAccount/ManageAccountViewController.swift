@@ -67,6 +67,11 @@ class ManageAccountViewController: KeyboardAwareViewController {
         subscribe(disposeBag, viewModel.openUnlockSignal) { [weak self] in self?.openUnlock() }
         subscribe(disposeBag, viewModel.openRecoveryPhraseSignal) { [weak self] in self?.openRecoveryPhrase(account: $0) }
         subscribe(disposeBag, viewModel.openBackupSignal) { [weak self] in self?.openBackup(account: $0) }
+        subscribe(disposeBag, viewModel.openBackupAndDeleteCloudSignal) { [weak self] in
+            self?.openBackup(account: $0) { [weak self] in
+                self?.deleteCloudBackup()
+            }
+        }
         subscribe(disposeBag, viewModel.openCloudBackupSignal) { [weak self] in self?.openCloudBackup(account: $0) }
         subscribe(disposeBag, viewModel.confirmDeleteCloudBackupSignal) { [weak self] in self?.confirmDeleteCloudBackup(manualBackedUp: $0) }
         subscribe(disposeBag, viewModel.cloudBackupDeletedSignal) { [weak self] in self?.cloudBackupDeleted($0) }
@@ -127,7 +132,7 @@ class ManageAccountViewController: KeyboardAwareViewController {
     }
 
     private func openBackup(account: Account, onComplete: (() -> ())? = nil) {
-        guard let viewController = BackupModule.manualViewController(account: account) else {
+        guard let viewController = BackupModule.manualViewController(account: account, onComplete: onComplete) else {
             return
         }
 
@@ -151,6 +156,10 @@ class ManageAccountViewController: KeyboardAwareViewController {
             }
             present(viewController, animated: true)
         }
+    }
+
+    private func deleteCloudBackup() {
+        viewModel.deleteCloudBackup()
     }
 
     private func cloudBackupDeleted(_ successful: Bool) {

@@ -95,7 +95,7 @@ extension BackupCryptoHelper {
         return Crypto.sha3(data)
     }
 
-    public static func valid(macHex: String, pass: String, message: Data, kdf: KdfParams) throws -> Bool {
+    public static func isValid(macHex: String, pass: String, message: Data, kdf: KdfParams) throws -> Bool {
         let sha3 = try mac(pass: pass, message: message, kdf: kdf)
         return macHex == sha3.hs.hex
     }

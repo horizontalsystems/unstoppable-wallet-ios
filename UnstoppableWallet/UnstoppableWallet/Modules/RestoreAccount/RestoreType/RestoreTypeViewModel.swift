@@ -13,7 +13,6 @@ extension RestoreTypeViewModel {
     enum RestoreType: CaseIterable {
         case cloudRestore
         case recoveryOrPrivateKey
-        case watchAddress
     }
 
 }
@@ -24,7 +23,6 @@ extension RestoreTypeViewModel.RestoreType {
         switch self {
         case .cloudRestore: return "restore_type.cloud.title".localized
         case .recoveryOrPrivateKey: return "restore_type.recovery.title".localized
-        case .watchAddress: return "restore_type.watch.title".localized
         }
     }
 
@@ -32,7 +30,6 @@ extension RestoreTypeViewModel.RestoreType {
         switch self {
         case .cloudRestore: return "restore_type.cloud.description".localized
         case .recoveryOrPrivateKey: return "restore_type.recovery.description".localized
-        case .watchAddress: return "restore_type.watch.description".localized
         }
     }
 
@@ -40,7 +37,6 @@ extension RestoreTypeViewModel.RestoreType {
         switch self {
         case .cloudRestore: return "icloud_24"
         case .recoveryOrPrivateKey: return "edit_24"
-        case .watchAddress: return "binocule_24"
         }
     }
 

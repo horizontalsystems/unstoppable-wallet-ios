@@ -80,7 +80,7 @@ class BackupViewController: ThemeViewController {
     }
 
     @objc private func onTapVerify() {
-        guard let viewController = BackupVerifyWordsModule.viewController(account: viewModel.account) else {
+        guard let viewController = BackupVerifyWordsModule.viewController(account: viewModel.account, onComplete: onComplete) else {
             return
         }
 

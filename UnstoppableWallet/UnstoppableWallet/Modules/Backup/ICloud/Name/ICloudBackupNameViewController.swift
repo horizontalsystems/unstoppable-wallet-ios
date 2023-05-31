@@ -126,7 +126,7 @@ class ICloudBackupNameViewController: KeyboardAwareViewController {
             return
         }
 
-        let controller = ICloudBackupModule.backupPassword(account: viewModel.account, name: name)
+        let controller = BackupCloudModule.backupPassword(account: viewModel.account, name: name)
         navigationController?.pushViewController(controller, animated: true)
     }
 

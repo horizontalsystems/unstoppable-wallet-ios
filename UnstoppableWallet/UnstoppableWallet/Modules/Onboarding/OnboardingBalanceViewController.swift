@@ -55,7 +55,7 @@ class OnboardingBalanceViewController: ThemeViewController {
     }
 
     @objc func didTapRestore() {
-        let viewController = RestoreModule.viewController(sourceViewController: self)
+        let viewController = RestoreTypeModule.viewController(sourceViewController: self)
         present(viewController, animated: true)
     }
 

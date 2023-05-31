@@ -14,6 +14,7 @@ class ManageAccountsViewController: ThemeViewController {
 
     private let createCell = BaseSelectableThemeCell()
     private let restoreCell = BaseSelectableThemeCell()
+    private let watchCell = BaseSelectableThemeCell()
 
     private var viewState = ManageAccountsViewModel.ViewState.empty
     private var isLoaded = false
@@ -64,7 +65,7 @@ class ManageAccountsViewController: ThemeViewController {
             }
         ]))
 
-        restoreCell.set(backgroundStyle: .lawrence, isLast: true)
+        restoreCell.set(backgroundStyle: .lawrence)
         CellBuilderNew.buildStatic(cell: restoreCell, rootElement: .hStack([
             .image24 { (component: ImageComponent) -> () in
                 component.imageView.image = UIImage(named: "download_24")?.withTintColor(.themeJacob)
@@ -75,6 +76,17 @@ class ManageAccountsViewController: ThemeViewController {
                 component.text = "onboarding.balance.import".localized
             }
         ]))
+
+        watchCell.set(backgroundStyle: .lawrence, isLast: true)
+        CellBuilder.build(cell: watchCell, elements: [.image20, .text])
+        watchCell.bind(index: 0, block: { (component: ImageComponent) in
+            component.imageView.image = UIImage(named: "eye_20")?.withTintColor(.themeJacob)
+        })
+        watchCell.bind(index: 1, block: { (component: TextComponent) in
+            component.font = .body
+            component.textColor = .themeJacob
+            component.text = "onboarding.balance.watch".localized
+        })
 
         subscribe(disposeBag, viewModel.viewStateDriver) { [weak self] in self?.sync(viewState: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.dismiss(animated: true) }
@@ -99,6 +111,11 @@ class ManageAccountsViewController: ThemeViewController {
 
     private func onTapRestore() {
         let viewController = RestoreTypeModule.viewController(sourceViewController: self, returnViewController: createAccountListener)
+        present(viewController, animated: true)
+    }
+
+    private func onTapWatch() {
+        let viewController = WatchModule.viewController(sourceViewController: createAccountListener)
         present(viewController, animated: true)
     }
 
@@ -238,6 +255,15 @@ extension ManageAccountsViewController: SectionsDataSource {
                                     self?.onTapRestore()
                                 }
                         ),
+                        StaticRow(
+                                cell: watchCell,
+                                id: "watch",
+                                height: .heightCell48,
+                                autoDeselect: true,
+                                action: { [weak self] in
+                                    self?.onTapWatch()
+                                }
+                        )
                     ]
             )
         ]

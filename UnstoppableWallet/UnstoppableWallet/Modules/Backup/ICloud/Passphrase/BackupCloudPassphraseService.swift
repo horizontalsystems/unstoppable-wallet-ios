@@ -1,8 +1,6 @@
 import Foundation
 
-class ICloudBackupPassphraseService {
-    private let minimumPassphraseLength = 8
-
+class BackupCloudPassphraseService {
     private let iCloudManager: CloudAccountBackupManager
     private let account: Account
     private let name: String
@@ -18,7 +16,7 @@ class ICloudBackupPassphraseService {
 
 }
 
-extension ICloudBackupPassphraseService {
+extension BackupCloudPassphraseService {
 
     func validate(text: String?) -> Bool {
         PassphraseValidator.validate(text: text)
@@ -29,8 +27,13 @@ extension ICloudBackupPassphraseService {
             throw CreateError.emptyPassphrase
         }
 
-        guard passphrase.count >= minimumPassphraseLength else {
-            throw CreateError.tooShort
+        guard passphrase.count >= BackupCloudModule.minimumPassphraseLength else {
+            throw CreateError.simplePassword
+        }
+
+        let allSatisfy = BackupCloudModule.PassphraseCharacterSet.allCases.allSatisfy { set in set.contains(passphrase) }
+        if !allSatisfy {
+            throw CreateError.simplePassword
         }
 
         guard passphrase == passphraseConfirmation else {
@@ -49,11 +52,11 @@ extension ICloudBackupPassphraseService {
 
 }
 
-extension ICloudBackupPassphraseService {
+extension BackupCloudPassphraseService {
 
     enum CreateError: Error {
         case emptyPassphrase
-        case tooShort
+        case simplePassword
         case invalidConfirmation
         case urlNotAvailable
         case cantSaveFile(Error)

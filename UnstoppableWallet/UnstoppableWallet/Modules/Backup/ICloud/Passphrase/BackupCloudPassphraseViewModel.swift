@@ -2,10 +2,10 @@ import Combine
 import Foundation
 import HsExtensions
 
-class ICloudBackupPassphraseViewModel {
+class BackupCloudPassphraseViewModel {
     private var cancellables = Set<AnyCancellable>()
 
-    private let service: ICloudBackupPassphraseService
+    private let service: BackupCloudPassphraseService
     @Published public var passphraseCaution: Caution?
     @Published public var passphraseConfirmationCaution: Caution?
 
@@ -13,7 +13,7 @@ class ICloudBackupPassphraseViewModel {
     private let showErrorSubject = PassthroughSubject<String, Never>()
     private let finishSubject = PassthroughSubject<Void, Never>()
 
-    init(service: ICloudBackupPassphraseService) {
+    init(service: BackupCloudPassphraseService) {
         self.service = service
     }
 
@@ -29,7 +29,7 @@ class ICloudBackupPassphraseViewModel {
 
 }
 
-extension ICloudBackupPassphraseViewModel {
+extension BackupCloudPassphraseViewModel {
 
     var clearInputsPublisher: AnyPublisher<Void, Never> {
         clearInputsSubject.eraseToAnyPublisher()
@@ -78,18 +78,17 @@ extension ICloudBackupPassphraseViewModel {
                 try await service.createBackup()
                 finishSubject.send(())
             } catch {
-                switch (error as? ICloudBackupPassphraseService.CreateError) {
+                switch (error as? BackupCloudPassphraseService.CreateError) {
                 case .emptyPassphrase:
                     passphraseCaution = Caution(text: "backup.cloud.password.error.empty_passphrase".localized, type: .error)
-                case .tooShort:
-                    passphraseCaution = Caution(text: "backup.cloud.password.error.minimum_required".localized, type: .error)
+                case .simplePassword:
+                    passphraseCaution = Caution(text: "backup.cloud.password.error.minimum_requirement".localized, type: .error)
                 case .invalidConfirmation:
                     passphraseConfirmationCaution = Caution(text: "backup.cloud.password.confirm.error.doesnt_match".localized, type: .error)
                 case .urlNotAvailable:
                     showErrorSubject.send("backup.cloud.not_available".localized)
-                case .cantSaveFile(let error):
+                case .cantSaveFile:
                     showErrorSubject.send("backup.cloud.cant_create_file".localized)
-                    print("Has Error while try save file: \(error)")
                 case .none:
                     showErrorSubject.send(error.smartDescription)
                 }

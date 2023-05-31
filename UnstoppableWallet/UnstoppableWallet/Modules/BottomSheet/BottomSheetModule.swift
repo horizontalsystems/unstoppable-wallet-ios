@@ -40,7 +40,7 @@ extension BottomSheetModule {
                 image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
                 title: "backup_prompt.title".localized,
                 items: [
-                    .highlightedDescription(text: "F".localized)
+                    .highlightedDescription(text: "backup_prompt.warning".localized)
                 ],
                 buttons: [
                     .init(style: .yellow, title: "backup_prompt.backup_manual".localized, imageName: "edit_24", actionType: .afterClose) { [weak sourceViewController] in
