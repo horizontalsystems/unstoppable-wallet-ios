@@ -4,19 +4,25 @@ import HsExtensions
 
 class ICloudBackupTermsService {
     let account: Account
-    let termCount = 2
+    let termCount = 1
+
+    private let cloudAccountBackupManager: CloudAccountBackupManager
 
     @PostPublished private(set) var state: State = .selectedTerms(Set())
 
-    init(account: Account) {
+    init(cloudAccountBackupManager: CloudAccountBackupManager, account: Account) {
         self.account = account
+        self.cloudAccountBackupManager = cloudAccountBackupManager
     }
 
 }
 
 extension ICloudBackupTermsService {
 
-    // 1. Terms Screen
+    var cloudIsAvailable: Bool {
+        cloudAccountBackupManager.isAvailable
+    }
+
     func toggleTerm(at index: Int) {
         guard case .selectedTerms(var checkedIndices) = state,
               index < termCount else {

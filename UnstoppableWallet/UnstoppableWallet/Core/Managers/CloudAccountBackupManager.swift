@@ -133,10 +133,8 @@ extension CloudAccountBackupManager {
 
 extension CloudAccountBackupManager {
 
-    func checkAvailable() async throws {
-        if iCloudUrl == nil {
-            throw BackupError.urlNotAvailable
-        }
+    var isAvailable: Bool {
+        iCloudUrl != nil
     }
 
     func save(accountType: AccountType, passphrase: String, name: String) async throws {

@@ -8,6 +8,9 @@ class ICloudBackupTermsViewModel {
     @Published public var viewItems = [ViewItem]()
     @Published public var buttonEnabled: Bool = false
 
+    private let showCloudNotAvailableSubject = PassthroughSubject<Void, Never>()
+    private let showModuleSubject = PassthroughSubject<Void, Never>()
+
     init(service: ICloudBackupTermsService) {
         self.service = service
 
@@ -38,12 +41,24 @@ extension ICloudBackupTermsViewModel {
         service.account
     }
 
+    var showCloudNotAvailablePublisher: AnyPublisher<Void, Never> {
+        showCloudNotAvailableSubject.eraseToAnyPublisher()
+    }
+
+    var showModulePublisher: AnyPublisher<Void, Never> {
+        showModuleSubject.eraseToAnyPublisher()
+    }
+
     func onToggle(index: Int) {
         service.toggleTerm(at: index)
     }
 
-    func onTapAgree() {
-//        service.setTermsAccepted()
+    func onContinue() {
+        if service.cloudIsAvailable {
+            showModuleSubject.send(())
+        } else {
+            showCloudNotAvailableSubject.send(())
+        }
     }
 
 }

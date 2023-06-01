@@ -78,6 +78,21 @@ class ICloudBackupTermsViewController: ThemeViewController {
                 }
                 .store(in: &cancellables)
 
+        viewModel.showModulePublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.showModule()
+                }
+                .store(in: &cancellables)
+
+        viewModel.showCloudNotAvailablePublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.showNotCloudAvailable()
+                }
+                .store(in: &cancellables)
+
+
         loaded = true
         reloadTable()
     }
@@ -87,11 +102,18 @@ class ICloudBackupTermsViewController: ThemeViewController {
     }
 
     @objc private func onTapContinue() {
+        viewModel.onContinue()
+    }
+
+    private func showNotCloudAvailable() {
+        let viewController = BottomSheetModule.cloudNotAvailableController()
+        present(viewController, animated: true)
+    }
+
+    private func showModule() {
         let controller = BackupCloudModule.backupName(account: viewModel.account)
         navigationController?.pushViewController(controller, animated: true)
     }
-
-    private func openModuleIfRequired() {}
 
     private func reloadTable() {
         if loaded {

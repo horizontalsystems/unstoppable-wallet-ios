@@ -15,7 +15,7 @@ struct BackupModule {
     }
 
     static func cloudViewController(account: Account) -> UIViewController {
-        let service = ICloudBackupTermsService(account: account)
+        let service = ICloudBackupTermsService(cloudAccountBackupManager: App.shared.cloudAccountBackupManager, account: account)
         let viewModel = ICloudBackupTermsViewModel(service: service)
         let viewController = ICloudBackupTermsViewController(viewModel: viewModel)
 
