@@ -3,6 +3,7 @@ import RxSwift
 import GRDB
 import UniswapKit
 import EvmKit
+import TronKit
 import ThemeKit
 import Alamofire
 import HsToolKit
@@ -70,6 +71,12 @@ protocol ISendEthereumAdapter {
     var evmKitWrapper: EvmKitWrapper { get }
     var balanceData: BalanceData { get }
     func transactionData(amount: BigUInt, address: EvmKit.Address) -> TransactionData
+}
+
+protocol ISendTronAdapter {
+    var tronKitWrapper: TronKitWrapper { get }
+    var balanceData: BalanceData { get }
+    func contract(amount: BigUInt, address: TronKit.Address) -> TronKit.Contract
 }
 
 protocol IErc20Adapter {

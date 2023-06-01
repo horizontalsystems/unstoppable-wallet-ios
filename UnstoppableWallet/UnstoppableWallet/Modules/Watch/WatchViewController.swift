@@ -236,6 +236,29 @@ extension WatchViewController: SectionsDataSource {
             )
 
             sections.append(evmAddressSection)
+        case .tronAddress:
+            let tronAddressSection: SectionProtocol = Section(
+                    id: "address",
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        StaticRow(
+                                cell: addressCell,
+                                id: "address-input",
+                                dynamicHeight: { [weak self] width in
+                                    self?.addressCell.height(containerWidth: width) ?? 0
+                                }
+                        ),
+                        StaticRow(
+                                cell: addressCautionCell,
+                                id: "address-caution",
+                                dynamicHeight: { [weak self] width in
+                                    self?.addressCautionCell.height(containerWidth: width) ?? 0
+                                }
+                        )
+                    ]
+            )
+
+            sections.append(tronAddressSection)
         case .publicKey:
             let publicKeySection: SectionProtocol = Section(
                     id: "public-key-input",

@@ -24,6 +24,7 @@ extension TokenQuery {
         case (.polygon, .native), (.polygon, .eip20): return true
         case (.avalanche, .native), (.avalanche, .eip20): return true
         case (.binanceChain, .native), (.binanceChain, .bep2): return true
+        case (.tron, .native), (.tron, .eip20): return true
         default: return false
         }
     }

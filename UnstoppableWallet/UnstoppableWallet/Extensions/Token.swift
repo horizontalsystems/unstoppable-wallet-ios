@@ -6,7 +6,7 @@ extension Token {
         switch type {
         case .native:
             switch blockchainType {
-            case .ethereum, .binanceSmartChain: return nil
+                case .ethereum, .binanceSmartChain, .tron: return nil
             case .binanceChain: return "BEP2"
             default: return blockchain.name
             }
@@ -14,6 +14,7 @@ extension Token {
             switch blockchainType {
             case .ethereum: return "ERC20"
             case .binanceSmartChain: return "BEP20"
+            case .tron: return "TRC20"
             default: return blockchain.name
             }
         case .bep2:
@@ -34,6 +35,7 @@ extension Token {
             switch blockchainType {
             case .ethereum: return "\(blockchain.name) (ERC20)"
             case .binanceSmartChain: return "\(blockchain.name) (BEP20)"
+            case .tron: return "\(blockchain.name) (TRC20)"
             default: return blockchain.name
             }
         case .bep2:

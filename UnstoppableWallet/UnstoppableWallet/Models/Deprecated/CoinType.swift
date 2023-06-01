@@ -26,6 +26,7 @@ public enum CoinType: Decodable {
     case sora(address: String)
     case tomochain(address: String)
     case xdai(address: String)
+    case trc20(address: String)
     case unsupported(type: String)
 
     public init(from decoder: Decoder) throws {
@@ -64,6 +65,7 @@ public enum CoinType: Decodable {
         case "sora": if let address = address { self = .sora(address: address) } else { return nil }
         case "tomochain": if let address = address { self = .tomochain(address: address) } else { return nil }
         case "xdai": if let address = address { self = .xdai(address: address) } else { return nil }
+        case "trc20": if let address = address { self = .trc20(address: address) } else { return nil }
         default: self = .unsupported(type: type)
         }
     }
@@ -97,6 +99,7 @@ public enum CoinType: Decodable {
         case .sora(let address): return (type: "sora", address: address, symbol: nil)
         case .tomochain(let address): return (type: "tomochain", address: address, symbol: nil)
         case .xdai(let address): return (type: "xdai", address: address, symbol: nil)
+        case .trc20(let address): return (type: "trc20", address: address, symbol: nil)
         case .unsupported(let type): return (type: type, address: nil, symbol: nil)
         }
     }
@@ -134,6 +137,7 @@ extension CoinType: Equatable {
         case (.sora(let lhsAddress), .sora(let rhsAddress)): return lhsAddress.lowercased() == rhsAddress.lowercased()
         case (.tomochain(let lhsAddress), .tomochain(let rhsAddress)): return lhsAddress.lowercased() == rhsAddress.lowercased()
         case (.xdai(let lhsAddress), .xdai(let rhsAddress)): return lhsAddress.lowercased() == rhsAddress.lowercased()
+        case (.trc20(let lhsAddress), .trc20(let rhsAddress)): return lhsAddress.lowercased() == rhsAddress.lowercased()
         case (.unsupported(let lhsType), .unsupported(let rhsType)): return lhsType == rhsType
         default: return false
         }
@@ -188,6 +192,7 @@ extension CoinType: Identifiable {
             case "sora": self = .sora(address: String(chunks[1]))
             case "tomochain": self = .tomochain(address: String(chunks[1]))
             case "xdai": self = .xdai(address: String(chunks[1]))
+            case "trc20": self = .trc20(address: String(chunks[1]))
             case "unsupported": self = .unsupported(type: chunks.suffix(from: 1).joined(separator: "|"))
             default: self = .unsupported(type: chunks.joined(separator: "|"))
             }
@@ -223,6 +228,7 @@ extension CoinType: Identifiable {
         case .sora(let address): return ["sora", address].joined(separator: "|")
         case .tomochain(let address): return ["tomochain", address].joined(separator: "|")
         case .xdai(let address): return ["xdai", address].joined(separator: "|")
+        case .trc20(let address): return ["trc20", address].joined(separator: "|")
         case .unsupported(let type): return ["unsupported", type].joined(separator: "|")
         }
     }
@@ -260,6 +266,7 @@ extension CoinType: CustomStringConvertible {
         case .sora(let address): return ["sora", "\(address.prefix(4))...\(address.suffix(2))"].joined(separator: "|")
         case .tomochain(let address): return ["tomochain", "\(address.prefix(4))...\(address.suffix(2))"].joined(separator: "|")
         case .xdai(let address): return ["xdai", "\(address.prefix(4))...\(address.suffix(2))"].joined(separator: "|")
+        case .trc20(let address): return ["trc20", "\(address.prefix(4))...\(address.suffix(2))"].joined(separator: "|")
         case .unsupported(let type): return ["unsupported", type].joined(separator: "|")
         }
     }

@@ -61,6 +61,16 @@ struct WatchModule {
                     marketKit: App.shared.marketKit
                 )
 
+            case .tronAddress:
+                service = ChooseCoinService(
+                    accountType: accountType,
+                    accountName: name,
+                    accountFactory: App.shared.accountFactory,
+                    accountManager: App.shared.accountManager,
+                    walletManager: App.shared.walletManager,
+                    marketKit: App.shared.marketKit
+                )
+
             case .publicKey:
                 service = ChooseCoinService(
                     accountType: accountType,
@@ -83,11 +93,13 @@ extension WatchModule {
 
     enum WatchType: CaseIterable {
         case evmAddress
+        case tronAddress
         case publicKey
 
         var title: String {
             switch self {
                 case .evmAddress: return "watch_address.evm_address".localized
+                case .tronAddress: return "watch_address.tron_address".localized
                 case .publicKey: return "watch_address.public_key".localized
             }
         }
