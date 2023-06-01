@@ -16,31 +16,32 @@ struct WalletModule {
                 marketKit: App.shared.marketKit
         )
 
-        let commonService = WalletCommonService(
+        let elementService = WalletBlockchainElementService(
+                adapterService: adapterService,
+                walletManager: App.shared.walletManager
+        )
+
+        adapterService.delegate = elementService
+
+        let service = WalletService(
+                elementService: elementService,
+                coinPriceService: coinPriceService,
                 accountManager: App.shared.accountManager,
+                cacheManager: App.shared.enabledWalletCacheManager,
                 accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
                 reachabilityManager: App.shared.reachabilityManager,
                 balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
                 balanceHiddenManager: App.shared.balanceHiddenManager,
+                balanceConversionManager: App.shared.balanceConversionManager,
                 cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
                 rateAppManager: App.shared.rateAppManager,
+                appManager: App.shared.appManager,
+                feeCoinProvider: App.shared.feeCoinProvider,
                 localStorage: StorageKit.LocalStorage.default
         )
 
-        let service = WalletService(
-                commonService: commonService,
-                adapterService: adapterService,
-                coinPriceService: coinPriceService,
-                cacheManager: App.shared.enabledWalletCacheManager,
-                walletManager: App.shared.walletManager,
-                marketKit: App.shared.marketKit,
-                balanceConversionManager: App.shared.balanceConversionManager,
-                appManager: App.shared.appManager,
-                feeCoinProvider: App.shared.feeCoinProvider
-        )
-
-        adapterService.delegate = service
         coinPriceService.delegate = service
+        elementService.delegate = service
 
         let accountRestoreWarningFactory = AccountRestoreWarningFactory(
                 appConfigProvider: App.shared.appConfigProvider,
@@ -49,7 +50,6 @@ struct WalletModule {
         )
 
         let viewModel = WalletViewModel(
-                commonService: commonService,
                 service: service,
                 factory: WalletViewItemFactory(),
                 accountRestoreWarningFactory: accountRestoreWarningFactory
@@ -60,56 +60,61 @@ struct WalletModule {
 
 }
 
-protocol IBalanceItem {
-    var item: WalletModule.Item { get }
-    var isMainNet: Bool { get }
-    var balanceData: BalanceData { get }
-    var state: AdapterState { get }
-    var buttons: [WalletModule.Button: ButtonState] { get }
-    var priceItem: WalletCoinPriceService.Item? { get }
-}
-
 extension WalletModule {
 
-    enum Item: Hashable {
-        case _wallet(wallet: Wallet)
-        case _coin(coin: Coin, account: Account)
+    enum Element: Hashable {
+        case wallet(wallet: Wallet)
+        case coin(coin: Coin, account: Account)
 
         var coin: Coin {
             switch self {
-            case ._wallet(let wallet): return wallet.coin
-            case ._coin(let coin, _): return coin
+            case .wallet(let wallet): return wallet.coin
+            case .coin(let coin, _): return coin
             }
         }
 
         var wallet: Wallet? {
             switch self {
-            case ._wallet(let wallet): return wallet
+            case .wallet(let wallet): return wallet
             default: return nil
             }
         }
 
         var decimals: Int {
             switch self {
-            case ._wallet(let wallet): return wallet.decimals
-            case ._coin: return 8 // todo: how many decimals for coin???
+            case .wallet(let wallet): return wallet.decimals
+            case .coin: return 8 // todo: how many decimals for coin???
+            }
+        }
+
+        var account: Account {
+            switch self {
+            case .wallet(let wallet): return wallet.account
+            case .coin(_, let account): return account
+            }
+        }
+
+        var priceCoinUid: String? {
+            switch self {
+            case .wallet(let wallet): return wallet.token.isCustom ? nil : wallet.coin.uid
+            case .coin(let coin, _): return coin.uid
             }
         }
 
         func hash(into hasher: inout Hasher) {
             switch self {
-            case ._wallet(let wallet):
+            case .wallet(let wallet):
                 hasher.combine(wallet)
-            case ._coin(let coin, let account):
+            case .coin(let coin, let account):
                 hasher.combine(coin)
                 hasher.combine(account)
             }
         }
 
-        static func ==(lhs: Item, rhs: Item) -> Bool {
+        static func ==(lhs: Element, rhs: Element) -> Bool {
             switch (lhs, rhs) {
-            case (._wallet(let lhsWallet), ._wallet(let rhsWallet)): return lhsWallet == rhsWallet
-            case (._coin(let lhsCoin, let lhsAccount), ._coin(let rhsCoin, let rhsAccount)): return lhsCoin == rhsCoin && lhsAccount == rhsAccount
+            case (.wallet(let lhsWallet), .wallet(let rhsWallet)): return lhsWallet == rhsWallet
+            case (.coin(let lhsCoin, let lhsAccount), .coin(let rhsCoin, let rhsAccount)): return lhsCoin == rhsCoin && lhsAccount == rhsAccount
             default: return false
             }
         }
@@ -126,13 +131,6 @@ extension WalletModule {
     struct ButtonItem {
         let button: Button
         let state: ButtonState
-    }
-
-    struct TotalItem {
-        let currencyValue: CurrencyValue
-        let expired: Bool
-        let convertedValue: CoinValue?
-        let convertedValueExpired: Bool
     }
 
     enum SortType: String, CaseIterable {

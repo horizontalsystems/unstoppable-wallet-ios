@@ -93,9 +93,9 @@ class NftAssetOverviewService {
     private func handleFetched(asset: NftAssetMetadata, collection: NftCollectionMetadata, nftImage: NftImage?) {
         queue.async {
             let item = Item(asset: asset, collection: collection, assetNftImage: nftImage, isOwned: self._isOwned())
-            let tokens = self._allTokens(item: item)
-            self._fillCoinPrices(item: item, tokens: tokens)
-            self.coinPriceService.set(tokens: tokens)
+            let coinUids = self._allCoinUids(item: item)
+            self._fillCoinPrices(item: item, coinUids: coinUids)
+            self.coinPriceService.set(coinUids: coinUids)
 
             self.state = .completed(item)
         }
@@ -120,18 +120,18 @@ class NftAssetOverviewService {
         return adapter.nftRecord(nftUid: nftUid) != nil
     }
 
-    private func _allTokens(item: Item) -> Set<Token> {
+    private func _allCoinUids(item: Item) -> Set<String> {
         var priceItems = [item.lastSale, item.average7d, item.average30d, item.collectionFloor] + item.offers
 
         if let saleItem = item.sale {
             priceItems.append(contentsOf: saleItem.listings.map { $0.price })
         }
 
-        return Set(priceItems.compactMap { $0?.nftPrice.token })
+        return Set(priceItems.compactMap { $0?.nftPrice.token.coin.uid })
     }
 
-    private func _fillCoinPrices(item: Item, tokens: Set<Token>) {
-        _fillCoinPrices(item: item, map: coinPriceService.itemMap(tokens: Array(tokens)))
+    private func _fillCoinPrices(item: Item, coinUids: Set<String>) {
+        _fillCoinPrices(item: item, map: coinPriceService.itemMap(coinUids: Array(coinUids)))
     }
 
     private func _fillCoinPrices(item: Item, map: [String: WalletCoinPriceService.Item]) {
@@ -169,7 +169,7 @@ extension NftAssetOverviewService: IWalletCoinPriceServiceDelegate {
                 return
             }
 
-            self._fillCoinPrices(item: item, tokens: self._allTokens(item: item))
+            self._fillCoinPrices(item: item, coinUids: self._allCoinUids(item: item))
             self.state = .completed(item)
         }
     }
