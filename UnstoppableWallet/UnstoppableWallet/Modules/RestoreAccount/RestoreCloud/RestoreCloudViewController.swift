@@ -66,12 +66,11 @@ class RestoreCloudViewController: ThemeViewController {
                     self?.restore(item: $0)
                 }.store(in: &cancellables)
 
-//        subscribe(disposeBag, viewModel.successSignal) { [weak self] in
-//            HudHelper.instance.show(banner: .imported)
-//            (self?.returnViewController ?? self)?.dismiss(animated: true)
-//        }
-
         tableView.buildSections()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
     @objc private func onCancel() {
@@ -139,8 +138,12 @@ extension RestoreCloudViewController: SectionsDataSource {
 
         var sections = [
             descriptionSection,
-            section(id: "not_imported", viewItems: viewModel.viewItem.notImported),
         ]
+        if !viewItem.notImported.isEmpty {
+            sections.append(
+                    section(id: "not_imported", viewItems: viewModel.viewItem.notImported)
+            )
+        }
 
         if !viewItem.imported.isEmpty {
             sections.append(

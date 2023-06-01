@@ -208,23 +208,26 @@ enum AccountType {
 
 extension AccountType {
 
+    private static func split(_ string: String, separator: String) -> (String, String) {
+        if let index = string.firstIndex(of: Character(separator)) {
+            let left = String(string.prefix(upTo: index))
+            let right = String(string.suffix(from: string.index(after: index)))
+            return (left, right)
+        }
+
+        return (string, "")
+    }
+
     static func decode(uniqueId: Data, type: Abstract) -> AccountType? {
         let string = String(decoding: uniqueId, as: UTF8.self)
 
         switch type {
         case .mnemonic:
-            guard let index = string.firstIndex(of: Character("@")) else {
-                let words = string.split(separator: " ").map(String.init)
-                return AccountType.mnemonic(words: words, salt: "", bip39Compliant: true)
-            }
-            var words = string.prefix(upTo: index).split(separator: "&").map(String.init)
-            let salt = String(string.suffix(from: string.index(after: index)))
-            var bip39Compliant = true
+            let (wordsWithCompliant, salt) = split(string, separator: "@")
+            let (wordList, bip39CompliantString) = split(wordsWithCompliant, separator: "&")
+            let words = wordList.split(separator: " ").map(String.init)
 
-            if words.count == 2 {
-                words = words[0].split(separator: " ").map(String.init)
-                bip39Compliant = false
-            }
+            let bip39Compliant = bip39CompliantString.isEmpty
             return AccountType.mnemonic(words: words, salt: salt, bip39Compliant: bip39Compliant)
         case .evmPrivateKey:
             return AccountType.evmPrivateKey(data: uniqueId)

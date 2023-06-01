@@ -6,7 +6,7 @@ class BackupCloudModule {
     static let minimumPassphraseLength = 8
 
     static func backupTerms(account: Account) -> UIViewController {
-        let service = ICloudBackupTermsService(account: account)
+        let service = ICloudBackupTermsService(cloudAccountBackupManager: App.shared.cloudAccountBackupManager, account: account)
         let viewModel = ICloudBackupTermsViewModel(service: service)
         let controller = ICloudBackupTermsViewController(viewModel: viewModel)
 

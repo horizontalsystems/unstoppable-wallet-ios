@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 import ThemeKit
 import SnapKit
@@ -6,6 +7,7 @@ import ComponentKit
 
 class RestoreTypeViewController: ThemeViewController {
     private let viewModel: RestoreTypeViewModel
+    private var cancellables = Set<AnyCancellable>()
 
     private let tableView = SectionsTableView(style: .grouped)
     private weak var returnViewController: UIViewController?
@@ -41,6 +43,20 @@ class RestoreTypeViewController: ThemeViewController {
         tableView.separatorStyle = .none
 
         tableView.sectionDataSource = self
+
+        viewModel.showModulePublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.show(type: $0)
+                }
+                .store(in: &cancellables)
+
+        viewModel.showCloudNotAvailablePublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.showNotCloudAvailable()
+                }
+                .store(in: &cancellables)
 
         tableView.buildSections()
     }
@@ -102,12 +118,12 @@ class RestoreTypeViewController: ThemeViewController {
                     cell.set(backgroundStyle: backgroundStyle, isFirst: true, isLast: true)
                 },
                 action: { [weak self] in
-                    self?.onTap(type: item)
+                    self?.viewModel.onTap(type: item)
                 }
         )
     }
 
-    private func onTap(type: RestoreTypeViewModel.RestoreType) {
+    private func show(type: RestoreTypeViewModel.RestoreType) {
         switch type {
         case .cloudRestore:
             let viewController = RestoreCloudModule.viewController(returnViewController: returnViewController)
@@ -116,6 +132,11 @@ class RestoreTypeViewController: ThemeViewController {
             let viewController = RestoreModule.viewController(sourceViewController: self, returnViewController: returnViewController)
             navigationController?.pushViewController(viewController, animated: true)
         }
+    }
+
+    private func showNotCloudAvailable() {
+        let viewController = BottomSheetModule.cloudNotAvailableController()
+        present(viewController, animated: true)
     }
 
 }

@@ -1,11 +1,42 @@
 import UIKit
+import Combine
 
 class RestoreTypeViewModel {
+    private let cloudAccountBackupManager: CloudAccountBackupManager
+
+    private let showCloudNotAvailableSubject = PassthroughSubject<Void, Never>()
+    private let showModuleSubject = PassthroughSubject<RestoreType, Never>()
+
+    init(cloudAccountBackupManager: CloudAccountBackupManager) {
+        self.cloudAccountBackupManager = cloudAccountBackupManager
+    }
 
 }
 
 extension RestoreTypeViewModel {
+
     var items: [RestoreType] { RestoreType.allCases }
+
+    var showCloudNotAvailablePublisher: AnyPublisher<Void, Never> {
+        showCloudNotAvailableSubject.eraseToAnyPublisher()
+    }
+
+    var showModulePublisher: AnyPublisher<RestoreType, Never> {
+        showModuleSubject.eraseToAnyPublisher()
+    }
+
+    func onTap(type: RestoreType) {
+        switch type {
+        case .recoveryOrPrivateKey: showModuleSubject.send(type)
+        case .cloudRestore:
+            if cloudAccountBackupManager.isAvailable {
+                showModuleSubject.send(type)
+            } else {
+                showCloudNotAvailableSubject.send(())
+            }
+        }
+    }
+
 }
 
 extension RestoreTypeViewModel {
