@@ -3,7 +3,7 @@ import DeepDiff
 import MarketKit
 
 struct BalanceViewItem {
-    let item: WalletModule.Item
+    let element: WalletModule.Element
 
     let topViewItem: BalanceTopViewItem
     let lockedAmountViewItem: BalanceLockedAmountViewItem?
@@ -117,8 +117,8 @@ extension BalanceLockedAmountViewItem: Equatable {
 
 extension BalanceViewItem: DiffAware {
 
-    public var diffId: WalletModule.Item {
-        item
+    public var diffId: WalletModule.Element {
+        element
     }
 
     static func compareContent(_ a: BalanceViewItem, _ b: BalanceViewItem) -> Bool {

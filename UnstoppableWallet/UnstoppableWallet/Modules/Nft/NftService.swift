@@ -58,18 +58,18 @@ class NftService {
         _handle(adapterMap: nftAdapterManager.adapterMap)
     }
 
-    private func allTokens(items: [Item]) -> Set<Token> {
-        var tokens = Set<Token>()
+    private func allCoinUids(items: [Item]) -> Set<String> {
+        var coinUids = Set<String>()
 
         for item in items {
             for assetItem in item.assetItems {
                 if let price = assetItem.price {
-                    tokens.insert(price.token)
+                    coinUids.insert(price.token.coin.uid)
                 }
             }
         }
 
-        return tokens
+        return coinUids
     }
 
     private func updatePriceItems(items: [Item], map: [String: WalletCoinPriceService.Item]) {
@@ -175,7 +175,7 @@ class NftService {
 
         _syncItems()
 
-        coinPriceService.set(tokens: allTokens(items: items).union(balanceConversionManager.conversionTokens))
+        coinPriceService.set(coinUids: allCoinUids(items: items).union(balanceConversionManager.conversionTokens.map { $0.coin.uid }))
     }
 
     private func syncItems() {
@@ -221,7 +221,7 @@ class NftService {
             )
         }
 
-        updatePriceItems(items: items, map: coinPriceService.itemMap(tokens: Array(allTokens(items: items))))
+        updatePriceItems(items: items, map: coinPriceService.itemMap(coinUids: Array(allCoinUids(items: items))))
 
         self.items = sort(items: items)
         syncTotalItem()
@@ -241,7 +241,7 @@ class NftService {
         var convertedValue: CoinValue?
         var convertedValueExpired = false
 
-        if let conversionToken = balanceConversionManager.conversionToken, let priceItem = coinPriceService.item(token: conversionToken) {
+        if let conversionToken = balanceConversionManager.conversionToken, let priceItem = coinPriceService.item(coinUid: conversionToken.coin.uid) {
             convertedValue = CoinValue(kind: .token(token: conversionToken), value: total / priceItem.price.value)
             convertedValueExpired = priceItem.expired
         }
@@ -266,7 +266,7 @@ extension NftService: IWalletCoinPriceServiceDelegate {
 
     func didUpdateBaseCurrency() {
         queue.async {
-            self.updatePriceItems(items: self.items, map: self.coinPriceService.itemMap(tokens: Array(self.allTokens(items: self.items))))
+            self.updatePriceItems(items: self.items, map: self.coinPriceService.itemMap(coinUids: Array(self.allCoinUids(items: self.items))))
             self.items = self.sort(items: self.items)
             self.syncTotalItem()
         }

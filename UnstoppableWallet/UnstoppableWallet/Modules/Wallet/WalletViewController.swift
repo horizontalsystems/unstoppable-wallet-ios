@@ -275,25 +275,25 @@ class WalletViewController: ThemeViewController {
                 animated: animated,
                 duration: animationDuration,
                 onSend: { [weak self] in
-                    if let wallet = viewItem.item.wallet {
+                    if let wallet = viewItem.element.wallet {
                         self?.openSend(wallet: wallet)
                     }
                 },
                 onReceive: { [weak self] in
-                    if let wallet = viewItem.item.wallet {
+                    if let wallet = viewItem.element.wallet {
                         self?.viewModel.onTapReceive(wallet: wallet)
                     }
                 },
                 onSwap: { [weak self] in
-                    if let wallet = viewItem.item.wallet {
+                    if let wallet = viewItem.element.wallet {
                         self?.openSwap(wallet: wallet)
                     }
                 },
                 onChart: { [weak self] in
-                    self?.viewModel.onTapChart(item: viewItem.item)
+                    self?.viewModel.onTapChart(element: viewItem.element)
                 },
                 onTapError: { [weak self] in
-                    self?.viewModel.onTapFailedIcon(item: viewItem.item)
+                    self?.viewModel.onTapFailedIcon(element: viewItem.element)
                 }
         )
     }
@@ -402,7 +402,7 @@ class WalletViewController: ThemeViewController {
             return
         }
 
-        let item = viewItems[index].item
+        let element = viewItems[index].element
 
         viewItems.remove(at: index)
 
@@ -410,7 +410,7 @@ class WalletViewController: ThemeViewController {
         tableView.deleteRows(at: [indexPath], with: .fade)
         tableView.endUpdates()
 
-        viewModel.onDisable(item: item)
+        viewModel.onDisable(element: element)
     }
 
     private func showBackupPromptIfRequired() {
@@ -488,7 +488,7 @@ extension WalletViewController: UITableViewDelegate {
         if warningViewItem != nil, indexPath.row == 0 {
             return
         }
-        viewModel.onTap(item: viewItems[indexPath.item - viewItemsOffset].item)
+        viewModel.onTap(element: viewItems[indexPath.item - viewItemsOffset].element)
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
