@@ -41,6 +41,8 @@ class TransactionAdapterManager {
 
             if evmBlockchainManager.allBlockchains.contains(where: { $0.type == source.blockchainType }) {
                 transactionsAdapter = adapterFactory.evmTransactionsAdapter(transactionSource: source)
+            } else if source.blockchainType == .tron {
+                transactionsAdapter = adapterFactory.tronTransactionsAdapter(transactionSource: source)
             } else {
                 transactionsAdapter = adapter as? ITransactionsAdapter
             }

@@ -102,6 +102,7 @@ extension UdnAddressParserItem {
         case .binanceChain: return "ETH"
         case .gnosis: return "ETH"
         case .fantom: return "ETH"
+        case .tron: return "TRX"
         case .solana: return "SOL"
         case .unsupported(let uid): return uid
         }

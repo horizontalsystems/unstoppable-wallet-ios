@@ -9,16 +9,19 @@ class AdapterManager {
     private let adapterFactory: AdapterFactory
     private let walletManager: WalletManager
     private let evmBlockchainManager: EvmBlockchainManager
+    private let tronKitManager: TronKitManager
 
     private let adaptersReadyRelay = PublishRelay<[Wallet: IAdapter]>()
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.adapter_manager", qos: .userInitiated)
     private var _adapterMap = [Wallet: IAdapter]()
 
-    init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager, btcBlockchainManager: BtcBlockchainManager) {
+    init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
+         tronKitManager: TronKitManager, btcBlockchainManager: BtcBlockchainManager) {
         self.adapterFactory = adapterFactory
         self.walletManager = walletManager
         self.evmBlockchainManager = evmBlockchainManager
+        self.tronKitManager = tronKitManager
 
         walletManager.activeWalletsUpdatedObservable
                 .observeOn(SerialDispatchQueueScheduler(qos: .utility))
@@ -149,6 +152,8 @@ extension AdapterManager {
                     adapter.refresh()
                 }
             }
+
+            self.tronKitManager.tronKitWrapper?.tronKit.refresh()
         }
     }
 
@@ -156,6 +161,8 @@ extension AdapterManager {
         queue.async {
             if let blockchainType = self.evmBlockchainManager.blockchain(token: wallet.token)?.type {
                 self.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit.refresh()
+            } else if wallet.token.blockchainType == .tron {
+                self.tronKitManager.tronKitWrapper?.tronKit.refresh()
             } else {
                 self._adapterMap[wallet]?.refresh()
             }

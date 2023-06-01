@@ -419,6 +419,62 @@ class TransactionInfoViewItemFactory {
                 sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
             }
 
+        case let record as TronIncomingTransactionRecord:
+            sections.append(receiveSection(source: record.source, transactionValue: record.value, from: record.from, rates: item.rates))
+
+        case let record as TronOutgoingTransactionRecord:
+            sections.append(sendSection(source: record.source, transactionValue: record.value, to: record.to, rates: item.rates, nftMetadata: item.nftMetadata, sentToSelf: record.sentToSelf))
+
+            if record.sentToSelf {
+                sections.append([.sentToSelf])
+            }
+
+        case let record as TronApproveTransactionRecord:
+            let transactionValue = record.value
+            let rate = _rate(transactionValue)
+
+            var viewItems: [TransactionInfoModule.ViewItem] = [
+                .actionTitle(iconName: "check_2_24", iconDimmed: true, title: "transactions.approve".localized, subTitle: transactionValue.fullName),
+                amount(source: record.source, transactionValue: transactionValue, rate: rate, type: .neutral),
+            ]
+            let contactData = contactLabelService.contactData(for: record.spender)
+            let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: record.spender) : nil
+            viewItems.append(.spender(value: record.spender, valueTitle: valueTitle, contactAddress: contactData.contactAddress))
+            if let name = contactData.name {
+                viewItems.append(.contactName(name: name))
+            }
+
+            viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: transactionValue.coin?.code)))
+
+            sections.append(viewItems)
+
+        case let record as TronContractCallTransactionRecord:
+            sections.append([
+                .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress))
+            ])
+
+            for event in record.outgoingEvents {
+                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
+            }
+
+            for event in record.incomingEvents {
+                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
+            }
+
+        case let record as TronExternalContractCallTransactionRecord:
+            for event in record.outgoingEvents {
+                sections.append(sendSection(source: record.source, transactionValue: event.value, to: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
+            }
+
+            for event in record.incomingEvents {
+                sections.append(receiveSection(source: record.source, transactionValue: event.value, from: event.address, rates: item.rates, nftMetadata: item.nftMetadata))
+            }
+
+        case let record as TronTransactionRecord:
+            sections.append([
+                .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.transaction.contract?.label ?? "transactions.contract_call".localized, subTitle: "")
+            ])
+
         case let record as BitcoinIncomingTransactionRecord:
             sections.append(receiveSection(source: record.source, transactionValue: record.value, from: record.from, rates: item.rates))
 
@@ -479,6 +535,19 @@ class TransactionInfoViewItemFactory {
         ]
 
         if let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction, let transactionValue = evmRecord.fee {
+            let title: String
+            switch status {
+            case .pending: title = "tx_info.fee.estimated".localized
+            case .processing, .failed, .completed: title = "tx_info.fee".localized
+            }
+
+            feeViewItem = .fee(
+                    title: title,
+                    value: feeString(transactionValue: transactionValue, rate: _rate(transactionValue))
+            )
+        }
+
+        if let tronRecord = record as? TronTransactionRecord, tronRecord.ownTransaction, let transactionValue = tronRecord.fee {
             let title: String
             switch status {
             case .pending: title = "tx_info.fee.estimated".localized

@@ -89,6 +89,8 @@ class AddressParserFactory {
             }
 
             return addressParserChain
+        case .tron:
+            return AddressParserChain().append(handler: TronAddressParser())
         case .binanceChain:
             let network = BinanceChainKit.NetworkType.mainNet
             let validator = BinanceAddressValidator(prefix: network.addressPrefix)

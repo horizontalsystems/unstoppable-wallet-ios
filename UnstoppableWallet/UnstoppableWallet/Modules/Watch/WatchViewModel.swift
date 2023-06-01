@@ -32,6 +32,7 @@ class WatchViewModel {
     private var subViewModel: IWatchSubViewModel {
         switch watchTypeRelay.value {
         case .evmAddress: return evmAddressViewModel
+        case .tronAddress: return evmAddressViewModel
         case .publicKey: return publicKeyViewModel
         }
     }

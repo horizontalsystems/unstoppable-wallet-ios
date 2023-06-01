@@ -18,7 +18,7 @@ class PoolGroupFactory {
                 return [provider]
             }
         } else if let blockchainType = blockchainType {
-            if App.shared.evmBlockchainManager.allBlockchains.contains(where: { $0.type == blockchainType }) {
+            if App.shared.evmBlockchainManager.allBlockchains.contains(where: { $0.type == blockchainType }) || blockchainType == .tron {
                 let poolSource = PoolSource(
                         blockchainType: blockchainType,
                         filter: filter,
@@ -57,7 +57,7 @@ class PoolGroupFactory {
             for wallet in wallets {
                 let poolSource: PoolSource
 
-                if App.shared.evmBlockchainManager.allBlockchains.contains(where: { $0 == wallet.token.blockchain }) {
+                if App.shared.evmBlockchainManager.allBlockchains.contains(where: { $0 == wallet.token.blockchain }) || wallet.token.blockchainType == .tron {
                     poolSource = PoolSource(
                             blockchainType: wallet.token.blockchainType,
                             filter: filter,
