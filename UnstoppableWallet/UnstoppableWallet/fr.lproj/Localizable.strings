@@ -218,8 +218,7 @@
 "backup.cloud.title" = "Backup to iCloud";
 "backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
 
-"backup.cloud.terms.item.1" = "I understand that by using iCloud backup, I am transferring my data to third party storage";
-"backup.cloud.terms.item.2" = "I understand that if I lose access to my iCloud, I will lose access to my wallet backup copy ";
+"backup.cloud.terms.item.1" = "I understand that loosing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
 
 "backup.cloud.name.title" = "Backup Name";
 "backup.cloud.name.description" = "Add a name for the recovery phrase backup to distinguish it from other backups";
