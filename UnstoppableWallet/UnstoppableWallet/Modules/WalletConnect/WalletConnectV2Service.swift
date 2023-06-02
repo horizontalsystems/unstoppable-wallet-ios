@@ -272,7 +272,7 @@ extension WalletConnectV2Service {
     }
 
     public func disconnect(topic: String, reason: WalletConnectSign.Reason) {
-        Task.init { [weak self] in
+        Task.init { [weak self, logger] in
             do {
                 try await Sign.instance.disconnect(topic: topic)
                 self?.updateSessions()

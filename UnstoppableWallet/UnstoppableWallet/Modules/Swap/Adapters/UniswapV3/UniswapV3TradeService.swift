@@ -146,7 +146,7 @@ class UniswapV3TradeService: ISwapSettingProvider {
             return false
         }
 
-        Task { [weak self, uniswapProvider] in
+        Task { [weak self, uniswapProvider, tradeType, settings] in
             do {
                 let bestTrade = try await uniswapProvider.bestTrade(tokenIn: tokenIn, tokenOut: tokenOut, amount: amount, tradeType: tradeType, tradeOptions: settings.tradeOptions)
                 self?.handle(tradeData: bestTrade)

@@ -249,7 +249,7 @@ class ContactBookManager {
 
         // check url available
         guard let iCloudUrl else {
-            logger?.debug("=C-MANAGER> UPDATE REMOTE: Has Error: \(iCloudError)!")
+            logger?.debug("=C-MANAGER> UPDATE REMOTE: Has Error: \(iCloudError.map { "\($0)" } ?? "nil")!")
             iCloudError = StorageError.cloudUrlNotAvailable
             metadataMonitor = nil
 

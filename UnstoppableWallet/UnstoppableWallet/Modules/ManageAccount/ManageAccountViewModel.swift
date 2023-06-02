@@ -173,7 +173,7 @@ extension ManageAccountViewModel {
     }
 
     func deleteCloudBackup() {
-        Task { [weak self] in
+        Task { [weak self, service] in
             do {
                 try await service.deleteCloudBackup()
                 self?.cloudBackupDeletedRelay.accept(true)
