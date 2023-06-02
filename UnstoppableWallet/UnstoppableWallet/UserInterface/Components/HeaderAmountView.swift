@@ -4,7 +4,7 @@ import ThemeKit
 import ComponentKit
 
 class HeaderAmountView: UIView {
-    static let height: CGFloat = 100
+    static let height: CGFloat = 131
 
     private let amountButton = TextButtonComponent()
     private let convertedAmountButton = TextButtonComponent()
@@ -17,16 +17,17 @@ class HeaderAmountView: UIView {
         }
 
         addSubview(amountButton)
-        amountButton.snp.makeConstraints { maker in
-            maker.leading.top.equalToSuperview().inset(CGFloat.margin16)
+        amountButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(CGFloat.margin32)
+            make.centerX.equalToSuperview()
         }
 
         amountButton.font = .title2R
 
         addSubview(convertedAmountButton)
-        convertedAmountButton.snp.makeConstraints { maker in
-            maker.leading.equalTo(amountButton)
-            maker.top.equalTo(amountButton.snp.bottom).offset(CGFloat.margin6)
+        convertedAmountButton.snp.makeConstraints { make in
+            make.top.equalTo(amountButton.snp.bottom).offset(CGFloat.margin6)
+            make.centerX.equalToSuperview()
         }
 
         convertedAmountButton.font = .body
