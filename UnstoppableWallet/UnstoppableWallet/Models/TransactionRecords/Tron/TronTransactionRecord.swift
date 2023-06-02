@@ -28,7 +28,7 @@ class TronTransactionRecord: TransactionRecord {
             transactionIndex: 0,
             blockHeight: transaction.blockNumber,
             confirmationsThreshold: BaseTronAdapter.confirmationsThreshold,
-            date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+            date: Date(timeIntervalSince1970: Double(transaction.timestamp / 1000)),
             failed: transaction.isFailed,
             spam: spam
         )

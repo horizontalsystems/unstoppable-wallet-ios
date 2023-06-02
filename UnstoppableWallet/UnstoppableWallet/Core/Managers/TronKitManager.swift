@@ -35,6 +35,8 @@ class TronKitManager {
                 }
                 address = try Signer.address(seed: seed)
                 signer = try Signer.instance(seed: seed)
+            case let .tronAddress(value):
+                address = value
             default:
                 throw AdapterError.unsupportedAccount
         }

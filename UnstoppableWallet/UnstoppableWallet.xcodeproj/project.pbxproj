@@ -2185,6 +2185,12 @@
 		D05E96A72A2627E5002CCD71 /* TronOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96A52A2627E5002CCD71 /* TronOutgoingTransactionRecord.swift */; };
 		D05E96A92A28657F002CCD71 /* TronAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96A82A28657F002CCD71 /* TronAccountManager.swift */; };
 		D05E96AA2A28657F002CCD71 /* TronAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96A82A28657F002CCD71 /* TronAccountManager.swift */; };
+		D05E96B32A29F8AE002CCD71 /* WatchTronAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96B22A29F8AE002CCD71 /* WatchTronAddressService.swift */; };
+		D05E96B42A29F8AE002CCD71 /* WatchTronAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96B22A29F8AE002CCD71 /* WatchTronAddressService.swift */; };
+		D05E96B62A29F9D3002CCD71 /* WatchTronAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96B52A29F9D3002CCD71 /* WatchTronAddressViewModel.swift */; };
+		D05E96B72A29F9D3002CCD71 /* WatchTronAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96B52A29F9D3002CCD71 /* WatchTronAddressViewModel.swift */; };
+		D05E96B92A2A1113002CCD71 /* WatchTronService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96B82A2A1113002CCD71 /* WatchTronService.swift */; };
+		D05E96BA2A2A1113002CCD71 /* WatchTronService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96B82A2A1113002CCD71 /* WatchTronService.swift */; };
 		D087627329815DAE00E6FFD4 /* ChooseWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D087626E29815DAD00E6FFD4 /* ChooseWatchViewController.swift */; };
 		D087627429815DAE00E6FFD4 /* ChooseWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D087626E29815DAD00E6FFD4 /* ChooseWatchViewController.swift */; };
 		D087627629815DAE00E6FFD4 /* ChooseWatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D087626F29815DAD00E6FFD4 /* ChooseWatchViewModel.swift */; };
@@ -3552,6 +3558,9 @@
 		D05E96A22A2627DA002CCD71 /* TronIncomingTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronIncomingTransactionRecord.swift; sourceTree = "<group>"; };
 		D05E96A52A2627E5002CCD71 /* TronOutgoingTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronOutgoingTransactionRecord.swift; sourceTree = "<group>"; };
 		D05E96A82A28657F002CCD71 /* TronAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronAccountManager.swift; sourceTree = "<group>"; };
+		D05E96B22A29F8AE002CCD71 /* WatchTronAddressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTronAddressService.swift; sourceTree = "<group>"; };
+		D05E96B52A29F9D3002CCD71 /* WatchTronAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTronAddressViewModel.swift; sourceTree = "<group>"; };
+		D05E96B82A2A1113002CCD71 /* WatchTronService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTronService.swift; sourceTree = "<group>"; };
 		D087626E29815DAD00E6FFD4 /* ChooseWatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseWatchViewController.swift; sourceTree = "<group>"; };
 		D087626F29815DAD00E6FFD4 /* ChooseWatchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseWatchViewModel.swift; sourceTree = "<group>"; };
 		D087627F29815E8400E6FFD4 /* ChooseCoinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCoinService.swift; sourceTree = "<group>"; };
@@ -4708,6 +4717,9 @@
 				11B35A8370C726989F4F456E /* WatchEvmAddressViewModel.swift */,
 				11B3559E9511A2E053E00361 /* WatchPublicKeyService.swift */,
 				11B350D2A21FC1BE1F457B41 /* WatchPublicKeyViewModel.swift */,
+				D05E96B22A29F8AE002CCD71 /* WatchTronAddressService.swift */,
+				D05E96B52A29F9D3002CCD71 /* WatchTronAddressViewModel.swift */,
+				D05E96B82A2A1113002CCD71 /* WatchTronService.swift */,
 			);
 			path = Watch;
 			sourceTree = "<group>";
@@ -7195,6 +7207,7 @@
 				D384058C218317DF007D50AD /* LocalStorage.swift in Sources */,
 				D384058E218317DF007D50AD /* SecuritySettingsViewController.swift in Sources */,
 				D023D26B2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
+				D05E96BA2A2A1113002CCD71 /* WatchTronService.swift in Sources */,
 				D384058F218317DF007D50AD /* SecuritySettingsModule.swift in Sources */,
 				D3840590218317DF007D50AD /* SecuritySettingsService.swift in Sources */,
 				D3840592218317DF007D50AD /* SecuritySettingsViewModel.swift in Sources */,
@@ -7208,6 +7221,7 @@
 				D02A67CC272A7460009B2C1C /* TwitterUsersResponse.swift in Sources */,
 				D38405A6218317DF007D50AD /* SystemInfoManager.swift in Sources */,
 				D38405A7218317DF007D50AD /* PermissionsHelper.swift in Sources */,
+				D05E96B72A29F9D3002CCD71 /* WatchTronAddressViewModel.swift in Sources */,
 				11B354AD94C483A7D5E3DD1F /* ValueFormatter.swift in Sources */,
 				11B35BCC6C00E857CE562F16 /* EvmAdapter.swift in Sources */,
 				11B35E0BEC5BE604ACE59BC2 /* PasteboardManager.swift in Sources */,
@@ -7627,6 +7641,7 @@
 				11B35607DD0F0E613B4E26B5 /* BalanceLockedAmountView.swift in Sources */,
 				1A564BB34D0EAA2E8BE8B498 /* DeepLinkManager.swift in Sources */,
 				1A564FEF3AEC87712186DD28 /* DeepLinkService.swift in Sources */,
+				D05E96B42A29F8AE002CCD71 /* WatchTronAddressService.swift in Sources */,
 				D36DE0B4272FD689000BC916 /* SwapProviderManager.swift in Sources */,
 				11B357118379A537844A83D0 /* EvmSyncSource.swift in Sources */,
 				11B354CAD4BC4FAB3889838D /* EvmSyncSourceManager.swift in Sources */,
@@ -8355,6 +8370,7 @@
 				D384067D21831B3D007D50AD /* SecuritySettingsViewController.swift in Sources */,
 				D384067E21831B3D007D50AD /* SecuritySettingsModule.swift in Sources */,
 				D023D26A2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
+				D05E96B92A2A1113002CCD71 /* WatchTronService.swift in Sources */,
 				D384067F21831B3D007D50AD /* SecuritySettingsService.swift in Sources */,
 				D384068121831B3D007D50AD /* SecuritySettingsViewModel.swift in Sources */,
 				D384068221831B3D007D50AD /* BitcoinAdapter.swift in Sources */,
@@ -8368,6 +8384,7 @@
 				D384069621831B3D007D50AD /* PermissionsHelper.swift in Sources */,
 				11B3541F6B5316F3B373D1EA /* ValueFormatter.swift in Sources */,
 				11B351C81028727569851233 /* EvmAdapter.swift in Sources */,
+				D05E96B62A29F9D3002CCD71 /* WatchTronAddressViewModel.swift in Sources */,
 				11B35A801504D47FBE31CF40 /* PasteboardManager.swift in Sources */,
 				58AAA4E1C32E0B48A4CFECCD /* PaymentRequestAddress.swift in Sources */,
 				11B35D0542ACB56A31C61143 /* UIImage.swift in Sources */,
@@ -8787,6 +8804,7 @@
 				D36DE0EC272FD89B000BC916 /* SwapSettingsModule.swift in Sources */,
 				1A564032D3C011BCAA7D44A8 /* DeepLinkService.swift in Sources */,
 				11B35804545D048C0EDB8089 /* EvmSyncSource.swift in Sources */,
+				D05E96B32A29F8AE002CCD71 /* WatchTronAddressService.swift in Sources */,
 				11B352F14D96C26D946E3877 /* EvmSyncSourceManager.swift in Sources */,
 				11B35F73153DEE805DD539CE /* EvmNetworkViewController.swift in Sources */,
 				11B35B507F2F843A5B3E4C7C /* EvmNetworkViewModel.swift in Sources */,

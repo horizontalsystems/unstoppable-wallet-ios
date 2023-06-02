@@ -12,7 +12,9 @@ protocol IWatchSubViewModel: AnyObject {
 
 class WatchViewModel {
     private let service: WatchService
+    private let tronService: WatchTronService
     private let evmAddressViewModel: IWatchSubViewModel
+    private let tronAddressViewModel: IWatchSubViewModel
     private let publicKeyViewModel: IWatchSubViewModel
     private var disposeBag = DisposeBag()
 
@@ -21,9 +23,11 @@ class WatchViewModel {
     private let nameRelay = PublishRelay<String>()
     private let proceedRelay = PublishRelay<(WatchModule.WatchType, AccountType, String)>()
 
-    init(service: WatchService, evmAddressViewModel: IWatchSubViewModel, publicKeyViewModel: IWatchSubViewModel) {
+    init(service: WatchService, tronService: WatchTronService, evmAddressViewModel: IWatchSubViewModel, tronAddressViewModel: IWatchSubViewModel, publicKeyViewModel: IWatchSubViewModel) {
         self.service = service
+        self.tronService = tronService
         self.evmAddressViewModel = evmAddressViewModel
+        self.tronAddressViewModel = tronAddressViewModel
         self.publicKeyViewModel = publicKeyViewModel
 
         syncSubViewModel()
@@ -32,7 +36,7 @@ class WatchViewModel {
     private var subViewModel: IWatchSubViewModel {
         switch watchTypeRelay.value {
         case .evmAddress: return evmAddressViewModel
-        case .tronAddress: return evmAddressViewModel
+        case .tronAddress: return tronAddressViewModel
         case .publicKey: return publicKeyViewModel
         }
     }
@@ -79,6 +83,10 @@ extension WatchViewModel {
         nameRelay.asSignal()
     }
 
+    var hasNextPage: Bool {
+        watchTypeRelay.value == .tronAddress
+    }
+
     func onChange(name: String) {
         service.set(name: name)
     }
@@ -94,7 +102,12 @@ extension WatchViewModel {
 
     func onTapNext() {
         if let accountType = subViewModel.resolve() {
-            proceedRelay.accept((watchTypeRelay.value, accountType, service.resolvedName))
+            let watchType = watchTypeRelay.value
+            if watchType == .tronAddress {
+                tronService.enableWatch(accountType: accountType, accountName: service.resolvedName)
+            }
+
+            proceedRelay.accept((watchType, accountType, service.resolvedName))
         }
     }
 

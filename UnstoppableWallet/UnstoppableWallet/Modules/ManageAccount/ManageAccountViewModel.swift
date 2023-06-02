@@ -67,7 +67,7 @@ class ManageAccountViewModel {
         switch account.type {
         case .mnemonic: keyActions.append(contentsOf: [.recoveryPhrase, .privateKeys, .publicKeys])
         case .evmPrivateKey: keyActions.append(contentsOf: [.privateKeys, .publicKeys])
-        case .evmAddress: keyActions.append(contentsOf: [.publicKeys])
+        case .evmAddress, .tronAddress: keyActions.append(contentsOf: [.publicKeys])
         case .hdExtendedKey(let key):
             switch key {
             case .private: keyActions.append(contentsOf: [.privateKeys, .publicKeys])

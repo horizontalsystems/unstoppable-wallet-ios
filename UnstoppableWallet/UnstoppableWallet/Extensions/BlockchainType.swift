@@ -142,6 +142,8 @@ extension BlockchainType {
             case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom: return true
             default: return false
             }
+        case .tronAddress:
+            return self == .tron
         }
     }
 

@@ -56,6 +56,16 @@ class TransactionInfoService {
             tokens.append(contentsOf: tx.incomingEvents.map({ $0.value.token }))
             tokens.append(contentsOf: tx.outgoingEvents.map({ $0.value.token }))
 
+        case let tx as TronIncomingTransactionRecord: tokens.append(tx.value.token)
+        case let tx as TronOutgoingTransactionRecord: tokens.append(tx.value.token)
+        case let tx as TronApproveTransactionRecord: tokens.append(tx.value.token)
+        case let tx as TronContractCallTransactionRecord:
+            tokens.append(contentsOf: tx.incomingEvents.map({ $0.value.token }))
+            tokens.append(contentsOf: tx.outgoingEvents.map({ $0.value.token }))
+        case let tx as TronExternalContractCallTransactionRecord:
+            tokens.append(contentsOf: tx.incomingEvents.map({ $0.value.token }))
+            tokens.append(contentsOf: tx.outgoingEvents.map({ $0.value.token }))
+
         case let tx as BitcoinIncomingTransactionRecord: tokens.append(tx.value.token)
         case let tx as BitcoinOutgoingTransactionRecord:
             tx.fee.flatMap { tokens.append($0.token) }
@@ -70,6 +80,10 @@ class TransactionInfoService {
         }
 
         if let evmTransaction = transactionRecord as? EvmTransactionRecord, evmTransaction.ownTransaction, let fee = evmTransaction.fee {
+            tokens.append(fee.token)
+        }
+
+        if let tronTransaction = transactionRecord as? TronTransactionRecord, tronTransaction.ownTransaction, let fee = tronTransaction.fee {
             tokens.append(fee.token)
         }
 
