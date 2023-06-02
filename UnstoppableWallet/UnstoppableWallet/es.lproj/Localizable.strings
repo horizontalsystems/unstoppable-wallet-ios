@@ -207,7 +207,7 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Respaldar Frase de Recuperación";
+"backup_prompt.title" = "Manual Backup";
 "backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
 "backup_prompt.backup" = "Copia de seguridad";
 "backup_prompt.backup_manual" = "Manual Backup";
@@ -1309,6 +1309,8 @@
 "manage_account.manual_backup_required.description" = "In order to securely delete your backup on iCloud, you will need to manually backup your recovery phrase first.";
 "manage_account.manual_backup_required.button" = "Backup Now";
 "manage_account.unlink" = "Unlink Wallet";
+"manage_account.backup.no_backup_yet_description" = "Complete one of the wallet backup options to start using the wallet.";
+"manage_account.backup.has_backup_description" = "It's recommended to have a manual backup for each wallet.";
 
 "manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
 // Manage Account -> Public Keys
