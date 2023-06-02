@@ -135,6 +135,7 @@
 "restore.cloud.imported" = "Imported wallets";
 
 "restore.cloud.password.title" = "Enter Password";
+"restore.cloud.password.placeholder" = "Backup Password";
 "restore.cloud.password.description" = "Enter the backup password to import your wallet from iCloud.";
 
 // Coin Settings
@@ -450,7 +451,9 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "掉期交易";
-"swap.confirmation.impact_too_high" = "市场价格与预期结算价格之间的差额太高。";
+"swap.confirmation.impact_too_high" = "Unstoppable has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
+"swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
+
 "swap.confirmation.minimum_received" = "收到的最小金额";
 "swap.confirmation.maximum_sent" = "最大支出";
 
