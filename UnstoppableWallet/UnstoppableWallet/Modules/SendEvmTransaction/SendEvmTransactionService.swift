@@ -81,11 +81,11 @@ class SendEvmTransactionService {
             syncDataState(transaction: fallibleTransaction.data)
 
             let warnings = sendData.warnings + fallibleTransaction.warnings
-
-            if fallibleTransaction.errors.isEmpty {
+            let errors = sendData.errors + fallibleTransaction.errors
+            if errors.isEmpty {
                 state = .ready(warnings: warnings)
             } else {
-                state = .notReady(errors: fallibleTransaction.errors, warnings: warnings)
+                state = .notReady(errors: errors, warnings: warnings)
             }
         }
     }

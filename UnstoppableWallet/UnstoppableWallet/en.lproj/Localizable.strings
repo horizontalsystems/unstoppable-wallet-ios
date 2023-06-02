@@ -135,6 +135,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "restore.cloud.imported" = "Imported wallets";
 
 "restore.cloud.password.title" = "Enter Password";
+"restore.cloud.password.placeholder" = "Backup Password";
 "restore.cloud.password.description" = "Enter the backup password to import your wallet from iCloud.";
 
 // Coin Settings
@@ -449,7 +450,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Swap";
-"swap.confirmation.impact_too_high" = "The difference between the market price and the expected settlement price is too high.";
+"swap.confirmation.impact_too_high" = "Unstoppable has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
+"swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
+
 "swap.confirmation.minimum_received" = "Minimum Received";
 "swap.confirmation.maximum_sent" = "Maximum Sent";
 

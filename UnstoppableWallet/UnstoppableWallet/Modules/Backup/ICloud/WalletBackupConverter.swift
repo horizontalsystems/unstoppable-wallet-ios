@@ -5,7 +5,7 @@ class WalletBackupConverter {
 
     static func encode(accountType: AccountType, passphrase: String) throws -> Data {
         let message = accountType.uniqueId(hashed: false)
-        let iv =  "cbc0e5a17c31a2537461fc75b90d5f74"// BackupCryptoHelper.generateInitialVector().hs.hex
+        let iv = BackupCryptoHelper.generateInitialVector().hs.hex
 
         let cipherText = try BackupCryptoHelper.AES128(
                 operation: .encrypt,

@@ -191,7 +191,7 @@ extension RestoreSelectService {
     }
 
     func restore() {
-        let account = accountFactory.account(type: accountType, origin: cloudBackedUp ? .created : .restored, name: accountName)
+        let account = accountFactory.account(type: accountType, origin: .restored, backedUp: !cloudBackedUp, name: accountName)
         accountManager.save(account: account)
 
         for (token, settings) in restoreSettingsMap {

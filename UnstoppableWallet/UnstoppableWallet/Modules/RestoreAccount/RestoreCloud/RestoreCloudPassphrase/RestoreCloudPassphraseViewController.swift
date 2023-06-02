@@ -67,12 +67,12 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
         }
 
         importButton.set(style: .yellow)
-        importButton.setTitle("backup.cloud.password.save".localized, for: .normal)
+        importButton.setTitle("button.import".localized, for: .normal)
         importButton.addTarget(self, action: #selector(onTapCreate), for: .touchUpInside)
 
         passphraseCell.set(textSecure: true)
         passphraseCell.onTextSecurityChange = { [weak self] in self?.passphraseCell.set(textSecure: $0) }
-        passphraseCell.inputPlaceholder = "backup.cloud.password.placeholder".localized
+        passphraseCell.inputPlaceholder = "restore.cloud.password.placeholder".localized
         passphraseCell.onChangeText = { [weak self] in self?.viewModel.onChange(passphrase: $0 ?? "") }
         passphraseCell.isValidText = { [weak self] in self?.viewModel.validatePassphrase(text: $0) ?? true }
 

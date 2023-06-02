@@ -156,7 +156,7 @@ class App {
         accountRestoreWarningManager = AccountRestoreWarningManager(accountManager: accountManager, localStorage: StorageKit.LocalStorage.default)
         accountFactory = AccountFactory(accountManager: accountManager)
 
-        cloudAccountBackupManager = CloudAccountBackupManager(ubiquityContainerIdentifier: CloudAccountBackupManager.iCloudSharedContainer, logger: Logger(minLogLevel: .error))
+        cloudAccountBackupManager = CloudAccountBackupManager(ubiquityContainerIdentifier: CloudAccountBackupManager.iCloudSharedContainer, logger: logger)
         backupManager = BackupManager(accountManager: accountManager, cloudBackupManager: cloudAccountBackupManager)
 
         kitCleaner = KitCleaner(accountManager: accountManager)

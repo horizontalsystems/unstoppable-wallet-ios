@@ -9,6 +9,14 @@ struct SendEvmData {
     let transactionData: TransactionData
     let additionalInfo: AdditionInfo?
     let warnings: [Warning]
+    let errors: [Error]
+
+    init(transactionData: TransactionData, additionalInfo: AdditionInfo?, warnings: [Warning], errors: [Error] = []) {
+        self.transactionData = transactionData
+        self.additionalInfo = additionalInfo
+        self.warnings = warnings
+        self.errors = errors
+    }
 
     enum AdditionInfo {
         case otherDApp(info: DAppInfo)

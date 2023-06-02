@@ -20,7 +20,7 @@ class SwapViewItemHelper {
         return (first.formattedFull, second.formattedFull)
     }
 
-    func priceImpactViewItem(priceImpact: Decimal?, impactLevel: UniswapTradeService.PriceImpactLevel?, minLevel: UniswapTradeService.PriceImpactLevel = .warning) -> UniswapModule.PriceImpactViewItem? {
+    func priceImpactViewItem(priceImpact: Decimal?, impactLevel: UniswapTradeService.PriceImpactLevel?, minLevel: UniswapTradeService.PriceImpactLevel = .normal) -> UniswapModule.PriceImpactViewItem? {
         guard var priceImpact = priceImpact, let impactLevel, impactLevel.rawValue >= minLevel.rawValue else {
             return nil
         }

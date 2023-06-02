@@ -26,13 +26,13 @@ extension AccountFactory {
         return "Watch Wallet \(order)"
     }
 
-    func account(type: AccountType, origin: AccountOrigin, name: String) -> Account {
+    func account(type: AccountType, origin: AccountOrigin, backedUp: Bool, name: String) -> Account {
         Account(
                 id: UUID().uuidString,
                 name: name,
                 type: type,
                 origin: origin,
-                backedUp: origin == .restored
+                backedUp: backedUp
         )
     }
 
