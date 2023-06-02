@@ -107,7 +107,7 @@ extension AppStatusManager {
                 ("App Version", systemInfoManager.appVersion.description),
                 ("Phone Model", systemInfoManager.deviceModel),
                 ("OS Version", systemInfoManager.osVersion)
-            ]),
+            ] as [Any]),
             ("App Log", logRecordManager.logsGroupedBy(context: "Send")),
             ("Version History", storage.appVersions.map { ($0.description, $0.date) }),
             ("Market Last Sync Timestamps", marketLastSyncTimestamps),

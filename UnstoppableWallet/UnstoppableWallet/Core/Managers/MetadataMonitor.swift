@@ -56,7 +56,9 @@ class MetadataMonitor {
         NotificationCenter.default.addObserver(self, selector: #selector(handle(_:)), name: .NSMetadataQueryDidUpdate, object: metadataQuery)
 
         logger?.debug("Check url : \(url.path)")
-        logger?.debug(try? FileManager.default.contentsOfDirectory(atPath: url.path))
+        if let contents = try? FileManager.default.contentsOfDirectory(atPath: url.path) {
+            logger?.debug(contents)
+        }
 
         // Try to copy icloud file to local icloud, if it's exist
         do {

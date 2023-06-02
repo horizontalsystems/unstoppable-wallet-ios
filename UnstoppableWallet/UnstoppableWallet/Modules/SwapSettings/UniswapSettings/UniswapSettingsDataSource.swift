@@ -151,7 +151,7 @@ extension UniswapSettingsDataSource {
                     ]
             ),
         ]
-        if let deadlineViewModel {
+        if deadlineViewModel != nil {
             sections.append(Section(
                     id: "deadline",
                     headerState: tableView.sectionHeader(text: "swap.advanced_settings.deadline".localized),
