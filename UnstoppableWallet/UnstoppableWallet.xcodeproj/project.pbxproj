@@ -2532,7 +2532,6 @@
 		11B3537769E4496D08EB0376 /* AppearanceModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceModule.swift; sourceTree = "<group>"; };
 		11B3538387B200C894A68ADF /* SendEvmConfirmationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEvmConfirmationModule.swift; sourceTree = "<group>"; };
 		11B353885F7A93DF25F5023B /* EvmAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmAddressViewController.swift; sourceTree = "<group>"; };
-		11B3538ABCCE78F3B90D6D74 /* BackupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackupViewController.swift; path = Manual/BackupViewController.swift; sourceTree = "<group>"; };
 		11B3538D10D6256399A51F61 /* SelfSizedSectionsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfSizedSectionsTableView.swift; sourceTree = "<group>"; };
 		11B35392439DBC8C06DCCB60 /* FormTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTextView.swift; sourceTree = "<group>"; };
 		11B353952C50E25662C8EFBD /* CoinTokensService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTokensService.swift; sourceTree = "<group>"; };
@@ -2756,7 +2755,6 @@
 		11B359E4C84921BEAB994792 /* CoinMajorHoldersViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinMajorHoldersViewModel.swift; sourceTree = "<group>"; };
 		11B359E546B8F1E572E695F4 /* AmountTypeSwitchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmountTypeSwitchService.swift; sourceTree = "<group>"; };
 		11B359F01A63378AFAAEE113 /* ManageAccountsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAccountsModule.swift; sourceTree = "<group>"; };
-		11B359FAA3732BC839196AD5 /* BackupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackupViewModel.swift; path = Manual/BackupViewModel.swift; sourceTree = "<group>"; };
 		11B359FB85F826A825CB401D /* AboutViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
 		11B359FE5BB60FB12BB24F3E /* NonSpamPoolProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonSpamPoolProvider.swift; sourceTree = "<group>"; };
 		11B359FE71F5DE6AAD2BA3D8 /* NftMetadataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftMetadataManager.swift; sourceTree = "<group>"; };
@@ -9748,7 +9746,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/UniswapKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.3;
+				version = 2.0.4;
 			};
 		};
 		D3604E5128F02B150066C366 /* XCRemoteSwiftPackageReference "OneInchKit.Swift" */ = {

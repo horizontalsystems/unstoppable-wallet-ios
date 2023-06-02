@@ -369,9 +369,15 @@ extension UniswapV3ViewModel {
                 priceImpact: viewItemHelper.priceImpactViewItem(priceImpact: trade.tradeData.priceImpact, impactLevel: trade.impactLevel)
         )
 
+        var impactWarning = [Warning]()
+        switch trade.impactLevel {
+        case .warning:  impactWarning = [UniswapModule.UniswapWarning.highPriceImpact]
+        case .forbidden:  impactWarning = [UniswapModule.UniswapWarning.forbiddenPriceImpact]
+        default: ()
+        }
         let sendEvmData = SendEvmData(
                 transactionData: transactionData, additionalInfo: .uniswap(info: swapInfo),
-                warnings: trade.impactLevel == .forbidden ? [UniswapModule.UniswapWarning.highPriceImpact] : []
+                warnings: impactWarning
         )
 
         openConfirmRelay.accept(sendEvmData)

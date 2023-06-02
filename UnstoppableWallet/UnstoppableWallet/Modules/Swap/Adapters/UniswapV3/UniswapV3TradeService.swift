@@ -19,8 +19,9 @@ class UniswapV3TradeService: ISwapSettingProvider {
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
-    private static let warningPriceImpact: Decimal = 1
-    private static let forbiddenPriceImpact: Decimal = 5
+    private static let normalPriceImpact: Decimal = 1
+    private static let warningPriceImpact: Decimal = 5
+    private static let forbiddenPriceImpact: Decimal = 20
 
     private let uniswapProvider: UniswapV3Provider
     let syncInterval: TimeInterval
@@ -325,6 +326,9 @@ extension UniswapV3TradeService {
             self.tradeData = tradeData
 
             impactLevel = tradeData.priceImpact.map { priceImpact in
+                if priceImpact < UniswapV3TradeService.normalPriceImpact {
+                    return .negligible
+                }
                 if priceImpact < UniswapV3TradeService.warningPriceImpact {
                     return .normal
                 }

@@ -365,9 +365,19 @@ extension UniswapViewModel {
                 priceImpact: viewItemHelper.priceImpactViewItem(priceImpact: trade.tradeData.priceImpact, impactLevel: trade.impactLevel)
         )
 
+        var impactWarnings = [Warning]()
+        var impactErrors = [Error]()
+
+        switch trade.impactLevel {
+        case .warning:  impactWarnings = [UniswapModule.UniswapWarning.highPriceImpact]
+        case .forbidden:  impactErrors = [UniswapModule.UniswapError.forbiddenPriceImpact(provider: "Uniswap")] // we can use url from dex
+        default: ()
+        }
         let sendEvmData = SendEvmData(
-                transactionData: transactionData, additionalInfo: .uniswap(info: swapInfo),
-                warnings: trade.impactLevel == .forbidden ? [UniswapModule.UniswapWarning.highPriceImpact] : []
+                transactionData: transactionData,
+                additionalInfo: .uniswap(info: swapInfo),
+                warnings: impactWarnings,
+                errors: impactErrors
         )
 
         openConfirmRelay.accept(sendEvmData)

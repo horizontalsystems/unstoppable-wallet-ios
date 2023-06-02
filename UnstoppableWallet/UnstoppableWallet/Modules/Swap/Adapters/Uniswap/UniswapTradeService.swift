@@ -13,8 +13,9 @@ class UniswapTradeService: ISwapSettingProvider {
     private var refreshTimerDisposeBag = DisposeBag()
     private var tasks = Set<AnyTask>()
 
-    private static let warningPriceImpact: Decimal = 1
-    private static let forbiddenPriceImpact: Decimal = 5
+    private static let normalPriceImpact: Decimal = 1
+    private static let warningPriceImpact: Decimal = 5
+    private static let forbiddenPriceImpact: Decimal = 20
 
     private let uniswapProvider: UniswapProvider
     let syncInterval: TimeInterval
@@ -327,6 +328,7 @@ extension UniswapTradeService {
     }
 
     enum PriceImpactLevel: Int {
+        case negligible
         case normal
         case warning
         case forbidden
@@ -341,7 +343,8 @@ extension UniswapTradeService {
 
             impactLevel = tradeData.priceImpact.map { priceImpact in
                 switch priceImpact {
-                case 0..<UniswapTradeService.warningPriceImpact: return .normal
+                case 0..<UniswapTradeService.normalPriceImpact: return .negligible
+                case UniswapTradeService.normalPriceImpact..<UniswapTradeService.warningPriceImpact: return .normal
                 case UniswapTradeService.warningPriceImpact..<UniswapTradeService.forbiddenPriceImpact: return .warning
                 default: return .forbidden
                 }

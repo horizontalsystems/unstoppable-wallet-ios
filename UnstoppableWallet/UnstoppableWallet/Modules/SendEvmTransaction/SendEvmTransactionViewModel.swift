@@ -475,8 +475,8 @@ class SendEvmTransactionViewModel {
         if let priceImpact = swapInfo?.priceImpact {
             var type: ValueType
             switch priceImpact.level {
-            case .forbidden: type = .alert
-            case .warning: type = .warning
+            case .normal: type = .warning
+            case .warning, .forbidden: type = .alert
             default: type = .regular
             }
 

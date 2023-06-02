@@ -97,6 +97,11 @@ extension UniswapModule {
 
     enum UniswapWarning: Warning {
         case highPriceImpact
+        case forbiddenPriceImpact
+    }
+
+    enum UniswapError: Error {
+        case forbiddenPriceImpact(provider: String)
     }
 
     enum TradeError: Error {
