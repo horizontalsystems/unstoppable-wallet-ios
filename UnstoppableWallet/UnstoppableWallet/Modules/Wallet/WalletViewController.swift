@@ -52,6 +52,8 @@ class WalletViewController: ThemeViewController {
             tableView.sectionHeaderTopPadding = 0
         }
 
+        navigationItem.largeTitleDisplayMode = .never
+
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "switch_wallet_24"), style: .plain, target: self, action: #selector(onTapSwitchWallet))
         navigationItem.leftBarButtonItem?.tintColor = .themeJacob
 
