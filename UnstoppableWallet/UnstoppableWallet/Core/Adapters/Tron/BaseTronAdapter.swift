@@ -32,7 +32,6 @@ class BaseTronAdapter {
     }
 
     func convertToAdapterState(tronSyncState: TronKit.SyncState) -> AdapterState {
-        print("tronSyncState: \(tronSyncState)")
         switch tronSyncState {
             case .synced: return .synced
             case .notSynced(let error): return .notSynced(error: error.convertedError)

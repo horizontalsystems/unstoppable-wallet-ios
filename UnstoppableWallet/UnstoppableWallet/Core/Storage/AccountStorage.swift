@@ -1,6 +1,7 @@
 import Foundation
 import StorageKit
 import EvmKit
+import TronKit
 import HdWalletKit
 
 class AccountStorage {
@@ -50,6 +51,12 @@ class AccountStorage {
             }
 
             type = .evmAddress(address: EvmKit.Address(raw: data))
+        case .tronAddress:
+            guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
+                return nil
+            }
+
+            type = .tronAddress(address: try! TronKit.Address(raw: data))
         case .hdExtendedKey:
             guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
                 return nil
@@ -92,6 +99,9 @@ class AccountStorage {
         case .evmAddress(let address):
             typeName = .evmAddress
             dataKey = try store(data: address.raw, id: id, typeName: typeName, keyName: .data)
+        case .tronAddress(let address):
+            typeName = .tronAddress
+            dataKey = try store(data: address.raw, id: id, typeName: typeName, keyName: .data)
         case .hdExtendedKey(let key):
             typeName = .hdExtendedKey
             dataKey = try store(data: key.serialized, id: id, typeName: typeName, keyName: .data)
@@ -121,6 +131,8 @@ class AccountStorage {
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .evmPrivateKey, keyName: .data))
         case .evmAddress:
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .evmAddress, keyName: .data))
+        case .tronAddress:
+            try secureStorage.removeValue(for: secureKey(id: id, typeName: .tronAddress, keyName: .data))
         case .hdExtendedKey:
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .hdExtendedKey, keyName: .data))
         }
@@ -206,6 +218,7 @@ extension AccountStorage {
         case mnemonic
         case evmPrivateKey
         case evmAddress = "address"
+        case tronAddress = "tronAddress"
         case hdExtendedKey
     }
 

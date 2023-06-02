@@ -1,6 +1,7 @@
 import Foundation
 import HdWalletKit
 import EvmKit
+import TronKit
 import BitcoinCore
 import MarketKit
 import Crypto
@@ -9,6 +10,7 @@ enum AccountType {
     case mnemonic(words: [String], salt: String, bip39Compliant: Bool)
     case evmPrivateKey(data: Data)
     case evmAddress(address: EvmKit.Address)
+    case tronAddress(address: TronKit.Address)
     case hdExtendedKey(key: HDExtendedKey)
 
     var mnemonicSeed: Data? {
@@ -38,6 +40,8 @@ enum AccountType {
         case let .evmPrivateKey(data):
             privateData = data
         case let .evmAddress(address):
+            privateData = address.raw
+        case let .tronAddress(address):
             privateData = address.raw
         case let .hdExtendedKey(key):
             privateData = key.serialized
@@ -113,6 +117,11 @@ enum AccountType {
             case (.optimism, .native), (.optimism, .eip20): return true
             default: return false
             }
+        case .tronAddress:
+            switch (configuredToken.blockchainType, configuredToken.token.type) {
+            case (.tron, .native), (.tron, .eip20): return true
+            default: return false
+            }
         }
     }
 
@@ -146,6 +155,8 @@ enum AccountType {
             return "EVM Private Key"
         case .evmAddress:
             return "EVM Address"
+        case .tronAddress:
+            return "TRON Address"
         case .hdExtendedKey(let key):
             switch key {
             case .private:
@@ -167,6 +178,8 @@ enum AccountType {
         switch self {
         case .evmAddress(let address):
             return address.eip55.shortened
+        case .tronAddress(let address):
+            return address.base58.shortened
         default: return description
         }
     }
@@ -270,6 +283,8 @@ extension AccountType: Hashable {
             return lhsData == rhsData
         case (let .evmAddress(lhsAddress), let .evmAddress(rhsAddress)):
             return lhsAddress == rhsAddress
+        case (let .tronAddress(lhsAddress), let .tronAddress(rhsAddress)):
+            return lhsAddress == rhsAddress
         case (let .hdExtendedKey(lhsKey), let .hdExtendedKey(rhsKey)):
             return lhsKey == rhsKey
         default: return false
@@ -288,6 +303,9 @@ extension AccountType: Hashable {
             hasher.combine(data)
         case let .evmAddress(address):
             hasher.combine("evmAddress")
+            hasher.combine(address.raw)
+        case let .tronAddress(address):
+            hasher.combine("tronAddress")
             hasher.combine(address.raw)
         case let .hdExtendedKey(key):
             hasher.combine("hdExtendedKey")

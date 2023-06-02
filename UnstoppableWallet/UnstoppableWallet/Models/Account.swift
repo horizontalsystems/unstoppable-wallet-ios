@@ -17,7 +17,7 @@ class Account {
 
     var watchAccount: Bool {
         switch type {
-        case .evmAddress:
+        case .evmAddress, .tronAddress:
             return true
         case .hdExtendedKey(let key):
             switch key {
