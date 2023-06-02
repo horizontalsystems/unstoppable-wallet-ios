@@ -42,8 +42,8 @@ extension RestoreTypeViewModel {
 extension RestoreTypeViewModel {
 
     enum RestoreType: CaseIterable {
-        case cloudRestore
         case recoveryOrPrivateKey
+        case cloudRestore
     }
 
 }

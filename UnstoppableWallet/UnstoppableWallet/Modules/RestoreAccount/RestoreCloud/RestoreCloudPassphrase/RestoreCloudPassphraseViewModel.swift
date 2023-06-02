@@ -10,7 +10,7 @@ class RestoreCloudPassphraseViewModel {
 
     private let clearInputsSubject = PassthroughSubject<Void, Never>()
     private let showErrorSubject = PassthroughSubject<String, Never>()
-    private let importSubject = PassthroughSubject<(String, AccountType), Never>()
+    private let importSubject = PassthroughSubject<RestoreCloudModule.RestoredAccount, Never>()
 
     init(service: RestoreCloudPassphraseService) {
         self.service = service
@@ -34,7 +34,7 @@ extension RestoreCloudPassphraseViewModel {
         showErrorSubject.eraseToAnyPublisher()
     }
 
-    var importPublisher: AnyPublisher<(String, AccountType), Never> {
+    var importPublisher: AnyPublisher<RestoreCloudModule.RestoredAccount, Never> {
         importSubject.eraseToAnyPublisher()
     }
 
@@ -57,8 +57,8 @@ extension RestoreCloudPassphraseViewModel {
 
         Task {
             do {
-                let accountItem = try await service.importWallet()
-                importSubject.send(accountItem)
+                let restoredAccount = try await service.importWallet()
+                importSubject.send(restoredAccount)
             } catch {
                 switch (error as? RestoreCloudPassphraseService.RestoreError) {
                 case .emptyPassphrase:

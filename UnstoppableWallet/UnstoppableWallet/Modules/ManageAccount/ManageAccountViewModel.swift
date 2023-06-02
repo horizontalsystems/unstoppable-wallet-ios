@@ -8,7 +8,7 @@ class ManageAccountViewModel {
     private let accountRestoreWarningFactory: AccountRestoreWarningFactory
     private let disposeBag = DisposeBag()
 
-    private let keyActionsRelay = BehaviorRelay<[[KeyAction]]>(value: [])
+    private let keyActionsRelay = BehaviorRelay<[KeyActionSection]>(value: [])
     private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let openUnlockRelay = PublishRelay<()>()
@@ -43,18 +43,24 @@ class ManageAccountViewModel {
         }
     }
 
-    private func keyActions(account: Account, isCloudBackedUp: Bool) -> [[KeyAction]] {
+    private func keyActions(account: Account, isCloudBackedUp: Bool) -> [KeyActionSection] {
         var backupActions = [KeyAction]()
-        if !account.backedUp {
-            backupActions.append(.backup(isCloudBackedUp: isCloudBackedUp))
+
+        let footerText: String = !(account.backedUp && isCloudBackedUp) ?
+                "manage_account.backup.no_backup_yet_description".localized :
+                "manage_account.backup.has_backup_description".localized
+
+        if account.canBeBackedUp {
+            backupActions.append(.manualBackup(account.backedUp))
         }
 
         if !account.watchAccount {
-            backupActions.append(.cloudBackedUp(isCloudBackedUp, manualBackedUp: account.backedUp))
+            backupActions.append(.cloudBackedUp(isCloudBackedUp, isManualBackedUp: account.backedUp))
         }
 
+        let backupSection = KeyActionSection(keyActions: backupActions, footerText: footerText)
         guard account.backedUp || isCloudBackedUp else {
-            return [backupActions]
+            return [backupSection]
         }
 
         var keyActions = [KeyAction]()
@@ -69,7 +75,12 @@ class ManageAccountViewModel {
             }
         }
 
-        return [keyActions, backupActions]
+        var sections =  [KeyActionSection(keyActions: keyActions)]
+        if !backupSection.keyActions.isEmpty {
+            sections.append(backupSection)
+        }
+
+        return sections
     }
 
     private func sync(account: Account? = nil) {
@@ -86,7 +97,7 @@ extension ManageAccountViewModel {
         saveEnabledRelay.asDriver()
     }
 
-    var keyActionsDriver: Driver<[[KeyAction]]> {
+    var keyActionsDriver: Driver<[KeyActionSection]> {
         keyActionsRelay.asDriver()
     }
 
@@ -225,8 +236,19 @@ extension ManageAccountViewModel {
         case recoveryPhrase
         case publicKeys
         case privateKeys
-        case backup(isCloudBackedUp: Bool)
-        case cloudBackedUp(Bool, manualBackedUp: Bool)
+        case manualBackup(Bool)
+        case cloudBackedUp(Bool, isManualBackedUp: Bool)
+    }
+
+    struct KeyActionSection {
+        let keyActions: [KeyAction]
+        let footerText: String
+
+        init(keyActions: [KeyAction], footerText: String = "") {
+            self.keyActions = keyActions
+            self.footerText = footerText
+        }
+
     }
 
 }

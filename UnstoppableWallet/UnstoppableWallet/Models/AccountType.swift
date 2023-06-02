@@ -242,10 +242,10 @@ extension AccountType {
     }
 
     enum Abstract: String, Codable {
-        case mnemonic
-        case evmPrivateKey
-        case evmAddress
-        case hdExtendedKey
+        case mnemonic = "mnemonic"
+        case evmPrivateKey = "private_key"
+        case evmAddress = "evm_address"
+        case hdExtendedKey = "hd_extended_key"
 
         init(_ type: AccountType) {
             switch type {

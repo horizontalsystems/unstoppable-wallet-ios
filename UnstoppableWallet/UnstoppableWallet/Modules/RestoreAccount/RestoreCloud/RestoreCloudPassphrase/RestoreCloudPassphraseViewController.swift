@@ -41,6 +41,7 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
 
         title = "restore.cloud.password.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onTapCancel))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.largeTitleDisplayMode = .never
 
         view.addSubview(tableView)
@@ -102,8 +103,8 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
 
         viewModel.importPublisher
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] accountItem in
-                    self?.openSelectCoins(accountName: accountItem.0, accountType: accountItem.1)
+                .sink { [weak self] backupAccount in
+                    self?.openSelectCoins(accountName: backupAccount.name, accountType: backupAccount.accountType, isManualBackedUp: backupAccount.isManualBackedUp)
                 }
                 .store(in: &cancellables)
 
@@ -136,11 +137,11 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
         HudHelper.instance.show(banner: .error(string: error))
     }
 
-    private func openSelectCoins(accountName: String, accountType: AccountType) {
+    private func openSelectCoins(accountName: String, accountType: AccountType, isManualBackedUp: Bool) {
         let viewController = RestoreSelectModule.viewController(
                 accountName: accountName,
                 accountType: accountType,
-                cloudBackedUp: true,
+                isManualBackedUp: isManualBackedUp,
                 returnViewController: returnViewController
         )
         navigationController?.pushViewController(viewController, animated: true)

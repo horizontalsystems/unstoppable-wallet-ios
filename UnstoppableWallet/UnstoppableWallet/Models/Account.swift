@@ -45,6 +45,13 @@ class Account {
         return !(Mnemonic.language(words: words) == Mnemonic.Language.english && PassphraseValidator.validate(text: salt))
     }
 
+    var canBeBackedUp: Bool {
+        switch type {
+        case .mnemonic: return true
+        case .hdExtendedKey, .evmAddress, .evmPrivateKey: return false
+        }
+    }
+
 }
 
 extension Account: Hashable {

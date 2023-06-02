@@ -43,6 +43,8 @@ class BackupCloudPassphraseViewController: KeyboardAwareViewController {
 
         title = "backup.cloud.password.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onTapCancel))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+
         navigationItem.largeTitleDisplayMode = .never
 
         view.addSubview(tableView)

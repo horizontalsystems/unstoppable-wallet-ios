@@ -3,7 +3,7 @@ import Foundation
 class WalletBackupConverter {
     private static let version = 1
 
-    static func encode(accountType: AccountType, passphrase: String) throws -> Data {
+    static func encode(accountType: AccountType, isManualBackedUp: Bool, passphrase: String) throws -> Data {
         let message = accountType.uniqueId(hashed: false)
         let iv = BackupCryptoHelper.generateInitialVector().hs.hex
 
@@ -32,6 +32,7 @@ class WalletBackupConverter {
                 crypto: crypto,
                 id: accountType.uniqueId().hs.hex,
                 type: AccountType.Abstract(accountType),
+                isManualBackedUp: isManualBackedUp,
                 version: Self.version,
                 timestamp: Date().timeIntervalSince1970
         )

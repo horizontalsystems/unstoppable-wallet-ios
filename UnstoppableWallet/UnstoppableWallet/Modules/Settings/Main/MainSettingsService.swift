@@ -53,6 +53,8 @@ class MainSettingsService {
 
         subscribe(disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncWalletRequiredActions() }
         subscribe(disposeBag, accountRestoreWarningManager.hasNonStandardObservable) { [weak self] _ in self?.syncWalletRequiredActions() }
+
+        syncWalletRequiredActions()
     }
 
     private func syncWalletRequiredActions() {

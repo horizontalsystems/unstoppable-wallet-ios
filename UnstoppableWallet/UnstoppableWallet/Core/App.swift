@@ -157,7 +157,7 @@ class App {
         accountFactory = AccountFactory(accountManager: accountManager)
 
         cloudAccountBackupManager = CloudAccountBackupManager(ubiquityContainerIdentifier: CloudAccountBackupManager.iCloudSharedContainer, logger: logger)
-        backupManager = BackupManager(accountManager: accountManager, cloudBackupManager: cloudAccountBackupManager)
+        backupManager = BackupManager(accountManager: accountManager)
 
         kitCleaner = KitCleaner(accountManager: accountManager)
 
