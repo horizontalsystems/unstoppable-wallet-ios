@@ -3,13 +3,13 @@ import Foundation
 class RestoreCloudPassphraseService {
     private let iCloudManager: CloudAccountBackupManager
 
-    private let item: RestoreCloudModule.Item
+    private let restoredBackup: RestoreCloudModule.RestoredBackup
 
     var passphrase: String = ""
 
-    init(iCloudManager: CloudAccountBackupManager, item: RestoreCloudModule.Item) {
+    init(iCloudManager: CloudAccountBackupManager, item: RestoreCloudModule.RestoredBackup) {
         self.iCloudManager = iCloudManager
-        self.item = item
+        self.restoredBackup = item
     }
 
 }
@@ -20,8 +20,8 @@ extension RestoreCloudPassphraseService {
         PassphraseValidator.validate(text: text)
     }
 
-    func importWallet() async throws -> (String, AccountType) {
-        let crypto = item.walletBackup.crypto
+    func importWallet() async throws -> RestoreCloudModule.RestoredAccount {
+        let crypto = restoredBackup.walletBackup.crypto
 
         guard !passphrase.isEmpty else {
             throw RestoreError.emptyPassphrase
@@ -58,11 +58,11 @@ extension RestoreCloudPassphraseService {
                     message: walletData,
                     kdf: crypto.kdfParams)
 
-            guard let accountType = AccountType.decode(uniqueId: data, type: item.walletBackup.type) else {
+            guard let accountType = AccountType.decode(uniqueId: data, type: restoredBackup.walletBackup.type) else {
                 throw RestoreError.invalidBackup
             }
 
-            return (item.name, accountType)
+            return RestoreCloudModule.RestoredAccount(name: restoredBackup.name, accountType: accountType, isManualBackedUp: restoredBackup.walletBackup.isManualBackedUp)
         } catch {
             throw RestoreError.invalidBackup
         }

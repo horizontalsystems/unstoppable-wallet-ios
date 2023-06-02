@@ -16,7 +16,7 @@ class ManageAccountViewController: KeyboardAwareViewController {
     private let nameCell = TextFieldCell()
 
     private var warningViewItem: CancellableTitledCaution?
-    private var keyActions: [[ManageAccountViewModel.KeyAction]] = []
+    private var keyActions: [ManageAccountViewModel.KeyActionSection] = []
     private var isLoaded = false
 
     private weak var sourceViewController: ManageAccountsViewController?
@@ -243,23 +243,24 @@ extension ManageAccountViewController: SectionsDataSource {
             ) { [weak self] in
                 self?.openPublicKeys()
             }
-        case .backup(let isCloudBackedUp):
+        case let .manualBackup(isManualBackedUp):
+            let accessory: CellBuilderNew.CellElement.AccessoryType = isManualBackedUp ?
+                    CellBuilderNew.CellElement.ImageAccessoryType(image: UIImage(named: "check_1_20")?.withTintColor(.themeRemus)) :
+                    CellBuilderNew.CellElement.ImageAccessoryType(image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian))
+
             return tableView.universalRow48(
                     id: "backup-recovery-phrase",
                     image: .local(UIImage(named: "edit_24")?.withTintColor(.themeJacob)),
                     title: .body("manage_account.backup_recovery_phrase".localized, color: .themeJacob),
-                    accessoryType: CellBuilderNew.CellElement.ImageAccessoryType(
-                            image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian),
-                            visible: !isCloudBackedUp
-                    ),
+                    accessoryType: accessory,
                     autoDeselect: true,
                     isFirst: isFirst,
                     isLast: isLast
             ) { [weak self] in
                 self?.viewModel.onTapBackup()
             }
-        case .cloudBackedUp(let isBackedUp, manualBackedUp: let manualBackedUp):
-            if isBackedUp {
+        case let .cloudBackedUp(isCloudBackedUp, isManualBackedUp):
+            if isCloudBackedUp {
                 return tableView.universalRow48(
                         id: "cloud-backup-recovery",
                         image: .local(UIImage(named: "no_internet_24")?.withTintColor(.themeLucian)),
@@ -278,7 +279,7 @@ extension ManageAccountViewController: SectionsDataSource {
                     title: .body("manage_account.cloud_backup_recovery_phrase".localized, color: .themeJacob),
                     accessoryType: CellBuilderNew.CellElement.ImageAccessoryType(
                             image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian),
-                            visible: !manualBackedUp
+                            visible: !isManualBackedUp
                     ),
                     autoDeselect: true,
                     isFirst: isFirst,
@@ -336,9 +337,9 @@ extension ManageAccountViewController: SectionsDataSource {
             keyActions.enumerated().map { (index, section) in
                 Section(
                         id: "actions-\(index)",
-                        footerState: .margin(height: .margin32),
-                        rows: section.enumerated().map { index, keyAction in
-                            row(keyAction: keyAction, isFirst: index == 0, isLast: index == section.count - 1)
+                        footerState: section.footerText.isEmpty ? .margin(height: .margin32) : tableView.sectionFooter(text: section.footerText),
+                        rows: section.keyActions.enumerated().map { index, keyAction in
+                            row(keyAction: keyAction, isFirst: index == 0, isLast: index == section.keyActions.count - 1)
                         }
                 )
             }

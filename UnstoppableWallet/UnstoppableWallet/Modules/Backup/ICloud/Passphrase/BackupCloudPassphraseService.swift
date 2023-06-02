@@ -41,7 +41,7 @@ extension BackupCloudPassphraseService {
         }
 
         do {
-            try await iCloudManager.save(accountType: account.type, passphrase: passphrase, name: name)
+            try await iCloudManager.save(accountType: account.type, isManualBackedUp: account.backedUp, passphrase: passphrase, name: name)
         } catch {
             if case .urlNotAvailable = error as? CloudAccountBackupManager.BackupError {
                 throw CreateError.urlNotAvailable

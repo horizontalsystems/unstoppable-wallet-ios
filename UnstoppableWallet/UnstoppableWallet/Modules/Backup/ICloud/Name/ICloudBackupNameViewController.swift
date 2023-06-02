@@ -40,6 +40,7 @@ class ICloudBackupNameViewController: KeyboardAwareViewController {
 
         title = "backup.cloud.name.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .done, target: self, action: #selector(onTapNext))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.largeTitleDisplayMode = .never
 
         view.addSubview(tableView)

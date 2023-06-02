@@ -6,7 +6,7 @@ class RestoreCloudViewModel {
     private var cancellables = Set<AnyCancellable>()
 
     @Published private(set) var viewItem: ViewItem = .empty
-    private let restoreSubject = PassthroughSubject<RestoreCloudModule.Item, Never>()
+    private let restoreSubject = PassthroughSubject<RestoreCloudModule.RestoredBackup, Never>()
 
     init(service: RestoreCloudService) {
         self.service = service
@@ -43,7 +43,7 @@ class RestoreCloudViewModel {
 
 extension RestoreCloudViewModel {
 
-    var restorePublisher: AnyPublisher<RestoreCloudModule.Item, Never> {
+    var restorePublisher: AnyPublisher<RestoreCloudModule.RestoredBackup, Never> {
         restoreSubject.eraseToAnyPublisher()
     }
 
@@ -52,7 +52,7 @@ extension RestoreCloudViewModel {
             return
         }
 
-        restoreSubject.send(RestoreCloudModule.Item(name: item.name, walletBackup: item.backup))
+        restoreSubject.send(RestoreCloudModule.RestoredBackup(name: item.name, walletBackup: item.backup))
     }
 
 }

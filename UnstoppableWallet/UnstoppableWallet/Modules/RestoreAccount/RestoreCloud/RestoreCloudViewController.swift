@@ -34,6 +34,7 @@ class RestoreCloudViewController: ThemeViewController {
 
         title = "restore.cloud.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onCancel))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -77,7 +78,7 @@ class RestoreCloudViewController: ThemeViewController {
         (returnViewController ?? self)?.dismiss(animated: true)
     }
 
-    private func restore(item: RestoreCloudModule.Item) {
+    private func restore(item: RestoreCloudModule.RestoredBackup) {
         let viewController = RestoreCloudPassphraseModule.restorePassword(item: item, returnViewController: returnViewController)
 
         navigationController?.pushViewController(viewController, animated: true)

@@ -68,8 +68,12 @@ extension ManageAccountsService {
         let cloudBackedUp: Bool
         let isActive: Bool
 
-        var hasBackup: Bool {
-            account.backedUp || cloudBackedUp
+        var hasAlertDescription: Bool {
+            !(account.backedUp || cloudBackedUp)
+        }
+
+        var hasAlert: Bool {
+            !account.backedUp
         }
     }
 
