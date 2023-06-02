@@ -251,7 +251,7 @@ extension AccountType {
             } catch {
                 return nil
             }
-        case .evmAddress: return nil
+        case .evmAddress, .tronAddress: return nil
         }
     }
 
@@ -259,6 +259,7 @@ extension AccountType {
         case mnemonic = "mnemonic"
         case evmPrivateKey = "private_key"
         case evmAddress = "evm_address"
+        case tronAddress = "tron_address"
         case hdExtendedKey = "hd_extended_key"
 
         init(_ type: AccountType) {
@@ -266,6 +267,7 @@ extension AccountType {
             case .mnemonic: self = .mnemonic
             case .evmPrivateKey: self = .evmPrivateKey
             case .evmAddress: self = .evmAddress
+            case .tronAddress: self = .tronAddress
             case .hdExtendedKey: self = .hdExtendedKey
             }
         }

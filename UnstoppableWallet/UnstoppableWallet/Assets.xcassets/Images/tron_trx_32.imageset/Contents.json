@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Tron.png",
+      "filename" : "tron.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Tron@2x.png",
+      "filename" : "tron@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Tron@3x.png",
+      "filename" : "tron@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
