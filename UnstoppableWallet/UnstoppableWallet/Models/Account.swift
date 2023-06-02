@@ -48,7 +48,7 @@ class Account {
     var canBeBackedUp: Bool {
         switch type {
         case .mnemonic: return true
-        case .hdExtendedKey, .evmAddress, .evmPrivateKey: return false
+        case .hdExtendedKey, .evmAddress, .tronAddress, .evmPrivateKey: return false
         }
     }
 
