@@ -12,6 +12,7 @@ class MainSettingsService {
     private let disposeBag = DisposeBag()
 
     private let backupManager: BackupManager
+    private let cloudAccountBackupManager: CloudAccountBackupManager
     private let accountRestoreWarningManager: AccountRestoreWarningManager
     private let accountManager: AccountManager
     private let contactBookManager: ContactBookManager?
@@ -26,9 +27,10 @@ class MainSettingsService {
     private let iCloudAvailableErrorRelay = BehaviorRelay<Bool>(value: false)
     private let noWalletRequiredActionsRelay = BehaviorRelay<Bool>(value: false)
 
-    init(backupManager: BackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager?, pinKit: PinKit.Kit, termsManager: TermsManager,
+    init(backupManager: BackupManager, cloudAccountBackupManager: CloudAccountBackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager?, pinKit: PinKit.Kit, termsManager: TermsManager,
          systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit, appConfigProvider: AppConfigProvider,
          walletConnectSessionManager: WalletConnectSessionManager, walletConnectV2SessionManager: WalletConnectV2SessionManager) {
+        self.cloudAccountBackupManager = cloudAccountBackupManager
         self.backupManager = backupManager
         self.accountRestoreWarningManager = accountRestoreWarningManager
         self.accountManager = accountManager
@@ -138,6 +140,32 @@ extension MainSettingsService {
 
     var activeAccount: Account? {
         accountManager.activeAccount
+    }
+
+    var walletConnectState: WalletConnectState {
+        guard let activeAccount = activeAccount else {
+            return .noAccount
+        }
+
+        if !activeAccount.type.supportsWalletConnect {
+            return .nonSupportedAccountType(accountType: activeAccount.type)
+        }
+
+        if activeAccount.backedUp || cloudAccountBackupManager.backedUp(uniqueId: activeAccount.type.uniqueId()) {
+            return .backedUp
+        }
+        return .unBackedUpAccount(account: activeAccount)
+    }
+
+}
+
+extension MainSettingsService {
+
+    enum WalletConnectState {
+        case noAccount
+        case backedUp
+        case nonSupportedAccountType(accountType: AccountType)
+        case unBackedUpAccount(account: Account)
     }
 
 }
