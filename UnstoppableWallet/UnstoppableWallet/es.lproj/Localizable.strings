@@ -652,23 +652,23 @@
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "Este proyecto no tiene datos analíticos";
-"coin_analytics.locked.not_subscribed" = "This page available only for Unstoppable Wallet premium users";
-"coin_analytics.locked.learn_more" = "Learn More";
-"coin_analytics.locked.not_activated" = "Activate your subscription for getting access to analytics";
+"coin_analytics.locked.not_subscribed" = "Esta página sólo está disponible para usuarios premium de Wallet imparables";
+"coin_analytics.locked.learn_more" = "Aprender más";
+"coin_analytics.locked.not_activated" = "Activa tu suscripción para obtener acceso a analíticas";
 "coin_analytics.locked.activate" = "Activar";
 
 "coin_analytics.cex_volume" = "Volumen CEX";
 "coin_analytics.cex_volume_rank" = "Rango de Volumen CEX";
 "coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
-"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
+"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
-"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over 30-day period.";
+"coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
 
 "coin_analytics.dex_volume" = "Volumen DEX";
 "coin_analytics.dex_volume_rank" = "Rango de Volumen DEX";
 "coin_analytics.dex_volume_rank.description" = "Tokens clasificados por volumen de negociación para el token en los intercambios descentralizados.";
-"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over a 30-day period.";
+"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info2" = "Gráfico que muestra variación en el volumen de operaciones diarias para la ficha de los principales intercambios descentralizados en un período de 1 año.";
 "coin_analytics.dex_volume.info3" = "El rango de Token se basa en el volumen de negociación de los principales intercambios descentralizados durante un período de 30 días.";
 "coin_analytics.dex_volume.info4" = "Lista de todos los tokens clasificados en base al volumen de negociación de intercambios descentralizados sobre intervalos 24H / 7D / 1M.";
@@ -690,7 +690,7 @@
 "coin_analytics.active_addresses.30_day_unique_addresses" = "Direcciones únicas de 30 días";
 "coin_analytics.active_addresses_rank" = "Rango de direcciones activas";
 "coin_analytics.active_addresses_rank.description" = "Tokens clasificados por el número de direcciones únicas que transaccionan con el token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over a 24-hour period.";
+"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
 "coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
 "coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
@@ -1504,16 +1504,16 @@
 // Activate Subscription
 
 "activate_subscription.title" = "Activar";
-"activate_subscription.wallet" = "Wallet";
+"activate_subscription.wallet" = "Monedero";
 "activate_subscription.address" = "Dirección";
-"activate_subscription.message" = "Message to Sign";
+"activate_subscription.message" = "Mensaje a firmar";
 "activate_subscription.sign" = "Firma";
-"activate_subscription.activating" = "Activating...";
-"activate_subscription.description" = "You need to sign this message to activate your subscription";
-"activate_subscription.failed_to_activate" = "Failed to activate subscription";
+"activate_subscription.activating" = "Activando...";
+"activate_subscription.description" = "Necesitas firmar este mensaje para activar tu suscripción";
+"activate_subscription.failed_to_activate" = "Error al activar la suscripción";
 
 
 // Launch
 
-"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting app or report the error to our support team.";
+"launch.failed_to_launch" = "Error al iniciar la aplicación debido a un error interno. Por favor, intenta reiniciar la aplicación o reporta el error a nuestro equipo de soporte.";
 "launch.failed_to_launch.report" = "Reportar";
