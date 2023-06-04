@@ -209,7 +209,7 @@
 // Backup Prompt
 
 "backup_prompt.title" = "Manual Backup";
-"backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.warning" = "Erstellen Sie eine Sicherungskopie der Wiederherstellungsphrase und des zugehörigen Passworts, mit dem Sie Ihre Wallet wiederherstellen können, wenn Ihr Telefon verloren geht, gestohlen, kaputt, etc.";
 "backup_prompt.backup" = "Sicherung";
 "backup_prompt.backup_manual" = "Manual Backup";
 "backup_prompt.backup_cloud" = "Backup to iCloud";
@@ -661,15 +661,15 @@
 "coin_analytics.cex_volume" = "CEX Volume";
 "coin_analytics.cex_volume_rank" = "CEX Volume Rank";
 "coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
-"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
+"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
-"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over 30-day period.";
+"coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
 
 "coin_analytics.dex_volume" = "DEX Volume";
 "coin_analytics.dex_volume_rank" = "DEX Volume Rank";
 "coin_analytics.dex_volume_rank.description" = "Tokens ranked by trading volume for the token on decentralized exchanges.";
-"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over a 30-day period.";
+"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
 "coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
@@ -691,7 +691,7 @@
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
 "coin_analytics.active_addresses_rank" = "Active Addresses Rank";
 "coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over a 24-hour period.";
+"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
 "coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
 "coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
@@ -1083,7 +1083,7 @@
 "settings.icloud_sync.alert.title" = "iCloud Sync";
 "settings.icloud_sync.alert.description" = "Bitte überprüfen Sie, dass der iCloud-Speicher auf Ihrem Gerät aktiviert ist.";
 
-"settings.icloud_sync.alert_error.title" = "iCloud Error";
+"settings.icloud_sync.alert_error.title" = "iCloud Fehler";
 "settings.icloud_sync.alert_error.description" = "Keine Verbindung zu iCloud, dies könnte daran liegen, dass iCloud-Speicher auf Ihrem Gerät nicht verfügbar ist oder für unaufhaltsame App deaktiviert";
 
 // Set PIN
