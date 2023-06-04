@@ -663,15 +663,15 @@
 "coin_analytics.cex_volume" = "CEX交易量";
 "coin_analytics.cex_volume_rank" = "CEX交易量排名";
 "coin_analytics.cex_volume_rank.description" = "对中心化交易所的代币按交易量排名的代币。";
-"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
+"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
-"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over 30-day period.";
+"coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
 
 "coin_analytics.dex_volume" = "DEX交易量";
 "coin_analytics.dex_volume_rank" = "DEX交易量排名";
 "coin_analytics.dex_volume_rank.description" = "对去中心化交易所的代币按交易量排名的代币。";
-"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over a 30-day period.";
+"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
 "coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
@@ -693,7 +693,7 @@
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30天唯一地址";
 "coin_analytics.active_addresses_rank" = "活跃地址排名";
 "coin_analytics.active_addresses_rank.description" = "按与代币交易的唯一地址的数量排名的代币。";
-"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over a 24-hour period.";
+"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
 "coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
 "coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
@@ -1320,9 +1320,9 @@
 
 "public_keys.title" = "公钥";
 "public_keys.evm_address" = "EVM 地址";
-"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM based blockchains.";
+"public_keys.evm_address.description" = "允许只读监视持有Etherum、 Binance Smart Chain和其他基于 EVM 的区块链的钱包。";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
-"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
+"public_keys.account_extended_public_key.description" = "允许只读监视持有比特币和其他基于 UTXO 的加密钱包(即Liteco、 比特币现金、 破折号等)。";
 
 // Manage Account -> Private Keys
 
@@ -1507,16 +1507,16 @@
 // Activate Subscription
 
 "activate_subscription.title" = "激活";
-"activate_subscription.wallet" = "Wallet";
+"activate_subscription.wallet" = "钱包";
 "activate_subscription.address" = "地址";
-"activate_subscription.message" = "Message to Sign";
+"activate_subscription.message" = "待签名消息";
 "activate_subscription.sign" = "签名";
-"activate_subscription.activating" = "Activating...";
-"activate_subscription.description" = "You need to sign this message to activate your subscription";
-"activate_subscription.failed_to_activate" = "Failed to activate subscription";
+"activate_subscription.activating" = "激活";
+"activate_subscription.description" = "您需要签署此消息以激活您的订阅";
+"activate_subscription.failed_to_activate" = "订阅激活失败";
 
 
 // Launch
 
-"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting app or report the error to our support team.";
+"launch.failed_to_launch" = "由于内部错误，应用程序无法启动。请尝试重新启动应用程序或向我们的支持团队报告错误。";
 "launch.failed_to_launch.report" = "报告";
