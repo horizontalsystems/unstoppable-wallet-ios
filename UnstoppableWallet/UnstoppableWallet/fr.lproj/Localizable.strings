@@ -652,9 +652,9 @@
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "Ce projet n'a pas de données d'analyse";
-"coin_analytics.locked.not_subscribed" = "This page available only for Unstoppable Wallet premium users";
-"coin_analytics.locked.learn_more" = "Learn More";
-"coin_analytics.locked.not_activated" = "Activate your subscription for getting access to analytics";
+"coin_analytics.locked.not_subscribed" = "Cette page n'est disponible que pour les utilisateurs Premium Unstoppable Wallet";
+"coin_analytics.locked.learn_more" = "En savoir plus";
+"coin_analytics.locked.not_activated" = "Activez votre abonnement pour avoir accès aux analyses";
 "coin_analytics.locked.activate" = "Activer";
 
 "coin_analytics.cex_volume" = "Volume CEX";
@@ -662,13 +662,13 @@
 "coin_analytics.cex_volume_rank.description" = "Les tokens classés en fonction du volume de trading du token sur les exchanges centralisés.";
 "coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
-"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over 30-day period.";
+"coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
 
 "coin_analytics.dex_volume" = "Volume DEX";
 "coin_analytics.dex_volume_rank" = "Rang de volume DEX";
 "coin_analytics.dex_volume_rank.description" = "Les tokens classés en fonction du volume de trading du token sur les exchanges décentralisés.";
-"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over a 30-day period.";
+"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
 "coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
 "coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
@@ -690,7 +690,7 @@
 "coin_analytics.active_addresses.30_day_unique_addresses" = "Adresses uniques de 30 jours";
 "coin_analytics.active_addresses_rank" = "Classement des adresses actives";
 "coin_analytics.active_addresses_rank.description" = "Tokens classés par nombre d'adresses uniques effectuant des transactions avec le token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over a 24-hour period.";
+"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
 "coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
@@ -1505,16 +1505,16 @@
 // Activate Subscription
 
 "activate_subscription.title" = "Activer";
-"activate_subscription.wallet" = "Wallet";
+"activate_subscription.wallet" = "Portefeuille";
 "activate_subscription.address" = "Adresses";
-"activate_subscription.message" = "Message to Sign";
+"activate_subscription.message" = "Message à signer";
 "activate_subscription.sign" = "Signer";
-"activate_subscription.activating" = "Activating...";
-"activate_subscription.description" = "You need to sign this message to activate your subscription";
-"activate_subscription.failed_to_activate" = "Failed to activate subscription";
+"activate_subscription.activating" = "Activation...";
+"activate_subscription.description" = "Vous devez signer ce message pour activer votre abonnement";
+"activate_subscription.failed_to_activate" = "Impossible d'activer l'abonnement";
 
 
 // Launch
 
-"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting app or report the error to our support team.";
+"launch.failed_to_launch" = "Échec du lancement de l'application en raison d'une erreur interne. Essayez de redémarrer l'application ou signalez l'erreur à notre équipe d'assistance.";
 "launch.failed_to_launch.report" = "Signaler";
