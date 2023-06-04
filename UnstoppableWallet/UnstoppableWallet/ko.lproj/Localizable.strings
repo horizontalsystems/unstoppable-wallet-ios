@@ -27,7 +27,7 @@
 "alert" = "알림";
 "alert.copied" = "복사됨";
 "alert.saved" = "저장";
-"alert.saved_to_icloud" = "Saved to iCloud";
+"alert.saved_to_icloud" = "저장된 위치: 아이클라우드";
 "alert.no_internet" = "인터넷에 연결되지 않음";
 "alert.wrong_amount" = "잘못된 금액";
 "alert.no_fee" = "잘못된 요금";
@@ -108,7 +108,7 @@
 "restore.checksum_error" = "유효하지 않은 체크섬";
 "restore.passphrase" = "암호문구";
 "restore.input.passphrase" = "암호문구";
-"restore.passphrase_description" = "This password is used to encrypt backup file of your wallet. It's not related to your Apple iCloud password. It can't be recovered or reset if lost or forgotten.";
+"restore.passphrase_description" = "이 암호는 지갑의 백업 파일을 암호화하는 데 사용됩니다. 이 암호는 Apple iCloud 암호와는 관련이 없습니다. 만약 분실하거나 잊어버린 경우, 복구하거나 재설정할 수 없습니다.";
 "restore.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "restore.non_standard_import" = "비표준 복원";
 "restore.non_standard_import.description" = "이 페이지는 비표준 지갑을 가지고 있는 Unstoppable 사용자를 위한 특별한 지갑 복원 메커니즘을 제공합니다. 일반적으로 이러한 지갑은 Unstoppable 버전 0.27 - 0.28에서 영어가 아닌 니모닉 단어 목록 및/또는 지갑 암호의 특수 문자(예: 분음 부호)를 사용하여 생성되었을 수 있습니다.\n\n영향을 받는 사용자인 경우 버전 0.29로 업데이트하면 지갑 잔액이 0으로 표시됩니다. 이 페이지에서는 비표준 지갑에 대한 액세스를 복원할 수 있습니다. 복원되면 새 지갑(표준 준수)을 만들고 그곳으로 자금을 옮기는 것이 좋습니다.";
@@ -119,10 +119,10 @@
 
 "restore_type.title" = "다음에서 복원하기";
 
-"restore_type.cloud.title" = "from iCloud";
-"restore_type.recovery.title" = "from Recovery Phrase";
+"restore_type.cloud.title" = "아이클라우드에서";
+"restore_type.recovery.title" = "복구 문구에서";
 
-"restore_type.cloud.description" = "Import from a backup file in your keychain.";
+"restore_type.cloud.description" = "키체인의 백업 파일에서 가져옵니다.";
 "restore_type.recovery.description" = "Import using recovery phrase or private key.";
 
 // Restore Cloud
@@ -1310,9 +1310,9 @@
 "manage_account.manual_backup_required.button" = "Backup Now";
 "manage_account.unlink" = "Unlink Wallet";
 "manage_account.backup.no_backup_yet_description" = "Complete one of the wallet backup options to start using the wallet.";
-"manage_account.backup.has_backup_description" = "It's recommended to have a manual backup for each wallet.";
+"manage_account.backup.has_backup_description" = "각 지갑에 대해 수동 백업을 하는 것이 좋습니다.";
 
-"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "아이클라우드에서 지갑 백업을 삭제하시겠습니까?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "공개 키";
