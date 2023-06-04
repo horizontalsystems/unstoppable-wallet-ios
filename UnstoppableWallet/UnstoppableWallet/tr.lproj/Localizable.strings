@@ -210,7 +210,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Backup Prompt
 
 "backup_prompt.title" = "Manual Backup";
-"backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.warning" = "Telefonunuzun kaybolması, çalınması, kırılması vb. durumlarda cüzdanınızı kurtarmanıza olanak sağlayacak kurtarma ifadesinin ve ilgili parolanın yedek bir kopyasını oluşturun.";
 "backup_prompt.backup" = "Yedekle";
 "backup_prompt.backup_manual" = "Manual Backup";
 "backup_prompt.backup_cloud" = "Backup to iCloud";
@@ -692,7 +692,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
 "coin_analytics.active_addresses_rank" = "Active Addresses Rank";
 "coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over a 24-hour period.";
+"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
 "coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
 "coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
@@ -1506,9 +1506,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Activate Subscription
 
 "activate_subscription.title" = "Activate";
-"activate_subscription.wallet" = "Wallet";
+"activate_subscription.wallet" = "Cüzdanı";
 "activate_subscription.address" = "Adres";
-"activate_subscription.message" = "Message to Sign";
+"activate_subscription.message" = "İmza için mesaj";
 "activate_subscription.sign" = "kaydol";
 "activate_subscription.activating" = "Activating...";
 "activate_subscription.description" = "You need to sign this message to activate your subscription";
