@@ -27,7 +27,7 @@
 "alert" = "Alerta";
 "alert.copied" = "Copiado";
 "alert.saved" = "Salvo";
-"alert.saved_to_icloud" = "Saved to iCloud";
+"alert.saved_to_icloud" = "Salvo no iCloud";
 "alert.no_internet" = "Sem Internet";
 "alert.wrong_amount" = "Quantia Errada";
 "alert.no_fee" = "Taxa Errada";
@@ -110,7 +110,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "restore.checksum_error" = "Soma de Verificação Inválida";
 "restore.passphrase" = "Senha";
 "restore.input.passphrase" = "Senha";
-"restore.passphrase_description" = "This password is used to encrypt backup file of your wallet. It's not related to your Apple iCloud password. It can't be recovered or reset if lost or forgotten.";
+"restore.passphrase_description" = "Esta senha é usada para criptografar o arquivo de backup de sua carteira. Não está relacionado à sua senha do Apple iCloud. Não pode ser recuperada ou redefinida se for perdida ou esquecida.";
 "restore.error.empty_passphrase" = "O senha não pode estar em branco";
 "restore.non_standard_import" = "Restauração Não-Padrão";
 "restore.non_standard_import.description" = "Esta página fornece um mecanismo especial de recuperação de carteira para usuários da Unstoppable que possuem uma carteira Não Padrão.  Geralmente, essas carteiras podem ter sido criadas na versão Unstoppable 0.27 - 0.28 usando uma lista de palavras mnemônicas não inglesas e/ou um caractere especial na senha da carteira (ou seja, símbolo diacrítico).\n\nSe você for um usuário afetado, o saldo da sua carteira será mostrado como 0 após a atualização para a versão 0.29.  Esta página permitirá que você restaure o acesso à sua carteira não padrão.  Uma vez restaurado, é recomendável criar uma nova carteira (que será compatível com o padrão) e mover fundos para lá.";
@@ -121,10 +121,10 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "restore_type.title" = "Importar carteira";
 
-"restore_type.cloud.title" = "from iCloud";
-"restore_type.recovery.title" = "from Recovery Phrase";
+"restore_type.cloud.title" = "do iCloud";
+"restore_type.recovery.title" = "da Frase de Recuperação";
 
-"restore_type.cloud.description" = "Import from a backup file in your keychain.";
+"restore_type.cloud.description" = "Importe de um arquivo de backup em sua keychain.";
 "restore_type.recovery.description" = "Import using recovery phrase or private key.";
 
 // Restore Cloud
