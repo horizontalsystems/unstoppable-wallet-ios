@@ -1304,7 +1304,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "manage_account.recovery_phrase" = "Kurtarma cümlesi";
 "manage_account.public_keys" = "Genel Anahtarlar";
 "manage_account.private_keys" = "Özel Anahtar";
-"manage_account.backup_recovery_phrase" = "Yedekleme Kurtarma İfadesi";
+"manage_account.backup_recovery_phrase" = "Manual Backup";
 "manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
 "manage_account.manual_backup_required" = "Manual Backup Required";
