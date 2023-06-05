@@ -27,7 +27,7 @@
 "alert" = "Alarm";
 "alert.copied" = "Kopiert";
 "alert.saved" = "Gespeichert";
-"alert.saved_to_icloud" = "Saved to iCloud";
+"alert.saved_to_icloud" = "In iCloud gespeichert";
 "alert.no_internet" = "Kein Internet";
 "alert.wrong_amount" = "Falscher Betrag";
 "alert.no_fee" = "Falsche Gebühr";
@@ -106,9 +106,9 @@
 "restore.private_key.invalid_key" = "Ungültiger Schlüssel";
 "restore_error.mnemonic_word_count" = "Falsche Wortzahl. Sie muss zwischen 12 und 24 Wörtern liegen. Sie haben eingegeben: %@";
 "restore.checksum_error" = "Ungültige Prüfsumme";
-"restore.passphrase" = "Passphrase";
-"restore.input.passphrase" = "Passphrase";
-"restore.passphrase_description" = "This password is used to encrypt backup file of your wallet. It's not related to your Apple iCloud password. It can't be recovered or reset if lost or forgotten.";
+"restore.passphrase" = "Passwort";
+"restore.input.passphrase" = "Passwort";
+"restore.passphrase_description" = "Dieses Passwort wird verwendet, um die Sicherungsdatei Ihrer Wallet zu verschlüsseln. Es hat nichts mit Ihrem Apple iCloud-Passwort zu tun. Wenn Sie es vergessen oder verlieren, kann es nicht wiederhergestellt oder zurückgesetzt werden.";
 "restore.error.empty_passphrase" = "Die Passphrase darf nicht leer sein";
 "restore.non_standard_import" = "Nicht standardmäßige Wiederherstellung";
 "restore.non_standard_import.description" = "Diese Seite bietet einen speziellen Wallet-Wiederherstellungsmechanismus für Unstoppable-Benutzer, die ein nicht standardmäßiges Wallet haben. Im Allgemeinen könnten solche Wallets in der Unstoppable-Version 0.27–0.28 mit einer nicht-englischen mnemonischen Wortliste und/oder einem Sonderzeichen in der Wallet-Passphrase (d. h. einem diakritischen Symbol) erstellt worden sein.
@@ -120,11 +120,11 @@
 
 "restore_type.title" = "Wallet importieren";
 
-"restore_type.cloud.title" = "from iCloud";
-"restore_type.recovery.title" = "from Recovery Phrase";
+"restore_type.cloud.title" = "von iCloud";
+"restore_type.recovery.title" = "von Wiederherstellungsphrase";
 
 "restore_type.cloud.description" = "Import from a backup file in your keychain.";
-"restore_type.recovery.description" = "Import using recovery phrase or private key.";
+"restore_type.recovery.description" = "Importieren Sie mithilfe der Wiederherstellungsphrase oder des privaten Schlüssels.";
 
 // Restore Cloud
 
@@ -162,7 +162,7 @@
 "recovery_phrase.title" = "Wiederherstellungsphrase";
 "recovery_phrase.warning" = "Teilen Sie niemals Ihre Wiederherstellungsphrase mit niemandem. Das unaufhaltsame Team wird niemals nach Ihrer Wiederherstellungsphrase fragen.";
 "recovery_phrase.tap_to_show" = "Tippen, um Wiederherstellungsphrase anzuzeigen";
-"recovery_phrase.passphrase" = "Passphrase";
+"recovery_phrase.passphrase" = "Passwort";
 "recovery_phrase.copy_warning.title" = "Risiko der Wiederherstellungs-Phrase-Kopie";
 "recovery_phrase.copy_warning.description" = "Als Sicherheitsmaßnahme empfehlen wir, Kopiermaßnahmen nicht auf Wiederherstellungs-Phrase zu verwenden.";
 
@@ -186,7 +186,7 @@
 "backup.title" = "Wiederherstellungsphrase";
 "backup.description" = "Schreibe diese Wörter in die richtige Reihenfolge und halte sie an einem sicheren Ort";
 "backup.tap_to_show" = "Tippen, um Wiederherstellungsphrase anzuzeigen";
-"backup.passphrase" = "Passphrase";
+"backup.passphrase" = "Passwort";
 "backup.verify" = "Prüfen";
 "backup.verified" = "Verifiziert";
 
@@ -1148,8 +1148,8 @@
 "create_wallet.12_words" = "12 Wörter (empfohlen)";
 "create_wallet.n_words" = "%@ Wörter";
 "create_wallet.word_list" = "Wortliste";
-"create_wallet.passphrase" = "Passphrase";
-"create_wallet.input.passphrase" = "Passphrase";
+"create_wallet.passphrase" = "Passwort";
+"create_wallet.input.passphrase" = "Passwort";
 "create_wallet.input.confirm" = "Bestätigen";
 "create_wallet.passphrase_description" = "Passphrases fügen eine zusätzliche Sicherheitsschicht für Brieftaschen hinzu. Um eine solche Brieftasche wiederherzustellen, benötigt ein Benutzer sowohl mnemonische als auch eine Passphrase.\n\nPassphrasen erleichtern es Benutzern auch, mehrere Multicoin-Wallets mit einem einzigen mnemonischen, aber anderen Passwort zu haben.";
 "create_wallet.error.empty_passphrase" = "Passphrase darf nicht leer sein";
@@ -1305,15 +1305,15 @@
 "manage_account.private_keys" = "Private Schlüssel";
 "manage_account.backup_recovery_phrase" = "Manual Backup";
 "manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
-"manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Sicherung aus iCloud löschen";
 "manage_account.manual_backup_required" = "Manual Backup Required";
-"manage_account.manual_backup_required.description" = "In order to securely delete your backup on iCloud, you will need to manually backup your recovery phrase first.";
+"manage_account.manual_backup_required.description" = "Um Ihre Sicherheitskopie auf iCloud sicher zu löschen, müssen Sie zuerst Ihre Wiederherstellungsphrase manuell sichern.";
 "manage_account.manual_backup_required.button" = "Backup Now";
 "manage_account.unlink" = "Unlink Wallet";
 "manage_account.backup.no_backup_yet_description" = "Complete one of the wallet backup options to start using the wallet.";
 "manage_account.backup.has_backup_description" = "It's recommended to have a manual backup for each wallet.";
 
-"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "Sind Sie sicher, dass Sie Ihre Wallet-Sicherung aus iCloud löschen möchten?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "Öffentliche Schlüssel";
@@ -1387,7 +1387,7 @@
 "fee_settings.time_lock.description" = "TimeLock funktioniert nur beim Senden an BIP44 Adressen (ab 1)";
 
 "fee_settings.network_fee" = "Netzwerkgebühr";
-"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
+"fee_settings.network_fee.info" = "Die geschätzten Kosten für den Versand der Transaktion im Netzwerk.";
 "fee_settings.gas_limit" = "Gaslimit";
 "fee_settings.gas_limit.info" = "Die Transaktionskomplexität wird in Einheiten mit dem Namen \"Gas\" gemessen, die je nach ausgeführten intelligenten Verträgen variieren. Das Gaslimit ist das geschätzte Höchstgas, das benötigt wird, um es auszuführen. Das tatsächliche Gas wird normalerweise niedriger sein.";
 
@@ -1422,7 +1422,7 @@
 "watch_address.by" = "Von";
 "watch_address.watch_by" = "Beobachten von";
 "watch_address.evm_address" = "EVM-Adresse";
-"watch_address.tron_address" = "TRON Address";
+"watch_address.tron_address" = "TRON Adresse";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Account Extended Public Key eingeben";
 "watch_address.public_key.invalid_key" = "Ungültiger Schlüssel";
