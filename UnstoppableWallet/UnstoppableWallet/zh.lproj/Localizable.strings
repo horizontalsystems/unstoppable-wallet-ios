@@ -27,7 +27,7 @@
 "alert" = "警报";
 "alert.copied" = "已复制";
 "alert.saved" = "已保存";
-"alert.saved_to_icloud" = "Saved to iCloud";
+"alert.saved_to_icloud" = "保存到 iCloud";
 "alert.no_internet" = "没有网络";
 "alert.wrong_amount" = "金额有误";
 "alert.no_fee" = "错误费用";
@@ -110,7 +110,7 @@
 "restore.checksum_error" = "校验和无效";
 "restore.passphrase" = "密码";
 "restore.input.passphrase" = "密码";
-"restore.passphrase_description" = "This password is used to encrypt backup file of your wallet. It's not related to your Apple iCloud password. It can't be recovered or reset if lost or forgotten.";
+"restore.passphrase_description" = "此密码用于加密您的钱包备份文件。与您的 Apple iCloud 密码无关。如果丢失或遗忘，将无法恢复或重置。";
 "restore.error.empty_passphrase" = "密码不能为空白";
 "restore.non_standard_import" = "非标准还原";
 "restore.non_standard_import.description" = "此页面为拥有非标准钱包的 Unstoppable 用户提供了一种特殊的钱包恢复机制。 通常，此类钱包可以在 Unstoppable 版本 0.27 - 0.28 中使用非英语助记词列表和/或钱包密码短语中的特殊字符（即变音符号）创建。\n\n如果您是受影响的用户，那么在 0.29 或更高版本中恢复此类钱包后，您的钱包余额将显示为 0。 此页面将使您能够恢复对非标准钱包的访问。 恢复后，建议您创建一个新钱包（符合标准）并将资金转移到那里。";
@@ -121,8 +121,8 @@
 
 "restore_type.title" = "恢复自";
 
-"restore_type.cloud.title" = "from iCloud";
-"restore_type.recovery.title" = "from Recovery Phrase";
+"restore_type.cloud.title" = "来自 iCloud";
+"restore_type.recovery.title" = "恢复短语";
 
 "restore_type.cloud.description" = "Import from a backup file in your keychain.";
 "restore_type.recovery.description" = "Import using recovery phrase or private key.";
@@ -134,9 +134,9 @@
 "restore.cloud.empty" = "No backups found.";
 "restore.cloud.imported" = "Imported wallets";
 
-"restore.cloud.password.title" = "Enter Password";
-"restore.cloud.password.placeholder" = "Backup Password";
-"restore.cloud.password.description" = "Enter the backup password to import your wallet from iCloud.";
+"restore.cloud.password.title" = "请输入密码";
+"restore.cloud.password.placeholder" = "备份密码";
+"restore.cloud.password.description" = "请输入备份密码以从iCloud导入您的钱包。";
 
 // Coin Settings
 
@@ -209,23 +209,23 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Manual Backup";
-"backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.title" = "进行手动备份";
+"backup_prompt.warning" = "创建恢复短语和相关密码的备份副本，允许您在手机丢失时恢复钱包， • 盗窃、故障等问题";
 "backup_prompt.backup" = "备份";
-"backup_prompt.backup_manual" = "Manual Backup";
-"backup_prompt.backup_cloud" = "Backup to iCloud";
+"backup_prompt.backup_manual" = "进行手动备份";
+"backup_prompt.backup_cloud" = "备份到iCloud";
 "backup_prompt.later" = "稍后";
 
 // Backup to iCloud
 
-"backup.cloud.title" = "Backup to iCloud";
-"backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
+"backup.cloud.title" = "备份到iCloud";
+"backup.cloud.description" = "iCloud 存储是 Apple 提供的第三方云存储服务。请注意，您的数据将存储在 Apple 的服务器上，而不是您的个人设备上。这意味着您正在委托您的数据并将信息的安全性移交给第三方服务。";
 
-"backup.cloud.terms.item.1" = "I understand that loosing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+"backup.cloud.terms.item.1" = "我了解无法访问我的 iCloud 将导致无法访问相应钱包的备份。";
 
-"backup.cloud.name.title" = "Backup Name";
-"backup.cloud.name.description" = "Enter name for the backup file.";
-"backup.cloud.name.empty" = "Backup name can't be empty!";
+"backup.cloud.name.title" = "备份名称";
+"backup.cloud.name.description" = "请输入备份文件的名称。";
+"backup.cloud.name.empty" = "备份名称不能为空！";
 "backup.cloud.name.error.empty" = "Backup name must be not empty";
 "backup.cloud.name.error.already_exist" = "Backup name already exist!";
 "backup.cloud.name.placeholder" = "名称";
@@ -709,7 +709,7 @@
 "coin_analytics.transaction_count.info5" = "30天周期内在区块链上传输的代币总数。";
 
 "coin_analytics.holders" = "持有者";
-"coin_analytics.holders_rank" = "Holders Rank";
+"coin_analytics.holders_rank" = "Classement des titulaires";
 "coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
 "coin_analytics.holders.info1" = "在各种区块链上持有代币的唯一地址的总数。";
 "coin_analytics.holders.info2" = "在每一个区块链上持有代币的前10大钱包。";
@@ -1305,8 +1305,8 @@
 "manage_account.recovery_phrase" = "恢复码";
 "manage_account.public_keys" = "公钥";
 "manage_account.private_keys" = "私钥";
-"manage_account.backup_recovery_phrase" = "Manual Backup";
-"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
+"manage_account.backup_recovery_phrase" = "进行手动备份";
+"manage_account.cloud_backup_recovery_phrase" = "备份到iCloud";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
 "manage_account.manual_backup_required" = "Manual Backup Required";
 "manage_account.manual_backup_required.description" = "In order to securely delete your backup on iCloud, you will need to manually backup your recovery phrase first.";
@@ -1315,7 +1315,7 @@
 "manage_account.backup.no_backup_yet_description" = "Complete one of the wallet backup options to start using the wallet.";
 "manage_account.backup.has_backup_description" = "It's recommended to have a manual backup for each wallet.";
 
-"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "你确定要从 iCloud 删除你的钱包备份吗？";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "公钥";
@@ -1389,7 +1389,7 @@
 "fee_settings.time_lock.description" = "时间锁（TimeLock）只适用于发送到BIP44地址（从1开始）";
 
 "fee_settings.network_fee" = "网络费";
-"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
+"fee_settings.network_fee.info" = "在网络上发送给定交易的估计费用。";
 "fee_settings.gas_limit" = "燃料限制";
 "fee_settings.gas_limit.info" = "交易复杂度以被称为“gas”（燃料）的单位度量。它将根据被执行的智能合同而变化。Gas Limit（燃料限制）是执行它所需要的估计最大燃料。使用的实际燃料通常会较低。";
 
@@ -1424,7 +1424,7 @@
 "watch_address.by" = "由";
 "watch_address.watch_by" = "观看者";
 "watch_address.evm_address" = "EVM 地址";
-"watch_address.tron_address" = "TRON Address";
+"watch_address.tron_address" = "TRON地址";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "輸入 Account Extended Public Key";
 "watch_address.public_key.invalid_key" = "错误密钥";
