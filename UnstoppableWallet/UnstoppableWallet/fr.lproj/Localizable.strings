@@ -1302,7 +1302,7 @@
 "manage_account.recovery_phrase" = "Phrase de récupération";
 "manage_account.public_keys" = "Clés publiques";
 "manage_account.private_keys" = "Clés privées";
-"manage_account.backup_recovery_phrase" = "Phrase de récupération de sauvegarde";
+"manage_account.backup_recovery_phrase" = "Manual Backup";
 "manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
 "manage_account.manual_backup_required" = "Manual Backup Required";
