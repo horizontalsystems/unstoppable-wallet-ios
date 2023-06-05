@@ -8,6 +8,7 @@ class BackupCloudPassphraseViewModel {
     private let service: BackupCloudPassphraseService
     @Published public var passphraseCaution: Caution?
     @Published public var passphraseConfirmationCaution: Caution?
+    @Published public var processing: Bool = false
 
     private let clearInputsSubject = PassthroughSubject<Void, Never>()
     private let showErrorSubject = PassthroughSubject<String, Never>()
@@ -73,9 +74,12 @@ extension BackupCloudPassphraseViewModel {
     func onTapCreate() {
         passphraseCaution = nil
         passphraseConfirmationCaution = nil
+
+        processing = true
         Task {
             do {
                 try await service.createBackup()
+                processing = false
                 finishSubject.send(())
             } catch {
                 switch (error as? BackupCloudPassphraseService.CreateError) {
@@ -92,6 +96,7 @@ extension BackupCloudPassphraseViewModel {
                 case .none:
                     showErrorSubject.send(error.smartDescription)
                 }
+                processing = false
             }
         }
     }

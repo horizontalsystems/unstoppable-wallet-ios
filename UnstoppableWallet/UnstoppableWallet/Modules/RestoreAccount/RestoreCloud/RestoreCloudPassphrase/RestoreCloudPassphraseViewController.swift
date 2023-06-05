@@ -67,7 +67,7 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
             maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
         }
 
-        importButton.set(style: .yellow)
+        show(processing: false)
         importButton.setTitle("button.import".localized, for: .normal)
         importButton.addTarget(self, action: #selector(onTapCreate), for: .touchUpInside)
 
@@ -84,6 +84,13 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
                 .sink { [weak self] caution in
                     self?.passphraseCell.set(cautionType: caution?.type)
                     self?.passphraseCautionCell.set(caution: caution)
+                }
+                .store(in: &cancellables)
+
+        viewModel.$processing
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] processing in
+                    self?.show(processing: processing)
                 }
                 .store(in: &cancellables)
 
@@ -110,6 +117,8 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
 
         additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: wrapperViewHeight - .margin16, right: 0)
 
+        showDefaultPassphrase()
+
         tableView.buildSections()
         isLoaded = true
     }
@@ -125,12 +134,32 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
         setInitialState(bottomPadding: gradientWrapperView.height)
     }
 
+    private func showDefaultPassphrase() {
+        let text = App.shared.appConfigProvider.defaultPassphrase
+        guard !text.isEmpty else {
+            return
+        }
+
+        passphraseCell.inputText = text
+        viewModel.onChange(passphrase: text)
+    }
+
     @objc private func onTapCancel() {
         dismiss(animated: true)
     }
 
     @objc private func onTapCreate() {
         viewModel.onTapImport()
+    }
+
+    private func show(processing: Bool) {
+        if processing {
+            importButton.set(style: .yellow, accessoryType: .spinner)
+            importButton.isEnabled = false
+        } else {
+            importButton.set(style: .yellow)
+            importButton.isEnabled = true
+        }
     }
 
     private func show(error: String) {

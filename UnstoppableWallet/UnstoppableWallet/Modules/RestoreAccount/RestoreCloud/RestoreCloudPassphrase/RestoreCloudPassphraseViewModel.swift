@@ -7,6 +7,7 @@ class RestoreCloudPassphraseViewModel {
 
     private let service: RestoreCloudPassphraseService
     @Published public var passphraseCaution: Caution?
+    @Published public var processing: Bool = false
 
     private let clearInputsSubject = PassthroughSubject<Void, Never>()
     private let showErrorSubject = PassthroughSubject<String, Never>()
@@ -55,9 +56,11 @@ extension RestoreCloudPassphraseViewModel {
     func onTapImport() {
         passphraseCaution = nil
 
+        processing = true
         Task {
             do {
                 let restoredAccount = try await service.importWallet()
+                processing = false
                 importSubject.send(restoredAccount)
             } catch {
                 switch (error as? RestoreCloudPassphraseService.RestoreError) {
@@ -72,6 +75,7 @@ extension RestoreCloudPassphraseViewModel {
                 case .none:
                     showErrorSubject.send(error.smartDescription)
                 }
+                processing = false
             }
         }
     }

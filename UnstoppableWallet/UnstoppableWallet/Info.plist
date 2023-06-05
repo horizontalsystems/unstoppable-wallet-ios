@@ -37,6 +37,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>DefaultWords</key>
 	<string>${default_words}</string>
+	<key>DefaultPassphrase</key>
+	<string>${default_passphrase}</string>
 	<key>DefiYieldApiKey</key>
 	<string>$(defiyield_api_key)</string>
 	<key>EtherscanApiKey</key>

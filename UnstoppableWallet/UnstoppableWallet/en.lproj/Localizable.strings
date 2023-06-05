@@ -1304,7 +1304,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "manage_account.recovery_phrase" = "Recovery Phrase";
 "manage_account.public_keys" = "Public Keys";
 "manage_account.private_keys" = "Private Keys";
-"manage_account.backup_recovery_phrase" = "Backup Recovery Phrase";
+"manage_account.backup_recovery_phrase" = "Manual Backup";
 "manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
 "manage_account.manual_backup_required" = "Manual Backup Required";

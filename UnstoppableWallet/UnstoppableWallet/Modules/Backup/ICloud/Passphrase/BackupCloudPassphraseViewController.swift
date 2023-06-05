@@ -70,7 +70,7 @@ class BackupCloudPassphraseViewController: KeyboardAwareViewController {
             maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
         }
 
-        saveButton.set(style: .yellow)
+        show(processing: false)
         saveButton.setTitle("backup.cloud.password.save".localized, for: .normal)
         saveButton.addTarget(self, action: #selector(onTapCreate), for: .touchUpInside)
 
@@ -107,6 +107,13 @@ class BackupCloudPassphraseViewController: KeyboardAwareViewController {
                 }
                 .store(in: &cancellables)
 
+        viewModel.$processing
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] processing in
+                    self?.show(processing: processing)
+                }
+                .store(in: &cancellables)
+
         viewModel.clearInputsPublisher
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] in
@@ -131,6 +138,8 @@ class BackupCloudPassphraseViewController: KeyboardAwareViewController {
 
         additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: wrapperViewHeight - .margin16, right: 0)
 
+        showDefaultPassphrase()
+
         tableView.buildSections()
         isLoaded = true
     }
@@ -146,12 +155,34 @@ class BackupCloudPassphraseViewController: KeyboardAwareViewController {
         setInitialState(bottomPadding: gradientWrapperView.height)
     }
 
+    private func showDefaultPassphrase() {
+        let text = App.shared.appConfigProvider.defaultPassphrase
+        guard !text.isEmpty else {
+            return
+        }
+
+        passphraseCell.inputText = text
+        viewModel.onChange(passphrase: text)
+        passphraseConfirmationCell.inputText = text
+        viewModel.onChange(passphraseConfirmation: text)
+    }
+
     @objc private func onTapCancel() {
         dismiss(animated: true)
     }
 
     @objc private func onTapCreate() {
         viewModel.onTapCreate()
+    }
+
+    private func show(processing: Bool) {
+        if processing {
+            saveButton.set(style: .yellow, accessoryType: .spinner)
+            saveButton.isEnabled = false
+        } else {
+            saveButton.set(style: .yellow)
+            saveButton.isEnabled = true
+        }
     }
 
     private func show(error: String) {

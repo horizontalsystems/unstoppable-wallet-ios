@@ -46,7 +46,7 @@ class ManageAccountViewModel {
     private func keyActions(account: Account, isCloudBackedUp: Bool) -> [KeyActionSection] {
         var backupActions = [KeyAction]()
 
-        let footerText: String = !(account.backedUp && isCloudBackedUp) ?
+        let footerText: String = !(account.backedUp || isCloudBackedUp) ?
                 "manage_account.backup.no_backup_yet_description".localized :
                 "manage_account.backup.has_backup_description".localized
 
