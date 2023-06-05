@@ -220,28 +220,28 @@
 "backup.cloud.title" = "Backup to iCloud";
 "backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
 
-"backup.cloud.terms.item.1" = "I understand that loosing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+"backup.cloud.terms.item.1" = "Ich verstehe, dass der Verlust des Zugriffs auf meine iCloud dazu führen wird, dass auch der Zugriff auf die Sicherung einer entsprechenden Brieftasche verloren geht.";
 
-"backup.cloud.name.title" = "Backup Name";
-"backup.cloud.name.description" = "Enter name for the backup file.";
-"backup.cloud.name.empty" = "Backup name can't be empty!";
-"backup.cloud.name.error.empty" = "Backup name must be not empty";
-"backup.cloud.name.error.already_exist" = "Backup name already exist!";
+"backup.cloud.name.title" = "Sicherungsname";
+"backup.cloud.name.description" = "Geben Sie den Namen für die Backup-Datei ein.";
+"backup.cloud.name.empty" = "Sicherungsname darf nicht leer sein!";
+"backup.cloud.name.error.empty" = "Sicherungsname darf nicht leer sein";
+"backup.cloud.name.error.already_exist" = "Sicherungsname existiert bereits!";
 "backup.cloud.name.placeholder" = "Name";
 
-"backup.cloud.password.title" = "Set Password";
-"backup.cloud.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
-"backup.cloud.password.highlighted_description" = "Don't forget this password! It is separate from your Apple iCloud password, and it cannot be recovered or reset.";
-"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.title" = "Passwort festlegen";
+"backup.cloud.password.description" = "Legen Sie ein Passwort fest, um das Entsperren zu ermöglichen. Das Passwort muss mindestens 8 Zeichen lang sein und einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.";
+"backup.cloud.password.highlighted_description" = "Vergessen Sie dieses Passwort nicht! Es ist getrennt von Ihrem Apple iCloud-Passwort und kann nicht wiederhergestellt oder zurückgesetzt werden.";
+"backup.cloud.password.placeholder" = "Passwort";
 "backup.cloud.password.confirm.placeholder" = "Bestätigen";
-"backup.cloud.password.save" = "Save and Backup";
+"backup.cloud.password.save" = "Speichern und sichern";
 
 "backup.cloud.password.error.empty_passphrase" = "Passphrase darf nicht leer sein";
-"backup.cloud.password.error.forbidden_symbols" = "Please use only supported symbols: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"backup.cloud.password.error.minimum_requirement" = "At least 8 characters, including one uppercase letter, one lowercase letter, one number, and one symbol";
-"backup.cloud.password.error.invalid_password" = "Incorrect Password";
-"backup.cloud.password.error.invalid_backup" = "Backup is corrupted";
-"backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
+"backup.cloud.password.error.forbidden_symbols" = "Bitte verwende nur unterstützte Symbole: <![CDATA[A-Z a-z 0-9 \' \" ` & / ? ! : ; . , ~ * $ = + - [ ](){} <> \\ _ # @ | % ]]>";
+"backup.cloud.password.error.minimum_requirement" = "Das Passwort muss mindestens 8 Zeichen enthalten, darunter ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Symbol.";
+"backup.cloud.password.error.invalid_password" = "Falsches Passwort";
+"backup.cloud.password.error.invalid_backup" = "Backup ist beschädigt";
+"backup.cloud.password.confirm.error.doesnt_match" = "Passwort stimmt nicht überein";
 "backup.cloud.not_available" = "iCloud not Available";
 "backup.cloud.cant_create_file" = "Can't save File to iCloud";
 "backup.cloud.cant_delete_file" = "Can't delete from iCloud";
@@ -449,8 +449,8 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Swap";
-"swap.confirmation.impact_too_high" = "Unstoppable has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
-"swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
+"swap.confirmation.impact_too_high" = "Die Swap-Aktion für diesen Handel wurde unaufhaltsam deaktiviert, da der angebotene Preis extrem ungünstig ist. Dies ist auf die extrem niedrige Liquidität zurückzuführen.\nWenn du dennoch wechseln möchtest, benutze stattdessen die %@ Webseite.";
+"swap.confirmation.impact_warning" = "Wichtig! Du bekommst einen extrem ungünstigen Preis. Dies ist auf die extrem niedrige Liquidität zurückzuführen.";
 
 "swap.confirmation.minimum_received" = "Mindestens erhalten";
 "swap.confirmation.maximum_sent" = "Maximale Ausgaben";
@@ -1024,7 +1024,7 @@
 "appearance.balance_value.coin_value" = "Coin Value";
 "appearance.balance_value.fiat_value" = "Fiat Value";
 
-"appearance.balance_auto_hide" = "Balance Auto Hide";
+"appearance.balance_auto_hide" = "Auto-Ausblenden ausgleichen";
 
 // Settings -> Contacts
 
@@ -1306,12 +1306,12 @@
 "manage_account.backup_recovery_phrase" = "Manual Backup";
 "manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Sicherung aus iCloud löschen";
-"manage_account.manual_backup_required" = "Manual Backup Required";
+"manage_account.manual_backup_required" = "Manuelle Sicherung erforderlich";
 "manage_account.manual_backup_required.description" = "Um Ihre Sicherheitskopie auf iCloud sicher zu löschen, müssen Sie zuerst Ihre Wiederherstellungsphrase manuell sichern.";
-"manage_account.manual_backup_required.button" = "Backup Now";
-"manage_account.unlink" = "Unlink Wallet";
-"manage_account.backup.no_backup_yet_description" = "Complete one of the wallet backup options to start using the wallet.";
-"manage_account.backup.has_backup_description" = "It's recommended to have a manual backup for each wallet.";
+"manage_account.manual_backup_required.button" = "Jetzt Sichern";
+"manage_account.unlink" = "Wallet entfernen";
+"manage_account.backup.no_backup_yet_description" = "Füllen Sie eine der Wallet-Sicherungsoptionen aus, um mit der Wallet zu beginnen.";
+"manage_account.backup.has_backup_description" = "Es wird empfohlen, eine manuelle Sicherung für jede Wallet zu haben.";
 
 "manage_account.cloud_delete_backup_recovery_phrase.description" = "Sind Sie sicher, dass Sie Ihre Wallet-Sicherung aus iCloud löschen möchten?";
 // Manage Account -> Public Keys
