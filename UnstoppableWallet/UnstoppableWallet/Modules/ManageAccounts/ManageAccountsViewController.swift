@@ -204,7 +204,7 @@ extension ManageAccountsViewController: SectionsDataSource {
                 ]),
                 tableView: tableView,
                 id: viewItem.accountId,
-                hash: "\(viewItem.title)-\(viewItem.selected)-\(viewItem.alert)-\(viewItem.watchAccount)-\(isFirst)-\(isLast)",
+                hash: "\(viewItem.title)-\(viewItem.subtitle)-\(viewItem.selected)-\(viewItem.alert)-\(viewItem.watchAccount)-\(isFirst)-\(isLast)",
                 height: .heightDoubleLineCell,
                 autoDeselect: true,
                 bind: { cell in

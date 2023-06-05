@@ -83,6 +83,10 @@ class AppConfigProvider {
         Bundle.main.object(forInfoDictionaryKey: "DefaultWords") as? String ?? ""
     }
 
+    var defaultPassphrase: String {
+        Bundle.main.object(forInfoDictionaryKey: "DefaultPassphrase") as? String ?? ""
+    }
+
 }
 
 
