@@ -45,7 +45,7 @@ class TronKitManager {
             address: address,
             network: network,
             walletId: account.id,
-            minLogLevel: .verbose
+            minLogLevel: .error
         )
 
         tronKit.start()
