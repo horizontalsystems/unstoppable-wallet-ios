@@ -27,7 +27,7 @@
 "alert" = "Предупреждение";
 "alert.copied" = "Скопировано";
 "alert.saved" = "Сохранено";
-"alert.saved_to_icloud" = "Saved to iCloud";
+"alert.saved_to_icloud" = "Сохранено в iCloud";
 "alert.no_internet" = "Нет интернета";
 "alert.wrong_amount" = "Неправильная сумма";
 "alert.no_fee" = "Неправильная комиссия";
@@ -123,7 +123,7 @@
 
 "restore_type.title" = "Импорт кошелька";
 
-"restore_type.cloud.title" = "from iCloud";
+"restore_type.cloud.title" = "из iCloud";
 "restore_type.recovery.title" = "from Recovery Phrase";
 
 "restore_type.cloud.description" = "Import from a backup file in your keychain.";
@@ -131,14 +131,14 @@
 
 // Restore Cloud
 
-"restore.cloud.title" = "Select Backup";
-"restore.cloud.description" = "Select the backup copy of the wallet you want to restore.";
-"restore.cloud.empty" = "No backups found.";
-"restore.cloud.imported" = "Imported wallets";
+"restore.cloud.title" = "Выберите резервную копию";
+"restore.cloud.description" = "Выберите резервную копию кошелька, которую вы хотите восстановить.";
+"restore.cloud.empty" = "Резервные копии не найдены.";
+"restore.cloud.imported" = "Импортированные кошельки";
 
-"restore.cloud.password.title" = "Enter Password";
-"restore.cloud.password.placeholder" = "Backup Password";
-"restore.cloud.password.description" = "Enter the backup password to import your wallet from iCloud.";
+"restore.cloud.password.title" = "Введите пароль";
+"restore.cloud.password.placeholder" = "Пароль для резервной копии";
+"restore.cloud.password.description" = "Введите пароль резервной копии для импорта вашего кошелька из iCloud.";
 
 // Coin Settings
 
@@ -212,7 +212,7 @@
 // Backup Prompt
 
 "backup_prompt.title" = "Manual Backup";
-"backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.warning" = "Создайте резервную копию вашей фразы восстановления и пароля, которые позволят вам восстановить ваш кошелек, если телефон потерян, украден, сломал и т.д.";
 "backup_prompt.backup" = "Резервная копия";
 "backup_prompt.backup_manual" = "Manual Backup";
 "backup_prompt.backup_cloud" = "Backup to iCloud";
@@ -223,31 +223,31 @@
 "backup.cloud.title" = "Backup to iCloud";
 "backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
 
-"backup.cloud.terms.item.1" = "I understand that loosing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+"backup.cloud.terms.item.1" = "Я понимаю, что закрытие доступа к моему iCloud, приведет к потере доступа к резервной копии соответствующего кошелька.";
 
-"backup.cloud.name.title" = "Backup Name";
-"backup.cloud.name.description" = "Enter name for the backup file.";
-"backup.cloud.name.empty" = "Backup name can't be empty!";
-"backup.cloud.name.error.empty" = "Backup name must be not empty";
-"backup.cloud.name.error.already_exist" = "Backup name already exist!";
+"backup.cloud.name.title" = "Имя резервной копии";
+"backup.cloud.name.description" = "Введите имя файла резервной копии.";
+"backup.cloud.name.empty" = "Имя резервной копии не может быть пустым!";
+"backup.cloud.name.error.empty" = "Имя резервной копии не должно быть пустым";
+"backup.cloud.name.error.already_exist" = "Имя резервной копии уже существует!";
 "backup.cloud.name.placeholder" = "По названию";
 
 "backup.cloud.password.title" = "Set Password";
 "backup.cloud.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
 "backup.cloud.password.highlighted_description" = "Don't forget this password! It is separate from your Apple iCloud password, and it cannot be recovered or reset.";
-"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.placeholder" = "Пароль";
 "backup.cloud.password.confirm.placeholder" = "Подтвердить";
-"backup.cloud.password.save" = "Save and Backup";
+"backup.cloud.password.save" = "Сохранить и создать резервную копию";
 
 "backup.cloud.password.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
-"backup.cloud.password.error.forbidden_symbols" = "Please use only supported symbols: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"backup.cloud.password.error.minimum_requirement" = "At least 8 characters, including one uppercase letter, one lowercase letter, one number, and one symbol";
-"backup.cloud.password.error.invalid_password" = "Incorrect Password";
-"backup.cloud.password.error.invalid_backup" = "Backup is corrupted";
-"backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
-"backup.cloud.not_available" = "iCloud not Available";
-"backup.cloud.cant_create_file" = "Can't save File to iCloud";
-"backup.cloud.cant_delete_file" = "Can't delete from iCloud";
+"backup.cloud.password.error.forbidden_symbols" = "Пожалуйста, используйте только поддерживаемые символы: A-Z a-z 0-9 ' \" ` & / ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_requirement" = "Не менее 8 символов, включая одну заглавную букву, одну строчную букву, одну цифру и один символ";
+"backup.cloud.password.error.invalid_password" = "Неверный пароль";
+"backup.cloud.password.error.invalid_backup" = "Резервная копия повреждена";
+"backup.cloud.password.confirm.error.doesnt_match" = "Пароли не совпадают";
+"backup.cloud.not_available" = "iCloud недоступен";
+"backup.cloud.cant_create_file" = "Не удается сохранить файл в iCloud";
+"backup.cloud.cant_delete_file" = "Не удается удалить из iCloud";
 
 
 // Errors
@@ -664,15 +664,15 @@
 "coin_analytics.cex_volume" = "Объем CEX";
 "coin_analytics.cex_volume_rank" = "Рейтинг объема CEX";
 "coin_analytics.cex_volume_rank.description" = "Торговый объем токена на централизованных биржах.";
-"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
+"coin_analytics.cex_volume.info1" = "Общий объем торгов по токену на ведущих централизованных биржах за 30-дневный период.";
 "coin_analytics.cex_volume.info2" = "График, показывающий колебания дневного объема торговли токеном на ведущих централизованных биржах за 1 год.";
-"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over 30-day period.";
+"coin_analytics.cex_volume.info3" = "Рейтинг токена основан на объеме торговли на ведущих централизованных биржах за 30-дневный период.";
 "coin_analytics.cex_volume.info4" = "Список всех токенов, ранжированных по объему торговли на децентрализованных биржах за 24ч/7дн/1мес.";
 
 "coin_analytics.dex_volume" = "Объем DEX";
 "coin_analytics.dex_volume_rank" = "Рейтинг объема DEX";
 "coin_analytics.dex_volume_rank.description" = "Торговый объем токена на децентрализованных биржах.";
-"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over a 30-day period.";
+"coin_analytics.dex_volume.info1" = "Общий объем торгов по токену на ведущих децентрализованных биржах за 30-дневный период.";
 "coin_analytics.dex_volume.info2" = "График, показывающий колебания дневного объема торговли токеном на ведущих децентрализованных биржах за 1 год.";
 "coin_analytics.dex_volume.info3" = "Рейтинг токена основан на объеме торговли на ведущих децентрализованных биржах за 30-дневный период.";
 "coin_analytics.dex_volume.info4" = "Список всех токенов, ранжированных по объему торговли на децентрализованных биржах за 24ч/7дн/1мес.";
@@ -694,7 +694,7 @@
 "coin_analytics.active_addresses.30_day_unique_addresses" = "Уникальные адреса за 30 дней";
 "coin_analytics.active_addresses_rank" = "Рейтинг активных адресов";
 "coin_analytics.active_addresses_rank.description" = "Список токенов, ранжированных по количеству уникальных адресов транзакций с токеном.";
-"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over a 24-hour period.";
+"coin_analytics.active_addresses.info1" = "Общее количество уникальных ежедневных активных адресов за 24 часа.";
 "coin_analytics.active_addresses.info2" = "График, показывающий вариацию количества ежедневных активных адресов в течение 1 года.";
 "coin_analytics.active_addresses.info3" = "Общее количество уникальных адресов блокчейна, с которых проводились транзакции с токеном за 30 дней.";
 "coin_analytics.active_addresses.info4" = "Рейтинг токена основан на количестве активных кошельков, используемых для транзакций с токеном за 30-дневный период.";
@@ -710,7 +710,7 @@
 "coin_analytics.transaction_count.info5" = "Общее количество токенов, отправленных через блокчейн за 30-дневный период.";
 
 "coin_analytics.holders" = "Держатели";
-"coin_analytics.holders_rank" = "Holders Rank";
+"coin_analytics.holders_rank" = "Рейтинг держателей";
 "coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
 "coin_analytics.holders.info1" = "Общее количество уникальных адресов с токенами в различных блокчейнах.";
 "coin_analytics.holders.info2" = "Топ-10 кошельков с токенами в каждом блокчейне.";
@@ -1027,7 +1027,7 @@
 "appearance.balance_value.coin_value" = "Токен значение";
 "appearance.balance_value.fiat_value" = "Фиатное значение";
 
-"appearance.balance_auto_hide" = "Balance Auto Hide";
+"appearance.balance_auto_hide" = "Автоскрытие баланса";
 
 // Settings -> Contacts
 
@@ -1306,12 +1306,12 @@
 "manage_account.recovery_phrase" = "Фраза восстановления";
 "manage_account.public_keys" = "Публичные ключи";
 "manage_account.private_keys" = "Приватные ключи";
-"manage_account.backup_recovery_phrase" = "Резервная копия";
+"manage_account.backup_recovery_phrase" = "Manual Backup";
 "manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
-"manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
-"manage_account.manual_backup_required" = "Manual Backup Required";
-"manage_account.manual_backup_required.description" = "In order to securely delete your backup on iCloud, you will need to manually backup your recovery phrase first.";
-"manage_account.manual_backup_required.button" = "Backup Now";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Удалить резервную копию из iCloud";
+"manage_account.manual_backup_required" = "Требуется резервное копирование вручную";
+"manage_account.manual_backup_required.description" = "Чтобы безопасно удалить резервную копию в iCloud, вам необходимо сначала сделать резервную копию фразы восстановления вручную.";
+"manage_account.manual_backup_required.button" = "Сделать резервную копию";
 "manage_account.unlink" = "Unlink Wallet";
 "manage_account.backup.no_backup_yet_description" = "Complete one of the wallet backup options to start using the wallet.";
 "manage_account.backup.has_backup_description" = "It's recommended to have a manual backup for each wallet.";
@@ -1427,7 +1427,7 @@
 "watch_address.by" = "Из";
 "watch_address.watch_by" = "Смотреть из";
 "watch_address.evm_address" = "EVM адрес";
-"watch_address.tron_address" = "TRON Address";
+"watch_address.tron_address" = "TRON адрес";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Введите Account Extended Public Key";
 "watch_address.public_key.invalid_key" = "Неверный ключ";
