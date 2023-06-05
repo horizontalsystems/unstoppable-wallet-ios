@@ -1302,7 +1302,7 @@
 "manage_account.recovery_phrase" = "복구 문구";
 "manage_account.public_keys" = "공개 키";
 "manage_account.private_keys" = "개인 암호";
-"manage_account.backup_recovery_phrase" = "백업 복구 문구";
+"manage_account.backup_recovery_phrase" = "Manual Backup";
 "manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
 "manage_account.manual_backup_required" = "Manual Backup Required";
