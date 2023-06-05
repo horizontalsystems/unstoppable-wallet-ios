@@ -125,18 +125,18 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "restore_type.recovery.title" = "da Frase de Recuperação";
 
 "restore_type.cloud.description" = "Importe de um arquivo de backup em sua keychain.";
-"restore_type.recovery.description" = "Import using recovery phrase or private key.";
+"restore_type.recovery.description" = "Importar usando frase de recuperação ou chave privada.";
 
 // Restore Cloud
 
-"restore.cloud.title" = "Select Backup";
-"restore.cloud.description" = "Select the backup copy of the wallet you want to restore.";
-"restore.cloud.empty" = "No backups found.";
-"restore.cloud.imported" = "Imported wallets";
+"restore.cloud.title" = "Selecionar Backup";
+"restore.cloud.description" = "Selecione a cópia de backup da carteira que você deseja restaurar.";
+"restore.cloud.empty" = "Nenhum backup encontrado.";
+"restore.cloud.imported" = "Carteiras importadas";
 
-"restore.cloud.password.title" = "Enter Password";
-"restore.cloud.password.placeholder" = "Backup Password";
-"restore.cloud.password.description" = "Enter the backup password to import your wallet from iCloud.";
+"restore.cloud.password.title" = "Digite a senha";
+"restore.cloud.password.placeholder" = "Fazer Backup da Senha";
+"restore.cloud.password.description" = "Digite a senha de backup para importar sua carteira.";
 
 // Coin Settings
 
@@ -209,43 +209,43 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Backup Prompt
 
-"backup_prompt.title" = "Manual Backup";
-"backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.title" = "Backup Manual";
+"backup_prompt.warning" = "Crie uma cópia de backup da frase de recuperação e da senha associada que permitirá recuperar sua carteira caso seu telefone seja perdido, roubado, quebrado etc.";
 "backup_prompt.backup" = "Backup";
-"backup_prompt.backup_manual" = "Manual Backup";
-"backup_prompt.backup_cloud" = "Backup to iCloud";
+"backup_prompt.backup_manual" = "Backup Manual";
+"backup_prompt.backup_cloud" = "Backup para o iCloud";
 "backup_prompt.later" = "Mais tarde";
 
 // Backup to iCloud
 
-"backup.cloud.title" = "Backup to iCloud";
-"backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
+"backup.cloud.title" = "Backup para o iCloud";
+"backup.cloud.description" = "O armazenamento em iCloud é um serviço de armazenamento em nuvem de terceiros fornecido pela Apple. É importante saber que seus dados serão armazenados nos servidores da Apple, não em seus dispositivos pessoais. Isso significa que você está confiando seus dados e entregando a segurança de suas informações a um serviço terceirizado.";
 
-"backup.cloud.terms.item.1" = "I understand that loosing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+"backup.cloud.terms.item.1" = "Compreendo que perder acesso ao meu iCloud resultará em perder acesso ao backup de uma respectiva carteira.";
 
-"backup.cloud.name.title" = "Backup Name";
-"backup.cloud.name.description" = "Enter name for the backup file.";
-"backup.cloud.name.empty" = "Backup name can't be empty!";
-"backup.cloud.name.error.empty" = "Backup name must be not empty";
-"backup.cloud.name.error.already_exist" = "Backup name already exist!";
+"backup.cloud.name.title" = "Nome do Backup";
+"backup.cloud.name.description" = "Digite o nome para o arquivo de backup.";
+"backup.cloud.name.empty" = "O nome do Backup não pode estar vazio!";
+"backup.cloud.name.error.empty" = "O nome do backup não pode estar vazio";
+"backup.cloud.name.error.already_exist" = "O nome do Backup já existe!";
 "backup.cloud.name.placeholder" = "Nome";
 
-"backup.cloud.password.title" = "Set Password";
-"backup.cloud.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
-"backup.cloud.password.highlighted_description" = "Don't forget this password! It is separate from your Apple iCloud password, and it cannot be recovered or reset.";
-"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.title" = "Definir Senha";
+"backup.cloud.password.description" = "Defina a senha de desbloqueio para o seu backup. Deve consistir de pelo menos 8 símbolos e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial.";
+"backup.cloud.password.highlighted_description" = "Não esqueça esta senha! Ela é separada da sua senha do iCloud da Apple e não pode ser recuperada ou redefinida.";
+"backup.cloud.password.placeholder" = "Senha";
 "backup.cloud.password.confirm.placeholder" = "Confirmar";
-"backup.cloud.password.save" = "Save and Backup";
+"backup.cloud.password.save" = "Salvar e fazer Backup";
 
 "backup.cloud.password.error.empty_passphrase" = "A senha não pode estar vazia";
-"backup.cloud.password.error.forbidden_symbols" = "Please use only supported symbols: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"backup.cloud.password.error.minimum_requirement" = "At least 8 characters, including one uppercase letter, one lowercase letter, one number, and one symbol";
-"backup.cloud.password.error.invalid_password" = "Incorrect Password";
-"backup.cloud.password.error.invalid_backup" = "Backup is corrupted";
-"backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
-"backup.cloud.not_available" = "iCloud not Available";
-"backup.cloud.cant_create_file" = "Can't save File to iCloud";
-"backup.cloud.cant_delete_file" = "Can't delete from iCloud";
+"backup.cloud.password.error.forbidden_symbols" = "Por favor, use apenas símbolos suportados: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_requirement" = "Pelo menos 8 caracteres, incluindo uma letra maiúscula, uma letra minúscula, um número e um símbolo";
+"backup.cloud.password.error.invalid_password" = "Senha Incorreta";
+"backup.cloud.password.error.invalid_backup" = "O backup está corrompido";
+"backup.cloud.password.confirm.error.doesnt_match" = "A senha não corresponde";
+"backup.cloud.not_available" = "iCloud indisponível";
+"backup.cloud.cant_create_file" = "Não é possível salvar o arquivo no iCloud";
+"backup.cloud.cant_delete_file" = "Não é possível excluir do iCloud";
 
 
 // Errors
@@ -450,8 +450,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Trocar";
-"swap.confirmation.impact_too_high" = "Unstoppable has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
-"swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
+"swap.confirmation.impact_too_high" = "A Unstoppable desativou a ação de troca para esta negociação porque você está obtendo um preço extremamente desfavorável. Isso ocorre devido à liquidez extremamente baixa.\nSe você ainda deseja trocar, use o site %@.";
+"swap.confirmation.impact_warning" = "Importante! Você está recebendo um preço extremamente desfavorável. Isso se deve a uma liquidez extremamente baixa.";
 
 "swap.confirmation.minimum_received" = "Mínimo recebido";
 "swap.confirmation.maximum_sent" = "Gastos máximos";
@@ -493,8 +493,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.project_has_no_coin" = "Esse projeto não tem uma moeda";
 
 "market.top.section.header.see_all" = "Ver tudo";
-"market.top.section.header.top_gainers" = "Top ganhadores";
-"market.top.section.header.top_losers" = "Top Perdedores";
+"market.top.section.header.top_gainers" = "Maiores Altas";
+"market.top.section.header.top_losers" = "Maiores Quedas";
 "market.top.section.header.top_sectors" = "Principais Setores";
 "market.top.section.header.news" = "Notícias";
 "market.top.volume.title" = "Vol";
@@ -518,8 +518,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.top.lowest_cap" = "Menor capitalização";
 "market.top.highest_volume" = "Maior volume";
 "market.top.lowest_volume" = "Menor volume";
-"market.top.top_gainers" = "Top ganhadores";
-"market.top.top_losers" = "Top Perdedores";
+"market.top.top_gainers" = "Maiores Altas";
+"market.top.top_losers" = "Maiores Quedas";
 "market.top.top_collections" = "Principais Coleções NFT";
 "market.top.floor_price" = "Andar:";
 "market.top.top_platforms" = "Melhores Plataformas";
@@ -656,21 +656,21 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.not_available" = "Este projeto não tem dados de análise";
 "coin_analytics.locked.not_subscribed" = "Esta página está disponível apenas para usuários premium da Carteira Unstoppable";
 "coin_analytics.locked.learn_more" = "Saiba Mais";
-"coin_analytics.locked.not_activated" = "Activate your subscription for getting access to analytics";
+"coin_analytics.locked.not_activated" = "Ativar sua assinatura para ter acesso ao Analytics";
 "coin_analytics.locked.activate" = "Ativar";
 
 "coin_analytics.cex_volume" = "Volume CEX";
 "coin_analytics.cex_volume_rank" = "Ranking do Volume CEX";
 "coin_analytics.cex_volume_rank.description" = "Tokens classificados por volume de negociação para o token em corretoras centralizadas.";
-"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
+"coin_analytics.cex_volume.info1" = "Volume total de trading para o token em corretoras centralizadas durante um período de 30 dias.";
 "coin_analytics.cex_volume.info2" = "Gráfico mostrando a variação no volume diário de negociação do token nas principais corretoras centralizadas durante um período de 1 ano.";
-"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over 30-day period.";
+"coin_analytics.cex_volume.info3" = "Classificação do Token baseada no volume de trading nas principais corretoras centralizadas durante um período de 30 dias.";
 "coin_analytics.cex_volume.info4" = "Lista de todos os tokens com base no volume de trading em corretoras centralizadas ao longo de 24H / 7D / 1M.";
 
 "coin_analytics.dex_volume" = "Volume DEX";
 "coin_analytics.dex_volume_rank" = "Ranking do Volume DEX";
 "coin_analytics.dex_volume_rank.description" = "Tokens classificados por volume de negociação para o token em corretoras descentralizadas.";
-"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over a 30-day period.";
+"coin_analytics.dex_volume.info1" = "Volume total de trading para o token em corretoras centralizadas durante um período de 30 dias.";
 "coin_analytics.dex_volume.info2" = "Gráfico mostrando a variação no volume diário de negociação do token nas principais corretoras centralizadas durante um período de 1 ano.";
 "coin_analytics.dex_volume.info3" = "Classificação do Token baseada no volume de trading em principais corretoras centralizadas durante um período de 30 dias.";
 "coin_analytics.dex_volume.info4" = "Lista de todos os tokens com base no volume de trading em corretoras descentralizadas ao longo de 24H / 7D / 1M.";
@@ -692,7 +692,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30 Dias Endereços Únicos";
 "coin_analytics.active_addresses_rank" = "Ranking de Endereços Ativos";
 "coin_analytics.active_addresses_rank.description" = "Tokens classificados pelo número de endereços exclusivos que realizam transações com o token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over a 24-hour period.";
+"coin_analytics.active_addresses.info1" = "Número total de endereços ativos diários únicos em um período de 24 horas.";
 "coin_analytics.active_addresses.info2" = "Gráfico mostrando a variação na contagem diária de endereços ativos durante o período de 1 ano.";
 "coin_analytics.active_addresses.info3" = "Número total de endereços de blockchain únicos realizando transações com token em um período de 30 dias.";
 "coin_analytics.active_addresses.info4" = "Classificação do token com base no número de carteiras ativas realizando transações no período de 30 dias do token.";
@@ -708,8 +708,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.transaction_count.info5" = "O número total de tokens transferidos sobre a blockchain ao longo do período de 30 dias.";
 
 "coin_analytics.holders" = "Holders";
-"coin_analytics.holders_rank" = "Holders Rank";
-"coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
+"coin_analytics.holders_rank" = "Classificação dos Holders";
+"coin_analytics.holders_rank.description" = "Raking de tokens por endereços únicos guardando-os em várias blockchains.";
 "coin_analytics.holders.info1" = "Número total de endereços únicos que contêm o token em várias blockchains.";
 "coin_analytics.holders.info2" = "As 10 principais carteiras que possuem o token em cada blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Blockchains rastreadas: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
@@ -1305,16 +1305,16 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "manage_account.public_keys" = "Chaves públicas";
 "manage_account.private_keys" = "Chave Privada";
 "manage_account.backup_recovery_phrase" = "Backup da frase de recuperação";
-"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
-"manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
-"manage_account.manual_backup_required" = "Manual Backup Required";
-"manage_account.manual_backup_required.description" = "In order to securely delete your backup on iCloud, you will need to manually backup your recovery phrase first.";
-"manage_account.manual_backup_required.button" = "Backup Now";
-"manage_account.unlink" = "Unlink Wallet";
-"manage_account.backup.no_backup_yet_description" = "Complete one of the wallet backup options to start using the wallet.";
-"manage_account.backup.has_backup_description" = "It's recommended to have a manual backup for each wallet.";
+"manage_account.cloud_backup_recovery_phrase" = "Backup para o iCloud";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Excluir Backup do iCloud";
+"manage_account.manual_backup_required" = "Backup Manual Requerido";
+"manage_account.manual_backup_required.description" = "Para excluir com segurança seu backup no iCloud, você precisará fazer backup da sua frase de recuperação manualmente.";
+"manage_account.manual_backup_required.button" = "Realizar backup agora";
+"manage_account.unlink" = "Desvincular Carteira";
+"manage_account.backup.no_backup_yet_description" = "Conclua uma das opções de backup da carteira para começar a usar a carteira.";
+"manage_account.backup.has_backup_description" = "É recomendável ter um backup manual para cada carteira.";
 
-"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "Você tem certeza de que deseja excluir o backup da carteira do iCloud?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "Chaves públicas";
