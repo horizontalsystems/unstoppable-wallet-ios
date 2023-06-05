@@ -81,11 +81,11 @@
 
 "sync_error" = "동기화 오류입니다. 다시 시도하십시오.";
 
-"number.thousand" = "%@K";
-"number.million" = "%@M";
-"number.billion" = "%@B";
-"number.trillion" = "%@T";
-"number.quadrillion" = "%@Q";
+"number.thousand" = "%@천";
+"number.million" = "%@백만";
+"number.billion" = "%@십억";
+"number.trillion" = "%@일조";
+"number.quadrillion" = "%@천조";
 
 "selector.any" = "어떤";
 
@@ -1307,7 +1307,7 @@
 "manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
 "manage_account.manual_backup_required" = "Manual Backup Required";
 "manage_account.manual_backup_required.description" = "In order to securely delete your backup on iCloud, you will need to manually backup your recovery phrase first.";
-"manage_account.manual_backup_required.button" = "Backup Now";
+"manage_account.manual_backup_required.button" = "백업 지금";
 "manage_account.unlink" = "Unlink Wallet";
 "manage_account.backup.no_backup_yet_description" = "Complete one of the wallet backup options to start using the wallet.";
 "manage_account.backup.has_backup_description" = "각 지갑에 대해 수동 백업을 하는 것이 좋습니다.";
@@ -1421,7 +1421,7 @@
 "watch_address.by" = "작성";
 "watch_address.watch_by" = "지켜보다";
 "watch_address.evm_address" = "EVM 주소";
-"watch_address.tron_address" = "TRON Address";
+"watch_address.tron_address" = "TRON 주소";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Account Extended Public Key 입력";
 "watch_address.public_key.invalid_key" = "잘못된 암호입니다";
