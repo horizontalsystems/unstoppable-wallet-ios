@@ -27,7 +27,7 @@
 "alert" = "Alerte";
 "alert.copied" = "Copié";
 "alert.saved" = "Sauvegardé";
-"alert.saved_to_icloud" = "Saved to iCloud";
+"alert.saved_to_icloud" = "Enregistré dans iCloud";
 "alert.no_internet" = "Aucune connexion Internet";
 "alert.wrong_amount" = "Montant incorrect";
 "alert.no_fee" = "Commission incorrecte";
@@ -108,7 +108,7 @@
 "restore.checksum_error" = "Somme de contrôle invalide";
 "restore.passphrase" = "Phrase d'authentification";
 "restore.input.passphrase" = "Phrase d'authentification";
-"restore.passphrase_description" = "This password is used to encrypt backup file of your wallet. It's not related to your Apple iCloud password. It can't be recovered or reset if lost or forgotten.";
+"restore.passphrase_description" = "Ce mot de passe est utilisé pour chiffrer le fichier de sauvegarde de votre portefeuille. Il n'est pas lié à votre mot de passe Apple iCloud, et il ne peut pas être récupéré ou réinitialisé en cas de perte ou d'oubli.";
 "restore.error.empty_passphrase" = "La phrase d'authentification ne peut pas être une valeur vide";
 "restore.non_standard_import" = "Restauration non-standard";
 "restore.non_standard_import.description" = "Sur cette page, vous trouverez un mécanisme spécial de restauration de portefeuille pour les utilisateurs d'Unstoppable dont le portefeuille n'est pas standard. En général, de tels portefeuilles ont été créés dans la version 0.27 - 0.28 d'Unstoppable en utilisant une liste de mots mnémoniques non-anglais et/ou un caractère spécial dans la phrase de passe du portefeuille (c'est-à-dire un symbole diacritique).\n\nSi vous êtes un utilisateur concerné, le solde de votre portefeuille sera affiché à 0 après la restauration de ce portefeuille dans la version 0.29 ou supérieure. Grâce à cette page, vous pourrez restaurer l'accès à votre portefeuille non-standard. Une fois la restauration effectuée, il est conseillé de créer un nouveau portefeuille (qui sera conforme aux normes) et d'y transférer vos fonds.";
@@ -236,13 +236,13 @@
 "backup.cloud.password.save" = "Save and Backup";
 
 "backup.cloud.password.error.empty_passphrase" = "La phrase d'authentification ne peut pas être laissée en blanc";
-"backup.cloud.password.error.forbidden_symbols" = "Please use only supported symbols: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.forbidden_symbols" = "Veuillez utiliser uniquement les symboles pris en charge : A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_requirement" = "At least 8 characters, including one uppercase letter, one lowercase letter, one number, and one symbol";
 "backup.cloud.password.error.invalid_password" = "Incorrect Password";
 "backup.cloud.password.error.invalid_backup" = "Backup is corrupted";
 "backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
 "backup.cloud.not_available" = "iCloud not Available";
-"backup.cloud.cant_create_file" = "Can't save File to iCloud";
+"backup.cloud.cant_create_file" = "Impossible de sauvegarder le fichier sur iCloud";
 "backup.cloud.cant_delete_file" = "Can't delete from iCloud";
 
 
@@ -705,9 +705,9 @@
 "coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
 "coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
 
-"coin_analytics.holders" = "Holders";
-"coin_analytics.holders_rank" = "Holders Rank";
-"coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
+"coin_analytics.holders" = "Porteurs";
+"coin_analytics.holders_rank" = "Classement des porteurs";
+"coin_analytics.holders_rank.description" = "Classement des jetons selon les adresses uniques qui les détiennent sur plusieurs chaînes de blocs.";
 "coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
@@ -1422,7 +1422,7 @@
 "watch_address.by" = "Par";
 "watch_address.watch_by" = "Regarder par";
 "watch_address.evm_address" = "Adresse EVM";
-"watch_address.tron_address" = "TRON Address";
+"watch_address.tron_address" = "Adresse TRON";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Entrez Account Extended Public Key ";
 "watch_address.public_key.invalid_key" = "Clé invalide";
