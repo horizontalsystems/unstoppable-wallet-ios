@@ -1424,6 +1424,7 @@
 "watch_address.by" = "由";
 "watch_address.watch_by" = "观看者";
 "watch_address.evm_address" = "EVM 地址";
+"watch_address.tron_address" = "TRON Address";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "輸入 Account Extended Public Key";
 "watch_address.public_key.invalid_key" = "错误密钥";
