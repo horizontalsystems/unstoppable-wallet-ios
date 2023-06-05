@@ -1421,6 +1421,7 @@
 "watch_address.by" = "Por";
 "watch_address.watch_by" = "Ver por";
 "watch_address.evm_address" = "Dirección EVM";
+"watch_address.tron_address" = "TRON Address";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Introduzca Account Extended Public Key ";
 "watch_address.public_key.invalid_key" = "Clave no válida";
