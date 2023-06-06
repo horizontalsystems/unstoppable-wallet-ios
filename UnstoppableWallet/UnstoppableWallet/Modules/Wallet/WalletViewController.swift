@@ -281,9 +281,19 @@ class WalletViewController: ThemeViewController {
                         self?.openSend(wallet: wallet)
                     }
                 },
+                onWithdraw: { [weak self] in
+                    if let cexAsset = viewItem.element.cexAsset {
+                        self?.openWithdraw(cexAsset: cexAsset)
+                    }
+                },
                 onReceive: { [weak self] in
                     if let wallet = viewItem.element.wallet {
                         self?.viewModel.onTapReceive(wallet: wallet)
+                    }
+                },
+                onDeposit: { [weak self] in
+                    if let cexAsset = viewItem.element.cexAsset {
+                        self?.openDeposit(cexAsset: cexAsset)
                     }
                 },
                 onSwap: { [weak self] in
@@ -322,16 +332,24 @@ class WalletViewController: ThemeViewController {
         present(alertController, animated: true)
     }
 
+    private func openSend(wallet: Wallet) {
+        if let module = SendModule.controller(wallet: wallet) {
+            present(module, animated: true)
+        }
+    }
+
+    private func openWithdraw(cexAsset: CexAsset) {
+        // todo
+    }
+
     private func openReceive(wallet: Wallet) {
         if let module = DepositModule.viewController(wallet: wallet) {
             present(module, animated: true)
         }
     }
 
-    private func openSend(wallet: Wallet) {
-        if let module = SendModule.controller(wallet: wallet) {
-            present(module, animated: true)
-        }
+    private func openDeposit(cexAsset: CexAsset) {
+        // todo
     }
 
     private func openSwap(wallet: Wallet) {

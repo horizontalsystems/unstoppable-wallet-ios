@@ -67,6 +67,18 @@ class AccountStorage {
             }
 
             type = .hdExtendedKey(key: key)
+        case .cex:
+            guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
+                return nil
+            }
+
+            let uniqueId = String(decoding: data, as: UTF8.self)
+
+            guard let cexType = CexType.decode(uniqueId: uniqueId) else {
+                return nil
+            }
+
+            type = .cex(type: cexType)
         }
 
         return Account(
@@ -105,6 +117,11 @@ class AccountStorage {
         case .hdExtendedKey(let key):
             typeName = .hdExtendedKey
             dataKey = try store(data: key.serialized, id: id, typeName: typeName, keyName: .data)
+        case .cex(let type):
+            typeName = .cex
+            if let data = type.uniqueId.data(using: .utf8) {
+                dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
+            }
         }
 
         return AccountRecord(
@@ -135,6 +152,8 @@ class AccountStorage {
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .tronAddress, keyName: .data))
         case .hdExtendedKey:
             try secureStorage.removeValue(for: secureKey(id: id, typeName: .hdExtendedKey, keyName: .data))
+        case .cex:
+            try secureStorage.removeValue(for: secureKey(id: id, typeName: .cex, keyName: .data))
         }
     }
 
@@ -220,6 +239,7 @@ extension AccountStorage {
         case evmAddress = "address"
         case tronAddress
         case hdExtendedKey
+        case cex
     }
 
     private enum KeyName: String {

@@ -6,6 +6,7 @@ import StorageKit
 import CurrencyKit
 
 protocol IWalletElementService: AnyObject {
+    var delegate: IWalletElementServiceDelegate? { get set }
     var elements: [WalletModule.Element] { get }
     func isMainNet(element: WalletModule.Element) -> Bool?
     func balanceData(element: WalletModule.Element) -> BalanceData?
@@ -25,7 +26,7 @@ protocol IWalletElementServiceDelegate: AnyObject {
 class WalletService {
     private let keySortType = "wallet-sort-type"
 
-    private let elementService: IWalletElementService
+    private let elementServiceFactory: WalletElementServiceFactory
     private let coinPriceService: WalletCoinPriceService
     private let accountManager: AccountManager
     private let cacheManager: EnabledWalletCacheManager
@@ -81,15 +82,17 @@ class WalletService {
         }
     }
 
+    private var elementService: IWalletElementService?
+
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
-    init(elementService: IWalletElementService, coinPriceService: WalletCoinPriceService, accountManager: AccountManager,
+    init(elementServiceFactory: WalletElementServiceFactory, coinPriceService: WalletCoinPriceService, accountManager: AccountManager,
          cacheManager: EnabledWalletCacheManager, accountRestoreWarningManager: AccountRestoreWarningManager, reachabilityManager: IReachabilityManager,
          balancePrimaryValueManager: BalancePrimaryValueManager, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager,
          cloudAccountBackupManager: CloudAccountBackupManager, rateAppManager: RateAppManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider,
          localStorage: StorageKit.ILocalStorage
     ) {
-        self.elementService = elementService
+        self.elementServiceFactory = elementServiceFactory
         self.coinPriceService = coinPriceService
         self.accountManager = accountManager
         self.cacheManager = cacheManager
@@ -113,7 +116,7 @@ class WalletService {
         }
 
         subscribe(disposeBag, accountManager.activeAccountObservable) { [weak self] in
-            self?.activeAccountRelay.accept($0)
+            self?.handleUpdated(activeAccount: $0)
         }
         subscribe(disposeBag, accountManager.accountUpdatedObservable) { [weak self] in
             self?.handleUpdated(account: $0)
@@ -133,7 +136,9 @@ class WalletService {
             self?.syncTotalItem()
         }
 
-        _sync(elements: elementService.elements)
+        elementService = accountManager.activeAccount.map { elementServiceFactory.elementService(accountType: $0.type) }
+        _sync(elements: elementService?.elements ?? [])
+        elementService?.delegate = self
     }
 
     private func _sync(elements: [WalletModule.Element]) {
@@ -144,10 +149,10 @@ class WalletService {
         let items: [Item] = elements.map { element in
             let item = Item(
                     element: element,
-                    isMainNet: elementService.isMainNet(element: element) ?? fallbackIsMainNet,
+                    isMainNet: elementService?.isMainNet(element: element) ?? fallbackIsMainNet,
                     watchAccount: watchAccount,
-                    balanceData: elementService.balanceData(element: element) ?? cachedBalanceData(element: element, cacheContainer: cacheContainer) ?? fallbackBalanceData,
-                    state: elementService.state(element: element)  ?? fallbackAdapterState
+                    balanceData: elementService?.balanceData(element: element) ?? cachedBalanceData(element: element, cacheContainer: cacheContainer) ?? fallbackBalanceData,
+                    state: elementService?.state(element: element)  ?? fallbackAdapterState
             )
 
             if let priceCoinUid = element.priceCoinUid {
@@ -175,6 +180,18 @@ class WalletService {
 
     private func _item(element: WalletModule.Element) -> Item? {
         internalItems.first { $0.element == element }
+    }
+
+    private func handleUpdated(activeAccount: Account?) {
+        queue.async {
+            self.elementService?.delegate = nil
+
+            self.elementService = activeAccount.map { self.elementServiceFactory.elementService(accountType: $0.type) }
+            self._sync(elements: self.elementService?.elements ?? [])
+            self.elementService?.delegate = self
+        }
+
+        activeAccountRelay.accept(activeAccount)
     }
 
     private func handleUpdateSortType() {
@@ -256,11 +273,11 @@ extension WalletService: IWalletElementServiceDelegate {
             var balanceDataMap = [Wallet: BalanceData]()
 
             for item in self.internalItems {
-                let balanceData = self.elementService.balanceData(element: item.element) ?? self.fallbackBalanceData
+                let balanceData = self.elementService?.balanceData(element: item.element) ?? self.fallbackBalanceData
 
-                item.isMainNet = self.elementService.isMainNet(element: item.element) ?? self.fallbackIsMainNet
+                item.isMainNet = self.elementService?.isMainNet(element: item.element) ?? self.fallbackIsMainNet
                 item.balanceData = balanceData
-                item.state = self.elementService.state(element: item.element) ?? self.fallbackAdapterState
+                item.state = self.elementService?.state(element: item.element) ?? self.fallbackAdapterState
 
                 if let wallet = item.element.wallet {
                     balanceDataMap[wallet] = balanceData
@@ -442,12 +459,12 @@ extension WalletService {
     }
 
     func refresh() {
-        elementService.refresh()
+        elementService?.refresh()
         coinPriceService.refresh()
     }
 
     func disable(element: WalletModule.Element) {
-        elementService.disable(element: element)
+        elementService?.disable(element: element)
     }
 
     func isCloudBackedUp(account: Account) -> Bool {
