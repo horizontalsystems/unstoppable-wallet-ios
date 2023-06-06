@@ -123,19 +123,19 @@
 "restore_type.cloud.title" = "von iCloud";
 "restore_type.recovery.title" = "von Wiederherstellungsphrase";
 
-"restore_type.cloud.description" = "Import from a backup file in your keychain.";
+"restore_type.cloud.description" = "Importieren Sie aus einer Sicherungsdatei in Ihrem Schlüsselbund.";
 "restore_type.recovery.description" = "Importieren Sie mithilfe der Wiederherstellungsphrase oder des privaten Schlüssels.";
 
 // Restore Cloud
 
-"restore.cloud.title" = "Select Backup";
-"restore.cloud.description" = "Select the backup copy of the wallet you want to restore.";
-"restore.cloud.empty" = "No backups found.";
-"restore.cloud.imported" = "Imported wallets";
+"restore.cloud.title" = "Sicherung auswählen";
+"restore.cloud.description" = "Wählen Sie die Sicherungskopie der Wallet aus, die Sie wiederherstellen möchten.";
+"restore.cloud.empty" = "Keine Sicherungen gefunden.";
+"restore.cloud.imported" = "Importierte Wallet";
 
-"restore.cloud.password.title" = "Enter Password";
-"restore.cloud.password.placeholder" = "Backup Password";
-"restore.cloud.password.description" = "Enter the backup password to import your wallet from iCloud.";
+"restore.cloud.password.title" = "Passwort eingeben";
+"restore.cloud.password.placeholder" = "Passwort sichern";
+"restore.cloud.password.description" = "Geben Sie das Backup-Passwort ein, um Ihre Brieftasche aus iCloud zu importieren.";
 
 // Coin Settings
 
@@ -208,17 +208,17 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Manual Backup";
+"backup_prompt.title" = "Manuelle Sicherung";
 "backup_prompt.warning" = "Erstellen Sie eine Sicherungskopie der Wiederherstellungsphrase und des zugehörigen Passworts, mit dem Sie Ihre Wallet wiederherstellen können, wenn Ihr Telefon verloren geht, gestohlen, kaputt, etc.";
 "backup_prompt.backup" = "Sicherung";
-"backup_prompt.backup_manual" = "Manual Backup";
-"backup_prompt.backup_cloud" = "Backup to iCloud";
+"backup_prompt.backup_manual" = "Manuelle Sicherung";
+"backup_prompt.backup_cloud" = "Sicherung in iCloud";
 "backup_prompt.later" = "Später";
 
 // Backup to iCloud
 
-"backup.cloud.title" = "Backup to iCloud";
-"backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
+"backup.cloud.title" = "Sicherung in iCloud";
+"backup.cloud.description" = "iCloud-Speicher ist ein von Apple bereitgestellter Cloud-Speicherdienst. Es ist wichtig zu wissen, dass Ihre Daten auf Apple-Servern gespeichert werden und nicht auf Ihren persönlichen Geräten. Das bedeutet, dass Sie Ihre Daten anvertrauen und die Sicherheit Ihrer Daten einem Drittanbieter überlassen.";
 
 "backup.cloud.terms.item.1" = "Ich verstehe, dass der Verlust des Zugriffs auf meine iCloud dazu führen wird, dass auch der Zugriff auf die Sicherung einer entsprechenden Brieftasche verloren geht.";
 
@@ -242,9 +242,9 @@
 "backup.cloud.password.error.invalid_password" = "Falsches Passwort";
 "backup.cloud.password.error.invalid_backup" = "Backup ist beschädigt";
 "backup.cloud.password.confirm.error.doesnt_match" = "Passwort stimmt nicht überein";
-"backup.cloud.not_available" = "iCloud not Available";
-"backup.cloud.cant_create_file" = "Can't save File to iCloud";
-"backup.cloud.cant_delete_file" = "Can't delete from iCloud";
+"backup.cloud.not_available" = "iCloud nicht verfügbar";
+"backup.cloud.cant_create_file" = "Die Datei kann nicht in iCloud gespeichert werden";
+"backup.cloud.cant_delete_file" = "Kann nicht von iCloud gelöscht werden";
 
 
 // Errors
@@ -1303,8 +1303,8 @@
 "manage_account.recovery_phrase" = "Wiederherstellungsphrase";
 "manage_account.public_keys" = "Öffentliche Schlüssel";
 "manage_account.private_keys" = "Private Schlüssel";
-"manage_account.backup_recovery_phrase" = "Manual Backup";
-"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
+"manage_account.backup_recovery_phrase" = "Manuelle Sicherung";
+"manage_account.cloud_backup_recovery_phrase" = "Sicherung in iCloud";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Sicherung aus iCloud löschen";
 "manage_account.manual_backup_required" = "Manuelle Sicherung erforderlich";
 "manage_account.manual_backup_required.description" = "Um Ihre Sicherheitskopie auf iCloud sicher zu löschen, müssen Sie zuerst Ihre Wiederherstellungsphrase manuell sichern.";
