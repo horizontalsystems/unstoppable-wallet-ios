@@ -219,7 +219,7 @@
 "backup.cloud.title" = "iCloud에 백업";
 "backup.cloud.description" = "iCloud 저장소는 Apple에서 제공하는 타사 클라우드 저장소 서비스입니다. 데이터가 개인 기기가 아닌 Apple 서버에 저장된다는 점을 아는 것이 중요합니다. 이것은 귀하가 귀하의 데이터를 위탁하고 귀하의 정보 보안을 제3자 서비스에 넘기고 있음을 의미합니다.";
 
-"backup.cloud.terms.item.1" = "내 iCloud에 대한 액세스 권한을 상실하면 해당 지갑의 백업에 대한 액세스 권한도 잃게 된다는 점을 이해합니다.";
+"backup.cloud.terms.item.1" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
 
 "backup.cloud.name.title" = "백업 이름";
 "backup.cloud.name.description" = "백업 파일의 이름을 입력하세요.";
