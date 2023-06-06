@@ -88,7 +88,10 @@ extension MainSettingsService {
     }
 
     var isCloudAvailableError: Bool {
-        (contactBookManager?.remoteSync ?? false) && (contactBookManager?.iCloudError != nil)
+        guard let contactBookManager else {
+            return false
+        }
+        return contactBookManager.remoteSync && contactBookManager.iCloudError != nil
     }
 
     var iCloudAvailableErrorObservable: Observable<Bool> {

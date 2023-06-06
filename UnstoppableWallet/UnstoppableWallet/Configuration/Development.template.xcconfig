@@ -14,3 +14,5 @@ market_api_url = https:/$()/api-dev.blocksdecoded.com
 hs_provider_api_key =
 wallet_connect_v2_project_key =
 default_words =
+shared_cloud_container_id =
+private_cloud_container_id =

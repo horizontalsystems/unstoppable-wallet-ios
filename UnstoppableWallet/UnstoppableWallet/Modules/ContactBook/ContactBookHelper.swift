@@ -94,7 +94,7 @@ extension ContactBookHelper {
             let removed = contacts.remove(at: index)
 
             var deleted = book.deleted
-            deleted.append(DeletedContact(uid: removed.uid, deletedAt: Int(Date().timeIntervalSince1970)))
+            deleted.append(DeletedContact(uid: removed.uid, deletedAt: Date().timeIntervalSince1970))
 
             return ContactBook(version: book.version, contacts: contacts, deletedContacts: deleted)
         }
@@ -150,7 +150,7 @@ extension ContactBookHelper {
                 version: (lastVersion ?? 0) + 1,
                 contacts: contacts
                         .map { Contact(uid: $0.uid,
-                                modifiedAt: Int(Date().timeIntervalSince1970),
+                                modifiedAt: Date().timeIntervalSince1970,
                                 name: $0.name,
                                 addresses: $0.addresses)
                         },
@@ -163,7 +163,7 @@ extension ContactBookHelper {
 
     private struct EqualContactData: Equatable, Hashable {
         let uid: String
-        let timestamp: Int
+        let timestamp: TimeInterval
 
         static func ==(lhs: EqualContactData, rhs: EqualContactData) -> Bool {
             lhs.uid == rhs.uid && lhs.timestamp == rhs.timestamp

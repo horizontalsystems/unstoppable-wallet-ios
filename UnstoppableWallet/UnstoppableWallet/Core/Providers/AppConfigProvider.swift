@@ -87,6 +87,14 @@ class AppConfigProvider {
         Bundle.main.object(forInfoDictionaryKey: "DefaultPassphrase") as? String ?? ""
     }
 
+    var sharedCloudContainer: String? {
+        Bundle.main.object(forInfoDictionaryKey: "SharedCloudContainerId") as? String
+    }
+
+    var privateCloudContainer: String? {
+        Bundle.main.object(forInfoDictionaryKey: "PrivateCloudContainerId") as? String
+    }
+
 }
 
 

@@ -6,9 +6,8 @@ import HsExtensions
 class CloudAccountBackupManager {
     static private let batchingInterval: TimeInterval = 1
     static private let fileExtension = ".json"
-    static let iCloudSharedContainer = "iCloud.io.horizontalsystems.bank-wallet.shared.dev"
 
-    private let ubiquityContainerIdentifier: String
+    private let ubiquityContainerIdentifier: String?
     private let fileStorage: FileStorage
     private let logger: Logger?
 
@@ -25,7 +24,7 @@ class CloudAccountBackupManager {
     @PostPublished private(set) var items = [String: WalletBackup]()
     @PostPublished private(set) var state = State.loading
 
-    init(ubiquityContainerIdentifier: String, logger: Logger?) {
+    init(ubiquityContainerIdentifier: String?, logger: Logger?) {
         self.ubiquityContainerIdentifier = ubiquityContainerIdentifier
 
         fileStorage = FileStorage(logger: logger)

@@ -153,7 +153,7 @@ extension ContactBookContactService {
         }
 
         let uid = oldContact?.uid ?? UUID().uuidString
-        let contact = Contact(uid: uid, modifiedAt: Int(Date().timeIntervalSince1970), name: contactName, addresses: addresses)
+        let contact = Contact(uid: uid, modifiedAt: Date().timeIntervalSince1970, name: contactName, addresses: addresses)
 
         try contactManager.update(contact: contact)
     }

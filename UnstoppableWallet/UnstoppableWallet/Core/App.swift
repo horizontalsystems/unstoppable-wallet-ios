@@ -157,7 +157,7 @@ class App {
         accountRestoreWarningManager = AccountRestoreWarningManager(accountManager: accountManager, localStorage: StorageKit.LocalStorage.default)
         accountFactory = AccountFactory(accountManager: accountManager)
 
-        cloudAccountBackupManager = CloudAccountBackupManager(ubiquityContainerIdentifier: CloudAccountBackupManager.iCloudSharedContainer, logger: logger)
+        cloudAccountBackupManager = CloudAccountBackupManager(ubiquityContainerIdentifier: appConfigProvider.sharedCloudContainer, logger: logger)
         backupManager = BackupManager(accountManager: accountManager)
 
         kitCleaner = KitCleaner(accountManager: accountManager)
@@ -298,7 +298,7 @@ class App {
         balanceHiddenManager = BalanceHiddenManager(localStorage: StorageKit.LocalStorage.default)
         balanceConversionManager = BalanceConversionManager(marketKit: marketKit, localStorage: StorageKit.LocalStorage.default)
 
-        contactManager = ContactBookManager(localStorage: localStorage, helper: ContactBookHelper(), logger: logger)
+        contactManager = ContactBookManager(localStorage: localStorage, ubiquityContainerIdentifier: appConfigProvider.privateCloudContainer, helper: ContactBookHelper(), logger: logger)
 
         subscriptionManager = SubscriptionManager(localStorage: StorageKit.LocalStorage.default)
 
