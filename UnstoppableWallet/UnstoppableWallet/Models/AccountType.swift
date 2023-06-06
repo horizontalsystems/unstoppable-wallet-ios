@@ -12,6 +12,7 @@ enum AccountType {
     case evmAddress(address: EvmKit.Address)
     case tronAddress(address: TronKit.Address)
     case hdExtendedKey(key: HDExtendedKey)
+    case cex(type: CexType)
 
     var mnemonicSeed: Data? {
         switch self {
@@ -45,6 +46,8 @@ enum AccountType {
             privateData = address.raw
         case let .hdExtendedKey(key):
             privateData = key.serialized
+        case let .cex(type):
+            privateData = type.uniqueId.data(using: .utf8) ?? Data() // always non-null
         }
 
         if hashed {
@@ -122,6 +125,8 @@ enum AccountType {
             case (.tron, .native), (.tron, .eip20): return true
             default: return false
             }
+        default:
+            return false
         }
     }
 
@@ -171,6 +176,8 @@ enum AccountType {
                 default: return ""
                 }
             }
+        case .cex(let type):
+            return type.title
         }
     }
 
@@ -251,7 +258,14 @@ extension AccountType {
             } catch {
                 return nil
             }
-        case .evmAddress, .tronAddress: return nil
+        case .evmAddress, .tronAddress:
+            return nil
+        case .cex:
+            guard let type = CexType.decode(uniqueId: string) else {
+                return nil
+            }
+
+            return .cex(type: type)
         }
     }
 
@@ -261,6 +275,7 @@ extension AccountType {
         case evmAddress = "evm_address"
         case tronAddress = "tron_address"
         case hdExtendedKey = "hd_extended_key"
+        case cex = "cex"
 
         init(_ type: AccountType) {
             switch type {
@@ -269,6 +284,7 @@ extension AccountType {
             case .evmAddress: self = .evmAddress
             case .tronAddress: self = .tronAddress
             case .hdExtendedKey: self = .hdExtendedKey
+            case .cex: self = .cex
             }
         }
     }
@@ -289,6 +305,8 @@ extension AccountType: Hashable {
             return lhsAddress == rhsAddress
         case (let .hdExtendedKey(lhsKey), let .hdExtendedKey(rhsKey)):
             return lhsKey == rhsKey
+        case (let .cex(lhsType), let .cex(rhsType)):
+            return lhsType == rhsType
         default: return false
         }
     }
@@ -312,6 +330,9 @@ extension AccountType: Hashable {
         case let .hdExtendedKey(key):
             hasher.combine("hdExtendedKey")
             hasher.combine(key)
+        case let .cex(type):
+            hasher.combine("cex")
+            hasher.combine(type)
         }
     }
 

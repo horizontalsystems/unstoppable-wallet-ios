@@ -121,11 +121,13 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "restore_type.title" = "Import Wallet";
 
-"restore_type.cloud.title" = "from iCloud";
 "restore_type.recovery.title" = "from Recovery Phrase";
+"restore_type.cloud.title" = "from iCloud";
+"restore_type.cex.title" = "from Exchange Wallet";
 
-"restore_type.cloud.description" = "Import from a backup file in your keychain.";
 "restore_type.recovery.description" = "Import using recovery phrase or private key.";
+"restore_type.cloud.description" = "Import from a backup file in your keychain.";
+"restore_type.cex.description" = "Connect to a wallet on centralized exchange.";
 
 // Restore Cloud
 
@@ -260,8 +262,10 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "balance.title" = "Balance";
 "balance.tab_bar_item" = "Balance";
 "balance.send" = "Send";
+"balance.withdraw" = "Withdraw";
 "balance.swap" = "Swap";
-"balance.deposit" = "Receive";
+"balance.receive" = "Receive";
+"balance.deposit" = "Deposit";
 "balance.address" = "Address";
 "balance.rate_per_coin" = "%@ per %@";
 "balance.syncing" = "Syncing...";

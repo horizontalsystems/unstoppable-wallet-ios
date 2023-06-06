@@ -2,13 +2,17 @@ import Foundation
 
 class RestoreCloudPassphraseService {
     private let iCloudManager: CloudAccountBackupManager
+    private let accountFactory: AccountFactory
+    private let accountManager: AccountManager
 
     private let restoredBackup: RestoreCloudModule.RestoredBackup
 
     var passphrase: String = ""
 
-    init(iCloudManager: CloudAccountBackupManager, item: RestoreCloudModule.RestoredBackup) {
+    init(iCloudManager: CloudAccountBackupManager, accountFactory: AccountFactory, accountManager: AccountManager, item: RestoreCloudModule.RestoredBackup) {
         self.iCloudManager = iCloudManager
+        self.accountFactory = accountFactory
+        self.accountManager = accountManager
         self.restoredBackup = item
     }
 
@@ -62,11 +66,23 @@ extension RestoreCloudPassphraseService {
                 throw RestoreError.invalidBackup
             }
 
-            return .restoredAccount(RestoreCloudModule.RestoredAccount(
-                    name: restoredBackup.name,
-                    accountType: accountType,
-                    isManualBackedUp: restoredBackup.walletBackup.isManualBackedUp
-            ))
+            switch accountType {
+            case .cex:
+                let account = accountFactory.account(
+                        type: accountType,
+                        origin: .restored,
+                        backedUp: restoredBackup.walletBackup.isManualBackedUp,
+                        name: restoredBackup.name
+                )
+                accountManager.save(account: account)
+                return .success
+            default:
+                return .restoredAccount(RestoreCloudModule.RestoredAccount(
+                        name: restoredBackup.name,
+                        accountType: accountType,
+                        isManualBackedUp: restoredBackup.walletBackup.isManualBackedUp
+                ))
+            }
         } catch {
             throw RestoreError.invalidBackup
         }

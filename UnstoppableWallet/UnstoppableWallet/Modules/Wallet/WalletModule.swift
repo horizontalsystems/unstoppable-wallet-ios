@@ -9,22 +9,20 @@ import CurrencyKit
 struct WalletModule {
 
     static func viewController() -> UIViewController {
-        let adapterService = WalletAdapterService(adapterManager: App.shared.adapterManager)
-
         let coinPriceService = WalletCoinPriceService(
                 currencyKit: App.shared.currencyKit,
                 marketKit: App.shared.marketKit
         )
 
-        let elementService = WalletBlockchainElementService(
-                adapterService: adapterService,
-                walletManager: App.shared.walletManager
+        let elementServiceFactory = WalletElementServiceFactory(
+                adapterManager: App.shared.adapterManager,
+                walletManager: App.shared.walletManager,
+                networkManager: App.shared.networkManager,
+                marketKit: App.shared.marketKit
         )
 
-        adapterService.delegate = elementService
-
         let service = WalletService(
-                elementService: elementService,
+                elementServiceFactory: elementServiceFactory,
                 coinPriceService: coinPriceService,
                 accountManager: App.shared.accountManager,
                 cacheManager: App.shared.enabledWalletCacheManager,
@@ -41,7 +39,6 @@ struct WalletModule {
         )
 
         coinPriceService.delegate = service
-        elementService.delegate = service
 
         let accountRestoreWarningFactory = AccountRestoreWarningFactory(
                 appConfigProvider: App.shared.appConfigProvider,
@@ -87,6 +84,13 @@ extension WalletModule {
             }
         }
 
+        var cexAsset: CexAsset? {
+            switch self {
+            case .cexAsset(let cexAsset): return cexAsset
+            default: return nil
+            }
+        }
+
         var decimals: Int {
             switch self {
             case .wallet(let wallet): return wallet.decimals
@@ -121,7 +125,9 @@ extension WalletModule {
 
     enum Button: CaseIterable {
         case send
+        case withdraw
         case receive
+        case deposit
         case address
         case swap
         case chart
