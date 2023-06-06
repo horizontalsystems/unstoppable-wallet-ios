@@ -244,11 +244,11 @@ extension WalletViewModel {
     }
 
     func onTapChart(element: WalletModule.Element) {
-        guard let item = service.item(element: element), item.priceItem != nil else {
+        guard let coin = element.coin, let item = service.item(element: element), item.priceItem != nil else {
             return
         }
 
-        openCoinPageRelay.accept(element.coin)
+        openCoinPageRelay.accept(coin)
     }
 
     func onTapFailedIcon(element: WalletModule.Element) {

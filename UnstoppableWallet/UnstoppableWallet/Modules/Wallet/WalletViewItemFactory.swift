@@ -11,14 +11,13 @@ class WalletViewItemFactory {
     }
 
     private func topViewItem(item: WalletService.Item, balancePrimaryValue: BalancePrimaryValue, balanceHidden: Bool, expanded: Bool) -> BalanceTopViewItem {
-        let coin = item.element.coin
         let state = item.state
 
         return BalanceTopViewItem(
                 isMainNet: item.isMainNet,
-                iconUrlString: iconUrlString(coin: coin, state: state),
+                iconUrlString: iconUrlString(coin: item.element.coin, state: state),
                 placeholderIconName: item.element.wallet?.token.placeholderImageName ?? "placeholder_circle_32",
-                coinCode: coin.code,
+                name: item.element.name,
                 blockchainBadge: item.element.wallet?.badge,
                 syncSpinnerProgress: syncSpinnerProgress(state: state),
                 indefiniteSearchCircle: indefiniteSearchCircle(state: state),
@@ -53,10 +52,10 @@ class WalletViewItemFactory {
         )
     }
 
-    private func iconUrlString(coin: Coin, state: AdapterState) -> String? {
+    private func iconUrlString(coin: Coin?, state: AdapterState) -> String? {
         switch state {
         case .notSynced: return nil
-        default: return coin.imageUrl
+        default: return coin?.imageUrl
         }
     }
 
@@ -149,7 +148,7 @@ class WalletViewItemFactory {
 
         switch item.element {
         case .wallet(let wallet):
-            if item.element.account.watchAccount {
+            if item.watchAccount {
                 buttons[.address] = .enabled
             } else {
                 let sendButtonState: ButtonState = item.state == .synced ? .enabled : .disabled
@@ -163,7 +162,7 @@ class WalletViewItemFactory {
             }
 
             buttons[.chart] = item.priceItem != nil ? .enabled : .disabled
-        case .coin:
+        case .cexAsset:
             () // todo
         }
 
