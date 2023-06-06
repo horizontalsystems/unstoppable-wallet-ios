@@ -230,7 +230,7 @@
 "backup.cloud.name.empty" = "Имя резервной копии не может быть пустым!";
 "backup.cloud.name.error.empty" = "Имя резервной копии не должно быть пустым";
 "backup.cloud.name.error.already_exist" = "Имя резервной копии уже существует!";
-"backup.cloud.name.placeholder" = "По названию";
+"backup.cloud.name.placeholder" = "Название";
 
 "backup.cloud.password.title" = "Установить пароль";
 "backup.cloud.password.description" = "Установите пароль разблокировки для своей резервной копии. Пароль должен содержать не менее 8 символов и включать как минимум одну строчную букву, заглавную букву, цифру и специальный символ.";
@@ -1040,7 +1040,7 @@
 "contacts.update_contact.replace" = "Заменить";
 "contacts.list.addresses_count" = "Адреса: %d";
 "contacts.contact.new.title" = "Новый контакт";
-"contacts.contact.name.placeholder" = "По названию";
+"contacts.contact.name.placeholder" = "Название";
 "contacts.contact.update.error.name_already_exist" = "Имя уже существует";
 "contacts.contact.add_address" = "Добавить адрес";
 "contacts.contact.delete" = "Удалить контакт";
@@ -1143,7 +1143,7 @@
 // Create Wallet
 
 "create_wallet.title" = "Новый кошелек";
-"create_wallet.name" = "По названию";
+"create_wallet.name" = "Название";
 "create_wallet.advanced_setup" = "Доп. настройки";
 "create_wallet.create" = "Создать";
 "create_wallet.advanced" = "Доп. настройки";
@@ -1302,7 +1302,7 @@
 
 // Manage Account
 
-"manage_account.name" = "По названию";
+"manage_account.name" = "Название";
 "manage_account.recovery_phrase" = "Фраза восстановления";
 "manage_account.public_keys" = "Публичные ключи";
 "manage_account.private_keys" = "Приватные ключи";
@@ -1365,7 +1365,7 @@
 // Add RPC Source
 
 "add_evm_sync_source.title" = "Добавить источник RPC";
-"add_evm_sync_source.name" = "По названию";
+"add_evm_sync_source.name" = "Название";
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "Базовая авторизация (опц.)";
 "add_evm_sync_source.warning.url_exists" = "RPC Источник с таким url уже существует";
