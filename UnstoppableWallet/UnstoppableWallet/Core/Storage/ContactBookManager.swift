@@ -13,6 +13,8 @@ class ContactBookManager {
     static let localUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.contact_manager")
 
+    private let ubiquityContainerIdentifier: String?
+
     private let disposeBag = DisposeBag()
     private var monitorDisposeBag = DisposeBag()
 
@@ -53,7 +55,12 @@ class ContactBookManager {
     private let fileStorage = FileDataStorage()
 
     let localUrl: URL
-    var iCloudUrl: URL? { FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") }
+    var iCloudUrl: URL? {
+        FileManager
+                .default
+                .url(forUbiquityContainerIdentifier: ubiquityContainerIdentifier)?
+                .appendingPathComponent("Documents")
+    }
 
     private var needsToSyncRemote = false {
         didSet {
@@ -61,10 +68,12 @@ class ContactBookManager {
         }
     }
 
-    init?(localStorage: LocalStorage, helper: ContactBookHelper, logger: Logger? = nil) {
+    init?(localStorage: LocalStorage, ubiquityContainerIdentifier: String?, helper: ContactBookHelper, logger: Logger? = nil) {
         guard let localUrl = ContactBookManager.localUrl else {
             return nil
         }
+
+        self.ubiquityContainerIdentifier = ubiquityContainerIdentifier
 
         logger?.debug("=C-MANAGER> INIT")
         self.localStorage = localStorage
@@ -131,7 +140,6 @@ class ContactBookManager {
            localError.code == 260 {
 
             sync(localData: Data())
-
             return
         }
 

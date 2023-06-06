@@ -42,11 +42,11 @@ extension Array where Element == ContactAddress {
 
 class Contact: ImmutableMappable, Hashable, Equatable {
     let uid: String
-    let modifiedAt: Int
+    let modifiedAt: TimeInterval
     let name: String
     let addresses: [ContactAddress]
 
-    init(uid: String, modifiedAt: Int, name: String, addresses: [ContactAddress]) {
+    init(uid: String, modifiedAt: TimeInterval, name: String, addresses: [ContactAddress]) {
         self.uid = uid
         self.modifiedAt = modifiedAt
         self.name = name
@@ -83,9 +83,9 @@ class Contact: ImmutableMappable, Hashable, Equatable {
 
 class DeletedContact: ImmutableMappable, Hashable, Equatable {
     let uid: String
-    let deletedAt: Int
+    let deletedAt: TimeInterval
 
-    init(uid: String, deletedAt: Int) {
+    init(uid: String, deletedAt: TimeInterval) {
         self.uid = uid
         self.deletedAt = deletedAt
     }
