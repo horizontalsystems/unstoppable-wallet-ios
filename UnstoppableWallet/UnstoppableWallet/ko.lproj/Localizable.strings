@@ -224,26 +224,26 @@
 "backup.cloud.name.title" = "백업 이름";
 "backup.cloud.name.description" = "백업 파일의 이름을 입력하세요.";
 "backup.cloud.name.empty" = "백업 이름은 비워둘 수 없습니다!";
-"backup.cloud.name.error.empty" = "Backup name must be not empty";
-"backup.cloud.name.error.already_exist" = "Backup name already exist!";
+"backup.cloud.name.error.empty" = "백업 이름은 비워둘 수 없습니다";
+"backup.cloud.name.error.already_exist" = "백업 이름이 이미 존재합니다!";
 "backup.cloud.name.placeholder" = "이름";
 
-"backup.cloud.password.title" = "Set Password";
+"backup.cloud.password.title" = "암호를 설정하세요.";
 "backup.cloud.password.description" = "백업에 대한 잠금 해제 암호를 설정하십시오. 최소 8개의 기호로 구성되어야 하며 소문자, 대문자, 숫자 및 특수 문자가 하나 이상 포함되어야 합니다.";
 "backup.cloud.password.highlighted_description" = "이 비밀번호를 잊지 마세요! Apple iCloud 암호와는 별개이며 복구하거나 재설정할 수 없습니다.";
-"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.placeholder" = "비밀번호";
 "backup.cloud.password.confirm.placeholder" = "확인";
-"backup.cloud.password.save" = "Save and Backup";
+"backup.cloud.password.save" = "저장 및 백업";
 
 "backup.cloud.password.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "backup.cloud.password.error.forbidden_symbols" = "지원되는 기호만 사용하세요: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"backup.cloud.password.error.minimum_requirement" = "At least 8 characters, including one uppercase letter, one lowercase letter, one number, and one symbol";
-"backup.cloud.password.error.invalid_password" = "Incorrect Password";
-"backup.cloud.password.error.invalid_backup" = "Backup is corrupted";
-"backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
-"backup.cloud.not_available" = "iCloud not Available";
-"backup.cloud.cant_create_file" = "Can't save File to iCloud";
-"backup.cloud.cant_delete_file" = "Can't delete from iCloud";
+"backup.cloud.password.error.minimum_requirement" = "대문자 1개, 소문자 1개, 숫자 1개, 기호 1개를 포함하여 8자 이상";
+"backup.cloud.password.error.invalid_password" = "잘못된 비밀번호";
+"backup.cloud.password.error.invalid_backup" = "백업이 손상되었습니다";
+"backup.cloud.password.confirm.error.doesnt_match" = "비밀번호가 일치하지 않습니다";
+"backup.cloud.not_available" = "iCloud를 사용할 수 없음";
+"backup.cloud.cant_create_file" = "파일을 iCloud에 저장할 수 없음";
+"backup.cloud.cant_delete_file" = "iCloud에서 삭제할 수 없습니다";
 
 
 // Errors
@@ -335,7 +335,7 @@
 "send.transaction_inputs_outputs_info.title" = "트랜잭션 입력/출력";
 "send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
-"send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
+"send.transaction_inputs_outputs_info.shuffle.description" = "트랜잭션 출력의 순서는 모든 트랜잭션에서 무작위로 지정됩니다. 때로는 변화가 첫 번째 출력이 될 수도 있고 때로는 두 번째 출력이 될 수도 있습니다. 사용자가 앱 개발자를 신뢰하는 경우 권장 옵션으로 간주합니다.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
 
@@ -448,8 +448,8 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "스왑";
-"swap.confirmation.impact_too_high" = "Unstoppable has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
-"swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
+"swap.confirmation.impact_too_high" = "Unstoppable은 현재 유동성이 매우 낮아 매우 불리한 가격으로 거래되고 있으므로, 이 거래에 대한 스왑 조치를 비활성화했습니다.\n교환을 원하시면 %@ 웹사이트를 사용하십시오.";
+"swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";
 
 "swap.confirmation.minimum_received" = "최소 지급액";
 "swap.confirmation.maximum_sent" = "최대 속도";
@@ -1304,8 +1304,8 @@
 "manage_account.private_keys" = "개인 암호";
 "manage_account.backup_recovery_phrase" = "수동으로 백업합니다";
 "manage_account.cloud_backup_recovery_phrase" = "iCloud에 백업";
-"manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
-"manage_account.manual_backup_required" = "Manual Backup Required";
+"manage_account.cloud_delete_backup_recovery_phrase" = "iCloud에서 백업 삭제";
+"manage_account.manual_backup_required" = "수동으로 백업해야합니다";
 "manage_account.manual_backup_required.description" = "iCloud에서 백업을 안전하게 삭제하려면 먼저 수동으로 복구 문구를 백업해야 합니다.";
 "manage_account.manual_backup_required.button" = "백업 지금";
 "manage_account.unlink" = "지갑 연결 해제";
