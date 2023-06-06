@@ -64,12 +64,19 @@ extension WalletModule {
 
     enum Element: Hashable {
         case wallet(wallet: Wallet)
-        case coin(coin: Coin, account: Account)
+        case cexAsset(cexAsset: CexAsset)
 
-        var coin: Coin {
+        var name: String {
+            switch self {
+            case .wallet(let wallet): return wallet.coin.code
+            case .cexAsset(let cexAsset): return cexAsset.coin?.code ?? cexAsset.id
+            }
+        }
+
+        var coin: Coin? {
             switch self {
             case .wallet(let wallet): return wallet.coin
-            case .coin(let coin, _): return coin
+            case .cexAsset(let cexAsset): return cexAsset.coin
             }
         }
 
@@ -83,21 +90,14 @@ extension WalletModule {
         var decimals: Int {
             switch self {
             case .wallet(let wallet): return wallet.decimals
-            case .coin: return 8 // todo: how many decimals for coin???
-            }
-        }
-
-        var account: Account {
-            switch self {
-            case .wallet(let wallet): return wallet.account
-            case .coin(_, let account): return account
+            case .cexAsset: return 8 // todo: how many decimals for coin???
             }
         }
 
         var priceCoinUid: String? {
             switch self {
             case .wallet(let wallet): return wallet.token.isCustom ? nil : wallet.coin.uid
-            case .coin(let coin, _): return coin.uid
+            case .cexAsset(let cexAsset): return cexAsset.coin?.uid
             }
         }
 
@@ -105,16 +105,15 @@ extension WalletModule {
             switch self {
             case .wallet(let wallet):
                 hasher.combine(wallet)
-            case .coin(let coin, let account):
-                hasher.combine(coin)
-                hasher.combine(account)
+            case .cexAsset(let cexAsset):
+                hasher.combine(cexAsset)
             }
         }
 
         static func ==(lhs: Element, rhs: Element) -> Bool {
             switch (lhs, rhs) {
             case (.wallet(let lhsWallet), .wallet(let rhsWallet)): return lhsWallet == rhsWallet
-            case (.coin(let lhsCoin, let lhsAccount), .coin(let rhsCoin, let rhsAccount)): return lhsCoin == rhsCoin && lhsAccount == rhsAccount
+            case (.cexAsset(let lhsCexAsset), .cexAsset(let rhsCexAsset)): return lhsCexAsset == rhsCexAsset
             default: return false
             }
         }

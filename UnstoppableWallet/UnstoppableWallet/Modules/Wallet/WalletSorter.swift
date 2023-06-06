@@ -27,7 +27,7 @@ class WalletSorter {
             return nonZeroItems.sorted(by: descending) + zeroItems.sorted(by: descending)
         case .name:
             return items.sorted { lhsItem, rhsItem in
-                lhsItem.element.coin.code.caseInsensitiveCompare(rhsItem.element.coin.code) == .orderedAscending
+                lhsItem.element.name.caseInsensitiveCompare(rhsItem.element.name) == .orderedAscending
             }
         case .percentGrowth:
             return items.sorted { lhsItem, rhsItem in

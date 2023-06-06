@@ -139,16 +139,20 @@ class WalletService {
     private func _sync(elements: [WalletModule.Element]) {
         let cacheContainer = activeAccount.map { cacheManager.cacheContainer(accountId: $0.id) }
         let priceItemMap = coinPriceService.itemMap(coinUids: elements.compactMap { $0.priceCoinUid })
+        let watchAccount = watchAccount
 
         let items: [Item] = elements.map { element in
             let item = Item(
                     element: element,
                     isMainNet: elementService.isMainNet(element: element) ?? fallbackIsMainNet,
+                    watchAccount: watchAccount,
                     balanceData: elementService.balanceData(element: element) ?? cachedBalanceData(element: element, cacheContainer: cacheContainer) ?? fallbackBalanceData,
                     state: elementService.state(element: element)  ?? fallbackAdapterState
             )
 
-            item.priceItem = priceItemMap[element.coin.uid]
+            if let priceCoinUid = element.priceCoinUid {
+                item.priceItem = priceItemMap[priceCoinUid]
+            }
 
             return item
         }
@@ -331,9 +335,11 @@ extension WalletService: IWalletElementServiceDelegate {
 
 extension WalletService: IWalletCoinPriceServiceDelegate {
 
-    private func handleUpdated(priceItemMap: [String: WalletCoinPriceService.Item]) {
+    private func _handleUpdated(priceItemMap: [String: WalletCoinPriceService.Item]) {
         for item in internalItems {
-            item.priceItem = priceItemMap[item.element.coin.uid]
+            if let priceCoinUid = item.element.priceCoinUid {
+                item.priceItem = priceItemMap[priceCoinUid]
+            }
         }
 
         internalItems = sorter.sort(items: internalItems, sortType: sortType)
@@ -343,13 +349,13 @@ extension WalletService: IWalletCoinPriceServiceDelegate {
     func didUpdateBaseCurrency() {
         queue.async {
             let coinUids = Array(Set(self.internalItems.compactMap { $0.element.priceCoinUid }))
-            self.handleUpdated(priceItemMap: self.coinPriceService.itemMap(coinUids: coinUids))
+            self._handleUpdated(priceItemMap: self.coinPriceService.itemMap(coinUids: coinUids))
         }
     }
 
     func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]) {
         queue.async {
-            self.handleUpdated(priceItemMap: itemsMap)
+            self._handleUpdated(priceItemMap: itemsMap)
         }
     }
 
@@ -464,13 +470,15 @@ extension WalletService {
     class Item {
         let element: WalletModule.Element
         var isMainNet: Bool
+        var watchAccount: Bool
         var balanceData: BalanceData
         var state: AdapterState
         var priceItem: WalletCoinPriceService.Item?
 
-        init(element: WalletModule.Element, isMainNet: Bool, balanceData: BalanceData, state: AdapterState) {
+        init(element: WalletModule.Element, isMainNet: Bool, watchAccount: Bool, balanceData: BalanceData, state: AdapterState) {
             self.element = element
             self.isMainNet = isMainNet
+            self.watchAccount = watchAccount
             self.balanceData = balanceData
             self.state = state
         }

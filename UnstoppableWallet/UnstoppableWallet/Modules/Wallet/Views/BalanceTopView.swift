@@ -113,7 +113,7 @@ class BalanceTopView: UIView {
 
         testnetImageView.isHidden = viewItem.isMainNet
 
-        nameLabel.text = viewItem.coinCode
+        nameLabel.text = viewItem.name
 
         if let blockchainBadge = viewItem.blockchainBadge {
             blockchainBadgeView.text = blockchainBadge
