@@ -124,15 +124,15 @@
 "restore_type.cloud.title" = "来自 iCloud";
 "restore_type.recovery.title" = "恢复短语";
 
-"restore_type.cloud.description" = "Import from a backup file in your keychain.";
-"restore_type.recovery.description" = "Import using recovery phrase or private key.";
+"restore_type.cloud.description" = "从您的密钥链备份文件中导入。";
+"restore_type.recovery.description" = "使用恢复短语或私钥导入。";
 
 // Restore Cloud
 
-"restore.cloud.title" = "Select Backup";
-"restore.cloud.description" = "Select the backup copy of the wallet you want to restore.";
-"restore.cloud.empty" = "No backups found.";
-"restore.cloud.imported" = "Imported wallets";
+"restore.cloud.title" = "选择备份";
+"restore.cloud.description" = "选择想要恢复的钱包备份副本。";
+"restore.cloud.empty" = "未找到备份。";
+"restore.cloud.imported" = "导入钱包";
 
 "restore.cloud.password.title" = "请输入密码";
 "restore.cloud.password.placeholder" = "备份密码";
@@ -226,26 +226,26 @@
 "backup.cloud.name.title" = "备份名称";
 "backup.cloud.name.description" = "请输入备份文件的名称。";
 "backup.cloud.name.empty" = "备份名称不能为空！";
-"backup.cloud.name.error.empty" = "Backup name must be not empty";
-"backup.cloud.name.error.already_exist" = "Backup name already exist!";
+"backup.cloud.name.error.empty" = "备份名称不能为空";
+"backup.cloud.name.error.already_exist" = "备份名称已经存在！";
 "backup.cloud.name.placeholder" = "名称";
 
-"backup.cloud.password.title" = "Set Password";
-"backup.cloud.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
-"backup.cloud.password.highlighted_description" = "Don't forget this password! It is separate from your Apple iCloud password, and it cannot be recovered or reset.";
-"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.title" = "设置密码";
+"backup.cloud.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
+"backup.cloud.password.highlighted_description" = "请不要忘记这个密码！它与您的 Apple iCloud 密码不同，无法恢复或重置。";
+"backup.cloud.password.placeholder" = "密码";
 "backup.cloud.password.confirm.placeholder" = "确认";
-"backup.cloud.password.save" = "Save and Backup";
+"backup.cloud.password.save" = "保存并备份";
 
 "backup.cloud.password.error.empty_passphrase" = "密码不能为空";
-"backup.cloud.password.error.forbidden_symbols" = "Please use only supported symbols: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"backup.cloud.password.error.minimum_requirement" = "At least 8 characters, including one uppercase letter, one lowercase letter, one number, and one symbol";
-"backup.cloud.password.error.invalid_password" = "Incorrect Password";
-"backup.cloud.password.error.invalid_backup" = "Backup is corrupted";
-"backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
-"backup.cloud.not_available" = "iCloud not Available";
-"backup.cloud.cant_create_file" = "Can't save File to iCloud";
-"backup.cloud.cant_delete_file" = "Can't delete from iCloud";
+"backup.cloud.password.error.forbidden_symbols" = "请只使用支持的符号：A-Z a-z 0-9 ' \" & / ? , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_requirement" = "密码需要至少8个字符，包括一个大写字母、一个小写字母、一个数字和一个符号。";
+"backup.cloud.password.error.invalid_password" = "密码错误";
+"backup.cloud.password.error.invalid_backup" = "备份已损坏";
+"backup.cloud.password.confirm.error.doesnt_match" = "密码不匹配";
+"backup.cloud.not_available" = "iCloud 服务不可用";
+"backup.cloud.cant_create_file" = "无法将文件保存到iCloud。";
+"backup.cloud.cant_delete_file" = "无法从 iCloud 删除";
 
 
 // Errors
@@ -451,8 +451,8 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "掉期交易";
-"swap.confirmation.impact_too_high" = "Unstoppable has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
-"swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
+"swap.confirmation.impact_too_high" = "由于流动性极低，禁止不可阻挡地进行该交换操作，因为您将获得非常不利的价格。\n如果您仍然想要交换，请使用%@网站。";
+"swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
 
 "swap.confirmation.minimum_received" = "收到的最小金额";
 "swap.confirmation.maximum_sent" = "最大支出";
@@ -656,8 +656,8 @@
 
 "coin_analytics.not_available" = "此项目没有分析数据";
 "coin_analytics.locked.not_subscribed" = "此页面仅对Unstoppable钱包的高级用户开放";
-"coin_analytics.locked.learn_more" = "Learn More";
-"coin_analytics.locked.not_activated" = "Activate your subscription for getting access to analytics";
+"coin_analytics.locked.learn_more" = "了解更多";
+"coin_analytics.locked.not_activated" = "请激活您的订阅以获取分析权限";
 "coin_analytics.locked.activate" = "激活";
 
 "coin_analytics.cex_volume" = "CEX交易量";
@@ -710,7 +710,7 @@
 
 "coin_analytics.holders" = "持有者";
 "coin_analytics.holders_rank" = "Classement des titulaires";
-"coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
+"coin_analytics.holders_rank.description" = "通过在多个区块链上持有它们的独特地址来排名令牌。";
 "coin_analytics.holders.info1" = "在各种区块链上持有代币的唯一地址的总数。";
 "coin_analytics.holders.info2" = "在每一个区块链上持有代币的前10大钱包。";
 "coin_analytics.holders.tracked_blockchains" = "已追踪区块链：以太坊、币安智能链、Optimism、Arbitrum、Celo、Cronos、Avalanche、Fantom、Polygon";
@@ -1026,7 +1026,7 @@
 "appearance.balance_value.coin_value" = "币值";
 "appearance.balance_value.fiat_value" = "纤维值";
 
-"appearance.balance_auto_hide" = "Balance Auto Hide";
+"appearance.balance_auto_hide" = "自动隐藏余额";
 
 // Settings -> Contacts
 
@@ -1307,13 +1307,13 @@
 "manage_account.private_keys" = "私钥";
 "manage_account.backup_recovery_phrase" = "进行手动备份";
 "manage_account.cloud_backup_recovery_phrase" = "备份到iCloud";
-"manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
-"manage_account.manual_backup_required" = "Manual Backup Required";
-"manage_account.manual_backup_required.description" = "In order to securely delete your backup on iCloud, you will need to manually backup your recovery phrase first.";
-"manage_account.manual_backup_required.button" = "Backup Now";
-"manage_account.unlink" = "Unlink Wallet";
-"manage_account.backup.no_backup_yet_description" = "Complete one of the wallet backup options to start using the wallet.";
-"manage_account.backup.has_backup_description" = "It's recommended to have a manual backup for each wallet.";
+"manage_account.cloud_delete_backup_recovery_phrase" = "删除 iCloud 备份";
+"manage_account.manual_backup_required" = "需要手动备份";
+"manage_account.manual_backup_required.description" = "为了安全地删除 iCloud 上的备份，您需要先手动备份您的恢复短语。";
+"manage_account.manual_backup_required.button" = "立即备份";
+"manage_account.unlink" = "取消链接钱包";
+"manage_account.backup.no_backup_yet_description" = "完成钱包备份选项之一以开始使用钱包。";
+"manage_account.backup.has_backup_description" = "建议为每个钱包提供手动备份。";
 
 "manage_account.cloud_delete_backup_recovery_phrase.description" = "你确定要从 iCloud 删除你的钱包备份吗？";
 // Manage Account -> Public Keys
