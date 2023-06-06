@@ -7,6 +7,7 @@
 "button.reset" = "Sıfırla";
 "button.import" = "Geri Yükle";
 "button.next" = "İleri";
+"button.delete" = "Sil";
 "button.share" = "Paylaş";
 "button.paste" = "Yapıştır";
 "button.backup" = "Yedekle";
@@ -26,6 +27,7 @@
 "alert" = "Uyarı";
 "alert.copied" = "Kopyalandı";
 "alert.saved" = "Kaydet";
+"alert.saved_to_icloud" = "Saved to iCloud";
 "alert.no_internet" = "Internet Bağlantısı Yok";
 "alert.wrong_amount" = "Yanlış Tutar";
 "alert.no_fee" = "Yanlış Masraf";
@@ -108,12 +110,33 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
 "restore.passphrase" = "Parola";
 "restore.input.passphrase" = "Parola";
-"restore.passphrase_description" = "Bu anımsatıcı ifadeyi oluştururken kullandığınız parolayı girin. Mevcut bir cüzdanı yeni bir parolayla geri yüklemek, yepyeni bir cüzdan oluşturur.";
+"restore.passphrase_description" = "This password is used to encrypt backup file of your wallet. It's not related to your Apple iCloud password. It can't be recovered or reset if lost or forgotten.";
 "restore.error.empty_passphrase" = "Şifre boş bırakılamaz";
 "restore.non_standard_import" = "Standart Olmayan Yükleme";
 "restore.non_standard_import.description" = "Bu sayfa, standart olmayan bir cüzdanı olan Unstoppable kullanıcıları için özel geri yükleme mekanizması sağlar. Genel olarak, bu tür cüzdanlar, İngilizce olmayan bir anımsatma kelimeleri listesi ve/veya cüzdan şifresinde özel bir karakter (yani aksan simgesi) kullanılarak Unstoppable 0.27 - 0.28 sürümünde oluşturulmuş olabilir.\n\n Bu durumdan etkilenen bir kullanıcıysanız, 0.29 sürümüne güncelledikten sonra cüzdan bakiyeniz 0 olarak görüntülenir. Bu sayfa, standart olmayan cüzdanınıza erişimi geri yüklemenizi sağlayacaktır. Geri yüklendikten sonra, yeni bir cüzdan oluşturmanız (standartlarla uyumlu) ve paranızı oraya taşımanız önerilir.";
 "restore.warning.non_recommended.description" = "Bu cüzdan, gizli sözcükler listesinde ve/veya bir şifrede standart olmayan bir karakter kullanıyor gibi görünüyor. Bir bakiye veya işlem göremiyorsanız lütfen bilgi için aşağıya bakınız.\n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYINIZ";
 "restore.error.non_standard.description" = "Bu standart olmayan bir cüzdandır. \n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYIN";
+
+// Restore Type
+
+"restore_type.title" = "Cuzdan Yükle";
+
+"restore_type.cloud.title" = "from iCloud";
+"restore_type.recovery.title" = "from Recovery Phrase";
+
+"restore_type.cloud.description" = "Import from a backup file in your keychain.";
+"restore_type.recovery.description" = "Import using recovery phrase or private key.";
+
+// Restore Cloud
+
+"restore.cloud.title" = "Select Backup";
+"restore.cloud.description" = "Select the backup copy of the wallet you want to restore.";
+"restore.cloud.empty" = "No backups found.";
+"restore.cloud.imported" = "Imported wallets";
+
+"restore.cloud.password.title" = "Enter Password";
+"restore.cloud.password.placeholder" = "Backup Password";
+"restore.cloud.password.description" = "Enter the backup password to import your wallet from iCloud.";
 
 // Coin Settings
 
@@ -186,10 +209,44 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Backup Prompt
 
-"backup_prompt.title" = "Cüzdanı yedekle";
-"backup_prompt.warning" = "Kurtarma ifadesinin bir kopyasını oluşturarak bu cüzdanı yedekleyin. Telefonunuzun kaybolması, çalınması, kırılması vb. durumlarda cüzdana erişmek için gerekli olacaktır.";
+"backup_prompt.title" = "Manual Backup";
+"backup_prompt.warning" = "Telefonunuzun kaybolması, çalınması, kırılması vb. durumlarda cüzdanınızı kurtarmanıza olanak sağlayacak kurtarma ifadesinin ve ilgili parolanın yedek bir kopyasını oluşturun.";
 "backup_prompt.backup" = "Yedekle";
+"backup_prompt.backup_manual" = "Manual Backup";
+"backup_prompt.backup_cloud" = "Backup to iCloud";
 "backup_prompt.later" = "Sonra";
+
+// Backup to iCloud
+
+"backup.cloud.title" = "Backup to iCloud";
+"backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
+
+"backup.cloud.terms.item.1" = "I understand that loosing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+
+"backup.cloud.name.title" = "Backup Name";
+"backup.cloud.name.description" = "Enter name for the backup file.";
+"backup.cloud.name.empty" = "Backup name can't be empty!";
+"backup.cloud.name.error.empty" = "Backup name must be not empty";
+"backup.cloud.name.error.already_exist" = "Backup name already exist!";
+"backup.cloud.name.placeholder" = "İsim";
+
+"backup.cloud.password.title" = "Set Password";
+"backup.cloud.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
+"backup.cloud.password.highlighted_description" = "Don't forget this password! It is separate from your Apple iCloud password, and it cannot be recovered or reset.";
+"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.confirm.placeholder" = "Onayla";
+"backup.cloud.password.save" = "Save and Backup";
+
+"backup.cloud.password.error.empty_passphrase" = "Parola boş olamaz";
+"backup.cloud.password.error.forbidden_symbols" = "Please use only supported symbols: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_requirement" = "At least 8 characters, including one uppercase letter, one lowercase letter, one number, and one symbol";
+"backup.cloud.password.error.invalid_password" = "Incorrect Password";
+"backup.cloud.password.error.invalid_backup" = "Backup is corrupted";
+"backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
+"backup.cloud.not_available" = "iCloud not Available";
+"backup.cloud.cant_create_file" = "Can't save File to iCloud";
+"backup.cloud.cant_delete_file" = "Can't delete from iCloud";
+
 
 // Errors
 
@@ -393,7 +450,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Takas";
-"swap.confirmation.impact_too_high" = "Piyasa fiyatı ile beklenen uzlaşma fiyatı arasındaki fark çok yüksektir.";
+"swap.confirmation.impact_too_high" = "Unstoppable has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
+"swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
+
 "swap.confirmation.minimum_received" = "Minimum Alınan";
 "swap.confirmation.maximum_sent" = "Maksimum Harcama";
 
@@ -595,7 +654,10 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "This project has no analytical data";
-"coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked.not_subscribed" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked.learn_more" = "Learn More";
+"coin_analytics.locked.not_activated" = "Activate your subscription for getting access to analytics";
+"coin_analytics.locked.activate" = "Activate";
 
 "coin_analytics.cex_volume" = "CEX Volume";
 "coin_analytics.cex_volume_rank" = "CEX Volume Rank";
@@ -608,7 +670,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.dex_volume" = "DEX Volume";
 "coin_analytics.dex_volume_rank" = "DEX Volume Rank";
 "coin_analytics.dex_volume_rank.description" = "Tokens ranked by trading volume for the token on decentralized exchanges.";
-"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over 30-day period.";
+"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
 "coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
@@ -646,6 +708,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
 
 "coin_analytics.holders" = "Holders";
+"coin_analytics.holders_rank" = "Holders Rank";
+"coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
 "coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
@@ -961,6 +1025,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "appearance.balance_value.coin_value" = "Para değeri";
 "appearance.balance_value.fiat_value" = "Fiat Değeri";
 
+"appearance.balance_auto_hide" = "Balance Auto Hide";
+
 // Settings -> Contacts
 
 "contacts.title" = "Kişiler";
@@ -1238,9 +1304,17 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "manage_account.recovery_phrase" = "Kurtarma cümlesi";
 "manage_account.public_keys" = "Genel Anahtarlar";
 "manage_account.private_keys" = "Özel Anahtar";
-"manage_account.backup_recovery_phrase" = "Yedekleme Kurtarma İfadesi";
-"manage_account.unlink" = "Ayır";
+"manage_account.backup_recovery_phrase" = "Manual Backup";
+"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
+"manage_account.manual_backup_required" = "Manual Backup Required";
+"manage_account.manual_backup_required.description" = "In order to securely delete your backup on iCloud, you will need to manually backup your recovery phrase first.";
+"manage_account.manual_backup_required.button" = "Backup Now";
+"manage_account.unlink" = "Unlink Wallet";
+"manage_account.backup.no_backup_yet_description" = "Complete one of the wallet backup options to start using the wallet.";
+"manage_account.backup.has_backup_description" = "It's recommended to have a manual backup for each wallet.";
 
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "Genel Anahtarlar";
@@ -1313,8 +1387,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock yalnızca BIP44 adreslerine (1 ile başlar) göndermek için çalışır";
 
-"fee_settings.max_fee" = "Maksimum Ücret";
-"fee_settings.max_fee.info" = "Bu işlem için ödenecek maksimum tahmini işlem ücreti, aşağıdaki gaz limiti, maksimum ücret oranı ve maksimum öncelik ücreti değerlerine göre hesaplanır. Ödenen gerçek ücret normalde daha düşük olacaktır.";
+"fee_settings.network_fee" = "Ağ Ücreti";
+"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "İşlem karmaşıklığı \"gaz\" adı verilen birimlerle ölçülür. Yürütülen akıllı sözleşmeye bağlı olarak değişir. Gaz Limiti, onu yürütmek için gereken tahmini maksimum gazdır. Kullanılan gerçek gaz normalde daha düşük olacaktır.";
 
@@ -1349,6 +1423,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "watch_address.by" = "İçerik";
 "watch_address.watch_by" = "İzle";
 "watch_address.evm_address" = "EVM Adresi";
+"watch_address.tron_address" = "TRON Address";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Account Extended Public Key ";
 "watch_address.public_key.invalid_key" = "Geçersiz Anahtar";
@@ -1428,3 +1503,20 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "nft.activity.event_type.listCancel" = "Liste İptal";
 "nft.activity.event_type.offer" = "Teklif";
 "nft.activity.event_type.offerCancel" = "Teklif İptal";
+
+// Activate Subscription
+
+"activate_subscription.title" = "Activate";
+"activate_subscription.wallet" = "Cüzdanı";
+"activate_subscription.address" = "Adres";
+"activate_subscription.message" = "İmza için mesaj";
+"activate_subscription.sign" = "kaydol";
+"activate_subscription.activating" = "Activating...";
+"activate_subscription.description" = "You need to sign this message to activate your subscription";
+"activate_subscription.failed_to_activate" = "Failed to activate subscription";
+
+
+// Launch
+
+"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting app or report the error to our support team.";
+"launch.failed_to_launch.report" = "Şikayet Et";

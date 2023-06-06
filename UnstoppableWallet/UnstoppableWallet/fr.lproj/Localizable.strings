@@ -7,6 +7,7 @@
 "button.reset" = "Réinitialiser";
 "button.import" = "Importation";
 "button.next" = "Suivant";
+"button.delete" = "Supprimer";
 "button.share" = "Partager";
 "button.paste" = "Coller";
 "button.backup" = "Sauvegarde";
@@ -26,6 +27,7 @@
 "alert" = "Alerte";
 "alert.copied" = "Copié";
 "alert.saved" = "Sauvegardé";
+"alert.saved_to_icloud" = "Enregistré dans iCloud";
 "alert.no_internet" = "Aucune connexion Internet";
 "alert.wrong_amount" = "Montant incorrect";
 "alert.no_fee" = "Commission incorrecte";
@@ -106,12 +108,33 @@
 "restore.checksum_error" = "Somme de contrôle invalide";
 "restore.passphrase" = "Phrase d'authentification";
 "restore.input.passphrase" = "Phrase d'authentification";
-"restore.passphrase_description" = "Entrez la phrase d'authentification que vous avez utilisée pour créer cette phrase mnémonique.";
+"restore.passphrase_description" = "Ce mot de passe est utilisé pour chiffrer le fichier de sauvegarde de votre portefeuille. Il n'est pas lié à votre mot de passe Apple iCloud, et il ne peut pas être récupéré ou réinitialisé en cas de perte ou d'oubli.";
 "restore.error.empty_passphrase" = "La phrase d'authentification ne peut pas être une valeur vide";
 "restore.non_standard_import" = "Restauration non-standard";
 "restore.non_standard_import.description" = "Sur cette page, vous trouverez un mécanisme spécial de restauration de portefeuille pour les utilisateurs d'Unstoppable dont le portefeuille n'est pas standard. En général, de tels portefeuilles ont été créés dans la version 0.27 - 0.28 d'Unstoppable en utilisant une liste de mots mnémoniques non-anglais et/ou un caractère spécial dans la phrase de passe du portefeuille (c'est-à-dire un symbole diacritique).\n\nSi vous êtes un utilisateur concerné, le solde de votre portefeuille sera affiché à 0 après la restauration de ce portefeuille dans la version 0.29 ou supérieure. Grâce à cette page, vous pourrez restaurer l'accès à votre portefeuille non-standard. Une fois la restauration effectuée, il est conseillé de créer un nouveau portefeuille (qui sera conforme aux normes) et d'y transférer vos fonds.";
 "restore.warning.non_recommended.description" = "Ce portefeuille semble utiliser un caractère non-standard dans sa liste de mots secrets et/ou dans une phrase de passe. Si vous ne voyez pas de solde ou de transactions, veuillez vous reporter aux informations ci-dessous. \n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
 "restore.error.non_standard.description" = "Ce portefeuille n'est pas conforme aux normes.\n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
+
+// Restore Type
+
+"restore_type.title" = "Importer le porte-monnaie";
+
+"restore_type.cloud.title" = "depuis iCloud";
+"restore_type.recovery.title" = "Voir la phase de récupération";
+
+"restore_type.cloud.description" = "Importer un fichier de sauvegarde dans votre trousseau de clés.";
+"restore_type.recovery.description" = "Importer à l'aide de la phrase de récupération ou de la clé privée.";
+
+// Restore Cloud
+
+"restore.cloud.title" = "Choisir la sauvegarde";
+"restore.cloud.description" = "Sélectionnez la copie de sauvegarde du portefeuille que vous souhaitez restaurer.";
+"restore.cloud.empty" = "Aucune sauvegarde trouvée.";
+"restore.cloud.imported" = "Importer le portefeuille";
+
+"restore.cloud.password.title" = "Entrez le mot de passe";
+"restore.cloud.password.placeholder" = "Mot de passe de la sauvegarde";
+"restore.cloud.password.description" = "Entrez le mot de passe de sauvegarde pour importer votre portefeuille depuis iCloud.";
 
 // Coin Settings
 
@@ -184,10 +207,44 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Porte-monnaie de Sauvegarde";
-"backup_prompt.warning" = "Sauvegarder ce portefeuille en créant une copie de sa phrase de récupération. Il sera nécessaire pour accéder au portefeuille si votre téléphone est perdu, volé, cassé, etc.";
+"backup_prompt.title" = "Sauvegarde manuelle";
+"backup_prompt.warning" = "Créez une copie de sauvegarde de la phrase de récupération et du mot de passe qui vous permettra de récupérer votre portefeuille si votre téléphone est perdu, volé, cassé, etc.";
 "backup_prompt.backup" = "Sauvegarde";
+"backup_prompt.backup_manual" = "Sauvegarde manuelle";
+"backup_prompt.backup_cloud" = "Sauvegarder sur iCloud";
 "backup_prompt.later" = "Plus tard";
+
+// Backup to iCloud
+
+"backup.cloud.title" = "Sauvegarder sur iCloud";
+"backup.cloud.description" = "Le stockage iCloud est un service tiers de stockage cloud fourni par Apple. Il est important de savoir que vos données seront stockées sur les serveurs d'Apple, pas sur vos appareils personnels. Cela signifie que vous confiez vos données et que vous transmettez la sécurité de vos informations à un service tiers.";
+
+"backup.cloud.terms.item.1" = "Je comprends que la perte d'accès à mon iCloud entraînera la perte d'accès à la sauvegarde du portefeuille correspondant.";
+
+"backup.cloud.name.title" = "Nom de la sauvegarde";
+"backup.cloud.name.description" = "Entrez le nom du fichier de sauvegarde.";
+"backup.cloud.name.empty" = "Le nom de sauvegarde ne peut pas être vide!";
+"backup.cloud.name.error.empty" = "Le nom de sauvegarde ne doit pas être vide";
+"backup.cloud.name.error.already_exist" = "Le nom de sauvegarde existe déjà!";
+"backup.cloud.name.placeholder" = "Nom";
+
+"backup.cloud.password.title" = "Créer un mot de passe";
+"backup.cloud.password.description" = "Définissez le mot de passe de déverrouillage de votre sauvegarde. Il doit contenir au moins 8 symboles, y compris une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial.";
+"backup.cloud.password.highlighted_description" = "N'oubliez pas ce mot de passe ! Il est différent de votre mot de passe Apple iCloud, et ne peut pas être récupéré ou réinitialisé.";
+"backup.cloud.password.placeholder" = "Mot de passe";
+"backup.cloud.password.confirm.placeholder" = "Confirmer";
+"backup.cloud.password.save" = "Enregistrez une copie de sauvegarde";
+
+"backup.cloud.password.error.empty_passphrase" = "La phrase d'authentification ne peut pas être laissée en blanc";
+"backup.cloud.password.error.forbidden_symbols" = "Veuillez utiliser uniquement les symboles pris en charge : A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_requirement" = "Votre mot de passe doit contenir au moins 8 caractères, y compris une lettre majuscule, une lettre minuscule, un chiffre et un symbole";
+"backup.cloud.password.error.invalid_password" = "Mot de passe incorrect";
+"backup.cloud.password.error.invalid_backup" = "La sauvegarde est corrompue";
+"backup.cloud.password.confirm.error.doesnt_match" = "Le mot de passe ne correspond pas";
+"backup.cloud.not_available" = "iCloud n'est pas disponible";
+"backup.cloud.cant_create_file" = "Impossible de sauvegarder le fichier sur iCloud";
+"backup.cloud.cant_delete_file" = "Impossible de supprimer de iCloud";
+
 
 // Errors
 
@@ -391,7 +448,9 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Echanger";
-"swap.confirmation.impact_too_high" = "La différence entre le prix du marché et le prix de règlement prévu est trop élevée.";
+"swap.confirmation.impact_too_high" = "Unstoppable a désactivé l'action d'échange pour cet échange parce que vous obtenez un prix extrêmement défavorable. Ceci est dû à une liquidité extrêmement faible.\nSi vous voulez toujours échanger, veuillez utiliser le site Web %@ à la place.";
+"swap.confirmation.impact_warning" = "Important ! Vous avez reçu un prix extrêmement défavorable en raison d'une liquidité extrêmement faible.";
+
 "swap.confirmation.minimum_received" = "Minimum reçu";
 "swap.confirmation.maximum_sent" = "Dépense maximale";
 
@@ -593,7 +652,10 @@
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "Ce projet n'a pas de données d'analyse";
-"coin_analytics.locked" = "Cette page n'est disponible que pour les utilisateurs Premium Unstoppable Wallet";
+"coin_analytics.locked.not_subscribed" = "Cette page n'est disponible que pour les utilisateurs Premium Unstoppable Wallet";
+"coin_analytics.locked.learn_more" = "En savoir plus";
+"coin_analytics.locked.not_activated" = "Activez votre abonnement pour avoir accès aux analyses";
+"coin_analytics.locked.activate" = "Activer";
 
 "coin_analytics.cex_volume" = "Volume CEX";
 "coin_analytics.cex_volume_rank" = "Rang de volume CEX";
@@ -606,7 +668,7 @@
 "coin_analytics.dex_volume" = "Volume DEX";
 "coin_analytics.dex_volume_rank" = "Rang de volume DEX";
 "coin_analytics.dex_volume_rank.description" = "Les tokens classés en fonction du volume de trading du token sur les exchanges décentralisés.";
-"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over a 30-day period.";
+"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
 "coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
 "coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
@@ -643,7 +705,9 @@
 "coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
 "coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
 
-"coin_analytics.holders" = "Holders";
+"coin_analytics.holders" = "Porteurs";
+"coin_analytics.holders_rank" = "Classement des porteurs";
+"coin_analytics.holders_rank.description" = "Classement des jetons selon les adresses uniques qui les détiennent sur plusieurs chaînes de blocs.";
 "coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
@@ -959,6 +1023,8 @@
 "appearance.balance_value.coin_value" = "Valeur de la pièce";
 "appearance.balance_value.fiat_value" = "Valeur Fiat";
 
+"appearance.balance_auto_hide" = "Masquer le Solde Automatiquement";
+
 // Settings -> Contacts
 
 "contacts.title" = "Contacts";
@@ -1236,9 +1302,17 @@
 "manage_account.recovery_phrase" = "Phrase de récupération";
 "manage_account.public_keys" = "Clés publiques";
 "manage_account.private_keys" = "Clés privées";
-"manage_account.backup_recovery_phrase" = "Phrase de récupération de sauvegarde";
-"manage_account.unlink" = "Dissocier";
+"manage_account.backup_recovery_phrase" = "Sauvegarde manuelle";
+"manage_account.cloud_backup_recovery_phrase" = "Sauvegarder sur iCloud";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Supprimer la sauvegarde d'iCloud";
+"manage_account.manual_backup_required" = "Sauvegarde manuelle requise";
+"manage_account.manual_backup_required.description" = "Afin de supprimer de façon sécurisée votre sauvegarde sur iCloud, vous devez d'abord sauvegarder manuellement votre phrase de récupération.";
+"manage_account.manual_backup_required.button" = "Sauvegarder Maintenant";
+"manage_account.unlink" = "Délier le portefeuille";
+"manage_account.backup.no_backup_yet_description" = "Pour commencer à utiliser le portefeuille, veuillez choisir l'une des options de sauvegarde disponibles.";
+"manage_account.backup.has_backup_description" = "Il est recommandé de faire une sauvegarde manuelle pour chaque portefeuille.";
 
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "Clés publiques";
@@ -1311,8 +1385,8 @@
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "Le TimeLock ne fonctionne que pour les envois vers les adresses du BIP44 (commençant par 1)";
 
-"fee_settings.max_fee" = "Frais Max";
-"fee_settings.max_fee.info" = "Le montant maximum estimé des frais à payer pour cette transaction, calculé sur la base des valeurs de limite de gas, de taux de frais maximum et de frais de priorité maximum ci-dessous. Les frais réels payés sont généralement inférieurs.";
+"fee_settings.network_fee" = "Frais de réseau";
+"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "La complexité des transactions est mesurée en unités appelées \"gas\". Elles varient en fonction du contrat intelligent en cours d'exécution. La limite de gas est le volume maximum estimé de gas nécessaire pour son exécution. Le volume de gaz réellement utilisé est généralement inférieur.";
 
@@ -1348,6 +1422,7 @@
 "watch_address.by" = "Par";
 "watch_address.watch_by" = "Regarder par";
 "watch_address.evm_address" = "Adresse EVM";
+"watch_address.tron_address" = "Adresse TRON";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Entrez Account Extended Public Key ";
 "watch_address.public_key.invalid_key" = "Clé invalide";
@@ -1427,3 +1502,20 @@
 "nft.activity.event_type.listCancel" = "Annuler la liste";
 "nft.activity.event_type.offer" = "Offre";
 "nft.activity.event_type.offerCancel" = "Offre annulée";
+
+// Activate Subscription
+
+"activate_subscription.title" = "Activer";
+"activate_subscription.wallet" = "Portefeuille";
+"activate_subscription.address" = "Adresses";
+"activate_subscription.message" = "Message à signer";
+"activate_subscription.sign" = "Signer";
+"activate_subscription.activating" = "Activation...";
+"activate_subscription.description" = "Vous devez signer ce message pour activer votre abonnement";
+"activate_subscription.failed_to_activate" = "Impossible d'activer l'abonnement";
+
+
+// Launch
+
+"launch.failed_to_launch" = "Échec du lancement de l'application en raison d'une erreur interne. Essayez de redémarrer l'application ou signalez l'erreur à notre équipe d'assistance.";
+"launch.failed_to_launch.report" = "Signaler";

@@ -7,6 +7,7 @@
 "button.reset" = "Zurücksetzen";
 "button.import" = "Wiederherstellen";
 "button.next" = "Weiter";
+"button.delete" = "Löschen";
 "button.share" = "Teilen";
 "button.paste" = "Einsetzen";
 "button.backup" = "Sicherung";
@@ -26,6 +27,7 @@
 "alert" = "Alarm";
 "alert.copied" = "Kopiert";
 "alert.saved" = "Gespeichert";
+"alert.saved_to_icloud" = "In iCloud gespeichert";
 "alert.no_internet" = "Kein Internet";
 "alert.wrong_amount" = "Falscher Betrag";
 "alert.no_fee" = "Falsche Gebühr";
@@ -104,15 +106,36 @@
 "restore.private_key.invalid_key" = "Ungültiger Schlüssel";
 "restore_error.mnemonic_word_count" = "Falsche Wortzahl. Sie muss zwischen 12 und 24 Wörtern liegen. Sie haben eingegeben: %@";
 "restore.checksum_error" = "Ungültige Prüfsumme";
-"restore.passphrase" = "Passphrase";
-"restore.input.passphrase" = "Passphrase";
-"restore.passphrase_description" = "Geben Sie Ihre Passphrase ein, die Sie beim Erstellen dieser Eselsbrücke verwendet haben.";
+"restore.passphrase" = "Passwort";
+"restore.input.passphrase" = "Passwort";
+"restore.passphrase_description" = "Dieses Passwort wird verwendet, um die Sicherungsdatei Ihrer Wallet zu verschlüsseln. Es hat nichts mit Ihrem Apple iCloud-Passwort zu tun. Wenn Sie es vergessen oder verlieren, kann es nicht wiederhergestellt oder zurückgesetzt werden.";
 "restore.error.empty_passphrase" = "Die Passphrase darf nicht leer sein";
 "restore.non_standard_import" = "Nicht standardmäßige Wiederherstellung";
 "restore.non_standard_import.description" = "Diese Seite bietet einen speziellen Wallet-Wiederherstellungsmechanismus für Unstoppable-Benutzer, die ein nicht standardmäßiges Wallet haben. Im Allgemeinen könnten solche Wallets in der Unstoppable-Version 0.27–0.28 mit einer nicht-englischen mnemonischen Wortliste und/oder einem Sonderzeichen in der Wallet-Passphrase (d. h. einem diakritischen Symbol) erstellt worden sein.
 \n\nWenn Sie ein betroffener Benutzer sind, wird Ihr Wallet-Guthaben nach der Wiederherstellung eines solchen Wallets in Version 0.29 oder höher als 0 angezeigt.Auf dieser Seite können Sie den Zugriff auf Ihre nicht standardmäßige Brieftasche wiederherstellen. Nach der Wiederherstellung wird empfohlen, eine neue Brieftasche zu erstellen (die standardkonform ist) und Gelder dorthin zu verschieben.";
 "restore.warning.non_recommended.description" = "Diese Brieftasche scheint ein nicht standardmäßiges Zeichen in ihrer geheimen Wortliste und/oder einer Passphrase zu verwenden. Wenn Sie kein Guthaben oder Transaktionen sehen, lesen Sie bitte unten für Details.\n\nKLICKEN, UM WEITERE INFORMATIONEN ZU ERHALTEN";
 "restore.error.non_standard.description" = "Dies ist eine nicht standardmäßige Wallet. \n\nKLICKEN SIE MEHR INFO";
+
+// Restore Type
+
+"restore_type.title" = "Wallet importieren";
+
+"restore_type.cloud.title" = "von iCloud";
+"restore_type.recovery.title" = "von Wiederherstellungsphrase";
+
+"restore_type.cloud.description" = "Importieren Sie aus einer Sicherungsdatei in Ihrem Schlüsselbund.";
+"restore_type.recovery.description" = "Importieren Sie mithilfe der Wiederherstellungsphrase oder des privaten Schlüssels.";
+
+// Restore Cloud
+
+"restore.cloud.title" = "Sicherung auswählen";
+"restore.cloud.description" = "Wählen Sie die Sicherungskopie der Wallet aus, die Sie wiederherstellen möchten.";
+"restore.cloud.empty" = "Keine Sicherungen gefunden.";
+"restore.cloud.imported" = "Importierte Wallet";
+
+"restore.cloud.password.title" = "Passwort eingeben";
+"restore.cloud.password.placeholder" = "Passwort sichern";
+"restore.cloud.password.description" = "Geben Sie das Backup-Passwort ein, um Ihre Brieftasche aus iCloud zu importieren.";
 
 // Coin Settings
 
@@ -139,7 +162,7 @@
 "recovery_phrase.title" = "Wiederherstellungsphrase";
 "recovery_phrase.warning" = "Teilen Sie niemals Ihre Wiederherstellungsphrase mit niemandem. Das unaufhaltsame Team wird niemals nach Ihrer Wiederherstellungsphrase fragen.";
 "recovery_phrase.tap_to_show" = "Tippen, um Wiederherstellungsphrase anzuzeigen";
-"recovery_phrase.passphrase" = "Passphrase";
+"recovery_phrase.passphrase" = "Passwort";
 "recovery_phrase.copy_warning.title" = "Risiko der Wiederherstellungs-Phrase-Kopie";
 "recovery_phrase.copy_warning.description" = "Als Sicherheitsmaßnahme empfehlen wir, Kopiermaßnahmen nicht auf Wiederherstellungs-Phrase zu verwenden.";
 
@@ -163,7 +186,7 @@
 "backup.title" = "Wiederherstellungsphrase";
 "backup.description" = "Schreibe diese Wörter in die richtige Reihenfolge und halte sie an einem sicheren Ort";
 "backup.tap_to_show" = "Tippen, um Wiederherstellungsphrase anzuzeigen";
-"backup.passphrase" = "Passphrase";
+"backup.passphrase" = "Passwort";
 "backup.verify" = "Prüfen";
 "backup.verified" = "Verifiziert";
 
@@ -185,10 +208,44 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Wallet sichern";
-"backup_prompt.warning" = "Sichern Sie diese Brieftasche durch Erstellen einer Kopie ihrer Wiederherstellungs-Phrase. Es wird benötigt, um auf die Brieftasche zuzugreifen, wenn Ihr Telefon verloren geht, gestohlen, kaputt usw.";
+"backup_prompt.title" = "Manuelle Sicherung";
+"backup_prompt.warning" = "Erstellen Sie eine Sicherungskopie der Wiederherstellungsphrase und des zugehörigen Passworts, mit dem Sie Ihre Wallet wiederherstellen können, wenn Ihr Telefon verloren geht, gestohlen, kaputt, etc.";
 "backup_prompt.backup" = "Sicherung";
+"backup_prompt.backup_manual" = "Manuelle Sicherung";
+"backup_prompt.backup_cloud" = "Sicherung in iCloud";
 "backup_prompt.later" = "Später";
+
+// Backup to iCloud
+
+"backup.cloud.title" = "Sicherung in iCloud";
+"backup.cloud.description" = "iCloud-Speicher ist ein von Apple bereitgestellter Cloud-Speicherdienst. Es ist wichtig zu wissen, dass Ihre Daten auf Apple-Servern gespeichert werden und nicht auf Ihren persönlichen Geräten. Das bedeutet, dass Sie Ihre Daten anvertrauen und die Sicherheit Ihrer Daten einem Drittanbieter überlassen.";
+
+"backup.cloud.terms.item.1" = "Ich verstehe, dass der Verlust des Zugriffs auf meine iCloud dazu führen wird, dass auch der Zugriff auf die Sicherung einer entsprechenden Brieftasche verloren geht.";
+
+"backup.cloud.name.title" = "Sicherungsname";
+"backup.cloud.name.description" = "Geben Sie den Namen für die Backup-Datei ein.";
+"backup.cloud.name.empty" = "Sicherungsname darf nicht leer sein!";
+"backup.cloud.name.error.empty" = "Sicherungsname darf nicht leer sein";
+"backup.cloud.name.error.already_exist" = "Sicherungsname existiert bereits!";
+"backup.cloud.name.placeholder" = "Name";
+
+"backup.cloud.password.title" = "Passwort festlegen";
+"backup.cloud.password.description" = "Legen Sie ein Passwort fest, um das Entsperren zu ermöglichen. Das Passwort muss mindestens 8 Zeichen lang sein und einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.";
+"backup.cloud.password.highlighted_description" = "Vergessen Sie dieses Passwort nicht! Es ist getrennt von Ihrem Apple iCloud-Passwort und kann nicht wiederhergestellt oder zurückgesetzt werden.";
+"backup.cloud.password.placeholder" = "Passwort";
+"backup.cloud.password.confirm.placeholder" = "Bestätigen";
+"backup.cloud.password.save" = "Speichern und sichern";
+
+"backup.cloud.password.error.empty_passphrase" = "Passphrase darf nicht leer sein";
+"backup.cloud.password.error.forbidden_symbols" = "Bitte verwende nur unterstützte Symbole: <![CDATA[A-Z a-z 0-9 \' \" ` & / ? ! : ; . , ~ * $ = + - [ ](){} <> \\ _ # @ | % ]]>";
+"backup.cloud.password.error.minimum_requirement" = "Das Passwort muss mindestens 8 Zeichen enthalten, darunter ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Symbol.";
+"backup.cloud.password.error.invalid_password" = "Falsches Passwort";
+"backup.cloud.password.error.invalid_backup" = "Backup ist beschädigt";
+"backup.cloud.password.confirm.error.doesnt_match" = "Passwort stimmt nicht überein";
+"backup.cloud.not_available" = "iCloud nicht verfügbar";
+"backup.cloud.cant_create_file" = "Die Datei kann nicht in iCloud gespeichert werden";
+"backup.cloud.cant_delete_file" = "Kann nicht von iCloud gelöscht werden";
+
 
 // Errors
 
@@ -392,7 +449,9 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Swap";
-"swap.confirmation.impact_too_high" = "Die Differenz zwischen dem Marktpreis und dem erwarteten Abrechnungspreis ist zu hoch.";
+"swap.confirmation.impact_too_high" = "Die Swap-Aktion für diesen Handel wurde unaufhaltsam deaktiviert, da der angebotene Preis extrem ungünstig ist. Dies ist auf die extrem niedrige Liquidität zurückzuführen.\nWenn du dennoch wechseln möchtest, benutze stattdessen die %@ Webseite.";
+"swap.confirmation.impact_warning" = "Wichtig! Du bekommst einen extrem ungünstigen Preis. Dies ist auf die extrem niedrige Liquidität zurückzuführen.";
+
 "swap.confirmation.minimum_received" = "Mindestens erhalten";
 "swap.confirmation.maximum_sent" = "Maximale Ausgaben";
 
@@ -594,7 +653,10 @@
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "This project has no analytics data";
-"coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked.not_subscribed" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked.learn_more" = "Learn More";
+"coin_analytics.locked.not_activated" = "Activate your subscription for getting access to analytics";
+"coin_analytics.locked.activate" = "Activate";
 
 "coin_analytics.cex_volume" = "CEX Volume";
 "coin_analytics.cex_volume_rank" = "CEX Volume Rank";
@@ -607,7 +669,7 @@
 "coin_analytics.dex_volume" = "DEX Volume";
 "coin_analytics.dex_volume_rank" = "DEX Volume Rank";
 "coin_analytics.dex_volume_rank.description" = "Tokens ranked by trading volume for the token on decentralized exchanges.";
-"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over 30-day period.";
+"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
 "coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
@@ -645,6 +707,8 @@
 "coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
 
 "coin_analytics.holders" = "Holders";
+"coin_analytics.holders_rank" = "Holders Rank";
+"coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
 "coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
@@ -960,6 +1024,8 @@
 "appearance.balance_value.coin_value" = "Coin Value";
 "appearance.balance_value.fiat_value" = "Fiat Value";
 
+"appearance.balance_auto_hide" = "Auto-Ausblenden ausgleichen";
+
 // Settings -> Contacts
 
 "contacts.title" = "Kontakte";
@@ -1017,7 +1083,7 @@
 "settings.icloud_sync.alert.title" = "iCloud Sync";
 "settings.icloud_sync.alert.description" = "Bitte überprüfen Sie, dass der iCloud-Speicher auf Ihrem Gerät aktiviert ist.";
 
-"settings.icloud_sync.alert_error.title" = "iCloud Error";
+"settings.icloud_sync.alert_error.title" = "iCloud Fehler";
 "settings.icloud_sync.alert_error.description" = "Keine Verbindung zu iCloud, dies könnte daran liegen, dass iCloud-Speicher auf Ihrem Gerät nicht verfügbar ist oder für unaufhaltsame App deaktiviert";
 
 // Set PIN
@@ -1082,8 +1148,8 @@
 "create_wallet.12_words" = "12 Wörter (empfohlen)";
 "create_wallet.n_words" = "%@ Wörter";
 "create_wallet.word_list" = "Wortliste";
-"create_wallet.passphrase" = "Passphrase";
-"create_wallet.input.passphrase" = "Passphrase";
+"create_wallet.passphrase" = "Passwort";
+"create_wallet.input.passphrase" = "Passwort";
 "create_wallet.input.confirm" = "Bestätigen";
 "create_wallet.passphrase_description" = "Passphrases fügen eine zusätzliche Sicherheitsschicht für Brieftaschen hinzu. Um eine solche Brieftasche wiederherzustellen, benötigt ein Benutzer sowohl mnemonische als auch eine Passphrase.\n\nPassphrasen erleichtern es Benutzern auch, mehrere Multicoin-Wallets mit einem einzigen mnemonischen, aber anderen Passwort zu haben.";
 "create_wallet.error.empty_passphrase" = "Passphrase darf nicht leer sein";
@@ -1237,9 +1303,17 @@
 "manage_account.recovery_phrase" = "Wiederherstellungsphrase";
 "manage_account.public_keys" = "Öffentliche Schlüssel";
 "manage_account.private_keys" = "Private Schlüssel";
-"manage_account.backup_recovery_phrase" = "Wiederherstellungsphrase sichern";
-"manage_account.unlink" = "Verknüpfung trennen";
+"manage_account.backup_recovery_phrase" = "Manuelle Sicherung";
+"manage_account.cloud_backup_recovery_phrase" = "Sicherung in iCloud";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Sicherung aus iCloud löschen";
+"manage_account.manual_backup_required" = "Manuelle Sicherung erforderlich";
+"manage_account.manual_backup_required.description" = "Um Ihre Sicherheitskopie auf iCloud sicher zu löschen, müssen Sie zuerst Ihre Wiederherstellungsphrase manuell sichern.";
+"manage_account.manual_backup_required.button" = "Jetzt Sichern";
+"manage_account.unlink" = "Wallet entfernen";
+"manage_account.backup.no_backup_yet_description" = "Füllen Sie eine der Wallet-Sicherungsoptionen aus, um mit der Wallet zu beginnen.";
+"manage_account.backup.has_backup_description" = "Es wird empfohlen, eine manuelle Sicherung für jede Wallet zu haben.";
 
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "Sind Sie sicher, dass Sie Ihre Wallet-Sicherung aus iCloud löschen möchten?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "Öffentliche Schlüssel";
@@ -1312,8 +1386,8 @@
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock funktioniert nur beim Senden an BIP44 Adressen (ab 1)";
 
-"fee_settings.max_fee" = "Max Gebühr";
-"fee_settings.max_fee.info" = "Die geschätzte Transaktionsgebühr, die für diese Transaktion gezahlt werden soll berechnet anhand des Gaslimits, der maximalen Gebührenrate und der unten angegebenen Maximalpriorität. Die tatsächlich gezahlte Gebühr ist in der Regel niedriger.";
+"fee_settings.network_fee" = "Netzwerkgebühr";
+"fee_settings.network_fee.info" = "Die geschätzten Kosten für den Versand der Transaktion im Netzwerk.";
 "fee_settings.gas_limit" = "Gaslimit";
 "fee_settings.gas_limit.info" = "Die Transaktionskomplexität wird in Einheiten mit dem Namen \"Gas\" gemessen, die je nach ausgeführten intelligenten Verträgen variieren. Das Gaslimit ist das geschätzte Höchstgas, das benötigt wird, um es auszuführen. Das tatsächliche Gas wird normalerweise niedriger sein.";
 
@@ -1348,6 +1422,7 @@
 "watch_address.by" = "Von";
 "watch_address.watch_by" = "Beobachten von";
 "watch_address.evm_address" = "EVM-Adresse";
+"watch_address.tron_address" = "TRON Adresse";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Account Extended Public Key eingeben";
 "watch_address.public_key.invalid_key" = "Ungültiger Schlüssel";
@@ -1427,3 +1502,20 @@
 "nft.activity.event_type.listCancel" = "Liste abbrechen";
 "nft.activity.event_type.offer" = "Angebot";
 "nft.activity.event_type.offerCancel" = "Angebot abbrechen";
+
+// Activate Subscription
+
+"activate_subscription.title" = "Activate";
+"activate_subscription.wallet" = "Wallet";
+"activate_subscription.address" = "Adresse";
+"activate_subscription.message" = "Message to Sign";
+"activate_subscription.sign" = "Signieren";
+"activate_subscription.activating" = "Activating...";
+"activate_subscription.description" = "You need to sign this message to activate your subscription";
+"activate_subscription.failed_to_activate" = "Failed to activate subscription";
+
+
+// Launch
+
+"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting app or report the error to our support team.";
+"launch.failed_to_launch.report" = "Melden";

@@ -7,6 +7,7 @@
 "button.reset" = "Resetar";
 "button.import" = "Importar";
 "button.next" = "Próximo";
+"button.delete" = "Deletar";
 "button.share" = "Compartilhar";
 "button.paste" = "Colar";
 "button.backup" = "Backup";
@@ -26,6 +27,7 @@
 "alert" = "Alerta";
 "alert.copied" = "Copiado";
 "alert.saved" = "Salvo";
+"alert.saved_to_icloud" = "Salvo no iCloud";
 "alert.no_internet" = "Sem Internet";
 "alert.wrong_amount" = "Quantia Errada";
 "alert.no_fee" = "Taxa Errada";
@@ -108,12 +110,33 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "restore.checksum_error" = "Soma de Verificação Inválida";
 "restore.passphrase" = "Senha";
 "restore.input.passphrase" = "Senha";
-"restore.passphrase_description" = "Digite a senha que você usou ao criar esta frase mnemônica.";
+"restore.passphrase_description" = "Esta senha é usada para criptografar o arquivo de backup de sua carteira. Não está relacionado à sua senha do Apple iCloud. Não pode ser recuperada ou redefinida se for perdida ou esquecida.";
 "restore.error.empty_passphrase" = "O senha não pode estar em branco";
 "restore.non_standard_import" = "Restauração Não-Padrão";
 "restore.non_standard_import.description" = "Esta página fornece um mecanismo especial de recuperação de carteira para usuários da Unstoppable que possuem uma carteira Não Padrão.  Geralmente, essas carteiras podem ter sido criadas na versão Unstoppable 0.27 - 0.28 usando uma lista de palavras mnemônicas não inglesas e/ou um caractere especial na senha da carteira (ou seja, símbolo diacrítico).\n\nSe você for um usuário afetado, o saldo da sua carteira será mostrado como 0 após a atualização para a versão 0.29.  Esta página permitirá que você restaure o acesso à sua carteira não padrão.  Uma vez restaurado, é recomendável criar uma nova carteira (que será compatível com o padrão) e mover fundos para lá.";
 "restore.warning.non_recommended.description" = "Esta carteira parece usar um caractere não padrão em sua lista de palavras secretas e/ou uma frase secreta.  Se você não ver um saldo ou transações, leia abaixo para obter detalhes.\n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
 "restore.error.non_standard.description" = "Esta é uma carteira não padrão. \n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
+
+// Restore Type
+
+"restore_type.title" = "Importar carteira";
+
+"restore_type.cloud.title" = "do iCloud";
+"restore_type.recovery.title" = "da Frase de Recuperação";
+
+"restore_type.cloud.description" = "Importe de um arquivo de backup em sua keychain.";
+"restore_type.recovery.description" = "Importar usando frase de recuperação ou chave privada.";
+
+// Restore Cloud
+
+"restore.cloud.title" = "Selecionar Backup";
+"restore.cloud.description" = "Selecione a cópia de backup da carteira que você deseja restaurar.";
+"restore.cloud.empty" = "Nenhum backup encontrado.";
+"restore.cloud.imported" = "Carteiras importadas";
+
+"restore.cloud.password.title" = "Digite a senha";
+"restore.cloud.password.placeholder" = "Fazer Backup da Senha";
+"restore.cloud.password.description" = "Digite a senha de backup para importar sua carteira.";
 
 // Coin Settings
 
@@ -151,9 +174,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Extended Key
 
-"extended_key.bip32_root_key" = "BIP32 Root Key";
-"extended_key.account_extended_private_key" = "Account Extended Private Key";
-"extended_key.account_extended_public_key" = "Account Extended Public Key";
+"extended_key.bip32_root_key" = "Chave Raiz BIP32";
+"extended_key.account_extended_private_key" = "Chave Privada Estendida da Conta";
+"extended_key.account_extended_public_key" = "Chave Pública Estendida da Conta";
 "extended_key.purpose" = "Propósito";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "Conta";
@@ -186,10 +209,44 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Backup Prompt
 
-"backup_prompt.title" = "Carteira de Backup";
-"backup_prompt.warning" = "Fazer backup desta carteira criando uma cópia de sua frase de recuperação. Será necessário para acessar a carteira se seu telefone for perdido, roubado, quebrado, etc.";
+"backup_prompt.title" = "Backup Manual";
+"backup_prompt.warning" = "Crie uma cópia de backup da frase de recuperação e da senha associada que permitirá recuperar sua carteira caso seu telefone seja perdido, roubado, quebrado etc.";
 "backup_prompt.backup" = "Backup";
+"backup_prompt.backup_manual" = "Backup Manual";
+"backup_prompt.backup_cloud" = "Backup para o iCloud";
 "backup_prompt.later" = "Mais tarde";
+
+// Backup to iCloud
+
+"backup.cloud.title" = "Backup para o iCloud";
+"backup.cloud.description" = "O armazenamento em iCloud é um serviço de armazenamento em nuvem de terceiros fornecido pela Apple. É importante saber que seus dados serão armazenados nos servidores da Apple, não em seus dispositivos pessoais. Isso significa que você está confiando seus dados e entregando a segurança de suas informações a um serviço terceirizado.";
+
+"backup.cloud.terms.item.1" = "Compreendo que perder acesso ao meu iCloud resultará em perder acesso ao backup de uma respectiva carteira.";
+
+"backup.cloud.name.title" = "Nome do Backup";
+"backup.cloud.name.description" = "Digite o nome para o arquivo de backup.";
+"backup.cloud.name.empty" = "O nome do Backup não pode estar vazio!";
+"backup.cloud.name.error.empty" = "O nome do backup não pode estar vazio";
+"backup.cloud.name.error.already_exist" = "O nome do Backup já existe!";
+"backup.cloud.name.placeholder" = "Nome";
+
+"backup.cloud.password.title" = "Definir Senha";
+"backup.cloud.password.description" = "Defina a senha de desbloqueio para o seu backup. Deve consistir de pelo menos 8 símbolos e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial.";
+"backup.cloud.password.highlighted_description" = "Não esqueça esta senha! Ela é separada da sua senha do iCloud da Apple e não pode ser recuperada ou redefinida.";
+"backup.cloud.password.placeholder" = "Senha";
+"backup.cloud.password.confirm.placeholder" = "Confirmar";
+"backup.cloud.password.save" = "Salvar e fazer Backup";
+
+"backup.cloud.password.error.empty_passphrase" = "A senha não pode estar vazia";
+"backup.cloud.password.error.forbidden_symbols" = "Por favor, use apenas símbolos suportados: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_requirement" = "Pelo menos 8 caracteres, incluindo uma letra maiúscula, uma letra minúscula, um número e um símbolo";
+"backup.cloud.password.error.invalid_password" = "Senha Incorreta";
+"backup.cloud.password.error.invalid_backup" = "O backup está corrompido";
+"backup.cloud.password.confirm.error.doesnt_match" = "A senha não corresponde";
+"backup.cloud.not_available" = "iCloud indisponível";
+"backup.cloud.cant_create_file" = "Não é possível salvar o arquivo no iCloud";
+"backup.cloud.cant_delete_file" = "Não é possível excluir do iCloud";
+
 
 // Errors
 
@@ -268,7 +325,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "send.next_button" = "Próximo";
 "send.error.invalid" = "Inválido";
 "send.error.address" = "Endereço";
-"send.hodler_locktime" = "TimeLock";
+"send.hodler_locktime" = "TravaTempo";
 "send.hodler_locktime_hour" = "1 hora";
 "send.hodler_locktime_month" = "1 mês";
 "send.hodler_locktime_half_year" = "6 meses";
@@ -279,9 +336,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "send.fee_info.description" = "As Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são maiores quando um monte de transações ocorrem na rede.\n\n A carteira Unstoppable estima a taxa com base na atividade atual da blockchain e recomenda o valor ideal para que a transação seja processada dentro de um período razoável de tempo.\n\n A taxa recomendada é mostrada como a quantidade de satoshi que o usuário precisa pagar por um único byte da transação. Assim, a taxa total depende do tamanho total da transação que é medida em bytes.\n\nUsuários podem utilizar os controles fornecidos para aumentar ou diminuir o custo. A mudança altera a taxa total para a transação que o usuário irá pagar.\n\nDefinir a taxa abaixo do valor recomendado pode resultar em uma transação ser realizada como pendente por horas, ou ser rejeitada. Quanto menor o valor, mais tempo levará a transação para confirmar. Para as transações onde a prioridade é importante, recomendamos definir uma taxa mais alta.";
 "send.transaction_inputs_outputs_info.title" = "Entradas / Saídas de Transação";
 "send.transaction_inputs_outputs_info.description" = "A maioria das transações do Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira Unstoppable implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários Unstoppable:";
-"send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
+"send.transaction_inputs_outputs_info.shuffle.title" = "1. Embaralhar";
 "send.transaction_inputs_outputs_info.shuffle.description" = "A ordem das saídas da transação é aleatória em cada transação. Às vezes, a mudança pode ser a primeira saída, às vezes pode ser a segunda. Se um usuário confiar no desenvolvedor do aplicativo, considere essa uma opção recomendada.";
-"send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
+"send.transaction_inputs_outputs_info.deterministic.title" = "2. Determinístico";
 "send.transaction_inputs_outputs_info.deterministic.description" = "Existe um padrão comumente aceitado para ordenar saídas de transações (conhecido como BIP69). Em carteiras de código aberto, esse padrão garante que os usuários de carteiras não precisem confiar em como os desenvolvedores do aplicativo implementam a ordem das saídas. Como esse padrão é novo, poucas carteiras o implementaram ainda. Como resultado, é possível ver no blockchain se uma transação foi enviada de uma carteira que usa esse padrão ou não.";
 
 "send.confirmation.you_send" = "Enviar";
@@ -317,7 +374,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "send.stuck_warning" = "Atenção! Risco de ficar preso";
 
-"send.lock_time" = "TimeLock";
+"send.lock_time" = "TravaTempo";
 
 "approve.confirmation.you_approve" = "Você concorda";
 "approve.confirmation.you_revoke" = "Você revoga";
@@ -393,7 +450,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Trocar";
-"swap.confirmation.impact_too_high" = "A diferença entre o preço de mercado e o preço de liquidação esperado é bastante elevada.";
+"swap.confirmation.impact_too_high" = "A Unstoppable desativou a ação de troca para esta negociação porque você está obtendo um preço extremamente desfavorável. Isso ocorre devido à liquidez extremamente baixa.\nSe você ainda deseja trocar, use o site %@.";
+"swap.confirmation.impact_warning" = "Importante! Você está recebendo um preço extremamente desfavorável. Isso se deve a uma liquidez extremamente baixa.";
+
 "swap.confirmation.minimum_received" = "Mínimo recebido";
 "swap.confirmation.maximum_sent" = "Gastos máximos";
 
@@ -434,8 +493,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.project_has_no_coin" = "Esse projeto não tem uma moeda";
 
 "market.top.section.header.see_all" = "Ver tudo";
-"market.top.section.header.top_gainers" = "Top ganhadores";
-"market.top.section.header.top_losers" = "Top Perdedores";
+"market.top.section.header.top_gainers" = "Maiores Altas";
+"market.top.section.header.top_losers" = "Maiores Quedas";
 "market.top.section.header.top_sectors" = "Principais Setores";
 "market.top.section.header.news" = "Notícias";
 "market.top.volume.title" = "Vol";
@@ -459,8 +518,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market.top.lowest_cap" = "Menor capitalização";
 "market.top.highest_volume" = "Maior volume";
 "market.top.lowest_volume" = "Menor volume";
-"market.top.top_gainers" = "Top ganhadores";
-"market.top.top_losers" = "Top Perdedores";
+"market.top.top_gainers" = "Maiores Altas";
+"market.top.top_losers" = "Maiores Quedas";
 "market.top.top_collections" = "Principais Coleções NFT";
 "market.top.floor_price" = "Andar:";
 "market.top.top_platforms" = "Melhores Plataformas";
@@ -595,14 +654,17 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "Este projeto não tem dados de análise";
-"coin_analytics.locked" = "Esta página disponível apenas para usuários Premium da Carteira Unstoppable";
+"coin_analytics.locked.not_subscribed" = "Esta página está disponível apenas para usuários premium da Carteira Unstoppable";
+"coin_analytics.locked.learn_more" = "Saiba Mais";
+"coin_analytics.locked.not_activated" = "Ativar sua assinatura para ter acesso ao Analytics";
+"coin_analytics.locked.activate" = "Ativar";
 
 "coin_analytics.cex_volume" = "Volume CEX";
 "coin_analytics.cex_volume_rank" = "Ranking do Volume CEX";
 "coin_analytics.cex_volume_rank.description" = "Tokens classificados por volume de negociação para o token em corretoras centralizadas.";
 "coin_analytics.cex_volume.info1" = "Volume total de trading para o token em corretoras centralizadas durante um período de 30 dias.";
 "coin_analytics.cex_volume.info2" = "Gráfico mostrando a variação no volume diário de negociação do token nas principais corretoras centralizadas durante um período de 1 ano.";
-"coin_analytics.cex_volume.info3" = "Classificação do Token baseada no volume de trading em principais corretoras centralizadas durante um período de 30 dias.";
+"coin_analytics.cex_volume.info3" = "Classificação do Token baseada no volume de trading nas principais corretoras centralizadas durante um período de 30 dias.";
 "coin_analytics.cex_volume.info4" = "Lista de todos os tokens com base no volume de trading em corretoras centralizadas ao longo de 24H / 7D / 1M.";
 
 "coin_analytics.dex_volume" = "Volume DEX";
@@ -630,11 +692,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30 Dias Endereços Únicos";
 "coin_analytics.active_addresses_rank" = "Ranking de Endereços Ativos";
 "coin_analytics.active_addresses_rank.description" = "Tokens classificados pelo número de endereços exclusivos que realizam transações com o token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
-"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
-"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses.info1" = "Número total de endereços ativos diários únicos em um período de 24 horas.";
+"coin_analytics.active_addresses.info2" = "Gráfico mostrando a variação na contagem diária de endereços ativos durante o período de 1 ano.";
+"coin_analytics.active_addresses.info3" = "Número total de endereços de blockchain únicos realizando transações com token em um período de 30 dias.";
+"coin_analytics.active_addresses.info4" = "Classificação do token com base no número de carteiras ativas realizando transações no período de 30 dias do token.";
+"coin_analytics.active_addresses.info5" = "Lista de todos os tokens classificados com base no número de endereços ativos diários que realizam transações com o token em intervalos de 24h / 7D / 1M.";
 
 "coin_analytics.transaction_count" = "Contagem de transações";
 "coin_analytics.transaction_count_rank" = "Ranking de Contador Tx";
@@ -646,6 +708,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.transaction_count.info5" = "O número total de tokens transferidos sobre a blockchain ao longo do período de 30 dias.";
 
 "coin_analytics.holders" = "Holders";
+"coin_analytics.holders_rank" = "Classificação dos Holders";
+"coin_analytics.holders_rank.description" = "Raking de tokens por endereços únicos guardando-os em várias blockchains.";
 "coin_analytics.holders.info1" = "Número total de endereços únicos que contêm o token em várias blockchains.";
 "coin_analytics.holders.info2" = "As 10 principais carteiras que possuem o token em cada blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Blockchains rastreadas: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
@@ -656,11 +720,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.project_tvl" = "Projeto TVL";
 "coin_analytics.tvl_ratio" = "Proporção de Capital de M. / TVB";
 "coin_analytics.project_tvl.info_title" = "Projeto TVB (Total de Valor Bloqueado)";
-"coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
-"coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
-"coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
+"coin_analytics.project_tvl.info1" = "Valor-Total-Bloqueado (ou Ativos Sob Gerenciamento) nos contratos inteligentes do projeto.";
+"coin_analytics.project_tvl.info2" = "Gráfico mostrando a variação Valor-Total-Bloqueado nos contratos inteligentes do projeto durante o período de 1 ano.";
+"coin_analytics.project_tvl.info3" = "Classificação do token com base no Valor-Total-Bloqueado atual.";
+"coin_analytics.project_tvl.info4" = "Lista de todos os tokens classificados com base no Valor-Total-Bloqueado atual.";
+"coin_analytics.project_tvl.info5" = "Valor de Mercado / proporção VTB para o projeto.";
 
 "coin_analytics.project_revenue" = "Receita do Projeto";
 "coin_analytics.project_revenue_rank" = "Ranking da Receita do Projeto";
@@ -676,7 +740,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_analytics.funding" = "Financiamento";
 "coin_analytics.funding.lead" = "Conduzir";
 
-"coin_analytics.treasuries" = "Treasuries";
+"coin_analytics.treasuries" = "Tesouros";
 "coin_analytics.treasuries.filters" = "Filtros";
 "coin_analytics.treasuries.filter.all" = "Todos";
 "coin_analytics.treasuries.filter.public" = "Público";
@@ -708,7 +772,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Pro Features
 
-"pro_features.authorize.wallet_passes.title" = "Unstoppable NFT";
+"pro_features.authorize.wallet_passes.title" = "NFT Unstoppable";
 "pro_features.authorize.wallet_passes.subtitle" = "Obtenha acesso aos recursos avançados de carteira\nFazendo Holdin NFTs Unstoppable.";
 
 "pro_features.lock_info.go_to_mint" = "Em Breve";
@@ -845,11 +909,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "Os recursos abaixo são experimentais e devem ser usados com cautela. Enquanto nós testamos minuciosamente esses recursos usando nossos próprios fundos cripto, nós não podemos garantir que eles funcionarão como esperado em todos os casos possíveis.";
-"settings.experimental_features.bitcoin_hodling" = "TimeLock";
+"settings.experimental_features.bitcoin_hodling" = "TravaTempo";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "TimeLock";
+"settings.bitcoin_hodling.title" = "TravaTempo";
 "settings.bitcoin_hodling.lock_time" = "Ativar";
 "settings.bitcoin_hodling.description" = "Isso permite que você envie Bitcoins que não podem ser gastos até uma data especificada. \n\nO destinatário de tais transações deve usar o aplicativo de carteira Unstoppable versão 0.10 ou mais recente, com o formato de endereço BIP44 para Bitcoin. \n\nSomente a carteira Unstoppable pode identificar corretamente tais transações na rede Bitcoin, bem como permitir que o receptor gaste esses Bitcoins após o período de bloqueio expirar. \n\nSe você é um HOLDER, você pode usar este recurso para se forçar a manter seus Bitcoins enviando tais transações para si mesmo. \n\nSendo um recurso experimental, o valor máximo por transação é limitado a 0,5 BTC.";
 
@@ -960,6 +1024,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "appearance.balance_value" = "Valor Patrimonial";
 "appearance.balance_value.coin_value" = "Valor da Moeda";
 "appearance.balance_value.fiat_value" = "Valor Fiat";
+
+"appearance.balance_auto_hide" = "Ocultar Saldo Automaticamente";
 
 // Settings -> Contacts
 
@@ -1097,7 +1163,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Lock Info
 
-"lock_info.title" = "TimeLock";
+"lock_info.title" = "TravaTempo";
 "lock_info.text" = "O remetente enviou esses fundos com um fechamento de gastos que expirará na data mostrada. \n\nNão se preocupe, o Bitcoin recebido já é seu, mas até que o período de bloqueio expire, você não pode gastá-los na rede Bitcoin.";
 
 // Double Spend Info
@@ -1238,15 +1304,23 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "manage_account.recovery_phrase" = "Frase de Recuperação";
 "manage_account.public_keys" = "Chaves públicas";
 "manage_account.private_keys" = "Chave Privada";
-"manage_account.backup_recovery_phrase" = "Backup da frase de recuperação";
-"manage_account.unlink" = "Desvincular";
+"manage_account.backup_recovery_phrase" = "Backup Manual";
+"manage_account.cloud_backup_recovery_phrase" = "Backup para o iCloud";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Excluir Backup do iCloud";
+"manage_account.manual_backup_required" = "Backup Manual Requerido";
+"manage_account.manual_backup_required.description" = "Para excluir com segurança seu backup no iCloud, você precisará fazer backup da sua frase de recuperação manualmente.";
+"manage_account.manual_backup_required.button" = "Realizar backup agora";
+"manage_account.unlink" = "Desvincular Carteira";
+"manage_account.backup.no_backup_yet_description" = "Conclua uma das opções de backup da carteira para começar a usar a carteira.";
+"manage_account.backup.has_backup_description" = "É recomendável ter um backup manual para cada carteira.";
 
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "Você tem certeza de que deseja excluir o backup da carteira do iCloud?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "Chaves públicas";
 "public_keys.evm_address" = "Endereço EVM";
 "public_keys.evm_address.description" = "Permite o monitoramento somente leitura de carteiras mantendo ativos na Ethereum, na Binance Smart Chain e em outras blockchains baseadas em EVM.";
-"public_keys.account_extended_public_key" = "Account Extended Public Key";
+"public_keys.account_extended_public_key" = "Chave Pública Estendida da Conta";
 "public_keys.account_extended_public_key.description" = "Permite monitoramento somente leitura das carteiras segurando Bitcoin e outras cripto baseadas em UTXO (ou seja, Litecoin, Bitcoin Cash, Dash etc.).";
 
 // Manage Account -> Private Keys
@@ -1254,9 +1328,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "private_keys.title" = "Chave Privada";
 "private_keys.evm_private_key" = "Chave Privada EVM";
 "private_keys.evm_private_key.description" = "Concede controle total sobre cripto baseado em EVM i.e Ethereum, Binance Smart Chain, etc. dentro da respectiva carteira.";
-"private_keys.bip32_root_key" = "BIP32 Root Key";
+"private_keys.bip32_root_key" = "Chave Raiz BIP32";
 "private_keys.bip32_root_key.description" = "Concede controle total sobre os ativos da respectiva carteira.";
-"private_keys.account_extended_private_key" = "Account Extended Private Key";
+"private_keys.account_extended_private_key" = "Chave Privada Estendida da Conta";
 "private_keys.account_extended_private_key.description" = "Concede controle total sobre Bitcoin e outras criptomoedas baseadas em UTXO, ou seja, Litecoin, Bitcoin Cash, Dash etc. dentro da respectiva carteira.";
 
 // Manage Account -> EVM Address
@@ -1290,7 +1364,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "add_evm_sync_source.title" = "Adicionar fonte RPC";
 "add_evm_sync_source.name" = "Nome";
-"add_evm_sync_source.rpc_url" = "RPC URL";
+"add_evm_sync_source.rpc_url" = "URL RPC";
 "add_evm_sync_source.basic_auth" = "Autenticação básica (opcional)";
 "add_evm_sync_source.warning.url_exists" = "Fonte RPC com esta url já existe";
 "add_evm_sync_source.error.invalid_url" = "Url inserida é inválida. URL válida deve ter um dos seguintes esquemas: http, https, ws, wss";
@@ -1313,8 +1387,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock funciona apenas para enviar para endereços BIP44 (começando com 1)";
 
-"fee_settings.max_fee" = "Taxa máxima";
-"fee_settings.max_fee.info" = "A taxa máxima estimada de transação a ser paga por esta transação, calculado com base no limite do gás, a taxa máxima e os valores da taxa máxima de prioridade abaixo. A taxa real paga normalmente será menor.";
+"fee_settings.network_fee" = "Taxa de Rede";
+"fee_settings.network_fee.info" = "O custo estimado do envio de determinada transação na rede.";
 "fee_settings.gas_limit" = "Limite de gás";
 "fee_settings.gas_limit.info" = "A complexidade da transação é medida em unidades chamadas \"gas\". Ela varia dependendo do contrato inteligente ser executado. O Limite de Gas é estimado o gas máximo necessário para o executar. O gas real utilizado normalmente será mais baixo.";
 
@@ -1349,7 +1423,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "watch_address.by" = "Por";
 "watch_address.watch_by" = "Assistir Por";
 "watch_address.evm_address" = "Endereço EVM";
-"watch_address.public_key" = "Account xPubKey";
+"watch_address.tron_address" = "Endereço TRON";
+"watch_address.public_key" = "xPubKey da Conta";
 "watch_address.public_key.placeholder" = "Insira a chave pública estendida da conta ";
 "watch_address.public_key.invalid_key" = "Chave Inválida";
 "watch_address.choose_blockchain" = "Escolha Blockchain";
@@ -1428,3 +1503,20 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "nft.activity.event_type.listCancel" = "Lista De Cancelar";
 "nft.activity.event_type.offer" = "Oferta";
 "nft.activity.event_type.offerCancel" = "Cancelar oferta";
+
+// Activate Subscription
+
+"activate_subscription.title" = "Ativar";
+"activate_subscription.wallet" = "Carteira";
+"activate_subscription.address" = "Endereço";
+"activate_subscription.message" = "Mensagem para Assinar";
+"activate_subscription.sign" = "Assinar";
+"activate_subscription.activating" = "Ativando...";
+"activate_subscription.description" = "Você precisa assinar esta mensagem para ativar sua assinatura";
+"activate_subscription.failed_to_activate" = "Falha ao ativar a assinatura";
+
+
+// Launch
+
+"launch.failed_to_launch" = "Falha ao iniciar o aplicativo devido a um erro interno. Tente reiniciar o aplicativo ou relate o erro à nossa equipe de suporte.";
+"launch.failed_to_launch.report" = "Reportar";

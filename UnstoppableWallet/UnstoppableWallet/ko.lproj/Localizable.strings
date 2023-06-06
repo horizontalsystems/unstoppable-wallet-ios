@@ -7,6 +7,7 @@
 "button.reset" = "초기화";
 "button.import" = "복구";
 "button.next" = "다음";
+"button.delete" = "삭제";
 "button.share" = "공유";
 "button.paste" = "불여넣기";
 "button.backup" = "백업";
@@ -26,6 +27,7 @@
 "alert" = "알림";
 "alert.copied" = "복사됨";
 "alert.saved" = "저장";
+"alert.saved_to_icloud" = "저장된 위치: 아이클라우드";
 "alert.no_internet" = "인터넷에 연결되지 않음";
 "alert.wrong_amount" = "잘못된 금액";
 "alert.no_fee" = "잘못된 요금";
@@ -79,11 +81,11 @@
 
 "sync_error" = "동기화 오류입니다. 다시 시도하십시오.";
 
-"number.thousand" = "%@K";
-"number.million" = "%@M";
-"number.billion" = "%@B";
-"number.trillion" = "%@T";
-"number.quadrillion" = "%@Q";
+"number.thousand" = "%@천";
+"number.million" = "%@백만";
+"number.billion" = "%@십억";
+"number.trillion" = "%@일조";
+"number.quadrillion" = "%@천조";
 
 "selector.any" = "어떤";
 
@@ -106,12 +108,33 @@
 "restore.checksum_error" = "유효하지 않은 체크섬";
 "restore.passphrase" = "암호문구";
 "restore.input.passphrase" = "암호문구";
-"restore.passphrase_description" = "이 연상 부호를 만들 때 사용한 암호 문구 입력.";
+"restore.passphrase_description" = "이 암호는 지갑의 백업 파일을 암호화하는 데 사용됩니다. 이 암호는 Apple iCloud 암호와는 관련이 없습니다. 만약 분실하거나 잊어버린 경우, 복구하거나 재설정할 수 없습니다.";
 "restore.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "restore.non_standard_import" = "비표준 복원";
 "restore.non_standard_import.description" = "이 페이지는 비표준 지갑을 가지고 있는 Unstoppable 사용자를 위한 특별한 지갑 복원 메커니즘을 제공합니다. 일반적으로 이러한 지갑은 Unstoppable 버전 0.27 - 0.28에서 영어가 아닌 니모닉 단어 목록 및/또는 지갑 암호의 특수 문자(예: 분음 부호)를 사용하여 생성되었을 수 있습니다.\n\n영향을 받는 사용자인 경우 버전 0.29로 업데이트하면 지갑 잔액이 0으로 표시됩니다. 이 페이지에서는 비표준 지갑에 대한 액세스를 복원할 수 있습니다. 복원되면 새 지갑(표준 준수)을 만들고 그곳으로 자금을 옮기는 것이 좋습니다.";
 "restore.warning.non_recommended.description" = "이 지갑은 비밀 단어 목록 및/또는 암호 문구에 비표준 문자를 사용하는 것 같습니다. 잔액이나 거래 내역이 보이지 않으면 아래에서 자세한 내용을 읽어보세요.\n\n더 많은 정보를 얻으려면 클릭하십시오";
 "restore.error.non_standard.description" = "비표준 호환 지갑입니다. 자세한 내용은 아래를 참조하십시오.\n\n더 많은 정보를 얻으려면 클릭하십시오";
+
+// Restore Type
+
+"restore_type.title" = "다음에서 복원하기";
+
+"restore_type.cloud.title" = "아이클라우드에서";
+"restore_type.recovery.title" = "복구 문구에서";
+
+"restore_type.cloud.description" = "키체인의 백업 파일에서 가져옵니다.";
+"restore_type.recovery.description" = "이 문구는 복구 문구 또는 개인 키를 사용하여 가져올 수 있습니다.";
+
+// Restore Cloud
+
+"restore.cloud.title" = "백업 선택";
+"restore.cloud.description" = "지갑을 복원하려면 백업 사본을 선택하세요.";
+"restore.cloud.empty" = "백업이 없습니다.";
+"restore.cloud.imported" = "수입 지갑";
+
+"restore.cloud.password.title" = "암호를 입력하세요";
+"restore.cloud.password.placeholder" = "백업 비밀번호";
+"restore.cloud.password.description" = "iCloud에서 지갑을 가져오려면 백업 비밀번호를 입력하세요.";
 
 // Coin Settings
 
@@ -184,10 +207,44 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "백업용 지갑";
-"backup_prompt.warning" = "복구 문구의 복사본을 생성하여 이 지갑을 백업하십시오. 휴대폰 분실, 도난, 파손 등의 경우 지갑에 액세스하기 위해 필요합니다.";
+"backup_prompt.title" = "수동으로 백업합니다";
+"backup_prompt.warning" = "휴대전화 분실, 도난, 파손 등의 경우 지갑을 복구할 수 있도록 복구 문구 및 관련 비밀번호의 백업 사본을 만드십시오.";
 "backup_prompt.backup" = "백업";
+"backup_prompt.backup_manual" = "수동으로 백업합니다";
+"backup_prompt.backup_cloud" = "iCloud에 백업";
 "backup_prompt.later" = "나중에";
+
+// Backup to iCloud
+
+"backup.cloud.title" = "iCloud에 백업";
+"backup.cloud.description" = "iCloud 저장소는 Apple에서 제공하는 타사 클라우드 저장소 서비스입니다. 데이터가 개인 기기가 아닌 Apple 서버에 저장된다는 점을 아는 것이 중요합니다. 이것은 귀하가 귀하의 데이터를 위탁하고 귀하의 정보 보안을 제3자 서비스에 넘기고 있음을 의미합니다.";
+
+"backup.cloud.terms.item.1" = "내 iCloud에 대한 액세스 권한을 상실하면 해당 지갑의 백업에 대한 액세스 권한도 잃게 된다는 점을 이해합니다.";
+
+"backup.cloud.name.title" = "백업 이름";
+"backup.cloud.name.description" = "백업 파일의 이름을 입력하세요.";
+"backup.cloud.name.empty" = "백업 이름은 비워둘 수 없습니다!";
+"backup.cloud.name.error.empty" = "백업 이름은 비워둘 수 없습니다";
+"backup.cloud.name.error.already_exist" = "백업 이름이 이미 존재합니다!";
+"backup.cloud.name.placeholder" = "이름";
+
+"backup.cloud.password.title" = "암호를 설정하세요.";
+"backup.cloud.password.description" = "백업에 대한 잠금 해제 암호를 설정하십시오. 최소 8개의 기호로 구성되어야 하며 소문자, 대문자, 숫자 및 특수 문자가 하나 이상 포함되어야 합니다.";
+"backup.cloud.password.highlighted_description" = "이 비밀번호를 잊지 마세요! Apple iCloud 암호와는 별개이며 복구하거나 재설정할 수 없습니다.";
+"backup.cloud.password.placeholder" = "비밀번호";
+"backup.cloud.password.confirm.placeholder" = "확인";
+"backup.cloud.password.save" = "저장 및 백업";
+
+"backup.cloud.password.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
+"backup.cloud.password.error.forbidden_symbols" = "지원되는 기호만 사용하세요: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_requirement" = "대문자 1개, 소문자 1개, 숫자 1개, 기호 1개를 포함하여 8자 이상";
+"backup.cloud.password.error.invalid_password" = "잘못된 비밀번호";
+"backup.cloud.password.error.invalid_backup" = "백업이 손상되었습니다";
+"backup.cloud.password.confirm.error.doesnt_match" = "비밀번호가 일치하지 않습니다";
+"backup.cloud.not_available" = "iCloud를 사용할 수 없음";
+"backup.cloud.cant_create_file" = "파일을 iCloud에 저장할 수 없음";
+"backup.cloud.cant_delete_file" = "iCloud에서 삭제할 수 없습니다";
+
 
 // Errors
 
@@ -278,7 +335,7 @@
 "send.transaction_inputs_outputs_info.title" = "트랜잭션 입력/출력";
 "send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
-"send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
+"send.transaction_inputs_outputs_info.shuffle.description" = "트랜잭션 출력의 순서는 모든 트랜잭션에서 무작위로 지정됩니다. 때로는 변화가 첫 번째 출력이 될 수도 있고 때로는 두 번째 출력이 될 수도 있습니다. 사용자가 앱 개발자를 신뢰하는 경우 권장 옵션으로 간주합니다.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
 
@@ -391,7 +448,9 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "스왑";
-"swap.confirmation.impact_too_high" = "시장 가격과 예상 결제 가격의 차이가 너무 큽니다.";
+"swap.confirmation.impact_too_high" = "Unstoppable은 현재 유동성이 매우 낮아 매우 불리한 가격으로 거래되고 있으므로, 이 거래에 대한 스왑 조치를 비활성화했습니다.\n교환을 원하시면 %@ 웹사이트를 사용하십시오.";
+"swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";
+
 "swap.confirmation.minimum_received" = "최소 지급액";
 "swap.confirmation.maximum_sent" = "최대 속도";
 
@@ -593,20 +652,23 @@
 // Coin Page -> Analytics
 
 "coin_analytics.not_available" = "This project has no analytics data";
-"coin_analytics.locked" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked.not_subscribed" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked.learn_more" = "Learn More";
+"coin_analytics.locked.not_activated" = "Activate your subscription for getting access to analytics";
+"coin_analytics.locked.activate" = "활성화";
 
 "coin_analytics.cex_volume" = "CEX Volume";
 "coin_analytics.cex_volume_rank" = "CEX Volume Rank";
 "coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
-"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over 30-day period.";
+"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
 "coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
-"coin_analytics.cex_volume.info3" = "Token's rank based on trading volume on leading centralized exchanges over 30-day period.";
+"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over 30-day period.";
 "coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
 
 "coin_analytics.dex_volume" = "DEX Volume";
 "coin_analytics.dex_volume_rank" = "DEX Volume Rank";
 "coin_analytics.dex_volume_rank.description" = "Tokens ranked by trading volume for the token on decentralized exchanges.";
-"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over 30-day period.";
+"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over a 30-day period.";
 "coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
 "coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
 "coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
@@ -628,7 +690,7 @@
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
 "coin_analytics.active_addresses_rank" = "Active Addresses Rank";
 "coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over 24-hour period.";
+"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over a 24-hour period.";
 "coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
 "coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
 "coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
@@ -641,9 +703,11 @@
 "coin_analytics.transaction_count.info2" = "Chart showing variation in transaction count over 1 year period.";
 "coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
 "coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
-"coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
+"coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30-day period.";
 
 "coin_analytics.holders" = "Holders";
+"coin_analytics.holders_rank" = "Holders Rank";
+"coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
 "coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
 "coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
@@ -959,6 +1023,8 @@
 "appearance.balance_value.coin_value" = "코인 가치";
 "appearance.balance_value.fiat_value" = "법정 가치";
 
+"appearance.balance_auto_hide" = "Balance Auto Hide";
+
 // Settings -> Contacts
 
 "contacts.title" = "연락처";
@@ -1236,9 +1302,17 @@
 "manage_account.recovery_phrase" = "복구 문구";
 "manage_account.public_keys" = "공개 키";
 "manage_account.private_keys" = "개인 암호";
-"manage_account.backup_recovery_phrase" = "백업 복구 문구";
-"manage_account.unlink" = "링크 해제";
+"manage_account.backup_recovery_phrase" = "수동으로 백업합니다";
+"manage_account.cloud_backup_recovery_phrase" = "iCloud에 백업";
+"manage_account.cloud_delete_backup_recovery_phrase" = "iCloud에서 백업 삭제";
+"manage_account.manual_backup_required" = "수동으로 백업해야합니다";
+"manage_account.manual_backup_required.description" = "iCloud에서 백업을 안전하게 삭제하려면 먼저 수동으로 복구 문구를 백업해야 합니다.";
+"manage_account.manual_backup_required.button" = "백업 지금";
+"manage_account.unlink" = "지갑 연결 해제";
+"manage_account.backup.no_backup_yet_description" = "지갑 사용을 시작하려면 지갑 백업 옵션 중 하나를 완료하세요.";
+"manage_account.backup.has_backup_description" = "각 지갑에 대해 수동 백업을 하는 것이 좋습니다.";
 
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "아이클라우드에서 지갑 백업을 삭제하시겠습니까?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "공개 키";
@@ -1311,8 +1385,8 @@
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock은 BIP44 주소(1부터 시작)로 전송하는 경우에만 작동합니다.";
 
-"fee_settings.max_fee" = "최대 수수료";
-"fee_settings.max_fee.info" = "The maximum estimated transaction fee to be paid for this transaction, computed based on the gas limit, max fee rate and max priority fee values below. The actual fee paid will normally be lower.";
+"fee_settings.network_fee" = "네트워크 수수료";
+"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "Transaction complexity is measured in units called \"gas\". It varies depending on the smart contract being executed. The Gas Limit is the estimated maximum gas needed to execute it. The actual gas used will normally be lower.";
 
@@ -1347,6 +1421,7 @@
 "watch_address.by" = "작성";
 "watch_address.watch_by" = "지켜보다";
 "watch_address.evm_address" = "EVM 주소";
+"watch_address.tron_address" = "TRON 주소";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Account Extended Public Key 입력";
 "watch_address.public_key.invalid_key" = "잘못된 암호입니다";
@@ -1426,3 +1501,20 @@
 "nft.activity.event_type.listCancel" = "목록 취소";
 "nft.activity.event_type.offer" = "제안";
 "nft.activity.event_type.offerCancel" = "제안 취소";
+
+// Activate Subscription
+
+"activate_subscription.title" = "활성화";
+"activate_subscription.wallet" = "Wallet";
+"activate_subscription.address" = "주소";
+"activate_subscription.message" = "Message to Sign";
+"activate_subscription.sign" = "가입";
+"activate_subscription.activating" = "Activating...";
+"activate_subscription.description" = "You need to sign this message to activate your subscription";
+"activate_subscription.failed_to_activate" = "Failed to activate subscription";
+
+
+// Launch
+
+"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting app or report the error to our support team.";
+"launch.failed_to_launch.report" = "보고";
