@@ -27,7 +27,7 @@
 "alert" = "Alerta";
 "alert.copied" = "Copiado";
 "alert.saved" = "Salvar";
-"alert.saved_to_icloud" = "Saved to iCloud";
+"alert.saved_to_icloud" = "Guardado en iCloud";
 "alert.no_internet" = "Sin conexión a Internet";
 "alert.wrong_amount" = "Cantidad Incorrecta";
 "alert.no_fee" = "Tarifa Incorrecta";
@@ -108,7 +108,7 @@
 "restore.checksum_error" = "Suma de verificación inválida";
 "restore.passphrase" = "Frase de contraseña";
 "restore.input.passphrase" = "Frase de contraseña";
-"restore.passphrase_description" = "This password is used to encrypt backup file of your wallet. It's not related to your Apple iCloud password. It can't be recovered or reset if lost or forgotten.";
+"restore.passphrase_description" = "Esta contraseña se utiliza para cifrar el archivo de copia de seguridad de su cartera. No está relacionada con su contraseña de Apple iCloud. No se puede recuperar ni reiniciar si se pierde u olvida.";
 "restore.error.empty_passphrase" = "La frase no puede estar vacía";
 "restore.non_standard_import" = "Restauración no estándar";
 "restore.non_standard_import.description" = "Esta página proporciona un mecanismo especial de restauración de monedero para usuarios de Unstoppable que tienen un monedero no estándar. Por lo general, dichos monederos se podrían haber creado en la versión 0.27 - 0.28 de Unstoppable utilizando una lista de palabras mnemotécnicas que no están en inglés y/o un carácter especial en la frase de contraseña del monedero (es decir, un símbolo diacrítico).\n\nSi es un usuario afectado, el saldo de su billetera se mostrará en 0 después de restaurar dicha billetera en la versión 0.29 o superior. Esta página te permitirá restaurar el acceso a tu monedero no estándar. Una vez restaurado, se recomienda crear un nuevo monedero (que cumplirá con los estándares) y mover todos los fondos allí.";
@@ -119,22 +119,22 @@
 
 "restore_type.title" = "Importar monedero";
 
-"restore_type.cloud.title" = "from iCloud";
-"restore_type.recovery.title" = "from Recovery Phrase";
+"restore_type.cloud.title" = "desde iCloud";
+"restore_type.recovery.title" = "de Frase de Recuperación";
 
-"restore_type.cloud.description" = "Import from a backup file in your keychain.";
-"restore_type.recovery.description" = "Import using recovery phrase or private key.";
+"restore_type.cloud.description" = "Importar desde un archivo de copia de seguridad en su llavero.";
+"restore_type.recovery.description" = "Importe utilizando la frase de recuperación o la clave privada.";
 
 // Restore Cloud
 
-"restore.cloud.title" = "Select Backup";
-"restore.cloud.description" = "Select the backup copy of the wallet you want to restore.";
-"restore.cloud.empty" = "No backups found.";
-"restore.cloud.imported" = "Imported wallets";
+"restore.cloud.title" = "Seleccionar copia de seguridad";
+"restore.cloud.description" = "Seleccione la copia de seguridad de la billetera que desea restaurar.";
+"restore.cloud.empty" = "No se encontraron copias de seguridad.";
+"restore.cloud.imported" = "Carteras importadas";
 
-"restore.cloud.password.title" = "Enter Password";
-"restore.cloud.password.placeholder" = "Backup Password";
-"restore.cloud.password.description" = "Enter the backup password to import your wallet from iCloud.";
+"restore.cloud.password.title" = "Introduzca contraseña";
+"restore.cloud.password.placeholder" = "Copiar contraseña";
+"restore.cloud.password.description" = "Introduzca la contraseña de copia de seguridad para importar su cartera desde iCloud.";
 
 // Coin Settings
 
@@ -207,43 +207,43 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Manual Backup";
-"backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.title" = "Copia de seguridad manual";
+"backup_prompt.warning" = "Crear una copia de seguridad de la frase de recuperación y la contraseña asociada que le permitirá recuperar su cartera si su teléfono está perdido, robado, roto, etc.";
 "backup_prompt.backup" = "Copia de seguridad";
-"backup_prompt.backup_manual" = "Manual Backup";
-"backup_prompt.backup_cloud" = "Backup to iCloud";
+"backup_prompt.backup_manual" = "Copia de seguridad manual";
+"backup_prompt.backup_cloud" = "Copia de seguridad en iCloud";
 "backup_prompt.later" = "Más tarde";
 
 // Backup to iCloud
 
-"backup.cloud.title" = "Backup to iCloud";
-"backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
+"backup.cloud.title" = "Copia de seguridad en iCloud";
+"backup.cloud.description" = "El almacenamiento en iCloud es un servicio de almacenamiento en la nube de terceros proporcionado por Apple. Es importante tener en cuenta que sus datos se almacenarán en los servidores de Apple, no en sus dispositivos personales. Por lo tanto, está confiando sus datos y entregando la seguridad de su información a un servicio de terceros.";
 
-"backup.cloud.terms.item.1" = "I understand that loosing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+"backup.cloud.terms.item.1" = "Entiendo que perder el acceso a mi iCloud, resultará en perder el acceso a la copia de seguridad de una cartera respectiva.";
 
-"backup.cloud.name.title" = "Backup Name";
-"backup.cloud.name.description" = "Enter name for the backup file.";
-"backup.cloud.name.empty" = "Backup name can't be empty!";
-"backup.cloud.name.error.empty" = "Backup name must be not empty";
-"backup.cloud.name.error.already_exist" = "Backup name already exist!";
+"backup.cloud.name.title" = "Nombre de copia de seguridad";
+"backup.cloud.name.description" = "Introduzca el nombre del archivo de copia de seguridad.";
+"backup.cloud.name.empty" = "¡El nombre de la copia de seguridad no puede estar vacío!";
+"backup.cloud.name.error.empty" = "El nombre de la copia de seguridad no debe estar vacío";
+"backup.cloud.name.error.already_exist" = "¡El nombre de la copia de seguridad ya existe!";
 "backup.cloud.name.placeholder" = "Nombre";
 
-"backup.cloud.password.title" = "Set Password";
-"backup.cloud.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
-"backup.cloud.password.highlighted_description" = "Don't forget this password! It is separate from your Apple iCloud password, and it cannot be recovered or reset.";
-"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.title" = "Establecer contraseña";
+"backup.cloud.password.description" = "Establezca la contraseña de desbloqueo para su copia de seguridad. La contraseña debe contener al menos 8 caracteres, incluyendo una letra minúscula, una letra mayúscula, un número y un carácter especial.";
+"backup.cloud.password.highlighted_description" = "¡No olvides esta contraseña! Es independiente de tu contraseña de iCloud de Apple, y no se puede recuperar o restablecer.";
+"backup.cloud.password.placeholder" = "Contraseña";
 "backup.cloud.password.confirm.placeholder" = "Confirmar";
-"backup.cloud.password.save" = "Save and Backup";
+"backup.cloud.password.save" = "Guardar y hacer una copia de seguridad";
 
 "backup.cloud.password.error.empty_passphrase" = "La frase de contraseña no puede estar vacía";
-"backup.cloud.password.error.forbidden_symbols" = "Please use only supported symbols: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"backup.cloud.password.error.minimum_requirement" = "At least 8 characters, including one uppercase letter, one lowercase letter, one number, and one symbol";
-"backup.cloud.password.error.invalid_password" = "Incorrect Password";
-"backup.cloud.password.error.invalid_backup" = "Backup is corrupted";
-"backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
-"backup.cloud.not_available" = "iCloud not Available";
-"backup.cloud.cant_create_file" = "Can't save File to iCloud";
-"backup.cloud.cant_delete_file" = "Can't delete from iCloud";
+"backup.cloud.password.error.forbidden_symbols" = "Utilice solo símbolos admitidos: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_requirement" = "Al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula, un número y un símbolo";
+"backup.cloud.password.error.invalid_password" = "Contraseña incorrecta";
+"backup.cloud.password.error.invalid_backup" = "Copia de seguridad corrupta";
+"backup.cloud.password.confirm.error.doesnt_match" = "La contraseña no coincide";
+"backup.cloud.not_available" = "iCloud no disponible";
+"backup.cloud.cant_create_file" = "No se puede guardar el archivo en iCloud";
+"backup.cloud.cant_delete_file" = "No se puede eliminar de iCloud";
 
 
 // Errors
@@ -332,7 +332,7 @@
 "send.hodler_error.unsupported_address" = "El bloqueo del tiempo solo funciona con direcciones P2PKH (a partir de 1)";
 "send.fee_info.title" = "Tasa de comisión";
 "send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe Unstoppable wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
-"send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
+"send.transaction_inputs_outputs_info.title" = "Entradas / salidas de transacciones";
 "send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe Unstoppable wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to Unstoppable users:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
@@ -448,8 +448,8 @@
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Permutar";
-"swap.confirmation.impact_too_high" = "Unstoppable has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
-"swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
+"swap.confirmation.impact_too_high" = "Unstoppable ha desactivado la acción de intercambio para esta operación porque está recibiendo un precio extremadamente desfavorable. Esto se debe a una liquidez extremadamente baja. \nSi aún desea intercambiar, utilice el sitio web %@ en su lugar.";
+"swap.confirmation.impact_warning" = "¡Importante! Has obtenido un precio extremadamente desfavorable debido a la baja liquidez del mercado.";
 
 "swap.confirmation.minimum_received" = "Mínimo Recibido";
 "swap.confirmation.maximum_sent" = "Gasto máximo";
@@ -1023,7 +1023,7 @@
 "appearance.balance_value.coin_value" = "Valor de la moneda";
 "appearance.balance_value.fiat_value" = "Valor Fiat";
 
-"appearance.balance_auto_hide" = "Balance Auto Hide";
+"appearance.balance_auto_hide" = "Saldo Auto Ocultar";
 
 // Settings -> Contacts
 
@@ -1302,17 +1302,17 @@
 "manage_account.recovery_phrase" = "Frase de Recuperación";
 "manage_account.public_keys" = "Claves públicas";
 "manage_account.private_keys" = "Claves privadas";
-"manage_account.backup_recovery_phrase" = "Manual Backup";
-"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
-"manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
-"manage_account.manual_backup_required" = "Manual Backup Required";
-"manage_account.manual_backup_required.description" = "In order to securely delete your backup on iCloud, you will need to manually backup your recovery phrase first.";
-"manage_account.manual_backup_required.button" = "Backup Now";
-"manage_account.unlink" = "Unlink Wallet";
-"manage_account.backup.no_backup_yet_description" = "Complete one of the wallet backup options to start using the wallet.";
-"manage_account.backup.has_backup_description" = "It's recommended to have a manual backup for each wallet.";
+"manage_account.backup_recovery_phrase" = "Copia de seguridad manual";
+"manage_account.cloud_backup_recovery_phrase" = "Copia de seguridad en iCloud";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Eliminar copia de seguridad de iCloud";
+"manage_account.manual_backup_required" = "Copia de seguridad manual requerida";
+"manage_account.manual_backup_required.description" = "Para eliminar de forma segura su copia de seguridad en iCloud, primero necesitará hacer una copia de seguridad de su frase de recuperación.";
+"manage_account.manual_backup_required.button" = "Copia de seguridad ahora";
+"manage_account.unlink" = "Desvincular cartera";
+"manage_account.backup.no_backup_yet_description" = "Completa una de las opciones de copia de seguridad de la cartera para empezar a utilizarla.";
+"manage_account.backup.has_backup_description" = "Se recomienda tener una copia de seguridad manual para cada cartera.";
 
-"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "¿Está seguro que desea eliminar la copia de seguridad de su cartera de iCloud?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "Claves públicas";
@@ -1386,7 +1386,7 @@
 "fee_settings.time_lock.description" = "TimeLock sólo funciona para enviar a direcciones BIP44 (comenzando con 1)";
 
 "fee_settings.network_fee" = "Cuota de transferencia";
-"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
+"fee_settings.network_fee.info" = "El coste estimado del envío de una transacción en la red.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "La complejidad de la transacción se mide en unidades llamadas \"gas\". El límite de gas es el máximo estimado de gas necesario para ejecutarlo. El gas utilizado será normalmente más bajo.";
 
@@ -1421,7 +1421,7 @@
 "watch_address.by" = "Por";
 "watch_address.watch_by" = "Ver por";
 "watch_address.evm_address" = "Dirección EVM";
-"watch_address.tron_address" = "TRON Address";
+"watch_address.tron_address" = "Dirección de TRON";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Introduzca Account Extended Public Key ";
 "watch_address.public_key.invalid_key" = "Clave no válida";
