@@ -223,7 +223,7 @@
 "backup.cloud.title" = "Резервное копирование в iCloud";
 "backup.cloud.description" = "Хранилище iCloud является облачным хранилищем, предоставляемым сторонней компанией и доступным через Apple. Важно знать, что ваши данные будут храниться на серверах Apple, а не на ваших личных устройствах. Это означает, что вы доверяете свои данные и передаете безопасность своей информации стороннему сервису.";
 
-"backup.cloud.terms.item.1" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+"backup.cloud.terms.item.1" = "Я понимаю, что закрытие доступа к моему iCloud, приведет к потере доступа к резервной копии соответствующего кошелька.";
 
 "backup.cloud.name.title" = "Имя резервной копии";
 "backup.cloud.name.description" = "Введите имя файла резервной копии.";
@@ -309,9 +309,9 @@
 "deposit.your_address" = "Ваш адрес";
 "receive_alert.not_backed_up_description" = "Вам нужно сделать резервную копию %@ перед получением %@.";
 
-"deposit.not_active" = "not active";
-"deposit.not_active.title" = "Not Active Address";
-"deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
+"deposit.not_active" = "не активен";
+"deposit.not_active.title" = "Неактивный адрес";
+"deposit.not_active.tron_description" = "Недавно созданные учетные записи в блокчейне TRON неактивны и не могут быть запрошены или изучены. Они должны быть активированы.\n\nАктивация новой учетной записи в цепочке Tron требует комиссию в размере 1 TRX. Для активации достаточно просто перевести токены TRX или TRC-10 на неактивный адрес аккаунта";
 
 // Send
 
