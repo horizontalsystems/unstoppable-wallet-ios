@@ -83,7 +83,7 @@ class DepositViewController: ThemeViewController {
 
         qrCodeImageView.asyncSetImage { UIImage.qrCodeImage(qrCodeString: address, size: size)  }
 
-        if !viewModel.isMainNet {
+        if viewModel.testNet {
             let testnetImageView = UIImageView()
 
             view.addSubview(testnetImageView)
@@ -96,26 +96,56 @@ class DepositViewController: ThemeViewController {
             testnetImageView.tintColor = .themeRed50
         }
 
-        let addressTitleLabel = UILabel()
+        let stackView = UIStackView()
 
-        contentWrapperView.addSubview(addressTitleLabel)
-        addressTitleLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+        contentWrapperView.addSubview(stackView)
+        stackView.snp.makeConstraints { maker in
+            maker.centerX.equalToSuperview()
             maker.top.equalTo(qrCodeImageView.snp.bottom).offset(CGFloat.margin24)
         }
 
-        addressTitleLabel.textAlignment = .center
+        stackView.spacing = 0
+        stackView.alignment = .center
+
+        let addressTitleLabel = UILabel()
+        addressTitleLabel.setContentHuggingPriority(.required, for: .horizontal)
+        stackView.addArrangedSubview(addressTitleLabel)
+
         addressTitleLabel.numberOfLines = 0
-        addressTitleLabel.font = .subhead2
-        addressTitleLabel.textColor = viewModel.isMainNet ? .themeGray : .themeLucian
 
-        var addressTitle = viewModel.watchAccount ? "deposit.address".localized : "deposit.your_address".localized
+        let plainColor: UIColor = viewModel.testNet ? .themeLucian : .themeGray
+        let additionalColor = viewModel.additionalInfo.customColor ?? plainColor
+        let addressTitle = viewModel.watchAccount ? "deposit.address".localized : "deposit.your_address".localized
 
-        if let additionalInfo = viewModel.additionalInfo {
-            addressTitle += " (\(additionalInfo))"
+        let mutableString = NSMutableAttributedString(
+                string: addressTitle,
+                attributes: [
+                    .font: UIFont.subhead2,
+                    .foregroundColor: plainColor
+                ])
+
+        if let text = viewModel.additionalInfo.text {
+            mutableString.append(
+                    NSAttributedString(string: " (\(text))", attributes: [
+                        .font: UIFont.subhead2,
+                        .foregroundColor: additionalColor
+                    ])
+            )
         }
 
-        addressTitleLabel.text = addressTitle
+        addressTitleLabel.attributedText = mutableString
+
+        if case .warning = viewModel.additionalInfo {
+            let infoButton = UIButton()
+            infoButton.snp.makeConstraints { make in
+                make.size.equalTo(CGFloat.margin24)
+            }
+
+            stackView.addArrangedSubview(infoButton)
+
+            infoButton.setImage(UIImage(named: "circle_information_20")?.withTintColor(additionalColor), for: .normal)
+            infoButton.addTarget(self, action: #selector(onInfoButton), for: .touchUpInside)
+        }
 
         let addressLabelWrapper = UIView()
 
@@ -172,6 +202,14 @@ class DepositViewController: ThemeViewController {
 
     @objc private func onTapCopy() {
         CopyHelper.copyAndNotify(value: viewModel.address)
+    }
+
+    @objc private func onInfoButton() {
+        guard case let .warning(_, title, text) = viewModel.additionalInfo else {
+            return
+        }
+
+        present(BottomSheetModule.description(title: title, text: text), animated: true)
     }
 
     @objc private func onTapShare() {

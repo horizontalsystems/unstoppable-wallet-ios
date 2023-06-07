@@ -77,8 +77,11 @@ extension BaseTronAdapter {
 
 extension BaseTronAdapter: IDepositAdapter {
 
-    var receiveAddress: String {
-        tronKit.receiveAddress.base58
+    var receiveAddress: DepositAddress {
+        ActivatedDepositAddress(
+            receiveAddress: tronKit.receiveAddress.base58,
+            isActive: false
+        )
     }
 
 }

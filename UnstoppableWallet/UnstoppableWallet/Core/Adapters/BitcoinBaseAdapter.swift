@@ -379,8 +379,16 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
 
 extension BitcoinBaseAdapter: IDepositAdapter {
 
-    var receiveAddress: String {
-        abstractKit.receiveAddress()
+    var receiveAddress: DepositAddress {
+        DepositAddress(abstractKit.receiveAddress())
     }
 
+}
+
+class DepositAddress {
+    let address: String
+
+    init(_ receiveAddress: String) {
+        self.address = receiveAddress
+    }
 }

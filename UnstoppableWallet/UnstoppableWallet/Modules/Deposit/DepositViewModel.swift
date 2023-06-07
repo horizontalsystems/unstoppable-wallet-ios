@@ -3,9 +3,11 @@ import MarketKit
 
 class DepositViewModel {
     private let service: DepositService
+    private let depositViewItemHelper: DepositAddressViewHelper
 
-    init(service: DepositService) {
+    init(service: DepositService, depositViewItemHelper: DepositAddressViewHelper) {
         self.service = service
+        self.depositViewItemHelper = depositViewItemHelper
     }
 
 }
@@ -28,25 +30,22 @@ extension DepositViewModel {
         service.watchAccount
     }
 
-    var isMainNet: Bool {
-        service.isMainNet
+    var testNet: Bool {
+        depositViewItemHelper.testNet
     }
 
-    var additionalInfo: String? {
-        var items = [String]()
+    var additionalInfo: DepositAddressViewHelper.AdditionalInfo {
+        depositViewItemHelper.additionalInfo
+    }
 
-        if let derivation = service.mnemonicDerivation {
-            items.append(derivation.addressType)
-        }
+}
 
-        if !service.isMainNet {
-            items.append("TestNet")
-        }
+extension DepositAddressViewHelper.AdditionalInfo {
 
-        if items.isEmpty {
-            return nil
-        } else {
-            return items.joined(separator: ", ")
+    var customColor: UIColor? {
+        switch self {
+        case .none, .plain: return nil
+        case .warning: return .themeJacob
         }
     }
 

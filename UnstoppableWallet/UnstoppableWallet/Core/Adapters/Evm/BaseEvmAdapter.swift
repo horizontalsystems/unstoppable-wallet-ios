@@ -77,8 +77,8 @@ extension BaseEvmAdapter {
 
 extension BaseEvmAdapter: IDepositAdapter {
 
-    var receiveAddress: String {
-        evmKit.receiveAddress.eip55
+    var receiveAddress: DepositAddress {
+        DepositAddress(evmKit.receiveAddress.eip55)
     }
 
 }

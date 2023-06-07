@@ -33,7 +33,7 @@ protocol IBalanceAdapter: IBaseAdapter {
 }
 
 protocol IDepositAdapter: IBaseAdapter {
-    var receiveAddress: String { get }
+    var receiveAddress: DepositAddress { get }
 }
 
 protocol ITransactionsAdapter {
