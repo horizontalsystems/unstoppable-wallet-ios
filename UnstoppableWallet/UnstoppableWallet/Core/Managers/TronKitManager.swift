@@ -93,30 +93,12 @@ class TronKitWrapper {
         self.signer = signer
     }
 
-    func sendSingle(contract: Contract, feeLimit: Int?) -> Single<Void> {
+    func send(contract: Contract, feeLimit: Int?) async throws {
         guard let signer = signer else {
-            return Single.error(SignerError.signerNotSupported)
+            throw SignerError.signerNotSupported
         }
 
-        return Single<Void>.create { [weak self] observer in
-            guard let strongSelf = self else {
-                observer(.error(TronKitManager.KitWrapperError.disposeError))
-                return Disposables.create()
-            }
-
-            let task = Task {
-                do {
-                    try await strongSelf.tronKit.send(contract: contract, signer: signer, feeLimit: feeLimit)
-                    observer(.success(()))
-                } catch {
-                    observer(.error(error))
-                }
-            }
-
-            return Disposables.create {
-                task.cancel()
-            }
-        }
+        return try await tronKit.send(contract: contract, signer: signer, feeLimit: feeLimit)
     }
 
 }
@@ -124,7 +106,6 @@ class TronKitWrapper {
 extension TronKitManager {
 
     enum KitWrapperError: Error {
-        case disposeError
         case mnemonicNoSeed
     }
 

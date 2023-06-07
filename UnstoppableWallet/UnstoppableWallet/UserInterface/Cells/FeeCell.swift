@@ -21,7 +21,7 @@ class FeeCell: BaseThemeCell {
 
     var onOpenInfo: (() -> ())? = nil
 
-    init(viewModel: IFeeViewModel, title: String, showInfoIcon: Bool = true) {
+    init(viewModel: IFeeViewModel, title: String, showInfoIcon: Bool = true, isFirst: Bool = true, isLast: Bool = true) {
         self.viewModel = viewModel
         self.title = title
         self.showInfoIcon = showInfoIcon
@@ -30,7 +30,7 @@ class FeeCell: BaseThemeCell {
 
         backgroundColor = .clear
         clipsToBounds = true
-        set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
         sync()
 
         subscribe(disposeBag, viewModel.valueDriver) { [weak self] value in

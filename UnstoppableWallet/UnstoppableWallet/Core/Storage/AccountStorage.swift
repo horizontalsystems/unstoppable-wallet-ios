@@ -218,7 +218,7 @@ extension AccountStorage {
         case mnemonic
         case evmPrivateKey
         case evmAddress = "address"
-        case tronAddress = "tronAddress"
+        case tronAddress
         case hdExtendedKey
     }
 

@@ -26,6 +26,8 @@ class SendModule {
             return SendModule.viewController(token: token, adapter: adapter)
         case let adapter as ISendEthereumAdapter:
             return SendEvmModule.viewController(token: token, adapter: adapter)
+        case let adapter as ISendTronAdapter:
+            return SendTronModule.viewController(token: token, adapter: adapter)
         default: return nil
         }
     }
