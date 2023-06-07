@@ -221,7 +221,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "backup.cloud.title" = "Backup para o iCloud";
 "backup.cloud.description" = "O armazenamento em iCloud é um serviço de armazenamento em nuvem de terceiros fornecido pela Apple. É importante saber que seus dados serão armazenados nos servidores da Apple, não em seus dispositivos pessoais. Isso significa que você está confiando seus dados e entregando a segurança de suas informações a um serviço terceirizado.";
 
-"backup.cloud.terms.item.1" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+"backup.cloud.terms.item.1" = "Compreendo que perder acesso ao meu iCloud resultará em perder acesso ao backup de uma respectiva carteira.";
 
 "backup.cloud.name.title" = "Nome do Backup";
 "backup.cloud.name.description" = "Digite o nome para o arquivo de backup.";
@@ -307,9 +307,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "deposit.your_address" = "Seu endereço";
 "receive_alert.not_backed_up_description" = "Você precisa fazer um backup de %@ antes de poder receber %@.";
 
-"deposit.not_active" = "not active";
-"deposit.not_active.title" = "Not Active Address";
-"deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
+"deposit.not_active" = "não ativo";
+"deposit.not_active.title" = "Endereço não ativo";
+"deposit.not_active.tron_description" = "Contas recém-criadas no blockchain TRON estão inativas e não podem ser consultadas ou exploradas. Elas precisam ser ativadas.\n\nPara ativar uma nova conta na cadeia Tron, é necessário transferir tokens TRX ou TRC-10 para um endereço de conta inativo, juntamente com uma taxa de ativação de 1 TRX";
 
 // Send
 
