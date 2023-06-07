@@ -223,8 +223,8 @@ extension BinanceAdapter: ITransactionsAdapter {
 
 extension BinanceAdapter: IDepositAdapter {
 
-    var receiveAddress: String {
-        binanceKit.account
+    var receiveAddress: DepositAddress {
+        DepositAddress(binanceKit.account)
     }
 
 }

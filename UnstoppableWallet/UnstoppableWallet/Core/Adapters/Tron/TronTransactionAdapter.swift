@@ -86,3 +86,12 @@ extension TronTransactionsAdapter: ITransactionsAdapter {
     }
 
 }
+
+class ActivatedDepositAddress: DepositAddress {
+    let isActive: Bool
+
+    init(receiveAddress: String, isActive: Bool) {
+        self.isActive = isActive
+        super.init(receiveAddress)
+    }
+}

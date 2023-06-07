@@ -703,9 +703,9 @@ extension ZcashAdapter: IBalanceAdapter {
 
 extension ZcashAdapter: IDepositAdapter {
 
-    var receiveAddress: String {
+    var receiveAddress: DepositAddress {
         // only first account
-        zAddress ?? "n/a".localized
+        DepositAddress(zAddress ?? "n/a".localized)
     }
 
 }
@@ -721,7 +721,7 @@ extension ZcashAdapter: ISendZcashAdapter {
     }
 
     func validate(address: String) throws -> AddressType {
-        guard address != receiveAddress else {
+        guard address != receiveAddress.address else {
             throw AppError.addressInvalid
         }
 
