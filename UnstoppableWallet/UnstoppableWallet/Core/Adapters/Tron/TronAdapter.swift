@@ -2,8 +2,6 @@ import TronKit
 import RxSwift
 import BigInt
 import HsToolKit
-import Eip20Kit
-import UniswapKit
 
 class TronAdapter: BaseTronAdapter {
     static let decimals = 6

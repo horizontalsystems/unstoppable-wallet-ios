@@ -2195,6 +2195,14 @@
 		D05E96B72A29F9D3002CCD71 /* WatchTronAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96B52A29F9D3002CCD71 /* WatchTronAddressViewModel.swift */; };
 		D05E96B92A2A1113002CCD71 /* WatchTronService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96B82A2A1113002CCD71 /* WatchTronService.swift */; };
 		D05E96BA2A2A1113002CCD71 /* WatchTronService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96B82A2A1113002CCD71 /* WatchTronService.swift */; };
+		D07157DB2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
+		D07157DC2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
+		D07157DE2A2DDA09006F141F /* SendTronService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DD2A2DDA09006F141F /* SendTronService.swift */; };
+		D07157DF2A2DDA09006F141F /* SendTronService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DD2A2DDA09006F141F /* SendTronService.swift */; };
+		D07157E12A2DDA17006F141F /* SendTronViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157E02A2DDA17006F141F /* SendTronViewModel.swift */; };
+		D07157E22A2DDA17006F141F /* SendTronViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157E02A2DDA17006F141F /* SendTronViewModel.swift */; };
+		D07157E42A2DDAA6006F141F /* SendTronViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157E32A2DDAA6006F141F /* SendTronViewController.swift */; };
+		D07157E52A2DDAA6006F141F /* SendTronViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157E32A2DDAA6006F141F /* SendTronViewController.swift */; };
 		D087627329815DAE00E6FFD4 /* ChooseWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D087626E29815DAD00E6FFD4 /* ChooseWatchViewController.swift */; };
 		D087627429815DAE00E6FFD4 /* ChooseWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D087626E29815DAD00E6FFD4 /* ChooseWatchViewController.swift */; };
 		D087627629815DAE00E6FFD4 /* ChooseWatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D087626F29815DAD00E6FFD4 /* ChooseWatchViewModel.swift */; };
@@ -2215,6 +2223,14 @@
 		D09200C6293F21720091981A /* RestoreNonStandardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C0293F21710091981A /* RestoreNonStandardViewModel.swift */; };
 		D09200C8293F21720091981A /* RestoreNonStandardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C1293F21720091981A /* RestoreNonStandardModule.swift */; };
 		D09200C9293F21720091981A /* RestoreNonStandardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09200C1293F21720091981A /* RestoreNonStandardModule.swift */; };
+		D09D768C2A2E066E004311E6 /* SendTronConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */; };
+		D09D768E2A2E06D6004311E6 /* SendTronConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */; };
+		D09D768F2A2E06D6004311E6 /* SendTronConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */; };
+		D09D76912A2E0753004311E6 /* SendTronConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D76902A2E0753004311E6 /* SendTronConfirmationViewModel.swift */; };
+		D09D76922A2E0753004311E6 /* SendTronConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D76902A2E0753004311E6 /* SendTronConfirmationViewModel.swift */; };
+		D09D76942A2E07BD004311E6 /* SendTronConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */; };
+		D09D76952A2E07BD004311E6 /* SendTronConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */; };
+		D09D76992A2F3682004311E6 /* SendTronConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */; };
 		D0D5BCBC2976CB9F00587FDB /* PasswordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */; };
 		D0D5BCBD2976CB9F00587FDB /* PasswordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */; };
 		D0D5BCC02976D3B300587FDB /* PsswordInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */; };
@@ -3567,6 +3583,10 @@
 		D05E96B22A29F8AE002CCD71 /* WatchTronAddressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTronAddressService.swift; sourceTree = "<group>"; };
 		D05E96B52A29F9D3002CCD71 /* WatchTronAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTronAddressViewModel.swift; sourceTree = "<group>"; };
 		D05E96B82A2A1113002CCD71 /* WatchTronService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTronService.swift; sourceTree = "<group>"; };
+		D07157DA2A2DD968006F141F /* SendTronModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronModule.swift; sourceTree = "<group>"; };
+		D07157DD2A2DDA09006F141F /* SendTronService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronService.swift; sourceTree = "<group>"; };
+		D07157E02A2DDA17006F141F /* SendTronViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronViewModel.swift; sourceTree = "<group>"; };
+		D07157E32A2DDAA6006F141F /* SendTronViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronViewController.swift; sourceTree = "<group>"; };
 		D087626E29815DAD00E6FFD4 /* ChooseWatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseWatchViewController.swift; sourceTree = "<group>"; };
 		D087626F29815DAD00E6FFD4 /* ChooseWatchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseWatchViewModel.swift; sourceTree = "<group>"; };
 		D087627F29815E8400E6FFD4 /* ChooseCoinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseCoinService.swift; sourceTree = "<group>"; };
@@ -3577,6 +3597,10 @@
 		D09200BF293F21700091981A /* RestoreNonStandardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardViewController.swift; sourceTree = "<group>"; };
 		D09200C0293F21710091981A /* RestoreNonStandardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardViewModel.swift; sourceTree = "<group>"; };
 		D09200C1293F21720091981A /* RestoreNonStandardModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardModule.swift; sourceTree = "<group>"; };
+		D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationModule.swift; sourceTree = "<group>"; };
+		D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewController.swift; sourceTree = "<group>"; };
+		D09D76902A2E0753004311E6 /* SendTronConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewModel.swift; sourceTree = "<group>"; };
+		D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationService.swift; sourceTree = "<group>"; };
 		D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputView.swift; sourceTree = "<group>"; };
 		D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsswordInputCell.swift; sourceTree = "<group>"; };
 		D0EE557D2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -4307,6 +4331,7 @@
 				11B355EF6B0229D407CE109B /* Onboarding */,
 				11B350F4F8AA86BB84CF5CF2 /* SendEvmTransaction */,
 				11B35D070AAF3E6A8ED8EC83 /* SendEvm */,
+				D07157D72A2DD7A8006F141F /* SendTron */,
 				58AAA119CAEF1B4621D71DF8 /* Favorites */,
 				58AAAC89F3E7CD9F799B89D7 /* Coin */,
 				11B3581D97669C8038485FAE /* CreateAccount */,
@@ -6825,6 +6850,18 @@
 			path = Evm;
 			sourceTree = "<group>";
 		};
+		D07157D72A2DD7A8006F141F /* SendTron */ = {
+			isa = PBXGroup;
+			children = (
+				D09D768A2A2E05D8004311E6 /* Confirmation */,
+				D07157DA2A2DD968006F141F /* SendTronModule.swift */,
+				D07157DD2A2DDA09006F141F /* SendTronService.swift */,
+				D07157E02A2DDA17006F141F /* SendTronViewModel.swift */,
+				D07157E32A2DDAA6006F141F /* SendTronViewController.swift */,
+			);
+			path = SendTron;
+			sourceTree = "<group>";
+		};
 		D087626D29815DAD00E6FFD4 /* ChooseWatch */ = {
 			isa = PBXGroup;
 			children = (
@@ -6854,6 +6891,17 @@
 				2FA5D5BC7249DDB680769ADD /* Eip1559EvmFeeDataSource.swift */,
 			);
 			path = Eip1559;
+			sourceTree = "<group>";
+		};
+		D09D768A2A2E05D8004311E6 /* Confirmation */ = {
+			isa = PBXGroup;
+			children = (
+				D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */,
+				D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */,
+				D09D76902A2E0753004311E6 /* SendTronConfirmationViewModel.swift */,
+				D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */,
+			);
+			path = Confirmation;
 			sourceTree = "<group>";
 		};
 		D0D6933E270B28240077AF17 /* CoinOverview */ = {
@@ -7195,6 +7243,7 @@
 				D3840502218317DF007D50AD /* Protocols.swift in Sources */,
 				D3840505218317DF007D50AD /* LaunchModule.swift in Sources */,
 				D3840525218317DF007D50AD /* DepositModule.swift in Sources */,
+				D07157DF2A2DDA09006F141F /* SendTronService.swift in Sources */,
 				D3840526218317DF007D50AD /* DepositService.swift in Sources */,
 				D3840527218317DF007D50AD /* DepositViewModel.swift in Sources */,
 				D087628529826E3100E6FFD4 /* WatchService.swift in Sources */,
@@ -7204,6 +7253,7 @@
 				D04D98EB268055A2001A3135 /* TransactionRecord.swift in Sources */,
 				D36DE0FD272FD92F000BC916 /* SwapSelectProviderService.swift in Sources */,
 				D008CA67267C8E1800001E0A /* ApproveTransactionRecord.swift in Sources */,
+				D09D768F2A2E06D6004311E6 /* SendTronConfirmationViewController.swift in Sources */,
 				D384057F218317DF007D50AD /* LaunchService.swift in Sources */,
 				D3840581218317DF007D50AD /* App.swift in Sources */,
 				D3840583218317DF007D50AD /* BlurManager.swift in Sources */,
@@ -7816,6 +7866,7 @@
 				11B35DFBDB3080E8F2C09C96 /* AppearanceViewController.swift in Sources */,
 				11B351CFB65D4F6484D7B226 /* AppearanceService.swift in Sources */,
 				11B35EDDDC14E735570A5796 /* AppearanceViewModel.swift in Sources */,
+				D07157DC2A2DD968006F141F /* SendTronModule.swift in Sources */,
 				11B35A82532EC55909EFBAD8 /* LaunchScreen.swift in Sources */,
 				11B35B925CE6EB25DF542611 /* CoinInvestorsService.swift in Sources */,
 				11B3545B8A5568792A4C43D8 /* CoinTreasuriesModule.swift in Sources */,
@@ -7900,6 +7951,7 @@
 				ABC9AB86218564E4873F6428 /* WalletConnectUriHandler.swift in Sources */,
 				ABC9ABAE470C553AE5E80A9F /* WalletConnectSessionKiller.swift in Sources */,
 				ABC9A9E3191338CD0D1DE8AE /* WalletConnectModule.swift in Sources */,
+				D09D76922A2E0753004311E6 /* SendTronConfirmationViewModel.swift in Sources */,
 				ABC9A2FF431ACFA812F58AD1 /* WalletConnectV2RequestMapper.swift in Sources */,
 				ABC9A4566EA1995007490C0D /* SendFeeViewModel.swift in Sources */,
 				ABC9A6C0A45A33C83B632D58 /* SendFeeService.swift in Sources */,
@@ -7932,12 +7984,14 @@
 				11B35DB339D0E7CF183760F4 /* EnabledWalletCacheStorage.swift in Sources */,
 				ABC9A80BCDA72347C6619E6C /* SendTimeLockErrorService.swift in Sources */,
 				11B350ADB6D0D0C3E97F73D6 /* NftCollectionViewController.swift in Sources */,
+				D07157E22A2DDA17006F141F /* SendTronViewModel.swift in Sources */,
 				11B35E4E9EA0B6F6A1157E17 /* NftCollectionService.swift in Sources */,
 				11B35AB1A8FB2E49C98FCBEB /* NftCollectionViewModel.swift in Sources */,
 				D0D5BCC12976D3B300587FDB /* PsswordInputCell.swift in Sources */,
 				11B35633B952154A098532A4 /* NftCollectionModule.swift in Sources */,
 				11B35B9C05783F7EA0C7C0EC /* NftCollectionOverviewService.swift in Sources */,
 				11B355EE18C23669D470BBB0 /* NftCollectionOverviewViewModel.swift in Sources */,
+				D09D76992A2F3682004311E6 /* SendTronConfirmationModule.swift in Sources */,
 				11B3550B0E0438427CBE72A3 /* NftCollectionOverviewModule.swift in Sources */,
 				11B350A41E2B2A6DF2E9B4FF /* NftCollectionOverviewViewController.swift in Sources */,
 				11B35C47A06C0A4F7231C511 /* NftCollectionAssetsModule.swift in Sources */,
@@ -8063,6 +8117,7 @@
 				11B35A81973F6FB70B24AF7A /* PoolProvider.swift in Sources */,
 				11B3525DD29BC2286526669F /* PoolGroup.swift in Sources */,
 				11B35AB989198F423D880695 /* PoolGroupFactory.swift in Sources */,
+				D09D76952A2E07BD004311E6 /* SendTronConfirmationService.swift in Sources */,
 				11B3521C81ACF7BFC8875A61 /* TransactionsHeaderView.swift in Sources */,
 				11B358A1409FB729B1C3013E /* PoolSource.swift in Sources */,
 				ABC9A52E08E5C57665C07DBC /* PseudoAccessoryView.swift in Sources */,
@@ -8189,6 +8244,7 @@
 				11B354D6DE193776FFACE1B5 /* AddEvmSyncSourceViewController.swift in Sources */,
 				11B354BC4D954CCDA2E75C68 /* AddEvmSyncSourceViewModel.swift in Sources */,
 				11B353F6BB87F0F1933D63C2 /* AddEvmSyncSourceService.swift in Sources */,
+				D07157E52A2DDAA6006F141F /* SendTronViewController.swift in Sources */,
 				11B35068706B5C13888F7E22 /* EvmSyncSourceRecord.swift in Sources */,
 				11B3532F1BE8F0D1A6B43A33 /* EvmSyncSourceStorage.swift in Sources */,
 				11B3511CD62516A146124350 /* TextDropDownAndSettingsView.swift in Sources */,
@@ -8356,10 +8412,12 @@
 			files = (
 				D38405D321831B3D007D50AD /* AppDelegate.swift in Sources */,
 				D36DE0FC272FD92F000BC916 /* SwapSelectProviderService.swift in Sources */,
+				D09D76912A2E0753004311E6 /* SendTronConfirmationViewModel.swift in Sources */,
 				D38405D721831B3D007D50AD /* MainViewController.swift in Sources */,
 				D38405E821831B3D007D50AD /* MainModule.swift in Sources */,
 				D38405F121831B3D007D50AD /* Protocols.swift in Sources */,
 				D38405F421831B3D007D50AD /* LaunchModule.swift in Sources */,
+				D07157DE2A2DDA09006F141F /* SendTronService.swift in Sources */,
 				D384061421831B3D007D50AD /* DepositModule.swift in Sources */,
 				D384061521831B3D007D50AD /* DepositService.swift in Sources */,
 				D087628429826E3100E6FFD4 /* WatchService.swift in Sources */,
@@ -8393,6 +8451,7 @@
 				D384069521831B3D007D50AD /* SystemInfoManager.swift in Sources */,
 				D384069621831B3D007D50AD /* PermissionsHelper.swift in Sources */,
 				11B3541F6B5316F3B373D1EA /* ValueFormatter.swift in Sources */,
+				D09D768C2A2E066E004311E6 /* SendTronConfirmationModule.swift in Sources */,
 				11B351C81028727569851233 /* EvmAdapter.swift in Sources */,
 				D05E96B62A29F9D3002CCD71 /* WatchTronAddressViewModel.swift in Sources */,
 				11B35A801504D47FBE31CF40 /* PasteboardManager.swift in Sources */,
@@ -8741,6 +8800,7 @@
 				D02A67C2272A7460009B2C1C /* TwitterText.swift in Sources */,
 				11B359F73F1D626BF832977F /* BackupModule.swift in Sources */,
 				6BCD530C2A161F4100993F20 /* ICloudBackupNameViewModel.swift in Sources */,
+				D09D76942A2E07BD004311E6 /* SendTronConfirmationService.swift in Sources */,
 				11B35328067C30C80DF244DF /* BackupVerifyWordsViewModel.swift in Sources */,
 				11B354460024FA6EDB8B27DC /* BackupVerifyWordsService.swift in Sources */,
 				11B3508A67A63E5580A177FD /* BackupVerifyWordsViewController.swift in Sources */,
@@ -8844,6 +8904,7 @@
 				58AAA50BFCE894B7650F28B0 /* OneInchSettingsDataSource.swift in Sources */,
 				58AAA9771EA29EC8CDA33C58 /* OneInchSettingsModule.swift in Sources */,
 				58AAA96EA2327421BB3A115B /* SwapDeadlineViewModel.swift in Sources */,
+				D09D768E2A2E06D6004311E6 /* SendTronConfirmationViewController.swift in Sources */,
 				58AAA289FEAE983739189B8D /* RecipientAddressViewModel.swift in Sources */,
 				58AAA49049C7EA04AABC41E9 /* SwapSlippageViewModel.swift in Sources */,
 				58AAA9ABBBA6A19CBC351D52 /* AddressResolutionProvider.swift in Sources */,
@@ -8981,6 +9042,7 @@
 				11B357D19BFD13D7466D040B /* AppearanceService.swift in Sources */,
 				11B35D33D85E8B19BD7EC004 /* AppearanceViewModel.swift in Sources */,
 				11B35FA6F9EE876BD65E9AD6 /* LaunchScreen.swift in Sources */,
+				D07157DB2A2DD968006F141F /* SendTronModule.swift in Sources */,
 				11B351EE1B16B2A26B5D6A40 /* CoinInvestorsService.swift in Sources */,
 				11B35EDC3703B04ED8B72BA8 /* CoinTreasuriesModule.swift in Sources */,
 				11B35147B6C9B62FC86A5BB9 /* CoinTreasuriesViewController.swift in Sources */,
@@ -9097,6 +9159,7 @@
 				11B35D5B873123BC2D3909EF /* AppVersionRecordStorage.swift in Sources */,
 				11B3564706CBCF6F6A30FF65 /* EnabledWalletCacheStorage.swift in Sources */,
 				11B35AC11F00B7FBE244425C /* NftCollectionViewController.swift in Sources */,
+				D07157E12A2DDA17006F141F /* SendTronViewModel.swift in Sources */,
 				11B351E6C8EF6B22C5F8B98D /* NftCollectionService.swift in Sources */,
 				11B35AD1BD3E71EC4C29051F /* NftCollectionViewModel.swift in Sources */,
 				11B3586BF6AC0538272E71A4 /* NftCollectionModule.swift in Sources */,
@@ -9354,6 +9417,7 @@
 				11B35BE5E6974F580927CAFA /* RestoreService.swift in Sources */,
 				11B35D4B4DE7C4620C34AA11 /* AddEvmSyncSourceModule.swift in Sources */,
 				11B35F72D67DB96FA83C9004 /* AddEvmSyncSourceViewController.swift in Sources */,
+				D07157E42A2DDAA6006F141F /* SendTronViewController.swift in Sources */,
 				11B357BADA228BE93B8451E7 /* AddEvmSyncSourceViewModel.swift in Sources */,
 				11B3509F4BE82888A15D88E8 /* AddEvmSyncSourceService.swift in Sources */,
 				11B3561E7DF566A274210E01 /* EvmSyncSourceRecord.swift in Sources */,

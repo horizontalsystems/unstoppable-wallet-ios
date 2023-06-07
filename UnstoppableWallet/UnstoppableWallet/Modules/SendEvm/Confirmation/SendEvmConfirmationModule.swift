@@ -86,7 +86,6 @@ struct SendEvmConfirmationModule {
                 blockchainType: evmKitWrapper.blockchainType,
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
-                evmBlockchainManager: App.shared.evmBlockchainManager,
                 coinManager: App.shared.coinManager
         ) else {
             return nil
@@ -126,7 +125,6 @@ struct SendEvmConfirmationModule {
                 blockchainType: evmKitWrapper.blockchainType,
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
-                evmBlockchainManager: App.shared.evmBlockchainManager,
                 coinManager: App.shared.coinManager
         ) else {
             throw CreateModuleError.cantCreateFeeRateProvider

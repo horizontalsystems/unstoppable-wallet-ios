@@ -80,7 +80,7 @@ extension BaseTronAdapter: IDepositAdapter {
     var receiveAddress: DepositAddress {
         ActivatedDepositAddress(
             receiveAddress: tronKit.receiveAddress.base58,
-            isActive: false
+            isActive: !tronKit.accountInactive
         )
     }
 
