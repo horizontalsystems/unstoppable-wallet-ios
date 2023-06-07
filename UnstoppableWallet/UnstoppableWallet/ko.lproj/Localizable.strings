@@ -219,7 +219,7 @@
 "backup.cloud.title" = "iCloud에 백업";
 "backup.cloud.description" = "iCloud 저장소는 Apple에서 제공하는 타사 클라우드 저장소 서비스입니다. 데이터가 개인 기기가 아닌 Apple 서버에 저장된다는 점을 아는 것이 중요합니다. 이것은 귀하가 귀하의 데이터를 위탁하고 귀하의 정보 보안을 제3자 서비스에 넘기고 있음을 의미합니다.";
 
-"backup.cloud.terms.item.1" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+"backup.cloud.terms.item.1" = "내 iCloud에 대한 액세스 권한을 상실하면 해당 지갑의 백업에 대한 액세스 권한도 잃게 된다는 점을 이해합니다.";
 
 "backup.cloud.name.title" = "백업 이름";
 "backup.cloud.name.description" = "백업 파일의 이름을 입력하세요.";
@@ -305,9 +305,9 @@
 "deposit.your_address" = "당신의 주소";
 "receive_alert.not_backed_up_description" = "%@를 백업해야 %@를 받을 수 있습니다.";
 
-"deposit.not_active" = "not active";
-"deposit.not_active.title" = "Not Active Address";
-"deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
+"deposit.not_active" = "비활성화됨";
+"deposit.not_active.title" = "비활성 주소";
+"deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
 
 // Send
 
