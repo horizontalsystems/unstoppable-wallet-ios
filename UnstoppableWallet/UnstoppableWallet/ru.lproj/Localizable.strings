@@ -123,16 +123,16 @@
 
 "restore_type.title" = "Импорт кошелька";
 
-"restore_type.cloud.title" = "из iCloud";
+"restore_type.cloud.title" = "iCloud";
 "restore_type.recovery.title" = "Фраза восстановления";
 
 "restore_type.cloud.description" = "Импорт из файла резервной копии в вашем keychain.";
-"restore_type.recovery.description" = "Импортс помощью фразы восстановления или приватного ключа.";
+"restore_type.recovery.description" = "Импорт с помощью фразы восстановления или приватного ключа.";
 
 // Restore Cloud
 
-"restore.cloud.title" = "Выберите резервную копию";
-"restore.cloud.description" = "Выберите резервную копию кошелька, которую вы хотите восстановить.";
+"restore.cloud.title" = "Резерв. копия";
+"restore.cloud.description" = "Выберите резервную копию кошелька, который вы хотите восстановить.";
 "restore.cloud.empty" = "Резервные копии не найдены.";
 "restore.cloud.imported" = "Импортированные кошельки";
 
