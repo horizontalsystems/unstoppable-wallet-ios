@@ -305,6 +305,10 @@
 "deposit.your_address" = "Votre address";
 "receive_alert.not_backed_up_description" = "Vous devez sauvegarder %@ avant de recevoir %@.";
 
+"deposit.not_active" = "not active";
+"deposit.not_active.title" = "Not Active Address";
+"deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
+
 // Send
 
 "send.title" = "Envoyer %@";
