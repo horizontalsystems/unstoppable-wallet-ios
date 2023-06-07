@@ -112,7 +112,16 @@
 	</array>
 	<key>NSUbiquitousContainers</key>
 	<dict>
-		<key>${shared_cloud_container_id}</key>
+		<key>iCloud.io.horizontalsystems.bank-wallet.shared.dev</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>$(PRODUCT_NAME)</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
+		</dict>
+		<key>iCloud.io.horizontalsystems.bank-wallet.shared</key>
 		<dict>
 			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
 			<true/>
