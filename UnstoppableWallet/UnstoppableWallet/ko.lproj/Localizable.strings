@@ -305,6 +305,10 @@
 "deposit.your_address" = "당신의 주소";
 "receive_alert.not_backed_up_description" = "%@를 백업해야 %@를 받을 수 있습니다.";
 
+"deposit.not_active" = "비활성화됨";
+"deposit.not_active.title" = "비활성 주소";
+"deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
+
 // Send
 
 "send.title" = "전송 %@";

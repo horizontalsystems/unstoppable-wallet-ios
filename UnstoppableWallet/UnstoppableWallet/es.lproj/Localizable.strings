@@ -305,6 +305,10 @@
 "deposit.your_address" = "Su dirección";
 "receive_alert.not_backed_up_description" = "Necesita una Copia de seguridad %@ antes de poder recibir %@.";
 
+"deposit.not_active" = "inactivo";
+"deposit.not_active.title" = "Dirección no activa";
+"deposit.not_active.tron_description" = "Las cuentas recién creadas en la cadena de bloques TRON están inactivas y no se pueden consultar ni explorar. Necesitan ser activadas.\n\nPara activar una cuenta inactiva, transfiera tokens TRX o TRC-10 a su dirección. Para activar una nueva cuenta en la cadena Tron, se requiere una cuota de 1 TRX";
+
 // Send
 
 "send.title" = "Enviar %@";

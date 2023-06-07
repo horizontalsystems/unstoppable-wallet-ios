@@ -221,7 +221,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "backup.cloud.title" = "Backup to iCloud";
 "backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
 
-"backup.cloud.terms.item.1" = "I understand that loosing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+"backup.cloud.terms.item.1" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
 
 "backup.cloud.name.title" = "Backup Name";
 "backup.cloud.name.description" = "Enter name for the backup file.";
@@ -306,6 +306,10 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "deposit.address" = "Adres";
 "deposit.your_address" = "Adresiniz";
 "receive_alert.not_backed_up_description" = "%@ almadan önce %@ anahtarlarınızı yedeklemeniz gerekiyor.";
+
+"deposit.not_active" = "not active";
+"deposit.not_active.title" = "Not Active Address";
+"deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
 
 // Send
 
@@ -1311,8 +1315,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "manage_account.manual_backup_required.description" = "In order to securely delete your backup on iCloud, you will need to manually backup your recovery phrase first.";
 "manage_account.manual_backup_required.button" = "Backup Now";
 "manage_account.unlink" = "Unlink Wallet";
-"manage_account.backup.no_backup_yet_description" = "Complete one of the wallet backup options to start using the wallet.";
-"manage_account.backup.has_backup_description" = "It's recommended to have a manual backup for each wallet.";
+"manage_account.backup.no_backup_yet_description" = "Cüzdanı kullanmaya başlamak için cüzdan yedekleme seçeneklerinden birini tamamlayın.";
+"manage_account.backup.has_backup_description" = "Her cüzdan için manuel bir yedeğin olması önerilir.";
 
 "manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
 // Manage Account -> Public Keys
@@ -1423,7 +1427,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "watch_address.by" = "İçerik";
 "watch_address.watch_by" = "İzle";
 "watch_address.evm_address" = "EVM Adresi";
-"watch_address.tron_address" = "TRON Address";
+"watch_address.tron_address" = "TRON Adresi";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Account Extended Public Key ";
 "watch_address.public_key.invalid_key" = "Geçersiz Anahtar";

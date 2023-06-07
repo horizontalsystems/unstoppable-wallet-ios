@@ -307,6 +307,10 @@
 "deposit.your_address" = "您的地址";
 "receive_alert.not_backed_up_description" = "您必须在接收%@之前先备份%@。";
 
+"deposit.not_active" = "不活动";
+"deposit.not_active.title" = "未激活的地址";
+"deposit.not_active.tron_description" = "新创建的 TRON 区块链上的帐户是不活动的，无法查询或探索。它们需要激活。\n\n正在将TRX或 TRC-10令牌传输到一个不活动的帐户地址将激活该帐户。 激活Tron链上的一个新帐户需要1TRX";
+
 // Send
 
 "send.title" = "发送%@";

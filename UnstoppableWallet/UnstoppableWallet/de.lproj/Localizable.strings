@@ -306,6 +306,10 @@
 "deposit.your_address" = "Deine Adresse";
 "receive_alert.not_backed_up_description" = "Sie müssen %@ sichern, bevor Sie %@ empfangen können.";
 
+"deposit.not_active" = "nicht aktiv";
+"deposit.not_active.title" = "Keine aktive Adresse";
+"deposit.not_active.tron_description" = "Neu erstellte Konten in der TRON-Blockchain sind inaktiv und können nicht abgefragt oder untersucht werden. Sie müssen aktiviert werden.\n\nDie Übertragung von TRX- oder TRC-10-Token an eine inaktive Konto-Adresse wird das Konto aktivieren. Zur Aktivierung eines neuen Kontos auf der Tron-Kette ist eine Gebühr von 1 TRX erforderlich";
+
 // Send
 
 "send.title" = "Senden %@";

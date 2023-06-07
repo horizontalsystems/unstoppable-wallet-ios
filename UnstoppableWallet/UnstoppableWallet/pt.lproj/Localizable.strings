@@ -307,6 +307,10 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "deposit.your_address" = "Seu endereço";
 "receive_alert.not_backed_up_description" = "Você precisa fazer um backup de %@ antes de poder receber %@.";
 
+"deposit.not_active" = "não ativo";
+"deposit.not_active.title" = "Endereço não ativo";
+"deposit.not_active.tron_description" = "Contas recém-criadas no blockchain TRON estão inativas e não podem ser consultadas ou exploradas. Elas precisam ser ativadas.\n\nPara ativar uma nova conta na cadeia Tron, é necessário transferir tokens TRX ou TRC-10 para um endereço de conta inativo, juntamente com uma taxa de ativação de 1 TRX";
+
 // Send
 
 "send.title" = "Enviar %@";
