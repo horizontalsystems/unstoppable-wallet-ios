@@ -1199,7 +1199,6 @@
 		1A5645D6AC7D344E6D3D0CAF /* AppVersion_v_0_20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646C5FEE5A60A658B0180 /* AppVersion_v_0_20.swift */; };
 		1A5645DA5F609D469D12A6E1 /* AppVersionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56446CCB15D32581396A59 /* AppVersionRecord.swift */; };
 		1A5645DE1329BC81C1A9B711 /* BtcBlockchainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646B6231F2C52F27526F7 /* BtcBlockchainManager.swift */; };
-		1A564628BD2F50E8B2E93E24 /* WalletConnectShowSigningMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646B7EB871D0599CE332F /* WalletConnectShowSigningMessageViewController.swift */; };
 		1A5646322B606C56DFFA324A /* NftCollectionsMultiSortHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5643A672A508BC4CBCABDD /* NftCollectionsMultiSortHeaderViewModel.swift */; };
 		1A56463AB918839385E8CDBD /* BlockchainSettingsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56443BF752CB6537E45F5A /* BlockchainSettingsStorage.swift */; };
 		1A56463FADAB4646BA106A5D /* TopPlatformMarketCapFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A1B86DF22E86F0BB442 /* TopPlatformMarketCapFetcher.swift */; };
@@ -1265,7 +1264,6 @@
 		1A564B17A7FF7D36926CF6DE /* ThemeActionSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E86CCEAD0F9956664D4 /* ThemeActionSheetController.swift */; };
 		1A564B1C354CEC471841AEB9 /* ReachabilityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564814721244F4D4D87557 /* ReachabilityViewModel.swift */; };
 		1A564B1D457A23C7732B76DF /* ReleaseNotesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644074A3ACB1DFB63FF92 /* ReleaseNotesService.swift */; };
-		1A564B83D0B0C4403947AB20 /* WalletConnectShowSigningMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646B7EB871D0599CE332F /* WalletConnectShowSigningMessageViewController.swift */; };
 		1A564BA5366D4F0B921F5EE8 /* ThemeActionSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E86CCEAD0F9956664D4 /* ThemeActionSheetController.swift */; };
 		1A564BAB51E12A8F37D870B5 /* PerformanceSideCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B73ABBEFC58A13D501E /* PerformanceSideCollectionViewCell.swift */; };
 		1A564BB34D0EAA2E8BE8B498 /* DeepLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564580B3F739DAC59C623F /* DeepLinkManager.swift */; };
@@ -3061,7 +3059,6 @@
 		1A56469A2F3EAAEDECFB4034 /* JailbreakService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JailbreakService.swift; sourceTree = "<group>"; };
 		1A5646B5D68A302515565030 /* BalanceErrorService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceErrorService.swift; sourceTree = "<group>"; };
 		1A5646B6231F2C52F27526F7 /* BtcBlockchainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BtcBlockchainManager.swift; sourceTree = "<group>"; };
-		1A5646B7EB871D0599CE332F /* WalletConnectShowSigningMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectShowSigningMessageViewController.swift; sourceTree = "<group>"; };
 		1A5646C5FEE5A60A658B0180 /* AppVersion_v_0_20.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersion_v_0_20.swift; sourceTree = "<group>"; };
 		1A5646D49060C3EFF06D0479 /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		1A564702FB246F315983743E /* BalanceErrorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceErrorViewModel.swift; sourceTree = "<group>"; };
@@ -5404,7 +5401,6 @@
 				1A564342B778B822F3ED02E7 /* WalletConnectSignMessageRequestModule.swift */,
 				1A56400EBD84656A0447EA59 /* WalletConnectSignMessageRequestService.swift */,
 				1A564C60EABE355B1F395D97 /* WalletConnectSignMessageRequestViewController.swift */,
-				1A5646B7EB871D0599CE332F /* WalletConnectShowSigningMessageViewController.swift */,
 			);
 			path = Sign;
 			sourceTree = "<group>";
@@ -7715,7 +7711,6 @@
 				1A56412437A8C323E8555C82 /* WalletConnectSignMessageRequestService.swift in Sources */,
 				1A564F06F8B2F6C186157E18 /* WalletConnectSignMessageRequestViewController.swift in Sources */,
 				D36DE0DF272FD887000BC916 /* OneInchViewModel.swift in Sources */,
-				1A564B83D0B0C4403947AB20 /* WalletConnectShowSigningMessageViewController.swift in Sources */,
 				D02A67C6272A7460009B2C1C /* CoinTweetsViewModel.swift in Sources */,
 				D09200C6293F21720091981A /* RestoreNonStandardViewModel.swift in Sources */,
 				11B35F20127C070137781ED5 /* AddTokenModule.swift in Sources */,
@@ -8888,7 +8883,6 @@
 				1A5647022FBA647CA2DC1601 /* WalletConnectSignMessageRequestModule.swift in Sources */,
 				1A56424D3C033360DF68A675 /* WalletConnectSignMessageRequestService.swift in Sources */,
 				1A564BE7A540E7427795B8A8 /* WalletConnectSignMessageRequestViewController.swift in Sources */,
-				1A564628BD2F50E8B2E93E24 /* WalletConnectShowSigningMessageViewController.swift in Sources */,
 				11B3534B567884E30A871F32 /* AddTokenModule.swift in Sources */,
 				11B35758262A961566ABB87F /* AddBep2TokenBlockchainService.swift in Sources */,
 				58AAADEE16D9605E4FA0390A /* UniswapSettingsViewModel.swift in Sources */,

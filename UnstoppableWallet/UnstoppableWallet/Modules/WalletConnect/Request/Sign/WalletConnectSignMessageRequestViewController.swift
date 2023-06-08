@@ -89,10 +89,6 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
         viewModel.onReject()
     }
 
-    private func showMessage() {
-        navigationController?.pushViewController(WalletConnectShowSigningMessageViewController(viewModel: viewModel), animated: true)
-    }
-
     private func show(error: Error) {
         HudHelper.instance.show(banner: .error(string: error.localizedDescription))
     }
@@ -106,50 +102,57 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
 extension WalletConnectSignMessageRequestViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        var rows: [RowProtocol] = []
+        var sections = [SectionProtocol]()
 
-        if let domain = viewModel.domain {
-            let row = tableView.universalRow48(
-                    id: "sign_domain",
-                    title: .subhead2("wallet_connect.sign.domain".localized),
-                    value: .subhead1(domain),
-                    isFirst: true
+        if viewModel.domain != nil || viewModel.dAppName != nil {
+            var rows: [RowProtocol] = []
+
+            if let domain = viewModel.domain {
+                let row = tableView.universalRow48(
+                        id: "sign_domain",
+                        title: .subhead2("wallet_connect.sign.domain".localized),
+                        value: .subhead1(domain),
+                        isFirst: true,
+                        isLast: viewModel.dAppName == nil
+                )
+
+                rows.append(row)
+            }
+
+            if let dAppName = viewModel.dAppName {
+                let row = tableView.universalRow48(
+                        id: "dApp_name",
+                        title: .subhead2("wallet_connect.sign.dapp_name".localized),
+                        value: .subhead1(dAppName),
+                        isFirst: viewModel.domain == nil,
+                        isLast: true
+                )
+
+                rows.append(row)
+            }
+
+            sections.append(
+                    Section(
+                            id: "info",
+                            headerState: .margin(height: .margin12),
+                            footerState: .margin(height: .margin24),
+                            rows: rows
+                    )
             )
-
-            rows.append(row)
         }
 
-        let messageRow = tableView.universalRow48(
-                id: "sign_message",
-                title: .subhead2("wallet_connect.sign.message".localized),
-                accessoryType: .disclosure,
-                isFirst: viewModel.domain == nil,
-                isLast: viewModel.dAppName == nil
-        ) { [weak self] in
-            self?.showMessage()
-        }
+        sections.append(
+                Section(
+                        id: "message",
+                        headerState: tableView.sectionHeader(text: "wallet_connect.sign.message".localized),
+                        footerState: .margin(height: .margin32),
+                        rows: [
+                            tableView.messageRow(text: viewModel.message)
+                        ]
+                )
+        )
 
-        rows.append(messageRow)
-
-        if let dAppName = viewModel.dAppName {
-            let row = tableView.universalRow48(
-                    id: "dApp_name",
-                    title: .subhead2("wallet_connect.sign.dapp_name".localized),
-                    value: .subhead1(dAppName),
-                    isLast: true
-            )
-
-            rows.append(row)
-        }
-
-        return [
-            Section(
-                    id: "sign_section",
-                    headerState: .margin(height: .margin12),
-                    footerState: tableView.sectionFooter(text: "wallet_connect.sign.description".localized),
-                    rows: rows
-            )
-        ]
+        return sections
     }
 
 }
