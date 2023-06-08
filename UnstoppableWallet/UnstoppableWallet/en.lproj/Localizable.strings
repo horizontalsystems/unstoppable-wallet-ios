@@ -1516,7 +1516,6 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "activate_subscription.message" = "Message to Sign";
 "activate_subscription.sign" = "Sign";
 "activate_subscription.activating" = "Activating...";
-"activate_subscription.description" = "You need to sign this message to activate your subscription";
 "activate_subscription.failed_to_activate" = "Failed to activate subscription";
 
 

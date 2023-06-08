@@ -16,10 +16,6 @@ class WalletConnectSignMessageRequestService {
         try signer.signed(message: message, isLegacy: isLegacy)
     }
 
-    private func signTypedData(message: Data) throws -> Data {
-        try signer.signTypedData(message: message)
-    }
-
 }
 
 extension WalletConnectSignMessageRequestService {
@@ -31,22 +27,26 @@ extension WalletConnectSignMessageRequestService {
         case let .personalSign(data, _):
             return String(data: data, encoding: .utf8) ?? data.hs.hexString
         case let .signTypeData(_, data, _):
-            guard let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                  let message = object["message"],
-                  let prettyData = try? JSONSerialization.data(withJSONObject: message, options: .prettyPrinted) else {
+            do {
+                let eip712TypedData = try EIP712TypedData.parseFrom(rawJson: data)
+                let encoder = JSONEncoder()
+                encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+                let data = try encoder.encode(eip712TypedData.sanitizedMessage)
+
+                return String(decoding: data, as: UTF8.self)
+            } catch {
                 return ""
             }
-
-            return String(decoding: prettyData, as: UTF8.self)
         }
     }
 
     var domain: String? {
-        if case let .signTypeData(_, data, _) = request.payload {
-            let typedData = try? signer.parseTypedData(rawJson: data)
-            if let domain = typedData?.domain.objectValue, let domainString = domain["name"]?.stringValue {
+        switch request.payload {
+        case .signTypeData(_, let data, _):
+            if let eip712TypedData = try? EIP712TypedData.parseFrom(rawJson: data), let domain = eip712TypedData.domain.objectValue, let domainString = domain["name"]?.stringValue {
                 return domainString
             }
+        default: ()
         }
 
         return nil
@@ -66,7 +66,8 @@ extension WalletConnectSignMessageRequestService {
         case let .personalSign(data, _):
             signedMessage = try sign(message: data)
         case let .signTypeData(_, data, _):
-            signedMessage = try signTypedData(message: data)
+            let eip712TypedData = try EIP712TypedData.parseFrom(rawJson: data)
+            signedMessage = try signer.sign(eip712TypedData: eip712TypedData)
         }
 
         signService.approveRequest(id: request.id, result: signedMessage)
