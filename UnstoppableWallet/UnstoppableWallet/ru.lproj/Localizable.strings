@@ -211,10 +211,10 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Ручное резервное копирование";
+"backup_prompt.title" = "Manual Backup";
 "backup_prompt.warning" = "Создайте резервную копию вашей фразы восстановления и пароля, которые позволят вам восстановить ваш кошелек, если телефон потерян, украден, сломал и т.д.";
 "backup_prompt.backup" = "Резервная копия";
-"backup_prompt.backup_manual" = "Ручное резервное копирование";
+"backup_prompt.backup_manual" = "Manual Backup";
 "backup_prompt.backup_cloud" = "Резерв. копирование в iCloud";
 "backup_prompt.later" = "Позже";
 
@@ -1310,8 +1310,8 @@
 "manage_account.recovery_phrase" = "Фраза восстановления";
 "manage_account.public_keys" = "Публичные ключи";
 "manage_account.private_keys" = "Приватные ключи";
-"manage_account.backup_recovery_phrase" = "Ручное резервное копирование";
-"manage_account.cloud_backup_recovery_phrase" = "Резерв. копирование в iCloud";
+"manage_account.backup_recovery_phrase" = "Ручное резервное \nкопирование";
+"manage_account.cloud_backup_recovery_phrase" = "Резерв. копирование /nв iCloud";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Удалить резервную копию из iCloud";
 "manage_account.manual_backup_required" = "Требуется резервное копирование вручную";
 "manage_account.manual_backup_required.description" = "Чтобы безопасно удалить резервную копию в iCloud, вам необходимо сначала сделать резервную копию фразы восстановления вручную.";
@@ -1520,7 +1520,6 @@
 "activate_subscription.message" = "Сообщение для подписи";
 "activate_subscription.sign" = "Подписать";
 "activate_subscription.activating" = "Активация...";
-"activate_subscription.description" = "Вам нужно подписать это сообщение, чтобы активировать вашу подписку";
 "activate_subscription.failed_to_activate" = "Не удалось активировать подписку";
 
 
