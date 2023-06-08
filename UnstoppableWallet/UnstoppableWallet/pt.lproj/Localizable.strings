@@ -1244,7 +1244,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "wallet_connect.sign.domain" = "Domínio";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Mensagem não assinada";
-"wallet_connect.sign.description" = "Por favor, assine uma mensagem para autenticar";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Nenhuma sessão ativa";
