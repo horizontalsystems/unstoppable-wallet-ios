@@ -137,7 +137,7 @@
 "restore.cloud.imported" = "Импортированные кошельки";
 
 "restore.cloud.password.title" = "Введите пароль";
-"restore.cloud.password.placeholder" = "Пароль для резервной копии";
+"restore.cloud.password.placeholder" = "Пароль резервной копии";
 "restore.cloud.password.description" = "Введите пароль резервной копии для импорта вашего кошелька из iCloud.";
 
 // Coin Settings
@@ -215,12 +215,12 @@
 "backup_prompt.warning" = "Создайте резервную копию вашей фразы восстановления и пароля, которые позволят вам восстановить ваш кошелек, если телефон потерян, украден, сломал и т.д.";
 "backup_prompt.backup" = "Резервная копия";
 "backup_prompt.backup_manual" = "Ручное резервное копирование";
-"backup_prompt.backup_cloud" = "Резервное копирование в iCloud";
+"backup_prompt.backup_cloud" = "Резерв. копирование в iCloud";
 "backup_prompt.later" = "Позже";
 
 // Backup to iCloud
 
-"backup.cloud.title" = "Резервное копирование в iCloud";
+"backup.cloud.title" = "Резерв. копирование в iCloud";
 "backup.cloud.description" = "Хранилище iCloud является облачным хранилищем, предоставляемым сторонней компанией и доступным через Apple. Важно знать, что ваши данные будут храниться на серверах Apple, а не на ваших личных устройствах. Это означает, что вы доверяете свои данные и передаете безопасность своей информации стороннему сервису.";
 
 "backup.cloud.terms.item.1" = "Я понимаю, что закрытие доступа к моему iCloud, приведет к потере доступа к резервной копии соответствующего кошелька.";
@@ -1311,7 +1311,7 @@
 "manage_account.public_keys" = "Публичные ключи";
 "manage_account.private_keys" = "Приватные ключи";
 "manage_account.backup_recovery_phrase" = "Ручное резервное копирование";
-"manage_account.cloud_backup_recovery_phrase" = "Резервное копирование в iCloud";
+"manage_account.cloud_backup_recovery_phrase" = "Резерв. копирование в iCloud";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Удалить резервную копию из iCloud";
 "manage_account.manual_backup_required" = "Требуется резервное копирование вручную";
 "manage_account.manual_backup_required.description" = "Чтобы безопасно удалить резервную копию в iCloud, вам необходимо сначала сделать резервную копию фразы восстановления вручную.";
