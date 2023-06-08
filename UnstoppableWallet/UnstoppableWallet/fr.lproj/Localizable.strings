@@ -1515,7 +1515,6 @@
 "activate_subscription.message" = "Message à signer";
 "activate_subscription.sign" = "Signer";
 "activate_subscription.activating" = "Activation...";
-"activate_subscription.description" = "Vous devez signer ce message pour activer votre abonnement";
 "activate_subscription.failed_to_activate" = "Impossible d'activer l'abonnement";
 
 
