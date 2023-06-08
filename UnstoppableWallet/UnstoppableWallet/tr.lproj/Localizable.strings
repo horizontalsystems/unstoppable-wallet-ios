@@ -27,7 +27,7 @@
 "alert" = "Uyarı";
 "alert.copied" = "Kopyalandı";
 "alert.saved" = "Kaydet";
-"alert.saved_to_icloud" = "Saved to iCloud";
+"alert.saved_to_icloud" = "iCloud'a kaydedildi";
 "alert.no_internet" = "Internet Bağlantısı Yok";
 "alert.wrong_amount" = "Yanlış Tutar";
 "alert.no_fee" = "Yanlış Masraf";
@@ -110,7 +110,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
 "restore.passphrase" = "Parola";
 "restore.input.passphrase" = "Parola";
-"restore.passphrase_description" = "This password is used to encrypt backup file of your wallet. It's not related to your Apple iCloud password. It can't be recovered or reset if lost or forgotten.";
+"restore.passphrase_description" = "Bu şifre, cüzdanınızın yedek dosyasını şifrelemek için kullanılır. Apple iCloud parolanızla ilgili değil. Kaybolur veya unutulursa kurtarılamaz veya sıfırlanamaz.";
 "restore.error.empty_passphrase" = "Şifre boş bırakılamaz";
 "restore.non_standard_import" = "Standart Olmayan Yükleme";
 "restore.non_standard_import.description" = "Bu sayfa, standart olmayan bir cüzdanı olan Unstoppable kullanıcıları için özel geri yükleme mekanizması sağlar. Genel olarak, bu tür cüzdanlar, İngilizce olmayan bir anımsatma kelimeleri listesi ve/veya cüzdan şifresinde özel bir karakter (yani aksan simgesi) kullanılarak Unstoppable 0.27 - 0.28 sürümünde oluşturulmuş olabilir.\n\n Bu durumdan etkilenen bir kullanıcıysanız, 0.29 sürümüne güncelledikten sonra cüzdan bakiyeniz 0 olarak görüntülenir. Bu sayfa, standart olmayan cüzdanınıza erişimi geri yüklemenizi sağlayacaktır. Geri yüklendikten sonra, yeni bir cüzdan oluşturmanız (standartlarla uyumlu) ve paranızı oraya taşımanız önerilir.";
@@ -121,22 +121,22 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "restore_type.title" = "Cuzdan Yükle";
 
-"restore_type.cloud.title" = "from iCloud";
-"restore_type.recovery.title" = "from Recovery Phrase";
+"restore_type.cloud.title" = "iCloud'dan";
+"restore_type.recovery.title" = "Kurtarma İfadesinden";
 
-"restore_type.cloud.description" = "Import from a backup file in your keychain.";
-"restore_type.recovery.description" = "Import using recovery phrase or private key.";
+"restore_type.cloud.description" = "Anahtar zincirinizdeki bir yedek dosyadan içe aktarın.";
+"restore_type.recovery.description" = "Kurtarma ifadesini veya özel anahtarı kullanarak içe aktarın.";
 
 // Restore Cloud
 
-"restore.cloud.title" = "Select Backup";
-"restore.cloud.description" = "Select the backup copy of the wallet you want to restore.";
-"restore.cloud.empty" = "No backups found.";
-"restore.cloud.imported" = "Imported wallets";
+"restore.cloud.title" = "Yedekleme Seç";
+"restore.cloud.description" = "Geri yüklemek istediğiniz cüzdanın yedek kopyasını seçin.";
+"restore.cloud.empty" = "Yedek bulunamadı.";
+"restore.cloud.imported" = "Ithal cüzdanlar";
 
-"restore.cloud.password.title" = "Enter Password";
-"restore.cloud.password.placeholder" = "Backup Password";
-"restore.cloud.password.description" = "Enter the backup password to import your wallet from iCloud.";
+"restore.cloud.password.title" = "Parolanı Gir";
+"restore.cloud.password.placeholder" = "Yedek Şifre";
+"restore.cloud.password.description" = "Cüzdanınızı iCloud'dan içe aktarmak için yedek parolayı girin.";
 
 // Coin Settings
 
@@ -209,43 +209,43 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Backup Prompt
 
-"backup_prompt.title" = "Manual Backup";
+"backup_prompt.title" = "Manuel Yedekleme";
 "backup_prompt.warning" = "Telefonunuzun kaybolması, çalınması, kırılması vb. durumlarda cüzdanınızı kurtarmanıza olanak sağlayacak kurtarma ifadesinin ve ilgili parolanın yedek bir kopyasını oluşturun.";
 "backup_prompt.backup" = "Yedekle";
-"backup_prompt.backup_manual" = "Manual Backup";
-"backup_prompt.backup_cloud" = "Backup to iCloud";
+"backup_prompt.backup_manual" = "Manuel Yedekleme";
+"backup_prompt.backup_cloud" = "iCloud'a yedekle";
 "backup_prompt.later" = "Sonra";
 
 // Backup to iCloud
 
-"backup.cloud.title" = "Backup to iCloud";
-"backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
+"backup.cloud.title" = "iCloud'a yedekle";
+"backup.cloud.description" = "iCloud depolama, Apple tarafından sağlanan bir üçüncü taraf bulut depolama hizmetidir. Verilerinizin kişisel cihazlarınızda değil, Apple'ın sunucularında saklanacağını bilmek önemlidir. Bu, verilerinizi emanet ettiğiniz ve bilgilerinizin güvenliğini üçüncü bir hizmete devrettiğiniz anlamına gelir.";
 
-"backup.cloud.terms.item.1" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+"backup.cloud.terms.item.1" = "iCloud'uma erişimi kaybetmenin, ilgili cüzdanın yedeğine erişimi kaybetmeyle sonuçlanacağını anlıyorum.";
 
-"backup.cloud.name.title" = "Backup Name";
-"backup.cloud.name.description" = "Enter name for the backup file.";
-"backup.cloud.name.empty" = "Backup name can't be empty!";
-"backup.cloud.name.error.empty" = "Backup name must be not empty";
-"backup.cloud.name.error.already_exist" = "Backup name already exist!";
+"backup.cloud.name.title" = "Yedek Adı";
+"backup.cloud.name.description" = "Yedekleme dosyası için ad girin.";
+"backup.cloud.name.empty" = "Yedek adı boş olamaz!";
+"backup.cloud.name.error.empty" = "Yedekleme adı boş olmamalıdır";
+"backup.cloud.name.error.already_exist" = "Yedek adı zaten var!";
 "backup.cloud.name.placeholder" = "İsim";
 
-"backup.cloud.password.title" = "Set Password";
-"backup.cloud.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
-"backup.cloud.password.highlighted_description" = "Don't forget this password! It is separate from your Apple iCloud password, and it cannot be recovered or reset.";
-"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.title" = "Şifre Ayarla";
+"backup.cloud.password.description" = "Yedeklemeniz için kilit açma parolasını ayarlayın. En az 8 sembolden oluşmalı ve en az bir küçük harf, büyük harf, sayı ve özel karakter içermelidir.";
+"backup.cloud.password.highlighted_description" = "Bu şifreyi unutmayın! Apple iCloud parolasından farklıdır ve kurtarılamaz veya sıfırlanamaz.";
+"backup.cloud.password.placeholder" = "Şifre";
 "backup.cloud.password.confirm.placeholder" = "Onayla";
-"backup.cloud.password.save" = "Save and Backup";
+"backup.cloud.password.save" = "Kaydet ve Yedekle";
 
 "backup.cloud.password.error.empty_passphrase" = "Parola boş olamaz";
-"backup.cloud.password.error.forbidden_symbols" = "Please use only supported symbols: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"backup.cloud.password.error.minimum_requirement" = "At least 8 characters, including one uppercase letter, one lowercase letter, one number, and one symbol";
-"backup.cloud.password.error.invalid_password" = "Incorrect Password";
-"backup.cloud.password.error.invalid_backup" = "Backup is corrupted";
-"backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
-"backup.cloud.not_available" = "iCloud not Available";
-"backup.cloud.cant_create_file" = "Can't save File to iCloud";
-"backup.cloud.cant_delete_file" = "Can't delete from iCloud";
+"backup.cloud.password.error.forbidden_symbols" = "Lütfen yalnızca desteklenen sembolleri kullanın:  A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_requirement" = "Bir büyük harf, bir küçük harf, bir rakam ve bir sembol dahil olmak üzere en az 8 karakter";
+"backup.cloud.password.error.invalid_password" = "Yanlış parola";
+"backup.cloud.password.error.invalid_backup" = "Yedekleme bozuk";
+"backup.cloud.password.confirm.error.doesnt_match" = "Şifre eşleşmiyor";
+"backup.cloud.not_available" = "iCloud Kullanılamıyor";
+"backup.cloud.cant_create_file" = "Dosya iCloud'a kaydedilemiyor";
+"backup.cloud.cant_delete_file" = "iCloud'dan silinemiyor";
 
 
 // Errors
@@ -307,9 +307,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "deposit.your_address" = "Adresiniz";
 "receive_alert.not_backed_up_description" = "%@ almadan önce %@ anahtarlarınızı yedeklemeniz gerekiyor.";
 
-"deposit.not_active" = "not active";
-"deposit.not_active.title" = "Not Active Address";
-"deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
+"deposit.not_active" = "aktif değil";
+"deposit.not_active.title" = "Aktif Adres Değil";
+"deposit.not_active.tron_description" = "TRON blok zincirinde yeni oluşturulan hesaplar etkin değildir ve sorgulanamaz veya araştırılamaz. Etkinleştirilmeleri gerekiyor.\n\nTRX veya TRC-10 jetonlarını etkin olmayan bir hesap adresine aktarmak, hesabı etkinleştirir. Tron zincirinde yeni bir hesabın etkinleştirilmesi 1 TRX ücret gerektirir";
 
 // Send
 
@@ -454,8 +454,8 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Takas";
-"swap.confirmation.impact_too_high" = "Unstoppable has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
-"swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
+"swap.confirmation.impact_too_high" = "Son derece elverişsiz bir fiyat aldığınız için Durdurulamaz, bu ticaret için takas işlemini devre dışı bıraktı. Bunun nedeni son derece düşük likiditedir.\nHala takas yapmak istiyorsanız lütfen bunun yerine %@ web sitesini kullanın.";
+"swap.confirmation.impact_warning" = "Önemli! Son derece olumsuz bir fiyat alıyorsunuz. Bunun nedeni son derece düşük likiditedir.";
 
 "swap.confirmation.minimum_received" = "Minimum Alınan";
 "swap.confirmation.maximum_sent" = "Maksimum Harcama";
@@ -1029,7 +1029,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "appearance.balance_value.coin_value" = "Para değeri";
 "appearance.balance_value.fiat_value" = "Fiat Değeri";
 
-"appearance.balance_auto_hide" = "Balance Auto Hide";
+"appearance.balance_auto_hide" = "Denge Otomatik Gizleme";
 
 // Settings -> Contacts
 
@@ -1308,17 +1308,17 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "manage_account.recovery_phrase" = "Kurtarma cümlesi";
 "manage_account.public_keys" = "Genel Anahtarlar";
 "manage_account.private_keys" = "Özel Anahtar";
-"manage_account.backup_recovery_phrase" = "Manual Backup";
-"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
-"manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
-"manage_account.manual_backup_required" = "Manual Backup Required";
-"manage_account.manual_backup_required.description" = "In order to securely delete your backup on iCloud, you will need to manually backup your recovery phrase first.";
-"manage_account.manual_backup_required.button" = "Backup Now";
-"manage_account.unlink" = "Unlink Wallet";
+"manage_account.backup_recovery_phrase" = "Manuel Yedekleme";
+"manage_account.cloud_backup_recovery_phrase" = "iCloud'a yedekle";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Yedeklemeyi iCloud'dan Sil";
+"manage_account.manual_backup_required" = "Manuel Yedekleme Gerekli";
+"manage_account.manual_backup_required.description" = "iCloud'daki yedeklemenizi güvenli bir şekilde silmek için önce kurtarma ifadenizi manuel olarak yedeklemeniz gerekir.";
+"manage_account.manual_backup_required.button" = "Şimdi yedekle";
+"manage_account.unlink" = "Cüzdanın bağlantısını kaldır";
 "manage_account.backup.no_backup_yet_description" = "Cüzdanı kullanmaya başlamak için cüzdan yedekleme seçeneklerinden birini tamamlayın.";
 "manage_account.backup.has_backup_description" = "Her cüzdan için manuel bir yedeğin olması önerilir.";
 
-"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "Cüzdan yedeklemenizi iCloud'dan silmek istediğinizden emin misiniz?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "Genel Anahtarlar";
@@ -1369,7 +1369,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "add_evm_sync_source.title" = "RPC Kaynağı Ekle";
 "add_evm_sync_source.name" = "İsim";
 "add_evm_sync_source.rpc_url" = "RPC URL";
-"add_evm_sync_source.basic_auth" = "Basic Auth (optional)";
+"add_evm_sync_source.basic_auth" = "Basic Auth (isteğe bağlı)";
 "add_evm_sync_source.warning.url_exists" = "Bu URL'ye sahip RPC kaynak zaten var";
 "add_evm_sync_source.error.invalid_url" = "Girilen Url geçersiz. Geçerli url aşağıdaki şemalardan birine sahip olmalıdır: http, https, ws, wss";
 
@@ -1392,7 +1392,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "fee_settings.time_lock.description" = "TimeLock yalnızca BIP44 adreslerine (1 ile başlar) göndermek için çalışır";
 
 "fee_settings.network_fee" = "Ağ Ücreti";
-"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
+"fee_settings.network_fee.info" = "Ağda belirli bir işlemi göndermenin tahmini maliyeti.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "İşlem karmaşıklığı \"gaz\" adı verilen birimlerle ölçülür. Yürütülen akıllı sözleşmeye bağlı olarak değişir. Gaz Limiti, onu yürütmek için gereken tahmini maksimum gazdır. Kullanılan gerçek gaz normalde daha düşük olacaktır.";
 
@@ -1527,10 +1527,10 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Tron
 
-"tron.send.activation_fee" = "Activation Fee";
-"tron.send.resources_consumed" = "Resources Consumed";
+"tron.send.activation_fee" = "Aktivasyon ücreti";
+"tron.send.resources_consumed" = "Tüketilen Kaynaklar";
 "tron.send.bandwidth" = "Bandwidth";
 "tron.send.energy" = "Energy";
-"tron.send.fee.info" = "The estimated cost of sending given transaction on the network. (Without excluding Energy, Bandwidth and Activating Fee)";
-"tron.send.resources_consumed.info" = "Bandwidth is the unit that measures the size of the transaction bytes stored in the blockchain database. The larger the transaction, the more bandwidth resources will be consumed.\n\nEnergy is the unit that measures the amount of computation required by the TRON virtual machine to perform specific operations on the TRON network.\n\nSince smart contract transactions require computing resources to execute, each smart contract transaction requires to pay for the energy fee.";
-"tron.send.activation_fee.info" = "Transferring TRX or TRC-10 tokens to an inactive account address will activate the account.";
+"tron.send.fee.info" = "Ağda belirli bir işlemi göndermenin tahmini maliyeti. (Enerji, Bant Genişliği ve Aktivasyon Ücreti hariç)";
+"tron.send.resources_consumed.info" = "Bandwidth, blockchain veritabanında saklanan işlem baytlarının boyutunu ölçen birimdir. İşlem ne kadar büyük olursa, o kadar fazla bant genişliği kaynağı tüketilir.\n\nEnergy, TRON sanal makinesinin TRON ağında belirli işlemleri gerçekleştirmek için ihtiyaç duyduğu hesaplama miktarını ölçen birimdir.\n\nAkıllı sözleşmeden beri işlemlerin yürütülmesi için bilgi işlem kaynakları gerekir, her akıllı sözleşme işleminin energy ücretini ödemesi gerekir.";
+"tron.send.activation_fee.info" = "TRX veya TRC-10 jetonlarını etkin olmayan bir hesap adresine aktarmak, hesabı etkinleştirir.";
