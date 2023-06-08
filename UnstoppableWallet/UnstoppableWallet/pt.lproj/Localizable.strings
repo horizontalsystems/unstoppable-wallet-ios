@@ -1524,3 +1524,13 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "launch.failed_to_launch" = "Falha ao iniciar o aplicativo devido a um erro interno. Tente reiniciar o aplicativo ou relate o erro à nossa equipe de suporte.";
 "launch.failed_to_launch.report" = "Reportar";
+
+// Tron
+
+"tron.send.activation_fee" = "Activation Fee";
+"tron.send.resources_consumed" = "Resources Consumed";
+"tron.send.bandwidth" = "Bandwidth";
+"tron.send.energy" = "Energy";
+"tron.send.fee.info" = "The estimated cost of sending given transaction on the network. (Without excluding Energy, Bandwidth and Activating Fee)";
+"tron.send.resources_consumed.info" = "Bandwidth is the unit that measures the size of the transaction bytes stored in the blockchain database. The larger the transaction, the more bandwidth resources will be consumed.\n\nEnergy is the unit that measures the amount of computation required by the TRON virtual machine to perform specific operations on the TRON network.\n\nSince smart contract transactions require computing resources to execute, each smart contract transaction requires to pay for the energy fee.";
+"tron.send.activation_fee.info" = "Transferring TRX or TRC-10 tokens to an inactive account address will activate the account.";
