@@ -1514,7 +1514,6 @@
 "activate_subscription.message" = "Mensaje a firmar";
 "activate_subscription.sign" = "Firma";
 "activate_subscription.activating" = "Activando...";
-"activate_subscription.description" = "Necesitas firmar este mensaje para activar tu suscripción";
 "activate_subscription.failed_to_activate" = "Error al activar la suscripción";
 
 
