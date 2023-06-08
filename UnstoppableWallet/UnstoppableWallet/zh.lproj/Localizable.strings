@@ -1245,7 +1245,6 @@
 "wallet_connect.sign.domain" = "域名";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "待签名消息";
-"wallet_connect.sign.description" = "请对消息签名以便进行验证";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "没有活跃会话";
