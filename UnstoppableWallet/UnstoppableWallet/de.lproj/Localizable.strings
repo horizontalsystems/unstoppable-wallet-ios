@@ -1243,7 +1243,6 @@
 "wallet_connect.sign.domain" = "Domäne";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Zu unterzeichnende Nachricht";
-"wallet_connect.sign.description" = "Bitte signieren Sie eine Nachricht zur Authentifizierung";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Keine aktiven Sitzungen";
