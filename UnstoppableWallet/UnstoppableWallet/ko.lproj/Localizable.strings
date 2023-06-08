@@ -1242,7 +1242,6 @@
 "wallet_connect.sign.domain" = "도메인";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "서명할 메시지";
-"wallet_connect.sign.description" = "인증을 위해 메시지에 서명하십시오";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "활성 세션 없음";
