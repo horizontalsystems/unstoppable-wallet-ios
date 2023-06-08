@@ -1516,7 +1516,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "activate_subscription.message" = "Mensagem para Assinar";
 "activate_subscription.sign" = "Assinar";
 "activate_subscription.activating" = "Ativando...";
-"activate_subscription.description" = "Você precisa assinar esta mensagem para ativar sua assinatura";
 "activate_subscription.failed_to_activate" = "Falha ao ativar a assinatura";
 
 
