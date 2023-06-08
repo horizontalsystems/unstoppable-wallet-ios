@@ -1242,7 +1242,6 @@
 "wallet_connect.sign.domain" = "Domaine";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Message à signer";
-"wallet_connect.sign.description" = "Veuillez signer un message pour vous authentifier";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Aucune session active";
