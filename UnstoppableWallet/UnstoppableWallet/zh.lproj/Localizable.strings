@@ -1517,7 +1517,6 @@
 "activate_subscription.message" = "待签名消息";
 "activate_subscription.sign" = "签名";
 "activate_subscription.activating" = "激活";
-"activate_subscription.description" = "您需要签署此消息以激活您的订阅";
 "activate_subscription.failed_to_activate" = "订阅激活失败";
 
 
@@ -1525,3 +1524,13 @@
 
 "launch.failed_to_launch" = "由于内部错误，应用程序无法启动。请尝试重新启动应用程序或向我们的支持团队报告错误。";
 "launch.failed_to_launch.report" = "报告";
+
+// Tron
+
+"tron.send.activation_fee" = "激活费";
+"tron.send.resources_consumed" = "消耗的资源";
+"tron.send.bandwidth" = "Bandwidth";
+"tron.send.energy" = "Energy";
+"tron.send.fee.info" = "估算在网络上发送特定交易所需的成本，包括能源、带宽和激活费";
+"tron.send.resources_consumed.info" = "Bandwidth 是衡量存储在区块链数据库中的交易字节大小的单位。 交易越大，消耗的带宽资源就越多。\n\nEnergy 是衡量波场虚拟机在波场网络上执行特定操作所需计算量的单位。\n\n自智能合约 交易需要计算资源来执行，每笔智能合约交易都需要支付 energy费用。";
+"tron.send.activation_fee.info" = "正在将TRX或 TRC-10令牌传输到一个非活动帐户地址将激活帐户。";

@@ -137,7 +137,7 @@
 "restore.cloud.imported" = "Импортированные кошельки";
 
 "restore.cloud.password.title" = "Введите пароль";
-"restore.cloud.password.placeholder" = "Пароль для резервной копии";
+"restore.cloud.password.placeholder" = "Пароль резервной копии";
 "restore.cloud.password.description" = "Введите пароль резервной копии для импорта вашего кошелька из iCloud.";
 
 // Coin Settings
@@ -211,16 +211,16 @@
 
 // Backup Prompt
 
-"backup_prompt.title" = "Ручное резервное копирование";
+"backup_prompt.title" = "Manual Backup";
 "backup_prompt.warning" = "Создайте резервную копию вашей фразы восстановления и пароля, которые позволят вам восстановить ваш кошелек, если телефон потерян, украден, сломал и т.д.";
 "backup_prompt.backup" = "Резервная копия";
-"backup_prompt.backup_manual" = "Ручное резервное копирование";
-"backup_prompt.backup_cloud" = "Резервное копирование в iCloud";
+"backup_prompt.backup_manual" = "Manual Backup";
+"backup_prompt.backup_cloud" = "Резерв. копирование в iCloud";
 "backup_prompt.later" = "Позже";
 
 // Backup to iCloud
 
-"backup.cloud.title" = "Резервное копирование в iCloud";
+"backup.cloud.title" = "Резерв. копирование в iCloud";
 "backup.cloud.description" = "Хранилище iCloud является облачным хранилищем, предоставляемым сторонней компанией и доступным через Apple. Важно знать, что ваши данные будут храниться на серверах Apple, а не на ваших личных устройствах. Это означает, что вы доверяете свои данные и передаете безопасность своей информации стороннему сервису.";
 
 "backup.cloud.terms.item.1" = "Я понимаю, что закрытие доступа к моему iCloud, приведет к потере доступа к резервной копии соответствующего кошелька.";
@@ -1310,8 +1310,8 @@
 "manage_account.recovery_phrase" = "Фраза восстановления";
 "manage_account.public_keys" = "Публичные ключи";
 "manage_account.private_keys" = "Приватные ключи";
-"manage_account.backup_recovery_phrase" = "Ручное резервное копирование";
-"manage_account.cloud_backup_recovery_phrase" = "Резервное копирование в iCloud";
+"manage_account.backup_recovery_phrase" = "Ручное резервное \nкопирование";
+"manage_account.cloud_backup_recovery_phrase" = "Резерв. копирование /nв iCloud";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Удалить резервную копию из iCloud";
 "manage_account.manual_backup_required" = "Требуется резервное копирование вручную";
 "manage_account.manual_backup_required.description" = "Чтобы безопасно удалить резервную копию в iCloud, вам необходимо сначала сделать резервную копию фразы восстановления вручную.";
@@ -1520,7 +1520,6 @@
 "activate_subscription.message" = "Сообщение для подписи";
 "activate_subscription.sign" = "Подписать";
 "activate_subscription.activating" = "Активация...";
-"activate_subscription.description" = "Вам нужно подписать это сообщение, чтобы активировать вашу подписку";
 "activate_subscription.failed_to_activate" = "Не удалось активировать подписку";
 
 
@@ -1528,3 +1527,13 @@
 
 "launch.failed_to_launch" = "Не удалось запустить приложение из-за внутренней ошибки. Пожалуйста, попробуйте перезапустить приложение или сообщите об ошибке нашей службе поддержки.";
 "launch.failed_to_launch.report" = "Пожаловаться";
+
+// Tron
+
+"tron.send.activation_fee" = "Комиссия за активацию";
+"tron.send.resources_consumed" = "Расходуемые ресурсы";
+"tron.send.bandwidth" = "Bandwidth";
+"tron.send.energy" = "Energy";
+"tron.send.fee.info" = "Ориентировочные затраты на отправку данной транзакции по сети (без учёта energy, Bandwidth и комиссии за активацию) предполагаются";
+"tron.send.resources_consumed.info" = "Bandwidth - это единица, которая измеряет размер байт транзакции, хранящихся в базе данных блокчейна. Чем больше транзакция, тем больше bandwidth будет потребляться.\n\nEnergy — это единица, измеряющая количество вычислений, требуемых виртуальной машиной TRON для выполнения конкретных операций в сети TRON.\n\nПоскольку транзакции смарт-контракта требуют выполнения вычислительных ресурсов, каждая сделка по контракту требует оплаты energy комиссии.";
+"tron.send.activation_fee.info" = "Передача токенов TRX или TRC-10 на адрес неактивного аккаунта активирует его.";

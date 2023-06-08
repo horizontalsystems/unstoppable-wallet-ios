@@ -1516,7 +1516,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "activate_subscription.message" = "Mensagem para Assinar";
 "activate_subscription.sign" = "Assinar";
 "activate_subscription.activating" = "Ativando...";
-"activate_subscription.description" = "Você precisa assinar esta mensagem para ativar sua assinatura";
 "activate_subscription.failed_to_activate" = "Falha ao ativar a assinatura";
 
 
@@ -1524,3 +1523,13 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "launch.failed_to_launch" = "Falha ao iniciar o aplicativo devido a um erro interno. Tente reiniciar o aplicativo ou relate o erro à nossa equipe de suporte.";
 "launch.failed_to_launch.report" = "Reportar";
+
+// Tron
+
+"tron.send.activation_fee" = "Taxa de ativação";
+"tron.send.resources_consumed" = "Recursos consumidos";
+"tron.send.bandwidth" = "Bandwidth";
+"tron.send.energy" = "Energy";
+"tron.send.fee.info" = "O custo estimado de envio de determinada transação na rede. (Sem excluir Energy, Bandwidth e Taxa de Ativação)";
+"tron.send.resources_consumed.info" = "A bandwidth é a unidade que mede o tamanho dos bytes de transação armazenados no banco de dados blockchain. Quanto maior a transação, mais recursos de largura de banda serão consumidos.\n\nEnergy é a unidade que mede a quantidade de computação necessária pela máquina virtual TRON para realizar operações específicas na rede TRON.\n\nComo as transações de contrato inteligente exigem recursos de computação para executar, cada transação de contrato inteligente requer o pagamento da taxa de energy.";
+"tron.send.activation_fee.info" = "Transferir tokens TRX ou TRC-10 para um endereço de conta inativo ativará a conta.";
