@@ -48,7 +48,6 @@ class CoinAnalyticsService {
                 let analyticsPreview = try await marketKit.analyticsPreview(coinUid: fullCoin.coin.uid, addresses: addresses)
                 let subscriptionAddress = analyticsPreview.subscriptions.sorted { lhs, rhs in lhs.deadline > rhs.deadline }.first?.address
                 self?.state = .preview(analyticsPreview: analyticsPreview, subscriptionAddress: subscriptionAddress)
-//                self?.state = .preview(analyticsPreview: analyticsPreview, subscriptionAddress: "0x0bdab86aff88cec5e745425c344c64c073af0dc4")
             } catch {
                 self?.state = .failed(error)
             }
@@ -102,7 +101,7 @@ extension CoinAnalyticsService {
                     let analytics = try await marketKit.analytics(coinUid: fullCoin.coin.uid, currencyCode: currency.code, authToken: authToken)
                     self?.state = .success(analytics: analytics)
                 } catch {
-                    if let responseError = error as? NetworkManager.ResponseError, responseError.statusCode == 401 {
+                    if let responseError = error as? NetworkManager.ResponseError, (responseError.statusCode == 401 || responseError.statusCode == 403) {
                         self?.subscriptionManager.invalidateAuthToken()
                         self?.loadPreview()
                     } else {

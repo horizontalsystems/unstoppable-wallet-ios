@@ -194,49 +194,6 @@ extension ActivateSubscriptionViewController: SectionsDataSource {
                     )
                 },
                 bind: { cell in
-                    cell.set(backgroundStyle: .lawrence)
-                }
-        )
-    }
-
-    private func messageRow(tableView: UITableView, value: String) -> RowProtocol {
-        let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
-        let title = "activate_subscription.message".localized
-        let titleFont: UIFont = .subhead2
-        let valueFont: UIFont = .subhead1
-
-        return CellBuilderNew.row(
-                rootElement: .hStack([
-                    .text { component in
-                        component.font = titleFont
-                        component.textColor = .themeGray
-                        component.text = title
-                        component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                    },
-                    .text { component in
-                        component.font = valueFont
-                        component.textColor = .themeLeah
-                        component.text = value
-                        component.textAlignment = .right
-                        component.numberOfLines = 0
-                    }
-                ]),
-                tableView: tableView,
-                id: "message",
-                hash: value,
-                dynamicHeight: { containerWidth in
-                    CellBuilderNew.height(
-                            containerWidth: containerWidth,
-                            backgroundStyle: backgroundStyle,
-                            text: value,
-                            font: valueFont,
-                            elements: [
-                                .fixed(width: TextComponent.width(font: titleFont, text: title)),
-                                .multiline
-                            ]
-                    )
-                },
-                bind: { cell in
                     cell.set(backgroundStyle: .lawrence, isLast: true)
                 }
         )
@@ -251,7 +208,7 @@ extension ActivateSubscriptionViewController: SectionsDataSource {
             Section(
                     id: "main",
                     headerState: .margin(height: .margin12),
-                    footerState: tableView.sectionFooter(text: "activate_subscription.description".localized),
+                    footerState: .margin(height: .margin24),
                     rows: [
                         tableView.universalRow48(
                                 id: "wallet-name",
@@ -259,8 +216,15 @@ extension ActivateSubscriptionViewController: SectionsDataSource {
                                 value: .subhead1(viewItem.walletName),
                                 isFirst: true
                         ),
-                        addressRow(tableView: tableView, value: viewItem.address),
-                        messageRow(tableView: tableView, value: viewItem.message)
+                        addressRow(tableView: tableView, value: viewItem.address)
+                    ]
+            ),
+            Section(
+                    id: "message",
+                    headerState: tableView.sectionHeader(text: "activate_subscription.message".localized),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        tableView.messageRow(text: viewItem.message)
                     ]
             )
         ]

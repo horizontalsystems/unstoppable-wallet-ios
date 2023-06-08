@@ -129,6 +129,41 @@ extension SectionsTableView {
         )
     }
 
+    func messageRow(text: String) -> RowProtocol {
+        let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
+        let font: UIFont = .caption
+
+        return CellBuilderNew.row(
+                rootElement: .hStack([
+                    .text { component in
+                        component.font = font
+                        component.textColor = .themeLeah
+                        component.text = text
+                        component.numberOfLines = 0
+                    }
+                ]),
+                tableView: self,
+                id: "message",
+                hash: text,
+                autoDeselect: true,
+                dynamicHeight: { containerWidth in
+                    CellBuilderNew.height(
+                            containerWidth: containerWidth,
+                            backgroundStyle: backgroundStyle,
+                            text: text,
+                            font: font,
+                            elements: [.multiline]
+                    )
+                },
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+                },
+                action: {
+                    CopyHelper.copyAndNotify(value: text)
+                }
+        )
+    }
+
 }
 
 extension SectionsTableView {
