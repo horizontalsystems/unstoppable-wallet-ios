@@ -1516,7 +1516,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "activate_subscription.message" = "İmza için mesaj";
 "activate_subscription.sign" = "kaydol";
 "activate_subscription.activating" = "Activating...";
-"activate_subscription.description" = "You need to sign this message to activate your subscription";
 "activate_subscription.failed_to_activate" = "Failed to activate subscription";
 
 
