@@ -1517,7 +1517,6 @@
 "activate_subscription.message" = "待签名消息";
 "activate_subscription.sign" = "签名";
 "activate_subscription.activating" = "激活";
-"activate_subscription.description" = "您需要签署此消息以激活您的订阅";
 "activate_subscription.failed_to_activate" = "订阅激活失败";
 
 
