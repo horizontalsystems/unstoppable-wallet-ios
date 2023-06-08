@@ -1531,10 +1531,10 @@
 
 // Tron
 
-"tron.send.activation_fee" = "Activation Fee";
-"tron.send.resources_consumed" = "Resources Consumed";
+"tron.send.activation_fee" = "Комиссия за активацию";
+"tron.send.resources_consumed" = "Расходуемые ресурсы";
 "tron.send.bandwidth" = "Bandwidth";
 "tron.send.energy" = "Energy";
-"tron.send.fee.info" = "The estimated cost of sending given transaction on the network. (Without excluding Energy, Bandwidth and Activating Fee)";
-"tron.send.resources_consumed.info" = "Bandwidth is the unit that measures the size of the transaction bytes stored in the blockchain database. The larger the transaction, the more bandwidth resources will be consumed.\n\nEnergy is the unit that measures the amount of computation required by the TRON virtual machine to perform specific operations on the TRON network.\n\nSince smart contract transactions require computing resources to execute, each smart contract transaction requires to pay for the energy fee.";
-"tron.send.activation_fee.info" = "Transferring TRX or TRC-10 tokens to an inactive account address will activate the account.";
+"tron.send.fee.info" = "Ориентировочные затраты на отправку данной транзакции по сети (без учёта energy, Bandwidth и комиссии за активацию) предполагаются";
+"tron.send.resources_consumed.info" = "Bandwidth - это единица, которая измеряет размер байт транзакции, хранящихся в базе данных блокчейна. Чем больше транзакция, тем больше bandwidth будет потребляться.\n\nEnergy — это единица, измеряющая количество вычислений, требуемых виртуальной машиной TRON для выполнения конкретных операций в сети TRON.\n\nПоскольку транзакции смарт-контракта требуют выполнения вычислительных ресурсов, каждая сделка по контракту требует оплаты energy комиссии.";
+"tron.send.activation_fee.info" = "Передача токенов TRX или TRC-10 на адрес неактивного аккаунта активирует его.";
