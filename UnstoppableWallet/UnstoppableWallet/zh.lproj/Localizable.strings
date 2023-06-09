@@ -1407,6 +1407,7 @@
 "fee_settings.tips.info" = "用户支付优先费用以激励交易更快地得到确认。这些费用有时被称为小费。最高优先费率是用户在基础费率基础上愿意支付的每一燃料（gas）的最高额外价格。这里显示的值是基于预测的网络条件的建议值。实际的优先费用通常会更低。将此设置为零可能会导致交易确认的等待时间很长，因为它被放置在所有用户的待定交易队列的末尾。";
 
 "fee_settings.errors.insufficient_balance" = "余额不足";
+"fee_settings.errors.unexpected_error" = "异常错误";
 "fee_settings.errors.insufficient_balance.info" = "當前%@餘額低於處理此交易所需的金額，包括交易費用。";
 "fee_settings.errors.low_max_fee" = "低费用";
 "fee_settings.errors.low_max_fee.info" = "当前设置的交易费用金额不足以处理此交易。";
@@ -1533,3 +1534,4 @@
 "tron.send.fee.info" = "估算在网络上发送特定交易所需的成本，包括能源、带宽和激活费";
 "tron.send.resources_consumed.info" = "Bandwidth 是衡量存储在区块链数据库中的交易字节大小的单位。 交易越大，消耗的带宽资源就越多。\n\nEnergy 是衡量波场虚拟机在波场网络上执行特定操作所需计算量的单位。\n\n自智能合约 交易需要计算资源来执行，每笔智能合约交易都需要支付 energy费用。";
 "tron.send.activation_fee.info" = "正在将TRX或 TRC-10令牌传输到一个非活动帐户地址将激活帐户。";
+"tron.send.inactive_address" = "此地址未激活";
