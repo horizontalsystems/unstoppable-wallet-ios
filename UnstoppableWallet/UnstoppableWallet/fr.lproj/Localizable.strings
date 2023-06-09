@@ -1405,6 +1405,7 @@
 ";
 
 "fee_settings.errors.insufficient_balance" = "Solde insuffisant";
+"fee_settings.errors.unexpected_error" = "Erreur inattendue";
 "fee_settings.errors.insufficient_balance.info" = "Le solde actuel des ETH est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
 "fee_settings.errors.low_max_fee" = "Frais faibles";
 "fee_settings.errors.low_max_fee.info" = "Le montant des frais de transaction défini est insuffisant pour traiter cette transaction immédiatement.";
@@ -1531,3 +1532,4 @@
 "tron.send.fee.info" = "Le coût estimé pour envoyer une transaction donnée sur le réseau (sans exclure les coûts d'énergie, de bande passante et d'activation)";
 "tron.send.resources_consumed.info" = "Bandwidth passante est l'unité qui mesure la taille des octets de transaction stockés dans la base de données blockchain. Plus la transaction est grande, plus la bande passante sera consommée.\n\nL'énergie est l'unité qui mesure le montant de calcul requis par la machine virtuelle TRON pour effectuer des opérations spécifiques sur le réseau TRON.\n\nÉtant donné que les transactions de contrats intelligents nécessitent des ressources informatiques pour être exécutées, chaque transaction de contrat intelligent nécessite le paiement de frais d'énergie.";
 "tron.send.activation_fee.info" = "Le transfert de jetons TRX ou TRC-10 vers une adresse de compte inactive activera ledit compte.";
+"tron.send.inactive_address" = "Cette adresse n'est pas active";
