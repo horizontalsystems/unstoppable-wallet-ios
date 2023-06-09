@@ -1406,6 +1406,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "fee_settings.tips.info" = "Os usuários pagam taxas de prioridade para incentivar uma transação a ser confirmada mais rapidamente. Às vezes são chamados de tips. A taxa máxima de prioridade é o preço adicional máximo por gas que o usuário está disposto a pagar acima da taxa base. O valor mostrado aqui é sugerido com base nas condições previstas de rede. A taxa de prioridade real normalmente será menor. Definir como zero pode resultar em um longo tempo de espera para que a transação seja confirmada, como é colocado no final da fila de transações pendentes de todos os usuários.";
 
 "fee_settings.errors.insufficient_balance" = "Saldo insuficiente";
+"fee_settings.errors.unexpected_error" = "Erro inesperado";
 "fee_settings.errors.insufficient_balance.info" = "O saldo atual de %@ está abaixo do valor necessário para processar a transação, incluindo taxa de transação.";
 "fee_settings.errors.low_max_fee" = "Taxa baixa";
 "fee_settings.errors.low_max_fee.info" = "A taxa de transação definida é insuficiente para processar esta transação agora.";
@@ -1532,3 +1533,4 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "tron.send.fee.info" = "O custo estimado de envio de determinada transação na rede. (Sem excluir Energy, Bandwidth e Taxa de Ativação)";
 "tron.send.resources_consumed.info" = "A bandwidth é a unidade que mede o tamanho dos bytes de transação armazenados no banco de dados blockchain. Quanto maior a transação, mais recursos de largura de banda serão consumidos.\n\nEnergy é a unidade que mede a quantidade de computação necessária pela máquina virtual TRON para realizar operações específicas na rede TRON.\n\nComo as transações de contrato inteligente exigem recursos de computação para executar, cada transação de contrato inteligente requer o pagamento da taxa de energy.";
 "tron.send.activation_fee.info" = "Transferir tokens TRX ou TRC-10 para um endereço de conta inativo ativará a conta.";
+"tron.send.inactive_address" = "Este endereço não está ativo";
