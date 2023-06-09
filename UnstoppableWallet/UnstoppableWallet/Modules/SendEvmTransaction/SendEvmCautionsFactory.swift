@@ -72,9 +72,12 @@ class SendEvmCautionsFactory {
 
         if case AppError.ethereum(let reason) = error.convertedError {
             switch reason {
-            case .insufficientBalanceWithFee, .executionReverted:
+            case .insufficientBalanceWithFee:
                 title = "fee_settings.errors.insufficient_balance".localized
                 text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(baseCoinService.token.coin.code)
+            case .executionReverted(let message):
+                title = "fee_settings.errors.unexpected_error".localized
+                text = message
             case .lowerThanBaseGasLimit:
                 title = "fee_settings.errors.low_max_fee".localized
                 text = "fee_settings.errors.low_max_fee.info".localized

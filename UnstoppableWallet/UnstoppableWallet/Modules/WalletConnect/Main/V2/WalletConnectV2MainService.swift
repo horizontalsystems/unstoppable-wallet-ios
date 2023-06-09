@@ -342,14 +342,13 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         }
 
         let set = Set(accounts)
-        Task {
+        Task { [weak self, service, blockchains] in
             do {
                 try await service.approve(proposal: proposal, accounts: set, methods: blockchains.methods, events: blockchains.events)
             } catch {
-                errorRelay.accept(error)
+                self?.errorRelay.accept(error)
             }
         }
-
     }
 
     func rejectSession() {
@@ -359,14 +358,14 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         }
 
         if let proposal = proposal {
-            Task {
+            Task { [weak self, service] in
                 defer {
-                    state = .killed(reason: .rejectProposal)
+                    self?.state = .killed(reason: .rejectProposal)
                 }
                 do {
                     try await service.reject(proposal: proposal)
                 } catch {
-                    errorRelay.accept(error)
+                    self?.errorRelay.accept(error)
                 }
             }
         }

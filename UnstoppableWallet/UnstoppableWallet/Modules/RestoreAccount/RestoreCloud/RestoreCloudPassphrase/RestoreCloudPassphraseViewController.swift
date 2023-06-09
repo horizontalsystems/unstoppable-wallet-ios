@@ -108,10 +108,18 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
                 }
                 .store(in: &cancellables)
 
-        viewModel.importPublisher
+        viewModel.openSelectCoinsPublisher
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] backupAccount in
                     self?.openSelectCoins(accountName: backupAccount.name, accountType: backupAccount.accountType, isManualBackedUp: backupAccount.isManualBackedUp)
+                }
+                .store(in: &cancellables)
+
+        viewModel.successPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    HudHelper.instance.show(banner: .imported)
+                    (self?.returnViewController ?? self)?.dismiss(animated: true)
                 }
                 .store(in: &cancellables)
 

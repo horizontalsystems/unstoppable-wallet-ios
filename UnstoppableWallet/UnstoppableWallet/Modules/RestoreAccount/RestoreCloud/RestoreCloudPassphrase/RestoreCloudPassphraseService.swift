@@ -20,7 +20,7 @@ extension RestoreCloudPassphraseService {
         PassphraseValidator.validate(text: text)
     }
 
-    func importWallet() async throws -> RestoreCloudModule.RestoredAccount {
+    func importWallet() async throws -> RestoreResult {
         let crypto = restoredBackup.walletBackup.crypto
 
         guard !passphrase.isEmpty else {
@@ -62,7 +62,11 @@ extension RestoreCloudPassphraseService {
                 throw RestoreError.invalidBackup
             }
 
-            return RestoreCloudModule.RestoredAccount(name: restoredBackup.name, accountType: accountType, isManualBackedUp: restoredBackup.walletBackup.isManualBackedUp)
+            return .restoredAccount(RestoreCloudModule.RestoredAccount(
+                    name: restoredBackup.name,
+                    accountType: accountType,
+                    isManualBackedUp: restoredBackup.walletBackup.isManualBackedUp
+            ))
         } catch {
             throw RestoreError.invalidBackup
         }
@@ -77,6 +81,11 @@ extension RestoreCloudPassphraseService {
         case simplePassword
         case invalidPassword
         case invalidBackup
+    }
+
+    enum RestoreResult {
+        case restoredAccount(RestoreCloudModule.RestoredAccount)
+        case success
     }
 
 }

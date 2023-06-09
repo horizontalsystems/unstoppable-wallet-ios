@@ -11,7 +11,8 @@ class RestoreCloudPassphraseViewModel {
 
     private let clearInputsSubject = PassthroughSubject<Void, Never>()
     private let showErrorSubject = PassthroughSubject<String, Never>()
-    private let importSubject = PassthroughSubject<RestoreCloudModule.RestoredAccount, Never>()
+    private let openSelectCoinsSubject = PassthroughSubject<RestoreCloudModule.RestoredAccount, Never>()
+    private let successSubject = PassthroughSubject<Void, Never>()
 
     init(service: RestoreCloudPassphraseService) {
         self.service = service
@@ -35,10 +36,13 @@ extension RestoreCloudPassphraseViewModel {
         showErrorSubject.eraseToAnyPublisher()
     }
 
-    var importPublisher: AnyPublisher<RestoreCloudModule.RestoredAccount, Never> {
-        importSubject.eraseToAnyPublisher()
+    var openSelectCoinsPublisher: AnyPublisher<RestoreCloudModule.RestoredAccount, Never> {
+        openSelectCoinsSubject.eraseToAnyPublisher()
     }
 
+    var successPublisher: AnyPublisher<Void, Never> {
+        successSubject.eraseToAnyPublisher()
+    }
 
     func onChange(passphrase: String) {
         service.passphrase = passphrase
@@ -57,25 +61,29 @@ extension RestoreCloudPassphraseViewModel {
         passphraseCaution = nil
 
         processing = true
-        Task {
+        Task { [weak self, service] in
             do {
-                let restoredAccount = try await service.importWallet()
-                processing = false
-                importSubject.send(restoredAccount)
+                let result = try await service.importWallet()
+                self?.processing = false
+
+                switch result {
+                case .success: self?.successSubject.send()
+                case .restoredAccount(let account): self?.openSelectCoinsSubject.send(account)
+                }
             } catch {
                 switch (error as? RestoreCloudPassphraseService.RestoreError) {
                 case .emptyPassphrase:
-                    passphraseCaution = Caution(text: "backup.cloud.password.error.empty_passphrase".localized, type: .error)
+                    self?.passphraseCaution = Caution(text: "backup.cloud.password.error.empty_passphrase".localized, type: .error)
                 case .simplePassword:
-                    passphraseCaution = Caution(text: "backup.cloud.password.error.minimum_requirement".localized, type: .error)
+                    self?.passphraseCaution = Caution(text: "backup.cloud.password.error.minimum_requirement".localized, type: .error)
                 case .invalidPassword:
-                    passphraseCaution = Caution(text: "backup.cloud.password.error.invalid_password".localized, type: .error)
+                    self?.passphraseCaution = Caution(text: "backup.cloud.password.error.invalid_password".localized, type: .error)
                 case .invalidBackup:
-                    showErrorSubject.send("backup.cloud.password.error.invalid_backup".localized)
+                    self?.showErrorSubject.send("backup.cloud.password.error.invalid_backup".localized)
                 case .none:
-                    showErrorSubject.send(error.smartDescription)
+                    self?.showErrorSubject.send(error.smartDescription)
                 }
-                processing = false
+                self?.processing = false
             }
         }
     }

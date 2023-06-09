@@ -1406,6 +1406,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
 
 "fee_settings.errors.insufficient_balance" = "Insufficient balance";
+"fee_settings.errors.unexpected_error" = "Unexpected Error";
 "fee_settings.errors.insufficient_balance.info" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
 "fee_settings.errors.low_max_fee" = "Low Fee";
 "fee_settings.errors.low_max_fee.info" = "The set transaction fee amount is insufficient for processing this transaction now.";

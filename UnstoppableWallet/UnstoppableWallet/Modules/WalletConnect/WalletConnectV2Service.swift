@@ -246,7 +246,7 @@ extension WalletConnectV2Service {
 
     public func approve(proposal: WalletConnectSign.Session.Proposal, accounts: Set<WalletConnectUtils.Account>, methods: Set<String>, events: Set<String>) async throws {
         logger?.debug("[WALLET] Approve Session: \(proposal.id)")
-        Task {
+        Task { [logger] in
             do {
                 let eip155 = WalletConnectSign.SessionNamespace(
                         accounts: accounts,
@@ -272,7 +272,7 @@ extension WalletConnectV2Service {
     }
 
     public func disconnect(topic: String, reason: WalletConnectSign.Reason) {
-        Task.init { [weak self, logger] in
+        Task { [weak self, logger] in
             do {
                 try await Sign.instance.disconnect(topic: topic)
                 self?.updateSessions()
@@ -289,19 +289,19 @@ extension WalletConnectV2Service {
 
     public func sign(request: WalletConnectSign.Request, result: Data) {
         let result = AnyCodable(result)// Signer.signEth(request: request)
-        Task {
+        Task { [weak self] in
             do {
                 try await Sign.instance.respond(topic: request.topic, requestId: request.id, response: .response(result))
-                pendingRequestsUpdatedRelay.accept(())
+                self?.pendingRequestsUpdatedRelay.accept(())
             }
         }
     }
 
     public func reject(request: WalletConnectSign.Request) {
-        Task {
+        Task { [weak self] in
             do {
                 try await Sign.instance.respond(topic: request.topic, requestId: request.id, response: .error(.init(code: 5000, message: "Reject by User")))
-                pendingRequestsUpdatedRelay.accept(())
+                self?.pendingRequestsUpdatedRelay.accept(())
             }
         }
     }

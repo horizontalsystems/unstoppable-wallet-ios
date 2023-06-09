@@ -66,16 +66,16 @@ class CloudAccountBackupManager {
             return
         }
 
-        Task {
+        Task { [weak self, fileStorage, logger] in
             do {
-                forceDownloadContainerFiles(url: url)
-                let items = try await downloadItems(url: url)
+                self?.forceDownloadContainerFiles(url: url)
+                let items = try await Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
 
-                state = .success
+                self?.state = .success
                 logger?.log(level: .debug, message: "CloudAccountManager.state = \(state)")
-                self.items = items
+                self?.items = items
             } catch {
-                state = .error(error)
+                self?.state = .error(error)
                 logger?.log(level: .debug, message: "CloudAccountManager.state = \(state)")
             }
         }
@@ -98,7 +98,7 @@ class CloudAccountBackupManager {
         }
     }
 
-    private func downloadItems(url: URL) async throws -> [String: WalletBackup] {
+    private static func downloadItems(url: URL, fileStorage: FileStorage, logger: Logger? = nil) async throws -> [String: WalletBackup] {
         let files = try fileStorage.fileList(url: url).filter { s in s.contains(Self.fileExtension) }
         var items = [String: WalletBackup]()
 
