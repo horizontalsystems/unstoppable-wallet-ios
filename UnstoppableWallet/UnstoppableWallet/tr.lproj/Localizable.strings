@@ -1244,7 +1244,6 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.sign.domain" = "Domain";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "İmza için mesaj";
-"wallet_connect.sign.description" = "Lütfen doğrulamak için bir mesajı imzalayın";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Başka bir aktif oturum yok";
@@ -1407,6 +1406,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "fee_settings.tips.info" = "Kullanıcılar, bir işlemin daha hızlı onaylanmasını teşvik etmek için öncelik ücretleri öderler. Bazen tips denir. Maksimum öncelik ücreti oranı, kullanıcının taban ücret oranının üzerine ödemek istediği gaz başına maksimum ek fiyattır. Burada gösterilen değer, tahmin edilen ağ koşullarına göre önerilir. Gerçek öncelik ücreti normalde daha düşük olacaktır. Bunu sıfıra ayarlamak, tüm kullanıcılardan bekleyen işlemler kuyruğunun sonuna yerleştirildiğinden, işlemin onaylanması için uzun bir bekleme süresine neden olabilir.";
 
 "fee_settings.errors.insufficient_balance" = "Yetersiz bakiye";
+"fee_settings.errors.unexpected_error" = "Beklenmeyen hata";
 "fee_settings.errors.insufficient_balance.info" = "Mevcut %@ bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
 "fee_settings.errors.low_max_fee" = "Düşük Ücret";
 "fee_settings.errors.low_max_fee.info" = "Belirlenen işlem ücreti, bu işlemin şimdi işlenmesi için yetersiz.";
@@ -1533,3 +1533,4 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "tron.send.fee.info" = "Ağda belirli bir işlemi göndermenin tahmini maliyeti. (Enerji, Bant Genişliği ve Aktivasyon Ücreti hariç)";
 "tron.send.resources_consumed.info" = "Bandwidth, blockchain veritabanında saklanan işlem baytlarının boyutunu ölçen birimdir. İşlem ne kadar büyük olursa, o kadar fazla bant genişliği kaynağı tüketilir.\n\nEnergy, TRON sanal makinesinin TRON ağında belirli işlemleri gerçekleştirmek için ihtiyaç duyduğu hesaplama miktarını ölçen birimdir.\n\nAkıllı sözleşmeden beri işlemlerin yürütülmesi için bilgi işlem kaynakları gerekir, her akıllı sözleşme işleminin energy ücretini ödemesi gerekir.";
 "tron.send.activation_fee.info" = "TRX veya TRC-10 jetonlarını etkin olmayan bir hesap adresine aktarmak, hesabı etkinleştirir.";
+"tron.send.inactive_address" = "Bu adres aktif değil";
