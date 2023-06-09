@@ -1404,6 +1404,7 @@
 "fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
 
 "fee_settings.errors.insufficient_balance" = "잔액이 부족합니다";
+"fee_settings.errors.unexpected_error" = "예기치 못한 오류";
 "fee_settings.errors.insufficient_balance.info" = "현재 %@ 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
 "fee_settings.errors.low_max_fee" = "적은 수수료";
 "fee_settings.errors.low_max_fee.info" = "설정된 거래 수수료 금액이 현재 이 거래를 처리하기에 충분하지 않습니다.";
@@ -1530,3 +1531,4 @@
 "tron.send.fee.info" = "네트워크에서 거래하는 데 드는 예상 비용입니다. (energy, bandwidth 및 활성화 수수료 제외)";
 "tron.send.resources_consumed.info" = "Bandwidth 은 블록체인 데이터베이스에 저장된 트랜잭션 바이트 크기를 측정하는 단위입니다. 거래가 클수록 대역폭 자원이 더 많이 사용됩니다.\n\nEnergy 는 TRON 가상 머신이 TRON 네트워크에서 특정 작업을 수행하기 위해 필요한 계산 양을 측정하는 단위입니다. \n\n스마트 계약 트랜잭션은 실행에 계산 자원이 필요하기 때문에 각 스마트 계약 트랜잭션에는 energy 수수료를 지불해야합니다.";
 "tron.send.activation_fee.info" = "TRX나 TRC-10 토큰을 비활성화된 계정 주소로 이전하면 해당 계정이 활성화됩니다.";
+"tron.send.inactive_address" = "이 주소는 활성화되어 있지 않습니다";
