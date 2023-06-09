@@ -47,6 +47,10 @@ class BaseTronAdapter {
         BalanceData(balance: balanceDecimal(kitBalance: balance, decimals: decimals))
     }
 
+    func accountActive(address: TronKit.Address) async -> Bool {
+        return (try? await tronKit.accountActive(address: address)) ?? true
+    }
+
 }
 
 // IAdapter
@@ -80,7 +84,7 @@ extension BaseTronAdapter: IDepositAdapter {
     var receiveAddress: DepositAddress {
         ActivatedDepositAddress(
             receiveAddress: tronKit.receiveAddress.base58,
-            isActive: !tronKit.accountInactive
+            isActive: tronKit.accountActive
         )
     }
 

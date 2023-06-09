@@ -77,6 +77,7 @@ protocol ISendTronAdapter {
     var tronKitWrapper: TronKitWrapper { get }
     var balanceData: BalanceData { get }
     func contract(amount: BigUInt, address: TronKit.Address) -> TronKit.Contract
+    func accountActive(address: TronKit.Address) async -> Bool
 }
 
 protocol IErc20Adapter {

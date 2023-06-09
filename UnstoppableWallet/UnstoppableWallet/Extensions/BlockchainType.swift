@@ -78,19 +78,19 @@ extension BlockchainType {
         case .bitcoin: return 1
         case .ethereum: return 2
         case .binanceSmartChain: return 3
-        case .polygon: return 4
-        case .avalanche: return 5
-        case .zcash: return 6
-        case .bitcoinCash: return 7
-        case .ecash: return 8
-        case .litecoin: return 9
-        case .dash: return 10
-        case .binanceChain: return 11
-        case .gnosis: return 12
-        case .fantom: return 13
-        case .arbitrumOne: return 14
-        case .optimism: return 15
-        case .tron: return 16
+        case .tron: return 4
+        case .polygon: return 5
+        case .avalanche: return 6
+        case .zcash: return 7
+        case .bitcoinCash: return 8
+        case .ecash: return 9
+        case .litecoin: return 10
+        case .dash: return 11
+        case .binanceChain: return 12
+        case .gnosis: return 13
+        case .fantom: return 14
+        case .arbitrumOne: return 15
+        case .optimism: return 16
         default: return Int.max
         }
     }

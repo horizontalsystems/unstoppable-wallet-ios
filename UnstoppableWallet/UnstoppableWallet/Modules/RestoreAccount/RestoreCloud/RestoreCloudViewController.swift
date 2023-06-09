@@ -33,7 +33,7 @@ class RestoreCloudViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "restore.cloud.title".localized
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .done, target: self, action: #selector(onCancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onCancel))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         view.addSubview(tableView)
