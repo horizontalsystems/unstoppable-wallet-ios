@@ -159,6 +159,8 @@ class SendTronConfirmationViewController: ThemeViewController {
                 return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: title, value: value, valueTitle: valueTitle, onAddToContact: onAddToContact)
             case let .value(title, value, type):
                 return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: title, value: value, type: type)
+            case let .warning(text, title, info):
+                return warningRow(tableView: tableView, rowInfo: rowInfo, text: text, title: title, info: info)
         }
     }
 
@@ -168,6 +170,30 @@ class SendTronConfirmationViewController: ThemeViewController {
             headerState: .margin(height: .margin12),
             rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
                 row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1))
+            }
+        )
+    }
+
+    private func warningRow(tableView: SectionsTableView, rowInfo: RowInfo, text: String, title: String, info: String) -> RowProtocol {
+        CellBuilderNew.row(
+            rootElement: .hStack([
+                .secondaryButton { [weak self] component in
+                    component.button.set(style: .transparent2, image: UIImage(named: "circle_information_20"))
+                    component.button.setTitle(text, for: .normal)
+                    component.button.setTitleColor(.themeJacob, for: .normal)
+                    component.onTap = { [weak self] in
+                        self?.openInfo(title: title, description: info)
+                    }
+                },
+                .margin0,
+                .text { _ in },
+            ]),
+            tableView: tableView,
+            id: "warning-\(rowInfo.index)",
+            hash: "warning-\(title)",
+            height: .heightDoubleLineCell,
+            bind: { cell in
+                cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
             }
         )
     }

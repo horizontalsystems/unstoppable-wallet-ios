@@ -184,7 +184,7 @@ class App {
         evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, testNetManager: testNetManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
 
         let binanceKitManager = BinanceKitManager()
-        let tronKitManager = TronKitManager(network: .mainNet)
+        let tronKitManager = TronKitManager(testNetManager: testNetManager, appConfigProvider: appConfigProvider)
         tronAccountManager = TronAccountManager(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, tronKitManager: tronKitManager, evmAccountRestoreStateManager: evmAccountRestoreStateManager)
 
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)

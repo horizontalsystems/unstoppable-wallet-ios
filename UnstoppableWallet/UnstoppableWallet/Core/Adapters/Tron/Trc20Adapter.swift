@@ -6,7 +6,6 @@ import HsToolKit
 import MarketKit
 
 class Trc20Adapter: BaseTronAdapter {
-    private static let approveConfirmationsThreshold: Int? = nil
     private let contractAddress: TronKit.Address
 
     init(tronKitWrapper: TronKitWrapper, contractAddress: String, wallet: Wallet) throws {

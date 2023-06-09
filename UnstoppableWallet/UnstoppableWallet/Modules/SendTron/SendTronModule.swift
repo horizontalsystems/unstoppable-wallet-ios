@@ -35,7 +35,7 @@ class SendTronModule {
         )
         addressService.amountPublishService = amountViewModel
 
-        let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
+        let recipientViewModel = TronRecipientAddressViewModel(service: addressService, handlerDelegate: nil, sendService: service)
 
         let viewController = SendTronViewController(
             tronKitWrapper: adapter.tronKitWrapper,

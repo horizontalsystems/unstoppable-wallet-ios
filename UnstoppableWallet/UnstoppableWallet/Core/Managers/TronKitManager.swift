@@ -6,8 +6,9 @@ import HdWalletKit
 import MarketKit
 
 class TronKitManager {
-    let network: TronKit.Network
     private let disposeBag = DisposeBag()
+    private let testNetManager: TestNetManager
+    private let appConfigProvider: AppConfigProvider
 
     private weak var _tronKitWrapper: TronKitWrapper?
 
@@ -16,8 +17,9 @@ class TronKitManager {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.tron-kit-manager", qos: .userInitiated)
 
-    init(network: TronKit.Network) {
-        self.network = network
+    init(testNetManager: TestNetManager, appConfigProvider: AppConfigProvider) {
+        self.testNetManager = testNetManager
+        self.appConfigProvider = appConfigProvider
     }
 
     private func _tronKitWrapper(account: Account, blockchainType: BlockchainType) throws -> TronKitWrapper {
@@ -25,6 +27,7 @@ class TronKitManager {
             return _tronKitWrapper
         }
 
+        let network: Network = testNetManager.testNetEnabled ? .nileTestnet : .mainNet
         let address: TronKit.Address
         var signer: Signer?
 
@@ -45,6 +48,7 @@ class TronKitManager {
             address: address,
             network: network,
             walletId: account.id,
+            apiKey: appConfigProvider.tronGridApiKey,
             minLogLevel: .error
         )
 

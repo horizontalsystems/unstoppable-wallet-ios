@@ -106,7 +106,8 @@ extension TronTransactionConverter {
                                 transaction: transaction,
                                 baseToken: baseToken,
                                 from: transfer.ownerAddress.base58,
-                                value: baseCoinValue(value: transfer.amount, sign: .plus)
+                                value: baseCoinValue(value: transfer.amount, sign: .plus),
+                                spam: transfer.amount < 10
                             )
                         } else {
                             return TronOutgoingTransactionRecord(

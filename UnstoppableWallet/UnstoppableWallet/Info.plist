@@ -49,6 +49,8 @@
 	<string>${gnosisscan_api_key}</string>
 	<key>HsProviderApiKey</key>
 	<string>$(hs_provider_api_key)</string>
+	<key>TronGridApiKey</key>
+	<string>${trongrid_api_key}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>InfuraProjectId</key>

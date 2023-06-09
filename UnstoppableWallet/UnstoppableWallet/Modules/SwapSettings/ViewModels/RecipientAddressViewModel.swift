@@ -12,7 +12,7 @@ protocol IRecipientAddressService {
     func set(amount: Decimal)
 }
 
-class RecipientAddressViewModel {
+open class RecipientAddressViewModel {
     private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.resipient-view-model", qos: .userInitiated)
 
     private let disposeBag = DisposeBag()
@@ -21,7 +21,7 @@ class RecipientAddressViewModel {
 
     private let isSuccessRelay = BehaviorRelay<Bool>(value: false)
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
-    private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
+    let cautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let setTextRelay = BehaviorRelay<String?>(value: nil)
     private let showContactsRelay = BehaviorRelay<Bool>(value: false)
 
@@ -52,7 +52,7 @@ class RecipientAddressViewModel {
         }
     }
 
-    private func sync(state: AddressService.State? = nil, customError: Error? = nil) {
+    func sync(state: AddressService.State? = nil, customError: Error? = nil) {
         var state = state ?? service.state
 
         // force provide error if customError is exist

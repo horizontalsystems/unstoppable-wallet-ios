@@ -33,10 +33,8 @@ class SendTronConfirmationViewModel {
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(disposeBag, service.sendStateObservable) { [weak self] in self?.sync(sendState: $0) }
-
-        subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in
-            self?.reSyncServiceState()
-        }
+        subscribe(disposeBag, service.sendAdressActiveObservable) { [weak self] _ in self?.reSyncServiceState() }
+        subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in self?.reSyncServiceState() }
 
         sync(state: service.state)
         sync(sendState: service.sendState)
@@ -176,6 +174,16 @@ class SendTronConfirmationViewModel {
         }
     }
 
+    private func addressActiveViewItems() -> [ViewItem] {
+        guard !service.sendAdressActive else {
+            return []
+        }
+
+        return [
+            .warning(text: "tron.send.inactive_address".localized, title: "tron.send.activation_fee".localized, info: "tron.send.activation_fee.info".localized)
+        ]
+    }
+
     private func amountViewItem(coinService: CoinService, value: BigUInt, type: AmountType) -> ViewItem {
         amountViewItem(coinService: coinService, amountData: coinService.amountData(value: value, sign: type.sign), type: type)
     }
@@ -237,7 +245,7 @@ class SendTronConfirmationViewModel {
             viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
         }
 
-        return [SectionViewItem(viewItems: viewItems)]
+        return [SectionViewItem(viewItems: viewItems + addressActiveViewItems())]
     }
 
     private func eip20TransferItems(to: TronKit.Address, value: BigUInt, contractAddress: TronKit.Address) -> [SectionViewItem]? {
@@ -274,7 +282,7 @@ class SendTronConfirmationViewModel {
             viewItems.append(.value(title: "send.confirmation.contact_name".localized, value: contactName, type: .regular))
         }
 
-        return [SectionViewItem(viewItems: viewItems)]
+        return [SectionViewItem(viewItems: viewItems + addressActiveViewItems())]
     }
 
     private func coinService(token: MarketKit.Token) -> CoinService {
@@ -330,6 +338,7 @@ extension SendTronConfirmationViewModel {
         case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
         case address(title: String, value: String, valueTitle: String?, contactAddress: ContactAddress?)
         case value(title: String, value: String, type: ValueType)
+        case warning(text: String, title: String, info: String)
     }
 
     struct TronFeeViewItem {

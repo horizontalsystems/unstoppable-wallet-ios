@@ -29,6 +29,8 @@ class SendTronService {
         }
     }
 
+    private let activeAddressRelay = PublishRelay<Bool>()
+
     init(token: Token, adapter: ISendTronAdapter, addressService: AddressService) {
         sendToken = token
         self.adapter = adapter
@@ -82,6 +84,10 @@ extension SendTronService {
 
     var amountCautionObservable: Observable<(error: Error?, warning: AmountWarning?)> {
         amountCautionRelay.asObservable()
+    }
+
+    var activeAddressObservable: Observable<Bool> {
+        activeAddressRelay.asObservable()
     }
 
 }
@@ -148,6 +154,30 @@ extension SendTronService: IAmountInputService {
         }
 
         syncState()
+    }
+
+    func sync(address: String) {
+        guard let tronAddress = try? TronKit.Address(address: address) else {
+            return
+        }
+
+        Single<Bool>
+            .create { [weak self] observer in
+                let task = Task { [weak self] in
+                    let active = await self?.adapter.accountActive(address: tronAddress) ?? false
+                    observer(.success(active))
+                }
+
+                return Disposables.create {
+                    task.cancel()
+                }
+            }
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onSuccess: { [weak self] active in
+                self?.activeAddressRelay.accept(active)
+            })
+            .disposed(by: disposeBag)
     }
 
 }

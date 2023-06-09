@@ -2193,6 +2193,10 @@
 		D05E96B72A29F9D3002CCD71 /* WatchTronAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96B52A29F9D3002CCD71 /* WatchTronAddressViewModel.swift */; };
 		D05E96B92A2A1113002CCD71 /* WatchTronService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96B82A2A1113002CCD71 /* WatchTronService.swift */; };
 		D05E96BA2A2A1113002CCD71 /* WatchTronService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96B82A2A1113002CCD71 /* WatchTronService.swift */; };
+		D05F132E2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05F132D2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift */; };
+		D05F132F2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05F132D2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift */; };
+		D06669022A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */; };
+		D06669032A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */; };
 		D07157DB2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
 		D07157DC2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
 		D07157DE2A2DDA09006F141F /* SendTronService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DD2A2DDA09006F141F /* SendTronService.swift */; };
@@ -3580,6 +3584,8 @@
 		D05E96B22A29F8AE002CCD71 /* WatchTronAddressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTronAddressService.swift; sourceTree = "<group>"; };
 		D05E96B52A29F9D3002CCD71 /* WatchTronAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTronAddressViewModel.swift; sourceTree = "<group>"; };
 		D05E96B82A2A1113002CCD71 /* WatchTronService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTronService.swift; sourceTree = "<group>"; };
+		D05F132D2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTronTokenBlockchainService.swift; sourceTree = "<group>"; };
+		D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronRecipientAddressViewModel.swift; sourceTree = "<group>"; };
 		D07157DA2A2DD968006F141F /* SendTronModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronModule.swift; sourceTree = "<group>"; };
 		D07157DD2A2DDA09006F141F /* SendTronService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronService.swift; sourceTree = "<group>"; };
 		D07157E02A2DDA17006F141F /* SendTronViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronViewModel.swift; sourceTree = "<group>"; };
@@ -3881,6 +3887,7 @@
 				11B352ABFDEAEEA84D3FDD8B /* AddEvmTokenBlockchainService.swift */,
 				11B355267E1A6678B7B5FCF1 /* AddTokenModule.swift */,
 				11B35102BB1E66987670CD1F /* AddBep2TokenBlockchainService.swift */,
+				D05F132D2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift */,
 			);
 			path = AddToken;
 			sourceTree = "<group>";
@@ -6854,6 +6861,7 @@
 				D07157DD2A2DDA09006F141F /* SendTronService.swift */,
 				D07157E02A2DDA17006F141F /* SendTronViewModel.swift */,
 				D07157E32A2DDAA6006F141F /* SendTronViewController.swift */,
+				D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */,
 			);
 			path = SendTron;
 			sourceTree = "<group>";
@@ -7323,6 +7331,7 @@
 				D36DE0D9272FD887000BC916 /* OneInchDataSource.swift in Sources */,
 				D02A67D5272A7460009B2C1C /* CoinTweetsService.swift in Sources */,
 				D36DE0F0272FD89B000BC916 /* SwapSettingsViewController.swift in Sources */,
+				D05F132F2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift in Sources */,
 				11B355B7E336EB3AED69FA38 /* AddressParserFactory.swift in Sources */,
 				11B35D4E566D1F5D24825050 /* FeeRateProviderFactory.swift in Sources */,
 				3AF9F61B253EF555000626A8 /* ZcashTransactionPool.swift in Sources */,
@@ -7549,6 +7558,7 @@
 				11B35E57C6406D2249A23E6F /* SendEvmTransactionService.swift in Sources */,
 				11B352AB213E0F3C147EAEE9 /* SendEvmTransactionViewController.swift in Sources */,
 				D02A67CF272A7460009B2C1C /* Tweet.swift in Sources */,
+				D06669032A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */,
 				11B350B7D3DDBEE4F5B6E914 /* SendEvmTransactionViewModel.swift in Sources */,
 				D02A67C3272A7460009B2C1C /* TwitterText.swift in Sources */,
 				11B354A6D78AA69DC3B8E496 /* SwapApproveConfirmationViewController.swift in Sources */,
@@ -8495,6 +8505,7 @@
 				11B35AB9EA64C5D3825DD44E /* AddressParserFactory.swift in Sources */,
 				11B3519B8645E4788A70E0A4 /* FeeRateProviderFactory.swift in Sources */,
 				3AF9F61A253EF555000626A8 /* ZcashTransactionPool.swift in Sources */,
+				D05F132E2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift in Sources */,
 				2FA5DD18B3869199E0BEF72A /* KitCleaner.swift in Sources */,
 				D02A67C5272A7460009B2C1C /* CoinTweetsViewModel.swift in Sources */,
 				D36DE0C3272FD864000BC916 /* UniswapModule.swift in Sources */,
@@ -8721,6 +8732,7 @@
 				11B35201583EC6E1EB476ADB /* WalletConnectSession.swift in Sources */,
 				11B355FAD0E7823AF5F8EC83 /* SendEvmTransactionService.swift in Sources */,
 				11B355967997A7C65B008BC7 /* SendEvmTransactionViewController.swift in Sources */,
+				D06669022A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */,
 				11B35BC0F2171DAF7E0F06A5 /* SendEvmTransactionViewModel.swift in Sources */,
 				11B3500B2BFCC3F83C19BC4C /* SwapApproveConfirmationViewController.swift in Sources */,
 				11B35E4AEE28763AF3C3BA38 /* SwapApproveConfirmationModule.swift in Sources */,
@@ -9901,8 +9913,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/TronKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.0;
-
+				version = 1.0.1;
 			};
 		};
 		D0DA740B272A6EFC0072BE86 /* XCRemoteSwiftPackageReference "UnicodeURL" */ = {

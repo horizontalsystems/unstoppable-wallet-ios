@@ -34,6 +34,19 @@ struct AddTokenModule {
             items.append(item)
         }
 
+        if let blockchain = try? App.shared.marketKit.blockchain(uid: BlockchainType.tron.uid),
+           blockchain.type.supports(accountType: account.type) {
+            let service: IAddTokenBlockchainService = AddTronTokenBlockchainService(
+                blockchain: blockchain,
+                networkManager: App.shared.networkManager,
+                network: App.shared.testNetManager.testNetEnabled ? .nileTestnet : .mainNet,
+                appConfigProvider: App.shared.appConfigProvider
+            )
+
+            let item = Item(blockchain: blockchain, service: service)
+            items.append(item)
+        }
+
         let service = AddTokenService(account: account, items: items, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager)
         let viewModel = AddTokenViewModel(service: service)
         let viewController = AddTokenViewController(viewModel: viewModel)
