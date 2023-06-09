@@ -76,27 +76,27 @@ extension BackupCloudPassphraseViewModel {
         passphraseConfirmationCaution = nil
 
         processing = true
-        Task {
+        Task { [weak self, service] in
             do {
                 try await service.createBackup()
-                processing = false
-                finishSubject.send(())
+                self?.processing = false
+                self?.finishSubject.send(())
             } catch {
                 switch (error as? BackupCloudPassphraseService.CreateError) {
                 case .emptyPassphrase:
-                    passphraseCaution = Caution(text: "backup.cloud.password.error.empty_passphrase".localized, type: .error)
+                    self?.passphraseCaution = Caution(text: "backup.cloud.password.error.empty_passphrase".localized, type: .error)
                 case .simplePassword:
-                    passphraseCaution = Caution(text: "backup.cloud.password.error.minimum_requirement".localized, type: .error)
+                    self?.passphraseCaution = Caution(text: "backup.cloud.password.error.minimum_requirement".localized, type: .error)
                 case .invalidConfirmation:
-                    passphraseConfirmationCaution = Caution(text: "backup.cloud.password.confirm.error.doesnt_match".localized, type: .error)
+                    self?.passphraseConfirmationCaution = Caution(text: "backup.cloud.password.confirm.error.doesnt_match".localized, type: .error)
                 case .urlNotAvailable:
-                    showErrorSubject.send("backup.cloud.not_available".localized)
+                    self?.showErrorSubject.send("backup.cloud.not_available".localized)
                 case .cantSaveFile:
-                    showErrorSubject.send("backup.cloud.cant_create_file".localized)
+                    self?.showErrorSubject.send("backup.cloud.cant_create_file".localized)
                 case .none:
-                    showErrorSubject.send(error.smartDescription)
+                    self?.showErrorSubject.send(error.smartDescription)
                 }
-                processing = false
+                self?.processing = false
             }
         }
     }
