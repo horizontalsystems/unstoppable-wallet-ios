@@ -133,19 +133,8 @@ class RestoreTypeViewController: ThemeViewController {
             let viewController = RestoreCloudModule.viewController(returnViewController: returnViewController)
             navigationController?.pushViewController(viewController, animated: true)
         case .cex:
-            let cexType: CexType = .binance(apiKey: "api_key", secret: "secret")
-            let accountType: AccountType = .cex(type: cexType)
-
-            let account = App.shared.accountFactory.account(
-                    type: accountType,
-                    origin: .restored,
-                    backedUp: true,
-                    name: "Binance EA"
-            )
-
-            App.shared.accountManager.save(account: account)
-
-            (returnViewController ?? self)?.dismiss(animated: true)
+            let viewController = RestoreCexViewController(returnViewController: returnViewController)
+            navigationController?.pushViewController(viewController, animated: true)
         }
     }
 

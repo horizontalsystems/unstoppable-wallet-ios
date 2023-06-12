@@ -13,10 +13,10 @@ enum CexType {
         }
     }
 
-    var title: String {
+    var cex: Cex {
         switch self {
-        case .binance: return "Binance"
-        case .coinzix: return "Coinzix"
+        case .binance: return .binance
+        case .coinzix: return .coinzix
         }
     }
 

@@ -6,7 +6,7 @@ import MarketKit
 import HsToolKit
 
 class BinanceCexProvider {
-    private let baseUrl = "https://api.binance.com"
+    private static let baseUrl = "https://api.binance.com"
 
     private let networkManager: NetworkManager
     private let marketKit: MarketKit.Kit
@@ -35,7 +35,7 @@ class BinanceCexProvider {
         ]
     }
 
-    private func fetch<T: ImmutableMappable>(path: String, parameters: Parameters = [:]) async throws -> T {
+    private static func fetch<T: ImmutableMappable>(networkManager: NetworkManager, apiKey: String, secret: String, path: String, parameters: Parameters = [:]) async throws -> T {
         var parameters = parameters
 
         let timestamp = String(Int(Date().timeIntervalSince1970 * 1000))
@@ -59,6 +59,10 @@ class BinanceCexProvider {
         return try await networkManager.fetch(url: baseUrl + path, parameters: parameters, headers: headers)
     }
 
+    private func fetch<T: ImmutableMappable>(path: String, parameters: Parameters = [:]) async throws -> T {
+        try await Self.fetch(networkManager: networkManager, apiKey: apiKey, secret: secret, path: path, parameters: parameters)
+    }
+
 }
 
 extension BinanceCexProvider: ICexProvider {
@@ -80,6 +84,14 @@ extension BinanceCexProvider: ICexProvider {
                             locked: balance.locked
                     )
                 }
+    }
+
+}
+
+extension BinanceCexProvider {
+
+    static func validate(apiKey: String, secret: String, networkManager: NetworkManager) async throws {
+        let _: AccountResponse = try await Self.fetch(networkManager: networkManager, apiKey: apiKey, secret: secret, path: "/api/v3/account")
     }
 
 }
