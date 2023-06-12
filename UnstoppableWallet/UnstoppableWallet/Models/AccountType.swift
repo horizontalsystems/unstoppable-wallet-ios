@@ -177,7 +177,7 @@ enum AccountType {
                 }
             }
         case .cex(let type):
-            return type.title
+            return type.cex.title
         }
     }
 

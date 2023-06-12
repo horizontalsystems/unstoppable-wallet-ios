@@ -140,6 +140,22 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "restore.cloud.password.placeholder" = "Backup Password";
 "restore.cloud.password.description" = "Enter the backup password to import your wallet from iCloud.";
 
+// Restore Cex
+
+"restore.cex.title" = "Select CEX";
+"restore.cex.description" = "Select the centralized exchange to which you want to connect.";
+
+// Restore Binance
+
+"restore.binance.description" = "Please provide the API Keys and API Secret to link your exchange.";
+"restore.binance.api_key" = "API Key";
+"restore.binance.secret_key" = "Secret Key";
+"restore.binance.connect" = "Connect";
+"restore.binance.connecting" = "Connecting...";
+"restore.binance.get_api_keys" = "Get API Keys";
+"restore.binance.failed_to_connect" = "Failed to connect your API Key";
+"restore.binance.invalid_qr_code" = "Invalid QR Code";
+
 // Coin Settings
 
 "coin_settings.title" = "Blockchain Settings";
