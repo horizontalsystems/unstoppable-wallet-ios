@@ -59,8 +59,11 @@ class TextDropDownAndSettingsView: UIView {
         onTapSettings?()
     }
 
-    func bind(dropdownTitle: String?, settingsHidden: Bool = false) {
+    func set(dropdownTitle: String?) {
         dropdownButton.setTitle(dropdownTitle, for: .normal)
+    }
+
+    func set(settingsHidden: Bool) {
         settingsButton.isHidden = settingsHidden
     }
 

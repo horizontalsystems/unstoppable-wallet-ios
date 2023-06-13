@@ -45,7 +45,8 @@ class TextDropDownAndSettingsHeaderView: UITableViewHeaderFooterView {
     }
 
     func bind(dropdownTitle: String?, settingsHidden: Bool = false) {
-        view.bind(dropdownTitle: dropdownTitle, settingsHidden: settingsHidden)
+        view.set(dropdownTitle: dropdownTitle)
+        view.set(settingsHidden: settingsHidden)
     }
 
     func setSelector(items: [String]) {

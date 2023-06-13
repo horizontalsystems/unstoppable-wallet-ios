@@ -13,9 +13,7 @@ class WalletViewModel {
 
     private let titleRelay = BehaviorRelay<String?>(value: nil)
     private let displayModeRelay = BehaviorRelay<DisplayMode>(value: .list)
-    private let headerViewItemRelay = BehaviorRelay<HeaderViewItem?>(value: nil)
     private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
-    private let sortByRelay = BehaviorRelay<String?>(value: nil)
     private let viewItemsRelay = BehaviorRelay<[BalanceViewItem]>(value: [])
     private let openReceiveRelay = PublishRelay<Wallet>()
     private let openBackupRequiredRelay = PublishRelay<Wallet>()
@@ -25,6 +23,9 @@ class WalletViewModel {
     private let playHapticRelay = PublishRelay<()>()
     private let scrollToTopRelay = PublishRelay<()>()
 
+    @Published private(set) var headerViewItem: HeaderViewItem?
+    @Published private(set) var sortBy: String?
+    @Published private(set) var controlViewItem: ControlViewItem?
     @Published private(set) var nftVisible: Bool = false
 
     private var viewItems = [BalanceViewItem]()
@@ -55,6 +56,10 @@ class WalletViewModel {
         titleRelay.accept(activeAccount?.name)
         nftVisible = activeAccount?.type.supportsNft ?? false
 
+        controlViewItem = activeAccount.map {
+            ControlViewItem(watchVisible: $0.watchAccount, coinManagerVisible: !$0.cexAccount && !$0.watchAccount)
+        }
+
         if let account = activeAccount {
             showWarningRelay.accept(accountRestoreWarningFactory.caution(account: account, canIgnoreActiveAccountWarning: true))
         }
@@ -70,12 +75,11 @@ class WalletViewModel {
     }
 
     private func sync(totalItem: WalletService.TotalItem?) {
-        let headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, watchAccount: service.watchAccount, cexAccount: service.cexAccount) }
-        headerViewItemRelay.accept(headerViewItem)
+        headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, cexAccount: service.cexAccount) }
     }
 
     private func sync(sortType: WalletModule.SortType, scrollToTop: Bool) {
-        sortByRelay.accept(sortType.title)
+        sortBy = sortType.title
 
         if scrollToTop {
             scrollToTopRelay.accept(())
@@ -131,14 +135,6 @@ extension WalletViewModel {
 
     var displayModeDriver: Driver<DisplayMode> {
         displayModeRelay.asDriver()
-    }
-
-    var headerViewItemDriver: Driver<HeaderViewItem?> {
-        headerViewItemRelay.asDriver()
-    }
-
-    var sortByDriver: Driver<String?> {
-        sortByRelay.asDriver()
     }
 
     var showWarningDriver: Driver<CancellableTitledCaution?> {
@@ -315,8 +311,12 @@ extension WalletViewModel {
         let amountExpired: Bool
         let convertedValue: String?
         let convertedValueExpired: Bool
-        let watchAccount: Bool
-        let cexAccount: Bool
+        let buttonsVisible: Bool
+    }
+
+    struct ControlViewItem {
+        let watchVisible: Bool
+        let coinManagerVisible: Bool
     }
 
 }
