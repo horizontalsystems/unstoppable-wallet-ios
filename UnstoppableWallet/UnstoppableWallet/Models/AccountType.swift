@@ -144,6 +144,13 @@ enum AccountType {
         }
     }
 
+    var supportsNft: Bool {
+        switch self {
+        case .cex: return false
+        default: return true
+        }
+    }
+
     var hideZeroBalances: Bool {
         switch self {
         case .evmAddress: return true
