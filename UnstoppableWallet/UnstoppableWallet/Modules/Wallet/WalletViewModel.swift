@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -23,6 +24,8 @@ class WalletViewModel {
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
     private let playHapticRelay = PublishRelay<()>()
     private let scrollToTopRelay = PublishRelay<()>()
+
+    @Published private(set) var nftVisible: Bool = false
 
     private var viewItems = [BalanceViewItem]()
     private var expandedElement: WalletModule.Element?
@@ -50,6 +53,7 @@ class WalletViewModel {
 
     private func sync(activeAccount: Account?) {
         titleRelay.accept(activeAccount?.name)
+        nftVisible = activeAccount?.type.supportsNft ?? false
 
         if let account = activeAccount {
             showWarningRelay.accept(accountRestoreWarningFactory.caution(account: account, canIgnoreActiveAccountWarning: true))

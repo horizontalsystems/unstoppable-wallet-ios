@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 import ThemeKit
 import SectionsTableView
@@ -12,6 +13,7 @@ class WalletViewController: ThemeViewController {
     private let animationDuration: TimeInterval = 0.2
 
     private let viewModel: WalletViewModel
+    private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
 
     private let tableView = UITableView(frame: .zero, style: .plain)
@@ -56,8 +58,6 @@ class WalletViewController: ThemeViewController {
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "switch_wallet_24"), style: .plain, target: self, action: #selector(onTapSwitchWallet))
         navigationItem.leftBarButtonItem?.tintColor = .themeJacob
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "nft_24"), style: .plain, target: self, action: #selector(onTapNft))
 
         refreshControl.tintColor = .themeLeah
         refreshControl.alpha = 0.6
@@ -116,6 +116,11 @@ class WalletViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.playHapticSignal) { [weak self] in self?.playHaptic() }
         subscribe(disposeBag, viewModel.scrollToTopSignal) { [weak self] in self?.scrollToTop() }
 
+        viewModel.$nftVisible
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.sync(nftVisible: $0) }
+                .store(in: &cancellables)
+
         isLoaded = true
     }
 
@@ -157,6 +162,10 @@ class WalletViewController: ThemeViewController {
 
     @objc private func onTapAddCoin() {
         openManageWallets()
+    }
+
+    private func sync(nftVisible: Bool) {
+        navigationItem.rightBarButtonItem = nftVisible ? UIBarButtonItem(image: UIImage(named: "nft_24"), style: .plain, target: self, action: #selector(onTapNft)) : nil
     }
 
     private func sync(displayMode: WalletViewModel.DisplayMode) {
