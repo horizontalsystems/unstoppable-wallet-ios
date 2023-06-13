@@ -1309,9 +1309,9 @@
 "manage_account.recovery_phrase" = "Фраза восстановления";
 "manage_account.public_keys" = "Публичные ключи";
 "manage_account.private_keys" = "Приватные ключи";
-"manage_account.backup_recovery_phrase" = "Ручное резервное \nкопирование";
-"manage_account.cloud_backup_recovery_phrase" = "Резерв. копирование /nв iCloud";
-"manage_account.cloud_delete_backup_recovery_phrase" = "Удалить резервную копию из iCloud";
+"manage_account.backup_recovery_phrase" = "Ручное резерв.копирование";
+"manage_account.cloud_backup_recovery_phrase" = "Резерв. копирование в iCloud";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Удалить резерв. копию из iCloud";
 "manage_account.manual_backup_required" = "Требуется резервное копирование вручную";
 "manage_account.manual_backup_required.description" = "Чтобы безопасно удалить резервную копию в iCloud, вам необходимо сначала сделать резервную копию фразы восстановления вручную.";
 "manage_account.manual_backup_required.button" = "Сделать резервную копию";
