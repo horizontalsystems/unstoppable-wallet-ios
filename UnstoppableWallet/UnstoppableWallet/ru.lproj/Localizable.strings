@@ -815,12 +815,12 @@
 "transactions.completed" = "Завершено";
 "transactions.failed" = "Не удалось";
 
-"transactions.receive" = "Получить";
-"transactions.send" = "Отправить";
+"transactions.receive" = "Получено";
+"transactions.send" = "Отправлено";
 "transactions.burn" = "Сжечь";
 "transactions.mint" = "Минт";
-"transactions.approve" = "Разрешить";
-"transactions.swap" = "Обменять";
+"transactions.approve" = "Разрешение";
+"transactions.swap" = "Обмен";
 "transactions.contract_call" = "Вызов контракта";
 "transactions.contract_creation" = "Создание контракта";
 "transactions.external_call" = "Внешний вызов";
