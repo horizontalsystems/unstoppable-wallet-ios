@@ -70,7 +70,7 @@ class WalletViewModel {
     }
 
     private func sync(totalItem: WalletService.TotalItem?) {
-        let headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, watchAccount: service.watchAccount) }
+        let headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, watchAccount: service.watchAccount, cexAccount: service.cexAccount) }
         headerViewItemRelay.accept(headerViewItem)
     }
 
@@ -316,6 +316,7 @@ extension WalletViewModel {
         let convertedValue: String?
         let convertedValueExpired: Bool
         let watchAccount: Bool
+        let cexAccount: Bool
     }
 
 }

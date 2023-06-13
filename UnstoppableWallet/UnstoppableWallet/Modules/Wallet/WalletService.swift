@@ -424,6 +424,10 @@ extension WalletService {
         accountManager.activeAccount?.watchAccount ?? false
     }
 
+    var cexAccount: Bool {
+        accountManager.activeAccount?.cexAccount ?? false
+    }
+
     var lastCreatedAccount: Account? {
         accountManager.popLastCreatedAccount()
     }

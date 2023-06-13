@@ -74,7 +74,7 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         amountView.set(amountText: viewItem.amount, expired: viewItem.amountExpired)
         amountView.set(convertedAmountText: viewItem.convertedValue, expired: viewItem.convertedValueExpired)
 
-        sortAddCoinView.bind(dropdownTitle: sortBy, settingsHidden: viewItem.watchAccount)
+        sortAddCoinView.bind(dropdownTitle: sortBy, settingsHidden: viewItem.watchAccount || viewItem.cexAccount)
         watchAccountImage.isHidden = !viewItem.watchAccount
     }
 
