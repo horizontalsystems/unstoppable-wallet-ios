@@ -31,6 +31,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private var sortBy: String?
+    private var controlViewItem: WalletViewModel.ControlViewItem?
     private var isLoaded = false
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet_view_controller", qos: .userInitiated)
@@ -74,6 +75,7 @@ class WalletViewController: ThemeViewController {
 
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.registerCell(forClass: WalletHeaderCell.self)
         tableView.registerCell(forClass: BalanceCell.self)
         tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
         tableView.registerHeaderFooter(forClass: WalletHeaderView.self)
@@ -103,8 +105,6 @@ class WalletViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.titleDriver) { [weak self] in self?.navigationItem.title = $0 }
         subscribe(disposeBag, viewModel.displayModeDriver) { [weak self] in self?.sync(displayMode: $0) }
-        subscribe(disposeBag, viewModel.headerViewItemDriver) { [weak self] in self?.sync(headerViewItem: $0) }
-        subscribe(disposeBag, viewModel.sortByDriver) { [weak self] in self?.sync(sortBy: $0) }
         subscribe(disposeBag, viewModel.showWarningDriver) { [weak self] in self?.sync(warning: $0) }
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.openReceiveSignal) { [weak self] in self?.openReceive(wallet: $0) }
@@ -115,6 +115,21 @@ class WalletViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.showAccountsLostSignal) { [weak self] in self?.showAccountsLost() }
         subscribe(disposeBag, viewModel.playHapticSignal) { [weak self] in self?.playHaptic() }
         subscribe(disposeBag, viewModel.scrollToTopSignal) { [weak self] in self?.scrollToTop() }
+
+        viewModel.$headerViewItem
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.sync(headerViewItem: $0) }
+                .store(in: &cancellables)
+
+        viewModel.$sortBy
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.sync(sortBy: $0) }
+                .store(in: &cancellables)
+
+        viewModel.$controlViewItem
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.sync(controlViewItem: $0) }
+                .store(in: &cancellables)
 
         viewModel.$nftVisible
                 .receive(on: DispatchQueue.main)
@@ -177,16 +192,24 @@ class WalletViewController: ThemeViewController {
     private func sync(headerViewItem: WalletViewModel.HeaderViewItem?) {
         self.headerViewItem = headerViewItem
 
-        if isLoaded, let headerView = tableView.headerView(forSection: 0) as? WalletHeaderView {
-            bind(headerView: headerView)
+        if isLoaded, let headerCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? WalletHeaderCell {
+            bind(headerCell: headerCell)
         }
     }
 
     private func sync(sortBy: String?) {
         self.sortBy = sortBy
 
-        if isLoaded, let headerView = tableView.headerView(forSection: 0) as? WalletHeaderView {
-            bind(headerView: headerView)
+        if isLoaded, let headerView = tableView.headerView(forSection: 1) as? WalletHeaderView {
+            headerView.bind(sortBy: sortBy)
+        }
+    }
+
+    private func sync(controlViewItem: WalletViewModel.ControlViewItem?) {
+        self.controlViewItem = controlViewItem
+
+        if isLoaded, let controlViewItem, let headerView = tableView.headerView(forSection: 1) as? WalletHeaderView {
+            headerView.bind(controlViewItem: controlViewItem)
         }
     }
 
@@ -196,7 +219,7 @@ class WalletViewController: ThemeViewController {
         if isLoaded {
             if needToRemove {
                 tableView.beginUpdates()
-                tableView.deleteRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+                tableView.deleteRows(at: [IndexPath(row: 0, section: 1)], with: .fade)
                 tableView.endUpdates()
             } else {
                 tableView.reloadData()
@@ -273,7 +296,7 @@ class WalletViewController: ThemeViewController {
             }
 
             updateIndexes.forEach {
-                if let cell = tableView.cellForRow(at: IndexPath(row: $0 + viewItemsOffset, section: 0)) as? BalanceCell {
+                if let cell = tableView.cellForRow(at: IndexPath(row: $0 + viewItemsOffset, section: 1)) as? BalanceCell {
                     bind(cell: cell, viewItem: viewItems[$0], animated: true)
                 }
             }
@@ -319,14 +342,12 @@ class WalletViewController: ThemeViewController {
         )
     }
 
-    private func bind(headerView: WalletHeaderView) {
+    private func bind(headerCell: WalletHeaderCell) {
         if let viewItem = headerViewItem {
-            headerView.bind(viewItem: viewItem, sortBy: sortBy)
+            headerCell.bind(viewItem: viewItem)
 
-            headerView.onTapAmount = { [weak self] in self?.viewModel.onTapTotalAmount() }
-            headerView.onTapConvertedAmount = { [weak self] in self?.viewModel.onTapConvertedTotalAmount() }
-            headerView.onTapSortBy = { [weak self] in self?.openSortType() }
-            headerView.onTapAddCoin = { [weak self] in self?.openManageWallets() }
+            headerCell.onTapAmount = { [weak self] in self?.viewModel.onTapTotalAmount() }
+            headerCell.onTapConvertedAmount = { [weak self] in self?.viewModel.onTapConvertedTotalAmount() }
         }
     }
 
@@ -455,15 +476,27 @@ class WalletViewController: ThemeViewController {
 
 extension WalletViewController: UITableViewDataSource {
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewItemsOffset + viewItems.count
+        switch section {
+        case 0: return 1
+        default: return viewItemsOffset + viewItems.count
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if warningViewItem != nil, indexPath.row == 0 {
-            return tableView.dequeueReusableCell(withIdentifier: String(describing: TitledHighlightedDescriptionCell.self), for: indexPath)
+        switch indexPath.section {
+        case 0:
+            return tableView.dequeueReusableCell(withIdentifier: String(describing: WalletHeaderCell.self), for: indexPath)
+        default:
+            if warningViewItem != nil, indexPath.row == 0 {
+                return tableView.dequeueReusableCell(withIdentifier: String(describing: TitledHighlightedDescriptionCell.self), for: indexPath)
+            }
+            return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self), for: indexPath)
         }
-        return tableView.dequeueReusableCell(withIdentifier: String(describing: BalanceCell.self), for: indexPath)
     }
 
 }
@@ -471,42 +504,69 @@ extension WalletViewController: UITableViewDataSource {
 extension WalletViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? TitledHighlightedDescriptionCell, let warningViewItem = warningViewItem {
-            cell.set(backgroundStyle: .transparent, isFirst: true)
-            cell.topOffset = .margin12
-            cell.bind(caution: warningViewItem)
-            cell.onBackgroundButton = { [weak self] in self?.onOpenWarning() }
-            cell.onCloseButton = warningViewItem.cancellable ? { [weak self] in self?.onCloseWarning() } : nil
-        }
+        switch indexPath.section {
+        case 0:
+            if let cell = cell as? WalletHeaderCell {
+                bind(headerCell: cell)
+            }
+        default:
+            if let cell = cell as? TitledHighlightedDescriptionCell, let warningViewItem = warningViewItem {
+                cell.set(backgroundStyle: .transparent, isFirst: true)
+                cell.topOffset = .margin12
+                cell.bind(caution: warningViewItem)
+                cell.onBackgroundButton = { [weak self] in self?.onOpenWarning() }
+                cell.onCloseButton = warningViewItem.cancellable ? { [weak self] in self?.onCloseWarning() } : nil
+            }
 
-        if let cell = cell as? BalanceCell {
-            bind(cell: cell, viewItem: viewItems[indexPath.item - viewItemsOffset])
+            if let cell = cell as? BalanceCell {
+                bind(cell: cell, viewItem: viewItems[indexPath.row - viewItemsOffset])
+            }
         }
     }
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerView = view as? WalletHeaderView {
-            bind(headerView: headerView)
+            headerView.bind(sortBy: sortBy)
+            if let controlViewItem {
+                headerView.bind(controlViewItem: controlViewItem)
+            }
+
+            headerView.onTapSortBy = { [weak self] in self?.openSortType() }
+            headerView.onTapAddCoin = { [weak self] in self?.openManageWallets() }
         }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if warningViewItem != nil, indexPath.row == 0 {
-            return TitledHighlightedDescriptionCell.height(containerWidth: tableView.width, text: warningViewItem?.text ?? "") + .margin32
+        switch indexPath.section {
+        case 0:
+            return WalletHeaderCell.height(viewItem: headerViewItem)
+        default:
+            if warningViewItem != nil, indexPath.row == 0 {
+                return TitledHighlightedDescriptionCell.height(containerWidth: tableView.width, text: warningViewItem?.text ?? "") + .margin32
+            }
+            return BalanceCell.height(viewItem: viewItems[indexPath.row - viewItemsOffset])
         }
-        return BalanceCell.height(viewItem: viewItems[indexPath.row - viewItemsOffset])
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        WalletHeaderView.height
+        switch section {
+        case 0: return 0
+        default: return WalletHeaderView.height
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        .margin8
+        switch section {
+        case 0: return 0
+        default: return .margin8
+        }
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: WalletHeaderView.self))
+        switch section {
+        case 0: return nil
+        default: return tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: WalletHeaderView.self))
+        }
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -514,30 +574,40 @@ extension WalletViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if warningViewItem != nil, indexPath.row == 0 {
-            return
+        switch indexPath.section {
+        case 0:
+            () // do nothing
+        default:
+            if warningViewItem != nil, indexPath.row == 0 {
+                return
+            }
+            viewModel.onTap(element: viewItems[indexPath.item - viewItemsOffset].element)
         }
-        viewModel.onTap(element: viewItems[indexPath.item - viewItemsOffset].element)
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if warningViewItem != nil, indexPath.row == 0 {
+        switch indexPath.section {
+        case 0:
             return nil
+        default:
+            if warningViewItem != nil, indexPath.row == 0 {
+                return nil
+            }
+
+            guard viewModel.swipeActionsEnabled else {
+                return nil
+            }
+
+            let action = UIContextualAction(style: .normal, title: nil) { [weak self] _, _, completion in
+                self?.handleRemove(indexPath: indexPath)
+                completion(true)
+            }
+
+            action.image = UIImage(named: "circle_minus_shifted_24")
+            action.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+
+            return UISwipeActionsConfiguration(actions: [action])
         }
-
-        guard viewModel.swipeActionsEnabled else {
-            return nil
-        }
-
-        let action = UIContextualAction(style: .normal, title: nil) { [weak self] _, _, completion in
-            self?.handleRemove(indexPath: indexPath)
-            completion(true)
-        }
-
-        action.image = UIImage(named: "circle_minus_shifted_24")
-        action.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
-
-        return UISwipeActionsConfiguration(actions: [action])
     }
 
 }

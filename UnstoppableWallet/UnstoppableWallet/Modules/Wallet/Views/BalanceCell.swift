@@ -4,7 +4,7 @@ import SnapKit
 import ComponentKit
 
 class BalanceCell: UITableViewCell {
-    private static let margins = UIEdgeInsets(top: .margin4, left: .margin16, bottom: .margin4, right: .margin16)
+    private static let margins = UIEdgeInsets(top: .margin8, left: .margin16, bottom: 0, right: .margin16)
 
     private let cardView = CardView(insets: .zero)
 

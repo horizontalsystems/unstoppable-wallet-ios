@@ -5,10 +5,8 @@ import ComponentKit
 import HUD
 
 class WalletHeaderView: UITableViewHeaderFooterView {
-    private static let bottomMargin: CGFloat = .margin4
-    static var height: CGFloat = HeaderAmountView.height + TextDropDownAndSettingsView.height + bottomMargin
+    static var height: CGFloat = TextDropDownAndSettingsView.height
 
-    private let amountView = HeaderAmountView()
     private let sortAddCoinView = TextDropDownAndSettingsView()
     private let watchAccountImage = ImageComponent(size: .iconSize24)
 
@@ -21,26 +19,9 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         backgroundView = UIView()
         backgroundView?.backgroundColor = .themeNavigationBarBackground
 
-        contentView.addSubview(amountView)
-        amountView.snp.makeConstraints { maker in
-            maker.leading.top.trailing.equalToSuperview()
-        }
-
-        let separatorView = UIView()
-
-        contentView.addSubview(separatorView)
-        separatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(amountView.snp.bottom)
-            maker.height.equalTo(CGFloat.heightOneDp)
-        }
-
-        separatorView.backgroundColor = .themeSteel10
-
         contentView.addSubview(sortAddCoinView)
         sortAddCoinView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(amountView.snp.bottom)
+            maker.leading.top.trailing.equalToSuperview()
             maker.height.equalTo(TextDropDownAndSettingsView.height)
         }
 
@@ -60,22 +41,13 @@ class WalletHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var onTapAmount: (() -> ())? {
-        get { amountView.onTapAmount }
-        set { amountView.onTapAmount = newValue }
+    func bind(sortBy: String?) {
+        sortAddCoinView.set(dropdownTitle: sortBy)
     }
 
-    var onTapConvertedAmount: (() -> ())? {
-        get { amountView.onTapConvertedAmount }
-        set { amountView.onTapConvertedAmount = newValue }
-    }
-
-    func bind(viewItem: WalletViewModel.HeaderViewItem, sortBy: String?) {
-        amountView.set(amountText: viewItem.amount, expired: viewItem.amountExpired)
-        amountView.set(convertedAmountText: viewItem.convertedValue, expired: viewItem.convertedValueExpired)
-
-        sortAddCoinView.bind(dropdownTitle: sortBy, settingsHidden: viewItem.watchAccount || viewItem.cexAccount)
-        watchAccountImage.isHidden = !viewItem.watchAccount
+    func bind(controlViewItem: WalletViewModel.ControlViewItem) {
+        sortAddCoinView.set(settingsHidden: !controlViewItem.coinManagerVisible)
+        watchAccountImage.isHidden = !controlViewItem.watchVisible
     }
 
 }
