@@ -90,6 +90,18 @@ extension CoinzixCexProvider: ICexProvider {
                 }
     }
 
+    func allAssetInfos() async throws -> [CexAssetInfo] {
+        fatalError("allAssetInfos() has not been implemented")
+    }
+
+    func deposit(cexAsset: CexAsset, network: String?) async throws -> String {
+        fatalError("deposit(cexAsset:network:) has not been implemented")
+    }
+
+    func withdraw(cexAsset: CexAsset, network: String, address: String, amount: Decimal) async throws -> String {
+        fatalError("withdraw(cexAsset:network:address:amount:) has not been implemented")
+    }
+
 }
 
 extension CoinzixCexProvider {

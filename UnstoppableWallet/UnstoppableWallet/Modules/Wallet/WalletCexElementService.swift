@@ -6,6 +6,9 @@ import MarketKit
 
 protocol ICexProvider {
     func balances() async throws -> [CexBalance]
+    func allAssetInfos() async throws -> [CexAssetInfo]
+    func deposit(cexAsset: CexAsset, network: String?) async throws -> String
+    func withdraw(cexAsset: CexAsset, network: String, address: String, amount: Decimal) async throws -> String
 }
 
 class WalletCexElementService {

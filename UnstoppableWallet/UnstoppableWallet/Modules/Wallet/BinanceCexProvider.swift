@@ -35,13 +35,20 @@ class BinanceCexProvider {
         ]
     }
 
-    private static func fetch<T: ImmutableMappable>(networkManager: NetworkManager, apiKey: String, secret: String, path: String, parameters: Parameters = [:]) async throws -> T {
+    private func blockchainUidMap() async throws -> [String: String] {
+        [
+            "BSC": "binance-smart-chain",
+            "ETH": "ethereum",
+        ]
+    }
+
+    private static func signed(parameters: Parameters, apiKey: String, secret: String) throws -> (Parameters, HTTPHeaders) {
         var parameters = parameters
 
         let timestamp = String(Int(Date().timeIntervalSince1970 * 1000))
         parameters["timestamp"] = timestamp
 
-        let queryString = parameters.map { "\($0)=\($1)" }.joined(separator: "&")
+        let queryString = parameters.map { ($0, $1) }.sorted { $0.0 < $1.0 }.map { "\($0)=\($1)" }.joined(separator: "&")
 
         guard let queryStringData = queryString.data(using: .utf8) else {
             throw RequestError.invalidQueryString
@@ -55,12 +62,25 @@ class BinanceCexProvider {
         let signature = Data(HMAC<SHA256>.authenticationCode(for: queryStringData, using: symmetricKey))
         parameters["signature"] = Data(signature).hs.hex
 
-        let headers = HTTPHeaders(["X-MBX-APIKEY": apiKey])
-        return try await networkManager.fetch(url: baseUrl + path, parameters: parameters, headers: headers)
+        return (parameters, HTTPHeaders(["X-MBX-APIKEY": apiKey]))
     }
 
-    private func fetch<T: ImmutableMappable>(path: String, parameters: Parameters = [:]) async throws -> T {
-        try await Self.fetch(networkManager: networkManager, apiKey: apiKey, secret: secret, path: path, parameters: parameters)
+    private static func fetch<T: ImmutableMappable>(networkManager: NetworkManager, apiKey: String, secret: String, path: String, method: HTTPMethod = .get, parameters: Parameters = [:]) async throws -> T {
+        let (parameters, headers) = try signed(parameters: parameters, apiKey: apiKey, secret: secret)
+        return try await networkManager.fetch(url: baseUrl + path, method: method, parameters: parameters, headers: headers)
+    }
+
+    private static func fetch<T: ImmutableMappable>(networkManager: NetworkManager, apiKey: String, secret: String, path: String, method: HTTPMethod = .get, parameters: Parameters = [:]) async throws -> [T] {
+        let (parameters, headers) = try signed(parameters: parameters, apiKey: apiKey, secret: secret)
+        return try await networkManager.fetch(url: baseUrl + path, method: method, parameters: parameters, headers: headers)
+    }
+
+    private func fetch<T: ImmutableMappable>(path: String, method: HTTPMethod = .get, parameters: Parameters = [:]) async throws -> T {
+        try await Self.fetch(networkManager: networkManager, apiKey: apiKey, secret: secret, path: path, method: method, parameters: parameters)
+    }
+
+    private func fetch<T: ImmutableMappable>(path: String, method: HTTPMethod = .get, parameters: Parameters = [:]) async throws -> [T] {
+        try await Self.fetch(networkManager: networkManager, apiKey: apiKey, secret: secret, path: path, method: method, parameters: parameters)
     }
 
 }
@@ -84,6 +104,62 @@ extension BinanceCexProvider: ICexProvider {
                             locked: balance.locked
                     )
                 }
+    }
+
+    func allAssetInfos() async throws -> [CexAssetInfo] {
+        let response: [AssetResponse] = try await fetch(path: "/sapi/v1/capital/config/getall")
+
+        let coinUidMap = try await coinUidMap()
+        let coins = try marketKit.allCoins()
+        var coinMap = [String: Coin]()
+        coins.forEach { coinMap[$0.uid] = $0 }
+
+        let blockchainUidMap = try await blockchainUidMap()
+        let blockchains: [Blockchain] = [] // todo
+        var blockchainMap = [String: Blockchain]()
+        blockchains.forEach { blockchainMap[$0.uid] = $0 }
+
+        return response
+                .map { asset in
+                    CexAssetInfo(
+                            asset: CexAsset(id: asset.coin, coin: coinUidMap[asset.coin].flatMap { coinMap[$0] }),
+                            networks: asset.networks.map { network in
+                                CexNetwork(
+                                        network: network.network,
+                                        name: network.name,
+                                        isDefault: network.isDefault,
+                                        depositEnabled: network.depositEnable,
+                                        withdrawEnabled: network.withdrawEnable,
+                                        blockchain: blockchainUidMap[network.network].flatMap { blockchainMap[$0] }
+                                )
+                            }
+                    )
+                }
+    }
+
+    func deposit(cexAsset: CexAsset, network: String?) async throws -> String {
+        var parameters: Parameters = [
+            "coin": cexAsset.id
+        ]
+
+        if let network {
+            parameters["network"] = network
+        }
+
+        let response: DepositResponse = try await fetch(path: "/sapi/v1/capital/deposit/address", parameters: parameters)
+        return response.address
+    }
+
+    func withdraw(cexAsset: CexAsset, network: String, address: String, amount: Decimal) async throws -> String {
+        let parameters: Parameters = [
+            "coin": cexAsset.id,
+            "network": network,
+            "address": address,
+            "amount": amount
+        ]
+
+        let response: WithdrawResponse = try await fetch(path: "/sapi/v1/capital/withdraw/apply", method: .post, parameters: parameters)
+        return response.id
     }
 
 }
@@ -115,6 +191,48 @@ extension BinanceCexProvider {
                 free = try map.value("free", using: Transform.stringToDecimalTransform)
                 locked = try map.value("locked", using: Transform.stringToDecimalTransform)
             }
+        }
+    }
+
+    private struct AssetResponse: ImmutableMappable {
+        let coin: String
+        let networks: [Network]
+
+        init(map: Map) throws {
+            coin = try map.value("coin")
+            networks = try map.value("networkList")
+        }
+
+        struct Network: ImmutableMappable {
+            let network: String
+            let name: String
+            let isDefault: Bool
+            let depositEnable: Bool
+            let withdrawEnable: Bool
+
+            init(map: Map) throws {
+                network = try map.value("network")
+                name = try map.value("name")
+                isDefault = try map.value("isDefault")
+                depositEnable = try map.value("depositEnable")
+                withdrawEnable = try map.value("withdrawEnable")
+            }
+        }
+    }
+
+    private struct DepositResponse: ImmutableMappable {
+        let address: String
+
+        init(map: Map) throws {
+            address = try map.value("address")
+        }
+    }
+
+    private struct WithdrawResponse: ImmutableMappable {
+        let id: String
+
+        init(map: Map) throws {
+            id = try map.value("id")
         }
     }
 
