@@ -1,13 +1,15 @@
 import Foundation
+import Combine
 import RxSwift
 import RxRelay
 import HsToolKit
+import HsExtensions
 import StorageKit
 import CurrencyKit
 
 protocol IWalletElementService: AnyObject {
     var delegate: IWalletElementServiceDelegate? { get set }
-    var elements: [WalletModule.Element] { get }
+    var state: WalletModule.ElementState { get }
     func isMainNet(element: WalletModule.Element) -> Bool?
     func balanceData(element: WalletModule.Element) -> BalanceData?
     func state(element: WalletModule.Element) -> AdapterState?
@@ -16,7 +18,7 @@ protocol IWalletElementService: AnyObject {
 }
 
 protocol IWalletElementServiceDelegate: AnyObject {
-    func didUpdate(elements: [WalletModule.Element])
+    func didUpdate(elementState: WalletModule.ElementState)
     func didUpdateElements()
     func didUpdate(isMainNet: Bool, element: WalletModule.Element)
     func didUpdate(balanceData: BalanceData, element: WalletModule.Element)
@@ -42,8 +44,31 @@ class WalletService {
     private let sorter = WalletSorter()
     private let disposeBag = DisposeBag()
 
+    private var internalState: State = .loading {
+        didSet {
+            switch internalState {
+            case .loaded(let items):
+                let hideZeroBalances = activeAccount?.type.hideZeroBalances ?? false
+
+                if hideZeroBalances {
+                    state = .loaded(items: items.filter { $0.balanceData.balanceTotal != 0 || $0.element.wallet?.token.type == .native })
+                } else {
+                    state = .loaded(items: items)
+                }
+            default:
+                state = internalState
+            }
+        }
+    }
+
+    private var elementService: IWalletElementService?
+
+    @PostPublished private(set) var state: State = .loading
+    @PostPublished private(set) var totalItem: TotalItem?
+
     private let activeAccountRelay = PublishRelay<Account?>()
     private let accountsLostRelay = PublishRelay<()>()
+    private let itemUpdatedRelay = PublishRelay<Item>()
 
     private let sortTypeRelay = PublishRelay<WalletModule.SortType>()
     var sortType: WalletModule.SortType {
@@ -54,35 +79,6 @@ class WalletService {
         }
     }
 
-    private let totalItemRelay = PublishRelay<TotalItem?>()
-    private(set) var totalItem: TotalItem? {
-        didSet {
-            totalItemRelay.accept(totalItem)
-        }
-    }
-
-    private let itemUpdatedRelay = PublishRelay<Item>()
-
-    private let itemsRelay = PublishRelay<[Item]>()
-    private(set) var items: [Item] = [] {
-        didSet {
-            itemsRelay.accept(items)
-        }
-    }
-
-    private var internalItems: [Item] = [] {
-        didSet {
-            let hideZeroBalances = activeAccount?.type.hideZeroBalances ?? false
-
-            if hideZeroBalances {
-                items = internalItems.filter { $0.balanceData.balanceTotal != 0 || $0.element.wallet?.token.type == .native }
-            } else {
-                items = internalItems
-            }
-        }
-    }
-
-    private var elementService: IWalletElementService?
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
 
@@ -136,59 +132,78 @@ class WalletService {
             self?.syncTotalItem()
         }
 
-        elementService = accountManager.activeAccount.map { elementServiceFactory.elementService(accountType: $0.type) }
-        _sync(elements: elementService?.elements ?? [])
-        elementService?.delegate = self
+        _sync(activeAccount: accountManager.activeAccount)
     }
 
-    private func _sync(elements: [WalletModule.Element]) {
-        let cacheContainer = activeAccount.map { cacheManager.cacheContainer(accountId: $0.id) }
-        let priceItemMap = coinPriceService.itemMap(coinUids: elements.compactMap { $0.priceCoinUid })
-        let watchAccount = watchAccount
+    private func _sync(activeAccount: Account?) {
+        elementService?.delegate = nil
 
-        let items: [Item] = elements.map { element in
-            let item = Item(
-                    element: element,
-                    isMainNet: elementService?.isMainNet(element: element) ?? fallbackIsMainNet,
-                    watchAccount: watchAccount,
-                    balanceData: elementService?.balanceData(element: element) ?? cachedBalanceData(element: element, cacheContainer: cacheContainer) ?? fallbackBalanceData,
-                    state: elementService?.state(element: element)  ?? fallbackAdapterState
-            )
+        if let activeAccount {
+            let elementService = elementServiceFactory.elementService(accountType: activeAccount.type)
+            elementService.delegate = self
+            self.elementService = elementService
 
-            if let priceCoinUid = element.priceCoinUid {
-                item.priceItem = priceItemMap[priceCoinUid]
+            _sync(elementState: elementService.state)
+        } else {
+            internalState = .noAccount
+        }
+    }
+
+    private func _sync(elementState: WalletModule.ElementState) {
+        switch elementState {
+        case .loading:
+            internalState = .loading
+        case .loaded(let elements):
+            let cacheContainer = activeAccount.map { cacheManager.cacheContainer(accountId: $0.id) }
+            let priceItemMap = coinPriceService.itemMap(coinUids: elements.compactMap { $0.priceCoinUid })
+            let watchAccount = watchAccount
+
+            let items: [Item] = elements.map { element in
+                let item = Item(
+                        element: element,
+                        isMainNet: elementService?.isMainNet(element: element) ?? fallbackIsMainNet,
+                        watchAccount: watchAccount,
+                        balanceData: elementService?.balanceData(element: element) ?? _cachedBalanceData(element: element, cacheContainer: cacheContainer) ?? fallbackBalanceData,
+                        state: elementService?.state(element: element)  ?? fallbackAdapterState
+                )
+
+                if let priceCoinUid = element.priceCoinUid {
+                    item.priceItem = priceItemMap[priceCoinUid]
+                }
+
+                return item
             }
 
-            return item
+            internalState = .loaded(items: sorter.sort(items: items, sortType: sortType))
+            _syncTotalItem()
+
+            let coinUids = Set(elements.compactMap { $0.priceCoinUid })
+            let feeCoinUids = Set(elements.compactMap { $0.wallet }.compactMap { feeCoinProvider.feeToken(token: $0.token) }.map { $0.coin.uid })
+
+            coinPriceService.set(coinUids: coinUids.union(feeCoinUids).union(balanceConversionManager.conversionTokens.map { $0.coin.uid }))
+        case .failed(let reason):
+            internalState = .failed(reason: reason)
         }
-
-        internalItems = sorter.sort(items: items, sortType: sortType)
-        syncTotalItem()
-
-        let coinUids = Set(elements.compactMap { $0.priceCoinUid })
-        let feeCoinUids = Set(elements.compactMap { $0.wallet }.compactMap { feeCoinProvider.feeToken(token: $0.token) }.map { $0.coin.uid })
-
-        coinPriceService.set(coinUids: coinUids.union(feeCoinUids).union(balanceConversionManager.conversionTokens.map { $0.coin.uid }))
     }
 
-    private func cachedBalanceData(element: WalletModule.Element, cacheContainer: EnabledWalletCacheManager.CacheContainer?) -> BalanceData? {
+    private func _cachedBalanceData(element: WalletModule.Element, cacheContainer: EnabledWalletCacheManager.CacheContainer?) -> BalanceData? {
         switch element {
         case .wallet(let wallet): return cacheContainer?.balanceData(wallet: wallet)
         default: return nil
         }
     }
 
-    private func _item(element: WalletModule.Element) -> Item? {
-        internalItems.first { $0.element == element }
+    private func _sorted(items: [Item]) -> [Item] {
+        sorter.sort(items: items, sortType: sortType)
+    }
+
+    private func _item(element: WalletModule.Element, items: [Item]) -> Item? {
+        items.first { $0.element == element }
     }
 
     private func handleUpdated(activeAccount: Account?) {
         queue.async {
-            self.elementService?.delegate = nil
-
-            self.elementService = activeAccount.map { self.elementServiceFactory.elementService(accountType: $0.type) }
-            self._sync(elements: self.elementService?.elements ?? [])
-            self.elementService?.delegate = self
+            self._sync(activeAccount: activeAccount)
         }
 
         activeAccountRelay.accept(activeAccount)
@@ -196,7 +211,11 @@ class WalletService {
 
     private func handleUpdateSortType() {
         queue.async {
-            self.internalItems = self.sorter.sort(items: self.internalItems, sortType: self.sortType)
+            guard case .loaded(let items) = self.internalState else {
+                return
+            }
+
+            self.internalState = .loaded(items: self._sorted(items: items))
         }
     }
 
@@ -211,6 +230,16 @@ class WalletService {
     }
 
     private func syncTotalItem() {
+        queue.async {
+            self._syncTotalItem()
+        }
+    }
+
+    private func _syncTotalItem() {
+        guard case .loaded(let items) = state else {
+            return
+        }
+
         var total: Decimal = 0
         var expired = false
 
@@ -262,17 +291,21 @@ class WalletService {
 
 extension WalletService: IWalletElementServiceDelegate {
 
-    func didUpdate(elements: [WalletModule.Element]) {
+    func didUpdate(elementState: WalletModule.ElementState) {
         queue.async {
-            self._sync(elements: elements)
+            self._sync(elementState: elementState)
         }
     }
 
     func didUpdateElements() {
         queue.async {
+            guard case .loaded(let items) = self.internalState else {
+                return
+            }
+
             var balanceDataMap = [Wallet: BalanceData]()
 
-            for item in self.internalItems {
+            for item in items {
                 let balanceData = self.elementService?.balanceData(element: item.element) ?? self.fallbackBalanceData
 
                 item.isMainNet = self.elementService?.isMainNet(element: item.element) ?? self.fallbackIsMainNet
@@ -284,8 +317,8 @@ extension WalletService: IWalletElementServiceDelegate {
                 }
             }
 
-            self.internalItems = self.sorter.sort(items: self.internalItems, sortType: self.sortType)
-            self.syncTotalItem()
+            self.internalState = .loaded(items: self._sorted(items: items))
+            self._syncTotalItem()
 
             if !balanceDataMap.isEmpty {
                 self.cacheManager.set(balanceDataMap: balanceDataMap)
@@ -295,7 +328,7 @@ extension WalletService: IWalletElementServiceDelegate {
 
     func didUpdate(isMainNet: Bool, element: WalletModule.Element) {
         queue.async {
-            guard let item = self._item(element: element) else {
+            guard case .loaded(let items) = self.internalState, let item = self._item(element: element, items: items) else {
                 return
             }
 
@@ -307,19 +340,19 @@ extension WalletService: IWalletElementServiceDelegate {
 
     func didUpdate(balanceData: BalanceData, element: WalletModule.Element) {
         queue.async {
-            guard let item = self._item(element: element) else {
+            guard case .loaded(let items) = self.internalState, let item = self._item(element: element, items: items) else {
                 return
             }
 
             item.balanceData = balanceData
 
-            if self.sortType == .balance, self.internalItems.allSatisfy({ $0.state.isSynced }) {
-                self.internalItems = self.sorter.sort(items: self.internalItems, sortType: self.sortType)
+            if self.sortType == .balance, items.allSatisfy({ $0.state.isSynced }) {
+                self.internalState = .loaded(items: self._sorted(items: items))
             } else {
                 self.itemUpdatedRelay.accept(item)
             }
 
-            self.syncTotalItem()
+            self._syncTotalItem()
 
             if let wallet = element.wallet {
                 self.cacheManager.set(balanceData: balanceData, wallet: wallet)
@@ -329,21 +362,21 @@ extension WalletService: IWalletElementServiceDelegate {
 
     func didUpdate(state: AdapterState, element: WalletModule.Element) {
         queue.async {
-            guard let item = self._item(element: element) else {
+            guard case .loaded(let items) = self.internalState, let item = self._item(element: element, items: items) else {
                 return
             }
 
             let oldState = item.state
             item.state = state
 
-            if self.sortType == .balance, self.internalItems.allSatisfy({ $0.state.isSynced }) {
-                self.internalItems = self.sorter.sort(items: self.internalItems, sortType: self.sortType)
+            if self.sortType == .balance, items.allSatisfy({ $0.state.isSynced }) {
+                self.internalState = .loaded(items: self._sorted(items: items))
             } else {
                 self.itemUpdatedRelay.accept(item)
             }
 
             if oldState.isSynced != state.isSynced {
-                self.syncTotalItem()
+                self._syncTotalItem()
             }
         }
     }
@@ -352,27 +385,35 @@ extension WalletService: IWalletElementServiceDelegate {
 
 extension WalletService: IWalletCoinPriceServiceDelegate {
 
-    private func _handleUpdated(priceItemMap: [String: WalletCoinPriceService.Item]) {
-        for item in internalItems {
+    private func _handleUpdated(priceItemMap: [String: WalletCoinPriceService.Item], items: [Item]) {
+        for item in items {
             if let priceCoinUid = item.element.priceCoinUid {
                 item.priceItem = priceItemMap[priceCoinUid]
             }
         }
 
-        internalItems = sorter.sort(items: internalItems, sortType: sortType)
-        syncTotalItem()
+        internalState = .loaded(items: _sorted(items: items))
+        _syncTotalItem()
     }
 
     func didUpdateBaseCurrency() {
         queue.async {
-            let coinUids = Array(Set(self.internalItems.compactMap { $0.element.priceCoinUid }))
-            self._handleUpdated(priceItemMap: self.coinPriceService.itemMap(coinUids: coinUids))
+            guard case .loaded(let items) = self.internalState else {
+                return
+            }
+
+            let coinUids = Array(Set(items.compactMap { $0.element.priceCoinUid }))
+            self._handleUpdated(priceItemMap: self.coinPriceService.itemMap(coinUids: coinUids), items: items)
         }
     }
 
     func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]) {
         queue.async {
-            self._handleUpdated(priceItemMap: itemsMap)
+            guard case .loaded(let items) = self.internalState else {
+                return
+            }
+
+            self._handleUpdated(priceItemMap: itemsMap, items: items)
         }
     }
 
@@ -384,16 +425,8 @@ extension WalletService {
         activeAccountRelay.asObservable()
     }
 
-    var totalItemObservable: Observable<TotalItem?> {
-        totalItemRelay.asObservable()
-    }
-
     var itemUpdatedObservable: Observable<Item> {
         itemUpdatedRelay.asObservable()
-    }
-
-    var itemsObservable: Observable<[Item]> {
-        itemsRelay.asObservable()
     }
 
     var accountsLostObservable: Observable<()> {
@@ -442,7 +475,11 @@ extension WalletService {
 
     func item(element: WalletModule.Element) -> Item? {
         queue.sync {
-            _item(element: element)
+            guard case .loaded(let items) = internalState else {
+                return nil
+            }
+
+            return _item(element: element, items: items)
         }
     }
 
@@ -463,12 +500,16 @@ extension WalletService {
     }
 
     func refresh() {
-        elementService?.refresh()
-        coinPriceService.refresh()
+        queue.async {
+            self.elementService?.refresh()
+            self.coinPriceService.refresh()
+        }
     }
 
     func disable(element: WalletModule.Element) {
-        elementService?.disable(element: element)
+        queue.async {
+            self.elementService?.disable(element: element)
+        }
     }
 
     func isCloudBackedUp(account: Account) -> Bool {
@@ -487,6 +528,18 @@ extension WalletService {
 }
 
 extension WalletService {
+
+    enum InternalState {
+        case noAccount
+        case regular(elementService: IWalletElementService)
+    }
+
+    enum State {
+        case noAccount
+        case loading
+        case loaded(items: [Item])
+        case failed(reason: WalletModule.FailureReason)
+    }
 
     class Item {
         let element: WalletModule.Element

@@ -13,7 +13,6 @@ class MainViewController: ThemeTabBarController {
 
     private var marketModule: UIViewController?
     private let balanceModule = ThemeNavigationController(rootViewController: WalletModule.viewController())
-    private let onboardingModule = OnboardingBalanceViewController()
     private let transactionsModule = ThemeNavigationController(rootViewController: TransactionsModule.viewController())
     private let settingsModule = ThemeNavigationController(rootViewController: MainSettingsModule.viewController())
 
@@ -79,13 +78,6 @@ class MainViewController: ThemeTabBarController {
     }
 
     private func sync(balanceTabState: MainViewModel.BalanceTabState) {
-        let balanceTabModule: UIViewController
-
-        switch balanceTabState {
-        case .balance: balanceTabModule = balanceModule
-        case .onboarding: balanceTabModule = onboardingModule
-        }
-
         var viewControllers = [UIViewController]()
         if viewModel.showMarket {
             let marketModule = marketModule ?? ThemeNavigationController(rootViewController: MarketModule.viewController())
@@ -97,7 +89,7 @@ class MainViewController: ThemeTabBarController {
         }
 
         viewControllers.append(contentsOf: [
-            balanceTabModule,
+            balanceModule,
             transactionsModule,
             settingsModule
         ])

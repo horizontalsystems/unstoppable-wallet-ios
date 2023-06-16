@@ -19,8 +19,14 @@ class WalletViewController: ThemeViewController {
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let refreshControl = UIRefreshControl()
 
+    private let placeholderView = PlaceholderView(layoutType: .bottom)
+
+    private let spinner = HUDActivityView.create(with: .medium24)
+
     private let emptyView = PlaceholderView()
     private let watchEmptyView = PlaceholderView()
+    private let failedView = PlaceholderView()
+    private let invalidApiKeyView = PlaceholderView()
 
     private var viewItems = [BalanceViewItem]()
     private var headerViewItem: WalletViewModel.HeaderViewItem?
@@ -57,9 +63,6 @@ class WalletViewController: ThemeViewController {
 
         navigationItem.largeTitleDisplayMode = .never
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "switch_wallet_24"), style: .plain, target: self, action: #selector(onTapSwitchWallet))
-        navigationItem.leftBarButtonItem?.tintColor = .themeJacob
-
         refreshControl.tintColor = .themeLeah
         refreshControl.alpha = 0.6
         refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
@@ -80,6 +83,40 @@ class WalletViewController: ThemeViewController {
         tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
         tableView.registerHeaderFooter(forClass: WalletHeaderView.self)
         tableView.registerHeaderFooter(forClass: SectionColorHeader.self)
+
+        view.addSubview(placeholderView)
+        placeholderView.snp.makeConstraints { maker in
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        placeholderView.image = UIImage(named: "add_to_wallet_48")
+
+        placeholderView.addPrimaryButton(
+                style: .yellow,
+                title: "onboarding.balance.create".localized,
+                target: self,
+                action: #selector(onTapCreate)
+        )
+
+        placeholderView.addPrimaryButton(
+                style: .gray,
+                title: "onboarding.balance.import".localized,
+                target: self,
+                action: #selector(onTapRestore)
+        )
+
+        placeholderView.addPrimaryButton(
+                style: .transparent,
+                title: "onboarding.balance.watch".localized,
+                target: self,
+                action: #selector(onTapWatch)
+        )
+
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        spinner.startAnimating()
 
         view.addSubview(emptyView)
         emptyView.snp.makeConstraints { maker in
@@ -103,10 +140,30 @@ class WalletViewController: ThemeViewController {
         watchEmptyView.image = UIImage(named: "empty_wallet_48")
         watchEmptyView.text = "balance.watch_empty.description".localized
 
+        view.addSubview(failedView)
+        failedView.snp.makeConstraints { maker in
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        failedView.image = UIImage(named: "sync_error_48")
+        failedView.text = "sync_error".localized
+        failedView.addPrimaryButton(
+                style: .yellow,
+                title: "button.retry".localized,
+                target: self,
+                action: #selector(onTapRetry)
+        )
+
+        view.addSubview(invalidApiKeyView)
+        invalidApiKeyView.snp.makeConstraints { maker in
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        invalidApiKeyView.image = UIImage(named: "not_available_48")
+        invalidApiKeyView.text = "balance.invalid_api_key".localized
+
         subscribe(disposeBag, viewModel.titleDriver) { [weak self] in self?.navigationItem.title = $0 }
-        subscribe(disposeBag, viewModel.displayModeDriver) { [weak self] in self?.sync(displayMode: $0) }
         subscribe(disposeBag, viewModel.showWarningDriver) { [weak self] in self?.sync(warning: $0) }
-        subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.openReceiveSignal) { [weak self] in self?.openReceive(wallet: $0) }
         subscribe(disposeBag, viewModel.openBackupRequiredSignal) { [weak self] in self?.openBackupRequired(wallet: $0) }
         subscribe(disposeBag, viewModel.openCoinPageSignal) { [weak self] in self?.openCoinPage(coin: $0) }
@@ -115,6 +172,11 @@ class WalletViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.showAccountsLostSignal) { [weak self] in self?.showAccountsLost() }
         subscribe(disposeBag, viewModel.playHapticSignal) { [weak self] in self?.playHaptic() }
         subscribe(disposeBag, viewModel.scrollToTopSignal) { [weak self] in self?.scrollToTop() }
+
+        viewModel.$state
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.sync(state: $0) }
+                .store(in: &cancellables)
 
         viewModel.$headerViewItem
                 .receive(on: DispatchQueue.main)
@@ -154,6 +216,21 @@ class WalletViewController: ThemeViewController {
         viewModel.onDisappear()
     }
 
+    @objc func onTapCreate() {
+        let viewController = CreateAccountModule.viewController(sourceViewController: self)
+        present(viewController, animated: true)
+    }
+
+    @objc func onTapRestore() {
+        let viewController = RestoreTypeModule.viewController(sourceViewController: self)
+        present(viewController, animated: true)
+    }
+
+    @objc func onTapWatch() {
+        let viewController = WatchModule.viewController()
+        present(viewController, animated: true)
+    }
+
     @objc func onRefresh() {
         viewModel.onTriggerRefresh()
 
@@ -175,6 +252,10 @@ class WalletViewController: ThemeViewController {
         navigationController?.pushViewController(module, animated: true)
     }
 
+    @objc private func onTapRetry() {
+        // todo
+    }
+
     @objc private func onTapAddCoin() {
         openManageWallets()
     }
@@ -183,10 +264,53 @@ class WalletViewController: ThemeViewController {
         navigationItem.rightBarButtonItem = nftVisible ? UIBarButtonItem(image: UIImage(named: "nft_24"), style: .plain, target: self, action: #selector(onTapNft)) : nil
     }
 
-    private func sync(displayMode: WalletViewModel.DisplayMode) {
-        tableView.isHidden = displayMode != .list
-        emptyView.isHidden = displayMode != .empty
-        watchEmptyView.isHidden = displayMode != .watchEmpty
+    private func sync(state: WalletViewModel.State) {
+        switch state {
+        case .noAccount:
+            placeholderView.isHidden = false
+            navigationItem.leftBarButtonItem = nil
+        default:
+            placeholderView.isHidden = true
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "switch_wallet_24"), style: .plain, target: self, action: #selector(onTapSwitchWallet))
+            navigationItem.leftBarButtonItem?.tintColor = .themeJacob
+        }
+
+        switch state {
+        case .loading: spinner.isHidden = false
+        default: spinner.isHidden = true
+        }
+
+        switch state {
+        case .list(let viewItems):
+            if isLoaded {
+                handle(newViewItems: viewItems)
+            } else {
+                self.viewItems = viewItems
+            }
+            tableView.isHidden = false
+        default:
+            tableView.isHidden = true
+        }
+
+        switch state {
+        case .empty: emptyView.isHidden = false
+        default: emptyView.isHidden = true
+        }
+
+        switch state {
+        case .watchEmpty: watchEmptyView.isHidden = false
+        default: watchEmptyView.isHidden = true
+        }
+
+        switch state {
+        case .syncFailed: failedView.isHidden = false
+        default: failedView.isHidden = true
+        }
+
+        switch state {
+        case .invalidApiKey: invalidApiKeyView.isHidden = false
+        default: invalidApiKeyView.isHidden = true
+        }
     }
 
     private func sync(headerViewItem: WalletViewModel.HeaderViewItem?) {
@@ -245,16 +369,6 @@ class WalletViewController: ThemeViewController {
         viewModel.onCloseWarning()
     }
 
-    private func sync(viewItems: [BalanceViewItem]) {
-        if isLoaded {
-            queue.async { [weak self] in
-                self?.handle(newViewItems: viewItems)
-            }
-        } else {
-            self.viewItems = viewItems
-        }
-    }
-
     private func handle(newViewItems: [BalanceViewItem]) {
         let changes = diff(old: viewItems, new: newViewItems)
 
@@ -267,10 +381,8 @@ class WalletViewController: ThemeViewController {
             if case .delete = $0 { return true }
             return false
         }) {
-            DispatchQueue.main.sync {
-                viewItems = newViewItems
-                tableView.reloadData()
-            }
+            viewItems = newViewItems
+            tableView.reloadData()
             return
         }
 
@@ -287,18 +399,16 @@ class WalletViewController: ThemeViewController {
             }
         }
 
-        DispatchQueue.main.sync {
-            viewItems = newViewItems
+        viewItems = newViewItems
 
-            UIView.animate(withDuration: animationDuration) {
-                self.tableView.beginUpdates()
-                self.tableView.endUpdates()
-            }
+        UIView.animate(withDuration: animationDuration) {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
 
-            updateIndexes.forEach {
-                if let cell = tableView.cellForRow(at: IndexPath(row: $0 + viewItemsOffset, section: 1)) as? BalanceCell {
-                    bind(cell: cell, viewItem: viewItems[$0], animated: true)
-                }
+        updateIndexes.forEach {
+            if let cell = tableView.cellForRow(at: IndexPath(row: $0 + viewItemsOffset, section: 1)) as? BalanceCell {
+                bind(cell: cell, viewItem: viewItems[$0], animated: true)
             }
         }
     }
@@ -551,7 +661,7 @@ extension WalletViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0: return 0
-        default: return WalletHeaderView.height
+        default: return viewItems.isEmpty ? 0 : WalletHeaderView.height
         }
     }
 
@@ -565,7 +675,7 @@ extension WalletViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch section {
         case 0: return nil
-        default: return tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: WalletHeaderView.self))
+        default: return viewItems.isEmpty ? nil : tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: WalletHeaderView.self))
         }
     }
 

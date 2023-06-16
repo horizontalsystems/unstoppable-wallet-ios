@@ -17,21 +17,37 @@ class WalletCexElementService {
 
     weak var delegate: IWalletElementServiceDelegate?
 
-    private var items = [CexAsset: BalanceData]() {
+    private(set) var state: WalletModule.ElementState = .loading {
         didSet {
-            delegate?.didUpdate(elements: items.keys.map { .cexAsset(cexAsset: $0) })
+            delegate?.didUpdate(elementState: state)
         }
     }
+
+    private var items = [CexAsset: BalanceData]()
 
     init(provider: ICexProvider) {
         self.provider = provider
 
+        sync()
+    }
+
+    private func sync() {
+        tasks = Set()
+
+        switch state {
+        case .loaded: ()
+        default: state = .loading
+        }
+
         Task { [weak self, provider] in
             do {
                 let balances = try await provider.balances()
-                self?.items = Dictionary(balances.map { ($0.asset, BalanceData(balance: $0.free, balanceLocked: $0.locked)) }, uniquingKeysWith: { lhs, _ in lhs })
+                let items = Dictionary(balances.map { ($0.asset, BalanceData(balance: $0.free, balanceLocked: $0.locked)) }, uniquingKeysWith: { lhs, _ in lhs })
+                self?.items = items
+                self?.state = .loaded(elements: items.keys.map { .cexAsset(cexAsset: $0) })
             } catch {
                 print("ERROR: \(error)")
+                self?.state = .failed(reason: .syncFailed)
             }
         }.store(in: &tasks)
     }
@@ -39,10 +55,6 @@ class WalletCexElementService {
 }
 
 extension WalletCexElementService: IWalletElementService {
-
-    var elements: [WalletModule.Element] {
-        []
-    }
 
     func isMainNet(element: WalletModule.Element) -> Bool? {
         true
@@ -61,7 +73,7 @@ extension WalletCexElementService: IWalletElementService {
     }
 
     func refresh() {
-        // todo
+        sync()
     }
 
     func disable(element: WalletModule.Element) {

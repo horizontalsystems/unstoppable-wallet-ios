@@ -9,12 +9,11 @@ class WalletViewModel {
     private let service: WalletService
     private let factory: WalletViewItemFactory
     private let accountRestoreWarningFactory: AccountRestoreWarningFactory
+    private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
 
     private let titleRelay = BehaviorRelay<String?>(value: nil)
-    private let displayModeRelay = BehaviorRelay<DisplayMode>(value: .list)
     private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
-    private let viewItemsRelay = BehaviorRelay<[BalanceViewItem]>(value: [])
     private let openReceiveRelay = PublishRelay<Wallet>()
     private let openBackupRequiredRelay = PublishRelay<Wallet>()
     private let openCoinPageRelay = PublishRelay<Coin>()
@@ -23,12 +22,12 @@ class WalletViewModel {
     private let playHapticRelay = PublishRelay<()>()
     private let scrollToTopRelay = PublishRelay<()>()
 
+    @Published private(set) var state: State = .list(viewItems: [])
     @Published private(set) var headerViewItem: HeaderViewItem?
     @Published private(set) var sortBy: String?
     @Published private(set) var controlViewItem: ControlViewItem?
     @Published private(set) var nftVisible: Bool = false
 
-    private var viewItems = [BalanceViewItem]()
     private var expandedElement: WalletModule.Element?
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-view-model", qos: .userInitiated)
@@ -40,16 +39,46 @@ class WalletViewModel {
 
         subscribe(disposeBag, service.activeAccountObservable) { [weak self] in self?.sync(activeAccount: $0) }
         subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.onUpdateBalanceHidden() }
-        subscribe(disposeBag, service.totalItemObservable) { [weak self] in self?.sync(totalItem: $0) }
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
-        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
         subscribe(disposeBag, service.sortTypeObservable) { [weak self] in self?.sync(sortType: $0, scrollToTop: true) }
         subscribe(disposeBag, service.balancePrimaryValueObservable) { [weak self] _ in self?.onUpdateBalancePrimaryValue() }
 
+        service.$state
+                .sink { [weak self] in self?.sync(serviceState: $0) }
+                .store(in: &cancellables)
+
+        service.$totalItem
+                .sink { [weak self] in self?.sync(totalItem: $0) }
+                .store(in: &cancellables)
+
         sync(activeAccount: service.activeAccount)
         sync(totalItem: service.totalItem)
-        sync(items: service.items)
         sync(sortType: service.sortType, scrollToTop: false)
+        sync(serviceState: service.state)
+    }
+
+    private func sync(serviceState: WalletService.State) {
+        queue.async {
+            self._sync(serviceState: serviceState)
+        }
+    }
+
+    private func _sync(serviceState: WalletService.State) {
+        switch service.state {
+        case .noAccount: state = .noAccount
+        case .loading: state = .loading
+        case .loaded(let items):
+            if items.isEmpty, !service.cexAccount {
+                state = service.watchAccount ? .watchEmpty : .empty
+            } else {
+                state = .list(viewItems: items.map { _viewItem(item: $0) })
+            }
+        case .failed(let reason):
+            switch reason {
+            case .syncFailed: state = .syncFailed
+            case .invalidApiKey: state = .invalidApiKey
+            }
+        }
     }
 
     private func sync(activeAccount: Account?) {
@@ -66,12 +95,12 @@ class WalletViewModel {
     }
 
     private func onUpdateBalanceHidden() {
-        sync(items: service.items)
+        sync(serviceState: service.state)
         sync(totalItem: service.totalItem)
     }
 
     private func onUpdateBalancePrimaryValue() {
-        sync(items: service.items)
+        sync(serviceState: service.state)
     }
 
     private func sync(totalItem: WalletService.TotalItem?) {
@@ -88,41 +117,26 @@ class WalletViewModel {
 
     private func syncUpdated(item: WalletService.Item) {
         queue.async {
-            guard let index = self.viewItems.firstIndex(where: { $0.element == item.element }) else {
+            guard case .list(var viewItems) = self.state else {
                 return
             }
 
-            self.viewItems[index] = self.viewItem(item: item)
-            self.viewItemsRelay.accept(self.viewItems)
-        }
-    }
-
-    private func sync(items: [WalletService.Item]) {
-        queue.async {
-            self.viewItems = items.map {
-                self.viewItem(item: $0)
+            guard let index = viewItems.firstIndex(where: { $0.element == item.element }) else {
+                return
             }
-            self.viewItemsRelay.accept(self.viewItems)
-        }
 
-        displayModeRelay.accept(items.isEmpty ? (service.watchAccount ? .watchEmpty : .empty) : .list)
+            viewItems[index] = self._viewItem(item: item)
+            self.state = .list(viewItems: viewItems)
+        }
     }
 
-    private func viewItem(item: WalletService.Item) -> BalanceViewItem {
+    private func _viewItem(item: WalletService.Item) -> BalanceViewItem {
         factory.viewItem(
                 item: item,
                 balancePrimaryValue: service.balancePrimaryValue,
                 balanceHidden: service.balanceHidden,
                 expanded: item.element == expandedElement
         )
-    }
-
-    private func syncViewItem(element: WalletModule.Element) {
-        guard let item = service.item(element: element), let index = viewItems.firstIndex(where: { $0.element == element }) else {
-            return
-        }
-
-        viewItems[index] = viewItem(item: item)
     }
 
 }
@@ -133,16 +147,8 @@ extension WalletViewModel {
         titleRelay.asDriver()
     }
 
-    var displayModeDriver: Driver<DisplayMode> {
-        displayModeRelay.asDriver()
-    }
-
     var showWarningDriver: Driver<CancellableTitledCaution?> {
         showWarningRelay.asDriver()
-    }
-
-    var viewItemsDriver: Driver<[BalanceViewItem]> {
-        viewItemsRelay.asDriver()
     }
 
     var openReceiveSignal: Signal<Wallet> {
@@ -218,20 +224,30 @@ extension WalletViewModel {
 
     func onTap(element: WalletModule.Element) {
         queue.async {
+            guard case .list(var viewItems) = self.state else {
+                return
+            }
+
             if self.expandedElement == element {
                 self.expandedElement = nil
-                self.syncViewItem(element: element)
+
+                if let item = self.service.item(element: element), let index = viewItems.firstIndex(where: { $0.element == element }) {
+                    viewItems[index] = self._viewItem(item: item)
+                }
             } else {
                 let oldExpandedElement = self.expandedElement
                 self.expandedElement = element
 
-                if let oldExpandedElement {
-                    self.syncViewItem(element: oldExpandedElement)
+                if let oldExpandedElement, let item = self.service.item(element: oldExpandedElement), let index = viewItems.firstIndex(where: { $0.element == oldExpandedElement }) {
+                    viewItems[index] = self._viewItem(item: item)
                 }
-                self.syncViewItem(element: element)
+
+                if let item = self.service.item(element: element), let index = viewItems.firstIndex(where: { $0.element == element }) {
+                    viewItems[index] = self._viewItem(item: item)
+                }
             }
 
-            self.viewItemsRelay.accept(self.viewItems)
+            self.state = .list(viewItems: viewItems)
         }
     }
 
@@ -300,10 +316,14 @@ extension WalletViewModel {
 
 extension WalletViewModel {
 
-    enum DisplayMode {
-        case list
+    enum State {
+        case list(viewItems: [BalanceViewItem])
+        case noAccount
         case empty
         case watchEmpty
+        case loading
+        case syncFailed
+        case invalidApiKey
     }
 
     struct HeaderViewItem {
