@@ -12,8 +12,8 @@ class WalletBlockchainElementService {
         self.adapterService = adapterService
         self.walletManager = walletManager
 
-        subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] in
-            self?.delegate?.didUpdate(elements: $0.map { .wallet(wallet: $0) })
+        subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
+            self?.delegate?.didUpdate(elementState: .loaded(elements: wallets.map { .wallet(wallet: $0) }))
         }
     }
 
@@ -21,8 +21,8 @@ class WalletBlockchainElementService {
 
 extension WalletBlockchainElementService: IWalletElementService {
 
-    var elements: [WalletModule.Element] {
-        walletManager.activeWallets.map { .wallet(wallet: $0) }
+    var state: WalletModule.ElementState {
+        .loaded(elements: walletManager.activeWallets.map { .wallet(wallet: $0) })
     }
 
     func isMainNet(element: WalletModule.Element) -> Bool? {

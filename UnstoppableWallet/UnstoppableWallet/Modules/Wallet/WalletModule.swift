@@ -59,6 +59,17 @@ struct WalletModule {
 
 extension WalletModule {
 
+    enum ElementState {
+        case loading
+        case loaded(elements: [Element])
+        case failed(reason: FailureReason)
+    }
+
+    enum FailureReason {
+        case syncFailed
+        case invalidApiKey
+    }
+
     enum Element: Hashable {
         case wallet(wallet: Wallet)
         case cexAsset(cexAsset: CexAsset)
