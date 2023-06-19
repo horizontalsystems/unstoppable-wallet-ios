@@ -13,8 +13,12 @@ class WalletBlockchainElementService {
         self.walletManager = walletManager
 
         subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
-            self?.delegate?.didUpdate(elementState: .loaded(elements: wallets.map { .wallet(wallet: $0) }))
+            self?.handleUpdated(wallets: wallets)
         }
+    }
+
+    private func handleUpdated(wallets: [Wallet]) {
+        delegate?.didUpdate(elementState: .loaded(elements: wallets.map { .wallet(wallet: $0) }), elementService: self)
     }
 
 }
@@ -66,7 +70,7 @@ extension WalletBlockchainElementService: IWalletElementService {
 extension WalletBlockchainElementService: IWalletAdapterServiceDelegate {
 
     func didPrepareAdapters() {
-        delegate?.didUpdateElements()
+        delegate?.didUpdateElements(elementService: self)
     }
 
     func didUpdate(isMainNet: Bool, wallet: Wallet) {
