@@ -19,7 +19,7 @@ class WalletCexElementService {
 
     private(set) var state: WalletModule.ElementState = .loading {
         didSet {
-            delegate?.didUpdate(elementState: state)
+            delegate?.didUpdate(elementState: state, elementService: self)
         }
     }
 

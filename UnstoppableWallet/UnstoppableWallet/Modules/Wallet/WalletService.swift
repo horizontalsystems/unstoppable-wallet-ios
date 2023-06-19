@@ -18,8 +18,8 @@ protocol IWalletElementService: AnyObject {
 }
 
 protocol IWalletElementServiceDelegate: AnyObject {
-    func didUpdate(elementState: WalletModule.ElementState)
-    func didUpdateElements()
+    func didUpdate(elementState: WalletModule.ElementState, elementService: IWalletElementService)
+    func didUpdateElements(elementService: IWalletElementService)
     func didUpdate(isMainNet: Bool, element: WalletModule.Element)
     func didUpdate(balanceData: BalanceData, element: WalletModule.Element)
     func didUpdate(state: AdapterState, element: WalletModule.Element)
@@ -132,10 +132,10 @@ class WalletService {
             self?.syncTotalItem()
         }
 
-        _sync(activeAccount: accountManager.activeAccount)
+        sync(activeAccount: accountManager.activeAccount)
     }
 
-    private func _sync(activeAccount: Account?) {
+    private func sync(activeAccount: Account?) {
         elementService?.delegate = nil
 
         if let activeAccount {
@@ -143,13 +143,17 @@ class WalletService {
             elementService.delegate = self
             self.elementService = elementService
 
-            _sync(elementState: elementService.state)
+            queue.async {
+                self._sync(elementState: elementService.state, elementService: elementService)
+            }
         } else {
-            internalState = .noAccount
+            queue.async {
+                self.internalState = .noAccount
+            }
         }
     }
 
-    private func _sync(elementState: WalletModule.ElementState) {
+    private func _sync(elementState: WalletModule.ElementState, elementService: IWalletElementService) {
         switch elementState {
         case .loading:
             internalState = .loading
@@ -161,10 +165,10 @@ class WalletService {
             let items: [Item] = elements.map { element in
                 let item = Item(
                         element: element,
-                        isMainNet: elementService?.isMainNet(element: element) ?? fallbackIsMainNet,
+                        isMainNet: elementService.isMainNet(element: element) ?? fallbackIsMainNet,
                         watchAccount: watchAccount,
-                        balanceData: elementService?.balanceData(element: element) ?? _cachedBalanceData(element: element, cacheContainer: cacheContainer) ?? fallbackBalanceData,
-                        state: elementService?.state(element: element)  ?? fallbackAdapterState
+                        balanceData: elementService.balanceData(element: element) ?? _cachedBalanceData(element: element, cacheContainer: cacheContainer) ?? fallbackBalanceData,
+                        state: elementService.state(element: element)  ?? fallbackAdapterState
                 )
 
                 if let priceCoinUid = element.priceCoinUid {
@@ -203,7 +207,7 @@ class WalletService {
 
     private func handleUpdated(activeAccount: Account?) {
         queue.async {
-            self._sync(activeAccount: activeAccount)
+            self.sync(activeAccount: activeAccount)
         }
 
         activeAccountRelay.accept(activeAccount)
@@ -291,13 +295,13 @@ class WalletService {
 
 extension WalletService: IWalletElementServiceDelegate {
 
-    func didUpdate(elementState: WalletModule.ElementState) {
+    func didUpdate(elementState: WalletModule.ElementState, elementService: IWalletElementService) {
         queue.async {
-            self._sync(elementState: elementState)
+            self._sync(elementState: elementState, elementService: elementService)
         }
     }
 
-    func didUpdateElements() {
+    func didUpdateElements(elementService: IWalletElementService) {
         queue.async {
             guard case .loaded(let items) = self.internalState else {
                 return
@@ -306,11 +310,11 @@ extension WalletService: IWalletElementServiceDelegate {
             var balanceDataMap = [Wallet: BalanceData]()
 
             for item in items {
-                let balanceData = self.elementService?.balanceData(element: item.element) ?? self.fallbackBalanceData
+                let balanceData = elementService.balanceData(element: item.element) ?? self.fallbackBalanceData
 
-                item.isMainNet = self.elementService?.isMainNet(element: item.element) ?? self.fallbackIsMainNet
+                item.isMainNet = elementService.isMainNet(element: item.element) ?? self.fallbackIsMainNet
                 item.balanceData = balanceData
-                item.state = self.elementService?.state(element: item.element) ?? self.fallbackAdapterState
+                item.state = elementService.state(element: item.element) ?? self.fallbackAdapterState
 
                 if let wallet = item.element.wallet {
                     balanceDataMap[wallet] = balanceData
@@ -500,16 +504,15 @@ extension WalletService {
     }
 
     func refresh() {
+        elementService?.refresh()
+
         queue.async {
-            self.elementService?.refresh()
             self.coinPriceService.refresh()
         }
     }
 
     func disable(element: WalletModule.Element) {
-        queue.async {
-            self.elementService?.disable(element: element)
-        }
+        elementService?.disable(element: element)
     }
 
     func isCloudBackedUp(account: Account) -> Bool {
@@ -528,11 +531,6 @@ extension WalletService {
 }
 
 extension WalletService {
-
-    enum InternalState {
-        case noAccount
-        case regular(elementService: IWalletElementService)
-    }
 
     enum State {
         case noAccount
