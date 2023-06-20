@@ -8,11 +8,11 @@ class WalletManager {
     private let storage: WalletStorage
     private let disposeBag = DisposeBag()
 
-    private let activeWalletsRelay = PublishRelay<[Wallet]>()
+    private let activeWalletDataRelay = PublishRelay<WalletData>()
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet_manager", qos: .userInitiated)
 
-    private var cachedActiveWallets = [Wallet]()
+    private var cachedActiveWalletData = WalletData(wallets: [], account: nil)
 
     init(accountManager: AccountManager, storage: WalletStorage) {
         self.accountManager = accountManager
@@ -31,22 +31,20 @@ class WalletManager {
         }
     }
 
-    private var activeAccountWallets: [Wallet] {
+    private func _reloadWallets() {
         guard let activeAccount = accountManager.activeAccount else {
-            return []
+            cachedActiveWalletData = WalletData(wallets: [], account: nil)
+            return
         }
 
         do {
-            return try storage.wallets(account: activeAccount)
+            cachedActiveWalletData = WalletData(wallets: try storage.wallets(account: activeAccount), account: activeAccount)
         } catch {
             // todo
-            return []
+            cachedActiveWalletData = WalletData(wallets: [], account: activeAccount)
         }
-    }
 
-    private func _reloadWallets() {
-        cachedActiveWallets = activeAccountWallets
-        activeWalletsRelay.accept(cachedActiveWallets)
+        activeWalletDataRelay.accept(cachedActiveWalletData)
     }
 
     private func reloadWallets() {
@@ -57,12 +55,16 @@ class WalletManager {
 
 extension WalletManager {
 
-    var activeWallets: [Wallet] {
-        queue.sync { cachedActiveWallets }
+    var activeWalletData: WalletData {
+        queue.sync { cachedActiveWalletData }
     }
 
-    var activeWalletsUpdatedObservable: Observable<[Wallet]> {
-        activeWalletsRelay.asObservable()
+    var activeWallets: [Wallet] {
+        activeWalletData.wallets
+    }
+
+    var activeWalletDataUpdatedObservable: Observable<WalletData> {
+        activeWalletDataRelay.asObservable()
     }
 
     func preloadWallets() {
@@ -98,6 +100,15 @@ extension WalletManager {
 
     func clearWallets() {
         storage.clearWallets()
+    }
+
+}
+
+extension WalletManager {
+
+    struct WalletData {
+        let wallets: [Wallet]
+        let account: Account?
     }
 
 }

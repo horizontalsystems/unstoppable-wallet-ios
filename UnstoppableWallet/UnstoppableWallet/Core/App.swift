@@ -104,6 +104,8 @@ class App {
 
     let subscriptionManager: SubscriptionManager
 
+    let cexAssetManager: CexAssetManager
+
     let appManager: AppManager
     let contactManager: ContactBookManager?
     let cloudAccountBackupManager: CloudAccountBackupManager
@@ -301,6 +303,9 @@ class App {
         contactManager = ContactBookManager(localStorage: localStorage, ubiquityContainerIdentifier: appConfigProvider.privateCloudContainer, helper: ContactBookHelper(), logger: logger)
 
         subscriptionManager = SubscriptionManager(localStorage: StorageKit.LocalStorage.default)
+
+        let cexAssetRecordStorage = CexAssetRecordStorage(dbPool: dbPool)
+        cexAssetManager = CexAssetManager(accountManager: accountManager, marketKit: marketKit, storage: cexAssetRecordStorage)
 
         appManager = AppManager(
                 accountManager: accountManager,

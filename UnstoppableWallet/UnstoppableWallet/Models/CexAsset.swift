@@ -1,7 +1,11 @@
+import Foundation
 import MarketKit
 
 struct CexAsset {
     let id: String
+    let freeBalance: Decimal
+    let lockedBalance: Decimal
+    let networks: [CexNetwork]
     let coin: Coin?
 }
 
@@ -9,11 +13,10 @@ extension CexAsset: Hashable {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-        hasher.combine(coin)
     }
 
     static func ==(lhs: CexAsset, rhs: CexAsset) -> Bool {
-        lhs.id == rhs.id && lhs.coin == rhs.coin
+        lhs.id == rhs.id && lhs.freeBalance == rhs.freeBalance && lhs.lockedBalance == rhs.lockedBalance && lhs.networks == rhs.networks && lhs.coin == rhs.coin
     }
 
 }

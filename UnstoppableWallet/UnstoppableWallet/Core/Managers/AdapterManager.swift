@@ -11,10 +11,10 @@ class AdapterManager {
     private let evmBlockchainManager: EvmBlockchainManager
     private let tronKitManager: TronKitManager
 
-    private let adaptersReadyRelay = PublishRelay<[Wallet: IAdapter]>()
+    private let adapterDataReadyRelay = PublishRelay<AdapterData>()
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.adapter_manager", qos: .userInitiated)
-    private var _adapterMap = [Wallet: IAdapter]()
+    private var _adapterData = AdapterData(adapterMap: [:], account: nil)
 
     init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
          tronKitManager: TronKitManager, btcBlockchainManager: BtcBlockchainManager) {
@@ -23,10 +23,10 @@ class AdapterManager {
         self.evmBlockchainManager = evmBlockchainManager
         self.tronKitManager = tronKitManager
 
-        walletManager.activeWalletsUpdatedObservable
+        walletManager.activeWalletDataUpdatedObservable
                 .observeOn(SerialDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] wallets in
-                    self?.initAdapters(wallets: wallets)
+                .subscribe(onNext: { [weak self] walletData in
+                    self?.initAdapters(wallets: walletData.wallets, account: walletData.account)
                 })
                 .disposed(by: disposeBag)
 
@@ -36,8 +36,8 @@ class AdapterManager {
         subscribe(disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] in self?.handleUpdatedRestoreMode(blockchainType: $0) }
     }
 
-    private func initAdapters(wallets: [Wallet]) {
-        var newAdapterMap = queue.sync { _adapterMap }
+    private func initAdapters(wallets: [Wallet], account: Account?) {
+        var newAdapterMap = queue.sync { _adapterData.adapterMap }
 
         for wallet in wallets {
             guard newAdapterMap[wallet] == nil else {
@@ -61,8 +61,9 @@ class AdapterManager {
         }
 
         queue.async {
-            self._adapterMap = newAdapterMap
-            self.adaptersReadyRelay.accept(newAdapterMap)
+            let newAdapterData = AdapterData(adapterMap: newAdapterMap, account: account)
+            self._adapterData = newAdapterData
+            self.adapterDataReadyRelay.accept(newAdapterData)
         }
 
         removedAdapters.forEach { adapter in
@@ -71,14 +72,14 @@ class AdapterManager {
     }
 
     private func handleUpdatedEvmKit(blockchain: Blockchain) {
-        let wallets = queue.sync { _adapterMap.keys }
+        let wallets = queue.sync { _adapterData.adapterMap.keys }
         refreshAdapters(wallets: wallets.filter { wallet in
             wallet.token.blockchain == blockchain
         })
     }
 
     private func handleUpdatedRestoreMode(blockchainType: BlockchainType) {
-        let wallets = queue.sync { _adapterMap.keys }
+        let wallets = queue.sync { _adapterData.adapterMap.keys }
 
         refreshAdapters(wallets: wallets.filter {
             $0.token.blockchain.type == blockchainType && $0.account.origin == .restored
@@ -92,28 +93,29 @@ class AdapterManager {
 
         queue.sync {
             wallets.forEach {
-                _adapterMap[$0]?.stop()
-                _adapterMap[$0] = nil
+                _adapterData.adapterMap[$0]?.stop()
+                _adapterData.adapterMap[$0] = nil
             }
         }
 
-        initAdapters(wallets: walletManager.activeWallets)
+        let activeWalletData = walletManager.activeWalletData
+        initAdapters(wallets: activeWalletData.wallets, account: activeWalletData.account)
     }
 
 }
 
 extension AdapterManager {
 
-    var adapterMap: [Wallet: IAdapter] {
-        queue.sync { _adapterMap }
+    var adapterData: AdapterData {
+        queue.sync { _adapterData }
     }
 
-    var adaptersReadyObservable: Observable<[Wallet: IAdapter]> {
-        adaptersReadyRelay.asObservable()
+    var adapterDataReadyObservable: Observable<AdapterData> {
+        adapterDataReadyRelay.asObservable()
     }
 
     func adapter(for wallet: Wallet) -> IAdapter? {
-        queue.sync { _adapterMap[wallet] }
+        queue.sync { _adapterData.adapterMap[wallet] }
     }
 
     func adapter(for token: Token) -> IAdapter? {
@@ -122,16 +124,16 @@ extension AdapterManager {
                 return nil
             }
 
-            return _adapterMap[wallet]
+            return _adapterData.adapterMap[wallet]
         }
     }
 
     func balanceAdapter(for wallet: Wallet) -> IBalanceAdapter? {
-        queue.sync { _adapterMap[wallet] as? IBalanceAdapter }
+        queue.sync { _adapterData.adapterMap[wallet] as? IBalanceAdapter }
     }
 
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter? {
-        queue.sync { _adapterMap[wallet] as? IDepositAdapter }
+        queue.sync { _adapterData.adapterMap[wallet] as? IDepositAdapter }
     }
 
     func refresh() {
@@ -141,7 +143,7 @@ extension AdapterManager {
             }
             var binanceKitUpdated = false
 
-            for (wallet, adapter) in self._adapterMap {
+            for (wallet, adapter) in self._adapterData.adapterMap {
                 switch wallet.token.blockchainType {
                 case .binanceChain:
                     if !binanceKitUpdated {
@@ -164,9 +166,18 @@ extension AdapterManager {
             } else if wallet.token.blockchainType == .tron {
                 self.tronKitManager.tronKitWrapper?.tronKit.refresh()
             } else {
-                self._adapterMap[wallet]?.refresh()
+                self._adapterData.adapterMap[wallet]?.refresh()
             }
         }
+    }
+
+}
+
+extension AdapterManager {
+
+    struct AdapterData {
+        var adapterMap: [Wallet: IAdapter]
+        let account: Account?
     }
 
 }

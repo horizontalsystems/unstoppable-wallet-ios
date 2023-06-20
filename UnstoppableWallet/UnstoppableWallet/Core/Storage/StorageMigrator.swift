@@ -725,6 +725,19 @@ class StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Create CexAssetRecord") { db in
+            try db.create(table: CexAssetRecord.databaseTableName) { t in
+                t.column(CexAssetRecord.Columns.accountId.name, .text).notNull()
+                t.column(CexAssetRecord.Columns.id.name, .text).notNull()
+                t.column(CexAssetRecord.Columns.freeBalance.name, .text).notNull()
+                t.column(CexAssetRecord.Columns.lockedBalance.name, .text).notNull()
+                t.column(CexAssetRecord.Columns.networks.name, .text)
+                t.column(CexAssetRecord.Columns.coinUid.name, .text)
+
+                t.primaryKey([CexAssetRecord.Columns.accountId.name, CexAssetRecord.Columns.id.name], onConflict: .replace)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

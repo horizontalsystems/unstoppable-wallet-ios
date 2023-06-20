@@ -47,7 +47,7 @@ class MainService {
         self.presetTab = presetTab
 
         subscribe(disposeBag, accountManager.accountsObservable) { [weak self] in self?.sync(accounts: $0) }
-        subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] in self?.sync(activeWallets: $0) }
+        subscribe(disposeBag, walletManager.activeWalletDataUpdatedObservable) { [weak self] in self?.sync(activeWallets: $0.wallets) }
         subscribe(disposeBag, launchScreenManager.showMarketObservable) { [weak self] in self?.sync(showMarket: $0) }
         subscribe(disposeBag, appManager.didBecomeActiveObservable) { [weak self] in self?.didBecomeActive() }
 

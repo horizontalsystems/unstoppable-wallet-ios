@@ -33,8 +33,8 @@ class ManageWalletsService {
         self.walletManager = walletManager
         self.restoreSettingsService = restoreSettingsService
 
-        subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
-            self?.handleUpdated(wallets: wallets)
+        subscribe(disposeBag, walletManager.activeWalletDataUpdatedObservable) { [weak self] walletData in
+            self?.handleUpdated(wallets: walletData.wallets)
         }
         subscribe(disposeBag, restoreSettingsService.approveSettingsObservable) { [weak self] tokenWithSettings in
             self?.handleApproveRestoreSettings(token: tokenWithSettings.token, settings: tokenWithSettings.settings)

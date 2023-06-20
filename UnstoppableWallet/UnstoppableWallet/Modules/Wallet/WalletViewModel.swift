@@ -4,6 +4,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import MarketKit
+import HsExtensions
 
 class WalletViewModel {
     private let service: WalletService
@@ -22,7 +23,7 @@ class WalletViewModel {
     private let playHapticRelay = PublishRelay<()>()
     private let scrollToTopRelay = PublishRelay<()>()
 
-    @Published private(set) var state: State = .list(viewItems: [])
+    @PostPublished private(set) var state: State = .list(viewItems: [])
     @Published private(set) var headerViewItem: HeaderViewItem?
     @Published private(set) var sortBy: String?
     @Published private(set) var controlViewItem: ControlViewItem?
@@ -54,7 +55,7 @@ class WalletViewModel {
         sync(activeAccount: service.activeAccount)
         sync(totalItem: service.totalItem)
         sync(sortType: service.sortType, scrollToTop: false)
-        sync(serviceState: service.state)
+        _sync(serviceState: service.state)
     }
 
     private func sync(serviceState: WalletService.State) {
@@ -316,7 +317,7 @@ extension WalletViewModel {
 
 extension WalletViewModel {
 
-    enum State {
+    enum State: CustomStringConvertible {
         case list(viewItems: [BalanceViewItem])
         case noAccount
         case empty
@@ -324,6 +325,18 @@ extension WalletViewModel {
         case loading
         case syncFailed
         case invalidApiKey
+
+        var description: String {
+            switch self {
+            case .list(let viewItems): return "list: \(viewItems.count) view items"
+            case .noAccount: return "noAccount"
+            case .empty: return "empty"
+            case .watchEmpty: return "watchEmpty"
+            case .loading: return "loading"
+            case .syncFailed: return "syncFailed"
+            case .invalidApiKey: return "invalidApiKey"
+            }
+        }
     }
 
     struct HeaderViewItem {

@@ -11,6 +11,7 @@ protocol IWalletAdapterServiceDelegate: AnyObject {
 class WalletAdapterService {
     weak var delegate: IWalletAdapterServiceDelegate?
 
+    private let account: Account
     private let adapterManager: AdapterManager
     private let disposeBag = DisposeBag()
     private var adaptersDisposeBag = DisposeBag()
@@ -19,14 +20,19 @@ class WalletAdapterService {
 
     private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-adapter-service", qos: .userInitiated)
 
-    init(adapterManager: AdapterManager) {
+    init(account: Account, adapterManager: AdapterManager) {
+        self.account = account
         self.adapterManager = adapterManager
 
-        adapterMap = adapterManager.adapterMap.compactMapValues { $0 as? IBalanceAdapter }
+        adapterMap = adapterManager.adapterData.adapterMap.compactMapValues { $0 as? IBalanceAdapter }
         subscribeToAdapters()
 
-        subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] in
-            self?.handleAdaptersReady(adapterMap: $0)
+        subscribe(disposeBag, adapterManager.adapterDataReadyObservable) { [weak self] adapterData in
+            guard adapterData.account == self?.account else {
+                return
+            }
+
+            self?.handleAdaptersReady(adapterMap: adapterData.adapterMap)
         }
     }
 
