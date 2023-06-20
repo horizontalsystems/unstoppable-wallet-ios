@@ -458,9 +458,6 @@ class WalletViewController: ThemeViewController {
     private func bind(headerCell: WalletHeaderCell) {
         if let viewItem = headerViewItem {
             headerCell.bind(viewItem: viewItem)
-
-            headerCell.onTapAmount = { [weak self] in self?.viewModel.onTapTotalAmount() }
-            headerCell.onTapConvertedAmount = { [weak self] in self?.viewModel.onTapConvertedTotalAmount() }
         }
     }
 
@@ -603,7 +600,24 @@ extension WalletViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            return tableView.dequeueReusableCell(withIdentifier: String(describing: WalletHeaderCell.self), for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: WalletHeaderCell.self), for: indexPath)
+
+            if let headerCell = cell as? WalletHeaderCell {
+                headerCell.onTapAmount = { [weak self] in self?.viewModel.onTapTotalAmount() }
+                headerCell.onTapConvertedAmount = { [weak self] in self?.viewModel.onTapConvertedTotalAmount() }
+                headerCell.onDeposit = { [weak self] in
+                    if let viewController = CexCoinSelectModule.viewController(mode: .deposit) {
+                        self?.present(viewController, animated: true)
+                    }
+                }
+                headerCell.onWithdraw = { [weak self] in
+                    if let viewController = CexCoinSelectModule.viewController(mode: .withdraw) {
+                        self?.present(viewController, animated: true)
+                    }
+                }
+            }
+
+            return cell
         default:
             if warningViewItem != nil, indexPath.row == 0 {
                 return tableView.dequeueReusableCell(withIdentifier: String(describing: TitledHighlightedDescriptionCell.self), for: indexPath)

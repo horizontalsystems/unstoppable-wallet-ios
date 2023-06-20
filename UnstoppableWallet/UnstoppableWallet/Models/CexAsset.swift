@@ -3,8 +3,11 @@ import MarketKit
 
 struct CexAsset {
     let id: String
+    let name: String
     let freeBalance: Decimal
     let lockedBalance: Decimal
+    let depositEnabled: Bool
+    let withdrawEnabled: Bool
     let networks: [CexNetwork]
     let coin: Coin?
 }

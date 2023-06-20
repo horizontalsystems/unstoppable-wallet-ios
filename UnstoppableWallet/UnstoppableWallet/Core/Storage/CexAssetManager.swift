@@ -27,8 +27,11 @@ class CexAssetManager {
         return records.compactMap { record in
             CexAsset(
                     id: record.id,
+                    name: record.name,
                     freeBalance: record.freeBalance,
                     lockedBalance: record.lockedBalance,
+                    depositEnabled: record.depositEnabled,
+                    withdrawEnabled: record.withdrawEnabled,
                     networks: record.networks.map { $0.cexNetwork(blockchain: $0.blockchainUid.flatMap { blockchainMap[$0] }) },
                     coin: record.coinUid.flatMap { coinMap[$0] }
             )

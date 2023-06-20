@@ -71,7 +71,6 @@ extension CoinzixCexProvider: ICexProvider {
         let coinUidMap = try await coinUidMap()
 
         return response.balances
-                .filter { $0.balance > 0 }
                 .map { balanceResponse in
                     let assetId = balanceResponse.currencyIso3
                     let balance = Decimal(sign: .plus, exponent: -8, significand: balanceResponse.balance)
@@ -79,8 +78,11 @@ extension CoinzixCexProvider: ICexProvider {
 
                     return CexAssetResponse(
                             id: assetId,
+                            name: balanceResponse.currencyName,
                             freeBalance: balanceAvailable,
                             lockedBalance: balance - balanceAvailable,
+                            depositEnabled: balanceResponse.currencyRefill == 1,
+                            withdrawEnabled: balanceResponse.currencyWithdraw == 1,
                             networks: [], // todo
                             coinUid: coinUidMap[assetId]
                     )
@@ -108,11 +110,17 @@ extension CoinzixCexProvider {
 
         struct Balance: ImmutableMappable {
             let currencyIso3: String
+            let currencyName: String
+            let currencyRefill: Int
+            let currencyWithdraw: Int
             let balance: Decimal
             let balanceAvailable: Decimal
 
             init(map: Map) throws {
                 currencyIso3 = try map.value("currency.iso3")
+                currencyName = try map.value("currency.name")
+                currencyRefill = try map.value("currency.refill")
+                currencyWithdraw = try map.value("currency.withdraw")
                 balance = try map.value("balance", using: Transform.doubleToDecimalTransform)
                 balanceAvailable = try map.value("balance_available", using: Transform.doubleToDecimalTransform)
             }
