@@ -29,6 +29,7 @@ class CexCoinSelectViewController: ThemeSearchViewController {
 
         title = "cex_coin_select.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.searchController?.searchBar.placeholder = "cex_coin_select.search_placeholder".localized
 
         view.addSubview(tableView)
@@ -52,6 +53,10 @@ class CexCoinSelectViewController: ThemeSearchViewController {
         tableView.buildSections()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
+    }
+
     @objc func onTapCancel() {
         dismiss(animated: true)
     }
@@ -62,8 +67,11 @@ class CexCoinSelectViewController: ThemeSearchViewController {
 
     private func onSelect(cexAsset: CexAsset) {
         switch mode {
-        case .deposit: () // todo
-        case .withdraw: () // todo
+        case .deposit:
+            let viewController = CexDepositNetworkSelectModule.viewController(cexAsset: cexAsset)
+            navigationController?.pushViewController(viewController, animated: true)
+        case .withdraw:
+            () // todo
         }
     }
 
