@@ -199,6 +199,7 @@ class WalletViewController: ThemeViewController {
                 .store(in: &cancellables)
 
         sync(state: viewModel.state)
+        sync(headerViewItem: viewModel.headerViewItem)
 
         isLoaded = true
     }
