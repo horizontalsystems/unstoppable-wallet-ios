@@ -1,24 +1,24 @@
-import MarketKit
 import HsToolKit
 
 struct WalletElementServiceFactory {
     private let adapterManager: AdapterManager
     private let walletManager: WalletManager
     private let networkManager: NetworkManager
-    private let marketKit: MarketKit.Kit
+    private let cexAssetManager: CexAssetManager
 
-    init(adapterManager: AdapterManager, walletManager: WalletManager, networkManager: NetworkManager, marketKit: MarketKit.Kit) {
+    init(adapterManager: AdapterManager, walletManager: WalletManager, networkManager: NetworkManager, cexAssetManager: CexAssetManager) {
         self.adapterManager = adapterManager
         self.walletManager = walletManager
         self.networkManager = networkManager
-        self.marketKit = marketKit
+        self.cexAssetManager = cexAssetManager
     }
 
-    func elementService(accountType: AccountType) -> IWalletElementService {
-        switch accountType {
+    func elementService(account: Account) -> IWalletElementService {
+        switch account.type {
         case .mnemonic, .evmPrivateKey, .evmAddress, .tronAddress, .hdExtendedKey:
-            let adapterService = WalletAdapterService(adapterManager: adapterManager)
+            let adapterService = WalletAdapterService(account: account, adapterManager: adapterManager)
             let elementService = WalletBlockchainElementService(
+                    account: account,
                     adapterService: adapterService,
                     walletManager: walletManager
             )
@@ -32,20 +32,18 @@ struct WalletElementServiceFactory {
             case .binance(let apiKey, let secret):
                 provider = BinanceCexProvider(
                         networkManager: networkManager,
-                        marketKit: marketKit,
                         apiKey: apiKey,
                         secret: secret
                 )
             case .coinzix(let authToken, let secret):
                 provider = CoinzixCexProvider(
                         networkManager: networkManager,
-                        marketKit: marketKit,
                         authToken: authToken,
                         secret: secret
                 )
             }
 
-            return WalletCexElementService(provider: provider)
+            return WalletCexElementService(account: account, provider: provider, cexAssetManager: cexAssetManager)
         }
     }
 

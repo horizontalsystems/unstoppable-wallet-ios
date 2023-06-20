@@ -2,18 +2,24 @@ import Foundation
 import RxSwift
 
 class WalletBlockchainElementService {
+    private let account: Account
     private let adapterService: WalletAdapterService
     private let walletManager: WalletManager
     private let disposeBag = DisposeBag()
 
     weak var delegate: IWalletElementServiceDelegate?
 
-    init(adapterService: WalletAdapterService, walletManager: WalletManager) {
+    init(account: Account, adapterService: WalletAdapterService, walletManager: WalletManager) {
+        self.account = account
         self.adapterService = adapterService
         self.walletManager = walletManager
 
-        subscribe(disposeBag, walletManager.activeWalletsUpdatedObservable) { [weak self] wallets in
-            self?.handleUpdated(wallets: wallets)
+        subscribe(disposeBag, walletManager.activeWalletDataUpdatedObservable) { [weak self] walletData in
+            guard walletData.account == self?.account else {
+                return
+            }
+
+            self?.handleUpdated(wallets: walletData.wallets)
         }
     }
 

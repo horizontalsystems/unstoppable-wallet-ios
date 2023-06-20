@@ -139,7 +139,7 @@ class WalletService {
         elementService?.delegate = nil
 
         if let activeAccount {
-            let elementService = elementServiceFactory.elementService(accountType: activeAccount.type)
+            let elementService = elementServiceFactory.elementService(account: activeAccount)
             elementService.delegate = self
             self.elementService = elementService
 
@@ -532,11 +532,20 @@ extension WalletService {
 
 extension WalletService {
 
-    enum State {
+    enum State: CustomStringConvertible {
         case noAccount
         case loading
         case loaded(items: [Item])
         case failed(reason: WalletModule.FailureReason)
+
+        var description: String {
+            switch self {
+            case .noAccount: return "noAccount"
+            case .loading: return "loading"
+            case .loaded(let items): return "loaded: \(items.count) items"
+            case .failed: return "failed"
+            }
+        }
     }
 
     class Item {

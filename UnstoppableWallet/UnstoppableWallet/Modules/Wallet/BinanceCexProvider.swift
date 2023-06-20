@@ -9,13 +9,11 @@ class BinanceCexProvider {
     private static let baseUrl = "https://api.binance.com"
 
     private let networkManager: NetworkManager
-    private let marketKit: MarketKit.Kit
     private let apiKey: String
     private let secret: String
 
-    init(networkManager: NetworkManager, marketKit: MarketKit.Kit, apiKey: String, secret: String) {
+    init(networkManager: NetworkManager, apiKey: String, secret: String) {
         self.networkManager = networkManager
-        self.marketKit = marketKit
         self.apiKey = apiKey
         self.secret = secret
     }
@@ -87,59 +85,36 @@ class BinanceCexProvider {
 
 extension BinanceCexProvider: ICexProvider {
 
-    func balances() async throws -> [CexBalance] {
-        let response: AccountResponse = try await fetch(path: "/api/v3/account")
-
-        let map = try await coinUidMap()
-        let coins = try marketKit.allCoins()
-        var coinMap = [String: Coin]()
-        coins.forEach { coinMap[$0.uid] = $0 }
-
-        return response.balances
-                .filter { $0.free > 0 || $0.locked > 0 }
-                .map { balance in
-                    CexBalance(
-                            asset: CexAsset(id: balance.asset, coin: map[balance.asset].flatMap { coinMap[$0] }),
-                            free: balance.free,
-                            locked: balance.locked
-                    )
-                }
-    }
-
-    func allAssetInfos() async throws -> [CexAssetInfo] {
+    func assets() async throws -> [CexAssetResponse] {
         let response: [AssetResponse] = try await fetch(path: "/sapi/v1/capital/config/getall")
 
         let coinUidMap = try await coinUidMap()
-        let coins = try marketKit.allCoins()
-        var coinMap = [String: Coin]()
-        coins.forEach { coinMap[$0.uid] = $0 }
-
         let blockchainUidMap = try await blockchainUidMap()
-        let blockchains: [Blockchain] = [] // todo
-        var blockchainMap = [String: Blockchain]()
-        blockchains.forEach { blockchainMap[$0.uid] = $0 }
 
         return response
                 .map { asset in
-                    CexAssetInfo(
-                            asset: CexAsset(id: asset.coin, coin: coinUidMap[asset.coin].flatMap { coinMap[$0] }),
+                    CexAssetResponse(
+                            id: asset.coin,
+                            freeBalance: asset.free,
+                            lockedBalance: asset.locked,
                             networks: asset.networks.map { network in
-                                CexNetwork(
+                                CexNetworkRaw(
                                         network: network.network,
                                         name: network.name,
                                         isDefault: network.isDefault,
                                         depositEnabled: network.depositEnable,
                                         withdrawEnabled: network.withdrawEnable,
-                                        blockchain: blockchainUidMap[network.network].flatMap { blockchainMap[$0] }
+                                        blockchainUid: blockchainUidMap[network.network]
                                 )
-                            }
+                            },
+                            coinUid: coinUidMap[asset.coin]
                     )
                 }
     }
 
-    func deposit(cexAsset: CexAsset, network: String?) async throws -> String {
+    func deposit(id: String, network: String?) async throws -> String {
         var parameters: Parameters = [
-            "coin": cexAsset.id
+            "coin": id
         ]
 
         if let network {
@@ -150,9 +125,9 @@ extension BinanceCexProvider: ICexProvider {
         return response.address
     }
 
-    func withdraw(cexAsset: CexAsset, network: String, address: String, amount: Decimal) async throws -> String {
+    func withdraw(id: String, network: String, address: String, amount: Decimal) async throws -> String {
         let parameters: Parameters = [
-            "coin": cexAsset.id,
+            "coin": id,
             "network": network,
             "address": address,
             "amount": amount
@@ -167,39 +142,23 @@ extension BinanceCexProvider: ICexProvider {
 extension BinanceCexProvider {
 
     static func validate(apiKey: String, secret: String, networkManager: NetworkManager) async throws {
-        let _: AccountResponse = try await Self.fetch(networkManager: networkManager, apiKey: apiKey, secret: secret, path: "/api/v3/account")
+        let _: [AssetResponse] = try await Self.fetch(networkManager: networkManager, apiKey: apiKey, secret: secret, path: "/sapi/v1/capital/config/getall")
     }
 
 }
 
 extension BinanceCexProvider {
 
-    private struct AccountResponse: ImmutableMappable {
-        let balances: [Balance]
-
-        init(map: Map) throws {
-            balances = try map.value("balances")
-        }
-
-        struct Balance: ImmutableMappable {
-            let asset: String
-            let free: Decimal
-            let locked: Decimal
-
-            init(map: Map) throws {
-                asset = try map.value("asset")
-                free = try map.value("free", using: Transform.stringToDecimalTransform)
-                locked = try map.value("locked", using: Transform.stringToDecimalTransform)
-            }
-        }
-    }
-
     private struct AssetResponse: ImmutableMappable {
         let coin: String
+        let free: Decimal
+        let locked: Decimal
         let networks: [Network]
 
         init(map: Map) throws {
             coin = try map.value("coin")
+            free = try map.value("free", using: Transform.stringToDecimalTransform)
+            locked = try map.value("locked", using: Transform.stringToDecimalTransform)
             networks = try map.value("networkList")
         }
 

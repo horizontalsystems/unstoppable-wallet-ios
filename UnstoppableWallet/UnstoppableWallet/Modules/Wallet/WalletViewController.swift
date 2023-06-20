@@ -198,6 +198,8 @@ class WalletViewController: ThemeViewController {
                 .sink { [weak self] in self?.sync(nftVisible: $0) }
                 .store(in: &cancellables)
 
+        sync(state: viewModel.state)
+
         isLoaded = true
     }
 

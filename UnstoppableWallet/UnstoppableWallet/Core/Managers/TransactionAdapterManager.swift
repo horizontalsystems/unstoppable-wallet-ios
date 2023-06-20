@@ -19,10 +19,10 @@ class TransactionAdapterManager {
         self.evmBlockchainManager = evmBlockchainManager
         self.adapterFactory = adapterFactory
 
-        adapterManager.adaptersReadyObservable
+        adapterManager.adapterDataReadyObservable
                 .observeOn(SerialDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] adaptersMap in
-                    self?.initAdapters(adapterMap: adaptersMap)
+                .subscribe(onNext: { [weak self] adapterData in
+                    self?.initAdapters(adapterMap: adapterData.adapterMap)
                 })
                 .disposed(by: disposeBag)
     }

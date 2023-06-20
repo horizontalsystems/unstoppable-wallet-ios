@@ -17,10 +17,10 @@ class NftAdapterManager {
         self.walletManager = walletManager
         self.evmBlockchainManager = evmBlockchainManager
 
-        walletManager.activeWalletsUpdatedObservable
+        walletManager.activeWalletDataUpdatedObservable
                 .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] wallets in
-                    self?.handleAdaptersReady(wallets: wallets)
+                .subscribe(onNext: { [weak self] walletData in
+                    self?.handleAdaptersReady(wallets: walletData.wallets)
                 })
                 .disposed(by: disposeBag)
 

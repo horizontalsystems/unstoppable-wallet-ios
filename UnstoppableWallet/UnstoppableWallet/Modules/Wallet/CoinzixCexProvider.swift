@@ -9,13 +9,11 @@ class CoinzixCexProvider {
     private let baseUrl = "https://api.coinzix.com"
 
     private let networkManager: NetworkManager
-    private let marketKit: MarketKit.Kit
     private let authToken: String
     private let secret: String
 
-    init(networkManager: NetworkManager, marketKit: MarketKit.Kit, authToken: String, secret: String) {
+    init(networkManager: NetworkManager, authToken: String, secret: String) {
         self.networkManager = networkManager
-        self.marketKit = marketKit
         self.authToken = authToken
         self.secret = secret
     }
@@ -67,13 +65,10 @@ class CoinzixCexProvider {
 
 extension CoinzixCexProvider: ICexProvider {
 
-    func balances() async throws -> [CexBalance] {
+    func assets() async throws -> [CexAssetResponse] {
         let response: BalancesResponse = try await fetch(path: "/v1/private/balances")
 
-        let map = try await coinUidMap()
-        let coins = try marketKit.allCoins()
-        var coinMap = [String: Coin]()
-        coins.forEach { coinMap[$0.uid] = $0 }
+        let coinUidMap = try await coinUidMap()
 
         return response.balances
                 .filter { $0.balance > 0 }
@@ -82,23 +77,21 @@ extension CoinzixCexProvider: ICexProvider {
                     let balance = Decimal(sign: .plus, exponent: -8, significand: balanceResponse.balance)
                     let balanceAvailable = Decimal(sign: .plus, exponent: -8, significand: balanceResponse.balanceAvailable)
 
-                    return CexBalance(
-                            asset: CexAsset(id: assetId, coin: map[assetId].flatMap { coinMap[$0] }),
-                            free: balanceAvailable,
-                            locked: balance - balanceAvailable
+                    return CexAssetResponse(
+                            id: assetId,
+                            freeBalance: balanceAvailable,
+                            lockedBalance: balance - balanceAvailable,
+                            networks: [], // todo
+                            coinUid: coinUidMap[assetId]
                     )
                 }
     }
 
-    func allAssetInfos() async throws -> [CexAssetInfo] {
-        fatalError("allAssetInfos() has not been implemented")
-    }
-
-    func deposit(cexAsset: CexAsset, network: String?) async throws -> String {
+    func deposit(id: String, network: String?) async throws -> String {
         fatalError("deposit(cexAsset:network:) has not been implemented")
     }
 
-    func withdraw(cexAsset: CexAsset, network: String, address: String, amount: Decimal) async throws -> String {
+    func withdraw(id: String, network: String, address: String, amount: Decimal) async throws -> String {
         fatalError("withdraw(cexAsset:network:address:amount:) has not been implemented")
     }
 

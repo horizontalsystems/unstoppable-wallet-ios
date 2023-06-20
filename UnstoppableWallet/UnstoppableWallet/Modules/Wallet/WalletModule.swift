@@ -18,7 +18,7 @@ struct WalletModule {
                 adapterManager: App.shared.adapterManager,
                 walletManager: App.shared.walletManager,
                 networkManager: App.shared.networkManager,
-                marketKit: App.shared.marketKit
+                cexAssetManager: App.shared.cexAssetManager
         )
 
         let service = WalletService(
@@ -59,10 +59,18 @@ struct WalletModule {
 
 extension WalletModule {
 
-    enum ElementState {
+    enum ElementState: CustomStringConvertible {
         case loading
         case loaded(elements: [Element])
         case failed(reason: FailureReason)
+
+        var description: String {
+            switch self {
+            case .loading: return "loading"
+            case .loaded(let elements): return "loaded: \(elements.count) elements"
+            case .failed: return "failed"
+            }
+        }
     }
 
     enum FailureReason {
