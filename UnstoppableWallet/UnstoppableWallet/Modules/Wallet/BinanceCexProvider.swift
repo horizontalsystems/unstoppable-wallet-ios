@@ -95,8 +95,11 @@ extension BinanceCexProvider: ICexProvider {
                 .map { asset in
                     CexAssetResponse(
                             id: asset.coin,
+                            name: asset.name,
                             freeBalance: asset.free,
                             lockedBalance: asset.locked,
+                            depositEnabled: asset.depositAllEnable,
+                            withdrawEnabled: asset.withdrawAllEnable,
                             networks: asset.networks.map { network in
                                 CexNetworkRaw(
                                         network: network.network,
@@ -151,14 +154,20 @@ extension BinanceCexProvider {
 
     private struct AssetResponse: ImmutableMappable {
         let coin: String
+        let name: String
         let free: Decimal
         let locked: Decimal
+        let depositAllEnable: Bool
+        let withdrawAllEnable: Bool
         let networks: [Network]
 
         init(map: Map) throws {
             coin = try map.value("coin")
+            name = try map.value("name")
             free = try map.value("free", using: Transform.stringToDecimalTransform)
             locked = try map.value("locked", using: Transform.stringToDecimalTransform)
+            depositAllEnable = try map.value("depositAllEnable")
+            withdrawAllEnable = try map.value("withdrawAllEnable")
             networks = try map.value("networkList")
         }
 

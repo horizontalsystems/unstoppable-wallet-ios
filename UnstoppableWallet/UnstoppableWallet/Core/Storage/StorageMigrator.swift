@@ -729,8 +729,11 @@ class StorageMigrator {
             try db.create(table: CexAssetRecord.databaseTableName) { t in
                 t.column(CexAssetRecord.Columns.accountId.name, .text).notNull()
                 t.column(CexAssetRecord.Columns.id.name, .text).notNull()
+                t.column(CexAssetRecord.Columns.name.name, .text).notNull()
                 t.column(CexAssetRecord.Columns.freeBalance.name, .text).notNull()
                 t.column(CexAssetRecord.Columns.lockedBalance.name, .text).notNull()
+                t.column(CexAssetRecord.Columns.withdrawEnabled.name, .boolean).notNull()
+                t.column(CexAssetRecord.Columns.depositEnabled.name, .boolean).notNull()
                 t.column(CexAssetRecord.Columns.networks.name, .text)
                 t.column(CexAssetRecord.Columns.coinUid.name, .text)
 
