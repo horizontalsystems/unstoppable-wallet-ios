@@ -24,7 +24,7 @@ class WalletViewModel {
     private let scrollToTopRelay = PublishRelay<()>()
 
     @PostPublished private(set) var state: State = .list(viewItems: [])
-    @Published private(set) var headerViewItem: HeaderViewItem?
+    @PostPublished private(set) var headerViewItem: HeaderViewItem?
     @Published private(set) var sortBy: String?
     @Published private(set) var controlViewItem: ControlViewItem?
     @Published private(set) var nftVisible: Bool = false
