@@ -1560,3 +1560,8 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "cex_coin_select.title" = "Choose Coin";
 "cex_coin_select.search_placeholder" = "Coin Code or Name";
+
+// Cex Deposit Network Select
+
+"cex_deposit_network_select.title" = "Choose Network";
+"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
