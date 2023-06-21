@@ -69,30 +69,3 @@ extension Eip20Kit.Kit {
     }
 
 }
-
-extension DataProvider {
-    struct DisposedError: Error {}
-
-    public func getBalance(contractAddress: EvmKit.Address, address: EvmKit.Address) -> Single<BigUInt> {
-        Single<BigUInt>.create { [weak self] observer in
-            guard let strongSelf = self else {
-                observer(.error(DisposedError()))
-                return Disposables.create()
-            }
-
-            let task = Task {
-                do {
-                    let result = try await strongSelf.fetchBalance(contractAddress: contractAddress, address: address)
-                    observer(.success(result))
-                } catch {
-                    observer(.error(error))
-                }
-            }
-
-            return Disposables.create {
-                task.cancel()
-            }
-        }
-    }
-
-}
