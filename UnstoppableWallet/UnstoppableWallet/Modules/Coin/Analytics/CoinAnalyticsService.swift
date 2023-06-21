@@ -95,10 +95,10 @@ extension CoinAnalyticsService {
 
         state = .loading
 
-        if let authToken = subscriptionManager.authToken {
+        if subscriptionManager.authToken != nil {
             Task { [weak self, marketKit, fullCoin, currency] in
                 do {
-                    let analytics = try await marketKit.analytics(coinUid: fullCoin.coin.uid, currencyCode: currency.code, authToken: authToken)
+                    let analytics = try await marketKit.analytics(coinUid: fullCoin.coin.uid, currencyCode: currency.code)
                     self?.state = .success(analytics: analytics)
                 } catch {
                     if let responseError = error as? NetworkManager.ResponseError, (responseError.statusCode == 401 || responseError.statusCode == 403) {
