@@ -302,7 +302,7 @@ class App {
 
         contactManager = ContactBookManager(localStorage: localStorage, ubiquityContainerIdentifier: appConfigProvider.privateCloudContainer, helper: ContactBookHelper(), logger: logger)
 
-        subscriptionManager = SubscriptionManager(localStorage: StorageKit.LocalStorage.default)
+        subscriptionManager = SubscriptionManager(localStorage: StorageKit.LocalStorage.default, marketKit: marketKit)
 
         let cexAssetRecordStorage = CexAssetRecordStorage(dbPool: dbPool)
         cexAssetManager = CexAssetManager(accountManager: accountManager, marketKit: marketKit, storage: cexAssetRecordStorage)

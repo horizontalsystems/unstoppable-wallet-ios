@@ -10091,7 +10091,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/HsToolKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.3;
+				version = 2.0.4;
 			};
 		};
 		D023D2612A249E59004F65B0 /* XCRemoteSwiftPackageReference "TronKit.Swift" */ = {
@@ -10187,7 +10187,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.8;
+				version = 2.0.9;
 			};
 		};
 		D3604E7128F03B0A0066C366 /* XCRemoteSwiftPackageReference "ScanQrKit.Swift" */ = {
