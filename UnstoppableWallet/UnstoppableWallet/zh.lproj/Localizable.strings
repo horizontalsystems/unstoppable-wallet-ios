@@ -1051,11 +1051,11 @@
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "删除地址";
 
+"contacts.restore.restored" = "恢复";
 "contacts.restore.parsing_error" = "文件包含错误数据！";
-"contacts.restore.storage_error" = "无法保存联系人！";
+"contacts.restore.restore_error" = "无法恢复联系人";
 "contacts.restore.overwrite_alert.description" = "此操作将覆盖您的本地付款联系人以及它的 iCloud 副本（如有）。";
 "contacts.restore.overwrite_alert.replace" = "替换";
-
 
 "contacts.add_address.title" = "添加地址";
 "contacts.add_address.create_new" = "创建新联系人";
@@ -1518,7 +1518,7 @@
 "activate_subscription.sign" = "签名";
 "activate_subscription.activating" = "激活";
 "activate_subscription.failed_to_activate" = "订阅激活失败";
-
+"activate_subscription.activated" = "已激活";
 
 // Launch
 

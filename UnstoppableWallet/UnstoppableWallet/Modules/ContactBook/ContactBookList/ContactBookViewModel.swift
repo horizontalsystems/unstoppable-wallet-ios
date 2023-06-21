@@ -20,7 +20,7 @@ class ContactBookViewModel {
     private let showRestoreAlertRelay = PublishRelay<[BackupContact]>()
     private let showSuccessfulRestoreRelay = PublishRelay<()>()
     private let showParsingErrorRelay = PublishRelay<()>()
-    private let showStorageErrorRelay = PublishRelay<()>()
+    private let showRestoreErrorRelay = PublishRelay<()>()
 
     init(service: ContactBookService) {
         self.service = service
@@ -83,8 +83,8 @@ extension ContactBookViewModel {
         showParsingErrorRelay.asSignal()
     }
 
-    var showStorageErrorSignal: Signal<()> {
-        showStorageErrorRelay.asSignal()
+    var showRestoreErrorSignal: Signal<()> {
+        showRestoreErrorRelay.asSignal()
     }
 
     func contactAddress(contactUid: String, blockchainUid: String) -> ContactAddress? {
@@ -111,7 +111,12 @@ extension ContactBookViewModel {
     }
 
     func replace(contacts: [BackupContact]) {
-        service.replace(contacts: contacts)
+        do {
+            try service.replace(contacts: contacts)
+            showSuccessfulRestoreRelay.accept(())
+        } catch {
+            showRestoreErrorRelay.accept(())
+        }
     }
 
     func blockchainName(blockchainUid: String) -> String? {

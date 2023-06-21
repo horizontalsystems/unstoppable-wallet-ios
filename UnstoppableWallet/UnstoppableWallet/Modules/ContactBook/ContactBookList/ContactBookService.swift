@@ -98,8 +98,8 @@ extension ContactBookService {
         try contactManager.backupContacts(from: url)
     }
 
-    func replace(contacts: [BackupContact]) {
-        try? contactManager.restore(contacts: contacts)
+    func replace(contacts: [BackupContact]) throws {
+        try contactManager.restore(contacts: contacts)
     }
 
     func blockchainName(blockchainUid: String) -> String? {
