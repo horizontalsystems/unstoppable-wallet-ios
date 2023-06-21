@@ -1049,11 +1049,11 @@
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Adresse löschen";
 
+"contacts.restore.restored" = "Wiederhergestellt";
 "contacts.restore.parsing_error" = "Datei hat falsche Daten!";
-"contacts.restore.storage_error" = "Kontakte können nicht gespeichert werden!";
+"contacts.restore.restore_error" = "Wiederherstellung der Kontakte fehlgeschlagen";
 "contacts.restore.overwrite_alert.description" = "Diese Aktion wird Ihre lokalen Zahlungskontakte sowie die iCloud-Kopie (falls vorhanden) überschreiben.";
 "contacts.restore.overwrite_alert.replace" = "Ersetzen";
-
 
 "contacts.add_address.title" = "Adresse hinzufügen";
 "contacts.add_address.create_new" = "Neuen Kontakt erstellen";
@@ -1516,7 +1516,7 @@
 "activate_subscription.sign" = "Signieren";
 "activate_subscription.activating" = "Activating...";
 "activate_subscription.failed_to_activate" = "Failed to activate subscription";
-
+"activate_subscription.activated" = "Activated";
 
 // Launch
 

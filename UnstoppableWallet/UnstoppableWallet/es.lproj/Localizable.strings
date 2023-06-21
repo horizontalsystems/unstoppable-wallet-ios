@@ -1048,11 +1048,11 @@
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Eliminar dirección";
 
+"contacts.restore.restored" = "Restaurado";
 "contacts.restore.parsing_error" = "¡El archivo tiene datos incorrectos!";
-"contacts.restore.storage_error" = "¡No se pueden guardar contactos!";
+"contacts.restore.restore_error" = "Error al restaurar contactos";
 "contacts.restore.overwrite_alert.description" = "Esta acción sobrescribirá sus contactos de pago locales, así como su copia de iCloud (si hay una).";
 "contacts.restore.overwrite_alert.replace" = "Reemplazar";
-
 
 "contacts.add_address.title" = "Añadir dirección";
 "contacts.add_address.create_new" = "Crear nuevo contacto";
@@ -1515,7 +1515,7 @@
 "activate_subscription.sign" = "Firma";
 "activate_subscription.activating" = "Activando...";
 "activate_subscription.failed_to_activate" = "Error al activar la suscripción";
-
+"activate_subscription.activated" = "Activado";
 
 // Launch
 

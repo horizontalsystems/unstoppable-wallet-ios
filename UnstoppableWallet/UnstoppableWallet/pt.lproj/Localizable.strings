@@ -1050,11 +1050,11 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Excluir endereço";
 
+"contacts.restore.restored" = "Restaurado";
 "contacts.restore.parsing_error" = "O arquivo tem dados errados!";
-"contacts.restore.storage_error" = "Não é possível salvar os contatos!";
+"contacts.restore.restore_error" = "Erro ao restaurar contatos";
 "contacts.restore.overwrite_alert.description" = "Esta ação substituirá seus contatos de pagamento locais, bem como sua cópia do iCloud (se houver uma).";
 "contacts.restore.overwrite_alert.replace" = "Substituir";
-
 
 "contacts.add_address.title" = "Adicionar endereço";
 "contacts.add_address.create_new" = "Criar Novo Contato";
@@ -1517,7 +1517,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "activate_subscription.sign" = "Assinar";
 "activate_subscription.activating" = "Ativando...";
 "activate_subscription.failed_to_activate" = "Falha ao ativar a assinatura";
-
+"activate_subscription.activated" = "Ativado";
 
 // Launch
 

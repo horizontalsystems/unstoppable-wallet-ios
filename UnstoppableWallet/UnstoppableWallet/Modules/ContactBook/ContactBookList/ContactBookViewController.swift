@@ -88,9 +88,9 @@ class ContactBookViewController: ThemeSearchViewController {
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.onUpdate(viewItems: $0) }
         subscribe(disposeBag, viewModel.emptyListDriver) { [weak self] in self?.set(emptyList: $0) }
         subscribe(disposeBag, viewModel.showRestoreAlertSignal) { [weak self] in self?.showRestoreAlert(contacts: $0) }
-        subscribe(disposeBag, viewModel.showSuccessfulRestoreSignal) { HudHelper.instance.showSuccessBanner() }
+        subscribe(disposeBag, viewModel.showSuccessfulRestoreSignal) { HudHelper.instance.show(banner: .success(string: "contacts.restore.restored".localized)) }
         subscribe(disposeBag, viewModel.showParsingErrorSignal) { [weak self] in self?.showParsingError() }
-        subscribe(disposeBag, viewModel.showStorageErrorSignal) { [weak self] in self?.showStorageError() }
+        subscribe(disposeBag, viewModel.showRestoreErrorSignal) { [weak self] in self?.showRestoreError() }
 
         tableView.buildSections()
 
@@ -131,8 +131,8 @@ class ContactBookViewController: ThemeSearchViewController {
         HudHelper.instance.show(banner: .error(string: "contacts.restore.parsing_error".localized))
     }
 
-    private func showStorageError() {
-        HudHelper.instance.show(banner: .error(string: "contacts.restore.storage_error".localized))
+    private func showRestoreError() {
+        HudHelper.instance.show(banner: .error(string: "contacts.restore.restore_error".localized))
     }
 
     @objc private func onTapMore() {
