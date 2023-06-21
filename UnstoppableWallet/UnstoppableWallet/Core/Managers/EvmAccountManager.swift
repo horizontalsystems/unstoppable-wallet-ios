@@ -1,3 +1,4 @@
+import Foundation
 import RxSwift
 import MarketKit
 import HsToolKit
@@ -5,6 +6,9 @@ import EvmKit
 import Eip20Kit
 import UniswapKit
 import OneInchKit
+import HsExtensions
+import Combine
+import BigInt
 
 class EvmAccountManager {
     private let blockchainType: BlockchainType
@@ -15,7 +19,8 @@ class EvmAccountManager {
     private let evmAccountRestoreStateManager: EvmAccountRestoreStateManager
 
     private let disposeBag = DisposeBag()
-    private var internalDisposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
+    private var tasks = Set<AnyTask>()
 
     init(blockchainType: BlockchainType, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmKitManager: EvmKitManager, evmAccountRestoreStateManager: EvmAccountRestoreStateManager) {
         self.blockchainType = blockchainType
@@ -29,7 +34,8 @@ class EvmAccountManager {
     }
 
     private func handleEvmKitCreated() {
-        internalDisposeBag = DisposeBag()
+        cancellables = Set([])
+        tasks = Set([])
 
         subscribeToTransactions()
     }
@@ -41,12 +47,12 @@ class EvmAccountManager {
 
 //        print("Subscribe: \(evmKitWrapper.evmKit.networkType)")
 
-        evmKitWrapper.evmKit.allTransactionsObservable
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onNext: { [weak self] fullTransactions, initial in
-                    self?.handle(fullTransactions: fullTransactions, initial: initial)
-                })
-                .disposed(by: internalDisposeBag)
+        evmKitWrapper.evmKit.allTransactionsPublisher
+            .receive(on: DispatchQueue.global(qos: .utility))
+            .sink { [weak self] fullTransactions, initial in
+                self?.handle(fullTransactions: fullTransactions, initial: initial)
+            }
+            .store(in: &cancellables)
     }
 
     private func handle(fullTransactions: [FullTransaction], initial: Bool) {
@@ -203,24 +209,33 @@ class EvmAccountManager {
         let userAddress = evmKit.address
         let dataProvider = DataProvider(evmKit: evmKit)
 
-        let singles: [Single<TokenInfo?>] = newTokenInfos.map { info in
-            guard case let .eip20(address) = info.type, let contractAddress = try? EvmKit.Address(hex: address) else {
-                return Single.just(nil)
+        let task = Task(priority: .utility) { [weak self] in
+            let tokenInfos: [(tokenInfo: TokenInfo, balance: BigUInt)] = await withTaskGroup(of: (TokenInfo, BigUInt).self) { group in
+                for tokenInfo in tokenInfos {
+                    guard case let .eip20(address) = tokenInfo.type, let contractAddress = try? EvmKit.Address(hex: address) else {
+                        continue
+                    }
+
+                    group.addTask {
+                        let balance = (try? await dataProvider.fetchBalance(contractAddress: contractAddress, address: userAddress)) ?? 0
+                        return (tokenInfo, balance)
+                    }
+                }
+
+                var results = [(TokenInfo, BigUInt)]()
+                for await result in group {
+                    results.append(result)
+                }
+
+                return results
             }
 
-            return dataProvider.getBalance(contractAddress: contractAddress, address: userAddress)
-                    .map { balance in
-                        balance > 0 ? info : nil
-                    }
-                    .catchErrorJustReturn(info)
+            let nonZeroBalanceTokens = tokenInfos.filter { $0.balance > 0 }.map { $0.tokenInfo }
+
+            self?.handle(processedTokenInfos: nonZeroBalanceTokens, account: account)
         }
 
-        Single.zip(singles)
-                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
-                .subscribe(onSuccess: { [weak self] tokenInfos in
-                    self?.handle(processedTokenInfos: tokenInfos.compactMap { $0 }, account: account)
-                })
-                .disposed(by: internalDisposeBag)
+        task.store(in: &tasks)
     }
 
     private func handle(processedTokenInfos infos: [TokenInfo], account: Account) {
