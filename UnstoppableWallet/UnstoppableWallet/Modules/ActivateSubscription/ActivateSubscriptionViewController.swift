@@ -127,7 +127,7 @@ class ActivateSubscriptionViewController: ThemeViewController {
         viewModel.finishPublisher
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] in
-                    HudHelper.instance.showSuccessBanner()
+                    HudHelper.instance.show(banner: .success(string: "activate_subscription.activated".localized))
                     self?.dismiss(animated: true)
                 }
                 .store(in: &cancellables)

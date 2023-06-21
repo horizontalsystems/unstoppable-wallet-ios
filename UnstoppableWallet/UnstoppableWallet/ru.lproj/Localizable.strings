@@ -1052,11 +1052,11 @@
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Удалить адрес";
 
+"contacts.restore.restored" = "Восстановлено";
 "contacts.restore.parsing_error" = "Файл имеет неправильные данные!";
-"contacts.restore.storage_error" = "Не удается сохранить контакты!";
+"contacts.restore.restore_error" = "Не удалось восстановить контакты";
 "contacts.restore.overwrite_alert.description" = "Это действие перезапишет ваши локальные платежные контакты, а также их копии в iCloud (при наличии таковых).";
 "contacts.restore.overwrite_alert.replace" = "Заменить";
-
 
 "contacts.add_address.title" = "Добавить адрес";
 "contacts.add_address.create_new" = "Создать новый контакт";
@@ -1521,7 +1521,7 @@
 "activate_subscription.sign" = "Подписать";
 "activate_subscription.activating" = "Активация...";
 "activate_subscription.failed_to_activate" = "Не удалось активировать подписку";
-
+"activate_subscription.activated" = "Активировано";
 
 // Launch
 

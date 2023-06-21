@@ -1048,11 +1048,11 @@
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "주소 삭제 ";
 
+"contacts.restore.restored" = "복원됨";
 "contacts.restore.parsing_error" = "파일에 잘못된 데이터가 있습니다!";
-"contacts.restore.storage_error" = "연락처를 저장할 수 없습니다!";
+"contacts.restore.restore_error" = "연락처 복원에 실패했습니다";
 "contacts.restore.overwrite_alert.description" = "이 작업은 로컬 결제 연락처와 iCloud 복사본(있는 경우)을 덮어씁니다.";
 "contacts.restore.overwrite_alert.replace" = "위젯 변경";
-
 
 "contacts.add_address.title" = "주소 추가";
 "contacts.add_address.create_new" = "새 연락처 등록";
@@ -1515,7 +1515,7 @@
 "activate_subscription.sign" = "가입";
 "activate_subscription.activating" = "Activating...";
 "activate_subscription.failed_to_activate" = "Failed to activate subscription";
-
+"activate_subscription.activated" = "Activated";
 
 // Launch
 

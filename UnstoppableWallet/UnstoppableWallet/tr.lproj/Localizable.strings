@@ -1050,11 +1050,11 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Adresi Sil";
 
+"contacts.restore.restored" = "Restored";
 "contacts.restore.parsing_error" = "Dosyada yanlış veriler var!";
-"contacts.restore.storage_error" = "Kişiler kaydedilemiyor!";
+"contacts.restore.restore_error" = "Failed to restore contacts ";
 "contacts.restore.overwrite_alert.description" = "Bu işlem, cihazdaki ödeme kişilerinizin yanı sıra iCloud kopyasının (varsa) üzerine yazacaktır.";
 "contacts.restore.overwrite_alert.replace" = "Değiştir";
-
 
 "contacts.add_address.title" = "Adres ekle";
 "contacts.add_address.create_new" = "Yeni Kişi Oluştur";
@@ -1517,7 +1517,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "activate_subscription.sign" = "kaydol";
 "activate_subscription.activating" = "Activating...";
 "activate_subscription.failed_to_activate" = "Failed to activate subscription";
-
+"activate_subscription.activated" = "Activated";
 
 // Launch
 
