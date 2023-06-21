@@ -300,7 +300,7 @@ class App {
 
         contactManager = ContactBookManager(localStorage: localStorage, ubiquityContainerIdentifier: appConfigProvider.privateCloudContainer, helper: ContactBookHelper(), logger: logger)
 
-        subscriptionManager = SubscriptionManager(localStorage: StorageKit.LocalStorage.default)
+        subscriptionManager = SubscriptionManager(localStorage: StorageKit.LocalStorage.default, marketKit: marketKit)
 
         appManager = AppManager(
                 accountManager: accountManager,
