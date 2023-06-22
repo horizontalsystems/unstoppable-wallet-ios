@@ -32,11 +32,11 @@ class MarketCardCell: UITableViewCell {
     }
 
     func append(viewItem: MarketCardView.ViewItem, configuration: ChartConfiguration = .smallPreviewChart, onTap: (() -> ())? = nil) {
-        let marketCardView = MarketCardView()
+        let marketCardView = MarketCardView(configuration: configuration)
         marketCardView.onTap = onTap
 
         append(view: marketCardView)
-        marketCardView.set(viewItem: viewItem, configuration: configuration)
+        marketCardView.set(viewItem: viewItem)
     }
 
 }

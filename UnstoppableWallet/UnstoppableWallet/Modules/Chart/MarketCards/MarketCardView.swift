@@ -15,7 +15,8 @@ class MarketCardView: UIView {
     private let descriptionWrapper = UIView()
     private let descriptionView = TextComponent()
 
-    private let chartView = RateChartView()
+    private let chartView: RateChartView
+    private let configuration: ChartConfiguration
     private let button = UIButton()
 
     private var alreadyHasData: Bool = false
@@ -26,7 +27,9 @@ class MarketCardView: UIView {
         }
     }
 
-    required init() {
+    required init(configuration: ChartConfiguration) {
+        chartView = RateChartView(configuration: configuration)
+        self.configuration = configuration
         super.init(frame: .zero)
 
         backgroundColor = .themeLawrence
@@ -132,26 +135,25 @@ class MarketCardView: UIView {
         set { descriptionView.textColor = newValue }
     }
 
-    func set(chartData data: ChartData?, trend: MovementTrend?, configuration: ChartConfiguration = ChartConfiguration.smallPreviewChart) {
+    func set(chartData data: ChartData?, trend: MovementTrend?) {
         chartView.isHidden = data == nil
         guard let data = data, let trend = trend else {
             alreadyHasData = false
             return
         }
 
-        chartView.apply(configuration: configuration)
         chartView.setCurve(colorType: trend.chartColorType)
         chartView.set(chartData: data, animated: alreadyHasData)
         alreadyHasData = true
     }
 
-    func set(viewItem: ViewItem, configuration: ChartConfiguration = .smallPreviewChart) {
+    func set(viewItem: ViewItem) {
         title = viewItem.title
         value = viewItem.value
         descriptionText = viewItem.description
         descriptionColor = viewItem.descriptionColor ?? .themeGray
 
-        set(chartData: viewItem.chartData, trend: viewItem.movementTrend, configuration: configuration)
+        set(chartData: viewItem.chartData, trend: viewItem.movementTrend)
     }
 }
 

@@ -174,11 +174,11 @@ class ChartCell: UITableViewCell {
         chartView.snp.makeConstraints { maker in
             maker.top.equalTo(currentValueWrapper.snp.bottom)
             maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(configuration.mainHeight + (configuration.showIndicators ? configuration.indicatorHeight : 0))
+            maker.height.equalTo(configuration.mainHeight + (configuration.showIndicatorArea ? configuration.indicatorHeight : 0))
         }
 
         chartView.delegate = viewModel
-        chartView.setVolumes(hidden: !configuration.showIndicators)
+        chartView.setVolumes(hidden: !configuration.showIndicatorArea)
 
         contentView.addSubview(timePeriodView)
         timePeriodView.snp.makeConstraints { maker in
@@ -210,7 +210,7 @@ class ChartCell: UITableViewCell {
     }
 
     var cellHeight: CGFloat {
-        .heightDoubleLineCell + configuration.mainHeight + (configuration.showIndicators ? configuration.indicatorHeight : 0) + .margin8 + .heightCell48 + .margin8
+        .heightDoubleLineCell + configuration.mainHeight + (configuration.showIndicatorArea ? configuration.indicatorHeight : 0) + .margin8 + .heightCell48 + .margin8
     }
 
     private func syncChart(viewItem: ChartModule.ViewItem?) {
@@ -260,8 +260,21 @@ class ChartCell: UITableViewCell {
                 }
             }
 
+            var indicators = [ChartIndicator]()
+            let dominanceIndicator = viewItem.chartData.values(name: MarketGlobalModule.dominance)
+            if !dominanceIndicator.isEmpty {
+                indicators.append(
+                        PrecalculatedIndicator(
+                            id: MarketGlobalModule.dominance,
+                            values: dominanceIndicator,
+                            configuration: .dominance
+                        )
+                )
+            }
+            chartView.indicatorsIsHidden = indicators.isEmpty
+
             chartView.setCurve(colorType: viewItem.chartTrend.chartColorType)
-            chartView.set(chartData: viewItem.chartData, animated: true)
+            chartView.set(chartData: viewItem.chartData, indicators: indicators, animated: true)
             chartView.set(highLimitText: viewItem.maxValue, lowLimitText: viewItem.minValue)
         } else {
             currentValueWrapper.isHidden = true

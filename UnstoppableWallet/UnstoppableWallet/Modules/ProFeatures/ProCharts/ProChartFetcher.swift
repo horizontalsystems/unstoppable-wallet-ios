@@ -66,7 +66,7 @@ extension ProChartFetcher: IMetricChartFetcher {
             let data = try await marketKit.transactions(coinUid: coin.uid, timePeriod: interval)
             return MetricChartModule.ItemData(
                     items: data.points.map {
-                        let indicators: [ChartIndicatorName: Decimal]? = $0.volume.map { [.volume: $0] }
+                        let indicators: [String: Decimal]? = $0.volume.map { [ChartData.volume: $0] }
                         return MetricChartModule.Item(value: $0.value, indicators: indicators, timestamp: $0.timestamp)
                     },
                     type: .aggregated(value: data.aggregatedValue)

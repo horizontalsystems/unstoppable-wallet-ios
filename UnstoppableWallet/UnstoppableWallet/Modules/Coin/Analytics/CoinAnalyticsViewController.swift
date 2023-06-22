@@ -274,18 +274,18 @@ class CoinAnalyticsViewController: ThemeViewController {
             let baseValue = Decimal(i) * 2
 
             chartItems.append(contentsOf: [
-                ChartItem(timestamp: baseTimeStamp).added(name: .rate, value: baseValue + 2),
-                ChartItem(timestamp: baseTimeStamp + 25).added(name: .rate, value: baseValue + 6),
-                ChartItem(timestamp: baseTimeStamp + 50).added(name: .rate, value: baseValue),
-                ChartItem(timestamp: baseTimeStamp + 75).added(name: .rate, value: baseValue + 9)
+                ChartItem(timestamp: baseTimeStamp).added(name: ChartData.rate, value: baseValue + 2),
+                ChartItem(timestamp: baseTimeStamp + 25).added(name: ChartData.rate, value: baseValue + 6),
+                ChartItem(timestamp: baseTimeStamp + 50).added(name: ChartData.rate, value: baseValue),
+                ChartItem(timestamp: baseTimeStamp + 75).added(name: ChartData.rate, value: baseValue + 9)
             ])
         }
 
         chartItems.append(
-                ChartItem(timestamp: 800).added(name: .rate, value: 16)
+                ChartItem(timestamp: 800).added(name: ChartData.rate, value: 16)
         )
 
-        return ChartData(items: chartItems, startTimestamp: 0, endTimestamp: 800)
+        return ChartData(items: chartItems, startWindow: 0, endWindow: 800)
     }
 
 }

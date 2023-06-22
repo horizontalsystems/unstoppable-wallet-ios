@@ -11,7 +11,7 @@ class MarketMetricView: UIView {
     private let badgeView = BadgeView()
     private let valueLabel = UILabel()
     private let diffLabel = DiffLabel()
-    private let chartView = RateChartView()
+    private let chartView: RateChartView
     private let button = UIButton()
 
     var onTap: (() -> ())? {
@@ -22,7 +22,9 @@ class MarketMetricView: UIView {
     
     var alreadyHasData: Bool = false
 
-    init(configuration: ChartConfiguration? = nil) {
+    init(configuration: ChartConfiguration) {
+        chartView = RateChartView(configuration: configuration)
+
         super.init(frame: .zero)
 
         addSubview(button)
@@ -35,10 +37,6 @@ class MarketMetricView: UIView {
 
         updateUI()
 
-        if let configuration = configuration {
-            chartView.apply(configuration: configuration)
-        }
-
         backgroundColor = .themeLawrence
         layer.cornerRadius = .cornerRadius12
         layer.cornerCurve = .continuous
@@ -47,9 +45,7 @@ class MarketMetricView: UIView {
         addSubview(chartView)
         chartView.snp.makeConstraints { maker in
             maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin12)
-            if let mainHeight = configuration?.mainHeight {
-                maker.height.equalTo(mainHeight)
-            }
+            maker.height.equalTo(configuration.mainHeight)
         }
 
         chartView.isUserInteractionEnabled = false
@@ -116,14 +112,6 @@ class MarketMetricView: UIView {
 
 extension MarketMetricView {
 
-    func set(configuration: ChartConfiguration) {
-        chartView.apply(configuration: configuration)
-        chartView.snp.remakeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview().inset(CGFloat.margin12)
-            maker.height.equalTo(configuration.mainHeight)
-        }
-    }
-
     var title: String? {
         get { titleLabel.text }
         set { titleLabel.text = newValue }
@@ -168,7 +156,7 @@ extension MarketMetricView {
 
         chartView.setCurve(colorType: trend.chartColorType)
         if let chartData = chartData {
-            chartView.set(chartData: chartData, animated: alreadyHasData)
+            chartView.set(chartData: chartData, indicators: [], animated: alreadyHasData)
             alreadyHasData = true
         } else {
             alreadyHasData = false
