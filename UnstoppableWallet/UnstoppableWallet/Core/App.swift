@@ -221,7 +221,7 @@ class App {
 
         let nftDatabaseStorage = try NftDatabaseStorage(dbPool: dbPool)
         let nftStorage = NftStorage(marketKit: marketKit, storage: nftDatabaseStorage)
-        nftMetadataManager = NftMetadataManager(networkManager: networkManager, marketKit: marketKit, storage: nftStorage)
+        nftMetadataManager = NftMetadataManager(networkManager: networkManager, marketKit: marketKit, storage: nftStorage, appConfigProvider: appConfigProvider)
         nftAdapterManager = NftAdapterManager(
                 walletManager: walletManager,
                 evmBlockchainManager: evmBlockchainManager

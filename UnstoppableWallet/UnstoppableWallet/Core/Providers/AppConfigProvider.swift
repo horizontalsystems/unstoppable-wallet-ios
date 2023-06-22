@@ -99,6 +99,10 @@ class AppConfigProvider {
         Bundle.main.object(forInfoDictionaryKey: "PrivateCloudContainerId") as? String
     }
 
+    var openSeaApiKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "OpenSeaApiKey") as? String) ?? ""
+    }
+
 }
 
 
