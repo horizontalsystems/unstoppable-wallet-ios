@@ -16,12 +16,13 @@ class OpenSeaNftProvider {
     private let headers: HTTPHeaders
     private let encoding: ParameterEncoding = URLEncoding(arrayEncoding: .noBrackets, boolEncoding: .literal)
 
-    init(networkManager: NetworkManager, marketKit: MarketKit.Kit) {
+    init(networkManager: NetworkManager, marketKit: MarketKit.Kit, appConfigProvider: AppConfigProvider) {
         self.networkManager = networkManager
         self.marketKit = marketKit
 
         headers = HTTPHeaders([
-            HTTPHeader.userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36")
+            HTTPHeader.userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"),
+            HTTPHeader(name: "X-API-KEY", value: appConfigProvider.openSeaApiKey)
         ])
     }
 
