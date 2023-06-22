@@ -11,11 +11,11 @@ class NftMetadataManager {
 
     private let addressMetadataRelay = PublishRelay<(NftKey, NftAddressMetadata)>()
 
-    init(networkManager: NetworkManager, marketKit: MarketKit.Kit, storage: NftStorage) {
+    init(networkManager: NetworkManager, marketKit: MarketKit.Kit, storage: NftStorage, appConfigProvider: AppConfigProvider) {
         self.storage = storage
 
         providerMap = [
-            .ethereum: OpenSeaNftProvider(networkManager: networkManager, marketKit: marketKit)
+            .ethereum: OpenSeaNftProvider(networkManager: networkManager, marketKit: marketKit, appConfigProvider: appConfigProvider)
         ]
 
         eventProviderMap = [
