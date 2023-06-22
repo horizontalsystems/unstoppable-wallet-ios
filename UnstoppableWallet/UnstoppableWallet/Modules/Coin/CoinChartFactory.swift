@@ -36,10 +36,10 @@ class CoinChartFactory {
         }
 
         let items = points.map { point in
-            let item = ChartItem(timestamp: point.timestamp).added(name: .rate, value: point.value)
+            let item = ChartItem(timestamp: point.timestamp).added(name: ChartData.rate, value: point.value)
 
             if let volume = point.volume {
-                item.added(name: .volume, value: volume)
+                item.added(name: ChartData.volume, value: volume)
             }
 
             return item
@@ -51,7 +51,7 @@ class CoinChartFactory {
                 value: ValueFormatter.instance.formatFull(currencyValue: CurrencyValue(currency: currency, value: item.rate)),
                 valueDescription: nil,
                 rightSideMode: .none,
-                chartData: ChartData(items: items, startTimestamp: firstPoint.timestamp, endTimestamp: lastPoint.timestamp),
+                chartData: ChartData(items: items, startWindow: firstPoint.timestamp, endWindow: lastPoint.timestamp),
                 chartTrend: lastPoint.value > firstPoint.value ? .up : .down,
                 chartDiff: (lastPoint.value - firstPoint.value) / firstPoint.value * 100,
                 minValue: values.min().flatMap { ValueFormatter.instance.formatFull(currency: currency, value: $0) },
@@ -60,7 +60,7 @@ class CoinChartFactory {
     }
 
     func selectedPointViewItem(chartItem: ChartItem, firstChartItem: ChartItem?, currency: Currency) -> ChartModule.SelectedPointViewItem? {
-        guard let rate = chartItem.indicators[.rate] else {
+        guard let rate = chartItem.indicators[ChartData.rate] else {
             return nil
         }
 
@@ -68,7 +68,7 @@ class CoinChartFactory {
         let formattedDate = DateHelper.instance.formatFullTime(from: date)
         let formattedValue = ValueFormatter.instance.formatFull(currency: currency, value: rate)
 
-        let rightSideMode: ChartModule.RightSideMode = .volume(value: chartItem.indicators[.volume].flatMap {
+        let rightSideMode: ChartModule.RightSideMode = .volume(value: chartItem.indicators[ChartData.volume].flatMap {
             $0.isZero ? nil : ValueFormatter.instance.formatShort(currency: currency, value: $0)
         })
 

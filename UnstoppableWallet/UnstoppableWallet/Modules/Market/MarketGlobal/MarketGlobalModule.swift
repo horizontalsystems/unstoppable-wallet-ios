@@ -4,6 +4,7 @@ import Chart
 import LanguageKit
 
 struct MarketGlobalModule {
+    static let dominance = "dominance"
 
     enum MetricsType {
         case totalMarketCap, volume24h, defiCap, tvlInDefi

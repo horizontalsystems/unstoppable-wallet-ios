@@ -46,10 +46,10 @@ class MetricChartModule {
 
     struct Item {
         let value: Decimal
-        let indicators: [ChartIndicatorName: Decimal]?
+        let indicators: [String: Decimal]?
         let timestamp: TimeInterval
 
-        init(value: Decimal, indicators: [ChartIndicatorName: Decimal]? = nil, timestamp: TimeInterval) {
+        init(value: Decimal, indicators: [String: Decimal]? = nil, timestamp: TimeInterval) {
             self.value = value
             self.indicators = indicators
             self.timestamp = timestamp

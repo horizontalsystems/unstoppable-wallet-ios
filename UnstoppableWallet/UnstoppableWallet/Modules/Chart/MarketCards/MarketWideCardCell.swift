@@ -9,7 +9,7 @@ class MarketWideCardCell: BaseSelectableThemeCell {
     private let infoButton = SecondaryCircleButton()
     private let valueLabel = UILabel()
     private let valueInfoLabel = UILabel()
-    private let chartView = RateChartView()
+    private var chartView = RateChartView(configuration: ChartConfiguration.previewChart)
 
     private var onTapInfo: (() -> ())?
 
@@ -55,6 +55,10 @@ class MarketWideCardCell: BaseSelectableThemeCell {
         valueInfoLabel.font = .subhead1
         valueInfoLabel.textColor = .themeGray
 
+        remakeChartView()
+    }
+
+    private func remakeChartView() {
         wrapperView.addSubview(chartView)
         chartView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
@@ -79,14 +83,16 @@ class MarketWideCardCell: BaseSelectableThemeCell {
         valueInfoLabel.text = value != nil ? valueInfo : nil
 
         if let chartData, let chartTrend {
-            chartView.isHidden = false
-
             let chartConfiguration: ChartConfiguration
             switch chartCurveType {
             case .line: chartConfiguration = .previewChart
             case .bars: chartConfiguration = .previewBarChart
             }
-            chartView.apply(configuration: chartConfiguration)
+            chartView.removeFromSuperview()
+            chartView = RateChartView(configuration: chartConfiguration)
+            remakeChartView()
+
+            chartView.isHidden = false
 
             chartView.setCurve(colorType: chartTrend.chartColorType)
             chartView.set(chartData: chartData, animated: false)

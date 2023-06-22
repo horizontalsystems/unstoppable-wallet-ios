@@ -18,10 +18,10 @@ class MarketOverviewMetricsCell: UITableViewCell {
     init(chartConfiguration: ChartConfiguration, presentDelegate: IPresentDelegate) {
         self.presentDelegate = presentDelegate
 
-        totalMarketCapView = MarketCardView()
-        volume24hView = MarketCardView()
-        deFiCapView = MarketCardView()
-        deFiTvlView = MarketCardView()
+        totalMarketCapView = MarketCardView(configuration: chartConfiguration)
+        volume24hView = MarketCardView(configuration: chartConfiguration)
+        deFiCapView = MarketCardView(configuration: chartConfiguration)
+        deFiTvlView = MarketCardView(configuration: chartConfiguration)
 
         super.init(style: .default, reuseIdentifier: nil)
 

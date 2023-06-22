@@ -94,10 +94,10 @@ class CoinAnalyticsViewModel {
         }
 
         let chartItems = points.map {
-            ChartItem(timestamp: $0.timestamp).added(name: .rate, value: $0.value)
+            ChartItem(timestamp: $0.timestamp).added(name: ChartData.rate, value: $0.value)
         }
 
-        let chartData = ChartData(items: chartItems, startTimestamp: first.timestamp, endTimestamp: last.timestamp)
+        let chartData = ChartData(items: chartItems, startWindow: first.timestamp, endWindow: last.timestamp)
 
         var valueString: String?
 
