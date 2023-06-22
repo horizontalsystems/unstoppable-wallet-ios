@@ -83,6 +83,10 @@ class AppConfigProvider {
         (Bundle.main.object(forInfoDictionaryKey: "WallectConnectV2ProjectKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
+    var coinzixHCaptchaKey: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "CoinzixHCaptchaKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    }
+
     var defaultWords: String {
         Bundle.main.object(forInfoDictionaryKey: "DefaultWords") as? String ?? ""
     }
