@@ -22,8 +22,8 @@ class CexCoinSelectViewModel {
         viewItems = cexAssets.map { cexAsset -> ViewItem in
             ViewItem(
                     cexAsset: cexAsset,
-                    title: cexAsset.coin?.code ?? cexAsset.id,
-                    subtitle: cexAsset.coin?.name ?? cexAsset.name,
+                    title: cexAsset.coinCode,
+                    subtitle: cexAsset.coinName,
                     imageUrl: cexAsset.coin?.imageUrl
             )
         }

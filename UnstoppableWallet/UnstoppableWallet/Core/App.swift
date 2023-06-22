@@ -104,6 +104,7 @@ class App {
 
     let subscriptionManager: SubscriptionManager
 
+    let cexProviderFactory: CexProviderFactory
     let cexAssetManager: CexAssetManager
 
     let appManager: AppManager
@@ -304,6 +305,7 @@ class App {
 
         subscriptionManager = SubscriptionManager(localStorage: StorageKit.LocalStorage.default, marketKit: marketKit)
 
+        cexProviderFactory = CexProviderFactory(networkManager: networkManager)
         let cexAssetRecordStorage = CexAssetRecordStorage(dbPool: dbPool)
         cexAssetManager = CexAssetManager(accountManager: accountManager, marketKit: marketKit, storage: cexAssetRecordStorage)
 

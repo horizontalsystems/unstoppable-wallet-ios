@@ -23,7 +23,10 @@ class CexDepositNetworkSelectViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "cex_deposit_network_select.title".localized
+
+        navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -47,7 +50,12 @@ class CexDepositNetworkSelectViewController: ThemeViewController {
 
     private func onSelect(cexNetwork: CexNetwork) {
         let cexAsset = viewModel.cexAsset
-        // todo
+
+        guard let viewController = CexDepositModule.viewController(cexAsset: cexAsset, cexNetwork: cexNetwork) else {
+            return
+        }
+
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
 }
@@ -76,7 +84,7 @@ extension CexDepositNetworkSelectViewController: SectionsDataSource {
                     rows: viewModel.viewItems.enumerated().map { index, viewItem in
                         tableView.universalRow56(
                                 id: "cex-network-\(index)",
-                                image: .url(viewItem.imageUrl, placeholder: "placeholder_rectangle_32"),
+                                image: .url(viewItem.imageUrl ?? "", placeholder: "placeholder_rectangle_32"),
                                 title: .body(viewItem.title),
                                 accessoryType: .disclosure,
                                 isFirst: index == 0,

@@ -9,7 +9,7 @@ class CexDepositNetworkSelectViewModel {
         viewItems = service.cexNetworks.map { cexNetwork in
             ViewItem(
                     cexNetwork: cexNetwork,
-                    title: cexNetwork.blockchain?.name ?? cexNetwork.name,
+                    title: cexNetwork.networkName,
                     imageUrl: cexNetwork.blockchain?.type.imageUrl
             )
         }

@@ -7,6 +7,11 @@ struct CexNetwork {
     let depositEnabled: Bool
     let withdrawEnabled: Bool
     let blockchain: Blockchain?
+
+    var networkName: String {
+        blockchain?.name ?? name
+    }
+
 }
 
 extension CexNetwork: Hashable {

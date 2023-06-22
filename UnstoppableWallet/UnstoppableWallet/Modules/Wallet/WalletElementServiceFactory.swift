@@ -3,14 +3,14 @@ import HsToolKit
 struct WalletElementServiceFactory {
     private let adapterManager: AdapterManager
     private let walletManager: WalletManager
-    private let networkManager: NetworkManager
     private let cexAssetManager: CexAssetManager
+    private let cexProviderFactory: CexProviderFactory
 
-    init(adapterManager: AdapterManager, walletManager: WalletManager, networkManager: NetworkManager, cexAssetManager: CexAssetManager) {
+    init(adapterManager: AdapterManager, walletManager: WalletManager, cexAssetManager: CexAssetManager, cexProviderFactory: CexProviderFactory) {
         self.adapterManager = adapterManager
         self.walletManager = walletManager
-        self.networkManager = networkManager
         self.cexAssetManager = cexAssetManager
+        self.cexProviderFactory = cexProviderFactory
     }
 
     func elementService(account: Account) -> IWalletElementService {
@@ -26,23 +26,7 @@ struct WalletElementServiceFactory {
 
             return elementService
         case .cex(let type):
-            let provider: ICexProvider
-
-            switch type {
-            case .binance(let apiKey, let secret):
-                provider = BinanceCexProvider(
-                        networkManager: networkManager,
-                        apiKey: apiKey,
-                        secret: secret
-                )
-            case .coinzix(let authToken, let secret):
-                provider = CoinzixCexProvider(
-                        networkManager: networkManager,
-                        authToken: authToken,
-                        secret: secret
-                )
-            }
-
+            let provider = cexProviderFactory.provider(type: type)
             return WalletCexElementService(account: account, provider: provider, cexAssetManager: cexAssetManager)
         }
     }

@@ -10,6 +10,15 @@ struct CexAsset {
     let withdrawEnabled: Bool
     let networks: [CexNetwork]
     let coin: Coin?
+
+    var coinCode: String {
+        coin?.code ?? id
+    }
+
+    var coinName: String {
+        coin?.name ?? name
+    }
+
 }
 
 extension CexAsset: Hashable {
