@@ -17,8 +17,8 @@ struct WalletModule {
         let elementServiceFactory = WalletElementServiceFactory(
                 adapterManager: App.shared.adapterManager,
                 walletManager: App.shared.walletManager,
-                networkManager: App.shared.networkManager,
-                cexAssetManager: App.shared.cexAssetManager
+                cexAssetManager: App.shared.cexAssetManager,
+                cexProviderFactory: App.shared.cexProviderFactory
         )
 
         let service = WalletService(
@@ -85,7 +85,7 @@ extension WalletModule {
         var name: String {
             switch self {
             case .wallet(let wallet): return wallet.coin.code
-            case .cexAsset(let cexAsset): return cexAsset.coin?.code ?? cexAsset.id
+            case .cexAsset(let cexAsset): return cexAsset.coinCode
             }
         }
 

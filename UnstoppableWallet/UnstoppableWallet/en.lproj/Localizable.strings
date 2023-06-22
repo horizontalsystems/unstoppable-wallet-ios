@@ -1565,3 +1565,9 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "cex_deposit_network_select.title" = "Choose Network";
 "cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
+
+// Cex Deposit
+
+"cex_deposit.failed" = "Failed to load deposit address. Please retry.";
+"cex_deposit.warning" = "Please make sure that only %@ is deposited to this address. Sending other types of tokens to this address will result in their ultimate loss.";
+"cex_deposit.address_title" = "Your address for depositing %@ into the %@ Network";
