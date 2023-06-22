@@ -6,7 +6,7 @@ import MarketKit
 import HsToolKit
 
 class CoinzixCexProvider {
-    private let baseUrl = "https://api.coinzix.com"
+    private static let baseUrl = "https://api.coinzix.com"
 
     private let networkManager: NetworkManager
     private let authToken: String
@@ -53,7 +53,7 @@ class CoinzixCexProvider {
         ])
 
         return try await networkManager.fetch(
-                url: baseUrl + path,
+                url: Self.baseUrl + path,
                 method: .post,
                 parameters: parameters,
                 encoding: JSONEncoding.default,
@@ -101,6 +101,32 @@ extension CoinzixCexProvider: ICexProvider {
 
 extension CoinzixCexProvider {
 
+    static func login(username: String, password: String, captchaToken: String, networkManager: NetworkManager) async throws -> (String, String) {
+        let parameters: Parameters = [
+            "username": username,
+            "password": password,
+            "g-recaptcha-response": captchaToken
+        ]
+
+        let response: LoginResult = try await networkManager.fetch(
+            url: baseUrl + "/api/user/login",
+            method: .post,
+            parameters: parameters,
+            encoding: JSONEncoding.default
+        )
+
+        guard let secret = response.secret, let token = response.token,
+              response.status == true else {
+            throw LoginError.loginFailed(message: response.message ?? response.requestError ?? "")
+        }
+
+        return (secret, token)
+    }
+
+}
+
+extension CoinzixCexProvider {
+
     private struct BalancesResponse: ImmutableMappable {
         let balances: [Balance]
 
@@ -127,8 +153,28 @@ extension CoinzixCexProvider {
         }
     }
 
+    private struct LoginResult: ImmutableMappable {
+        let status: Bool
+        let message: String?
+        let requestError: String?
+        let secret: String?
+        let token: String?
+
+        init(map: Map) throws {
+            status = try map.value("status")
+            message = try map.value("message")
+            requestError = try map.value("errors.request")
+            secret = try map.value("data.secret")
+            token = try map.value("token")
+        }
+    }
+
     enum RequestError: Error {
         case invalidSignatureData
+    }
+
+    enum LoginError: Error {
+        case loginFailed(message: String)
     }
 
 }

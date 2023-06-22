@@ -156,6 +156,15 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "restore.binance.failed_to_connect" = "Failed to connect your API Key";
 "restore.binance.invalid_qr_code" = "Invalid QR Code";
 
+// Restore Coinzix
+
+"restore.coinzix.description" = "Enter your email and password from Coinzix Account";
+"restore.coinzix.sign_up" = "Sign Up";
+"restore.coinzix.login" = "Log In";
+"restore.coinzix.sample_username" = "Email";
+"restore.coinzix.sample_password" = "Password";
+"restore.coinzix.failed_to_login" = "Failed to log in";
+
 // Coin Settings
 
 "coin_settings.title" = "Blockchain Settings";
