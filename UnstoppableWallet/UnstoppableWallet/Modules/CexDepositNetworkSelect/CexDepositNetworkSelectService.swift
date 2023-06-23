@@ -5,7 +5,7 @@ class CexDepositNetworkSelectService {
     init(cexAsset: CexAsset) {
         self.cexAsset = cexAsset
 
-        cexNetworks = cexAsset.networks.filter { $0.depositEnabled }
+        cexNetworks = cexAsset.networks
     }
 
 }

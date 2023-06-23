@@ -82,16 +82,31 @@ extension CexDepositNetworkSelectViewController: SectionsDataSource {
                     id: "cex-networks",
                     footerState: .margin(height: .margin32),
                     rows: viewModel.viewItems.enumerated().map { index, viewItem in
-                        tableView.universalRow56(
+                        let isFirst = index == 0
+                        let isLast = index == viewModel.viewItems.count - 1
+
+                        return CellBuilderNew.row(
+                                rootElement: .hStack([
+                                    .image32 { component in
+                                        component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_32"))
+                                    },
+                                    .textElement(text: .body(viewItem.title)),
+                                    .imageElement(image: viewItem.enabled ? .local(UIImage(named: "arrow_big_forward_20")) : nil, size: .image20),
+                                    .badge { component in
+                                        component.isHidden = viewItem.enabled
+                                        component.badgeView.set(style: .small)
+                                        component.badgeView.text = "cex_coin_select.suspended".localized.uppercased()
+                                    }
+                                ]),
+                                tableView: tableView,
                                 id: "cex-network-\(index)",
-                                image: .url(viewItem.imageUrl ?? "", placeholder: "placeholder_rectangle_32"),
-                                title: .body(viewItem.title),
-                                accessoryType: .disclosure,
-                                isFirst: index == 0,
-                                isLast: index == viewModel.viewItems.count - 1,
-                                action: { [weak self] in
+                                height: .heightCell56,
+                                bind: { cell in
+                                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                                },
+                                action: viewItem.enabled ? { [weak self] in
                                     self?.onSelect(cexNetwork: viewItem.cexNetwork)
-                                }
+                                } : nil
                         )
                     }
             )

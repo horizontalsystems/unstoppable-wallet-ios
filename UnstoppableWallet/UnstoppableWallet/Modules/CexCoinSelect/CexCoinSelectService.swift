@@ -7,10 +7,10 @@ class CexCoinSelectService {
     private let mode: CexCoinSelectModule.Mode
     private let cexAssetManager: CexAssetManager
 
-    private let internalCexAssets: [CexAsset]
+    private let internalItems: [Item]
     private var filter: String = ""
 
-    @PostPublished private(set) var cexAssets = [CexAsset]()
+    @PostPublished private(set) var items = [Item]()
 
     init?(accountManager: AccountManager, mode: CexCoinSelectModule.Mode, cexAssetManager: CexAssetManager) {
         guard let account = accountManager.activeAccount else {
@@ -21,30 +21,39 @@ class CexCoinSelectService {
         self.mode = mode
         self.cexAssetManager = cexAssetManager
 
-        internalCexAssets = cexAssetManager.cexAssets(account: account)
+        internalItems = cexAssetManager.cexAssets(account: account).map { cexAsset in
+            let enabled: Bool
 
-        syncCexAssets()
+            switch mode {
+            case .deposit: enabled = cexAsset.depositEnabled
+            case .withdraw: enabled = cexAsset.withdrawEnabled
+            }
+
+            return Item(cexAsset: cexAsset, enabled: enabled)
+        }
+
+        syncItems()
     }
 
-    private func syncCexAssets() {
-        var cexAssets = internalCexAssets
+    private func syncItems() {
+        var items = internalItems
 
         switch mode {
         case .withdraw:
-            cexAssets = cexAssets.filter { cexAsset in
-                cexAsset.freeBalance > 0
+            items = items.filter { item in
+                item.cexAsset.freeBalance > 0
             }
         case .deposit: ()
         }
 
         if !filter.isEmpty {
-            cexAssets = cexAssets.filter { cexAsset in
-                cexAsset.id.localizedCaseInsensitiveContains(filter)
+            items = items.filter { item in
+                item.cexAsset.coinCode.localizedCaseInsensitiveContains(filter) || item.cexAsset.coinName.localizedCaseInsensitiveContains(filter)
             }
         }
 
-        self.cexAssets = cexAssets.sorted { lhsCexAsset, rhsCexAsset in
-            lhsCexAsset.id.lowercased() < rhsCexAsset.id.lowercased()
+        self.items = items.sorted { lhsItem, rhsItem in
+            lhsItem.cexAsset.coinCode.lowercased() < rhsItem.cexAsset.coinCode.lowercased()
         }
     }
 
@@ -54,7 +63,16 @@ extension CexCoinSelectService {
 
     func set(filter: String) {
         self.filter = filter
-        syncCexAssets()
+        syncItems()
+    }
+
+}
+
+extension CexCoinSelectService {
+
+    struct Item {
+        let cexAsset: CexAsset
+        let enabled: Bool
     }
 
 }

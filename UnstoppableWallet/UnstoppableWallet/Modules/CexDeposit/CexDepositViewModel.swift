@@ -6,7 +6,7 @@ class CexDepositViewModel {
 
     @Published private(set) var spinnerVisible: Bool = false
     @Published private(set) var errorVisible: Bool = false
-    @Published private(set) var address: String?
+    @Published private(set) var viewItem: ViewItem?
 
     init(service: CexDepositService) {
         self.service = service
@@ -23,15 +23,15 @@ class CexDepositViewModel {
         case .loading:
             spinnerVisible = true
             errorVisible = false
-            address = nil
-        case .loaded(let address):
+            viewItem = nil
+        case .loaded(let address, let memo):
             spinnerVisible = false
             errorVisible = false
-            self.address = address
+            viewItem = ViewItem(address: address, memo: memo)
         case .failed:
             spinnerVisible = false
             errorVisible = true
-            address = nil
+            viewItem = nil
         }
     }
 
@@ -43,12 +43,21 @@ extension CexDepositViewModel {
         service.cexAsset.coinCode
     }
 
-    var networkName: String {
-        service.cexNetwork.networkName
+    var networkName: String? {
+        service.cexNetwork?.networkName
     }
 
     func onTapRetry() {
         service.reload()
+    }
+
+}
+
+extension CexDepositViewModel {
+
+    struct ViewItem {
+        let address: String
+        let memo: String?
     }
 
 }

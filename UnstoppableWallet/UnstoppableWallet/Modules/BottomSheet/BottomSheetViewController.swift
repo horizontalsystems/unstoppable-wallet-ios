@@ -116,12 +116,13 @@ class BottomSheetViewController: ThemeActionSheetController {
         )
     }
 
-    private func highlightedDescriptionSection(index: Int, text: String) -> SectionProtocol {
+    private func highlightedDescriptionSection(index: Int, style: HighlightedDescriptionBaseView.Style = .yellow, text: String) -> SectionProtocol {
         Section(
                 id: "section-\(index)",
                 rows: [
                     tableView.highlightedDescriptionRow(
                             id: "description_\(index)",
+                            style: style,
                             text: text,
                             ignoreBottomMargin: true
                     )
@@ -217,7 +218,7 @@ extension BottomSheetViewController: SectionsDataSource {
         items.enumerated().map { index, item in
             switch item {
             case .description(let text): return descriptionSection(index: index, text: text)
-            case .highlightedDescription(let text): return highlightedDescriptionSection(index: index, text: text)
+            case let .highlightedDescription(text, style): return highlightedDescriptionSection(index: index, style: style, text: text)
             case let .copyableValue(title, value): return copyableValueSection(index: index, title: title, value: value)
             case let .contractAddress(imageUrl, value, explorerUrl): return contractAddressSection(index: index, imageUrl: imageUrl, value: value, explorerUrl: explorerUrl)
             }

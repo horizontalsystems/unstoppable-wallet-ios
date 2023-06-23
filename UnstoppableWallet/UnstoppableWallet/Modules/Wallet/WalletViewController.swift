@@ -489,7 +489,9 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openDeposit(cexAsset: CexAsset) {
-        let viewController = CexDepositNetworkSelectModule.viewController(cexAsset: cexAsset)
+        guard let viewController = CexDepositModule.viewController(cexAsset: cexAsset) else {
+            return
+        }
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 

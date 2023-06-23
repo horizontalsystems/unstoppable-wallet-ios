@@ -23,6 +23,7 @@
 "button.send" = "Send";
 "button.sign" = "Sign";
 "button.more" = "Show More";
+"button.i_understand" = "I Understand";
 
 "alert" = "Alert";
 "alert.copied" = "Copied";
@@ -1569,6 +1570,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "cex_coin_select.title" = "Choose Coin";
 "cex_coin_select.search_placeholder" = "Coin Code or Name";
+"cex_coin_select.suspended" = "Suspended";
 
 // Cex Deposit Network Select
 
@@ -1577,6 +1579,15 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 // Cex Deposit
 
+"cex_deposit.title" = "Deposit %@";
+"cex_deposit.qr_code_description" = "Your address for depositing %@";
+"cex_deposit.address" = "Address";
+"cex_deposit.network" = "Network";
+"cex_deposit.memo" = "Memo (Tag)";
+"cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
+"cex_deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
+"cex_deposit.copy_address" = "Copy Address";
+"cex_deposit.share_address" = "Share Address";
 "cex_deposit.failed" = "Failed to load deposit address. Please retry.";
-"cex_deposit.warning" = "Please make sure that only %@ is deposited to this address. Sending other types of tokens to this address will result in their ultimate loss.";
-"cex_deposit.address_title" = "Your address for depositing %@ into the %@ Network";
+"cex_deposit.memo_warning.title" = "Important";
+"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";

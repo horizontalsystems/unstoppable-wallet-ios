@@ -3,19 +3,20 @@ import UIKit
 import SnapKit
 import ThemeKit
 import ComponentKit
+import SectionsTableView
 import HUD
 
 class CexDepositViewController: ThemeViewController {
-    private let maxQrCodeSize: CGFloat = 230
-
     private let viewModel: CexDepositViewModel
     private var cancellables = Set<AnyCancellable>()
 
+    private let tableView = SectionsTableView(style: .grouped)
     private let spinner = HUDActivityView.create(with: .medium24)
     private let failedView = PlaceholderView()
-    private let addressView = UIView()
-    private let addressLabel = UILabel()
-    private let qrCodeImageView = UIImageView()
+    private let buttonsHolder = BottomGradientHolder()
+
+    private var viewItem: CexDepositViewModel.ViewItem?
+    private var memoWarningShown = false
 
     init(viewModel: CexDepositViewModel) {
         self.viewModel = viewModel
@@ -30,10 +31,20 @@ class CexDepositViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = viewModel.networkName
+        title = "cex_deposit.title".localized(viewModel.coinCode)
 
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDone))
+
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.leading.top.trailing.equalToSuperview()
+        }
+
+        tableView.sectionDataSource = self
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.registerCell(forClass: QrCodeCell.self)
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { make in
@@ -55,126 +66,34 @@ class CexDepositViewController: ThemeViewController {
                 action: #selector(onTapRetry)
         )
 
-        view.addSubview(addressView)
-        addressView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+        view.addSubview(buttonsHolder)
+        buttonsHolder.snp.makeConstraints { make in
+            make.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
+            make.leading.trailing.bottom.equalToSuperview()
         }
 
-        let warningView = HighlightedDescriptionView()
-        addressView.addSubview(warningView)
-        warningView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            make.top.equalToSuperview().inset(CGFloat.margin12)
+        let stackView = UIStackView()
+
+        buttonsHolder.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(CGFloat.margin24)
         }
 
-        warningView.text = "cex_deposit.warning".localized(viewModel.coinCode)
-        warningView.setContentHuggingPriority(.required, for: .vertical)
-
-        let contentView = UIView()
-        addressView.addSubview(contentView)
-        contentView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.top.equalTo(warningView.snp.bottom).offset(CGFloat.margin24)
-        }
-
-        let wrapperView = UIView()
-        contentView.addSubview(wrapperView)
-        wrapperView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.centerY.equalToSuperview()
-            make.top.greaterThanOrEqualToSuperview()
-            make.bottom.lessThanOrEqualToSuperview()
-        }
-
-        let qrCodeImageWrapper = UIView()
-        wrapperView.addSubview(qrCodeImageWrapper)
-        qrCodeImageWrapper.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview()
-            make.width.equalTo(qrCodeImageWrapper.snp.height)
-            make.height.lessThanOrEqualTo(maxQrCodeSize)
-            make.height.equalTo(maxQrCodeSize).priority(.high)
-        }
-
-        qrCodeImageWrapper.isUserInteractionEnabled = true
-        qrCodeImageWrapper.backgroundColor = .white
-        qrCodeImageWrapper.layer.cornerRadius = .cornerRadius8
-        qrCodeImageWrapper.layer.cornerCurve = .continuous
-
-        let qrCodeRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapCopy))
-        qrCodeImageView.addGestureRecognizer(qrCodeRecognizer)
-
-        qrCodeImageWrapper.addSubview(qrCodeImageView)
-        qrCodeImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(CGFloat.margin4)
-        }
-
-        qrCodeImageView.isUserInteractionEnabled = true
-        qrCodeImageView.backgroundColor = .white
-        qrCodeImageView.contentMode = .scaleToFill
-        qrCodeImageView.clipsToBounds = true
-
-        let addressTitleLabel = UILabel()
-        wrapperView.addSubview(addressTitleLabel)
-        addressTitleLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(CGFloat.margin32)
-            make.top.equalTo(qrCodeImageWrapper.snp.bottom).offset(CGFloat.margin32)
-        }
-
-        addressTitleLabel.numberOfLines = 0
-        addressTitleLabel.textAlignment = .center
-        addressTitleLabel.font = .subhead2
-        addressTitleLabel.textColor = .themeGray
-        addressTitleLabel.text = "cex_deposit.address_title".localized(viewModel.coinCode, viewModel.networkName)
-        addressTitleLabel.setContentHuggingPriority(.required, for: .vertical)
-        addressTitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-
-        let addressLabelWrapper = UIView()
-        wrapperView.addSubview(addressLabelWrapper)
-        addressLabelWrapper.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(addressTitleLabel.snp.bottom)
-            maker.bottom.equalToSuperview()
-        }
-
-        let addressRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapCopy))
-        addressLabelWrapper.isUserInteractionEnabled = true
-        addressLabelWrapper.addGestureRecognizer(addressRecognizer)
-
-        addressLabelWrapper.addSubview(addressLabel)
-        addressLabel.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin32)
-            maker.top.bottom.equalToSuperview().inset(CGFloat.margin12)
-        }
-
-        addressLabel.textAlignment = .center
-        addressLabel.numberOfLines = 0
-        addressLabel.font = .subhead1
-        addressLabel.textColor = .themeLeah
-        addressLabel.setContentHuggingPriority(.required, for: .vertical)
-        addressLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        stackView.axis = .vertical
+        stackView.spacing = .margin16
 
         let copyButton = PrimaryButton()
-        addressView.addSubview(copyButton)
-        copyButton.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            make.top.equalTo(contentView.snp.bottom).offset(CGFloat.margin12)
-        }
+        stackView.addArrangedSubview(copyButton)
 
         copyButton.set(style: .yellow)
-        copyButton.setTitle("button.copy".localized, for: .normal)
+        copyButton.setTitle("cex_deposit.copy_address".localized, for: .normal)
         copyButton.addTarget(self, action: #selector(onTapCopy), for: .touchUpInside)
 
         let shareButton = PrimaryButton()
-        addressView.addSubview(shareButton)
-        shareButton.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
-            make.top.equalTo(copyButton.snp.bottom).offset(CGFloat.margin16)
-            make.bottom.equalToSuperview().inset(CGFloat.margin16)
-        }
+        stackView.addArrangedSubview(shareButton)
 
         shareButton.set(style: .gray)
-        shareButton.setTitle("button.share".localized, for: .normal)
+        shareButton.setTitle("cex_deposit.share_address".localized, for: .normal)
         shareButton.addTarget(self, action: #selector(onTapShare), for: .touchUpInside)
 
         viewModel.$spinnerVisible
@@ -187,21 +106,21 @@ class CexDepositViewController: ThemeViewController {
                 .sink { [weak self] in self?.failedView.isHidden = !$0 }
                 .store(in: &cancellables)
 
-        viewModel.$address
+        viewModel.$viewItem
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.sync(address: $0) }
+                .sink { [weak self] in self?.sync(viewItem: $0) }
                 .store(in: &cancellables)
     }
 
-    private func sync(address: String?) {
-        if let address {
-            addressView.isHidden = false
-            addressLabel.text = address
+    private func sync(viewItem: CexDepositViewModel.ViewItem?) {
+        self.viewItem = viewItem
+        tableView.isHidden = viewItem == nil
+        buttonsHolder.isHidden = viewItem == nil
+        tableView.reload()
 
-            let size = qrCodeImageView.height
-            qrCodeImageView.asyncSetImage { UIImage.qrCodeImage(qrCodeString: address, size: size)  }
-        } else {
-            addressView.isHidden = true
+        if let viewItem, viewItem.memo != nil, !memoWarningShown {
+            showMemoWarning()
+            memoWarningShown = true
         }
     }
 
@@ -214,7 +133,7 @@ class CexDepositViewController: ThemeViewController {
     }
 
     @objc private func onTapCopy() {
-        guard let address = viewModel.address else {
+        guard let address = viewItem?.address else {
             return
         }
 
@@ -222,12 +141,146 @@ class CexDepositViewController: ThemeViewController {
     }
 
     @objc private func onTapShare() {
-        guard let address = viewModel.address else {
+        guard let address = viewItem?.address else {
             return
         }
 
         let activityViewController = UIActivityViewController(activityItems: [address], applicationActivities: [])
         present(activityViewController, animated: true, completion: nil)
+    }
+
+    private func showMemoWarning() {
+        let viewController = BottomSheetModule.viewController(
+                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)),
+                title: "cex_deposit.memo_warning.title".localized,
+                items: [
+                    .highlightedDescription(text: "cex_deposit.memo_warning.description".localized, style: .red)
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "button.i_understand".localized)
+                ]
+        )
+
+        present(viewController, animated: true)
+    }
+
+}
+
+extension CexDepositViewController: SectionsDataSource {
+
+    private func addressRow(value: String) -> RowProtocol {
+        let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
+        let title = "cex_deposit.address".localized
+        let titleFont: UIFont = .subhead2
+        let valueFont: UIFont = .subhead1
+
+        return CellBuilderNew.row(
+                rootElement: .hStack([
+                    .textElement(text: .subhead2(title)),
+                    .text { component in
+                        component.textAlignment = .right
+                        component.font = valueFont
+                        component.textColor = .themeLeah
+                        component.text = value
+                        component.numberOfLines = 0
+                    }
+                ]),
+                tableView: tableView,
+                id: "address",
+                dynamicHeight: { containerWidth in
+                    CellBuilderNew.height(
+                            containerWidth: containerWidth,
+                            backgroundStyle: backgroundStyle,
+                            text: value,
+                            font: valueFont,
+                            elements: [
+                                .fixed(width: TextComponent.width(font: titleFont, text: title)),
+                                .multiline
+                            ]
+                    )
+                },
+                bind: { cell in
+                    cell.set(backgroundStyle: backgroundStyle, isFirst: true)
+                }
+        )
+    }
+
+    func buildSections() -> [SectionProtocol] {
+        guard let viewItem else {
+            return []
+        }
+
+        let qrCodeText = "cex_deposit.qr_code_description".localized(viewModel.coinCode)
+
+        var mainRows: [RowProtocol] = [
+            addressRow(value: viewItem.address),
+            tableView.universalRow48(
+                    id: "network",
+                    title: .subhead2("cex_deposit.network".localized),
+                    value: .subhead1(viewModel.networkName),
+                    isLast: viewItem.memo == nil
+            )
+        ]
+
+        if let memo = viewItem.memo {
+            mainRows.append(
+                    CellBuilderNew.row(
+                            rootElement: .hStack([
+                                .textElement(text: .subhead2("cex_deposit.memo".localized)),
+                                .textElement(text: .subhead1(memo)),
+                                .secondaryCircleButton { component in
+                                    component.button.set(image: UIImage(named: "copy_20"))
+                                    component.onTap = {
+                                        CopyHelper.copyAndNotify(value: memo)
+                                    }
+                                }
+                            ]),
+                            tableView: tableView,
+                            id: "memo",
+                            height: .heightCell48,
+                            bind: { cell in
+                                cell.set(backgroundStyle: .lawrence, isLast: true)
+                            }
+                    )
+            )
+        }
+
+        return [
+            Section(
+                    id: "qr-code",
+                    headerState: .margin(height: .margin12),
+                    rows: [
+                        Row<QrCodeCell>(
+                                id: "qr-code",
+                                dynamicHeight: { width in
+                                    QrCodeCell.height(containerWidth: width, text: qrCodeText)
+                                },
+                                bind: { [weak self] cell, _ in
+                                    cell.set(qrCodeString: viewItem.address, text: qrCodeText)
+                                    cell.onTap = { self?.onTapCopy() }
+                                }
+                        )
+                    ]
+            ),
+            Section(
+                    id: "main",
+                    headerState: .margin(height: .margin12),
+                    rows: mainRows
+            ),
+            Section(
+                    id: "description",
+                    headerState: .margin(height: .margin4),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        tableView.highlightedDescriptionRow(
+                                id: "warning",
+                                style: viewItem.memo == nil ? .yellow : .red,
+                                text: (viewItem.memo == nil ? "" : "\("cex_deposit.warning_memo".localized)\n\n") + "cex_deposit.warning".localized(viewModel.coinCode),
+                                ignoreBottomMargin: true
+                        )
+                    ]
+            )
+        ]
     }
 
 }

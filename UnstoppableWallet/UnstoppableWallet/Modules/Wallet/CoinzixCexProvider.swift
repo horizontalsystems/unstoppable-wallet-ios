@@ -33,13 +33,20 @@ class CoinzixCexProvider {
         ]
     }
 
+    private func blockchainUidMap() async throws -> [String: String] {
+        [
+            "BSC": "binance-smart-chain",
+            "ETH": "ethereum",
+        ]
+    }
+
     private func fetch<T: ImmutableMappable>(path: String, parameters: Parameters = [:]) async throws -> T {
         var parameters = parameters
 
         let requestId = String(Int(Date().timeIntervalSince1970))
         parameters["request_id"] = requestId
 
-        let parametersSignature = parameters.keys.sorted().compactMap { parameters[$0] as? String }.joined(separator: "")
+        let parametersSignature = parameters.keys.sorted().compactMap { parameters[$0].map { "\($0)" } }.joined(separator: "")
 
         let signature = parametersSignature + secret
 
@@ -69,28 +76,61 @@ extension CoinzixCexProvider: ICexProvider {
         let response: BalancesResponse = try await fetch(path: "/v1/private/balances")
 
         let coinUidMap = try await coinUidMap()
+        let blockchainUidMap = try await blockchainUidMap()
 
         return response.balances
                 .map { balanceResponse in
                     let assetId = balanceResponse.currencyIso3
                     let balance = Decimal(sign: .plus, exponent: -8, significand: balanceResponse.balance)
                     let balanceAvailable = Decimal(sign: .plus, exponent: -8, significand: balanceResponse.balanceAvailable)
+                    let depositEnabled = balanceResponse.currencyRefill == 1
+                    let withdrawEnabled = balanceResponse.currencyWithdraw == 1
 
                     return CexAssetResponse(
                             id: assetId,
                             name: balanceResponse.currencyName,
                             freeBalance: balanceAvailable,
                             lockedBalance: balance - balanceAvailable,
-                            depositEnabled: balanceResponse.currencyRefill == 1,
-                            withdrawEnabled: balanceResponse.currencyWithdraw == 1,
-                            networks: [], // todo
+                            depositEnabled: depositEnabled,
+                            withdrawEnabled: withdrawEnabled,
+                            networks: balanceResponse.networks.values.map { network in
+                                CexNetworkRaw(
+                                        network: network,
+                                        name: network,
+                                        isDefault: false,
+                                        depositEnabled: depositEnabled,
+                                        withdrawEnabled: withdrawEnabled,
+                                        blockchainUid: blockchainUidMap[network]
+                                )
+                            },
                             coinUid: coinUidMap[assetId]
                     )
                 }
     }
 
-    func deposit(id: String, network: String?) async throws -> String {
-        fatalError("deposit(cexAsset:network:) has not been implemented")
+    func deposit(id: String, network: String?) async throws -> (String, String?) {
+        var parameters: Parameters = [
+            "iso": id,
+            "new": 0
+        ]
+
+        if let network {
+            parameters["network"] = network
+        }
+
+        let response: GetAddressResponse = try await fetch(path: "/v1/private/get-address", parameters: parameters)
+
+        guard response.status else {
+            throw RequestError.negativeStatusForDeposit
+        }
+
+        if let address = response.address {
+            return (address, response.memo)
+        } else if let account = response.account {
+            return (account, response.memo)
+        } else {
+            throw RequestError.invalidDepositResponse
+        }
     }
 
     func withdraw(id: String, network: String, address: String, amount: Decimal) async throws -> String {
@@ -139,6 +179,7 @@ extension CoinzixCexProvider {
             let currencyName: String
             let currencyRefill: Int
             let currencyWithdraw: Int
+            let networks: [String: String]
             let balance: Decimal
             let balanceAvailable: Decimal
 
@@ -147,6 +188,7 @@ extension CoinzixCexProvider {
                 currencyName = try map.value("currency.name")
                 currencyRefill = try map.value("currency.refill")
                 currencyWithdraw = try map.value("currency.withdraw")
+                networks = (try? map.value("currency.networks")) ?? [:]
                 balance = try map.value("balance", using: Transform.doubleToDecimalTransform)
                 balanceAvailable = try map.value("balance_available", using: Transform.doubleToDecimalTransform)
             }
@@ -169,8 +211,24 @@ extension CoinzixCexProvider {
         }
     }
 
+    private struct GetAddressResponse: ImmutableMappable {
+        let status: Bool
+        let address: String?
+        let account: String?
+        let memo: String?
+
+        init(map: Map) throws {
+            status = try map.value("status")
+            address = try? map.value("data.address")
+            account = try? map.value("data.account")
+            memo = try? map.value("data.memo")
+        }
+    }
+
     enum RequestError: Error {
         case invalidSignatureData
+        case negativeStatusForDeposit
+        case invalidDepositResponse
     }
 
     enum LoginError: Error {

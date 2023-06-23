@@ -10,7 +10,8 @@ class CexDepositNetworkSelectViewModel {
             ViewItem(
                     cexNetwork: cexNetwork,
                     title: cexNetwork.networkName,
-                    imageUrl: cexNetwork.blockchain?.type.imageUrl
+                    imageUrl: cexNetwork.blockchain?.type.imageUrl,
+                    enabled: cexNetwork.depositEnabled
             )
         }
     }
@@ -31,6 +32,7 @@ extension CexDepositNetworkSelectViewModel {
         let cexNetwork: CexNetwork
         let title: String
         let imageUrl: String?
+        let enabled: Bool
     }
 
 }
