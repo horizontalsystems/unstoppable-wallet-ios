@@ -53,6 +53,10 @@ class HighlightedDescriptionCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func set(style: HighlightedDescriptionBaseView.Style) {
+        descriptionView.set(style: style)
+    }
+
     var descriptionText: String? {
         get { descriptionView.text }
         set {

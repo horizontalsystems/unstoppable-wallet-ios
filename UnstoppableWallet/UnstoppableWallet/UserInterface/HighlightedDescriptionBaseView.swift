@@ -24,9 +24,29 @@ class HighlightedDescriptionBaseView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func set(style: Style) {
+        switch style {
+        case .yellow:
+            backgroundColor = .themeYellow20
+            borderColor = .themeYellowD
+        case .red:
+            backgroundColor = UIColor(hex: 0xff4820, alpha: 0.2)
+            borderColor = .themeLucian
+        }
+    }
+
     var text: String? {
         get { label.text }
         set { label.text = newValue }
+    }
+
+}
+
+extension HighlightedDescriptionBaseView {
+
+    enum Style {
+        case yellow
+        case red
     }
 
 }

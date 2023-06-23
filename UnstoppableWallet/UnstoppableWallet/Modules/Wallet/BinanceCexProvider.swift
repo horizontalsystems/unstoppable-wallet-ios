@@ -115,7 +115,7 @@ extension BinanceCexProvider: ICexProvider {
                 }
     }
 
-    func deposit(id: String, network: String?) async throws -> String {
+    func deposit(id: String, network: String?) async throws -> (String, String?) {
         var parameters: Parameters = [
             "coin": id
         ]
@@ -125,7 +125,7 @@ extension BinanceCexProvider: ICexProvider {
         }
 
         let response: DepositResponse = try await fetch(path: "/sapi/v1/capital/deposit/address", parameters: parameters)
-        return response.address
+        return (response.address, response.tag.isEmpty ? nil : response.tag)
     }
 
     func withdraw(id: String, network: String, address: String, amount: Decimal) async throws -> String {
@@ -190,9 +190,11 @@ extension BinanceCexProvider {
 
     private struct DepositResponse: ImmutableMappable {
         let address: String
+        let tag: String
 
         init(map: Map) throws {
             address = try map.value("address")
+            tag = try map.value("tag")
         }
     }
 

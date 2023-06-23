@@ -11,20 +11,21 @@ class CexCoinSelectViewModel {
     init(service: CexCoinSelectService) {
         self.service = service
 
-        service.$cexAssets
-                .sink { [weak self] in self?.sync(cexAssets: $0) }
+        service.$items
+                .sink { [weak self] in self?.sync(items: $0) }
                 .store(in: &cancellables)
 
-        sync(cexAssets: service.cexAssets)
+        sync(items: service.items)
     }
 
-    private func sync(cexAssets: [CexAsset]) {
-        viewItems = cexAssets.map { cexAsset -> ViewItem in
+    private func sync(items: [CexCoinSelectService.Item]) {
+        viewItems = items.map { item -> ViewItem in
             ViewItem(
-                    cexAsset: cexAsset,
-                    title: cexAsset.coinCode,
-                    subtitle: cexAsset.coinName,
-                    imageUrl: cexAsset.coin?.imageUrl
+                    cexAsset: item.cexAsset,
+                    title: item.cexAsset.coinCode,
+                    subtitle: item.cexAsset.coinName,
+                    imageUrl: item.cexAsset.coin?.imageUrl,
+                    enabled: item.enabled
             )
         }
     }
@@ -48,6 +49,7 @@ extension CexCoinSelectViewModel {
         let title: String
         let subtitle: String
         let imageUrl: String?
+        let enabled: Bool
     }
 
 }

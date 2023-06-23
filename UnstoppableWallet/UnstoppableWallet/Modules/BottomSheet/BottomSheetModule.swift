@@ -119,7 +119,7 @@ extension BottomSheetModule {
 
     enum Item {
         case description(text: String)
-        case highlightedDescription(text: String)
+        case highlightedDescription(text: String, style: HighlightedDescriptionBaseView.Style = .yellow)
         case copyableValue(title: String, value: String)
         case contractAddress(imageUrl: String, value: String, explorerUrl: String?)
     }

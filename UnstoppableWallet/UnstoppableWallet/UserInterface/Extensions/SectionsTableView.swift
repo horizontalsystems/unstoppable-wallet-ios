@@ -15,17 +15,20 @@ extension SectionsTableView {
         )
     }
 
-    func sectionFooter(text: String) -> ViewState<BottomDescriptionHeaderFooterView> {
+    func sectionFooter(text: String, textColor: UIColor = .themeGray) -> ViewState<BottomDescriptionHeaderFooterView> {
         registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         return .cellType(
                 hash: text,
-                binder: { $0.bind(text: text) },
+                binder: {
+                    $0.text = text
+                    $0.textColor = textColor
+                },
                 dynamicHeight: { BottomDescriptionHeaderFooterView.height(containerWidth: $0, text: text) }
         )
     }
 
-    func highlightedDescriptionRow(id: String, text: String, ignoreBottomMargin: Bool = false) -> RowProtocol {
+    func highlightedDescriptionRow(id: String, style: HighlightedDescriptionBaseView.Style = .yellow, text: String, ignoreBottomMargin: Bool = false) -> RowProtocol {
         registerCell(forClass: HighlightedDescriptionCell.self)
 
         return Row<HighlightedDescriptionCell>(
@@ -34,6 +37,7 @@ extension SectionsTableView {
                     HighlightedDescriptionCell.height(containerWidth: width, text: text, ignoreBottomMargin: ignoreBottomMargin)
                 },
                 bind: { cell, _ in
+                    cell.set(style: style)
                     cell.descriptionText = text
                 }
         )

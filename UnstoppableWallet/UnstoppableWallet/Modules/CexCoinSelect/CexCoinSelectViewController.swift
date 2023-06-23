@@ -68,7 +68,9 @@ class CexCoinSelectViewController: ThemeSearchViewController {
     private func onSelect(cexAsset: CexAsset) {
         switch mode {
         case .deposit:
-            let viewController = CexDepositNetworkSelectModule.viewController(cexAsset: cexAsset)
+            guard let viewController = CexDepositModule.viewController(cexAsset: cexAsset) else {
+                return
+            }
             navigationController?.pushViewController(viewController, animated: true)
         case .withdraw:
             () // todo
@@ -97,7 +99,12 @@ extension CexCoinSelectViewController: SectionsDataSource {
                                         .textElement(text: .body(viewItem.title)),
                                         .margin(1),
                                         .textElement(text: .subhead2(viewItem.subtitle)),
-                                    ])
+                                    ]),
+                                    .badge { component in
+                                        component.isHidden = viewItem.enabled
+                                        component.badgeView.set(style: .small)
+                                        component.badgeView.text = "cex_coin_select.suspended".localized.uppercased()
+                                    }
                                 ]),
                                 tableView: tableView,
                                 id: "cex-asset-\(index)",
@@ -105,9 +112,9 @@ extension CexCoinSelectViewController: SectionsDataSource {
                                 bind: { cell in
                                     cell.set(backgroundStyle: .transparent, isLast: isLast)
                                 },
-                                action: { [weak self] in
+                                action: viewItem.enabled ? { [weak self] in
                                     self?.onSelect(cexAsset: viewItem.cexAsset)
-                                }
+                                } : nil
                         )
                     }
             )
