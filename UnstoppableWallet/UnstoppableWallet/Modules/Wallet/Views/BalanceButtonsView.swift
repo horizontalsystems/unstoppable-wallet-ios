@@ -9,9 +9,11 @@ class BalanceButtonsView: UIView {
 
     private let sendButtonWrapper = UIControl()
     private let sendButton = PrimaryButton()
+    private let withdrawButtonWrapper = UIControl()
     private let withdrawButton = PrimaryButton()
     private let receiveButton = PrimaryButton()
     private let receiveCircleButton = PrimaryCircleButton()
+    private let depositButtonWrapper = UIControl()
     private let depositButton = PrimaryButton()
     private let addressButton = PrimaryButton()
     private let swapButtonWrapper = UIControl()
@@ -53,7 +55,12 @@ class BalanceButtonsView: UIView {
         sendButton.setTitle("balance.send".localized, for: .normal)
         sendButton.addTarget(self, action: #selector(onSend), for: .touchUpInside)
 
-        stackView.addArrangedSubview(withdrawButton)
+        stackView.addArrangedSubview(withdrawButtonWrapper)
+
+        withdrawButtonWrapper.addSubview(withdrawButton)
+        withdrawButton.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
 
         withdrawButton.set(style: .yellow)
         withdrawButton.setTitle("balance.withdraw".localized, for: .normal)
@@ -68,8 +75,11 @@ class BalanceButtonsView: UIView {
         receiveButton.setTitle("balance.receive".localized, for: .normal)
         receiveButton.addTarget(self, action: #selector(onReceive), for: .touchUpInside)
 
-        stackView.addArrangedSubview(depositButton)
+        stackView.addArrangedSubview(depositButtonWrapper)
+
+        depositButtonWrapper.addSubview(depositButton)
         depositButton.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
             maker.width.equalTo(withdrawButton)
         }
 
@@ -127,10 +137,10 @@ class BalanceButtonsView: UIView {
         chartButton.isEnabled = buttons[.chart] == .enabled
 
         sendButtonWrapper.isHidden = (buttons[.send] ?? .hidden) == .hidden
-        withdrawButton.isHidden = (buttons[.withdraw] ?? .hidden) == .hidden
+        withdrawButtonWrapper.isHidden = (buttons[.withdraw] ?? .hidden) == .hidden
         receiveButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttons.count > 3
         receiveCircleButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttons.count <= 3
-        depositButton.isHidden = (buttons[.deposit] ?? .hidden) == .hidden
+        depositButtonWrapper.isHidden = (buttons[.deposit] ?? .hidden) == .hidden
         addressButton.isHidden = (buttons[.address] ?? .hidden) == .hidden
         swapButtonWrapper.isHidden = (buttons[.swap] ?? .hidden) == .hidden
         chartButtonWrapper.isHidden = (buttons[.chart] ?? .hidden) == .hidden

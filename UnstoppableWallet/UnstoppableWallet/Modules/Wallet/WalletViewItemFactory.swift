@@ -160,9 +160,9 @@ class WalletViewItemFactory {
                     buttons[.swap] = sendButtonState
                 }
             }
-        case .cexAsset:
-            buttons[.withdraw] = .enabled
-            buttons[.deposit] = .enabled
+        case .cexAsset(let cexAsset):
+            buttons[.withdraw] = cexAsset.withdrawEnabled ? .enabled : .disabled
+            buttons[.deposit] = cexAsset.depositEnabled ? .enabled : .disabled
         }
 
         buttons[.chart] = item.priceItem != nil ? .enabled : .disabled
