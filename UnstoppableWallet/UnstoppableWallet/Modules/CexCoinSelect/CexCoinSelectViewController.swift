@@ -11,7 +11,10 @@ class CexCoinSelectViewController: ThemeSearchViewController {
     private var cancellables = Set<AnyCancellable>()
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let notFoundPlaceholder = PlaceholderView(layoutType: .keyboard)
+
     private var viewItems = [CexCoinSelectViewModel.ViewItem]()
+    private var isLoaded = false
 
     init(viewModel: CexCoinSelectViewModel, mode: CexCoinSelectModule.Mode) {
         self.viewModel = viewModel
@@ -41,16 +44,22 @@ class CexCoinSelectViewController: ThemeSearchViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
+        view.addSubview(notFoundPlaceholder)
+        notFoundPlaceholder.snp.makeConstraints { maker in
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        notFoundPlaceholder.image = UIImage(named: "not_found_48")
+        notFoundPlaceholder.text = "no_results_found".localized
+
         viewModel.$viewItems
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] viewItems in
-                    self?.viewItems = viewItems
-                    self?.tableView.reload()
-                }
+                .sink { [weak self] in self?.sync(viewItems: $0) }
                 .store(in: &cancellables)
 
-        viewItems = viewModel.viewItems
-        tableView.buildSections()
+        sync(viewItems: viewModel.viewItems)
+
+        isLoaded = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -63,6 +72,24 @@ class CexCoinSelectViewController: ThemeSearchViewController {
 
     override func onUpdate(filter: String?) {
         viewModel.onUpdate(filter: filter)
+    }
+
+    private func sync(viewItems: [CexCoinSelectViewModel.ViewItem]) {
+        self.viewItems = viewItems
+
+        if viewItems.isEmpty {
+            tableView.isHidden = true
+            notFoundPlaceholder.isHidden = false
+        } else {
+            tableView.isHidden = false
+            notFoundPlaceholder.isHidden = true
+        }
+
+        if isLoaded {
+            tableView.reload()
+        } else {
+            tableView.buildSections()
+        }
     }
 
     private func onSelect(cexAsset: CexAsset) {

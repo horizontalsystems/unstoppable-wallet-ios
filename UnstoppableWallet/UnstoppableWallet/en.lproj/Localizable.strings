@@ -62,7 +62,7 @@
 "alert.revoking" = "Revoking";
 "alert.revoked" = "Revoked";
 
-
+"no_results_found" = "No results found";
 "action.loading" = "loading...";
 "placeholder.search" = "Search";
 
