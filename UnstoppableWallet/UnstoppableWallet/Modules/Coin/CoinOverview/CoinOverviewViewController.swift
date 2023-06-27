@@ -11,6 +11,7 @@ import Down
 class CoinOverviewViewController: ThemeViewController {
     private let viewModel: CoinOverviewViewModel
     private let chartViewModel: CoinChartViewModel
+    private let chartRouter: ChartIndicatorRouter
     private let markdownParser: CoinPageMarkdownParser
     private var urlManager: UrlManager
     private let disposeBag = DisposeBag()
@@ -25,14 +26,18 @@ class CoinOverviewViewController: ThemeViewController {
     private let chartCell: ChartCell
     private let chartRow: StaticRow
 
+    private let chartConfigurationCell = BaseThemeCell()
+    private let chartConfigurationRow: StaticRow
+
     /* Description */
     private let descriptionTextCell = ReadMoreTextCell()
 
     weak var parentNavigationController: UINavigationController?
 
-    init(viewModel: CoinOverviewViewModel, chartViewModel: CoinChartViewModel, markdownParser: CoinPageMarkdownParser, urlManager: UrlManager) {
+    init(viewModel: CoinOverviewViewModel, chartViewModel: CoinChartViewModel, chartRouter: ChartIndicatorRouter, markdownParser: CoinPageMarkdownParser, urlManager: UrlManager) {
         self.viewModel = viewModel
         self.chartViewModel = chartViewModel
+        self.chartRouter = chartRouter
         self.markdownParser = markdownParser
         self.urlManager = urlManager
 
@@ -41,6 +46,12 @@ class CoinOverviewViewController: ThemeViewController {
                 cell: chartCell,
                 id: "chartView",
                 height: chartCell.cellHeight
+        )
+
+        chartConfigurationRow = StaticRow(
+                cell: chartConfigurationCell,
+                id: "chartConfiguration",
+                height: .heightCell48
         )
 
         super.init()
@@ -105,11 +116,17 @@ class CoinOverviewViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
             self?.errorView.isHidden = !visible
         }
+        subscribe(disposeBag, chartViewModel.openSettingsSignal) { [weak self] in
+            self?.openChartSettings()
+        }
         subscribe(disposeBag, viewModel.hudSignal) {
             HudHelper.instance.show(banner: $0)
         }
 
         chartRow.onReady = { [weak chartCell] in chartCell?.onLoad() }
+
+        chartConfigurationCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
+        syncChartConfigurationCell()
 
         viewModel.onLoad()
         chartViewModel.start()
@@ -136,11 +153,44 @@ class CoinOverviewViewController: ThemeViewController {
         tableView.reload()
     }
 
+    private func syncChartConfigurationCell() {
+        CellBuilderNew.buildStatic(
+                cell: chartConfigurationCell,
+                rootElement: .hStack([
+                    .textElement(text: .body("coin_overview.indicators".localized)),
+                    .secondaryButton { [weak self] component in
+                        component.isHidden = false
+                        component.button.set(style: .default)
+                        component.button.setTitle("coin_overview.indicators.show".localized, for: .normal)
+                        component.onTap = {
+                        }
+                    },
+                    .margin(8),
+                    .secondaryCircleButton { component in
+                        component.isHidden = false
+                        component.button.set(image: UIImage(named: "setting_20"))
+                        component.button.isEnabled = true
+                        component.onTap = { [weak self] in
+                            self?.chartViewModel.onTapChartSettings()
+                        }
+                    },
+                    .image24 { component in
+                        component.isHidden = true
+                        component.imageView.image = UIImage(named: "lock_24")
+                    }
+                ])
+        )
+    }
+
     private func reloadTable() {
         tableView.buildSections()
 
         tableView.beginUpdates()
         tableView.endUpdates()
+    }
+
+    private func openChartSettings() {
+        present(chartRouter.viewController(), animated: true)
     }
 
 }
@@ -492,6 +542,15 @@ extension CoinOverviewViewController: SectionsDataSource {
         if let viewItem = viewItem {
             sections.append(coinInfoSection(viewItem: viewItem.coinViewItem))
             sections.append(chartSection)
+            sections.append(
+                    Section(
+                            id: "chart-configuration",
+                            headerState: .margin(height: .margin12),
+                            rows: [
+                                chartConfigurationRow
+                            ]
+                    )
+            )
 
             if let marketInfoSection = marketInfoSection(viewItem: viewItem) {
                 sections.append(marketInfoSection)

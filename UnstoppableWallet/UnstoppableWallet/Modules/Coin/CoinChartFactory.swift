@@ -16,21 +16,25 @@ class CoinChartFactory {
         var firstPoint = item.chartPointsItem.firstPoint
         var lastPoint = item.chartPointsItem.lastPoint
 
+        // add current rate point, if last point older
         if item.timestamp > lastPoint.timestamp {
             let point = ChartPoint(timestamp: item.timestamp, value: item.rate)
 
             points.append(point)
             lastPoint = point
 
-            if periodType == .day1, let rateDiff24 = item.rateDiff24h {
+            // for daily chart we need change oldest visible point to 24h back timestamp-same point
+            if periodType.in([.day1]), let rateDiff24 = item.rateDiff24h {
                 let timestamp = item.timestamp - 24 * 60 * 60
                 let value = 100 * item.rate / (100 + rateDiff24)
 
                 let point = ChartPoint(timestamp: timestamp, value: value)
 
-                points = points.filter { $0.timestamp > timestamp }
+                if let index = points.firstIndex(where: { $0.timestamp > timestamp }) {
+                    points.insert(point, at: index)
+                    points.remove(at: index - 1)
+                }
 
-                points.insert(point, at: 0)
                 firstPoint = point
             }
         }
@@ -52,6 +56,7 @@ class CoinChartFactory {
                 valueDescription: nil,
                 rightSideMode: .none,
                 chartData: ChartData(items: items, startWindow: firstPoint.timestamp, endWindow: lastPoint.timestamp),
+                indicators: ChartIndicatorFactory.default, //todo:
                 chartTrend: lastPoint.value > firstPoint.value ? .up : .down,
                 chartDiff: (lastPoint.value - firstPoint.value) / firstPoint.value * 100,
                 minValue: values.min().flatMap { ValueFormatter.instance.formatFull(currency: currency, value: $0) },
@@ -100,6 +105,7 @@ extension HsPeriodType {
     public func `in`(_ intervals: [HsTimePeriod]) -> Bool {
         switch self {
         case .byPeriod(let interval): return intervals.contains(interval)
+        case .byCustomPoints(let interval, _): return intervals.contains(interval)
         case .byStartTime: return true
         }
     }
@@ -107,6 +113,8 @@ extension HsPeriodType {
     var gridInterval: Int {
         switch self {
         case .byPeriod(let interval):
+            return ChartIntervalConverter.convert(interval: interval)
+        case .byCustomPoints(let interval, _):
             return ChartIntervalConverter.convert(interval: interval)
         case .byStartTime(let startTime):
             return CoinChartFactory.gridInterval(fromTimestamp: startTime)

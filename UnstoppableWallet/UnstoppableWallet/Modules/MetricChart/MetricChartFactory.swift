@@ -86,7 +86,7 @@ extension MetricChartFactory {
             chartTrend = (lastItem.value - firstItem.value).isSignMinus ? .down : .up
             valueDiff = (lastItem.value - firstItem.value) / firstItem.value * 100
 
-            if let first = firstItem.indicators?[MarketGlobalModule.dominance], let last = lastItem.indicators?[MarketGlobalModule.dominance] {
+            if let first = itemData.indicators[MarketGlobalModule.dominance]?.first, let last = itemData.indicators[MarketGlobalModule.dominance]?.last {
                 rightSideMode = .dominance(value: last, diff: (last - first) / first * 100)
             }
         case .aggregated(let aggregatedValue):
@@ -98,11 +98,18 @@ extension MetricChartFactory {
             let chartItem = ChartItem(timestamp: item.timestamp)
 
             chartItem.added(name: ChartData.rate, value: item.value)
-            item.indicators?.forEach { key, value in
-                chartItem.added(name: key, value: value)
-            }
-
             return chartItem
+        }
+
+        var indicators = [ChartIndicator]()
+        if let dominancePoints = itemData.indicators[MarketGlobalModule.dominance] {
+            let dominanceIndicator = PrecalculatedIndicator(
+                    id: MarketGlobalModule.dominance,
+                    enabled: true,
+                    values: dominancePoints,
+                    configuration: ChartIndicator.LineConfiguration.dominance)
+
+            indicators.append(dominanceIndicator)
         }
 
         return ChartModule.ViewItem(
@@ -110,6 +117,7 @@ extension MetricChartFactory {
                 valueDescription: nil,
                 rightSideMode: rightSideMode,
                 chartData: ChartData(items: chartItems, startWindow: startTimestamp, endWindow: endTimestamp),
+                indicators: indicators,
                 chartTrend: chartTrend,
                 chartDiff: valueDiff,
                 minValue: format(value: min, valueType: valueType),
@@ -128,7 +136,7 @@ extension MetricChartFactory {
 
         var rightSideMode: ChartModule.RightSideMode = .none
 
-        if let dominance = chartItem.indicators[MarketGlobalModule.dominance] {
+        if let dominance = chartItem.indicators[ChartIndicator.LineConfiguration.dominanceId] {
             rightSideMode = .dominance(value: dominance, diff: nil)
         } else if let volume = chartItem.indicators[ChartData.volume] {
             rightSideMode = .volume(value: format(value: volume, valueType: valueType))

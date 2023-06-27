@@ -260,21 +260,10 @@ class ChartCell: UITableViewCell {
                 }
             }
 
-            var indicators = [ChartIndicator]()
-            let dominanceIndicator = viewItem.chartData.values(name: MarketGlobalModule.dominance)
-            if !dominanceIndicator.isEmpty {
-                indicators.append(
-                        PrecalculatedIndicator(
-                            id: MarketGlobalModule.dominance,
-                            values: dominanceIndicator,
-                            configuration: .dominance
-                        )
-                )
-            }
-            chartView.indicatorsIsHidden = indicators.isEmpty
+            chartView.indicatorsIsHidden = viewItem.indicators.isEmpty
 
             chartView.setCurve(colorType: viewItem.chartTrend.chartColorType)
-            chartView.set(chartData: viewItem.chartData, indicators: indicators, animated: true)
+            chartView.set(chartData: viewItem.chartData, indicators: viewItem.indicators, animated: true)
             chartView.set(highLimitText: viewItem.maxValue, lowLimitText: viewItem.minValue)
         } else {
             currentValueWrapper.isHidden = true

@@ -64,11 +64,12 @@ extension ProChartFetcher: IMetricChartFetcher {
             )
         case .txCount:
             let data = try await marketKit.transactions(coinUid: coin.uid, timePeriod: interval)
+            let volumes = data.points.map { $0.volume ?? 0 }
             return MetricChartModule.ItemData(
                     items: data.points.map {
-                        let indicators: [String: Decimal]? = $0.volume.map { [ChartData.volume: $0] }
-                        return MetricChartModule.Item(value: $0.value, indicators: indicators, timestamp: $0.timestamp)
+                        return MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp)
                     },
+                    indicators: [ChartData.volume: volumes],
                     type: .aggregated(value: data.aggregatedValue)
             )
         case .tvl:

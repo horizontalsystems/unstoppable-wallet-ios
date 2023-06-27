@@ -54,6 +54,7 @@ class MetricChartViewModel {
 
             if let viewItem = factory.convert(itemData: itemData, valueType: service.valueType) {
                 errorRelay.accept(false)
+                print("MChartVM: \(viewItem.indicators.first?.json)")
                 chartInfoRelay.accept(viewItem)
             } else {
                 errorRelay.accept(true)

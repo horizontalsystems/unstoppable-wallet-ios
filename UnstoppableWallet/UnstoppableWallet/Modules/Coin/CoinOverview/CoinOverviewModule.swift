@@ -15,11 +15,14 @@ struct CoinOverviewModule {
                 walletManager: App.shared.walletManager
         )
 
+        let repository = ChartIndicatorsRepository(localStorage: App.shared.localStorage)
         let chartService = CoinChartService(
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
+                countFetcher: repository,
                 coinUid: coinUid
         )
+        let router = ChartIndicatorRouter(repository: repository, fetcher: chartService)
 
         let viewModel = CoinOverviewViewModel(service: service)
 
@@ -29,6 +32,7 @@ struct CoinOverviewModule {
         return CoinOverviewViewController(
                 viewModel: viewModel,
                 chartViewModel: chartViewModel,
+                chartRouter: router,
                 markdownParser: CoinPageMarkdownParser(),
                 urlManager: UrlManager(inApp: true)
         )
