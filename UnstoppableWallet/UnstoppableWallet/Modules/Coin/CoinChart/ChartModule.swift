@@ -12,6 +12,7 @@ struct ChartModule {
         let rightSideMode: RightSideMode
 
         let chartData: ChartData
+        let indicators: [ChartIndicator]
         let chartTrend: MovementTrend
         let chartDiff: Decimal?
 

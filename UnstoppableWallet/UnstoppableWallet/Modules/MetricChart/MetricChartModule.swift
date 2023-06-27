@@ -36,7 +36,14 @@ class MetricChartModule {
 
     struct ItemData {
         let items: [Item]
+        let indicators: [String: [Decimal]]
         let type: ItemType
+
+        init(items: [Item], indicators: [String: [Decimal]] = [:], type: ItemType) {
+            self.items = items
+            self.indicators = indicators
+            self.type = type
+        }
     }
 
     enum ItemType {
@@ -46,12 +53,10 @@ class MetricChartModule {
 
     struct Item {
         let value: Decimal
-        let indicators: [String: Decimal]?
         let timestamp: TimeInterval
 
-        init(value: Decimal, indicators: [String: Decimal]? = nil, timestamp: TimeInterval) {
+        init(value: Decimal, timestamp: TimeInterval) {
             self.value = value
-            self.indicators = indicators
             self.timestamp = timestamp
         }
 

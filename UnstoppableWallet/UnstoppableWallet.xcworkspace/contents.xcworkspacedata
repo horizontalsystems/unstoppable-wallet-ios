@@ -7,4 +7,7 @@
    <FileRef
       location = "group:../../Chart.Swift">
    </FileRef>
+   <FileRef
+      location = "group:../../MarketKit.Swift">
+   </FileRef>
 </Workspace>

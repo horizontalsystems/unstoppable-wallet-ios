@@ -9,7 +9,7 @@ class MarketWideCardCell: BaseSelectableThemeCell {
     private let infoButton = SecondaryCircleButton()
     private let valueLabel = UILabel()
     private let valueInfoLabel = UILabel()
-    private var chartView = RateChartView(configuration: ChartConfiguration.previewChart)
+    private var chartView: RateChartView?
 
     private var onTapInfo: (() -> ())?
 
@@ -54,11 +54,13 @@ class MarketWideCardCell: BaseSelectableThemeCell {
 
         valueInfoLabel.font = .subhead1
         valueInfoLabel.textColor = .themeGray
-
-        remakeChartView()
     }
 
-    private func remakeChartView() {
+    private func showChartView(configuration: ChartConfiguration) {
+        chartView?.removeFromSuperview()
+
+        let chartView = RateChartView(configuration: configuration)
+
         wrapperView.addSubview(chartView)
         chartView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
@@ -66,6 +68,7 @@ class MarketWideCardCell: BaseSelectableThemeCell {
             make.height.equalTo(60)
         }
 
+        self.chartView = chartView
         chartView.isUserInteractionEnabled = false
     }
 
@@ -88,16 +91,13 @@ class MarketWideCardCell: BaseSelectableThemeCell {
             case .line: chartConfiguration = .previewChart
             case .bars: chartConfiguration = .previewBarChart
             }
-            chartView.removeFromSuperview()
-            chartView = RateChartView(configuration: chartConfiguration)
-            remakeChartView()
+            showChartView(configuration: chartConfiguration)
 
-            chartView.isHidden = false
-
-            chartView.setCurve(colorType: chartTrend.chartColorType)
-            chartView.set(chartData: chartData, animated: false)
+            chartView?.setCurve(colorType: chartTrend.chartColorType)
+            chartView?.set(chartData: chartData, animated: false)
         } else {
-            chartView.isHidden = true
+            chartView?.removeFromSuperview()
+            chartView = nil
         }
 
         self.onTapInfo = onTapInfo

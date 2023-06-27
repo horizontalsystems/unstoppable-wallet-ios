@@ -48,7 +48,7 @@ extension ChartConfiguration {
 
         curveWidth = 2
         curvePadding = UIEdgeInsets(top: 20, left: .margin8, bottom: 20, right: .margin8)
-        volumeBarsInsets = UIEdgeInsets(top: 8, left: .margin8, bottom: 0, right: .margin8)
+        indicatorAreaPadding = UIEdgeInsets(top: 8, left: .margin8, bottom: 0, right: .margin8)
 
         return self
     }
@@ -135,7 +135,12 @@ extension ChartConfiguration {
 extension ChartIndicator.LineConfiguration {
 
     static public var dominance: Self {
-        Self(color: Color(.themeJacob.withAlphaComponent(0.5)), width: 1)
+        Self(color: ChartColor(.themeYellowD.withAlphaComponent(0.5)), width: 1)
+    }
+
+    static public var dominanceId: String {
+        let indicator = PrecalculatedIndicator(id: MarketGlobalModule.dominance, enabled: true, values: [], configuration: dominance)
+        return indicator.json
     }
 
 }

@@ -25,23 +25,24 @@ extension MarketGlobalFetcher: IMetricChartFetcher {
     func fetch(interval: HsTimePeriod) async throws -> MetricChartModule.ItemData {
         let points = try await marketKit.globalMarketPoints(currencyCode: currencyKit.baseCurrency.code, timePeriod: interval)
 
+        var dominancePoints = [Decimal]()
         let items = points.map { point -> MetricChartModule.Item in
             let value: Decimal
-            var indicators = [String: Decimal]()
+
 
             switch metricsType {
             case .defiCap: value = point.defiMarketCap
             case .totalMarketCap:
                 value = point.marketCap
-                indicators[MarketGlobalModule.dominance] = point.btcDominance
+                dominancePoints.append(point.btcDominance)
             case .tvlInDefi: value = point.tvl
             case .volume24h: value = point.volume24h
             }
 
-            return MetricChartModule.Item(value: value, indicators: indicators, timestamp: point.timestamp)
+            return MetricChartModule.Item(value: value, timestamp: point.timestamp)
         }
-
-        return MetricChartModule.ItemData(items: items, type: .regular)
+        let indicators = [MarketGlobalModule.dominance: dominancePoints]
+        return MetricChartModule.ItemData(items: items, indicators: indicators, type: .regular)
     }
 
 }

@@ -6,16 +6,22 @@ import MarketKit
 import CurrencyKit
 import HsExtensions
 
+protocol IChartPointFetcher {
+    var points: DataStatus<[ChartPoint]> { get }
+    var pointsUpdatedPublisher: AnyPublisher<Void, Never> { get }
+}
+
 class CoinChartService {
     private var tasks = Set<AnyTask>()
     private var cancellables = Set<AnyCancellable>()
 
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
+    private let countFetcher: ICountFetcher
     private let coinUid: String
 
     private let periodTypeRelay = PublishRelay<HsPeriodType>()
-    var periodType: HsPeriodType = .day1 {
+    var periodType: HsPeriodType {
         didSet {
             if periodType != oldValue {
                 periodTypeRelay.accept(periodType)
@@ -25,9 +31,12 @@ class CoinChartService {
     }
 
     private let stateRelay = PublishRelay<DataStatus<Item>>()
+    private let stateUpdatedSubject = PassthroughSubject<Void, Never>()
+
     private(set) var state: DataStatus<Item> = .loading {
         didSet {
             stateRelay.accept(state)
+            stateUpdatedSubject.send()
         }
     }
 
@@ -43,11 +52,16 @@ class CoinChartService {
     private var coinPrice: CoinPrice?
     private var chartPointsMap = [HsPeriodType: ChartPointsItem]()
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, coinUid: String) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, countFetcher: ICountFetcher, coinUid: String) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+        self.countFetcher = countFetcher
         self.coinUid = coinUid
+
+        periodType = .byCustomPoints(.day1, countFetcher.count)
     }
+
+    deinit { print("Deinit \(self)") }
 
     private func fetchStartTime() {
         Task { [weak self, marketKit, coinUid] in
@@ -62,16 +76,16 @@ class CoinChartService {
     private func fetchChartInfo() {
         Task { [weak self, marketKit, coinUid, currency, periodType] in
             do {
-                let chartPoints = try await marketKit.chartPoints(coinUid: coinUid, currencyCode: currency.code, periodType: periodType)
-                self?.handle(chartPoints: chartPoints, periodType: periodType)
+                let (fromTimestamp, chartPoints) = try await marketKit.chartPoints(coinUid: coinUid, currencyCode: currency.code, periodType: periodType)
+                self?.handle(fromTimestamp: fromTimestamp, chartPoints: chartPoints, periodType: periodType)
             } catch {
                 self?.state = .failed(error)
             }
         }.store(in: &tasks)
     }
 
-    private func handle(chartPoints: [ChartPoint], periodType: HsPeriodType) {
-        guard chartPoints.count >= 2, let firstPoint = chartPoints.first, let lastPoint = chartPoints.last else {
+    private func handle(fromTimestamp: TimeInterval, chartPoints: [ChartPoint], periodType: HsPeriodType) {
+        guard chartPoints.count >= 2, let firstPoint = chartPoints.first(where: { $0.timestamp >= fromTimestamp}), let lastPoint = chartPoints.last else {
             state = .failed(ChartError.notEnoughPoints)
             return
         }
@@ -125,7 +139,7 @@ extension CoinChartService {
     }
 
     func setPeriod(interval: HsTimePeriod) {
-        periodType = .byPeriod(interval)
+        periodType = .byCustomPoints(interval, countFetcher.count)
     }
 
     func start() {
@@ -154,6 +168,18 @@ extension CoinChartService {
         } else {
             fetchChartInfo()
         }
+    }
+
+}
+
+extension CoinChartService: IChartPointFetcher {
+
+    var points: DataStatus<[ChartPoint]> {
+        state.map { item in item.chartPointsItem.points }
+    }
+
+    var pointsUpdatedPublisher: AnyPublisher<(), Never> {
+        stateUpdatedSubject.eraseToAnyPublisher()
     }
 
 }

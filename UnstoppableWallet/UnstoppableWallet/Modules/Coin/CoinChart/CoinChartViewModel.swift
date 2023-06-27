@@ -21,6 +21,7 @@ class CoinChartViewModel {
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let chartInfoRelay = BehaviorRelay<ChartModule.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<Bool>(value: false)
+    private let openSettingsRelay = PublishRelay<()>()
 
     var intervals: [String] {
         service.validIntervals.map { $0.title } + ["chart.time_duration.all".localized]
@@ -45,7 +46,7 @@ class CoinChartViewModel {
     private func index(periodType: HsPeriodType) -> Int {
         switch periodType {
         case .byStartTime: return service.validIntervals.count
-        case .byPeriod(let interval): return service.validIntervals.firstIndex(of: interval) ?? 0
+        case .byPeriod(let interval), .byCustomPoints(let interval, _): return service.validIntervals.firstIndex(of: interval) ?? 0
         }
     }
 
@@ -65,7 +66,9 @@ class CoinChartViewModel {
         case .completed(let item):
             loadingRelay.accept(false)
             errorRelay.accept(false)
-            chartInfoRelay.accept(factory.convert(item: item, periodType: service.periodType, currency: service.currency))
+            let convert = factory.convert(item: item, periodType: service.periodType, currency: service.currency)
+            print("CoinChartViewModel: \(convert.indicators.first?.json)")
+            chartInfoRelay.accept(convert)
         }
     }
 
@@ -97,6 +100,10 @@ extension CoinChartViewModel: IChartViewModel {
         errorRelay.asDriver()
     }
 
+    var openSettingsSignal: Signal<()> {
+        openSettingsRelay.asSignal()
+    }
+
     func onSelectInterval(at index: Int) {
         let intervals = service.validIntervals
 
@@ -120,6 +127,14 @@ extension CoinChartViewModel: IChartViewModel {
         service.fetch()
     }
 
+    func onTapChartSettings() {
+        // check subscriptions
+        openSettingsRelay.accept(())
+    }
+
+    func toggleIndicators() {
+    }
+
 }
 
 extension CoinChartViewModel: IChartViewTouchDelegate {
@@ -133,7 +148,7 @@ extension CoinChartViewModel: IChartViewTouchDelegate {
         pointSelectedItemRelay.accept(
                 factory.selectedPointViewItem(
                         chartItem: item,
-                        firstChartItem: chartInfoRelay.value?.chartData.items.first,
+                        firstChartItem: chartInfoRelay.value?.chartData.visibleItems.first,
                         currency: service.currency
                 )
         )
