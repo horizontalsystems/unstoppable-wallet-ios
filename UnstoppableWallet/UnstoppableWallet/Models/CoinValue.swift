@@ -14,8 +14,8 @@ struct CoinValue {
         CoinValue(kind: kind, value: value.magnitude)
     }
 
-    var coin: Coin {
-        kind.coin
+    var symbol: String {
+        kind.symbol
     }
 
     var decimals: Int {
@@ -33,18 +33,21 @@ extension CoinValue {
     enum Kind: Equatable {
         case token(token: Token)
         case coin(coin: Coin, decimals: Int)
+        case cexAsset(cexAsset: CexAsset)
 
         var decimals: Int {
             switch self {
             case .token(let token): return token.decimals
             case .coin(_, let decimals): return decimals
+            case .cexAsset: return CexAsset.decimals
             }
         }
 
-        var coin: Coin {
+        var symbol: String {
             switch self {
-            case .token(let token): return token.coin
-            case .coin(let coin, _): return coin
+            case .token(let token): return token.coin.code
+            case .coin(let coin, _): return coin.code
+            case .cexAsset(let cexAsset): return cexAsset.coinCode
             }
         }
 
@@ -52,6 +55,7 @@ extension CoinValue {
             switch (lhs, rhs) {
             case (.token(let lhsToken), .token(let rhsToken)): return lhsToken == rhsToken
             case (.coin(let lhsCoin, let lhsDecimals), .coin(let rhsCoin, let rhsDecimals)): return lhsCoin == rhsCoin && lhsDecimals == rhsDecimals
+            case (.cexAsset(let lhsCexAsset), .cexAsset(let rhsCexAsset)): return lhsCexAsset == rhsCexAsset
             default: return false
             }
         }

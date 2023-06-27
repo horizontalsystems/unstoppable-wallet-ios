@@ -1591,3 +1591,10 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "cex_deposit.failed" = "Failed to load deposit address. Please retry.";
 "cex_deposit.memo_warning.title" = "Important";
 "cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
+
+// Cex Withdraw Confirm
+
+"cex_withdraw_confirm.you_withdraw" = "You Withdraw";
+"cex_withdraw_confirm.network" = "Network";
+"cex_withdraw_confirm.withdraw" = "Withdraw";
+"cex_withdraw_confirm.withdraw_failed" = "Failed to withdraw";
