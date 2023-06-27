@@ -524,13 +524,16 @@ extension BinanceCexProvider: ICexProvider {
         return (response.address, response.tag.isEmpty ? nil : response.tag)
     }
 
-    func withdraw(id: String, network: String, address: String, amount: Decimal) async throws -> String {
-        let parameters: Parameters = [
+    func withdraw(id: String, network: String?, address: String, amount: Decimal) async throws -> String {
+        var parameters: Parameters = [
             "coin": id,
-            "network": network,
             "address": address,
             "amount": amount
         ]
+
+        if let network {
+            parameters["network"] = network
+        }
 
         let response: WithdrawResponse = try await fetch(path: "/sapi/v1/capital/withdraw/apply", method: .post, parameters: parameters)
         return response.id

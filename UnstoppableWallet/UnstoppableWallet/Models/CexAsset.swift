@@ -2,6 +2,8 @@ import Foundation
 import MarketKit
 
 struct CexAsset {
+    static let decimals = 8
+
     let id: String
     let name: String
     let freeBalance: Decimal

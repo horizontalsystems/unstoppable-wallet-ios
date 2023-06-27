@@ -196,8 +196,24 @@ extension CoinzixCexProvider: ICexProvider {
         }
     }
 
-    func withdraw(id: String, network: String, address: String, amount: Decimal) async throws -> String {
-        fatalError("withdraw(cexAsset:network:address:amount:) has not been implemented")
+    func withdraw(id: String, network: String?, address: String, amount: Decimal) async throws -> String {
+        var parameters: Parameters = [
+            "iso": id,
+            "to_address": address,
+            "amount": amount
+        ]
+
+        if let network {
+            parameters["network"] = network
+        }
+
+        let response: WithdrawResponse = try await fetch(path: "/v1/withdraw", parameters: parameters)
+
+        guard response.status else {
+            throw RequestError.negativeStatusForWithdraw
+        }
+
+        return String(response.id)
     }
 
 }
@@ -288,10 +304,21 @@ extension CoinzixCexProvider {
         }
     }
 
+    private struct WithdrawResponse: ImmutableMappable {
+        let status: Bool
+        let id: Int
+
+        init(map: Map) throws {
+            status = try map.value("status")
+            id = try map.value("data.id")
+        }
+    }
+
     enum RequestError: Error {
         case invalidSignatureData
         case negativeStatusForDeposit
         case invalidDepositResponse
+        case negativeStatusForWithdraw
     }
 
     enum LoginError: Error {
