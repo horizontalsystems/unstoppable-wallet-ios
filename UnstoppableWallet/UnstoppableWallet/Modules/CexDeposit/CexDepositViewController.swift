@@ -168,7 +168,7 @@ class CexDepositViewController: ThemeViewController {
 
 extension CexDepositViewController: SectionsDataSource {
 
-    private func addressRow(value: String) -> RowProtocol {
+    private func addressRow(value: String, isLast: Bool) -> RowProtocol {
         let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
         let title = "cex_deposit.address".localized
         let titleFont: UIFont = .subhead2
@@ -200,7 +200,7 @@ extension CexDepositViewController: SectionsDataSource {
                     )
                 },
                 bind: { cell in
-                    cell.set(backgroundStyle: backgroundStyle, isFirst: true)
+                    cell.set(backgroundStyle: backgroundStyle, isFirst: true, isLast: isLast)
                 }
         )
     }
@@ -213,14 +213,19 @@ extension CexDepositViewController: SectionsDataSource {
         let qrCodeText = "cex_deposit.qr_code_description".localized(viewModel.coinCode)
 
         var mainRows: [RowProtocol] = [
-            addressRow(value: viewItem.address),
-            tableView.universalRow48(
-                    id: "network",
-                    title: .subhead2("cex_deposit.network".localized),
-                    value: .subhead1(viewModel.networkName),
-                    isLast: viewItem.memo == nil
-            )
+            addressRow(value: viewItem.address, isLast: viewModel.networkName == nil && viewItem.memo == nil)
         ]
+
+        if let networkName = viewModel.networkName {
+            mainRows.append(
+                    tableView.universalRow48(
+                            id: "network",
+                            title: .subhead2("cex_deposit.network".localized),
+                            value: .subhead1(networkName),
+                            isLast: viewItem.memo == nil
+                    )
+            )
+        }
 
         if let memo = viewItem.memo {
             mainRows.append(
