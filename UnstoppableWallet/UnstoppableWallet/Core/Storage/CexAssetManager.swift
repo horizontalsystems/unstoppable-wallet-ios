@@ -22,7 +22,9 @@ class CexAssetManager {
         var coinMap = [String: Coin]()
         coins.forEach { coinMap[$0.uid] = $0 }
 
+        let blockchains = try marketKit.allBlockchains()
         var blockchainMap = [String: Blockchain]()
+        blockchains.forEach { blockchainMap[$0.uid] = $0 }
 
         return records.compactMap { record in
             CexAsset(
