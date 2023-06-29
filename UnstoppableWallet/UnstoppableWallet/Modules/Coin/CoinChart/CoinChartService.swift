@@ -2,6 +2,7 @@ import Combine
 import UIKit
 import RxSwift
 import RxCocoa
+import Chart
 import MarketKit
 import CurrencyKit
 import HsExtensions
@@ -17,7 +18,7 @@ class CoinChartService {
 
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
-    private let countFetcher: ICountFetcher
+    private let indicatorRepository: IChartIndicatorsRepository
     private let coinUid: String
 
     private let periodTypeRelay = PublishRelay<HsPeriodType>()
@@ -52,13 +53,18 @@ class CoinChartService {
     private var coinPrice: CoinPrice?
     private var chartPointsMap = [HsPeriodType: ChartPointsItem]()
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, countFetcher: ICountFetcher, coinUid: String) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, indicatorRepository: IChartIndicatorsRepository, coinUid: String) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
-        self.countFetcher = countFetcher
+        self.indicatorRepository = indicatorRepository
         self.coinUid = coinUid
 
-        periodType = .byCustomPoints(.day1, countFetcher.count)
+        periodType = .byCustomPoints(.day1, indicatorRepository.extendedPointCount)
+        indicatorRepository.updatedPublisher
+                .sink { [weak self] in
+                    self?.fetchWithUpdatedIndicators()
+                }
+                .store(in: &cancellables)
     }
 
     deinit { print("Deinit \(self)") }
@@ -104,7 +110,8 @@ class CoinChartService {
                 rate: coinPrice.value,
                 rateDiff24h: coinPrice.diff,
                 timestamp: coinPrice.timestamp,
-                chartPointsItem: chartPointsItem
+                chartPointsItem: chartPointsItem,
+                indicators: indicatorRepository.indicators
         )
 
         state = .completed(item)
@@ -138,8 +145,21 @@ extension CoinChartService {
         periodType = .byStartTime(startTime ?? 0)
     }
 
+    func fetchWithUpdatedIndicators() {
+        switch periodType {
+        case .byCustomPoints(let interval, _):
+            let updatedType: HsPeriodType = .byCustomPoints(interval, indicatorRepository.extendedPointCount)
+            if periodType == updatedType {
+                fetch()
+            } else {
+                periodType = updatedType
+            }
+        default: ()
+        }
+    }
+
     func setPeriod(interval: HsTimePeriod) {
-        periodType = .byCustomPoints(interval, countFetcher.count)
+        periodType = .byCustomPoints(interval, indicatorRepository.extendedPointCount)
     }
 
     func start() {
@@ -192,6 +212,7 @@ extension CoinChartService {
         let rateDiff24h: Decimal?
         let timestamp: TimeInterval
         let chartPointsItem: ChartPointsItem
+        let indicators: [ChartIndicator]
     }
 
     struct ChartPointsItem {

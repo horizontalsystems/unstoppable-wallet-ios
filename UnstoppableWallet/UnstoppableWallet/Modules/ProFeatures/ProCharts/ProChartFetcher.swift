@@ -67,7 +67,7 @@ extension ProChartFetcher: IMetricChartFetcher {
             let volumes = data.points.map { $0.volume ?? 0 }
             return MetricChartModule.ItemData(
                     items: data.points.map {
-                        return MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp)
+                        MetricChartModule.Item(value: $0.value, timestamp: $0.timestamp)
                     },
                     indicators: [ChartData.volume: volumes],
                     type: .aggregated(value: data.aggregatedValue)

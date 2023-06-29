@@ -21,6 +21,7 @@ class CoinChartViewModel {
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let chartInfoRelay = BehaviorRelay<ChartModule.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<Bool>(value: false)
+    private let indicatorShownRelay = BehaviorRelay<Bool>(value: true)
     private let openSettingsRelay = PublishRelay<()>()
 
     var intervals: [String] {
@@ -67,7 +68,6 @@ class CoinChartViewModel {
             loadingRelay.accept(false)
             errorRelay.accept(false)
             let convert = factory.convert(item: item, periodType: service.periodType, currency: service.currency)
-            print("CoinChartViewModel: \(convert.indicators.first?.json)")
             chartInfoRelay.accept(convert)
         }
     }
@@ -98,6 +98,10 @@ extension CoinChartViewModel: IChartViewModel {
 
     var errorDriver: Driver<Bool> {
         errorRelay.asDriver()
+    }
+
+    var indicatorShownDriver: Driver<Bool> {
+        indicatorShownRelay.asDriver()
     }
 
     var openSettingsSignal: Signal<()> {
@@ -132,7 +136,8 @@ extension CoinChartViewModel: IChartViewModel {
         openSettingsRelay.accept(())
     }
 
-    func toggleIndicators() {
+    func onToggleIndicators() {
+        indicatorShownRelay.accept(!indicatorShownRelay.value)
     }
 
 }

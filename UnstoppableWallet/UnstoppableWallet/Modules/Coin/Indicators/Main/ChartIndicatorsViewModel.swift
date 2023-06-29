@@ -64,7 +64,7 @@ extension ChartIndicatorsViewModel {
     }
 
     func onToggle(viewItem: ChartIndicatorsViewModel.IndicatorViewItem, _ isOn: Bool) {
-
+        service.set(enabled: isOn, id: viewItem.id, index: viewItem.index)
     }
 
 }

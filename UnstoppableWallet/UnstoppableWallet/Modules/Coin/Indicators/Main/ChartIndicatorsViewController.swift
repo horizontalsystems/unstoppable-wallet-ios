@@ -39,10 +39,6 @@ class ChartIndicatorsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        onDeinit = { [weak self] in
-            self?.viewModel.saveIndicators()
-        }
-
         viewModel.$viewItems
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] viewItems in
@@ -53,6 +49,10 @@ class ChartIndicatorsViewController: ThemeViewController {
 
         viewItems = viewModel.viewItems
         tableView.buildSections()
+    }
+
+    deinit {    // on any dismiss we need to save user indicators
+        viewModel.saveIndicators()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -72,9 +72,9 @@ extension ChartIndicatorsViewController {
             .imageElement(image: .local(viewItem.image), size: .image24),
             .textElement(text: .body(viewItem.name)),
             .imageElement(image: .local(UIImage(named: "edit_20")), size: .image20),
-            .switch { component in
+            .switch { [weak self] component in
                 component.switchView.isOn = viewItem.enabled
-                component.onSwitch = { [weak self] in self?.viewModel.onToggle(viewItem: viewItem, $0) }
+                component.onSwitch = { self?.viewModel.onToggle(viewItem: viewItem, $0) }
             }
         ]
 

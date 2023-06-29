@@ -19,7 +19,7 @@ struct CoinOverviewModule {
         let chartService = CoinChartService(
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
-                countFetcher: repository,
+                indicatorRepository: repository,
                 coinUid: coinUid
         )
         let router = ChartIndicatorRouter(repository: repository, fetcher: chartService)

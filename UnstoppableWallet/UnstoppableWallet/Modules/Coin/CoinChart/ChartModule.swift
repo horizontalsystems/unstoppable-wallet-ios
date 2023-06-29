@@ -64,6 +64,7 @@ protocol IChartViewModel {
     var intervalIndexDriver: Driver<Int> { get }
     var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> { get }
     var loadingDriver: Driver<Bool> { get }
+    var indicatorShownDriver: Driver<Bool> { get }
     var chartInfoDriver: Driver<ChartModule.ViewItem?> { get }
     var errorDriver: Driver<Bool> { get }
 
