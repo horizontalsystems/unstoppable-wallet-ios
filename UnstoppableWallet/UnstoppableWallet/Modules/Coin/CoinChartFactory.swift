@@ -32,7 +32,9 @@ class CoinChartFactory {
 
                 if let index = points.firstIndex(where: { $0.timestamp > timestamp }) {
                     points.insert(point, at: index)
-                    points.remove(at: index - 1)
+                    if index > 0 {
+                        points.remove(at: index - 1)
+                    }
                 }
 
                 firstPoint = point
@@ -56,7 +58,7 @@ class CoinChartFactory {
                 valueDescription: nil,
                 rightSideMode: .none,
                 chartData: ChartData(items: items, startWindow: firstPoint.timestamp, endWindow: lastPoint.timestamp),
-                indicators: ChartIndicatorFactory.default, //todo:
+                indicators: item.indicators,
                 chartTrend: lastPoint.value > firstPoint.value ? .up : .down,
                 chartDiff: (lastPoint.value - firstPoint.value) / firstPoint.value * 100,
                 minValue: values.min().flatMap { ValueFormatter.instance.formatFull(currency: currency, value: $0) },
@@ -106,7 +108,7 @@ extension HsPeriodType {
         switch self {
         case .byPeriod(let interval): return intervals.contains(interval)
         case .byCustomPoints(let interval, _): return intervals.contains(interval)
-        case .byStartTime: return true
+        case .byStartTime: return false
         }
     }
 

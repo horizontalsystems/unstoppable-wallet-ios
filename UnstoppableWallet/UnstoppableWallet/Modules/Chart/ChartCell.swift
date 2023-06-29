@@ -260,8 +260,6 @@ class ChartCell: UITableViewCell {
                 }
             }
 
-            chartView.indicatorsIsHidden = viewItem.indicators.isEmpty
-
             chartView.setCurve(colorType: viewItem.chartTrend.chartColorType)
             chartView.set(chartData: viewItem.chartData, indicators: viewItem.indicators, animated: true)
             chartView.set(highLimitText: viewItem.maxValue, lowLimitText: viewItem.minValue)
@@ -344,6 +342,10 @@ class ChartCell: UITableViewCell {
         syncChart(typeIndex: typeIndex)
     }
 
+    private func syncChart(showIndicators: Bool) {
+        chartView.indicatorsIsHidden = !showIndicators
+    }
+
     private func syncChart(loading: Bool) {
         chartView.isUserInteractionEnabled = !loading
         loadingView.isHidden = !loading
@@ -368,6 +370,7 @@ extension ChartCell {
         subscribe(disposeBag, viewModel.intervalIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
         subscribe(disposeBag, viewModel.intervalsUpdatedWithCurrentIndexDriver) { [weak self] in self?.syncIntervals(typeIndex: $0) }
 
+        subscribe(disposeBag, viewModel.indicatorShownDriver) { [weak self] in self?.syncChart(showIndicators: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] in self?.syncChart(loading: $0) }
         subscribe(disposeBag, viewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }
         subscribe(disposeBag, viewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }

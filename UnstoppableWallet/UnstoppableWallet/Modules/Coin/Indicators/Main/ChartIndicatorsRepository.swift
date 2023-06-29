@@ -1,12 +1,18 @@
 import Foundation
+import Combine
 import Chart
 
 protocol IChartIndicatorsRepository {
-    var indicators: [ChartIndicator] { get set }
+    var indicators: [ChartIndicator] { get }
+    var updatedPublisher: AnyPublisher<Void, Never> { get }
+    var extendedPointCount: Int { get }
+
+    func set(indicators: [ChartIndicator])
 }
 
 class ChartIndicatorsRepository {
     private let localStorage: LocalStorage
+    private let updatedSubject = PassthroughSubject<Void, Never>()
 
     init(localStorage: LocalStorage) {
         self.localStorage = localStorage
@@ -14,38 +20,42 @@ class ChartIndicatorsRepository {
 
     private var userIndicators: [ChartIndicator] {
         // for first time returns default list
-        guard let indicators = localStorage.chartIndicators else {
-            return ChartIndicatorFactory.`default`
+        guard let indicatorData = localStorage.chartIndicators else {
+            return ChartIndicatorFactory.default
         }
 
         let decoder = JSONDecoder()
-        guard let indicators = try? decoder.decode([ChartIndicator].self, from: indicators) else {
-            // if local storage has wrong record, returns default
-            return ChartIndicatorFactory.`default`
-        }
+        let results = try? decoder.decode(ChartIndicators.self, from: indicatorData)
 
-        return indicators
+        return results?.indicators ?? ChartIndicatorFactory.default
     }
 }
 
 extension ChartIndicatorsRepository: IChartIndicatorsRepository {
 
     var indicators: [ChartIndicator] {
-        get {
-            userIndicators
-        }
-        set {
-            let encoder = JSONEncoder()
-            localStorage.chartIndicators = try? encoder.encode(newValue)
+        userIndicators
+    }
+
+    func set(indicators: [ChartIndicator]) {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys
+
+        let oldIndicators = userIndicators
+        if indicators != oldIndicators {
+            localStorage.chartIndicators = try? encoder.encode(ChartIndicators(with: indicators))
+            updatedSubject.send()
         }
     }
 
-}
+    var updatedPublisher: AnyPublisher<Void, Never> {
+        updatedSubject.eraseToAnyPublisher()
+    }
 
-extension ChartIndicatorsRepository: ICountFetcher {
-
-    var count: Int {
-        indicators.reduce(into: 0) { greatest, indicator in greatest = max(greatest, indicator.greatestPeriod) }
+    var extendedPointCount: Int {
+        indicators.reduce(into: 0) { greatest, indicator in
+            greatest = indicator.enabled ? max(greatest, indicator.greatestPeriod) : greatest
+        }
     }
 
 }

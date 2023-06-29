@@ -661,7 +661,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "coin_overview.indicators" = "Indicators";
 "coin_overview.indicators.show" = "Show";
-"coin_overview.indicators.show" = "Hide";
+"coin_overview.indicators.hide" = "Hide";
 "coin_overview.market_cap" = "Market Cap";
 "coin_overview.circulating_supply" = "In Circulation";
 "coin_overview.total_supply" = "Total Supply";

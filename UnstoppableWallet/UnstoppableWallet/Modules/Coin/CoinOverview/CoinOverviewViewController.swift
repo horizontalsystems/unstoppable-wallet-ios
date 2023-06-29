@@ -28,6 +28,7 @@ class CoinOverviewViewController: ThemeViewController {
 
     private let chartConfigurationCell = BaseThemeCell()
     private let chartConfigurationRow: StaticRow
+    private var chartIndicatorShown: Bool = true
 
     /* Description */
     private let descriptionTextCell = ReadMoreTextCell()
@@ -116,6 +117,10 @@ class CoinOverviewViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
             self?.errorView.isHidden = !visible
         }
+        subscribe(disposeBag, chartViewModel.indicatorShownDriver) { [weak self] isShown in
+            self?.chartIndicatorShown = isShown
+            self?.syncChartConfigurationCell()
+        }
         subscribe(disposeBag, chartViewModel.openSettingsSignal) { [weak self] in
             self?.openChartSettings()
         }
@@ -161,8 +166,10 @@ class CoinOverviewViewController: ThemeViewController {
                     .secondaryButton { [weak self] component in
                         component.isHidden = false
                         component.button.set(style: .default)
-                        component.button.setTitle("coin_overview.indicators.show".localized, for: .normal)
+                        let title = (self?.chartIndicatorShown ?? false) ? "coin_overview.indicators.hide".localized : "coin_overview.indicators.show".localized
+                        component.button.setTitle(title, for: .normal)
                         component.onTap = {
+                            self?.chartViewModel.onToggleIndicators()
                         }
                     },
                     .margin(8),
@@ -190,7 +197,7 @@ class CoinOverviewViewController: ThemeViewController {
     }
 
     private func openChartSettings() {
-        present(chartRouter.viewController(), animated: true)
+        parentNavigationController?.present(chartRouter.viewController(), animated: true)
     }
 
 }

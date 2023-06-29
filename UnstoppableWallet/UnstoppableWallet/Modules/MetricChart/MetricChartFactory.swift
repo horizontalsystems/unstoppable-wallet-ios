@@ -94,11 +94,14 @@ extension MetricChartFactory {
             chartTrend = .neutral
         }
 
-        let chartItems = itemData.items.map { item -> ChartItem in
-            let chartItem = ChartItem(timestamp: item.timestamp)
-
-            chartItem.added(name: ChartData.rate, value: item.value)
-            return chartItem
+        var chartItems = [ChartItem]()
+        for index in 0..<itemData.items.count {
+            let chartItem = ChartItem(timestamp: itemData.items[index].timestamp)
+            chartItem.added(name: ChartData.rate, value: itemData.items[index].value)
+            if let value = itemData.indicators[ChartData.volume]?.at(index: index) {
+                chartItem.added(name: ChartData.volume, value: value)
+            }
+            chartItems.append(chartItem)
         }
 
         var indicators = [ChartIndicator]()
