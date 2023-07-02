@@ -23,6 +23,7 @@
 "button.send" = "Envoyer";
 "button.sign" = "Signer";
 "button.more" = "Afficher plus";
+"button.i_understand" = "I Understand";
 
 "alert" = "Alerte";
 "alert.copied" = "Copié";
@@ -61,7 +62,7 @@
 "alert.revoking" = "Révocation en cours";
 "alert.revoked" = "Révoqué";
 
-
+"no_results_found" = "No results found";
 "action.loading" = "chargement en cours...";
 "placeholder.search" = "Chercher";
 
@@ -119,11 +120,13 @@
 
 "restore_type.title" = "Importer le porte-monnaie";
 
-"restore_type.cloud.title" = "depuis iCloud";
 "restore_type.recovery.title" = "Voir la phase de récupération";
+"restore_type.cloud.title" = "depuis iCloud";
+"restore_type.cex.title" = "from Exchange Wallet";
 
-"restore_type.cloud.description" = "Importer un fichier de sauvegarde dans votre trousseau de clés.";
 "restore_type.recovery.description" = "Importer à l'aide de la phrase de récupération ou de la clé privée.";
+"restore_type.cloud.description" = "Importer un fichier de sauvegarde dans votre trousseau de clés.";
+"restore_type.cex.description" = "Connect to a wallet on centralized exchange.";
 
 // Restore Cloud
 
@@ -135,6 +138,31 @@
 "restore.cloud.password.title" = "Entrez le mot de passe";
 "restore.cloud.password.placeholder" = "Mot de passe de la sauvegarde";
 "restore.cloud.password.description" = "Entrez le mot de passe de sauvegarde pour importer votre portefeuille depuis iCloud.";
+
+// Restore Cex
+
+"restore.cex.title" = "Select CEX";
+"restore.cex.description" = "Select the centralized exchange to which you want to connect.";
+
+// Restore Binance
+
+"restore.binance.description" = "Please provide the API Keys and API Secret to link your exchange.";
+"restore.binance.api_key" = "API Key";
+"restore.binance.secret_key" = "Secret Key";
+"restore.binance.connect" = "Connecter";
+"restore.binance.connecting" = "Connexion en cours...";
+"restore.binance.get_api_keys" = "Get API Keys";
+"restore.binance.failed_to_connect" = "Failed to connect your API Key";
+"restore.binance.invalid_qr_code" = "Invalid QR Code";
+
+// Restore Coinzix
+
+"restore.coinzix.description" = "Enter your email and password from Coinzix Account";
+"restore.coinzix.sign_up" = "Sign Up";
+"restore.coinzix.login" = "Log In";
+"restore.coinzix.sample_username" = "Email";
+"restore.coinzix.sample_password" = "Password";
+"restore.coinzix.failed_to_login" = "Failed to log in";
 
 // Coin Settings
 
@@ -231,7 +259,7 @@
 "backup.cloud.password.title" = "Créer un mot de passe";
 "backup.cloud.password.description" = "Définissez le mot de passe de déverrouillage de votre sauvegarde. Il doit contenir au moins 8 symboles, y compris une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial.";
 "backup.cloud.password.highlighted_description" = "N'oubliez pas ce mot de passe ! Il est différent de votre mot de passe Apple iCloud, et ne peut pas être récupéré ou réinitialisé.";
-"backup.cloud.password.placeholder" = "Mot de passe";
+"backup.cloud.password.placeholder" = "Password";
 "backup.cloud.password.confirm.placeholder" = "Confirmer";
 "backup.cloud.password.save" = "Enregistrez une copie de sauvegarde";
 
@@ -258,7 +286,9 @@
 "balance.title" = "Solde";
 "balance.tab_bar_item" = "Solde";
 "balance.send" = "Envoyer";
+"balance.withdraw" = "Withdraw";
 "balance.swap" = "Echanger";
+"balance.receive" = "Receive";
 "balance.deposit" = "Recevoir";
 "balance.address" = "Adresses";
 "balance.rate_per_coin" = "%@ par %@";
@@ -273,6 +303,7 @@
 "balance.syncing_percent" = "Synchronisation... %@";
 "balance.synced_through" = "jusqu'à: %@";
 "balance.add_coin" = "Ajouter la pièce";
+"balance.invalid_api_key" = "Invalid API Key";
 "balance.empty.add_coins" = "Ajouter les pièces";
 "balance.empty.description" = "Vous n'avez ajouté aucune pièce à ce portefeuille.";
 "balance.watch_empty.description" = "Cette adresse de portefeuille n'a pas de solde";
@@ -537,12 +568,12 @@
 "market_discovery.filters" = "Filtres";
 "market_discovery.browse_categories" = "Parcourir les catégories";
 "market_discovery.top_coins" = "TOP des coins";
-"market_discovery.not_found" = "Aucun résultat";
+"market_discovery.not_found" = "No results found";
 
 "market_watchlist.empty.caption" = "Votre liste de suivi est vide.";
 
 "market.search.title" = "Chercher";
-"market.search.empty_text" = "Aucun résultat";
+"market.search.empty_text" = "No results found";
 
 "market.advanced_search.title" = "Filtres";
 "market.advanced_search.show_results" = "Afficher les résultats";
@@ -626,6 +657,9 @@
 
 // Coin Page -> Overview
 
+"coin_overview.indicators" = "Indicators";
+"coin_overview.indicators.show" = "Show";
+"coin_overview.indicators.hide" = "Hide";
 "coin_overview.market_cap" = "Cap. marché";
 "coin_overview.circulating_supply" = "En circulation";
 "coin_overview.total_supply" = "Offre totale";
@@ -772,6 +806,12 @@
 "coin_tweets.not_available" = "Twitter n'est pas disponible";
 "coin_tweets.see_on_twitter" = "Voir notre Twitter";
 
+// Coin Page -> Indicators
+
+"chart_indicators.title" = "Indicators";
+"chart_indicators.moving_averages" = "Moving Averages";
+"chart_indicators.oscillators" = "Oscillators";
+
 // Pro Features
 
 "pro_features.authorize.wallet_passes.title" = "Unstoppable NFT";
@@ -811,7 +851,7 @@
 "transactions.completed" = "Terminé";
 "transactions.failed" = "Échec";
 
-"transactions.receive" = "Recevoir";
+"transactions.receive" = "Receive";
 "transactions.send" = "Envoyer";
 "transactions.burn" = "Brûlure";
 "transactions.mint" = "Mint";
@@ -1034,7 +1074,7 @@
 "contacts.title" = "Contacts";
 "contacts.list.search_placeholder" = "Rechercher par nom";
 "contacts.list.not_found" = "Vous n'avez pas ajouté de contact";
-"contacts.list.not_found_search" = "Aucun résultat";
+"contacts.list.not_found_search" = "No results found";
 "contacts.add_new_contact" = "Ajouter un nouveau contact";
 "contacts.update_contact.already_has_address" = "Le contact sélectionné possède déjà une adresse sur %@. Cette action remplacera l'adresse %@ par %@.";
 "contacts.update_contact.replace" = "Remplacer";
@@ -1533,3 +1573,36 @@
 "tron.send.resources_consumed.info" = "Bandwidth passante est l'unité qui mesure la taille des octets de transaction stockés dans la base de données blockchain. Plus la transaction est grande, plus la bande passante sera consommée.\n\nL'énergie est l'unité qui mesure le montant de calcul requis par la machine virtuelle TRON pour effectuer des opérations spécifiques sur le réseau TRON.\n\nÉtant donné que les transactions de contrats intelligents nécessitent des ressources informatiques pour être exécutées, chaque transaction de contrat intelligent nécessite le paiement de frais d'énergie.";
 "tron.send.activation_fee.info" = "Le transfert de jetons TRX ou TRC-10 vers une adresse de compte inactive activera ledit compte.";
 "tron.send.inactive_address" = "Cette adresse n'est pas active";
+
+// Cex Coin Select
+
+"cex_coin_select.title" = "Choisir la pièce";
+"cex_coin_select.search_placeholder" = "Coin Code or Name";
+"cex_coin_select.suspended" = "Suspended";
+
+// Cex Deposit Network Select
+
+"cex_deposit_network_select.title" = "Choose Network";
+"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
+
+// Cex Deposit
+
+"cex_deposit.title" = "Deposit %@";
+"cex_deposit.qr_code_description" = "Your address for depositing %@";
+"cex_deposit.address" = "Adresses";
+"cex_deposit.network" = "Réseau";
+"cex_deposit.memo" = "Memo (Tag)";
+"cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
+"cex_deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
+"cex_deposit.copy_address" = "Copy Address";
+"cex_deposit.share_address" = "Share Address";
+"cex_deposit.failed" = "Failed to load deposit address. Please retry.";
+"cex_deposit.memo_warning.title" = "Important";
+"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
+
+// Cex Withdraw Confirm
+
+"cex_withdraw_confirm.you_withdraw" = "You Withdraw";
+"cex_withdraw_confirm.network" = "Réseau";
+"cex_withdraw_confirm.withdraw" = "Withdraw";
+"cex_withdraw_confirm.withdraw_failed" = "Failed to withdraw";
