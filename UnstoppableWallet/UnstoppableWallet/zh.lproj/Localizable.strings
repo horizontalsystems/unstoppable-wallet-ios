@@ -23,6 +23,7 @@
 "button.send" = "发送​​";
 "button.sign" = "签名";
 "button.more" = "显示更多";
+"button.i_understand" = "I Understand";
 
 "alert" = "警报";
 "alert.copied" = "已复制";
@@ -61,7 +62,7 @@
 "alert.revoking" = "正在取消";
 "alert.revoked" = "已注销";
 
-
+"no_results_found" = "No results found";
 "action.loading" = "正在加载...";
 "placeholder.search" = "搜索​​​​";
 
@@ -121,11 +122,13 @@
 
 "restore_type.title" = "恢复自";
 
-"restore_type.cloud.title" = "来自 iCloud";
 "restore_type.recovery.title" = "恢复短语";
+"restore_type.cloud.title" = "来自 iCloud";
+"restore_type.cex.title" = "from Exchange Wallet";
 
-"restore_type.cloud.description" = "从您的密钥链备份文件中导入。";
 "restore_type.recovery.description" = "使用恢复短语或私钥导入。";
+"restore_type.cloud.description" = "从您的密钥链备份文件中导入。";
+"restore_type.cex.description" = "Connect to a wallet on centralized exchange.";
 
 // Restore Cloud
 
@@ -137,6 +140,31 @@
 "restore.cloud.password.title" = "请输入密码";
 "restore.cloud.password.placeholder" = "备份密码";
 "restore.cloud.password.description" = "请输入备份密码以从iCloud导入您的钱包。";
+
+// Restore Cex
+
+"restore.cex.title" = "Select CEX";
+"restore.cex.description" = "Select the centralized exchange to which you want to connect.";
+
+// Restore Binance
+
+"restore.binance.description" = "Please provide the API Keys and API Secret to link your exchange.";
+"restore.binance.api_key" = "API Key";
+"restore.binance.secret_key" = "Secret Key";
+"restore.binance.connect" = "连接";
+"restore.binance.connecting" = "正在连接...";
+"restore.binance.get_api_keys" = "Get API Keys";
+"restore.binance.failed_to_connect" = "Failed to connect your API Key";
+"restore.binance.invalid_qr_code" = "Invalid QR Code";
+
+// Restore Coinzix
+
+"restore.coinzix.description" = "Enter your email and password from Coinzix Account";
+"restore.coinzix.sign_up" = "Sign Up";
+"restore.coinzix.login" = "Log In";
+"restore.coinzix.sample_username" = "Email";
+"restore.coinzix.sample_password" = "Password";
+"restore.coinzix.failed_to_login" = "Failed to log in";
 
 // Coin Settings
 
@@ -233,7 +261,7 @@
 "backup.cloud.password.title" = "设置密码";
 "backup.cloud.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
 "backup.cloud.password.highlighted_description" = "请不要忘记这个密码！它与您的 Apple iCloud 密码不同，无法恢复或重置。";
-"backup.cloud.password.placeholder" = "密码";
+"backup.cloud.password.placeholder" = "Password";
 "backup.cloud.password.confirm.placeholder" = "确认";
 "backup.cloud.password.save" = "保存并备份";
 
@@ -260,7 +288,9 @@
 "balance.title" = "余额";
 "balance.tab_bar_item" = "余额";
 "balance.send" = "发送​​";
+"balance.withdraw" = "Withdraw";
 "balance.swap" = "掉期交易";
+"balance.receive" = "Receive";
 "balance.deposit" = "接收";
 "balance.address" = "地址";
 "balance.rate_per_coin" = "%@ / %@";
@@ -275,6 +305,7 @@
 "balance.syncing_percent" = "正在同步... %@";
 "balance.synced_through" = "直到 %@";
 "balance.add_coin" = "添加代币";
+"balance.invalid_api_key" = "Invalid API Key";
 "balance.empty.add_coins" = "添加代币";
 "balance.empty.description" = "您还没有添加任何代币到此钱包中。";
 "balance.watch_empty.description" = "此钱包地址没有任何余额";
@@ -540,12 +571,12 @@
 "market_discovery.filters" = "过滤器";
 "market_discovery.browse_categories" = "浏览类别";
 "market_discovery.top_coins" = "TOP 硬币";
-"market_discovery.not_found" = "未发现结果";
+"market_discovery.not_found" = "No results found";
 
 "market_watchlist.empty.caption" = "您的观察列表为空。";
 
 "market.search.title" = "搜索​​​​";
-"market.search.empty_text" = "未发现结果";
+"market.search.empty_text" = "No results found";
 
 "market.advanced_search.title" = "过滤器";
 "market.advanced_search.show_results" = "显示结果";
@@ -629,6 +660,9 @@
 
 // Coin Page -> Overview
 
+"coin_overview.indicators" = "Indicators";
+"coin_overview.indicators.show" = "Show";
+"coin_overview.indicators.hide" = "Hide";
 "coin_overview.market_cap" = "市场价值";
 "coin_overview.circulating_supply" = "流通量";
 "coin_overview.total_supply" = "总供应";
@@ -775,6 +809,12 @@
 "coin_tweets.not_available" = "没有twitter";
 "coin_tweets.see_on_twitter" = "打开Twitter";
 
+// Coin Page -> Indicators
+
+"chart_indicators.title" = "Indicators";
+"chart_indicators.moving_averages" = "Moving Averages";
+"chart_indicators.oscillators" = "Oscillators";
+
 // Pro Features
 
 "pro_features.authorize.wallet_passes.title" = "Unstoppable NFT";
@@ -814,7 +854,7 @@
 "transactions.completed" = "已完成";
 "transactions.failed" = "失败";
 
-"transactions.receive" = "接收";
+"transactions.receive" = "Receive";
 "transactions.send" = "发送​​";
 "transactions.burn" = "燃烧";
 "transactions.mint" = "薄荷绿";
@@ -1037,7 +1077,7 @@
 "contacts.title" = "联系人";
 "contacts.list.search_placeholder" = "按名字搜索";
 "contacts.list.not_found" = "您没有已添加的联系人";
-"contacts.list.not_found_search" = "未发现结果";
+"contacts.list.not_found_search" = "No results found";
 "contacts.add_new_contact" = "添加新联系人";
 "contacts.update_contact.already_has_address" = "所选联系人在 %@上已经有一个地址。此操作将把地址 %@ 替换为 %@。";
 "contacts.update_contact.replace" = "替换";
@@ -1535,3 +1575,36 @@
 "tron.send.resources_consumed.info" = "Bandwidth 是衡量存储在区块链数据库中的交易字节大小的单位。 交易越大，消耗的带宽资源就越多。\n\nEnergy 是衡量波场虚拟机在波场网络上执行特定操作所需计算量的单位。\n\n自智能合约 交易需要计算资源来执行，每笔智能合约交易都需要支付 energy费用。";
 "tron.send.activation_fee.info" = "正在将TRX或 TRC-10令牌传输到一个非活动帐户地址将激活帐户。";
 "tron.send.inactive_address" = "此地址未激活";
+
+// Cex Coin Select
+
+"cex_coin_select.title" = "选择代币";
+"cex_coin_select.search_placeholder" = "Coin Code or Name";
+"cex_coin_select.suspended" = "Suspended";
+
+// Cex Deposit Network Select
+
+"cex_deposit_network_select.title" = "Choose Network";
+"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
+
+// Cex Deposit
+
+"cex_deposit.title" = "Deposit %@";
+"cex_deposit.qr_code_description" = "Your address for depositing %@";
+"cex_deposit.address" = "地址";
+"cex_deposit.network" = "网络";
+"cex_deposit.memo" = "Memo (Tag)";
+"cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
+"cex_deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
+"cex_deposit.copy_address" = "Copy Address";
+"cex_deposit.share_address" = "Share Address";
+"cex_deposit.failed" = "Failed to load deposit address. Please retry.";
+"cex_deposit.memo_warning.title" = "Important";
+"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
+
+// Cex Withdraw Confirm
+
+"cex_withdraw_confirm.you_withdraw" = "You Withdraw";
+"cex_withdraw_confirm.network" = "网络";
+"cex_withdraw_confirm.withdraw" = "Withdraw";
+"cex_withdraw_confirm.withdraw_failed" = "Failed to withdraw";
