@@ -23,6 +23,7 @@
 "button.send" = "전송";
 "button.sign" = "가입";
 "button.more" = "더 보기";
+"button.i_understand" = "I Understand";
 
 "alert" = "알림";
 "alert.copied" = "복사됨";
@@ -61,7 +62,7 @@
 "alert.revoking" = "철회";
 "alert.revoked" = "철회됨";
 
-
+"no_results_found" = "No results found";
 "action.loading" = "로딩중";
 "placeholder.search" = "검색";
 
@@ -119,11 +120,13 @@
 
 "restore_type.title" = "다음에서 복원하기";
 
-"restore_type.cloud.title" = "아이클라우드에서";
 "restore_type.recovery.title" = "복구 문구에서";
+"restore_type.cloud.title" = "아이클라우드에서";
+"restore_type.cex.title" = "from Exchange Wallet";
 
-"restore_type.cloud.description" = "키체인의 백업 파일에서 가져옵니다.";
 "restore_type.recovery.description" = "이 문구는 복구 문구 또는 개인 키를 사용하여 가져올 수 있습니다.";
+"restore_type.cloud.description" = "키체인의 백업 파일에서 가져옵니다.";
+"restore_type.cex.description" = "Connect to a wallet on centralized exchange.";
 
 // Restore Cloud
 
@@ -135,6 +138,31 @@
 "restore.cloud.password.title" = "암호를 입력하세요";
 "restore.cloud.password.placeholder" = "백업 비밀번호";
 "restore.cloud.password.description" = "iCloud에서 지갑을 가져오려면 백업 비밀번호를 입력하세요.";
+
+// Restore Cex
+
+"restore.cex.title" = "Select CEX";
+"restore.cex.description" = "Select the centralized exchange to which you want to connect.";
+
+// Restore Binance
+
+"restore.binance.description" = "Please provide the API Keys and API Secret to link your exchange.";
+"restore.binance.api_key" = "API Key";
+"restore.binance.secret_key" = "Secret Key";
+"restore.binance.connect" = "연결";
+"restore.binance.connecting" = "연결 중...";
+"restore.binance.get_api_keys" = "Get API Keys";
+"restore.binance.failed_to_connect" = "Failed to connect your API Key";
+"restore.binance.invalid_qr_code" = "Invalid QR Code";
+
+// Restore Coinzix
+
+"restore.coinzix.description" = "Enter your email and password from Coinzix Account";
+"restore.coinzix.sign_up" = "Sign Up";
+"restore.coinzix.login" = "Log In";
+"restore.coinzix.sample_username" = "Email";
+"restore.coinzix.sample_password" = "Password";
+"restore.coinzix.failed_to_login" = "Failed to log in";
 
 // Coin Settings
 
@@ -231,7 +259,7 @@
 "backup.cloud.password.title" = "암호를 설정하세요.";
 "backup.cloud.password.description" = "백업에 대한 잠금 해제 암호를 설정하십시오. 최소 8개의 기호로 구성되어야 하며 소문자, 대문자, 숫자 및 특수 문자가 하나 이상 포함되어야 합니다.";
 "backup.cloud.password.highlighted_description" = "이 비밀번호를 잊지 마세요! Apple iCloud 암호와는 별개이며 복구하거나 재설정할 수 없습니다.";
-"backup.cloud.password.placeholder" = "비밀번호";
+"backup.cloud.password.placeholder" = "Password";
 "backup.cloud.password.confirm.placeholder" = "확인";
 "backup.cloud.password.save" = "저장 및 백업";
 
@@ -258,7 +286,9 @@
 "balance.title" = "잔액";
 "balance.tab_bar_item" = "잔액";
 "balance.send" = "전송";
+"balance.withdraw" = "Withdraw";
 "balance.swap" = "스왑";
+"balance.receive" = "Receive";
 "balance.deposit" = "수신";
 "balance.address" = "주소";
 "balance.rate_per_coin" = "%@ 당 %@";
@@ -273,6 +303,7 @@
 "balance.syncing_percent" = "동기화 중... %@";
 "balance.synced_through" = "%@ 까지";
 "balance.add_coin" = "코인 추가";
+"balance.invalid_api_key" = "Invalid API Key";
 "balance.empty.add_coins" = "코인 추가";
 "balance.empty.description" = "이 지갑에 코인을 넣지 않았습니다.";
 "balance.watch_empty.description" = "이 지갑 주소에는 잔액이 없습니다";
@@ -626,6 +657,9 @@
 
 // Coin Page -> Overview
 
+"coin_overview.indicators" = "Indicators";
+"coin_overview.indicators.show" = "Show";
+"coin_overview.indicators.hide" = "Hide";
 "coin_overview.market_cap" = "Market Cap";
 "coin_overview.circulating_supply" = "In Circulation";
 "coin_overview.total_supply" = "Total Supply";
@@ -772,6 +806,12 @@
 "coin_tweets.not_available" = "No twitter available";
 "coin_tweets.see_on_twitter" = "See on Twitter";
 
+// Coin Page -> Indicators
+
+"chart_indicators.title" = "Indicators";
+"chart_indicators.moving_averages" = "Moving Averages";
+"chart_indicators.oscillators" = "Oscillators";
+
 // Pro Features
 
 "pro_features.authorize.wallet_passes.title" = "Unstoppable NFT";
@@ -811,7 +851,7 @@
 "transactions.completed" = "완료됨";
 "transactions.failed" = "실패";
 
-"transactions.receive" = "수신";
+"transactions.receive" = "Receive";
 "transactions.send" = "전송";
 "transactions.burn" = "번";
 "transactions.mint" = "민트";
@@ -1532,3 +1572,36 @@
 "tron.send.resources_consumed.info" = "Bandwidth 은 블록체인 데이터베이스에 저장된 트랜잭션 바이트 크기를 측정하는 단위입니다. 거래가 클수록 대역폭 자원이 더 많이 사용됩니다.\n\nEnergy 는 TRON 가상 머신이 TRON 네트워크에서 특정 작업을 수행하기 위해 필요한 계산 양을 측정하는 단위입니다. \n\n스마트 계약 트랜잭션은 실행에 계산 자원이 필요하기 때문에 각 스마트 계약 트랜잭션에는 energy 수수료를 지불해야합니다.";
 "tron.send.activation_fee.info" = "TRX나 TRC-10 토큰을 비활성화된 계정 주소로 이전하면 해당 계정이 활성화됩니다.";
 "tron.send.inactive_address" = "이 주소는 활성화되어 있지 않습니다";
+
+// Cex Coin Select
+
+"cex_coin_select.title" = "코인 선택";
+"cex_coin_select.search_placeholder" = "Coin Code or Name";
+"cex_coin_select.suspended" = "Suspended";
+
+// Cex Deposit Network Select
+
+"cex_deposit_network_select.title" = "Choose Network";
+"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
+
+// Cex Deposit
+
+"cex_deposit.title" = "Deposit %@";
+"cex_deposit.qr_code_description" = "Your address for depositing %@";
+"cex_deposit.address" = "주소";
+"cex_deposit.network" = "네트워크";
+"cex_deposit.memo" = "Memo (Tag)";
+"cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
+"cex_deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
+"cex_deposit.copy_address" = "Copy Address";
+"cex_deposit.share_address" = "Share Address";
+"cex_deposit.failed" = "Failed to load deposit address. Please retry.";
+"cex_deposit.memo_warning.title" = "Important";
+"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
+
+// Cex Withdraw Confirm
+
+"cex_withdraw_confirm.you_withdraw" = "You Withdraw";
+"cex_withdraw_confirm.network" = "네트워크";
+"cex_withdraw_confirm.withdraw" = "Withdraw";
+"cex_withdraw_confirm.withdraw_failed" = "Failed to withdraw";
