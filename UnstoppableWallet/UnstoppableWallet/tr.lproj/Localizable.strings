@@ -23,6 +23,7 @@
 "button.send" = "Gönder";
 "button.sign" = "kaydol";
 "button.more" = "Daha Fazlası";
+"button.i_understand" = "I Understand";
 
 "alert" = "Uyarı";
 "alert.copied" = "Kopyalandı";
@@ -61,7 +62,7 @@
 "alert.revoking" = "İptal ediliyor";
 "alert.revoked" = "İptal et";
 
-
+"no_results_found" = "No results found";
 "action.loading" = "yükleniyor...";
 "placeholder.search" = "Ara";
 
@@ -121,11 +122,13 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 "restore_type.title" = "Cuzdan Yükle";
 
-"restore_type.cloud.title" = "iCloud'dan";
 "restore_type.recovery.title" = "Kurtarma İfadesinden";
+"restore_type.cloud.title" = "iCloud'dan";
+"restore_type.cex.title" = "from Exchange Wallet";
 
-"restore_type.cloud.description" = "Anahtar zincirinizdeki bir yedek dosyadan içe aktarın.";
 "restore_type.recovery.description" = "Kurtarma ifadesini veya özel anahtarı kullanarak içe aktarın.";
+"restore_type.cloud.description" = "Anahtar zincirinizdeki bir yedek dosyadan içe aktarın.";
+"restore_type.cex.description" = "Connect to a wallet on centralized exchange.";
 
 // Restore Cloud
 
@@ -137,6 +140,31 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "restore.cloud.password.title" = "Parolanı Gir";
 "restore.cloud.password.placeholder" = "Yedek Şifre";
 "restore.cloud.password.description" = "Cüzdanınızı iCloud'dan içe aktarmak için yedek parolayı girin.";
+
+// Restore Cex
+
+"restore.cex.title" = "Select CEX";
+"restore.cex.description" = "Select the centralized exchange to which you want to connect.";
+
+// Restore Binance
+
+"restore.binance.description" = "Please provide the API Keys and API Secret to link your exchange.";
+"restore.binance.api_key" = "API Key";
+"restore.binance.secret_key" = "Secret Key";
+"restore.binance.connect" = "Bağlan";
+"restore.binance.connecting" = "Bağlanıyor...";
+"restore.binance.get_api_keys" = "Get API Keys";
+"restore.binance.failed_to_connect" = "Failed to connect your API Key";
+"restore.binance.invalid_qr_code" = "Invalid QR Code";
+
+// Restore Coinzix
+
+"restore.coinzix.description" = "Enter your email and password from Coinzix Account";
+"restore.coinzix.sign_up" = "Sign Up";
+"restore.coinzix.login" = "Log In";
+"restore.coinzix.sample_username" = "Email";
+"restore.coinzix.sample_password" = "Password";
+"restore.coinzix.failed_to_login" = "Failed to log in";
 
 // Coin Settings
 
@@ -233,7 +261,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "backup.cloud.password.title" = "Şifre Ayarla";
 "backup.cloud.password.description" = "Yedeklemeniz için kilit açma parolasını ayarlayın. En az 8 sembolden oluşmalı ve en az bir küçük harf, büyük harf, sayı ve özel karakter içermelidir.";
 "backup.cloud.password.highlighted_description" = "Bu şifreyi unutmayın! Apple iCloud parolasından farklıdır ve kurtarılamaz veya sıfırlanamaz.";
-"backup.cloud.password.placeholder" = "Şifre";
+"backup.cloud.password.placeholder" = "Password";
 "backup.cloud.password.confirm.placeholder" = "Onayla";
 "backup.cloud.password.save" = "Kaydet ve Yedekle";
 
@@ -260,7 +288,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "balance.title" = "Bakiye";
 "balance.tab_bar_item" = "Bakiye";
 "balance.send" = "Gönder";
+"balance.withdraw" = "Withdraw";
 "balance.swap" = "Takas";
+"balance.receive" = "Receive";
 "balance.deposit" = "Al";
 "balance.address" = "Adres";
 "balance.rate_per_coin" = "%@ = 1 %@";
@@ -275,6 +305,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "balance.syncing_percent" = "Senkronize ediliyor... %@";
 "balance.synced_through" = "%@ kadar";
 "balance.add_coin" = "Para Ekle";
+"balance.invalid_api_key" = "Invalid API Key";
 "balance.empty.add_coins" = "Kripto Para Ekle";
 "balance.empty.description" = "Bu cüzdana hiç jeton eklemediniz.";
 "balance.watch_empty.description" = "Bu cüzdan adresinde bakiye bulunmuyor";
@@ -628,6 +659,9 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Coin Page -> Overview
 
+"coin_overview.indicators" = "Indicators";
+"coin_overview.indicators.show" = "Show";
+"coin_overview.indicators.hide" = "Hide";
 "coin_overview.market_cap" = "Market Cap";
 "coin_overview.circulating_supply" = "In Circulation";
 "coin_overview.total_supply" = "Total Supply";
@@ -774,6 +808,12 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "coin_tweets.not_available" = "No twitter available";
 "coin_tweets.see_on_twitter" = "See on Twitter";
 
+// Coin Page -> Indicators
+
+"chart_indicators.title" = "Indicators";
+"chart_indicators.moving_averages" = "Moving Averages";
+"chart_indicators.oscillators" = "Oscillators";
+
 // Pro Features
 
 "pro_features.authorize.wallet_passes.title" = "Unstoppable NFT";
@@ -813,7 +853,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "transactions.completed" = "Tamamlandı";
 "transactions.failed" = "Başarısız";
 
-"transactions.receive" = "Al";
+"transactions.receive" = "Receive";
 "transactions.send" = "Gönder";
 "transactions.burn" = "Burn";
 "transactions.mint" = "Mint";
@@ -1534,3 +1574,36 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "tron.send.resources_consumed.info" = "Bandwidth, blockchain veritabanında saklanan işlem baytlarının boyutunu ölçen birimdir. İşlem ne kadar büyük olursa, o kadar fazla bant genişliği kaynağı tüketilir.\n\nEnergy, TRON sanal makinesinin TRON ağında belirli işlemleri gerçekleştirmek için ihtiyaç duyduğu hesaplama miktarını ölçen birimdir.\n\nAkıllı sözleşmeden beri işlemlerin yürütülmesi için bilgi işlem kaynakları gerekir, her akıllı sözleşme işleminin energy ücretini ödemesi gerekir.";
 "tron.send.activation_fee.info" = "TRX veya TRC-10 jetonlarını etkin olmayan bir hesap adresine aktarmak, hesabı etkinleştirir.";
 "tron.send.inactive_address" = "Bu adres aktif değil";
+
+// Cex Coin Select
+
+"cex_coin_select.title" = "Kripto Parayı Seç";
+"cex_coin_select.search_placeholder" = "Coin Code or Name";
+"cex_coin_select.suspended" = "Suspended";
+
+// Cex Deposit Network Select
+
+"cex_deposit_network_select.title" = "Choose Network";
+"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
+
+// Cex Deposit
+
+"cex_deposit.title" = "Deposit %@";
+"cex_deposit.qr_code_description" = "Your address for depositing %@";
+"cex_deposit.address" = "Adres";
+"cex_deposit.network" = "Ağ";
+"cex_deposit.memo" = "Memo (Tag)";
+"cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
+"cex_deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
+"cex_deposit.copy_address" = "Copy Address";
+"cex_deposit.share_address" = "Share Address";
+"cex_deposit.failed" = "Failed to load deposit address. Please retry.";
+"cex_deposit.memo_warning.title" = "Important";
+"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
+
+// Cex Withdraw Confirm
+
+"cex_withdraw_confirm.you_withdraw" = "You Withdraw";
+"cex_withdraw_confirm.network" = "Ağ";
+"cex_withdraw_confirm.withdraw" = "Withdraw";
+"cex_withdraw_confirm.withdraw_failed" = "Failed to withdraw";
