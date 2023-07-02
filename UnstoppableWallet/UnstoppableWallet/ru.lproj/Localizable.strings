@@ -23,7 +23,7 @@
 "button.send" = "Отправить";
 "button.sign" = "Подписать";
 "button.more" = "Показать больше";
-"button.i_understand" = "I Understand";
+"button.i_understand" = "Я понимаю";
 
 "alert" = "Предупреждение";
 "alert.copied" = "Скопировано";
@@ -62,7 +62,7 @@
 "alert.revoking" = "Отмена";
 "alert.revoked" = "Отменен";
 
-"no_results_found" = "No results found";
+"no_results_found" = "Ничего не найдено";
 "action.loading" = "загрузка...";
 "placeholder.search" = "Поиск";
 
@@ -151,13 +151,13 @@
 // Restore Binance
 
 "restore.binance.description" = "Please provide the API Keys and API Secret to link your exchange.";
-"restore.binance.api_key" = "API Key";
-"restore.binance.secret_key" = "Secret Key";
+"restore.binance.api_key" = "API ключ";
+"restore.binance.secret_key" = "Секретный ключ";
 "restore.binance.connect" = "Подключиться";
 "restore.binance.connecting" = "Подключение...";
-"restore.binance.get_api_keys" = "Get API Keys";
-"restore.binance.failed_to_connect" = "Failed to connect your API Key";
-"restore.binance.invalid_qr_code" = "Invalid QR Code";
+"restore.binance.get_api_keys" = "Получить API ключ";
+"restore.binance.failed_to_connect" = "Не удалось подключиться к твоему API ключу";
+"restore.binance.invalid_qr_code" = "Недопустимый QR-код";
 
 // Restore Coinzix
 
@@ -572,12 +572,12 @@
 "market_discovery.filters" = "Фильтры";
 "market_discovery.browse_categories" = "Обзор категорий";
 "market_discovery.top_coins" = "Топ токены";
-"market_discovery.not_found" = "No results found";
+"market_discovery.not_found" = "Ничего не найдено";
 
 "market_watchlist.empty.caption" = "У вас нет токенов в избранном.";
 
 "market.search.title" = "Поиск";
-"market.search.empty_text" = "No results found";
+"market.search.empty_text" = "Ничего не найдено";
 
 "market.advanced_search.title" = "Фильтры";
 "market.advanced_search.show_results" = "Показать результаты";
@@ -1078,7 +1078,7 @@
 "contacts.title" = "Контакты";
 "contacts.list.search_placeholder" = "Поиск по имени";
 "contacts.list.not_found" = "У вас нет добавленных контактов";
-"contacts.list.not_found_search" = "No results found";
+"contacts.list.not_found_search" = "Ничего не найдено";
 "contacts.add_new_contact" = "Добавить новый контакт";
 "contacts.update_contact.already_has_address" = "Выбранный контакт уже имеет адрес на %@. Это действие заменит адрес %@ на %@.";
 "contacts.update_contact.replace" = "Заменить";
