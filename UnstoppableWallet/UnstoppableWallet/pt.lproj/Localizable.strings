@@ -23,6 +23,7 @@
 "button.send" = "Enviar";
 "button.sign" = "Assinar";
 "button.more" = "Mostrar Mais";
+"button.i_understand" = "I Understand";
 
 "alert" = "Alerta";
 "alert.copied" = "Copiado";
@@ -61,7 +62,7 @@
 "alert.revoking" = "Revogando";
 "alert.revoked" = "Revogado";
 
-
+"no_results_found" = "No results found";
 "action.loading" = "carregando...";
 "placeholder.search" = "Buscar";
 
@@ -121,11 +122,13 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "restore_type.title" = "Importar carteira";
 
-"restore_type.cloud.title" = "do iCloud";
 "restore_type.recovery.title" = "da Frase de Recuperação";
+"restore_type.cloud.title" = "do iCloud";
+"restore_type.cex.title" = "from Exchange Wallet";
 
-"restore_type.cloud.description" = "Importe de um arquivo de backup em sua keychain.";
 "restore_type.recovery.description" = "Importar usando frase de recuperação ou chave privada.";
+"restore_type.cloud.description" = "Importe de um arquivo de backup em sua keychain.";
+"restore_type.cex.description" = "Connect to a wallet on centralized exchange.";
 
 // Restore Cloud
 
@@ -137,6 +140,31 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "restore.cloud.password.title" = "Digite a senha";
 "restore.cloud.password.placeholder" = "Fazer Backup da Senha";
 "restore.cloud.password.description" = "Digite a senha de backup para importar sua carteira.";
+
+// Restore Cex
+
+"restore.cex.title" = "Select CEX";
+"restore.cex.description" = "Select the centralized exchange to which you want to connect.";
+
+// Restore Binance
+
+"restore.binance.description" = "Please provide the API Keys and API Secret to link your exchange.";
+"restore.binance.api_key" = "API Key";
+"restore.binance.secret_key" = "Secret Key";
+"restore.binance.connect" = "Conectar";
+"restore.binance.connecting" = "Conectando...";
+"restore.binance.get_api_keys" = "Get API Keys";
+"restore.binance.failed_to_connect" = "Failed to connect your API Key";
+"restore.binance.invalid_qr_code" = "Invalid QR Code";
+
+// Restore Coinzix
+
+"restore.coinzix.description" = "Enter your email and password from Coinzix Account";
+"restore.coinzix.sign_up" = "Sign Up";
+"restore.coinzix.login" = "Log In";
+"restore.coinzix.sample_username" = "Email";
+"restore.coinzix.sample_password" = "Password";
+"restore.coinzix.failed_to_login" = "Failed to log in";
 
 // Coin Settings
 
@@ -233,7 +261,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "backup.cloud.password.title" = "Definir Senha";
 "backup.cloud.password.description" = "Defina a senha de desbloqueio para o seu backup. Deve consistir de pelo menos 8 símbolos e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial.";
 "backup.cloud.password.highlighted_description" = "Não esqueça esta senha! Ela é separada da sua senha do iCloud da Apple e não pode ser recuperada ou redefinida.";
-"backup.cloud.password.placeholder" = "Senha";
+"backup.cloud.password.placeholder" = "Password";
 "backup.cloud.password.confirm.placeholder" = "Confirmar";
 "backup.cloud.password.save" = "Salvar e fazer Backup";
 
@@ -260,7 +288,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "balance.title" = "Saldo";
 "balance.tab_bar_item" = "Saldo";
 "balance.send" = "Enviar";
+"balance.withdraw" = "Withdraw";
 "balance.swap" = "Trocar";
+"balance.receive" = "Receive";
 "balance.deposit" = "Receber";
 "balance.address" = "Endereço";
 "balance.rate_per_coin" = "%@ por %@";
@@ -275,6 +305,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "balance.syncing_percent" = "Sincronizando... %@";
 "balance.synced_through" = "até %@";
 "balance.add_coin" = "Adicionar Moeda";
+"balance.invalid_api_key" = "Invalid API Key";
 "balance.empty.add_coins" = "Adicionar Moedas";
 "balance.empty.description" = "Você não adicionou nenhuma moeda nesta carteira.";
 "balance.watch_empty.description" = "Este endereço da carteira não tem nenhum saldo";
@@ -539,12 +570,12 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "market_discovery.filters" = "Filtros";
 "market_discovery.browse_categories" = "Navegar nas categorias";
 "market_discovery.top_coins" = "TOP Moedas";
-"market_discovery.not_found" = "Nenhum resultado encontrado";
+"market_discovery.not_found" = "No results found";
 
 "market_watchlist.empty.caption" = "Seu catálogo está vazio.";
 
 "market.search.title" = "Buscar";
-"market.search.empty_text" = "Nenhum resultado encontrado";
+"market.search.empty_text" = "No results found";
 
 "market.advanced_search.title" = "Filtros";
 "market.advanced_search.show_results" = "Mostrar Resultados";
@@ -628,6 +659,9 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 // Coin Page -> Overview
 
+"coin_overview.indicators" = "Indicators";
+"coin_overview.indicators.show" = "Show";
+"coin_overview.indicators.hide" = "Hide";
 "coin_overview.market_cap" = "Capitalização de mercado";
 "coin_overview.circulating_supply" = "Em Circulação";
 "coin_overview.total_supply" = "Fornecimento total";
@@ -774,6 +808,12 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "coin_tweets.not_available" = "Nenhum twitter disponível";
 "coin_tweets.see_on_twitter" = "Veja no Twitter";
 
+// Coin Page -> Indicators
+
+"chart_indicators.title" = "Indicators";
+"chart_indicators.moving_averages" = "Moving Averages";
+"chart_indicators.oscillators" = "Oscillators";
+
 // Pro Features
 
 "pro_features.authorize.wallet_passes.title" = "NFT Unstoppable";
@@ -813,7 +853,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "transactions.completed" = "Concluído";
 "transactions.failed" = "Falhou";
 
-"transactions.receive" = "Receber";
+"transactions.receive" = "Receive";
 "transactions.send" = "Enviar";
 "transactions.burn" = "Queimar";
 "transactions.mint" = "Mint";
@@ -1036,7 +1076,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "contacts.title" = "Contatos";
 "contacts.list.search_placeholder" = "Pesquisar por nome";
 "contacts.list.not_found" = "Você não tem nenhum contato adicionado";
-"contacts.list.not_found_search" = "Nenhum resultado encontrado";
+"contacts.list.not_found_search" = "No results found";
 "contacts.add_new_contact" = "Adicionar um novo contato";
 "contacts.update_contact.already_has_address" = "O contato selecionado já tem um endereço em %@. Esta ação substituirá o endereço %@ por %@.";
 "contacts.update_contact.replace" = "Substituir";
@@ -1534,3 +1574,36 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "tron.send.resources_consumed.info" = "A bandwidth é a unidade que mede o tamanho dos bytes de transação armazenados no banco de dados blockchain. Quanto maior a transação, mais recursos de largura de banda serão consumidos.\n\nEnergy é a unidade que mede a quantidade de computação necessária pela máquina virtual TRON para realizar operações específicas na rede TRON.\n\nComo as transações de contrato inteligente exigem recursos de computação para executar, cada transação de contrato inteligente requer o pagamento da taxa de energy.";
 "tron.send.activation_fee.info" = "Transferir tokens TRX ou TRC-10 para um endereço de conta inativo ativará a conta.";
 "tron.send.inactive_address" = "Este endereço não está ativo";
+
+// Cex Coin Select
+
+"cex_coin_select.title" = "Escolher Moedas";
+"cex_coin_select.search_placeholder" = "Coin Code or Name";
+"cex_coin_select.suspended" = "Suspended";
+
+// Cex Deposit Network Select
+
+"cex_deposit_network_select.title" = "Choose Network";
+"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
+
+// Cex Deposit
+
+"cex_deposit.title" = "Deposit %@";
+"cex_deposit.qr_code_description" = "Your address for depositing %@";
+"cex_deposit.address" = "Endereço";
+"cex_deposit.network" = "Rede";
+"cex_deposit.memo" = "Memo (Tag)";
+"cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
+"cex_deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
+"cex_deposit.copy_address" = "Copy Address";
+"cex_deposit.share_address" = "Share Address";
+"cex_deposit.failed" = "Failed to load deposit address. Please retry.";
+"cex_deposit.memo_warning.title" = "Important";
+"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
+
+// Cex Withdraw Confirm
+
+"cex_withdraw_confirm.you_withdraw" = "You Withdraw";
+"cex_withdraw_confirm.network" = "Rede";
+"cex_withdraw_confirm.withdraw" = "Withdraw";
+"cex_withdraw_confirm.withdraw_failed" = "Failed to withdraw";
