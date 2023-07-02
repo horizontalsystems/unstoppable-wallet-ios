@@ -23,6 +23,7 @@
 "button.send" = "Отправить";
 "button.sign" = "Подписать";
 "button.more" = "Показать больше";
+"button.i_understand" = "I Understand";
 
 "alert" = "Предупреждение";
 "alert.copied" = "Скопировано";
@@ -61,7 +62,7 @@
 "alert.revoking" = "Отмена";
 "alert.revoked" = "Отменен";
 
-
+"no_results_found" = "No results found";
 "action.loading" = "загрузка...";
 "placeholder.search" = "Поиск";
 
@@ -123,11 +124,13 @@
 
 "restore_type.title" = "Импорт кошелька";
 
-"restore_type.cloud.title" = "iCloud";
 "restore_type.recovery.title" = "Фраза восстановления";
+"restore_type.cloud.title" = "iCloud";
+"restore_type.cex.title" = "from Exchange Wallet";
 
-"restore_type.cloud.description" = "Импорт из файла резервной копии в вашем keychain.";
 "restore_type.recovery.description" = "Импорт с помощью фразы восстановления или приватного ключа.";
+"restore_type.cloud.description" = "Импорт из файла резервной копии в вашем keychain.";
+"restore_type.cex.description" = "Connect to a wallet on centralized exchange.";
 
 // Restore Cloud
 
@@ -139,6 +142,31 @@
 "restore.cloud.password.title" = "Введите пароль";
 "restore.cloud.password.placeholder" = "Пароль резервной копии";
 "restore.cloud.password.description" = "Введите пароль резервной копии для импорта вашего кошелька из iCloud.";
+
+// Restore Cex
+
+"restore.cex.title" = "Select CEX";
+"restore.cex.description" = "Select the centralized exchange to which you want to connect.";
+
+// Restore Binance
+
+"restore.binance.description" = "Please provide the API Keys and API Secret to link your exchange.";
+"restore.binance.api_key" = "API Key";
+"restore.binance.secret_key" = "Secret Key";
+"restore.binance.connect" = "Подключиться";
+"restore.binance.connecting" = "Подключение...";
+"restore.binance.get_api_keys" = "Get API Keys";
+"restore.binance.failed_to_connect" = "Failed to connect your API Key";
+"restore.binance.invalid_qr_code" = "Invalid QR Code";
+
+// Restore Coinzix
+
+"restore.coinzix.description" = "Enter your email and password from Coinzix Account";
+"restore.coinzix.sign_up" = "Sign Up";
+"restore.coinzix.login" = "Log In";
+"restore.coinzix.sample_username" = "Email";
+"restore.coinzix.sample_password" = "Password";
+"restore.coinzix.failed_to_login" = "Failed to log in";
 
 // Coin Settings
 
@@ -235,7 +263,7 @@
 "backup.cloud.password.title" = "Установить пароль";
 "backup.cloud.password.description" = "Установите пароль разблокировки для своей резервной копии. Пароль должен содержать не менее 8 символов и включать как минимум одну строчную букву, заглавную букву, цифру и специальный символ.";
 "backup.cloud.password.highlighted_description" = "Не забудьте этот пароль! Он отличается от вашего пароля для Apple iCloud и не может быть восстановлен или сброшен.";
-"backup.cloud.password.placeholder" = "Пароль";
+"backup.cloud.password.placeholder" = "Password";
 "backup.cloud.password.confirm.placeholder" = "Подтвердить";
 "backup.cloud.password.save" = "Сохранить и создать резервную копию";
 
@@ -262,7 +290,9 @@
 "balance.title" = "Баланс";
 "balance.tab_bar_item" = "Баланс";
 "balance.send" = "Отправить";
+"balance.withdraw" = "Withdraw";
 "balance.swap" = "Обменять";
+"balance.receive" = "Receive";
 "balance.deposit" = "Получить";
 "balance.address" = "Адрес";
 "balance.rate_per_coin" = "%@ за %@";
@@ -277,13 +307,14 @@
 "balance.syncing_percent" = "Синхронизация... %@";
 "balance.synced_through" = "до %@";
 "balance.add_coin" = "Добавить токен";
+"balance.invalid_api_key" = "Invalid API Key";
 "balance.empty.add_coins" = "Добавить токены";
 "balance.empty.description" = "Вы еще не добавили токены в этот кошелек.";
 "balance.watch_empty.description" = "У кошелька с этим адресом нет баланса";
 "balance.sort_by" = "Сортировать";
 "balance.sort.header" = "Сортировать";
 "balance.sort.valueHighToLow" = "Баланс";
-"balance.sort.az" = "По названию";
+"balance.sort.az" = "Название";
 "balance.sort.price_change" = "По изменению цены (%)";
 
 "balance_error.change_source" = "Изменить источник";
@@ -541,12 +572,12 @@
 "market_discovery.filters" = "Фильтры";
 "market_discovery.browse_categories" = "Обзор категорий";
 "market_discovery.top_coins" = "Топ токены";
-"market_discovery.not_found" = "Ничего не найдено";
+"market_discovery.not_found" = "No results found";
 
 "market_watchlist.empty.caption" = "У вас нет токенов в избранном.";
 
 "market.search.title" = "Поиск";
-"market.search.empty_text" = "Ничего не найдено";
+"market.search.empty_text" = "No results found";
 
 "market.advanced_search.title" = "Фильтры";
 "market.advanced_search.show_results" = "Показать результаты";
@@ -630,6 +661,9 @@
 
 // Coin Page -> Overview
 
+"coin_overview.indicators" = "Indicators";
+"coin_overview.indicators.show" = "Show";
+"coin_overview.indicators.hide" = "Hide";
 "coin_overview.market_cap" = "Рын. капитализация";
 "coin_overview.circulating_supply" = "В обороте";
 "coin_overview.total_supply" = "Макс.выпуск";
@@ -776,6 +810,12 @@
 "coin_tweets.not_available" = "Twitter не доступен";
 "coin_tweets.see_on_twitter" = "Посмотреть в Twitter";
 
+// Coin Page -> Indicators
+
+"chart_indicators.title" = "Indicators";
+"chart_indicators.moving_averages" = "Moving Averages";
+"chart_indicators.oscillators" = "Oscillators";
+
 // Pro Features
 
 "pro_features.authorize.wallet_passes.title" = "Unstoppable NFT";
@@ -815,12 +855,12 @@
 "transactions.completed" = "Завершено";
 "transactions.failed" = "Не удалось";
 
-"transactions.receive" = "Получено";
-"transactions.send" = "Отправлено";
+"transactions.receive" = "Receive";
+"transactions.send" = "Отправить";
 "transactions.burn" = "Сжечь";
 "transactions.mint" = "Минт";
-"transactions.approve" = "Разрешение";
-"transactions.swap" = "Обмен";
+"transactions.approve" = "Разрешить";
+"transactions.swap" = "Обменять";
 "transactions.contract_call" = "Вызов контракта";
 "transactions.contract_creation" = "Создание контракта";
 "transactions.external_call" = "Внешний вызов";
@@ -1038,7 +1078,7 @@
 "contacts.title" = "Контакты";
 "contacts.list.search_placeholder" = "Поиск по имени";
 "contacts.list.not_found" = "У вас нет добавленных контактов";
-"contacts.list.not_found_search" = "Ничего не найдено";
+"contacts.list.not_found_search" = "No results found";
 "contacts.add_new_contact" = "Добавить новый контакт";
 "contacts.update_contact.already_has_address" = "Выбранный контакт уже имеет адрес на %@. Это действие заменит адрес %@ на %@.";
 "contacts.update_contact.replace" = "Заменить";
@@ -1309,7 +1349,7 @@
 "manage_account.recovery_phrase" = "Фраза восстановления";
 "manage_account.public_keys" = "Публичные ключи";
 "manage_account.private_keys" = "Приватные ключи";
-"manage_account.backup_recovery_phrase" = "Ручное резерв.копирование";
+"manage_account.backup_recovery_phrase" = "Ручное резервное копирование";
 "manage_account.cloud_backup_recovery_phrase" = "Резерв. копирование в iCloud";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Удалить резерв. копию из iCloud";
 "manage_account.manual_backup_required" = "Требуется резервное копирование вручную";
@@ -1538,3 +1578,36 @@
 "tron.send.resources_consumed.info" = "Bandwidth - это единица, которая измеряет размер байт транзакции, хранящихся в базе данных блокчейна. Чем больше транзакция, тем больше bandwidth будет потребляться.\n\nEnergy — это единица, измеряющая количество вычислений, требуемых виртуальной машиной TRON для выполнения конкретных операций в сети TRON.\n\nПоскольку транзакции смарт-контракта требуют выполнения вычислительных ресурсов, каждая сделка по контракту требует оплаты energy комиссии.";
 "tron.send.activation_fee.info" = "Передача токенов TRX или TRC-10 на адрес неактивного аккаунта активирует его.";
 "tron.send.inactive_address" = "Этот адрес не активен";
+
+// Cex Coin Select
+
+"cex_coin_select.title" = "Выберите токен";
+"cex_coin_select.search_placeholder" = "Coin Code or Name";
+"cex_coin_select.suspended" = "Suspended";
+
+// Cex Deposit Network Select
+
+"cex_deposit_network_select.title" = "Choose Network";
+"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
+
+// Cex Deposit
+
+"cex_deposit.title" = "Deposit %@";
+"cex_deposit.qr_code_description" = "Your address for depositing %@";
+"cex_deposit.address" = "Адрес";
+"cex_deposit.network" = "Сеть";
+"cex_deposit.memo" = "Memo (Tag)";
+"cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
+"cex_deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
+"cex_deposit.copy_address" = "Copy Address";
+"cex_deposit.share_address" = "Share Address";
+"cex_deposit.failed" = "Failed to load deposit address. Please retry.";
+"cex_deposit.memo_warning.title" = "Important";
+"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
+
+// Cex Withdraw Confirm
+
+"cex_withdraw_confirm.you_withdraw" = "You Withdraw";
+"cex_withdraw_confirm.network" = "Сеть";
+"cex_withdraw_confirm.withdraw" = "Withdraw";
+"cex_withdraw_confirm.withdraw_failed" = "Failed to withdraw";
