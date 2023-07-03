@@ -73,7 +73,7 @@ class WalletConnectV2Service {
         Sign.instance.sessionProposalPublisher
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] sessionProposal in
-                    self?.didReceive(sessionProposal: sessionProposal)
+                    self?.didReceive(sessionProposal: sessionProposal.proposal)
                 }.store(in: &publishers)
 
         Sign.instance.sessionSettlePublisher
@@ -85,7 +85,7 @@ class WalletConnectV2Service {
         Sign.instance.sessionRequestPublisher
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] sessionRequest in
-                    self?.didReceive(sessionRequest: sessionRequest)
+                    self?.didReceive(sessionRequest: sessionRequest.request)
                 }.store(in: &publishers)
 
         Sign.instance.sessionDeletePublisher
@@ -288,7 +288,7 @@ extension WalletConnectV2Service {
     }
 
     public func sign(request: WalletConnectSign.Request, result: Data) {
-        let result = AnyCodable(result)// Signer.signEth(request: request)
+        let result = AnyCodable(result.hs.hexString)// Signer.signEth(request: request)
         Task { [weak self] in
             do {
                 try await Sign.instance.respond(topic: request.topic, requestId: request.id, response: .response(result))

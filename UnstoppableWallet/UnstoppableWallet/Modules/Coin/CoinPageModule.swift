@@ -20,14 +20,13 @@ struct CoinPageModule {
         let overviewController = CoinOverviewModule.viewController(coinUid: coinUid)
         let marketsController = CoinMarketsModule.viewController(coin: fullCoin.coin)
         let analyticsController = CoinAnalyticsModule.viewController(fullCoin: fullCoin)
-        let tweetsController = CoinTweetsModule.viewController(fullCoin: fullCoin)
+//        let tweetsController = CoinTweetsModule.viewController(fullCoin: fullCoin)
 
         let viewController = CoinPageViewController(
                 viewModel: viewModel,
                 overviewController: overviewController,
                 analyticsController: analyticsController,
-                marketsController: marketsController,
-                tweetsController: tweetsController
+                marketsController: marketsController
         )
 
         return ThemeNavigationController(rootViewController: viewController)
@@ -41,14 +40,14 @@ extension CoinPageModule {
         case overview
         case analytics
         case markets
-        case tweets
+//        case tweets
 
         var title: String {
             switch self {
             case .overview: return "coin_page.overview".localized
             case .analytics: return "coin_page.analytics".localized
             case .markets: return "coin_page.markets".localized
-            case .tweets: return "coin_page.tweets".localized
+//            case .tweets: return "coin_page.tweets".localized
             }
         }
     }
