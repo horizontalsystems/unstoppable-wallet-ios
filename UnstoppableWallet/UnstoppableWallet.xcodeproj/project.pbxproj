@@ -10164,7 +10164,6 @@
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Unstoppable.entitlements;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HC4MCAXJ66;
-				MARKETING_VERSION = 0.33.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_MODULE_NAME = Unstoppable;
 				PRODUCT_NAME = Unstoppable;
@@ -10182,7 +10181,6 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Unstoppable.entitlements;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				MARKETING_VERSION = 0.33.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_MODULE_NAME = Unstoppable;
 				PRODUCT_NAME = Unstoppable;
