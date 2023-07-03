@@ -17,13 +17,13 @@ class SendAvailableBalanceViewModel {
     private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.available-balance-view-model", qos: .userInitiated)
 
     private let service: IAvailableBalanceService
-    private let coinService: CoinService
+    private let coinService: ICoinService
     private let switchService: AmountTypeSwitchService
     private let disposeBag = DisposeBag()
 
     private let viewStateRelay = BehaviorRelay<ViewState>(value: .loading)
 
-    init(service: IAvailableBalanceService, coinService: CoinService, switchService: AmountTypeSwitchService) {
+    init(service: IAvailableBalanceService, coinService: ICoinService, switchService: AmountTypeSwitchService) {
         self.service = service
         self.coinService = coinService
         self.switchService = switchService
@@ -65,7 +65,7 @@ class SendAvailableBalanceViewModel {
             let currencyValue = CurrencyValue(currency: rate.currency, value: availableBalance * rate.value)
             value = ValueFormatter.instance.formatFull(currencyValue: currencyValue)
         } else {
-            let coinValue = CoinValue(kind: .token(token: coinService.token), value: availableBalance)
+            let coinValue = coinService.coinValue(value: availableBalance)
             value = ValueFormatter.instance.formatFull(coinValue: coinValue)
         }
 

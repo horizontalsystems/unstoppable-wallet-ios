@@ -14,7 +14,9 @@ class FiatService {
     private let currencyKit: CurrencyKit.Kit
     private let marketKit: MarketKit.Kit
 
-    private(set) var token: Token?
+    private var coinValueKind: CoinValue.Kind?
+    var token: Token? { coinValueKind?.token }
+
     private var price: Decimal? {
         didSet {
             toggleAvailableRelay.accept(price != nil)
@@ -83,8 +85,8 @@ class FiatService {
 
     private func sync() {
         queue.async {
-            if let token = self.token {
-                let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(kind: .token(token: token), value: self.coinAmount))
+            if let coinValueKind = self.coinValueKind {
+                let coinAmountInfo: AmountInfo = .coinValue(coinValue: CoinValue(kind: coinValueKind, value: self.coinAmount))
                 let currencyAmountInfo: AmountInfo? = self.currencyAmount.map { .currencyValue(currencyValue: CurrencyValue(currency: self.currency, value: $0)) }
 
                 switch self.switchService.amountType {
@@ -120,6 +122,18 @@ class FiatService {
         }
     }
 
+    private func fetchRate(coin: Coin, subscribe: Bool) {
+        sync(coinPrice: marketKit.coinPrice(coinUid: coin.uid, currencyCode: currency.code))
+
+        if subscribe {
+            marketKit.coinPricePublisher(coinUid: coin.uid, currencyCode: currency.code)
+                .sink { [weak self] coinPrice in
+                    self?.sync(coinPrice: coinPrice)
+                }
+                .store(in: &cancellables)
+        }
+    }
+
 }
 
 extension FiatService {
@@ -145,21 +159,34 @@ extension FiatService {
     }
 
     func set(token: Token?) {
-        self.token = token
+        set(coinValueKind: token.flatMap { .token(token: $0) })
+    }
+
+    func set(coinValueKind: CoinValue.Kind?) {
+        self.coinValueKind = coinValueKind
 
         cancellables = Set()
+        var fetching: Bool = true
 
-        if let token = token {
-            sync(coinPrice: marketKit.coinPrice(coinUid: token.coin.uid, currencyCode: currency.code))
+        if let coinValueKind = coinValueKind {
+            switch coinValueKind {
+            case .token(let token):
+                fetchRate(coin: token.coin, subscribe: !token.isCustom)
+            case .coin(let coin, _):
+                fetchRate(coin: coin, subscribe: false)
+            case .cexAsset(let cexAsset):
+                if let coin = cexAsset.coin {
+                    fetchRate(coin: coin, subscribe: false)
+                } else {
+                    fetching = false
+                }
 
-            if !token.isCustom {
-                marketKit.coinPricePublisher(coinUid: token.coin.uid, currencyCode: currency.code)
-                        .sink { [weak self] coinPrice in
-                            self?.sync(coinPrice: coinPrice)
-                        }
-                        .store(in: &cancellables)
             }
         } else {
+            fetching = false
+        }
+
+        if !fetching {
             price = nil
             currencyAmount = nil
             sync()

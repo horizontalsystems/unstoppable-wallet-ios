@@ -10,7 +10,7 @@ import ECashKit
 
 class AddressParserFactory {
 
-    static func parser(blockchainType: BlockchainType) -> AddressUriParser {
+    static func parser(blockchainType: BlockchainType?) -> AddressUriParser {
         switch blockchainType {
         case .bitcoin: return AddressUriParser(validScheme: "bitcoin", removeScheme: true)
         case .litecoin: return AddressUriParser(validScheme: "litecoin", removeScheme: true)
