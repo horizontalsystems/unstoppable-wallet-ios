@@ -123,7 +123,7 @@ extension RecipientAddressViewModel {
         showContactsRelay.asDriver()
     }
 
-    var contactBlockchainType: BlockchainType {
+    var contactBlockchainType: BlockchainType? {
         service.blockchainType
     }
 

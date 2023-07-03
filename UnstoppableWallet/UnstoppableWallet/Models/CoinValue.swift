@@ -35,6 +35,13 @@ extension CoinValue {
         case coin(coin: Coin, decimals: Int)
         case cexAsset(cexAsset: CexAsset)
 
+        var token: Token? {
+            switch self {
+                case .token(let token): return token
+                case .coin, .cexAsset: return nil
+            }
+        }
+
         var decimals: Int {
             switch self {
             case .token(let token): return token.decimals

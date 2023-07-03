@@ -38,8 +38,8 @@ class RecipientAddressInputCell: AddressInputCell {
     }
 
     private func openContacts() {
-        guard let viewController = ContactBookModule.viewController(
-                mode: .select(viewModel.contactBlockchainType, self),
+        guard let blockchainType = viewModel.contactBlockchainType, let viewController = ContactBookModule.viewController(
+                mode: .select(blockchainType, self),
                 presented: true
         ) else {
             return

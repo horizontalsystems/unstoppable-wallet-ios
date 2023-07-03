@@ -16,14 +16,14 @@ class AddressService {
     private var customErrorDisposeBag = DisposeBag()
 
     private var addressUriParser: AddressUriParser
-    private var addressParserChain: AddressParserChain
+    private var addressParserChain: AddressParserChain?
 
-    private(set) var blockchainType: BlockchainType
+    private(set) var blockchainType: BlockchainType?
     private let contactBookManager: ContactBookManager?
 
     private let showContactsRelay = PublishRelay<Bool>()
     var showContacts: Bool {
-        guard let contactBookManager else {
+        guard let contactBookManager, let blockchainType = blockchainType else {
             return false
         }
 
@@ -53,15 +53,15 @@ class AddressService {
         }
     }
 
-    init(mode: Mode, marketKit: MarketKit.Kit, contactBookManager: ContactBookManager?, blockchainType: BlockchainType, initialAddress: Address? = nil) {
+    init(mode: Mode, marketKit: MarketKit.Kit, contactBookManager: ContactBookManager?, blockchainType: BlockchainType?, initialAddress: Address? = nil) {
         self.marketKit = marketKit
         self.blockchainType = blockchainType
         self.contactBookManager = contactBookManager
 
         switch mode {
-        case .blockchainType:
+            case .blockchainType:
             addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType)
-            addressParserChain = AddressParserFactory.parserChain(blockchainType: blockchainType)
+            addressParserChain = blockchainType.flatMap { AddressParserFactory.parserChain(blockchainType: $0) }
         case .parsers(let uriParser, let parserChain):
             addressUriParser = uriParser
             addressParserChain = parserChain
@@ -109,7 +109,7 @@ class AddressService {
         }
 
         switch error {
-        case .validationError: state = .validationError(blockchainName: try? marketKit.blockchain(uid: blockchainType.uid)?.name)
+        case .validationError: state = .validationError(blockchainName: blockchainType.flatMap { try? marketKit.blockchain(uid: $0.uid) }?.name)
         case .fetchError(let error): state = .fetchError(error)
         }
     }
@@ -134,6 +134,11 @@ extension AddressService {
         self.text = text
         guard !text.isEmpty else {
             state = .empty
+            return
+        }
+
+        guard let addressParserChain = addressParserChain else {
+            sync(address: Address(raw: text))
             return
         }
 
@@ -169,6 +174,7 @@ extension AddressService {
         addressParserChain = AddressParserFactory.parserChain(blockchainType: blockchainType)
 
         set(text: text)
+        showContactsRelay.accept(showContacts)
     }
 
 }

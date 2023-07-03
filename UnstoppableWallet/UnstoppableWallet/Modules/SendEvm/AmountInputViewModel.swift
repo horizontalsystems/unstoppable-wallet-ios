@@ -25,15 +25,15 @@ extension IAmountInputService {
 
 }
 
-class AmountInputViewModel {
-    private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.fiat-service", qos: .userInitiated)
+open class AmountInputViewModel {
+    var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.fiat-service", qos: .userInitiated)
 
     private static let fallbackCoinDecimals = 8
 
-    private let disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
 
     private let service: IAmountInputService
-    private let fiatService: FiatService
+    let fiatService: FiatService
     private let switchService: AmountTypeSwitchService
     private let decimalParser: AmountDecimalParser
     private let isMaxSupported: Bool
@@ -56,7 +56,7 @@ class AmountInputViewModel {
     private var switchEnabledRelay: BehaviorRelay<Bool>
     private var amountWarningRelay = BehaviorRelay<String?>(value: nil)
 
-    private var coinDecimals: Int
+    var coinDecimals: Int
     let publishAmountRelay = PublishRelay<Decimal>()
 
     init(service: IAmountInputService, fiatService: FiatService, switchService: AmountTypeSwitchService, decimalParser: AmountDecimalParser, coinDecimals: Int = AmountInputViewModel.fallbackCoinDecimals, isMaxSupported: Bool = true) {
@@ -111,7 +111,7 @@ class AmountInputViewModel {
         }
     }
 
-    private func updateMaxEnabled() {
+    func updateMaxEnabled() {
         isMaxEnabledRelay.accept(isMaxSupported && (service.balance ?? 0) > 0)
     }
 
