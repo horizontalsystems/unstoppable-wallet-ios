@@ -73,8 +73,16 @@ extension CoinOverviewViewModel {
 
     func onTapAddToWallet(index: Int) {
         do {
-            try service.addToWallet(index: index)
+            try service.editWallet(index: index, add: true)
             hudRelay.accept(.addedToWallet)
+        } catch {
+        }
+    }
+
+    func onTapAddedToWallet(index: Int) {
+        do {
+            try service.editWallet(index: index, add: false)
+            hudRelay.accept(.removedFromWallet)
         } catch {
         }
     }

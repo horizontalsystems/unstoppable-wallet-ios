@@ -143,19 +143,24 @@ extension CoinOverviewService {
         }.store(in: &tasks)
     }
 
-    func addToWallet(index: Int) throws {
+    func editWallet(index: Int, add: Bool) throws {
         guard case .completed(let item) = state else {
-            throw AddToWalletError.invalidState
+            throw EditWalletError.invalidState
         }
 
         guard let account = accountManager.activeAccount else {
-            throw AddToWalletError.noActiveAccount
+            throw EditWalletError.noActiveAccount
         }
 
         let configuredToken = item.tokens[index].configuredToken
 
         let wallet = Wallet(configuredToken: configuredToken, account: account)
-        walletManager.save(wallets: [wallet])
+
+        if add {
+            walletManager.save(wallets: [wallet])
+        } else {
+            walletManager.delete(wallets: [wallet])
+        }
 
         sync(info: item.info)
     }
@@ -181,7 +186,7 @@ extension CoinOverviewService {
         case cannotBeAdded
     }
 
-    enum AddToWalletError: Error {
+    enum EditWalletError: Error {
         case invalidState
         case noActiveAccount
     }

@@ -40,6 +40,7 @@
 "alert.added_to_watchlist" = "Added to Watchlist";
 "alert.removed_from_watchlist" = "Removed from Watchlist";
 "alert.added_to_wallet" = "Added to Wallet";
+"alert.removed_from_wallet" = "Removed from Wallet";
 "alert.already_added_to_wallet" = "Already added to Wallet";
 "alert.not_supported_yet" = "Not Supported Yet";
 "alert.copied" = "Copied";

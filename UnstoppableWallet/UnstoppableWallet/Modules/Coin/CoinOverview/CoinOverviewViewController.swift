@@ -396,10 +396,13 @@ extension CoinOverviewViewController {
                             self?.viewModel.onTapAddToWallet(index: index)
                         }
                     },
-                    .secondaryCircleButton { component in
+                    .secondaryCircleButton { [weak self] component in
                         component.isHidden = !viewItem.showAdded
-                        component.button.set(image: UIImage(named: "in_wallet_20"))
-                        component.button.isEnabled = false
+                        component.button.set(image: UIImage(named: "filled_wallet_20"))
+                        component.button.isSelected = true
+                        component.onTap = {
+                            self?.viewModel.onTapAddedToWallet(index: index)
+                        }
                     },
                     .secondaryCircleButton { [weak self] component in
                         if let explorerUrl = viewItem.explorerUrl {

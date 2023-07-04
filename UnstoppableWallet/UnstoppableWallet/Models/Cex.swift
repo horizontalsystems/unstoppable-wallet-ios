@@ -20,7 +20,7 @@ enum Cex: String, CaseIterable {
 
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)
-        return "https://cdn.blocksdecoded.com/CEX/\(rawValue)@\(scale)x.png"
+        return "https://cdn.blocksdecoded.com/cex-icons/\(rawValue)@\(scale)x.png"
     }
 
 }
