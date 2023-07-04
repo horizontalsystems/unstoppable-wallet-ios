@@ -98,22 +98,22 @@ class CoinOverviewViewItemFactory {
                 title = blockchain.name
                 subtitle = address.shortened
                 reference = address
-                url = blockchain.eip20TokenUrl(address: address)
+                url = blockchain.explorerUrl(reference: address)
             case .bep2(let symbol):
                 title = blockchain.name
                 subtitle = symbol
                 reference = symbol
-                url = blockchain.bep2TokenUrl(symbol: symbol)
+                url = blockchain.explorerUrl(reference: symbol)
             case .spl(let address):
                 title = blockchain.name
                 subtitle = address.shortened
                 reference = address
-                url = nil
+                url = blockchain.explorerUrl(reference: address)
             case let .unsupported(_, _reference):
                 title = blockchain.name
                 subtitle = _reference?.shortened
                 reference = _reference
-                url = reference.flatMap { blockchain.eip20TokenUrl(address: $0) }
+                url = blockchain.explorerUrl(reference: reference)
             }
 
             switch item.state {

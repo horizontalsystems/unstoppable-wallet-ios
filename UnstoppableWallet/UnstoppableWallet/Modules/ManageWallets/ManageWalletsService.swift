@@ -287,11 +287,10 @@ extension ManageWalletsService {
         }
 
         switch token.type {
-        case .eip20(let address):
-            return InfoItem(token: token, type: .contractAddress(value: address, explorerUrl: configuredToken.blockchain.eip20TokenUrl(address: address)))
-        case .bep2(let symbol):
-            return InfoItem(token: token, type: .contractAddress(value: symbol, explorerUrl: configuredToken.blockchain.bep2TokenUrl(symbol: symbol)))
-        default: return nil
+        case .eip20(let value), .bep2(let value):
+            return InfoItem(token: token, type: .contractAddress(value: value, explorerUrl: configuredToken.blockchain.explorerUrl(reference: value)))
+        default:
+            return nil
         }
     }
 
