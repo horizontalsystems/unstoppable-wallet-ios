@@ -40,6 +40,7 @@
 "alert.added_to_watchlist" = "Added To Watchlist";
 "alert.removed_from_watchlist" = "İzleme Listesinden Kaldır";
 "alert.added_to_wallet" = "Cüzdana Eklendi";
+"alert.removed_from_wallet" = "Removed from Wallet";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
 "alert.copied" = "Kopyalandı";
