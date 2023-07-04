@@ -1599,6 +1599,16 @@
 "cex_deposit.memo_warning.title" = "Important";
 "cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
 
+// Cex Widthdraw
+
+"cex_withdraw.network" = "네트워크";
+"cex_withdraw.network_warning" = "Ensure the network matches the withdrawal address and the deposit platform supports it, or assets may be lost.";
+
+// Cex Withdraw Network Select
+
+"cex_withdraw_network_select.title" = "네트워크";
+"cex_withdraw_network_select.description" = "Ensure the network matches the withdrawal address and the deposit platform supports it.";
+
 // Cex Withdraw Confirm
 
 "cex_withdraw_confirm.you_withdraw" = "You Withdraw";
