@@ -9,6 +9,7 @@ extension HudHelper {
         case addedToWatchlist
         case removedFromWatchlist
         case addedToWallet
+        case removedFromWallet
         case alreadyAddedToWallet
         case notSupportedYet
         case copied
@@ -43,6 +44,7 @@ extension HudHelper {
             case .addedToWatchlist: image = UIImage(named: "star_24")
             case .removedFromWatchlist: image = UIImage(named: "star_off_24")
             case .addedToWallet: image = UIImage(named: "add_to_wallet_2_24")
+            case .removedFromWallet: image = UIImage(named: "empty_wallet_24")
             case .alreadyAddedToWallet: image = UIImage(named: "warning_2_24")
             case .notSupportedYet: image = UIImage(named: "warning_2_24")
             case .copied: image = UIImage(named: "copy_24")
@@ -71,7 +73,7 @@ extension HudHelper {
         var color: UIColor {
             switch self {
             case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .revoked, .attention: return .themeJacob
-            case .removedFromWatchlist,  .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
+            case .removedFromWallet, .removedFromWatchlist,  .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
             case .addedToWallet, .copied, .saved, .savedToCloud, .done, .created, .imported, .walletAdded, .enabled, .success: return .themeRemus
             case .waitingForSession, .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return .themeGray
             }
@@ -82,6 +84,7 @@ extension HudHelper {
             case .addedToWatchlist: return "alert.added_to_watchlist".localized
             case .removedFromWatchlist: return "alert.removed_from_watchlist".localized
             case .addedToWallet: return "alert.added_to_wallet".localized
+            case .removedFromWallet: return "alert.removed_from_wallet".localized
             case .alreadyAddedToWallet: return "alert.already_added_to_wallet".localized
             case .notSupportedYet: return "alert.not_supported_yet".localized
             case .copied: return "alert.copied".localized
