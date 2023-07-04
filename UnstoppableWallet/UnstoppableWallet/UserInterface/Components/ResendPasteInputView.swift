@@ -3,12 +3,13 @@ import ThemeKit
 import SnapKit
 import ComponentKit
 
-class PasteInputView: UIView {
+class ResendPasteInputView: UIView {
     private let formValidatedView: FormValidatedView
     private let inputStackView = InputStackView()
 
     private let deleteView = InputSecondaryCircleButtonWrapperView()
     private let pasteView = InputSecondaryButtonWrapperView(style: .default)
+    let resendView = InputSecondaryButtonWrapperView(style: .default)
 
     var isEnabled: Bool = true {
         didSet {
@@ -26,6 +27,7 @@ class PasteInputView: UIView {
 
     var onChangeText: ((String?) -> ())?
     var onFetchText: ((String?) -> ())?
+    var onResend: (() -> ())?
 
     init() {
         formValidatedView = FormValidatedView(contentView: inputStackView, padding: UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16))
@@ -42,6 +44,10 @@ class PasteInputView: UIView {
         deleteView.button.set(image: UIImage(named: "trash_20"))
         deleteView.onTapButton = { [weak self] in self?.onTapDelete() }
 
+        resendView.button.setTitle("button.resend".localized, for: .normal)
+        resendView.onTapButton = { [weak self] in self?.onTapResend() }
+        resendView.button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+
         pasteView.button.setTitle("button.paste".localized, for: .normal)
         pasteView.onTapButton = { [weak self] in self?.onTapPaste() }
         pasteView.button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -50,6 +56,7 @@ class PasteInputView: UIView {
         inputStackView.autocorrectionType = .no
 
         inputStackView.appendSubview(deleteView)
+        inputStackView.appendSubview(resendView)
         inputStackView.appendSubview(pasteView)
 
         inputStackView.onChangeText = { [weak self] text in
@@ -76,6 +83,10 @@ class PasteInputView: UIView {
         onFetchText?(text)
     }
 
+    private func onTapResend() {
+        onResend?()
+    }
+
     private func handleChange(text: String?) {
         onChangeText?(text)
         syncButtonStates()
@@ -84,16 +95,18 @@ class PasteInputView: UIView {
     private func syncButtonStates() {
         if let text = inputStackView.text, !text.isEmpty {
             deleteView.isHidden = false
+            resendView.isHidden = true
             pasteView.isHidden = true
         } else {
             deleteView.isHidden = true
+            resendView.isHidden = false
             pasteView.isHidden = false
         }
     }
 
 }
 
-extension PasteInputView {
+extension ResendPasteInputView {
 
     var inputPlaceholder: String? {
         get { inputStackView.placeholder }

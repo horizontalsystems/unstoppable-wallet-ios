@@ -7,6 +7,7 @@ import HsToolKit
 
 class CoinzixCexProvider {
     private static let baseUrl = "https://api.coinzix.com"
+    static let withdrawEmailPinResendTime: UInt64 = 5_000_000_000
 
     private let networkManager: NetworkManager
     private let authToken: String
@@ -199,7 +200,7 @@ extension CoinzixCexProvider: ICexProvider {
         let response: GetAddressResponse = try await fetch(path: "/api/deposit/get-address", parameters: parameters)
 
         guard response.status else {
-            throw RequestError.negativeStatusForDeposit
+            throw RequestError.negativeStatus
         }
 
         if let address = response.address {
@@ -225,7 +226,7 @@ extension CoinzixCexProvider: ICexProvider {
         let response: WithdrawResponse = try await fetch(path: "/v1/withdraw", parameters: parameters)
 
         guard response.status else {
-            throw RequestError.negativeStatusForWithdraw
+            throw RequestError.negativeStatus
         }
 
         return String(response.id)
@@ -255,6 +256,32 @@ extension CoinzixCexProvider {
         }
 
         return (secret, token)
+    }
+
+    func confirmWithdraw(id: Int, emailPin: String, googlePin: String) async throws {
+        let parameters: Parameters = [
+            "id": id,
+            "email_pin": emailPin,
+            "google_pin": googlePin
+        ]
+
+        let response: StatusResponse = try await fetch(path: "/v1/withdraw/confirm-code", parameters: parameters)
+
+        guard response.status else {
+            throw RequestError.negativeStatus
+        }
+    }
+
+    func sendWithdrawPin(id: Int) async throws {
+        let parameters: Parameters = [
+            "id": id
+        ]
+
+        let response: StatusResponse = try await fetch(path: "/v1/withdraw/send-pin", parameters: parameters)
+
+        guard response.status else {
+            throw RequestError.negativeStatus
+        }
     }
 
 }
@@ -415,11 +442,18 @@ extension CoinzixCexProvider {
         }
     }
 
+    private struct StatusResponse: ImmutableMappable {
+        let status: Bool
+
+        init(map: Map) throws {
+            status = try map.value("status")
+        }
+    }
+
     enum RequestError: Error {
         case invalidSignatureData
-        case negativeStatusForDeposit
         case invalidDepositResponse
-        case negativeStatusForWithdraw
+        case negativeStatus
     }
 
     enum LoginError: Error {
