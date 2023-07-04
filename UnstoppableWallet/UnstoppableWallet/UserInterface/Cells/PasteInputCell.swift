@@ -40,6 +40,11 @@ extension PasteInputCell {
         set { pasteInputView.isEditable = newValue }
     }
 
+    var isEnabled: Bool {
+        get { pasteInputView.isEnabled }
+        set { pasteInputView.isEnabled = newValue }
+    }
+
     func set(cautionType: CautionType?) {
         pasteInputView.set(cautionType: cautionType)
     }
