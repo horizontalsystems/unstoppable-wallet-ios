@@ -40,6 +40,7 @@
 "alert.added_to_watchlist" = "添加到观察名单";
 "alert.removed_from_watchlist" = "从观察名单中删除";
 "alert.added_to_wallet" = "添加到钱包";
+"alert.removed_from_wallet" = "Removed from Wallet";
 "alert.already_added_to_wallet" = "已添加到钱包";
 "alert.not_supported_yet" = "目前不支持";
 "alert.copied" = "已复制";
