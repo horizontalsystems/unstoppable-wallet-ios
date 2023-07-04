@@ -40,6 +40,7 @@
 "alert.added_to_watchlist" = "Добавлено в избранное";
 "alert.removed_from_watchlist" = "Удалить из избранного";
 "alert.added_to_wallet" = "Добавлено в кошелек";
+"alert.removed_from_wallet" = "Removed from Wallet";
 "alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Ещё не поддерживается";
 "alert.copied" = "Скопировано";
