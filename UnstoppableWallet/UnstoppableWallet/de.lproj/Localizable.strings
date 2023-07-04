@@ -40,6 +40,7 @@
 "alert.added_to_watchlist" = "Zur Merkliste hinzugefügt";
 "alert.removed_from_watchlist" = "Aus Merkliste entfernt";
 "alert.added_to_wallet" = "Zum Wallet hinzugefügt";
+"alert.removed_from_wallet" = "Removed from Wallet";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
 "alert.copied" = "Kopiert";
