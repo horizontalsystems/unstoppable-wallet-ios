@@ -1104,10 +1104,6 @@
 "contacts.add_address.add_to_contact" = "Добавить в существующий контакт";
 "contacts.add_address.exist_address" = "Этот адрес уже используется для %@";
 
-"contacts.more.title" = "Ещё";
-"contacts.more.import" = "Восстановить контакты";
-"contacts.more.export" = "Резерв. копирование контактов";
-
 "contacts.contact.delete_alert.title" = "Удалить контакт";
 "contacts.contact.delete_alert.description" = "Вы действительно хотите удалить этот контакт?";
 "contacts.contact.delete_alert.delete" = "Удалить";
@@ -1120,19 +1116,22 @@
 "contacts.add_address.delete_alert.description" = "Вы уверены, что хотите удалить этот адрес?";
 "contacts.add_address.delete_alert.delete" = "Удалить";
 
-// Settings -> iCloud Sync
+// Contacts -> Settings
 
-"icloud_sync.title" = "iCloud синхр.";
-"settings.icloud_sync.title" = "iCloud синхр.";
-"settings.icloud_sync.contact_book" = "Синхронизировать контакты";
-"settings.icloud_sync.description" = "Синхронизируйте платежные контакты с iCloud для легкого резервного копирования и доступа к ним на нескольких устройствах.";
-"settings.icloud_sync.merge_disclaimer" = "Ваши локальные платежные контакты будут объединены с данными, хранящимися в iCloud.";
+"contacts.settings.title" = "Настройки";
 
-"settings.icloud_sync.alert.title" = "iCloud синхр.";
-"settings.icloud_sync.alert.description" = "Пожалуйста, убедитесь, что iCloud хранилище включено на вашем устройстве.";
+"contacts.settings.restore_contacts" = "Restore Contacts";
+"contacts.settings.backup_contacts" = "Backup Contacts";
 
-"settings.icloud_sync.alert_error.title" = "Ошибка iCloud";
-"settings.icloud_sync.alert_error.description" = "Не удается подключиться к iCloud, это может быть потому, что iCloud не доступен на вашем устройстве или отключен для Unstoppable приложения";
+"contacts.settings.icloud_sync" = "iCloud Sync";
+"contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
+"contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+
+"contacts.settings.alert.title" = "iCloud Sync";
+"contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+
+"contacts.settings.alert_error.title" = "iCloud Error";
+"contacts.settings.alert_error.description" = "Cannot connect to iCloud, this may be because iCloud storage not available on your device, or disabled for Unstoppable app";
 
 // Set PIN
 
