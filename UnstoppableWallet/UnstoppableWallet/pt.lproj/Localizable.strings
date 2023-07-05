@@ -1102,10 +1102,6 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "contacts.add_address.add_to_contact" = "Adicionar ao Contato Existente";
 "contacts.add_address.exist_address" = "Este endereço já está em uso para %@";
 
-"contacts.more.title" = "Mais";
-"contacts.more.import" = "Restaurar contatos";
-"contacts.more.export" = "Backup de contatos";
-
 "contacts.contact.delete_alert.title" = "Excluir contato";
 "contacts.contact.delete_alert.description" = "Você tem certeza que deseja excluir este contato?";
 "contacts.contact.delete_alert.delete" = "Deletar";
@@ -1118,19 +1114,22 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "contacts.add_address.delete_alert.description" = "Você tem certeza que deseja excluir este endereço?";
 "contacts.add_address.delete_alert.delete" = "Deletar";
 
-// Settings -> iCloud Sync
+// Contacts -> Settings
 
-"icloud_sync.title" = "Sincronização com iCloud";
-"settings.icloud_sync.title" = "Sincronização com iCloud";
-"settings.icloud_sync.contact_book" = "Sincronizar contatos";
-"settings.icloud_sync.description" = "Sincronize os contatos de pagamento no iCloud para facilitar o backup e o acesso entre vários dispositivos.";
-"settings.icloud_sync.merge_disclaimer" = "Seus contatos de pagamento locais serão mesclados com os armazenados no iCloud.";
+"contacts.settings.title" = "Configurações";
 
-"settings.icloud_sync.alert.title" = "Sincronização com iCloud";
-"settings.icloud_sync.alert.description" = "Por favor, verifique se o armazenamento do iCloud está ativado no seu dispositivo.";
+"contacts.settings.restore_contacts" = "Restore Contacts";
+"contacts.settings.backup_contacts" = "Backup Contacts";
 
-"settings.icloud_sync.alert_error.title" = "erro do iCloud";
-"settings.icloud_sync.alert_error.description" = "Não é possível conectar ao iCloud, isso pode ser porque o armazenamento iCloud não está disponível em seu dispositivo ou desativado para aplicativo Unstoppable";
+"contacts.settings.icloud_sync" = "iCloud Sync";
+"contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
+"contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+
+"contacts.settings.alert.title" = "iCloud Sync";
+"contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+
+"contacts.settings.alert_error.title" = "iCloud Error";
+"contacts.settings.alert_error.description" = "Cannot connect to iCloud, this may be because iCloud storage not available on your device, or disabled for Unstoppable app";
 
 // Set PIN
 
