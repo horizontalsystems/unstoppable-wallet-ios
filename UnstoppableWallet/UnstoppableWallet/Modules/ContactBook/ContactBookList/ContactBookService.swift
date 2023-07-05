@@ -94,14 +94,6 @@ extension ContactBookService {
         try contactManager.delete(contactUid)
     }
 
-    func backupContacts(from url: URL) throws -> [BackupContact] {
-        try contactManager.backupContacts(from: url)
-    }
-
-    func replace(contacts: [BackupContact]) throws {
-        try contactManager.restore(contacts: contacts)
-    }
-
     func blockchainName(blockchainUid: String) -> String? {
         try? marketKit.blockchain(uid: blockchainUid)?.name
     }

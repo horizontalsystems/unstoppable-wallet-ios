@@ -38,13 +38,13 @@ class ContactBookViewController: ThemeSearchViewController {
         title = "contacts.title".localized
         navigationItem.searchController?.searchBar.placeholder = "contacts.list.search_placeholder".localized
 
-        // add editable buttons (Add Contact + Share)
+        // add editable buttons (Add Contact + Settings)
         if mode.editable {
-            let settingsItem = UIBarButtonItem(image: UIImage(named: "morevert_24"), style: .plain, target: self, action: #selector(onTapMore))
-            settingsItem.tintColor = .themeJacob
-
             let addContact = UIBarButtonItem(image: UIImage(named: "user_plus_24"), style: .plain, target: self, action: #selector(onCreateContact))
             addContact.tintColor = .themeJacob
+
+            let settingsItem = UIBarButtonItem(image: UIImage(named: "manage_2_24"), style: .plain, target: self, action: #selector(onTapSettings))
+            settingsItem.tintColor = .themeJacob
 
             navigationItem.rightBarButtonItems = [settingsItem, addContact]
         }
@@ -87,10 +87,6 @@ class ContactBookViewController: ThemeSearchViewController {
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.onUpdate(viewItems: $0) }
         subscribe(disposeBag, viewModel.emptyListDriver) { [weak self] in self?.set(emptyList: $0) }
-        subscribe(disposeBag, viewModel.showRestoreAlertSignal) { [weak self] in self?.showRestoreAlert(contacts: $0) }
-        subscribe(disposeBag, viewModel.showSuccessfulRestoreSignal) { HudHelper.instance.show(banner: .success(string: "contacts.restore.restored".localized)) }
-        subscribe(disposeBag, viewModel.showParsingErrorSignal) { [weak self] in self?.showParsingError() }
-        subscribe(disposeBag, viewModel.showRestoreErrorSignal) { [weak self] in self?.showRestoreError() }
 
         tableView.buildSections()
 
@@ -110,33 +106,12 @@ class ContactBookViewController: ThemeSearchViewController {
         }
     }
 
-    private func showRestoreAlert(contacts: [BackupContact]) {
-        let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
-                title: "alert.warning".localized,
-                items: [
-                    .highlightedDescription(text: "contacts.restore.overwrite_alert.description".localized)
-                ],
-                buttons: [
-                    .init(style: .red, title: "contacts.restore.overwrite_alert.replace".localized, actionType: .afterClose) { [weak self] in
-                        self?.viewModel.replace(contacts: contacts)
-                    },
-                    .init(style: .transparent, title: "button.cancel".localized)
-                ]
-        )
-        present(viewController, animated: true)
-    }
+    @objc private func onTapSettings() {
+        guard let viewController = ContactBookSettingsModule.viewController else {
+            return
+        }
 
-    private func showParsingError() {
-        HudHelper.instance.show(banner: .error(string: "contacts.restore.parsing_error".localized))
-    }
-
-    private func showRestoreError() {
-        HudHelper.instance.show(banner: .error(string: "contacts.restore.restore_error".localized))
-    }
-
-    @objc private func onTapMore() {
-        ContactBookModule.showMore(parentViewController: self)
+        present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
     @objc private func onCreateContact() {
@@ -280,16 +255,6 @@ extension ContactBookViewController: SectionsDataSource {
                     }
             )
         ]
-    }
-
-}
-
-extension ContactBookViewController: UIDocumentPickerDelegate {
-
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        if let jsonUrl = urls.first {
-            viewModel.didPick(url: jsonUrl)
-        }
     }
 
 }

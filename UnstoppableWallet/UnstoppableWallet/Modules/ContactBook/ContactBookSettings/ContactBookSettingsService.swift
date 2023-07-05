@@ -1,7 +1,8 @@
+import Foundation
 import RxRelay
 import RxSwift
 
-class ContactBookSyncSettingsService {
+class ContactBookSettingsService {
     private let disposeBag = DisposeBag()
     private let contactManager: ContactBookManager
 
@@ -31,7 +32,15 @@ class ContactBookSyncSettingsService {
 
 }
 
-extension ContactBookSyncSettingsService {
+extension ContactBookSettingsService {
+
+    var hasContacts: Bool {
+        guard let contactBook = contactManager.state.data else {
+            return false
+        }
+
+        return !contactBook.contacts.isEmpty
+    }
 
     var activated: Bool {
         get {
@@ -78,6 +87,41 @@ extension ContactBookSyncSettingsService {
 
     func confirm() {
         activated = true
+    }
+
+    func backupContacts(from url: URL) throws -> [BackupContact] {
+        try contactManager.backupContacts(from: url)
+    }
+
+    func replace(contacts: [BackupContact]) throws {
+        try contactManager.restore(contacts: contacts)
+    }
+
+    func createBackupFile() throws -> URL {
+        // make simple book json.
+        guard let backupBook = contactManager.backupContactBook else {
+            throw CreateBackupFileError.noBackupContactBook
+        }
+
+        let jsonData = try JSONSerialization.data(withJSONObject: backupBook.contacts.toJSON())
+
+        // save book to temporary file
+        guard let temporaryFileUrl = ContactBookManager.localUrl?.appendingPathComponent("ContactBook.json") else {
+            throw CreateBackupFileError.noTempFileUrl
+        }
+
+        try jsonData.write(to: temporaryFileUrl)
+
+        return temporaryFileUrl
+    }
+
+}
+
+extension ContactBookSettingsService {
+
+    enum CreateBackupFileError: Error {
+        case noBackupContactBook
+        case noTempFileUrl
     }
 
 }

@@ -3,7 +3,6 @@ import ThemeKit
 import ComponentKit
 import MarketKit
 import MobileCoreServices
-import UniformTypeIdentifiers
 
 protocol ContactBookSelectorDelegate: AnyObject {
     func onFetch(address: String)
@@ -46,71 +45,6 @@ struct ContactBookModule {
         }
     }
 
-    private static func chooseMoreMode(action: ((MoreMode) -> ())?) -> UIViewController {
-        let exportDisabled = App.shared.contactManager?.state.data?.contacts.isEmpty ?? false
-
-        let alertViewItems = [
-            AlertViewItem(text: "contacts.more.import".localized, selected: false),
-            AlertViewItem(text: "contacts.more.export".localized, selected: false, disabled: exportDisabled)
-        ]
-
-        return AlertRouter.module(
-                title: "contacts.more.title".localized,
-                viewItems: alertViewItems,
-                afterClose: true
-        ) { index in
-            switch index {
-            case 0: action?(.restore)
-            default: action?(.backup)
-            }
-        }
-    }
-
-    private static func pickUpBackupBook(parentViewController: UIViewController?) {
-        guard let delegate = parentViewController as? UIDocumentPickerDelegate else {
-            return
-        }
-
-        let documentPicker: UIDocumentPickerViewController
-        if #available(iOS 14.0, *) {
-            let types = UTType.types(tag: "json",
-                    tagClass: UTTagClass.filenameExtension,
-                    conformingTo: nil)
-
-            documentPicker = UIDocumentPickerViewController(
-                    forOpeningContentTypes: types)
-        } else {
-            documentPicker = UIDocumentPickerViewController(documentTypes: ["*.json"], in: .import)
-        }
-
-        documentPicker.delegate = delegate
-        documentPicker.allowsMultipleSelection = false
-        parentViewController?.present(documentPicker, animated: true, completion: nil)
-    }
-
-    private static func shareBackupBook(parentViewController: UIViewController?) {
-        // make simple book json.
-        guard let contactManager = App.shared.contactManager,
-              let backupBook = contactManager.backupContactBook,
-              let jsonData = try? JSONSerialization.data(withJSONObject: backupBook.contacts.toJSON()) else {
-            return
-        }
-
-        // save book to temporary file
-        guard let temporaryFileUrl = ContactBookManager.localUrl?.appendingPathComponent("ContactBook.json") else {
-            return
-        }
-        do {
-            try jsonData.write(to: temporaryFileUrl)
-
-            // show share controller with temporary url
-            let activityViewController = UIActivityViewController(activityItems: [temporaryFileUrl], applicationActivities: nil)
-            parentViewController?.present(activityViewController, animated: true, completion: nil)
-        } catch {
-            HudHelper.instance.show(banner: .error(string: "contacts.restore.storage_error".localized))
-        }
-    }
-
 }
 
 extension ContactBookModule {
@@ -148,17 +82,6 @@ extension ContactBookModule {
         }
 
         parentViewController?.present(alertController, animated: true)
-    }
-
-    static func showMore(parentViewController: UIViewController?) {
-        let viewController = chooseMoreMode(action: { [weak parentViewController] in
-            switch $0 {
-            case .restore: pickUpBackupBook(parentViewController: parentViewController)
-            case .backup: shareBackupBook(parentViewController: parentViewController)
-            }
-        })
-
-        parentViewController?.present(viewController, animated: true)
     }
 
 }
