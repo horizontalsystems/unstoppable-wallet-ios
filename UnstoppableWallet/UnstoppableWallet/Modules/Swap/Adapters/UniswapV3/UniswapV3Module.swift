@@ -14,7 +14,7 @@ class UniswapV3Module {
             return nil
         }
 
-        guard let swapKit = try? UniswapKit.KitV3.instance(evmKit: evmKit) else {
+        guard let swapKit = try? UniswapKit.KitV3.instance(evmKit: evmKit, dexType: dex.provider.dexType) else {
             return nil
         }
 

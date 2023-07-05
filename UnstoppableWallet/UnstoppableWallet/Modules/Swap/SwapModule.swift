@@ -5,6 +5,7 @@ import SectionsTableView
 import ThemeKit
 import RxSwift
 import RxCocoa
+import UniswapKit
 
 protocol ISwapDexManager {
     var dex: SwapModule.Dex? { get }
@@ -44,7 +45,7 @@ protocol ISwapDataSource: AnyObject {
 
 class SwapModule {
 
-    static func viewController(tokenFrom: Token? = nil) -> UIViewController? {
+    static func viewController(tokenFrom: MarketKit.Token? = nil) -> UIViewController? {
         let swapDexManager = SwapProviderManager(localStorage: App.shared.localStorage, evmBlockchainManager: App.shared.evmBlockchainManager, tokenFrom: tokenFrom)
 
         let viewModel =  SwapViewModel(dexManager: swapDexManager)
@@ -61,7 +62,7 @@ class SwapModule {
 extension SwapModule {
     private static let addressesForRevoke = ["0xdac17f958d2ee523a2206206994597c13d831ec7"]
 
-    static func mustBeRevoked(token: Token?) -> Bool {
+    static func mustBeRevoked(token: MarketKit.Token?) -> Bool {
         if let token = token,
            case .ethereum = token.blockchainType,
            case .eip20(let address) = token.type,
@@ -81,13 +82,13 @@ extension SwapModule {
     }
 
     class DataSourceState {
-        var tokenFrom: Token?
-        var tokenTo: Token?
+        var tokenFrom: MarketKit.Token?
+        var tokenTo: MarketKit.Token?
         var amountFrom: Decimal?
         var amountTo: Decimal?
         var exactFrom: Bool
 
-        init(tokenFrom: Token?, tokenTo: Token? = nil, amountFrom: Decimal? = nil, amountTo: Decimal? = nil, exactFrom: Bool = true) {
+        init(tokenFrom: MarketKit.Token?, tokenTo: MarketKit.Token? = nil, amountFrom: Decimal? = nil, amountTo: Decimal? = nil, exactFrom: Bool = true) {
             self.tokenFrom = tokenFrom
             self.tokenTo = tokenTo
             self.amountFrom = amountFrom
@@ -157,8 +158,8 @@ extension BlockchainType {
 
     var allowedProviders: [SwapModule.Dex.Provider] {
         switch self {
-        case .ethereum: return [.oneInch, .uniswap, .uniswapV3]
-        case .binanceSmartChain: return [.oneInch, .pancake]
+        case .ethereum: return [.oneInch, .uniswap, .uniswapV3, .pancakeV3]
+        case .binanceSmartChain: return [.oneInch, .pancake, .pancakeV3, .uniswapV3]
         case .polygon: return [.oneInch, .quickSwap, .uniswapV3]
         case .avalanche: return [.oneInch]
         case .optimism: return [.oneInch]
@@ -178,14 +179,16 @@ extension SwapModule.Dex {
         case uniswapV3 = "Uniswap V3"
         case oneInch = "1Inch"
         case pancake = "PancakeSwap"
+        case pancakeV3 = "PancakeSwap V3"
         case quickSwap = "QuickSwap"
 
         var allowedBlockchainTypes: [BlockchainType] {
             switch self {
             case .uniswap: return [.ethereum]
-            case .uniswapV3: return [.ethereum, .arbitrumOne, .polygon]
+            case .uniswapV3: return [.ethereum, .binanceSmartChain, .arbitrumOne, .polygon]
             case .oneInch: return [.ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom]
             case .pancake: return [.binanceSmartChain]
+            case .pancakeV3: return [.ethereum, .binanceSmartChain]
             case .quickSwap: return [.polygon]
             }
         }
@@ -194,7 +197,7 @@ extension SwapModule.Dex {
             switch self {
             case .uniswap, .uniswapV3: return "https://uniswap.org/"
             case .oneInch: return "https://app.1inch.io/"
-            case .pancake: return "https://pancakeswap.finance/"
+            case .pancake, .pancakeV3: return "https://pancakeswap.finance/"
             case .quickSwap: return "https://quickswap.exchange/"
             }
         }
@@ -204,7 +207,8 @@ extension SwapModule.Dex {
             case .uniswap: return "Uniswap v.2"
             case .uniswapV3: return "Uniswap v.3"
             case .oneInch: return "1Inch"
-            case .pancake: return "PancakeSwap"
+            case .pancake: return "PancakeSwap v.2"
+            case .pancakeV3: return "PancakeSwap v.3"
             case .quickSwap: return "QuickSwap"
             }
         }
@@ -213,8 +217,15 @@ extension SwapModule.Dex {
             switch self {
             case .uniswap, .uniswapV3: return "uniswap_32"
             case .oneInch: return "1inch_32"
-            case .pancake: return "pancake_32"
+            case .pancake, .pancakeV3: return "pancake_32"
             case .quickSwap: return "quick_32"
+            }
+        }
+
+        var dexType: DexType {
+            switch self {
+            case .uniswap, .uniswapV3: return .uniswap
+            default: return .pancakeSwap
             }
         }
 
