@@ -1100,10 +1100,6 @@
 "contacts.add_address.add_to_contact" = "Añadir al contacto existente";
 "contacts.add_address.exist_address" = "Esta dirección ya está en uso para %@";
 
-"contacts.more.title" = "Más";
-"contacts.more.import" = "Restaurar contactos";
-"contacts.more.export" = "Copiar contactos";
-
 "contacts.contact.delete_alert.title" = "Eliminar contacto";
 "contacts.contact.delete_alert.description" = "¿Está seguro de que desea eliminar este contacto?";
 "contacts.contact.delete_alert.delete" = "Eliminar";
@@ -1116,19 +1112,22 @@
 "contacts.add_address.delete_alert.description" = "¿Está seguro que desea eliminar esta dirección?";
 "contacts.add_address.delete_alert.delete" = "Eliminar";
 
-// Settings -> iCloud Sync
+// Contacts -> Settings
 
-"icloud_sync.title" = "iCloud Sync";
-"settings.icloud_sync.title" = "iCloud Sync";
-"settings.icloud_sync.contact_book" = "Sincronizar contactos";
-"settings.icloud_sync.description" = "Sincronizar contactos de pago a iCloud para facilitar la copia de seguridad y el acceso a través de múltiples dispositivos.";
-"settings.icloud_sync.merge_disclaimer" = "Tus contactos de pago locales se combinarán con los almacenados en iCloud.";
+"contacts.settings.title" = "Ajustes";
 
-"settings.icloud_sync.alert.title" = "iCloud Sync";
-"settings.icloud_sync.alert.description" = "Por favor, comprueba que iCloud Almacenamiento está habilitado en tu dispositivo.";
+"contacts.settings.restore_contacts" = "Restore Contacts";
+"contacts.settings.backup_contacts" = "Backup Contacts";
 
-"settings.icloud_sync.alert_error.title" = "iCloud Error";
-"settings.icloud_sync.alert_error.description" = "No se puede conectar a iCloud, esto puede deberse a que el almacenamiento de iCloud no está disponible en tu dispositivo o está desactivado para una aplicación imparable";
+"contacts.settings.icloud_sync" = "iCloud Sync";
+"contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
+"contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+
+"contacts.settings.alert.title" = "iCloud Sync";
+"contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+
+"contacts.settings.alert_error.title" = "iCloud Error";
+"contacts.settings.alert_error.description" = "Cannot connect to iCloud, this may be because iCloud storage not available on your device, or disabled for Unstoppable app";
 
 // Set PIN
 
