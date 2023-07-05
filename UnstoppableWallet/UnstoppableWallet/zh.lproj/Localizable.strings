@@ -1103,10 +1103,6 @@
 "contacts.add_address.add_to_contact" = "添加到现有联系人";
 "contacts.add_address.exist_address" = "此地址已用于 %@";
 
-"contacts.more.title" = "更多";
-"contacts.more.import" = "恢复联系人";
-"contacts.more.export" = "备份联系人";
-
 "contacts.contact.delete_alert.title" = "删除联系人";
 "contacts.contact.delete_alert.description" = "您确认要删除此联系人吗？";
 "contacts.contact.delete_alert.delete" = "删除";
@@ -1119,19 +1115,22 @@
 "contacts.add_address.delete_alert.description" = "您确定要删除此地址吗？";
 "contacts.add_address.delete_alert.delete" = "删除";
 
-// Settings -> iCloud Sync
+// Contacts -> Settings
 
-"icloud_sync.title" = "iCloud同步";
-"settings.icloud_sync.title" = "iCloud同步";
-"settings.icloud_sync.contact_book" = "同步联系人";
-"settings.icloud_sync.description" = "同步付款联系人到iCloud以便于备份和跨多设备访问。";
-"settings.icloud_sync.merge_disclaimer" = "您的本地付款联系人将与存储在iCloud上的联系人合并。";
+"contacts.settings.title" = "设置";
 
-"settings.icloud_sync.alert.title" = "iCloud同步";
-"settings.icloud_sync.alert.description" = "请检查您的设备上是否已启用iCloud存储。";
+"contacts.settings.restore_contacts" = "Restore Contacts";
+"contacts.settings.backup_contacts" = "Backup Contacts";
 
-"settings.icloud_sync.alert_error.title" = "iCloud错误";
-"settings.icloud_sync.alert_error.description" = "无法连接到iCloud，这可能是因为iCloud存储在您的设备上不可用，或者已对Unstoppable应用程序禁用";
+"contacts.settings.icloud_sync" = "iCloud Sync";
+"contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
+"contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+
+"contacts.settings.alert.title" = "iCloud Sync";
+"contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+
+"contacts.settings.alert_error.title" = "iCloud Error";
+"contacts.settings.alert_error.description" = "Cannot connect to iCloud, this may be because iCloud storage not available on your device, or disabled for Unstoppable app";
 
 // Set PIN
 
