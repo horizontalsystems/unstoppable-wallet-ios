@@ -8,6 +8,7 @@ class ChartIndicatorsViewModel {
     private var cancellables = Set<AnyCancellable>()
 
     @Published public var viewItems = [ViewItem]()
+    private let openSettingsSubject = PassthroughSubject<ChartIndicator, Never>()
 
     init(service: ChartIndicatorsService) {
         self.service = service
@@ -55,12 +56,23 @@ class ChartIndicatorsViewModel {
 
 extension ChartIndicatorsViewModel {
 
+    var openSettingsPublisher: AnyPublisher<ChartIndicator, Never> {
+        openSettingsSubject.eraseToAnyPublisher()
+    }
+
+    func update(indicator: ChartIndicator) {
+        service.update(indicator: indicator)
+    }
+
     func saveIndicators() {
         service.saveIndicators()
     }
 
     func onEdit(viewItem: ChartIndicatorsViewModel.IndicatorViewItem) {
-
+        guard let indicator = service.indicator(id: viewItem.id, index: viewItem.index) else {
+            return
+        }
+        openSettingsSubject.send(indicator)
     }
 
     func onToggle(viewItem: ChartIndicatorsViewModel.IndicatorViewItem, _ isOn: Bool) {
