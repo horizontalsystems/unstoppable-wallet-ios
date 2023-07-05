@@ -1,8 +1,9 @@
 import Combine
 import UIKit
 import SnapKit
-import ThemeKit
+import Chart
 import ComponentKit
+import ThemeKit
 import SectionsTableView
 
 
@@ -29,6 +30,7 @@ class ChartIndicatorsViewController: ThemeViewController {
         title = "chart_indicators.title".localized
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -47,6 +49,13 @@ class ChartIndicatorsViewController: ThemeViewController {
                 }
                 .store(in: &cancellables)
 
+        viewModel.openSettingsPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] indicator in
+                    self?.openSettings(indicator: indicator)
+                }
+                .store(in: &cancellables)
+
         viewItems = viewModel.viewItems
         tableView.buildSections()
     }
@@ -61,6 +70,18 @@ class ChartIndicatorsViewController: ThemeViewController {
 
     @objc func onTapClose() {
         dismiss(animated: true)
+    }
+
+    private func openSettings(indicator: ChartIndicator) {
+        guard let viewController = ChartIndicatorSettingsModule.viewController(
+                indicator: indicator,
+                onComplete: { [weak self] indicator in
+                    self?.viewModel.update(indicator: indicator)
+        }) else {
+            return
+        }
+
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
 }

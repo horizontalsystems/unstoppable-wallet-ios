@@ -59,6 +59,19 @@ extension ChartIndicatorsService {
         let newItemIndicator = items[itemIndex].indicator
         newItemIndicator.enabled = enabled
 
+        // if we have single-view items on same area and try it enable this one, we must found and disable all others
+        if enabled {
+            for (index, item) in items.enumerated() {
+                guard index != itemIndex else {
+                    continue
+                }
+
+                if item.indicator.onChart == newItemIndicator.onChart, item.indicator.single {
+                    item.indicator.enabled = false
+                }
+            }
+        }
+
         items[itemIndex] = IndicatorItem(
                 indicator: newItemIndicator,
                 insufficientData: calculateInsufficient(
@@ -70,6 +83,22 @@ extension ChartIndicatorsService {
 
     func saveIndicators() {
         repository.set(indicators: items.map { $0.indicator })
+    }
+
+    func indicator(id: String, index: Int) -> ChartIndicator? {
+        guard let index = items.firstIndex(where: { $0.indicator.id == id && $0.indicator.index == index }) else {
+            return nil
+        }
+
+        return items[index].indicator
+    }
+
+    func update(indicator: ChartIndicator) {
+        guard let index = items.firstIndex(where: { $0.indicator.id == indicator.id && $0.indicator.index == indicator.index }) else {
+            return
+        }
+
+        items[index] = IndicatorItem(indicator: indicator, insufficientData: items[index].insufficientData)
     }
 
 }

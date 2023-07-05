@@ -33,6 +33,13 @@ class ChartCell: UITableViewCell {
     private let loadingView = HUDActivityView.create(with: .medium24)
     private let errorView = PlaceholderView()
 
+    private var viewItem: ChartModule.ViewItem?
+    private var showIndicators: Bool = true {
+        didSet {
+            syncChart(viewItem: viewItem)
+        }
+    }
+
     private static let percentFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .percent
@@ -214,6 +221,7 @@ class ChartCell: UITableViewCell {
     }
 
     private func syncChart(viewItem: ChartModule.ViewItem?) {
+        self.viewItem = viewItem
         if let viewItem {
             currentValueWrapper.isHidden = false
             chartView.isHidden = false
@@ -261,7 +269,7 @@ class ChartCell: UITableViewCell {
             }
 
             chartView.setCurve(colorType: viewItem.chartTrend.chartColorType)
-            chartView.set(chartData: viewItem.chartData, indicators: viewItem.indicators, animated: true)
+            chartView.set(chartData: viewItem.chartData, indicators: viewItem.indicators, showIndicators: showIndicators, animated: true)
             chartView.set(highLimitText: viewItem.maxValue, lowLimitText: viewItem.minValue)
         } else {
             currentValueWrapper.isHidden = true
@@ -343,7 +351,7 @@ class ChartCell: UITableViewCell {
     }
 
     private func syncChart(showIndicators: Bool) {
-        chartView.indicatorsIsHidden = !showIndicators
+        self.showIndicators = showIndicators
     }
 
     private func syncChart(loading: Bool) {

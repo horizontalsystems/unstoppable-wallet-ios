@@ -53,7 +53,7 @@ class ChartIndicatorFactory {
                     index: 0,
                     enabled: false,
                     fast: 12,
-                    long: 26,
+                    slow: 26,
                     signal: 9,
                     configuration: macdConfiguration
             )
