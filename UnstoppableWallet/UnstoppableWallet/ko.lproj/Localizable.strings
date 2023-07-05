@@ -1100,10 +1100,6 @@
 "contacts.add_address.add_to_contact" = "기존 연락처에 추가";
 "contacts.add_address.exist_address" = "이 주소는 이미 %@에 사용되었습니다";
 
-"contacts.more.title" = "보다";
-"contacts.more.import" = "연락처 복원";
-"contacts.more.export" = "백업 연락처";
-
 "contacts.contact.delete_alert.title" = "연락처 삭제";
 "contacts.contact.delete_alert.description" = "이 연락처를 삭제하시겠습니까?";
 "contacts.contact.delete_alert.delete" = "삭제";
@@ -1116,19 +1112,22 @@
 "contacts.add_address.delete_alert.description" = "이 주소를 정말 삭제하시겠습니까?";
 "contacts.add_address.delete_alert.delete" = "삭제";
 
-// Settings -> iCloud Sync
+// Contacts -> Settings
 
-"icloud_sync.title" = "iCloud 동기화";
-"settings.icloud_sync.title" = "iCloud 동기화";
-"settings.icloud_sync.contact_book" = "연락처 동기화";
-"settings.icloud_sync.description" = "결제 연락처를 iCloud에 동기화하여 여러 기기에서 쉽게 백업하고 액세스할 수 있습니다.";
-"settings.icloud_sync.merge_disclaimer" = "로컬 결제 연락처가 iCloud에 저장된 연락처와 병합됩니다.";
+"contacts.settings.title" = "설정";
 
-"settings.icloud_sync.alert.title" = "iCloud 동기화";
-"settings.icloud_sync.alert.description" = "기기에서 iCloud 저장소가 활성화되어 있는지 확인하세요.";
+"contacts.settings.restore_contacts" = "Restore Contacts";
+"contacts.settings.backup_contacts" = "Backup Contacts";
 
-"settings.icloud_sync.alert_error.title" = "iCloud 오류";
-"settings.icloud_sync.alert_error.description" = "iCloud에 연결할 수 없습니다. 기기에서 iCloud 저장소를 사용할 수 없거나 Unstoppable 앱이 비활성화되었기 때문일 수 있습니다.";
+"contacts.settings.icloud_sync" = "iCloud Sync";
+"contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
+"contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+
+"contacts.settings.alert.title" = "iCloud Sync";
+"contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+
+"contacts.settings.alert_error.title" = "iCloud Error";
+"contacts.settings.alert_error.description" = "Cannot connect to iCloud, this may be because iCloud storage not available on your device, or disabled for Unstoppable app";
 
 // Set PIN
 
