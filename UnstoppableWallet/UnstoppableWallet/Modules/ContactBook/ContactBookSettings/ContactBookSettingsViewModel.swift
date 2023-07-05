@@ -1,17 +1,23 @@
+import Foundation
 import RxRelay
 import RxSwift
 import RxCocoa
 
-class ContactBookSyncSettingsViewModel {
+class ContactBookSettingsViewModel {
     private let disposeBag = DisposeBag()
-    private let service: ContactBookSyncSettingsService
+    private let service: ContactBookSettingsService
 
     private let featureEnabledRelay = BehaviorRelay<Bool>(value: false)
 
     private let showConfirmationRelay = PublishRelay<()>()
     private let showSyncErrorRelay = PublishRelay<Bool>()
 
-    init(service: ContactBookSyncSettingsService) {
+    private let showRestoreAlertRelay = PublishRelay<[BackupContact]>()
+    private let showParsingErrorRelay = PublishRelay<()>()
+    private let showSuccessfulRestoreRelay = PublishRelay<()>()
+    private let showRestoreErrorRelay = PublishRelay<()>()
+
+    init(service: ContactBookSettingsService) {
         self.service = service
 
         subscribe(disposeBag, service.activatedChangedObservable) { [weak self] in self?.sync(featureEnabled: $0) }
@@ -38,7 +44,27 @@ class ContactBookSyncSettingsViewModel {
     }
 
 }
-extension ContactBookSyncSettingsViewModel {
+extension ContactBookSettingsViewModel {
+
+    var showRestoreAlertSignal: Signal<[BackupContact]> {
+        showRestoreAlertRelay.asSignal()
+    }
+
+    var showParsingErrorSignal: Signal<()> {
+        showParsingErrorRelay.asSignal()
+    }
+
+    var showSuccessfulRestoreSignal: Signal<()> {
+        showSuccessfulRestoreRelay.asSignal()
+    }
+
+    var showRestoreErrorSignal: Signal<()> {
+        showRestoreErrorRelay.asSignal()
+    }
+
+    var hasContacts: Bool {
+        service.hasContacts
+    }
 
     var featureEnabled: Bool {
         service.activated
@@ -67,6 +93,28 @@ extension ContactBookSyncSettingsViewModel {
 
     func onConfirm() {
         service.confirm()
+    }
+
+    func didPick(url: URL) {
+        do {
+            let backupContacts = try service.backupContacts(from: url)
+            showRestoreAlertRelay.accept(backupContacts)
+        } catch {
+            showParsingErrorRelay.accept(())
+        }
+    }
+
+    func replace(contacts: [BackupContact]) {
+        do {
+            try service.replace(contacts: contacts)
+            showSuccessfulRestoreRelay.accept(())
+        } catch {
+            showRestoreErrorRelay.accept(())
+        }
+    }
+
+    func createBackupFile() throws -> URL {
+        try service.createBackupFile()
     }
 
 }

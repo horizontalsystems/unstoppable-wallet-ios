@@ -22,7 +22,6 @@ class MainSettingsViewController: ThemeViewController {
     private let securityCell = BaseSelectableThemeCell()
     private let appearanceCell = BaseSelectableThemeCell()
     private let contactBookCell = BaseSelectableThemeCell()
-    private let iCloudSyncCell = BaseSelectableThemeCell()
     private let baseCurrencyCell = BaseSelectableThemeCell()
     private let languageCell = BaseSelectableThemeCell()
     private let themeModeCell = BaseSelectableThemeCell()
@@ -75,10 +74,7 @@ class MainSettingsViewController: ThemeViewController {
         buildTitleValue(cell: appearanceCell, image: UIImage(named: "brush_24"), title: "appearance.title".localized)
 
         contactBookCell.set(backgroundStyle: .lawrence)
-        buildTitleValue(cell: contactBookCell, image: UIImage(named: "user_24"), title: "contacts.title".localized)
-
-        iCloudSyncCell.set(backgroundStyle: .lawrence)
-        syncICloudCell()
+        syncContactBookCell()
 
         baseCurrencyCell.set(backgroundStyle: .lawrence)
         syncBaseCurrency()
@@ -96,7 +92,7 @@ class MainSettingsViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.manageWalletsAlertDriver) { [weak self] in self?.syncManageAccountCell(alert: $0) }
         subscribe(disposeBag, viewModel.securityCenterAlertDriver) { [weak self] in self?.syncSecurityCell(alert: $0) }
-        subscribe(disposeBag, viewModel.iCloudSyncAlertDriver) { [weak self] in self?.syncICloudCell(alert: $0) }
+        subscribe(disposeBag, viewModel.iCloudSyncAlertDriver) { [weak self] in self?.syncContactBookCell(alert: $0) }
 
         subscribe(disposeBag, viewModel.walletConnectCountDriver) { [weak self] tuple in
             self?.syncWalletConnectCell(text: tuple?.text, highlighted: tuple?.highlighted ?? false)
@@ -126,9 +122,9 @@ class MainSettingsViewController: ThemeViewController {
         buildTitleImage(cell: securityCell, image: UIImage(named: "shield_24"), title: "settings.security".localized, alertImage: alertImage)
     }
 
-    private func syncICloudCell(alert: Bool = false) {
+    private func syncContactBookCell(alert: Bool = false) {
         let alertImage = alert ? UIImage(named: "warning_2_20")?.withRenderingMode(.alwaysTemplate) : nil
-        buildTitleImage(cell: iCloudSyncCell, image: UIImage(named: "icloud_24"), title: "icloud_sync.title".localized, alertImage: alertImage)
+        buildTitleImage(cell: contactBookCell, image: UIImage(named: "user_24"), title: "contacts.title".localized, alertImage: alertImage)
     }
 
     private func syncAboutCell(alert: Bool = false) {
@@ -255,18 +251,6 @@ class MainSettingsViewController: ThemeViewController {
                         guard let viewController = ContactBookModule.viewController(mode: .edit) else {
                             return
                         }
-                        self?.navigationController?.pushViewController(viewController, animated: true)
-                    }
-            ),
-            StaticRow(
-                    cell: iCloudSyncCell,
-                    id: "icloud-sync",
-                    height: .heightCell48,
-                    action: { [weak self] in
-                        guard let viewController = ContactBookSyncSettingsModule.viewController else {
-                            return
-                        }
-
                         self?.navigationController?.pushViewController(viewController, animated: true)
                     }
             ),
