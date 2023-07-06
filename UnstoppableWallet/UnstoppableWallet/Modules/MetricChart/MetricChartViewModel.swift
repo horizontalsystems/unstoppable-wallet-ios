@@ -120,7 +120,7 @@ extension MetricChartViewModel: IChartViewTouchDelegate {
     public func touchDown() {
     }
 
-    public func select(item: ChartItem) {
+    public func select(item: ChartItem, indicators: [ChartIndicator]) {
         HapticGenerator.instance.notification(.feedback(.soft))
 
         pointSelectedItemRelay.accept(

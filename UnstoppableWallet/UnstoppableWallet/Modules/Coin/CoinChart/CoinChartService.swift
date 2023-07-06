@@ -67,8 +67,6 @@ class CoinChartService {
                 .store(in: &cancellables)
     }
 
-    deinit { print("Deinit \(self)") }
-
     private func fetchStartTime() {
         Task { [weak self, marketKit, coinUid] in
             do {

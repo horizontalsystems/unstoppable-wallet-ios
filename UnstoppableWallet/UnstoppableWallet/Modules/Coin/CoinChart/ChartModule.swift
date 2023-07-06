@@ -38,6 +38,7 @@ struct ChartModule {
         case none
         case volume(value: String?)
         case dominance(value: Decimal?, diff: Decimal?)
+        case indicators(top: NSAttributedString?, bottom: NSAttributedString?)
     }
 
 }
