@@ -813,6 +813,27 @@
 "chart_indicators.moving_averages" = "Moving Averages";
 "chart_indicators.oscillators" = "Oscillators";
 
+
+"chart_indicators.settings.period.error" = "Period can’t be more than %d";
+
+"chart_indicators.settings.ma.title" = "Moving Average";
+"chart_indicators.settings.ma.description" = "The EMA, SMA, and WMA are moving averages used in technical analysis:\n\nEMA emphasizes recent prices for quicker reactions.\nSMA averages price data for a general trend view.\nWMA balances sensitivity and noise reduction by linearly weighting recent data";
+"chart_indicators.settings.ma.type_title" = "Type";
+"chart_indicators.settings.ma.period_title" = "Period";
+
+"chart_indicators.settings.rsi.title" = "RSI";
+"chart_indicators.settings.rsi.description" = "The Relative Strength Index (RSI) is a momentum oscillator that measures price speed and change, identifying overbought (above 70) or oversold (below 30) market conditions. It can also detect price reversals through divergences.";
+"chart_indicators.settings.rsi.period_title" = "RSI Length";
+
+"chart_indicators.settings.macd.title" = "MACD";
+"chart_indicators.settings.macd.description" = "The Moving Average Convergence Divergence (MACD) is a momentum indicator that tracks the relationship between two EMAs of a security's price. It signals buying or selling opportunities when the MACD line (12-period EMA minus 26-period EMA) crosses the 9-period EMA, known as the signal line.";
+"chart_indicators.settings.macd.fast_period_title" = "Fast Length";
+"chart_indicators.settings.macd.slow_period_title" = "Slow Length";
+"chart_indicators.settings.macd.signal_period_title" = "Signal Smoothing";
+
+"chart_indicators.settings.macd.slow_fast.error" = "Fast Length must be less than Slow Length";
+
+
 // Pro Features
 
 "pro_features.authorize.wallet_passes.title" = "Unstoppable NFT";
@@ -1163,7 +1184,7 @@
 "chart.market_cap" = "Market Cap";
 "chart.volume" = "볼륨 (24 시간)";
 "chart.circulation" = "In Circulation";
-"chart.selected.volume" = "음량";
+"chart.selected.volume" = "Vol.";
 
 "chart.market.header" = "Market";
 "chart.market.market_cap" = "Market Cap";
