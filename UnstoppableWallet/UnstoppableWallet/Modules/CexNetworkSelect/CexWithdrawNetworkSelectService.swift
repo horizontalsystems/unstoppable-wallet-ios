@@ -1,12 +1,12 @@
 import HsExtensions
 
 class CexWithdrawNetworkSelectService {
-    let cexNetworks: [CexNetwork]
+    let networks: [CexWithdrawNetwork]
 
-    @PostPublished private(set) var selectedNetwork: CexNetwork?
+    @PostPublished private(set) var selectedNetwork: CexWithdrawNetwork?
 
-    init(cexNetworks: [CexNetwork], defaultNetwork: CexNetwork?) {
-        self.cexNetworks = cexNetworks
+    init(networks: [CexWithdrawNetwork], defaultNetwork: CexWithdrawNetwork?) {
+        self.networks = networks
         selectedNetwork = defaultNetwork
     }
 
@@ -15,7 +15,7 @@ class CexWithdrawNetworkSelectService {
 extension CexWithdrawNetworkSelectService {
 
     func select(index: Int) {
-        if let network = cexNetworks.at(index: index) {
+        if let network = networks.at(index: index) {
             selectedNetwork = network
         }
     }

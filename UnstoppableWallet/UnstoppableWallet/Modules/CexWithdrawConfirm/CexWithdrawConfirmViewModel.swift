@@ -38,10 +38,10 @@ class CexWithdrawConfirmViewModel {
             SectionViewItem(viewItems: mainViewItems())
         ]
 
-        if let cexNetwork = service.cexNetwork {
+        if let network = service.network {
             sectionViewItems.append(
                     SectionViewItem(viewItems: [
-                        .value(title: "cex_withdraw_confirm.network".localized, value: cexNetwork.networkName, type: .regular)
+                        .value(title: "cex_withdraw_confirm.network".localized, value: network.networkName, type: .regular)
                     ])
             )
         }

@@ -734,7 +734,8 @@ class StorageMigrator {
                 t.column(CexAssetRecord.Columns.lockedBalance.name, .text).notNull()
                 t.column(CexAssetRecord.Columns.withdrawEnabled.name, .boolean).notNull()
                 t.column(CexAssetRecord.Columns.depositEnabled.name, .boolean).notNull()
-                t.column(CexAssetRecord.Columns.networks.name, .text)
+                t.column(CexAssetRecord.Columns.depositNetworks.name, .text)
+                t.column(CexAssetRecord.Columns.withdrawNetworks.name, .text)
                 t.column(CexAssetRecord.Columns.coinUid.name, .text)
 
                 t.primaryKey([CexAssetRecord.Columns.accountId.name, CexAssetRecord.Columns.id.name], onConflict: .replace)

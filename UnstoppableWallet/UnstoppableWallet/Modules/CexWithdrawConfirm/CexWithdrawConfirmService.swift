@@ -4,7 +4,7 @@ import HsExtensions
 
 class CexWithdrawConfirmService {
     let cexAsset: CexAsset
-    let cexNetwork: CexNetwork?
+    let network: CexWithdrawNetwork?
     let address: String
     let amount: Decimal
     private let provider: ICexProvider
@@ -14,9 +14,9 @@ class CexWithdrawConfirmService {
     private let confirmWithdrawSubject = PassthroughSubject<String, Never>()
     private let errorSubject = PassthroughSubject<Error, Never>()
 
-    init(cexAsset: CexAsset, cexNetwork: CexNetwork?, address: String, amount: Decimal, provider: ICexProvider) {
+    init(cexAsset: CexAsset, network: CexWithdrawNetwork?, address: String, amount: Decimal, provider: ICexProvider) {
         self.cexAsset = cexAsset
-        self.cexNetwork = cexNetwork
+        self.network = network
         self.address = address
         self.amount = amount
         self.provider = provider
@@ -39,9 +39,9 @@ extension CexWithdrawConfirmService {
 
         state = .loading
 
-        Task { [weak self, provider, cexAsset, cexNetwork, address, amount] in
+        Task { [weak self, provider, cexAsset, network, address, amount] in
             do {
-                let id = try await provider.withdraw(id: cexAsset.id, network: cexNetwork?.network, address: address, amount: amount)
+                let id = try await provider.withdraw(id: cexAsset.id, network: network?.id, address: address, amount: amount)
                 self?.confirmWithdrawSubject.send(id)
             } catch {
                 self?.errorSubject.send(error)

@@ -92,14 +92,15 @@ class CoinzixCexProvider {
         ]
     }
 
-    private func blockchainUidMap() async throws -> [String: String] {
+    private func blockchainUidMap() async throws -> [Int: String] {
         [
-            "BSC": "binance-smart-chain",
-            "ETH": "ethereum",
-            "BNB": "binancecoin",
-            "MATIC": "polygon-pos",
-            "SOL": "solana",
-            "TRX": "tron",
+            1: "ethereum",
+            2: "tron",
+            3: "binancecoin",
+            4: "binance-smart-chain",
+            6: "solana",
+            8: "polygon-pos",
+            9: "arbitrum-one",
         ]
     }
 
@@ -136,34 +137,49 @@ class CoinzixCexProvider {
 extension CoinzixCexProvider: ICexProvider {
 
     func assets() async throws -> [CexAssetResponse] {
-        let response: BalancesResponse = try await fetch(path: "/v1/private/balances")
+        async let configRequest: ConfigResponse = try fetch(path: "/api/default/config")
+        async let depositListRequest: DepositListResponse = try fetch(path: "/api/deposit/list")
+
+        let (configResponse, depositListResponse) = try await (configRequest, depositListRequest)
 
         let coinUidMap = try await coinUidMap()
         let blockchainUidMap = try await blockchainUidMap()
 
-        return response.balances
-                .map { balanceResponse in
-                    let assetId = balanceResponse.currencyIso3
-                    let balance = Decimal(sign: .plus, exponent: -8, significand: balanceResponse.balance)
-                    let balanceAvailable = Decimal(sign: .plus, exponent: -8, significand: balanceResponse.balanceAvailable)
-                    let depositEnabled = balanceResponse.currencyRefill == 1
-                    let withdrawEnabled = balanceResponse.currencyWithdraw == 1
+        return depositListResponse.items
+                .map { item in
+                    let assetId = item.currencyIso3
+                    let balance = Decimal(sign: .plus, exponent: -8, significand: item.balance)
+                    let balanceAvailable = Decimal(sign: .plus, exponent: -8, significand: item.balanceAvailable)
+                    let depositEnabled = configResponse.depositCurrencies.contains(item.currencyIso3)
+                    let withdrawEnabled = configResponse.withdrawCurrencies.contains(item.currencyIso3)
 
                     return CexAssetResponse(
                             id: assetId,
-                            name: balanceResponse.currencyName,
+                            name: item.currencyName,
                             freeBalance: balanceAvailable,
                             lockedBalance: balance - balanceAvailable,
                             depositEnabled: depositEnabled,
                             withdrawEnabled: withdrawEnabled,
-                            networks: balanceResponse.networks.values.map { network in
-                                CexNetworkRaw(
-                                        network: network,
-                                        name: network,
-                                        isDefault: false,
-                                        depositEnabled: depositEnabled,
-                                        withdrawEnabled: withdrawEnabled,
-                                        blockchainUid: blockchainUidMap[network]
+                            depositNetworks: configResponse.depositNetworks(id: assetId).enumerated().map { index, network in
+                                CexDepositNetworkRaw(
+                                        id: String(network.networkType),
+                                        name: String(network.networkType),
+                                        isDefault: index == 0,
+                                        enabled: depositEnabled,
+                                        minAmount: network.minRefill,
+                                        blockchainUid: blockchainUidMap[network.networkType]
+                                )
+                            },
+                            withdrawNetworks: configResponse.withdrawNetworks(id: assetId).enumerated().map { index, network in
+                                CexWithdrawNetworkRaw(
+                                        id: String(network.networkType),
+                                        name: String(network.networkType),
+                                        isDefault: index == 0,
+                                        enabled: withdrawEnabled,
+                                        minAmount: network.minWithdraw,
+                                        maxAmount: network.maxWithdraw,
+                                        commission: network.fixed,
+                                        blockchainUid: blockchainUidMap[network.networkType]
                                 )
                             },
                             coinUid: coinUidMap[assetId]
@@ -245,6 +261,92 @@ extension CoinzixCexProvider {
 }
 
 extension CoinzixCexProvider {
+
+    private struct ConfigResponse: ImmutableMappable {
+        let withdrawCurrencies: [String]
+        let depositCurrencies: [String]
+        let withdrawNetworks: [String: WithdrawNetwork]
+        let depositNetworks: [String: DepositNetwork]
+
+        init(map: Map) throws {
+            withdrawCurrencies = try map.value("data.currency_withdraw")
+            depositCurrencies = try map.value("data.currency_deposit")
+            withdrawNetworks = try map.value("data.commission")
+            depositNetworks = try map.value("data.commission_refill")
+        }
+
+        func withdrawNetworks(id: String) -> [WithdrawNetwork] {
+            guard let network = withdrawNetworks[id] else {
+                return []
+            }
+
+            return [network] + network.networks
+        }
+
+        func depositNetworks(id: String) -> [DepositNetwork] {
+            guard let network = depositNetworks[id] else {
+                return []
+            }
+
+            return [network] + network.networks
+        }
+
+        struct WithdrawNetwork: ImmutableMappable {
+            let fixed: Decimal
+            let minCommission: Decimal
+            let maxWithdraw: Decimal
+            let minWithdraw: Decimal
+            let networkType: Int
+            let networks: [WithdrawNetwork]
+
+            init(map: Map) throws {
+                fixed = try map.value("fixed", using: Transform.doubleToDecimalTransform)
+                minCommission = try map.value("min_commission", using: Transform.doubleToDecimalTransform)
+                maxWithdraw = try map.value("max_withdraw", using: Transform.doubleToDecimalTransform)
+                minWithdraw = try map.value("min_withdraw", using: Transform.doubleToDecimalTransform)
+                networkType = try map.value("network_type")
+                networks = (try? map.value("networks")) ?? []
+            }
+        }
+
+        struct DepositNetwork: ImmutableMappable {
+            let fixed: Decimal
+            let minCommission: Decimal
+            let minRefill: Decimal
+            let networkType: Int
+            let networks: [DepositNetwork]
+
+            init(map: Map) throws {
+                fixed = try map.value("fixed", using: Transform.doubleToDecimalTransform)
+                minCommission = try map.value("min_commission", using: Transform.doubleToDecimalTransform)
+                minRefill = try map.value("min_refill", using: Transform.doubleToDecimalTransform)
+                networkType = try map.value("network_type")
+                networks = (try? map.value("networks")) ?? []
+            }
+        }
+    }
+
+    private struct DepositListResponse: ImmutableMappable {
+        let items: [Item]
+
+        init(map: Map) throws {
+            items = try map.value("data.list")
+        }
+
+        struct Item: ImmutableMappable {
+            let currencyIso3: String
+            let currencyName: String
+            let balance: Decimal
+            let balanceAvailable: Decimal
+
+            init(map: Map) throws {
+                currencyIso3 = try map.value("currency.iso3")
+                currencyName = try map.value("currency.name")
+                balance = try map.value("total_balance", using: Transform.doubleToDecimalTransform)
+                balanceAvailable = try map.value("total_balance_available", using: Transform.doubleToDecimalTransform)
+            }
+        }
+    }
 
     private struct BalancesResponse: ImmutableMappable {
         let balances: [Balance]

@@ -122,7 +122,7 @@ class CexWithdrawViewController: ThemeViewController {
 
     private func openConfirm(sendData: CexWithdrawModule.SendData) {
         guard let viewController = CexWithdrawConfirmModule.viewController(
-            cexAsset: sendData.cexAsset, cexNetwork: sendData.cexNetwork, address: sendData.address, amount: sendData.amount
+            cexAsset: sendData.cexAsset, network: sendData.network, address: sendData.address, amount: sendData.amount
         ) else {
             return
         }

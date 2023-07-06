@@ -44,7 +44,7 @@ extension CexDepositViewModel {
     }
 
     var networkName: String? {
-        service.cexNetwork?.networkName
+        service.network?.networkName
     }
 
     func onTapRetry() {

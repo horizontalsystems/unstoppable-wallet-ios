@@ -3,15 +3,15 @@ import HsExtensions
 
 class CexDepositService {
     let cexAsset: CexAsset
-    let cexNetwork: CexNetwork?
+    let network: CexDepositNetwork?
     private let provider: ICexProvider
     private var tasks = Set<AnyTask>()
 
     @PostPublished private(set) var state: State = .loading
 
-    init(cexAsset: CexAsset, cexNetwork: CexNetwork?, provider: ICexProvider) {
+    init(cexAsset: CexAsset, network: CexDepositNetwork?, provider: ICexProvider) {
         self.cexAsset = cexAsset
-        self.cexNetwork = cexNetwork
+        self.network = network
         self.provider = provider
 
         load()
@@ -20,9 +20,9 @@ class CexDepositService {
     private func load() {
         state = .loading
 
-        Task { [weak self, provider, cexAsset, cexNetwork] in
+        Task { [weak self, provider, cexAsset, network] in
             do {
-                let (address, memo) = try await provider.deposit(id: cexAsset.id, network: cexNetwork?.network)
+                let (address, memo) = try await provider.deposit(id: cexAsset.id, network: network?.id)
                 self?.state = .loaded(address: address, memo: memo)
             } catch {
                 self?.state = .failed

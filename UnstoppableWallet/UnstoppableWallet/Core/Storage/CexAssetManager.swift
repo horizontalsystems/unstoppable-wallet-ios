@@ -34,7 +34,8 @@ class CexAssetManager {
                     lockedBalance: record.lockedBalance,
                     depositEnabled: record.depositEnabled,
                     withdrawEnabled: record.withdrawEnabled,
-                    networks: record.networks.map { $0.cexNetwork(blockchain: $0.blockchainUid.flatMap { blockchainMap[$0] }) },
+                    depositNetworks: record.depositNetworks.map { $0.cexDepositNetwork(blockchain: $0.blockchainUid.flatMap { blockchainMap[$0] }) },
+                    withdrawNetworks: record.withdrawNetworks.map { $0.cexWithdrawNetwork(blockchain: $0.blockchainUid.flatMap { blockchainMap[$0] }) },
                     coin: record.coinUid.flatMap { coinMap[$0] }
             )
         }

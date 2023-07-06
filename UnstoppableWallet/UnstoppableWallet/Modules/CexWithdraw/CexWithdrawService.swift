@@ -8,7 +8,7 @@ class CexWithdrawService {
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
 
-    let asset: CexAsset
+    let cexAsset: CexAsset
     let networkService: CexWithdrawNetworkSelectService
     private let addressService: AddressService
 
@@ -18,7 +18,7 @@ class CexWithdrawService {
     private var validAmount: Decimal? = nil
 
     init(cexAsset: CexAsset, networkService: CexWithdrawNetworkSelectService, addressService: AddressService) {
-        self.asset = cexAsset
+        self.cexAsset = cexAsset
         self.networkService = networkService
         self.addressService = addressService
 
@@ -38,7 +38,7 @@ class CexWithdrawService {
     private func syncState() {
         if amountError == nil, case let .success(address) = addressService.state, let amount = validAmount {
             state = .ready(sendData: CexWithdrawModule.SendData(
-                cexAsset: asset, cexNetwork: networkService.selectedNetwork, address: address.raw, amount: amount))
+                cexAsset: cexAsset, network: networkService.selectedNetwork, address: address.raw, amount: amount))
         } else {
             state = .notReady
         }
@@ -49,11 +49,11 @@ class CexWithdrawService {
 extension CexWithdrawService: IAvailableBalanceService {
 
     var availableBalance: DataStatus<Decimal> {
-        .completed(asset.freeBalance)
+        .completed(cexAsset.freeBalance)
     }
 
     var availableBalanceObservable: Observable<DataStatus<Decimal>> {
-        Observable.just(.completed(asset.freeBalance))
+        Observable.just(.completed(cexAsset.freeBalance))
     }
 
 }
@@ -64,12 +64,8 @@ extension CexWithdrawService: ICexAmountInputService {
         0
     }
 
-    var cexAsset: CexAsset? {
-        asset
-    }
-
     var balance: Decimal? {
-        asset.freeBalance
+        cexAsset.freeBalance
     }
 
     var amountObservable: Observable<Decimal> {
@@ -77,13 +73,13 @@ extension CexWithdrawService: ICexAmountInputService {
     }
 
     var balanceObservable: Observable<Decimal?> {
-        .just(asset.freeBalance)
+        .just(cexAsset.freeBalance)
     }
 
     func onChange(amount: Decimal) {
         if amount > 0 {
             do {
-                if amount > asset.freeBalance {
+                if amount > cexAsset.freeBalance {
                     throw AmountError.insufficientBalance
                 }
 

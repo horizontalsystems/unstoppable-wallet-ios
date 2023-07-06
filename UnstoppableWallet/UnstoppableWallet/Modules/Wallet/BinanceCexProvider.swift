@@ -496,13 +496,25 @@ extension BinanceCexProvider: ICexProvider {
                             lockedBalance: asset.locked,
                             depositEnabled: asset.depositAllEnable,
                             withdrawEnabled: asset.withdrawAllEnable,
-                            networks: asset.networks.map { network in
-                                CexNetworkRaw(
-                                        network: network.network,
+                            depositNetworks: asset.networks.map { network in
+                                CexDepositNetworkRaw(
+                                        id: network.network,
                                         name: network.name,
                                         isDefault: network.isDefault,
-                                        depositEnabled: network.depositEnable,
-                                        withdrawEnabled: network.withdrawEnable,
+                                        enabled: network.depositEnable,
+                                        minAmount: 0,
+                                        blockchainUid: blockchainUidMap[network.network]
+                                )
+                            },
+                            withdrawNetworks: asset.networks.map { network in
+                                CexWithdrawNetworkRaw(
+                                        id: network.network,
+                                        name: network.name,
+                                        isDefault: network.isDefault,
+                                        enabled: network.withdrawEnable,
+                                        minAmount: network.withdrawMin,
+                                        maxAmount: network.withdrawMax,
+                                        commission: network.withdrawFee,
                                         blockchainUid: blockchainUidMap[network.network]
                                 )
                             },
@@ -578,6 +590,9 @@ extension BinanceCexProvider {
             let isDefault: Bool
             let depositEnable: Bool
             let withdrawEnable: Bool
+            let withdrawFee: Decimal
+            let withdrawMin: Decimal
+            let withdrawMax: Decimal
 
             init(map: Map) throws {
                 network = try map.value("network")
@@ -585,6 +600,9 @@ extension BinanceCexProvider {
                 isDefault = try map.value("isDefault")
                 depositEnable = try map.value("depositEnable")
                 withdrawEnable = try map.value("withdrawEnable")
+                withdrawFee = try map.value("withdrawFee", using: Transform.stringToDecimalTransform)
+                withdrawMax = try map.value("withdrawMax", using: Transform.stringToDecimalTransform)
+                withdrawMin = try map.value("withdrawMin", using: Transform.stringToDecimalTransform)
             }
         }
     }

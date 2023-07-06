@@ -1,11 +1,11 @@
 class CexDepositNetworkSelectService {
     let cexAsset: CexAsset
-    let cexNetworks: [CexNetwork]
+    let networks: [CexDepositNetwork]
 
     init(cexAsset: CexAsset) {
         self.cexAsset = cexAsset
 
-        cexNetworks = cexAsset.networks
+        networks = cexAsset.depositNetworks
     }
 
 }

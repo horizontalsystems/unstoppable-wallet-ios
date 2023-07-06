@@ -7,7 +7,8 @@ struct CexAssetResponse {
     let lockedBalance: Decimal
     let depositEnabled: Bool
     let withdrawEnabled: Bool
-    let networks: [CexNetworkRaw]
+    let depositNetworks: [CexDepositNetworkRaw]
+    let withdrawNetworks: [CexWithdrawNetworkRaw]
     let coinUid: String?
 
     func record(accountId: String) -> CexAssetRecord {
@@ -19,7 +20,8 @@ struct CexAssetResponse {
                 lockedBalance: lockedBalance,
                 depositEnabled: depositEnabled,
                 withdrawEnabled: withdrawEnabled,
-                networks: networks,
+                depositNetworks: depositNetworks,
+                withdrawNetworks: withdrawNetworks,
                 coinUid: coinUid
         )
     }

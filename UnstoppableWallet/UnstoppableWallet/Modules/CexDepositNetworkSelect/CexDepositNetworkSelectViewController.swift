@@ -48,10 +48,10 @@ class CexDepositNetworkSelectViewController: ThemeViewController {
         dismiss(animated: true)
     }
 
-    private func onSelect(cexNetwork: CexNetwork) {
+    private func onSelect(network: CexDepositNetwork) {
         let cexAsset = viewModel.cexAsset
 
-        guard let viewController = CexDepositModule.viewController(cexAsset: cexAsset, cexNetwork: cexNetwork) else {
+        guard let viewController = CexDepositModule.viewController(cexAsset: cexAsset, network: network) else {
             return
         }
 
@@ -105,7 +105,7 @@ extension CexDepositNetworkSelectViewController: SectionsDataSource {
                                     cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                                 },
                                 action: viewItem.enabled ? { [weak self] in
-                                    self?.onSelect(cexNetwork: viewItem.cexNetwork)
+                                    self?.onSelect(network: viewItem.network)
                                 } : nil
                         )
                     }
