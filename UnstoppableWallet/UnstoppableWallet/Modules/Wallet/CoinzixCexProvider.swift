@@ -163,7 +163,7 @@ extension CoinzixCexProvider: ICexProvider {
                             depositNetworks: configResponse.depositNetworks(id: assetId).enumerated().map { index, network in
                                 CexDepositNetworkRaw(
                                         id: String(network.networkType),
-                                        name: String(network.networkType),
+                                        name: network.networkType == 0 ? "Native" : String(network.networkType),
                                         isDefault: index == 0,
                                         enabled: depositEnabled,
                                         minAmount: network.minRefill,
@@ -173,7 +173,7 @@ extension CoinzixCexProvider: ICexProvider {
                             withdrawNetworks: configResponse.withdrawNetworks(id: assetId).enumerated().map { index, network in
                                 CexWithdrawNetworkRaw(
                                         id: String(network.networkType),
-                                        name: String(network.networkType),
+                                        name: network.networkType == 0 ? "Native" : String(network.networkType),
                                         isDefault: index == 0,
                                         enabled: withdrawEnabled,
                                         minAmount: network.minWithdraw,
@@ -189,15 +189,14 @@ extension CoinzixCexProvider: ICexProvider {
 
     func deposit(id: String, network: String?) async throws -> (String, String?) {
         var parameters: Parameters = [
-            "iso": id,
-            "new": 0
+            "iso": id
         ]
 
-        if let network {
-            parameters["network"] = network
+        if let network, let networkType = Int(network) {
+            parameters["network_type"] = networkType
         }
 
-        let response: GetAddressResponse = try await fetch(path: "/v1/private/get-address", parameters: parameters)
+        let response: GetAddressResponse = try await fetch(path: "/api/deposit/get-address", parameters: parameters)
 
         guard response.status else {
             throw RequestError.negativeStatusForDeposit
