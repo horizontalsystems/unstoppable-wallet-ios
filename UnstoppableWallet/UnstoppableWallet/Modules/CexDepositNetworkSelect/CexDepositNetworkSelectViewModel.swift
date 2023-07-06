@@ -6,12 +6,12 @@ class CexDepositNetworkSelectViewModel {
     init(service: CexDepositNetworkSelectService) {
         self.service = service
 
-        viewItems = service.cexNetworks.map { cexNetwork in
+        viewItems = service.networks.map { network in
             ViewItem(
-                    cexNetwork: cexNetwork,
-                    title: cexNetwork.networkName,
-                    imageUrl: cexNetwork.blockchain?.type.imageUrl,
-                    enabled: cexNetwork.depositEnabled
+                    network: network,
+                    title: network.networkName,
+                    imageUrl: network.blockchain?.type.imageUrl,
+                    enabled: network.enabled
             )
         }
     }
@@ -29,7 +29,7 @@ extension CexDepositNetworkSelectViewModel {
 extension CexDepositNetworkSelectViewModel {
 
     struct ViewItem {
-        let cexNetwork: CexNetwork
+        let network: CexDepositNetwork
         let title: String
         let imageUrl: String?
         let enabled: Bool

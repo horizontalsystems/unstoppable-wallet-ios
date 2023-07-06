@@ -12,12 +12,12 @@ class CexWithdrawViewModel {
     @PostPublished private(set) var amountCaution: Caution? = nil
     private let proceedSubject = PassthroughSubject<CexWithdrawModule.SendData, Never>()
 
-    private let networks: [CexNetwork]
+    private let networks: [CexWithdrawNetwork]
     private var selectedNetworkIndex: Int = 0
 
     init(service: CexWithdrawService) {
         self.service = service
-        networks = service.asset.networks
+        networks = service.cexAsset.withdrawNetworks
 
         subscribe(&cancellables, service.$state) { [weak self] in self?.sync(state: $0) }
         subscribe(&cancellables, service.$amountError) { [weak self] in self?.sync(amountError: $0) }
@@ -48,15 +48,15 @@ class CexWithdrawViewModel {
 extension CexWithdrawViewModel {
 
     var coinCode: String {
-        service.asset.coinCode
+        service.cexAsset.coinCode
     }
 
     var coinImageUrl: String {
-        service.asset.coin?.imageUrl ?? ""
+        service.cexAsset.coin?.imageUrl ?? ""
     }
 
     var placeholderImageName: String {
-        service.asset.placeholderImageName
+        service.cexAsset.placeholderImageName
     }
 
     var networksList: [SelectorModule.ViewItem] {

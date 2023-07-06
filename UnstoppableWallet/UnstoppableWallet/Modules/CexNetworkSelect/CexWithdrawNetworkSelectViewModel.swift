@@ -7,17 +7,17 @@ class CexWithdrawNetworkSelectViewModel {
     init(service: CexWithdrawNetworkSelectService) {
         self.service = service
 
-        viewItems = service.cexNetworks.enumerated().map { index, cexNetwork in
+        viewItems = service.networks.enumerated().map { index, network in
             ViewItem(
                 index: index,
-                title: cexNetwork.networkName,
-                imageUrl: cexNetwork.blockchain?.type.imageUrl,
-                enabled: cexNetwork.withdrawEnabled
+                title: network.networkName,
+                imageUrl: network.blockchain?.type.imageUrl,
+                enabled: network.enabled
             )
         }
 
         if let selectedNetwork = service.selectedNetwork {
-            selectedNetworkIndex = service.cexNetworks
+            selectedNetworkIndex = service.networks
                 .enumerated()
                 .first { (index, network) in network == selectedNetwork }?
                 .offset ?? 0

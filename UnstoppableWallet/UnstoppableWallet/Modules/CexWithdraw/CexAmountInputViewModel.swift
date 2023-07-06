@@ -5,7 +5,7 @@ import CurrencyKit
 import MarketKit
 
 protocol ICexAmountInputService: IAmountInputService {
-    var cexAsset: CexAsset? { get }
+    var cexAsset: CexAsset { get }
 }
 
 extension ICexAmountInputService {
@@ -27,10 +27,10 @@ class CexAmountInputViewModel: AmountInputViewModel {
         sync(cexAsset: service.cexAsset)
     }
 
-    private func sync(cexAsset: CexAsset?) {
+    private func sync(cexAsset: CexAsset) {
         queue.async { [weak self] in
             self?.coinDecimals = CexAsset.decimals
-            self?.fiatService.set(coinValueKind: cexAsset.flatMap { .cexAsset(cexAsset: $0) })
+            self?.fiatService.set(coinValueKind: .cexAsset(cexAsset: cexAsset))
             self?.updateMaxEnabled()
         }
     }

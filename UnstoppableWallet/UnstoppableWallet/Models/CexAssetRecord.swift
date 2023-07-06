@@ -10,10 +10,11 @@ class CexAssetRecord: Record {
     let lockedBalance: Decimal
     let depositEnabled: Bool
     let withdrawEnabled: Bool
-    let networks: [CexNetworkRaw]
+    let depositNetworks: [CexDepositNetworkRaw]
+    let withdrawNetworks: [CexWithdrawNetworkRaw]
     let coinUid: String?
 
-    init(accountId: String, id: String, name: String, freeBalance: Decimal, lockedBalance: Decimal, depositEnabled: Bool, withdrawEnabled: Bool, networks: [CexNetworkRaw], coinUid: String?) {
+    init(accountId: String, id: String, name: String, freeBalance: Decimal, lockedBalance: Decimal, depositEnabled: Bool, withdrawEnabled: Bool, depositNetworks: [CexDepositNetworkRaw], withdrawNetworks: [CexWithdrawNetworkRaw], coinUid: String?) {
         self.accountId = accountId
         self.id = id
         self.name = name
@@ -21,7 +22,8 @@ class CexAssetRecord: Record {
         self.lockedBalance = lockedBalance
         self.depositEnabled = depositEnabled
         self.withdrawEnabled = withdrawEnabled
-        self.networks = networks
+        self.withdrawNetworks = withdrawNetworks
+        self.depositNetworks = depositNetworks
         self.coinUid = coinUid
 
         super.init()
@@ -32,7 +34,7 @@ class CexAssetRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case accountId, id, name, freeBalance, lockedBalance, depositEnabled, withdrawEnabled, networks, coinUid
+        case accountId, id, name, freeBalance, lockedBalance, depositEnabled, withdrawEnabled, depositNetworks, withdrawNetworks, coinUid
     }
 
     required init(row: Row) {
@@ -43,8 +45,10 @@ class CexAssetRecord: Record {
         lockedBalance = row[Columns.lockedBalance]
         depositEnabled = row[Columns.depositEnabled]
         withdrawEnabled = row[Columns.withdrawEnabled]
-        let rawNetworks: String? = row[Columns.networks]
-        networks = rawNetworks.flatMap { [CexNetworkRaw](JSONString: $0) } ?? []
+        let rawDepositNetworks: String? = row[Columns.depositNetworks]
+        depositNetworks = rawDepositNetworks.flatMap { [CexDepositNetworkRaw](JSONString: $0) } ?? []
+        let rawWithdrawNetworks: String? = row[Columns.withdrawNetworks]
+        withdrawNetworks = rawWithdrawNetworks.flatMap { [CexWithdrawNetworkRaw](JSONString: $0) } ?? []
         coinUid = row[Columns.coinUid]
 
         super.init(row: row)
@@ -58,7 +62,8 @@ class CexAssetRecord: Record {
         container[Columns.lockedBalance] = lockedBalance
         container[Columns.depositEnabled] = depositEnabled
         container[Columns.withdrawEnabled] = withdrawEnabled
-        container[Columns.networks] = networks.toJSONString()
+        container[Columns.depositNetworks] = depositNetworks.toJSONString()
+        container[Columns.withdrawNetworks] = withdrawNetworks.toJSONString()
         container[Columns.coinUid] = coinUid
     }
 
