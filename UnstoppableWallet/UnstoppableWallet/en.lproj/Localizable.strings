@@ -832,6 +832,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "chart_indicators.settings.macd.fast_period_title" = "Fast Length";
 "chart_indicators.settings.macd.slow_period_title" = "Slow Length";
 "chart_indicators.settings.macd.signal_period_title" = "Signal Smoothing";
+
 "chart_indicators.settings.macd.slow_fast.error" = "Fast Length must be less than Slow Length";
 
 
@@ -1185,7 +1186,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "chart.market_cap" = "Market Cap";
 "chart.volume" = "Volume (24h)";
 "chart.circulation" = "In Circulation";
-"chart.selected.volume" = "Volume";
+"chart.selected.volume" = "Vol.";
 
 "chart.market.header" = "Market";
 "chart.market.market_cap" = "Market Cap";

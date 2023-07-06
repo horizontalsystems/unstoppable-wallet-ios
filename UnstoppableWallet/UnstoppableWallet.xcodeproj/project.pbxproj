@@ -10544,7 +10544,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/Chart.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.1.1;
+				version = 2.1.2;
 			};
 		};
 		D3604E8028F03C6B0066C366 /* XCRemoteSwiftPackageReference "FeeRateKit.Swift" */ = {

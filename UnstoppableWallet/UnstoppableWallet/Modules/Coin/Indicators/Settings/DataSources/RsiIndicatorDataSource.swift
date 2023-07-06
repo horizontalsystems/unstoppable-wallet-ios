@@ -57,13 +57,7 @@ class RsiIndicatorDataSource {
             state = .notChanged
             return
         }
-
-        if period < 0 || period > IndicatorCalculator.maximumPeriod {
-            let caution = IndicatorDataSource.Caution(
-                    id: periodId,
-                    error: "chart_indicators.settings.period.error".localized(IndicatorCalculator.maximumPeriod)
-
-            )
+        if let caution = IndicatorDataSource.periodError(id: periodId, period: period) {
             state = .failed([caution])
             return
         }

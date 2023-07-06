@@ -32,4 +32,14 @@ class IndicatorDataSource {
         let error: String
     }
 
+    static func periodError(id: String, period: Int) -> Caution? {
+        if period < 0 || period > IndicatorCalculator.maximumPeriod {
+            return Caution(
+                    id: id,
+                    error: "chart_indicators.settings.period.error".localized(IndicatorCalculator.maximumPeriod)
+            )
+        }
+        return nil
+    }
+
 }

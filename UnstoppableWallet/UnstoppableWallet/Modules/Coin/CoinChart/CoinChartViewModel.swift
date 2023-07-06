@@ -147,12 +147,13 @@ extension CoinChartViewModel: IChartViewTouchDelegate {
     public func touchDown() {
     }
 
-    public func select(item: ChartItem) {
+    public func select(item: ChartItem, indicators: [ChartIndicator]) {
         HapticGenerator.instance.notification(.feedback(.soft))
 
         pointSelectedItemRelay.accept(
                 factory.selectedPointViewItem(
                         chartItem: item,
+                        indicators: indicators,
                         firstChartItem: chartInfoRelay.value?.chartData.visibleItems.first,
                         currency: service.currency
                 )

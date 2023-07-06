@@ -83,20 +83,22 @@ class MacdIndicatorDataSource {
         }
 
         var cautions = [IndicatorDataSource.Caution]()
-        let fields = [
-            (fastPeriod, fastPeriodId),
-            (slowPeriod, slowPeriodId),
-            (signalPeriod, signalPeriodId),
-        ]
-        for field in fields {
-            if field.0 < 0 || field.0 > IndicatorCalculator.maximumPeriod {
-                let caution = IndicatorDataSource.Caution(
-                        id: field.1,
-                        error: "chart_indicators.settings.period.error".localized(IndicatorCalculator.maximumPeriod)
-                )
-                cautions.append(caution)
-            }
+        let wrongPeriodError = fastPeriod >= slowPeriod ? "chart_indicators.settings.macd.slow_fast.error".localized : nil
+
+        if let caution = IndicatorDataSource.periodError(id: fastPeriodId, period: fastPeriod) {
+            cautions.append(caution)
+        } else if let error = wrongPeriodError {
+            cautions.append(IndicatorDataSource.Caution(id: fastPeriodId, error: error))
         }
+        if let caution = IndicatorDataSource.periodError(id: slowPeriodId, period: slowPeriod) {
+            cautions.append(caution)
+        } else if let error = wrongPeriodError {
+            cautions.append(IndicatorDataSource.Caution(id: slowPeriodId, error: error))
+        }
+        if let caution = IndicatorDataSource.periodError(id: signalPeriodId, period: signalPeriod) {
+            cautions.append(caution)
+        }
+
         if !cautions.isEmpty {
             state = .failed(cautions)
             return

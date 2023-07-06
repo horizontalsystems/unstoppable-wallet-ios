@@ -153,6 +153,8 @@ class ChartCell: UITableViewCell {
 
         chartInfoTopStackView.addArrangedSubview(chartSecondaryTitleLabel)
         chartSecondaryTitleLabel.textAlignment = .right
+        chartSecondaryTitleLabel.adjustsFontSizeToFitWidth = true
+        chartSecondaryTitleLabel.minimumScaleFactor = 0.5
         chartSecondaryTitleLabel.font = .subhead2
         chartSecondaryTitleLabel.textColor = .themeGray
 
@@ -173,6 +175,8 @@ class ChartCell: UITableViewCell {
 
         chartInfoSecondaryValueStackView.addArrangedSubview(chartSecondaryValueLabel)
         chartSecondaryValueLabel.font = .subhead2
+        chartSecondaryValueLabel.adjustsFontSizeToFitWidth = true
+        chartSecondaryValueLabel.minimumScaleFactor = 0.5
 
         chartInfoSecondaryValueStackView.addArrangedSubview(chartSecondaryDiffLabel)
         chartSecondaryDiffLabel.font = .subhead2
@@ -248,7 +252,7 @@ class ChartCell: UITableViewCell {
             }
 
             switch viewItem.rightSideMode {
-            case .none, .volume:
+            case .none, .volume, .indicators:
                 currentSecondaryTitleLabel.isHidden = true
                 currentSecondaryValueLabel.isHidden = true
                 currentSecondaryDiffLabel.isHidden = true
@@ -305,10 +309,9 @@ class ChartCell: UITableViewCell {
             chartSecondaryDiffLabel.isHidden = true
         case .volume(let value):
             if let value = value {
-                chartSecondaryTitleLabel.isHidden = false
+                chartSecondaryTitleLabel.isHidden = true
                 chartSecondaryValueLabel.isHidden = false
 
-                chartSecondaryTitleLabel.text = "chart.selected.volume".localized
                 chartSecondaryValueLabel.text = value
                 chartSecondaryValueLabel.textColor = .themeGray
             } else {
@@ -331,6 +334,12 @@ class ChartCell: UITableViewCell {
             } else {
                 chartSecondaryDiffLabel.isHidden = true
             }
+        case .indicators(let top, let bottom):
+            chartSecondaryTitleLabel.isHidden = false
+            chartSecondaryValueLabel.isHidden = false
+            chartSecondaryTitleLabel.attributedText = top
+            chartSecondaryValueLabel.attributedText = bottom
+            chartSecondaryDiffLabel.isHidden = true
         }
 
         UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut]) { [weak self] in
