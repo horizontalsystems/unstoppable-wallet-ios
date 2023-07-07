@@ -53,7 +53,10 @@ class WalletCexElementService {
         case .loaded:
             state = .loaded(elements: elements)
         case .failed(let reason):
-            state = cexAssets.isEmpty ? .failed(reason: reason) : .loaded(elements: elements)
+            switch reason {
+            case .syncFailed: state = cexAssets.isEmpty ? .failed(reason: reason) : .loaded(elements: elements)
+            case .invalidApiKey: state = .failed(reason: reason)
+            }
         }
     }
 
@@ -98,7 +101,7 @@ extension WalletCexElementService: IWalletElementService {
 
     func state(element: WalletModule.Element) -> AdapterState? {
         switch internalState {
-        case .failed(let reason): return .notSynced(error: AppError.unknownError)
+        case .failed(let reason): return .notSynced(error: reason)
         default: return .synced
         }
     }

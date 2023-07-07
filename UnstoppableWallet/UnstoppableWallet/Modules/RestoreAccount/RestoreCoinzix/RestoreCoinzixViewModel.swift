@@ -6,7 +6,7 @@ class RestoreCoinzixViewModel {
 
     @Published private(set) var loginEnabled = false
     @Published private(set) var loginVisible = true
-    @Published private(set) var logginInVisible = false
+    @Published private(set) var loggingInVisible = false
 
     private let errorSubject = PassthroughSubject<String, Never>()
     private let successSubject = PassthroughSubject<Void, Never>()
@@ -26,18 +26,18 @@ class RestoreCoinzixViewModel {
             case .notReady:
                 loginEnabled = false
                 loginVisible = true
-                logginInVisible = false
+                loggingInVisible = false
             case .idle(let error):
                 loginEnabled = true
                 loginVisible = true
-                logginInVisible = false
+                loggingInVisible = false
 
                 if error != nil {
                     errorSubject.send("restore.coinzix.failed_to_login".localized)
                 }
             case .loggingIn:
                 loginVisible = false
-                logginInVisible = true
+                loggingInVisible = true
             case .loggedIn:
                 successSubject.send()
         }
