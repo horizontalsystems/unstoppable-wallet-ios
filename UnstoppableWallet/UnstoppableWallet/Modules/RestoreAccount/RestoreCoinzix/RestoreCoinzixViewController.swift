@@ -9,7 +9,7 @@ import HCaptcha
 
 class RestoreCoinzixViewController: KeyboardAwareViewController {
     private let wrapperViewHeight: CGFloat = .heightButton + .margin16 + .heightButton
-    private let hcaptcha: HCaptcha
+    private let hCaptcha: HCaptcha
     private let viewModel: RestoreCoinzixViewModel
     private var webView: UIView?
     private var cancellables = Set<AnyCancellable>()
@@ -23,16 +23,16 @@ class RestoreCoinzixViewController: KeyboardAwareViewController {
 
     private let buttonsHolder = BottomGradientHolder()
     private let loginButton = PrimaryButton()
-    private let logginInButton = PrimaryButton()
+    private let loggingInButton = PrimaryButton()
 
     private var isLoaded = false
 
     init?(hCaptchaKey: String, viewModel: RestoreCoinzixViewModel, returnViewController: UIViewController?) {
-        guard let hcaptcha = try? HCaptcha(apiKey: hCaptchaKey, baseURL: URL(string: "https://api.coinzix.com")) else {
+        guard let hCaptcha = try? HCaptcha(apiKey: hCaptchaKey, baseURL: URL(string: "https://api.coinzix.com")) else {
             return nil
         }
 
-        self.hcaptcha = hcaptcha
+        self.hCaptcha = hCaptcha
         self.viewModel = viewModel
         self.returnViewController = returnViewController
 
@@ -55,7 +55,6 @@ class RestoreCoinzixViewController: KeyboardAwareViewController {
             make.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: DescriptionCell.self)
         tableView.sectionDataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
@@ -68,7 +67,6 @@ class RestoreCoinzixViewController: KeyboardAwareViewController {
         passwordCell.onTextSecurityChange = { [weak self] in self?.passwordCell.set(textSecure: $0) }
         passwordCell.inputPlaceholder = "restore.coinzix.sample_password".localized
         passwordCell.onChangeText = { [weak self] in self?.viewModel.onChange(password: $0 ?? "") }
-
 
         view.addSubview(buttonsHolder)
         buttonsHolder.snp.makeConstraints { make in
@@ -90,10 +88,10 @@ class RestoreCoinzixViewController: KeyboardAwareViewController {
         loginButton.setTitle("restore.coinzix.login".localized, for: .normal)
         loginButton.addTarget(self, action: #selector(onTapLogin), for: .touchUpInside)
 
-        stackView.addArrangedSubview(logginInButton)
-        logginInButton.set(style: .yellow, accessoryType: .spinner)
-        logginInButton.isEnabled = false
-        logginInButton.setTitle("restore.coinzix.login".localized, for: .normal)
+        stackView.addArrangedSubview(loggingInButton)
+        loggingInButton.set(style: .yellow, accessoryType: .spinner)
+        loggingInButton.isEnabled = false
+        loggingInButton.setTitle("restore.coinzix.login".localized, for: .normal)
 
         let signUpButton = PrimaryButton()
         stackView.addArrangedSubview(signUpButton)
@@ -111,9 +109,9 @@ class RestoreCoinzixViewController: KeyboardAwareViewController {
             .sink { [weak self] visible in self?.loginButton.isHidden = !visible }
             .store(in: &cancellables)
 
-        viewModel.$logginInVisible
+        viewModel.$loggingInVisible
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] visible in self?.logginInButton.isHidden = !visible }
+            .sink { [weak self] visible in self?.loggingInButton.isHidden = !visible }
             .store(in: &cancellables)
 
         viewModel.errorPublisher
@@ -136,20 +134,20 @@ class RestoreCoinzixViewController: KeyboardAwareViewController {
         tableView.buildSections()
         isLoaded = true
 
-        hcaptcha.configureWebView { [weak self] webview in
-            webview.frame = self?.view.bounds ?? CGRect.zero
-            self?.webView = webview
+        hCaptcha.configureWebView { [weak self] webView in
+            webView.frame = self?.view.bounds ?? CGRect.zero
+            self?.webView = webView
         }
     }
 
     @objc private func onTapCancel() {
-        dismiss(animated: true)
+        (returnViewController ?? self).dismiss(animated: true)
     }
 
     @objc private func onTapLogin() {
         view.endEditing(true)
 
-        hcaptcha.validate(on: self.view) { [weak self] result in
+        hCaptcha.validate(on: view) { [weak self] result in
             do {
                 self?.viewModel.login(captchaToken: try result.dematerialize())
             } catch {
@@ -171,26 +169,21 @@ extension RestoreCoinzixViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                id: "description",
-                headerState: .margin(height: .margin12),
-                footerState: .margin(height: .margin32),
-                rows: [
-                    Row<DescriptionCell>(
-                        id: "description-cell",
-                        dynamicHeight: { containerWidth in
-                            DescriptionCell.height(containerWidth: containerWidth, text: "restore.coinzix.description".localized, font: .subhead2, ignoreBottomMargin: true)
-                        },
-                        bind: { cell, _ in
-                            cell.label.text = "restore.coinzix.description".localized
-                            cell.label.font = .subhead2
-                            cell.label.textColor = .themeGray
-                        }
-                    )
-                ]
+                    id: "description",
+                    headerState: .margin(height: .margin12),
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        tableView.descriptionRow(
+                                id: "description",
+                                text: "restore.coinzix.description".localized,
+                                font: .subhead2,
+                                textColor: .themeGray,
+                                ignoreBottomMargin: true
+                        )
+                    ]
             ),
             Section(
                 id: "username",
-                headerState: .margin(height: .margin12),
                 rows: [
                     StaticRow(
                         cell: usernameCell,

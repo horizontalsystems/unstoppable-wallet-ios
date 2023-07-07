@@ -73,7 +73,7 @@ extension WalletModule {
         }
     }
 
-    enum FailureReason {
+    enum FailureReason: Error {
         case syncFailed
         case invalidApiKey
     }
