@@ -146,10 +146,11 @@ class RestoreCoinzixViewController: KeyboardAwareViewController {
 
     @objc private func onTapLogin() {
         view.endEditing(true)
+        viewModel.onTapLogin()
 
         hCaptcha.validate(on: view) { [weak self] result in
             do {
-                self?.viewModel.login(captchaToken: try result.dematerialize())
+                self?.viewModel.onCaptchaValidated(captchaToken: try result.dematerialize())
             } catch {
                 print("ERROR: \(error)")
             }

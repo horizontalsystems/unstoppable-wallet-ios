@@ -7,38 +7,32 @@ import HsExtensions
 class CexWithdrawService {
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
-
-    let cexAsset: CexAsset
-    let networkService: CexWithdrawNetworkSelectService
     private let addressService: AddressService
 
     @PostPublished private(set) var state: State = .notReady
     @PostPublished private(set) var amountError: Error? = nil
+    @PostPublished private(set) var selectedNetwork: CexWithdrawNetwork?
 
+    let cexAsset: CexAsset
+    let networks: [CexWithdrawNetwork]
     private var validAmount: Decimal? = nil
 
-    init(cexAsset: CexAsset, networkService: CexWithdrawNetworkSelectService, addressService: AddressService) {
+    init(cexAsset: CexAsset, addressService: AddressService) {
         self.cexAsset = cexAsset
-        self.networkService = networkService
         self.addressService = addressService
-
-        subscribe(&cancellables, networkService.$selectedNetwork) { [weak self] in
-            guard let blockchainType = $0?.blockchain?.type else {
-                return
-            }
-
-            self?.addressService.change(blockchainType: blockchainType)
-        }
+        self.networks = cexAsset.withdrawNetworks
 
         addressService.stateObservable
             .subscribe { [weak self] _ in self?.syncState() }
             .disposed(by: disposeBag)
+
+        selectedNetwork = networks.first(where: { $0.isDefault }) ?? networks.first
     }
 
     private func syncState() {
         if amountError == nil, case let .success(address) = addressService.state, let amount = validAmount {
             state = .ready(sendData: CexWithdrawModule.SendData(
-                cexAsset: cexAsset, network: networkService.selectedNetwork, address: address.raw, amount: amount))
+                cexAsset: cexAsset, network: selectedNetwork, address: address.raw, amount: amount))
         } else {
             state = .notReady
         }
@@ -54,6 +48,15 @@ extension CexWithdrawService: IAvailableBalanceService {
 
     var availableBalanceObservable: Observable<DataStatus<Decimal>> {
         Observable.just(.completed(cexAsset.freeBalance))
+    }
+
+    func setSelectNetwork(index: Int) {
+        if let network = networks.at(index: index) {
+            selectedNetwork = network
+            network.blockchain.flatMap {
+                addressService.change(blockchainType: $0.type)
+            }
+        }
     }
 
 }

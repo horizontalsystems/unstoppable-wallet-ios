@@ -15,8 +15,7 @@ struct CexWithdrawModule {
             blockchainType: defaultNetwork?.blockchain?.type
         )
 
-        let networkService = CexWithdrawNetworkSelectService(networks: networks, defaultNetwork: defaultNetwork)
-        let service = CexWithdrawService(cexAsset: cexAsset, networkService: networkService, addressService: addressService)
+        let service = CexWithdrawService(cexAsset: cexAsset, addressService: addressService)
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
         let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 

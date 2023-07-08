@@ -12,17 +12,14 @@ class CexWithdrawViewModel {
     @PostPublished private(set) var amountCaution: Caution? = nil
     private let proceedSubject = PassthroughSubject<CexWithdrawModule.SendData, Never>()
 
-    private let networks: [CexWithdrawNetwork]
-    private var selectedNetworkIndex: Int = 0
-
     init(service: CexWithdrawService) {
         self.service = service
-        networks = service.cexAsset.withdrawNetworks
 
         subscribe(&cancellables, service.$state) { [weak self] in self?.sync(state: $0) }
         subscribe(&cancellables, service.$amountError) { [weak self] in self?.sync(amountError: $0) }
-        subscribe(&cancellables, networkService.$selectedNetwork) { [weak self] in self?.selectedNetwork = $0?.networkName }
-        selectedNetwork = networkService.selectedNetwork?.networkName
+        subscribe(&cancellables, service.$selectedNetwork) { [weak self] in self?.selectedNetwork = $0?.networkName }
+
+        self.selectedNetwork = service.selectedNetwork?.networkName
     }
 
     private func sync(state: CexWithdrawService.State) {
@@ -59,22 +56,23 @@ extension CexWithdrawViewModel {
         service.cexAsset.placeholderImageName
     }
 
-    var networksList: [SelectorModule.ViewItem] {
-        networks.enumerated().map { index, network in
-            SelectorModule.ViewItem(title: network.networkName, selected: index == selectedNetworkIndex)
+    var selectedNetworkIndex: Int? {
+        service.networks.firstIndex(where: { $0.id == service.selectedNetwork?.id })
+    }
+
+    var networkViewItems: [NetworkViewItem] {
+        service.networks.enumerated().map { index, network in
+            NetworkViewItem(index: index, title: network.networkName, imageUrl: network.blockchain?.type.imageUrl, enabled: network.enabled)
         }
     }
 
-    var networkService: CexWithdrawNetworkSelectService {
-        service.networkService
-    }
 
     var proceedPublisher: AnyPublisher<CexWithdrawModule.SendData, Never> {
         proceedSubject.eraseToAnyPublisher()
     }
 
-    func onSelectNetwork(_ index: Int) {
-        selectedNetworkIndex = index
+    func onSelectNetwork(index: Int) {
+        service.setSelectNetwork(index: index)
     }
 
     func didTapProceed() {
@@ -83,6 +81,17 @@ extension CexWithdrawViewModel {
         }
 
         proceedSubject.send(sendData)
+    }
+
+}
+
+extension CexWithdrawViewModel {
+
+    struct NetworkViewItem {
+        let index: Int
+        let title: String
+        let imageUrl: String?
+        let enabled: Bool
     }
 
 }

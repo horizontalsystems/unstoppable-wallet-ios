@@ -3,7 +3,7 @@ import ThemeKit
 import SectionsTableView
 import Combine
 
-class CexWithdrawViewController: ThemeViewController {
+class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectDelegate {
     private var cancellables = Set<AnyCancellable>()
     private let viewModel: CexWithdrawViewModel
 
@@ -106,10 +106,10 @@ class CexWithdrawViewController: ThemeViewController {
     }
 
     private func openNetworkSelect() {
-        let viewModel = CexWithdrawNetworkSelectViewModel(service: viewModel.networkService)
-        let viewController = CexWithdrawNetworkSelectViewController(viewModel: viewModel)
+        let viewController = CexWithdrawNetworkSelectViewController(viewItems: viewModel.networkViewItems, selectedNetworkIndex: viewModel.selectedNetworkIndex)
+        viewController.delegate = self
 
-        navigationController?.pushViewController(viewController, animated: true)
+        present(viewController, animated: true)
     }
 
     private func reloadTable() {
@@ -118,6 +118,10 @@ class CexWithdrawViewController: ThemeViewController {
         }
 
         tableView.reload(animated: true)
+    }
+
+    func onSelect(index: Int) {
+        viewModel.onSelectNetwork(index: index)
     }
 
     private func openConfirm(sendData: CexWithdrawModule.SendData) {

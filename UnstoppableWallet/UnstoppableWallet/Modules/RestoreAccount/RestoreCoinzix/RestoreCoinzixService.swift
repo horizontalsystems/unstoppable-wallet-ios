@@ -47,9 +47,11 @@ class RestoreCoinzixService {
 
 extension RestoreCoinzixService {
 
-    func login(captchaToken: String) {
+    func onCaptchaValidationStarted() {
         state = .loggingIn
+    }
 
+    func login(captchaToken: String) {
         Task { [weak self, username, password, networkManager] in
             do {
                 let (secretKey, token) = try await CoinzixCexProvider.login(username: username, password: password, captchaToken: captchaToken, networkManager: networkManager)
