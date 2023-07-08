@@ -41,7 +41,7 @@ extension CexWithdrawConfirmService {
 
         Task { [weak self, provider, cexAsset, network, address, amount] in
             do {
-                let id = try await provider.withdraw(id: cexAsset.id, network: network?.id, address: address, amount: amount)
+//                let id = try await provider.withdraw(id: cexAsset.id, network: network?.id, address: address, amount: amount)
                 self?.confirmWithdrawSubject.send("1000") // TODO: Send "id"
             } catch {
                 self?.errorSubject.send(error)

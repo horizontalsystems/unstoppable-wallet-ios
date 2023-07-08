@@ -63,7 +63,11 @@ extension RestoreCoinzixViewModel {
         service.password = password
     }
 
-    func login(captchaToken: String) {
+    func onTapLogin() {
+        service.onCaptchaValidationStarted()
+    }
+
+    func onCaptchaValidated(captchaToken: String) {
         service.login(captchaToken: captchaToken)
     }
 

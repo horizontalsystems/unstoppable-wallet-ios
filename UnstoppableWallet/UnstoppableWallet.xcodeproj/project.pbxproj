@@ -2357,10 +2357,6 @@
 		D09D76942A2E07BD004311E6 /* SendTronConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */; };
 		D09D76952A2E07BD004311E6 /* SendTronConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */; };
 		D09D76992A2F3682004311E6 /* SendTronConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */; };
-		D0B36D582A4D77CC00E289E7 /* CexWithdrawNetworkSelectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B36D572A4D77CC00E289E7 /* CexWithdrawNetworkSelectService.swift */; };
-		D0B36D592A4D77CC00E289E7 /* CexWithdrawNetworkSelectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B36D572A4D77CC00E289E7 /* CexWithdrawNetworkSelectService.swift */; };
-		D0B36D5B2A4D77D600E289E7 /* CexWithdrawNetworkSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B36D5A2A4D77D600E289E7 /* CexWithdrawNetworkSelectViewModel.swift */; };
-		D0B36D5C2A4D77D600E289E7 /* CexWithdrawNetworkSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B36D5A2A4D77D600E289E7 /* CexWithdrawNetworkSelectViewModel.swift */; };
 		D0B36D5E2A4D77E200E289E7 /* CexWithdrawNetworkSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B36D5D2A4D77E200E289E7 /* CexWithdrawNetworkSelectViewController.swift */; };
 		D0B36D5F2A4D77E200E289E7 /* CexWithdrawNetworkSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B36D5D2A4D77E200E289E7 /* CexWithdrawNetworkSelectViewController.swift */; };
 		D0B36D6A2A52F98300E289E7 /* CexAmountInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B36D692A52F98300E289E7 /* CexAmountInputViewModel.swift */; };
@@ -3810,8 +3806,6 @@
 		D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewController.swift; sourceTree = "<group>"; };
 		D09D76902A2E0753004311E6 /* SendTronConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewModel.swift; sourceTree = "<group>"; };
 		D09D76932A2E07BD004311E6 /* SendTronConfirmationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationService.swift; sourceTree = "<group>"; };
-		D0B36D572A4D77CC00E289E7 /* CexWithdrawNetworkSelectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CexWithdrawNetworkSelectService.swift; sourceTree = "<group>"; };
-		D0B36D5A2A4D77D600E289E7 /* CexWithdrawNetworkSelectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CexWithdrawNetworkSelectViewModel.swift; sourceTree = "<group>"; };
 		D0B36D5D2A4D77E200E289E7 /* CexWithdrawNetworkSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CexWithdrawNetworkSelectViewController.swift; sourceTree = "<group>"; };
 		D0B36D692A52F98300E289E7 /* CexAmountInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CexAmountInputViewModel.swift; sourceTree = "<group>"; };
 		D0BC6ECC2A499ADB00D5389F /* CexCoinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CexCoinService.swift; sourceTree = "<group>"; };
@@ -4619,7 +4613,6 @@
 				11B3517E4157D7C63AB22BBF /* CexDeposit */,
 				11B359EE57B76B654C3FD1BE /* CexWithdrawConfirm */,
 				D0EC34DE2A459E6000BB308B /* CexWithdraw */,
-				D0B36D532A4D77A500E289E7 /* CexNetworkSelect */,
 				11B35F3287C1B63CBD6F6338 /* CoinzixVerifyWithdraw */,
 			);
 			path = Modules;
@@ -7278,16 +7271,6 @@
 			path = Confirmation;
 			sourceTree = "<group>";
 		};
-		D0B36D532A4D77A500E289E7 /* CexNetworkSelect */ = {
-			isa = PBXGroup;
-			children = (
-				D0B36D572A4D77CC00E289E7 /* CexWithdrawNetworkSelectService.swift */,
-				D0B36D5A2A4D77D600E289E7 /* CexWithdrawNetworkSelectViewModel.swift */,
-				D0B36D5D2A4D77E200E289E7 /* CexWithdrawNetworkSelectViewController.swift */,
-			);
-			path = CexNetworkSelect;
-			sourceTree = "<group>";
-		};
 		D0D6933E270B28240077AF17 /* CoinOverview */ = {
 			isa = PBXGroup;
 			children = (
@@ -7307,6 +7290,7 @@
 				D0EC34E12A459EBA00BB308B /* CexWithdrawService.swift */,
 				D0EC34E42A459ECB00BB308B /* CexWithdrawViewModel.swift */,
 				D0EC34E72A459EDB00BB308B /* CexWithdrawViewController.swift */,
+				D0B36D5D2A4D77E200E289E7 /* CexWithdrawNetworkSelectViewController.swift */,
 				D0BC6ECC2A499ADB00D5389F /* CexCoinService.swift */,
 				D0B36D692A52F98300E289E7 /* CexAmountInputViewModel.swift */,
 			);
@@ -7946,7 +7930,6 @@
 				179E746F1E3D7BC613BD0AFC /* FavoriteCoinRecord.swift in Sources */,
 				11B35A42D28B8BC4CDA57D8E /* AccountRecord_v_0_19.swift in Sources */,
 				58AAAF6550F37A40DF445775 /* MarketDiscoveryFilterService.swift in Sources */,
-				D0B36D592A4D77CC00E289E7 /* CexWithdrawNetworkSelectService.swift in Sources */,
 				1A5648833265D60B9A098379 /* FilterCard.swift in Sources */,
 				1A56419070DA95A0D276E0AB /* MarketDiscoveryFilter.swift in Sources */,
 				1A5649CF5BAB555EA028D26E /* MarketDiscoveryFilterHeaderView.swift in Sources */,
@@ -8715,7 +8698,6 @@
 				11B3580696C6391D4C125245 /* EvmAddressService.swift in Sources */,
 				11B358623111DC1A8ED499DC /* EvmAddressViewModel.swift in Sources */,
 				11B351FC393EDD17C3487796 /* SelectorModule.swift in Sources */,
-				D0B36D5C2A4D77D600E289E7 /* CexWithdrawNetworkSelectViewModel.swift in Sources */,
 				11B356D9182DD8D8ACFC97D5 /* BottomSheetModule.swift in Sources */,
 				11B35197E2FD1BD9E533E967 /* BottomSheetViewController.swift in Sources */,
 				2FA5D20BC28280786A0FC3FE /* DropDownListCell.swift in Sources */,
@@ -9191,7 +9173,6 @@
 				11B35FF65FCE441A69822E1C /* InputPrefixWrapperView.swift in Sources */,
 				179E74DFB95966A1077ADF1E /* MarketDiscoveryViewController.swift in Sources */,
 				179E7EBD494842280D9F19A4 /* FavoriteCoinRecord.swift in Sources */,
-				D0B36D582A4D77CC00E289E7 /* CexWithdrawNetworkSelectService.swift in Sources */,
 				11B35C3AFFA5B40481AF15B9 /* AccountRecord_v_0_19.swift in Sources */,
 				58AAA39A293C9EBC7583ED63 /* MarketDiscoveryFilterService.swift in Sources */,
 				1A564DEEA0E56D2F0EF76FCC /* FilterCard.swift in Sources */,
@@ -9960,7 +9941,6 @@
 				11B3588E7AD4092A7120514C /* EvmAddressService.swift in Sources */,
 				11B3513AC9A4C945E6432475 /* EvmAddressViewModel.swift in Sources */,
 				11B3530E7755A4882F7E0C0A /* SelectorModule.swift in Sources */,
-				D0B36D5B2A4D77D600E289E7 /* CexWithdrawNetworkSelectViewModel.swift in Sources */,
 				11B356762C9C6E62706B874B /* BottomSheetModule.swift in Sources */,
 				11B35E99E0D2A095857DDE13 /* BottomSheetViewController.swift in Sources */,
 				2FA5D10D571F6D9E3BECAF9E /* DropDownListCell.swift in Sources */,

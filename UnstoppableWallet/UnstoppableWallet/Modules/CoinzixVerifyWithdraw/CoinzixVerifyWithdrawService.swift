@@ -56,7 +56,6 @@ extension CoinzixVerifyWithdrawService {
 
         Task { [weak self, orderId] in
 //            try? await provider.sendWithdrawPin(id: orderId)
-            try? await Task.sleep(nanoseconds: 2_000_000_000)
         }.store(in: &tasks)
     }
 

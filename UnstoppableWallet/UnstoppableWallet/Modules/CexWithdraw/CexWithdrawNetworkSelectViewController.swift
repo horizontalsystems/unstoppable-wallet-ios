@@ -4,13 +4,20 @@ import ThemeKit
 import ComponentKit
 import SectionsTableView
 
+protocol ICexWithdrawNetworkSelectDelegate: AnyObject {
+    func onSelect(index: Int)
+}
+
 class CexWithdrawNetworkSelectViewController: ThemeViewController {
-    private let viewModel: CexWithdrawNetworkSelectViewModel
+    weak var delegate: ICexWithdrawNetworkSelectDelegate?
 
     private let tableView = SectionsTableView(style: .grouped)
+    private let viewItems: [CexWithdrawViewModel.NetworkViewItem]
+    private let selectedNetworkIndex: Int?
 
-    init(viewModel: CexWithdrawNetworkSelectViewModel) {
-        self.viewModel = viewModel
+    init(viewItems: [CexWithdrawViewModel.NetworkViewItem], selectedNetworkIndex: Int?) {
+        self.viewItems = viewItems
+        self.selectedNetworkIndex = selectedNetworkIndex
 
         super.init()
     }
@@ -49,8 +56,8 @@ class CexWithdrawNetworkSelectViewController: ThemeViewController {
     }
 
     private func onSelect(index: Int) {
-        viewModel.onSelect(index: index)
-        _ = navigationController?.popViewController(animated: true)
+        delegate?.onSelect(index: index)
+        dismiss(animated: true)
     }
 
 }
@@ -76,9 +83,9 @@ extension CexWithdrawNetworkSelectViewController: SectionsDataSource {
             Section(
                 id: "cex-networks",
                 footerState: .margin(height: .margin32),
-                rows: viewModel.viewItems.enumerated().map { index, viewItem in
+                rows: viewItems.enumerated().map { index, viewItem in
                     let isFirst = index == 0
-                    let isLast = index == viewModel.viewItems.count - 1
+                    let isLast = index == viewItems.count - 1
 
                     return CellBuilderNew.row(
                         rootElement: .hStack([
@@ -86,7 +93,7 @@ extension CexWithdrawNetworkSelectViewController: SectionsDataSource {
                                 component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_32"))
                             },
                             .textElement(text: .body(viewItem.title)),
-                            .imageElement(image: viewModel.selectedNetworkIndex == index ? .local(UIImage(named: "check_1_20")) : nil, size: .image20),
+                            .imageElement(image: selectedNetworkIndex == index ? .local(UIImage(named: "check_1_20")) : nil, size: .image20),
                             .badge { component in
                                 component.isHidden = viewItem.enabled
                                 component.badgeView.set(style: .small)
