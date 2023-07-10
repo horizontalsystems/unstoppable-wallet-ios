@@ -105,7 +105,7 @@ class CoinzixCexProvider {
         ]
     }
 
-    private func fetch<T: ImmutableMappable>(path: String, parameters: Parameters = [:]) async throws -> T {
+    private func signedFetch<T: ImmutableMappable>(path: String, parameters: Parameters = [:]) async throws -> T {
         var parameters = parameters
 
         let requestId = String(Int(Date().timeIntervalSince1970))
@@ -133,26 +133,30 @@ class CoinzixCexProvider {
         )
     }
 
+    private func fetch<T: ImmutableMappable>(path: String, parameters: Parameters = [:]) async throws -> T {
+        try await networkManager.fetch(url: Self.baseUrl + path, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+    }
+
 }
 
 extension CoinzixCexProvider: ICexProvider {
 
     func assets() async throws -> [CexAssetResponse] {
         async let configRequest: ConfigResponse = try fetch(path: "/api/default/config")
-        async let depositListRequest: DepositListResponse = try fetch(path: "/api/deposit/list")
+        async let balancesRequest: BalancesResponse = try signedFetch(path: "/v1/private/balances")
 
-        let (configResponse, depositListResponse) = try await (configRequest, depositListRequest)
+        let (configResponse, balancesResponse) = try await (configRequest, balancesRequest)
 
         let coinUidMap = try await coinUidMap()
         let blockchainUidMap = try await blockchainUidMap()
 
-        return depositListResponse.items
+        return balancesResponse.items
                 .map { item in
                     let assetId = item.currencyIso3
                     let balance = Decimal(sign: .plus, exponent: -8, significand: item.balance)
                     let balanceAvailable = Decimal(sign: .plus, exponent: -8, significand: item.balanceAvailable)
-                    let depositEnabled = configResponse.depositCurrencies.contains(item.currencyIso3)
-                    let withdrawEnabled = configResponse.withdrawCurrencies.contains(item.currencyIso3)
+                    let depositEnabled = configResponse.depositCurrencies.contains(assetId)
+                    let withdrawEnabled = configResponse.withdrawCurrencies.contains(assetId)
 
                     return CexAssetResponse(
                             id: assetId,
@@ -197,7 +201,7 @@ extension CoinzixCexProvider: ICexProvider {
             parameters["network_type"] = networkType
         }
 
-        let response: GetAddressResponse = try await fetch(path: "/api/deposit/get-address", parameters: parameters)
+        let response: GetAddressResponse = try await signedFetch(path: "/v1/private/get-address", parameters: parameters)
 
         guard response.status else {
             throw RequestError.negativeStatus
@@ -223,13 +227,39 @@ extension CoinzixCexProvider: ICexProvider {
             parameters["network"] = network
         }
 
-        let response: WithdrawResponse = try await fetch(path: "/v1/withdraw", parameters: parameters)
+        let response: WithdrawResponse = try await signedFetch(path: "/v1/withdraw", parameters: parameters)
 
         guard response.status else {
             throw RequestError.negativeStatus
         }
 
         return String(response.id)
+    }
+
+    func confirmWithdraw(id: Int, emailPin: String, googlePin: String) async throws {
+        let parameters: Parameters = [
+            "id": id,
+            "email_pin": emailPin,
+            "google_pin": googlePin
+        ]
+
+        let response: StatusResponse = try await signedFetch(path: "/v1/withdraw/confirm-code", parameters: parameters)
+
+        guard response.status else {
+            throw RequestError.negativeStatus
+        }
+    }
+
+    func sendWithdrawPin(id: Int) async throws {
+        let parameters: Parameters = [
+            "id": id
+        ]
+
+        let response: StatusResponse = try await signedFetch(path: "/v1/withdraw/send-pin", parameters: parameters)
+
+        guard response.status else {
+            throw RequestError.negativeStatus
+        }
     }
 
 }
@@ -256,32 +286,6 @@ extension CoinzixCexProvider {
         }
 
         return (secret, token)
-    }
-
-    func confirmWithdraw(id: Int, emailPin: String, googlePin: String) async throws {
-        let parameters: Parameters = [
-            "id": id,
-            "email_pin": emailPin,
-            "google_pin": googlePin
-        ]
-
-        let response: StatusResponse = try await fetch(path: "/v1/withdraw/confirm-code", parameters: parameters)
-
-        guard response.status else {
-            throw RequestError.negativeStatus
-        }
-    }
-
-    func sendWithdrawPin(id: Int) async throws {
-        let parameters: Parameters = [
-            "id": id
-        ]
-
-        let response: StatusResponse = try await fetch(path: "/v1/withdraw/send-pin", parameters: parameters)
-
-        guard response.status else {
-            throw RequestError.negativeStatus
-        }
     }
 
 }
@@ -352,7 +356,7 @@ extension CoinzixCexProvider {
         }
     }
 
-    private struct DepositListResponse: ImmutableMappable {
+    private struct BalancesResponse: ImmutableMappable {
         let items: [Item]
 
         init(map: Map) throws {
@@ -368,34 +372,6 @@ extension CoinzixCexProvider {
             init(map: Map) throws {
                 currencyIso3 = try map.value("currency.iso3")
                 currencyName = try map.value("currency.name")
-                balance = try map.value("total_balance", using: Transform.doubleToDecimalTransform)
-                balanceAvailable = try map.value("total_balance_available", using: Transform.doubleToDecimalTransform)
-            }
-        }
-    }
-
-    private struct BalancesResponse: ImmutableMappable {
-        let balances: [Balance]
-
-        init(map: Map) throws {
-            balances = try map.value("data.list")
-        }
-
-        struct Balance: ImmutableMappable {
-            let currencyIso3: String
-            let currencyName: String
-            let currencyRefill: Int
-            let currencyWithdraw: Int
-            let networks: [String: String]
-            let balance: Decimal
-            let balanceAvailable: Decimal
-
-            init(map: Map) throws {
-                currencyIso3 = try map.value("currency.iso3")
-                currencyName = try map.value("currency.name")
-                currencyRefill = try map.value("currency.refill")
-                currencyWithdraw = try map.value("currency.withdraw")
-                networks = (try? map.value("currency.networks")) ?? [:]
                 balance = try map.value("balance", using: Transform.doubleToDecimalTransform)
                 balanceAvailable = try map.value("balance_available", using: Transform.doubleToDecimalTransform)
             }
