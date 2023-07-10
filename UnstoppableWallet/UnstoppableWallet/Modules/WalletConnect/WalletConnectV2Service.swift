@@ -23,6 +23,7 @@ struct SocketFactory: WebSocketFactory {
 class WalletConnectV2Service {
     private let logger: Logger?
     private let connectionService: WalletConnectV2SocketConnectionService
+    private let sessionRequestFilterManager: SessionRequestFilterManager
 
     private let receiveProposalSubject = PublishSubject<WalletConnectSign.Session.Proposal>()
     private let receiveSessionRelay = PublishRelay<WalletConnectSign.Session>()
@@ -42,9 +43,9 @@ class WalletConnectV2Service {
 
     private var publishers = [AnyCancellable]()
 
-
-    init(connectionService: WalletConnectV2SocketConnectionService, info: WalletConnectClientInfo, logger: Logger? = nil) {
+    init(connectionService: WalletConnectV2SocketConnectionService, sessionRequestFilterManager: SessionRequestFilterManager, info: WalletConnectClientInfo, logger: Logger? = nil) {
         self.connectionService = connectionService
+        self.sessionRequestFilterManager = sessionRequestFilterManager
         self.logger = logger
         let metadata = WalletConnectSign.AppMetadata(
                 name: info.name,
@@ -82,6 +83,12 @@ class WalletConnectV2Service {
                     self?.didSettle(session: session)
                 }.store(in: &publishers)
 
+        Sign.instance.sessionUpdatePublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] pair in
+                    self?.didUpdate(sessionTopic: pair.sessionTopic, namespaces: pair.namespaces)
+                }.store(in: &publishers)
+
         Sign.instance.sessionRequestPublisher
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] sessionRequest in
@@ -115,6 +122,11 @@ extension WalletConnectV2Service {
 
     public func didReceive(sessionRequest: Request) {
         logger?.debug("WC v2 SignClient did receive session request: \(sessionRequest.method) : session: \(sessionRequest.topic)")
+
+        if sessionRequestFilterManager.handle(request: sessionRequest) {
+            return
+        }
+
         sessionRequestReceivedRelay.accept(sessionRequest)
         pendingRequestsUpdatedRelay.accept(())
     }

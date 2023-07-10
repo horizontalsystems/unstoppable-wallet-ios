@@ -1886,6 +1886,7 @@
 		ABC9A0C6E37779D3F3602EEC /* SendEip1155AvailableBalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB612DE3C8AA3A1EEAC7 /* SendEip1155AvailableBalanceViewModel.swift */; };
 		ABC9A0CEBC41CCE5AB205B3C /* NftAssetOverviewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A90781302D793E0773CB /* NftAssetOverviewModule.swift */; };
 		ABC9A0D8D596A7122B2DDD97 /* WalletConnectV2ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8DC6C2EEBD4FD453342 /* WalletConnectV2ListViewModel.swift */; };
+		ABC9A0E6EE31D5675542EE0B /* SessionRequestFilterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA77C414AC06C41F9319 /* SessionRequestFilterManager.swift */; };
 		ABC9A0E743DDE8F4ADA483EB /* SwapPriceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA459E123B7053EC73F0 /* SwapPriceCell.swift */; };
 		ABC9A0F42A6687705CAD1340 /* NftAssetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF9C0D0174A5B6A91F13 /* NftAssetViewController.swift */; };
 		ABC9A0FE58CC65114E2B296F /* SimpleActivateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACF3E15CB67B44E7069E /* SimpleActivateService.swift */; };
@@ -2143,6 +2144,7 @@
 		ABC9AC5C8EE0A8C7F10B8A50 /* ContactBookSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A309A58148C40912B964 /* ContactBookSettingsService.swift */; };
 		ABC9AC73C488F8B1F54929B5 /* NftAssetCellFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A30A8F78E9C9AEE861F1 /* NftAssetCellFactory.swift */; };
 		ABC9AC78B2D374511F751997 /* WalletConnectV2AppShowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3FB680357E569B6DB5F /* WalletConnectV2AppShowViewModel.swift */; };
+		ABC9AC79493AB0EC96904164 /* SessionRequestFilterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA77C414AC06C41F9319 /* SessionRequestFilterManager.swift */; };
 		ABC9AC79ACCB69BF97A01B53 /* ContactBookSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A06A4A02C5E889265463 /* ContactBookSettingsViewModel.swift */; };
 		ABC9AC839A67BDEABD24CD7A /* SendMemoInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3C103C1DE359184D944 /* SendMemoInputCell.swift */; };
 		ABC9AC84790F5BEAA514C731 /* TransactionsContactLabelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE89A5925C2026AB6B69 /* TransactionsContactLabelService.swift */; };
@@ -3672,6 +3674,7 @@
 		ABC9AA52B8C4E6834843D552 /* AmountData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmountData.swift; sourceTree = "<group>"; };
 		ABC9AA6A9EA3FAE9031A34C8 /* WalletConnectV2PairingModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2PairingModule.swift; sourceTree = "<group>"; };
 		ABC9AA751C8B09F90F716231 /* RestoreCloudViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreCloudViewController.swift; sourceTree = "<group>"; };
+		ABC9AA77C414AC06C41F9319 /* SessionRequestFilterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionRequestFilterManager.swift; sourceTree = "<group>"; };
 		ABC9AA7F2ECF212EF8B70470 /* SendConfirmationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationViewController.swift; sourceTree = "<group>"; };
 		ABC9AA8F31619609907AD67E /* MacdIndicatorDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacdIndicatorDataSource.swift; sourceTree = "<group>"; };
 		ABC9AA99463E646706E8E36D /* RestoreCloudPassphraseViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreCloudPassphraseViewModel.swift; sourceTree = "<group>"; };
@@ -4136,6 +4139,7 @@
 				ABC9A0483AEAEB88DFBDD873 /* WalletConnectV2SocketConnectionService.swift */,
 				ABC9AF0B88F3140CBD4406B8 /* Pairings */,
 				ABC9A71A64E11AD3709A1174 /* Workers */,
+				ABC9AA77C414AC06C41F9319 /* SessionRequestFilterManager.swift */,
 			);
 			path = WalletConnect;
 			sourceTree = "<group>";
@@ -8858,6 +8862,7 @@
 				11B358259C0444DF181DFAFF /* CoinzixVerifyWithdrawService.swift in Sources */,
 				11B35D6ECC763F03EEB3BA0D /* CoinzixVerifyWithdrawModule.swift in Sources */,
 				11B35E7820666F516A119B91 /* CoinzixVerifyWithdrawViewModel.swift in Sources */,
+				ABC9AC79493AB0EC96904164 /* SessionRequestFilterManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10101,6 +10106,7 @@
 				11B353F9EB65FCF37C553E66 /* CoinzixVerifyWithdrawService.swift in Sources */,
 				11B35AE2F1EB2A905CDAE80A /* CoinzixVerifyWithdrawModule.swift in Sources */,
 				11B35880B435DD384AD049D3 /* CoinzixVerifyWithdrawViewModel.swift in Sources */,
+				ABC9A0E6EE31D5675542EE0B /* SessionRequestFilterManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

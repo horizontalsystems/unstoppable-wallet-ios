@@ -5,12 +5,12 @@ import BigInt
 
 class WalletConnectRequest {
     let id: Int
-    let chainId: Int?
+    let chain: Chain
     let dAppName: String?
 
-    init(id: Int, chainId: Int?, dAppName: String?) {
+    init(id: Int, chain: Chain, dAppName: String?) {
         self.id = id
-        self.chainId = chainId
+        self.chain = chain
         self.dAppName = dAppName
     }
 
@@ -18,12 +18,25 @@ class WalletConnectRequest {
         nil
     }
 
+    struct Chain {
+        let id: Int
+        let chainName: String?
+        let address: String?
+
+        init(id: Int, chainName: String? = nil, address: String? = nil) {
+            self.id = id
+            self.chainName = chainName
+            self.address = address
+        }
+
+    }
+
 }
 
 class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
     let transaction: WalletConnectTransaction
 
-    init(id: Int, chainId: Int?, dAppName: String?, transaction: WCEthereumTransaction) throws {
+    init(id: Int, chain: WalletConnectRequest.Chain, dAppName: String?, transaction: WCEthereumTransaction) throws {
         guard let to = transaction.to else {
             throw TransactionError.noRecipient
         }
@@ -41,7 +54,7 @@ class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
                 data: Data(hex: transaction.data)
         )
 
-        super.init(id: id, chainId: chainId, dAppName: dAppName)
+        super.init(id: id, chain: chain, dAppName: dAppName)
     }
 
     override func convert(result: Any) -> String? {
@@ -57,10 +70,10 @@ class WalletConnectSendEthereumTransactionRequest: WalletConnectRequest {
 class WalletConnectSignMessageRequest: WalletConnectRequest {
     let payload: WCEthereumSignPayload
 
-    init(id: Int, chainId: Int?, dAppName: String?, payload: WCEthereumSignPayload) {
+    init(id: Int, chain: WalletConnectRequest.Chain, dAppName: String?, payload: WCEthereumSignPayload) {
         self.payload = payload
 
-        super.init(id: id, chainId: chainId, dAppName: dAppName)
+        super.init(id: id, chain: chain, dAppName: dAppName)
     }
 
     override func convert(result: Any) -> String? {

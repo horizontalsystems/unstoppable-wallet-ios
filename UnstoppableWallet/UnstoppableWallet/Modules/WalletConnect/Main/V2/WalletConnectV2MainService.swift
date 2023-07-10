@@ -52,7 +52,7 @@ class WalletConnectV2MainService {
 
         subscribe(disposeBag, service.receiveProposalObservable) { [weak self] in
             self?.proposal = $0
-            self?.syncProposal()
+            self?.sync(proposal: $0)
         }
         subscribe(disposeBag, service.receiveSessionObservable) { [weak self] in
             self?.didReceive(session: $0)
@@ -65,10 +65,10 @@ class WalletConnectV2MainService {
         }
         connectionStateRelay.accept(service.socketConnectionStatus == .connected ? .connected : .disconnected)
 
-        if session != nil {
+        if let session {
             state = .ready
             do {
-                blockchains = try initialBlockchains()
+                blockchains = try blockchains(by: session)
                 allowedBlockchainsRelay.accept(allowedBlockchains)
             } catch {
                 state = .invalid(error: WalletConnectMainModule.SessionError.noAnySupportedChainId)
@@ -76,14 +76,14 @@ class WalletConnectV2MainService {
             }
         }
 
-        if proposal != nil {
-            syncProposal()
+        if let proposal {
+            sync(proposal: proposal)
         }
     }
 
-    private func syncProposal() {
+    private func sync(proposal: WalletConnectSign.Session.Proposal) {
         do {
-            blockchains = try initialBlockchains()
+            blockchains = try blockchains(by: proposal)
             allowedBlockchainsRelay.accept(allowedBlockchains)
 
             guard !blockchains.items.isEmpty else {
@@ -101,7 +101,7 @@ class WalletConnectV2MainService {
     private func didReceive(session: WalletConnectSign.Session) {
         self.session = session
         do {
-            blockchains = try initialBlockchains()
+            blockchains = try blockchains(by: session)
             allowedBlockchainsRelay.accept(allowedBlockchains)
 
             state = .ready
@@ -119,73 +119,66 @@ class WalletConnectV2MainService {
         state = .killed(reason: .killSession) // todo: ???
     }
 
-    private func initialBlockchains() throws -> WalletConnectMainModule.BlockchainSet {
-        var addressFetcher: (Chain) -> EvmKit.Address?
-
-        switch accountManager.activeAccount?.type {
-        case .mnemonic:
-            guard let seed = accountManager.activeAccount?.type.mnemonicSeed else {
-                return .empty
-            }
-            addressFetcher = { chain in try? Signer.address(seed: seed, chain: chain) }
-        case .evmPrivateKey(let key):
-            addressFetcher = { chain in Signer.address(privateKey: key) }
-        default: return .empty
+    private func blockchains(by session: WalletConnectSign.Session) throws ->  WalletConnectMainModule.BlockchainSet {
+        guard let account = accountManager.activeAccount,
+              let eip155 = session.namespaces["eip155"] else {
+            throw WalletConnectMainModule.SessionError.unsupportedChainId
         }
 
-        let supportedNamespace = "eip155" // Support only EVM blockchains yet
+        let wcBlockchains = eip155.accounts.map { $0.blockchain }
+        let items = blockchainItems(blockchains: wcBlockchains, account: account, selected: true)
+        return .init(items: Set(items), methods: eip155.methods, events: eip155.events)
+    }
 
-        if let session = session,
-            let eip155 = session.namespaces[supportedNamespace] {
-            let accounts = Array(eip155.accounts)
-            var blockchainItems = Set<WalletConnectMainModule.BlockchainItem>()
-            accounts.forEach { account in
-                guard let chainId = Int(account.reference),
-                        let blockchain = evmBlockchainManager.blockchain(chainId: chainId) else {
-                    return
-                }
-
-                blockchainItems.insert(WalletConnectMainModule.BlockchainItem(namespace: supportedNamespace, chainId: chainId, blockchain: blockchain, address: account.address, selected: true))
-            }
-
-            return WalletConnectMainModule.BlockchainSet(items: blockchainItems, methods: eip155.methods, events: eip155.events)
+    private func blockchains(by proposal: WalletConnectSign.Session.Proposal) throws ->  WalletConnectMainModule.BlockchainSet {
+        // check that we have only eip155 namespace for working
+        guard proposal.requiredNamespaces.count == 1,
+              let requiredEip155 = proposal.requiredNamespaces["eip155"] else {
+            throw WalletConnectMainModule.SessionError.unsupportedChainId
         }
-
-        guard let proposal = proposal, let eip155 = proposal.requiredNamespaces[supportedNamespace] else {
+        guard let account = accountManager.activeAccount else {
+            return .empty
+        }
+        // no any chains to sign
+        guard let wcRequiredChains = requiredEip155.chains?.compactMap({ $0 }) else {
             return .empty
         }
 
-
-        guard proposal.requiredNamespaces.filter({ key, _ in key != supportedNamespace }).isEmpty else {
+        var items = blockchainItems(blockchains: wcRequiredChains, account: account, selected: true)
+        // We must sign all required chains
+        guard items.count == wcRequiredChains.count else {
             throw WalletConnectMainModule.SessionError.unsupportedChainId
         }
+        // Add all optionals chains from proposal
+        if let optionalEip155 = proposal.optionalNamespaces?["eip155"],
+           let optionalChains = optionalEip155.chains?.compactMap({ $0 }) {
 
-        guard let chains = eip155.chains else {
-            throw WalletConnectMainModule.SessionError.unsupportedChainId
+            items.append(contentsOf: blockchainItems(blockchains: optionalChains, account: account, selected: false))
         }
 
-        // get chainIds
-        let chainIds = chains.compactMap { Int($0.reference) }
+        return .init(items: Set(items), methods: requiredEip155.methods, events: requiredEip155.events)
+    }
 
-        // get addresses
-        var blockchainItems = Set<WalletConnectMainModule.BlockchainItem>()
-        try chainIds.forEach { chainId in
-            guard let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
-                  let chain = evmBlockchainManager.chain(chainId: chainId),
-                  let address = addressFetcher(chain) else {
-                throw WalletConnectMainModule.SessionError.unsupportedChainId
+    private func blockchainItems(blockchains: [WalletConnectUtils.Blockchain], account: Account, selected: Bool) -> [WalletConnectMainModule.BlockchainItem] {
+        blockchains.compactMap { wcBlockchain in
+            guard let chainId = Int(wcBlockchain.reference),
+                  let blockchain = evmBlockchainManager.blockchain(chainId: chainId) else {
+                // not valid chainId for eip155 or not supported blockchain
+                return nil
             }
+            let chain = evmBlockchainManager.chain(blockchainType: blockchain.type)
 
-            blockchainItems.insert(WalletConnectMainModule.BlockchainItem(
-                    namespace: supportedNamespace,
+            guard let address = try? WalletConnectManager.evmAddress(account: account, chain: chain) else {
+                // can't get address for chain
+                return nil
+            }
+            return WalletConnectMainModule.BlockchainItem(
+                    namespace: wcBlockchain.namespace,
                     chainId: chainId,
                     blockchain: blockchain,
                     address: address.eip55,
-                    selected: true
-            ))
+                    selected: selected)
         }
-
-        return WalletConnectMainModule.BlockchainSet(items: blockchainItems, methods: eip155.methods, events: eip155.events)
     }
 
 }
@@ -322,18 +315,17 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
             return
         }
 
-        var accounts = [WalletConnectUtils.Account]()
-        blockchains.items.forEach { blockchain in
-            guard blockchain.selected,
-                  evmBlockchainManager.blockchain(chainId: blockchain.chainId) != nil else {
-                return
-            }
+        let chains = evmBlockchainManager.allBlockchains.compactMap { blockchain in
+            evmBlockchainManager.chain(blockchainType: blockchain.type)
+        }
 
-
-            if let wcBlockchain = WalletConnectUtils.Blockchain(namespace: blockchain.namespace, reference: blockchain.chainId.description),
-               let account = WalletConnectUtils.Account(blockchain: wcBlockchain, address: blockchain.address) {
-                accounts.append(account)
+        let accounts = chains.compactMap { chain in
+            if let firstBlockchainItem = blockchains.items.first,
+                    let wcBlockchain = WalletConnectUtils.Blockchain(namespace: firstBlockchainItem.namespace, reference: chain.id.description),
+                    let wcAccount = WalletConnectUtils.Account(blockchain: wcBlockchain, address: firstBlockchainItem.address) {
+                        return wcAccount
             }
+            return nil
         }
 
         guard !accounts.isEmpty else {

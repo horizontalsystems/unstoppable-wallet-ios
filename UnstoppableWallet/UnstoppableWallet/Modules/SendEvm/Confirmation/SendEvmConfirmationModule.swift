@@ -53,6 +53,8 @@ struct SendEvmData {
 
     struct DAppInfo {
         let name: String?
+        let chainName: String?
+        let address: String?
     }
 
     struct SwapInfo {

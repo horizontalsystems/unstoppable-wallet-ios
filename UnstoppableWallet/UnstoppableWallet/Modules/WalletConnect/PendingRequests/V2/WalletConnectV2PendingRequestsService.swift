@@ -107,7 +107,20 @@ extension WalletConnectV2PendingRequestsService {
             return
         }
         let session = sessionManager.sessions.first { $0.topic == request.topic }
-        guard let wcRequest = try? WalletConnectV2RequestMapper.map(dAppName: session?.peer.name, request: request) else {
+
+        guard let chainId = Int(request.chainId.reference),
+              let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
+              let account = accountManager.activeAccount,
+              let address = try? WalletConnectManager.evmAddress(
+                      account: account,
+                      chain: evmBlockchainManager.chain(blockchainType: blockchain.type)
+              ) else {
+            return
+        }
+
+        let chain = WalletConnectRequest.Chain(id: chainId, chainName: blockchain.name, address: address.eip55)
+
+        guard let wcRequest = try? WalletConnectV2RequestMapper.map(dAppName: session?.peer.name, chain: chain, request: request) else {
             return
         }
 

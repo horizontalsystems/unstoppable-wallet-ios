@@ -36,6 +36,10 @@ extension WalletConnectSignMessageRequestViewModel {
         service.dAppName
     }
 
+    var chain: WalletConnectRequest.Chain {
+        service.chain
+    }
+
     func onSign() {
         do {
             try service.sign()

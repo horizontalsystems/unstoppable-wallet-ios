@@ -76,6 +76,7 @@ struct WalletConnectMainModule {
         case let service as WalletConnectV2MainService:
             let pendingRequestService = WalletConnectV2MainPendingRequestService(
                     service: service,
+                    accountManager: App.shared.accountManager,
                     sessionManager: App.shared.walletConnectV2SessionManager,
                     evmBlockchainManager: App.shared.evmBlockchainManager,
                     signService: App.shared.walletConnectV2SessionManager.service)

@@ -104,7 +104,7 @@ extension WalletConnectSignMessageRequestViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections = [SectionProtocol]()
 
-        if viewModel.domain != nil || viewModel.dAppName != nil {
+        if viewModel.domain != nil || viewModel.dAppName != nil || viewModel.chain.chainName != nil {
             var rows: [RowProtocol] = []
 
             if let domain = viewModel.domain {
@@ -113,7 +113,7 @@ extension WalletConnectSignMessageRequestViewController: SectionsDataSource {
                         title: .subhead2("wallet_connect.sign.domain".localized),
                         value: .subhead1(domain),
                         isFirst: true,
-                        isLast: viewModel.dAppName == nil
+                        isLast: viewModel.dAppName == nil && viewModel.chain.chainName == nil
                 )
 
                 rows.append(row)
@@ -125,6 +125,18 @@ extension WalletConnectSignMessageRequestViewController: SectionsDataSource {
                         title: .subhead2("wallet_connect.sign.dapp_name".localized),
                         value: .subhead1(dAppName),
                         isFirst: viewModel.domain == nil,
+                        isLast: viewModel.chain.chainName == nil
+                )
+
+                rows.append(row)
+            }
+
+            if let chainName = viewModel.chain.chainName {
+                let row = tableView.universalRow48(
+                        id: "chain_name",
+                        title: .subhead2(chainName),
+                        value: .subhead1(viewModel.chain.address?.shortened),
+                        isFirst: viewModel.domain == nil && viewModel.dAppName == nil,
                         isLast: true
                 )
 
