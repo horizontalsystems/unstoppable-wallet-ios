@@ -47,6 +47,23 @@ extension CexDepositViewModel {
         service.network?.networkName
     }
 
+    var minAmount: String? {
+        guard let minAmount = service.network?.minAmount else {
+            return nil
+        }
+
+        guard minAmount > 0 else {
+            return nil
+        }
+
+        let coinValue = CoinValue(
+                kind: .cexAsset(cexAsset: service.cexAsset),
+                value: minAmount
+        )
+
+        return ValueFormatter.instance.formatFull(coinValue: coinValue)
+    }
+
     func onTapRetry() {
         service.reload()
     }

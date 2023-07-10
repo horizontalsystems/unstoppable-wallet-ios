@@ -212,22 +212,29 @@ extension CexDepositViewController: SectionsDataSource {
 
         let qrCodeText = "cex_deposit.qr_code_description".localized(viewModel.coinCode)
 
+        let networkName = viewModel.networkName
+        let memo = viewItem.memo
+        let minAmount = viewModel.minAmount
+
+        let items: [Any?] = [true, networkName, memo, minAmount]
+        let itemCount = items.compactMap { $0 }.count
+
         var mainRows: [RowProtocol] = [
-            addressRow(value: viewItem.address, isLast: viewModel.networkName == nil && viewItem.memo == nil)
+            addressRow(value: viewItem.address, isLast: itemCount == 1)
         ]
 
-        if let networkName = viewModel.networkName {
+        if let networkName {
             mainRows.append(
                     tableView.universalRow48(
                             id: "network",
                             title: .subhead2("cex_deposit.network".localized),
                             value: .subhead1(networkName),
-                            isLast: viewItem.memo == nil
+                            isLast: itemCount == mainRows.count + 1
                     )
             )
         }
 
-        if let memo = viewItem.memo {
+        if let memo {
             mainRows.append(
                     CellBuilderNew.row(
                             rootElement: .hStack([
@@ -244,8 +251,19 @@ extension CexDepositViewController: SectionsDataSource {
                             id: "memo",
                             height: .heightCell48,
                             bind: { cell in
-                                cell.set(backgroundStyle: .lawrence, isLast: true)
+                                cell.set(backgroundStyle: .lawrence, isLast: itemCount == mainRows.count + 1)
                             }
+                    )
+            )
+        }
+
+        if let minAmount {
+            mainRows.append(
+                    tableView.universalRow48(
+                            id: "min-amount",
+                            title: .subhead2("cex_deposit.min_amount".localized),
+                            value: .subhead1(minAmount),
+                            isLast: itemCount == mainRows.count + 1
                     )
             )
         }
