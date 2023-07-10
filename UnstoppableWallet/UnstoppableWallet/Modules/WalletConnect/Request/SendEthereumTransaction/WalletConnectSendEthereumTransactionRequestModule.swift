@@ -14,7 +14,7 @@ struct WalletConnectSendEthereumTransactionRequestModule {
 
     static func viewController(signService: IWalletConnectSignService, request: WalletConnectSendEthereumTransactionRequest) -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount,
-              let evmKitWrapper = App.shared.walletConnectManager.evmKitWrapper(chainId: request.chainId ?? 1, account: account) else {
+              let evmKitWrapper = App.shared.walletConnectManager.evmKitWrapper(chainId: request.chain.id, account: account) else {
             return nil
         }
 
@@ -28,7 +28,8 @@ struct WalletConnectSendEthereumTransactionRequestModule {
         }
 
         let service = WalletConnectSendEthereumTransactionRequestService(request: request, baseService: signService)
-        let additionalInfo: SendEvmData.AdditionInfo = .otherDApp(info: SendEvmData.DAppInfo(name: request.dAppName))
+        let info = SendEvmData.DAppInfo(name: request.dAppName, chainName: request.chain.chainName, address: request.chain.address)
+        let additionalInfo: SendEvmData.AdditionInfo = .otherDApp(info: info)
         let sendEvmData = SendEvmData(transactionData: service.transactionData, additionalInfo: additionalInfo, warnings: [])
 
         guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(

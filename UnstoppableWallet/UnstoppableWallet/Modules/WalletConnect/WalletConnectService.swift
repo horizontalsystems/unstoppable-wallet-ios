@@ -279,7 +279,7 @@ extension WalletConnectService: IWalletConnectInteractorDelegate {
         let peerName = sessionData?.peerMeta.name
         queue.async {
             self.handleRequest(id: id) {
-                try WalletConnectSendEthereumTransactionRequest(id: id, chainId: chainId, dAppName: peerName, transaction: transaction)
+                try WalletConnectSendEthereumTransactionRequest(id: id, chain: .init(id: chainId ?? 1), dAppName: peerName, transaction: transaction)
             }
         }
     }
@@ -293,7 +293,7 @@ extension WalletConnectService: IWalletConnectInteractorDelegate {
         let peerName = sessionData?.peerMeta.name
         queue.async {
             self.handleRequest(id: id) {
-                WalletConnectSignMessageRequest(id: id, chainId: chainId, dAppName: peerName, payload: payload)
+                WalletConnectSignMessageRequest(id: id, chain: .init(id: chainId ?? 1), dAppName: peerName, payload: payload)
             }
         }
     }

@@ -56,6 +56,10 @@ extension WalletConnectSignMessageRequestService {
         request.dAppName
     }
 
+    var chain: WalletConnectRequest.Chain {
+        request.chain
+    }
+
     func sign() throws {
         let signedMessage: Data
 

@@ -71,6 +71,30 @@ class SendEvmTransactionViewModel {
         return "\(slippage)%"
     }
 
+    private func dAppSection(additionalInfo: SendEvmData.AdditionInfo?) -> SectionViewItem? {
+        guard case let .otherDApp(info) = additionalInfo else {
+            return nil
+        }
+        return dAppSection(additionalInfo: info)
+    }
+
+    private func dAppSection(additionalInfo: SendEvmData.DAppInfo?) -> SectionViewItem? {
+        guard let info = additionalInfo else {
+            return nil
+        }
+        var viewItems = [ViewItem]()
+        if let dAppName = info.name {
+            viewItems.append(.value(title: "wallet_connect.sign.dapp_name".localized, value: dAppName, type: .regular))
+        }
+        if let chainName = info.chainName {
+            viewItems.append(.value(title: chainName, value: info.address?.shortened ?? "", type: .regular))
+        }
+        if viewItems.isEmpty {
+            return nil
+        }
+        return SectionViewItem(viewItems: viewItems)
+    }
+
     private func sync(sendState: SendEvmTransactionService.SendState) {
         switch sendState {
         case .idle: ()
@@ -142,6 +166,7 @@ class SendEvmTransactionViewModel {
                     spender: decoration.spender,
                     value: decoration.value,
                     contractAddress: decoration.contractAddress,
+                    additionalInfo: additionalInfo,
                     nonce: nonce
             )
 
@@ -354,7 +379,7 @@ class SendEvmTransactionViewModel {
         return [SectionViewItem(viewItems: viewItems)]
     }
 
-    private func eip20ApproveItems(spender: EvmKit.Address, value: BigUInt, contractAddress: EvmKit.Address, nonce: Int?) -> [SectionViewItem]? {
+    private func eip20ApproveItems(spender: EvmKit.Address, value: BigUInt, contractAddress: EvmKit.Address, additionalInfo: SendEvmData.AdditionInfo?, nonce: Int?) -> [SectionViewItem]? {
         guard let coinService = coinServiceFactory.coinService(contractAddress: contractAddress) else {
             return nil
         }
@@ -403,7 +428,11 @@ class SendEvmTransactionViewModel {
             viewItems.append(.value(title: "send.confirmation.nonce".localized, value: nonce.description, type: .regular))
         }
 
-        return [SectionViewItem(viewItems: viewItems)]
+        var sections = [SectionViewItem(viewItems: viewItems)]
+        if let section = dAppSection(additionalInfo: additionalInfo) {
+            sections.append(section)
+        }
+        return sections
     }
 
     private func uniswapItems(amountIn: SwapDecoration.Amount, amountOut: SwapDecoration.Amount, tokenIn: SwapDecoration.Token, tokenOut: SwapDecoration.Token, recipient: EvmKit.Address?, deadline: BigUInt?, swapInfo: SendEvmData.SwapInfo?, nonce: Int?) -> [SectionViewItem]? {
@@ -658,13 +687,12 @@ class SendEvmTransactionViewModel {
             viewItems.append(.value(title: "send.confirmation.method".localized, value: methodName, type: .regular))
         }
 
-        if let dAppName = dAppInfo?.name {
-            viewItems.append(.value(title: "wallet_connect.sign.dapp_name".localized, value: dAppName, type: .regular))
+        var sections = [SectionViewItem(viewItems: viewItems)]
+        if let section = dAppSection(additionalInfo: dAppInfo) {
+            sections.append(section)
         }
 
-        return [
-            SectionViewItem(viewItems: viewItems)
-        ]
+        return sections
     }
 
     private func coinService(token: SwapDecoration.Token) -> CoinService? {

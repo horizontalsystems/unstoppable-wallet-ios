@@ -5,10 +5,7 @@ import HsExtensions
 
 struct WalletConnectV2RequestMapper {
 
-    static func map(dAppName: String?, request: WalletConnectSign.Request) throws -> WalletConnectRequest? {
-        guard let chainId = Int(request.chainId.reference) else {
-            return nil
-        }
+    static func map(dAppName: String?, chain: WalletConnectRequest.Chain, request: WalletConnectSign.Request) throws -> WalletConnectRequest? {
         let id = request.id.intValue
         switch request.method {
         case "eth_sign":
@@ -19,7 +16,7 @@ struct WalletConnectV2RequestMapper {
             }
             return WalletConnectSignMessageRequest(
                     id: id,
-                    chainId: chainId,
+                    chain: chain,
                     dAppName: dAppName,
                     payload: WCEthereumSignPayload.sign(data: data, raw: params)
             )
@@ -32,7 +29,7 @@ struct WalletConnectV2RequestMapper {
             }
             return WalletConnectSignMessageRequest(
                     id: id,
-                    chainId: chainId,
+                    chain: chain,
                     dAppName: dAppName,
                     payload: WCEthereumSignPayload.personalSign(data: data, raw: params)
             )
@@ -45,7 +42,7 @@ struct WalletConnectV2RequestMapper {
             }
             return WalletConnectSignMessageRequest(
                     id: id,
-                    chainId: chainId,
+                    chain: chain,
                     dAppName: dAppName,
                     payload: WCEthereumSignPayload.signTypeData(id: request.id.int64Value, data: data, raw: params)
             )
@@ -57,7 +54,7 @@ struct WalletConnectV2RequestMapper {
             }
             return try WalletConnectSendEthereumTransactionRequest(
                     id: id,
-                    chainId: chainId,
+                    chain: chain,
                     dAppName: dAppName,
                     transaction: transactions[0]
             )

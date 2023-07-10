@@ -90,14 +90,24 @@ class WalletConnectV2SessionManager {
     }
 
     private func receiveSession(request: WalletConnectSign.Request) {
-        guard let accountId = accountManager.activeAccount?.id else {
+        guard let account = accountManager.activeAccount else {
             return
         }
-        let activeSessions = storage.sessionsV2(accountId: accountId)
+        let activeSessions = storage.sessionsV2(accountId: account.id)
 
+        guard let chainId = Int(request.chainId.reference),
+              let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
+              let address = try? WalletConnectManager.evmAddress(
+                      account: account,
+                      chain: evmBlockchainManager.chain(blockchainType: blockchain.type)
+              ) else {
+            return
+        }
+
+        let chain = WalletConnectRequest.Chain(id: chainId, chainName: blockchain.name, address: address.eip55)
         guard activeSessions.first(where: { session in session.topic == request.topic }) != nil,
               let session = allSessions.first(where: { session in session.topic == request.topic }),
-              let request = try? WalletConnectV2RequestMapper.map(dAppName: session.peer.name, request: request) else {
+              let request = try? WalletConnectV2RequestMapper.map(dAppName: session.peer.name, chain: chain, request: request) else {
             return
         }
 

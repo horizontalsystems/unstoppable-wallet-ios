@@ -6,6 +6,7 @@ import WalletConnectSign
 class WalletConnectV2MainPendingRequestService {
     private let disposeBag = DisposeBag()
 
+    private let accountManager: AccountManager
     private let sessionManager: WalletConnectV2SessionManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let signService: IWalletConnectSignService
@@ -20,11 +21,12 @@ class WalletConnectV2MainPendingRequestService {
 
     private let showPendingRequestRelay = PublishRelay<WalletConnectRequest>()
 
-    init(service: WalletConnectV2MainService, sessionManager: WalletConnectV2SessionManager, evmBlockchainManager: EvmBlockchainManager, signService: IWalletConnectSignService) {
+    init(service: WalletConnectV2MainService, accountManager: AccountManager, sessionManager: WalletConnectV2SessionManager, evmBlockchainManager: EvmBlockchainManager, signService: IWalletConnectSignService) {
+        self.accountManager = accountManager
         self.sessionManager = sessionManager
         self.evmBlockchainManager = evmBlockchainManager
         self.signService = signService
-        self.session = service.session
+        session = service.session
 
         subscribe(disposeBag, service.sessionUpdatedObservable) { [weak self] in self?.update(session: $0) }
         subscribe(disposeBag, sessionManager.activePendingRequestsObservable) { [weak self] _ in self?.syncPendingRequests() }
@@ -84,7 +86,20 @@ extension WalletConnectV2MainPendingRequestService {
             return
         }
         let session = sessionManager.sessions.first { $0.topic == request.topic }
-        guard let wcRequest = try? WalletConnectV2RequestMapper.map(dAppName: session?.peer.name, request: request) else {
+
+        guard let chainId = Int(request.chainId.reference),
+              let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
+              let account = accountManager.activeAccount,
+              let address = try? WalletConnectManager.evmAddress(
+                      account: account,
+                      chain: evmBlockchainManager.chain(blockchainType: blockchain.type)
+              ) else {
+            return
+        }
+
+        let chain = WalletConnectRequest.Chain(id: chainId, chainName: blockchain.name, address: address.eip55)
+
+        guard let wcRequest = try? WalletConnectV2RequestMapper.map(dAppName: session?.peer.name, chain: chain, request: request) else {
             return
         }
 

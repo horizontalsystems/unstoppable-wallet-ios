@@ -288,6 +288,7 @@ class App {
         walletConnectV2SocketConnectionService = WalletConnectV2SocketConnectionService(reachabilityManager: reachabilityManager, logger: logger)
         let walletConnectV2Service = WalletConnectV2Service(
                 connectionService: walletConnectV2SocketConnectionService,
+                sessionRequestFilterManager: SessionRequestFilterManager(),
                 info: walletClientInfo,
                 logger: logger
         )

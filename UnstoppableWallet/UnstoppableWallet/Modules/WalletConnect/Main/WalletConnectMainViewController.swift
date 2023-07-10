@@ -383,16 +383,6 @@ extension WalletConnectMainViewController: SectionsDataSource {
                 }
             }
 
-            if let blockchains = viewItem.blockchains {
-                for blockchain in blockchains {
-                    rowInfos.append(.value(
-                            title: blockchain.chainTitle ?? "Unsupported",
-                            value: blockchain.address,
-                            valueColor: nil
-                    ))
-                }
-            }
-
             for (index, rowInfo) in rowInfos.enumerated() {
                 let isFirst = index == 0
                 let isLast = index == rowInfos.count - 1

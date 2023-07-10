@@ -13,7 +13,7 @@ struct WalletConnectSignMessageRequestModule {
 
     static func viewController(signService: IWalletConnectSignService, request: WalletConnectSignMessageRequest) -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount,
-              let evmWrapper = App.shared.walletConnectManager.evmKitWrapper(chainId: request.chainId ?? 1, account: account),
+              let evmWrapper = App.shared.walletConnectManager.evmKitWrapper(chainId: request.chain.id, account: account),
               let signer = evmWrapper.signer else {
             return nil
         }
