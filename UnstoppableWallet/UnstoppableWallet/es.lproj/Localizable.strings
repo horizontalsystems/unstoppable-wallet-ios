@@ -1613,6 +1613,7 @@
 "cex_deposit.address" = "Dirección";
 "cex_deposit.network" = "Red";
 "cex_deposit.memo" = "Memo (Tag)";
+"cex_deposit.min_amount" = "Min. Amount";
 "cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
 "cex_deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
 "cex_deposit.copy_address" = "Copy Address";
