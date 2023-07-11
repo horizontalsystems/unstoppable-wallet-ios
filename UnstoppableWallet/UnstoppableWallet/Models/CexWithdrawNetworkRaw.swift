@@ -9,17 +9,21 @@ struct CexWithdrawNetworkRaw: ImmutableMappable {
     let enabled: Bool
     let minAmount: Decimal
     let maxAmount: Decimal
-    let commission: Decimal
+    let fixedFee: Decimal
+    let feePercent: Decimal
+    let minFee: Decimal
     let blockchainUid: String?
 
-    init(id: String, name: String, isDefault: Bool, enabled: Bool, minAmount: Decimal, maxAmount: Decimal, commission: Decimal, blockchainUid: String?) {
+    init(id: String, name: String, isDefault: Bool, enabled: Bool, minAmount: Decimal, maxAmount: Decimal, fixedFee: Decimal, feePercent: Decimal, minFee: Decimal, blockchainUid: String?) {
         self.id = id
         self.name = name
         self.isDefault = isDefault
         self.enabled = enabled
         self.minAmount = minAmount
         self.maxAmount = maxAmount
-        self.commission = commission
+        self.fixedFee = fixedFee
+        self.feePercent = feePercent
+        self.minFee = minFee
         self.blockchainUid = blockchainUid
     }
 
@@ -30,7 +34,9 @@ struct CexWithdrawNetworkRaw: ImmutableMappable {
         enabled = try map.value("enabled")
         minAmount = try map.value("minAmount", using: Transform.stringToDecimalTransform)
         maxAmount = try map.value("maxAmount", using: Transform.stringToDecimalTransform)
-        commission = try map.value("commission", using: Transform.stringToDecimalTransform)
+        fixedFee = try map.value("fixedFee", using: Transform.stringToDecimalTransform)
+        feePercent = try map.value("feePercent", using: Transform.stringToDecimalTransform)
+        minFee = try map.value("minFee", using: Transform.stringToDecimalTransform)
         blockchainUid = try map.value("blockchainUid")
     }
 
@@ -41,7 +47,9 @@ struct CexWithdrawNetworkRaw: ImmutableMappable {
         enabled >>> map["enabled"]
         minAmount.description >>> map["minAmount"]
         maxAmount.description >>> map["maxAmount"]
-        commission.description >>> map["commission"]
+        fixedFee.description >>> map["fixedFee"]
+        feePercent.description >>> map["feePercent"]
+        minFee.description >>> map["minFee"]
         blockchainUid >>> map["blockchainUid"]
     }
 
@@ -53,7 +61,9 @@ struct CexWithdrawNetworkRaw: ImmutableMappable {
                 enabled: enabled,
                 minAmount: minAmount,
                 maxAmount: maxAmount,
-                commission: commission,
+                fixedFee: fixedFee,
+                feePercent: feePercent,
+                minFee: minFee,
                 blockchain: blockchain
         )
     }
