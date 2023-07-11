@@ -8,7 +8,9 @@ struct CexWithdrawNetwork {
     let enabled: Bool
     let minAmount: Decimal
     let maxAmount: Decimal
-    let commission: Decimal
+    let fixedFee: Decimal
+    let feePercent: Decimal
+    let minFee: Decimal
     let blockchain: Blockchain?
 
     var networkName: String {
@@ -25,7 +27,8 @@ extension CexWithdrawNetwork: Hashable {
 
     static func ==(lhs: CexWithdrawNetwork, rhs: CexWithdrawNetwork) -> Bool {
         lhs.id == rhs.id && lhs.name == rhs.name && lhs.isDefault == rhs.isDefault && lhs.enabled == rhs.enabled
-                && lhs.minAmount == rhs.minAmount && lhs.maxAmount == rhs.maxAmount && lhs.commission == rhs.commission
+                && lhs.minAmount == rhs.minAmount && lhs.maxAmount == rhs.maxAmount
+                && lhs.fixedFee == rhs.fixedFee && lhs.feePercent == rhs.feePercent && lhs.minFee == rhs.minFee
                 && lhs.blockchain == rhs.blockchain
     }
 

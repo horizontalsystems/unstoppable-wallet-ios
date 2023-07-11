@@ -27,6 +27,7 @@ class CoinzixCexProvider {
             "ALGO": "algorand",
             "AMP": "amp-token",
             "APE": "apecoin-ape",
+            "ARB": "arbitrum",
             "ATOM": "cosmos",
             "AVAX": "avalanche-2",
             "AXS": "axie-infinity",
@@ -49,6 +50,7 @@ class CoinzixCexProvider {
             "FIL": "filecoin",
             "FLOKI": "floki",
             "FTM": "fantom",
+            "GALA": "gala",
             "GMT": "stepn",
             "GRT": "the-graph",
             "HOT": "holotoken",
@@ -93,7 +95,7 @@ class CoinzixCexProvider {
         ]
     }
 
-    private func blockchainUidMap() async throws -> [Int: String] {
+    private func networkTypeToBlockchainUidMap() async throws -> [Int: String] {
         [
             1: "ethereum",
             2: "tron",
@@ -102,6 +104,38 @@ class CoinzixCexProvider {
             6: "solana",
             8: "polygon-pos",
             9: "arbitrum-one",
+        ]
+    }
+
+    private func isoToBlockchainUidMap() async throws -> [String: String] {
+        [
+            "ADA": "cardano",
+            "ALGO": "algorand",
+            "ATOM": "cosmos",
+            "BCH": "bitcoin-cash",
+            "BTC": "bitcoin",
+            "DOGE": "dogecoin",
+            "DOT": "polkadot",
+            "EGLD": "elrond-erd-2",
+            "EOS": "eos",
+            "ETH": "ethereum",
+            "LTC": "litecoin",
+            "LUNA": "terra-luna-2",
+            "LUNC": "terra-luna",
+            "MATIC": "polygon-pos",
+            "ONE": "harmony",
+            "QTUM": "qtum",
+            "RUNE": "thorchain",
+            "SC": "siacoin",
+            "SOL": "solana",
+            "SUI": "sui",
+            "THETA": "theta-token",
+            "TRX": "tron",
+            "VET": "vechain",
+            "XLM": "stellar",
+            "XMR": "monero",
+            "XRP": "ripple",
+            "ZIL": "zilliqa",
         ]
     }
 
@@ -148,11 +182,19 @@ extension CoinzixCexProvider: ICexProvider {
         let (configResponse, balancesResponse) = try await (configRequest, balancesRequest)
 
         let coinUidMap = try await coinUidMap()
-        let blockchainUidMap = try await blockchainUidMap()
+        let networkTypeToBlockchainUidMap = try await networkTypeToBlockchainUidMap()
+        let isoToBlockchainUidMap = try await isoToBlockchainUidMap()
+
+        let ignoredIds = configResponse.fiatCurrencies + configResponse.demoCurrencies.values
 
         return balancesResponse.items
-                .map { item in
+                .compactMap { item in
                     let assetId = item.currencyIso3
+
+                    guard !ignoredIds.contains(assetId) else {
+                        return nil
+                    }
+
                     let balance = Decimal(sign: .plus, exponent: -8, significand: item.balance)
                     let balanceAvailable = Decimal(sign: .plus, exponent: -8, significand: item.balanceAvailable)
                     let depositEnabled = configResponse.depositCurrencies.contains(assetId)
@@ -168,23 +210,25 @@ extension CoinzixCexProvider: ICexProvider {
                             depositNetworks: configResponse.depositNetworks(id: assetId).enumerated().map { index, network in
                                 CexDepositNetworkRaw(
                                         id: String(network.networkType),
-                                        name: network.networkType == 0 ? "Native" : String(network.networkType),
+                                        name: String(network.networkType),
                                         isDefault: index == 0,
                                         enabled: depositEnabled,
                                         minAmount: network.minRefill,
-                                        blockchainUid: blockchainUidMap[network.networkType]
+                                        blockchainUid: network.networkType == 0 ? isoToBlockchainUidMap[assetId] : networkTypeToBlockchainUidMap[network.networkType]
                                 )
                             },
                             withdrawNetworks: configResponse.withdrawNetworks(id: assetId).enumerated().map { index, network in
                                 CexWithdrawNetworkRaw(
                                         id: String(network.networkType),
-                                        name: network.networkType == 0 ? "Native" : String(network.networkType),
+                                        name: String(network.networkType),
                                         isDefault: index == 0,
                                         enabled: withdrawEnabled,
                                         minAmount: network.minWithdraw,
                                         maxAmount: network.maxWithdraw,
-                                        commission: network.fixed,
-                                        blockchainUid: blockchainUidMap[network.networkType]
+                                        fixedFee: network.fixed,
+                                        feePercent: network.percent,
+                                        minFee: network.minCommission,
+                                        blockchainUid: network.networkType == 0 ? isoToBlockchainUidMap[assetId] : networkTypeToBlockchainUidMap[network.networkType]
                                 )
                             },
                             coinUid: coinUidMap[assetId]
@@ -297,12 +341,16 @@ extension CoinzixCexProvider {
         let depositCurrencies: [String]
         let withdrawNetworks: [String: WithdrawNetwork]
         let depositNetworks: [String: DepositNetwork]
+        let demoCurrencies: [String: String]
+        let fiatCurrencies: [String]
 
         init(map: Map) throws {
             withdrawCurrencies = try map.value("data.currency_withdraw")
             depositCurrencies = try map.value("data.currency_deposit")
             withdrawNetworks = try map.value("data.commission")
             depositNetworks = try map.value("data.commission_refill")
+            demoCurrencies = try map.value("data.demo_currency")
+            fiatCurrencies = try map.value("data.fiat_currencies")
         }
 
         func withdrawNetworks(id: String) -> [WithdrawNetwork] {
@@ -323,6 +371,7 @@ extension CoinzixCexProvider {
 
         struct WithdrawNetwork: ImmutableMappable {
             let fixed: Decimal
+            let percent: Decimal
             let minCommission: Decimal
             let maxWithdraw: Decimal
             let minWithdraw: Decimal
@@ -331,6 +380,7 @@ extension CoinzixCexProvider {
 
             init(map: Map) throws {
                 fixed = try map.value("fixed", using: Transform.doubleToDecimalTransform)
+                percent = try map.value("percent", using: Transform.doubleToDecimalTransform)
                 minCommission = try map.value("min_commission", using: Transform.doubleToDecimalTransform)
                 maxWithdraw = try map.value("max_withdraw", using: Transform.doubleToDecimalTransform)
                 minWithdraw = try map.value("min_withdraw", using: Transform.doubleToDecimalTransform)

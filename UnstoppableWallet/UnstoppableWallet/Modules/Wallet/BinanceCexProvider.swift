@@ -514,7 +514,9 @@ extension BinanceCexProvider: ICexProvider {
                                         enabled: network.withdrawEnable,
                                         minAmount: network.withdrawMin,
                                         maxAmount: network.withdrawMax,
-                                        commission: network.withdrawFee,
+                                        fixedFee: network.withdrawFee,
+                                        feePercent: 0,
+                                        minFee: 0,
                                         blockchainUid: blockchainUidMap[network.network]
                                 )
                             },
