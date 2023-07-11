@@ -317,10 +317,17 @@ class WalletViewController: ThemeViewController {
     }
 
     private func sync(headerViewItem: WalletViewModel.HeaderViewItem?) {
+        let heightChanged = self.headerViewItem?.buttonsVisible != headerViewItem?.buttonsVisible
+
         self.headerViewItem = headerViewItem
 
         if isLoaded, let headerCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? WalletHeaderCell {
             bind(headerCell: headerCell)
+
+            if heightChanged {
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            }
         }
     }
 
