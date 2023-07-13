@@ -7,6 +7,8 @@ class CexWithdrawConfirmService {
     let network: CexWithdrawNetwork?
     let address: String
     let amount: Decimal
+    let feeFromAmount: Bool
+    let fee: Decimal
     private let provider: ICexProvider
     private var tasks = Set<AnyTask>()
 
@@ -14,11 +16,13 @@ class CexWithdrawConfirmService {
     private let confirmWithdrawSubject = PassthroughSubject<String, Never>()
     private let errorSubject = PassthroughSubject<Error, Never>()
 
-    init(cexAsset: CexAsset, network: CexWithdrawNetwork?, address: String, amount: Decimal, provider: ICexProvider) {
-        self.cexAsset = cexAsset
-        self.network = network
-        self.address = address
-        self.amount = amount
+    init(sendData: CexWithdrawModule.SendData, provider: ICexProvider) {
+        cexAsset = sendData.cexAsset
+        network = sendData.network
+        address = sendData.address
+        amount = sendData.feeFromAmount ? sendData.amount - sendData.fee : sendData.amount
+        feeFromAmount = sendData.feeFromAmount
+        fee = sendData.fee
         self.provider = provider
     }
 
@@ -39,10 +43,10 @@ extension CexWithdrawConfirmService {
 
         state = .loading
 
-        Task { [weak self, provider, cexAsset, network, address, amount] in
+        Task { [weak self, provider, cexAsset, network, address, amount, feeFromAmount] in
             do {
-//                let id = try await provider.withdraw(id: cexAsset.id, network: network?.id, address: address, amount: amount)
-                self?.confirmWithdrawSubject.send("1000") // TODO: Send "id"
+                let id = try await provider.withdraw(id: cexAsset.id, network: network?.id, address: address, amount: amount, feeFromAmount: feeFromAmount)
+                self?.confirmWithdrawSubject.send(id)
             } catch {
                 self?.errorSubject.send(error)
             }

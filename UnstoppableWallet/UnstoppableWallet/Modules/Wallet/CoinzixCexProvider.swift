@@ -260,11 +260,12 @@ extension CoinzixCexProvider: ICexProvider {
         }
     }
 
-    func withdraw(id: String, network: String?, address: String, amount: Decimal) async throws -> String {
+    func withdraw(id: String, network: String?, address: String, amount: Decimal, feeFromAmount: Bool?) async throws -> String {
         var parameters: Parameters = [
             "iso": id,
             "to_address": address,
-            "amount": amount
+            "amount": amount,
+            "fee_from_amount": (feeFromAmount ?? false) ? 1 : 0
         ]
 
         if let network {
@@ -283,8 +284,7 @@ extension CoinzixCexProvider: ICexProvider {
     func confirmWithdraw(id: Int, emailPin: String, googlePin: String) async throws {
         let parameters: Parameters = [
             "id": id,
-            "email_pin": emailPin,
-            "google_pin": googlePin
+            "email_pin": emailPin
         ]
 
         let response: StatusResponse = try await signedFetch(path: "/v1/withdraw/confirm-code", parameters: parameters)

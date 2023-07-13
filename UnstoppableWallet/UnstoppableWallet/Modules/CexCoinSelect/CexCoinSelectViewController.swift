@@ -100,8 +100,9 @@ class CexCoinSelectViewController: ThemeSearchViewController {
             }
             navigationController?.pushViewController(viewController, animated: true)
         case .withdraw:
-            let viewController = CexWithdrawModule.viewController(cexAsset: cexAsset)
-            navigationController?.pushViewController(viewController, animated: true)
+            if let viewController = CexWithdrawModule.viewController(cexAsset: cexAsset) {
+                navigationController?.pushViewController(viewController, animated: true)
+            }
         }
     }
 

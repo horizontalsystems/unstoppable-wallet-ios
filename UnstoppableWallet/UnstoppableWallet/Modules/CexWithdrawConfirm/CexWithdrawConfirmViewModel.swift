@@ -3,6 +3,7 @@ import RxSwift
 
 class CexWithdrawConfirmViewModel {
     private let service: CexWithdrawConfirmService
+    private let coinService: CexCoinService
     private let contactLabelService: ContactLabelService?
     private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
@@ -10,8 +11,9 @@ class CexWithdrawConfirmViewModel {
     @Published private(set) var sectionViewItems = [SectionViewItem]()
     @Published private(set) var withdrawing = false
 
-    init(service: CexWithdrawConfirmService, contactLabelService: ContactLabelService?) {
+    init(service: CexWithdrawConfirmService, coinService: CexCoinService, contactLabelService: ContactLabelService?) {
         self.service = service
+        self.coinService = coinService
         self.contactLabelService = contactLabelService
 
         subscribe(disposeBag, contactLabelService?.stateObservable) { [weak self] _ in
@@ -45,6 +47,12 @@ class CexWithdrawConfirmViewModel {
                     ])
             )
         }
+
+        sectionViewItems.append(
+            SectionViewItem(viewItems: [
+                .feeValue(title: "cex_withdraw.fee".localized, value: coinService.amountData(value: service.fee, sign: .plus))
+            ])
+        )
 
         self.sectionViewItems = sectionViewItems
     }
@@ -111,6 +119,7 @@ extension CexWithdrawConfirmViewModel {
         case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
         case address(title: String, value: String, contactAddress: ContactAddress?)
         case value(title: String, value: String, type: ValueType)
+        case feeValue(title: String, value: AmountData)
     }
 
 }

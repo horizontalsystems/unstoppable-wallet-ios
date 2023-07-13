@@ -4,7 +4,7 @@ import ComponentKit
 
 struct CexWithdrawConfirmModule {
 
-    static func viewController(cexAsset: CexAsset, network: CexWithdrawNetwork?, address: String, amount: Decimal) -> UIViewController? {
+    static func viewController(sendData: CexWithdrawModule.SendData) -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount else {
             return nil
         }
@@ -14,12 +14,13 @@ struct CexWithdrawConfirmModule {
         }
 
         let provider = App.shared.cexProviderFactory.provider(type: type)
-        let contactLabelService = network?.blockchain.map {
+        let contactLabelService = sendData.network?.blockchain.map {
             ContactLabelService(contactManager: App.shared.contactManager, blockchainType: $0.type)
         }
 
-        let service = CexWithdrawConfirmService(cexAsset: cexAsset, network: network, address: address, amount: amount, provider: provider)
-        let viewModel = CexWithdrawConfirmViewModel(service: service, contactLabelService: contactLabelService)
+        let service = CexWithdrawConfirmService(sendData: sendData, provider: provider)
+        let coinService = CexCoinService(cexAsset: sendData.cexAsset, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let viewModel = CexWithdrawConfirmViewModel(service: service, coinService: coinService, contactLabelService: contactLabelService)
         return CexWithdrawConfirmViewController(viewModel: viewModel, cex: type.cex)
     }
 

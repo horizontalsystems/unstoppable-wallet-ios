@@ -7,7 +7,7 @@ import MarketKit
 protocol ICexProvider {
     func assets() async throws -> [CexAssetResponse]
     func deposit(id: String, network: String?) async throws -> (String, String?)
-    func withdraw(id: String, network: String?, address: String, amount: Decimal) async throws -> String
+    func withdraw(id: String, network: String?, address: String, amount: Decimal, feeFromAmount: Bool?) async throws -> String
 }
 
 class WalletCexElementService {
