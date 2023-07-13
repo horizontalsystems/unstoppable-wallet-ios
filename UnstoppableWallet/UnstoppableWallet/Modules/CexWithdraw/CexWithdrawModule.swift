@@ -4,18 +4,21 @@ import StorageKit
 
 struct CexWithdrawModule {
 
-    static func viewController(cexAsset: CexAsset) -> UIViewController {
+    static func viewController(cexAsset: CexAsset) -> UIViewController? {
         let networks = cexAsset.withdrawNetworks
-        let defaultNetwork = networks.first(where: { $0.isDefault }) ?? networks.first
+
+        guard let defaultNetwork = networks.first(where: { $0.isDefault }) ?? networks.first else {
+            return nil
+        }
 
         let addressService = AddressService(
             mode: .blockchainType,
             marketKit: App.shared.marketKit,
             contactBookManager: App.shared.contactManager,
-            blockchainType: defaultNetwork?.blockchain?.type
+            blockchainType: defaultNetwork.blockchain?.type
         )
 
-        let service = CexWithdrawService(cexAsset: cexAsset, addressService: addressService)
+        let service = CexWithdrawService(cexAsset: cexAsset, addressService: addressService, selectedNetwork: defaultNetwork)
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
         let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 
@@ -33,7 +36,7 @@ struct CexWithdrawModule {
         addressService.amountPublishService = amountViewModel
 
         let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
-        let viewModel = CexWithdrawViewModel(service: service)
+        let viewModel = CexWithdrawViewModel(service: service, coinService: coinService)
 
         return CexWithdrawViewController(
             viewModel: viewModel,
@@ -52,6 +55,8 @@ extension CexWithdrawModule {
         let network: CexWithdrawNetwork?
         let address: String
         let amount: Decimal
+        let feeFromAmount: Bool
+        let fee: Decimal
     }
 
 }

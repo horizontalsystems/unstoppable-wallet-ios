@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import RxCocoa
 import MarketKit
 import Combine
 import HsExtensions
@@ -9,33 +10,95 @@ class CexWithdrawService {
     private var cancellables = Set<AnyCancellable>()
     private let addressService: AddressService
 
-    @PostPublished private(set) var state: State = .notReady
+    @PostPublished private(set) var proceedSendData: CexWithdrawModule.SendData? = nil
     @PostPublished private(set) var amountError: Error? = nil
-    @PostPublished private(set) var selectedNetwork: CexWithdrawNetwork?
+    @PostPublished private(set) var selectedNetwork: CexWithdrawNetwork
+    @PostPublished private(set) var fee: Decimal = 0
+    private let availableBalanceSubject = PublishSubject<Decimal>()
+    private let amountSubject = PublishSubject<Decimal>()
 
     let cexAsset: CexAsset
     let networks: [CexWithdrawNetwork]
-    private var validAmount: Decimal? = nil
 
-    init(cexAsset: CexAsset, addressService: AddressService) {
+    private var feeFromAmount: Bool
+    private var _availableBalance: Decimal = 0 {
+        didSet {
+            availableBalanceSubject.onNext(_availableBalance)
+        }
+    }
+    private(set) var amount: Decimal = 0 {
+        didSet {
+            amountSubject.onNext(amount)
+        }
+    }
+
+    // error, errorObservable are for AddressService to show error on address input field if it is empty.
+    // "Address Required" must be shown when "Next" button is clicked.
+    private let errorRelay = BehaviorRelay<Error?>(value: nil)
+    var error: Error? {
+        didSet {
+            errorRelay.accept(error)
+        }
+    }
+
+    init(cexAsset: CexAsset, addressService: AddressService, selectedNetwork: CexWithdrawNetwork) {
         self.cexAsset = cexAsset
         self.addressService = addressService
         self.networks = cexAsset.withdrawNetworks
+        self.selectedNetwork = selectedNetwork
 
-        addressService.stateObservable
-            .subscribe { [weak self] _ in self?.syncState() }
-            .disposed(by: disposeBag)
-
-        selectedNetwork = networks.first(where: { $0.isDefault }) ?? networks.first
+        feeFromAmount = false
+        syncAvailableBalance()
+        addressService.customErrorService = self
+        subscribe(disposeBag, addressService.stateObservable) { [weak self] _ in self?.error = nil }
     }
 
-    private func syncState() {
-        if amountError == nil, case let .success(address) = addressService.state, let amount = validAmount {
-            state = .ready(sendData: CexWithdrawModule.SendData(
-                cexAsset: cexAsset, network: selectedNetwork, address: address.raw, amount: amount))
-        } else {
-            state = .notReady
+    private func syncFee() {
+        fee = calculateFee(amount: amount, feeFromAmount: feeFromAmount)
+        amountError = nil
+    }
+
+    private func syncAvailableBalance() {
+        _availableBalance = cexAsset.freeBalance - calculateFee(amount: cexAsset.freeBalance, feeFromAmount: feeFromAmount)
+    }
+
+    private func validateAmount() throws {
+        if amount > _availableBalance {
+            throw AmountError.insufficientBalance
         }
+
+        var maxAmount = selectedNetwork.maxAmount
+        if maxAmount.isZero {
+            maxAmount = Decimal.greatestFiniteMagnitude
+        }
+
+        if amount > maxAmount {
+            throw AmountError.maxAmountViolated(coinAmount: "\(selectedNetwork.maxAmount.description) \(cexAsset.coinCode)")
+        }
+
+        if amount < selectedNetwork.minAmount {
+            throw AmountError.minAmountViolated(coinAmount: "\(selectedNetwork.minAmount.description) \(cexAsset.coinCode)")
+        }
+
+        if feeFromAmount && amount < fee {
+            throw AmountError.minAmountViolated(coinAmount: "\(fee.description) \(cexAsset.coinCode)")
+        }
+    }
+
+    private func calculateFee(amount: Decimal, feeFromAmount: Bool) -> Decimal {
+        var fee: Decimal = 0
+
+        if feeFromAmount {
+            fee = amount - (amount - selectedNetwork.fixedFee) / (1 + selectedNetwork.feePercent / 100)
+        } else {
+            fee = amount * selectedNetwork.feePercent / 100 + selectedNetwork.fixedFee
+        }
+
+        if fee < selectedNetwork.minFee {
+            fee = selectedNetwork.minFee
+        }
+
+        return fee
     }
 
 }
@@ -43,73 +106,107 @@ class CexWithdrawService {
 extension CexWithdrawService: IAvailableBalanceService {
 
     var availableBalance: DataStatus<Decimal> {
-        .completed(cexAsset.freeBalance)
+        .completed(_availableBalance)
     }
 
     var availableBalanceObservable: Observable<DataStatus<Decimal>> {
-        Observable.just(.completed(cexAsset.freeBalance))
-    }
-
-    func setSelectNetwork(index: Int) {
-        if let network = networks.at(index: index) {
-            selectedNetwork = network
-            network.blockchain.flatMap {
-                addressService.change(blockchainType: $0.type)
-            }
-        }
+        availableBalanceSubject.asObserver().map { .completed($0) }
     }
 
 }
 
 extension CexWithdrawService: ICexAmountInputService {
 
-    var amount: Decimal {
-        0
-    }
-
     var balance: Decimal? {
-        cexAsset.freeBalance
+        _availableBalance
     }
 
     var amountObservable: Observable<Decimal> {
-        .empty()
+        amountSubject.asObserver()
     }
 
     var balanceObservable: Observable<Decimal?> {
-        .just(cexAsset.freeBalance)
+        availableBalanceSubject.asObserver().map { $0 }
     }
 
     func onChange(amount: Decimal) {
-        if amount > 0 {
-            do {
-                if amount > cexAsset.freeBalance {
-                    throw AmountError.insufficientBalance
-                }
+        self.amount = amount
+        syncFee()
+    }
 
-                validAmount = amount
-            } catch {
-                validAmount = nil
-                amountError = error
-            }
-        } else {
-            validAmount = nil
-            amountError = nil
-        }
+}
 
-        syncState()
+extension CexWithdrawService: IErrorService {
+
+    var errorObservable: Observable<Error?> {
+        errorRelay.asObservable()
     }
 
 }
 
 extension CexWithdrawService {
 
-    enum State {
-        case ready(sendData: CexWithdrawModule.SendData)
-        case notReady
+    func setSelectNetwork(index: Int) {
+        if let network = networks.at(index: index) {
+            selectedNetwork = network
+            network.blockchain.flatMap { addressService.change(blockchainType: $0.type) }
+            syncFee()
+        }
     }
 
-    enum AmountError: Error {
+    func set(feeFromAmount: Bool) {
+        self.feeFromAmount = feeFromAmount
+        syncAvailableBalance()
+        syncFee()
+    }
+
+    func proceed() {
+        do {
+            try validateAmount()
+        } catch {
+            amountError = error
+            return
+        }
+
+        switch addressService.state {
+        case .empty: error = AddressError.addressRequired
+        case .success(let address):
+            proceedSendData = CexWithdrawModule.SendData(
+                cexAsset: cexAsset,
+                network: selectedNetwork,
+                address: address.raw,
+                amount: amount,
+                feeFromAmount: feeFromAmount,
+                fee: fee
+            )
+        default: ()
+        }
+    }
+
+}
+
+extension CexWithdrawService {
+
+    enum AmountError: Error, LocalizedError {
         case insufficientBalance
+        case maxAmountViolated(coinAmount: String)
+        case minAmountViolated(coinAmount: String)
+
+        public var errorDescription: String? {
+            switch self {
+            case .insufficientBalance: return "cex_withdraw.error.insufficient_funds".localized
+            case .maxAmountViolated(let coinAmount): return "cex_withdraw.error.max_amount_violated".localized(coinAmount)
+            case .minAmountViolated(let coinAmount): return "cex_withdraw.error.min_amount_violated".localized(coinAmount)
+            }
+        }
+    }
+
+    enum AddressError: Error, LocalizedError {
+        case addressRequired
+
+        public var errorDescription: String? {
+            "cex_withdraw.address_required".localized
+        }
     }
 
 }

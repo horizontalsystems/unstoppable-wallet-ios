@@ -486,8 +486,9 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openWithdraw(cexAsset: CexAsset) {
-        let viewController = CexWithdrawModule.viewController(cexAsset: cexAsset)
-        present(ThemeNavigationController(rootViewController: viewController), animated: true)
+        if let viewController = CexWithdrawModule.viewController(cexAsset: cexAsset) {
+            present(ThemeNavigationController(rootViewController: viewController), animated: true)
+        }
     }
 
     private func openReceive(wallet: Wallet) {

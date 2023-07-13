@@ -1628,6 +1628,12 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 
 "cex_withdraw.network" = "Network";
 "cex_withdraw.network_warning" = "Ensure the network matches the withdrawal address and the deposit platform supports it, or assets may be lost.";
+"cex_withdraw.fee" = "Fee";
+"cex_withdraw.fee_from_amount" = "Fee from amount";
+"cex_withdraw.error.insufficient_funds" = "Not enough available balance";
+"cex_withdraw.error.max_amount_violated" = "The maximum amount you can withdraw is %@";
+"cex_withdraw.error.min_amount_violated" = "The minimum amount you can withdraw is %@";
+"cex_withdraw.address_required" = "Address is required";
 
 // Cex Withdraw Network Select
 

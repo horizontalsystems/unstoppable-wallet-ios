@@ -1,32 +1,36 @@
+import Foundation
 import RxSwift
 import RxCocoa
 import HsExtensions
 import Combine
+import CurrencyKit
+import BigInt
 
 class CexWithdrawViewModel {
     private var cancellables = Set<AnyCancellable>()
     private let service: CexWithdrawService
+    private let coinService: CexCoinService
 
-    @PostPublished private(set) var selectedNetwork: String? = nil
-    @PostPublished private(set) var proceedEnable: Bool = false
+    @PostPublished private(set) var selectedNetwork: String
+    @PostPublished private(set) var fee: AmountData
     @PostPublished private(set) var amountCaution: Caution? = nil
     private let proceedSubject = PassthroughSubject<CexWithdrawModule.SendData, Never>()
 
-    init(service: CexWithdrawService) {
+    init(service: CexWithdrawService, coinService: CexCoinService) {
         self.service = service
+        self.coinService = coinService
+        self.selectedNetwork = service.selectedNetwork.networkName
+        self.fee = coinService.amountData(value: service.fee, sign: .plus)
 
-        subscribe(&cancellables, service.$state) { [weak self] in self?.sync(state: $0) }
         subscribe(&cancellables, service.$amountError) { [weak self] in self?.sync(amountError: $0) }
-        subscribe(&cancellables, service.$selectedNetwork) { [weak self] in self?.selectedNetwork = $0?.networkName }
-
-        self.selectedNetwork = service.selectedNetwork?.networkName
+        subscribe(&cancellables, service.$selectedNetwork) { [weak self] in self?.selectedNetwork = $0.networkName }
+        subscribe(&cancellables, service.$fee) { [weak self] in self?.fee = coinService.amountData(value: $0, sign: .plus) }
+        subscribe(&cancellables, service.$proceedSendData) { [weak self] in self?.proceed(sendData: $0) }
     }
 
-    private func sync(state: CexWithdrawService.State) {
-        if case .ready = state {
-            proceedEnable = true
-        } else {
-            proceedEnable = false
+    private func proceed(sendData: CexWithdrawModule.SendData?) {
+        if let sendData = sendData {
+            proceedSubject.send(sendData)
         }
     }
 
@@ -57,7 +61,7 @@ extension CexWithdrawViewModel {
     }
 
     var selectedNetworkIndex: Int? {
-        service.networks.firstIndex(where: { $0.id == service.selectedNetwork?.id })
+        service.networks.firstIndex(where: { $0.id == service.selectedNetwork.id })
     }
 
     var networkViewItems: [NetworkViewItem] {
@@ -65,7 +69,6 @@ extension CexWithdrawViewModel {
             NetworkViewItem(index: index, title: network.networkName, imageUrl: network.blockchain?.type.imageUrl, enabled: network.enabled)
         }
     }
-
 
     var proceedPublisher: AnyPublisher<CexWithdrawModule.SendData, Never> {
         proceedSubject.eraseToAnyPublisher()
@@ -75,12 +78,12 @@ extension CexWithdrawViewModel {
         service.setSelectNetwork(index: index)
     }
 
-    func didTapProceed() {
-        guard case let .ready(sendData) = service.state else {
-            return
-        }
+    func onChange(feeFromAmount: Bool) {
+        service.set(feeFromAmount: feeFromAmount)
+    }
 
-        proceedSubject.send(sendData)
+    func didTapProceed() {
+        service.proceed()
     }
 
 }

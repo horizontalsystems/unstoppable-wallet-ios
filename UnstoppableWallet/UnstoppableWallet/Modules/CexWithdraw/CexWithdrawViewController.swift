@@ -2,6 +2,7 @@ import UIKit
 import ThemeKit
 import SectionsTableView
 import Combine
+import ComponentKit
 
 class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectDelegate {
     private var cancellables = Set<AnyCancellable>()
@@ -21,7 +22,8 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
 
     private let buttonCell = PrimaryButtonCell()
     private var isLoaded = false
-    private var selectedNetwork: String? = nil
+    private var selectedNetwork: String
+    private var fee: AmountData
 
     init(viewModel: CexWithdrawViewModel, availableBalanceViewModel: ISendAvailableBalanceViewModel, amountViewModel: AmountInputViewModel, recipientViewModel: RecipientAddressViewModel) {
         self.viewModel = viewModel
@@ -31,6 +33,7 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
         recipientCell = RecipientAddressInputCell(viewModel: recipientViewModel)
         recipientCautionCell = RecipientAddressCautionCell(viewModel: recipientViewModel)
         selectedNetwork = viewModel.selectedNetwork
+        fee = viewModel.fee
 
         super.init()
     }
@@ -41,7 +44,7 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         title = "send.title".localized(viewModel.coinCode)
 
         navigationItem.largeTitleDisplayMode = .never
@@ -68,11 +71,11 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
 
-        amountCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+        amountCautionCell.onChangeHeight = { [weak self] in self?.reloadHeights() }
 
-        recipientCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+        recipientCell.onChangeHeight = { [weak self] in self?.reloadHeights() }
         recipientCell.onOpenViewController = { [weak self] in self?.present($0, animated: true) }
-        recipientCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
+        recipientCautionCell.onChangeHeight = { [weak self] in self?.reloadHeights() }
 
         warningCell.descriptionText = "cex_withdraw.network_warning".localized
 
@@ -86,7 +89,10 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
             self?.selectedNetwork = $0
             self?.reloadTable()
         }
-        subscribe(&cancellables, viewModel.$proceedEnable) { [weak self] in self?.buttonCell.isEnabled = $0 }
+        subscribe(&cancellables, viewModel.$fee) { [weak self] in
+            self?.fee = $0
+            self?.reloadTable()
+        }
         subscribe(&cancellables, viewModel.$amountCaution) { [weak self] caution in
             self?.amountCell.set(cautionType: caution?.type)
             self?.amountCautionCell.set(caution: caution)
@@ -112,6 +118,17 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
         present(viewController, animated: true)
     }
 
+    private func reloadHeights() {
+        guard isLoaded else {
+            return
+        }
+
+        UIView.animate(withDuration: 0.2) {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
+    }
+
     private func reloadTable() {
         guard isLoaded else {
             return
@@ -124,10 +141,12 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
         viewModel.onSelectNetwork(index: index)
     }
 
+    private func onChange(feeFromAmount: Bool) {
+        viewModel.onChange(feeFromAmount: feeFromAmount)
+    }
+
     private func openConfirm(sendData: CexWithdrawModule.SendData) {
-        guard let viewController = CexWithdrawConfirmModule.viewController(
-            cexAsset: sendData.cexAsset, network: sendData.network, address: sendData.address, amount: sendData.amount
-        ) else {
+        guard let viewController = CexWithdrawConfirmModule.viewController(sendData: sendData) else {
             return
         }
 
@@ -140,7 +159,7 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
 extension CexWithdrawViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        var sections = [
+        [
             Section(
                 id: "available-balance",
                 headerState: .margin(height: .margin4),
@@ -169,34 +188,26 @@ extension CexWithdrawViewController: SectionsDataSource {
                         }
                     )
                 ]
-            )
-        ]
-
-        if let network = selectedNetwork {
-            sections.append(
-                Section(
-                    id: "network",
-                    headerState: .margin(height: .margin16),
-                    rows: [
-                        tableView.universalRow48(
-                            id: "networks",
-                            title: .subhead2("cex_withdraw.network".localized, color: .themeGray),
-                            value: .body(network, color: .themeLeah),
-                            accessoryType: .dropdown,
-                            hash: network,
-                            autoDeselect: true,
-                            isFirst: true,
-                            isLast: true,
-                            action: { [weak self] in
-                                self?.openNetworkSelect()
-                            }
-                        )
-                    ]
-                )
-            )
-        }
-
-        sections.append(
+            ),
+            Section(
+                id: "network",
+                headerState: .margin(height: .margin16),
+                rows: [
+                    tableView.universalRow48(
+                        id: "networks",
+                        title: .subhead2("cex_withdraw.network".localized, color: .themeGray),
+                        value: .body(selectedNetwork, color: .themeLeah),
+                        accessoryType: .dropdown,
+                        hash: selectedNetwork,
+                        autoDeselect: true,
+                        isFirst: true,
+                        isLast: true,
+                        action: { [weak self] in
+                            self?.openNetworkSelect()
+                        }
+                    )
+                ]
+            ),
             Section(
                 id: "recipient",
                 headerState: .margin(height: .margin16),
@@ -216,28 +227,85 @@ extension CexWithdrawViewController: SectionsDataSource {
                         }
                     )
                 ]
-            )
-        )
-
-        if selectedNetwork != nil {
-            sections.append(
-                Section(
-                    id: "warning",
-                    headerState: .margin(height: .margin16),
-                    rows: [
-                        StaticRow(
-                            cell: warningCell,
-                            id: "warning-cell",
-                            dynamicHeight: { [weak self] width in
-                                self?.warningCell.height(containerWidth: width) ?? 0
+            ),
+            Section(
+                id: "fee",
+                headerState: .margin(height: .margin16),
+                rows: [
+                    CellBuilderNew.row(
+                        rootElement: .hStack([
+                            .text { component in
+                                component.font = .subhead2
+                                component.textColor = .themeGray
+                                component.textAlignment = .left
+                                component.text = "cex_withdraw.fee".localized
+                            },
+                            .margin0,
+                            .text { _ in },
+                            .vStackCentered([
+                                .text { [weak self] (component: TextComponent) -> () in
+                                    component.font = .subhead2
+                                    component.textColor = .themeLeah
+                                    component.textAlignment = .right
+                                    component.text = (self?.fee.coinValue).flatMap {
+                                        ValueFormatter.instance.formatShort(coinValue: $0)
+                                    } ?? "n/a".localized
+                                },
+                                .margin(1),
+                                .text { [weak self] (component: TextComponent) -> () in
+                                    component.font = .caption
+                                    component.textColor = .themeGray
+                                    component.textAlignment = .right
+                                    component.text = self?.fee.currencyValue.flatMap { ValueFormatter.instance.formatShort(currencyValue: $0) }
+                                }
+                            ])
+                        ]),
+                        tableView: tableView,
+                        id: "fee-value",
+                        hash: "fee-value-\(fee.coinValue.value)",
+                        height: .heightDoubleLineCell,
+                        bind: { cell in
+                            cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
+                        }
+                    ),
+                    CellBuilderNew.row(
+                        rootElement: .hStack([
+                            .text { component in
+                                component.font = .subhead2
+                                component.textColor = .themeGray
+                                component.textAlignment = .left
+                                component.text = "cex_withdraw.fee_from_amount".localized
+                            },
+                            .margin0,
+                            .text { _ in },
+                            .switch { component in
+                                component.switchView.isOn = false
+                                component.onSwitch = { [weak self] in self?.onChange(feeFromAmount: $0) }
                             }
-                        )
-                    ]
-                )
-            )
-        }
-
-        sections.append(
+                        ]),
+                        tableView: tableView,
+                        id: "fee-from-amount",
+                        hash: "fee-from-amount",
+                        height: .heightCell48,
+                        bind: { cell in
+                            cell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+                        }
+                    ),
+                ]
+            ),
+            Section(
+                id: "warning",
+                headerState: .margin(height: .margin16),
+                rows: [
+                    StaticRow(
+                        cell: warningCell,
+                        id: "warning-cell",
+                        dynamicHeight: { [weak self] width in
+                            self?.warningCell.height(containerWidth: width) ?? 0
+                        }
+                    )
+                ]
+            ),
             Section(
                 id: "button",
                 footerState: .margin(height: .margin32),
@@ -249,9 +317,8 @@ extension CexWithdrawViewController: SectionsDataSource {
                     )
                 ]
             )
-        )
-
-        return sections
+        ]
     }
 
 }
+

@@ -538,7 +538,7 @@ extension BinanceCexProvider: ICexProvider {
         return (response.address, response.tag.isEmpty ? nil : response.tag)
     }
 
-    func withdraw(id: String, network: String?, address: String, amount: Decimal) async throws -> String {
+    func withdraw(id: String, network: String?, address: String, amount: Decimal, feeFromAmount: Bool?) async throws -> String {
         var parameters: Parameters = [
             "coin": id,
             "address": address,

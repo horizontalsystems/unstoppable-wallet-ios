@@ -55,7 +55,7 @@ extension CoinzixVerifyWithdrawService {
         tasks = Set()
 
         Task { [weak self, orderId] in
-//            try? await provider.sendWithdrawPin(id: orderId)
+            try? await provider.sendWithdrawPin(id: orderId)
         }.store(in: &tasks)
     }
 
@@ -66,8 +66,7 @@ extension CoinzixVerifyWithdrawService {
 
         Task { [weak self, provider, orderId, emailPin, googlePin] in
             do {
-//                try await provider.confirmWithdraw(id: orderId, emailPin: emailPin, googlePin: googlePin)
-                try await Task.sleep(nanoseconds: 2_000_000_000)
+                try await provider.confirmWithdraw(id: orderId, emailPin: emailPin, googlePin: googlePin)
                 self?.successSubject.send()
             } catch {
                 self?.errorSubject.send(error)
