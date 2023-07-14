@@ -256,7 +256,7 @@ extension CoinzixCexProvider: ICexProvider {
         } else if let account = response.account {
             return (account, response.memo)
         } else {
-            throw RequestError.invalidDepositResponse
+            throw RequestError.invalidResponse
         }
     }
 
@@ -281,11 +281,18 @@ extension CoinzixCexProvider: ICexProvider {
         return String(response.id)
     }
 
-    func confirmWithdraw(id: Int, emailPin: String, googlePin: String) async throws {
-        let parameters: Parameters = [
+    func confirmWithdraw(id: Int, emailPin: String?, googlePin: String?) async throws {
+        var parameters: Parameters = [
             "id": id,
-            "email_pin": emailPin
         ]
+
+        if let emailPin {
+            parameters["email_pin"] = emailPin
+        }
+
+        if let googlePin {
+            parameters["google_pin"] = googlePin
+        }
 
         let response: StatusResponse = try await signedFetch(path: "/v1/withdraw/confirm-code", parameters: parameters)
 
@@ -310,31 +317,73 @@ extension CoinzixCexProvider: ICexProvider {
 
 extension CoinzixCexProvider {
 
-    static func login(username: String, password: String, captchaToken: String, networkManager: NetworkManager) async throws -> (String, String) {
+    static func login(username: String, password: String, networkManager: NetworkManager) async throws -> LoginResult {
         let parameters: Parameters = [
             "username": username,
             "password": password,
-            "g-recaptcha-response": captchaToken
         ]
 
-        let response: LoginResult = try await networkManager.fetch(
-            url: baseUrl + "/api/user/login",
+        let response: LoginResponse = try await networkManager.fetch(
+            url: baseUrl + "/api/user/init-app",
             method: .post,
             parameters: parameters,
             encoding: JSONEncoding.default
         )
 
-        guard let secret = response.secret, let token = response.token,
-              response.status == true else {
-            throw LoginError.loginFailed(message: response.message ?? response.requestError ?? "")
+        if response.status {
+            if let token = response.token, let secret = response.secret, let twoFactorTypeRaw = response.twoFactorTypeRaw, let twoFactorType = TwoFactorType(rawValue: twoFactorTypeRaw) {
+                return .success(token: token, secret: secret, twoFactorType: twoFactorType)
+            }
+        } else {
+            if let leftAttempts = response.leftAttempts {
+                return .failed(reason: .invalidCredentials(attemptsLeft: leftAttempts))
+            }
+
+            if let timeExpire = response.timeExpire {
+                return .failed(reason: .tooManyAttempts(unlockDate: Date(timeIntervalSince1970: TimeInterval(timeExpire))))
+            }
         }
 
-        return (secret, token)
+        return .failed(reason: .unknown(message: response.errors.map { $0.joined(separator: "\n") } ?? "Unknown error"))
+    }
+
+    static func validateCode(code: String, token: String, networkManager: NetworkManager) async throws {
+        let parameters: Parameters = [
+            "code": code,
+            "login_token": token
+        ]
+
+        let response: StatusResponse = try await networkManager.fetch(
+                url: baseUrl + "/api/user/validate-code",
+                method: .post,
+                parameters: parameters,
+                encoding: JSONEncoding.default
+        )
+
+        guard response.status else {
+            throw RequestError.negativeStatus
+        }
     }
 
 }
 
 extension CoinzixCexProvider {
+
+    enum LoginResult {
+        case success(token: String, secret: String, twoFactorType: TwoFactorType)
+        case failed(reason: LoginFailureReason)
+    }
+
+    enum LoginFailureReason {
+        case invalidCredentials(attemptsLeft: Int)
+        case tooManyAttempts(unlockDate: Date)
+        case unknown(message: String)
+    }
+
+    enum TwoFactorType: Int {
+        case email = 1
+        case authenticator = 2
+    }
 
     private struct ConfigResponse: ImmutableMappable {
         let withdrawCurrencies: [String]
@@ -428,19 +477,23 @@ extension CoinzixCexProvider {
         }
     }
 
-    private struct LoginResult: ImmutableMappable {
+    private struct LoginResponse: ImmutableMappable {
         let status: Bool
-        let message: String?
-        let requestError: String?
-        let secret: String?
         let token: String?
+        let secret: String?
+        let twoFactorTypeRaw: Int?
+        let leftAttempts: Int?
+        let timeExpire: Int?
+        let errors: [String]?
 
         init(map: Map) throws {
             status = try map.value("status")
-            message = try map.value("message")
-            requestError = try map.value("errors.request")
-            secret = try map.value("data.secret")
-            token = try map.value("token")
+            token = try? map.value("token")
+            secret = try? map.value("data.secret")
+            twoFactorTypeRaw = try? map.value("data.required")
+            leftAttempts = try? map.value("data.left_attempt")
+            timeExpire = try? map.value("data.time_expire")
+            errors = try? map.value("errors")
         }
     }
 
@@ -478,12 +531,8 @@ extension CoinzixCexProvider {
 
     enum RequestError: Error {
         case invalidSignatureData
-        case invalidDepositResponse
+        case invalidResponse
         case negativeStatus
-    }
-
-    enum LoginError: Error {
-        case loginFailed(message: String)
     }
 
 }

@@ -5,13 +5,10 @@ import ThemeKit
 import ComponentKit
 import SectionsTableView
 import HUD
-import HCaptcha
 
 class RestoreCoinzixViewController: KeyboardAwareViewController {
     private let wrapperViewHeight: CGFloat = .heightButton + .margin16 + .heightButton
-    private let hCaptcha: HCaptcha
     private let viewModel: RestoreCoinzixViewModel
-    private var webView: UIView?
     private var cancellables = Set<AnyCancellable>()
 
     private weak var returnViewController: UIViewController?
@@ -27,12 +24,7 @@ class RestoreCoinzixViewController: KeyboardAwareViewController {
 
     private var isLoaded = false
 
-    init?(hCaptchaKey: String, viewModel: RestoreCoinzixViewModel, returnViewController: UIViewController?) {
-        guard let hCaptcha = try? HCaptcha(apiKey: hCaptchaKey, baseURL: URL(string: "https://api.coinzix.com")) else {
-            return nil
-        }
-
-        self.hCaptcha = hCaptcha
+    init(viewModel: RestoreCoinzixViewModel, returnViewController: UIViewController?) {
         self.viewModel = viewModel
         self.returnViewController = returnViewController
 
@@ -60,6 +52,7 @@ class RestoreCoinzixViewController: KeyboardAwareViewController {
         tableView.backgroundColor = .clear
 
         usernameCell.inputPlaceholder = "restore.coinzix.sample_username".localized
+        usernameCell.keyboardType = .emailAddress
         usernameCell.autocapitalizationType = .none
         usernameCell.onChangeText = { [weak self] in self?.viewModel.onChange(username: $0 ?? "") }
 
@@ -116,14 +109,17 @@ class RestoreCoinzixViewController: KeyboardAwareViewController {
 
         viewModel.errorPublisher
             .receive(on: DispatchQueue.main)
-            .sink { text in HudHelper.instance.showErrorBanner(title: text) }
+            .sink { [weak self] in self?.show(error: $0) }
             .store(in: &cancellables)
 
-        viewModel.successPublisher
+        viewModel.verifyPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                HudHelper.instance.show(banner: .imported)
-                (self?.returnViewController ?? self)?.dismiss(animated: true)
+            .sink { [weak self] mode, types in
+                guard let viewController = CoinzixVerifyModule.viewController(mode: mode, twoFactorTypes: types, returnViewController: self?.returnViewController) else {
+                    return
+                }
+
+                self?.navigationController?.pushViewController(viewController, animated: true)
             }
             .store(in: &cancellables)
 
@@ -133,11 +129,6 @@ class RestoreCoinzixViewController: KeyboardAwareViewController {
 
         tableView.buildSections()
         isLoaded = true
-
-        hCaptcha.configureWebView { [weak self] webView in
-            webView.frame = self?.view.bounds ?? CGRect.zero
-            self?.webView = webView
-        }
     }
 
     @objc private func onTapCancel() {
@@ -147,20 +138,25 @@ class RestoreCoinzixViewController: KeyboardAwareViewController {
     @objc private func onTapLogin() {
         view.endEditing(true)
         viewModel.onTapLogin()
-
-        hCaptcha.validate(on: view) { [weak self] result in
-            do {
-                self?.viewModel.onCaptchaValidated(captchaToken: try result.dematerialize())
-            } catch {
-                print("ERROR: \(error)")
-            }
-
-            self?.webView?.removeFromSuperview()
-        }
     }
 
     @objc private func onTapSignUp() {
         UrlManager.open(url: "https://coinzix.com/sign-up")
+    }
+
+    private func show(error: String) {
+        let viewController = BottomSheetModule.viewController(
+                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)),
+                title: "restore.coinzix.login_failed".localized,
+                items: [
+                    .highlightedDescription(text: error, style: .red)
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "button.ok".localized)
+                ]
+        )
+
+        present(viewController, animated: true)
     }
 
 }

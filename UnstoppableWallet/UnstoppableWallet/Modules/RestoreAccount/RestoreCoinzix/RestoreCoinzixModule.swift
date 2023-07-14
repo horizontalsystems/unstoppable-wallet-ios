@@ -2,19 +2,11 @@ import UIKit
 
 struct RestoreCoinzixModule {
 
-    static func viewController(returnViewController: UIViewController?) -> UIViewController? {
-        guard let hCaptchaKey = App.shared.appConfigProvider.coinzixHCaptchaKey else {
-            return nil
-        }
-
-        let service = RestoreCoinzixService(
-            networkManager: App.shared.networkManager,
-            accountFactory: App.shared.accountFactory,
-            accountManager: App.shared.accountManager
-        )
+    static func viewController(returnViewController: UIViewController?) -> UIViewController {
+        let service = RestoreCoinzixService(networkManager: App.shared.networkManager)
         let viewModel = RestoreCoinzixViewModel(service: service)
 
-        return RestoreCoinzixViewController(hCaptchaKey: hCaptchaKey, viewModel: viewModel, returnViewController: returnViewController)
+        return RestoreCoinzixViewController(viewModel: viewModel, returnViewController: returnViewController)
     }
 
 }
