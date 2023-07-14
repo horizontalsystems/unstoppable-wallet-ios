@@ -7,11 +7,13 @@ import SectionsTableView
 import HUD
 import UIExtensions
 
-class CoinzixVerifyWithdrawViewController: KeyboardAwareViewController {
+class CoinzixVerifyViewController: KeyboardAwareViewController {
     private let wrapperViewHeight: CGFloat = .margin16 + .heightButton + .margin32
 
-    private let viewModel: CoinzixVerifyWithdrawViewModel
+    private let viewModel: CoinzixVerifyViewModel
     private var cancellables = Set<AnyCancellable>()
+
+    private weak var returnViewController: UIViewController?
 
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -23,8 +25,9 @@ class CoinzixVerifyWithdrawViewController: KeyboardAwareViewController {
     private let submittingButton = PrimaryButton()
     private var isLoaded = false
 
-    init(viewModel: CoinzixVerifyWithdrawViewModel) {
+    init(viewModel: CoinzixVerifyViewModel, returnViewController: UIViewController?) {
         self.viewModel = viewModel
+        self.returnViewController = returnViewController
 
         super.init(scrollViews: [tableView], accessoryView: buttonsHolder)
     }
@@ -127,7 +130,7 @@ class CoinzixVerifyWithdrawViewController: KeyboardAwareViewController {
         }
     }
 
-    private func sync(submitButtonState: CoinzixVerifyWithdrawViewModel.ButtonState) {
+    private func sync(submitButtonState: CoinzixVerifyViewModel.ButtonState) {
         switch submitButtonState {
         case .disabled:
             submitButton.isHidden = false
@@ -153,11 +156,11 @@ class CoinzixVerifyWithdrawViewController: KeyboardAwareViewController {
     }
 
     private func confirmSubmit() {
-        dismiss(animated: true)
+        (returnViewController ?? self).dismiss(animated: true)
     }
 
     @objc private func onTapCancel() {
-        dismiss(animated: true)
+        (returnViewController ?? self).dismiss(animated: true)
     }
 
     @objc private func onTapSubmit() {
@@ -166,62 +169,75 @@ class CoinzixVerifyWithdrawViewController: KeyboardAwareViewController {
 
 }
 
-extension CoinzixVerifyWithdrawViewController: SectionsDataSource {
+extension CoinzixVerifyViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [
-            Section(
-                id: "email-pin",
-                headerState: .margin(height: .margin32),
-                rows: [
-                    StaticRow(
-                        cell: emailPinInputCell,
-                        id: "email-pin",
-                        dynamicHeight: { [weak self] width in
-                            self?.emailPinInputCell.height(containerWidth: width) ?? 0
-                        }
+        var sections = [SectionProtocol]()
+
+        for type in viewModel.twoFactorTypes {
+            switch type {
+            case .email:
+                sections.append(contentsOf: [
+                    Section(
+                            id: "email-pin",
+                            headerState: .margin(height: .margin32),
+                            rows: [
+                                StaticRow(
+                                        cell: emailPinInputCell,
+                                        id: "email-pin",
+                                        dynamicHeight: { [weak self] width in
+                                            self?.emailPinInputCell.height(containerWidth: width) ?? 0
+                                        }
+                                )
+                            ]
+                    ),
+                    Section(
+                            id: "email-pin-description",
+                            rows: [
+                                tableView.descriptionRow(
+                                        id: "email-pin-description",
+                                        text: "coinzix_verify_withdraw.email_pin.description".localized,
+                                        font: .subhead2,
+                                        textColor: .themeGray,
+                                        ignoreBottomMargin: true
+                                )
+                            ]
+                    ),
+                ])
+
+            case .authenticator:
+                sections.append(contentsOf: [
+                    Section(
+                            id: "google-pin",
+                            headerState: .margin(height: .margin32),
+                            rows: [
+                                StaticRow(
+                                        cell: googlePinInputCell,
+                                        id: "google-pin",
+                                        dynamicHeight: { [weak self] width in
+                                            self?.googlePinInputCell.height(containerWidth: width) ?? 0
+                                        }
+                                )
+                            ]
+                    ),
+                    Section(
+                            id: "google-pin-description",
+                            footerState: .margin(height: .margin32),
+                            rows: [
+                                tableView.descriptionRow(
+                                        id: "google-pin-description",
+                                        text: "coinzix_verify_withdraw.google_pin.description".localized,
+                                        font: .subhead2,
+                                        textColor: .themeGray,
+                                        ignoreBottomMargin: true
+                                )
+                            ]
                     )
-                ]
-            ),
-            Section(
-                id: "email-pin-description",
-                rows: [
-                    tableView.descriptionRow(
-                        id: "email-pin-description",
-                        text: "coinzix_verify_withdraw.email_pin.description".localized,
-                        font: .subhead2,
-                        textColor: .themeGray,
-                        ignoreBottomMargin: true
-                    )
-                ]
-            ),
-            Section(
-                id: "google-pin",
-                headerState: .margin(height: .margin32),
-                rows: [
-                    StaticRow(
-                        cell: googlePinInputCell,
-                        id: "google-pin",
-                        dynamicHeight: { [weak self] width in
-                            self?.googlePinInputCell.height(containerWidth: width) ?? 0
-                        }
-                    )
-                ]
-            ),
-            Section(
-                id: "google-pin-description",
-                footerState: .margin(height: .margin32),
-                rows: [
-                    tableView.descriptionRow(
-                        id: "google-pin-description",
-                        text: "coinzix_verify_withdraw.google_pin.description".localized,
-                        font: .subhead2,
-                        textColor: .themeGray,
-                        ignoreBottomMargin: true
-                    )
-                ]
-            )
-        ]
+                ])
+            }
+        }
+
+        return sections
     }
 
 }

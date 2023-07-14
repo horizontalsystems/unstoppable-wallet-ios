@@ -1,10 +1,16 @@
 import Foundation
 import Combine
 import HsExtensions
+import HsToolKit
 
-class CoinzixVerifyWithdrawService {
-    private let orderId: Int
-    private let provider: CoinzixCexProvider
+protocol ICoinzixVerifyService {
+    func verify(emailCode: String?, googleCode: String?) async throws
+    func resendPin() async throws
+}
+
+class CoinzixVerifyService {
+    let twoFactorTypes: [CoinzixVerifyModule.TwoFactorType]
+    private let verifyService: ICoinzixVerifyService
     private var tasks = Set<AnyTask>()
 
     private var emailPin = ""
@@ -14,24 +20,35 @@ class CoinzixVerifyWithdrawService {
     private let successSubject = PassthroughSubject<Void, Never>()
     private let errorSubject = PassthroughSubject<Error, Never>()
 
-    init(orderId: Int, provider: CoinzixCexProvider) {
-        self.orderId = orderId
-        self.provider = provider
+    init(twoFactorTypes: [CoinzixVerifyModule.TwoFactorType], verifyService: ICoinzixVerifyService) {
+        self.twoFactorTypes = twoFactorTypes
+        self.verifyService = verifyService
 
         syncState()
     }
 
     private func syncState() {
-        if emailPin.isEmpty || googlePin.isEmpty {
-            state = .notReady
-        } else {
-            state = .ready
+        var ready = true
+
+        for type in twoFactorTypes {
+            switch type {
+            case .email:
+                if emailPin.isEmpty {
+                    ready = false
+                }
+            case .authenticator:
+                if googlePin.isEmpty {
+                    ready = false
+                }
+            }
         }
+
+        state = ready ? .ready : .notReady
     }
 
 }
 
-extension CoinzixVerifyWithdrawService {
+extension CoinzixVerifyService {
 
     var successPublisher: AnyPublisher<Void, Never> {
         successSubject.eraseToAnyPublisher()
@@ -54,8 +71,8 @@ extension CoinzixVerifyWithdrawService {
     func resendEmailPin() {
         tasks = Set()
 
-        Task { [weak self, orderId] in
-            try? await provider.sendWithdrawPin(id: orderId)
+        Task { [verifyService] in
+            try? await verifyService.resendPin()
         }.store(in: &tasks)
     }
 
@@ -64,9 +81,9 @@ extension CoinzixVerifyWithdrawService {
 
         state = .submitting
 
-        Task { [weak self, provider, orderId, emailPin, googlePin] in
+        Task { [weak self, verifyService, emailPin, googlePin] in
             do {
-                try await provider.confirmWithdraw(id: orderId, emailPin: emailPin, googlePin: googlePin)
+                try await verifyService.verify(emailCode: emailPin.isEmpty ? nil : emailPin, googleCode: googlePin.isEmpty ? nil : googlePin)
                 self?.successSubject.send()
             } catch {
                 self?.errorSubject.send(error)
@@ -78,7 +95,7 @@ extension CoinzixVerifyWithdrawService {
 
 }
 
-extension CoinzixVerifyWithdrawService {
+extension CoinzixVerifyService {
 
     enum State {
         case notReady

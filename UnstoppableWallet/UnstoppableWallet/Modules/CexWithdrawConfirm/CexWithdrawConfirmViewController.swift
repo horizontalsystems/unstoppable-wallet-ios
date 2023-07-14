@@ -107,7 +107,7 @@ class CexWithdrawConfirmViewController: ThemeViewController {
     private func confirmWithdraw(id: String) {
         switch cex {
         case .coinzix:
-            guard let orderId = Int(id), let viewController = CoinzixVerifyWithdrawModule.viewController(orderId: orderId) else {
+            guard let orderId = Int(id), let viewController = CoinzixVerifyModule.viewController(mode: .withdraw(orderId: orderId), twoFactorTypes: [.email]) else {
                 return
             }
 

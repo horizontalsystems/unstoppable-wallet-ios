@@ -8,9 +8,6 @@ class RestoreCoinzixViewModel {
     @Published private(set) var loginVisible = true
     @Published private(set) var loggingInVisible = false
 
-    private let errorSubject = PassthroughSubject<String, Never>()
-    private let successSubject = PassthroughSubject<Void, Never>()
-
     init(service: RestoreCoinzixService) {
         self.service = service
 
@@ -27,19 +24,13 @@ class RestoreCoinzixViewModel {
                 loginEnabled = false
                 loginVisible = true
                 loggingInVisible = false
-            case .idle(let error):
+            case .ready:
                 loginEnabled = true
                 loginVisible = true
                 loggingInVisible = false
-
-                if error != nil {
-                    errorSubject.send("restore.coinzix.failed_to_login".localized)
-                }
-            case .loggingIn:
+         case .loggingIn:
                 loginVisible = false
                 loggingInVisible = true
-            case .loggedIn:
-                successSubject.send()
         }
     }
 
@@ -48,11 +39,11 @@ class RestoreCoinzixViewModel {
 extension RestoreCoinzixViewModel {
 
     var errorPublisher: AnyPublisher<String, Never> {
-        errorSubject.eraseToAnyPublisher()
+        service.errorPublisher
     }
 
-    var successPublisher: AnyPublisher<Void, Never> {
-        successSubject.eraseToAnyPublisher()
+    var verifyPublisher: AnyPublisher<(CoinzixVerifyModule.Mode, [CoinzixVerifyModule.TwoFactorType]), Never> {
+        service.verifyPublisher
     }
 
     func onChange(username: String) {
@@ -64,11 +55,7 @@ extension RestoreCoinzixViewModel {
     }
 
     func onTapLogin() {
-        service.onCaptchaValidationStarted()
-    }
-
-    func onCaptchaValidated(captchaToken: String) {
-        service.login(captchaToken: captchaToken)
+        service.login()
     }
 
 }

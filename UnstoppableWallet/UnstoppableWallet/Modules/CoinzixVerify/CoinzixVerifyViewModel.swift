@@ -1,15 +1,15 @@
 import Combine
 import HsExtensions
 
-class CoinzixVerifyWithdrawViewModel {
-    private let service: CoinzixVerifyWithdrawService
+class CoinzixVerifyViewModel {
+    private let service: CoinzixVerifyService
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
     @Published private(set) var submitButtonState: ButtonState = .disabled
     @Published private(set) var resendEnabled: Bool = false
 
-    init(service: CoinzixVerifyWithdrawService) {
+    init(service: CoinzixVerifyService) {
         self.service = service
 
         service.$state
@@ -20,7 +20,7 @@ class CoinzixVerifyWithdrawViewModel {
         setResendEnableTimer()
     }
 
-    private func sync(state: CoinzixVerifyWithdrawService.State) {
+    private func sync(state: CoinzixVerifyService.State) {
         switch state {
         case .notReady: submitButtonState = .disabled
         case .ready: submitButtonState = .enabled
@@ -40,7 +40,7 @@ class CoinzixVerifyWithdrawViewModel {
 
 }
 
-extension CoinzixVerifyWithdrawViewModel {
+extension CoinzixVerifyViewModel {
 
     var successPublisher: AnyPublisher<Void, Never> {
         service.successPublisher
@@ -50,6 +50,10 @@ extension CoinzixVerifyWithdrawViewModel {
         service.errorPublisher
                 .map { _ in "coinzix_verify_withdraw.failed".localized }
                 .eraseToAnyPublisher()
+    }
+
+    var twoFactorTypes: [CoinzixVerifyModule.TwoFactorType] {
+        service.twoFactorTypes
     }
 
     func onTapResend() {
@@ -71,7 +75,7 @@ extension CoinzixVerifyWithdrawViewModel {
 
 }
 
-extension CoinzixVerifyWithdrawViewModel {
+extension CoinzixVerifyViewModel {
 
     enum ButtonState {
         case enabled

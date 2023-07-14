@@ -166,7 +166,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "restore.coinzix.login" = "Log In";
 "restore.coinzix.sample_username" = "Email";
 "restore.coinzix.sample_password" = "Password";
-"restore.coinzix.failed_to_login" = "Failed to log in";
+"restore.coinzix.login_failed" = "Login Failed";
 
 // Coin Settings
 

@@ -5,8 +5,6 @@ import HsExtensions
 
 class RestoreCoinzixService {
     private let networkManager: NetworkManager
-    private let accountFactory: AccountFactory
-    private let accountManager: AccountManager
     private var tasks = Set<AnyTask>()
 
     var username: String = "" {
@@ -23,42 +21,64 @@ class RestoreCoinzixService {
 
     @PostPublished private(set) var state: State = .notReady
 
-    init(networkManager: NetworkManager, accountFactory: AccountFactory, accountManager: AccountManager) {
+    private let verifySubject = PassthroughSubject<(CoinzixVerifyModule.Mode, [CoinzixVerifyModule.TwoFactorType]), Never>()
+    private let errorSubject = PassthroughSubject<String, Never>()
+
+    init(networkManager: NetworkManager) {
         self.networkManager = networkManager
-        self.accountFactory = accountFactory
-        self.accountManager = accountManager
     }
 
     private func syncState() {
-        state = username.trimmingCharacters(in: .whitespaces).isEmpty || password.trimmingCharacters(in: .whitespaces).isEmpty ? .notReady : .idle(error: nil)
+        state = username.trimmingCharacters(in: .whitespaces).isEmpty || password.trimmingCharacters(in: .whitespaces).isEmpty ? .notReady : .ready
     }
 
-    private func createAccount(secretKey: String, token: String) {
-        let type: AccountType = .cex(type: .coinzix(authToken: token, secret: secretKey))
-        let name = accountFactory.nextAccountName(cex: .coinzix)
-        let account = accountFactory.account(type: type, origin: .restored, backedUp: true, name: name)
+    private func handle(loginResult: CoinzixCexProvider.LoginResult) {
+        switch loginResult {
+        case .success(let token, let secret, let twoFactorType):
+            let type: CoinzixVerifyModule.TwoFactorType
 
-        accountManager.save(account: account)
+            switch twoFactorType {
+            case .email: type = .email
+            case .authenticator: type = .authenticator
+            }
 
-        state = .loggedIn
+            verifySubject.send((.login(token: token, secret: secret), [type]))
+        case .failed(let reason):
+            switch reason {
+            case .invalidCredentials(let attemptsLeft):
+                errorSubject.send("Invalid login credentials. Attempts left: \(attemptsLeft).")
+            case .tooManyAttempts(let unlockDate):
+                errorSubject.send("Too many invalid login attempts were made. Login is locked until \(DateHelper.instance.formatFullTime(from: unlockDate)).")
+            case .unknown(let message):
+                errorSubject.send(message)
+            }
+        }
     }
 
 }
 
 extension RestoreCoinzixService {
 
-    func onCaptchaValidationStarted() {
-        state = .loggingIn
+    var verifyPublisher: AnyPublisher<(CoinzixVerifyModule.Mode, [CoinzixVerifyModule.TwoFactorType]), Never> {
+        verifySubject.eraseToAnyPublisher()
     }
 
-    func login(captchaToken: String) {
+    var errorPublisher: AnyPublisher<String, Never> {
+        errorSubject.eraseToAnyPublisher()
+    }
+
+    func login() {
+        state = .loggingIn
+
         Task { [weak self, username, password, networkManager] in
             do {
-                let (secretKey, token) = try await CoinzixCexProvider.login(username: username, password: password, captchaToken: captchaToken, networkManager: networkManager)
-                self?.createAccount(secretKey: secretKey, token: token)
+                let loginResult = try await CoinzixCexProvider.login(username: username, password: password, networkManager: networkManager)
+                self?.handle(loginResult: loginResult)
             } catch {
-                self?.state = .idle(error: error)
+                self?.errorSubject.send(error.smartDescription)
             }
+
+            self?.state = .ready
         }.store(in: &tasks)
     }
 
@@ -68,9 +88,8 @@ extension RestoreCoinzixService {
 
     enum State {
         case notReady
-        case idle(error: Error?)
+        case ready
         case loggingIn
-        case loggedIn
     }
 
 }
