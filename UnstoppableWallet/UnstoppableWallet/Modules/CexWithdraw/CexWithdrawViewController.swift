@@ -23,7 +23,7 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
     private let buttonCell = PrimaryButtonCell()
     private var isLoaded = false
     private var selectedNetwork: String
-    private var fee: AmountData
+    private var fee: CexWithdrawViewModel.FeeAmount?
 
     init(viewModel: CexWithdrawViewModel, availableBalanceViewModel: ISendAvailableBalanceViewModel, amountViewModel: AmountInputViewModel, recipientViewModel: RecipientAddressViewModel) {
         self.viewModel = viewModel
@@ -247,22 +247,20 @@ extension CexWithdrawViewController: SectionsDataSource {
                                     component.font = .subhead2
                                     component.textColor = .themeLeah
                                     component.textAlignment = .right
-                                    component.text = (self?.fee.coinValue).flatMap {
-                                        ValueFormatter.instance.formatShort(coinValue: $0)
-                                    } ?? "n/a".localized
+                                    component.text = self?.fee?.coinAmount
                                 },
                                 .margin(1),
                                 .text { [weak self] (component: TextComponent) -> () in
                                     component.font = .caption
                                     component.textColor = .themeGray
                                     component.textAlignment = .right
-                                    component.text = self?.fee.currencyValue.flatMap { ValueFormatter.instance.formatShort(currencyValue: $0) }
+                                    component.text = self?.fee?.currencyAmount
                                 }
                             ])
                         ]),
                         tableView: tableView,
                         id: "fee-value",
-                        hash: "fee-value-\(fee.coinValue.value)",
+                        hash: "fee-value-\(fee?.coinAmount ?? "-")",
                         height: .heightDoubleLineCell,
                         bind: { cell in
                             cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
