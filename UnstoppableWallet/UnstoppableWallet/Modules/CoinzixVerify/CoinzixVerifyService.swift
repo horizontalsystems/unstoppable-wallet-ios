@@ -9,7 +9,7 @@ protocol ICoinzixVerifyService {
 }
 
 class CoinzixVerifyService {
-    let twoFactorTypes: [CoinzixVerifyModule.TwoFactorType]
+    let twoFactorTypes: [CoinzixCexProvider.TwoFactorType]
     private let verifyService: ICoinzixVerifyService
     private var tasks = Set<AnyTask>()
 
@@ -20,7 +20,7 @@ class CoinzixVerifyService {
     private let successSubject = PassthroughSubject<Void, Never>()
     private let errorSubject = PassthroughSubject<Error, Never>()
 
-    init(twoFactorTypes: [CoinzixVerifyModule.TwoFactorType], verifyService: ICoinzixVerifyService) {
+    init(twoFactorTypes: [CoinzixCexProvider.TwoFactorType], verifyService: ICoinzixVerifyService) {
         self.twoFactorTypes = twoFactorTypes
         self.verifyService = verifyService
 

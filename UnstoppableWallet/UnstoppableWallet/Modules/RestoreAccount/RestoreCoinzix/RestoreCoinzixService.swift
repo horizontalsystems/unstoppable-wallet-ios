@@ -21,7 +21,7 @@ class RestoreCoinzixService {
 
     @PostPublished private(set) var state: State = .notReady
 
-    private let verifySubject = PassthroughSubject<(CoinzixVerifyModule.Mode, [CoinzixVerifyModule.TwoFactorType]), Never>()
+    private let verifySubject = PassthroughSubject<(CoinzixVerifyModule.Mode, [CoinzixCexProvider.TwoFactorType]), Never>()
     private let errorSubject = PassthroughSubject<String, Never>()
 
     init(networkManager: NetworkManager) {
@@ -35,7 +35,7 @@ class RestoreCoinzixService {
     private func handle(loginResult: CoinzixCexProvider.LoginResult) {
         switch loginResult {
         case .success(let token, let secret, let twoFactorType):
-            let type: CoinzixVerifyModule.TwoFactorType
+            let type: CoinzixCexProvider.TwoFactorType
 
             switch twoFactorType {
             case .email: type = .email
@@ -59,7 +59,7 @@ class RestoreCoinzixService {
 
 extension RestoreCoinzixService {
 
-    var verifyPublisher: AnyPublisher<(CoinzixVerifyModule.Mode, [CoinzixVerifyModule.TwoFactorType]), Never> {
+    var verifyPublisher: AnyPublisher<(CoinzixVerifyModule.Mode, [CoinzixCexProvider.TwoFactorType]), Never> {
         verifySubject.eraseToAnyPublisher()
     }
 

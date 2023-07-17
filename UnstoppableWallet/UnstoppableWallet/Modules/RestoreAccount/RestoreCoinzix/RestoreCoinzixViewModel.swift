@@ -42,7 +42,7 @@ extension RestoreCoinzixViewModel {
         service.errorPublisher
     }
 
-    var verifyPublisher: AnyPublisher<(CoinzixVerifyModule.Mode, [CoinzixVerifyModule.TwoFactorType]), Never> {
+    var verifyPublisher: AnyPublisher<(CoinzixVerifyModule.Mode, [CoinzixCexProvider.TwoFactorType]), Never> {
         service.verifyPublisher
     }
 

@@ -52,7 +52,7 @@ extension CoinzixVerifyViewModel {
                 .eraseToAnyPublisher()
     }
 
-    var twoFactorTypes: [CoinzixVerifyModule.TwoFactorType] {
+    var twoFactorTypes: [CoinzixCexProvider.TwoFactorType] {
         service.twoFactorTypes
     }
 

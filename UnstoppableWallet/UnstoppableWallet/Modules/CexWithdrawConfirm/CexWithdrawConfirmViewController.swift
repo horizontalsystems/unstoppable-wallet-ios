@@ -6,20 +6,20 @@ import ComponentKit
 import SectionsTableView
 import HUD
 
-class CexWithdrawConfirmViewController: ThemeViewController {
-    private let viewModel: CexWithdrawConfirmViewModel
-    private let cex: Cex
+class CexWithdrawConfirmViewController<Handler: ICexWithdrawHandler>: ThemeViewController {
+    private let viewModel: CexWithdrawConfirmViewModel<Handler>
+    private let handler: Handler
     private var cancellables = Set<AnyCancellable>()
 
     private let tableView = SectionsTableView(style: .grouped)
     private let withdrawButton = PrimaryButton()
     private let withdrawingButton = PrimaryButton()
 
-    private var sectionViewItems = [CexWithdrawConfirmViewModel.SectionViewItem]()
+    private var sectionViewItems = [CexWithdrawConfirmViewModel<Handler>.SectionViewItem]()
 
-    init(viewModel: CexWithdrawConfirmViewModel, cex: Cex) {
+    init(viewModel: CexWithdrawConfirmViewModel<Handler>, handler: Handler) {
         self.viewModel = viewModel
-        self.cex = cex
+        self.handler = handler
 
         super.init()
     }
@@ -85,7 +85,7 @@ class CexWithdrawConfirmViewController: ThemeViewController {
 
         viewModel.confirmWithdrawPublisher
                 .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.confirmWithdraw(id: $0) }
+                .sink { [weak self] in self?.confirmWithdraw(result: $0) }
                 .store(in: &cancellables)
 
         viewModel.errorPublisher
@@ -94,7 +94,7 @@ class CexWithdrawConfirmViewController: ThemeViewController {
                 .store(in: &cancellables)
     }
 
-    private func sync(sectionViewItems: [CexWithdrawConfirmViewModel.SectionViewItem]) {
+    private func sync(sectionViewItems: [CexWithdrawConfirmViewModel<Handler>.SectionViewItem]) {
         self.sectionViewItems = sectionViewItems
         tableView.reload()
     }
@@ -104,16 +104,8 @@ class CexWithdrawConfirmViewController: ThemeViewController {
         withdrawingButton.isHidden = !withdrawing
     }
 
-    private func confirmWithdraw(id: String) {
-        switch cex {
-        case .coinzix:
-            guard let orderId = Int(id), let viewController = CoinzixVerifyModule.viewController(mode: .withdraw(orderId: orderId), twoFactorTypes: [.email]) else {
-                return
-            }
-
-            navigationController?.pushViewController(viewController, animated: true)
-        case .binance: ()
-        }
+    private func confirmWithdraw(result: Handler.WithdrawResult) {
+        handler.handle(result: result, viewController: self)
     }
 
     @objc private func onTapCancel() {
@@ -128,7 +120,7 @@ class CexWithdrawConfirmViewController: ThemeViewController {
 
 extension CexWithdrawConfirmViewController: SectionsDataSource {
 
-    private func row(viewItem: CexWithdrawConfirmViewModel.ViewItem, rowInfo: RowInfo) -> RowProtocol {
+    private func row(viewItem: CexWithdrawConfirmViewModel<Handler>.ViewItem, rowInfo: RowInfo) -> RowProtocol {
         switch viewItem {
         case let .subhead(iconName, title, value):
             return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: true, title: title, value: value)

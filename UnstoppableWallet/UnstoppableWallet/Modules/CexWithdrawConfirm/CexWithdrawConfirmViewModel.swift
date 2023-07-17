@@ -1,8 +1,8 @@
 import Combine
 import RxSwift
 
-class CexWithdrawConfirmViewModel {
-    private let service: CexWithdrawConfirmService
+class CexWithdrawConfirmViewModel<Handler: ICexWithdrawHandler> {
+    private let service: CexWithdrawConfirmService<Handler>
     private let coinService: CexCoinService
     private let contactLabelService: ContactLabelService?
     private var cancellables = Set<AnyCancellable>()
@@ -11,7 +11,7 @@ class CexWithdrawConfirmViewModel {
     @Published private(set) var sectionViewItems = [SectionViewItem]()
     @Published private(set) var withdrawing = false
 
-    init(service: CexWithdrawConfirmService, coinService: CexCoinService, contactLabelService: ContactLabelService?) {
+    init(service: CexWithdrawConfirmService<Handler>, coinService: CexCoinService, contactLabelService: ContactLabelService?) {
         self.service = service
         self.coinService = coinService
         self.contactLabelService = contactLabelService
@@ -28,7 +28,7 @@ class CexWithdrawConfirmViewModel {
         syncSectionViewItems()
     }
 
-    private func sync(state: CexWithdrawConfirmService.State) {
+    private func sync(state: CexWithdrawConfirmService<Handler>.State) {
         switch state {
         case .idle: withdrawing = false
         case .loading: withdrawing = true
@@ -92,7 +92,7 @@ class CexWithdrawConfirmViewModel {
 
 extension CexWithdrawConfirmViewModel {
 
-    var confirmWithdrawPublisher: AnyPublisher<String, Never> {
+    var confirmWithdrawPublisher: AnyPublisher<Handler.WithdrawResult, Never> {
         service.confirmWithdrawPublisher
     }
 

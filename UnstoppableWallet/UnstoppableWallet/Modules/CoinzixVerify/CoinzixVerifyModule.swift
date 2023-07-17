@@ -3,7 +3,7 @@ import HsToolKit
 
 struct CoinzixVerifyModule {
 
-    static func viewController(mode: Mode, twoFactorTypes: [TwoFactorType], returnViewController: UIViewController? = nil) -> UIViewController? {
+    static func viewController(mode: Mode, twoFactorTypes: [CoinzixCexProvider.TwoFactorType], returnViewController: UIViewController? = nil) -> UIViewController? {
         let verifyService: ICoinzixVerifyService
 
         switch mode {
@@ -39,11 +39,6 @@ struct CoinzixVerifyModule {
 }
 
 extension CoinzixVerifyModule {
-
-    enum TwoFactorType {
-        case email
-        case authenticator
-    }
 
     enum Mode {
         case login(token: String, secret: String)
