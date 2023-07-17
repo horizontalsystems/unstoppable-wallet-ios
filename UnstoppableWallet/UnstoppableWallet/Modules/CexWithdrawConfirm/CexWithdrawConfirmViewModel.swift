@@ -48,9 +48,14 @@ class CexWithdrawConfirmViewModel<Handler: ICexWithdrawHandler> {
             )
         }
 
+        let feeData = coinService.amountData(value: service.fee, sign: .plus)
         sectionViewItems.append(
             SectionViewItem(viewItems: [
-                .feeValue(title: "cex_withdraw.fee".localized, value: coinService.amountData(value: service.fee, sign: .plus))
+                .feeValue(
+                    title: "cex_withdraw.fee".localized,
+                    coinAmount: ValueFormatter.instance.formatFull(coinValue: feeData.coinValue) ?? "n/a".localized,
+                    currencyAmount: feeData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) }
+                )
             ])
         )
 
@@ -59,6 +64,7 @@ class CexWithdrawConfirmViewModel<Handler: ICexWithdrawHandler> {
 
     private func mainViewItems() -> [ViewItem] {
         let contactData = contactLabelService?.contactData(for: service.address)
+        let amountData = coinService.amountData(value: service.amount, sign: .plus)
 
         var viewItems: [ViewItem] = [
             .subhead(
@@ -69,9 +75,8 @@ class CexWithdrawConfirmViewModel<Handler: ICexWithdrawHandler> {
             .amount(
                     iconUrl: service.cexAsset.coin?.imageUrl,
                     iconPlaceholderImageName: "placeholder_circle_32",
-                    coinAmount: ValueFormatter.instance.formatFull(coinValue: CoinValue(kind: .cexAsset(cexAsset: service.cexAsset), value: service.amount)) ?? "n/a".localized,
-//                    currencyAmount: currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
-                    currencyAmount: nil,
+                    coinAmount: ValueFormatter.instance.formatFull(coinValue: amountData.coinValue) ?? "n/a".localized,
+                    currencyAmount: amountData.currencyValue.flatMap { ValueFormatter.instance.formatFull(currencyValue: $0) },
                     type: .neutral
             ),
             .address(
@@ -119,7 +124,7 @@ extension CexWithdrawConfirmViewModel {
         case amount(iconUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType)
         case address(title: String, value: String, contactAddress: ContactAddress?)
         case value(title: String, value: String, type: ValueType)
-        case feeValue(title: String, value: AmountData)
+        case feeValue(title: String, coinAmount: String, currencyAmount: String?)
     }
 
 }

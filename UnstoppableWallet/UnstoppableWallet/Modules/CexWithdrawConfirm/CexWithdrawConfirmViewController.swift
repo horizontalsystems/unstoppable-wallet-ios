@@ -136,11 +136,11 @@ extension CexWithdrawConfirmViewController: SectionsDataSource {
             return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: title, value: value, valueTitle: nil, onAddToContact: onAddToContact)
         case let .value(title, value, type):
             return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: title, value: value, type: type)
-        case let .feeValue(title, value):
+        case let .feeValue(title, coinAmount, currencyAmount):
             return CellComponent.doubleAmountRow(
                 tableView: tableView, rowInfo: rowInfo, title: title,
-                coinValue: ValueFormatter.instance.formatShort(coinValue: value.coinValue) ?? "n/a".localized,
-                currencyValue: value.currencyValue.flatMap { ValueFormatter.instance.formatShort(currencyValue: $0) }
+                coinValue: coinAmount,
+                currencyValue: currencyAmount
             )
         }
     }
