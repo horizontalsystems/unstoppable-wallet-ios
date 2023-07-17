@@ -21,15 +21,17 @@ class CexCoinSelectService {
         self.mode = mode
         self.cexAssetManager = cexAssetManager
 
-        internalItems = cexAssetManager.cexAssets(account: account).map { cexAsset in
-            let enabled: Bool
-
+        internalItems = cexAssetManager.cexAssets(account: account).compactMap { cexAsset in
             switch mode {
-            case .deposit: enabled = cexAsset.depositEnabled
-            case .withdraw: enabled = cexAsset.withdrawEnabled
-            }
+            case .deposit:
+                return Item(cexAsset: cexAsset, enabled: cexAsset.depositEnabled)
+            case .withdraw:
+                guard cexAsset.freeBalance > 0 else {
+                    return nil
+                }
 
-            return Item(cexAsset: cexAsset, enabled: enabled)
+                return Item(cexAsset: cexAsset, enabled: cexAsset.withdrawEnabled)
+            }
         }
 
         syncItems()
@@ -37,14 +39,6 @@ class CexCoinSelectService {
 
     private func syncItems() {
         var items = internalItems
-
-        switch mode {
-        case .withdraw:
-            items = items.filter { item in
-                item.cexAsset.freeBalance > 0
-            }
-        case .deposit: ()
-        }
 
         if !filter.isEmpty {
             items = items.filter { item in
@@ -60,6 +54,10 @@ class CexCoinSelectService {
 }
 
 extension CexCoinSelectService {
+
+    var isEmpty: Bool {
+        internalItems.isEmpty
+    }
 
     func set(filter: String) {
         self.filter = filter
