@@ -30,34 +30,53 @@ class CexCoinSelectViewController: ThemeSearchViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "cex_coin_select.title".localized
+        switch mode {
+        case .deposit: title = "cex_coin_select.title".localized
+        case .withdraw: title = "cex_coin_select.withdraw".localized
+        }
+
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem.searchController?.searchBar.placeholder = "cex_coin_select.search_placeholder".localized
 
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+        if viewModel.isEmpty {
+            navigationItem.searchController = nil
+
+            let emptyView = PlaceholderView()
+
+            view.addSubview(emptyView)
+            emptyView.snp.makeConstraints { maker in
+                maker.edges.equalToSuperview()
+            }
+
+            emptyView.image = UIImage(named: "empty_wallet_48")?.withTintColor(.themeGray)
+            emptyView.text = "cex_coin_select.withdraw.empty".localized
+        } else {
+            navigationItem.searchController?.searchBar.placeholder = "cex_coin_select.search_placeholder".localized
+
+            view.addSubview(tableView)
+            tableView.snp.makeConstraints { maker in
+                maker.edges.equalToSuperview()
+            }
+
+            tableView.sectionDataSource = self
+            tableView.backgroundColor = .clear
+            tableView.separatorStyle = .none
+
+            view.addSubview(notFoundPlaceholder)
+            notFoundPlaceholder.snp.makeConstraints { maker in
+                maker.edges.equalTo(view.safeAreaLayoutGuide)
+            }
+
+            notFoundPlaceholder.image = UIImage(named: "not_found_48")
+            notFoundPlaceholder.text = "no_results_found".localized
+
+            viewModel.$viewItems
+                    .receive(on: DispatchQueue.main)
+                    .sink { [weak self] in self?.sync(viewItems: $0) }
+                    .store(in: &cancellables)
+
+            sync(viewItems: viewModel.viewItems)
         }
-
-        tableView.sectionDataSource = self
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-
-        view.addSubview(notFoundPlaceholder)
-        notFoundPlaceholder.snp.makeConstraints { maker in
-            maker.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-
-        notFoundPlaceholder.image = UIImage(named: "not_found_48")
-        notFoundPlaceholder.text = "no_results_found".localized
-
-        viewModel.$viewItems
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in self?.sync(viewItems: $0) }
-                .store(in: &cancellables)
-
-        sync(viewItems: viewModel.viewItems)
 
         isLoaded = true
     }

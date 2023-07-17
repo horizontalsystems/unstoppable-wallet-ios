@@ -34,6 +34,10 @@ class CexCoinSelectViewModel {
 
 extension CexCoinSelectViewModel {
 
+    var isEmpty: Bool {
+        service.isEmpty
+    }
+
     func onUpdate(filter: String?) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             self?.service.set(filter: filter?.trimmingCharacters(in: .whitespaces) ?? "")

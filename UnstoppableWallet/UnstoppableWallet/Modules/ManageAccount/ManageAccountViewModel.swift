@@ -77,7 +77,12 @@ class ManageAccountViewModel {
         case .cex: ()
         }
 
-        var sections =  [KeyActionSection(keyActions: keyActions)]
+        var sections = [KeyActionSection]()
+
+        if !keyActions.isEmpty {
+            sections.append(KeyActionSection(keyActions: keyActions))
+        }
+
         if !backupSection.keyActions.isEmpty {
             sections.append(backupSection)
         }
