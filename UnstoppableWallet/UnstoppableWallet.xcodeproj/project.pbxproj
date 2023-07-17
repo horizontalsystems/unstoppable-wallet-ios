@@ -2369,6 +2369,10 @@
 		D0B36D6B2A52F98300E289E7 /* CexAmountInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B36D692A52F98300E289E7 /* CexAmountInputViewModel.swift */; };
 		D0BC6ECD2A499ADB00D5389F /* CexCoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BC6ECC2A499ADB00D5389F /* CexCoinService.swift */; };
 		D0BC6ECE2A499ADB00D5389F /* CexCoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BC6ECC2A499ADB00D5389F /* CexCoinService.swift */; };
+		D0C226092A654FFB007101F7 /* CoinzixWihdrawHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C226082A654FFB007101F7 /* CoinzixWihdrawHandler.swift */; };
+		D0C2260A2A654FFB007101F7 /* CoinzixWihdrawHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C226082A654FFB007101F7 /* CoinzixWihdrawHandler.swift */; };
+		D0C2260C2A6552CA007101F7 /* BinanceWithdrawHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C2260B2A6552CA007101F7 /* BinanceWithdrawHandler.swift */; };
+		D0C2260D2A6552CA007101F7 /* BinanceWithdrawHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C2260B2A6552CA007101F7 /* BinanceWithdrawHandler.swift */; };
 		D0D5BCBC2976CB9F00587FDB /* PasswordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */; };
 		D0D5BCBD2976CB9F00587FDB /* PasswordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */; };
 		D0D5BCC02976D3B300587FDB /* PsswordInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */; };
@@ -3818,6 +3822,8 @@
 		D0B36D5D2A4D77E200E289E7 /* CexWithdrawNetworkSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CexWithdrawNetworkSelectViewController.swift; sourceTree = "<group>"; };
 		D0B36D692A52F98300E289E7 /* CexAmountInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CexAmountInputViewModel.swift; sourceTree = "<group>"; };
 		D0BC6ECC2A499ADB00D5389F /* CexCoinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CexCoinService.swift; sourceTree = "<group>"; };
+		D0C226082A654FFB007101F7 /* CoinzixWihdrawHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinzixWihdrawHandler.swift; sourceTree = "<group>"; };
+		D0C2260B2A6552CA007101F7 /* BinanceWithdrawHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinanceWithdrawHandler.swift; sourceTree = "<group>"; };
 		D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputView.swift; sourceTree = "<group>"; };
 		D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsswordInputCell.swift; sourceTree = "<group>"; };
 		D0EC34DF2A459E9600BB308B /* CexWithdrawModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CexWithdrawModule.swift; sourceTree = "<group>"; };
@@ -5112,6 +5118,7 @@
 		11B359EE57B76B654C3FD1BE /* CexWithdrawConfirm */ = {
 			isa = PBXGroup;
 			children = (
+				D0C226072A654FE5007101F7 /* Handlers */,
 				11B35676F5A029CEFB14D537 /* CexWithdrawConfirmService.swift */,
 				11B351880FC2741D862C5245 /* CexWithdrawConfirmModule.swift */,
 				11B3572A5E32D60B3CF86F63 /* CexWithdrawConfirmViewModel.swift */,
@@ -7283,6 +7290,15 @@
 			path = Confirmation;
 			sourceTree = "<group>";
 		};
+		D0C226072A654FE5007101F7 /* Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				D0C226082A654FFB007101F7 /* CoinzixWihdrawHandler.swift */,
+				D0C2260B2A6552CA007101F7 /* BinanceWithdrawHandler.swift */,
+			);
+			path = Handlers;
+			sourceTree = "<group>";
+		};
 		D0D6933E270B28240077AF17 /* CoinOverview */ = {
 			isa = PBXGroup;
 			children = (
@@ -7879,6 +7895,7 @@
 				11B35A866A95D72FF5360F12 /* WalletConnectSessionManager.swift in Sources */,
 				1A564CB3AA2230EAB642D03A /* BottomGradientHolder.swift in Sources */,
 				D36DE0C4272FD864000BC916 /* UniswapModule.swift in Sources */,
+				D0C2260D2A6552CA007101F7 /* BinanceWithdrawHandler.swift in Sources */,
 				D05E968E2A25D6C6002CCD71 /* Trc20Adapter.swift in Sources */,
 				11B355F32686B8689B4EC105 /* WalletConnectRequest.swift in Sources */,
 				11B3534916B76A847608D1A4 /* WalletConnectRequestModule.swift in Sources */,
@@ -8753,6 +8770,7 @@
 				11B353973C1ADD51D174AC74 /* CoinRankService.swift in Sources */,
 				11B35B3F5DE4F73225EBFF36 /* CoinRankViewModel.swift in Sources */,
 				11B35FA3A00690573A482BAC /* CoinRankViewController.swift in Sources */,
+				D0C2260A2A654FFB007101F7 /* CoinzixWihdrawHandler.swift in Sources */,
 				11B35C81D9DFBF07955D2461 /* CoinRankModule.swift in Sources */,
 				11B35A89B3F0D81C42DC5C40 /* CoinRankHeaderView.swift in Sources */,
 				ABC9AEA4EF88D31D00781014 /* ContactLabelService.swift in Sources */,
@@ -9125,6 +9143,7 @@
 				11B35A8456750E9838BBEA93 /* WalletConnectRequestViewController.swift in Sources */,
 				D36DE0F6272FD92F000BC916 /* SwapSelectProviderViewController.swift in Sources */,
 				11B357CD9544E312865CE36F /* WalletConnectInteractor.swift in Sources */,
+				D0C2260C2A6552CA007101F7 /* BinanceWithdrawHandler.swift in Sources */,
 				11B35FCBBA5007F4CA25BA0A /* WalletConnectSessionManager.swift in Sources */,
 				1A564649D3CF95AFAB6C1719 /* BottomGradientHolder.swift in Sources */,
 				D05E968D2A25D6C6002CCD71 /* Trc20Adapter.swift in Sources */,
@@ -9999,6 +10018,7 @@
 				11B35D96A814579F37BAD3D0 /* CoinRankService.swift in Sources */,
 				11B359C2651DA1F00A3C613C /* CoinRankViewModel.swift in Sources */,
 				11B35F9CC94DB2BC7B43BB59 /* CoinRankViewController.swift in Sources */,
+				D0C226092A654FFB007101F7 /* CoinzixWihdrawHandler.swift in Sources */,
 				11B352D8DDF054073BC79FC2 /* CoinRankModule.swift in Sources */,
 				11B35BCF9FFC93255EFB2774 /* CoinRankHeaderView.swift in Sources */,
 				ABC9A20F6F7D5EA2A1A55A9E /* ContactLabelService.swift in Sources */,

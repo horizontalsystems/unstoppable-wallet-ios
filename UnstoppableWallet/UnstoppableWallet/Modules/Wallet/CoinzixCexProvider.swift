@@ -260,27 +260,6 @@ extension CoinzixCexProvider: ICexProvider {
         }
     }
 
-    func withdraw(id: String, network: String?, address: String, amount: Decimal, feeFromAmount: Bool?) async throws -> String {
-        var parameters: Parameters = [
-            "iso": id,
-            "to_address": address,
-            "amount": amount,
-            "fee_from_amount": (feeFromAmount ?? false) ? 1 : 0
-        ]
-
-        if let network {
-            parameters["network"] = network
-        }
-
-        let response: WithdrawResponse = try await signedFetch(path: "/v1/withdraw", parameters: parameters)
-
-        guard response.status else {
-            throw RequestError.negativeStatus
-        }
-
-        return String(response.id)
-    }
-
     func confirmWithdraw(id: Int, emailPin: String?, googlePin: String?) async throws {
         var parameters: Parameters = [
             "id": id,
@@ -311,6 +290,33 @@ extension CoinzixCexProvider: ICexProvider {
         guard response.status else {
             throw RequestError.negativeStatus
         }
+    }
+
+}
+
+extension CoinzixCexProvider {
+
+    func withdraw(id: String, network: String?, address: String, amount: Decimal, feeFromAmount: Bool?) async throws -> (String, [TwoFactorType]) {
+        var parameters: Parameters = [
+            "iso": id,
+            "to_address": address,
+            "amount": amount,
+            "fee_from_amount": (feeFromAmount ?? false) ? 1 : 0
+        ]
+
+        if let network {
+            parameters["network"] = network
+        }
+
+        let response: WithdrawResponse = try await signedFetch(path: "/v1/withdraw", parameters: parameters)
+
+        guard response.status else {
+            throw RequestError.negativeStatus
+        }
+
+        let twoFactorTypes = response.step.compactMap { TwoFactorType.init(rawValue: $0) }
+
+        return (String(response.id), twoFactorTypes)
     }
 
 }
@@ -514,10 +520,12 @@ extension CoinzixCexProvider {
     private struct WithdrawResponse: ImmutableMappable {
         let status: Bool
         let id: Int
+        let step: [Int]
 
         init(map: Map) throws {
             status = try map.value("status")
             id = try map.value("data.id")
+            step = try map.value("data.step")
         }
     }
 
