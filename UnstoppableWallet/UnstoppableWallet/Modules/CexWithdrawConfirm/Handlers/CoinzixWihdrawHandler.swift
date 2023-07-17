@@ -4,7 +4,7 @@ import UIKit
 class CoinzixWithdrawHandler: ICexWithdrawHandler {
     typealias WithdrawResult = (String, [CoinzixCexProvider.TwoFactorType])
 
-    let provider: CoinzixCexProvider
+    private let provider: CoinzixCexProvider
 
     init(provider: CoinzixCexProvider) {
         self.provider = provider

@@ -4,7 +4,7 @@ import UIKit
 class BinanceWithdrawHandler: ICexWithdrawHandler {
     typealias WithdrawResult = String
 
-    let provider: BinanceCexProvider
+    private let provider: BinanceCexProvider
 
     init(provider: BinanceCexProvider) {
         self.provider = provider
