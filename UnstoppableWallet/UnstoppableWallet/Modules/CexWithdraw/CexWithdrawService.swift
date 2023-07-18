@@ -59,8 +59,12 @@ class CexWithdrawService {
     }
 
     private func syncAvailableBalance() {
-        let fee = calculateFee(amount: cexAsset.freeBalance, feeFromAmount: feeFromAmount)
-        _availableBalance = fee < cexAsset.freeBalance ? cexAsset.freeBalance - fee : 0
+        if feeFromAmount {
+            _availableBalance = cexAsset.freeBalance
+        } else {
+            let fee = calculateFee(amount: cexAsset.freeBalance, feeFromAmount: feeFromAmount)
+            _availableBalance = fee < cexAsset.freeBalance ? cexAsset.freeBalance - fee : 0
+        }
     }
 
     private func validateAmount() throws {
