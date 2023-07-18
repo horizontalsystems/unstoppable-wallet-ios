@@ -1598,6 +1598,8 @@
 // Cex Coin Select
 
 "cex_coin_select.title" = "Elegir moneda";
+"cex_coin_select.withdraw" = "Withdraw";
+"cex_coin_select.withdraw.empty" = "You have no assets to withdraw.";
 "cex_coin_select.search_placeholder" = "Coin Code or Name";
 "cex_coin_select.suspended" = "Suspended";
 
