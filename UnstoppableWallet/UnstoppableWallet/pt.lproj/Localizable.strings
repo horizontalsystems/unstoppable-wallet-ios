@@ -1600,6 +1600,8 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 // Cex Coin Select
 
 "cex_coin_select.title" = "Escolher Moedas";
+"cex_coin_select.withdraw" = "Withdraw";
+"cex_coin_select.withdraw.empty" = "You have no assets to withdraw.";
 "cex_coin_select.search_placeholder" = "Coin Code or Name";
 "cex_coin_select.suspended" = "Suspended";
 
