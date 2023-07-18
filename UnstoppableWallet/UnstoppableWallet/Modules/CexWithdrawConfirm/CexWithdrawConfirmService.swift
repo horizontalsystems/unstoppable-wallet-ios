@@ -3,12 +3,7 @@ import Combine
 import HsExtensions
 
 class CexWithdrawConfirmService<Handler: ICexWithdrawHandler> {
-    let cexAsset: CexAsset
-    let network: CexWithdrawNetwork?
-    let address: String
-    let amount: Decimal
-    let feeFromAmount: Bool
-    let fee: Decimal
+    private let sendData: CexWithdrawModule.SendData
     private let handler: Handler
     private var tasks = Set<AnyTask>()
 
@@ -17,13 +12,28 @@ class CexWithdrawConfirmService<Handler: ICexWithdrawHandler> {
     private let errorSubject = PassthroughSubject<Error, Never>()
 
     init(sendData: CexWithdrawModule.SendData, handler: Handler) {
-        cexAsset = sendData.cexAsset
-        network = sendData.network
-        address = sendData.address
-        amount = sendData.feeFromAmount ? sendData.amount - sendData.fee : sendData.amount
-        feeFromAmount = sendData.feeFromAmount
-        fee = sendData.fee
+        self.sendData = sendData
         self.handler = handler
+    }
+
+    var cexAsset: CexAsset {
+        sendData.cexAsset
+    }
+
+    var network: CexWithdrawNetwork? {
+        sendData.network
+    }
+
+    var address: String {
+        sendData.address
+    }
+
+    var amount: Decimal {
+        sendData.feeFromAmount ? sendData.amount - sendData.fee : sendData.amount
+    }
+
+    var fee: Decimal {
+        sendData.fee
     }
 
 }
@@ -43,9 +53,15 @@ extension CexWithdrawConfirmService {
 
         state = .loading
 
-        Task { [weak self, handler, cexAsset, network, address, amount, feeFromAmount] in
+        Task { [weak self, handler, sendData] in
             do {
-                let result = try await handler.withdraw(id: cexAsset.id, network: network?.id, address: address, amount: amount, feeFromAmount: feeFromAmount)
+                let result = try await handler.withdraw(
+                    id: sendData.cexAsset.id,
+                    network: sendData.network?.id,
+                    address: sendData.address,
+                    amount: sendData.amount,
+                    feeFromAmount: sendData.feeFromAmount
+                )
 
                 self?.confirmWithdrawSubject.send(result)
             } catch {
