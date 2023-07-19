@@ -27,6 +27,7 @@ extension CoinRankModule {
         case address
         case txCount
         case holders
+        case fee
         case revenue
     }
 

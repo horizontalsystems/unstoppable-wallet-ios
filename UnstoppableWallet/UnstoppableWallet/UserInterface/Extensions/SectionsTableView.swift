@@ -15,16 +15,15 @@ extension SectionsTableView {
         )
     }
 
-    func sectionFooter(text: String, textColor: UIColor = .themeGray) -> ViewState<BottomDescriptionHeaderFooterView> {
+    func sectionFooter(text: String, textColor: UIColor = .themeGray, topMargin: CGFloat = .margin12, bottomMargin: CGFloat = .margin32) -> ViewState<BottomDescriptionHeaderFooterView> {
         registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
         return .cellType(
                 hash: text,
                 binder: {
-                    $0.text = text
-                    $0.textColor = textColor
+                    $0.bind(text: text, textColor: textColor, topMargin: topMargin, bottomMargin: bottomMargin)
                 },
-                dynamicHeight: { BottomDescriptionHeaderFooterView.height(containerWidth: $0, text: text) }
+                dynamicHeight: { BottomDescriptionHeaderFooterView.height(containerWidth: $0, text: text, topMargin: topMargin, bottomMargin: bottomMargin) }
         )
     }
 
