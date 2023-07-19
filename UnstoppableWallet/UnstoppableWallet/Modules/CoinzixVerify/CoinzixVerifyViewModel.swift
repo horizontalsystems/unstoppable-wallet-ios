@@ -47,9 +47,7 @@ extension CoinzixVerifyViewModel {
     }
 
     var errorPublisher: AnyPublisher<String, Never> {
-        service.errorPublisher
-                .map { _ in "coinzix_verify_withdraw.failed".localized }
-                .eraseToAnyPublisher()
+        service.errorPublisher.map { $0.smartDescription }.eraseToAnyPublisher()
     }
 
     var twoFactorTypes: [CoinzixCexProvider.TwoFactorType] {
