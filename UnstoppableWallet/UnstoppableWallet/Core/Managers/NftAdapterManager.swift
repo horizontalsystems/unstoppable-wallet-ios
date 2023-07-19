@@ -11,7 +11,7 @@ class NftAdapterManager {
     private let adaptersUpdatedRelay = PublishRelay<[NftKey: INftAdapter]>()
     private var _adapterMap = [NftKey: INftAdapter]()
 
-    private let queue = DispatchQueue(label: "io.horizontal-systems.unstoppable.nft-adapter_manager", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).nft-adapter_manager", qos: .userInitiated)
 
     init(walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager) {
         self.walletManager = walletManager

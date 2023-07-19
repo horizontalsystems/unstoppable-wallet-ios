@@ -20,7 +20,7 @@ class TransactionsViewModel {
 
     private var sectionViewItems = [SectionViewItem]()
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions_view_model", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).transactions_view_model", qos: .userInitiated)
 
     init(service: TransactionsService, contactLabelService: TransactionsContactLabelService, factory: TransactionsViewItemFactory) {
         self.service = service

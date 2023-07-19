@@ -11,7 +11,7 @@ class ContactBookManager {
     static let filename = "Contacts.json"
 
     static let localUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.contact_manager")
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).contact_manager")
 
     private let ubiquityContainerIdentifier: String?
 

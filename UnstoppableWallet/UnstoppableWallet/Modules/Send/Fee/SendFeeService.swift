@@ -5,7 +5,7 @@ import RxCocoa
 import MarketKit
 
 class SendFeeService {
-    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.send-fee-service")
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).send-fee-service")
 
     private let disposeBag = DisposeBag()
     private var feeRateDisposeBag = DisposeBag()

@@ -8,7 +8,7 @@ import MarketKit
 class FiatService {
     private var disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
-    private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.fiat-service", qos: .userInitiated)
+    private var queue = DispatchQueue(label: "\(AppConfig.label).fiat-service", qos: .userInitiated)
 
     private let switchService: AmountTypeSwitchService
     private let currencyKit: CurrencyKit.Kit

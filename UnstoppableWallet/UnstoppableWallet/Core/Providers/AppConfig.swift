@@ -1,6 +1,8 @@
 import Foundation
 
 struct AppConfig {
+    static let label = "io.horizontalsystems.unstoppable"
+
     static let reportEmail = "support.unstoppable@protonmail.com"
     static let companyWebPageLink = "https://horizontalsystems.io"
     static let appWebPageLink = "https://unstoppable.money"

@@ -7,7 +7,7 @@ import MarketKit
 import Chart
 
 class CoinAnalyticsViewModel {
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.coin_analytics_view_model", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).coin_analytics_view_model", qos: .userInitiated)
 
     private let service: CoinAnalyticsService
     private let technicalIndicatorService: TechnicalIndicatorService

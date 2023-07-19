@@ -20,7 +20,7 @@ class EvmKitManager {
     private let evmKitUpdatedRelay = PublishRelay<Void>()
     private var currentAccount: Account?
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.ethereum-kit-manager", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).ethereum-kit-manager", qos: .userInitiated)
 
     init(chain: Chain, syncSourceManager: EvmSyncSourceManager) {
         self.chain = chain

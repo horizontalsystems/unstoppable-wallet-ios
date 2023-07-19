@@ -18,7 +18,7 @@ class WalletAdapterService {
 
     private var adapterMap: [Wallet: IBalanceAdapter]
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-adapter-service", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).wallet-adapter-service", qos: .userInitiated)
 
     init(account: Account, adapterManager: AdapterManager) {
         self.account = account

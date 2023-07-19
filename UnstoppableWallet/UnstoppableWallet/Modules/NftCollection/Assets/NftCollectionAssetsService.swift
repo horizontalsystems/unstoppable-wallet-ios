@@ -20,7 +20,7 @@ class NftCollectionAssetsService {
     private var paginationData: PaginationData?
     private var loadingMore = false
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-collection-assets-service", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).nft-collection-assets-service", qos: .userInitiated)
 
     init(blockchainType: BlockchainType, providerCollectionUid: String, nftMetadataManager: NftMetadataManager, coinPriceService: WalletCoinPriceService) {
         self.blockchainType = blockchainType

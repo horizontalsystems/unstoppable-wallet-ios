@@ -11,7 +11,7 @@ import Combine
 
 class ZcashAdapter {
     private static let endPoint = "lightwalletd.electriccoin.co" //"mainnet.lightwalletd.com"
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.zcash-adapter", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
 
     private let disposeBag = DisposeBag()
     private var cancellables: [AnyCancellable] = []

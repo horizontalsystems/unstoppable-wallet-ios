@@ -6,7 +6,7 @@ import RxRelay
 import EvmKit
 
 class WalletConnectMainViewModel {
-    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.wallet_connect_main")
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).wallet_connect_main")
 
     private let service: IWalletConnectMainService
     private let disposeBag = DisposeBag()

@@ -24,7 +24,7 @@ class NftAssetOverviewService {
         }
     }
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-asset-service", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).nft-asset-service", qos: .userInitiated)
 
     init(providerCollectionUid: String, nftUid: NftUid, accountManager: AccountManager, nftAdapterManager: NftAdapterManager, nftMetadataManager: NftMetadataManager, marketKit: MarketKit.Kit, coinPriceService: WalletCoinPriceService) {
         self.providerCollectionUid = providerCollectionUid

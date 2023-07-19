@@ -4,7 +4,7 @@ import RxRelay
 import HsToolKit
 
 class MetadataMonitor {
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.metadata_monitor", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).metadata_monitor", qos: .userInitiated)
 
     private let url: URL
     private let filename: String

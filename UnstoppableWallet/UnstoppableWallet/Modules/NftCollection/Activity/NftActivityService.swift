@@ -52,7 +52,7 @@ class NftActivityService {
     private var paginationData: PaginationData?
     private var loadingMore = false
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-collection-activity-service", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).nft-collection-activity-service", qos: .userInitiated)
 
     init(eventListType: NftActivityModule.NftEventListType, defaultEventType: NftEventMetadata.EventType?, nftMetadataManager: NftMetadataManager, coinPriceService: WalletCoinPriceService) {
         self.eventListType = eventListType

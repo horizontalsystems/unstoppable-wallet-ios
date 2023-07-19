@@ -17,7 +17,7 @@ class ContactLabelService {
         }
     }
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.contact-label-service", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).contact-label-service", qos: .userInitiated)
     private var observedAddress: String = ""
 
     init(contactManager: ContactBookManager?, blockchainType: BlockchainType) {

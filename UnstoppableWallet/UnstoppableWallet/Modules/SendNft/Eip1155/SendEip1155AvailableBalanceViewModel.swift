@@ -5,7 +5,7 @@ import BigInt
 import CurrencyKit
 
 class SendEip1155AvailableBalanceViewModel {
-    private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.available-balance-view-model", qos: .userInitiated)
+    private var queue = DispatchQueue(label: "\(AppConfig.label).available-balance-view-model", qos: .userInitiated)
 
     private let service: SendEip1155Service
     private let disposeBag = DisposeBag()
