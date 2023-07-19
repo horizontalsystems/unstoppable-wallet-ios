@@ -25,6 +25,7 @@
 "button.sign" = "Sign";
 "button.more" = "Show More";
 "button.i_understand" = "I Understand";
+"button.learn_more" = "Learn More";
 
 "alert" = "Alert";
 "alert.copied" = "Copied";
@@ -976,6 +977,7 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "settings.blockchain_settings" = "Blockchain Settings";
 "settings.security" = "Security";
 "settings.experimental_features" = "Experimental";
+"settings.personal_support" = "Personal Support";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
 "settings.faq" = "FAQ";
@@ -999,6 +1001,16 @@ Go to Settings - > Unstoppable and allow access to the camera.";
 "manage_wallets.contract_address" = "Contract Address";
 "manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile Unstoppable wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile Unstoppable wallet supports both of them it recommends to use a Bitcoin Cash wallet operating in TYPE 145 format.";
+
+// Settings -> Personal Support
+
+"settings.personal_support.telegram_username.title" = "Account";
+"settings.personal_support.telegram_username.placeholder" = "@username";
+"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
+"settings.personal_support.request" = "Request";
+"settings.personal_support.requested" = "Requested";
+"settings.personal_support.failed" = "Request failed";
+"settings.personal_support.need_subscription" = "This feature only for Unstoppable Wallet premium users. More info in our official site.";
 
 // Settings -> Experimental Features
 

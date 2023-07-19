@@ -62,7 +62,7 @@ class CexWithdrawService {
         if feeFromAmount {
             _availableBalance = cexAsset.freeBalance
         } else {
-            let fee = calculateFee(amount: cexAsset.freeBalance, feeFromAmount: feeFromAmount)
+            let fee = calculateFee(amount: cexAsset.freeBalance, feeFromAmount: true)
             _availableBalance = fee < cexAsset.freeBalance ? cexAsset.freeBalance - fee : 0
         }
     }
