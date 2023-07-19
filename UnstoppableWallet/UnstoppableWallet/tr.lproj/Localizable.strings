@@ -1658,15 +1658,10 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 
 // Coinzix Verify Withdraw
 
-"coinzix_verify_withdraw.title" = "Security Verification";
-"coinzix_verify_withdraw.email.title" = "Email Verification Code";
-"coinzix_verify_withdraw.email.description" = "Enter verification code sent to %@";
-"coinzix_verify_withdraw.google.title" = "Google Authentication Code";
-"coinzix_verify_withdraw.google.description" = "Enter Google authentication code from your Google Authenticator App";
-"coinzix_verify_withdraw.get_code" = "Get Code";
-"coinzix_verify_withdraw.failed" = "Failed to verify";
-"coinzix_verify_withdraw.submit" = "Submit";
-"coinzix_verify_withdraw.email_pin" = "Verification Code";
-"coinzix_verify_withdraw.email_pin.description" = "Enter verification code sent to test@gmail.com";
-"coinzix_verify_withdraw.google_pin" = "Google Authentication Code";
-"coinzix_verify_withdraw.google_pin.description" = "Enter google authentication code from your Google Authenticator App";
+"coinzix_verify.title" = "Security Verification";
+"coinzix_verify.failed" = "Failed to verify";
+"coinzix_verify.submit" = "Submit";
+"coinzix_verify.email_pin" = "Verification Code";
+"coinzix_verify.email_pin.description" = "Enter verification code sent to your email";
+"coinzix_verify.google_pin" = "Google Authentication Code";
+"coinzix_verify.google_pin.description" = "Enter google authentication code from your Google Authenticator App";
