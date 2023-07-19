@@ -54,6 +54,7 @@ extension CoinDetailAdviceViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
+        [Section(id: "mergin-section", headerState: .margin(height: .margin12))] +
         viewItems.map { section in
             Section(
                     id: "header-\(section.name)",

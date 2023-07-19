@@ -62,6 +62,10 @@ extension ContactBookViewModel {
         viewItemsRelay.asDriver()
     }
 
+    var showBadgeDriver: Driver<Bool> {
+        service.iCloudAvailableErrorObservable.asDriver(onErrorJustReturn: true)
+    }
+
     var emptyListDriver: Driver<ViewItemListType?> {
         emptyListRelay.asDriver()
     }

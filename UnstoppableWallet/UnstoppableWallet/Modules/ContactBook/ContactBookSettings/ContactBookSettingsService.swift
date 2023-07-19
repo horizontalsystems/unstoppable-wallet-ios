@@ -9,7 +9,7 @@ class ContactBookSettingsService {
     private let activatedChangedRelay = BehaviorRelay<Bool>(value: false)
     private let confirmationRelay = PublishRelay<()>()
 
-    private let cloudErrorRelay = PublishRelay<Error?>()
+    private let cloudErrorRelay = BehaviorRelay<Error?>(value: nil)
     var cloudError: Error? {
         didSet {
             cloudErrorRelay.accept(cloudError)
@@ -23,6 +23,9 @@ class ContactBookSettingsService {
     init(contactManager: ContactBookManager) {
         self.contactManager = contactManager
 
+        subscribe(disposeBag, contactManager.iCloudErrorObservable) { [weak self] error in
+            self?.sync(error: error)
+        }
         sync(error: contactManager.iCloudError)
     }
 

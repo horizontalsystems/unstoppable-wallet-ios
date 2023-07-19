@@ -106,7 +106,7 @@ class App {
     let cexAssetManager: CexAssetManager
 
     let appManager: AppManager
-    let contactManager: ContactBookManager?
+    let contactManager: ContactBookManager
     let cloudAccountBackupManager: CloudAccountBackupManager
 
     init() throws {

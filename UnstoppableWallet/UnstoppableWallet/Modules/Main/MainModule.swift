@@ -24,7 +24,8 @@ struct MainModule {
                 accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
                 pinKit: App.shared.pinKit,
                 termsManager: App.shared.termsManager,
-                walletConnectV2SessionManager: App.shared.walletConnectV2SessionManager
+                walletConnectV2SessionManager: App.shared.walletConnectV2SessionManager,
+                contactBookManager: App.shared.contactManager
         )
         let releaseNotesService = ReleaseNotesService(
                 appVersionManager: App.shared.appVersionManager

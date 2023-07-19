@@ -19,6 +19,8 @@ class ContactBookService {
         }
     }
 
+    private let iCloudAvailableErrorRelay = BehaviorRelay<Bool>(value: false)
+
     var emptyBook: Bool {
         _contacts.isEmpty
     }
@@ -58,6 +60,14 @@ class ContactBookService {
         self.blockchainType = blockchainType
 
         subscribe(disposeBag, contactManager.stateObservable) { [weak self] _ in self?.sync() }
+        subscribe(disposeBag, contactManager.iCloudErrorObservable) { [weak self] error in
+            if error != nil, (self?.contactManager.remoteSync ?? false) {
+                self?.iCloudAvailableErrorRelay.accept(true)
+            } else {
+                self?.iCloudAvailableErrorRelay.accept(false)
+            }
+        }
+
         sync()
     }
 
@@ -76,6 +86,10 @@ extension ContactBookService {
 
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
+    }
+
+    var iCloudAvailableErrorObservable: Observable<Bool> {
+        iCloudAvailableErrorRelay.asObservable()
     }
 
     func set(filter: String) {

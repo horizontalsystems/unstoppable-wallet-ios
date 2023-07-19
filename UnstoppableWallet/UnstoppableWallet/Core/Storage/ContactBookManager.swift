@@ -54,7 +54,7 @@ class ContactBookManager {
 
     private let fileStorage = FileDataStorage()
 
-    let localUrl: URL
+    let localUrl: URL?
     var iCloudUrl: URL? {
         FileManager
                 .default
@@ -68,17 +68,13 @@ class ContactBookManager {
         }
     }
 
-    init?(localStorage: LocalStorage, ubiquityContainerIdentifier: String?, helper: ContactBookHelper, logger: Logger? = nil) {
-        guard let localUrl = ContactBookManager.localUrl else {
-            return nil
-        }
-
+    init(localStorage: LocalStorage, ubiquityContainerIdentifier: String?, helper: ContactBookHelper, logger: Logger? = nil) {
         self.ubiquityContainerIdentifier = ubiquityContainerIdentifier
 
         logger?.debug("=C-MANAGER> INIT")
         self.localStorage = localStorage
         self.helper = helper
-        self.localUrl = localUrl
+        localUrl = ContactBookManager.localUrl
         self.logger = logger
 
         logger?.debug("=C-MANAGER> Want to Sync LocalFile")
@@ -90,6 +86,10 @@ class ContactBookManager {
 //  ================================ LOCAL ==================================================== //
     func syncLocalFile() {
         state = .loading
+        guard let localUrl else {
+            state = .failed(ContactBookManager.StorageError.localUrlNotAvailable)
+            return
+        }
 
         logger?.debug("=C-MANAGER> SYNC")
         fileStorage
@@ -118,6 +118,11 @@ class ContactBookManager {
                 syncRemoteStorage()
             }
         } catch {
+            guard let localUrl else {
+                state = .failed(ContactBookManager.StorageError.localUrlNotAvailable)
+                return
+            }
+
             // if file can't be parsed we need delete it and show empty book
             fileStorage
                     .deleteFile(url: localUrl)
@@ -184,6 +189,11 @@ class ContactBookManager {
     }
 
     private func sync(iCloudData: Data, localBook: ContactBook) {
+        guard let localUrl else {
+            state = .failed(ContactBookManager.StorageError.localUrlNotAvailable)
+            return
+        }
+
         do {
             // if there no local book yet, just get empty. When it's come from local - resync change localfile
             logger?.debug("=C-MANAGER> LOCAL BOOK : \(localBook.contacts.count)")
@@ -364,6 +374,11 @@ extension ContactBookManager {
     }
 
     func update(contact: Contact) throws {
+        guard let localUrl else {
+            state = .failed(ContactBookManager.StorageError.localUrlNotAvailable)
+            return
+        }
+
         guard let contactBook = state.data else {
             throw StorageError.notReady
         }
@@ -378,6 +393,11 @@ extension ContactBookManager {
     }
 
     func delete(_ contactUid: String) throws {
+        guard let localUrl else {
+            state = .failed(ContactBookManager.StorageError.localUrlNotAvailable)
+            return
+        }
+
         guard let contactBook = state.data else {
             throw StorageError.notReady
         }
@@ -405,6 +425,11 @@ extension ContactBookManager {
     }
 
     func restore(contacts:[BackupContact]) throws {
+        guard let localUrl else {
+            state = .failed(ContactBookManager.StorageError.localUrlNotAvailable)
+            return
+        }
+
         let newContactBook = helper.contactBook(contacts: contacts, lastVersion: state.data?.version)
 
         try save(url: localUrl, newContactBook)
@@ -423,6 +448,7 @@ extension ContactBookManager {
 
     enum StorageError: Error {
         case cloudUrlNotAvailable
+        case localUrlNotAvailable
         case notReady
         case cantParseData
     }

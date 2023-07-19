@@ -13,15 +13,17 @@ class MainBadgeService {
     private let pinKit: PinKit.Kit
     private let termsManager: TermsManager
     private let walletConnectV2SessionManager: WalletConnectV2SessionManager
+    private let contactBookManager: ContactBookManager
 
     private let settingsBadgeRelay = BehaviorRelay<(Bool, Int)>(value: (false, 0))
 
-    init(backupManager: BackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, pinKit: PinKit.Kit, termsManager: TermsManager, walletConnectV2SessionManager: WalletConnectV2SessionManager) {
+    init(backupManager: BackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, pinKit: PinKit.Kit, termsManager: TermsManager, walletConnectV2SessionManager: WalletConnectV2SessionManager, contactBookManager: ContactBookManager) {
         self.backupManager = backupManager
         self.accountRestoreWarningManager = accountRestoreWarningManager
         self.pinKit = pinKit
         self.termsManager = termsManager
         self.walletConnectV2SessionManager = walletConnectV2SessionManager
+        self.contactBookManager = contactBookManager
 
         accountRestoreWarningManager.hasNonStandardObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -61,6 +63,15 @@ class MainBadgeService {
                 })
                 .disposed(by: disposeBag)
 
+        contactBookManager.iCloudErrorObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+                .subscribe(onNext: { [weak self] _ in
+                    self?.syncSettingsBadge()
+                })
+                .disposed(by: disposeBag)
+
+
         syncSettingsBadge()
     }
 
@@ -70,7 +81,8 @@ class MainBadgeService {
 
     private func syncSettingsBadge() {
         let count = walletConnectV2SessionManager.activePendingRequests.count
-        let visible = accountRestoreWarningManager.hasNonStandard || !backupManager.allBackedUp || !pinKit.isPinSet || !termsManager.termsAccepted || count != 0
+        let cloudError = contactBookManager.iCloudError != nil && contactBookManager.remoteSync
+        let visible = accountRestoreWarningManager.hasNonStandard || !backupManager.allBackedUp || !pinKit.isPinSet || !termsManager.termsAccepted || cloudError || count != 0
         settingsBadgeRelay.accept((visible, count))
     }
 

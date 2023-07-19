@@ -11,6 +11,7 @@ class ContactBookSettingsViewController: ThemeViewController {
 
     private let tableView = SectionsTableView(style: .grouped)
     private var viewAppeared = false
+    private var lostSynchronization = false
 
     init(viewModel: ContactBookSettingsViewModel) {
         self.viewModel = viewModel
@@ -45,7 +46,10 @@ class ContactBookSettingsViewController: ThemeViewController {
         tableView.buildSections()
 
         subscribe(disposeBag, viewModel.showConfirmationSignal) { [weak self] in self?.showMergeConfirmation() }
-        subscribe(disposeBag, viewModel.showSyncErrorSignal) { [weak self] in self?.showCloudAlert(syncingOn: $0) }
+        subscribe(disposeBag, viewModel.showSyncErrorDriver) { [weak self] in
+            self?.lostSynchronization = $0
+            self?.tableView.reload()
+        }
 
         subscribe(disposeBag, viewModel.showRestoreAlertSignal) { [weak self] in self?.showRestoreAlert(contacts: $0) }
         subscribe(disposeBag, viewModel.showParsingErrorSignal) { [weak self] in self?.showParsingError() }
@@ -60,7 +64,6 @@ class ContactBookSettingsViewController: ThemeViewController {
         super.viewDidAppear(animated)
 
         if !viewAppeared {
-            viewModel.onViewAppeared()
             viewAppeared = true
         }
     }
@@ -111,22 +114,6 @@ class ContactBookSettingsViewController: ThemeViewController {
         present(viewController, animated: true)
     }
 
-    private func showCloudAlert(syncingOn: Bool) {
-        let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "no_internet_24")?.withTintColor(.themeJacob)),
-                title: syncingOn ? "contacts.settings.alert.title".localized : "contacts.settings.alert_error.title".localized,
-                items: [
-                    .highlightedDescription(text: syncingOn ? "contacts.settings.alert.description".localized : "contacts.settings.alert_error.description".localized)
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "button.continue".localized, action: !syncingOn ? { [weak self] in self?.setToggle(on: false) } : nil),
-                ],
-                delegate: !syncingOn ? self : nil
-        )
-
-        present(viewController, animated: true)
-    }
-
     private func goToSettings() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
@@ -137,18 +124,22 @@ class ContactBookSettingsViewController: ThemeViewController {
 
     }
 
-    private func rootElement(on: Bool, animated: Bool = false) -> CellBuilderNew.CellElement {
-        .hStack(
-                tableView.universalImage24Elements(
-                        title: .body("contacts.settings.icloud_sync".localized),
-                        accessoryType: .switch(
-                                isOn: on,
-                                animated: animated
-                        ) { [weak self] isOn in
-                            self?.viewModel.onToggle(isOn: isOn)
-                        }
-                )
+    private func activationElements(on: Bool, warning: Bool, animated: Bool = false) -> CellBuilderNew.CellElement {
+        var elements = tableView.universalImage24Elements(
+                title: .body("contacts.settings.icloud_sync".localized),
+                accessoryType: .switch(
+                        isOn: on,
+                        animated: animated
+                ) { [weak self] isOn in
+                    self?.viewModel.onToggle(isOn: isOn)
+                }
         )
+        elements.insert(.image20 { (component: ImageComponent) -> () in
+            component.isHidden = !(on && warning)
+            component.imageView.image = UIImage(named: "warning_2_20")?.withTintColor(.themeLucian)
+        }, at: 2)
+
+        return .hStack(elements)
     }
 
     private func setToggle(on: Bool) {
@@ -156,7 +147,7 @@ class ContactBookSettingsViewController: ThemeViewController {
             return
         }
 
-        CellBuilderNew.buildStatic(cell: cell, rootElement: rootElement(on: on, animated: true))
+        CellBuilderNew.buildStatic(cell: cell, rootElement: activationElements(on: on, warning: lostSynchronization, animated: true))
     }
 
     private func onTapRestore() {
@@ -221,7 +212,7 @@ extension ContactBookSettingsViewController: SectionsDataSource {
             )
         }
 
-        return [
+        var sections: [SectionProtocol] = [
             Section(
                     id: "manage-contacts",
                     headerState: .margin(height: .margin12),
@@ -233,7 +224,7 @@ extension ContactBookSettingsViewController: SectionsDataSource {
                     footerState: tableView.sectionFooter(text: "contacts.settings.description".localized),
                     rows: [
                         CellBuilderNew.row(
-                                rootElement: rootElement(on: viewModel.featureEnabled),
+                                rootElement: activationElements(on: viewModel.featureEnabled, warning: lostSynchronization),
                                 tableView: tableView,
                                 id: "activate-icloud-contacts",
                                 height: .heightCell48,
@@ -245,6 +236,17 @@ extension ContactBookSettingsViewController: SectionsDataSource {
                     ]
             )
         ]
+
+        if lostSynchronization {
+            sections.append(Section(
+                    id: "lost_sync_section",
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        tableView.highlightedDescriptionRow(id: "lost_connection", style: .red, text: "contacts.settings.lost_synchronization.description".localized)
+                    ]
+            ))
+        }
+        return sections
     }
 
 }
