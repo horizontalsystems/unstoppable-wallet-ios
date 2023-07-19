@@ -119,9 +119,12 @@ class CoinChartFactory {
             }
             // build top-line string
             let topLineString = NSMutableAttributedString()
+            let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = NSTextAlignment.right
+
             for (index, pair) in maPairs.enumerated() {
                 let formatted = ValueFormatter.instance.formatFull(value: pair.0, decimalCount: 8, showSign: pair.0 < 0)
-                topLineString.append(NSAttributedString(string: formatted ?? "", attributes: [.foregroundColor: pair.1.withAlphaComponent(1)]))
+                topLineString.append(NSAttributedString(string: formatted ?? "", attributes: [.foregroundColor: pair.1.withAlphaComponent(1), .paragraphStyle: paragraphStyle]))
                 if index < maPairs.count - 1 {
                     topLineString.append(NSAttributedString(string: " "))
                 }
@@ -134,7 +137,7 @@ class CoinChartFactory {
                 let formatted = value.flatMap {
                     ValueFormatter.instance.formatFull(value: $0, decimalCount: 2, showSign: $0 < 0)
                 }
-                bottomLineString.append(NSAttributedString(string: formatted ?? "", attributes: [.foregroundColor: rsi.configuration.color.value.withAlphaComponent(1)]))
+                bottomLineString.append(NSAttributedString(string: formatted ?? "", attributes: [.foregroundColor: rsi.configuration.color.value.withAlphaComponent(1), .paragraphStyle: paragraphStyle]))
             case let macd as MacdIndicator:
                 var pairs = [(Decimal, UIColor)]()
                 // histogram pair
@@ -145,24 +148,22 @@ class CoinChartFactory {
                 }
                 let signalName = MacdIndicator.MacdType.signal.name(id: macd.json)
                 if let signalValue = chartItem.indicators[signalName] {
-                    let color = macd.configuration.fastColor
                     pairs.append((signalValue, macd.configuration.fastColor.value))
                 }
                 let macdName = MacdIndicator.MacdType.macd.name(id: macd.json)
                 if let macdValue = chartItem.indicators[macdName] {
-                    let color = macd.configuration.fastColor
                     pairs.append((macdValue, macd.configuration.longColor.value))
                 }
                 for (index, pair) in pairs.enumerated() {
                     let formatted = ValueFormatter.instance.formatFull(value: pair.0, decimalCount: 8, showSign: pair.0 < 0)
-                    bottomLineString.append(NSAttributedString(string: formatted ?? "", attributes: [.foregroundColor: pair.1.withAlphaComponent(1)]))
+                    bottomLineString.append(NSAttributedString(string: formatted ?? "", attributes: [.foregroundColor: pair.1.withAlphaComponent(1), .paragraphStyle: paragraphStyle]))
                     if index < pairs.count - 1 {
                         bottomLineString.append(NSAttributedString(string: " "))
                     }
                 }
             default:
                 if let volume = volumeString {
-                    bottomLineString.append(NSAttributedString(string: volume, attributes: [.foregroundColor: UIColor.themeGray]))
+                    bottomLineString.append(NSAttributedString(string: volume, attributes: [.foregroundColor: UIColor.themeGray, .paragraphStyle: paragraphStyle]))
                 }
             }
 

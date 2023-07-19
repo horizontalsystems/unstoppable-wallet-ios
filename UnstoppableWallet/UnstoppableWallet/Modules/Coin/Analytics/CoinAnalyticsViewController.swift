@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 import RxSwift
 import ThemeKit
@@ -9,10 +10,11 @@ import MarketKit
 import Chart
 
 class CoinAnalyticsViewController: ThemeViewController {
-    private let placeholderText = "•••"
+    private static let placeholderText = "•••"
 
     private let viewModel: CoinAnalyticsViewModel
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -23,6 +25,7 @@ class CoinAnalyticsViewController: ThemeViewController {
     weak var parentNavigationController: UINavigationController?
 
     private var viewItem: CoinAnalyticsViewModel.ViewItem?
+    private var indicatorViewItem: CoinAnalyticsViewModel.IndicatorViewItem?
 
     init(viewModel: CoinAnalyticsViewModel) {
         self.viewModel = viewModel
@@ -79,6 +82,7 @@ class CoinAnalyticsViewController: ThemeViewController {
         tableView.registerCell(forClass: PlaceholderCell.self)
         tableView.registerCell(forClass: MarketWideCardCell.self)
         tableView.registerCell(forClass: CoinAnalyticsHoldersCell.self)
+        tableView.registerCell(forClass: IndicatorAdviceCell.self)
         tableView.sectionDataSource = self
 
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in
@@ -93,6 +97,13 @@ class CoinAnalyticsViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.emptyViewDriver) { [weak self] visible in
             self?.emptyView.isHidden = !visible
         }
+        viewModel.indicatorViewItemsPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.indicatorViewItem = $0
+                    self?.tableView.reload()
+                }
+                .store(in: &cancellables)
 
         viewModel.onLoad()
     }
@@ -120,6 +131,17 @@ class CoinAnalyticsViewController: ThemeViewController {
         guard let viewController = ActivateSubscriptionModule.viewController(address: address) else {
             return
         }
+
+        parentNavigationController?.present(viewController, animated: true)
+    }
+
+    private func openTechnicalIndicatorInfo() {
+        let viewController = InfoModule.viewController(viewItems: [
+            .header1(text: "coin_analytics.technical_indicators".localized),
+            .listItem(text: "coin_analytics.technical_indicators.info1".localized),
+            .listItem(text: "coin_analytics.technical_indicators.info2".localized),
+            .listItem(text: "coin_analytics.technical_indicators.info3".localized),
+        ])
 
         parentNavigationController?.present(viewController, animated: true)
     }
@@ -260,6 +282,27 @@ class CoinAnalyticsViewController: ThemeViewController {
         parentNavigationController?.present(viewController, animated: true)
     }
 
+    private func openPeriodSelect() {
+        let viewController = SelectorModule.bottomSingleSelectorViewController(
+                title: "coin_analytics.period.select_title".localized,
+                viewItems: viewModel.periodViewItems,
+                onSelect: { [weak self] index in
+                    self?.viewModel.onSelectPeriod(index: index)
+                }
+        )
+
+        present(viewController, animated: true)
+    }
+
+    private func openDetailAdvices() {
+        guard let viewItems = viewModel.detailAdviceSectionViewItems else {
+            return
+        }
+
+        let viewController = CoinDetailAdviceViewController(viewItems: viewItems)
+        parentNavigationController?.pushViewController(viewController, animated: true)
+    }
+
     private func placeholderChartData() -> ChartData {
         var chartItems = [ChartItem]()
 
@@ -287,13 +330,13 @@ class CoinAnalyticsViewController: ThemeViewController {
 extension CoinAnalyticsViewController: SectionsDataSource {
 
     private func chartRow(id: String, title: String, valueInfo: String, chartCurveType: ChartConfiguration.CurveType, viewItem: Previewable<CoinAnalyticsViewModel.ChartViewItem>, isLast: Bool, infoAction: @escaping () -> (), action: @escaping () -> ()) -> RowProtocol {
-        let value: String?
+        let value: String
         let chartData: ChartData
         let chartTrend: MovementTrend
 
         switch viewItem {
         case .preview:
-            value = placeholderText
+            value = Self.placeholderText
             chartData = placeholderChartData()
             chartTrend = .ignored
         case .regular(let viewItem):
@@ -334,7 +377,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
 
         if let value {
             switch value {
-            case .preview: rowValue = placeholderText
+            case .preview: rowValue = Self.placeholderText
             case .regular(let value): rowValue = value
             }
         }
@@ -357,6 +400,58 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                 isLast: isLast,
                 action: rowAction
         )
+    }
+
+    private func indicatorSection(viewItem: CoinAnalyticsViewModel.IndicatorViewItem) -> SectionProtocol {
+        let disableInfo = viewItem.loading || viewItem.error || viewItem.viewItems.isEmpty
+        return Section(
+                id: "indicator-section",
+                headerState: .margin(height: 12),
+                rows: [
+                    Row<IndicatorAdviceCell>(id: "indicator-advices-row",
+                            height: IndicatorAdviceCell.height,
+                            autoDeselect: false,
+                            bind: { [weak self] cell, _ in
+                                cell.set(backgroundStyle: .lawrence, isFirst: true)
+                                cell.set(loading: viewItem.loading)
+
+                                if viewItem.error {
+                                    cell.setEmpty(value: "n/a".localized)
+                                    return
+                                }
+
+                                if viewItem.viewItems.isEmpty {
+                                    cell.setEmpty(value: Self.placeholderText)
+                                } else {
+                                    cell.set(viewItems: viewItem.viewItems)
+                                }
+
+                                cell.onTapInfo = { [weak self] in
+                                    self?.openTechnicalIndicatorInfo()
+                                }
+                            }
+                    ),
+                    tableView.universalRow48(
+                            id: "period",
+                            title: .subhead2("coin_analytics.period".localized, color: .themeGray),
+                            value: .subhead2(viewModel.period, color: viewItem.switchEnabled ? .themeLeah : .themeGray),
+                            accessoryType: .dropdown,
+                            autoDeselect: true,
+                            action: viewItem.switchEnabled ? { [weak self] in
+                                self?.openPeriodSelect()
+                            } : nil
+                    ),
+                    tableView.universalRow48(
+                            id: "details",
+                            title: .subhead2("coin_analytics.details".localized, color: disableInfo ? .themeGray50 : .themeGray),
+                            accessoryType: .disclosure,
+                            autoDeselect: true,
+                            isLast: true,
+                            action: !disableInfo ? { [weak self] in
+                                self?.openDetailAdvices()
+                            } : nil
+                    ),
+                ])
     }
 
     private func ratingRow(id: String, rating: Previewable<CoinAnalyticsModule.Rating>, isFirst: Bool = false, isLast: Bool = false) -> RowProtocol {
@@ -747,11 +842,11 @@ extension CoinAnalyticsViewController: SectionsDataSource {
 
         switch viewItem {
         case .preview:
-            value = placeholderText
+            value = Self.placeholderText
             blockchains = [
-                Blockchain(imageUrl: nil, name: "Blockchain 1", value: placeholderText, action: nil),
-                Blockchain(imageUrl: nil, name: "Blockchain 2", value: placeholderText, action: nil),
-                Blockchain(imageUrl: nil, name: "Blockchain 3", value: placeholderText, action: nil),
+                Blockchain(imageUrl: nil, name: "Blockchain 1", value: Self.placeholderText, action: nil),
+                Blockchain(imageUrl: nil, name: "Blockchain 2", value: Self.placeholderText, action: nil),
+                Blockchain(imageUrl: nil, name: "Blockchain 3", value: Self.placeholderText, action: nil),
             ]
             chartItems = [
                 (0.5, UIColor.themeGray.withAlphaComponent(0.8)),
@@ -917,7 +1012,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
 
         switch viewItem.value {
         case .preview:
-            value = placeholderText
+            value = Self.placeholderText
             valueInfo = nil
         case .regular(let _value):
             value = _value
@@ -1072,6 +1167,10 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         if let viewItem {
             if let lockInfo = viewItem.lockInfo {
                 sections.append(lockInfoSection(lockInfo: lockInfo))
+            }
+
+            if let indicatorViewItem {
+                sections.append(indicatorSection(viewItem: indicatorViewItem))
             }
 
             if let viewItem = viewItem.cexVolume {

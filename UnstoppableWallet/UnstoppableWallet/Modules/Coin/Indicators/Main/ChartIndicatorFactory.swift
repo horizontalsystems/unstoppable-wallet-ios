@@ -6,6 +6,8 @@ class ChartIndicatorFactory {
     static let precalculatedColor = [UIColor.themeYellowD]
     static let maColors = [UIColor(hex: 0xF54900), UIColor(hex: 0xBF5AF2), UIColor(hex: 0x09C1AB)]
     static let maPeriods = [9, 25, 50]
+    static let rsiPeriod = 12
+    static let macdPeriod = [12, 26, 9]
 
     static func maConfiguration(_ index: Int) -> ChartIndicator.LineConfiguration {
         let index = index % maColors.count
@@ -33,7 +35,7 @@ class ChartIndicatorFactory {
         var indicators = [ChartIndicator]()
         let maIndicators = maPeriods.enumerated().map { index, period in
             MaIndicator(
-                    id: MaIndicator.MaType.ema.rawValue,
+                    id: "MA",
                     index: index,
                     enabled: true,
                     period: period,
@@ -46,15 +48,15 @@ class ChartIndicatorFactory {
                     id: ChartIndicator.AbstractType.rsi.rawValue,
                     index: 0,
                     enabled: true,
-                    period: 12,
+                    period: rsiPeriod,
                     configuration: rsiConfiguration),
             MacdIndicator(
                     id: ChartIndicator.AbstractType.macd.rawValue,
                     index: 0,
                     enabled: false,
-                    fast: 12,
-                    slow: 26,
-                    signal: 9,
+                    fast: macdPeriod[0],
+                    slow: macdPeriod[1],
+                    signal: macdPeriod[2],
                     configuration: macdConfiguration
             )
         ])
