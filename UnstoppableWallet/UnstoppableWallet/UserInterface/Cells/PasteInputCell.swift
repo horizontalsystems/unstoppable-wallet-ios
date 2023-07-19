@@ -30,6 +30,11 @@ extension PasteInputCell {
         set { pasteInputView.inputPlaceholder = newValue }
     }
 
+    var keyboardType: UIKeyboardType {
+        get { pasteInputView.keyboardType }
+        set { pasteInputView.keyboardType = newValue }
+    }
+
     var inputText: String? {
         get { pasteInputView.inputText }
         set { pasteInputView.inputText = newValue }

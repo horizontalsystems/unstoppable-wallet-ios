@@ -323,7 +323,7 @@ extension CoinzixCexProvider {
 
 extension CoinzixCexProvider {
 
-    static func login(username: String, password: String, networkManager: NetworkManager) async throws -> LoginResult {
+    static func login(username: String, password: String, networkManager: NetworkManager) async throws -> LoginData {
         let parameters: Parameters = [
             "username": username,
             "password": password,
@@ -338,19 +338,19 @@ extension CoinzixCexProvider {
 
         if response.status {
             if let token = response.token, let secret = response.secret, let twoFactorTypeRaw = response.twoFactorTypeRaw, let twoFactorType = TwoFactorType(rawValue: twoFactorTypeRaw) {
-                return .success(token: token, secret: secret, twoFactorType: twoFactorType)
+                return LoginData(token: token, secret: secret, twoFactorType: twoFactorType)
             }
         } else {
             if let leftAttempts = response.leftAttempts {
-                return .failed(reason: .invalidCredentials(attemptsLeft: leftAttempts))
+                throw LoginError.invalidCredentials(attemptsLeft: leftAttempts)
             }
 
             if let timeExpire = response.timeExpire {
-                return .failed(reason: .tooManyAttempts(unlockDate: Date(timeIntervalSince1970: TimeInterval(timeExpire))))
+                throw LoginError.tooManyAttempts(unlockDate: Date(timeIntervalSince1970: TimeInterval(timeExpire)))
             }
         }
 
-        return .failed(reason: .unknown(message: response.errors.map { $0.joined(separator: "\n") } ?? "Unknown error"))
+        throw LoginError.unknown(message: response.errors.map { $0.joined(separator: "\n") } ?? "Unknown error")
     }
 
     static func validateCode(code: String, token: String, networkManager: NetworkManager) async throws {
@@ -367,6 +367,10 @@ extension CoinzixCexProvider {
         )
 
         guard response.status else {
+            if let errors = response.errors {
+                throw VerifyError(messages: errors)
+            }
+
             throw RequestError.negativeStatus
         }
     }
@@ -375,15 +379,32 @@ extension CoinzixCexProvider {
 
 extension CoinzixCexProvider {
 
-    enum LoginResult {
-        case success(token: String, secret: String, twoFactorType: TwoFactorType)
-        case failed(reason: LoginFailureReason)
+    struct LoginData {
+        let token: String
+        let secret: String
+        let twoFactorType: TwoFactorType
     }
 
-    enum LoginFailureReason {
+    enum LoginError: LocalizedError {
         case invalidCredentials(attemptsLeft: Int)
         case tooManyAttempts(unlockDate: Date)
         case unknown(message: String)
+
+        var errorDescription: String? {
+            switch self {
+            case .invalidCredentials(let attemptsLeft): return "Invalid login credentials. Attempts left: \(attemptsLeft)."
+            case .tooManyAttempts(let unlockDate): return "Too many invalid login attempts were made. Login is locked until \(DateHelper.instance.formatFullTime(from: unlockDate))."
+            case .unknown(let message): return message
+            }
+        }
+    }
+
+    struct VerifyError: LocalizedError {
+        let messages: [String]
+
+        var errorDescription: String? {
+            messages.joined(separator: "\n")
+        }
     }
 
     enum TwoFactorType: Int {
@@ -531,9 +552,11 @@ extension CoinzixCexProvider {
 
     private struct StatusResponse: ImmutableMappable {
         let status: Bool
+        let errors: [String]?
 
         init(map: Map) throws {
             status = try map.value("status")
+            errors = try? map.value("errors")
         }
     }
 

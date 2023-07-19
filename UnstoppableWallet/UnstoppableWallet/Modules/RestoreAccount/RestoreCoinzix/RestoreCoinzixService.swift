@@ -22,7 +22,7 @@ class RestoreCoinzixService {
     @PostPublished private(set) var state: State = .notReady
 
     private let verifySubject = PassthroughSubject<(CoinzixVerifyModule.Mode, [CoinzixCexProvider.TwoFactorType]), Never>()
-    private let errorSubject = PassthroughSubject<String, Never>()
+    private let errorSubject = PassthroughSubject<Error, Never>()
 
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
@@ -32,27 +32,15 @@ class RestoreCoinzixService {
         state = username.trimmingCharacters(in: .whitespaces).isEmpty || password.trimmingCharacters(in: .whitespaces).isEmpty ? .notReady : .ready
     }
 
-    private func handle(loginResult: CoinzixCexProvider.LoginResult) {
-        switch loginResult {
-        case .success(let token, let secret, let twoFactorType):
-            let type: CoinzixCexProvider.TwoFactorType
+    private func handle(loginData: CoinzixCexProvider.LoginData) {
+        let type: CoinzixCexProvider.TwoFactorType
 
-            switch twoFactorType {
-            case .email: type = .email
-            case .authenticator: type = .authenticator
-            }
-
-            verifySubject.send((.login(token: token, secret: secret), [type]))
-        case .failed(let reason):
-            switch reason {
-            case .invalidCredentials(let attemptsLeft):
-                errorSubject.send("Invalid login credentials. Attempts left: \(attemptsLeft).")
-            case .tooManyAttempts(let unlockDate):
-                errorSubject.send("Too many invalid login attempts were made. Login is locked until \(DateHelper.instance.formatFullTime(from: unlockDate)).")
-            case .unknown(let message):
-                errorSubject.send(message)
-            }
+        switch loginData.twoFactorType {
+        case .email: type = .email
+        case .authenticator: type = .authenticator
         }
+
+        verifySubject.send((.login(token: loginData.token, secret: loginData.secret), [type]))
     }
 
 }
@@ -63,7 +51,7 @@ extension RestoreCoinzixService {
         verifySubject.eraseToAnyPublisher()
     }
 
-    var errorPublisher: AnyPublisher<String, Never> {
+    var errorPublisher: AnyPublisher<Error, Never> {
         errorSubject.eraseToAnyPublisher()
     }
 
@@ -72,10 +60,10 @@ extension RestoreCoinzixService {
 
         Task { [weak self, username, password, networkManager] in
             do {
-                let loginResult = try await CoinzixCexProvider.login(username: username, password: password, networkManager: networkManager)
-                self?.handle(loginResult: loginResult)
+                let loginData = try await CoinzixCexProvider.login(username: username, password: password, networkManager: networkManager)
+                self?.handle(loginData: loginData)
             } catch {
-                self?.errorSubject.send(error.smartDescription)
+                self?.errorSubject.send(error)
             }
 
             self?.state = .ready

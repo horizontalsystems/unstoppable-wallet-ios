@@ -3,10 +3,9 @@ import ThemeKit
 import SnapKit
 
 class ResendPasteInputCell: UITableViewCell {
-    private let view: ResendPasteInputView
+    private let view = ResendPasteInputView()
 
     init() {
-        self.view = ResendPasteInputView()
         super.init(style: .default, reuseIdentifier: nil)
 
         backgroundColor = .clear
@@ -29,6 +28,11 @@ extension ResendPasteInputCell {
     var inputPlaceholder: String? {
         get { view.inputPlaceholder }
         set { view.inputPlaceholder = newValue }
+    }
+
+    var keyboardType: UIKeyboardType {
+        get { view.keyboardType }
+        set { view.keyboardType = newValue }
     }
 
     var inputText: String? {

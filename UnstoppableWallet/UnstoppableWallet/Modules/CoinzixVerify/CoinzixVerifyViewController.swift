@@ -39,7 +39,7 @@ class CoinzixVerifyViewController: KeyboardAwareViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "coinzix_verify_withdraw.title".localized
+        title = "coinzix_verify.title".localized
 
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
@@ -53,7 +53,8 @@ class CoinzixVerifyViewController: KeyboardAwareViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        emailPinInputCell.inputPlaceholder = "coinzix_verify_withdraw.email_pin".localized
+        emailPinInputCell.inputPlaceholder = "coinzix_verify.email_pin".localized
+        emailPinInputCell.keyboardType = .numberPad
         emailPinInputCell.onChangeHeight = { [weak self] in self?.reloadHeights() }
         emailPinInputCell.onChangeText = { [weak self] in self?.viewModel.onChange(emailPin: $0 ?? "") }
         emailPinInputCell.onFetchText = { [weak self] in
@@ -62,7 +63,8 @@ class CoinzixVerifyViewController: KeyboardAwareViewController {
         }
         emailPinInputCell.onResend = { [weak self] in self?.viewModel.onTapResend() }
 
-        googlePinInputCell.inputPlaceholder = "coinzix_verify_withdraw.google_pin".localized
+        googlePinInputCell.inputPlaceholder = "coinzix_verify.google_pin".localized
+        googlePinInputCell.keyboardType = .numberPad
         googlePinInputCell.onChangeHeight = { [weak self] in self?.reloadHeights() }
         googlePinInputCell.onChangeText = { [weak self] in self?.viewModel.onChange(googlePin: $0 ?? "") }
         googlePinInputCell.onFetchText = { [weak self] in
@@ -87,13 +89,13 @@ class CoinzixVerifyViewController: KeyboardAwareViewController {
 
         stackView.addArrangedSubview(submitButton)
         submitButton.set(style: .yellow)
-        submitButton.setTitle("coinzix_verify_withdraw.submit".localized, for: .normal)
+        submitButton.setTitle("coinzix_verify.submit".localized, for: .normal)
         submitButton.addTarget(self, action: #selector(onTapSubmit), for: .touchUpInside)
 
         stackView.addArrangedSubview(submittingButton)
         submittingButton.set(style: .gray, accessoryType: .spinner)
         submittingButton.isEnabled = false
-        submittingButton.setTitle("coinzix_verify_withdraw.submit".localized, for: .normal)
+        submittingButton.setTitle("coinzix_verify.submit".localized, for: .normal)
 
         viewModel.$submitButtonState
                 .receive(on: DispatchQueue.main)
@@ -112,7 +114,7 @@ class CoinzixVerifyViewController: KeyboardAwareViewController {
 
         viewModel.errorPublisher
                 .receive(on: DispatchQueue.main)
-                .sink { text in HudHelper.instance.showErrorBanner(title: text) }
+                .sink { [weak self] in self?.show(error: $0) }
                 .store(in: &cancellables)
 
         tableView.buildSections()
@@ -167,6 +169,21 @@ class CoinzixVerifyViewController: KeyboardAwareViewController {
         viewModel.onTapSubmit()
     }
 
+    private func show(error: String) {
+        let viewController = BottomSheetModule.viewController(
+                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)),
+                title: "coinzix_verify.failed".localized,
+                items: [
+                    .highlightedDescription(text: error, style: .red)
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "button.ok".localized)
+                ]
+        )
+
+        present(viewController, animated: true)
+    }
+
 }
 
 extension CoinzixVerifyViewController: SectionsDataSource {
@@ -196,7 +213,7 @@ extension CoinzixVerifyViewController: SectionsDataSource {
                             rows: [
                                 tableView.descriptionRow(
                                         id: "email-pin-description",
-                                        text: "coinzix_verify_withdraw.email_pin.description".localized,
+                                        text: "coinzix_verify.email_pin.description".localized,
                                         font: .subhead2,
                                         textColor: .themeGray,
                                         ignoreBottomMargin: true
@@ -226,7 +243,7 @@ extension CoinzixVerifyViewController: SectionsDataSource {
                             rows: [
                                 tableView.descriptionRow(
                                         id: "google-pin-description",
-                                        text: "coinzix_verify_withdraw.google_pin.description".localized,
+                                        text: "coinzix_verify.google_pin.description".localized,
                                         font: .subhead2,
                                         textColor: .themeGray,
                                         ignoreBottomMargin: true

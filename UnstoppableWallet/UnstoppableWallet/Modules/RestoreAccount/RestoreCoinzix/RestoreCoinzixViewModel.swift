@@ -39,7 +39,7 @@ class RestoreCoinzixViewModel {
 extension RestoreCoinzixViewModel {
 
     var errorPublisher: AnyPublisher<String, Never> {
-        service.errorPublisher
+        service.errorPublisher.map { $0.smartDescription }.eraseToAnyPublisher()
     }
 
     var verifyPublisher: AnyPublisher<(CoinzixVerifyModule.Mode, [CoinzixCexProvider.TwoFactorType]), Never> {

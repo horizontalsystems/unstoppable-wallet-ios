@@ -100,6 +100,11 @@ extension PasteInputView {
         set { inputStackView.placeholder = newValue }
     }
 
+    var keyboardType: UIKeyboardType {
+        get { inputStackView.keyboardType }
+        set { inputStackView.keyboardType = newValue }
+    }
+
     var inputText: String? {
         get { inputStackView.text }
         set {
