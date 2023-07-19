@@ -465,7 +465,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         case .preview:
             return CellBuilderNew.row(
                     rootElement: .hStack(titleElements + [
-                        .textElement(text: .subhead1(placeholderText), parameters: .rightAlignment)
+                        .textElement(text: .subhead1(Self.placeholderText), parameters: .rightAlignment)
                     ]),
                     tableView: tableView,
                     id: id,
