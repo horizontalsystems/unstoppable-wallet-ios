@@ -2121,6 +2121,7 @@
 		ABC9AAA26F0215D41AE50C57 /* SwapInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A90E8831B7B909124AB2 /* SwapInputCell.swift */; };
 		ABC9AAB720B0187F782E18AB /* WalletConnectV2SocketConnectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A0483AEAEB88DFBDD873 /* WalletConnectV2SocketConnectionService.swift */; };
 		ABC9AAB941B036B4CA08334B /* WalletConnectV2PairingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AFD222C4514B22C3E43F /* WalletConnectV2PairingViewModel.swift */; };
+		ABC9AADE6C4251FCC9222125 /* ManageBarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6CFDF38D413679D2088 /* ManageBarButtonView.swift */; };
 		ABC9AAEE109F50E3500DD6D4 /* SendBitcoinFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3DC5DA5B7BFDBF72B5D /* SendBitcoinFactory.swift */; };
 		ABC9AAEF5D444F5BCB9D0CE2 /* UniswapV3ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1C2F1CC07FD4CDFC591 /* UniswapV3ViewModel.swift */; };
 		ABC9AB0F8FE5808DB889C081 /* WalletConnectScanQrViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3DBB89D0AE0C127742B /* WalletConnectScanQrViewModel.swift */; };
@@ -2183,6 +2184,7 @@
 		ABC9AD12C685D7260D65F914 /* SimpleActivateModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AF9AABCDDAE5E7D0244C /* SimpleActivateModule.swift */; };
 		ABC9AD1C8D0CE88A604D5250 /* SendBinanceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD0DD32AB4B9BAB79F11 /* SendBinanceFactory.swift */; };
 		ABC9AD27E074CF3FA292C647 /* IndicatorAdviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A044BFF4E76CD17835CA /* IndicatorAdviceView.swift */; };
+		ABC9AD3001AAA0570B503876 /* ManageBarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6CFDF38D413679D2088 /* ManageBarButtonView.swift */; };
 		ABC9AD3276132B33F6045AFF /* MarketCategoryMarketCapFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ADC1A3B17225B6CC0869 /* MarketCategoryMarketCapFetcher.swift */; };
 		ABC9AD41E7C88963F6512905 /* ChartIndicatorsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3758FE2D56036DF27FF /* ChartIndicatorsRepository.swift */; };
 		ABC9AD49CCD14F97CD912454 /* SendBitcoinAdapterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1BD3B1B53C72DDF923A /* SendBitcoinAdapterService.swift */; };
@@ -3649,6 +3651,7 @@
 		ABC9A6663522498A53CF4174 /* KdfParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KdfParams.swift; sourceTree = "<group>"; };
 		ABC9A696DCBBE4761E77311C /* SendBitcoinService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBitcoinService.swift; sourceTree = "<group>"; };
 		ABC9A6B2EF46FF7EDA4728D3 /* CheckboxView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckboxView.swift; sourceTree = "<group>"; };
+		ABC9A6CFDF38D413679D2088 /* ManageBarButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageBarButtonView.swift; sourceTree = "<group>"; };
 		ABC9A6CFF0208D48FE778028 /* WalletConnectV1MainRequestViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV1MainRequestViewModel.swift; sourceTree = "<group>"; };
 		ABC9A6D56EBB7FFAD68CFD66 /* IntegerAmountInputViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegerAmountInputViewModel.swift; sourceTree = "<group>"; };
 		ABC9A6DE5C760A5D0C90B70E /* ChartIndicatorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartIndicatorFactory.swift; sourceTree = "<group>"; };
@@ -6729,6 +6732,7 @@
 				ABC9AC4A19838CA08603E17B /* ContactBookService.swift */,
 				ABC9A3C708CD81CFE4C5BC5C /* ContactBookViewModel.swift */,
 				ABC9A5518367F0DDDB94D320 /* ContactBookModule.swift */,
+				ABC9A6CFDF38D413679D2088 /* ManageBarButtonView.swift */,
 			);
 			path = ContactBookList;
 			sourceTree = "<group>";
@@ -8929,6 +8933,7 @@
 				ABC9A0EE5E5B31405569BF3F /* IndicatorAdviceCell.swift in Sources */,
 				ABC9AD27E074CF3FA292C647 /* IndicatorAdviceView.swift in Sources */,
 				ABC9A305CBB28F2B19EB00D2 /* CoinDetailAdviceViewController.swift in Sources */,
+				ABC9AADE6C4251FCC9222125 /* ManageBarButtonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10183,6 +10188,7 @@
 				ABC9A74F192AB94CFD1D1649 /* IndicatorAdviceCell.swift in Sources */,
 				ABC9AFE47A405844612EB01A /* IndicatorAdviceView.swift in Sources */,
 				ABC9A0866C672D2D560DA23C /* CoinDetailAdviceViewController.swift in Sources */,
+				ABC9AD3001AAA0570B503876 /* ManageBarButtonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

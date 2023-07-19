@@ -41,6 +41,7 @@ class TechnicalIndicatorService {
         tasks.forEach { task in task.cancel() }
         tasks = Set()
 
+        state = .loading
         Task { [weak self, marketKit, coinUid, currency, period] in
             do {
                 let points = try await marketKit.chartPoints(

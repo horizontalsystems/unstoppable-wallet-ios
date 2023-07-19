@@ -13,6 +13,7 @@ class ContactBookViewController: ThemeSearchViewController {
 
     private let disposeBag = DisposeBag()
     private let tableView = SectionsTableView(style: .grouped)
+    private let manageBarButtonView = ManageBarButtonView()
     private let notFoundPlaceholder = PlaceholderView()
 
     private var viewItems: [ContactBookViewModel.ViewItem] = []
@@ -43,7 +44,10 @@ class ContactBookViewController: ThemeSearchViewController {
             let addContact = UIBarButtonItem(image: UIImage(named: "user_plus_24"), style: .plain, target: self, action: #selector(onCreateContact))
             addContact.tintColor = .themeJacob
 
-            let settingsItem = UIBarButtonItem(image: UIImage(named: "manage_2_24"), style: .plain, target: self, action: #selector(onTapSettings))
+            let settingsItem = UIBarButtonItem(customView: manageBarButtonView)
+            manageBarButtonView.onTap = { [weak self] in
+                self?.onTapSettings()
+            }
             settingsItem.tintColor = .themeJacob
 
             navigationItem.rightBarButtonItems = [settingsItem, addContact]
@@ -87,6 +91,7 @@ class ContactBookViewController: ThemeSearchViewController {
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.onUpdate(viewItems: $0) }
         subscribe(disposeBag, viewModel.emptyListDriver) { [weak self] in self?.set(emptyList: $0) }
+        subscribe(disposeBag, viewModel.showBadgeDriver) { [weak self] in self?.manageBarButtonView.isBadgeHidden = !$0 }
 
         tableView.buildSections()
 

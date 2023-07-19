@@ -15,7 +15,7 @@ class MainSettingsService {
     private let cloudAccountBackupManager: CloudAccountBackupManager
     private let accountRestoreWarningManager: AccountRestoreWarningManager
     private let accountManager: AccountManager
-    private let contactBookManager: ContactBookManager?
+    private let contactBookManager: ContactBookManager
     private let pinKit: PinKit.Kit
     private let termsManager: TermsManager
     private let systemInfoManager: SystemInfoManager
@@ -26,7 +26,7 @@ class MainSettingsService {
     private let iCloudAvailableErrorRelay = BehaviorRelay<Bool>(value: false)
     private let noWalletRequiredActionsRelay = BehaviorRelay<Bool>(value: false)
 
-    init(backupManager: BackupManager, cloudAccountBackupManager: CloudAccountBackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager?, pinKit: PinKit.Kit, termsManager: TermsManager,
+    init(backupManager: BackupManager, cloudAccountBackupManager: CloudAccountBackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager, pinKit: PinKit.Kit, termsManager: TermsManager,
          systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit,
          walletConnectSessionManager: WalletConnectSessionManager, walletConnectV2SessionManager: WalletConnectV2SessionManager) {
         self.cloudAccountBackupManager = cloudAccountBackupManager
@@ -41,13 +41,11 @@ class MainSettingsService {
         self.walletConnectSessionManager = walletConnectSessionManager
         self.walletConnectV2SessionManager = walletConnectV2SessionManager
 
-        if let contactBookManager {
-            subscribe(disposeBag, contactBookManager.iCloudErrorObservable) { [weak self] error in
-                if error != nil, (self?.contactBookManager?.remoteSync ?? false) {
-                    self?.iCloudAvailableErrorRelay.accept(true)
-                } else {
-                    self?.iCloudAvailableErrorRelay.accept(false)
-                }
+        subscribe(disposeBag, contactBookManager.iCloudErrorObservable) { [weak self] error in
+            if error != nil, (self?.contactBookManager.remoteSync ?? false) {
+                self?.iCloudAvailableErrorRelay.accept(true)
+            } else {
+                self?.iCloudAvailableErrorRelay.accept(false)
             }
         }
 
@@ -82,10 +80,7 @@ extension MainSettingsService {
     }
 
     var isCloudAvailableError: Bool {
-        guard let contactBookManager else {
-            return false
-        }
-        return contactBookManager.remoteSync && contactBookManager.iCloudError != nil
+        contactBookManager.remoteSync && contactBookManager.iCloudError != nil
     }
 
     var iCloudAvailableErrorObservable: Observable<Bool> {

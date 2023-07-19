@@ -10,7 +10,7 @@ class ContactBookSettingsViewModel {
     private let featureEnabledRelay = BehaviorRelay<Bool>(value: false)
 
     private let showConfirmationRelay = PublishRelay<()>()
-    private let showSyncErrorRelay = PublishRelay<Bool>()
+    private let showSyncErrorRelay = BehaviorRelay<Bool>(value: false)
 
     private let showRestoreAlertRelay = PublishRelay<[BackupContact]>()
     private let showParsingErrorRelay = PublishRelay<()>()
@@ -29,17 +29,11 @@ class ContactBookSettingsViewModel {
         featureEnabledRelay.accept(featureEnabled)
     }
 
-    private func sync(error: Error?, activatedOnly: Bool = false) {
-        guard let error else {
-            return
-        }
-
-        if activatedOnly, !service.activated {  // don't show alert on start (activated only shows)
-            return
-        }
-
+    private func sync(error: Error?) {
         if case .cloudUrlNotAvailable = error as? ContactBookManager.StorageError {
-            showSyncErrorRelay.accept(service.activated)
+            showSyncErrorRelay.accept(true)
+        } else {
+            showSyncErrorRelay.accept(false)
         }
     }
 
@@ -78,13 +72,8 @@ extension ContactBookSettingsViewModel {
         showConfirmationRelay.asSignal()
     }
 
-    var showSyncErrorSignal: Signal<Bool> {
-        showSyncErrorRelay.asSignal()
-    }
-
-    func onViewAppeared() {
-        // if sync is On, but no access to iCloud folder we need show alert
-        sync(error: service.cloudError, activatedOnly: true)
+    var showSyncErrorDriver: Driver<Bool> {
+        showSyncErrorRelay.asDriver()
     }
 
     func onToggle(isOn: Bool) {

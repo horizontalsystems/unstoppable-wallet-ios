@@ -4,29 +4,25 @@ import ThemeKit
 class ContactBookContactModule {
 
     static func viewController(mode: Mode, onUpdateContact: (() -> ())? = nil) -> UIViewController? {
-        guard let contactManager = App.shared.contactManager else {
-            return nil
-        }
-
         let service: ContactBookContactService
 
         switch mode {
         case .new:
             service = ContactBookContactService(
-                    contactManager: contactManager,
+                    contactManager: App.shared.contactManager,
                     marketKit: App.shared.marketKit,
                     contact: nil
             )
         case .exist(let uid, let newAddresses):
             service = ContactBookContactService(
-                    contactManager: contactManager,
+                    contactManager: App.shared.contactManager,
                     marketKit: App.shared.marketKit,
-                    contact: contactManager.all?.first(where: { $0.uid == uid }),
+                    contact: App.shared.contactManager.all?.first(where: { $0.uid == uid }),
                     newAddresses: newAddresses
             )
         case let .add(address):
             service = ContactBookContactService(
-                    contactManager: contactManager,
+                    contactManager: App.shared.contactManager,
                     marketKit: App.shared.marketKit,
                     contact: nil,
                     newAddresses: [address]
