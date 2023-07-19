@@ -7,12 +7,10 @@ import LanguageKit
 class GuidesService {
     private let disposeBag = DisposeBag()
 
-    private let appConfigProvider: AppConfigProvider
     private let repository: GuidesRepository
     private let languageManager: LanguageManager
 
-    init(appConfigProvider: AppConfigProvider, repository: GuidesRepository, languageManager: LanguageManager) {
-        self.appConfigProvider = appConfigProvider
+    init(repository: GuidesRepository, languageManager: LanguageManager) {
         self.repository = repository
         self.languageManager = languageManager
     }
@@ -31,7 +29,7 @@ class GuidesService {
     }
 
     private func guideItem(guide: Guide) -> GuideItem {
-        let guidesIndexUrl = appConfigProvider.guidesIndexUrl
+        let guidesIndexUrl = AppConfig.guidesIndexUrl
 
         return GuideItem(
                 title: guide.title,

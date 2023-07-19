@@ -7,7 +7,6 @@ struct BalanceErrorModule {
                 wallet: wallet,
                 error: error,
                 adapterManager: App.shared.adapterManager,
-                appConfigProvider: App.shared.appConfigProvider,
                 btcBlockchainManager: App.shared.btcBlockchainManager,
                 evmBlockchainManager: App.shared.evmBlockchainManager
         )

@@ -45,11 +45,9 @@ extension AccountRestoreWarningManager {
 class AccountRestoreWarningFactory {
     static let keyAccountWarningPrefix = "wallet-ignore-non-recommended"
     private let localStorage: ILocalStorage
-    private let appConfigProvider: AppConfigProvider
     private let languageManager: LanguageManager
 
-    init(appConfigProvider: AppConfigProvider, localStorage: ILocalStorage, languageManager: LanguageManager) {
-        self.appConfigProvider = appConfigProvider
+    init(localStorage: ILocalStorage, languageManager: LanguageManager) {
         self.localStorage = localStorage
         self.languageManager = languageManager
     }
@@ -68,7 +66,7 @@ class AccountRestoreWarningFactory {
     }
 
     func warningUrl(account: Account) -> URL? {
-        let faqIndexUrl = appConfigProvider.faqIndexUrl
+        let faqIndexUrl = AppConfig.faqIndexUrl
         var fileUrl = "faq/\(languageManager.currentLanguage)/"
 
         if account.nonStandard {

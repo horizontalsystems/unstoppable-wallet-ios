@@ -4,18 +4,16 @@ import HsToolKit
 import LanguageKit
 
 class FaqService {
-    private let appConfigProvider: AppConfigProvider
     private let repository: FaqRepository
     private let languageManager: LanguageManager
 
-    init(appConfigProvider: AppConfigProvider, repository: FaqRepository, languageManager: LanguageManager) {
-        self.appConfigProvider = appConfigProvider
+    init(repository: FaqRepository, languageManager: LanguageManager) {
         self.repository = repository
         self.languageManager = languageManager
     }
 
     private func sectionItems(sections: [FaqSection]) -> [SectionItem] {
-        let faqIndexUrl = appConfigProvider.faqIndexUrl
+        let faqIndexUrl = AppConfig.faqIndexUrl
 
         return sections.compactMap { section in
             guard let title = section.titles[languageManager.currentLanguage] ?? section.titles[LanguageManager.fallbackLanguage] else {

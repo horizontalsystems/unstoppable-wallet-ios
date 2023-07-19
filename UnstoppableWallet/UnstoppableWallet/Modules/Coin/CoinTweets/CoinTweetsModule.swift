@@ -5,7 +5,7 @@ struct CoinTweetsModule {
     static func viewController(fullCoin: FullCoin) -> CoinTweetsViewController {
         let tweetsProvider = TweetsProvider(
                 networkManager: App.shared.networkManager,
-                bearerToken: App.shared.appConfigProvider.twitterBearerToken
+                bearerToken: AppConfig.twitterBearerToken
         )
 
         let service = CoinTweetsService(

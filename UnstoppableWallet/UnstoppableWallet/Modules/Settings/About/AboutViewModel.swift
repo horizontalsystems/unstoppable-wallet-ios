@@ -41,28 +41,16 @@ extension AboutViewModel {
         service.appVersion
     }
 
-    var appWebPageLink: String {
-        service.appWebPageLink
-    }
-
-    var contactEmail: String {
-        service.contactEmail
-    }
-
     var releaseNotesUrl: URL? {
         releaseNotesService.lastVersionUrl
     }
 
-    var twitterAccount: String {
-        service.twitterAccount
-    }
-
     func onTapGithubLink() {
-        openLinkRelay.accept(service.appGitHubLink)
+        openLinkRelay.accept(AppConfig.appGitHubLink)
     }
 
     func onTapWebPageLink() {
-        openLinkRelay.accept(service.appWebPageLink)
+        openLinkRelay.accept(AppConfig.appWebPageLink)
     }
 
     func onTapRateApp() {

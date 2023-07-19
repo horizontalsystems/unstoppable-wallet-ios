@@ -6,14 +6,12 @@ class FaqRepository {
     private let disposeBag = DisposeBag()
 
     private let networkManager: NetworkManager
-    private let appConfigProvider: AppConfigProvider
     private let reachabilityManager: IReachabilityManager
 
     private let faqRelay = BehaviorRelay<DataStatus<[FaqSection]>>(value: .loading)
 
-    init(networkManager: NetworkManager, appConfigProvider: AppConfigProvider, reachabilityManager: IReachabilityManager) {
+    init(networkManager: NetworkManager, reachabilityManager: IReachabilityManager) {
         self.networkManager = networkManager
-        self.appConfigProvider = appConfigProvider
         self.reachabilityManager = reachabilityManager
 
         reachabilityManager.reachabilityObservable
@@ -37,7 +35,7 @@ class FaqRepository {
     private func fetch() {
         faqRelay.accept(.loading)
 
-        let request = networkManager.session.request(appConfigProvider.faqIndexUrl)
+        let request = networkManager.session.request(AppConfig.faqIndexUrl)
 
         networkManager.single(request: request, mapper: self)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))

@@ -6,7 +6,6 @@ struct AboutModule {
         let service = AboutService(
                 termsManager: App.shared.termsManager,
                 systemInfoManager: App.shared.systemInfoManager,
-                appConfigProvider: App.shared.appConfigProvider,
                 rateAppManager: App.shared.rateAppManager
         )
         let releaseNotesService = ReleaseNotesService(appVersionManager: App.shared.appVersionManager)

@@ -10,7 +10,6 @@ struct CoinOverviewModule {
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
                 languageManager: LanguageManager.shared,
-                appConfigProvider: App.shared.appConfigProvider,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager
         )

@@ -251,7 +251,7 @@ class RestoreViewController: KeyboardAwareViewController {
     }
 
     private func showDefaultWords() {
-        let text = App.shared.appConfigProvider.defaultWords
+        let text = AppConfig.defaultWords
         mnemonicInputCell.set(text: text)
     }
 

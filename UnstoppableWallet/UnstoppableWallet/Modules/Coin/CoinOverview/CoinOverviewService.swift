@@ -13,7 +13,6 @@ class CoinOverviewService {
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private let languageManager: LanguageManager
-    private let appConfigProvider: AppConfigProvider
     private let accountManager: AccountManager
     private let walletManager: WalletManager
 
@@ -24,12 +23,11 @@ class CoinOverviewService {
         }
     }
 
-    init(coinUid: String, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, languageManager: LanguageManager, appConfigProvider: AppConfigProvider, accountManager: AccountManager, walletManager: WalletManager) {
+    init(coinUid: String, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, languageManager: LanguageManager, accountManager: AccountManager, walletManager: WalletManager) {
         self.coinUid = coinUid
         self.marketKit = marketKit
         self.currencyKit = currencyKit
         self.languageManager = languageManager
-        self.appConfigProvider = appConfigProvider
         self.accountManager = accountManager
         self.walletManager = walletManager
     }
@@ -94,7 +92,7 @@ class CoinOverviewService {
             return nil
         }
 
-        return URL(string: guideFileUrl, relativeTo: appConfigProvider.guidesIndexUrl)
+        return URL(string: guideFileUrl, relativeTo: AppConfig.guidesIndexUrl)
     }
 
     private var guideFileUrl: String? {

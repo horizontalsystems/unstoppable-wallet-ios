@@ -4,15 +4,13 @@ class BalanceErrorService {
     private let wallet: Wallet
     private let error: Error
     private let adapterManager: AdapterManager
-    private let appConfigProvider: AppConfigProvider
 
     var item: Item?
 
-    init(wallet: Wallet, error: Error, adapterManager: AdapterManager, appConfigProvider: AppConfigProvider, btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager) {
+    init(wallet: Wallet, error: Error, adapterManager: AdapterManager, btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager) {
         self.wallet = wallet
         self.error = error
         self.adapterManager = adapterManager
-        self.appConfigProvider = appConfigProvider
 
         if let blockchain = btcBlockchainManager.blockchain(token: wallet.token) {
             item = .btc(blockchain: blockchain)
@@ -35,10 +33,6 @@ extension BalanceErrorService {
 
     var isSourceChangeable: Bool {
         item != nil
-    }
-
-    var contactEmail: String {
-        appConfigProvider.reportEmail
     }
 
     func refreshWallet() {

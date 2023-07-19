@@ -39,8 +39,7 @@ struct AddTokenModule {
             let service: IAddTokenBlockchainService = AddTronTokenBlockchainService(
                 blockchain: blockchain,
                 networkManager: App.shared.networkManager,
-                network: App.shared.testNetManager.testNetEnabled ? .nileTestnet : .mainNet,
-                appConfigProvider: App.shared.appConfigProvider
+                network: App.shared.testNetManager.testNetEnabled ? .nileTestnet : .mainNet
             )
 
             let item = Item(blockchain: blockchain, service: service)

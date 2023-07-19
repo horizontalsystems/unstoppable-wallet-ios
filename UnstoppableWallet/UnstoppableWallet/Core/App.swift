@@ -25,8 +25,6 @@ class App {
 
     let marketKit: MarketKit.Kit
 
-    let appConfigProvider: AppConfigProvider
-
     let localStorage: LocalStorage
 
     let themeManager: ThemeManager
@@ -112,8 +110,6 @@ class App {
     let cloudAccountBackupManager: CloudAccountBackupManager
 
     init() throws {
-        appConfigProvider = AppConfigProvider()
-
         localStorage = LocalStorage(storage: StorageKit.LocalStorage.default)
 
         let databaseURL = try FileManager.default
@@ -129,10 +125,10 @@ class App {
         currencyKit = CurrencyKit.Kit(localStorage: StorageKit.LocalStorage.default)
 
         marketKit = try MarketKit.Kit.instance(
-                hsApiBaseUrl: appConfigProvider.marketApiUrl,
-                cryptoCompareApiKey: appConfigProvider.cryptoCompareApiKey,
-                defiYieldApiKey: appConfigProvider.defiYieldApiKey,
-                hsProviderApiKey: appConfigProvider.hsProviderApiKey,
+                hsApiBaseUrl: AppConfig.marketApiUrl,
+                cryptoCompareApiKey: AppConfig.cryptoCompareApiKey,
+                defiYieldApiKey: AppConfig.defiYieldApiKey,
+                hsProviderApiKey: AppConfig.hsProviderApiKey,
                 minLogLevel: .error
         )
         marketKit.sync()
@@ -145,7 +141,7 @@ class App {
         themeManager = ThemeManager.shared
         systemInfoManager = SystemInfoManager()
 
-        if appConfigProvider.officeMode {
+        if AppConfig.officeMode {
             debugLogger = DebugLogger(localStorage: localStorage, dateProvider: CurrentDateProvider())
         }
 
@@ -160,7 +156,7 @@ class App {
         accountRestoreWarningManager = AccountRestoreWarningManager(accountManager: accountManager, localStorage: StorageKit.LocalStorage.default)
         accountFactory = AccountFactory(accountManager: accountManager)
 
-        cloudAccountBackupManager = CloudAccountBackupManager(ubiquityContainerIdentifier: appConfigProvider.sharedCloudContainer, logger: logger)
+        cloudAccountBackupManager = CloudAccountBackupManager(ubiquityContainerIdentifier: AppConfig.sharedCloudContainer, logger: logger)
         backupManager = BackupManager(accountManager: accountManager)
 
         kitCleaner = KitCleaner(accountManager: accountManager)
@@ -178,7 +174,7 @@ class App {
         testNetManager = TestNetManager(localStorage: StorageKit.LocalStorage.default)
 
         let evmSyncSourceStorage = EvmSyncSourceStorage(dbPool: dbPool)
-        evmSyncSourceManager = EvmSyncSourceManager(appConfigProvider: appConfigProvider, testNetManager: testNetManager, blockchainSettingsStorage: blockchainSettingsStorage, evmSyncSourceStorage: evmSyncSourceStorage)
+        evmSyncSourceManager = EvmSyncSourceManager(testNetManager: testNetManager, blockchainSettingsStorage: blockchainSettingsStorage, evmSyncSourceStorage: evmSyncSourceStorage)
 
         let evmAccountRestoreStateStorage = EvmAccountRestoreStateStorage(dbPool: dbPool)
         evmAccountRestoreStateManager = EvmAccountRestoreStateManager(storage: evmAccountRestoreStateStorage)
@@ -187,14 +183,14 @@ class App {
         evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, testNetManager: testNetManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
 
         let binanceKitManager = BinanceKitManager()
-        let tronKitManager = TronKitManager(testNetManager: testNetManager, appConfigProvider: appConfigProvider)
+        let tronKitManager = TronKitManager(testNetManager: testNetManager)
         tronAccountManager = TronAccountManager(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, tronKitManager: tronKitManager, evmAccountRestoreStateManager: evmAccountRestoreStateManager)
 
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)
         predefinedBlockchainService = PredefinedBlockchainService(restoreSettingsManager: restoreSettingsManager)
 
-        let hsLabelProvider = HsLabelProvider(networkManager: networkManager, appConfigProvider: appConfigProvider)
+        let hsLabelProvider = HsLabelProvider(networkManager: networkManager)
         let evmLabelStorage = EvmLabelStorage(dbPool: dbPool)
         let syncerStateStorage = SyncerStateStorage(dbPool: dbPool)
         evmLabelManager = EvmLabelManager(provider: hsLabelProvider, storage: evmLabelStorage, syncerStateStorage: syncerStateStorage)
@@ -224,7 +220,7 @@ class App {
 
         let nftDatabaseStorage = try NftDatabaseStorage(dbPool: dbPool)
         let nftStorage = NftStorage(marketKit: marketKit, storage: nftDatabaseStorage)
-        nftMetadataManager = NftMetadataManager(networkManager: networkManager, marketKit: marketKit, storage: nftStorage, appConfigProvider: appConfigProvider)
+        nftMetadataManager = NftMetadataManager(networkManager: networkManager, marketKit: marketKit, storage: nftStorage)
         nftAdapterManager = NftAdapterManager(
                 walletManager: walletManager,
                 evmBlockchainManager: evmBlockchainManager
@@ -235,7 +231,7 @@ class App {
         enabledWalletCacheManager = EnabledWalletCacheManager(storage: enabledWalletCacheStorage, accountManager: accountManager)
 
         feeCoinProvider = FeeCoinProvider(marketKit: marketKit)
-        feeRateProviderFactory = FeeRateProviderFactory(appConfigProvider: appConfigProvider)
+        feeRateProviderFactory = FeeRateProviderFactory()
 
         let favoriteCoinRecordStorage = FavoriteCoinRecordStorage(dbPool: dbPool)
         favoritesManager = FavoritesManager(storage: favoriteCoinRecordStorage)
@@ -277,11 +273,11 @@ class App {
         walletConnectManager = WalletConnectManager(accountManager: accountManager, evmBlockchainManager: evmBlockchainManager)
 
         let walletClientInfo = WalletConnectClientInfo(
-                projectId: appConfigProvider.walletConnectV2ProjectKey ?? "c4f79cc821944d9680842e34466bfb",
+                projectId: AppConfig.walletConnectV2ProjectKey ?? "c4f79cc821944d9680842e34466bfb",
                 relayHost: "relay.walletconnect.com",
                 name: "Unstoppable",
                 description: "",
-                url: appConfigProvider.appWebPageLink,
+                url: AppConfig.appWebPageLink,
                 icons: ["https://raw.githubusercontent.com/horizontalsystems/HS-Design/master/PressKit/UW-AppIcon-on-light.png"]
         )
 
@@ -302,7 +298,7 @@ class App {
         balanceHiddenManager = BalanceHiddenManager(localStorage: StorageKit.LocalStorage.default)
         balanceConversionManager = BalanceConversionManager(marketKit: marketKit, localStorage: StorageKit.LocalStorage.default)
 
-        contactManager = ContactBookManager(localStorage: localStorage, ubiquityContainerIdentifier: appConfigProvider.privateCloudContainer, helper: ContactBookHelper(), logger: logger)
+        contactManager = ContactBookManager(localStorage: localStorage, ubiquityContainerIdentifier: AppConfig.privateCloudContainer, helper: ContactBookHelper(), logger: logger)
 
         subscriptionManager = SubscriptionManager(localStorage: StorageKit.LocalStorage.default, marketKit: marketKit)
 

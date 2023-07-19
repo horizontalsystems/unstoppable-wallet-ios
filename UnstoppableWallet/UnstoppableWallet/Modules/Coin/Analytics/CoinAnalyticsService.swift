@@ -11,19 +11,17 @@ class CoinAnalyticsService {
     private let currencyKit: CurrencyKit.Kit
     private let subscriptionManager: SubscriptionManager
     private let accountManager: AccountManager
-    private let appConfigProvider: AppConfigProvider
     private var tasks = Set<AnyTask>()
     private var cancellables = Set<AnyCancellable>()
 
     @PostPublished private(set) var state: State = .loading
 
-    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, subscriptionManager: SubscriptionManager, accountManager: AccountManager, appConfigProvider: AppConfigProvider) {
+    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, subscriptionManager: SubscriptionManager, accountManager: AccountManager) {
         self.fullCoin = fullCoin
         self.marketKit = marketKit
         self.currencyKit = currencyKit
         self.subscriptionManager = subscriptionManager
         self.accountManager = accountManager
-        self.appConfigProvider = appConfigProvider
 
         subscriptionManager.$authToken
                 .sink { [weak self] token in
@@ -64,10 +62,6 @@ extension CoinAnalyticsService {
 
     var coin: Coin {
         fullCoin.coin
-    }
-
-    var analyticsLink: String {
-        appConfigProvider.analyticsLink
     }
 
     var auditAddresses: [String]? {

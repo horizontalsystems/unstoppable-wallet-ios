@@ -416,10 +416,6 @@ extension CoinAnalyticsViewModel {
         service.coin
     }
 
-    var analyticsLink: String {
-        service.analyticsLink
-    }
-
     func onLoad() {
         service.sync()
     }

@@ -1,11 +1,7 @@
 import MarketKit
 
 class FeeRateProviderFactory {
-    private let feeRateProvider: FeeRateProvider
-
-    init(appConfigProvider: AppConfigProvider) {
-        feeRateProvider = FeeRateProvider(appConfigProvider: appConfigProvider)
-    }
+    private let feeRateProvider = FeeRateProvider()
 
     func provider(blockchainType: BlockchainType) -> IFeeRateProvider? {
         switch blockchainType {

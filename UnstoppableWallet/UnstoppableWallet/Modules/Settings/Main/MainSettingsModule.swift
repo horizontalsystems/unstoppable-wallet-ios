@@ -13,7 +13,6 @@ struct MainSettingsModule {
                 termsManager: App.shared.termsManager,
                 systemInfoManager: App.shared.systemInfoManager,
                 currencyKit: App.shared.currencyKit,
-                appConfigProvider: App.shared.appConfigProvider,
                 walletConnectSessionManager: App.shared.walletConnectSessionManager,
                 walletConnectV2SessionManager: App.shared.walletConnectV2SessionManager
         )

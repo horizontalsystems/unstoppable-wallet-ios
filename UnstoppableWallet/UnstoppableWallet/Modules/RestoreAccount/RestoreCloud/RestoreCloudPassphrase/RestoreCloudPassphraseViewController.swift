@@ -143,7 +143,7 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
     }
 
     private func showDefaultPassphrase() {
-        let text = App.shared.appConfigProvider.defaultPassphrase
+        let text = AppConfig.defaultPassphrase
         guard !text.isEmpty else {
             return
         }
