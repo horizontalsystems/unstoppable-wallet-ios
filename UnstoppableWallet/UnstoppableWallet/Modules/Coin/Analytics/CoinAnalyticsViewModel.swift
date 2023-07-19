@@ -7,13 +7,19 @@ import MarketKit
 import Chart
 
 class CoinAnalyticsViewModel {
+    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.coin_analytics_view_model", qos: .userInitiated)
+
     private let service: CoinAnalyticsService
+    private let technicalIndicatorService: TechnicalIndicatorService
+    private let coinIndicatorViewItemFactory: CoinIndicatorViewItemFactory
     private var cancellables = Set<AnyCancellable>()
 
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let syncErrorRelay = BehaviorRelay<Bool>(value: false)
     private let emptyViewRelay = BehaviorRelay<Bool>(value: false)
+
+    private let indicatorViewItemsSubject = CurrentValueSubject<IndicatorViewItem, Never>(.empty)
 
     private let ratioFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -33,28 +39,63 @@ class CoinAnalyticsViewModel {
         return formatter
     }()
 
-    init(service: CoinAnalyticsService) {
+    init(service: CoinAnalyticsService, technicalIndicatorService: TechnicalIndicatorService, coinIndicatorViewItemFactory: CoinIndicatorViewItemFactory) {
         self.service = service
+        self.technicalIndicatorService = technicalIndicatorService
+        self.coinIndicatorViewItemFactory = coinIndicatorViewItemFactory
 
         service.$state
-                .sink { [weak self] in self?.sync(state: $0) }
+                .receive(on: queue)
+                .sink { [weak self] _ in self?.sync() }
                 .store(in: &cancellables)
 
-        sync(state: service.state)
+        technicalIndicatorService.$state
+                .receive(on: queue)
+                .sink { [weak self] _ in self?.sync() }
+                .store(in: &cancellables)
+
+        sync()
     }
 
-    private func sync(state: CoinAnalyticsService.State) {
+    private func syncIndicators(enabled: Bool) {
+        var loading = false
+        var error: Bool = false
+        var switchEnabled = false
+        var viewItems = [CoinIndicatorViewItemFactory.ViewItem]()
+
+        if enabled {
+            switch technicalIndicatorService.state {
+            case .loading: loading = true
+            case .failed:
+                error = true
+                switchEnabled = true
+            case .completed(let items):
+                switchEnabled = true
+                viewItems = coinIndicatorViewItemFactory.viewItems(items: items)
+            }
+        }
+
+        let viewItem = IndicatorViewItem(loading: loading, error: error, switchEnabled: switchEnabled, viewItems: viewItems)
+        indicatorViewItemsSubject.send(viewItem)
+    }
+
+    private func sync() {
+        let state = service.state
         switch state {
         case .loading:
             viewItemRelay.accept(nil)
             loadingRelay.accept(true)
             syncErrorRelay.accept(false)
             emptyViewRelay.accept(false)
+
+            syncIndicators(enabled: false)
         case .failed:
             viewItemRelay.accept(nil)
             loadingRelay.accept(false)
             syncErrorRelay.accept(true)
             emptyViewRelay.accept(false)
+
+            syncIndicators(enabled: false)
         case .preview(let analyticsPreview, let subscriptionAddress):
             let viewItem = previewViewItem(analyticsPreview: analyticsPreview, subscriptionAddress: subscriptionAddress)
 
@@ -68,6 +109,8 @@ class CoinAnalyticsViewModel {
 
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
+
+            syncIndicators(enabled: false)
         case .success(let analytics):
             let viewItem = viewItem(analytics: analytics)
 
@@ -81,6 +124,8 @@ class CoinAnalyticsViewModel {
 
             loadingRelay.accept(false)
             syncErrorRelay.accept(false)
+
+            syncIndicators(enabled: true)
         }
     }
 
@@ -318,6 +363,35 @@ class CoinAnalyticsViewModel {
 
 extension CoinAnalyticsViewModel {
 
+    var period: String {
+        technicalIndicatorService.period.title
+    }
+
+    var periodViewItems: [SelectorModule.ViewItem] {
+        technicalIndicatorService.allPeriods.map {
+            .init(title: $0.title, selected: $0 == technicalIndicatorService.period)
+        }
+    }
+
+    var detailAdviceSectionViewItems: [CoinIndicatorViewItemFactory.SectionDetailViewItem]? {
+        guard let items = technicalIndicatorService.state.data else {
+            return nil
+        }
+        return coinIndicatorViewItemFactory.detailViewItems(items: items)
+    }
+
+    func onSelectPeriod(index: Int) {
+        guard let period = technicalIndicatorService.allPeriods.at(index: index) else {
+            return
+        }
+
+        technicalIndicatorService.period = period
+    }
+
+}
+
+extension CoinAnalyticsViewModel {
+
     var viewItemDriver: Driver<ViewItem?> {
         viewItemRelay.asDriver()
     }
@@ -332,6 +406,10 @@ extension CoinAnalyticsViewModel {
 
     var emptyViewDriver: Driver<Bool> {
         emptyViewRelay.asDriver()
+    }
+
+    var indicatorViewItemsPublisher: AnyPublisher<IndicatorViewItem, Never> {
+        indicatorViewItemsSubject.eraseToAnyPublisher()
     }
 
     var coin: Coin {
@@ -376,6 +454,15 @@ extension CoinAnalyticsViewModel {
             let items: [Any?] = [cexVolume, dexVolume, dexLiquidity, activeAddresses, transactionCount, holders, tvl, revenue, reports, investors, treasuries]
             return items.compactMap { $0 }.isEmpty
         }
+    }
+
+    struct IndicatorViewItem {
+        static let empty = IndicatorViewItem(loading: false, error: false, switchEnabled: false, viewItems: [])
+
+        let loading: Bool
+        let error: Bool
+        let switchEnabled: Bool
+        let viewItems: [CoinIndicatorViewItemFactory.ViewItem]
     }
 
     enum LockInfo {
@@ -465,6 +552,20 @@ enum Previewable<T> {
         switch self {
         case .preview: return nil
         case .regular(let value): return mapper(value)
+        }
+    }
+
+}
+
+extension HsPointTimePeriod {
+
+    var title: String {
+        switch self {
+        case .minute30, .hour8: return "" // not used
+        case .hour1: return "coin_analytics.period.1h".localized
+        case .hour4: return "coin_analytics.period.4h".localized
+        case .day1: return "coin_analytics.period.1d".localized
+        case .week1: return "coin_analytics.period.1w".localized
         }
     }
 

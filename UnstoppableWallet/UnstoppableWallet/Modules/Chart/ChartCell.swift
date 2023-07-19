@@ -272,7 +272,9 @@ class ChartCell: UITableViewCell {
                 }
             }
 
-            chartView.setCurve(colorType: viewItem.chartTrend.chartColorType)
+            if !chartView.isPressed {
+                chartView.setCurve(colorType: viewItem.chartTrend.chartColorType)
+            }
             chartView.set(chartData: viewItem.chartData, indicators: viewItem.indicators, showIndicators: showIndicators, animated: true)
             chartView.set(highLimitText: viewItem.maxValue, lowLimitText: viewItem.minValue)
         } else {

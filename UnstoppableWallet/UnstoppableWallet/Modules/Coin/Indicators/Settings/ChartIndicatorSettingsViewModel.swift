@@ -52,7 +52,7 @@ extension ChartIndicatorSettingsViewModel {
     var title: String {
         let indicator = dataSource.chartIndicator
         switch indicator.abstractType {
-        case .ma: return "chart_indicators.settings.ma.title".localized + " \(indicator.index + 1)"
+        case .ma: return indicator.id + " \(indicator.index + 1)"
         case .rsi: return "chart_indicators.settings.rsi.title".localized
         case .macd: return "chart_indicators.settings.macd.title".localized
         default: return "Custom"

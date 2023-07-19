@@ -13,7 +13,17 @@ struct CoinAnalyticsModule {
                 accountManager: App.shared.accountManager,
                 appConfigProvider: App.shared.appConfigProvider
         )
-        let viewModel = CoinAnalyticsViewModel(service: service)
+        let technicalIndicatorService = TechnicalIndicatorService(
+                coinUid: fullCoin.coin.uid,
+                currencyKit: App.shared.currencyKit,
+                marketKit: App.shared.marketKit
+        )
+        let coinIndicatorViewItemFactory = CoinIndicatorViewItemFactory()
+        let viewModel = CoinAnalyticsViewModel(
+                service: service,
+                technicalIndicatorService: technicalIndicatorService,
+                coinIndicatorViewItemFactory: coinIndicatorViewItemFactory
+        )
 
         return CoinAnalyticsViewController(viewModel: viewModel)
     }
