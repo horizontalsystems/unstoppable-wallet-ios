@@ -25,6 +25,7 @@
 "button.sign" = "kaydol";
 "button.more" = "Daha Fazlası";
 "button.i_understand" = "I Understand";
+"button.learn_more" = "Learn More";
 
 "alert" = "Uyarı";
 "alert.copied" = "Kopyalandı";
@@ -976,6 +977,7 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "settings.blockchain_settings" = "Blockchain Ayarları";
 "settings.security" = "Güvenlik";
 "settings.experimental_features" = "Deneysel";
+"settings.personal_support" = "Personal Support";
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
 "settings.faq" = "FAQ";
@@ -999,6 +1001,16 @@ Ayarlar - > Unstoppable ekranına giderek kamera erişimine izin verin.";
 "manage_wallets.contract_address" = "Sözleşme Adresi";
 "manage_wallets.derivation_description" = "%@ cüzdanlarının gelen ödemeleri almak için kullanabileceği 4 yaygın adres biçimi vardır:\n \n- BIP-44 (eski)\n- BIP-49\n- BIP-84 (önerilen)\n- BIP-86 (en yeni)\n \nUnstoppable cüzdan 4'ünü de desteklerken, BIP-84 formatında çalışan bir %@ cüzdanı kullanmanızı önerir.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Bitcoin Cash cüzdanlarının gelen ödemeleri almak için kullanabileceği 2 adres formatı vardır: \n \n- TYPE0 (eski) \n- TYPE145 (daha yeni) \n \nUnstoppable cüzdan her ikisini de desteklerken, TYPE145 formatında çalışan bir Bitcoin Cash cüzdanı kullanmanızı önerir.";
+
+// Settings -> Personal Support
+
+"settings.personal_support.telegram_username.title" = "Account";
+"settings.personal_support.telegram_username.placeholder" = "@username";
+"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
+"settings.personal_support.request" = "Request";
+"settings.personal_support.requested" = "Requested";
+"settings.personal_support.failed" = "Request failed";
+"settings.personal_support.need_subscription" = "This feature only for Unstoppable Wallet premium users. More info in our official site.";
 
 // Settings -> Experimental Features
 
