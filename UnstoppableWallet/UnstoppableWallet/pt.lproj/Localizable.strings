@@ -25,6 +25,7 @@
 "button.sign" = "Assinar";
 "button.more" = "Mostrar Mais";
 "button.i_understand" = "I Understand";
+"button.learn_more" = "Saiba Mais";
 
 "alert" = "Alerta";
 "alert.copied" = "Copiado";
@@ -976,6 +977,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "settings.blockchain_settings" = "Configurações da Blockchain";
 "settings.security" = "Segurança";
 "settings.experimental_features" = "Experimental";
+"settings.personal_support" = "Personal Support";
 "settings.base_currency" = "Moeda base";
 "settings.language" = "Idioma";
 "settings.faq" = "FAQ";
@@ -999,6 +1001,16 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 "manage_wallets.contract_address" = "Endereço do Contrato";
 "manage_wallets.derivation_description" = "Existem 4 formatos de endereço comuns %@ que as carteiras podem usar para receber pagamentos:\n\n- BIP44 (mais antigo)\n- BIP49\n- BIP84 (recomendado)\n- BIP86 (mais recente)\n\nEnquanto a Unstoppable wallet suporta todos os 4, recomendamos usar uma %@ carteira operando no formato BIP84.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Existem 2 formatos de endereço que as carteiras Bitcoin Cash podem usar para receber pagamentos:\n\n- TYPE0 (antigo)\n- TYPE145 (mais recente)\n\nEmbora a carteira Unstoppable suporte ambos, recomenda-se usar uma carteira Bitcoin Cash operando no formato TYPE145.";
+
+// Settings -> Personal Support
+
+"settings.personal_support.telegram_username.title" = "Conta";
+"settings.personal_support.telegram_username.placeholder" = "@username";
+"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
+"settings.personal_support.request" = "Request";
+"settings.personal_support.requested" = "Requested";
+"settings.personal_support.failed" = "Request failed";
+"settings.personal_support.need_subscription" = "This feature only for Unstoppable Wallet premium users. More info in our official site.";
 
 // Settings -> Experimental Features
 
