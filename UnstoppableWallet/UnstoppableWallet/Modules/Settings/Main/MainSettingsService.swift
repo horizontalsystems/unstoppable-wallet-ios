@@ -149,6 +149,14 @@ extension MainSettingsService {
         return .unBackedUpAccount(account: activeAccount)
     }
 
+    var analyticsLink: String {
+        AppConfig.analyticsLink
+    }
+
+    var isSubscribed: Bool {
+        App.shared.subscriptionManager.authToken != nil
+    }
+
 }
 
 extension MainSettingsService {

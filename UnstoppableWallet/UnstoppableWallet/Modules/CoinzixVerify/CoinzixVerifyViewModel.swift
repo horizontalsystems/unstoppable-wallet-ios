@@ -6,7 +6,7 @@ class CoinzixVerifyViewModel {
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
-    @Published private(set) var submitButtonState: ButtonState = .disabled
+    @Published private(set) var submitButtonState: AsyncActionButtonState = .disabled
     @Published private(set) var resendEnabled: Bool = false
 
     init(service: CoinzixVerifyService) {
@@ -69,16 +69,6 @@ extension CoinzixVerifyViewModel {
 
     func onChange(googlePin: String) {
         service.set(googlePin: googlePin)
-    }
-
-}
-
-extension CoinzixVerifyViewModel {
-
-    enum ButtonState {
-        case enabled
-        case disabled
-        case spinner
     }
 
 }

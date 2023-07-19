@@ -132,7 +132,7 @@ class CoinzixVerifyViewController: KeyboardAwareViewController {
         }
     }
 
-    private func sync(submitButtonState: CoinzixVerifyViewModel.ButtonState) {
+    private func sync(submitButtonState: AsyncActionButtonState) {
         switch submitButtonState {
         case .disabled:
             submitButton.isHidden = false

@@ -233,6 +233,47 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
+    private func onPersonalSupportTapped() {
+        if viewModel.isSubscribed {
+            navigationController?.pushViewController(PersonalSupportModule.viewController(), animated: true)
+        } else {
+            let viewController = BottomSheetModule.viewController(
+                image: .local(image: UIImage(named: "lock_24")?.withTintColor(.themeGray)),
+                title: "settings.personal_support".localized,
+                items: [
+                    .description(text: "settings.personal_support.need_subscription".localized)
+                ],
+                buttons: [
+                    .init(
+                        style: .yellow, title: "button.learn_more".localized,
+                        action: { [weak self] in
+                            (self?.viewModel.analyticsLink).flatMap { UrlManager.open(url: $0) }
+                        }
+                    )
+                ]
+            )
+
+            present(viewController, animated: true)
+        }
+    }
+
+    private var supportRows: [RowProtocol] {
+        [
+            tableView.universalRow48(
+                id: "personal-support",
+                image: .local(UIImage(named: "support_2_24")?.withTintColor(.themeJacob)),
+                title: .body("settings.personal_support".localized),
+                accessoryType: .disclosure,
+                autoDeselect: true,
+                isFirst: true,
+                isLast: true,
+                action: { [weak self] in
+                    self?.onPersonalSupportTapped()
+                }
+            )
+        ]
+    }
+
     private var appearanceRows: [RowProtocol] {
         [
             StaticRow(
@@ -363,6 +404,7 @@ extension MainSettingsViewController: SectionsDataSource {
         var sections: [SectionProtocol] = [
             Section(id: "account", headerState: .margin(height: .margin12), rows: accountRows),
             Section(id: "wallet_connect", headerState: .margin(height: .margin32), rows: walletConnectRows),
+            Section(id: "personal_support", headerState: .margin(height: .margin32), rows: supportRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
             Section(id: "experimental", headerState: .margin(height: .margin32), rows: experimentalRows),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),

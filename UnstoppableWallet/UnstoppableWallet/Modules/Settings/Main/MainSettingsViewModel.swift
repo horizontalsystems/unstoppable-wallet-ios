@@ -128,6 +128,14 @@ extension MainSettingsViewModel {
         service.appVersion
     }
 
+    var analyticsLink: String {
+        service.analyticsLink
+    }
+
+    var isSubscribed: Bool {
+        service.isSubscribed
+    }
+
     func onTapWalletConnect() {
         switch service.walletConnectState {
             case .noAccount: openWalletConnectRelay.accept(.errorDialog(error: .noAccount))
