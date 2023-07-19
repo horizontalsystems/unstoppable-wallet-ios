@@ -25,6 +25,7 @@
 "button.sign" = "Подписать";
 "button.more" = "Показать больше";
 "button.i_understand" = "Я понимаю";
+"button.learn_more" = "Подробнее";
 
 "alert" = "Предупреждение";
 "alert.copied" = "Скопировано";
@@ -978,6 +979,7 @@
 "settings.blockchain_settings" = "Настройки блокчейна";
 "settings.security" = "Безопасность";
 "settings.experimental_features" = "Экспериментальные функции";
+"settings.personal_support" = "Personal Support";
 "settings.base_currency" = "Базовая валюта";
 "settings.language" = "Язык";
 "settings.faq" = "FAQ";
@@ -1001,6 +1003,16 @@
 "manage_wallets.contract_address" = "Адрес контракта";
 "manage_wallets.derivation_description" = "Существует 4 распространенных формата адресов %@ кошельков для получения входящих платежей:\n\n- BIP44 (более старый)\n- BIP49\n- BIP84 (рекомендованный)\n- BIP86 (самый новый)\n\nХотя кошелек Unstoppable поддерживает все четыре формата, рекомендуется использовать %@ кошелек, работающий в формате BIP84.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Существует 2 формата адресов, которые кошельки Bitcoin Cash могут использовать для приема входящих платежей:\n\n- TYPE 0 (более старый)\n- TYPE 145 (более новый)\n\nХотя кошелек Unstoppable поддерживает оба формата, рекомендуется использовать кошелек Bitcoin Cash, работающий в формате TYPE 145.";
+
+// Settings -> Personal Support
+
+"settings.personal_support.telegram_username.title" = "Account";
+"settings.personal_support.telegram_username.placeholder" = "@username";
+"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
+"settings.personal_support.request" = "Request";
+"settings.personal_support.requested" = "Requested";
+"settings.personal_support.failed" = "Request failed";
+"settings.personal_support.need_subscription" = "This feature only for Unstoppable Wallet premium users. More info in our official site.";
 
 // Settings -> Experimental Features
 
