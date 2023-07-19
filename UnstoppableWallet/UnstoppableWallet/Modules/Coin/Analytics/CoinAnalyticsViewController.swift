@@ -215,17 +215,6 @@ class CoinAnalyticsViewController: ThemeViewController {
         parentNavigationController?.present(viewController, animated: true)
     }
 
-    private func openRevenueInfo() {
-        let viewController = InfoModule.viewController(viewItems: [
-            .header1(text: "coin_analytics.project_revenue".localized),
-            .listItem(text: "coin_analytics.project_revenue.info1".localized),
-            .listItem(text: "coin_analytics.project_revenue.info2".localized),
-            .listItem(text: "coin_analytics.project_revenue.info3".localized)
-        ])
-
-        parentNavigationController?.present(viewController, animated: true)
-    }
-
     private func openMajorHolders(blockchain: Blockchain) {
         let viewController = CoinMajorHoldersModule.viewController(coin: viewModel.coin, blockchain: blockchain)
         parentNavigationController?.present(viewController, animated: true)
@@ -259,6 +248,11 @@ class CoinAnalyticsViewController: ThemeViewController {
     private func openProDataChart(type: CoinProChartModule.ProChartType) {
         let viewController = CoinProChartModule.viewController(coin: viewModel.coin, type: type)
         parentNavigationController?.present(viewController, animated: true)
+    }
+
+    private func openRatings() {
+        let viewController = CoinAnalyticsRatingScaleViewController()
+        parentNavigationController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
     private func openRanks(type: CoinRankModule.RankType) {
@@ -365,6 +359,49 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         )
     }
 
+    private func ratingRow(id: String, rating: Previewable<CoinAnalyticsModule.Rating>, isFirst: Bool = false, isLast: Bool = false) -> RowProtocol {
+        let titleElements: [CellBuilderNew.CellElement] = [
+            .textElement(text: .subhead2("coin_analytics.rating_scale".localized), parameters: .highHugging),
+            .margin8,
+            .imageElement(image: .local(UIImage(named: "circle_information_20")?.withTintColor(.themeGray)), size: .image20)
+        ]
+
+        switch rating {
+        case .preview:
+            return CellBuilderNew.row(
+                    rootElement: .hStack(titleElements + [
+                        .textElement(text: .subhead1(placeholderText), parameters: .rightAlignment)
+                    ]),
+                    tableView: tableView,
+                    id: id,
+                    height: .heightCell48,
+                    autoDeselect: true,
+                    bind: { cell in
+                        cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                    }
+            )
+        case .regular(let rating):
+            return CellBuilderNew.row(
+                    rootElement: .hStack(titleElements + [
+                        .textElement(text: .subhead1(rating.title.uppercased(), color: rating.color), parameters: .rightAlignment),
+                        .margin8,
+                        .imageElement(image: .local(rating.image), size: .image24)
+                    ]),
+                    tableView: tableView,
+                    id: id,
+                    hash: rating.title,
+                    height: .heightCell48,
+                    autoDeselect: true,
+                    bind: { cell in
+                        cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                    },
+                    action: { [weak self] in
+                        self?.openRatings()
+                    }
+            )
+        }
+    }
+
     private func lockInfoSection(lockInfo: CoinAnalyticsViewModel.LockInfo) -> SectionProtocol {
         let icon: UIImage?
         let text: String
@@ -410,6 +447,9 @@ extension CoinAnalyticsViewController: SectionsDataSource {
     }
 
     private func cexVolumeSection(viewItem: CoinAnalyticsViewModel.RankCardViewItem) -> SectionProtocol {
+        let items: [Any?] = [true, viewItem.rating, viewItem.rank]
+        let itemCount = items.compactMap { $0 }.count
+
         var rows: [RowProtocol] = [
             chartRow(
                     id: "cex-volume",
@@ -417,7 +457,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     valueInfo: "coin_analytics.last_30d".localized,
                     chartCurveType: .bars,
                     viewItem: viewItem.chart,
-                    isLast: viewItem.rank == nil,
+                    isLast: itemCount == 1,
                     infoAction: { [weak self] in
                         self?.openCexVolumeInfo()
                     },
@@ -427,6 +467,16 @@ extension CoinAnalyticsViewController: SectionsDataSource {
             )
         ]
 
+        if let rating = viewItem.rating {
+            rows.append(
+                    ratingRow(
+                            id: "cex-volume-rating",
+                            rating: rating,
+                            isLast: rows.count + 1 == itemCount
+                    )
+            )
+        }
+
         if let rank = viewItem.rank {
             rows.append(
                     previewableRow(
@@ -434,7 +484,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             title: "coin_analytics.30_day_rank".localized,
                             value: rank,
                             accessoryType: .disclosure,
-                            isLast: true,
+                            isLast: rows.count + 1 == itemCount,
                             action: rank.previewableValue { _ in { [weak self] in
                                 self?.openRanks(type: .cexVolume)
                             }}
@@ -450,6 +500,9 @@ extension CoinAnalyticsViewController: SectionsDataSource {
     }
 
     private func dexVolumeSection(viewItem: CoinAnalyticsViewModel.RankCardViewItem) -> SectionProtocol {
+        let items: [Any?] = [true, viewItem.rating, viewItem.rank]
+        let itemCount = items.compactMap { $0 }.count
+
         var rows: [RowProtocol] = [
             chartRow(
                     id: "dex-volume",
@@ -457,7 +510,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     valueInfo: "coin_analytics.last_30d".localized,
                     chartCurveType: .bars,
                     viewItem: viewItem.chart,
-                    isLast: viewItem.rank == nil,
+                    isLast: itemCount == 1,
                     infoAction: { [weak self] in
                         self?.openDexVolumeInfo()
                     },
@@ -467,6 +520,16 @@ extension CoinAnalyticsViewController: SectionsDataSource {
             )
         ]
 
+        if let rating = viewItem.rating {
+            rows.append(
+                    ratingRow(
+                            id: "dex-volume-rating",
+                            rating: rating,
+                            isLast: rows.count + 1 == itemCount
+                    )
+            )
+        }
+
         if let rank = viewItem.rank {
             rows.append(
                     previewableRow(
@@ -474,7 +537,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             title: "coin_analytics.30_day_rank".localized,
                             value: rank,
                             accessoryType: .disclosure,
-                            isLast: true,
+                            isLast: rows.count + 1 == itemCount,
                             action: rank.previewableValue { _ in { [weak self] in
                                 self?.openRanks(type: .dexVolume)
                             }}
@@ -490,6 +553,9 @@ extension CoinAnalyticsViewController: SectionsDataSource {
     }
 
     private func dexLiquiditySection(viewItem: CoinAnalyticsViewModel.RankCardViewItem) -> SectionProtocol {
+        let items: [Any?] = [true, viewItem.rating, viewItem.rank]
+        let itemCount = items.compactMap { $0 }.count
+
         var rows: [RowProtocol] = [
             chartRow(
                     id: "dex-liquidity",
@@ -497,7 +563,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     valueInfo: "coin_analytics.current".localized,
                     chartCurveType: .line,
                     viewItem: viewItem.chart,
-                    isLast: viewItem.rank == nil,
+                    isLast: itemCount == 1,
                     infoAction: { [weak self] in
                         self?.openDexLiquidityInfo()
                     },
@@ -507,6 +573,16 @@ extension CoinAnalyticsViewController: SectionsDataSource {
             )
         ]
 
+        if let rating = viewItem.rating {
+            rows.append(
+                    ratingRow(
+                            id: "dex-liquidity-rating",
+                            rating: rating,
+                            isLast: rows.count + 1 == itemCount
+                    )
+            )
+        }
+
         if let rank = viewItem.rank {
             rows.append(
                     previewableRow(
@@ -514,7 +590,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             title: "coin_analytics.rank".localized,
                             value: rank,
                             accessoryType: .disclosure,
-                            isLast: true,
+                            isLast: rows.count + 1 == itemCount,
                             action: rank.previewableValue { _ in { [weak self] in
                                 self?.openRanks(type: .dexLiquidity)
                             }}
@@ -530,7 +606,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
     }
 
     private func addressesSection(viewItem: CoinAnalyticsViewModel.ActiveAddressesViewItem) -> SectionProtocol {
-        let items: [Any?] = [true, viewItem.count30d, viewItem.rank]
+        let items: [Any?] = [true, viewItem.rating, viewItem.count30d, viewItem.rank]
         let itemCount = items.compactMap { $0 }.count
 
         var rows: [RowProtocol] = [
@@ -549,6 +625,16 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     }
             )
         ]
+
+        if let rating = viewItem.rating {
+            rows.append(
+                    ratingRow(
+                            id: "addresses-rating",
+                            rating: rating,
+                            isLast: rows.count + 1 == itemCount
+                    )
+            )
+        }
 
         if let count30d = viewItem.count30d {
             rows.append(
@@ -584,7 +670,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
     }
 
     private func txCountSection(viewItem: CoinAnalyticsViewModel.TransactionCountViewItem) -> SectionProtocol {
-        let items: [Any?] = [true, viewItem.volume, viewItem.rank]
+        let items: [Any?] = [true, viewItem.rating, viewItem.volume, viewItem.rank]
         let itemCount = items.compactMap { $0 }.count
 
         var rows: [RowProtocol] = [
@@ -603,6 +689,16 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     }
             )
         ]
+
+        if let rating = viewItem.rating {
+            rows.append(
+                    ratingRow(
+                            id: "tx-count-rating",
+                            rating: rating,
+                            isLast: rows.count + 1 == itemCount
+                    )
+            )
+        }
 
         if let volume = viewItem.volume {
             rows.append(
@@ -637,7 +733,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         )
     }
 
-    private func holdersSection(viewItem: Previewable<CoinAnalyticsViewModel.HoldersViewItem>, rank: Previewable<String>?) -> SectionProtocol {
+    private func holdersSection(viewItem: Previewable<CoinAnalyticsViewModel.HoldersViewItem>, rank: Previewable<String>?, rating: Previewable<CoinAnalyticsModule.Rating>?) -> SectionProtocol {
         struct Blockchain {
             let imageUrl: String?
             let name: String
@@ -704,7 +800,19 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                         cell.bind(items: chartItems)
                     }
             )
-        ] + blockchains.enumerated().map { index, blockchain in
+        ]
+
+        if let rating {
+            rows.append(
+                    ratingRow(
+                            id: "holders-rating",
+                            rating: rating,
+                            isLast: false
+                    )
+            )
+        }
+
+        rows.append(contentsOf: blockchains.enumerated().map { index, blockchain in
             tableView.universalRow56(
                     id: "holders-blockchain-\(index)",
                     image: .url(blockchain.imageUrl, placeholder: "placeholder_rectangle_32"),
@@ -715,7 +823,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     isLast: index == blockchains.count - 1 && rank == nil,
                     action: blockchain.action
             )
-        }
+        })
 
         if let rank {
             rows.append(
@@ -740,6 +848,9 @@ extension CoinAnalyticsViewController: SectionsDataSource {
     }
 
     private func tvlSection(viewItem: CoinAnalyticsViewModel.TvlViewItem) -> SectionProtocol {
+        let items: [Any?] = [true, viewItem.rating, viewItem.rank, viewItem.ratio]
+        let itemCount = items.compactMap { $0 }.count
+
         var rows: [RowProtocol] = [
             chartRow(
                     id: "tvl",
@@ -747,7 +858,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     valueInfo: "coin_analytics.current".localized,
                     chartCurveType: .line,
                     viewItem: viewItem.chart,
-                    isLast: viewItem.rank == nil && viewItem.ratio == nil,
+                    isLast: itemCount == 1,
                     infoAction: { [weak self] in
                         self?.openTvlInfo()
                     },
@@ -757,6 +868,16 @@ extension CoinAnalyticsViewController: SectionsDataSource {
             )
         ]
 
+        if let rating = viewItem.rating {
+            rows.append(
+                    ratingRow(
+                            id: "cex-volume-rating",
+                            rating: rating,
+                            isLast: rows.count + 1 == itemCount
+                    )
+            )
+        }
+
         if let rank = viewItem.rank {
             rows.append(
                     previewableRow(
@@ -764,7 +885,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             title: "coin_analytics.rank".localized,
                             value: rank,
                             accessoryType: .disclosure,
-                            isLast: viewItem.ratio == nil,
+                            isLast: rows.count + 1 == itemCount,
                             action: rank.previewableValue { _ in { [weak self] in
                                 self?.openTvlRank()
                             }}
@@ -778,7 +899,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                             id: "tvl-ratio",
                             title: "coin_analytics.tvl_ratio".localized,
                             value: ratio,
-                            isLast: true
+                            isLast: rows.count + 1 == itemCount
                     )
             )
         }
@@ -790,7 +911,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         )
     }
 
-    private func revenueSection(viewItem: CoinAnalyticsViewModel.RevenueViewItem) -> SectionProtocol {
+    private func valueRankSection(id: String, title: String, viewItem: CoinAnalyticsViewModel.ValueRankViewItem, onTapRank: @escaping () -> ()) -> SectionProtocol {
         let value: String?
         let valueInfo: String?
 
@@ -805,19 +926,16 @@ extension CoinAnalyticsViewController: SectionsDataSource {
 
         var rows: [RowProtocol] = [
             Row<MarketWideCardCell>(
-                    id: "revenue",
+                    id: id,
                     height: MarketWideCardCell.height(hasChart: false),
-                    bind: { [weak self] cell, _ in
+                    bind: { cell, _ in
                         cell.set(backgroundStyle: .lawrence, isFirst: true)
                         cell.selectionStyle = .none
 
                         cell.bind(
-                                title: "coin_analytics.project_revenue".localized,
+                                title: title,
                                 value: value,
-                                valueInfo: valueInfo,
-                                onTapInfo: {
-                                    self?.openRevenueInfo()
-                                }
+                                valueInfo: valueInfo
                         )
                     }
             )
@@ -826,22 +944,43 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         if let rank = viewItem.rank {
             rows.append(
                     previewableRow(
-                            id: "revenue-rank",
+                            id: "\(id)-rank",
                             title: "coin_analytics.30_day_rank".localized,
                             value: rank,
                             accessoryType: .disclosure,
                             isLast: true,
-                            action: rank.previewableValue { _ in { [weak self] in
-                                self?.openRanks(type: .revenue)
-                            }}
+                            action: rank.previewableValue { _ in onTapRank }
                     )
             )
         }
 
         return Section(
-                id: "revenue",
+                id: id,
                 headerState: .margin(height: .margin12),
+                footerState: viewItem.description.map { tableView.sectionFooter(text: $0, bottomMargin: .margin12) } ?? .margin(height: 0),
                 rows: rows
+        )
+    }
+
+    private func feeSection(viewItem: CoinAnalyticsViewModel.ValueRankViewItem) -> SectionProtocol {
+        valueRankSection(
+                id: "fee",
+                title: "coin_analytics.project_fee".localized,
+                viewItem: viewItem,
+                onTapRank: { [weak self] in
+                    self?.openRanks(type: .fee)
+                }
+        )
+    }
+
+    private func revenueSection(viewItem: CoinAnalyticsViewModel.ValueRankViewItem) -> SectionProtocol {
+        valueRankSection(
+                id: "revenue",
+                title: "coin_analytics.project_revenue".localized,
+                viewItem: viewItem,
+                onTapRank: { [weak self] in
+                    self?.openRanks(type: .revenue)
+                }
         )
     }
 
@@ -943,6 +1082,10 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                 sections.append(dexVolumeSection(viewItem: viewItem))
             }
 
+            if let viewItem = viewItem.tvl {
+                sections.append(tvlSection(viewItem: viewItem))
+            }
+
             if let viewItem = viewItem.dexLiquidity {
                 sections.append(dexLiquiditySection(viewItem: viewItem))
             }
@@ -956,11 +1099,11 @@ extension CoinAnalyticsViewController: SectionsDataSource {
             }
 
             if let holdersViewItem = viewItem.holders {
-                sections.append(holdersSection(viewItem: holdersViewItem, rank: viewItem.holdersRank))
+                sections.append(holdersSection(viewItem: holdersViewItem, rank: viewItem.holdersRank, rating: viewItem.holdersRating))
             }
 
-            if let viewItem = viewItem.tvl {
-                sections.append(tvlSection(viewItem: viewItem))
+            if let viewItem = viewItem.fee {
+                sections.append(feeSection(viewItem: viewItem))
             }
 
             if let viewItem = viewItem.revenue {

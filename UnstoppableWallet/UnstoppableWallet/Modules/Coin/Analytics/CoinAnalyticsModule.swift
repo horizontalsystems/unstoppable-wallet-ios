@@ -1,3 +1,5 @@
+import UIKit
+import ThemeKit
 import MarketKit
 
 struct CoinAnalyticsModule {
@@ -14,6 +16,43 @@ struct CoinAnalyticsModule {
         let viewModel = CoinAnalyticsViewModel(service: service)
 
         return CoinAnalyticsViewController(viewModel: viewModel)
+    }
+
+}
+
+extension CoinAnalyticsModule {
+
+    enum Rating: String, CaseIterable {
+        case excellent
+        case good
+        case fair
+        case poor
+
+        var title: String {
+            "coin_analytics.rating_scale.\(rawValue)".localized
+        }
+
+        var percents: String {
+            switch self {
+            case .excellent: return "25%"
+            case .good: return "25%-50%"
+            case .fair: return "50%-75%"
+            case .poor: return "75%-100%"
+            }
+        }
+
+        var image: UIImage? {
+            UIImage(named: "rating_\(rawValue)_24")
+        }
+
+        var color: UIColor {
+            switch self {
+            case .excellent: return .themeGreenD
+            case .good: return .themeYellowD
+            case .fair: return UIColor(hex: 0xff7a00)
+            case .poor: return .themeRedD
+            }
+        }
     }
 
 }

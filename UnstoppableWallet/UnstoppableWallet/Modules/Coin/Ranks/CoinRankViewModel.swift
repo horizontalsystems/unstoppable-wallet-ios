@@ -70,7 +70,7 @@ class CoinRankViewModel {
 
     private func formatted(value: Decimal, currency: Currency) -> String? {
         switch service.type {
-        case .cexVolume, .dexVolume, .dexLiquidity, .revenue:
+        case .cexVolume, .dexVolume, .dexLiquidity, .fee, .revenue:
             return ValueFormatter.instance.formatShort(currencyValue: CurrencyValue(currency: currency, value: value))
         case .address, .txCount, .holders:
             return ValueFormatter.instance.formatShort(value: value)
@@ -105,6 +105,7 @@ extension CoinRankViewModel {
         case .address: return "coin_analytics.active_addresses_rank".localized
         case .txCount: return "coin_analytics.transaction_count_rank".localized
         case .holders: return "coin_analytics.holders_rank".localized
+        case .fee: return "coin_analytics.project_fee_rank".localized
         case .revenue: return "coin_analytics.project_revenue_rank".localized
         }
     }
@@ -117,6 +118,7 @@ extension CoinRankViewModel {
         case .address: return "coin_analytics.active_addresses_rank.description".localized
         case .txCount: return "coin_analytics.transaction_count_rank.description".localized
         case .holders: return "coin_analytics.holders_rank.description".localized
+        case .fee: return "coin_analytics.project_fee_rank.description".localized
         case .revenue: return "coin_analytics.project_revenue_rank.description".localized
         }
     }
@@ -129,6 +131,7 @@ extension CoinRankViewModel {
         case .address: return "active_addresses"
         case .txCount: return "trx_count"
         case .holders: return "holders"
+        case .fee: return "fee"
         case .revenue: return "revenue"
         }
     }
@@ -144,7 +147,7 @@ extension CoinRankViewModel {
 
     var selectorItems: [String]? {
         switch service.type {
-        case .cexVolume, .dexVolume, .address, .txCount, .revenue: return timePeriods.map { $0.title }
+        case .cexVolume, .dexVolume, .address, .txCount, .fee, .revenue: return timePeriods.map { $0.title }
         case .dexLiquidity, .holders: return nil
         }
     }

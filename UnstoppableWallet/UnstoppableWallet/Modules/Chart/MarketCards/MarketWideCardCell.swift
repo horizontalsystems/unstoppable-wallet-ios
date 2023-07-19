@@ -80,7 +80,7 @@ class MarketWideCardCell: BaseSelectableThemeCell {
         onTapInfo?()
     }
 
-    func bind(title: String, value: String?, valueInfo: String?, chartData: ChartData? = nil, chartTrend: MovementTrend? = nil, chartCurveType: ChartConfiguration.CurveType = .line, onTapInfo: @escaping () -> ()) {
+    func bind(title: String, value: String?, valueInfo: String?, chartData: ChartData? = nil, chartTrend: MovementTrend? = nil, chartCurveType: ChartConfiguration.CurveType = .line, onTapInfo: (() -> ())? = nil) {
         titleLabel.text = title
         valueLabel.text = value
         valueInfoLabel.text = value != nil ? valueInfo : nil
@@ -101,6 +101,7 @@ class MarketWideCardCell: BaseSelectableThemeCell {
         }
 
         self.onTapInfo = onTapInfo
+        infoButton.isHidden = onTapInfo == nil
     }
 
 }
