@@ -5,7 +5,6 @@ import EvmKit
 import MarketKit
 
 class EvmSyncSourceManager {
-    private let appConfigProvider: AppConfigProvider
     private let testNetManager: TestNetManager
     private let blockchainSettingsStorage: BlockchainSettingsStorage
     private let evmSyncSourceStorage: EvmSyncSourceStorage
@@ -13,8 +12,7 @@ class EvmSyncSourceManager {
     private let syncSourceRelay = PublishRelay<BlockchainType>()
     private let syncSourcesUpdatedRelay = PublishRelay<BlockchainType>()
 
-    init(appConfigProvider: AppConfigProvider, testNetManager: TestNetManager, blockchainSettingsStorage: BlockchainSettingsStorage, evmSyncSourceStorage: EvmSyncSourceStorage) {
-        self.appConfigProvider = appConfigProvider
+    init(testNetManager: TestNetManager, blockchainSettingsStorage: BlockchainSettingsStorage, evmSyncSourceStorage: EvmSyncSourceStorage) {
         self.testNetManager = testNetManager
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.evmSyncSourceStorage = evmSyncSourceStorage
@@ -22,14 +20,14 @@ class EvmSyncSourceManager {
 
     private func defaultTransactionSource(blockchainType: BlockchainType) -> EvmKit.TransactionSource {
         switch blockchainType {
-        case .ethereum: return .ethereumEtherscan(apiKey: appConfigProvider.etherscanKey)
-        case .binanceSmartChain: return .bscscan(apiKey: appConfigProvider.bscscanKey)
-        case .polygon: return .polygonscan(apiKey: appConfigProvider.polygonscanKey)
-        case .avalanche: return .snowtrace(apiKey: appConfigProvider.snowtraceKey)
-        case .optimism: return .optimisticEtherscan(apiKey: appConfigProvider.optimismEtherscanKey)
-        case .arbitrumOne: return .arbiscan(apiKey: appConfigProvider.arbiscanKey)
-        case .gnosis: return .gnosis(apiKey: appConfigProvider.gnosisscanKey)
-        case .fantom: return .fantom(apiKey: appConfigProvider.ftmscanKey)
+        case .ethereum: return .ethereumEtherscan(apiKey: AppConfig.etherscanKey)
+        case .binanceSmartChain: return .bscscan(apiKey: AppConfig.bscscanKey)
+        case .polygon: return .polygonscan(apiKey: AppConfig.polygonscanKey)
+        case .avalanche: return .snowtrace(apiKey: AppConfig.snowtraceKey)
+        case .optimism: return .optimisticEtherscan(apiKey: AppConfig.optimismEtherscanKey)
+        case .arbitrumOne: return .arbiscan(apiKey: AppConfig.arbiscanKey)
+        case .gnosis: return .gnosis(apiKey: AppConfig.gnosisscanKey)
+        case .fantom: return .fantom(apiKey: AppConfig.ftmscanKey)
         default: fatalError("Non-supported EVM blockchain")
         }
     }
@@ -53,10 +51,10 @@ extension EvmSyncSourceManager {
                 return [
                     EvmSyncSource(
                             name: "Infura Sepolia",
-                            rpcSource: .http(urls: [URL(string: "https://sepolia.infura.io/v3/\(appConfigProvider.infuraCredentials.id)")!], auth: appConfigProvider.infuraCredentials.secret),
+                            rpcSource: .http(urls: [URL(string: "https://sepolia.infura.io/v3/\(AppConfig.infuraCredentials.id)")!], auth: AppConfig.infuraCredentials.secret),
                             transactionSource: EvmKit.TransactionSource(
                                     name: "sepolia.etherscan.io",
-                                    type: .etherscan(apiBaseUrl: "https://api-sepolia.etherscan.io", txBaseUrl: "https://sepiloa.etherscan.io", apiKey: appConfigProvider.etherscanKey)
+                                    type: .etherscan(apiBaseUrl: "https://api-sepolia.etherscan.io", txBaseUrl: "https://sepiloa.etherscan.io", apiKey: AppConfig.etherscanKey)
                             )
                     )
                 ]
@@ -64,12 +62,12 @@ extension EvmSyncSourceManager {
                 return [
                     EvmSyncSource(
                             name: "Infura",
-                            rpcSource: .ethereumInfuraWebsocket(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
+                            rpcSource: .ethereumInfuraWebsocket(projectId: AppConfig.infuraCredentials.id, projectSecret: AppConfig.infuraCredentials.secret),
                             transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                     ),
                     EvmSyncSource(
                             name: "Infura",
-                            rpcSource: .ethereumInfuraHttp(projectId: appConfigProvider.infuraCredentials.id, projectSecret: appConfigProvider.infuraCredentials.secret),
+                            rpcSource: .ethereumInfuraHttp(projectId: AppConfig.infuraCredentials.id, projectSecret: AppConfig.infuraCredentials.secret),
                             transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                     ),
                     EvmSyncSource(
@@ -87,7 +85,7 @@ extension EvmSyncSourceManager {
                             rpcSource: .http(urls: [URL(string: "https://data-seed-prebsc-1-s1.binance.org:8545")!], auth: nil),
                             transactionSource: EvmKit.TransactionSource(
                                     name: "testnet.bscscan.com",
-                                    type: .etherscan(apiBaseUrl: "https://api-testnet.bscscan.com", txBaseUrl: "https://testnet.bscscan.com", apiKey: appConfigProvider.bscscanKey)
+                                    type: .etherscan(apiBaseUrl: "https://api-testnet.bscscan.com", txBaseUrl: "https://testnet.bscscan.com", apiKey: AppConfig.bscscanKey)
                             )
                     )
                 ]

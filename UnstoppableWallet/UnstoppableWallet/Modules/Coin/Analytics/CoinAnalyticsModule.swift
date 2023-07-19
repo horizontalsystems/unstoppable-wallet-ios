@@ -10,8 +10,7 @@ struct CoinAnalyticsModule {
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,
                 subscriptionManager: App.shared.subscriptionManager,
-                accountManager: App.shared.accountManager,
-                appConfigProvider: App.shared.appConfigProvider
+                accountManager: App.shared.accountManager
         )
         let technicalIndicatorService = TechnicalIndicatorService(
                 coinUid: fullCoin.coin.uid,

@@ -39,10 +39,6 @@ extension BalanceErrorViewModel {
         service.isSourceChangeable
     }
 
-    var email: String {
-        service.contactEmail
-    }
-
     var errorString: String {
         service.errorString
     }

@@ -5,14 +5,12 @@ import HsToolKit
 class GuidesRepository {
     private let disposeBag = DisposeBag()
 
-    private let appConfigProvider: AppConfigProvider
     private let guidesManager: GuidesManager
     private let reachabilityManager: IReachabilityManager
 
     private let categoriesRelay = BehaviorRelay<DataState<[GuideCategory]>>(value: .loading)
 
-    init(appConfigProvider: AppConfigProvider, guidesManager: GuidesManager, reachabilityManager: IReachabilityManager) {
-        self.appConfigProvider = appConfigProvider
+    init(guidesManager: GuidesManager, reachabilityManager: IReachabilityManager) {
         self.guidesManager = guidesManager
         self.reachabilityManager = reachabilityManager
 
@@ -37,7 +35,7 @@ class GuidesRepository {
     private func fetch() {
         categoriesRelay.accept(.loading)
 
-        guidesManager.guideCategoriesSingle(url: appConfigProvider.guidesIndexUrl)
+        guidesManager.guideCategoriesSingle(url: AppConfig.guidesIndexUrl)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .subscribe(onSuccess: { [weak self] categories in
                     self?.categoriesRelay.accept(.success(result: categories))

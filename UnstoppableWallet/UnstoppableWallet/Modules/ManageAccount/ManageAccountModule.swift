@@ -16,7 +16,6 @@ struct ManageAccountModule {
         }
 
         let accountRestoreWarningFactory = AccountRestoreWarningFactory(
-                appConfigProvider: App.shared.appConfigProvider,
                 localStorage: StorageKit.LocalStorage.default,
                 languageManager: LanguageManager.shared
         )

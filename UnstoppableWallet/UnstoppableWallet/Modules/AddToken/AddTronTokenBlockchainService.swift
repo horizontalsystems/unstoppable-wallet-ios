@@ -8,13 +8,11 @@ class AddTronTokenBlockchainService {
     private let blockchain: Blockchain
     private let networkManager: NetworkManager
     private let network: Network
-    private let appConfigProvider: AppConfigProvider
 
-    init(blockchain: Blockchain, networkManager: NetworkManager, network: Network, appConfigProvider: AppConfigProvider) {
+    init(blockchain: Blockchain, networkManager: NetworkManager, network: Network) {
         self.blockchain = blockchain
         self.networkManager = networkManager
         self.network = network
-        self.appConfigProvider = appConfigProvider
     }
 
 }
@@ -44,7 +42,7 @@ extension AddTronTokenBlockchainService: IAddTokenBlockchainService {
 
         let tokenQuery = tokenQuery(reference: reference)
         let blockchain = blockchain
-        let apiKey = appConfigProvider.tronGridApiKey
+        let apiKey = AppConfig.tronGridApiKey
 
         return Single<Token>.create { observer in
             let task = Task { [weak self] in

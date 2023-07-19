@@ -124,7 +124,7 @@ class CoinAnalyticsViewController: ThemeViewController {
     }
 
     private func openSubscriptionInfo() {
-        UrlManager.open(url: viewModel.analyticsLink, inAppController: parentNavigationController)
+        UrlManager.open(url: AppConfig.analyticsLink, inAppController: parentNavigationController)
     }
 
     private func openActivateSubscription(address: String) {

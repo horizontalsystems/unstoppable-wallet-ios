@@ -92,15 +92,17 @@ class BalanceErrorViewController: ThemeActionSheetController {
     }
 
     @objc private func onTapReport() {
+        let email = AppConfig.reportEmail
+
         if MFMailComposeViewController.canSendMail() {
             let controller = MFMailComposeViewController()
-            controller.setToRecipients([viewModel.email])
+            controller.setToRecipients([email])
             controller.setMessageBody(viewModel.errorString, isHTML: false)
             controller.mailComposeDelegate = self
 
             present(controller, animated: true)
         } else {
-            CopyHelper.copyAndNotify(value: viewModel.email)
+            CopyHelper.copyAndNotify(value: email)
         }
     }
 

@@ -69,13 +69,13 @@ class AboutViewController: ThemeViewController {
     }
 
     private func openTellFriends() {
-        let text = "settings_tell_friends.text".localized + "\n" + viewModel.appWebPageLink
+        let text = "settings_tell_friends.text".localized + "\n" + AppConfig.appWebPageLink
         let activityViewController = UIActivityViewController(activityItems: [text], applicationActivities: [])
         present(activityViewController, animated: true, completion: nil)
     }
 
     private func handleContact() {
-        let email = viewModel.contactEmail
+        let email = AppConfig.reportEmail
 
         if MFMailComposeViewController.canSendMail() {
             let controller = MFMailComposeViewController()
@@ -89,7 +89,7 @@ class AboutViewController: ThemeViewController {
     }
 
     private func openTwitter() {
-        let account = viewModel.twitterAccount
+        let account = AppConfig.appTwitterAccount
 
         if let appUrl = URL(string: "twitter://user?screen_name=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
             UIApplication.shared.open(appUrl)

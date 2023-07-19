@@ -5,12 +5,12 @@ import RxSwift
 class FeeRateProvider {
     private let feeRateKit: FeeRateKit.Kit
 
-    init(appConfigProvider: AppConfigProvider) {
+    init() {
         let providerConfig = FeeProviderConfig(
-                ethEvmUrl: FeeProviderConfig.infuraUrl(projectId: appConfigProvider.infuraCredentials.id),
-                ethEvmAuth: appConfigProvider.infuraCredentials.secret,
+                ethEvmUrl: FeeProviderConfig.infuraUrl(projectId: AppConfig.infuraCredentials.id),
+                ethEvmAuth: AppConfig.infuraCredentials.secret,
                 bscEvmUrl: FeeProviderConfig.defaultBscEvmUrl,
-                btcCoreRpcUrl: appConfigProvider.btcCoreRpcUrl,
+                btcCoreRpcUrl: AppConfig.btcCoreRpcUrl,
                 btcCoreRpcUser: nil,
                 btcCoreRpcPassword: nil
         )

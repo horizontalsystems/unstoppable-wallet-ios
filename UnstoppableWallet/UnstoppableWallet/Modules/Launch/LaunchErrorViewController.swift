@@ -71,7 +71,7 @@ class LaunchErrorViewController: ThemeViewController {
 
         if MFMailComposeViewController.canSendMail() {
             let controller = MFMailComposeViewController()
-            controller.setToRecipients([AppConfigProvider.reportEmail])
+            controller.setToRecipients([AppConfig.reportEmail])
             controller.setMessageBody(errorString, isHTML: false)
             controller.mailComposeDelegate = self
 

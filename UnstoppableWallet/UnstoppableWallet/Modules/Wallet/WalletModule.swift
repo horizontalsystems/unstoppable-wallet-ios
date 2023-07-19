@@ -41,7 +41,6 @@ struct WalletModule {
         coinPriceService.delegate = service
 
         let accountRestoreWarningFactory = AccountRestoreWarningFactory(
-                appConfigProvider: App.shared.appConfigProvider,
                 localStorage: StorageKit.LocalStorage.default,
                 languageManager: LanguageManager.shared
         )

@@ -20,7 +20,6 @@ class MainSettingsService {
     private let termsManager: TermsManager
     private let systemInfoManager: SystemInfoManager
     private let currencyKit: CurrencyKit.Kit
-    private let appConfigProvider: AppConfigProvider
     private let walletConnectSessionManager: WalletConnectSessionManager
     private let walletConnectV2SessionManager: WalletConnectV2SessionManager
 
@@ -28,7 +27,7 @@ class MainSettingsService {
     private let noWalletRequiredActionsRelay = BehaviorRelay<Bool>(value: false)
 
     init(backupManager: BackupManager, cloudAccountBackupManager: CloudAccountBackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager?, pinKit: PinKit.Kit, termsManager: TermsManager,
-         systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit, appConfigProvider: AppConfigProvider,
+         systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit,
          walletConnectSessionManager: WalletConnectSessionManager, walletConnectV2SessionManager: WalletConnectV2SessionManager) {
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.backupManager = backupManager
@@ -39,7 +38,6 @@ class MainSettingsService {
         self.termsManager = termsManager
         self.systemInfoManager = systemInfoManager
         self.currencyKit = currencyKit
-        self.appConfigProvider = appConfigProvider
         self.walletConnectSessionManager = walletConnectSessionManager
         self.walletConnectV2SessionManager = walletConnectV2SessionManager
 
@@ -66,10 +64,6 @@ class MainSettingsService {
 }
 
 extension MainSettingsService {
-
-    var companyWebPageLink: String {
-        appConfigProvider.companyWebPageLink
-    }
 
     var noWalletRequiredActions: Bool {
         backupManager.allBackedUp && !accountRestoreWarningManager.hasNonStandard

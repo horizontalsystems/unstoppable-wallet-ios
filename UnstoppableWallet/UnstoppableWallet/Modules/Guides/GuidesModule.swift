@@ -42,12 +42,11 @@ struct GuidesModule {
 
     static func instance() -> UIViewController {
         let repository = GuidesRepository(
-                appConfigProvider: App.shared.appConfigProvider,
                 guidesManager: App.shared.guidesManager,
                 reachabilityManager: App.shared.reachabilityManager
         )
 
-        let service = GuidesService(appConfigProvider: App.shared.appConfigProvider, repository: repository, languageManager: LanguageManager.shared)
+        let service = GuidesService(repository: repository, languageManager: LanguageManager.shared)
         let viewModel = GuidesViewModel(service: service)
 
         return GuidesViewController(viewModel: viewModel)

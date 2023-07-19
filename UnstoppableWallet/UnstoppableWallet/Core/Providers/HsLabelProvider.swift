@@ -6,13 +6,12 @@ import Alamofire
 
 class HsLabelProvider {
     private let networkManager: NetworkManager
-    private let apiUrl: String
+    private let apiUrl = AppConfig.marketApiUrl
     private let headers: HTTPHeaders?
 
-    init(networkManager: NetworkManager, appConfigProvider: AppConfigProvider) {
+    init(networkManager: NetworkManager) {
         self.networkManager = networkManager
-        apiUrl = appConfigProvider.marketApiUrl
-        headers = appConfigProvider.hsProviderApiKey.flatMap { HTTPHeaders([HTTPHeader(name: "apikey", value: $0)]) }
+        headers = AppConfig.hsProviderApiKey.flatMap { HTTPHeaders([HTTPHeader(name: "apikey", value: $0)]) }
     }
 
 }
