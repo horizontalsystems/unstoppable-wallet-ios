@@ -25,6 +25,7 @@
 "button.sign" = "签名";
 "button.more" = "显示更多";
 "button.i_understand" = "I Understand";
+"button.learn_more" = "了解更多";
 
 "alert" = "警报";
 "alert.copied" = "已复制";
@@ -977,6 +978,7 @@
 "settings.blockchain_settings" = "区块链设置";
 "settings.security" = "安全中心";
 "settings.experimental_features" = "实验性功能";
+"settings.personal_support" = "Personal Support";
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
 "settings.faq" = "常见问题";
@@ -1000,6 +1002,16 @@
 "manage_wallets.contract_address" = "智能合约地址";
 "manage_wallets.derivation_description" = "有4种%@钱包可用于接收应收款的常见地址格式：\n\n- BIP44（较旧）\n- BIP49\n- BIP84（受到推崇的）\n- BIP86（最新）\n\n虽然Unstoppable钱包支持全部4种格式，但是我们建议使用以BIP84格式运作的%@钱包。";
 "manage_wallets.bitcoin_cash_coin_type_description" = "有2种比特币现金钱包可用于接收应收款的常见地址格式：\n\n- TYPE 0（较旧）\n- TYPE 145（较新）\n\n虽然Unstoppable钱包支持全部两种格式，但是我们建议使用以TYPE 145格式运作的比特币现金钱包。";
+
+// Settings -> Personal Support
+
+"settings.personal_support.telegram_username.title" = "账户";
+"settings.personal_support.telegram_username.placeholder" = "@username";
+"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
+"settings.personal_support.request" = "Request";
+"settings.personal_support.requested" = "Requested";
+"settings.personal_support.failed" = "Request failed";
+"settings.personal_support.need_subscription" = "This feature only for Unstoppable Wallet premium users. More info in our official site.";
 
 // Settings -> Experimental Features
 
