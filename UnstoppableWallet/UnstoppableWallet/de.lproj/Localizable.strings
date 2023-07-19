@@ -25,6 +25,7 @@
 "button.sign" = "Signieren";
 "button.more" = "Mehr anzeigen";
 "button.i_understand" = "I Understand";
+"button.learn_more" = "Learn More";
 
 "alert" = "Alarm";
 "alert.copied" = "Kopiert";
@@ -975,6 +976,7 @@
 "settings.blockchain_settings" = "Blockchain Einstellungen";
 "settings.security" = "Sicherheit";
 "settings.experimental_features" = "Experimentell";
+"settings.personal_support" = "Personal Support";
 "settings.base_currency" = "Währung";
 "settings.language" = "Sprache";
 "settings.faq" = "FAQ";
@@ -998,6 +1000,16 @@
 "manage_wallets.contract_address" = "Vertragsadresse";
 "manage_wallets.derivation_description" = "Es gibt 4 gängige Adressformate %@ Brieftaschen können verwendet werden, um eingehende Zahlungen zu erhalten:\n\n- BIP44 (älter)\n- BIP49\n- BIP84 (empfohlen)\n- BIP86 (neueste)\n\nWährend unaufhaltsame Brieftasche alle 4 unterstützt, empfiehlt es eine %@ Brieftasche im BIP84-Format zu verwenden.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Es gibt 2 Adressformate Bitcoin Cash Wallets zum Empfang eingehender Zahlungen:\n\n- TYPE 0 (älter)\n- TYPE 145 (neuer)\n\nWährend unaufhaltsame Brieftaschen beide unterstützt, empfiehlt es sich, ein Bitcoin Cash Wallet im TYPE 145 Format zu verwenden.";
+
+// Settings -> Personal Support
+
+"settings.personal_support.telegram_username.title" = "Account";
+"settings.personal_support.telegram_username.placeholder" = "@username";
+"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
+"settings.personal_support.request" = "Request";
+"settings.personal_support.requested" = "Requested";
+"settings.personal_support.failed" = "Request failed";
+"settings.personal_support.need_subscription" = "This feature only for Unstoppable Wallet premium users. More info in our official site.";
 
 // Settings -> Experimental Features
 
