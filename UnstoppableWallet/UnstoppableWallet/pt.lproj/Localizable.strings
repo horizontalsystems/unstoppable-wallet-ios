@@ -1173,6 +1173,7 @@ Vá para Configurações → \"Unstoppable\" e permita o acesso à câmera.";
 
 "contacts.settings.icloud_sync" = "iCloud Sync";
 "contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
+"contacts.settings.lost_synchronization.description" = "iCloud synchronization is lost. Please check that iCloud Storage is enabled on your device.";
 "contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
 
 "contacts.settings.alert.title" = "iCloud Sync";
