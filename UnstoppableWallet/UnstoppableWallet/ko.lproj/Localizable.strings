@@ -25,6 +25,7 @@
 "button.sign" = "가입";
 "button.more" = "더 보기";
 "button.i_understand" = "I Understand";
+"button.learn_more" = "Learn More";
 
 "alert" = "알림";
 "alert.copied" = "복사됨";
@@ -974,6 +975,7 @@
 "settings.blockchain_settings" = "블록 체인 설정";
 "settings.security" = "보안 센터";
 "settings.experimental_features" = "실험";
+"settings.personal_support" = "Personal Support";
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
 "settings.faq" = "FAQ";
@@ -997,6 +999,16 @@
 "manage_wallets.contract_address" = "계약 주소";
 "manage_wallets.derivation_description" = "%@ 지갑이 입금을 받는 데 사용할 수 있는 4가지 일반적인 주소 형식이 있습니다.\n\n- BIP44(이전)\n- BIP49\n- BIP84(추천)\n- BIP86(최신)\n\nUnstoppable 지갑은 이 4가지 모두를 지원합니다. BIP84 형식으로 작동하는 %@ 지갑을 사용하는 것이 좋습니다.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "비트코인 캐시 지갑이 수신 지불을 받는 데 사용할 수 있는 2가지 주소 형식이 있습니다.\n\n- 유형 0(이전)\n- 유형 145(최신)\n\nUnstoppable 지갑은 두 가지를 모두 지원하지만 비트코인 캐시를 사용하는 것이 좋습니다. TYPE 145 형식으로 작동하는 지갑.";
+
+// Settings -> Personal Support
+
+"settings.personal_support.telegram_username.title" = "계정";
+"settings.personal_support.telegram_username.placeholder" = "@username";
+"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
+"settings.personal_support.request" = "Request";
+"settings.personal_support.requested" = "Requested";
+"settings.personal_support.failed" = "Request failed";
+"settings.personal_support.need_subscription" = "This feature only for Unstoppable Wallet premium users. More info in our official site.";
 
 // Settings -> Experimental Features
 
