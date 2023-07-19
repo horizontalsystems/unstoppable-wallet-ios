@@ -692,11 +692,33 @@
 
 // Coin Page -> Analytics
 
+"coin_analytics.indicators.summary" = "Summary";
+"coin_analytics.indicators.title" = "Technical Indicators";
+"coin_analytics.indicators.no_data" = "No Data";
+"coin_analytics.indicators.strong_buy" = "Strong Buy";
+"coin_analytics.indicators.buy" = "Buy";
+"coin_analytics.indicators.neutral" = "Neutral";
+"coin_analytics.indicators.sell" = "Sell";
+"coin_analytics.indicators.strong_sell" = "Strong Sell";
+"coin_analytics.period" = "Period";
+"coin_analytics.period.select_title" = "Select Period";
+"coin_analytics.period.1h" = "1 Stunde";
+"coin_analytics.period.4h" = "4 hours";
+"coin_analytics.period.1d" = "1 day";
+"coin_analytics.period.1w" = "1 week";
+
+"coin_analytics.details" = "Info";
+
 "coin_analytics.not_available" = "This project has no analytics data";
 "coin_analytics.locked.not_subscribed" = "This page available only for Unstoppable Wallet premium users";
 "coin_analytics.locked.learn_more" = "Learn More";
 "coin_analytics.locked.not_activated" = "Activate your subscription for getting access to analytics";
 "coin_analytics.locked.activate" = "Activate";
+
+"coin_analytics.technical_indicators" = "Technical Indicators";
+"coin_analytics.technical_indicators.info1" = "Summary: This is a general overview of an asset's technicals, considering a variety of technical indicators and timeframes. It provides a consensus viewpoint (Buy, Sell, or Neutral) based on these indicators.";
+"coin_analytics.technical_indicators.info2" = "Moving Averages (MA): These are commonly used technical indicators that smooth out price data to create a trend-following indicator. They show the average price over a specific time period. There are several types of MAs:\n\nSimple Moving Average (SMA): This calculates the average of a selected range of prices, usually closing prices, by the number of periods in that range.\n\nExponential Moving Average (EMA): This gives more weight to recent prices, thereby responding more quickly to recent price changes.";
+"coin_analytics.technical_indicators.info3" = "Oscillators: These are technical indicators that fluctuate over time within a band (above and below a center line, or between set levels). They are designed to help identify overbought and oversold conditions in a market. Here are some common oscillators:\n\nRelative Strength Index (RSI): This measures the speed and change of price movements. It is usually used to identify overbought or oversold conditions.\n\nMoving Average Convergence Divergence (MACD): This is used to identify potential buy and sell signals. It triggers technical signals when it crosses above (to buy) or below (to sell) its signal line.";
 
 "coin_analytics.cex_volume" = "CEX Volume";
 "coin_analytics.cex_volume_rank" = "CEX Volume Rank";
@@ -825,7 +847,6 @@
 
 "chart_indicators.settings.period.error" = "Period can’t be more than %d";
 
-"chart_indicators.settings.ma.title" = "Moving Average";
 "chart_indicators.settings.ma.description" = "The EMA, SMA, and WMA are moving averages used in technical analysis:\n\nEMA emphasizes recent prices for quicker reactions.\nSMA averages price data for a general trend view.\nWMA balances sensitivity and noise reduction by linearly weighting recent data";
 "chart_indicators.settings.ma.type_title" = "Type";
 "chart_indicators.settings.ma.period_title" = "Period";
