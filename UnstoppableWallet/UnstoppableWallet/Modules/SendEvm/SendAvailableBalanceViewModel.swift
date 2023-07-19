@@ -14,7 +14,7 @@ protocol ISendAvailableBalanceViewModel: AnyObject {
 }
 
 class SendAvailableBalanceViewModel {
-    private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.available-balance-view-model", qos: .userInitiated)
+    private var queue = DispatchQueue(label: "\(AppConfig.label).available-balance-view-model", qos: .userInitiated)
 
     private let service: IAvailableBalanceService
     private let coinService: ICoinService

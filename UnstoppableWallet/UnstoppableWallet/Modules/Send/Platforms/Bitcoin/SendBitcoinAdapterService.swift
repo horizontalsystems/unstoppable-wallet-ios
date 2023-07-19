@@ -22,7 +22,7 @@ protocol ISendService {
 
 class SendBitcoinAdapterService {
     private let disposeBag = DisposeBag()
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.send.bitcoin_adapter_service", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).send.bitcoin_adapter_service", qos: .userInitiated)
 
     private let feeRateService: FeeRateService
     private let amountInputService: IAmountInputService

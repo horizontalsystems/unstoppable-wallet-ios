@@ -6,7 +6,7 @@ import HsToolKit
 
 class SendBinanceService {
     private let disposeBag = DisposeBag()
-    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.send-bitcoin-service")
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).send-bitcoin-service")
 
     let token: Token
     private let amountService: IAmountInputService

@@ -10,7 +10,7 @@ class WalletManager {
 
     private let activeWalletDataRelay = PublishRelay<WalletData>()
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet_manager", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).wallet_manager", qos: .userInitiated)
 
     private var cachedActiveWalletData = WalletData(wallets: [], account: nil)
 

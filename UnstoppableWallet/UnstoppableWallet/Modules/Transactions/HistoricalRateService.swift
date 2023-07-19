@@ -17,7 +17,7 @@ class HistoricalRateService {
     private let rateUpdatedRelay = PublishRelay<(RateKey, CurrencyValue)>()
     private let ratesChangedRelay = PublishRelay<Void>()
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions-historical-rate-service-queue", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).transactions-historical-rate-service-queue", qos: .userInitiated)
 
     init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit) {
         self.marketKit = marketKit

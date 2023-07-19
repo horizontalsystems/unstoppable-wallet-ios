@@ -6,7 +6,7 @@ class BinanceKitManager {
     private weak var _binanceKit: BinanceChainKit?
     private var currentAccount: Account?
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.ethereum-kit-manager", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).ethereum-kit-manager", qos: .userInitiated)
 
     private func _binanceKit(account: Account) throws -> BinanceChainKit {
         if let _binanceKit = _binanceKit, let currentAccount = currentAccount, currentAccount == account {

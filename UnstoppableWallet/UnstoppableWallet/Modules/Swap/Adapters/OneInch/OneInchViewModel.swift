@@ -7,7 +7,7 @@ import EvmKit
 
 class OneInchViewModel {
     private let disposeBag = DisposeBag()
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.swap_one_inch_view_model", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).swap_one_inch_view_model", qos: .userInitiated)
 
     public let service: OneInchService
     public let tradeService: OneInchTradeService

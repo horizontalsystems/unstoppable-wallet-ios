@@ -4,7 +4,7 @@ class DebugLogger {
     private let localStorage: LocalStorage
     private let dateProvider: CurrentDateProvider
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.debug_logger", qos: .background)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).debug_logger", qos: .background)
 
     init(localStorage: LocalStorage, dateProvider: CurrentDateProvider) {
         self.localStorage = localStorage

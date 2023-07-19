@@ -7,7 +7,7 @@ import CurrencyKit
 import MarketKit
 
 class MarketDiscoveryViewModel {
-    private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.market-discovery-view-model", qos: .userInitiated)
+    private var queue = DispatchQueue(label: "\(AppConfig.label).market-discovery-view-model", qos: .userInitiated)
 
     private let categoryService: MarketDiscoveryCategoryService
     private let filterService: MarketDiscoveryFilterService

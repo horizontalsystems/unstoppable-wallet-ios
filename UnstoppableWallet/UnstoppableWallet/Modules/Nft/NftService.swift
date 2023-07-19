@@ -41,7 +41,7 @@ class NftService {
         }
     }
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.nft-collections-service", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).nft-collections-service", qos: .userInitiated)
 
     init(account: Account, nftAdapterManager: NftAdapterManager, nftMetadataManager: NftMetadataManager, nftMetadataSyncer: NftMetadataSyncer, balanceHiddenManager: BalanceHiddenManager, balanceConversionManager: BalanceConversionManager, coinPriceService: WalletCoinPriceService) {
         self.account = account

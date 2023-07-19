@@ -5,7 +5,7 @@ import Alamofire
 import HsToolKit
 
 class FileDataStorage {
-    private let queue: DispatchQueue = DispatchQueue(label: "io.horizontalsystems.unstoppable.file_storage.data", qos: .background)
+    private let queue: DispatchQueue = DispatchQueue(label: "\(AppConfig.label).file_storage.data", qos: .background)
 
     private let logger: Logger?
 

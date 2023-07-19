@@ -69,7 +69,7 @@ class TransactionsService {
     private var loadMoreRequested = false
     private var poolUpdateRequested = false
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.transactions-service")
+    private let queue = DispatchQueue(label: "\(AppConfig.label).transactions-service")
 
     init(walletManager: WalletManager, adapterManager: TransactionAdapterManager, rateService: HistoricalRateService, nftMetadataService: NftMetadataService) {
         self.walletManager = walletManager

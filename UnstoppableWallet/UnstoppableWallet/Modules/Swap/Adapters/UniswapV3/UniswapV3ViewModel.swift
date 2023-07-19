@@ -38,7 +38,7 @@ class UniswapV3ViewModel {
     private var openRevokeRelay = PublishRelay<SwapAllowanceService.ApproveData>()
     private var openApproveRelay = PublishRelay<SwapAllowanceService.ApproveData>()
 
-    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.swap_view_model")
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).swap_view_model")
 
     init(service: UniswapV3Service, tradeService: UniswapV3TradeService, switchService: AmountTypeSwitchService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, currencyKit: CurrencyKit.Kit, viewItemHelper: SwapViewItemHelper) {
         self.service = service

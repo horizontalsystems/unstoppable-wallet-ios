@@ -14,7 +14,7 @@ class TronKitManager {
     private let tronKitCreatedRelay = PublishRelay<Void>()
     private var currentAccount: Account?
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.tron-kit-manager", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).tron-kit-manager", qos: .userInitiated)
 
     init(testNetManager: TestNetManager) {
         self.testNetManager = testNetManager

@@ -15,7 +15,7 @@ protocol IIntegerAmountInputService {
 }
 
 class IntegerAmountInputViewModel {
-    private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.integer-amount-input-view-model", qos: .userInitiated)
+    private var queue = DispatchQueue(label: "\(AppConfig.label).integer-amount-input-view-model", qos: .userInitiated)
 
     private let disposeBag = DisposeBag()
 

@@ -4,8 +4,8 @@ import CurrencyKit
 class ValueFormatter {
     static let instance = ValueFormatter()
 
-    private let rawFormatterQueue = DispatchQueue(label: "io.horizontalsystems.unstoppable.value-formatter.raw-formatter", qos: .utility)
-    private let currencyFormatterQueue = DispatchQueue(label: "io.horizontalsystems.unstoppable.value-formatter.currency-formatter", qos: .utility)
+    private let rawFormatterQueue = DispatchQueue(label: "\(AppConfig.label).value-formatter.raw-formatter", qos: .utility)
+    private let currencyFormatterQueue = DispatchQueue(label: "\(AppConfig.label).value-formatter.currency-formatter", qos: .utility)
 
     private let rawFormatter: NumberFormatter = {
         let formatter = NumberFormatter()

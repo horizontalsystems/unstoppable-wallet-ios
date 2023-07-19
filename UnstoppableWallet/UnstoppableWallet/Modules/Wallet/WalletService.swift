@@ -80,7 +80,7 @@ class WalletService {
     }
 
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-service", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).wallet-service", qos: .userInitiated)
 
     init(elementServiceFactory: WalletElementServiceFactory, coinPriceService: WalletCoinPriceService, accountManager: AccountManager,
          cacheManager: EnabledWalletCacheManager, accountRestoreWarningManager: AccountRestoreWarningManager, reachabilityManager: IReachabilityManager,

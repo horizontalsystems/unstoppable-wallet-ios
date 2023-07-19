@@ -36,7 +36,7 @@ class WalletConnectV1MainService {
     private var pendingRequests = [Int: WalletConnectRequest]()
     private var requestIsProcessing = false
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.wallet-connect-service", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).wallet-connect-service", qos: .userInitiated)
 
     private(set) var state: WalletConnectMainModule.State = .idle {
         didSet {

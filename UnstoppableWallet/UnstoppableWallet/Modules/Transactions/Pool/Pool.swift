@@ -13,7 +13,7 @@ class Pool {
     private var invalidated = false
     private var allLoaded = false
 
-    private let queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.pool")
+    private let queue = DispatchQueue(label: "\(AppConfig.label).pool")
 
     init(provider: NonSpamPoolProvider) {
         self.provider = provider

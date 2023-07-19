@@ -26,7 +26,7 @@ extension IAmountInputService {
 }
 
 open class AmountInputViewModel {
-    var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.fiat-service", qos: .userInitiated)
+    var queue = DispatchQueue(label: "\(AppConfig.label).fiat-service", qos: .userInitiated)
 
     private static let fallbackCoinDecimals = 8
 

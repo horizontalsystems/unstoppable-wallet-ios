@@ -8,7 +8,7 @@ protocol IAmountPublishService: AnyObject {
 }
 
 class AddressService {
-    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "io.horizontalsystems.unstoppable.address-service")
+    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).address-service")
 
     private let disposeBag = DisposeBag()
     private let marketKit: MarketKit.Kit

@@ -13,7 +13,7 @@ protocol IRecipientAddressService {
 }
 
 open class RecipientAddressViewModel {
-    private var queue = DispatchQueue(label: "io.horizontalsystems.unstoppable.resipient-view-model", qos: .userInitiated)
+    private var queue = DispatchQueue(label: "\(AppConfig.label).resipient-view-model", qos: .userInitiated)
 
     private let disposeBag = DisposeBag()
     private let service: AddressService
