@@ -25,6 +25,7 @@
 "button.sign" = "Firma";
 "button.more" = "Mostrar más";
 "button.i_understand" = "I Understand";
+"button.learn_more" = "Aprender más";
 
 "alert" = "Alerta";
 "alert.copied" = "Copiado";
@@ -974,6 +975,7 @@
 "settings.blockchain_settings" = "Configuración de Blockchain";
 "settings.security" = "Seguridad";
 "settings.experimental_features" = "Experimental";
+"settings.personal_support" = "Personal Support";
 "settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
 "settings.faq" = "FAQ";
@@ -997,6 +999,16 @@
 "manage_wallets.contract_address" = "Dirección del contrato";
 "manage_wallets.derivation_description" = "Hay 4 formatos de dirección comunes que %@ monederos pueden usar para recibir pagos entrantes:\n\n- BIP44 (más antiguo)\n- BIP49\n- BIP84 (recomendado)\n- BIP86 (más reciente)\n\nMientras que el monedero imparable soporta todos los 4 se recomienda usar un monedero %@ que opere en formato BIP84.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Hay 2 formatos de dirección de las carteras Bitcoin Cash pueden usar para recibir pagos entrantes:\n\n- TYPE 0 (más antiguo)\n- TYPE 145 (más reciente)\n\nMientras que el monedero imparable soporta ambos se recomienda usar un monedero Bitcoin Cash que funcione en formato TYPE 145.";
+
+// Settings -> Personal Support
+
+"settings.personal_support.telegram_username.title" = "Account";
+"settings.personal_support.telegram_username.placeholder" = "@username";
+"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
+"settings.personal_support.request" = "Request";
+"settings.personal_support.requested" = "Requested";
+"settings.personal_support.failed" = "Request failed";
+"settings.personal_support.need_subscription" = "This feature only for Unstoppable Wallet premium users. More info in our official site.";
 
 // Settings -> Experimental Features
 
