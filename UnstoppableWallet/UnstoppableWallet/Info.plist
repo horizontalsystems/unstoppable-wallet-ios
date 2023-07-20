@@ -26,10 +26,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>money.unstoppable</string>
+			<string>io.horizontalsystems.bank-wallet</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>moneyunstoppable</string>
+				<string>unstoppable.money</string>
 			</array>
 		</dict>
 	</array>
