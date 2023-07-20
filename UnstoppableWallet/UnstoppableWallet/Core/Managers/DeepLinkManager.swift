@@ -9,11 +9,11 @@ class DeepLinkManager {
 extension DeepLinkManager {
 
     func handle(url: URL) -> Bool {
-        guard url.path.contains("wc"), let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems, let uri = queryItems.first(where: { $0.name == "uri" })?.value else {
+        guard let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems, let uri = queryItems.first(where: { $0.name == "uri" })?.value else {
             return false
         }
 
-        if url.scheme == "moneyunstoppable" || url.scheme == "https" {
+        if url.scheme == "unstoppable.money" || url.scheme == "https" {
             newSchemeRelay.accept(.walletConnect(url: uri))
 
             return true
