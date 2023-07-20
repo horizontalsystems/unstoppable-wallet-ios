@@ -243,6 +243,8 @@ extension MarkdownViewController: SectionsDataSource {
             return []
         }
 
+        let footerText = "© \(AppConfig.companyName) 2023"
+
         return [
             Section(
                     id: "blocks",
@@ -255,10 +257,10 @@ extension MarkdownViewController: SectionsDataSource {
                         Row<BrandFooterCell>(
                                 id: "brand",
                                 dynamicHeight: { containerWidth in
-                                    BrandFooterCell.height(containerWidth: containerWidth, title: BrandFooterCell.brandText)
+                                    BrandFooterCell.height(containerWidth: containerWidth, title: footerText)
                                 },
                                 bind: { cell, _ in
-                                    cell.title = BrandFooterCell.brandText
+                                    cell.title = footerText
                                 }
                         )
                     ]
