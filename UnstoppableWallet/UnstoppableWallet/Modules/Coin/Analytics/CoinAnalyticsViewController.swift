@@ -507,7 +507,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         switch lockInfo {
         case .notSubscribed:
             icon = UIImage(named: "lock_48")?.withTintColor(.themeJacob)
-            text = "coin_analytics.locked.not_subscribed".localized
+            text = "coin_analytics.locked.not_subscribed".localized(AppConfig.appName)
             buttonTitle = "coin_analytics.locked.learn_more".localized
             buttonStyle = .gray
             onTapButton = { [weak self] in self?.openSubscriptionInfo() }

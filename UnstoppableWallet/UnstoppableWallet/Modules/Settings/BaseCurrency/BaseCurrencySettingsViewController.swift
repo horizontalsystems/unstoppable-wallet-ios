@@ -48,7 +48,7 @@ class BaseCurrencySettingsViewController: ThemeViewController {
                 image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
                 title: "settings.base_currency.disclaimer".localized,
                 items: [
-                    .highlightedDescription(text: "settings.base_currency.disclaimer.description".localized(codes))
+                    .highlightedDescription(text: "settings.base_currency.disclaimer.description".localized(AppConfig.appName, codes))
                 ],
                 buttons: [
                     .init(style: .yellow, title: "settings.base_currency.disclaimer.set".localized) { [ weak self] in self?.viewModel.onAcceptDisclaimer() },

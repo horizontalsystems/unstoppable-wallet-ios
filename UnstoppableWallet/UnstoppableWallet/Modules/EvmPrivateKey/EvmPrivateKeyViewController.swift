@@ -106,7 +106,7 @@ extension EvmPrivateKeyViewController: SectionsDataSource {
                     rows: [
                         tableView.highlightedDescriptionRow(
                                 id: "warning",
-                                text: "recovery_phrase.warning".localized
+                                text: "recovery_phrase.warning".localized(AppConfig.appName)
                         ),
                         marginRow(id: "warning-bottom-margin", height: .margin12),
                         CellBuilderNew.row(

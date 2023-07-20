@@ -100,7 +100,7 @@ extension RecoveryPhraseViewController: SectionsDataSource {
         var rows: [RowProtocol] = [
             tableView.highlightedDescriptionRow(
                     id: "warning",
-                    text: "recovery_phrase.warning".localized
+                    text: "recovery_phrase.warning".localized(AppConfig.appName)
             ),
             marginRow(id: "warning-bottom-margin", height: .margin12),
             Row<MnemonicPhraseCell>(

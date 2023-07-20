@@ -241,7 +241,7 @@ class MainSettingsViewController: ThemeViewController {
                 image: .local(image: UIImage(named: "lock_24")?.withTintColor(.themeGray)),
                 title: "settings.personal_support".localized,
                 items: [
-                    .description(text: "settings.personal_support.need_subscription".localized)
+                    .description(text: "settings.personal_support.need_subscription".localized(AppConfig.appName))
                 ],
                 buttons: [
                     .init(

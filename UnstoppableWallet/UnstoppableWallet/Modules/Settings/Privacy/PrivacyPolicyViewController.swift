@@ -78,7 +78,7 @@ extension PrivacyPolicyViewController {
         static var privacy: Config {
             Config(
                     title: "settings.privacy".localized,
-                    description: "settings.privacy.description".localized,
+                    description: "settings.privacy.description".localized(AppConfig.appName),
                     viewItems: [
                         "settings.privacy.statement.user_data_storage".localized,
                         "settings.privacy.statement.data_usage".localized,

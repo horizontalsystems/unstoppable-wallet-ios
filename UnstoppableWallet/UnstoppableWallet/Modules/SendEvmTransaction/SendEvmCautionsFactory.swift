@@ -30,7 +30,7 @@ class SendEvmCautionsFactory {
                 switch error {
                 case .forbiddenPriceImpact(let provider):
                     return [
-                        TitledCaution(title: "swap.price_impact".localized, text: "swap.confirmation.impact_too_high".localized(provider), type: .error)
+                        TitledCaution(title: "swap.price_impact".localized, text: "swap.confirmation.impact_too_high".localized(AppConfig.appName, provider), type: .error)
                     ]
                 }
             }
@@ -52,7 +52,7 @@ class SendEvmCautionsFactory {
                 case .highPriceImpact:
                     warningCautions.append(TitledCaution(title: "swap.price_impact".localized, text: "swap.confirmation.impact_warning".localized, type: .error))
                 case .forbiddenPriceImpact:
-                    warningCautions.append(TitledCaution(title: "swap.price_impact".localized, text: "swap.confirmation.impact_too_high".localized, type: .error))
+                    warningCautions.append(TitledCaution(title: "swap.price_impact".localized, text: "swap.confirmation.impact_too_high".localized(AppConfig.appName), type: .error))
                 }
             }
         }

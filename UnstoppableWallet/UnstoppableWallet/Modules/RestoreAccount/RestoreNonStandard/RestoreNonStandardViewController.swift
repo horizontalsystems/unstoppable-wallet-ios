@@ -235,7 +235,7 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
 extension RestoreNonStandardViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        let descriptionText = "restore.non_standard_import.description".localized
+        let descriptionText = "restore.non_standard_import.description".localized(AppConfig.appName, AppConfig.appName)
         var sections: [SectionProtocol] = [
             Section(
                     id: "description",
