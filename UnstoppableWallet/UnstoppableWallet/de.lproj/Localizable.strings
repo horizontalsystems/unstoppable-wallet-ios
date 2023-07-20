@@ -117,8 +117,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "restore.passphrase_description" = "Dieses Passwort wird verwendet, um die Sicherungsdatei Ihrer Wallet zu verschlüsseln. Es hat nichts mit Ihrem Apple iCloud-Passwort zu tun. Wenn Sie es vergessen oder verlieren, kann es nicht wiederhergestellt oder zurückgesetzt werden.";
 "restore.error.empty_passphrase" = "Die Passphrase darf nicht leer sein";
 "restore.non_standard_import" = "Nicht standardmäßige Wiederherstellung";
-"restore.non_standard_import.description" = "Diese Seite bietet einen speziellen Wallet-Wiederherstellungsmechanismus für Unstoppable-Benutzer, die ein nicht standardmäßiges Wallet haben. Im Allgemeinen könnten solche Wallets in der Unstoppable-Version 0.27–0.28 mit einer nicht-englischen mnemonischen Wortliste und/oder einem Sonderzeichen in der Wallet-Passphrase (d. h. einem diakritischen Symbol) erstellt worden sein.
-\n\nWenn Sie ein betroffener Benutzer sind, wird Ihr Wallet-Guthaben nach der Wiederherstellung eines solchen Wallets in Version 0.29 oder höher als 0 angezeigt.Auf dieser Seite können Sie den Zugriff auf Ihre nicht standardmäßige Brieftasche wiederherstellen. Nach der Wiederherstellung wird empfohlen, eine neue Brieftasche zu erstellen (die standardkonform ist) und Gelder dorthin zu verschieben.";
+"restore.non_standard_import.description" = "This page provides a special wallet import mechanism to %@ users who have a non-standard wallet. Such wallets might have been created in %@ version 0.27 - 0.28 using a non-English recovery phrase and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
 "restore.warning.non_recommended.description" = "Diese Brieftasche scheint ein nicht standardmäßiges Zeichen in ihrer geheimen Wortliste und/oder einer Passphrase zu verwenden. Wenn Sie kein Guthaben oder Transaktionen sehen, lesen Sie bitte unten für Details.\n\nKLICKEN, UM WEITERE INFORMATIONEN ZU ERHALTEN";
 "restore.error.non_standard.description" = "Dies ist eine nicht standardmäßige Wallet. \n\nKLICKEN SIE MEHR INFO";
 
@@ -193,7 +192,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Recovery Phrase
 
 "recovery_phrase.title" = "Wiederherstellungsphrase";
-"recovery_phrase.warning" = "Teilen Sie niemals Ihre Wiederherstellungsphrase mit niemandem. Das unaufhaltsame Team wird niemals nach Ihrer Wiederherstellungsphrase fragen.";
+"recovery_phrase.warning" = "Never share this key with anyone. %@ Wallet support team will never ask for it.";
 "recovery_phrase.tap_to_show" = "Tippen, um Wiederherstellungsphrase anzuzeigen";
 "recovery_phrase.passphrase" = "Passwort";
 "recovery_phrase.copy_warning.title" = "Risiko der Wiederherstellungs-Phrase-Kopie";
@@ -285,7 +284,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "error.send.self_transfer" = "Sich selbst zu senden wird nicht unterstützt";
 "error.send_binance.memo_required" = "Empfänger benötigt nicht-leeren Vermerk bei Transfer einer Transaktion";
 "error.send_binance.only_digits_allowed" = "Der Vermerk darf nur Zahlen enthalten";
-"error.send_z_cash.transparent_address" = "Unstoppable unterstützt keine Zahlungen an eine transparente Adresse";
+"error.send_z_cash.transparent_address" = "%@ doesn't support payments to a transparent address";
 
 // Balance
 
@@ -372,9 +371,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.hodler_locktime_off" = "Aus";
 "send.hodler_error.unsupported_address" = "Zeitsperre funktioniert nur mit P2PKH-Adressen (beginnend mit 1) ";
 "send.fee_info.title" = "Gebührenrate";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe Unstoppable wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
+"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
 "send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
-"send.transaction_inputs_outputs_info.description" = "Die meisten Bitcoin-Transaktionen sowie Transaktionen in Kryptowährungen wie Bitcoin-Cash, Dash, und Litecoin erzeugen zwei Ausgänge. Die eine Ausgabe ist der Betrag, der an den Empfänger geht, die andere ist die Umstellausgabe, die an den Absender zurückgegeben wird. Die Art und Weise, wie die meisten Brieftaschen Transaktionen erstellen, macht es für einen Dritten leicht zu verstehen, welche der Ausgaben an den Empfänger gingen und welcher der Änderungsbetrag an den Absender zurückgegeben wurde. Da die an den Absender zurückgegebene Ausgabe später bei zukünftigen Transaktionen verwendet wird, zeigt sich eine Verbindung zwischen diesen beiden Transaktionen.\n\nDie unaufhaltsame Brieftasche implementiert Maßnahmen, um es jemandem zu erschweren, herauszufinden, welche Ausgabe wohin geht.\n\nEs gibt zwei Optionen für unaufhaltsame Benutzer:";
+"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe %@ wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to %@ users:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "Die Reihenfolge der Transaktionsausgänge wird bei jeder Transaktion zufällig. Manchmal können Änderungen die erste Ausgabe sein, manchmal kann es die zweite sein. Wenn ein Benutzer dem Entwickler der App vertraut, dann erwäge dies eine empfohlene Option.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
@@ -489,7 +488,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Swap";
-"swap.confirmation.impact_too_high" = "Die Swap-Aktion für diesen Handel wurde unaufhaltsam deaktiviert, da der angebotene Preis extrem ungünstig ist. Dies ist auf die extrem niedrige Liquidität zurückzuführen.\nWenn du dennoch wechseln möchtest, benutze stattdessen die %@ Webseite.";
+"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
 "swap.confirmation.impact_warning" = "Wichtig! Du bekommst einen extrem ungünstigen Preis. Dies ist auf die extrem niedrige Liquidität zurückzuführen.";
 
 "swap.confirmation.minimum_received" = "Mindestens erhalten";
@@ -713,7 +712,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.details" = "Info";
 
 "coin_analytics.not_available" = "This project has no analytics data";
-"coin_analytics.locked.not_subscribed" = "This page available only for Unstoppable Wallet premium users";
+"coin_analytics.locked.not_subscribed" = "This page available only for %@ Wallet premium users";
 "coin_analytics.locked.learn_more" = "Learn More";
 "coin_analytics.locked.not_activated" = "Activate your subscription for getting access to analytics";
 "coin_analytics.locked.activate" = "Activate";
@@ -866,29 +865,6 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "chart_indicators.settings.macd.slow_fast.error" = "Fast Length must be less than Slow Length";
 
-
-// Pro Features
-
-"pro_features.authorize.wallet_passes.title" = "Unstoppable NFT";
-"pro_features.authorize.wallet_passes.subtitle" = "Erhalten Sie Zugriff auf erweiterte Wallet-Funktionen\n, indem Sie unaufhaltsame NFTs gedrückt halten.";
-
-"pro_features.lock_info.go_to_mint" = "Coming Soon";
-
-"pro_features.lock_info.title" = "Unstoppable Pass";
-"pro_features.lock_info.coin_details.description" = "To enable this data, you must have the Unstoppable Pass NFT on your balance\n\nAlso you get access to the data below:";
-"pro_features.lock_info.coin_details.volume" = "DEX Volume";
-"pro_features.lock_info.coin_details.liquidity" = "DEX Liquidity";
-"pro_features.lock_info.coin_details.active_addresses" = "Active Addresses";
-"pro_features.lock_info.coin_details.transaction_count" = "Transaction Count";
-"pro_features.lock_info.coin_details.transaction_volume" = "Transaction Volume";
-
-"pro_features.activate" = "Activate";
-"pro_features.mountain_yak.activate.title" = "Activate the Pass";
-"pro_features.mountain_yak.activate.subtitle" = "Mountain Yak";
-"pro_features.mountain_yak.activate.description" = "Mountain Yak - Go borderless. Will show you important market data, analytical tools, and useful charts based on on-chain data that will help give you a clear view of projects";
-"pro_features.mountain_yak.activate.features" = "After Activation You Get:";
-"pro_features.activate.invalid_sign" = "Could not Activate ...";
-
 // Transactions
 
 "transactions.title" = "Transaktionen";
@@ -983,7 +959,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.language" = "Sprache";
 "settings.faq" = "FAQ";
 "settings.theme" = "Design";
-"settings.info_title" = "UNSTOPPABLE";
 "settings.info_subtitle" = "decentralized";
 
 // Settings -> Base Currency
@@ -991,7 +966,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.base_currency.title" = "Währung";
 "settings.base_currency.other" = "Andere";
 "settings.base_currency.disclaimer" = "Haftungsausschluss";
-"settings.base_currency.disclaimer.description" = "Die Wechselkursdaten werden von einem Drittanbieterdienst Coingecko.com bereitgestellt\n\nDie Wallet-App von Unstoppable garantiert nicht, dass diese Werte immer korrekt sind und mit den Marktdaten übereinstimmen. Die Wahrscheinlichkeit für Inkonsistenzen ist höher, wenn Sie eine andere Basiswährung als %@ auswählen.";
+"settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe %@ wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
 "settings.base_currency.disclaimer.set" = "Übernehmen";
 
 // Settings -> Manage Wallet
@@ -1000,8 +975,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "manage_wallets.not_found" = "Keine Ergebnisse gefunden. Versuchen Sie, Token manuell hinzuzufügen.";
 "manage_wallets.search_placeholder" = "Name, Code oder Vertragsadresse";
 "manage_wallets.contract_address" = "Vertragsadresse";
-"manage_wallets.derivation_description" = "Es gibt 4 gängige Adressformate %@ Brieftaschen können verwendet werden, um eingehende Zahlungen zu erhalten:\n\n- BIP44 (älter)\n- BIP49\n- BIP84 (empfohlen)\n- BIP86 (neueste)\n\nWährend unaufhaltsame Brieftasche alle 4 unterstützt, empfiehlt es eine %@ Brieftasche im BIP84-Format zu verwenden.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "Es gibt 2 Adressformate Bitcoin Cash Wallets zum Empfang eingehender Zahlungen:\n\n- TYPE 0 (älter)\n- TYPE 145 (neuer)\n\nWährend unaufhaltsame Brieftaschen beide unterstützt, empfiehlt es sich, ein Bitcoin Cash Wallet im TYPE 145 Format zu verwenden.";
+"manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile %@ wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile %@ wallet supports both of them it recommends to use a Bitcoin Cash wallet operating in TYPE 145 format.";
 
 // Settings -> Personal Support
 
@@ -1011,7 +986,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.personal_support.request" = "Request";
 "settings.personal_support.requested" = "Requested";
 "settings.personal_support.failed" = "Request failed";
-"settings.personal_support.need_subscription" = "This feature only for Unstoppable Wallet premium users. More info in our official site.";
+"settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
 
 // Settings -> Experimental Features
 
@@ -1023,7 +998,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "Activate";
-"settings.bitcoin_hodling.description" = "Damit können Sie gesendete Bitcoins sperren, sodass sie bis zu dem festgesetzten Datum nicht ausgegeben werden können.\n\nDer Empfänger einer solchen Transaktion sollte das Unstoppable-Wallet in der Version 0.10 (oder neuer) sowie das Bitcoin-Adressformat BIP44 verwenden.\n\nNur das Unstoppable-Wallet erkennt solche Transaktionen im Bitcoin-Netzwerk korrekt und ermöglicht es dem Empfänger, die Bitcoins nach der Sperrzeit zu auszugeben.\n\nWenn Sie ein HODLer* sind, können Sie diese Funktion auch für sich selbst nutzen, indem Sie sich selbst eine solche Transaktion schicken und so ihre Bitcoin für sich selbst zeitlich sperren.\n\nDa es sich noch um eine experimentelle Funktion handelt, liegt der maximale Betrag bei 0,5 BTC.";
+"settings.bitcoin_hodling.description" = "This enables you to send Bitcoins that cannot be spent until a specified date. \n\nThe receiver of such transactions should use the %@ wallet app version 0.10 or newer, with the BIP44 address format for Bitcoin. \n\nOnly the %@ wallet can correctly identify such transactions on the Bitcoin network, as well as enable the receiver to spend those Bitcoins after the lock period expires. \n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transactions to yourself.";
 
 // Settings -> Terms
 
@@ -1067,9 +1042,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "btc_transaction_sort_mode.bip69.description" = "Lexikographische Indizierung";
 
 "blockchain_settings.info.restore_source" = "Parameter wiederherstellen";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like Unstoppable to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like %@ to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
 "blockchain_settings.info.rpc_source" = "RPC-Quelle";
-"blockchain_settings.info.rpc_source.content" = "Diese Einstellung regelt, wie diese App beim Senden oder Empfangen von Transaktionen mit Blockchains interagiert.\n\nIm Falle von Bitcoin, Bitcoin Cash, Litecoin und Dash, ist die Kommunikation mit Blockchain Netzwerkknoten vollständig Peer-to-Peer. Unaufhaltsam pingt viele Knoten und kommuniziert mit einem von ihnen. Jedes Mal, wenn sich die App mit einem anderen Knoten verbindet.\n\nIm Fall von Ethereum, Binance Smart Chain und anderen EVM Blockchains, es gibt keine Alternativen für mobile Brieftaschen zur Interaktion mit entsprechenden Blockketten außer über RPC-Dienstanbieter Dritter (i. . Infura.io) oder persönliche Knoten. Das bedeutet im Grunde, dass Ihre Kommunikation mit dieser Blockchain nicht dezentralisiert ist. Dies wirkt sich in keiner Weise auf Ihr Geld aus, nur auf die Fähigkeit, sich mit dem blockchain Netzwerk zu verbinden.\n\nSeien Sie versichert, wir halten dies auf dem Radar und werden bald versuchen, eine dezentrale Synchronisierung zu ermöglichen.";
+"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. %@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
 
 // Manage Accounts
 
@@ -1091,8 +1066,8 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> About App
 
 "settings.about_app.title" = "Über die App";
-"settings.about_app.app_name" = "Unstoppable Wallet";
-"settings.about_app.description" = "Die unaufhaltsame Brieftasche ist für diejenigen gedacht, die Kryptowährungen auf private und unabhängige Weise investieren und speichern möchten.\n\nEs ist eine nicht-Custodial, Peer-to-Peer-Wallet, bei der nur der Benutzer die Kontrolle über das Guthaben hat. Es sammelt keine Daten und hält den Benutzer unabhängig, indem er das Guthaben des Benutzers nicht an eine bestimmte Wallet-App sperrt.\n\nDie unaufhaltsame Brieftasche ist vollständig Open-Source und jeder kann bestätigen, dass die App genau so funktioniert, wie sie es vorgibt.";
+"settings.about_app.app_name" = "%@ Wallet";
+"settings.about_app.description" = "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
 "settings.about_app.whats_new" = "Das ist neu";
 "settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Kontakt";
@@ -1102,7 +1077,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> Privacy
 
 "settings.privacy" = "Privatsphäre";
-"settings.privacy.description" = "Unaufhaltsam sammelt keine Daten oder verwendet Analysewerkzeuge, die möglicherweise Daten über ihre Nutzer enthüllen. Die Brieftasche ist so konzipiert, dass sie den Benutzern ein hohes Maß an Privatsphäre garantiert.";
+"settings.privacy.description" = "%@ doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
 "settings.privacy.statement.user_data_storage" = "Benutzerdaten bleiben immer auf dem Gerät des Benutzers.";
 "settings.privacy.statement.data_usage" = "Das Wallet sammelt keine Daten über Benutzer.";
 "settings.privacy.statement.data_privacy" = "Das Wallet teilt keine Daten über Benutzer.";
@@ -1193,7 +1168,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
 
 "contacts.settings.alert_error.title" = "iCloud Error";
-"contacts.settings.alert_error.description" = "Cannot connect to iCloud, this may be because iCloud storage not available on your device, or disabled for Unstoppable app";
 
 // Set PIN
 
@@ -1386,13 +1360,13 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "status_info.title" = "Status";
 "status_info.pending.title" = "In Bearbeitung";
-"status_info.pending.content" = "Die Transaktion wurde noch nicht in der Blockchain bestätigt. Transaktionen, die mit einer empfohlenen oder höheren Gebühreneinstellung gesendet werden, werden in der Regel innerhalb von  Minuten bearbeitet. Transaktionen, die mit einer niedrigen Gebühr gesendet werden, können einige Stunden oder sogar Tage ausstehend bleiben und können sogar abgelehnt werden. Beachten Sie auch, dass der Status einer einzelnen Transaktion, der in der Oberfläche von Unstoppable Wallet angezeigt wird, normalerweise mit einer kurzen Verzögerung aktualisiert wird.";
+"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within a few minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Note that status of an individual transaction in %@ wallet interface typically updated with a short delay.";
 "status_info.processing.title" = "Verarbeite";
 "status_info.processing.content" = "Die Transaktion wurde bereits in die Blockchain aufgenommen, ist aber noch nicht endgültig abgeschlossen. Zu diesem Zeitpunkt kann die Transaktion für kleinere Zahlungen als abgeschlossen betrachtet werden. Bei größeren Zahlungen wird empfohlen, zu warten, bis der Transaktionsstatus auf abgeschlossen wechselt.";
 "status_info.completed.title" = "Abgeschlossen";
 "status_info.confirmed.content" = "Die Transaktion ist abgeschlossen und gilt als dauerhaft und unumkehrbar.";
 "status_info.failed.title" = "Fehlgeschlagen";
-"status_info.failed.content" = "Die Transaktion wurde nicht verarbeitet und es wurde kein Werttransfer durchgeführt. Abhängig vom Grund des Scheiterns können einige fehlgeschlagene Transaktionen Transaktionsgebühren kosten. Transaktionen, die durch eine andere Transaktion ersetzt oder storniert wurden, verbrauchen keine Transaktionsgebühren und scheinen ebenfalls fehlgeschlagen zu sein. Die unaufhaltsame App kann den Grund für fehlgeschlagene Transaktionen nicht anzeigen. aber Benutzer können es selbst auf einem öffentlichen Block-Explorer etherscan.io.";
+"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Depending on the fail reason, some failed transactions may consume transaction fees. Transactions that were replaced or canceled by another transaction do not consume transaction fees and will also appear as failed. The %@ app is unable to show the reason for failed transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
 
 // Onboarding
 
