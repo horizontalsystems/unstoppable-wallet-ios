@@ -3444,8 +3444,8 @@
 		50AB06B6215A269200A01E4A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50AB06B8215A269700A01E4A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50AB06B9215A269900A01E4A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		50D05F9A249A228C0067D28F /* Unstoppable D.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Unstoppable D.entitlements"; sourceTree = "<group>"; };
-		50D05F9B249A22950067D28F /* Unstoppable.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Unstoppable.entitlements; sourceTree = "<group>"; };
+		50D05F9A249A228C0067D28F /* Development.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Development.entitlements; sourceTree = "<group>"; };
+		50D05F9B249A22950067D28F /* Production.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Production.entitlements; sourceTree = "<group>"; };
 		50E2A266214A67B400C51413 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50EED18F218822E200E200AD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50EED190218822E200E200AD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -6026,8 +6026,8 @@
 		5026FFF321C3CA280023EEA2 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				50D05F9B249A22950067D28F /* Unstoppable.entitlements */,
-				50D05F9A249A228C0067D28F /* Unstoppable D.entitlements */,
+				50D05F9B249A22950067D28F /* Production.entitlements */,
+				50D05F9A249A228C0067D28F /* Development.entitlements */,
 				1A564370A637B30D34776F2A /* Production.template.xcconfig */,
 				1A5641679DC88BE355F0F3A0 /* Development.template.xcconfig */,
 				1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */,
@@ -7456,9 +7456,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D38404E1218317DF007D50AD /* Unstoppable Dev */ = {
+		D38404E1218317DF007D50AD /* Development */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D38405CB218317DF007D50AD /* Build configuration list for PBXNativeTarget "Unstoppable Dev" */;
+			buildConfigurationList = D38405CB218317DF007D50AD /* Build configuration list for PBXNativeTarget "Development" */;
 			buildPhases = (
 				D38404E3218317DF007D50AD /* Sources */,
 				D38405B7218317DF007D50AD /* Frameworks */,
@@ -7468,7 +7468,7 @@
 			);
 			dependencies = (
 			);
-			name = "Unstoppable Dev";
+			name = Development;
 			packageProductDependencies = (
 				D0DA7410272A6F180072BE86 /* IDNSDK */,
 				D0DA7412272A6F180072BE86 /* UnicodeURL */,
@@ -7519,9 +7519,9 @@
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D38405D021831B3D007D50AD /* Unstoppable */ = {
+		D38405D021831B3D007D50AD /* Production */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D38406BB21831B3D007D50AD /* Build configuration list for PBXNativeTarget "Unstoppable" */;
+			buildConfigurationList = D38406BB21831B3D007D50AD /* Build configuration list for PBXNativeTarget "Production" */;
 			buildPhases = (
 				D38405D221831B3D007D50AD /* Sources */,
 				D38406A621831B3D007D50AD /* Frameworks */,
@@ -7531,7 +7531,7 @@
 			);
 			dependencies = (
 			);
-			name = Unstoppable;
+			name = Production;
 			packageProductDependencies = (
 				D0DA740C272A6EFC0072BE86 /* IDNSDK */,
 				D0DA740E272A6EFC0072BE86 /* UnicodeURL */,
@@ -7668,8 +7668,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D38405D021831B3D007D50AD /* Unstoppable */,
-				D38404E1218317DF007D50AD /* Unstoppable Dev */,
+				D38405D021831B3D007D50AD /* Production */,
+				D38404E1218317DF007D50AD /* Development */,
 			);
 		};
 /* End PBXProject section */
@@ -10414,7 +10414,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1A56433D5D39CCA995F97777 /* Development.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable D.entitlements";
+				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Development.entitlements;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev;
@@ -10432,7 +10432,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1A56433D5D39CCA995F97777 /* Development.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "UnstoppableWallet/Configuration/Unstoppable D.entitlements";
+				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Development.entitlements;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet.dev";
 				PRODUCT_MODULE_NAME = Unstoppable_Dev;
@@ -10450,7 +10450,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Unstoppable.entitlements;
+				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Production.entitlements;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = HC4MCAXJ66;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
@@ -10468,7 +10468,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1A5648F3AB070B0ACB98C7EE /* Production.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Unstoppable.entitlements;
+				CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Production.entitlements;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.horizontalsystems.bank-wallet";
 				PRODUCT_MODULE_NAME = Unstoppable;
@@ -10492,7 +10492,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D38405CB218317DF007D50AD /* Build configuration list for PBXNativeTarget "Unstoppable Dev" */ = {
+		D38405CB218317DF007D50AD /* Build configuration list for PBXNativeTarget "Development" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D38405CC218317DF007D50AD /* Debug */,
@@ -10501,7 +10501,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D38406BB21831B3D007D50AD /* Build configuration list for PBXNativeTarget "Unstoppable" */ = {
+		D38406BB21831B3D007D50AD /* Build configuration list for PBXNativeTarget "Production" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D38406BC21831B3D007D50AD /* Debug */,
