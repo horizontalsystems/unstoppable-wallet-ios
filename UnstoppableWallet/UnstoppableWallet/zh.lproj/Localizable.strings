@@ -95,9 +95,9 @@
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable需要使用相机扫描二维码。
+"access_camera.message" = "%@ needs access to your camera to scan the QR code.
 
-请前往”设置 -> Unstoppable”并授权对相机的访问。";
+Go to Settings - > %@ and allow access to the camera.";
 "access_camera.settings" = "设置";
 
 // Restore
