@@ -100,9 +100,9 @@ extension ManageWalletsViewModel {
         switch infoItem.type {
         case .derivation:
             let coinName = infoItem.token.coin.name
-            showInfoRelay.accept(InfoViewItem(coin: coinViewItem, text: "manage_wallets.derivation_description".localized(coinName, coinName, coinName)))
+            showInfoRelay.accept(InfoViewItem(coin: coinViewItem, text: "manage_wallets.derivation_description".localized(coinName, AppConfig.appName, coinName)))
         case .bitcoinCashCoinType:
-            showInfoRelay.accept(InfoViewItem(coin: coinViewItem, text: "manage_wallets.bitcoin_cash_coin_type_description".localized))
+            showInfoRelay.accept(InfoViewItem(coin: coinViewItem, text: "manage_wallets.bitcoin_cash_coin_type_description".localized(AppConfig.appName)))
         case .birthdayHeight(let height):
             showBirthdayHeightRelay.accept(BirthdayHeightViewItem(coin: coinViewItem, height: String(height)))
         case let .contractAddress(value, explorerUrl):

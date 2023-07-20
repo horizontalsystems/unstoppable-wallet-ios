@@ -50,7 +50,7 @@ class AboutViewController: ThemeViewController {
         tableView.registerCell(forClass: DescriptionCell.self)
 
         headerCell.image = UIImage(named: AppIcon.main.imageName)
-        headerCell.title = "settings.about_app.app_name".localized
+        headerCell.title = "settings.about_app.app_name".localized(AppConfig.appName)
         headerCell.subtitle = "version".localized(viewModel.appVersion)
 
         subscribe(disposeBag, viewModel.termsAlertDriver) { [weak self] alert in
@@ -121,7 +121,7 @@ extension AboutViewController: SectionsDataSource {
     }
 
     func buildSections() -> [SectionProtocol] {
-        let descriptionText = "settings.about_app.description".localized
+        let descriptionText = "settings.about_app.description".localized(AppConfig.appName, AppConfig.appName)
 
         return [
             Section(

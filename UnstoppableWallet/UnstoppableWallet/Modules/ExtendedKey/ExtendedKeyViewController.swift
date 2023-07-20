@@ -210,7 +210,7 @@ extension ExtendedKeyViewController: SectionsDataSource {
                             rows: [
                                 tableView.highlightedDescriptionRow(
                                         id: "warning",
-                                        text: "recovery_phrase.warning".localized
+                                        text: "recovery_phrase.warning".localized(AppConfig.appName)
                                 )
                             ]
                     )
