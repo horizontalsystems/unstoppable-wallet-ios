@@ -95,7 +95,9 @@
 
 // Access Camera
 
-"access_camera.message" = "El monedero Unstoppable necesita acceder a su cámara para escanear el código QR.\n\nIr a Ajustes - > Unstoppable y permita el acceso a cámara.";
+"access_camera.message" = "%@ needs access to your camera to scan the QR code.
+
+Go to Settings - > %@ and allow access to the camera.";
 "access_camera.settings" = "Ajustes";
 
 // Restore
