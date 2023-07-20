@@ -3,8 +3,6 @@ import SnapKit
 import ThemeKit
 
 class BrandFooterCell: UITableViewCell {
-    static let brandText = "© Horizontal Systems 2023"
-
     private let brandFooterView = BrandFooterView()
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

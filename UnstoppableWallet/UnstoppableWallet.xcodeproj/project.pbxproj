@@ -3439,7 +3439,6 @@
 		3C7B94F32F315F4F753D89AD /* UrlManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlManager.swift; sourceTree = "<group>"; };
 		3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewController.swift; sourceTree = "<group>"; };
 		5039F971269C5A9A004711B8 /* ReleaseNotesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseNotesViewController.swift; sourceTree = "<group>"; };
-		50A1DB5A24E407CF001D396C /* Unstoppable DT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Unstoppable DT.entitlements"; sourceTree = "<group>"; };
 		50A83FBE213FCB4B008A5F4B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		50AB06B6215A269200A01E4A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -6027,7 +6026,6 @@
 		5026FFF321C3CA280023EEA2 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				50A1DB5A24E407CF001D396C /* Unstoppable DT.entitlements */,
 				50D05F9B249A22950067D28F /* Unstoppable.entitlements */,
 				50D05F9A249A228C0067D28F /* Unstoppable D.entitlements */,
 				1A564370A637B30D34776F2A /* Production.template.xcconfig */,
