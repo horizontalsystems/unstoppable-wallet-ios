@@ -47,7 +47,7 @@ class BlurManager {
         logoTitleLabel.textAlignment = .center
         logoTitleLabel.font = .title2
         logoTitleLabel.textColor = .themeLeah
-        logoTitleLabel.text = "Unstoppable"
+        logoTitleLabel.text = AppConfig.appName
     }
 
     private func show() {

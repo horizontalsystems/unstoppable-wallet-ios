@@ -67,7 +67,7 @@ class MainSettingsFooterCell: UITableViewCell {
     }
 
     func set(appVersion: String) {
-        versionLabel.text = "\("settings.info_title".localized) \(appVersion)"
+        versionLabel.text = "\(AppConfig.appName.uppercased()) \(appVersion)"
     }
 
 }

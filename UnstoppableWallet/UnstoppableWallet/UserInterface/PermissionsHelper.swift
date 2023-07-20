@@ -13,7 +13,7 @@ class PermissionsHelper {
                     if granted {
                         action()
                     } else {
-                        self?.showPermissionAlert(fromController: fromController, message: "access_camera.message".localized)
+                        self?.showPermissionAlert(fromController: fromController, message: "access_camera.message".localized(AppConfig.appName, AppConfig.appName))
                     }
                 }
             })

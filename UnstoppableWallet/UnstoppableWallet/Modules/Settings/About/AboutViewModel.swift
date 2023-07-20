@@ -46,7 +46,7 @@ extension AboutViewModel {
     }
 
     func onTapGithubLink() {
-        openLinkRelay.accept(AppConfig.appGitHubLink)
+        openLinkRelay.accept("https://github.com/\(AppConfig.appGitHubAccount)/\(AppConfig.appGitHubRepository)")
     }
 
     func onTapWebPageLink() {

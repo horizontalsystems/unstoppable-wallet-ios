@@ -1,7 +1,7 @@
 import Foundation
 
 class KdfParams: Codable {
-    static var defaultBackup = KdfParams(dklen: 32, n: 16384, p: 4, r: 8, salt: "unstoppable")
+    static var defaultBackup = KdfParams(dklen: 32, n: 16384, p: 4, r: 8, salt: AppConfig.backupSalt)
 
     let dklen: Int
     let n: UInt64
