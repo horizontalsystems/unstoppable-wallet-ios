@@ -24,7 +24,7 @@ extension IWalletConnectInteractorDelegate {
 }
 
 class WalletConnectInteractor {
-    private static let clientMeta = WCPeerMeta(name: "Unstoppable Wallet", url: "https://unstoppable.money")
+    private static let clientMeta = WCPeerMeta(name: AppConfig.appName, url: AppConfig.appWebPageLink)
 
     weak var delegate: IWalletConnectInteractorDelegate?
 

@@ -95,9 +95,9 @@
 
 // Access Camera
 
-"access_camera.message" = "Unstoppable needs access to your camera to scan the QR code.
+"access_camera.message" = "%@ needs access to your camera to scan the QR code.
 
-Go to Settings - > Unstoppable and allow access to the camera.";
+Go to Settings - > %@ and allow access to the camera.";
 "access_camera.settings" = "Settings";
 
 // Restore

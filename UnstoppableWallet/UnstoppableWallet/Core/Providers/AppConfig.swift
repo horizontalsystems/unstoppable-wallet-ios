@@ -2,16 +2,24 @@ import Foundation
 
 struct AppConfig {
     static let label = "io.horizontalsystems.unstoppable"
+    static let backupSalt = "unstoppable"
 
     static let reportEmail = "support.unstoppable@protonmail.com"
     static let companyWebPageLink = "https://horizontalsystems.io"
     static let appWebPageLink = "https://unstoppable.money"
     static let analyticsLink = "https://unstoppable.money/analytics"
-    static let appGitHubLink = "https://github.com/horizontalsystems/unstoppable-wallet-ios"
+    static let appGitHubAccount = "horizontalsystems"
+    static let appGitHubRepository = "unstoppable-wallet-ios"
     static let appTwitterAccount = "unstoppablebyhs"
+    static let appTelegramAccount = "unstoppable_announcements"
+    static let appRedditAccount = "UNSTOPPABLEWallet"
     static let btcCoreRpcUrl = "https://btc.blocksdecoded.com/rpc"
     static let guidesIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/v1.2/index.json")!
     static let faqIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/unstoppable-wallet-website/master/src/faq.json")!
+
+    static var appName: String {
+        (Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String) ?? ""
+    }
 
     static var marketApiUrl: String {
         (Bundle.main.object(forInfoDictionaryKey: "MarketApiUrl") as? String) ?? ""
