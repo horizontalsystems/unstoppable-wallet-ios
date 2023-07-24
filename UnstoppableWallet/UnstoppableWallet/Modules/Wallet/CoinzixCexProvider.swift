@@ -7,6 +7,7 @@ import HsToolKit
 
 class CoinzixCexProvider {
     private static let baseUrl = "https://api.coinzix.com"
+    private static let nativeNetworkId = "NATIVE"
     static let withdrawEmailPinResendTime: UInt64 = 5_000_000_000
 
     private let networkManager: NetworkManager
@@ -207,20 +208,44 @@ extension CoinzixCexProvider: ICexProvider {
                             lockedBalance: balance - balanceAvailable,
                             depositEnabled: depositEnabled,
                             withdrawEnabled: withdrawEnabled,
-                            depositNetworks: configResponse.depositNetworks(id: assetId).enumerated().map { index, network in
-                                CexDepositNetworkRaw(
-                                        id: String(network.networkType),
-                                        name: String(network.networkType),
+                            depositNetworks: configResponse.depositNetworks(id: assetId).enumerated().compactMap { index, network in
+                                var networkId: String?
+
+                                if network.networkType == 0 {
+                                    networkId = Self.nativeNetworkId
+                                } else {
+                                    networkId = item.networks[String(network.networkType)]
+                                }
+
+                                guard let networkId else {
+                                    return nil
+                                }
+
+                                return CexDepositNetworkRaw(
+                                        id: networkId,
+                                        name: networkId,
                                         isDefault: index == 0,
                                         enabled: depositEnabled,
                                         minAmount: network.minRefill,
                                         blockchainUid: network.networkType == 0 ? isoToBlockchainUidMap[assetId] : networkTypeToBlockchainUidMap[network.networkType]
                                 )
                             },
-                            withdrawNetworks: configResponse.withdrawNetworks(id: assetId).enumerated().map { index, network in
-                                CexWithdrawNetworkRaw(
-                                        id: String(network.networkType),
-                                        name: String(network.networkType),
+                            withdrawNetworks: configResponse.withdrawNetworks(id: assetId).enumerated().compactMap { index, network in
+                                var networkId: String?
+
+                                if network.networkType == 0 {
+                                    networkId = Self.nativeNetworkId
+                                } else {
+                                    networkId = item.networks[String(network.networkType)]
+                                }
+
+                                guard let networkId else {
+                                    return nil
+                                }
+
+                                return CexWithdrawNetworkRaw(
+                                        id: networkId,
+                                        name: networkId,
                                         isDefault: index == 0,
                                         enabled: withdrawEnabled,
                                         minAmount: network.minWithdraw,
@@ -241,8 +266,8 @@ extension CoinzixCexProvider: ICexProvider {
             "iso": id
         ]
 
-        if let network, let networkType = Int(network) {
-            parameters["network_type"] = networkType
+        if let network, network != Self.nativeNetworkId {
+            parameters["network"] = network
         }
 
         let response: GetAddressResponse = try await signedFetch(path: "/v1/private/get-address", parameters: parameters)
@@ -304,7 +329,7 @@ extension CoinzixCexProvider {
             "fee_from_amount": (feeFromAmount ?? false) ? 1 : 0
         ]
 
-        if let network {
+        if let network, network != Self.nativeNetworkId {
             parameters["network"] = network
         }
 
@@ -361,6 +386,27 @@ extension CoinzixCexProvider {
 
         let response: StatusResponse = try await networkManager.fetch(
                 url: baseUrl + "/api/user/validate-code",
+                method: .post,
+                parameters: parameters,
+                encoding: JSONEncoding.default
+        )
+
+        guard response.status else {
+            if let errors = response.errors {
+                throw VerifyError(messages: errors)
+            }
+
+            throw RequestError.negativeStatus
+        }
+    }
+
+    static func resendPin(token: String, networkManager: NetworkManager) async throws {
+        let parameters: Parameters = [
+            "login_token": token
+        ]
+
+        let response: StatusResponse = try await networkManager.fetch(
+                url: baseUrl + "/api/user/send-two-fa",
                 method: .post,
                 parameters: parameters,
                 encoding: JSONEncoding.default
@@ -494,12 +540,14 @@ extension CoinzixCexProvider {
             let currencyName: String
             let balance: Decimal
             let balanceAvailable: Decimal
+            let networks: [String: String]
 
             init(map: Map) throws {
                 currencyIso3 = try map.value("currency.iso3")
                 currencyName = try map.value("currency.name")
                 balance = try map.value("balance", using: Transform.doubleToDecimalTransform)
                 balanceAvailable = try map.value("balance_available", using: Transform.doubleToDecimalTransform)
+                networks = (try? map.value("currency.networks")) ?? [:]
             }
         }
     }
