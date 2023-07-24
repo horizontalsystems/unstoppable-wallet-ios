@@ -9,15 +9,13 @@ import ComponentKit
 import UIExtensions
 
 class RestoreNonStandardViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .margin16 + .heightButton + .margin32
-
     private let viewModel: RestoreNonStandardViewModel
     private let mnemonicViewModel: RestoreMnemonicNonStandardViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    private let gradientWrapperView = BottomGradientHolder()
     private let nextButton = PrimaryButton()
 
     private let nameCell = TextFieldCell()
@@ -63,26 +61,14 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
             maker.edges.equalToSuperview()
         }
 
-        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: wrapperViewHeight - .margin16, right: 0)
-
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
 
         tableView.sectionDataSource = self
         tableView.registerCell(forClass: DescriptionCell.self)
 
-        view.addSubview(gradientWrapperView)
-        gradientWrapperView.snp.makeConstraints { maker in
-            maker.height.equalTo(wrapperViewHeight).priority(.high)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-
+        gradientWrapperView.add(to: self)
         gradientWrapperView.addSubview(nextButton)
-        nextButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-        }
 
         nextButton.set(style: .yellow)
         nextButton.setTitle("button.next".localized, for: .normal)

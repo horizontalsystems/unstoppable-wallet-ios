@@ -10,8 +10,6 @@ import UIExtensions
 import ComponentKit
 
 class SendEip721ViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
-
     private let evmKitWrapper: EvmKitWrapper
     private let viewModel: SendEip721ViewModel
     private let disposeBag = DisposeBag()
@@ -22,7 +20,7 @@ class SendEip721ViewController: KeyboardAwareViewController {
     private let recipientCell: RecipientAddressInputCell
     private let recipientCautionCell: RecipientAddressCautionCell
 
-    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    private let gradientWrapperView = BottomGradientHolder()
     private let nextButton = PrimaryButton()
 
     private var isLoaded = false
@@ -68,18 +66,9 @@ class SendEip721ViewController: KeyboardAwareViewController {
 
         recipientCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
-        view.addSubview(gradientWrapperView)
-        gradientWrapperView.snp.makeConstraints { maker in
-            maker.height.equalTo(wrapperViewHeight).priority(.high)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-
+        gradientWrapperView.add(to: self)
         gradientWrapperView.addSubview(nextButton)
-        nextButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-        }
+
         nextButton.set(style: .yellow)
         nextButton.setTitle("button.next".localized, for: .normal)
         nextButton.addTarget(self, action: #selector(onTapNext), for: .touchUpInside)
@@ -90,18 +79,8 @@ class SendEip721ViewController: KeyboardAwareViewController {
         }
         subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openConfirm(sendData: $0) }
 
-        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -.margin16, right: 0)
-        additionalInsetsOnlyForClosedKeyboard = false
-        ignoreSafeAreaForAccessoryView = false
-
         tableView.buildSections()
         isLoaded = true
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        setInitialState(bottomPadding: gradientWrapperView.height)
     }
 
     @objc private func onTapNext() {

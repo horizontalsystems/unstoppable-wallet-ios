@@ -41,7 +41,10 @@ class TermsViewController: ThemeViewController {
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.leading.top.trailing.equalToSuperview()
+            if !viewModel.buttonVisible {
+                maker.bottom.equalToSuperview()
+            }
         }
 
         tableView.separatorStyle = .none
@@ -49,19 +52,10 @@ class TermsViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         if viewModel.buttonVisible {
-            let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: .themeTyler)
-
-            view.addSubview(gradientWrapperView)
-            gradientWrapperView.snp.makeConstraints { maker in
-                maker.leading.trailing.bottom.equalToSuperview()
-            }
+            let gradientWrapperView = BottomGradientHolder()
+            gradientWrapperView.add(to: self, under: tableView)
 
             gradientWrapperView.addSubview(agreeButton)
-            agreeButton.snp.makeConstraints { maker in
-                maker.top.equalToSuperview().inset(CGFloat.margin32)
-                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-                maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-            }
 
             agreeButton.set(style: .yellow)
             agreeButton.setTitle("terms.i_agree".localized, for: .normal)

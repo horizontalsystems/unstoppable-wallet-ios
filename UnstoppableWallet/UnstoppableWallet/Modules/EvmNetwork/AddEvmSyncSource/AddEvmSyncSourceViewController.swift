@@ -9,7 +9,6 @@ import ComponentKit
 import UIExtensions
 
 class AddEvmSyncSourceViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
     private let viewModel: AddEvmSyncSourceViewModel
     private let disposeBag = DisposeBag()
 
@@ -20,7 +19,7 @@ class AddEvmSyncSourceViewController: KeyboardAwareViewController {
 
     private let basicAuthCell = AddressInputCell()
 
-    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    private let gradientWrapperView = BottomGradientHolder()
     private let addButton = PrimaryButton()
 
     init(viewModel: AddEvmSyncSourceViewModel) {
@@ -48,18 +47,8 @@ class AddEvmSyncSourceViewController: KeyboardAwareViewController {
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
 
-        view.addSubview(gradientWrapperView)
-        gradientWrapperView.snp.makeConstraints { maker in
-            maker.height.equalTo(wrapperViewHeight).priority(.high)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-
+        gradientWrapperView.add(to: self)
         gradientWrapperView.addSubview(addButton)
-        addButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-        }
 
         addButton.set(style: .yellow)
         addButton.setTitle("button.add".localized, for: .normal)
@@ -91,17 +80,7 @@ class AddEvmSyncSourceViewController: KeyboardAwareViewController {
             self?.dismiss(animated: true)
         }
 
-        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -.margin16, right: 0)
-        additionalInsetsOnlyForClosedKeyboard = false
-        ignoreSafeAreaForAccessoryView = false
-
         tableView.buildSections()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        setInitialState(bottomPadding: gradientWrapperView.height)
     }
 
     @objc private func onTapAdd() {

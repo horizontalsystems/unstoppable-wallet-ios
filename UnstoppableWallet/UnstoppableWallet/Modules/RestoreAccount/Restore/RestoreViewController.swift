@@ -9,8 +9,6 @@ import ComponentKit
 import UIExtensions
 
 class RestoreViewController: KeyboardAwareViewController {
-    private var wrapperViewHeight: CGFloat = .margin16 + .heightButton + .margin32
-
     private let advanced: Bool
     private let viewModel: RestoreViewModel
     private let mnemonicViewModel: RestoreMnemonicViewModel
@@ -74,32 +72,11 @@ class RestoreViewController: KeyboardAwareViewController {
 
         tableView.sectionDataSource = self
 
-        if !advanced {
-            wrapperViewHeight += .margin16 + .heightButton //additional button
-        }
-        let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
-
-        view.addSubview(gradientWrapperView)
-        gradientWrapperView.snp.makeConstraints { maker in
-            maker.height.equalTo(wrapperViewHeight).priority(.high)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-
-        let buttonStackView = UIStackView()
-
-        gradientWrapperView.addSubview(buttonStackView)
-        buttonStackView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-        }
-
-        buttonStackView.axis = .vertical
-        buttonStackView.spacing = .margin16
+        let gradientWrapperView = BottomGradientHolder()
+        gradientWrapperView.add(to: self)
 
         let nextButton = PrimaryButton()
-
-        buttonStackView.addArrangedSubview(nextButton)
+        gradientWrapperView.addSubview(nextButton)
 
         nextButton.set(style: .yellow)
         nextButton.setTitle("button.next".localized, for: .normal)
@@ -107,14 +84,12 @@ class RestoreViewController: KeyboardAwareViewController {
 
         if !advanced {
             let advancedButton = PrimaryButton()
-
-            buttonStackView.addArrangedSubview(advancedButton)
+            gradientWrapperView.addSubview(advancedButton)
 
             advancedButton.set(style: .transparent)
             advancedButton.setTitle("restore.advanced".localized, for: .normal)
             advancedButton.addTarget(self, action: #selector(onTapAdvanced), for: .touchUpInside)
         }
-        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: wrapperViewHeight - .margin16, right: 0)
 
         let namePlaceholder = viewModel.namePlaceholder
         nameCell.inputText = namePlaceholder

@@ -12,7 +12,7 @@ class CoinToggleViewController: ThemeSearchViewController {
     private let viewModel: ICoinToggleViewModel
     let disposeBag = DisposeBag()
 
-    private let tableView = SectionsTableView(style: .grouped)
+    let tableView = SectionsTableView(style: .grouped)
 
     private var viewItems: [CoinToggleViewModel.ViewItem] = []
     private var isLoaded = false

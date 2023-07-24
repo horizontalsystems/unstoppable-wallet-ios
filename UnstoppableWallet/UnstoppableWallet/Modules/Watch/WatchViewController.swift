@@ -8,14 +8,13 @@ import RxCocoa
 import UIExtensions
 
 class WatchViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
     private let viewModel: WatchViewModel
     private let publicKeyViewModel: WatchPublicKeyViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    private let gradientWrapperView = BottomGradientHolder()
     private let nextButton = PrimaryButton()
 
     private let nameCell = TextFieldCell()
@@ -66,18 +65,8 @@ class WatchViewController: KeyboardAwareViewController {
         tableView.separatorStyle = .none
         tableView.sectionDataSource = self
 
-        view.addSubview(gradientWrapperView)
-        gradientWrapperView.snp.makeConstraints { maker in
-            maker.height.equalTo(wrapperViewHeight).priority(.high)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-
+        gradientWrapperView.add(to: self)
         gradientWrapperView.addSubview(nextButton)
-        nextButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-        }
 
         nextButton.set(style: .yellow)
         nextButton.setTitle(viewModel.hasNextPage ? "button.next".localized : "watch_address.watch".localized, for: .normal)
@@ -124,18 +113,8 @@ class WatchViewController: KeyboardAwareViewController {
             self?.proceedToNextPage(watchType: watchType, accountType: accountType, name: name)
         }
 
-        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -.margin16, right: 0)
-        additionalInsetsOnlyForClosedKeyboard = false
-        ignoreSafeAreaForAccessoryView = false
-
         tableView.buildSections()
         isLoaded = true
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        setInitialState(bottomPadding: gradientWrapperView.height)
     }
 
     @objc private func onTapNext() {

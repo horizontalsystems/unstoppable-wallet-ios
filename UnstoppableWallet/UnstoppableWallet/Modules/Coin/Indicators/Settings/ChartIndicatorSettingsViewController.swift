@@ -9,7 +9,6 @@ import UIExtensions
 import UniswapKit
 
 class ChartIndicatorSettingsViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .margin16 + .heightButton + .margin32
     private let animationDuration: TimeInterval = 0.2
 
     private var cancellables = Set<AnyCancellable>()
@@ -17,7 +16,7 @@ class ChartIndicatorSettingsViewController: KeyboardAwareViewController {
     private let viewModel: ChartIndicatorSettingsViewModel
     private let tableView = SectionsTableView(style: .grouped)
 
-    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    private let gradientWrapperView = BottomGradientHolder()
     private let applyButton = PrimaryButton()
 
     private var isLoaded: Bool = false
@@ -57,25 +56,12 @@ class ChartIndicatorSettingsViewController: KeyboardAwareViewController {
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
 
-        view.addSubview(gradientWrapperView)
-        gradientWrapperView.snp.makeConstraints { maker in
-            maker.height.equalTo(wrapperViewHeight).priority(.high)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
+        gradientWrapperView.add(to: self)
 
         gradientWrapperView.addSubview(applyButton)
-        applyButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-        }
         applyButton.set(style: .yellow)
         applyButton.setTitle("button.apply".localized, for: .normal)
         applyButton.addTarget(self, action: #selector(onTapDoneButton), for: .touchUpInside)
-
-//        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -.margin16, right: 0)
-//        additionalInsetsOnlyForClosedKeyboard = false
-//        ignoreSafeAreaForAccessoryView = false
 
         viewModel.itemsUpdatedPublisher
                 .receive(on: DispatchQueue.main)
@@ -126,7 +112,6 @@ class ChartIndicatorSettingsViewController: KeyboardAwareViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        setInitialState(bottomPadding: gradientWrapperView.height)
         isLoaded = true
     }
 

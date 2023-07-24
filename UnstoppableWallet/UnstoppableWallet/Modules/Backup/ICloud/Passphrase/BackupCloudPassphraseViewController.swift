@@ -7,8 +7,6 @@ import SectionsTableView
 import UIExtensions
 
 class BackupCloudPassphraseViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .margin16 + .heightButton + .margin32
-
     private let viewModel: BackupCloudPassphraseViewModel
     private var cancellables = Set<AnyCancellable>()
 
@@ -22,7 +20,7 @@ class BackupCloudPassphraseViewController: KeyboardAwareViewController {
 
     private let passphraseDescriptionCell = HighlightedDescriptionCell()
 
-    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    private let gradientWrapperView = BottomGradientHolder()
     private let saveButton = PrimaryButton()
 
     private var keyboardShown = false
@@ -57,18 +55,8 @@ class BackupCloudPassphraseViewController: KeyboardAwareViewController {
 
         tableView.sectionDataSource = self
 
-        view.addSubview(gradientWrapperView)
-        gradientWrapperView.snp.makeConstraints { maker in
-            maker.height.equalTo(wrapperViewHeight).priority(.high)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-
+        gradientWrapperView.add(to: self)
         gradientWrapperView.addSubview(saveButton)
-        saveButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-        }
 
         show(processing: false)
         saveButton.setTitle("backup.cloud.password.save".localized, for: .normal)
@@ -136,8 +124,6 @@ class BackupCloudPassphraseViewController: KeyboardAwareViewController {
                 }
                 .store(in: &cancellables)
 
-        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: wrapperViewHeight - .margin16, right: 0)
-
         showDefaultPassphrase()
 
         tableView.buildSections()
@@ -151,8 +137,6 @@ class BackupCloudPassphraseViewController: KeyboardAwareViewController {
         }
 
         super.viewDidAppear(animated)
-
-        setInitialState(bottomPadding: gradientWrapperView.height)
     }
 
     private func showDefaultPassphrase() {

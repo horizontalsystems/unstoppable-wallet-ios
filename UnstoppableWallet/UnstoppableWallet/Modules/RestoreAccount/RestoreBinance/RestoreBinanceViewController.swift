@@ -68,34 +68,21 @@ class RestoreBinanceViewController: ThemeViewController {
         }
 
         let buttonsHolder = BottomGradientHolder()
-        view.addSubview(buttonsHolder)
-        buttonsHolder.snp.makeConstraints { make in
-            make.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
+        buttonsHolder.add(to: self, under: tableView)
 
-        let stackView = UIStackView()
+        buttonsHolder.addSubview(connectButton)
 
-        buttonsHolder.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(CGFloat.margin24)
-        }
-
-        stackView.axis = .vertical
-        stackView.spacing = .margin16
-
-        stackView.addArrangedSubview(connectButton)
         connectButton.set(style: .yellow)
         connectButton.setTitle("restore.binance.connect".localized, for: .normal)
         connectButton.addTarget(self, action: #selector(onTapConnect), for: .touchUpInside)
 
-        stackView.addArrangedSubview(connectingButton)
+        buttonsHolder.addSubview(connectingButton)
         connectingButton.set(style: .yellow, accessoryType: .spinner)
         connectingButton.isEnabled = false
         connectingButton.setTitle("restore.binance.connecting".localized, for: .normal)
 
         let getApiKeysButton = PrimaryButton()
-        stackView.addArrangedSubview(getApiKeysButton)
+        buttonsHolder.addSubview(getApiKeysButton)
         getApiKeysButton.set(style: .transparent)
         getApiKeysButton.setTitle("restore.binance.get_api_keys".localized, for: .normal)
         getApiKeysButton.addTarget(self, action: #selector(onTapGetApiKeys), for: .touchUpInside)

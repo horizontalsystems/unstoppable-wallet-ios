@@ -46,18 +46,10 @@ class BackupViewController: ThemeViewController {
 
         let backupButtonHolder = BottomGradientHolder()
 
-        view.addSubview(backupButtonHolder)
-        backupButtonHolder.snp.makeConstraints { maker in
-            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
+        backupButtonHolder.add(to: self, under: tableView)
 
         let verifyButton = PrimaryButton()
-
         backupButtonHolder.addSubview(verifyButton)
-        verifyButton.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview().inset(CGFloat.margin24)
-        }
 
         verifyButton.set(style: .yellow)
         verifyButton.setTitle("backup.verify".localized, for: .normal)

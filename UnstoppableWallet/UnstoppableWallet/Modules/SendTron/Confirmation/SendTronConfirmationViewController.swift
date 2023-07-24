@@ -59,19 +59,9 @@ class SendTronConfirmationViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
 
-        view.addSubview(bottomWrapper)
-        bottomWrapper.snp.makeConstraints { maker in
-            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
-            maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
+        bottomWrapper.add(to: self, under: tableView)
 
         bottomWrapper.addSubview(sendButton)
-        sendButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-        }
 
         sendButton.set(style: .yellow)
         sendButton.setTitle("send.confirmation.send_button".localized, for: .normal)

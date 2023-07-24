@@ -60,33 +60,19 @@ class ActivateSubscriptionViewController: ThemeViewController {
 
         errorView.configureSyncError(action: { [weak self] in self?.viewModel.onTapRetry() })
 
-        view.addSubview(buttonsHolder)
-        buttonsHolder.snp.makeConstraints { make in
-            make.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
+        buttonsHolder.add(to: self, under: tableView)
+        buttonsHolder.addSubview(signButton)
 
-        let stackView = UIStackView()
-
-        buttonsHolder.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(CGFloat.margin24)
-        }
-
-        stackView.axis = .vertical
-        stackView.spacing = .margin16
-
-        stackView.addArrangedSubview(signButton)
         signButton.set(style: .yellow)
         signButton.setTitle("activate_subscription.sign".localized, for: .normal)
         signButton.addTarget(self, action: #selector(onTapSignButton), for: .touchUpInside)
 
-        stackView.addArrangedSubview(activatingButton)
+        buttonsHolder.addSubview(activatingButton)
         activatingButton.set(style: .yellow, accessoryType: .spinner)
         activatingButton.isEnabled = false
         activatingButton.setTitle("activate_subscription.activating".localized, for: .normal)
 
-        stackView.addArrangedSubview(cancelButton)
+        buttonsHolder.addSubview(cancelButton)
         cancelButton.set(style: .gray)
         cancelButton.setTitle("button.cancel".localized, for: .normal)
         cancelButton.addTarget(self, action: #selector(onTapCancelButton), for: .touchUpInside)

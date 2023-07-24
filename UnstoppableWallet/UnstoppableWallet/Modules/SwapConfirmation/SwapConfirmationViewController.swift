@@ -14,11 +14,6 @@ class SwapConfirmationViewController: SendEvmTransactionViewController {
         title = "confirm".localized
 
         bottomWrapper.addSubview(swapButton)
-        swapButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-        }
 
         swapButton.set(style: .yellow)
         swapButton.setTitle("swap.confirmation.swap_button".localized, for: .normal)

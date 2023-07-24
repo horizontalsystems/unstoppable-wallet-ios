@@ -66,31 +66,16 @@ class CexDepositViewController: ThemeViewController {
                 action: #selector(onTapRetry)
         )
 
-        view.addSubview(buttonsHolder)
-        buttonsHolder.snp.makeConstraints { make in
-            make.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
-
-        let stackView = UIStackView()
-
-        buttonsHolder.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(CGFloat.margin24)
-        }
-
-        stackView.axis = .vertical
-        stackView.spacing = .margin16
-
+        buttonsHolder.add(to: self, under: tableView)
         let copyButton = PrimaryButton()
-        stackView.addArrangedSubview(copyButton)
+        buttonsHolder.addSubview(copyButton)
 
         copyButton.set(style: .yellow)
         copyButton.setTitle("cex_deposit.copy_address".localized, for: .normal)
         copyButton.addTarget(self, action: #selector(onTapCopy), for: .touchUpInside)
 
         let shareButton = PrimaryButton()
-        stackView.addArrangedSubview(shareButton)
+        buttonsHolder.addSubview(shareButton)
 
         shareButton.set(style: .gray)
         shareButton.setTitle("cex_deposit.share_address".localized, for: .normal)

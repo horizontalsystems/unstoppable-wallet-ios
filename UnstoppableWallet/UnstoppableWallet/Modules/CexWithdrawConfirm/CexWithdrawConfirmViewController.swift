@@ -46,28 +46,15 @@ class CexWithdrawConfirmViewController<Handler: ICexWithdrawHandler>: ThemeViewC
         tableView.separatorStyle = .none
 
         let buttonsHolder = BottomGradientHolder()
-        view.addSubview(buttonsHolder)
-        buttonsHolder.snp.makeConstraints { make in
-            make.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
+        buttonsHolder.add(to: self, under: tableView)
 
-        let stackView = UIStackView()
-        buttonsHolder.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(CGFloat.margin24)
-        }
-
-        stackView.axis = .vertical
-        stackView.spacing = .margin16
-
-        stackView.addArrangedSubview(withdrawButton)
+        buttonsHolder.addSubview(withdrawButton)
 
         withdrawButton.set(style: .yellow)
         withdrawButton.setTitle("cex_withdraw_confirm.withdraw".localized, for: .normal)
         withdrawButton.addTarget(self, action: #selector(onTapWithdraw), for: .touchUpInside)
 
-        stackView.addArrangedSubview(withdrawingButton)
+        buttonsHolder.addSubview(withdrawingButton)
 
         withdrawingButton.set(style: .yellow, accessoryType: .spinner)
         withdrawingButton.isEnabled = false

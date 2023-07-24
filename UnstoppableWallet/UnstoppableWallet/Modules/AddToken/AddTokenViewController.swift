@@ -59,16 +59,8 @@ class AddTokenViewController: ThemeViewController {
 
         inputCautionCell.onChangeHeight = { [weak self] in self?.reloadHeights() }
 
-        view.addSubview(addButtonHolder)
-        addButtonHolder.snp.makeConstraints { maker in
-            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-
+        addButtonHolder.add(to: self, under: tableView)
         addButtonHolder.addSubview(addButton)
-        addButton.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview().inset(CGFloat.margin24)
-        }
 
         addButton.set(style: .yellow)
         addButton.setTitle("button.add".localized, for: .normal)

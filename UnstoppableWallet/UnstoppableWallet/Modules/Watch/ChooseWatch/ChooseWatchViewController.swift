@@ -9,7 +9,7 @@ import UIExtensions
 
 class ChooseWatchViewController: CoinToggleViewController {
     private let viewModel: ChooseWatchViewModel
-    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    private let gradientWrapperView = BottomGradientHolder()
     private let watchButton = PrimaryButton()
 
     private weak var sourceViewController: UIViewController?
@@ -32,18 +32,13 @@ class ChooseWatchViewController: CoinToggleViewController {
 
         title = viewModel.title
 
-        view.addSubview(gradientWrapperView)
-        gradientWrapperView.snp.makeConstraints { maker in
-            maker.height.equalTo(.heightButton + .margin32 + .margin16).priority(.high)
-            maker.leading.trailing.bottom.equalToSuperview()
+        // remake to bind with bottom view
+        tableView.snp.remakeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
         }
 
+        gradientWrapperView.add(to: self, under: tableView)
         gradientWrapperView.addSubview(watchButton)
-        watchButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-        }
 
         watchButton.set(style: .yellow)
         watchButton.setTitle("watch_address.watch".localized, for: .normal)
@@ -59,6 +54,12 @@ class ChooseWatchViewController: CoinToggleViewController {
         subscribe(disposeBag, viewModel.watchEnabledDriver) { [weak self] enabled in
             self?.watchButton.isEnabled = enabled
         }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        setInitialState(bottomPadding: gradientWrapperView.height)
     }
 
     @objc private func onTapWatch() {

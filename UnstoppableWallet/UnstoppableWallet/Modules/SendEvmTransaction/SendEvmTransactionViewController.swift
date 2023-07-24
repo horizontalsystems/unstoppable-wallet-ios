@@ -63,12 +63,7 @@ class SendEvmTransactionViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
 
-        view.addSubview(bottomWrapper)
-        bottomWrapper.snp.makeConstraints { maker in
-            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
-            maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
+        bottomWrapper.add(to: self, under: tableView)
 
         subscribe(disposeBag, transactionViewModel.cautionsDriver) { [weak self] in self?.handle(cautions: $0) }
         subscribe(disposeBag, transactionViewModel.sendingSignal) { [weak self] in self?.handleSending() }

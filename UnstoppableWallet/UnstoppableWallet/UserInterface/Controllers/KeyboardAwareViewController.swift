@@ -33,7 +33,7 @@ class KeyboardAwareViewController: ThemeViewController {
     var showAccessoryView: Bool = true
 
     open var accessoryViewHeight: CGFloat {
-        showAccessoryView ? floor(accessoryView?.frame.size.height ?? 0) : 0
+        showAccessoryView ? floor(accessoryView?.height ?? 0) : 0   // need to use height without safe-area because tableview already use safe-area insets
     }
 
     override open var inputAccessoryView: UIView? {
@@ -119,6 +119,10 @@ class KeyboardAwareViewController: ThemeViewController {
         pendingFrame = nil
 
         translucentContentOffset = scrollViews[0].contentOffset.y
+
+        if let accessoryView {
+            setInitialState(bottomPadding: accessoryView.height)
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -174,7 +178,10 @@ class KeyboardAwareViewController: ThemeViewController {
     }
 
     public func updateInsets() {
-        var bottomInset = accessoryViewHeight
+        var bottomInset: CGFloat = 0
+        if showAccessoryView {
+            bottomInset = accessoryViewHeight
+        }
         if !ignoreSafeAreaForAccessoryView {
             bottomInset -= view.safeAreaInsets.bottom
         }

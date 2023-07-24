@@ -7,7 +7,6 @@ import SectionsTableView
 import HUD
 
 class RestoreCoinzixViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .heightButton + .margin16 + .heightButton
     private let viewModel: RestoreCoinzixViewModel
     private var cancellables = Set<AnyCancellable>()
 
@@ -61,33 +60,20 @@ class RestoreCoinzixViewController: KeyboardAwareViewController {
         passwordCell.inputPlaceholder = "restore.coinzix.sample_password".localized
         passwordCell.onChangeText = { [weak self] in self?.viewModel.onChange(password: $0 ?? "") }
 
-        view.addSubview(buttonsHolder)
-        buttonsHolder.snp.makeConstraints { make in
-            make.height.equalTo(wrapperViewHeight).priority(.high)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
+        buttonsHolder.add(to: self)
 
-        let stackView = UIStackView()
-        buttonsHolder.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(CGFloat.margin24)
-        }
-
-        stackView.axis = .vertical
-        stackView.spacing = .margin16
-
-        stackView.addArrangedSubview(loginButton)
+        buttonsHolder.addSubview(loginButton)
         loginButton.set(style: .yellow)
         loginButton.setTitle("restore.coinzix.login".localized, for: .normal)
         loginButton.addTarget(self, action: #selector(onTapLogin), for: .touchUpInside)
 
-        stackView.addArrangedSubview(loggingInButton)
+        buttonsHolder.addSubview(loggingInButton)
         loggingInButton.set(style: .yellow, accessoryType: .spinner)
         loggingInButton.isEnabled = false
         loggingInButton.setTitle("restore.coinzix.login".localized, for: .normal)
 
         let signUpButton = PrimaryButton()
-        stackView.addArrangedSubview(signUpButton)
+        buttonsHolder.addSubview(signUpButton)
         signUpButton.set(style: .transparent)
         signUpButton.setTitle("restore.coinzix.sign_up".localized, for: .normal)
         signUpButton.addTarget(self, action: #selector(onTapSignUp), for: .touchUpInside)
@@ -122,10 +108,6 @@ class RestoreCoinzixViewController: KeyboardAwareViewController {
                 self?.navigationController?.pushViewController(viewController, animated: true)
             }
             .store(in: &cancellables)
-
-        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: -.margin16, right: 0)
-        additionalInsetsOnlyForClosedKeyboard = false
-        ignoreSafeAreaForAccessoryView = false
 
         tableView.buildSections()
         isLoaded = true

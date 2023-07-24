@@ -78,45 +78,26 @@ class WalletConnectMainViewController: ThemeViewController {
 
         spinner.set(hidden: true)
 
-        view.addSubview(buttonsHolder)
-        buttonsHolder.snp.makeConstraints { maker in
-            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin4x)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-
-        let stackView = UIStackView()
-
-        buttonsHolder.addSubview(stackView)
-        stackView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.bottom.equalToSuperview().offset(-CGFloat.margin16)
-        }
-
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .fill
-        stackView.spacing = .margin16
-
-        stackView.addArrangedSubview(connectButton)
+        buttonsHolder.add(to: self, under: tableView)
+        buttonsHolder.addSubview(connectButton)
 
         connectButton.set(style: .yellow)
         connectButton.setTitle("button.connect".localized, for: .normal)
         connectButton.addTarget(self, action: #selector(onTapConnect), for: .touchUpInside)
 
-        stackView.addArrangedSubview(reconnectButton)
+        buttonsHolder.addSubview(reconnectButton)
 
         reconnectButton.set(style: .yellow)
         reconnectButton.setTitle("wallet_connect.button_reconnect".localized, for: .normal)
         reconnectButton.addTarget(self, action: #selector(onTapReconnect), for: .touchUpInside)
 
-        stackView.addArrangedSubview(cancelButton)
+        buttonsHolder.addSubview(cancelButton)
 
         cancelButton.set(style: .gray)
         cancelButton.setTitle("button.cancel".localized, for: .normal)
         cancelButton.addTarget(self, action: #selector(onTapCancel), for: .touchUpInside)
 
-        stackView.addArrangedSubview(disconnectButton)
+        buttonsHolder.addSubview(disconnectButton)
 
         disconnectButton.set(style: .red)
         disconnectButton.setTitle("wallet_connect.button_disconnect".localized, for: .normal)

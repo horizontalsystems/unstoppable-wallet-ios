@@ -91,16 +91,8 @@ class MarketAdvancedSearchViewController: ThemeViewController {
             self?.onTapPriceCloseToAtlCell(isOn: $0)
         }
 
-        view.addSubview(showResultButtonHolder)
-        showResultButtonHolder.snp.makeConstraints { maker in
-            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-
+        showResultButtonHolder.add(to: self, under: tableView)
         showResultButtonHolder.addSubview(showResultButton)
-        showResultButton.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview().inset(CGFloat.margin24)
-        }
 
         showResultButton.set(style: .yellow)
         showResultButton.addTarget(self, action: #selector(onTapShowResult), for: .touchUpInside)
