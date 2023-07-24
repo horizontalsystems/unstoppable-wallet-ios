@@ -1836,6 +1836,7 @@
 		6B146A9B2A52A69400648C10 /* ChartIndicatorSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B146A952A52A69400648C10 /* ChartIndicatorSettingsModule.swift */; };
 		6B146A9C2A52A69400648C10 /* ChartIndicatorSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B146A952A52A69400648C10 /* ChartIndicatorSettingsModule.swift */; };
 		6B423FD42913785800EE5E70 /* BitcoinCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6B423FD32913785800EE5E70 /* BitcoinCore */; };
+		6B5546212A6E73190054B524 /* UIExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 6B5546202A6E73190054B524 /* UIExtensions */; };
 		6BCD53002A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
 		6BCD53012A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
 		6BCD53022A161F4100993F20 /* ICloudBackupTermsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */; };
@@ -3968,6 +3969,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B5546212A6E73190054B524 /* UIExtensions in Frameworks */,
 				D3AF5A8B29FFD85800C1399E /* RxRelay in Frameworks */,
 				D3993DB828F42595008720FB /* WalletConnect in Frameworks */,
 				D3C187DB290FCFBC00FE1900 /* SectionsTableView in Frameworks */,
@@ -7578,6 +7580,7 @@
 				D3AF5A8C29FFD85800C1399E /* RxSwift */,
 				D023D2622A249E59004F65B0 /* TronKit */,
 				D0EC34DA2A4450B100BB308B /* HCaptcha */,
+				6B5546202A6E73190054B524 /* UIExtensions */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -7663,6 +7666,7 @@
 				D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */,
 				D023D2612A249E59004F65B0 /* XCRemoteSwiftPackageReference "TronKit.Swift" */,
 				D0EC34D92A4450B100BB308B /* XCRemoteSwiftPackageReference "HCaptcha-ios-sdk" */,
+				6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions.Swift" */,
 			);
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
@@ -10529,6 +10533,14 @@
 				version = 2.0.2;
 			};
 		};
+		6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/UIExtensions.Swift";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.2;
+			};
+		};
 		6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/ECashKit.Swift.git";
@@ -10874,6 +10886,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6B423FD22913785800EE5E70 /* XCRemoteSwiftPackageReference "BitcoinCore.Swift" */;
 			productName = BitcoinCore;
+		};
+		6B5546202A6E73190054B524 /* UIExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions.Swift" */;
+			productName = UIExtensions;
 		};
 		6BDA29AA29D6F37C003847ED /* ECashKit */ = {
 			isa = XCSwiftPackageProductDependency;
