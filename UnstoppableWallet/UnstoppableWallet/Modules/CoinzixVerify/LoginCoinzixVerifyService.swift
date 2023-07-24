@@ -26,7 +26,7 @@ class LoginCoinzixVerifyService: ICoinzixVerifyService {
     }
 
     func resendPin() async throws {
-        // todo
+        try await CoinzixCexProvider.resendPin(token: token, networkManager: networkManager)
     }
 
 }
