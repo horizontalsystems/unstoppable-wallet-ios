@@ -28,21 +28,12 @@ class WalletConnectRequestViewController: SendEvmTransactionViewController {
         isModalInPresentation = true
 
         bottomWrapper.addSubview(approveButton)
-        approveButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-        }
 
         approveButton.set(style: .yellow)
         approveButton.setTitle("wallet_connect.button.confirm".localized, for: .normal)
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 
         bottomWrapper.addSubview(rejectButton)
-        rejectButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.top.equalTo(approveButton.snp.bottom).offset(CGFloat.margin16)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-        }
 
         rejectButton.set(style: .gray)
         rejectButton.setTitle("button.reject".localized, for: .normal)

@@ -8,8 +8,6 @@ import HUD
 import UIExtensions
 
 class CoinzixVerifyViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .margin16 + .heightButton + .margin32
-
     private let viewModel: CoinzixVerifyViewModel
     private var cancellables = Set<AnyCancellable>()
 
@@ -72,27 +70,14 @@ class CoinzixVerifyViewController: KeyboardAwareViewController {
             self?.googlePinInputCell.inputText = $0
         }
 
-        view.addSubview(buttonsHolder)
-        buttonsHolder.snp.makeConstraints { make in
-            make.height.equalTo(wrapperViewHeight).priority(.high)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
+        buttonsHolder.add(to: self)
 
-        let stackView = UIStackView()
-        buttonsHolder.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(CGFloat.margin24)
-        }
-
-        stackView.axis = .vertical
-        stackView.spacing = .margin16
-
-        stackView.addArrangedSubview(submitButton)
+        buttonsHolder.addSubview(submitButton)
         submitButton.set(style: .yellow)
         submitButton.setTitle("coinzix_verify.submit".localized, for: .normal)
         submitButton.addTarget(self, action: #selector(onTapSubmit), for: .touchUpInside)
 
-        stackView.addArrangedSubview(submittingButton)
+        buttonsHolder.addSubview(submittingButton)
         submittingButton.set(style: .gray, accessoryType: .spinner)
         submittingButton.isEnabled = false
         submittingButton.setTitle("coinzix_verify.submit".localized, for: .normal)

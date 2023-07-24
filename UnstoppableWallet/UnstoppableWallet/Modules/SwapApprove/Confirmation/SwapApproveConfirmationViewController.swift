@@ -25,11 +25,6 @@ class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
         title = "confirm".localized
 
         bottomWrapper.addSubview(approveButton)
-        approveButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-        }
 
         approveButton.set(style: .yellow)
         approveButton.setTitle("button.approve".localized, for: .normal)

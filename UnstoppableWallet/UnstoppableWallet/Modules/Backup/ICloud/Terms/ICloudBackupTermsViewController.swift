@@ -36,26 +36,17 @@ class ICloudBackupTermsViewController: ThemeViewController {
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+            maker.leading.top.trailing.equalToSuperview()
         }
 
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.sectionDataSource = self
 
-        let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: .themeTyler)
+        let gradientWrapperView = BottomGradientHolder()
 
-        view.addSubview(gradientWrapperView)
-        gradientWrapperView.snp.makeConstraints { maker in
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-
+        gradientWrapperView.add(to: self, under: tableView)
         gradientWrapperView.addSubview(continueButton)
-        continueButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-        }
 
         continueButton.isEnabled = false
         continueButton.set(style: .yellow)
@@ -182,7 +173,7 @@ extension ICloudBackupTermsViewController: SectionsDataSource {
             ),
             Section(
                 id: "terms",
-                footerState: .margin(height: .margin32 + .heightButton + .margin32),
+                footerState: .margin(height: .margin32),
                 rows: viewItems.enumerated().map { index, viewItem in
                     row(viewItem: viewItem, index: index, isFirst: index == 0, isLast: index == viewItems.count - 1)
                 }

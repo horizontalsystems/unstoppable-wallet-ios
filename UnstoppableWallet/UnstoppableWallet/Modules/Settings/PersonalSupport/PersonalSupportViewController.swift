@@ -19,6 +19,7 @@ class PersonalSupportViewController: KeyboardAwareViewController {
         self.viewModel = viewModel
 
         super.init(scrollViews: [tableView], accessoryView: buttonsHolder)
+        hidesBottomBarWhenPushed = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -42,27 +43,15 @@ class PersonalSupportViewController: KeyboardAwareViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
-        view.addSubview(buttonsHolder)
-        buttonsHolder.snp.makeConstraints { make in
-            make.height.equalTo(.margin16 + .heightButton + .margin32).priority(.high)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
+        buttonsHolder.add(to: self)
+        buttonsHolder.addSubview(requestButton)
 
-        let stackView = UIStackView()
-        buttonsHolder.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(CGFloat.margin24)
-        }
-
-        stackView.axis = .vertical
-        stackView.spacing = .margin16
-
-        stackView.addArrangedSubview(requestButton)
         requestButton.set(style: .yellow)
         requestButton.setTitle("settings.personal_support.request".localized, for: .normal)
         requestButton.addTarget(self, action: #selector(onTapRequest), for: .touchUpInside)
 
-        stackView.addArrangedSubview(requestingButton)
+        buttonsHolder.addSubview(requestingButton)
+
         requestingButton.set(style: .gray, accessoryType: .spinner)
         requestingButton.isEnabled = false
         requestingButton.setTitle("settings.personal_support.request".localized, for: .normal)
@@ -104,6 +93,8 @@ class PersonalSupportViewController: KeyboardAwareViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 

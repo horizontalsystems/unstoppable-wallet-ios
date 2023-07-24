@@ -64,16 +64,8 @@ class WalletConnectListViewController: ThemeViewController {
         emptyView.image = UIImage(named: "wallet_connect_48")
         emptyView.text = "wallet_connect.list.empty_view_text".localized
 
-        view.addSubview(bottomButtonHolder)
-        bottomButtonHolder.snp.makeConstraints { maker in
-            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-
+        bottomButtonHolder.add(to: self, under: tableView)
         bottomButtonHolder.addSubview(bottomButton)
-        bottomButton.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview().inset(CGFloat.margin24)
-        }
 
         bottomButton.set(style: .yellow)
         bottomButton.setTitle("wallet_connect_list.new_connection".localized, for: .normal)

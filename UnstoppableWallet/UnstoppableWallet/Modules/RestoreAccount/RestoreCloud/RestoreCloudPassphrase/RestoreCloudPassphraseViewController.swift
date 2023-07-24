@@ -7,8 +7,6 @@ import SectionsTableView
 import UIExtensions
 
 class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .margin16 + .heightButton + .margin32
-
     private let viewModel: RestoreCloudPassphraseViewModel
     private var cancellables = Set<AnyCancellable>()
 
@@ -19,7 +17,7 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
     private let passphraseCell = PasswordInputCell()
     private let passphraseCautionCell = FormCautionCell()
 
-    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    private let gradientWrapperView = BottomGradientHolder()
     private let importButton = PrimaryButton()
 
     private var keyboardShown = false
@@ -54,18 +52,8 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
 
         tableView.sectionDataSource = self
 
-        view.addSubview(gradientWrapperView)
-        gradientWrapperView.snp.makeConstraints { maker in
-            maker.height.equalTo(wrapperViewHeight).priority(.high)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-
+        gradientWrapperView.add(to: self)
         gradientWrapperView.addSubview(importButton)
-        importButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-        }
 
         show(processing: false)
         importButton.setTitle("button.import".localized, for: .normal)
@@ -123,8 +111,6 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
                 }
                 .store(in: &cancellables)
 
-        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: wrapperViewHeight - .margin16, right: 0)
-
         showDefaultPassphrase()
 
         tableView.buildSections()
@@ -138,8 +124,6 @@ class RestoreCloudPassphraseViewController: KeyboardAwareViewController {
         }
 
         super.viewDidAppear(animated)
-
-        setInitialState(bottomPadding: gradientWrapperView.height)
     }
 
     private func showDefaultPassphrase() {

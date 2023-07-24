@@ -41,29 +41,14 @@ class WalletConnectSignMessageRequestViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
 
-        view.addSubview(bottomWrapper)
-        bottomWrapper.snp.makeConstraints { maker in
-            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
-            maker.leading.trailing.equalToSuperview()
-            maker.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-
+        bottomWrapper.add(to: self, under: tableView)
         bottomWrapper.addSubview(signButton)
-        signButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-        }
 
         signButton.set(style: .yellow)
         signButton.setTitle("button.sign".localized, for: .normal)
         signButton.addTarget(self, action: #selector(onTapSign), for: .touchUpInside)
 
         bottomWrapper.addSubview(rejectButton)
-        rejectButton.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.top.equalTo(signButton.snp.bottom).offset(CGFloat.margin16)
-            maker.bottom.equalToSuperview().inset(CGFloat.margin16)
-        }
 
         rejectButton.set(style: .gray)
         rejectButton.setTitle("button.reject".localized, for: .normal)

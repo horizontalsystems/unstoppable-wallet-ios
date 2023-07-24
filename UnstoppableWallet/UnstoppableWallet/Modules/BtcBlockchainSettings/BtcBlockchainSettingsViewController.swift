@@ -53,16 +53,8 @@ class BtcBlockchainSettingsViewController: ThemeViewController {
 
         tableView.sectionDataSource = self
 
-        view.addSubview(saveButtonHolder)
-        saveButtonHolder.snp.makeConstraints { maker in
-            maker.top.equalTo(tableView.snp.bottom).offset(-CGFloat.margin16)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-
+        saveButtonHolder.add(to: self, under: tableView)
         saveButtonHolder.addSubview(saveButton)
-        saveButton.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview().inset(CGFloat.margin24)
-        }
 
         saveButton.set(style: .yellow)
         saveButton.setTitle("button.save".localized, for: .normal)

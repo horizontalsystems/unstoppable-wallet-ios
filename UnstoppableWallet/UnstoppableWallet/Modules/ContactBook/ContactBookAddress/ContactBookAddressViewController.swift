@@ -8,7 +8,6 @@ import ThemeKit
 import UIExtensions
 
 class ContactBookAddressViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .heightButton + .margin32 + .margin16
     private let viewModel: ContactBookAddressViewModel
     private let onUpdateAddress: (ContactAddress?) -> ()
     private let disposeBag = DisposeBag()
@@ -25,7 +24,7 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
     private let recipientCell: RecipientAddressInputCell
     private let recipientCautionCell: RecipientAddressCautionCell
 
-    private let gradientWrapperView: GradientView?
+    private let gradientWrapperView: BottomGradientHolder?
     private let doneButton: PrimaryButton?
 
     private var blockchainName: String = ""
@@ -38,7 +37,7 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
         self.onUpdateAddress = onUpdateAddress
 
         if !viewModel.existAddress {
-            gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+            gradientWrapperView = BottomGradientHolder()
             doneButton = PrimaryButton()
         } else {
             gradientWrapperView = nil
@@ -71,21 +70,12 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
         tableView.sectionDataSource = self
 
         if let gradientWrapperView {
-            view.addSubview(gradientWrapperView)
-            gradientWrapperView.snp.makeConstraints { maker in
-                maker.height.equalTo(wrapperViewHeight).priority(.high)
-                maker.leading.trailing.bottom.equalToSuperview()
-            }
+            gradientWrapperView.add(to: self)
             gradientWrapperView.isHidden = viewModel.existAddress
         }
 
         if let doneButton {
             gradientWrapperView?.addSubview(doneButton)
-            doneButton.snp.makeConstraints { maker in
-                maker.top.equalToSuperview().inset(CGFloat.margin32)
-                maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-                maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-            }
 
             doneButton.set(style: .yellow)
             doneButton.setTitle("button.done".localized, for: .normal)
@@ -119,8 +109,6 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         isModalInPresentation = addressWasChanged
-
-        setInitialState(bottomPadding: gradientWrapperView?.height ?? 0)
     }
 
     private func handleChangeAddress() {

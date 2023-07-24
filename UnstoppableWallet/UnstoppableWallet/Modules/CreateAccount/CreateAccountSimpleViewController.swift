@@ -8,7 +8,6 @@ import SectionsTableView
 import UIExtensions
 
 class CreateAccountSimpleViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .margin16 + .heightButton + .margin16 + .heightButton + .margin32
     private let viewModel: CreateAccountViewModel
     private let disposeBag = DisposeBag()
     private weak var listener: ICreateAccountListener?
@@ -16,7 +15,7 @@ class CreateAccountSimpleViewController: KeyboardAwareViewController {
     private let tableView = SectionsTableView(style: .grouped)
     private let nameCell = TextFieldCell()
 
-    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    private let gradientWrapperView = BottomGradientHolder()
     private let createButton = PrimaryButton()
 
     private var isLoaded = false
@@ -51,17 +50,9 @@ class CreateAccountSimpleViewController: KeyboardAwareViewController {
 
         tableView.sectionDataSource = self
 
-        view.addSubview(gradientWrapperView)
-        gradientWrapperView.snp.makeConstraints { maker in
-            maker.height.equalTo(wrapperViewHeight).priority(.high)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
+        gradientWrapperView.add(to: self)
 
         gradientWrapperView.addSubview(createButton)
-        createButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-        }
 
         createButton.set(style: .yellow)
         createButton.setTitle("create_wallet.create".localized, for: .normal)
@@ -69,12 +60,7 @@ class CreateAccountSimpleViewController: KeyboardAwareViewController {
 
         let advancedButton = PrimaryButton()
 
-        view.addSubview(advancedButton)
-        advancedButton.snp.makeConstraints { maker in
-            maker.top.equalTo(createButton.snp.bottom).offset(CGFloat.margin16)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-        }
+        gradientWrapperView.addSubview(advancedButton)
 
         advancedButton.set(style: .transparent)
         advancedButton.setTitle("create_wallet.advanced".localized, for: .normal)
@@ -88,8 +74,6 @@ class CreateAccountSimpleViewController: KeyboardAwareViewController {
 
         subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.show(error: $0) }
         subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.finish() }
-
-        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: wrapperViewHeight - .margin16, right: 0)
 
         tableView.buildSections()
         isLoaded = true

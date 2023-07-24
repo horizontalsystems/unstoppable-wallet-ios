@@ -7,8 +7,6 @@ import SectionsTableView
 import UIExtensions
 
 class ICloudBackupNameViewController: KeyboardAwareViewController {
-    private let wrapperViewHeight: CGFloat = .margin16 + .heightButton + .margin32
-
     private let viewModel: ICloudBackupNameViewModel
     private var cancellables = Set<AnyCancellable>()
 
@@ -17,7 +15,7 @@ class ICloudBackupNameViewController: KeyboardAwareViewController {
     private let nameCell = InputCell(singleLine: true)
     private let nameCautionCell = FormCautionCell()
 
-    private let gradientWrapperView = GradientView(gradientHeight: .margin16, fromColor: UIColor.themeTyler.withAlphaComponent(0), toColor: UIColor.themeTyler)
+    private let bottomView = BottomGradientHolder()
     private let nextButton = PrimaryButton()
 
     private var keyboardShown = false
@@ -28,7 +26,7 @@ class ICloudBackupNameViewController: KeyboardAwareViewController {
     init(viewModel: ICloudBackupNameViewModel) {
         self.viewModel = viewModel
 
-        super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
+        super.init(scrollViews: [tableView], accessoryView: bottomView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -53,18 +51,8 @@ class ICloudBackupNameViewController: KeyboardAwareViewController {
 
         tableView.sectionDataSource = self
 
-        view.addSubview(gradientWrapperView)
-        gradientWrapperView.snp.makeConstraints { maker in
-            maker.height.equalTo(wrapperViewHeight).priority(.high)
-            maker.leading.trailing.bottom.equalToSuperview()
-        }
-
-        gradientWrapperView.addSubview(nextButton)
-        nextButton.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin32)
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(CGFloat.margin16)
-        }
+        bottomView.add(to: self)
+        bottomView.addSubview(nextButton)
 
         nextButton.set(style: .yellow)
         nextButton.setTitle("button.next".localized, for: .normal)
@@ -101,8 +89,6 @@ class ICloudBackupNameViewController: KeyboardAwareViewController {
                 .store(in: &cancellables)
 
 
-        additionalContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: wrapperViewHeight - .margin16, right: 0)
-
         tableView.buildSections()
         isLoaded = true
     }
@@ -114,8 +100,6 @@ class ICloudBackupNameViewController: KeyboardAwareViewController {
         }
 
         super.viewDidAppear(animated)
-
-        setInitialState(bottomPadding: gradientWrapperView.height)
     }
 
     @objc private func onTapCancel() {
