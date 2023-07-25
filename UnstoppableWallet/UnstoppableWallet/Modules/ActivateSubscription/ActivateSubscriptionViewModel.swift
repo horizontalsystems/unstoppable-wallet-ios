@@ -7,12 +7,12 @@ class ActivateSubscriptionViewModel {
 
     @Published private(set) var spinnerVisible = true
     @Published private(set) var errorVisible = false
+    @Published private(set) var noSubscriptionsVisible = false
     @Published private(set) var viewItem: ViewItem?
+
     @Published private(set) var signVisible = false
     @Published private(set) var activatingVisible = false
-
-    private let errorSubject = PassthroughSubject<String, Never>()
-    private let finishSubject = PassthroughSubject<Void, Never>()
+    @Published private(set) var rejectEnabled = true
 
     init(service: ActivateSubscriptionService) {
         self.service = service
@@ -21,51 +21,49 @@ class ActivateSubscriptionViewModel {
                 .sink { [weak self] in self?.sync(state: $0) }
                 .store(in: &cancellables)
 
-        service.$messageItem
-                .sink { [weak self] in self?.sync(messageItem: $0) }
+        service.$activationState
+                .sink { [weak self] in self?.sync(activationState: $0) }
                 .store(in: &cancellables)
 
         sync(state: service.state)
+        sync(activationState: service.activationState)
     }
 
     private func sync(state: ActivateSubscriptionService.State) {
         switch state {
-        case .activated:
-            finishSubject.send()
-            return
-        case .failedToActivate:
-            errorSubject.send("activate_subscription.failed_to_activate".localized)
-        default: ()
-        }
-
-        switch state {
-        case .fetchingMessage: spinnerVisible = true
-        default: spinnerVisible = false
-        }
-
-        switch state {
-        case .failedToFetchMessage: errorVisible = true
-        default: errorVisible = false
-        }
-
-        switch state {
-        case .readyToActivate, .failedToActivate: signVisible = true
-        default: signVisible = false
-        }
-
-        switch state {
-        case .activating: activatingVisible = true
-        default: activatingVisible = false
+        case .loading:
+            spinnerVisible = true
+            errorVisible = false
+            noSubscriptionsVisible = false
+            viewItem = nil
+        case .noSubscriptions:
+            spinnerVisible = false
+            errorVisible = false
+            noSubscriptionsVisible = true
+            viewItem = nil
+        case let .readyToActivate(message, account, address):
+            spinnerVisible = false
+            errorVisible = false
+            noSubscriptionsVisible = false
+            viewItem = ViewItem(walletName: account.name, address: address.eip55, message: message)
+        case .failed:
+            spinnerVisible = false
+            errorVisible = true
+            noSubscriptionsVisible = false
+            viewItem = nil
         }
     }
 
-    private func sync(messageItem: ActivateSubscriptionService.MessageItem?) {
-        viewItem = messageItem.map {
-            ViewItem(
-                    walletName: $0.account.name,
-                    address: $0.address.eip55,
-                    message: $0.message
-            )
+    private func sync(activationState: ActivateSubscriptionService.ActivationState) {
+        switch activationState {
+        case .ready:
+            signVisible = true
+            activatingVisible = false
+            rejectEnabled = true
+        case .activating:
+            signVisible = false
+            activatingVisible = true
+            rejectEnabled = false
         }
     }
 
@@ -74,11 +72,13 @@ class ActivateSubscriptionViewModel {
 extension ActivateSubscriptionViewModel {
 
     var errorPublisher: AnyPublisher<String, Never> {
-        errorSubject.eraseToAnyPublisher()
+        service.activationErrorPublisher
+                .map { _ in "activate_subscription.failed_to_activate".localized }
+                .eraseToAnyPublisher()
     }
 
     var finishPublisher: AnyPublisher<Void, Never> {
-        finishSubject.eraseToAnyPublisher()
+        service.activatedPublisher
     }
 
     func onTapRetry() {

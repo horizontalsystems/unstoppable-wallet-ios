@@ -56,7 +56,12 @@ class SubscriptionInfoViewController: ThemeViewController {
     }
 
     @objc private func onTapAlreadyHave() {
-        // todo
+        let viewController = ActivateSubscriptionModule.viewController()
+        let presentingViewController = presentingViewController
+
+        dismiss(animated: true) {
+            presentingViewController?.present(viewController, animated: true)
+        }
     }
 
 }

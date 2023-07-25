@@ -10,18 +10,16 @@ class CoinAnalyticsService {
     private let marketKit: MarketKit.Kit
     private let currencyKit: CurrencyKit.Kit
     private let subscriptionManager: SubscriptionManager
-    private let accountManager: AccountManager
     private var tasks = Set<AnyTask>()
     private var cancellables = Set<AnyCancellable>()
 
     @PostPublished private(set) var state: State = .loading
 
-    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, subscriptionManager: SubscriptionManager, accountManager: AccountManager) {
+    init(fullCoin: FullCoin, marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, subscriptionManager: SubscriptionManager) {
         self.fullCoin = fullCoin
         self.marketKit = marketKit
         self.currencyKit = currencyKit
         self.subscriptionManager = subscriptionManager
-        self.accountManager = accountManager
 
         subscriptionManager.$isAuthenticated
                 .sink { [weak self] isAuthenticated in
@@ -32,18 +30,10 @@ class CoinAnalyticsService {
                 .store(in: &cancellables)
     }
 
-    private func resolveAddresses() -> [String] {
-        accountManager.accounts
-                .compactMap { $0.type.evmAddress(chain: App.shared.evmBlockchainManager.chain(blockchainType: .ethereum)) }
-                .map { $0.hex }
-    }
-
     private func loadPreview() {
-        let addresses = resolveAddresses()
-
         Task { [weak self, marketKit, fullCoin] in
             do {
-                let analyticsPreview = try await marketKit.analyticsPreview(coinUid: fullCoin.coin.uid, addresses: addresses)
+                let analyticsPreview = try await marketKit.analyticsPreview(coinUid: fullCoin.coin.uid)
                 self?.state = .preview(analyticsPreview: analyticsPreview)
             } catch {
                 self?.state = .failed(error)
