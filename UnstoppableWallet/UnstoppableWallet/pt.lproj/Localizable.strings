@@ -1604,6 +1604,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "activate_subscription.activating" = "Ativando...";
 "activate_subscription.failed_to_activate" = "Falha ao ativar a assinatura";
 "activate_subscription.activated" = "Ativado";
+"activate_subscription.no_subscriptions" = "Your wallet address does not have a subscription to premium features, you need to purchase it to activate the subscription.";
 
 // Launch
 
