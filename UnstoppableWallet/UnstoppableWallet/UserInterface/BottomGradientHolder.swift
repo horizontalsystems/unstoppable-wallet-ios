@@ -7,7 +7,7 @@ protocol IHeightAwareView {
 }
 
 class BottomGradientHolder: GradientView {
-    static let defaultStackViewInsets = UIEdgeInsets(top: .margin24, left: 0, bottom: .margin16, right: 0)
+    static let defaultStackViewInsets = UIEdgeInsets(top: .margin16 + .margin24, left: 0, bottom: .margin16, right: 0)
     let stackView = UIStackView()
 
     private let insets: UIEdgeInsets

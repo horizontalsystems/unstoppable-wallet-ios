@@ -20,6 +20,7 @@ class CoinAnalyticsViewModel {
     private let emptyViewRelay = BehaviorRelay<Bool>(value: false)
 
     private let indicatorViewItemsSubject = CurrentValueSubject<IndicatorViewItem, Never>(.empty)
+    private let subscriptionInfoSubject = PassthroughSubject<Void, Never>()
 
     private let ratioFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -96,8 +97,8 @@ class CoinAnalyticsViewModel {
             emptyViewRelay.accept(false)
 
             syncIndicators(enabled: false)
-        case .preview(let analyticsPreview, let subscriptionAddress):
-            let viewItem = previewViewItem(analyticsPreview: analyticsPreview, subscriptionAddress: subscriptionAddress)
+        case .preview(let analyticsPreview):
+            let viewItem = previewViewItem(analyticsPreview: analyticsPreview)
 
             if viewItem.isEmpty {
                 viewItemRelay.accept(nil)
@@ -111,6 +112,7 @@ class CoinAnalyticsViewModel {
             syncErrorRelay.accept(false)
 
             syncIndicators(enabled: false)
+            subscriptionInfoSubject.send()
         case .success(let analytics):
             let viewItem = viewItem(analytics: analytics)
 
@@ -270,7 +272,6 @@ class CoinAnalyticsViewModel {
 
     private func viewItem(analytics: Analytics) -> ViewItem {
         ViewItem(
-                lockInfo: nil,
                 cexVolume: rankCardViewItem(
                         points: analytics.cexVolume?.aggregatedChartPoints.points,
                         value: analytics.cexVolume?.aggregatedChartPoints.aggregatedValue,
@@ -338,9 +339,8 @@ class CoinAnalyticsViewModel {
         )
     }
 
-    private func previewViewItem(analyticsPreview data: AnalyticsPreview, subscriptionAddress: String?) -> ViewItem {
+    private func previewViewItem(analyticsPreview data: AnalyticsPreview) -> ViewItem {
         ViewItem(
-                lockInfo: subscriptionAddress.map { .notActivated(address: $0) } ?? .notSubscribed,
                 cexVolume: data.cexVolume ? RankCardViewItem(chart: .preview, rank: data.cexVolumeRank30d ? .preview : nil, rating: data.cexVolumeRating ? .preview : nil) : nil,
                 dexVolume: data.dexVolume ? RankCardViewItem(chart: .preview, rank: data.dexVolumeRank30d ? .preview : nil, rating: data.dexVolumeRating ? .preview : nil) : nil,
                 dexLiquidity: data.dexLiquidity ? RankCardViewItem(chart: .preview, rank: data.dexLiquidityRank ? .preview : nil, rating: data.dexLiquidityRating ? .preview : nil) : nil,
@@ -412,6 +412,10 @@ extension CoinAnalyticsViewModel {
         indicatorViewItemsSubject.eraseToAnyPublisher()
     }
 
+    var subscriptionInfoPublisher: AnyPublisher<Void, Never> {
+        subscriptionInfoSubject.eraseToAnyPublisher()
+    }
+
     var coin: Coin {
         service.coin
     }
@@ -429,7 +433,6 @@ extension CoinAnalyticsViewModel {
 extension CoinAnalyticsViewModel {
 
     struct ViewItem {
-        let lockInfo: LockInfo?
         let cexVolume: RankCardViewItem?
         let dexVolume: RankCardViewItem?
         let dexLiquidity: RankCardViewItem?
@@ -459,11 +462,6 @@ extension CoinAnalyticsViewModel {
         let error: Bool
         let switchEnabled: Bool
         let viewItems: [CoinIndicatorViewItemFactory.ViewItem]
-    }
-
-    enum LockInfo {
-        case notSubscribed
-        case notActivated(address: String)
     }
 
     struct ChartViewItem {

@@ -79,7 +79,6 @@ class CoinAnalyticsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
 
-        tableView.registerCell(forClass: PlaceholderCell.self)
         tableView.registerCell(forClass: MarketWideCardCell.self)
         tableView.registerCell(forClass: CoinAnalyticsHoldersCell.self)
         tableView.registerCell(forClass: IndicatorAdviceCell.self)
@@ -97,11 +96,19 @@ class CoinAnalyticsViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.emptyViewDriver) { [weak self] visible in
             self?.emptyView.isHidden = !visible
         }
+
         viewModel.indicatorViewItemsPublisher
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] in
                     self?.indicatorViewItem = $0
                     self?.tableView.reload()
+                }
+                .store(in: &cancellables)
+
+        viewModel.subscriptionInfoPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.openSubscriptionInfo()
                 }
                 .store(in: &cancellables)
 
@@ -121,18 +128,6 @@ class CoinAnalyticsViewController: ThemeViewController {
 
         tableView.isHidden = viewItem == nil
         tableView.reload()
-    }
-
-    private func openSubscriptionInfo() {
-        UrlManager.open(url: AppConfig.analyticsLink, inAppController: parentNavigationController)
-    }
-
-    private func openActivateSubscription(address: String) {
-        guard let viewController = ActivateSubscriptionModule.viewController(address: address) else {
-            return
-        }
-
-        parentNavigationController?.present(viewController, animated: true)
     }
 
     private func openTechnicalIndicatorInfo() {
@@ -301,6 +296,11 @@ class CoinAnalyticsViewController: ThemeViewController {
 
         let viewController = CoinDetailAdviceViewController(viewItems: viewItems)
         parentNavigationController?.pushViewController(viewController, animated: true)
+    }
+
+    private func openSubscriptionInfo() {
+        let viewController = SubscriptionInfoViewController()
+        parentNavigationController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
     private func placeholderChartData() -> ChartData {
@@ -473,6 +473,9 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     autoDeselect: true,
                     bind: { cell in
                         cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                    },
+                    action: { [weak self] in
+                        self?.openRatings()
                     }
             )
         case .regular(let rating):
@@ -495,50 +498,6 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     }
             )
         }
-    }
-
-    private func lockInfoSection(lockInfo: CoinAnalyticsViewModel.LockInfo) -> SectionProtocol {
-        let icon: UIImage?
-        let text: String
-        let buttonTitle: String
-        let buttonStyle: PrimaryButton.Style
-        let onTapButton: () -> ()
-
-        switch lockInfo {
-        case .notSubscribed:
-            icon = UIImage(named: "lock_48")?.withTintColor(.themeJacob)
-            text = "coin_analytics.locked.not_subscribed".localized(AppConfig.appName)
-            buttonTitle = "coin_analytics.locked.learn_more".localized
-            buttonStyle = .gray
-            onTapButton = { [weak self] in self?.openSubscriptionInfo() }
-        case .notActivated(let address):
-            icon = UIImage(named: "unlock_48")?.withTintColor(.themeJacob)
-            text = "coin_analytics.locked.not_activated".localized
-            buttonTitle = "coin_analytics.locked.activate".localized
-            buttonStyle = .yellow
-            onTapButton = { [weak self] in self?.openActivateSubscription(address: address) }
-        }
-
-        return Section(
-                id: "lock-info",
-                headerState: .margin(height: .margin12),
-                rows: [
-                    Row<PlaceholderCell>(
-                            id: "lock-info",
-                            dynamicHeight: { _ in PlaceholderCell.height(text: text) },
-                            bind: { cell, _ in
-                                cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
-                                cell.bind(
-                                        icon: icon,
-                                        text: text,
-                                        buttonTitle: buttonTitle,
-                                        buttonStyle: buttonStyle,
-                                        onTapButton: onTapButton
-                                )
-                            }
-                    )
-                ]
-        )
     }
 
     private func cexVolumeSection(viewItem: CoinAnalyticsViewModel.RankCardViewItem) -> SectionProtocol {
@@ -1165,10 +1124,6 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         var sections = [SectionProtocol]()
 
         if let viewItem {
-            if let lockInfo = viewItem.lockInfo {
-                sections.append(lockInfoSection(lockInfo: lockInfo))
-            }
-
             if let indicatorViewItem {
                 sections.append(indicatorSection(viewItem: indicatorViewItem))
             }

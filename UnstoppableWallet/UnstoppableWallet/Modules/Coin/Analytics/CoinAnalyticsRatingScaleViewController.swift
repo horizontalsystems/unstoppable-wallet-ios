@@ -43,14 +43,8 @@ extension CoinAnalyticsRatingScaleViewController: SectionsDataSource {
                     id: "info",
                     footerState: .margin(height: .margin12),
                     rows: [
-                        MarkdownViewController.header1Row(
-                                id: "header",
-                                attributedString: NSAttributedString(string: "coin_analytics.rating_scale".localized, attributes: [.font: UIFont.title2, .foregroundColor: UIColor.themeLeah])
-                        ),
-                        MarkdownViewController.textRow(
-                                id: "description",
-                                attributedString: NSAttributedString(string: "coin_analytics.rating_scale.description".localized, attributes: [.font: UIFont.body, .foregroundColor: UIColor.themeBran])
-                        )
+                        MarkdownViewController.header1Row(id: "header", string: "coin_analytics.rating_scale".localized),
+                        MarkdownViewController.textRow(id: "description", string: "coin_analytics.rating_scale.description".localized)
                     ]
             ),
             Section(

@@ -64,28 +64,13 @@ extension InfoViewController: SectionsDataSource {
         viewItems.enumerated().map { index, viewItem in
             switch viewItem {
             case .header1(let text):
-                return MarkdownViewController.header1Row(
-                        id: "header-\(index)",
-                        attributedString: NSAttributedString(string: text, attributes: [.font: UIFont.title2, .foregroundColor: UIColor.themeLeah])
-                )
+                return MarkdownViewController.header1Row(id: "header-\(index)", string: text)
             case .header3(let text):
-                return MarkdownViewController.header3Row(
-                        id: "header-\(index)",
-                        attributedString: NSAttributedString(string: text, attributes: [.font: UIFont.headline2, .foregroundColor: UIColor.themeJacob])
-                )
+                return MarkdownViewController.header3Row(id: "header-\(index)", string: text)
             case .text(let text):
-                return MarkdownViewController.textRow(
-                        id: "text-\(index)",
-                        attributedString: NSAttributedString(string: text, attributes: [.font: UIFont.body, .foregroundColor: UIColor.themeBran])
-                )
+                return MarkdownViewController.textRow(id: "text-\(index)", string: text)
             case .listItem(let text):
-                return MarkdownViewController.listItemRow(
-                        id: "list-item-\(index)",
-                        attributedString: NSAttributedString(string: text, attributes: [.font: UIFont.body, .foregroundColor: UIColor.themeBran]),
-                        prefix: "•",
-                        tightTop: false,
-                        tightBottom: false
-                )
+                return MarkdownViewController.listItemRow(id: "list-item-\(index)", string: text)
             }
         }
     }
