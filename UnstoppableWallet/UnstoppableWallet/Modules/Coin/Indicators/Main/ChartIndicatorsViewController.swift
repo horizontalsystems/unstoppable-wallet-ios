@@ -12,6 +12,7 @@ class ChartIndicatorsViewController: ThemeViewController {
     private var cancellables = Set<AnyCancellable>()
 
     private let tableView = SectionsTableView(style: .grouped)
+    private var isLocked = false
     private var viewItems = [ChartIndicatorsViewModel.ViewItem]()
 
     init(viewModel: ChartIndicatorsViewModel) {
@@ -41,6 +42,13 @@ class ChartIndicatorsViewController: ThemeViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
 
+        viewModel.$isLocked
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] isLocked in
+                    self?.isLocked = isLocked
+                }
+                .store(in: &cancellables)
+
         viewModel.$viewItems
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] viewItems in
@@ -56,6 +64,7 @@ class ChartIndicatorsViewController: ThemeViewController {
                 }
                 .store(in: &cancellables)
 
+        isLocked = viewModel.isLocked
         viewItems = viewModel.viewItems
         tableView.buildSections()
     }
@@ -65,6 +74,7 @@ class ChartIndicatorsViewController: ThemeViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
@@ -84,18 +94,31 @@ class ChartIndicatorsViewController: ThemeViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
+    private func openSubscriptionInfo() {
+        let viewController = SubscriptionInfoViewController()
+        present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
 }
 
 extension ChartIndicatorsViewController {
 
     private func indicatorRow(viewItem: ChartIndicatorsViewModel.IndicatorViewItem, rowInfo: RowInfo) -> RowProtocol {
+        let isLocked = isLocked
         let elements: [CellBuilderNew.CellElement] = [
             .imageElement(image: .local(viewItem.image), size: .image24),
             .textElement(text: .body(viewItem.name)),
             .imageElement(image: .local(UIImage(named: "edit_20")), size: .image20),
             .switch { [weak self] component in
                 component.switchView.isOn = viewItem.enabled
-                component.onSwitch = { self?.viewModel.onToggle(viewItem: viewItem, $0) }
+                component.onSwitch = { [weak component] in
+                    if isLocked {
+                        component?.switchView.setOn(!$0, animated: true)
+                        self?.openSubscriptionInfo()
+                    } else {
+                        self?.viewModel.onToggle(viewItem: viewItem, $0)
+                    }
+                }
             }
         ]
 

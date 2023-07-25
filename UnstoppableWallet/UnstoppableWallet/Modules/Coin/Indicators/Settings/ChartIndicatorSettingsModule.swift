@@ -5,7 +5,9 @@ class ChartIndicatorSettingsModule {
 
     static func viewController(indicator: ChartIndicator, onComplete: @escaping (ChartIndicator) -> ()) -> UIViewController? {
         let dataSource: IIndicatorDataSource
-        let defaultIndicator = ChartIndicatorFactory.default.first { $0.id == indicator.id && $0.index == indicator.index }
+        let defaultIndicator = ChartIndicatorFactory
+                .defaultIndicators(subscribed: true)
+                .first { $0.id == indicator.id && $0.index == indicator.index }
         switch indicator {
         case let indicator as MaIndicator:
             guard let defaultIndicator = defaultIndicator as? MaIndicator else {
@@ -25,7 +27,7 @@ class ChartIndicatorSettingsModule {
         default: return nil
         }
 
-        let viewModel = ChartIndicatorSettingsViewModel(dataSource: dataSource)
+        let viewModel = ChartIndicatorSettingsViewModel(dataSource: dataSource, subscriptionManager: App.shared.subscriptionManager)
         let viewController = ChartIndicatorSettingsViewController(viewModel: viewModel, onComplete: onComplete)
 
         return viewController

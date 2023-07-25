@@ -8,15 +8,22 @@ class ChartIndicatorsViewModel {
     private var cancellables = Set<AnyCancellable>()
 
     @Published public var viewItems = [ViewItem]()
+    @Published public var isLocked: Bool = false
+
     private let openSettingsSubject = PassthroughSubject<ChartIndicator, Never>()
 
     init(service: ChartIndicatorsService) {
         self.service = service
 
+        service.$isLocked
+                .sink { [weak self] in self?.isLocked = $0 }
+                .store(in: &cancellables)
+
         service.$items
                 .sink { [weak self] in self?.sync(items: $0) }
                 .store(in: &cancellables)
 
+        isLocked = service.isLocked
         sync(items: service.items)
     }
 
