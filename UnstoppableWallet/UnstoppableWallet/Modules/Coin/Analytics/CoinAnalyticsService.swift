@@ -23,9 +23,9 @@ class CoinAnalyticsService {
         self.subscriptionManager = subscriptionManager
         self.accountManager = accountManager
 
-        subscriptionManager.$authToken
-                .sink { [weak self] token in
-                    if token != nil {
+        subscriptionManager.$isAuthenticated
+                .sink { [weak self] isAuthenticated in
+                    if isAuthenticated {
                         self?.sync()
                     }
                 }
@@ -44,8 +44,7 @@ class CoinAnalyticsService {
         Task { [weak self, marketKit, fullCoin] in
             do {
                 let analyticsPreview = try await marketKit.analyticsPreview(coinUid: fullCoin.coin.uid, addresses: addresses)
-                let subscriptionAddress = analyticsPreview.subscriptions.sorted { lhs, rhs in lhs.deadline > rhs.deadline }.first?.address
-                self?.state = .preview(analyticsPreview: analyticsPreview, subscriptionAddress: subscriptionAddress)
+                self?.state = .preview(analyticsPreview: analyticsPreview)
             } catch {
                 self?.state = .failed(error)
             }
@@ -89,19 +88,22 @@ extension CoinAnalyticsService {
 
         state = .loading
 
-        if subscriptionManager.authToken != nil {
-            Task { [weak self, marketKit, fullCoin, currency] in
-                do {
-                    let analytics = try await marketKit.analytics(coinUid: fullCoin.coin.uid, currencyCode: currency.code)
-                    self?.state = .success(analytics: analytics)
-                } catch {
-                    if let responseError = error as? NetworkManager.ResponseError, (responseError.statusCode == 401 || responseError.statusCode == 403) {
-                        self?.subscriptionManager.invalidateAuthToken()
-                        self?.loadPreview()
-                    } else {
-                        self?.state = .failed(error)
-                    }
-                }
+        if subscriptionManager.isAuthenticated {
+            Task { [weak self, subscriptionManager, marketKit, fullCoin, currency] in
+                try await subscriptionManager.fetch(
+                        request: {
+                            try await marketKit.analytics(coinUid: fullCoin.coin.uid, currencyCode: currency.code)
+                        },
+                        onSuccess: { [weak self] analytics in
+                            self?.state = .success(analytics: analytics)
+                        },
+                        onInvalidAuthToken: { [weak self] in
+                            self?.loadPreview()
+                        },
+                        onFailure: { [weak self] error in
+                            self?.state = .failed(error)
+                        }
+                )
             }.store(in: &tasks)
         } else {
             loadPreview()
@@ -115,7 +117,7 @@ extension CoinAnalyticsService {
     enum State {
         case loading
         case failed(Error)
-        case preview(analyticsPreview: AnalyticsPreview, subscriptionAddress: String?)
+        case preview(analyticsPreview: AnalyticsPreview)
         case success(analytics: Analytics)
     }
 
