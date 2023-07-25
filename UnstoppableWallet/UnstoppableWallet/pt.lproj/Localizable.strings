@@ -712,10 +712,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.details" = "Detalhes";
 
 "coin_analytics.not_available" = "Este projeto não tem dados de análise";
-"coin_analytics.locked.not_subscribed" = "This page available only for %@ Wallet premium users";
-"coin_analytics.locked.learn_more" = "Saiba Mais";
-"coin_analytics.locked.not_activated" = "Ativar sua assinatura para ter acesso ao Analytics";
-"coin_analytics.locked.activate" = "Ativar";
 
 "coin_analytics.technical_indicators" = "Technical Indicators";
 "coin_analytics.technical_indicators.info1" = "Summary: This is a general overview of an asset's technicals, considering a variety of technical indicators and timeframes. It provides a consensus viewpoint (Buy, Sell, or Neutral) based on these indicators.";
@@ -1585,6 +1581,18 @@ Go to Settings - > %@ and allow access to the camera.";
 "nft.activity.event_type.listCancel" = "Lista De Cancelar";
 "nft.activity.event_type.offer" = "Oferta";
 "nft.activity.event_type.offerCancel" = "Cancelar oferta";
+
+// Subscription Info
+
+"subscription_info.title" = "Premium Features";
+"subscription_info.info1.title" = "Cryptocurrency Analytics";
+"subscription_info.info1.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
+"subscription_info.info2.title" = "Chart Indicators";
+"subscription_info.info2.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
+"subscription_info.info3.title" = "Personal Support";
+"subscription_info.info3.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
+"subscription_info.get_premium" = "Get Premium";
+"subscription_info.already_have" = "I already have Premium";
 
 // Activate Subscription
 
