@@ -234,26 +234,11 @@ class MainSettingsViewController: ThemeViewController {
     }
 
     private func onPersonalSupportTapped() {
-        if viewModel.isSubscribed {
+        if viewModel.isAuthenticated {
             navigationController?.pushViewController(PersonalSupportModule.viewController(), animated: true)
         } else {
-            let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "lock_24")?.withTintColor(.themeGray)),
-                title: "settings.personal_support".localized,
-                items: [
-                    .description(text: "settings.personal_support.need_subscription".localized(AppConfig.appName))
-                ],
-                buttons: [
-                    .init(
-                        style: .yellow, title: "button.learn_more".localized,
-                        action: { [weak self] in
-                            (self?.viewModel.analyticsLink).flatMap { UrlManager.open(url: $0) }
-                        }
-                    )
-                ]
-            )
-
-            present(viewController, animated: true)
+            let viewController = SubscriptionInfoViewController()
+            present(ThemeNavigationController(rootViewController: viewController), animated: true)
         }
     }
 

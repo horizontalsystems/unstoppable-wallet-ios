@@ -9,10 +9,26 @@ class PersonalSupportService {
     private let successSubject = PassthroughSubject<Void, Never>()
     private let errorSubject = PassthroughSubject<Error, Never>()
 
-    private var username: String?
+    @Published private(set) var requestButtonState: AsyncActionButtonState = .disabled
+    private var username: String? {
+        didSet {
+            sync()
+        }
+    }
 
     init(marketKit: MarketKit.Kit) {
         self.marketKit = marketKit
+
+        sync()
+    }
+
+    private func sync() {
+        if username?.isEmpty ?? true {
+            requestButtonState = .disabled
+            return
+        }
+
+        requestButtonState = .enabled
     }
 
 }
@@ -36,11 +52,15 @@ extension PersonalSupportService {
             return
         }
 
+        requestButtonState = .spinner
+
         Task { [weak self, marketKit] in
             do {
                 try await marketKit.requestPersonalSupport(telegramUsername: username)
+                self?.requestButtonState = .disabled
                 self?.successSubject.send()
             } catch {
+                self?.requestButtonState = .enabled
                 self?.errorSubject.send(error)
             }
         }.store(in: &tasks)

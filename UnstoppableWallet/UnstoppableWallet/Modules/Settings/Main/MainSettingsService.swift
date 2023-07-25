@@ -22,13 +22,14 @@ class MainSettingsService {
     private let currencyKit: CurrencyKit.Kit
     private let walletConnectSessionManager: WalletConnectSessionManager
     private let walletConnectV2SessionManager: WalletConnectV2SessionManager
+    private let subscriptionManager: SubscriptionManager
 
     private let iCloudAvailableErrorRelay = BehaviorRelay<Bool>(value: false)
     private let noWalletRequiredActionsRelay = BehaviorRelay<Bool>(value: false)
 
     init(backupManager: BackupManager, cloudAccountBackupManager: CloudAccountBackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager, pinKit: PinKit.Kit, termsManager: TermsManager,
          systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit,
-         walletConnectSessionManager: WalletConnectSessionManager, walletConnectV2SessionManager: WalletConnectV2SessionManager) {
+         walletConnectSessionManager: WalletConnectSessionManager, walletConnectV2SessionManager: WalletConnectV2SessionManager, subscriptionManager: SubscriptionManager) {
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.backupManager = backupManager
         self.accountRestoreWarningManager = accountRestoreWarningManager
@@ -40,6 +41,7 @@ class MainSettingsService {
         self.currencyKit = currencyKit
         self.walletConnectSessionManager = walletConnectSessionManager
         self.walletConnectV2SessionManager = walletConnectV2SessionManager
+        self.subscriptionManager = subscriptionManager
 
         subscribe(disposeBag, contactBookManager.iCloudErrorObservable) { [weak self] error in
             if error != nil, (self?.contactBookManager.remoteSync ?? false) {
@@ -134,6 +136,10 @@ extension MainSettingsService {
         accountManager.activeAccount
     }
 
+    var isAuthenticated: Bool {
+        subscriptionManager.isAuthenticated
+    }
+
     var walletConnectState: WalletConnectState {
         guard let activeAccount = activeAccount else {
             return .noAccount
@@ -151,10 +157,6 @@ extension MainSettingsService {
 
     var analyticsLink: String {
         AppConfig.analyticsLink
-    }
-
-    var isSubscribed: Bool {
-        App.shared.subscriptionManager.isAuthenticated
     }
 
 }

@@ -132,8 +132,8 @@ extension MainSettingsViewModel {
         service.analyticsLink
     }
 
-    var isSubscribed: Bool {
-        service.isSubscribed
+    var isAuthenticated: Bool {
+        service.isAuthenticated
     }
 
     func onTapWalletConnect() {

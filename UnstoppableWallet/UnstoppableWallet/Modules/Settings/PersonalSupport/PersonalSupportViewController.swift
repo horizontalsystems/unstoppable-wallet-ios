@@ -33,6 +33,7 @@ class PersonalSupportViewController: KeyboardAwareViewController {
 
         telegramUsernameCell.inputPlaceholder = "settings.personal_support.telegram_username.placeholder".localized
         telegramUsernameCell.onChangeText = { [weak self] in self?.viewModel.onChanged(username: $0) }
+        telegramUsernameCell.autocapitalizationType = .none
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -56,9 +57,19 @@ class PersonalSupportViewController: KeyboardAwareViewController {
         requestingButton.isEnabled = false
         requestingButton.setTitle("settings.personal_support.request".localized, for: .normal)
 
-        viewModel.$requestButtonState
+        viewModel.hiddenRequestButtonPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.sync(buttonState: $0) }
+            .sink { [weak self] in self?.requestButton.isHidden = $0 }
+            .store(in: &cancellables)
+
+        viewModel.enabledRequestButtonPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.requestButton.isEnabled = $0 }
+            .store(in: &cancellables)
+
+        viewModel.hiddenRequestingButtonPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.requestingButton.isHidden = $0 }
             .store(in: &cancellables)
 
         viewModel.successPublisher
@@ -71,31 +82,7 @@ class PersonalSupportViewController: KeyboardAwareViewController {
             .sink { text in HudHelper.instance.showErrorBanner(title: text) }
             .store(in: &cancellables)
 
-        sync(buttonState: viewModel.requestButtonState)
-
         tableView.buildSections()
-    }
-
-    private func sync(buttonState: AsyncActionButtonState) {
-        switch buttonState {
-        case .enabled:
-            requestButton.isEnabled = true
-            requestButton.isHidden = false
-            requestingButton.isHidden = true
-        case .spinner:
-            requestButton.isHidden = true
-            requestingButton.isHidden = false
-        case .disabled:
-            requestButton.isEnabled = false
-            requestButton.isHidden = false
-            requestingButton.isHidden = true
-        }
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
     @objc private func onTapRequest() {
