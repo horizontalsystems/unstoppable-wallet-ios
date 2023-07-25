@@ -3,25 +3,64 @@ import HsExtensions
 
 class PersonalSupportViewModel {
     private let service: PersonalSupportService
+    private var cancellables = Set<AnyCancellable>()
 
-    @Published private(set) var requestButtonState: AsyncActionButtonState = .enabled
+    private let hiddenRequestButtonSubject = CurrentValueSubject<Bool, Never>(false)
+    private let enabledRequestButtonSubject = CurrentValueSubject<Bool, Never>(false)
+    private let hiddenRequestingButtonSubject = CurrentValueSubject<Bool, Never>(false)
 
     init(service: PersonalSupportService) {
         self.service = service
+
+        service.$requestButtonState
+                .sink { [weak self] state in
+                    self?.sync(state: state)
+                }
+                .store(in: &cancellables)
+
+        sync(state: service.requestButtonState)
     }
+
+    private func sync(state: AsyncActionButtonState) {
+        var requestButtonEnabled = false
+        var requestButtonHidden = false
+        var requestingButtonHidden = false
+        switch state {
+        case .enabled:
+            requestButtonEnabled = true
+            requestingButtonHidden = true
+        case .spinner:
+            requestButtonHidden = true
+        case .disabled:
+            requestingButtonHidden = true
+        }
+        hiddenRequestButtonSubject.send(requestButtonHidden)
+        enabledRequestButtonSubject.send(requestButtonEnabled)
+        hiddenRequestingButtonSubject.send(requestingButtonHidden)
+    }
+
 }
 
 extension PersonalSupportViewModel {
 
+    var hiddenRequestButtonPublisher: AnyPublisher<Bool, Never> {
+        hiddenRequestButtonSubject.eraseToAnyPublisher()
+    }
+
+    var enabledRequestButtonPublisher: AnyPublisher<Bool, Never> {
+        enabledRequestButtonSubject.eraseToAnyPublisher()
+    }
+
+    var hiddenRequestingButtonPublisher: AnyPublisher<Bool, Never> {
+        hiddenRequestingButtonSubject.eraseToAnyPublisher()
+    }
+
     var successPublisher: AnyPublisher<Void, Never> {
-        service.successPublisher
-            .handleEvents(receiveOutput: { [weak self] in self?.requestButtonState = .disabled })
-            .eraseToAnyPublisher()
+        service.successPublisher.eraseToAnyPublisher()
     }
 
     var errorPublisher: AnyPublisher<String, Never> {
         service.errorPublisher
-            .handleEvents(receiveOutput: { [weak self] _ in self?.requestButtonState = .enabled })
             .map { _ in "settings.personal_support.failed".localized }
             .eraseToAnyPublisher()
     }
@@ -31,7 +70,6 @@ extension PersonalSupportViewModel {
     }
 
     func onTapRequest() {
-        requestButtonState = .spinner
         service.request()
     }
 
