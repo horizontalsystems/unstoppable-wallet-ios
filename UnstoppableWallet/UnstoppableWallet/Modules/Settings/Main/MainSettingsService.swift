@@ -154,7 +154,7 @@ extension MainSettingsService {
     }
 
     var isSubscribed: Bool {
-        App.shared.subscriptionManager.isAuthenticated != nil
+        App.shared.subscriptionManager.isAuthenticated
     }
 
 }

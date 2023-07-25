@@ -14,7 +14,11 @@ struct CoinOverviewModule {
                 walletManager: App.shared.walletManager
         )
 
-        let repository = ChartIndicatorsRepository(localStorage: App.shared.localStorage)
+        let repository = ChartIndicatorsRepository(
+                localStorage: App.shared.localStorage,
+                subscriptionManager: App.shared.subscriptionManager
+        )
+
         let chartService = CoinChartService(
                 marketKit: App.shared.marketKit,
                 currencyKit: App.shared.currencyKit,

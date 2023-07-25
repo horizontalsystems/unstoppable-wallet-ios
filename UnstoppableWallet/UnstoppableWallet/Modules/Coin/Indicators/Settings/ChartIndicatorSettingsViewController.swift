@@ -106,6 +106,13 @@ class ChartIndicatorSettingsViewController: KeyboardAwareViewController {
                 }
                 .store(in: &cancellables)
 
+        viewModel.showSubscribeInfoPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.showSubscribeInfo()
+                }
+                .store(in: &cancellables)
+
         tableView.buildSections()
     }
 
@@ -128,6 +135,11 @@ class ChartIndicatorSettingsViewController: KeyboardAwareViewController {
     private func onApply(indicator: ChartIndicator) {
         onComplete?(indicator)
         navigationController?.popViewController(animated: true)
+    }
+
+    private func showSubscribeInfo() {
+        let viewController = SubscriptionInfoViewController()
+        present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
     private func sync(cautions: [IndicatorDataSource.Caution]) {
