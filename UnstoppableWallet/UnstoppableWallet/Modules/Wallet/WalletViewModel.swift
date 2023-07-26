@@ -105,7 +105,7 @@ class WalletViewModel {
     }
 
     private func sync(totalItem: WalletService.TotalItem?) {
-        headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, cexAccount: service.cexAccount) }
+        headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, cexAccount: service.cexAccount, withdrawalAllowed: service.withdrawalAllowed) }
     }
 
     private func sync(sortType: WalletModule.SortType, scrollToTop: Bool) {
@@ -345,6 +345,7 @@ extension WalletViewModel {
         let convertedValue: String?
         let convertedValueExpired: Bool
         let buttonsVisible: Bool
+        let withdrawalAllowed: Bool
     }
 
     struct ControlViewItem {

@@ -495,7 +495,7 @@ extension BinanceCexProvider: ICexAssetProvider {
                             freeBalance: asset.free,
                             lockedBalance: asset.locked,
                             depositEnabled: asset.depositAllEnable,
-                            withdrawEnabled: asset.withdrawAllEnable,
+                            withdrawEnabled: false,
                             depositNetworks: asset.networks.map { network in
                                 CexDepositNetworkRaw(
                                         id: network.network,

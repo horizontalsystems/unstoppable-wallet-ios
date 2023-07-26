@@ -23,6 +23,13 @@ enum Cex: String, CaseIterable {
         return "https://cdn.blocksdecoded.com/cex-icons/\(rawValue)@\(scale)x.png"
     }
 
+    var withdrawalAllowed: Bool {
+        switch self {
+        case .binance: return false
+        case .coinzix: return true
+        }
+    }
+
     func restoreViewController(returnViewController: UIViewController?) -> UIViewController {
         switch self {
         case .binance: return RestoreBinanceModule.viewController(returnViewController: returnViewController)
