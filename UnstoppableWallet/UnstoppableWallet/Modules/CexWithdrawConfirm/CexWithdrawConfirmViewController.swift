@@ -6,18 +6,18 @@ import ComponentKit
 import SectionsTableView
 import HUD
 
-class CexWithdrawConfirmViewController<Handler: ICexWithdrawHandler>: ThemeViewController {
-    private let viewModel: CexWithdrawConfirmViewModel<Handler>
-    private let handler: Handler
+class CexWithdrawConfirmViewController: ThemeViewController {
+    private let viewModel: CexWithdrawConfirmViewModel
+    private let handler: ICexWithdrawHandler
     private var cancellables = Set<AnyCancellable>()
 
     private let tableView = SectionsTableView(style: .grouped)
     private let withdrawButton = PrimaryButton()
     private let withdrawingButton = PrimaryButton()
 
-    private var sectionViewItems = [CexWithdrawConfirmViewModel<Handler>.SectionViewItem]()
+    private var sectionViewItems = [CexWithdrawConfirmViewModel.SectionViewItem]()
 
-    init(viewModel: CexWithdrawConfirmViewModel<Handler>, handler: Handler) {
+    init(viewModel: CexWithdrawConfirmViewModel, handler: ICexWithdrawHandler) {
         self.viewModel = viewModel
         self.handler = handler
 
@@ -81,7 +81,7 @@ class CexWithdrawConfirmViewController<Handler: ICexWithdrawHandler>: ThemeViewC
                 .store(in: &cancellables)
     }
 
-    private func sync(sectionViewItems: [CexWithdrawConfirmViewModel<Handler>.SectionViewItem]) {
+    private func sync(sectionViewItems: [CexWithdrawConfirmViewModel.SectionViewItem]) {
         self.sectionViewItems = sectionViewItems
         tableView.reload()
     }
@@ -91,7 +91,7 @@ class CexWithdrawConfirmViewController<Handler: ICexWithdrawHandler>: ThemeViewC
         withdrawingButton.isHidden = !withdrawing
     }
 
-    private func confirmWithdraw(result: Handler.WithdrawResult) {
+    private func confirmWithdraw(result: Any) {
         handler.handle(result: result, viewController: self)
     }
 
@@ -107,7 +107,7 @@ class CexWithdrawConfirmViewController<Handler: ICexWithdrawHandler>: ThemeViewC
 
 extension CexWithdrawConfirmViewController: SectionsDataSource {
 
-    private func row(viewItem: CexWithdrawConfirmViewModel<Handler>.ViewItem, rowInfo: RowInfo) -> RowProtocol {
+    private func row(viewItem: CexWithdrawConfirmViewModel.ViewItem, rowInfo: RowInfo) -> RowProtocol {
         switch viewItem {
         case let .subhead(iconName, title, value):
             return CellComponent.actionTitleRow(tableView: tableView, rowInfo: rowInfo, iconName: iconName, iconDimmed: true, title: title, value: value)

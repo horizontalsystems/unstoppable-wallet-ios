@@ -4,12 +4,12 @@ import HsExtensions
 class CexDepositService {
     let cexAsset: CexAsset
     let network: CexDepositNetwork?
-    private let provider: ICexProvider
+    private let provider: ICexDepositProvider
     private var tasks = Set<AnyTask>()
 
     @PostPublished private(set) var state: State = .loading
 
-    init(cexAsset: CexAsset, network: CexDepositNetwork?, provider: ICexProvider) {
+    init(cexAsset: CexAsset, network: CexDepositNetwork?, provider: ICexDepositProvider) {
         self.cexAsset = cexAsset
         self.network = network
         self.provider = provider

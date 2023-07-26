@@ -174,7 +174,7 @@ class CoinzixCexProvider {
 
 }
 
-extension CoinzixCexProvider: ICexProvider {
+extension CoinzixCexProvider: ICexAssetProvider {
 
     func assets() async throws -> [CexAssetResponse] {
         async let configRequest: ConfigResponse = try fetch(path: "/api/default/config")
@@ -261,6 +261,10 @@ extension CoinzixCexProvider: ICexProvider {
                 }
     }
 
+}
+
+extension CoinzixCexProvider: ICexDepositProvider {
+
     func deposit(id: String, network: String?) async throws -> (String, String?) {
         var parameters: Parameters = [
             "iso": id
@@ -283,6 +287,33 @@ extension CoinzixCexProvider: ICexProvider {
         } else {
             throw RequestError.invalidResponse
         }
+    }
+
+}
+
+extension CoinzixCexProvider {
+
+    func withdraw(id: String, network: String?, address: String, amount: Decimal, feeFromAmount: Bool?) async throws -> (String, [TwoFactorType]) {
+        var parameters: Parameters = [
+            "iso": id,
+            "to_address": address,
+            "amount": amount,
+            "fee_from_amount": (feeFromAmount ?? false) ? 1 : 0
+        ]
+
+        if let network, network != Self.nativeNetworkId {
+            parameters["network"] = network
+        }
+
+        let response: WithdrawResponse = try await signedFetch(path: "/v1/withdraw", parameters: parameters)
+
+        guard response.status else {
+            throw RequestError.negativeStatus
+        }
+
+        let twoFactorTypes = response.step.compactMap { TwoFactorType.init(rawValue: $0) }
+
+        return (String(response.id), twoFactorTypes)
     }
 
     func confirmWithdraw(id: Int, emailPin: String?, googlePin: String?) async throws {
@@ -315,33 +346,6 @@ extension CoinzixCexProvider: ICexProvider {
         guard response.status else {
             throw RequestError.negativeStatus
         }
-    }
-
-}
-
-extension CoinzixCexProvider {
-
-    func withdraw(id: String, network: String?, address: String, amount: Decimal, feeFromAmount: Bool?) async throws -> (String, [TwoFactorType]) {
-        var parameters: Parameters = [
-            "iso": id,
-            "to_address": address,
-            "amount": amount,
-            "fee_from_amount": (feeFromAmount ?? false) ? 1 : 0
-        ]
-
-        if let network, network != Self.nativeNetworkId {
-            parameters["network"] = network
-        }
-
-        let response: WithdrawResponse = try await signedFetch(path: "/v1/withdraw", parameters: parameters)
-
-        guard response.status else {
-            throw RequestError.negativeStatus
-        }
-
-        let twoFactorTypes = response.step.compactMap { TwoFactorType.init(rawValue: $0) }
-
-        return (String(response.id), twoFactorTypes)
     }
 
 }

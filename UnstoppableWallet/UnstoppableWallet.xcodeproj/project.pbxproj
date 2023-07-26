@@ -200,7 +200,6 @@
 		11B3525364EADC132A262166 /* WatchModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3531B7AC10796F8D26455 /* WatchModule.swift */; };
 		11B35258C072691B5BD7C41E /* ExtendedKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A774105F0F012935845 /* ExtendedKeyViewController.swift */; };
 		11B3525DD29BC2286526669F /* PoolGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357F4747A6B256C31EC7C /* PoolGroup.swift */; };
-		11B352611245DD9B8EAD8FA4 /* CexProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FE5EFEFD62CE569B1C1 /* CexProviderFactory.swift */; };
 		11B35262A6D3AB8C41E2E245 /* AccountStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E87C15A3AE82F471007 /* AccountStorage.swift */; };
 		11B35262B98EA59CDA12DF97 /* WalletConnectV2SessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355C1E3C922BAE804AAF9 /* WalletConnectV2SessionStorage.swift */; };
 		11B3526D1747C11291F2D998 /* CoinTreasuriesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3580ECB328146E94D4359 /* CoinTreasuriesService.swift */; };
@@ -291,7 +290,7 @@
 		11B3535EF39FCD22171AC21C /* FaqService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352B4E116BEC01B972A39 /* FaqService.swift */; };
 		11B3536008462BFF8CA245BE /* PublicKeysViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C285327E4099656DBA8 /* PublicKeysViewModel.swift */; };
 		11B3536884FEE247C144B395 /* Blockchain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3595BAB29E195A1317DD1 /* Blockchain.swift */; };
-		11B3537251E7878C7307657D /* CexType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359198B26152903D5CA14 /* CexType.swift */; };
+		11B3537251E7878C7307657D /* CexAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359198B26152903D5CA14 /* CexAccount.swift */; };
 		11B35375BE8346D63CC89E51 /* MarketOverviewNftCollectionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351CEB402BC8F806365D9 /* MarketOverviewNftCollectionsService.swift */; };
 		11B3537B806A0FFDB66E31C5 /* RestoreBinanceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3544D5DACD92BB443462E /* RestoreBinanceModule.swift */; };
 		11B3537D1C632A925D76FBBA /* CexDepositViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357D7C0DBDA898233144F /* CexDepositViewModel.swift */; };
@@ -300,7 +299,7 @@
 		11B3538CDAA5FE6682A661D0 /* EvmAccountManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F980B34E005B9F02B8F /* EvmAccountManagerFactory.swift */; };
 		11B3538F09621AE16E30E26A /* BaseCurrencySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352034B036C9CB7A52724 /* BaseCurrencySettingsViewController.swift */; };
 		11B353917D2223D2B275429A /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359D48FD6D82735C8969A /* Error.swift */; };
-		11B35394C8DD94B9C726B22B /* CexType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359198B26152903D5CA14 /* CexType.swift */; };
+		11B35394C8DD94B9C726B22B /* CexAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359198B26152903D5CA14 /* CexAccount.swift */; };
 		11B353973C1ADD51D174AC74 /* CoinRankService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3513AC6560B9C37C342F3 /* CoinRankService.swift */; };
 		11B3539B3634BF7B3B1B9061 /* DescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3515BDAF15B6F7EEAB609 /* DescriptionCell.swift */; };
 		11B3539E833ABB2D6F696916 /* BlockchainSettingRecord_v_0_24.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3526A40F07F6C8E77BEF9 /* BlockchainSettingRecord_v_0_24.swift */; };
@@ -524,7 +523,6 @@
 		11B356D9DACA3E988BEDB3B4 /* ActivateSubscriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DFBFBF34277E7FC3325 /* ActivateSubscriptionViewModel.swift */; };
 		11B356DA0B90ECAB25C520B7 /* CoinTreasury.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35185ECC372A193D00A00 /* CoinTreasury.swift */; };
 		11B356DC58C5312D5034D30E /* RecoveryPhraseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BCBAD15E32459826712 /* RecoveryPhraseViewModel.swift */; };
-		11B356E52EFA9A76A2FCBBBB /* CexProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FE5EFEFD62CE569B1C1 /* CexProviderFactory.swift */; };
 		11B356E555F3ACDA6324FA77 /* AlertItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35163E7C4454BBA9E2E9E /* AlertItemCell.swift */; };
 		11B356E87B4A9AACBFEC7506 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D393EDFE4F015B0DEA /* Address.swift */; };
 		11B356ECE0D41F928FCED96C /* PrimaryButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354E55E901615862E7CD4 /* PrimaryButtonCell.swift */; };
@@ -2975,7 +2973,7 @@
 		11B358D98E1FBA6909D352DA /* FaqRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaqRepository.swift; sourceTree = "<group>"; };
 		11B358DFD25E8DC35F689D5C /* CoinAnalyticsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinAnalyticsViewModel.swift; sourceTree = "<group>"; };
 		11B358E9F753650F0B6BD4B9 /* CoinMajorHolderChartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinMajorHolderChartCell.swift; sourceTree = "<group>"; };
-		11B359198B26152903D5CA14 /* CexType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CexType.swift; sourceTree = "<group>"; };
+		11B359198B26152903D5CA14 /* CexAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CexAccount.swift; sourceTree = "<group>"; };
 		11B3591AD106DAC0D18FEDD7 /* BalanceViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalanceViewItem.swift; sourceTree = "<group>"; };
 		11B35921FBDF6F9BBAA88803 /* TextFieldStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldStackView.swift; sourceTree = "<group>"; };
 		11B3592A5323E54639864FC7 /* CreateAccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountService.swift; sourceTree = "<group>"; };
@@ -3233,7 +3231,6 @@
 		11B35FBB5EA656C7588B2233 /* CoinzixVerifyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinzixVerifyService.swift; sourceTree = "<group>"; };
 		11B35FC207C703EBF63FD56A /* DonutChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DonutChartView.swift; sourceTree = "<group>"; };
 		11B35FDC67CE58FBE44A4107 /* CoinAnalyticsRatingScaleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinAnalyticsRatingScaleViewController.swift; sourceTree = "<group>"; };
-		11B35FE5EFEFD62CE569B1C1 /* CexProviderFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CexProviderFactory.swift; sourceTree = "<group>"; };
 		11B35FEC3027F45085959FBB /* NftDoubleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftDoubleCell.swift; sourceTree = "<group>"; };
 		11B35FF539B93A4C61AD1D00 /* CoinInvestorsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinInvestorsViewModel.swift; sourceTree = "<group>"; };
 		11B35FF9B3B86F74961FADE1 /* TransactionsCoinSelectModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsCoinSelectModule.swift; sourceTree = "<group>"; };
@@ -4892,7 +4889,7 @@
 				ABC9AEAD18F73D4FBE05783D /* Contact.swift */,
 				ABC9AC50307ABA3DF7034E1D /* BackupContact.swift */,
 				11B357EC69F650DCA696F48D /* CexAsset.swift */,
-				11B359198B26152903D5CA14 /* CexType.swift */,
+				11B359198B26152903D5CA14 /* CexAccount.swift */,
 				11B35D6718A1DEB73A0CEC02 /* Cex.swift */,
 				11B3572F134D41A670EE9244 /* CexWithdrawNetwork.swift */,
 				11B35195509787CD52A6873A /* CexAssetRecord.swift */,
@@ -4943,7 +4940,6 @@
 				11B3583932F270503C1DF3F0 /* AdapterFactory.swift */,
 				11B35F980B34E005B9F02B8F /* EvmAccountManagerFactory.swift */,
 				ABC9A1057AD189DA1CE31BF5 /* PredefinedBlockchainService.swift */,
-				11B35FE5EFEFD62CE569B1C1 /* CexProviderFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -8909,7 +8905,7 @@
 				11B35486D0F8CF828A1C615D /* FileDataStorage.swift in Sources */,
 				11B35750FEA183828D4ABADE /* CexAsset.swift in Sources */,
 				ABC9AA3082B29EE372F6D755 /* DepositAddressViewHelper.swift in Sources */,
-				11B35394C8DD94B9C726B22B /* CexType.swift in Sources */,
+				11B35394C8DD94B9C726B22B /* CexAccount.swift in Sources */,
 				11B35440714FF3AAF24542D4 /* WalletCexElementService.swift in Sources */,
 				11B35425BF4ECBD1AF2F23E5 /* BinanceCexProvider.swift in Sources */,
 				11B3555F968EFA0AF7D1DF46 /* WalletElementServiceFactory.swift in Sources */,
@@ -8941,7 +8937,6 @@
 				11B3519A3E3B6EB4E73765BB /* CexDepositService.swift in Sources */,
 				11B35176A3A1D67366DE1CE3 /* CexDepositViewController.swift in Sources */,
 				11B35416F8A33E8A3B13D3AE /* CexDepositModule.swift in Sources */,
-				11B352611245DD9B8EAD8FA4 /* CexProviderFactory.swift in Sources */,
 				11B35E163CB471C55269E7EB /* QrCodeCell.swift in Sources */,
 				11B35069ADA6D305242B7E58 /* CexWithdrawConfirmService.swift in Sources */,
 				11B35A056D8693E9ABAED9AF /* CexWithdrawConfirmModule.swift in Sources */,
@@ -10169,7 +10164,7 @@
 				11B35EE4ECE73A553A1782ED /* FileDataStorage.swift in Sources */,
 				11B352407989CB29F849C0BA /* CexAsset.swift in Sources */,
 				ABC9A62E6105CEDF970F121B /* DepositAddressViewHelper.swift in Sources */,
-				11B3537251E7878C7307657D /* CexType.swift in Sources */,
+				11B3537251E7878C7307657D /* CexAccount.swift in Sources */,
 				11B358807588598C4815BCE0 /* WalletCexElementService.swift in Sources */,
 				11B355F7BF20DE6551FC531E /* BinanceCexProvider.swift in Sources */,
 				11B35EBB5EE2A4AE7332F86F /* WalletElementServiceFactory.swift in Sources */,
@@ -10201,7 +10196,6 @@
 				11B350E728194B4F06B31499 /* CexDepositService.swift in Sources */,
 				11B356719BA29898A792AB15 /* CexDepositViewController.swift in Sources */,
 				11B353DED74C93197F247909 /* CexDepositModule.swift in Sources */,
-				11B356E52EFA9A76A2FCBBBB /* CexProviderFactory.swift in Sources */,
 				11B35CA25E02E397E167EEC3 /* QrCodeCell.swift in Sources */,
 				11B35DC55F0DCB70AFF16A69 /* CexWithdrawConfirmService.swift in Sources */,
 				11B352D704D270F549839073 /* CexWithdrawConfirmModule.swift in Sources */,

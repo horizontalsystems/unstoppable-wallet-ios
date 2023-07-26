@@ -476,7 +476,7 @@ class BinanceCexProvider {
 
 }
 
-extension BinanceCexProvider: ICexProvider {
+extension BinanceCexProvider: ICexAssetProvider {
 
     func assets() async throws -> [CexAssetResponse] {
         let response: [AssetResponse] = try await fetch(path: "/sapi/v1/capital/config/getall")
@@ -525,6 +525,10 @@ extension BinanceCexProvider: ICexProvider {
                 }
     }
 
+}
+
+extension BinanceCexProvider: ICexDepositProvider {
+
     func deposit(id: String, network: String?) async throws -> (String, String?) {
         var parameters: Parameters = [
             "coin": id
@@ -537,6 +541,10 @@ extension BinanceCexProvider: ICexProvider {
         let response: DepositResponse = try await fetch(path: "/sapi/v1/capital/deposit/address", parameters: parameters)
         return (response.address, response.tag.isEmpty ? nil : response.tag)
     }
+
+}
+
+extension BinanceCexProvider {
 
     func withdraw(id: String, network: String?, address: String, amount: Decimal, feeFromAmount: Bool?) async throws -> String {
         var parameters: Parameters = [

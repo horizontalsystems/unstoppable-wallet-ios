@@ -2,16 +2,16 @@ import Foundation
 import Combine
 import HsExtensions
 
-class CexWithdrawConfirmService<Handler: ICexWithdrawHandler> {
+class CexWithdrawConfirmService {
     private let sendData: CexWithdrawModule.SendData
-    private let handler: Handler
+    private let handler: ICexWithdrawHandler
     private var tasks = Set<AnyTask>()
 
     @PostPublished private(set) var state: State = .idle
-    private let confirmWithdrawSubject = PassthroughSubject<Handler.WithdrawResult, Never>()
+    private let confirmWithdrawSubject = PassthroughSubject<Any, Never>()
     private let errorSubject = PassthroughSubject<Error, Never>()
 
-    init(sendData: CexWithdrawModule.SendData, handler: Handler) {
+    init(sendData: CexWithdrawModule.SendData, handler: ICexWithdrawHandler) {
         self.sendData = sendData
         self.handler = handler
     }
@@ -40,7 +40,7 @@ class CexWithdrawConfirmService<Handler: ICexWithdrawHandler> {
 
 extension CexWithdrawConfirmService {
 
-    var confirmWithdrawPublisher: AnyPublisher<Handler.WithdrawResult, Never> {
+    var confirmWithdrawPublisher: AnyPublisher<Any, Never> {
         confirmWithdrawSubject.eraseToAnyPublisher()
     }
 
