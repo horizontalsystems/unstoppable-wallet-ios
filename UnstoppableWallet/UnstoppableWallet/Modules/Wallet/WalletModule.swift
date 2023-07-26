@@ -17,8 +17,7 @@ struct WalletModule {
         let elementServiceFactory = WalletElementServiceFactory(
                 adapterManager: App.shared.adapterManager,
                 walletManager: App.shared.walletManager,
-                cexAssetManager: App.shared.cexAssetManager,
-                cexProviderFactory: App.shared.cexProviderFactory
+                cexAssetManager: App.shared.cexAssetManager
         )
 
         let service = WalletService(

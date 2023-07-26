@@ -12,7 +12,7 @@ enum AccountType {
     case evmAddress(address: EvmKit.Address)
     case tronAddress(address: TronKit.Address)
     case hdExtendedKey(key: HDExtendedKey)
-    case cex(type: CexType)
+    case cex(cexAccount: CexAccount)
 
     var mnemonicSeed: Data? {
         switch self {
@@ -46,8 +46,8 @@ enum AccountType {
             privateData = address.raw
         case let .hdExtendedKey(key):
             privateData = key.serialized
-        case let .cex(type):
-            privateData = type.uniqueId.data(using: .utf8) ?? Data() // always non-null
+        case let .cex(cexAccount):
+            privateData = cexAccount.uniqueId.data(using: .utf8) ?? Data() // always non-null
         }
 
         if hashed {
@@ -183,8 +183,8 @@ enum AccountType {
                 default: return ""
                 }
             }
-        case .cex(let type):
-            return type.cex.title
+        case .cex(let cexAccount):
+            return cexAccount.cex.title
         }
     }
 
@@ -268,11 +268,11 @@ extension AccountType {
         case .evmAddress, .tronAddress:
             return nil
         case .cex:
-            guard let type = CexType.decode(uniqueId: string) else {
+            guard let cexAccount = CexAccount.decode(uniqueId: string) else {
                 return nil
             }
 
-            return .cex(type: type)
+            return .cex(cexAccount: cexAccount)
         }
     }
 
@@ -312,8 +312,8 @@ extension AccountType: Hashable {
             return lhsAddress == rhsAddress
         case (let .hdExtendedKey(lhsKey), let .hdExtendedKey(rhsKey)):
             return lhsKey == rhsKey
-        case (let .cex(lhsType), let .cex(rhsType)):
-            return lhsType == rhsType
+        case (let .cex(lhsCexAccount), let .cex(rhsCexAccount)):
+            return lhsCexAccount == rhsCexAccount
         default: return false
         }
     }
@@ -337,9 +337,9 @@ extension AccountType: Hashable {
         case let .hdExtendedKey(key):
             hasher.combine("hdExtendedKey")
             hasher.combine(key)
-        case let .cex(type):
+        case let .cex(cexAccount):
             hasher.combine("cex")
-            hasher.combine(type)
+            hasher.combine(cexAccount)
         }
     }
 

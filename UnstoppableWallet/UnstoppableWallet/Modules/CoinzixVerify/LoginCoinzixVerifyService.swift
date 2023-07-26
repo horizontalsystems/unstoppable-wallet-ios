@@ -18,7 +18,7 @@ class LoginCoinzixVerifyService: ICoinzixVerifyService {
     func verify(emailCode: String?, googleCode: String?) async throws {
         try await CoinzixCexProvider.validateCode(code: emailCode ?? googleCode ?? "", token: token, networkManager: networkManager)
 
-        let type: AccountType = .cex(type: .coinzix(authToken: token, secret: secret))
+        let type: AccountType = .cex(cexAccount: .coinzix(authToken: token, secret: secret))
         let name = accountFactory.nextAccountName(cex: .coinzix)
         let account = accountFactory.account(type: type, origin: .restored, backedUp: true, name: name)
 

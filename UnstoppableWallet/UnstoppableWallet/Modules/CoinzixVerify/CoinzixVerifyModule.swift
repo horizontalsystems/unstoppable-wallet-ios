@@ -20,14 +20,15 @@ struct CoinzixVerifyModule {
                 return nil
             }
 
-            guard case .cex(let cexType) = account.type else {
+            guard case .cex(let cexAccount) = account.type else {
                 return nil
             }
 
-            guard let provider = App.shared.cexProviderFactory.provider(type: cexType) as? CoinzixCexProvider else {
+            guard case .coinzix(let authToken, let secret) = cexAccount else {
                 return nil
             }
 
+            let provider = CoinzixCexProvider(networkManager: App.shared.networkManager, authToken: authToken, secret: secret)
             verifyService = WithdrawCoinzixVerifyService(orderId: orderId, provider: provider)
         }
 

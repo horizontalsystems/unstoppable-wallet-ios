@@ -4,13 +4,11 @@ struct WalletElementServiceFactory {
     private let adapterManager: AdapterManager
     private let walletManager: WalletManager
     private let cexAssetManager: CexAssetManager
-    private let cexProviderFactory: CexProviderFactory
 
-    init(adapterManager: AdapterManager, walletManager: WalletManager, cexAssetManager: CexAssetManager, cexProviderFactory: CexProviderFactory) {
+    init(adapterManager: AdapterManager, walletManager: WalletManager, cexAssetManager: CexAssetManager) {
         self.adapterManager = adapterManager
         self.walletManager = walletManager
         self.cexAssetManager = cexAssetManager
-        self.cexProviderFactory = cexProviderFactory
     }
 
     func elementService(account: Account) -> IWalletElementService {
@@ -25,9 +23,8 @@ struct WalletElementServiceFactory {
             adapterService.delegate = elementService
 
             return elementService
-        case .cex(let type):
-            let provider = cexProviderFactory.provider(type: type)
-            return WalletCexElementService(account: account, provider: provider, cexAssetManager: cexAssetManager)
+        case .cex(let cexAccount):
+            return WalletCexElementService(account: account, provider: cexAccount.assetProvider, cexAssetManager: cexAssetManager)
         }
     }
 

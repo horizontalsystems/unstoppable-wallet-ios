@@ -22,7 +22,7 @@ extension AccountFactory {
     func nextAccountName(cex: Cex) -> String {
         let cexAccounts = accountManager.accounts.filter { account in
             switch account.type {
-            case .cex(let type): return type.cex == cex
+            case .cex(let cexAccount): return cexAccount.cex == cex
             default: return false
             }
         }

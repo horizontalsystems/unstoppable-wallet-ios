@@ -4,14 +4,9 @@ import HsToolKit
 import HsExtensions
 import MarketKit
 
-protocol ICexProvider {
-    func assets() async throws -> [CexAssetResponse]
-    func deposit(id: String, network: String?) async throws -> (String, String?)
-}
-
 class WalletCexElementService {
     private let account: Account
-    private let provider: ICexProvider
+    private let provider: ICexAssetProvider
     private let cexAssetManager: CexAssetManager
     private var tasks = Set<AnyTask>()
 
@@ -31,7 +26,7 @@ class WalletCexElementService {
 
     private var cexAssets: [CexAsset]
 
-    init(account: Account, provider: ICexProvider, cexAssetManager: CexAssetManager) {
+    init(account: Account, provider: ICexAssetProvider, cexAssetManager: CexAssetManager) {
         self.account = account
         self.provider = provider
         self.cexAssetManager = cexAssetManager

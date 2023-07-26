@@ -18,13 +18,11 @@ struct CexDepositModule {
             return nil
         }
 
-        guard case .cex(let type) = account.type else {
+        guard case .cex(let cexAccount) = account.type else {
             return nil
         }
 
-        let provider = App.shared.cexProviderFactory.provider(type: type)
-
-        let service = CexDepositService(cexAsset: cexAsset, network: network, provider: provider)
+        let service = CexDepositService(cexAsset: cexAsset, network: network, provider: cexAccount.depositProvider)
         let viewModel = CexDepositViewModel(service: service)
         return CexDepositViewController(viewModel: viewModel)
     }

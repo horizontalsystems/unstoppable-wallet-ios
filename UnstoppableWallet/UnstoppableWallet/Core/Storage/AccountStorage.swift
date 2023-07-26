@@ -74,11 +74,11 @@ class AccountStorage {
 
             let uniqueId = String(decoding: data, as: UTF8.self)
 
-            guard let cexType = CexType.decode(uniqueId: uniqueId) else {
+            guard let cexAccount = CexAccount.decode(uniqueId: uniqueId) else {
                 return nil
             }
 
-            type = .cex(type: cexType)
+            type = .cex(cexAccount: cexAccount)
         }
 
         return Account(
@@ -117,9 +117,9 @@ class AccountStorage {
         case .hdExtendedKey(let key):
             typeName = .hdExtendedKey
             dataKey = try store(data: key.serialized, id: id, typeName: typeName, keyName: .data)
-        case .cex(let type):
+        case .cex(let cexAccount):
             typeName = .cex
-            if let data = type.uniqueId.data(using: .utf8) {
+            if let data = cexAccount.uniqueId.data(using: .utf8) {
                 dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
             }
         }

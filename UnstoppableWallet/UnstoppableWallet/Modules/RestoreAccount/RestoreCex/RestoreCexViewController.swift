@@ -48,13 +48,7 @@ class RestoreCexViewController: ThemeViewController {
     }
 
     private func openRestore(cex: Cex) {
-        let viewController: UIViewController
-
-        switch cex {
-        case .binance: viewController = RestoreBinanceModule.viewController(returnViewController: returnViewController)
-        case .coinzix: viewController = RestoreCoinzixModule.viewController(returnViewController: returnViewController)
-        }
-
+        let viewController = cex.restoreViewController(returnViewController: returnViewController)
         navigationController?.pushViewController(viewController, animated: true)
     }
 
