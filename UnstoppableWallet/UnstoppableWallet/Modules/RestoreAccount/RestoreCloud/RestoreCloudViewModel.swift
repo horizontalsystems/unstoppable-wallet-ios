@@ -47,6 +47,14 @@ extension RestoreCloudViewModel {
         restoreSubject.eraseToAnyPublisher()
     }
 
+    var deleteItemCompletedPublisher: AnyPublisher<Bool, Never> {
+        service.deleteItemCompletedPublisher
+    }
+
+    func remove(id: String) {
+        service.remove(id: id)
+    }
+
     func didTap(id: String) {
         guard let item = service.items.first(where: { item in item.backup.id == id }) else {
             return

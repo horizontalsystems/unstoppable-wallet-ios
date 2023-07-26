@@ -155,11 +155,16 @@ extension CloudAccountBackupManager {
     }
 
     func delete(uniqueId: Data) async throws {
+        let hex = uniqueId.hs.hex
+        try await delete(uniqueId: hex)
+    }
+
+    func delete(uniqueId: String) async throws {
         guard let iCloudUrl else {
             throw BackupError.urlNotAvailable
         }
 
-        guard let item = items.first(where: { name, backup in backup.id == uniqueId.hs.hex }) else {
+        guard let item = items.first(where: { name, backup in backup.id == uniqueId }) else {
             throw BackupError.itemNotFound
         }
 
