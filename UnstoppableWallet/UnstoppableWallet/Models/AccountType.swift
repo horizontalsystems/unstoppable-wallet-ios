@@ -151,6 +151,13 @@ enum AccountType {
         }
     }
 
+    var withdrawalAllowed: Bool {
+        switch self {
+        case .cex(cexAccount: let account): return account.cex.withdrawalAllowed
+        default: return true
+        }
+    }
+
     var hideZeroBalances: Bool {
         switch self {
         case .evmAddress: return true

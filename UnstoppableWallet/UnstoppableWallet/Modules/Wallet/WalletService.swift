@@ -465,6 +465,10 @@ extension WalletService {
         accountManager.activeAccount?.cexAccount ?? false
     }
 
+    var withdrawalAllowed: Bool {
+        accountManager.activeAccount?.type.withdrawalAllowed ?? false
+    }
+
     var lastCreatedAccount: Account? {
         accountManager.popLastCreatedAccount()
     }

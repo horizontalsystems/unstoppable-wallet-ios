@@ -69,6 +69,11 @@ class WalletHeaderCell: UITableViewCell {
         onDeposit?()
     }
 
+    var withdrawalEnabled: Bool {
+        get { withdrawButton.isEnabled }
+        set { withdrawButton.isEnabled = newValue }
+    }
+
     var onTapAmount: (() -> ())? {
         get { amountView.onTapAmount }
         set { amountView.onTapAmount = newValue }
@@ -82,6 +87,7 @@ class WalletHeaderCell: UITableViewCell {
     func bind(viewItem: WalletViewModel.HeaderViewItem) {
         amountView.set(amountText: viewItem.amount, expired: viewItem.amountExpired)
         amountView.set(convertedAmountText: viewItem.convertedValue, expired: viewItem.convertedValueExpired)
+        withdrawButton.isEnabled = viewItem.withdrawalAllowed
     }
 
 }
