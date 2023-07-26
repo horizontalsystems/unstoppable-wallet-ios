@@ -109,7 +109,7 @@ class BalanceButtonsView: UIView {
         receiveButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttons.count > 3
         receiveCircleButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttons.count <= 3
         addressButton.isHidden = (buttons[.address] ?? .hidden) == .hidden
-        swapButtonWrapper.isHidden = (buttons[.swap] ?? .hidden) == .hidden
+        swapButtonWrapper.isHidden = true //(buttons[.swap] ?? .hidden) == .hidden
         chartButtonWrapper.isHidden = (buttons[.chart] ?? .hidden) == .hidden
 
         onTapSend = sendAction
