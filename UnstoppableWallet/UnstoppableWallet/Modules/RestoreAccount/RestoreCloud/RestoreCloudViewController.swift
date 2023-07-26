@@ -67,6 +67,12 @@ class RestoreCloudViewController: ThemeViewController {
                     self?.restore(item: $0)
                 }.store(in: &cancellables)
 
+        viewModel.deleteItemCompletedPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.deleteBackupCompleted(successful: $0)
+                }.store(in: &cancellables)
+
         tableView.buildSections()
     }
 
@@ -84,17 +90,37 @@ class RestoreCloudViewController: ThemeViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
+    private func deleteBackupCompleted(successful: Bool) {
+        if successful {
+            HudHelper.instance.show(banner: .deleted)
+        } else {
+            HudHelper.instance.show(banner: .error(string: "backup.cloud.cant_delete_file".localized))
+        }
+    }
+
     private func sync(viewItem: RestoreCloudViewModel.ViewItem) {
         emptyView.isHidden = !viewItem.isEmpty
         tableView.reload()
     }
 
+    private func deleteRowAction(id: String) -> RowAction {
+        RowAction(pattern: .icon(
+                image: UIImage(named: "circle_minus_shifted_24"),
+                background: UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        ), action: { [weak self] cell in
+            self?.viewModel.remove(id: id)
+        })
+    }
+
     private func row(viewItem: RestoreCloudViewModel.BackupViewItem, rowInfo: RowInfo) -> RowProtocol {
-        tableView.universalRow62(
+        let rowAction = deleteRowAction(id: viewItem.uniqueId)
+
+        return tableView.universalRow62(
                 id: viewItem.uniqueId,
                 title: .body(viewItem.name),
                 description: .subhead2(viewItem.description),
                 accessoryType: .disclosure,
+                rowActionProvider: { [ rowAction ] },
                 isFirst: rowInfo.isFirst,
                 isLast: rowInfo.isLast
         ) { [weak self] in

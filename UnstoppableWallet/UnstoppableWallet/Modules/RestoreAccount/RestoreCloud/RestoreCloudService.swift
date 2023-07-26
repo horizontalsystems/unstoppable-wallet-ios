@@ -7,6 +7,7 @@ class RestoreCloudService {
 
     private var cancellables = Set<AnyCancellable>()
 
+    private let deleteItemCompletedSubject = PassthroughSubject<Bool, Never>()
     @Published var items = [Item]()
 
     init(cloudAccountBackupManager: CloudAccountBackupManager, accountManager: AccountManager) {
@@ -48,6 +49,22 @@ class RestoreCloudService {
 }
 
 extension RestoreCloudService {
+
+    func remove(id: String) {
+        Task {
+            do {
+                try await cloudAccountBackupManager.delete(uniqueId: id)
+                deleteItemCompletedSubject.send(true)
+            } catch {
+                deleteItemCompletedSubject.send(false)
+            }
+        }
+    }
+
+    var deleteItemCompletedPublisher: AnyPublisher<Bool, Never> {
+        deleteItemCompletedSubject.eraseToAnyPublisher()
+    }
+
 }
 
 extension RestoreCloudService {
