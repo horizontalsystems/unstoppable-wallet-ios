@@ -194,7 +194,7 @@ extension WalletViewModel {
     }
 
     var swipeActionsEnabled: Bool {
-        !service.watchAccount
+        !service.watchAccount && !service.cexAccount
     }
 
     var lastCreatedAccount: Account? {
