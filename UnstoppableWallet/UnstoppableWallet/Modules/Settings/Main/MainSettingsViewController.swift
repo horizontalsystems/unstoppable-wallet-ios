@@ -389,7 +389,7 @@ extension MainSettingsViewController: SectionsDataSource {
         var sections: [SectionProtocol] = [
             Section(id: "account", headerState: .margin(height: .margin12), rows: accountRows),
             Section(id: "wallet_connect", headerState: .margin(height: .margin32), rows: walletConnectRows),
-            Section(id: "personal_support", headerState: .margin(height: .margin32), rows: supportRows),
+//            Section(id: "personal_support", headerState: .margin(height: .margin32), rows: supportRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
             Section(id: "experimental", headerState: .margin(height: .margin32), rows: experimentalRows),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),

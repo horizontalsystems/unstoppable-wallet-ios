@@ -22,9 +22,12 @@ class SubscriptionManager {
         self.localStorage = localStorage
         self.marketKit = marketKit
 
-        authToken = localStorage.value(for: keyAuthToken)
-        marketKit.set(proAuthToken: authToken)
-        isAuthenticated = authToken != nil
+//        authToken = localStorage.value(for: keyAuthToken)
+//        marketKit.set(proAuthToken: authToken)
+//        isAuthenticated = authToken != nil
+
+        authToken = nil
+        isAuthenticated = true
     }
 
     private func invalidateAuthToken() {
@@ -42,19 +45,21 @@ extension SubscriptionManager {
             let result = try await request()
             onSuccess(result)
         } catch {
-            if let responseError = error as? NetworkManager.ResponseError, (responseError.statusCode == 401 || responseError.statusCode == 403) {
-                invalidateAuthToken()
-                onInvalidAuthToken()
-            } else {
-                onFailure(error)
-            }
+//            if let responseError = error as? NetworkManager.ResponseError, (responseError.statusCode == 401 || responseError.statusCode == 403) {
+//                invalidateAuthToken()
+//                onInvalidAuthToken()
+//            } else {
+//                onFailure(error)
+//            }
+
+            onFailure(error)
         }
     }
 
     func set(authToken: String) {
-        marketKit.set(proAuthToken: authToken)
-        self.authToken = authToken
-        localStorage.set(value: authToken, for: keyAuthToken)
+//        marketKit.set(proAuthToken: authToken)
+//        self.authToken = authToken
+//        localStorage.set(value: authToken, for: keyAuthToken)
     }
 
 }
