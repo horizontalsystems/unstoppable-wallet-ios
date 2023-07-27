@@ -151,6 +151,7 @@ class CoinzixVerifyViewController: KeyboardAwareViewController {
     }
 
     @objc private func onTapSubmit() {
+        view.endEditing(true)
         viewModel.onTapSubmit()
     }
 

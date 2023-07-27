@@ -155,6 +155,7 @@ extension CexWithdrawService {
         if let network = networks.at(index: index) {
             selectedNetwork = network
             network.blockchain.flatMap { addressService.change(blockchainType: $0.type) }
+            syncAvailableBalance()
             syncFee()
         }
     }
