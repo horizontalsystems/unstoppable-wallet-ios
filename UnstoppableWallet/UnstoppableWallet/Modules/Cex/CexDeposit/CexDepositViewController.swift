@@ -220,6 +220,8 @@ extension CexDepositViewController: SectionsDataSource {
         }
 
         if let memo {
+            let isLast = itemCount == mainRows.count + 1
+
             mainRows.append(
                     CellBuilderNew.row(
                             rootElement: .hStack([
@@ -236,7 +238,7 @@ extension CexDepositViewController: SectionsDataSource {
                             id: "memo",
                             height: .heightCell48,
                             bind: { cell in
-                                cell.set(backgroundStyle: .lawrence, isLast: itemCount == mainRows.count + 1)
+                                cell.set(backgroundStyle: .lawrence, isLast: isLast)
                             }
                     )
             )
