@@ -95,23 +95,14 @@ extension CoinAnalyticsService {
 
         state = .loading
 
-        if subscriptionManager.authToken != nil {
-            Task { [weak self, marketKit, fullCoin, currency] in
-                do {
-                    let analytics = try await marketKit.analytics(coinUid: fullCoin.coin.uid, currencyCode: currency.code)
-                    self?.state = .success(analytics: analytics)
-                } catch {
-                    if let responseError = error as? NetworkManager.ResponseError, (responseError.statusCode == 401 || responseError.statusCode == 403) {
-                        self?.subscriptionManager.invalidateAuthToken()
-                        self?.loadPreview()
-                    } else {
-                        self?.state = .failed(error)
-                    }
-                }
-            }.store(in: &tasks)
-        } else {
-            loadPreview()
-        }
+        Task { [weak self, marketKit, fullCoin, currency] in
+            do {
+                let analytics = try await marketKit.analytics(coinUid: fullCoin.coin.uid, currencyCode: currency.code)
+                self?.state = .success(analytics: analytics)
+            } catch {
+                self?.state = .failed(error)
+            }
+        }.store(in: &tasks)
     }
 
 }
