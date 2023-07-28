@@ -389,7 +389,7 @@ extension ChartCell {
         subscribe(disposeBag, viewModel.intervalIndexDriver) { [weak self] in self?.syncChart(typeIndex: $0) }
         subscribe(disposeBag, viewModel.intervalsUpdatedWithCurrentIndexDriver) { [weak self] in self?.syncIntervals(typeIndex: $0) }
 
-        subscribe(disposeBag, viewModel.indicatorShownDriver) { [weak self] in self?.syncChart(showIndicators: $0) }
+        subscribe(disposeBag, viewModel.indicatorsShownDriver) { [weak self] in self?.syncChart(showIndicators: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] in self?.syncChart(loading: $0) }
         subscribe(disposeBag, viewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }
         subscribe(disposeBag, viewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }

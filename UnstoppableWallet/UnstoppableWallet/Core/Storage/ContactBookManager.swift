@@ -1,5 +1,6 @@
 import Foundation
 import CloudKit
+import Combine
 import RxSwift
 import RxRelay
 import ObjectMapper
@@ -15,8 +16,7 @@ class ContactBookManager {
 
     private let ubiquityContainerIdentifier: String?
 
-    private let disposeBag = DisposeBag()
-    private var monitorDisposeBag = DisposeBag()
+    private var monitorCancellables = Set<AnyCancellable>()
 
     private let localStorage: LocalStorage
     private let helper: ContactBookHelper
@@ -52,7 +52,7 @@ class ContactBookManager {
         }
     }
 
-    private let fileStorage = FileDataStorage()
+    private let fileStorage = FileStorage()
 
     let localUrl: URL?
     var iCloudUrl: URL? {
@@ -92,17 +92,15 @@ class ContactBookManager {
         }
 
         logger?.debug("=C-MANAGER> SYNC")
-        fileStorage
-                .read(directoryUrl: localUrl, filename: Self.filename)
-                .observeOn(scheduler)
-                .subscribe(onSuccess: { [weak self] data in
-                    self?.logger?.debug("=C-MANAGER> FOUND LOCAL: \(data.count)")
-                    self?.sync(localData: data)
-                }, onError: { [weak self] error in
-                    self?.logger?.debug("=C-MANAGER> FOUND LOCAL ERROR: \(error)")
-                    self?.sync(localError: error)
-                })
-                .disposed(by: disposeBag)
+        do {
+            let data = try fileStorage
+                    .read(directoryUrl: localUrl, filename: Self.filename)
+            logger?.debug("=C-MANAGER> FOUND LOCAL: \(data.count)")
+            sync(localData: data)
+        } catch {
+            logger?.debug("=C-MANAGER> FOUND LOCAL ERROR: \(error)")
+            sync(localError: error)
+        }
     }
 
     private func sync(localData: Data) {
@@ -124,17 +122,14 @@ class ContactBookManager {
             }
 
             // if file can't be parsed we need delete it and show empty book
-            fileStorage
-                    .deleteFile(url: localUrl)
-                    .observeOn(scheduler)
-                    .subscribe(onSuccess: { [weak self] in
-                        self?.logger?.debug("=C-MANAGER> REMOVE BROKEN file")
-                        self?.sync(localData: Data())
-                    }, onError: { [weak self] error in
-                        self?.logger?.debug("=C-MANAGER> Can't remove broken local file")
-                        self?.sync(localError: error)
-                    })
-                    .disposed(by: disposeBag)
+            do {
+                _ = try fileStorage.deleteFile(url: localUrl)
+                logger?.debug("=C-MANAGER> REMOVE BROKEN file")
+                sync(localData: Data())
+            } catch {
+                logger?.debug("=C-MANAGER> Can't remove broken local file")
+                sync(localError: error)
+            }
         }
     }
 
@@ -160,21 +155,17 @@ class ContactBookManager {
 
             try? fileStorage.prepareUbiquitousItem(url: iCloudUrl, filename: Self.filename)
 
-            fileStorage
-                    .read(directoryUrl: iCloudUrl, filename: Self.filename)
-                    .observeOn(scheduler)
-                    .subscribe(onSuccess: { [weak self] data in
-                        self?.logger?.debug("=C-MANAGER> Found remote data: \(data.count)")
-                        self?.sync(iCloudData: data, localBook: localBook)
-                    }, onError: { [weak self] error in
-                        self?.logger?.debug("=C-MANAGER> Found error: \(error)")
-                        self?.sync(iCloudError: error, localBook: localBook)
-                    })
-                    .disposed(by: disposeBag)
-            return
+            do {
+                let data = try fileStorage.read(directoryUrl: iCloudUrl, filename: Self.filename)
+                logger?.debug("=C-MANAGER> Found remote data: \(data.count)")
+                sync(iCloudData: data, localBook: localBook)
+            } catch {
+                logger?.debug("=C-MANAGER> Found error: \(error)")
+                sync(iCloudError: error, localBook: localBook)
+            }
+        } else {
+            iCloudError = StorageError.cloudUrlNotAvailable
         }
-
-        iCloudError = StorageError.cloudUrlNotAvailable
     }
 
     private func saveToICloud(book: ContactBook) throws {
@@ -263,7 +254,8 @@ class ContactBookManager {
 
     private func updateRemoteStorage() {
         logger?.debug("=C-MANAGER> UPDATE REMOTE: \(remoteSync)")
-        monitorDisposeBag = DisposeBag()
+        monitorCancellables.forEach { cancellable in cancellable.cancel() }
+        monitorCancellables.removeAll()
 
         // check url available
         guard let iCloudUrl else {
@@ -278,15 +270,15 @@ class ContactBookManager {
         if localStorage.remoteContactsSync {
 
             // create monitor and handle its events
-            let metadataMonitor = MetadataMonitor(url: iCloudUrl, filename: Self.filename, batchingInterval: Self.batchingInterval, logger: logger)
+            let metadataMonitor = MetadataMonitor(url: iCloudUrl, filenames: [Self.filename], batchingInterval: Self.batchingInterval, logger: logger)
             self.metadataMonitor = metadataMonitor
             logger?.debug("=C-MANAGER> Turn ON monitor")
-            subscribe(scheduler, disposeBag, metadataMonitor.itemUpdatedObservable) { [weak self] updated in
-                if updated {
-                    self?.logger?.debug("=C-MANAGER> Monitor Want to Sync iCloudStorage")
-                    self?.syncRemoteStorage()
-                }
-            }
+            metadataMonitor.needUpdatePublisher
+                    .sink { [weak self] in
+                        self?.logger?.debug("=C-MANAGER> Monitor Want to Sync iCloudStorage")
+                        self?.syncRemoteStorage()
+                    }
+                    .store(in: &monitorCancellables)
 
             syncRemoteStorage() // sometimes monitor not ask to check icloud file, but we need to check it for first time
         } else {
@@ -329,13 +321,12 @@ class ContactBookManager {
         }
 
         logger?.debug("=C-MANAGER> Save Book to Url: \(url.path)")
-        fileStorage
-                .write(directoryUrl: url, filename: Self.filename, data: jsonData)
-                .subscribe(
-                        onSuccess: { [weak self] in self?.state = .completed(book) },
-                        onError: { [weak self] in self?.state = .failed($0) }
-                )
-                .disposed(by: disposeBag)
+        do {
+            try fileStorage.write(directoryUrl: url, filename: Self.filename, data: jsonData)
+            state = .completed(book)
+        } catch {
+            state = .failed(error)
+        }
     }
 
 }

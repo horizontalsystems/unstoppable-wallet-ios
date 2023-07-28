@@ -1,25 +1,25 @@
 import Foundation
-import RxSwift
-import RxRelay
+import Combine
+import HsExtensions
 import HsToolKit
 
 class MetadataMonitor {
     private let queue = DispatchQueue(label: "\(AppConfig.label).metadata_monitor", qos: .userInitiated)
 
     private let url: URL
-    private let filename: String
+    private let filenames: [String]
     private let batchingInterval: TimeInterval
     private let logger: Logger?
 
-    private let itemUpdatedRelay = BehaviorRelay<Bool>(value: false)
-    private let parsingErrorRelay = BehaviorRelay<Error?>(value: nil)
+    private let needUpdateSubject = PassthroughSubject<Void, Never>()
+    @PostPublished private(set) var parsingError: Error? = nil
 
     private var metadataQuery: NSMetadataQuery?
     private var fileChangedTime = [URL: Date]()
 
-    init(url: URL, filename: String, batchingInterval: TimeInterval, logger: Logger? = nil) {
+    init(url: URL, filenames: [String] = [], batchingInterval: TimeInterval, logger: Logger? = nil) {
         self.url = url
-        self.filename = filename
+        self.filenames = filenames
         self.batchingInterval = batchingInterval
         self.logger = logger
 
@@ -28,19 +28,17 @@ class MetadataMonitor {
 
     deinit {
         if metadataQuery != nil {
-            logger?.debug("STop Metadata Monitor")
+            logger?.debug("Stop Metadata Monitor")
             stop()
         }
     }
 
     private func start() {
         let predicate: NSPredicate = NSPredicate(
-                format: "%K = FALSE AND %K BEGINSWITH %@ AND %K CONTAINS %@",
+                format: "%K = FALSE AND %K BEGINSWITH %@",
                 NSMetadataUbiquitousItemIsDownloadingKey,
                 NSMetadataItemPathKey,
-                url.path,
-                NSMetadataItemFSNameKey,
-                filename
+                url.path
         )
         let metadataQuery = NSMetadataQuery()
         self.metadataQuery = metadataQuery
@@ -62,7 +60,9 @@ class MetadataMonitor {
 
         // Try to copy icloud file to local icloud, if it's exist
         do {
-            try FileManager.default.startDownloadingUbiquitousItem(at: url.appendingPathComponent(filename))
+            for filename in filenames {
+                try FileManager.default.startDownloadingUbiquitousItem(at: url.appendingPathComponent(filename))
+            }
         } catch {
             logger?.debug("Can't download because : \(error)")
         }
@@ -105,21 +105,33 @@ class MetadataMonitor {
             return
         }
 
-        logger?.debug("=> META MONITOR: INITIAL DOWNLOAD for \(results.count)")
-        for item in results {
-            do {
+        // remove all not-needed to monitoring items
+        let filtered = filenames.isEmpty ? results : results.compactMap { item -> NSMetadataItem? in
+            guard let url = item.value(forAttribute: NSMetadataItemURLKey) as? URL else {
+                return nil
+            }
+            for filename in filenames {
+                if url.absoluteString.lowercased().contains(filename.lowercased()) {
+                    return item
+                }
+            }
+            return nil
+        }
 
+        logger?.debug("=> META MONITOR: INITIAL DOWNLOAD for \(filtered.count)")
+        for item in filtered {
+            do {
                 try resolveConflicts(for: item)
                 guard let url = item.value(forAttribute: NSMetadataItemURLKey) as? URL else { continue }
 
                 try FileManager.default.startDownloadingUbiquitousItem(at: url)
             } catch {
-                parsingErrorRelay.accept(error)
+                parsingError = error
             }
         }
 
         // Get the file URLs, to wait for them below.
-        let urls = results.compactMap { item -> URL? in
+        let urls = filtered.compactMap { item -> URL? in
             // check if file really changed in time because query returns 3 times same file
             logger?.debug("=> MONITOR : url : \((item.value(forAttribute: NSMetadataItemURLKey) as? URL)?.path ?? "N/A")")
             if let url = item.value(forAttribute: NSMetadataItemURLKey) as? URL {
@@ -152,8 +164,8 @@ class MetadataMonitor {
 
         // Inform observer
         if !urls.isEmpty {
-            itemUpdatedRelay.accept(true)
-            parsingErrorRelay.accept(nil)
+            needUpdateSubject.send(())
+            parsingError = nil
         }
     }
 
@@ -193,12 +205,8 @@ class MetadataMonitor {
 
 extension MetadataMonitor {
 
-    var itemUpdatedObservable: Observable<Bool> {
-        itemUpdatedRelay.asObservable()
-    }
-
-    var parsingErrorObservable: Observable<Error?> {
-        parsingErrorRelay.asObservable()
+    var needUpdatePublisher: AnyPublisher<Void, Never> {
+        needUpdateSubject.eraseToAnyPublisher()
     }
 
 }

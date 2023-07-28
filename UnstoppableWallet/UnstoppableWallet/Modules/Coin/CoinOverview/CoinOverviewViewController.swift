@@ -117,7 +117,7 @@ class CoinOverviewViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.syncErrorDriver) { [weak self] visible in
             self?.errorView.isHidden = !visible
         }
-        subscribe(disposeBag, chartViewModel.indicatorShownDriver) { [weak self] isShown in
+        subscribe(disposeBag, chartViewModel.indicatorsShownDriver) { [weak self] isShown in
             self?.chartIndicatorShown = isShown
             self?.syncChartConfigurationCell()
         }
