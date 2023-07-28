@@ -102,9 +102,7 @@ extension CexWithdrawConfirmViewModel {
     }
 
     var errorPublisher: AnyPublisher<String, Never> {
-        service.errorPublisher
-                .map { _ in "cex_withdraw_confirm.withdraw_failed".localized }
-                .eraseToAnyPublisher()
+        service.errorPublisher.map { $0.smartDescription }.eraseToAnyPublisher()
     }
 
     func onTapWithdraw() {

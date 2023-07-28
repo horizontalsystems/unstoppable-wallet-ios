@@ -143,6 +143,7 @@ class CoinzixVerifyViewController: KeyboardAwareViewController {
     }
 
     private func confirmSubmit() {
+        HudHelper.instance.showSuccessBanner(title: "alert.success".localized)
         (returnViewController ?? self).dismiss(animated: true)
     }
 

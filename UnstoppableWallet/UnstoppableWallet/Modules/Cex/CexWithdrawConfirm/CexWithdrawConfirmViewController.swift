@@ -4,7 +4,6 @@ import SnapKit
 import ThemeKit
 import ComponentKit
 import SectionsTableView
-import HUD
 
 class CexWithdrawConfirmViewController: ThemeViewController {
     private let viewModel: CexWithdrawConfirmViewModel
@@ -77,7 +76,7 @@ class CexWithdrawConfirmViewController: ThemeViewController {
 
         viewModel.errorPublisher
                 .receive(on: DispatchQueue.main)
-                .sink { text in HudHelper.instance.showErrorBanner(title: text) }
+                .sink { [weak self] in self?.show(error: $0) }
                 .store(in: &cancellables)
     }
 
@@ -93,6 +92,21 @@ class CexWithdrawConfirmViewController: ThemeViewController {
 
     private func confirmWithdraw(result: Any) {
         handler.handle(result: result, viewController: self)
+    }
+
+    private func show(error: String) {
+        let viewController = BottomSheetModule.viewController(
+            image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian)),
+            title: "cex_withdraw_confirm.withdraw_failed".localized,
+            items: [
+                .highlightedDescription(text: error, style: .red)
+            ],
+            buttons: [
+                .init(style: .yellow, title: "button.ok".localized)
+            ]
+        )
+
+        present(viewController, animated: true)
     }
 
     @objc private func onTapCancel() {
