@@ -51,13 +51,11 @@ class RestoreCloudService {
 extension RestoreCloudService {
 
     func remove(id: String) {
-        Task {
-            do {
-                try await cloudAccountBackupManager.delete(uniqueId: id)
-                deleteItemCompletedSubject.send(true)
-            } catch {
-                deleteItemCompletedSubject.send(false)
-            }
+        do {
+            try cloudAccountBackupManager.delete(uniqueId: id)
+            deleteItemCompletedSubject.send(true)
+        } catch {
+            deleteItemCompletedSubject.send(false)
         }
     }
 

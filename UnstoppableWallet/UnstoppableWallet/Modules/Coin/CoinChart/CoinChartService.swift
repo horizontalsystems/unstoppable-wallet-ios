@@ -17,9 +17,21 @@ class CoinChartService {
     private var cancellables = Set<AnyCancellable>()
 
     private let marketKit: MarketKit.Kit
+    private let localStorage: LocalStorage
     private let currencyKit: CurrencyKit.Kit
     private let indicatorRepository: IChartIndicatorsRepository
     private let coinUid: String
+
+    private let indicatorsShownUpdatedRelay = PublishRelay<()>()
+    var indicatorsShown: Bool {
+        get {
+            localStorage.indicatorsShown
+        }
+        set {
+            localStorage.indicatorsShown = newValue
+            indicatorsShownUpdatedRelay.accept(())
+        }
+    }
 
     private let periodTypeRelay = PublishRelay<HsPeriodType>()
     var periodType: HsPeriodType {
@@ -53,9 +65,10 @@ class CoinChartService {
     private var coinPrice: CoinPrice?
     private var chartPointsMap = [HsPeriodType: ChartPointsItem]()
 
-    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, indicatorRepository: IChartIndicatorsRepository, coinUid: String) {
+    init(marketKit: MarketKit.Kit, currencyKit: CurrencyKit.Kit, localStorage: LocalStorage, indicatorRepository: IChartIndicatorsRepository, coinUid: String) {
         self.marketKit = marketKit
         self.currencyKit = currencyKit
+        self.localStorage = localStorage
         self.indicatorRepository = indicatorRepository
         self.coinUid = coinUid
 
@@ -121,6 +134,10 @@ extension CoinChartService {
 
     var periodTypeObservable: Observable<HsPeriodType> {
         periodTypeRelay.asObservable()
+    }
+
+    var indicatorsShownUpdatedObservable: Observable<()> {
+        indicatorsShownUpdatedRelay.asObservable()
     }
 
     var intervalsUpdatedObservable: Observable<()> {

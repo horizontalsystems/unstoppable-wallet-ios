@@ -11,7 +11,7 @@ class CloudAccountBackupManager {
     private let fileStorage: FileStorage
     private let logger: Logger?
 
-    private var metadataMonitor: MetadataMonitorNew?
+    private var metadataMonitor: MetadataMonitor?
     private var publishers = [AnyCancellable]()
 
     var iCloudUrl: URL? {
@@ -44,7 +44,7 @@ class CloudAccountBackupManager {
             return
         }
 
-        let metadataMonitor = MetadataMonitorNew(url: url, batchingInterval: Self.batchingInterval, logger: logger)
+        let metadataMonitor = MetadataMonitor(url: url, batchingInterval: Self.batchingInterval, logger: logger)
         self.metadataMonitor = metadataMonitor
         logger?.debug("=C-MANAGER> Turn ON monitor")
 
@@ -66,18 +66,16 @@ class CloudAccountBackupManager {
             return
         }
 
-        Task { [weak self, fileStorage, logger] in
-            do {
-                self?.forceDownloadContainerFiles(url: url)
-                let items = try await Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
+        do {
+            forceDownloadContainerFiles(url: url)
+            let items = try Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
 
-                self?.state = .success
-                logger?.log(level: .debug, message: "CloudAccountManager.state = \(state)")
-                self?.items = items
-            } catch {
-                self?.state = .error(error)
-                logger?.log(level: .debug, message: "CloudAccountManager.state = \(state)")
-            }
+            state = .success
+            logger?.log(level: .debug, message: "CloudAccountManager.state = \(state)")
+            self.items = items
+        } catch {
+            state = .error(error)
+            logger?.log(level: .debug, message: "CloudAccountManager.state = \(state)")
         }
     }
 
@@ -98,13 +96,13 @@ class CloudAccountBackupManager {
         }
     }
 
-    private static func downloadItems(url: URL, fileStorage: FileStorage, logger: Logger? = nil) async throws -> [String: WalletBackup] {
+    private static func downloadItems(url: URL, fileStorage: FileStorage, logger: Logger? = nil) throws -> [String: WalletBackup] {
         let files = try fileStorage.fileList(url: url).filter { s in s.contains(Self.fileExtension) }
         var items = [String: WalletBackup]()
 
         for file in files {
             do {
-                let data = try await fileStorage.read(directoryUrl: url, filename: file)
+                let data = try fileStorage.read(directoryUrl: url, filename: file)
                 let backup = try JSONDecoder().decode(WalletBackup.self, from: data)
                 items[file] = backup
             } catch {
@@ -136,7 +134,7 @@ extension CloudAccountBackupManager {
         iCloudUrl != nil
     }
 
-    func save(accountType: AccountType, isManualBackedUp: Bool, passphrase: String, name: String) async throws {
+    func save(accountType: AccountType, isManualBackedUp: Bool, passphrase: String, name: String) throws {
         guard let iCloudUrl else {
             throw BackupError.urlNotAvailable
         }
@@ -145,7 +143,7 @@ extension CloudAccountBackupManager {
             let name = name + Self.fileExtension
             let encoded = try WalletBackupConverter.encode(accountType: accountType, isManualBackedUp: isManualBackedUp, passphrase: passphrase)
 
-            try await fileStorage.write(directoryUrl: iCloudUrl, filename: name, data: encoded)
+            try fileStorage.write(directoryUrl: iCloudUrl, filename: name, data: encoded)
             logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, save \(name)")
         } catch {
             logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, can't save \(name). Because: \(error)")
@@ -154,12 +152,12 @@ extension CloudAccountBackupManager {
 
     }
 
-    func delete(uniqueId: Data) async throws {
+    func delete(uniqueId: Data) throws {
         let hex = uniqueId.hs.hex
-        try await delete(uniqueId: hex)
+        try delete(uniqueId: hex)
     }
 
-    func delete(uniqueId: String) async throws {
+    func delete(uniqueId: String) throws {
         guard let iCloudUrl else {
             throw BackupError.urlNotAvailable
         }
@@ -170,7 +168,7 @@ extension CloudAccountBackupManager {
 
         let fileUrl = iCloudUrl.appendingPathComponent(item.key)
         do {
-            try await fileStorage.deleteFile(url: fileUrl)
+            try fileStorage.deleteFile(url: fileUrl)
 
             // system will automatically updates items but after 1-2 seconds. So we need force update
             items[item.key] = nil

@@ -22,7 +22,7 @@ extension BackupCloudPassphraseService {
         PassphraseValidator.validate(text: text)
     }
 
-    func createBackup() async throws {
+    func createBackup() throws {
         guard !passphrase.isEmpty else {
             throw CreateError.emptyPassphrase
         }
@@ -41,7 +41,7 @@ extension BackupCloudPassphraseService {
         }
 
         do {
-            try await iCloudManager.save(accountType: account.type, isManualBackedUp: account.backedUp, passphrase: passphrase, name: name)
+            try iCloudManager.save(accountType: account.type, isManualBackedUp: account.backedUp, passphrase: passphrase, name: name)
         } catch {
             if case .urlNotAvailable = error as? CloudAccountBackupManager.BackupError {
                 throw CreateError.urlNotAvailable

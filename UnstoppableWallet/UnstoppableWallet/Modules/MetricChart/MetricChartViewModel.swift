@@ -78,7 +78,7 @@ extension MetricChartViewModel: IChartViewModel {
         intervalIndexRelay.asDriver()
     }
 
-    var indicatorShownDriver: Driver<Bool> {
+    var indicatorsShownDriver: Driver<Bool> {
         .just(true)
     }
 

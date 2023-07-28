@@ -21,7 +21,7 @@ class CoinChartViewModel {
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let chartInfoRelay = BehaviorRelay<ChartModule.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<Bool>(value: false)
-    private let indicatorShownRelay = BehaviorRelay<Bool>(value: true)
+    private let indicatorsShownRelay = BehaviorRelay<Bool>(value: true)
     private let openSettingsRelay = PublishRelay<()>()
 
     var intervals: [String] {
@@ -35,13 +35,19 @@ class CoinChartViewModel {
         subscribe(scheduler, disposeBag, service.intervalsUpdatedObservable) { [weak self] in self?.syncIntervalsUpdate() }
         subscribe(scheduler, disposeBag, service.periodTypeObservable) { [weak self] in self?.sync(periodType: $0) }
         subscribe(scheduler, disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        subscribe(scheduler, disposeBag, service.indicatorsShownUpdatedObservable) { [weak self] in self?.updateIndicatorsShown() }
 
         sync(periodType: service.periodType)
         sync(state: service.state)
+        indicatorsShownRelay.accept(service.indicatorsShown)
     }
 
     private func syncIntervalsUpdate() {
         intervalsUpdatedWithCurrentIndex.accept(index(periodType: service.periodType))
+    }
+
+    private func updateIndicatorsShown() {
+        indicatorsShownRelay.accept(service.indicatorsShown)
     }
 
     private func index(periodType: HsPeriodType) -> Int {
@@ -100,8 +106,8 @@ extension CoinChartViewModel: IChartViewModel {
         errorRelay.asDriver()
     }
 
-    var indicatorShownDriver: Driver<Bool> {
-        indicatorShownRelay.asDriver()
+    var indicatorsShownDriver: Driver<Bool> {
+        indicatorsShownRelay.asDriver()
     }
 
     var openSettingsSignal: Signal<()> {
@@ -137,7 +143,7 @@ extension CoinChartViewModel: IChartViewModel {
     }
 
     func onToggleIndicators() {
-        indicatorShownRelay.accept(!indicatorShownRelay.value)
+        service.indicatorsShown.toggle()
     }
 
 }

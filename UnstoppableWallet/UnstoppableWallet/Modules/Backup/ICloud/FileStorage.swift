@@ -21,7 +21,7 @@ class FileStorage {
         try FileManager.default.contentsOfDirectory(atPath: url.path)
     }
 
-    func read(directoryUrl: URL, filename: String) async throws -> Data {
+    func read(directoryUrl: URL, filename: String) throws -> Data {
         let fileUrl = directoryUrl.appendingPathComponent(filename)
 
         logger?.debug("=> FDStorage =>: Start reading file : \(fileUrl.path)")
@@ -30,7 +30,7 @@ class FileStorage {
         return data
     }
 
-    func write(directoryUrl: URL, filename: String, data: Data) async throws {
+    func write(directoryUrl: URL, filename: String, data: Data) throws {
         let fileUrl = directoryUrl.appendingPathComponent(filename)
 
         if !FileManager.default.fileExists(atPath: directoryUrl.path, isDirectory: nil) {
@@ -41,7 +41,7 @@ class FileStorage {
         logger?.debug("=> FDStorage =>: Finish saving file : \(fileUrl.path)")
     }
 
-    func deleteFile(url: URL?) async throws {
+    func deleteFile(url: URL?) throws {
         logger?.debug("=> FDStorage =>: Try to delete file")
         guard let url,
               (try? FileManager.default.fileExists(coordinatingAccessAt: url).exists) ?? false else {

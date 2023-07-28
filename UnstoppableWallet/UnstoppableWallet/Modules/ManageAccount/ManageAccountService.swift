@@ -113,8 +113,8 @@ extension ManageAccountService {
         accountManager.update(account: account)
     }
 
-    func deleteCloudBackup() async throws {
-        try await cloudBackupManager.delete(uniqueId: account.type.uniqueId())
+    func deleteCloudBackup() throws {
+        try cloudBackupManager.delete(uniqueId: account.type.uniqueId())
     }
 
 }

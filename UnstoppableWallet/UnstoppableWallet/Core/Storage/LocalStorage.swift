@@ -17,6 +17,7 @@ class LocalStorage {
     private let keyDefaultProvider = "swap_provider"
     private let keyRemoteContactSync = "icloud-sync-value"
     private let keyUserChartIndicatorsSync = "user-chart-indicators"
+    private let keyIndicatorsShown = "indicators-shown"
 
     private let storage: StorageKit.ILocalStorage
 
@@ -87,6 +88,11 @@ extension LocalStorage {
     var chartIndicators: Data? {
         get { storage.value(for: keyUserChartIndicatorsSync) }
         set { storage.set(value: newValue, for: keyUserChartIndicatorsSync) }
+    }
+
+    var indicatorsShown: Bool {
+        get { storage.value(for: keyIndicatorsShown) ?? true }
+        set { storage.set(value: newValue, for: keyIndicatorsShown) }
     }
 
 }
