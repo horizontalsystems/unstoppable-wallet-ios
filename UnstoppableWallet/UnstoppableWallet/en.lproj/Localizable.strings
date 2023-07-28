@@ -38,6 +38,7 @@
 "alert.error" = "Error";
 "alert.unknown_error" = "Unknown Error";
 "alert.success_action" = "Done";
+"alert.success" = "Success";
 
 "alert.added_to_watchlist" = "Added to Watchlist";
 "alert.removed_from_watchlist" = "Removed from Watchlist";
@@ -1672,7 +1673,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "cex_withdraw_confirm.you_withdraw" = "You Withdraw";
 "cex_withdraw_confirm.network" = "Network";
 "cex_withdraw_confirm.withdraw" = "Withdraw";
-"cex_withdraw_confirm.withdraw_failed" = "Failed to withdraw";
+"cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
 
 // Coinzix Verify Withdraw
 

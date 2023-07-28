@@ -159,13 +159,31 @@ class CoinzixCexProvider {
             "x-auth-sign": Crypto.sha256(signatureData).hs.hex
         ])
 
-        return try await networkManager.fetch(
+        do {
+            return try await networkManager.fetch(
                 url: Self.baseUrl + path,
                 method: .post,
                 parameters: parameters,
                 encoding: JSONEncoding.default,
                 headers: headers
-        )
+            )
+        } catch let responseError as HsToolKit.NetworkManager.ResponseError {
+            guard let json = responseError.json as? [String: Any] else {
+                throw responseError
+            }
+
+            var message: String?
+
+            if let error = json["error"] as? String? {
+                message = error
+            }
+
+            if let errors = json["error"] as? [String] {
+                message = errors.first
+            }
+
+            throw RequestError.invalidRequest(message: message ?? "Unknown error")
+        }
     }
 
     private func fetch<T: ImmutableMappable>(path: String, parameters: Parameters = [:]) async throws -> T {
@@ -311,9 +329,9 @@ extension CoinzixCexProvider {
             throw RequestError.negativeStatus
         }
 
-        let twoFactorTypes = response.step.compactMap { TwoFactorType.init(rawValue: $0) }
+        let twoFactorTypes = response.step?.compactMap { TwoFactorType.init(rawValue: $0) }
 
-        return (String(response.id), twoFactorTypes)
+        return (String(response.id), twoFactorTypes ?? [])
     }
 
     func confirmWithdraw(id: Int, emailPin: String?, googlePin: String?) async throws {
@@ -593,7 +611,7 @@ extension CoinzixCexProvider {
     private struct WithdrawResponse: ImmutableMappable {
         let status: Bool
         let id: Int
-        let step: [Int]
+        let step: [Int]?
 
         init(map: Map) throws {
             status = try map.value("status")
@@ -612,10 +630,20 @@ extension CoinzixCexProvider {
         }
     }
 
-    enum RequestError: Error {
+    enum RequestError: LocalizedError {
         case invalidSignatureData
         case invalidResponse
         case negativeStatus
+        case invalidRequest(message: String)
+
+        public var errorDescription: String? {
+            switch self {
+                case .invalidSignatureData: return "Invalid signature data"
+                case .invalidResponse: return "Invalid Response"
+                case .negativeStatus: return "Request failed with unknown error"
+                case .invalidRequest(let message): return message
+            }
+        }
     }
 
 }
