@@ -38,6 +38,7 @@
 "alert.error" = "Ошибка";
 "alert.unknown_error" = "Неизвестная ошибка";
 "alert.success_action" = "Готово";
+"alert.success" = "Success";
 
 "alert.added_to_watchlist" = "Добавлено в избранное";
 "alert.removed_from_watchlist" = "Удалить из избранного";
@@ -1675,7 +1676,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "cex_withdraw_confirm.you_withdraw" = "You Withdraw";
 "cex_withdraw_confirm.network" = "Сеть";
 "cex_withdraw_confirm.withdraw" = "Withdraw";
-"cex_withdraw_confirm.withdraw_failed" = "Failed to withdraw";
+"cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
 
 // Coinzix Verify Withdraw
 
