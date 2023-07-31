@@ -22,10 +22,6 @@ struct CexAsset {
         coin?.name ?? name
     }
 
-    var placeholderImageName: String {
-        "_32"
-    }
-
 }
 
 extension CexAsset: Hashable {
