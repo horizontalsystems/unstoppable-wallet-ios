@@ -204,7 +204,7 @@ extension CoinzixCexProvider: ICexAssetProvider {
         let networkTypeToBlockchainUidMap = try await networkTypeToBlockchainUidMap()
         let isoToBlockchainUidMap = try await isoToBlockchainUidMap()
 
-        let ignoredIds = configResponse.fiatCurrencies + configResponse.demoCurrencies.values
+        let ignoredIds = configResponse.demoCurrencies.values
 
         return balancesResponse.items
                 .compactMap { item in
@@ -214,10 +214,12 @@ extension CoinzixCexProvider: ICexAssetProvider {
                         return nil
                     }
 
+                    let isFiat = configResponse.fiatCurrencies.contains(assetId)
+
                     let balance = Decimal(sign: .plus, exponent: -8, significand: item.balance)
                     let balanceAvailable = Decimal(sign: .plus, exponent: -8, significand: item.balanceAvailable)
-                    let depositEnabled = configResponse.depositCurrencies.contains(assetId)
-                    let withdrawEnabled = configResponse.withdrawCurrencies.contains(assetId)
+                    let depositEnabled = !isFiat && configResponse.depositCurrencies.contains(assetId)
+                    let withdrawEnabled = !isFiat && configResponse.withdrawCurrencies.contains(assetId)
 
                     return CexAssetResponse(
                             id: assetId,
