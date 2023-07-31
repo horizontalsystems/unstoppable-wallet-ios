@@ -38,6 +38,7 @@
 "alert.error" = "出错";
 "alert.unknown_error" = "未知错误";
 "alert.success_action" = "完成";
+"alert.success" = "Success";
 
 "alert.added_to_watchlist" = "添加到观察名单";
 "alert.removed_from_watchlist" = "从观察名单中删除";
@@ -1672,7 +1673,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "cex_withdraw_confirm.you_withdraw" = "You Withdraw";
 "cex_withdraw_confirm.network" = "网络";
 "cex_withdraw_confirm.withdraw" = "Withdraw";
-"cex_withdraw_confirm.withdraw_failed" = "Failed to withdraw";
+"cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
 
 // Coinzix Verify Withdraw
 
