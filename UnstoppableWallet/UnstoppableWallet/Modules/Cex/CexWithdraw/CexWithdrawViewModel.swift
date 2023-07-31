@@ -16,10 +16,16 @@ class CexWithdrawViewModel {
     @PostPublished private(set) var amountCaution: Caution? = nil
     private let proceedSubject = PassthroughSubject<CexWithdrawModule.SendData, Never>()
 
+    let networkViewItems: [NetworkViewItem]
+
     init(service: CexWithdrawService, coinService: CexCoinService) {
         self.service = service
         self.coinService = coinService
         self.selectedNetwork = service.selectedNetwork.networkName
+
+        networkViewItems = service.networks.enumerated().map { index, network in
+            NetworkViewItem(index: index, title: network.networkName, imageUrl: network.blockchain?.type.imageUrl, enabled: network.enabled)
+        }
 
         subscribe(&cancellables, service.$amountError) { [weak self] in self?.sync(amountError: $0) }
         subscribe(&cancellables, service.$selectedNetwork) { [weak self] in self?.selectedNetwork = $0.networkName }
@@ -66,18 +72,8 @@ extension CexWithdrawViewModel {
         service.cexAsset.coin?.imageUrl ?? ""
     }
 
-    var placeholderImageName: String {
-        service.cexAsset.placeholderImageName
-    }
-
     var selectedNetworkIndex: Int? {
         service.networks.firstIndex(where: { $0.id == service.selectedNetwork.id })
-    }
-
-    var networkViewItems: [NetworkViewItem] {
-        service.networks.enumerated().map { index, network in
-            NetworkViewItem(index: index, title: network.networkName, imageUrl: network.blockchain?.type.imageUrl, enabled: network.enabled)
-        }
     }
 
     var proceedPublisher: AnyPublisher<CexWithdrawModule.SendData, Never> {

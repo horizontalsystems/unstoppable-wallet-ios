@@ -55,7 +55,7 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
         iconImageView.snp.makeConstraints { make in
             make.size.equalTo(CGFloat.iconSize24)
         }
-        iconImageView.setImage(withUrlString: viewModel.coinImageUrl, placeholder: UIImage(named: viewModel.placeholderImageName))
+        iconImageView.setImage(withUrlString: viewModel.coinImageUrl, placeholder: nil)
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -115,7 +115,7 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
         let viewController = CexWithdrawNetworkSelectViewController(viewItems: viewModel.networkViewItems, selectedNetworkIndex: viewModel.selectedNetworkIndex)
         viewController.delegate = self
 
-        present(viewController, animated: true)
+        present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
     private func reloadHeights() {
@@ -197,14 +197,12 @@ extension CexWithdrawViewController: SectionsDataSource {
                         id: "networks",
                         title: .subhead2("cex_withdraw.network".localized, color: .themeGray),
                         value: .body(selectedNetwork, color: .themeLeah),
-                        accessoryType: .dropdown,
+                        accessoryType: viewModel.networkViewItems.count > 1 ? .dropdown : .none,
                         hash: selectedNetwork,
                         autoDeselect: true,
                         isFirst: true,
                         isLast: true,
-                        action: { [weak self] in
-                            self?.openNetworkSelect()
-                        }
+                        action: viewModel.networkViewItems.count > 1 ? { [weak self] in self?.openNetworkSelect() } : nil
                     )
                 ]
             ),
