@@ -2,7 +2,7 @@ name: Deploy Production to TestFlight
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, staging ]
   workflow_dispatch:
 
 jobs:
