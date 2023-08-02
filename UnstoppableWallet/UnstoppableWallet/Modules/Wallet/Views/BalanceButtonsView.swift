@@ -5,7 +5,7 @@ import ThemeKit
 import ComponentKit
 
 class BalanceButtonsView: UIView {
-    public static let height: CGFloat = 72
+    public static let height: CGFloat = 66
 
     private let sendButtonWrapper = UIControl()
     private let sendButton = PrimaryButton()
@@ -35,8 +35,8 @@ class BalanceButtonsView: UIView {
 
         addSubview(stackView)
         stackView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12)
-            maker.top.equalToSuperview().offset(10)
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalToSuperview().offset(CGFloat.margin4)
         }
 
         stackView.axis = .horizontal
@@ -51,7 +51,7 @@ class BalanceButtonsView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        sendButton.set(style: .yellow)
+        sendButton.set(style: .yellow, accessoryType: .icon(image: UIImage(named: "arrow_medium_2_up_right_24")))
         sendButton.setTitle("balance.send".localized, for: .normal)
         sendButton.addTarget(self, action: #selector(onSend), for: .touchUpInside)
 
@@ -126,7 +126,7 @@ class BalanceButtonsView: UIView {
         fatalError("not implemented")
     }
 
-    func bind(buttons: [WalletModule.Button: ButtonState], sendAction: @escaping () -> (), withdrawAction: @escaping () -> (), receiveAction: @escaping () -> (), depositAction: @escaping () -> (), swapAction: @escaping () -> (), chartAction: @escaping () -> ()) {
+    func bind(buttons: [WalletModule.Button: ButtonState], sendAction: (() -> ())?, withdrawAction: (() -> ())?, receiveAction: (() -> ())?, depositAction: (() -> ())?, swapAction: (() -> ())?, chartAction: (() -> ())?) {
         sendButton.isEnabled = buttons[.send] == .enabled
         withdrawButton.isEnabled = buttons[.withdraw] == .enabled
         receiveButton.isEnabled = buttons[.receive] == .enabled
@@ -138,8 +138,8 @@ class BalanceButtonsView: UIView {
 
         sendButtonWrapper.isHidden = (buttons[.send] ?? .hidden) == .hidden
         withdrawButtonWrapper.isHidden = (buttons[.withdraw] ?? .hidden) == .hidden
-        receiveButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttons.count > 3
-        receiveCircleButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttons.count <= 3
+        receiveButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttons.count > 2
+        receiveCircleButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttons.count <= 2
         depositButtonWrapper.isHidden = (buttons[.deposit] ?? .hidden) == .hidden
         addressButton.isHidden = (buttons[.address] ?? .hidden) == .hidden
         swapButtonWrapper.isHidden = (buttons[.swap] ?? .hidden) == .hidden
