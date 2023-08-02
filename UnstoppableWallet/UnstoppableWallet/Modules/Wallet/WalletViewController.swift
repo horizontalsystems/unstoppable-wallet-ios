@@ -317,7 +317,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func sync(headerViewItem: WalletViewModel.HeaderViewItem?) {
-        let heightChanged = self.headerViewItem?.buttonsVisible != headerViewItem?.buttonsVisible
+        let heightChanged = self.headerViewItem?.buttons.isEmpty != headerViewItem?.buttons.isEmpty
 
         self.headerViewItem = headerViewItem
 
@@ -428,33 +428,8 @@ class WalletViewController: ThemeViewController {
                 viewItem: viewItem,
                 animated: animated,
                 duration: animationDuration,
-                onSend: { [weak self] in
-                    if let wallet = viewItem.element.wallet {
-                        self?.openSend(wallet: wallet)
-                    }
-                },
-                onWithdraw: { [weak self] in
-                    if let cexAsset = viewItem.element.cexAsset {
-                        self?.openWithdraw(cexAsset: cexAsset)
-                    }
-                },
-                onReceive: { [weak self] in
-                    if let wallet = viewItem.element.wallet {
-                        self?.viewModel.onTapReceive(wallet: wallet)
-                    }
-                },
-                onDeposit: { [weak self] in
-                    if let cexAsset = viewItem.element.cexAsset {
-                        self?.openDeposit(cexAsset: cexAsset)
-                    }
-                },
-                onSwap: { [weak self] in
-                    if let wallet = viewItem.element.wallet {
-                        self?.openSwap(wallet: wallet)
-                    }
-                },
-                onChart: { [weak self] in
-                    self?.viewModel.onTapChart(element: viewItem.element)
+                onTap: { [weak self] in
+                    print("Tap cell in wallet")
                 },
                 onTapError: { [weak self] in
                     self?.viewModel.onTapFailedIcon(element: viewItem.element)
@@ -463,8 +438,8 @@ class WalletViewController: ThemeViewController {
     }
 
     private func bind(headerCell: WalletHeaderCell) {
-        if let viewItem = headerViewItem {
-            headerCell.bind(viewItem: viewItem)
+        if let headerViewItem {
+            headerCell.bind(viewItem: headerViewItem)
         }
     }
 
@@ -585,6 +560,27 @@ class WalletViewController: ThemeViewController {
         viewModel.onDisable(element: element)
     }
 
+    private func bindHeaderActions(cell: WalletHeaderCell) {
+        cell.onTapAmount = { [weak self] in self?.viewModel.onTapTotalAmount() }
+        cell.onTapConvertedAmount = { [weak self] in self?.viewModel.onTapConvertedTotalAmount() }
+        // Cex actions
+        cell.actions[.deposit] = { [weak self] in
+            if let viewController = CexCoinSelectModule.viewController(mode: .deposit) {
+                self?.present(viewController, animated: true)
+            }
+        }
+        cell.actions[.withdraw] = { [weak self] in
+            if let viewController = CexCoinSelectModule.viewController(mode: .withdraw) {
+                self?.present(viewController, animated: true)
+            }
+        }
+        // Master-account actions
+        cell.actions[.send] = { [weak self] in
+            let viewController = WalletModule.sendViewController()
+            self?.present(viewController, animated: true)
+        }
+    }
+
     private func showBackupPromptIfRequired() {
         guard let account = viewModel.lastCreatedAccount else {
             return
@@ -615,18 +611,7 @@ extension WalletViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: WalletHeaderCell.self), for: indexPath)
 
             if let headerCell = cell as? WalletHeaderCell {
-                headerCell.onTapAmount = { [weak self] in self?.viewModel.onTapTotalAmount() }
-                headerCell.onTapConvertedAmount = { [weak self] in self?.viewModel.onTapConvertedTotalAmount() }
-                headerCell.onDeposit = { [weak self] in
-                    if let viewController = CexCoinSelectModule.viewController(mode: .deposit) {
-                        self?.present(viewController, animated: true)
-                    }
-                }
-                headerCell.onWithdraw = { [weak self] in
-                    if let viewController = CexCoinSelectModule.viewController(mode: .withdraw) {
-                        self?.present(viewController, animated: true)
-                    }
-                }
+                bindHeaderActions(cell: headerCell)
             }
 
             return cell

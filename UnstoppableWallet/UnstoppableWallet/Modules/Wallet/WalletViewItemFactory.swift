@@ -34,8 +34,8 @@ class WalletViewItemFactory {
             return .customSyncing(main: main, secondary: secondary)
         } else {
             return .amount(viewItem: BalanceSecondaryAmountViewItem(
+                    descriptionValue: rateValue(rateItem: item.priceItem),
                     secondaryValue: balanceHidden ? nil : secondaryValue(item: item, balancePrimaryValue: balancePrimaryValue, expanded: expanded),
-                    rateValue: rateValue(rateItem: item.priceItem),
                     diff: diff(rateItem: item.priceItem)
             ))
         }
@@ -143,6 +143,27 @@ class WalletViewItemFactory {
         )
     }
 
+    private func headerButtons(account: Account?) -> [WalletModule.Button: ButtonState] {
+        guard let account = account else {
+            return [:]
+        }
+        switch account.type {
+        case .cex(let cexAccount):
+            let withdrawalEnabled = cexAccount.cex.withdrawalAllowed ? ButtonState.enabled : .disabled
+            return [
+                .deposit: .enabled,
+                .withdraw: withdrawalEnabled
+            ]
+        case .evmPrivateKey, .hdExtendedKey, .mnemonic:
+            return [
+                .send: .enabled,
+                .receive: .enabled,
+                .swap: .enabled
+            ]
+        case .evmAddress, .tronAddress: return [:]
+        }
+    }
+
     private func buttons(item: WalletService.Item) -> [WalletModule.Button: ButtonState]? {
         var buttons = [WalletModule.Button: ButtonState]()
 
@@ -183,7 +204,7 @@ extension WalletViewItemFactory {
         )
     }
 
-    func headerViewItem(totalItem: WalletService.TotalItem, balanceHidden: Bool, cexAccount: Bool, withdrawalAllowed: Bool) -> WalletViewModel.HeaderViewItem {
+    func headerViewItem(totalItem: WalletService.TotalItem, balanceHidden: Bool, account: Account?) -> WalletViewModel.HeaderViewItem {
         let amount = balanceHidden ? "*****" : ValueFormatter.instance.formatShort(currencyValue: totalItem.currencyValue)
 
         let convertedValue: String
@@ -200,8 +221,7 @@ extension WalletViewItemFactory {
                 amountExpired: balanceHidden ? false : totalItem.expired,
                 convertedValue: convertedValue,
                 convertedValueExpired: balanceHidden ? false : totalItem.convertedValueExpired,
-                buttonsVisible: cexAccount,
-                withdrawalAllowed: withdrawalAllowed
+                buttons: headerButtons(account: account)
         )
     }
 

@@ -53,6 +53,45 @@ struct WalletModule {
         return WalletViewController(viewModel: viewModel)
     }
 
+    static func sendViewController() -> UIViewController {
+        let coinPriceService = WalletCoinPriceService(
+                currencyKit: App.shared.currencyKit,
+                marketKit: App.shared.marketKit
+        )
+
+        let elementServiceFactory = WalletElementServiceFactory(
+                adapterManager: App.shared.adapterManager,
+                walletManager: App.shared.walletManager,
+                cexAssetManager: App.shared.cexAssetManager
+        )
+
+        let service = WalletService(
+                elementServiceFactory: elementServiceFactory,
+                coinPriceService: coinPriceService,
+                accountManager: App.shared.accountManager,
+                cacheManager: App.shared.enabledWalletCacheManager,
+                accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
+                reachabilityManager: App.shared.reachabilityManager,
+                balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+                balanceHiddenManager: App.shared.balanceHiddenManager,
+                balanceConversionManager: App.shared.balanceConversionManager,
+                cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
+                rateAppManager: App.shared.rateAppManager,
+                appManager: App.shared.appManager,
+                feeCoinProvider: App.shared.feeCoinProvider,
+                localStorage: StorageKit.LocalStorage.default
+        )
+
+        coinPriceService.delegate = service
+
+        let viewModel = WalletSendViewModel(
+                service: service,
+                factory: WalletSendViewItemFactory()
+        )
+
+        return ThemeNavigationController(rootViewController: WalletSendViewController(viewModel: viewModel))
+    }
+
 }
 
 extension WalletModule {
