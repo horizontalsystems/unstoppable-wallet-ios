@@ -24,7 +24,7 @@ struct WalletConnectV2RequestMapper {
         case "personal_sign":
             guard let params = try? request.params.get([String].self),
                   let dataString = params.first,
-                  let data = dataString.hs.hexData else {
+                  let data = dataString.hs.hexData ?? dataString.data(using: .utf8) else {
                 return nil
             }
             return WalletConnectSignMessageRequest(
