@@ -4,14 +4,10 @@ import ThemeKit
 import ComponentKit
 
 class WalletHeaderCell: UITableViewCell {
-    private static let margins = UIEdgeInsets(top: .margin4, left: .margin16, bottom: .margin4, right: .margin16)
-
     private let amountView = HeaderAmountView()
-    private let withdrawButton = PrimaryButton()
-    private let depositButton = PrimaryButton()
+    private let buttonsView = BalanceButtonsView()
 
-    var onWithdraw: (() -> ())?
-    var onDeposit: (() -> ())?
+    var actions: [WalletModule.Button: () -> ()] = [:]
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -25,26 +21,12 @@ class WalletHeaderCell: UITableViewCell {
             make.leading.top.trailing.equalToSuperview()
         }
 
-        contentView.addSubview(withdrawButton)
-        withdrawButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(CGFloat.margin24)
-            make.top.equalTo(amountView.snp.bottom).offset(CGFloat.margin4)
+        contentView.addSubview(buttonsView)
+        buttonsView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
+            make.top.equalTo(amountView.snp.bottom)
+            make.height.equalTo(BalanceButtonsView.height)
         }
-
-        withdrawButton.set(style: .yellow)
-        withdrawButton.setTitle("balance.withdraw".localized, for: .normal)
-        withdrawButton.addTarget(self, action: #selector(onTapWithdraw), for: .touchUpInside)
-
-        contentView.addSubview(depositButton)
-        depositButton.snp.makeConstraints { make in
-            make.leading.equalTo(withdrawButton.snp.trailing).offset(CGFloat.margin16)
-            make.top.width.equalTo(withdrawButton)
-            make.trailing.equalToSuperview().inset(CGFloat.margin24)
-        }
-
-        depositButton.set(style: .gray)
-        depositButton.setTitle("balance.deposit".localized, for: .normal)
-        depositButton.addTarget(self, action: #selector(onTapDeposit), for: .touchUpInside)
 
         let separatorView = UIView()
         contentView.addSubview(separatorView)
@@ -61,19 +43,6 @@ class WalletHeaderCell: UITableViewCell {
         fatalError("not implemented")
     }
 
-    @objc private func onTapWithdraw() {
-        onWithdraw?()
-    }
-
-    @objc private func onTapDeposit() {
-        onDeposit?()
-    }
-
-    var withdrawalEnabled: Bool {
-        get { withdrawButton.isEnabled }
-        set { withdrawButton.isEnabled = newValue }
-    }
-
     var onTapAmount: (() -> ())? {
         get { amountView.onTapAmount }
         set { amountView.onTapAmount = newValue }
@@ -87,7 +56,15 @@ class WalletHeaderCell: UITableViewCell {
     func bind(viewItem: WalletViewModel.HeaderViewItem) {
         amountView.set(amountText: viewItem.amount, expired: viewItem.amountExpired)
         amountView.set(convertedAmountText: viewItem.convertedValue, expired: viewItem.convertedValueExpired)
-        withdrawButton.isEnabled = viewItem.withdrawalAllowed
+        buttonsView.bind(
+                buttons: viewItem.buttons,
+                sendAction: actions[.send],
+                withdrawAction: actions[.withdraw],
+                receiveAction: actions[.receive],
+                depositAction: actions[.deposit],
+                swapAction: actions[.swap],
+                chartAction: actions[.chart]
+        )
     }
 
 }
@@ -99,7 +76,11 @@ extension WalletHeaderCell {
             return HeaderAmountView.height
         }
 
-        return HeaderAmountView.height + (viewItem.buttonsVisible ? .margin4 + PrimaryButton.height + .margin16 : 0)
+        var buttonsHidden = viewItem.buttons.isEmpty
+        if !viewItem.buttons.isEmpty {
+            buttonsHidden = viewItem.buttons.allSatisfy { key, value in value == .hidden }
+        }
+        return HeaderAmountView.height + (buttonsHidden ? 0 : BalanceButtonsView.height)
     }
 
 }

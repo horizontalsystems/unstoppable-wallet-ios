@@ -10,6 +10,12 @@ struct BalanceViewItem {
     let buttons: [WalletModule.Button: ButtonState]?
 }
 
+struct SendViewItem {
+    let element: WalletModule.Element
+
+    let topViewItem: BalanceTopViewItem
+}
+
 struct BalanceTopViewItem {
     let isMainNet: Bool
     let iconUrlString: String?
@@ -32,8 +38,8 @@ enum BalanceSecondaryInfoViewItem {
 }
 
 struct BalanceSecondaryAmountViewItem {
+    let descriptionValue: (text: String?, dimmed: Bool)
     let secondaryValue: (text: String?, dimmed: Bool)?
-    let rateValue: (text: String?, dimmed: Bool)
     let diff: (text: String, type: BalanceDiffType)?
 }
 
@@ -96,8 +102,8 @@ extension BalanceSecondaryAmountViewItem: Equatable {
     static func ==(lhs: BalanceSecondaryAmountViewItem, rhs: BalanceSecondaryAmountViewItem) -> Bool {
         lhs.secondaryValue?.text == rhs.secondaryValue?.text &&
                 lhs.secondaryValue?.dimmed == rhs.secondaryValue?.dimmed &&
-                lhs.rateValue.text == rhs.rateValue.text &&
-                lhs.rateValue.dimmed == rhs.rateValue.dimmed &&
+                lhs.descriptionValue.text == rhs.descriptionValue.text &&
+                lhs.descriptionValue.dimmed == rhs.descriptionValue.dimmed &&
                 lhs.diff?.text == rhs.diff?.text &&
                 lhs.diff?.type == rhs.diff?.type
     }
@@ -125,6 +131,18 @@ extension BalanceViewItem: DiffAware {
         a.topViewItem == b.topViewItem &&
                 a.lockedAmountViewItem == b.lockedAmountViewItem &&
                 a.buttons == b.buttons
+    }
+
+}
+
+extension SendViewItem: DiffAware {
+
+    public var diffId: WalletModule.Element {
+        element
+    }
+
+    static func compareContent(_ a: SendViewItem, _ b: SendViewItem) -> Bool {
+        a.topViewItem == b.topViewItem
     }
 
 }
@@ -160,7 +178,7 @@ extension BalanceSecondaryInfoViewItem: CustomStringConvertible {
 extension BalanceSecondaryAmountViewItem: CustomStringConvertible {
 
     var description: String {
-        "[secondaryValue: \(secondaryValue.map { "[text: \($0.text ?? "nil"); dimmed: \($0.dimmed)]" } ?? "nil"); rateValue: \("[text: \(rateValue.text ?? "nil"); dimmed: \(rateValue.dimmed)]"); diff: \(diff.map { "[text: \($0.text); type: \($0.type)]" } ?? "nil")]"
+        "[secondaryValue: \(secondaryValue.map { "[text: \($0.text ?? "nil"); dimmed: \($0.dimmed)]" } ?? "nil"); rateValue: \("[text: \(descriptionValue.text ?? "nil"); dimmed: \(descriptionValue.dimmed)]"); diff: \(diff.map { "[text: \($0.text); type: \($0.type)]" } ?? "nil")]"
     }
 
 }

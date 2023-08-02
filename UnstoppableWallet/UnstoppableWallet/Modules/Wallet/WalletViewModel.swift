@@ -105,7 +105,7 @@ class WalletViewModel {
     }
 
     private func sync(totalItem: WalletService.TotalItem?) {
-        headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, cexAccount: service.cexAccount, withdrawalAllowed: service.withdrawalAllowed) }
+        headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, account: service.activeAccount) }
     }
 
     private func sync(sortType: WalletModule.SortType, scrollToTop: Bool) {
@@ -224,32 +224,10 @@ extension WalletViewModel {
     }
 
     func onTap(element: WalletModule.Element) {
-        queue.async {
-            guard case .list(var viewItems) = self.state else {
-                return
-            }
-
-            if self.expandedElement == element {
-                self.expandedElement = nil
-
-                if let item = self.service.item(element: element), let index = viewItems.firstIndex(where: { $0.element == element }) {
-                    viewItems[index] = self._viewItem(item: item)
-                }
-            } else {
-                let oldExpandedElement = self.expandedElement
-                self.expandedElement = element
-
-                if let oldExpandedElement, let item = self.service.item(element: oldExpandedElement), let index = viewItems.firstIndex(where: { $0.element == oldExpandedElement }) {
-                    viewItems[index] = self._viewItem(item: item)
-                }
-
-                if let item = self.service.item(element: element), let index = viewItems.firstIndex(where: { $0.element == element }) {
-                    viewItems[index] = self._viewItem(item: item)
-                }
-            }
-
-            self.state = .list(viewItems: viewItems)
+        guard let coin = element.coin else {
+            return
         }
+        openCoinPageRelay.accept(coin)
     }
 
     func onTapReceive(wallet: Wallet) {
@@ -344,8 +322,7 @@ extension WalletViewModel {
         let amountExpired: Bool
         let convertedValue: String?
         let convertedValueExpired: Bool
-        let buttonsVisible: Bool
-        let withdrawalAllowed: Bool
+        let buttons: [WalletModule.Button: ButtonState]
     }
 
     struct ControlViewItem {
