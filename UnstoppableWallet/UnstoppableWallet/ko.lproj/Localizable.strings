@@ -24,8 +24,8 @@
 "button.send" = "전송";
 "button.sign" = "가입";
 "button.more" = "더 보기";
-"button.i_understand" = "I Understand";
-"button.learn_more" = "Learn More";
+"button.i_understand" = "이해합니다";
+"button.learn_more" = "자세히 보기";
 
 "alert" = "알림";
 "alert.copied" = "복사됨";
@@ -38,6 +38,7 @@
 "alert.error" = "오류";
 "alert.unknown_error" = "알수없는 오류";
 "alert.success_action" = "완료";
+"alert.success" = "성공";
 
 "alert.added_to_watchlist" = "관심목록에 추가되었습니다";
 "alert.removed_from_watchlist" = "관심목록에서 제거";
@@ -117,7 +118,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "restore.passphrase_description" = "이 암호는 지갑의 백업 파일을 암호화하는 데 사용됩니다. 이 암호는 Apple iCloud 암호와는 관련이 없습니다. 만약 분실하거나 잊어버린 경우, 복구하거나 재설정할 수 없습니다.";
 "restore.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "restore.non_standard_import" = "비표준 복원";
-"restore.non_standard_import.description" = "This page provides a special wallet import mechanism to %@ users who have a non-standard wallet. Such wallets might have been created in %@ version 0.27 - 0.28 using a non-English recovery phrase and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
+"restore.non_standard_import.description" = "이 페이지는 비표준 지갑을 가지고 있는 %@ 사용자를 위한 특별한 지갑 복원 메커니즘을 제공합니다. 일반적으로 이러한 지갑은 %@ 버전 0.27 - 0.28에서 영어가 아닌 니모닉 단어 목록 및/또는 지갑 암호의 특수 문자(예: 분음 부호)를 사용하여 생성되었을 수 있습니다.\n\n영향을 받는 사용자인 경우 버전 0.29로 업데이트하면 지갑 잔액이 0으로 표시됩니다. 이 페이지에서는 비표준 지갑에 대한 액세스를 복원할 수 있습니다. 복원되면 새 지갑(표준 준수)을 만들고 그곳으로 자금을 옮기는 것이 좋습니다.";
 "restore.warning.non_recommended.description" = "이 지갑은 비밀 단어 목록 및/또는 암호 문구에 비표준 문자를 사용하는 것 같습니다. 잔액이나 거래 내역이 보이지 않으면 아래에서 자세한 내용을 읽어보세요.\n\n더 많은 정보를 얻으려면 클릭하십시오";
 "restore.error.non_standard.description" = "비표준 호환 지갑입니다. 자세한 내용은 아래를 참조하십시오.\n\n더 많은 정보를 얻으려면 클릭하십시오";
 
@@ -284,7 +285,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "error.send.self_transfer" = "자체로 전송이 지원되지 않음";
 "error.send_binance.memo_required" = "수신자는 송금 내역에 메모 기록을 필요로 합니다";
 "error.send_binance.only_digits_allowed" = "메모에는 숫자만 포함하셔야 합니다";
-"error.send_z_cash.transparent_address" = "%@ doesn't support payments to a transparent address";
+"error.send_z_cash.transparent_address" = "%@은 투명 주소에 대한 지불을 지원하지 않습니다";
 
 // Balance
 
@@ -488,7 +489,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "스왑";
-"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
+"swap.confirmation.impact_too_high" = "%@은 현재 유동성이 매우 낮아 매우 불리한 가격으로 거래되고 있으므로, 이 거래에 대한 스왑 조치를 비활성화했습니다.\n교환을 원하시면 %@ 웹사이트를 사용하십시오.";
 "swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";
 
 "swap.confirmation.minimum_received" = "최소 지급액";
@@ -962,7 +963,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.base_currency.title" = "기초 통화";
 "settings.base_currency.other" = "기타";
 "settings.base_currency.disclaimer" = "면책";
-"settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe %@ wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
+"settings.base_currency.disclaimer.description" = "제3자 서비스 Coingecko.com\n\n%@ 지갑 앱에서 제공하는 환율 데이터는 이러한 가치가 항상 올바르고 시장 데이터와 일치함을 보장하지는 않습니다. %@ 이외의 기준 통화를 선택할 경우 불일치가 발생할 가능성이 더 높습니다.";
 "settings.base_currency.disclaimer.set" = "확인";
 
 // Settings -> Manage Wallet
@@ -971,17 +972,17 @@ Go to Settings - > %@ and allow access to the camera.";
 "manage_wallets.not_found" = "검색 결과가 없습니다. 토큰을 수동으로 추가해 보십시오.";
 "manage_wallets.search_placeholder" = "이름, 코드 또는 계약 주소";
 "manage_wallets.contract_address" = "계약 주소";
-"manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile %@ wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile %@ wallet supports both of them it recommends to use a Bitcoin Cash wallet operating in TYPE 145 format.";
+"manage_wallets.derivation_description" = "%@ 지갑이 입금을 받는 데 사용할 수 있는 4가지 일반적인 주소 형식이 있습니다.\n\n- BIP44(이전)\n- BIP49\n- BIP84(추천)\n- BIP86(최신)\n\n%@ 지갑은 이 4가지 모두를 지원합니다. BIP84 형식으로 작동하는 %@ 지갑을 사용하는 것이 좋습니다.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "비트코인 캐시 지갑이 수신 지불을 받는 데 사용할 수 있는 2가지 주소 형식이 있습니다.\n\n- 유형 0(이전)\n- 유형 145(최신)\n\n%@ 지갑은 두 가지를 모두 지원하지만 비트코인 캐시를 사용하는 것이 좋습니다. TYPE 145 형식으로 작동하는 지갑.";
 
 // Settings -> Personal Support
 
 "settings.personal_support.telegram_username.title" = "계정";
 "settings.personal_support.telegram_username.placeholder" = "@username";
 "settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
-"settings.personal_support.request" = "Request";
-"settings.personal_support.requested" = "Requested";
-"settings.personal_support.failed" = "Request failed";
+"settings.personal_support.request" = "요청";
+"settings.personal_support.requested" = "신청 완료";
+"settings.personal_support.failed" = "요청 실패";
 "settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
 
 // Settings -> Experimental Features
@@ -1062,7 +1063,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> About App
 
 "settings.about_app.title" = "앱 정보";
-"settings.about_app.app_name" = "%@ Wallet";
+"settings.about_app.app_name" = "%@ 지갑";
 "settings.about_app.description" = "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
 "settings.about_app.whats_new" = "새로운 기능";
 "settings.about_app.website" = "Website";
@@ -1073,7 +1074,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> Privacy
 
 "settings.privacy" = "개인정보";
-"settings.privacy.description" = "%@ doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
+"settings.privacy.description" = "%@은 사용자에 대한 데이터를 노출할 수 있는 데이터를 수집하거나 분석 도구를 사용하지 않습니다. 지갑은 사용자에게 높은 수준의 개인 정보를 보장하도록 설계되었습니다.";
 "settings.privacy.statement.user_data_storage" = "사용자 데이터는 항상 사용자의 장치에 남아 있습니다.";
 "settings.privacy.statement.data_usage" = "지갑은 사용자에 대한 데이터를 수집하지 않습니다.";
 "settings.privacy.statement.data_privacy" = "지갑은 사용자에 대한 데이터를 공유하지 않습니다.";
@@ -1152,18 +1153,18 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "contacts.settings.title" = "설정";
 
-"contacts.settings.restore_contacts" = "Restore Contacts";
-"contacts.settings.backup_contacts" = "Backup Contacts";
+"contacts.settings.restore_contacts" = "연락처 복원";
+"contacts.settings.backup_contacts" = "백업 연락처";
 
-"contacts.settings.icloud_sync" = "iCloud Sync";
-"contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
+"contacts.settings.icloud_sync" = "iCloud 동기화";
+"contacts.settings.description" = "결제 연락처를 iCloud에 동기화하여 여러 기기에서 쉽게 백업하고 액세스할 수 있습니다.";
 "contacts.settings.lost_synchronization.description" = "iCloud synchronization is lost. Please check that iCloud Storage is enabled on your device.";
 "contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
 
-"contacts.settings.alert.title" = "iCloud Sync";
+"contacts.settings.alert.title" = "iCloud 동기화";
 "contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
 
-"contacts.settings.alert_error.title" = "iCloud Error";
+"contacts.settings.alert_error.title" = "iCloud 오류";
 
 // Set PIN
 
@@ -1356,13 +1357,13 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "status_info.title" = "상태";
 "status_info.pending.title" = "보류 중";
-"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within a few minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Note that status of an individual transaction in %@ wallet interface typically updated with a short delay.";
+"status_info.pending.content" = "거래는 아직 블록체인에서 확인되지 않았습니다. 권장 또는 더 높은 수수료 설정으로 전송된 거래는 일반적으로 분 이내에 처리됩니다. 낮은 수수료로 전송된 거래는 몇 시간 또는 며칠 동안 보류 상태로 남아 있을 수 있으며 거부될 수도 있습니다. 또한 %@ 지갑 인터페이스에 표시되는 개별 트랜잭션의 상태는 일반적으로 짧은 지연으로 업데이트됩니다.";
 "status_info.processing.title" = "처리 중";
 "status_info.processing.content" = "거래는 이미 블록체인에 포함되었지만 영구적인 완결성에 도달하지 않았습니다. 이 시점에서 소액 결제를 위해 완료된 거래로 간주하는 것이 안전합니다. 더 큰 지불의 경우 거래 상태가 완료로 변경될 때까지 기다리는 것이 좋습니다.";
 "status_info.completed.title" = "완료됨";
 "status_info.confirmed.content" = "거래가 완료되고 영구적이고 되돌릴 수 없는 것으로 간주됩니다.";
 "status_info.failed.title" = "실패";
-"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Depending on the fail reason, some failed transactions may consume transaction fees. Transactions that were replaced or canceled by another transaction do not consume transaction fees and will also appear as failed. The %@ app is unable to show the reason for failed transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
+"status_info.failed.content" = "거래가 처리되지 않았으며 가치 이전이 발생하지 않았습니다. 실패 원인에 따라 일부 실패한 거래는 거래 수수료를 소모할 수 있습니다. 다른 거래로 대체되거나 취소된 거래는 거래 수수료를 소비하지 않으며 실패한 것으로 표시됩니다. %@ 앱은 거래 실패의 원인을 표시할 수 없지만 사용자는 etherscan.io와 같은 공개 블록 탐색기에서 직접 찾을 수 있습니다.";
 
 // Onboarding
 
@@ -1672,7 +1673,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "cex_withdraw_confirm.you_withdraw" = "You Withdraw";
 "cex_withdraw_confirm.network" = "네트워크";
 "cex_withdraw_confirm.withdraw" = "Withdraw";
-"cex_withdraw_confirm.withdraw_failed" = "Failed to withdraw";
+"cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
 
 // Coinzix Verify Withdraw
 
