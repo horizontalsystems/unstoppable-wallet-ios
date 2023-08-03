@@ -294,7 +294,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.send" = "Senden";
 "balance.withdraw" = "Withdraw";
 "balance.swap" = "Swap";
-"balance.receive" = "Receive";
+"balance.receive" = "Empfangen";
 "balance.deposit" = "Anfordern";
 "balance.address" = "Adresse";
 "balance.rate_per_coin" = "%@ pro %@";
@@ -879,7 +879,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "transactions.completed" = "Abgeschlossen";
 "transactions.failed" = "Fehlgeschlagen";
 
-"transactions.receive" = "Receive";
+"transactions.receive" = "Empfangen";
 "transactions.send" = "Senden";
 "transactions.burn" = "Burn";
 "transactions.mint" = "Mint";
@@ -972,17 +972,17 @@ Go to Settings - > %@ and allow access to the camera.";
 "manage_wallets.not_found" = "Keine Ergebnisse gefunden. Versuchen Sie, Token manuell hinzuzufügen.";
 "manage_wallets.search_placeholder" = "Name, Code oder Vertragsadresse";
 "manage_wallets.contract_address" = "Vertragsadresse";
-"manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile %@ wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile %@ wallet supports both of them it recommends to use a Bitcoin Cash wallet operating in TYPE 145 format.";
+"manage_wallets.derivation_description" = "Es gibt 4 gängige Adressformate %@ Brieftaschen zum Empfang eingehender Zahlungen:\n\n- BIP44 (ältes)\n- BIP49\n- BIP84 (empfohlen)\n- BIP86 (neueste)\n\nWährend %@ alle 4 unterstützt empfiehlt es, eine %@ Brieftasche im BIP84-Format zu verwenden.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Es gibt 2 Adressformate Bitcoin Cash Brieftaschen zum Empfang eingehender Zahlungen:\n\n- TYPE 0 (älter)\n- TYPE 145 (neuer)\n\nWährend %@ Brieftasche beide unterstützt, empfiehlt es sich, eine Bitcoin Cash Brieftasche im TYPE 145 Format zu verwenden.";
 
 // Settings -> Personal Support
 
 "settings.personal_support.telegram_username.title" = "Account";
-"settings.personal_support.telegram_username.placeholder" = "@username";
-"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
-"settings.personal_support.request" = "Request";
-"settings.personal_support.requested" = "Requested";
-"settings.personal_support.failed" = "Request failed";
+"settings.personal_support.telegram_username.placeholder" = "@benutzername";
+"settings.personal_support.description" = "Geben Sie Ihren Telegram-Kontonamen ein, um einen persönlichen Support-Chat zu eröffnen und wir senden Ihnen eine Nachricht.";
+"settings.personal_support.request" = "Anforderung";
+"settings.personal_support.requested" = "Angefragt";
+"settings.personal_support.failed" = "Anfrage fehlgeschlagen";
 "settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
 
 // Settings -> Experimental Features
@@ -994,8 +994,8 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Activate";
-"settings.bitcoin_hodling.description" = "This enables you to send Bitcoins that cannot be spent until a specified date. \n\nThe receiver of such transactions should use the %@ wallet app version 0.10 or newer, with the BIP44 address format for Bitcoin. \n\nOnly the %@ wallet can correctly identify such transactions on the Bitcoin network, as well as enable the receiver to spend those Bitcoins after the lock period expires. \n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transactions to yourself.";
+"settings.bitcoin_hodling.lock_time" = "Aktivieren";
+"settings.bitcoin_hodling.description" = "Dadurch können Sie Bitcoins senden, die bis zu einem bestimmten Datum nicht ausgegeben werden können. \n\nDer Empfänger solcher Transaktionen sollte die %@ Wallet-App Version 0 verwenden. 0 oder neuer, mit dem BIP44 Adressformat für Bitcoin. \n\nNur die %@ Brieftasche kann solche Transaktionen im Bitcoin-Netzwerk korrekt identifizieren sowie den Empfänger in die Lage zu versetzen, diese Bitcoins nach Ablauf der Sperrfrist auszugeben. \n\nWenn Sie ein HODLer sind Sie können diese Funktion nutzen, um sich selbst zu erzwingen, Ihre Bitcoins zu hodlen, indem Sie solche Transaktionen an sich senden.";
 
 // Settings -> Terms
 
@@ -1039,9 +1039,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "btc_transaction_sort_mode.bip69.description" = "Lexikographische Indizierung";
 
 "blockchain_settings.info.restore_source" = "Parameter wiederherstellen";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like %@ to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "Diese Einstellung ist nur relevant, wenn eine bestehende Brieftasche wiederhergestellt wird. Es ist ein Prozess, die Transaktionsgeschichte für eine bestimmte Kryptowährung abzurufen, so dass die Wallet-App in der Lage ist, vergangene Transaktionen anzuzeigen und den Kontostand des Benutzers zu berechnen. Dies muss nur einmal passieren, wenn der Benutzer die zuvor erstellten Wallets wiederherstellt.\n\nan diesem Punkt es gibt zwei mögliche Wege für eine mobile Brieftasche wie %@ , dies zu tun:\n\n1. vom API-Server: Es gibt einen vordefinierten Server von Dritten, der die gesamte Blockchain beherbergt und alle Daten verarbeitet und optimiert hat, um diese Daten schnell zur Verfügung zu stellen. Diese Methode ist schnell, aber möglicherweise (nicht notwendig) weniger privat. Es ist auch eine zentralisierte Methode, um eine Brieftasche wiederherzustellen, da sie von der Verfügbarkeit eines Drittanbieter-Servers abhängt. Diese Option wird aufgrund der Geschwindigkeit des Abrufs von Daten (5-10 Minuten) empfohlen.\n\n2. von Blockchain: Die App versucht direkt aus einem Netzwerk von Blockchain-Knoten wiederherzustellen. Dies ist ein dezentralisierter Weg, um das Gleichgewicht der Brieftasche und der vergangenen Transaktionen wiederherzustellen. Die App pingt viele Netzwerkknoten und fordert Daten von ihnen an, ohne einige Knoten speziell anzusprechen. Diese Option ist langsam und kann leicht 2-3 Stunden dauern. Die App muss während der Wiederherstellung geöffnet sein. Diese Wiederherstellungsmethode hängt nicht von einer Entität ab und sollte unter allen Bedingungen funktionieren.";
 "blockchain_settings.info.rpc_source" = "RPC-Quelle";
-"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. %@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer.%@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
 
 // Manage Accounts
 
@@ -1064,7 +1064,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "settings.about_app.title" = "Über die App";
 "settings.about_app.app_name" = "%@ Wallet";
-"settings.about_app.description" = "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
+"settings.about_app.description" = "Die Brieftasche %@ wurde für diejenigen gebaut, die Kryptowährungen auf private und unabhängige Weise investieren und speichern möchten.\n\nEs handelt sich um eine nicht-Custodial, Peer-to-Peer-Wallet, bei der nur der Benutzer die Kontrolle über das Guthaben hat. Es sammelt keine Daten und hält den Benutzer unabhängig, indem er das Guthaben des Benutzers nicht an eine bestimmte Wallet-App sperrt.\n\nDie %@ Brieftasche ist vollständig Open-Source und jeder kann bestätigen, dass die App genau so funktioniert, wie sie es vorgibt.";
 "settings.about_app.whats_new" = "Das ist neu";
 "settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Kontakt";
@@ -1074,7 +1074,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> Privacy
 
 "settings.privacy" = "Privatsphäre";
-"settings.privacy.description" = "%@ doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
+"settings.privacy.description" = "%@ sammelt keine Daten oder nutzt Analysewerkzeuge, die möglicherweise Daten über ihre Benutzer enthüllen. Die Brieftasche ist so konzipiert, dass sie den Benutzern ein hohes Maß an Privatsphäre garantiert.";
 "settings.privacy.statement.user_data_storage" = "Benutzerdaten bleiben immer auf dem Gerät des Benutzers.";
 "settings.privacy.statement.data_usage" = "Das Wallet sammelt keine Daten über Benutzer.";
 "settings.privacy.statement.data_privacy" = "Das Wallet teilt keine Daten über Benutzer.";
@@ -1153,18 +1153,18 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "contacts.settings.title" = "Einstellungen";
 
-"contacts.settings.restore_contacts" = "Restore Contacts";
-"contacts.settings.backup_contacts" = "Backup Contacts";
+"contacts.settings.restore_contacts" = "Kontakte wiederherstellen";
+"contacts.settings.backup_contacts" = "Kontakte speichern";
 
 "contacts.settings.icloud_sync" = "iCloud Sync";
-"contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
-"contacts.settings.lost_synchronization.description" = "iCloud synchronization is lost. Please check that iCloud Storage is enabled on your device.";
-"contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+"contacts.settings.description" = "Synchronisiere Zahlungskontakte mit iCloud für einfache Sicherung und Zugriff auf mehrere Geräte.";
+"contacts.settings.lost_synchronization.description" = "iCloud-Synchronisation ist verloren. Bitte überprüfen Sie, ob iCloud-Speicher auf Ihrem Gerät aktiviert ist.";
+"contacts.settings.merge_disclaimer" = "Ihre lokalen Zahlungskontakte werden mit den in iCloud gespeicherten zusammengeführt.";
 
 "contacts.settings.alert.title" = "iCloud Sync";
-"contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+"contacts.settings.alert.description" = "Bitte überprüfen Sie, dass der iCloud-Speicher auf Ihrem Gerät aktiviert ist.";
 
-"contacts.settings.alert_error.title" = "iCloud Error";
+"contacts.settings.alert_error.title" = "iCloud Fehler";
 
 // Set PIN
 
@@ -1597,7 +1597,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Activate Subscription
 
-"activate_subscription.title" = "Activate";
+"activate_subscription.title" = "Aktivieren";
 "activate_subscription.wallet" = "Wallet";
 "activate_subscription.address" = "Adresse";
 "activate_subscription.message" = "Message to Sign";
@@ -1644,24 +1644,24 @@ Go to Settings - > %@ and allow access to the camera.";
 "cex_deposit.network" = "Netzwerk";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. Amount";
-"cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
-"cex_deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
-"cex_deposit.copy_address" = "Copy Address";
-"cex_deposit.share_address" = "Share Address";
-"cex_deposit.failed" = "Failed to load deposit address. Please retry.";
-"cex_deposit.memo_warning.title" = "Important";
-"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
+"cex_deposit.warning_memo" = "Memo (Tag) ist erforderlich, sonst verlieren Sie Ihre Münzen.";
+"cex_deposit.warning" = "Senden Sie nur %@ an diese Adresse. Das Senden anderer Arten von Tokens an diese Adresse führt zu ihrem ultimativen Verlust.";
+"cex_deposit.copy_address" = "Adresse kopieren";
+"cex_deposit.share_address" = "Adresse teilen";
+"cex_deposit.failed" = "Fehler beim Laden der Einzahlungsadresse. Bitte erneut versuchen.";
+"cex_deposit.memo_warning.title" = "Wichtig";
+"cex_deposit.memo_warning.description" = "Sowohl eine Memo (Tag) als auch die Adresse werden benötigt, um sicherzustellen, dass Vermögenswerte empfangen werden. Andernfalls gehen Ihre Gelder verloren.";
 
 // Cex Widthdraw
 
 "cex_withdraw.network" = "Netzwerk";
-"cex_withdraw.network_warning" = "Ensure the network matches the withdrawal address and the deposit platform supports it, or assets may be lost.";
+"cex_withdraw.network_warning" = "Stellen Sie sicher, dass das Netzwerk mit der Auszahlungsadresse übereinstimmt und die Einzahlungsplattform sie unterstützt, oder es können Vermögenswerte verloren gehen.";
 "cex_withdraw.fee" = "Gebühr";
-"cex_withdraw.fee_from_amount" = "Fee from amount";
-"cex_withdraw.error.insufficient_funds" = "Not enough available balance";
-"cex_withdraw.error.max_amount_violated" = "The maximum amount you can withdraw is %@";
-"cex_withdraw.error.min_amount_violated" = "The minimum amount you can withdraw is %@";
-"cex_withdraw.address_required" = "Address is required";
+"cex_withdraw.fee_from_amount" = "Gebühr aus Betrag";
+"cex_withdraw.error.insufficient_funds" = "Nicht genügend verfügbares Guthaben";
+"cex_withdraw.error.max_amount_violated" = "Der maximale Betrag, den du abheben kannst, ist %@";
+"cex_withdraw.error.min_amount_violated" = "Der Mindestbetrag, den du abheben kannst, ist %@";
+"cex_withdraw.address_required" = "Adresse ist erforderlich";
 
 // Cex Withdraw Network Select
 
