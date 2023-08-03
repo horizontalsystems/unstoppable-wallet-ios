@@ -96,9 +96,7 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ needs access to your camera to scan the QR code.
-
-Go to Settings - > %@ and allow access to the camera.";
+"access_camera.message" = "%@이 QR코드를 스캔하기 위해선 카메라에 대한 접근이 필요합니다. \n\n설정 -> %@으로 가서 카메라 접근을 허용해 주세요.";
 "access_camera.settings" = "설정";
 
 // Restore
@@ -128,11 +126,11 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "restore_type.recovery.title" = "복구 문구에서";
 "restore_type.cloud.title" = "아이클라우드에서";
-"restore_type.cex.title" = "from Exchange Wallet";
+"restore_type.cex.title" = "거래소 지갑에서";
 
 "restore_type.recovery.description" = "이 문구는 복구 문구 또는 개인 키를 사용하여 가져올 수 있습니다.";
 "restore_type.cloud.description" = "키체인의 백업 파일에서 가져옵니다.";
-"restore_type.cex.description" = "Connect to a wallet on centralized exchange.";
+"restore_type.cex.description" = "중앙집중형 거래소의 지갑에 연결하세요.";
 
 // Restore Cloud
 
@@ -147,28 +145,28 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Restore Cex
 
-"restore.cex.title" = "Select CEX";
-"restore.cex.description" = "Select the centralized exchange to which you want to connect.";
+"restore.cex.title" = "CEX를 선택하세요";
+"restore.cex.description" = "연결하고자 하는 중앙 집중식 거래소를 선택하십시오.";
 
 // Restore Binance
 
-"restore.binance.description" = "Please provide the API Keys and API Secret to link your exchange.";
-"restore.binance.api_key" = "API Key";
-"restore.binance.secret_key" = "Secret Key";
+"restore.binance.description" = "거래소를 연결하려면 API 키 및 API 비밀 키를 제공해주세요.";
+"restore.binance.api_key" = "API 키";
+"restore.binance.secret_key" = "비밀 키";
 "restore.binance.connect" = "연결";
 "restore.binance.connecting" = "연결 중...";
-"restore.binance.get_api_keys" = "Get API Keys";
-"restore.binance.failed_to_connect" = "Failed to connect your API Key";
-"restore.binance.invalid_qr_code" = "Invalid QR Code";
+"restore.binance.get_api_keys" = "API 키 가져오기";
+"restore.binance.failed_to_connect" = "API 키 연결 실패";
+"restore.binance.invalid_qr_code" = "잘못된 QR 코드";
 
 // Restore Coinzix
 
-"restore.coinzix.description" = "Enter your email and password from Coinzix Account";
-"restore.coinzix.sign_up" = "Sign Up";
-"restore.coinzix.login" = "Log In";
+"restore.coinzix.description" = "코인직스 계정의 이메일과 비밀번호를 입력하세요";
+"restore.coinzix.sign_up" = "회원가입";
+"restore.coinzix.login" = "로그인";
 "restore.coinzix.sample_username" = "Email";
-"restore.coinzix.sample_password" = "Password";
-"restore.coinzix.login_failed" = "Login Failed";
+"restore.coinzix.sample_password" = "비밀번호";
+"restore.coinzix.login_failed" = "로그인 실패";
 
 // Coin Settings
 
@@ -193,7 +191,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Recovery Phrase
 
 "recovery_phrase.title" = "복구 문구";
-"recovery_phrase.warning" = "Never share this key with anyone. %@ Wallet support team will never ask for it.";
+"recovery_phrase.warning" = "복구 문구를 누구와도 공유하지 마십시오. %@ 팀은 복구 문구를 요구하지 않습니다.";
 "recovery_phrase.tap_to_show" = "탭하여 복구 문구 표시";
 "recovery_phrase.passphrase" = "암호문구";
 "recovery_phrase.copy_warning.title" = "복구 문구 복사 위험";
@@ -265,7 +263,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup.cloud.password.title" = "암호를 설정하세요.";
 "backup.cloud.password.description" = "백업에 대한 잠금 해제 암호를 설정하십시오. 최소 8개의 기호로 구성되어야 하며 소문자, 대문자, 숫자 및 특수 문자가 하나 이상 포함되어야 합니다.";
 "backup.cloud.password.highlighted_description" = "이 비밀번호를 잊지 마세요! Apple iCloud 암호와는 별개이며 복구하거나 재설정할 수 없습니다.";
-"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.placeholder" = "비밀번호";
 "backup.cloud.password.confirm.placeholder" = "확인";
 "backup.cloud.password.save" = "저장 및 백업";
 
@@ -292,9 +290,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.title" = "잔액";
 "balance.tab_bar_item" = "잔액";
 "balance.send" = "전송";
-"balance.withdraw" = "Withdraw";
+"balance.withdraw" = "빼다";
 "balance.swap" = "스왑";
-"balance.receive" = "Receive";
+"balance.receive" = "수령";
 "balance.deposit" = "수신";
 "balance.address" = "주소";
 "balance.rate_per_coin" = "%@ 당 %@";
@@ -309,7 +307,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.syncing_percent" = "동기화 중... %@";
 "balance.synced_through" = "%@ 까지";
 "balance.add_coin" = "코인 추가";
-"balance.invalid_api_key" = "Invalid API Key";
+"balance.invalid_api_key" = "유효하지 않은 API 키";
 "balance.empty.add_coins" = "코인 추가";
 "balance.empty.description" = "이 지갑에 코인을 넣지 않았습니다.";
 "balance.watch_empty.description" = "이 지갑 주소에는 잔액이 없습니다";
@@ -840,7 +838,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Coin Page -> Indicators
 
 "chart_indicators.title" = "Indicators";
-"chart_indicators.moving_averages" = "Moving Averages";
+"chart_indicators.moving_averages" = "이동 평균";
 "chart_indicators.oscillators" = "Oscillators";
 
 
@@ -879,7 +877,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "transactions.completed" = "완료됨";
 "transactions.failed" = "실패";
 
-"transactions.receive" = "Receive";
+"transactions.receive" = "수령";
 "transactions.send" = "전송";
 "transactions.burn" = "번";
 "transactions.mint" = "민트";
@@ -995,7 +993,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "settings.bitcoin_hodling.title" = "시간 자물쇠";
 "settings.bitcoin_hodling.lock_time" = "활성화";
-"settings.bitcoin_hodling.description" = "This enables you to send Bitcoins that cannot be spent until a specified date. \n\nThe receiver of such transactions should use the %@ wallet app version 0.10 or newer, with the BIP44 address format for Bitcoin. \n\nOnly the %@ wallet can correctly identify such transactions on the Bitcoin network, as well as enable the receiver to spend those Bitcoins after the lock period expires. \n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transactions to yourself.";
+"settings.bitcoin_hodling.description" = "이 기능을 사용하면 지정된 날짜까지 사용할 수 없는 비트코인을 보낼 수 있습니다. \n\n이러한 거래의 수신자는 비트코인을 위한 BIP44 주소 형식과 %@ 지갑 앱 버전 0.10 이상을 사용해야 합니다. \n\n%@ 지갑만이 비트코인 네트워크에서 이러한 거래를 올바르게 식별하고 잠금 기간이 종료된 후 해당 비트코인을 사용할 수 있도록 할 수 있습니다. \n\nHODLer이라면 이 기능을 사용하여 자신에게 이러한 거래를 보내어 비트코인을 보유할 수 있습니다.";
 
 // Settings -> Terms
 
@@ -1064,7 +1062,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "settings.about_app.title" = "앱 정보";
 "settings.about_app.app_name" = "%@ 지갑";
-"settings.about_app.description" = "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
+"settings.about_app.description" = "%@ 지갑은 암호화폐를 개인적이고 독립적인 방식으로 투자하고 보관하려는 사람들을 위해 만들어졌습니다. \n\n이 지갑은 사용자만이 자금에 대한 통제를 갖는 비보관형 P2P 지갑입니다. 데이터를 수집하지 않으며 사용자의 자금을 특정 지갑 앱에 잠그지 않아 독립성을 유지합니다. \n\n%@ 지갑은 완전한 오픈소스이며 누구든지 앱이 주장하는 대로 정확하게 작동하는지 확인할 수 있습니다.";
 "settings.about_app.whats_new" = "새로운 기능";
 "settings.about_app.website" = "Website";
 "settings.about_app.contact" = "연락처";
@@ -1158,11 +1156,11 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "contacts.settings.icloud_sync" = "iCloud 동기화";
 "contacts.settings.description" = "결제 연락처를 iCloud에 동기화하여 여러 기기에서 쉽게 백업하고 액세스할 수 있습니다.";
-"contacts.settings.lost_synchronization.description" = "iCloud synchronization is lost. Please check that iCloud Storage is enabled on your device.";
-"contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+"contacts.settings.lost_synchronization.description" = "iCloud 동기화가 끊어졌습니다. 기기에서 iCloud 저장소가 활성화되어 있는지 확인해주세요.";
+"contacts.settings.merge_disclaimer" = "당신의 로컬 결제 연락처는 iCloud에 저장된 연락처와 병합됩니다.";
 
 "contacts.settings.alert.title" = "iCloud 동기화";
-"contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+"contacts.settings.alert.description" = "기기에서 iCloud 저장소가 활성화되어 있는지 확인하세요.";
 
 "contacts.settings.alert_error.title" = "iCloud 오류";
 
@@ -1626,61 +1624,61 @@ Go to Settings - > %@ and allow access to the camera.";
 // Cex Coin Select
 
 "cex_coin_select.title" = "코인 선택";
-"cex_coin_select.withdraw" = "Withdraw";
-"cex_coin_select.withdraw.empty" = "You have no assets to withdraw.";
-"cex_coin_select.search_placeholder" = "Coin Code or Name";
-"cex_coin_select.suspended" = "Suspended";
+"cex_coin_select.withdraw" = "빼다";
+"cex_coin_select.withdraw.empty" = "당신은 인출할 자산이 없습니다.";
+"cex_coin_select.search_placeholder" = "코인 코드 또는 이름";
+"cex_coin_select.suspended" = "중단됨";
 
 // Cex Deposit Network Select
 
-"cex_deposit_network_select.title" = "Choose Network";
-"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
+"cex_deposit_network_select.title" = "네트워크 선택하기";
+"cex_deposit_network_select.description" = "네트워크를 선택하고 입금할 주소를 받으세요.";
 
 // Cex Deposit
 
-"cex_deposit.title" = "Deposit %@";
-"cex_deposit.qr_code_description" = "Your address for depositing %@";
+"cex_deposit.title" = "침전 %@";
+"cex_deposit.qr_code_description" = "입금 주소: %@";
 "cex_deposit.address" = "주소";
 "cex_deposit.network" = "네트워크";
 "cex_deposit.memo" = "Memo (Tag)";
-"cex_deposit.min_amount" = "Min. Amount";
-"cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
-"cex_deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
-"cex_deposit.copy_address" = "Copy Address";
-"cex_deposit.share_address" = "Share Address";
-"cex_deposit.failed" = "Failed to load deposit address. Please retry.";
-"cex_deposit.memo_warning.title" = "Important";
-"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
+"cex_deposit.min_amount" = "최소  금액";
+"cex_deposit.warning_memo" = "메모(tag)는 필수입니다. 메모 없이는 코인을 잃을 수 있습니다.";
+"cex_deposit.warning" = "이 주소로는 %@만 보내주세요. 다른 종류의 토큰을 이 주소로 보내면 최종적으로 손실이 발생합니다.";
+"cex_deposit.copy_address" = "주소 복사";
+"cex_deposit.share_address" = "주소 공유";
+"cex_deposit.failed" = "입금 주소를 불러오지 못했습니다. 다시 시도해주세요.";
+"cex_deposit.memo_warning.title" = "중요";
+"cex_deposit.memo_warning.description" = "자산을 수령하기 위해서는 메모(태그)와 주소 모두가 필요합니다. 그렇지 않으면 자금이 손실될 수 있습니다.";
 
 // Cex Widthdraw
 
 "cex_withdraw.network" = "네트워크";
-"cex_withdraw.network_warning" = "Ensure the network matches the withdrawal address and the deposit platform supports it, or assets may be lost.";
+"cex_withdraw.network_warning" = "출금 주소와 입금 플랫폼이 일치하는지 확인하고 지원하는 자산이어야 합니다. 그렇지 않으면 자산이 손실될 수 있습니다.";
 "cex_withdraw.fee" = "수수료";
-"cex_withdraw.fee_from_amount" = "Fee from amount";
-"cex_withdraw.error.insufficient_funds" = "Not enough available balance";
-"cex_withdraw.error.max_amount_violated" = "The maximum amount you can withdraw is %@";
-"cex_withdraw.error.min_amount_violated" = "The minimum amount you can withdraw is %@";
-"cex_withdraw.address_required" = "Address is required";
+"cex_withdraw.fee_from_amount" = "금액에 대한 수수료";
+"cex_withdraw.error.insufficient_funds" = "잔액이 충분하지 않습니다";
+"cex_withdraw.error.max_amount_violated" = "최대 인출 가능액은 %@입니다.";
+"cex_withdraw.error.min_amount_violated" = "최소 인출 금액은 %@입니다.";
+"cex_withdraw.address_required" = "주소가 필요합니다.";
 
 // Cex Withdraw Network Select
 
 "cex_withdraw_network_select.title" = "네트워크";
-"cex_withdraw_network_select.description" = "Ensure the network matches the withdrawal address and the deposit platform supports it.";
+"cex_withdraw_network_select.description" = "인출 주소가 네트워크와 일치하고, 입금 플랫폼이 해당 네트워크를 지원하는지 확인하세요.";
 
 // Cex Withdraw Confirm
 
-"cex_withdraw_confirm.you_withdraw" = "You Withdraw";
+"cex_withdraw_confirm.you_withdraw" = "출금하셨습니다";
 "cex_withdraw_confirm.network" = "네트워크";
-"cex_withdraw_confirm.withdraw" = "Withdraw";
-"cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
+"cex_withdraw_confirm.withdraw" = "빼다";
+"cex_withdraw_confirm.withdraw_failed" = "출금 실패";
 
 // Coinzix Verify Withdraw
 
-"coinzix_verify.title" = "Security Verification";
-"coinzix_verify.failed" = "Failed to verify";
-"coinzix_verify.submit" = "Submit";
-"coinzix_verify.email_pin" = "Verification Code";
-"coinzix_verify.email_pin.description" = "Enter verification code sent to your email";
-"coinzix_verify.google_pin" = "Google Authentication Code";
-"coinzix_verify.google_pin.description" = "Enter google authentication code from your Google Authenticator App";
+"coinzix_verify.title" = "보안 확인";
+"coinzix_verify.failed" = "검증 실패";
+"coinzix_verify.submit" = "제출하기";
+"coinzix_verify.email_pin" = "인증 코드";
+"coinzix_verify.email_pin.description" = "인증 코드를 이메일로 보냈습니다.";
+"coinzix_verify.google_pin" = "구글 OTP";
+"coinzix_verify.google_pin.description" = "Google Authenticator 앱에서 인증 코드를 입력하십시오.";
