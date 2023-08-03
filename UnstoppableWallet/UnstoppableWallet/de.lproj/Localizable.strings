@@ -1670,17 +1670,17 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Cex Withdraw Confirm
 
-"cex_withdraw_confirm.you_withdraw" = "You Withdraw";
+"cex_withdraw_confirm.you_withdraw" = "Sie zurückziehen";
 "cex_withdraw_confirm.network" = "Netzwerk";
 "cex_withdraw_confirm.withdraw" = "Withdraw";
-"cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
+"cex_withdraw_confirm.withdraw_failed" = "Fehler bei Auszahlung";
 
 // Coinzix Verify Withdraw
 
-"coinzix_verify.title" = "Security Verification";
-"coinzix_verify.failed" = "Failed to verify";
-"coinzix_verify.submit" = "Submit";
-"coinzix_verify.email_pin" = "Verification Code";
+"coinzix_verify.title" = "Sicherheitsüberprüfung";
+"coinzix_verify.failed" = "Fehler bei der Überprüfung";
+"coinzix_verify.submit" = "Abschicken";
+"coinzix_verify.email_pin" = "Bestätigungscode";
 "coinzix_verify.email_pin.description" = "Enter verification code sent to your email";
-"coinzix_verify.google_pin" = "Google Authentication Code";
-"coinzix_verify.google_pin.description" = "Enter google authentication code from your Google Authenticator App";
+"coinzix_verify.google_pin" = "Google Authentifizierungscode";
+"coinzix_verify.google_pin.description" = "Geben Sie den Google-Authentifizierungscode aus Ihrer Google Authenticator App ein";
