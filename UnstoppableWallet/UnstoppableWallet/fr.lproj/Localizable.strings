@@ -43,7 +43,7 @@
 "alert.added_to_watchlist" = "Ajouter à la liste de suivi";
 "alert.removed_from_watchlist" = "Retirer de la liste de suivi";
 "alert.added_to_wallet" = "Ajouté au portefeuille";
-"alert.removed_from_wallet" = "Removed from Wallet";
+"alert.removed_from_wallet" = "Supprimé du portefeuille";
 "alert.already_added_to_wallet" = "Déjà ajouté au portefeuille";
 "alert.not_supported_yet" = "Pas pris en charge pour le moment";
 "alert.copied" = "Copié";
@@ -66,7 +66,7 @@
 "alert.revoking" = "Révocation en cours";
 "alert.revoked" = "Révoqué";
 
-"no_results_found" = "No results found";
+"no_results_found" = "Aucun résultat";
 "action.loading" = "chargement en cours...";
 "placeholder.search" = "Chercher";
 
@@ -96,9 +96,9 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ needs access to your camera to scan the QR code.
+"access_camera.message" = "%@ a besoin d'accéder à votre caméra pour scanner le code QR.
 
-Go to Settings - > %@ and allow access to the camera.";
+Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "access_camera.settings" = "Paramètres";
 
 // Restore
@@ -118,7 +118,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "restore.passphrase_description" = "Ce mot de passe est utilisé pour chiffrer le fichier de sauvegarde de votre portefeuille. Il n'est pas lié à votre mot de passe Apple iCloud, et il ne peut pas être récupéré ou réinitialisé en cas de perte ou d'oubli.";
 "restore.error.empty_passphrase" = "La phrase d'authentification ne peut pas être une valeur vide";
 "restore.non_standard_import" = "Restauration non-standard";
-"restore.non_standard_import.description" = "This page provides a special wallet import mechanism to %@ users who have a non-standard wallet. Such wallets might have been created in %@ version 0.27 - 0.28 using a non-English recovery phrase and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
+"restore.non_standard_import.description" = "Sur cette page, vous trouverez un mécanisme spécial de restauration de portefeuille pour les utilisateurs %@ dont le portefeuille n'est pas standard. En général, de tels portefeuilles ont été créés dans la version 0.27 - 0.28 %@ en utilisant une liste de mots mnémoniques non-anglais et/ou un caractère spécial dans la phrase de passe du portefeuille (c'est-à-dire un symbole diacritique).\n\nSi vous êtes un utilisateur concerné, le solde de votre portefeuille sera affiché à 0 après la restauration de ce portefeuille dans la version 0.29 ou supérieure. Grâce à cette page, vous pourrez restaurer l'accès à votre portefeuille non-standard. Une fois la restauration effectuée, il est conseillé de créer un nouveau portefeuille (qui sera conforme aux normes) et d'y transférer vos fonds.";
 "restore.warning.non_recommended.description" = "Ce portefeuille semble utiliser un caractère non-standard dans sa liste de mots secrets et/ou dans une phrase de passe. Si vous ne voyez pas de solde ou de transactions, veuillez vous reporter aux informations ci-dessous. \n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
 "restore.error.non_standard.description" = "Ce portefeuille n'est pas conforme aux normes.\n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
 
@@ -128,11 +128,11 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "restore_type.recovery.title" = "Voir la phase de récupération";
 "restore_type.cloud.title" = "depuis iCloud";
-"restore_type.cex.title" = "from Exchange Wallet";
+"restore_type.cex.title" = "depuis Exchange Wallet";
 
 "restore_type.recovery.description" = "Importer à l'aide de la phrase de récupération ou de la clé privée.";
 "restore_type.cloud.description" = "Importer un fichier de sauvegarde dans votre trousseau de clés.";
-"restore_type.cex.description" = "Connect to a wallet on centralized exchange.";
+"restore_type.cex.description" = "Connectez-vous à un portefeuille en échange centralisé.";
 
 // Restore Cloud
 
@@ -147,28 +147,28 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Restore Cex
 
-"restore.cex.title" = "Select CEX";
-"restore.cex.description" = "Select the centralized exchange to which you want to connect.";
+"restore.cex.title" = "Sélectionner CEX";
+"restore.cex.description" = "Sélectionnez l'exchange centralisé auquel vous voulez vous connecter.";
 
 // Restore Binance
 
-"restore.binance.description" = "Please provide the API Keys and API Secret to link your exchange.";
+"restore.binance.description" = "Veuillez fournir les clés API et API Secret pour lier votre échange.";
 "restore.binance.api_key" = "API Key";
-"restore.binance.secret_key" = "Secret Key";
+"restore.binance.secret_key" = "Clé secrète";
 "restore.binance.connect" = "Connecter";
 "restore.binance.connecting" = "Connexion en cours...";
-"restore.binance.get_api_keys" = "Get API Keys";
-"restore.binance.failed_to_connect" = "Failed to connect your API Key";
-"restore.binance.invalid_qr_code" = "Invalid QR Code";
+"restore.binance.get_api_keys" = "Obtenir les clés API";
+"restore.binance.failed_to_connect" = "Impossible de connecter votre clé API";
+"restore.binance.invalid_qr_code" = "QR-Code invalide";
 
 // Restore Coinzix
 
-"restore.coinzix.description" = "Enter your email and password from Coinzix Account";
-"restore.coinzix.sign_up" = "Sign Up";
+"restore.coinzix.description" = "Entrez votre adresse e-mail et votre mot de passe depuis le compte Coinzix";
+"restore.coinzix.sign_up" = "S'inscrire";
 "restore.coinzix.login" = "Log In";
 "restore.coinzix.sample_username" = "Email";
-"restore.coinzix.sample_password" = "Password";
-"restore.coinzix.login_failed" = "Login Failed";
+"restore.coinzix.sample_password" = "Mot de passe";
+"restore.coinzix.login_failed" = "Échec de la connexion";
 
 // Coin Settings
 
@@ -193,7 +193,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Recovery Phrase
 
 "recovery_phrase.title" = "Phrase de récupération";
-"recovery_phrase.warning" = "Never share this key with anyone. %@ Wallet support team will never ask for it.";
+"recovery_phrase.warning" = "Ne partagez jamais cette clé avec quiconque. L'équipe de support du portefeuille %@ ne le demandera jamais.";
 "recovery_phrase.tap_to_show" = "Appuyez pour afficher la phrase de récupération";
 "recovery_phrase.passphrase" = "Phrase d'authentification";
 "recovery_phrase.copy_warning.title" = "Copie de la phrase de récupération";
@@ -265,7 +265,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup.cloud.password.title" = "Créer un mot de passe";
 "backup.cloud.password.description" = "Définissez le mot de passe de déverrouillage de votre sauvegarde. Il doit contenir au moins 8 symboles, y compris une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial.";
 "backup.cloud.password.highlighted_description" = "N'oubliez pas ce mot de passe ! Il est différent de votre mot de passe Apple iCloud, et ne peut pas être récupéré ou réinitialisé.";
-"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.placeholder" = "Mot de passe";
 "backup.cloud.password.confirm.placeholder" = "Confirmer";
 "backup.cloud.password.save" = "Enregistrez une copie de sauvegarde";
 
@@ -574,12 +574,12 @@ Go to Settings - > %@ and allow access to the camera.";
 "market_discovery.filters" = "Filtres";
 "market_discovery.browse_categories" = "Parcourir les catégories";
 "market_discovery.top_coins" = "TOP des coins";
-"market_discovery.not_found" = "No results found";
+"market_discovery.not_found" = "Aucun résultat";
 
 "market_watchlist.empty.caption" = "Votre liste de suivi est vide.";
 
 "market.search.title" = "Chercher";
-"market.search.empty_text" = "No results found";
+"market.search.empty_text" = "Aucun résultat";
 
 "market.advanced_search.title" = "Filtres";
 "market.advanced_search.show_results" = "Afficher les résultats";
@@ -698,13 +698,13 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.indicators.summary" = "Résumé";
 "coin_analytics.indicators.title" = "Indicateurs techniques";
 "coin_analytics.indicators.no_data" = "Pas de données";
-"coin_analytics.indicators.strong_buy" = "Strong Buy";
+"coin_analytics.indicators.strong_buy" = "Achat fort";
 "coin_analytics.indicators.buy" = "Acheter";
-"coin_analytics.indicators.neutral" = "Neutral";
-"coin_analytics.indicators.sell" = "Sell";
-"coin_analytics.indicators.strong_sell" = "Strong Sell";
+"coin_analytics.indicators.neutral" = "Neutre";
+"coin_analytics.indicators.sell" = "Vendre";
+"coin_analytics.indicators.strong_sell" = "Vente forte";
 "coin_analytics.period" = "Period";
-"coin_analytics.period.select_title" = "Select Period";
+"coin_analytics.period.select_title" = "Sélectionnez la période";
 "coin_analytics.period.1h" = "1 heure";
 "coin_analytics.period.4h" = "4 heures";
 "coin_analytics.period.1d" = "1 jour";
@@ -715,9 +715,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.not_available" = "Ce projet n'a pas de données d'analyse";
 
 "coin_analytics.technical_indicators" = "Indicateurs techniques";
-"coin_analytics.technical_indicators.info1" = "Summary: This is a general overview of an asset's technicals, considering a variety of technical indicators and timeframes. It provides a consensus viewpoint (Buy, Sell, or Neutral) based on these indicators.";
-"coin_analytics.technical_indicators.info2" = "Moving Averages (MA): These are commonly used technical indicators that smooth out price data to create a trend-following indicator. They show the average price over a specific time period. There are several types of MAs:\n\nSimple Moving Average (SMA): This calculates the average of a selected range of prices, usually closing prices, by the number of periods in that range.\n\nExponential Moving Average (EMA): This gives more weight to recent prices, thereby responding more quickly to recent price changes.";
-"coin_analytics.technical_indicators.info3" = "Oscillators: These are technical indicators that fluctuate over time within a band (above and below a center line, or between set levels). They are designed to help identify overbought and oversold conditions in a market. Here are some common oscillators:\n\nRelative Strength Index (RSI): This measures the speed and change of price movements. It is usually used to identify overbought or oversold conditions.\n\nMoving Average Convergence Divergence (MACD): This is used to identify potential buy and sell signals. It triggers technical signals when it crosses above (to buy) or below (to sell) its signal line.";
+"coin_analytics.technical_indicators.info1" = "Résumé: This is a general overview of an asset technicals, considering a variety of technical indicators and timeframes. Il fournit un point de vue consensuel (Acheter, Vendre ou Neutre) basé sur ces indicateurs.";
+"coin_analytics.technical_indicators.info2" = "Moyennes mobiles (MA) : Ce sont des indicateurs techniques couramment utilisés pour lisser les données de prix afin de créer un indicateur de suivi de tendance. Ils montrent le prix moyen sur une période de temps spécifique. Il existe plusieurs types de MA :\n\nMoyenne mobile simple (SMA) : Cela calcule la moyenne d'une plage de prix sélectionnée, généralement les prix de clôture, par le nombre de périodes dans cette plage.\n\nMoyenne mobile exponentielle (EMA) : Cela donne plus de poids aux prix récents, répondant ainsi plus rapidement aux changements de prix récents.";
+"coin_analytics.technical_indicators.info3" = "Oscillateurs: Ce sont des indicateurs techniques qui fluctuent dans le temps à l'intérieur d'une bande (au-dessus et en dessous d'une ligne centrale, ou entre des niveaux définis). Ils sont conçus pour aider à identifier les conditions de surachat et de survente sur un marché. Voici quelques oscillateurs courants:\n\nIndice de force relative (RSI): Cela mesure la vitesse et le changement des mouvements de prix. Il est généralement utilisé pour identifier les conditions de surachat ou de survente.\n\nConvergence divergence de moyennes mobiles (MACD): Cela est utilisé pour identifier les signaux d'achat et de vente potentiels. Il déclenche des signaux techniques lorsqu'il croise au-dessus (pour acheter) ou en dessous (pour vendre) de sa ligne de signal.";
 
 "coin_analytics.cex_volume" = "Volume CEX";
 "coin_analytics.cex_volume_rank" = "Rang de volume CEX";
@@ -814,12 +814,12 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "coin_analytics.last_30d" = "30 derniers j.";
 "coin_analytics.current" = "actuel";
-"coin_analytics.rating_scale" = "Rating Scale";
-"coin_analytics.rating_scale.description" = "The rating scale is derived from the top 250 tokens by market capitalisation and is proportionally adjusted by percentage to obtain the final rating scale.";
+"coin_analytics.rating_scale" = "Échelle de notation";
+"coin_analytics.rating_scale.description" = "L'échelle de notation est dérivée des 250 premiers jetons par capitalisation boursière et est ajustée proportionnellement par pourcentage pour obtenir l'échelle de notation finale.";
 "coin_analytics.rating_scale.excellent" = "Excellent";
-"coin_analytics.rating_scale.good" = "Good";
-"coin_analytics.rating_scale.fair" = "Fair";
-"coin_analytics.rating_scale.poor" = "Poor";
+"coin_analytics.rating_scale.good" = "Bon";
+"coin_analytics.rating_scale.fair" = "Équitable";
+"coin_analytics.rating_scale.poor" = "Mauvais";
 "coin_analytics.rank" = "Rang";
 "coin_analytics.30_day_rank" = "Classement sur 30 jours";
 "coin_analytics.30_day_volume" = "Volume sur 30 jours";
@@ -840,27 +840,27 @@ Go to Settings - > %@ and allow access to the camera.";
 // Coin Page -> Indicators
 
 "chart_indicators.title" = "Indicateurs";
-"chart_indicators.moving_averages" = "Moving Averages";
-"chart_indicators.oscillators" = "Oscillators";
+"chart_indicators.moving_averages" = "Moyennes mobiles";
+"chart_indicators.oscillators" = "Oscillateurs";
 
 
-"chart_indicators.settings.period.error" = "Period can’t be more than %d";
+"chart_indicators.settings.period.error" = "La période ne peut pas être supérieure à %d";
 
-"chart_indicators.settings.ma.description" = "The EMA, SMA, and WMA are moving averages used in technical analysis:\n\nEMA emphasizes recent prices for quicker reactions.\nSMA averages price data for a general trend view.\nWMA balances sensitivity and noise reduction by linearly weighting recent data";
+"chart_indicators.settings.ma.description" = "L'EMA, SMA et WMA sont des moyennes mobiles utilisées dans l'analyse technique :\n\nEMA souligne les prix récents pour des réactions plus rapides.\nSMA affiche en moyenne les données de prix pour une vue de tendance générale.\nWMA balance la sensibilité et la réduction du bruit en pondération linéaire des données récentes";
 "chart_indicators.settings.ma.type_title" = "Type";
 "chart_indicators.settings.ma.period_title" = "Period";
 
 "chart_indicators.settings.rsi.title" = "RSI";
-"chart_indicators.settings.rsi.description" = "The Relative Strength Index (RSI) is a momentum oscillator that measures price speed and change, identifying overbought (above 70) or oversold (below 30) market conditions. It can also detect price reversals through divergences.";
-"chart_indicators.settings.rsi.period_title" = "RSI Length";
+"chart_indicators.settings.rsi.description" = "L'indice de force relative (indice de force relative) est un oscillateur d'élan qui mesure la vitesse et le changement des prix, l'identification des surachetés (au-dessus de 70) ou les surachats (sous les 30 conditions du marché). Il peut également détecter des retours de prix par des divergences.";
+"chart_indicators.settings.rsi.period_title" = "Longueur RSI";
 
 "chart_indicators.settings.macd.title" = "MACD";
-"chart_indicators.settings.macd.description" = "The Moving Average Convergence Divergence (MACD) is a momentum indicator that tracks the relationship between two EMAs of a security's price. It signals buying or selling opportunities when the MACD line (12-period EMA minus 26-period EMA) crosses the 9-period EMA, known as the signal line.";
-"chart_indicators.settings.macd.fast_period_title" = "Fast Length";
-"chart_indicators.settings.macd.slow_period_title" = "Slow Length";
-"chart_indicators.settings.macd.signal_period_title" = "Signal Smoothing";
+"chart_indicators.settings.macd.description" = "Le MACD (Moving Average Average Convergence Divergence MACD) est un indicateur d'élan qui suit la relation entre deux EMA du prix d'un titre. Il signale l'achat ou la vente d'opportunités lorsque la ligne MACD (EMA moins 12 périodes de l'EMA) traverse l'EMA de 9 périodes, connue sous le nom de ligne de signal.";
+"chart_indicators.settings.macd.fast_period_title" = "Longueur rapide";
+"chart_indicators.settings.macd.slow_period_title" = "Longueur lente";
+"chart_indicators.settings.macd.signal_period_title" = "Lissage du signal";
 
-"chart_indicators.settings.macd.slow_fast.error" = "Fast Length must be less than Slow Length";
+"chart_indicators.settings.macd.slow_fast.error" = "La longueur rapide doit être inférieure à la longueur lente";
 
 // Transactions
 
@@ -951,7 +951,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.blockchain_settings" = "Paramètres de la Blockchain";
 "settings.security" = "Centre de Sécurité";
 "settings.experimental_features" = "Expérimental";
-"settings.personal_support" = "Personal Support";
+"settings.personal_support" = "Assistance Personnelle";
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
 "settings.faq" = "FAQ";
@@ -963,7 +963,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.base_currency.title" = "Devise de Base";
 "settings.base_currency.other" = "Autre";
 "settings.base_currency.disclaimer" = "Avertissement";
-"settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe %@ wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
+"settings.base_currency.disclaimer.description" = "Les données relatives aux taux de change fournies par un service tiers Coingecko.com\n\n%@ wallet app ne garantit pas que ces valeurs sont toujours correctes et correspondent aux données du marché. Le risque de divergence est plus élevé si vous sélectionnez une devise de base autre que %@.";
 "settings.base_currency.disclaimer.set" = "Appliquer";
 
 // Settings -> Manage Wallet
@@ -972,18 +972,18 @@ Go to Settings - > %@ and allow access to the camera.";
 "manage_wallets.not_found" = "Aucun résultat trouvé. Essayez d'ajouter le token manuellement.";
 "manage_wallets.search_placeholder" = "Nom, code ou adresse du contrat";
 "manage_wallets.contract_address" = "Adresse du contrat";
-"manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile %@ wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile %@ wallet supports both of them it recommends to use a Bitcoin Cash wallet operating in TYPE 145 format.";
+"manage_wallets.derivation_description" = "Les portefeuilles %@ peuvent utiliser 4 formats d'adresse courants pour recevoir des paiements : \n\n- BIP44 (plus ancien)\n- BIP49\n- BIP84 (recommandé)\n- BIP86 (plus récent)\n\n. Bien que le portefeuille %@ prenne en charge ces 4 formats, il est recommandé d'utiliser un portefeuille %@ opérant au format BIP84.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Les portefeuilles Bitcoin Cash peuvent utiliser deux formats d'adresse pour recevoir les paiements entrants : \n\n- TYPE 0 (plus ancien)\n- TYPE 145 (plus récent)\n\n. Bien que le portefeuille %@ soit compatible avec les deux formats, l'utilisation d'un portefeuille Bitcoin Cash utilisant le format TYPE 145 est recommandée.";
 
 // Settings -> Personal Support
 
 "settings.personal_support.telegram_username.title" = "Compte";
 "settings.personal_support.telegram_username.placeholder" = "@username";
-"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
-"settings.personal_support.request" = "Request";
-"settings.personal_support.requested" = "Requested";
-"settings.personal_support.failed" = "Request failed";
-"settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
+"settings.personal_support.description" = "Entrez le nom de votre compte Telegram pour ouvrir un chat de support personnel et nous vous enverrons un message.";
+"settings.personal_support.request" = "Requête";
+"settings.personal_support.requested" = "Demandé";
+"settings.personal_support.failed" = "La requête a échoué";
+"settings.personal_support.need_subscription" = "Cette fonctionnalité est réservée aux utilisateurs premium du Portefeuille %@ . Plus d'infos sur notre site officiel.";
 
 // Settings -> Experimental Features
 
@@ -995,7 +995,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "Activer";
-"settings.bitcoin_hodling.description" = "This enables you to send Bitcoins that cannot be spent until a specified date. \n\nThe receiver of such transactions should use the %@ wallet app version 0.10 or newer, with the BIP44 address format for Bitcoin. \n\nOnly the %@ wallet can correctly identify such transactions on the Bitcoin network, as well as enable the receiver to spend those Bitcoins after the lock period expires. \n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transactions to yourself.";
+"settings.bitcoin_hodling.description" = "Permet d'envoyer des Bitcoins qui ne peuvent pas être dépensées avant la date spécifiée.\n\nLe destinataire d'une telle transaction devrait utiliser un portefeuille %@.\n\nSeul un portefeuille %@ peut identifier correctement de telles transactions sur le réseau Bitcoin ainsi que permettre au destinataire de dépenser ces Bitcoins après l'expiration de la période de verrouillage.\n\nSi vous êtes un HODLer, vous pouvez utiliser cette fonction pour vous obliger à garder vos Bitcoins en vous envoyant une telle transaction à vous-même.\n\nPuisqu'il s'agit d'une fonctionnalité expérimentale, le montant maximum par transaction est limité à 0,5 BTC.";
 
 // Settings -> Terms
 
@@ -1063,8 +1063,8 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> About App
 
 "settings.about_app.title" = "À propos de l'application";
-"settings.about_app.app_name" = "%@ Wallet";
-"settings.about_app.description" = "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
+"settings.about_app.app_name" = "%@ Portefeuille";
+"settings.about_app.description" = "Le portefeuille %@ est conçu pour ceux qui cherchent à investir et à stocker des cryptomonnaies de manière privée et indépendante.\n\nC'est un portefeuille non-dépositaire, peer-to-peer où seul l'utilisateur a le contrôle sur les fonds. Il ne collecte aucune donnée et garde l'utilisateur indépendant en ne verrouillant pas les fonds de l'utilisateur sur une application spécifique de portefeuille.\n\nLe portefeuille %@ est entièrement open-source et tout le monde peut confirmer que l'application fonctionne exactement comme il le prétend.";
 "settings.about_app.whats_new" = "Nouveautés";
 "settings.about_app.website" = "Site Web";
 "settings.about_app.contact" = "Contact";
@@ -1074,7 +1074,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> Privacy
 
 "settings.privacy" = "Confidentialité";
-"settings.privacy.description" = "%@ doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
+"settings.privacy.description" = "%@ ne collecte aucune donnée et n'utilise aucun outil d'analyse susceptible d'exposer des données sur ses utilisateurs. Le portefeuille est conçu pour assurer un haut niveau de confidentialité à ses utilisateurs.";
 "settings.privacy.statement.user_data_storage" = "Les données de l'utilisateur restent toujours sur l'appareil de l'utilisateur.";
 "settings.privacy.statement.data_usage" = "Le portefeuille ne collecte aucune donnée sur les utilisateurs.";
 "settings.privacy.statement.data_privacy" = "Le portefeuille ne partage aucune donnée sur les utilisateurs.";
@@ -1112,7 +1112,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "contacts.title" = "Contacts";
 "contacts.list.search_placeholder" = "Rechercher par nom";
 "contacts.list.not_found" = "Vous n'avez pas ajouté de contact";
-"contacts.list.not_found_search" = "No results found";
+"contacts.list.not_found_search" = "Aucun résultat";
 "contacts.add_new_contact" = "Ajouter un nouveau contact";
 "contacts.update_contact.already_has_address" = "Le contact sélectionné possède déjà une adresse sur %@. Cette action remplacera l'adresse %@ par %@.";
 "contacts.update_contact.replace" = "Remplacer";
@@ -1153,18 +1153,18 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "contacts.settings.title" = "Paramètres";
 
-"contacts.settings.restore_contacts" = "Restore Contacts";
-"contacts.settings.backup_contacts" = "Backup Contacts";
+"contacts.settings.restore_contacts" = "Restaurer les contacts";
+"contacts.settings.backup_contacts" = "Sauvegarder les contacts";
 
 "contacts.settings.icloud_sync" = "iCloud Sync";
-"contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
-"contacts.settings.lost_synchronization.description" = "iCloud synchronization is lost. Please check that iCloud Storage is enabled on your device.";
-"contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+"contacts.settings.description" = "Synchroniser les contacts de paiement sur iCloud pour faciliter la sauvegarde et l'accès sur plusieurs appareils.";
+"contacts.settings.lost_synchronization.description" = "La synchronisation iCloud est perdue. Veuillez vérifier que le stockage iCloud est activé sur votre appareil.";
+"contacts.settings.merge_disclaimer" = "Vos contacts de paiement locaux seront fusionnés avec ceux stockés sur iCloud.";
 
 "contacts.settings.alert.title" = "iCloud Sync";
-"contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+"contacts.settings.alert.description" = "Veuillez vérifier que le stockage iCloud est activé sur votre appareil.";
 
-"contacts.settings.alert_error.title" = "iCloud Error";
+"contacts.settings.alert_error.title" = "Erreur iCloud";
 
 // Set PIN
 
@@ -1357,13 +1357,13 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "status_info.title" = "Statut";
 "status_info.pending.title" = "En attente";
-"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within a few minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Note that status of an individual transaction in %@ wallet interface typically updated with a short delay.";
+"status_info.pending.content" = "La transaction n'a pas encore été confirmée sur la blockchain. Les transactions envoyées avec un montant de frais recommandé ou supérieur sont généralement traitées en quelques minutes. Les transactions envoyées avec des frais peu élevés risquent de rester en attente pendant quelques heures, voire quelques jours, et peuvent même être rejetées. Notez que le statut d'une transaction individuelle dans l'interface du portefeuille %@ Wallet est généralement mis à jour avec un léger délai.";
 "status_info.processing.title" = "Traitement en cours";
 "status_info.processing.content" = "La transaction a déjà été incluse dans la blockchain mais n'a pas été finalisée. En ce qui concerne les petits paiements, il est prudent de considérer que la transaction est terminée. Pour les paiements plus importants, il est recommandé d'attendre que le statut de la transaction passe à terminé.";
 "status_info.completed.title" = "Terminé";
 "status_info.confirmed.content" = "La transaction est terminée et considérée comme permanente et irréversible.";
 "status_info.failed.title" = "Échec";
-"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Depending on the fail reason, some failed transactions may consume transaction fees. Transactions that were replaced or canceled by another transaction do not consume transaction fees and will also appear as failed. The %@ app is unable to show the reason for failed transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
+"status_info.failed.content" = "La transaction n'a pas été traitée et aucun transfert de fonds n'a eu lieu. En fonction de la raison de l'échec, certaines transactions qui ont échoué peuvent entraîner des frais de transaction. Les transactions qui ont été remplacées ou annulées par une autre transaction ne génèrent pas de frais et apparaîtront également comme ayant échoué. L'application %@ n'est pas en mesure d'indiquer la raison de l'échec des transactions, mais les utilisateurs peuvent en trouver eux-mêmes la raison sur un explorateur de blocs public, comme etherscan.io par exemple.";
 
 // Onboarding
 
@@ -1392,7 +1392,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "manage_account.backup.no_backup_yet_description" = "Pour commencer à utiliser le portefeuille, veuillez choisir l'une des options de sauvegarde disponibles.";
 "manage_account.backup.has_backup_description" = "Il est recommandé de faire une sauvegarde manuelle pour chaque portefeuille.";
 
-"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "Êtes-vous sûr de vouloir supprimer la sauvegarde de votre portefeuille d'iCloud ?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "Clés publiques";
@@ -1466,7 +1466,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "fee_settings.time_lock.description" = "Le TimeLock ne fonctionne que pour les envois vers les adresses du BIP44 (commençant par 1)";
 
 "fee_settings.network_fee" = "Frais de réseau";
-"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
+"fee_settings.network_fee.info" = "Le coût estimé de l'envoi d'une transaction donnée sur le réseau.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "La complexité des transactions est mesurée en unités appelées \"gas\". Elles varient en fonction du contrat intelligent en cours d'exécution. La limite de gas est le volume maximum estimé de gas nécessaire pour son exécution. Le volume de gaz réellement utilisé est généralement inférieur.";
 
@@ -1586,15 +1586,15 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Subscription Info
 
-"subscription_info.title" = "Premium Features";
-"subscription_info.info1.title" = "Cryptocurrency Analytics";
-"subscription_info.info1.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.info2.title" = "Chart Indicators";
-"subscription_info.info2.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.info3.title" = "Personal Support";
-"subscription_info.info3.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.get_premium" = "Get Premium";
-"subscription_info.already_have" = "I already have Premium";
+"subscription_info.title" = "Fonctionnalités Premium";
+"subscription_info.info1.title" = "Analyse des cryptomonnaies";
+"subscription_info.info1.text" = "Trouvez des opportunités Lucratives, évitez les Scams et maximisez vos profits dans le monde dynamique de la cryptomonnaie.";
+"subscription_info.info2.title" = "Indicateurs de la carte";
+"subscription_info.info2.text" = "Trouvez des opportunités Lucratives, évitez les Scams et maximisez vos profits dans le monde dynamique de la cryptomonnaie.";
+"subscription_info.info3.title" = "Assistance Personnelle";
+"subscription_info.info3.text" = "Trouvez des opportunités Lucratives, évitez les Scams et maximisez vos profits dans le monde dynamique de la cryptomonnaie.";
+"subscription_info.get_premium" = "Devenez Premium";
+"subscription_info.already_have" = "J'ai déjà Premium";
 
 // Activate Subscription
 
@@ -1606,7 +1606,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "activate_subscription.activating" = "Activation...";
 "activate_subscription.failed_to_activate" = "Impossible d'activer l'abonnement";
 "activate_subscription.activated" = "Activé";
-"activate_subscription.no_subscriptions" = "Your wallet address does not have a subscription to premium features, you need to purchase it to activate the subscription.";
+"activate_subscription.no_subscriptions" = "L'adresse de votre portefeuille n'a pas d'abonnement aux fonctionnalités premium, vous devez l'acheter pour activer l'abonnement.";
 
 // Launch
 
@@ -1628,60 +1628,60 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "cex_coin_select.title" = "Choisir la pièce";
 "cex_coin_select.withdraw" = "Retraits";
-"cex_coin_select.withdraw.empty" = "You have no assets to withdraw.";
-"cex_coin_select.search_placeholder" = "Coin Code or Name";
-"cex_coin_select.suspended" = "Suspended";
+"cex_coin_select.withdraw.empty" = "Vous n'avez pas d'actifs à retirer.";
+"cex_coin_select.search_placeholder" = "Code ou nom de pièce de monnaie";
+"cex_coin_select.suspended" = "Suspendues";
 
 // Cex Deposit Network Select
 
-"cex_deposit_network_select.title" = "Choose Network";
-"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
+"cex_deposit_network_select.title" = "Choisir un réseau";
+"cex_deposit_network_select.description" = "Choisissez un réseau et obtenez une adresse à déposer.";
 
 // Cex Deposit
 
-"cex_deposit.title" = "Deposit %@";
-"cex_deposit.qr_code_description" = "Your address for depositing %@";
+"cex_deposit.title" = "Dépôt %@";
+"cex_deposit.qr_code_description" = "Votre adresse pour le dépôt %@";
 "cex_deposit.address" = "Adresses";
 "cex_deposit.network" = "Réseau";
 "cex_deposit.memo" = "Mémo (Tag)";
-"cex_deposit.min_amount" = "Min. Amount";
-"cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
-"cex_deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
-"cex_deposit.copy_address" = "Copy Address";
-"cex_deposit.share_address" = "Share Address";
-"cex_deposit.failed" = "Failed to load deposit address. Please retry.";
+"cex_deposit.min_amount" = "Montant minimum";
+"cex_deposit.warning_memo" = "Mémo (tag) est requis ou vous perdrez vos pièces.";
+"cex_deposit.warning" = "Envoyer seulement %@ à cette adresse. Envoyer d'autres types de jetons à cette adresse entraînera leur perte ultime.";
+"cex_deposit.copy_address" = "Copier l'adresse";
+"cex_deposit.share_address" = "Partager l'adresse";
+"cex_deposit.failed" = "Impossible de charger l'adresse du dépôt. Veuillez réessayer.";
 "cex_deposit.memo_warning.title" = "Important";
-"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
+"cex_deposit.memo_warning.description" = "A la fois un mémo (tag) et l'adresse sont nécessaires pour s'assurer que les actifs sont reçus. Sinon, vos fonds seront perdus.";
 
 // Cex Widthdraw
 
 "cex_withdraw.network" = "Réseau";
-"cex_withdraw.network_warning" = "Ensure the network matches the withdrawal address and the deposit platform supports it, or assets may be lost.";
+"cex_withdraw.network_warning" = "Assurez-vous que le réseau correspond à l'adresse de retrait et que la plateforme de dépôt le supporte, ou que les actifs peuvent être perdus.";
 "cex_withdraw.fee" = "Frais";
-"cex_withdraw.fee_from_amount" = "Fee from amount";
-"cex_withdraw.error.insufficient_funds" = "Not enough available balance";
-"cex_withdraw.error.max_amount_violated" = "The maximum amount you can withdraw is %@";
-"cex_withdraw.error.min_amount_violated" = "The minimum amount you can withdraw is %@";
-"cex_withdraw.address_required" = "Address is required";
+"cex_withdraw.fee_from_amount" = "Frais du montant";
+"cex_withdraw.error.insufficient_funds" = "Solde disponible insuffisant";
+"cex_withdraw.error.max_amount_violated" = "Le montant maximum que vous pouvez retirer est %@";
+"cex_withdraw.error.min_amount_violated" = "Le montant minimum que vous pouvez retirer est %@";
+"cex_withdraw.address_required" = "Adresse obligatoire";
 
 // Cex Withdraw Network Select
 
 "cex_withdraw_network_select.title" = "Réseau";
-"cex_withdraw_network_select.description" = "Ensure the network matches the withdrawal address and the deposit platform supports it.";
+"cex_withdraw_network_select.description" = "Assurez-vous que le réseau correspond à l'adresse de retrait et que la plateforme de dépôt le supporte.";
 
 // Cex Withdraw Confirm
 
-"cex_withdraw_confirm.you_withdraw" = "You Withdraw";
+"cex_withdraw_confirm.you_withdraw" = "Vous retirez";
 "cex_withdraw_confirm.network" = "Réseau";
 "cex_withdraw_confirm.withdraw" = "Retraits";
-"cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
+"cex_withdraw_confirm.withdraw_failed" = "Échec du retrait";
 
 // Coinzix Verify Withdraw
 
-"coinzix_verify.title" = "Security Verification";
-"coinzix_verify.failed" = "Failed to verify";
-"coinzix_verify.submit" = "Submit";
-"coinzix_verify.email_pin" = "Verification Code";
-"coinzix_verify.email_pin.description" = "Enter verification code sent to your email";
+"coinzix_verify.title" = "Vérification de la sécurité";
+"coinzix_verify.failed" = "Échec de la vérification";
+"coinzix_verify.submit" = "Soumettre";
+"coinzix_verify.email_pin" = "Code de vérification";
+"coinzix_verify.email_pin.description" = "Entrez le code de vérification envoyé à votre adresse e-mail";
 "coinzix_verify.google_pin" = "Google Authentication Code";
-"coinzix_verify.google_pin.description" = "Enter google authentication code from your Google Authenticator App";
+"coinzix_verify.google_pin.description" = "Entrez le code d'authentification Google depuis votre application Google Authenticator";
