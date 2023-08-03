@@ -38,12 +38,12 @@
 "alert.error" = "Fehler";
 "alert.unknown_error" = "Unbekannter Fehler";
 "alert.success_action" = "Fertig";
-"alert.success" = "Success";
+"alert.success" = "Erfolgreich";
 
 "alert.added_to_watchlist" = "Zur Merkliste hinzugefügt";
 "alert.removed_from_watchlist" = "Aus Merkliste entfernt";
 "alert.added_to_wallet" = "Zum Wallet hinzugefügt";
-"alert.removed_from_wallet" = "Removed from Wallet";
+"alert.removed_from_wallet" = "Aus Wallet entfernt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
 "alert.copied" = "Kopiert";
@@ -96,9 +96,9 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ needs access to your camera to scan the QR code.
+"access_camera.message" = "%@ benötigt Zugriff auf Ihre Kamera, um den QR-Code zu scannen.
 
-Go to Settings - > %@ and allow access to the camera.";
+Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "access_camera.settings" = "Einstellungen";
 
 // Restore
@@ -118,7 +118,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "restore.passphrase_description" = "Dieses Passwort wird verwendet, um die Sicherungsdatei Ihrer Wallet zu verschlüsseln. Es hat nichts mit Ihrem Apple iCloud-Passwort zu tun. Wenn Sie es vergessen oder verlieren, kann es nicht wiederhergestellt oder zurückgesetzt werden.";
 "restore.error.empty_passphrase" = "Die Passphrase darf nicht leer sein";
 "restore.non_standard_import" = "Nicht standardmäßige Wiederherstellung";
-"restore.non_standard_import.description" = "This page provides a special wallet import mechanism to %@ users who have a non-standard wallet. Such wallets might have been created in %@ version 0.27 - 0.28 using a non-English recovery phrase and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
+"restore.non_standard_import.description" = "Diese Seite bietet einen speziellen Wallet-Importmechanismus für Benutzer von %@ die eine nicht standardmäßige Wallet haben. Solche Brieftaschen könnten in %@ Version 0 erstellt worden sein. 7 - 0.28 unter Verwendung einer nicht-englischen Wiederherstellungsphrase und/oder eines Sonderzeichens in der Brieftasche Passphrase (d.h. diakritisches Symbol).\n\nWenn Sie ein betroffener Benutzer sind, wird Ihr Wallet-Guthaben nach dem Import in Version 0.29 oder höher 0 angezeigt. Auf dieser Seite können Sie den Zugriff auf Ihre nicht standardmäßige Brieftasche wiederherstellen. Sobald Sie importiert haben, empfehlen wir Ihnen eine neue Wallet zu erstellen (die standardkonform ist) und Geld dorthin zu verschieben.";
 "restore.warning.non_recommended.description" = "Diese Brieftasche scheint ein nicht standardmäßiges Zeichen in ihrer geheimen Wortliste und/oder einer Passphrase zu verwenden. Wenn Sie kein Guthaben oder Transaktionen sehen, lesen Sie bitte unten für Details.\n\nKLICKEN, UM WEITERE INFORMATIONEN ZU ERHALTEN";
 "restore.error.non_standard.description" = "Dies ist eine nicht standardmäßige Wallet. \n\nKLICKEN SIE MEHR INFO";
 
@@ -128,11 +128,11 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "restore_type.recovery.title" = "von Wiederherstellungsphrase";
 "restore_type.cloud.title" = "von iCloud";
-"restore_type.cex.title" = "from Exchange Wallet";
+"restore_type.cex.title" = "von Exchange Wallet";
 
 "restore_type.recovery.description" = "Importieren Sie mithilfe der Wiederherstellungsphrase oder des privaten Schlüssels.";
 "restore_type.cloud.description" = "Importieren Sie aus einer Sicherungsdatei in Ihrem Schlüsselbund.";
-"restore_type.cex.description" = "Connect to a wallet on centralized exchange.";
+"restore_type.cex.description" = "Verbinden Sie sich mit einer Brieftasche bei zentralisiertem Austausch.";
 
 // Restore Cloud
 
@@ -147,28 +147,28 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Restore Cex
 
-"restore.cex.title" = "Select CEX";
-"restore.cex.description" = "Select the centralized exchange to which you want to connect.";
+"restore.cex.title" = "CEX auswählen";
+"restore.cex.description" = "Wählen Sie den zentralen Austausch aus, zu dem Sie sich verbinden möchten.";
 
 // Restore Binance
 
-"restore.binance.description" = "Please provide the API Keys and API Secret to link your exchange.";
-"restore.binance.api_key" = "API Key";
-"restore.binance.secret_key" = "Secret Key";
+"restore.binance.description" = "Bitte geben Sie den API-Schlüssel und das API-Geheimnis an, um Ihren Austausch zu verknüpfen.";
+"restore.binance.api_key" = "API-Schlüssel";
+"restore.binance.secret_key" = "Geheimer Schlüssel";
 "restore.binance.connect" = "Verbinden";
 "restore.binance.connecting" = "Verbinde...";
-"restore.binance.get_api_keys" = "Get API Keys";
-"restore.binance.failed_to_connect" = "Failed to connect your API Key";
-"restore.binance.invalid_qr_code" = "Invalid QR Code";
+"restore.binance.get_api_keys" = "API-Schlüssel erhalten";
+"restore.binance.failed_to_connect" = "Verbindung zum API-Schlüssel fehlgeschlagen";
+"restore.binance.invalid_qr_code" = "Ungültiger QR-Code";
 
 // Restore Coinzix
 
-"restore.coinzix.description" = "Enter your email and password from Coinzix Account";
-"restore.coinzix.sign_up" = "Sign Up";
-"restore.coinzix.login" = "Log In";
-"restore.coinzix.sample_username" = "Email";
-"restore.coinzix.sample_password" = "Password";
-"restore.coinzix.login_failed" = "Login Failed";
+"restore.coinzix.description" = "Bitte E-Mail-Adresse und Passwort Deines Coinzix-Kontos eingeben";
+"restore.coinzix.sign_up" = "Registrieren";
+"restore.coinzix.login" = "Anmelden";
+"restore.coinzix.sample_username" = "E-Mail";
+"restore.coinzix.sample_password" = "Passwort";
+"restore.coinzix.login_failed" = "Login fehlgeschlagen";
 
 // Coin Settings
 
@@ -193,7 +193,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Recovery Phrase
 
 "recovery_phrase.title" = "Wiederherstellungsphrase";
-"recovery_phrase.warning" = "Never share this key with anyone. %@ Wallet support team will never ask for it.";
+"recovery_phrase.warning" = "Teilen Sie diesen Schlüssel niemals mit niemandem. %@ Wallet-Support-Team wird ihn niemals anfragen.";
 "recovery_phrase.tap_to_show" = "Tippen, um Wiederherstellungsphrase anzuzeigen";
 "recovery_phrase.passphrase" = "Passwort";
 "recovery_phrase.copy_warning.title" = "Risiko der Wiederherstellungs-Phrase-Kopie";
@@ -265,7 +265,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup.cloud.password.title" = "Passwort festlegen";
 "backup.cloud.password.description" = "Legen Sie ein Passwort fest, um das Entsperren zu ermöglichen. Das Passwort muss mindestens 8 Zeichen lang sein und einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.";
 "backup.cloud.password.highlighted_description" = "Vergessen Sie dieses Passwort nicht! Es ist getrennt von Ihrem Apple iCloud-Passwort und kann nicht wiederhergestellt oder zurückgesetzt werden.";
-"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.placeholder" = "Passwort";
 "backup.cloud.password.confirm.placeholder" = "Bestätigen";
 "backup.cloud.password.save" = "Speichern und sichern";
 
@@ -292,7 +292,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.title" = "Guthaben";
 "balance.tab_bar_item" = "Guthaben";
 "balance.send" = "Senden";
-"balance.withdraw" = "Withdraw";
+"balance.withdraw" = "Abheben";
 "balance.swap" = "Swap";
 "balance.receive" = "Empfangen";
 "balance.deposit" = "Anfordern";
@@ -309,7 +309,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.syncing_percent" = "Synchronisieren... %@";
 "balance.synced_through" = "bis %@";
 "balance.add_coin" = "Coin hinzufügen";
-"balance.invalid_api_key" = "Invalid API Key";
+"balance.invalid_api_key" = "Ungültiger API-Schlüssel";
 "balance.empty.add_coins" = "Coins hinzufügen";
 "balance.empty.description" = "Sie haben keine Coins zu diesem Wallet hinzugefügt.";
 "balance.watch_empty.description" = "Diese Wallet-Adresse hat keinen Kontostand";
@@ -372,9 +372,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.hodler_locktime_off" = "Aus";
 "send.hodler_error.unsupported_address" = "Zeitsperre funktioniert nur mit P2PKH-Adressen (beginnend mit 1) ";
 "send.fee_info.title" = "Gebührenrate";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
+"send.fee_info.description" = "Blockchains verlangen, dass Nutzer Netzwerkgebühren beim Versenden von Transaktionen bezahlen. Die Gebühren sind höher, wenn viele Transaktionen im Netzwerk stattfinden.\n\nDie %@ Brieftasche schätzt die Gebühr basierend auf der aktuellen Blockchain Aktivität und empfiehlt den optimalen Wert, damit die Transaktion innerhalb einer angemessenen Zeit bearbeitet werden kann.\n\nDie empfohlene Gebührenrate, die als Betrag des satoshi Benutzers angezeigt wird, um für ein einziges Byte der Transaktion zu bezahlen. Daher hängt die Gesamtgebühr von der Gesamtgröße der Transaktion ab, die in Bytes gemessen wird.\n\nBenutzer können die zur Verfügung gestellten Steuerelemente verwenden, um den Gebührenwert zu erhöhen oder zu senken. Die Änderung des Gebührensatzes ändert die Gesamtgebühr für die Transaktion, die der Nutzer zu zahlen hat.\n\nSetzen der Gebühr unter dem empfohlenen Wert kann dazu führen, dass eine Transaktion stundenlang als ausstehend gehalten oder abgelehnt wird. Je niedriger der Wert, desto länger dauert die Bestätigung der Transaktion. Für Transaktionen, bei denen Priorität wichtig ist, empfehlen wir, höhere Gebührensätze festzulegen.";
 "send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
-"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe %@ wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to %@ users:";
+"send.transaction_inputs_outputs_info.description" = "Die meisten Bitcoin-Transaktionen sowie Transaktionen in Kryptowährungen wie Bitcoin-Cash, Dash, und Litecoin erzeugen zwei Ausgänge. Die eine Ausgabe ist der Betrag, der an den Empfänger geht, die andere ist die Umstellausgabe, die an den Absender zurückgegeben wird. Die Art und Weise, wie die meisten Brieftaschen Transaktionen erstellen, macht es für einen Dritten leicht zu verstehen, welche der Ausgaben an den Empfänger gingen und welcher der Änderungsbetrag an den Absender zurückgegeben wurde. Da die an den Absender zurückgegebene Ausgabe später bei zukünftigen Transaktionen verwendet wird, zeigt sich eine Verbindung zwischen diesen beiden Transaktionen.\n\nDie Brieftasche %@ implementiert Maßnahmen, um es jemandem zu erschweren, herauszufinden, welche Ausgabe wohin geht.\n\nEs gibt zwei Optionen für %@ Benutzer:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
 "send.transaction_inputs_outputs_info.shuffle.description" = "Die Reihenfolge der Transaktionsausgänge wird bei jeder Transaktion zufällig. Manchmal können Änderungen die erste Ausgabe sein, manchmal kann es die zweite sein. Wenn ein Benutzer dem Entwickler der App vertraut, dann erwäge dies eine empfohlene Option.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
@@ -489,7 +489,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Swap";
-"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
+"swap.confirmation.impact_too_high" = "%@ hat Swap-Aktion für diesen Handel deaktiviert, da du einen extrem ungünstigen Preis bekommst. Dies ist auf extrem niedrige Liquidität zurückzuführen.\nWenn Sie trotzdem wechseln möchten, verwenden Sie stattdessen %@ Webseite.";
 "swap.confirmation.impact_warning" = "Wichtig! Du bekommst einen extrem ungünstigen Preis. Dies ist auf die extrem niedrige Liquidität zurückzuführen.";
 
 "swap.confirmation.minimum_received" = "Mindestens erhalten";
@@ -816,8 +816,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.current" = "current";
 "coin_analytics.rating_scale" = "Rating Scale";
 "coin_analytics.rating_scale.description" = "The rating scale is derived from the top 250 tokens by market capitalisation and is proportionally adjusted by percentage to obtain the final rating scale.";
-"coin_analytics.rating_scale.excellent" = "Excellent";
-"coin_analytics.rating_scale.good" = "Good";
+"coin_analytics.rating_scale.excellent" = "Perfekt";
+"coin_analytics.rating_scale.good" = "Gut";
 "coin_analytics.rating_scale.fair" = "Fair";
 "coin_analytics.rating_scale.poor" = "Poor";
 "coin_analytics.rank" = "Rank";
@@ -1357,13 +1357,13 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "status_info.title" = "Status";
 "status_info.pending.title" = "In Bearbeitung";
-"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within a few minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Note that status of an individual transaction in %@ wallet interface typically updated with a short delay.";
+"status_info.pending.content" = "Die Transaktion wurde noch nicht in der Blockchain bestätigt. Transaktionen, die mit einer empfohlenen oder höheren Gebühreneinstellung gesendet werden, werden in der Regel innerhalb weniger Minuten abgewickelt. Transaktionen, die mit einer geringen Gebühr gesendet werden, können für einige Stunden oder sogar Tage ausstehend bleiben und sogar abgelehnt werden. Beachten Sie, dass der Status einer individuellen Transaktion in %@ Wallet-Schnittstelle typischerweise mit einer kurzen Verzögerung aktualisiert wird.";
 "status_info.processing.title" = "Verarbeite";
 "status_info.processing.content" = "Die Transaktion wurde bereits in die Blockchain aufgenommen, ist aber noch nicht endgültig abgeschlossen. Zu diesem Zeitpunkt kann die Transaktion für kleinere Zahlungen als abgeschlossen betrachtet werden. Bei größeren Zahlungen wird empfohlen, zu warten, bis der Transaktionsstatus auf abgeschlossen wechselt.";
 "status_info.completed.title" = "Abgeschlossen";
 "status_info.confirmed.content" = "Die Transaktion ist abgeschlossen und gilt als dauerhaft und unumkehrbar.";
 "status_info.failed.title" = "Fehlgeschlagen";
-"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Depending on the fail reason, some failed transactions may consume transaction fees. Transactions that were replaced or canceled by another transaction do not consume transaction fees and will also appear as failed. The %@ app is unable to show the reason for failed transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
+"status_info.failed.content" = "Die Transaktion wurde nicht verarbeitet und es wurde kein Werttransfer durchgeführt. Abhängig vom Grund des Scheiterns können einige fehlgeschlagene Transaktionen Transaktionsgebühren kosten. Transaktionen, die durch eine andere Transaktion ersetzt oder abgebrochen wurden, verbrauchen keine Transaktionsgebühren und erscheinen auch als fehlgeschlagen. Die %@ App kann den Grund für fehlgeschlagene Transaktionen nicht anzeigen. aber Benutzer können es selbst auf einem öffentlichen Block-Explorer i. e. etherscan.io.";
 
 // Onboarding
 
@@ -1585,15 +1585,15 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Subscription Info
 
-"subscription_info.title" = "Premium Features";
+"subscription_info.title" = "Premium-Funktionen";
 "subscription_info.info1.title" = "Cryptocurrency Analytics";
 "subscription_info.info1.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
 "subscription_info.info2.title" = "Chart Indicators";
 "subscription_info.info2.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
 "subscription_info.info3.title" = "Personal Support";
 "subscription_info.info3.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.get_premium" = "Get Premium";
-"subscription_info.already_have" = "I already have Premium";
+"subscription_info.get_premium" = "Premium erhalten";
+"subscription_info.already_have" = "Ich habe bereits Premium";
 
 // Activate Subscription
 
@@ -1604,12 +1604,12 @@ Go to Settings - > %@ and allow access to the camera.";
 "activate_subscription.sign" = "Signieren";
 "activate_subscription.activating" = "Activating...";
 "activate_subscription.failed_to_activate" = "Failed to activate subscription";
-"activate_subscription.activated" = "Activated";
-"activate_subscription.no_subscriptions" = "Your wallet address does not have a subscription to premium features, you need to purchase it to activate the subscription.";
+"activate_subscription.activated" = "Aktiviert";
+"activate_subscription.no_subscriptions" = "Ihre Wallet-Adresse hat kein Abonnement für Premium-Funktionen, Sie müssen sie kaufen, um das Abonnement zu aktivieren.";
 
 // Launch
 
-"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting app or report the error to our support team.";
+"launch.failed_to_launch" = "Anwendung konnte aufgrund eines internen Fehlers nicht gestartet werden. Bitte versuchen Sie die App neu zu starten oder melden Sie den Fehler an unser Support-Team.";
 "launch.failed_to_launch.report" = "Melden";
 
 // Tron
@@ -1626,20 +1626,20 @@ Go to Settings - > %@ and allow access to the camera.";
 // Cex Coin Select
 
 "cex_coin_select.title" = "Coins auswählen";
-"cex_coin_select.withdraw" = "Withdraw";
-"cex_coin_select.withdraw.empty" = "You have no assets to withdraw.";
-"cex_coin_select.search_placeholder" = "Coin Code or Name";
-"cex_coin_select.suspended" = "Suspended";
+"cex_coin_select.withdraw" = "Abheben";
+"cex_coin_select.withdraw.empty" = "Sie haben keine Assets zum Ausziehen.";
+"cex_coin_select.search_placeholder" = "Münzcode oder Name";
+"cex_coin_select.suspended" = "Gesperrt";
 
 // Cex Deposit Network Select
 
-"cex_deposit_network_select.title" = "Choose Network";
-"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
+"cex_deposit_network_select.title" = "Netzwerk auswählen";
+"cex_deposit_network_select.description" = "Wählen Sie ein Netzwerk aus und erhalten Sie eine Adresse zum Einzahlen.";
 
 // Cex Deposit
 
-"cex_deposit.title" = "Deposit %@";
-"cex_deposit.qr_code_description" = "Your address for depositing %@";
+"cex_deposit.title" = "Auftragen %@";
+"cex_deposit.qr_code_description" = "Ihre Adresse für %@";
 "cex_deposit.address" = "Adresse";
 "cex_deposit.network" = "Netzwerk";
 "cex_deposit.memo" = "Memo (Tag)";
@@ -1666,13 +1666,13 @@ Go to Settings - > %@ and allow access to the camera.";
 // Cex Withdraw Network Select
 
 "cex_withdraw_network_select.title" = "Netzwerk";
-"cex_withdraw_network_select.description" = "Ensure the network matches the withdrawal address and the deposit platform supports it.";
+"cex_withdraw_network_select.description" = "Stellen Sie sicher, dass das Netzwerk mit der Auszahlungsadresse übereinstimmt und die Einzahlungsplattform unterstützt sie.";
 
 // Cex Withdraw Confirm
 
 "cex_withdraw_confirm.you_withdraw" = "Sie zurückziehen";
 "cex_withdraw_confirm.network" = "Netzwerk";
-"cex_withdraw_confirm.withdraw" = "Withdraw";
+"cex_withdraw_confirm.withdraw" = "Abheben";
 "cex_withdraw_confirm.withdraw_failed" = "Fehler bei Auszahlung";
 
 // Coinzix Verify Withdraw
@@ -1681,6 +1681,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "coinzix_verify.failed" = "Fehler bei der Überprüfung";
 "coinzix_verify.submit" = "Abschicken";
 "coinzix_verify.email_pin" = "Bestätigungscode";
-"coinzix_verify.email_pin.description" = "Enter verification code sent to your email";
+"coinzix_verify.email_pin.description" = "Gib den Bestätigungscode ein, der an deine E-Mail gesendet wurde";
 "coinzix_verify.google_pin" = "Google Authentifizierungscode";
 "coinzix_verify.google_pin.description" = "Geben Sie den Google-Authentifizierungscode aus Ihrer Google Authenticator App ein";
