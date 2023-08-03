@@ -24,7 +24,7 @@
 "button.send" = "Envoyer";
 "button.sign" = "Signer";
 "button.more" = "Afficher plus";
-"button.i_understand" = "I Understand";
+"button.i_understand" = "J’ai Compris";
 "button.learn_more" = "En savoir plus";
 
 "alert" = "Alerte";
@@ -38,7 +38,7 @@
 "alert.error" = "Erreur";
 "alert.unknown_error" = "Erreur inconnue";
 "alert.success_action" = "Fait";
-"alert.success" = "Success";
+"alert.success" = "Effectué";
 
 "alert.added_to_watchlist" = "Ajouter à la liste de suivi";
 "alert.removed_from_watchlist" = "Retirer de la liste de suivi";
@@ -285,16 +285,16 @@ Go to Settings - > %@ and allow access to the camera.";
 "error.send.self_transfer" = "L'envoi à soi-même n'est pas pris en charge";
 "error.send_binance.memo_required" = "Le destinataire a besoin d'une note non vide pour une opération de transfert";
 "error.send_binance.only_digits_allowed" = "Nécessite que le mémo ne contienne que des chiffres";
-"error.send_z_cash.transparent_address" = "%@ doesn't support payments to a transparent address";
+"error.send_z_cash.transparent_address" = "%@ ne prend pas en charge les paiements à une adresse transparente";
 
 // Balance
 
 "balance.title" = "Solde";
 "balance.tab_bar_item" = "Solde";
 "balance.send" = "Envoyer";
-"balance.withdraw" = "Withdraw";
+"balance.withdraw" = "Retraits";
 "balance.swap" = "Echanger";
-"balance.receive" = "Receive";
+"balance.receive" = "Recevoir";
 "balance.deposit" = "Recevoir";
 "balance.address" = "Adresses";
 "balance.rate_per_coin" = "%@ par %@";
@@ -309,7 +309,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.syncing_percent" = "Synchronisation... %@";
 "balance.synced_through" = "jusqu'à: %@";
 "balance.add_coin" = "Ajouter la pièce";
-"balance.invalid_api_key" = "Invalid API Key";
+"balance.invalid_api_key" = "Clé API invalide";
 "balance.empty.add_coins" = "Ajouter les pièces";
 "balance.empty.description" = "Vous n'avez ajouté aucune pièce à ce portefeuille.";
 "balance.watch_empty.description" = "Cette adresse de portefeuille n'a pas de solde";
@@ -489,7 +489,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Echanger";
-"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
+"swap.confirmation.impact_too_high" = "%@ a désactivé l'action d'échange pour cet échange parce que vous obtenez un prix extrêmement défavorable. Ceci est dû à une liquidité extrêmement faible.\nSi vous voulez toujours échanger, veuillez utiliser le site Web %@ à la place.";
 "swap.confirmation.impact_warning" = "Important ! Vous avez reçu un prix extrêmement défavorable en raison d'une liquidité extrêmement faible.";
 
 "swap.confirmation.minimum_received" = "Minimum reçu";
@@ -663,9 +663,9 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Coin Page -> Overview
 
-"coin_overview.indicators" = "Indicators";
-"coin_overview.indicators.show" = "Show";
-"coin_overview.indicators.hide" = "Hide";
+"coin_overview.indicators" = "Indicateurs";
+"coin_overview.indicators.show" = "Afficher";
+"coin_overview.indicators.hide" = "Cacher";
 "coin_overview.market_cap" = "Cap. marché";
 "coin_overview.circulating_supply" = "En circulation";
 "coin_overview.total_supply" = "Offre totale";
@@ -695,26 +695,26 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Coin Page -> Analytics
 
-"coin_analytics.indicators.summary" = "Summary";
-"coin_analytics.indicators.title" = "Technical Indicators";
-"coin_analytics.indicators.no_data" = "No Data";
+"coin_analytics.indicators.summary" = "Résumé";
+"coin_analytics.indicators.title" = "Indicateurs techniques";
+"coin_analytics.indicators.no_data" = "Pas de données";
 "coin_analytics.indicators.strong_buy" = "Strong Buy";
-"coin_analytics.indicators.buy" = "Buy";
+"coin_analytics.indicators.buy" = "Acheter";
 "coin_analytics.indicators.neutral" = "Neutral";
 "coin_analytics.indicators.sell" = "Sell";
 "coin_analytics.indicators.strong_sell" = "Strong Sell";
 "coin_analytics.period" = "Period";
 "coin_analytics.period.select_title" = "Select Period";
 "coin_analytics.period.1h" = "1 heure";
-"coin_analytics.period.4h" = "4 hours";
-"coin_analytics.period.1d" = "1 day";
-"coin_analytics.period.1w" = "1 week";
+"coin_analytics.period.4h" = "4 heures";
+"coin_analytics.period.1d" = "1 jour";
+"coin_analytics.period.1w" = "1 semaine";
 
 "coin_analytics.details" = "Détailles";
 
 "coin_analytics.not_available" = "Ce projet n'a pas de données d'analyse";
 
-"coin_analytics.technical_indicators" = "Technical Indicators";
+"coin_analytics.technical_indicators" = "Indicateurs techniques";
 "coin_analytics.technical_indicators.info1" = "Summary: This is a general overview of an asset's technicals, considering a variety of technical indicators and timeframes. It provides a consensus viewpoint (Buy, Sell, or Neutral) based on these indicators.";
 "coin_analytics.technical_indicators.info2" = "Moving Averages (MA): These are commonly used technical indicators that smooth out price data to create a trend-following indicator. They show the average price over a specific time period. There are several types of MAs:\n\nSimple Moving Average (SMA): This calculates the average of a selected range of prices, usually closing prices, by the number of periods in that range.\n\nExponential Moving Average (EMA): This gives more weight to recent prices, thereby responding more quickly to recent price changes.";
 "coin_analytics.technical_indicators.info3" = "Oscillators: These are technical indicators that fluctuate over time within a band (above and below a center line, or between set levels). They are designed to help identify overbought and oversold conditions in a market. Here are some common oscillators:\n\nRelative Strength Index (RSI): This measures the speed and change of price movements. It is usually used to identify overbought or oversold conditions.\n\nMoving Average Convergence Divergence (MACD): This is used to identify potential buy and sell signals. It triggers technical signals when it crosses above (to buy) or below (to sell) its signal line.";
@@ -786,9 +786,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
 "coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
 
-"coin_analytics.project_fee" = "Project Fee";
-"coin_analytics.project_fee_rank" = "Project Fee Rank";
-"coin_analytics.project_fee_rank.description" = "Tokens ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
+"coin_analytics.project_fee" = "Frais de projet";
+"coin_analytics.project_fee_rank" = "Rang des frais du projet";
+"coin_analytics.project_fee_rank.description" = "Les jetons sont classés en fonction des frais générés par les projets respectifs. La manière dont les frais sont perçus varie selon les projets.";
 
 "coin_analytics.project_revenue" = "Revenus du projet";
 "coin_analytics.project_revenue_rank" = "Classement en fonction des revenus du projet";
@@ -839,7 +839,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Coin Page -> Indicators
 
-"chart_indicators.title" = "Indicators";
+"chart_indicators.title" = "Indicateurs";
 "chart_indicators.moving_averages" = "Moving Averages";
 "chart_indicators.oscillators" = "Oscillators";
 
@@ -879,7 +879,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "transactions.completed" = "Terminé";
 "transactions.failed" = "Échec";
 
-"transactions.receive" = "Receive";
+"transactions.receive" = "Recevoir";
 "transactions.send" = "Envoyer";
 "transactions.burn" = "Brûlure";
 "transactions.mint" = "Mint";
@@ -1627,7 +1627,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Cex Coin Select
 
 "cex_coin_select.title" = "Choisir la pièce";
-"cex_coin_select.withdraw" = "Withdraw";
+"cex_coin_select.withdraw" = "Retraits";
 "cex_coin_select.withdraw.empty" = "You have no assets to withdraw.";
 "cex_coin_select.search_placeholder" = "Coin Code or Name";
 "cex_coin_select.suspended" = "Suspended";
@@ -1643,7 +1643,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "cex_deposit.qr_code_description" = "Your address for depositing %@";
 "cex_deposit.address" = "Adresses";
 "cex_deposit.network" = "Réseau";
-"cex_deposit.memo" = "Memo (Tag)";
+"cex_deposit.memo" = "Mémo (Tag)";
 "cex_deposit.min_amount" = "Min. Amount";
 "cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
 "cex_deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
@@ -1673,7 +1673,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "cex_withdraw_confirm.you_withdraw" = "You Withdraw";
 "cex_withdraw_confirm.network" = "Réseau";
-"cex_withdraw_confirm.withdraw" = "Withdraw";
+"cex_withdraw_confirm.withdraw" = "Retraits";
 "cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
 
 // Coinzix Verify Withdraw
