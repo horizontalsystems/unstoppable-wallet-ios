@@ -24,7 +24,7 @@
 "button.send" = "Senden";
 "button.sign" = "Signieren";
 "button.more" = "Mehr anzeigen";
-"button.i_understand" = "I Understand";
+"button.i_understand" = "Ich stimme zu";
 "button.learn_more" = "Learn More";
 
 "alert" = "Alarm";
@@ -285,7 +285,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "error.send.self_transfer" = "Sich selbst zu senden wird nicht unterstützt";
 "error.send_binance.memo_required" = "Empfänger benötigt nicht-leeren Vermerk bei Transfer einer Transaktion";
 "error.send_binance.only_digits_allowed" = "Der Vermerk darf nur Zahlen enthalten";
-"error.send_z_cash.transparent_address" = "%@ doesn't support payments to a transparent address";
+"error.send_z_cash.transparent_address" = "%@ unterstützt keine Zahlungen an eine transparente Adresse";
 
 // Balance
 
