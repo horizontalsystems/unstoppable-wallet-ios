@@ -57,7 +57,7 @@ class WalletViewController: ThemeViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "switch_wallet_24"), style: .plain, target: self, action: #selector(onTapSwitchWallet))
         navigationItem.leftBarButtonItem?.tintColor = .themeJacob
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "nft_24"), style: .plain, target: self, action: #selector(onTapNft))
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "nft_24"), style: .plain, target: self, action: #selector(onTapNft))
 
         refreshControl.tintColor = .themeLeah
         refreshControl.alpha = 0.6
