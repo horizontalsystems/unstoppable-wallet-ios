@@ -24,7 +24,7 @@
 "button.send" = "Enviar";
 "button.sign" = "Firma";
 "button.more" = "Mostrar más";
-"button.i_understand" = "I Understand";
+"button.i_understand" = "Entiendo";
 "button.learn_more" = "Aprender más";
 
 "alert" = "Alerta";
@@ -38,12 +38,12 @@
 "alert.error" = "Erreur";
 "alert.unknown_error" = "Error Desconocido";
 "alert.success_action" = "Listo";
-"alert.success" = "Success";
+"alert.success" = "Completado";
 
 "alert.added_to_watchlist" = "Añadido a tu Lista de Seguimiento";
 "alert.removed_from_watchlist" = "Eliminado de la Lista de Seguimiento";
 "alert.added_to_wallet" = "Agregar a Wallet";
-"alert.removed_from_wallet" = "Removed from Wallet";
+"alert.removed_from_wallet" = "Eliminado del monedero";
 "alert.already_added_to_wallet" = "Ya se ha añadido a Wallet";
 "alert.not_supported_yet" = "Aún no compatible";
 "alert.copied" = "Copiado";
@@ -66,7 +66,7 @@
 "alert.revoking" = "Revocando";
 "alert.revoked" = "Revocada";
 
-"no_results_found" = "No results found";
+"no_results_found" = "No se han encontrado resultados";
 "action.loading" = "cargando...";
 "placeholder.search" = "Buscar";
 
@@ -560,7 +560,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.top.top_gainers" = "Máximos Ganadores";
 "market.top.top_losers" = "Máximos Perdedores";
 "market.top.top_collections" = "Mejores colecciones NFT";
-"market.top.floor_price" = "Floor:";
+"market.top.floor_price" = "Piso:";
 "market.top.top_platforms" = "Plataformas superiores";
 "market.top.protocols" = "Protocolos";
 
@@ -574,12 +574,12 @@ Go to Settings - > %@ and allow access to the camera.";
 "market_discovery.filters" = "Filtros";
 "market_discovery.browse_categories" = "Navegar Categorías";
 "market_discovery.top_coins" = "Monedas TOP";
-"market_discovery.not_found" = "No results found";
+"market_discovery.not_found" = "No se han encontrado resultados";
 
 "market_watchlist.empty.caption" = "Tu Watchlist está vacía.";
 
 "market.search.title" = "Buscar";
-"market.search.empty_text" = "No results found";
+"market.search.empty_text" = "No se han encontrado resultados";
 
 "market.advanced_search.title" = "Filtros";
 "market.advanced_search.show_results" = "Mostrar Resultados";
@@ -663,7 +663,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Coin Page -> Overview
 
-"coin_overview.indicators" = "Indicators";
+"coin_overview.indicators" = "Indicadores";
 "coin_overview.indicators.show" = "Show";
 "coin_overview.indicators.hide" = "Hide";
 "coin_overview.market_cap" = "Capitalización del Mercado";
@@ -839,7 +839,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Coin Page -> Indicators
 
-"chart_indicators.title" = "Indicators";
+"chart_indicators.title" = "Indicadores";
 "chart_indicators.moving_averages" = "Moving Averages";
 "chart_indicators.oscillators" = "Oscillators";
 
@@ -1063,7 +1063,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> About App
 
 "settings.about_app.title" = "Sobre la App";
-"settings.about_app.app_name" = "%@ Wallet";
+"settings.about_app.app_name" = "%@ Monedero";
 "settings.about_app.description" = "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
 "settings.about_app.whats_new" = "Qué novedades hay";
 "settings.about_app.website" = "Website";
@@ -1074,7 +1074,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> Privacy
 
 "settings.privacy" = "Privacidad";
-"settings.privacy.description" = "%@ doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
+"settings.privacy.description" = "%@ no recopila ningún dato o utiliza herramientas de análisis que puedan exponer cualquier dato sobre sus usuarios. La cartera está diseñada para asegurar un alto nivel de privacidad para sus usuarios.";
 "settings.privacy.statement.user_data_storage" = "Los datos del usuario siempre permanecen en el dispositivo del usuario.";
 "settings.privacy.statement.data_usage" = "La cartera no recopila ningún dato sobre los usuarios.";
 "settings.privacy.statement.data_privacy" = "La cartera no recopila ningún dato sobre los usuarios.";
@@ -1112,7 +1112,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "contacts.title" = "Contactos";
 "contacts.list.search_placeholder" = "Buscar por nombre";
 "contacts.list.not_found" = "No tienes un contacto añadido";
-"contacts.list.not_found_search" = "No results found";
+"contacts.list.not_found_search" = "No se han encontrado resultados";
 "contacts.add_new_contact" = "Añadir nuevo contacto";
 "contacts.update_contact.already_has_address" = "El contacto seleccionado ya tiene una dirección en %@. Esta acción reemplazará la dirección %@ por %@.";
 "contacts.update_contact.replace" = "Reemplazar";
@@ -1153,8 +1153,8 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "contacts.settings.title" = "Ajustes";
 
-"contacts.settings.restore_contacts" = "Restore Contacts";
-"contacts.settings.backup_contacts" = "Backup Contacts";
+"contacts.settings.restore_contacts" = "Restaurar contactos";
+"contacts.settings.backup_contacts" = "Copiar contactos";
 
 "contacts.settings.icloud_sync" = "iCloud Sync";
 "contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
