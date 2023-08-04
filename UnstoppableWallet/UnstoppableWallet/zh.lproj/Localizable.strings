@@ -664,8 +664,8 @@ Go to Settings - > %@ and allow access to the camera.";
 // Coin Page -> Overview
 
 "coin_overview.indicators" = "Indicators";
-"coin_overview.indicators.show" = "Show";
-"coin_overview.indicators.hide" = "Hide";
+"coin_overview.indicators.show" = "查看";
+"coin_overview.indicators.hide" = "隐藏";
 "coin_overview.market_cap" = "市场价值";
 "coin_overview.circulating_supply" = "流通量";
 "coin_overview.total_supply" = "总供应";
