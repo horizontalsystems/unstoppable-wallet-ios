@@ -38,12 +38,12 @@
 "alert.error" = "Ошибка";
 "alert.unknown_error" = "Неизвестная ошибка";
 "alert.success_action" = "Готово";
-"alert.success" = "Success";
+"alert.success" = "Успешно";
 
 "alert.added_to_watchlist" = "Добавлено в избранное";
 "alert.removed_from_watchlist" = "Удалить из избранного";
 "alert.added_to_wallet" = "Добавлено в кошелек";
-"alert.removed_from_wallet" = "Removed from Wallet";
+"alert.removed_from_wallet" = "Удалено из кошелька";
 "alert.already_added_to_wallet" = "Уже добавлено в кошелек";
 "alert.not_supported_yet" = "Ещё не поддерживается";
 "alert.copied" = "Скопировано";
@@ -96,9 +96,9 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ needs access to your camera to scan the QR code.
+"access_camera.message" = "%@ требуется доступ к вашей камере для сканирования QR-кода.
 
-Go to Settings - > %@ and allow access to the camera.";
+Перейдите в \"Настройки\" - > %@ и разрешите доступ к камере.";
 "access_camera.settings" = "Настройки";
 
 // Restore
@@ -118,7 +118,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "restore.passphrase_description" = "Этот пароль используется для шифрования файлов резервной копии вашего кошелька. Он не связан с вашим паролем Apple iCloud. Если вы потеряете или забудете этот пароль, его нельзя будет восстановить или сбросить.";
 "restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "restore.non_standard_import" = "Нестандартный импорт";
-"restore.non_standard_import.description" = "This page provides a special wallet import mechanism to %@ users who have a non-standard wallet. Such wallets might have been created in %@ version 0.27 - 0.28 using a non-English recovery phrase and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
+"restore.non_standard_import.description" = "На этой странице представлен специальный механизм восстановления кошелька для пользователей %@ с нестандартным кошельком. Как правило, такие кошельки могли быть созданы в версиях %@ 0.27–0.28 с использованием неанглоязычного списка мнемонических слов и/или специального символа в парольной фразе кошелька (например, диакритического знака).
+\n\nЕсли вы являетесь затронутым пользователем, то баланс вашего кошелька будет отображаться как 0 после восстановления такого кошелька в версии 0.29 или выше.Эта страница позволит вам восстановить доступ к вашему нестандартному кошельку. После восстановления рекомендуется создать новый кошелек (который будет соответствовать стандарту) и перевести туда средства.";
 "restore.warning.non_recommended.description" = "Похоже, этот кошелек использует нестандартный символ в списке мнемонических слов и/или парольной фразе. Если вы не видите баланс или транзакции, пожалуйста, прочтите подробности ниже.
 \n\nПОЖАЛУЙСТА НАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ.";
 "restore.error.non_standard.description" = "Это нестандартный кошелек.\n\nНАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ";
@@ -707,8 +708,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.period" = "Period";
 "coin_analytics.period.select_title" = "Select Period";
 "coin_analytics.period.1h" = "1 час";
-"coin_analytics.period.4h" = "4 hours";
-"coin_analytics.period.1d" = "1 day";
+"coin_analytics.period.4h" = "4 часа";
+"coin_analytics.period.1d" = "1 день";
 "coin_analytics.period.1w" = "1 week";
 
 "coin_analytics.details" = "Подробности";
@@ -1040,9 +1041,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "btc_transaction_sort_mode.bip69.description" = "Лексикографическая индексация";
 
 "blockchain_settings.info.restore_source" = "Источник восстановления";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like %@ to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "Этот параметр актуален только при восстановлении существующего кошелька. Это процесс получения истории транзакций для данной монеты, чтобы приложение кошелька могло отображать предыдущие транзакции и определять последний баланс. Это должно произойти только один раз при восстановлении пользователем ранее созданного кошелька. \n\nНа данный момент у такого мобильного кошелька, как %@, есть два возможных способа для реализации этого вопроса: \n\n1. С сервера API: существует предопределенный сторонний сервер, на котором размещается вся цепочка блоков, происходит обработка всех данных и их подготовка к быстрому предоставлению. Это быстрый метод, однако он предполагает потенциальное отслеживание IP-адресов и запрашиваемых данных. Этот вариант рекомендуется использовать из-за скорости получения данных (5-10 минут). Он сопряжен с минимальными рисками. Если пользователь восстанавливает данные со своего собственного сервера, то нет никакой угрозы конфиденциальности.\n\n2. Из блокчейна: в этом случае приложение пытается восстановить данные напрямую из p2p-сети узлов блокчейна. Приложение пингует многие из этих узлов и запрашивает у них данные. Потенциально эти узлы могут отслеживать IP-адрес пользователя и сделанные запросы, однако во время восстановления данных приложение может переключаться между узлами. В любое время в сети находится около 10 000 биткойн-узлов. Это медленный вариант обработки данных, она может занять 2-3 часа и приложение должно быть открыто во время их восстановления.";
 "blockchain_settings.info.rpc_source" = "Источник RPC";
-"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. %@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.rpc_source.content" = "Этот параметр определяет способ взаимодействия приложения с блокчейнами при отправке или получении транзакций.\n\nКогда речь идет о Bitcoin, Bitcoin Cash, Litecoin, и Dash, связь с сетевыми узлами блокчейна полностью равноправна. %@ пингует многие узлы и связывается с одним из них. Каждый раз приложение подключается к другому узлу.\n\nЧто касается Ethereum и Binance Smart Chain, то пока нет подходящих альтернативных вариантов мобильных кошельков для взаимодействия с соответствующими блокчейнами кроме сторонних поставщиков услуг RPC (т.е. Infura.io) или личными узлами Ethereum. Это значит, что ваше взаимодействие с блокчейном не децентрализовано. \n\nЭто влияет не на ваши средства, а на возможность подключения к сети блокчейн.";
 
 // Manage Accounts
 
@@ -1064,8 +1065,8 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> About App
 
 "settings.about_app.title" = "О приложении";
-"settings.about_app.app_name" = "%@ Wallet";
-"settings.about_app.description" = "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
+"settings.about_app.app_name" = "%@ кошелек";
+"settings.about_app.description" = "Кошелек %@ создан для тех, кто хочет инвестировать и хранить криптовалюты частным и независимым образом.\n\nЭто одноранговый кошелек, где только пользователь имеет контроль над средствами. Он не собирает никаких данных и обеспечивает независимость пользователя, не привязывая средства пользователя к определенному приложению.\n\nКошелек %@ имеет полностью открытый исходный код, и любой может подтвердить, что приложение работает именно так, как заявлено.";
 "settings.about_app.whats_new" = "Что нового";
 "settings.about_app.website" = "Веб-сайт";
 "settings.about_app.contact" = "Обратная связь";
@@ -1075,7 +1076,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> Privacy
 
 "settings.privacy" = "Приватность";
-"settings.privacy.description" = "%@ doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
+"settings.privacy.description" = "%@ не собирает данные и не использует инструменты аналитики, которые могут раскрывать любые данные о своих пользователях. Кошелек разработан для обеспечения высокого уровня конфиденциальности для своих пользователей.";
 "settings.privacy.statement.user_data_storage" = "Данные пользователя всегда остаются на устройстве пользователя.";
 "settings.privacy.statement.data_usage" = "Кошелек не собирает никаких данных о пользователях.";
 "settings.privacy.statement.data_privacy" = "Кошелек не передает никаких данных о пользователях.";
@@ -1154,18 +1155,18 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "contacts.settings.title" = "Настройки";
 
-"contacts.settings.restore_contacts" = "Restore Contacts";
-"contacts.settings.backup_contacts" = "Backup Contacts";
+"contacts.settings.restore_contacts" = "Восстановить контакты";
+"contacts.settings.backup_contacts" = "Резерв. копирование контактов";
 
-"contacts.settings.icloud_sync" = "iCloud Sync";
-"contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
-"contacts.settings.lost_synchronization.description" = "iCloud synchronization is lost. Please check that iCloud Storage is enabled on your device.";
-"contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+"contacts.settings.icloud_sync" = "iCloud синхр.";
+"contacts.settings.description" = "Синхронизируйте платежные контакты с iCloud для легкого резервного копирования и доступа к ним на нескольких устройствах.";
+"contacts.settings.lost_synchronization.description" = "Синхронизация iCloud утеряна. Пожалуйста, проверьте, что iCloud Storage включен на вашем устройстве.";
+"contacts.settings.merge_disclaimer" = "Ваши локальные платежные контакты будут объединены с данными, хранящимися в iCloud.";
 
-"contacts.settings.alert.title" = "iCloud Sync";
-"contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
+"contacts.settings.alert.title" = "iCloud синхр.";
+"contacts.settings.alert.description" = "Пожалуйста, убедитесь, что iCloud хранилище включено на вашем устройстве.";
 
-"contacts.settings.alert_error.title" = "iCloud Error";
+"contacts.settings.alert_error.title" = "Ошибка iCloud";
 
 // Set PIN
 
@@ -1201,7 +1202,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "chart.market_cap" = "Рын. капитализация";
 "chart.volume" = "Объём (за 24 ч)";
 "chart.circulation" = "В обороте";
-"chart.selected.volume" = "Vol.";
+"chart.selected.volume" = "Объём";
 
 "chart.market.header" = "Рынок";
 "chart.market.market_cap" = "Рын. капитализация";
@@ -1358,13 +1359,13 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "status_info.title" = "Статус";
 "status_info.pending.title" = "В обработке";
-"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within a few minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Note that status of an individual transaction in %@ wallet interface typically updated with a short delay.";
+"status_info.pending.content" = "Транзакция еще не подтверждена в блокчейне. Транзакции, отправленные с рекомендованной или более высокой комиссией, обычно обрабатываются в течение  минут. Транзакции, отправленные с низкой комиссией, могут обрабатываться в течение нескольких часов или дней и даже отклоняться. Учтите, что обновление статуса каждой транзакции, отображаемого в интерфейсе кошелька %@, обычно происходит с небольшой задержкой. ";
 "status_info.processing.title" = "В процессе";
 "status_info.processing.content" = "Транзакция уже включена в блокчейн, но пока не обработана. На данном этапе транзакции считаются завершенными для небольших платежей. Что касается завершения обработки более крупных транзакций, стоит дождаться смены статуса.";
 "status_info.completed.title" = "Завершено";
 "status_info.confirmed.content" = "Транзакция завершена и считается постоянной и необратимой.";
 "status_info.failed.title" = "Не удалось";
-"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Depending on the fail reason, some failed transactions may consume transaction fees. Transactions that were replaced or canceled by another transaction do not consume transaction fees and will also appear as failed. The %@ app is unable to show the reason for failed transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
+"status_info.failed.content" = "Транзакция не была обработана и передача средств не произошла. В зависимости от причины неудачи, некоторые неудачные транзакции могут использовать комиссию за транзакцию. Транзакции, которые были заменены или отменены другой транзакцией, не потребляют транзакционные сборы и также будут показаны как \"не удалось\". Приложение %@ не может показать причину неудачных транзакций, но пользователи могут посмотреть это в etherscan.io.";
 
 // Onboarding
 
@@ -1588,15 +1589,15 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Subscription Info
 
-"subscription_info.title" = "Premium Features";
-"subscription_info.info1.title" = "Cryptocurrency Analytics";
+"subscription_info.title" = "Премиум-функции";
+"subscription_info.info1.title" = "Анализ криптовалют";
 "subscription_info.info1.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
 "subscription_info.info2.title" = "Chart Indicators";
 "subscription_info.info2.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
 "subscription_info.info3.title" = "Personal Support";
 "subscription_info.info3.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
-"subscription_info.get_premium" = "Get Premium";
-"subscription_info.already_have" = "I already have Premium";
+"subscription_info.get_premium" = "Получите Премиум";
+"subscription_info.already_have" = "У меня уже есть Премиум";
 
 // Activate Subscription
 
@@ -1608,7 +1609,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "activate_subscription.activating" = "Активация...";
 "activate_subscription.failed_to_activate" = "Не удалось активировать подписку";
 "activate_subscription.activated" = "Активировано";
-"activate_subscription.no_subscriptions" = "Your wallet address does not have a subscription to premium features, you need to purchase it to activate the subscription.";
+"activate_subscription.no_subscriptions" = "Адрес вашего кошелька не имеет подписки на премиум-функции. Вам нужно его приобрести, чтобы активировать подписку.";
 
 // Launch
 
@@ -1646,23 +1647,23 @@ Go to Settings - > %@ and allow access to the camera.";
 "cex_deposit.address" = "Адрес";
 "cex_deposit.network" = "Сеть";
 "cex_deposit.memo" = "Memo (Tag)";
-"cex_deposit.min_amount" = "Min. Amount";
+"cex_deposit.min_amount" = "Мин. сумма";
 "cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
 "cex_deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
 "cex_deposit.copy_address" = "Copy Address";
 "cex_deposit.share_address" = "Share Address";
-"cex_deposit.failed" = "Failed to load deposit address. Please retry.";
-"cex_deposit.memo_warning.title" = "Important";
-"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
+"cex_deposit.failed" = "Не удалось загрузить адрес депозита. Повторите попытку.";
+"cex_deposit.memo_warning.title" = "Важно";
+"cex_deposit.memo_warning.description" = "Для получения активов необходимы memo(tag) и адрес. В противном случае Ваши средства будут утеряны.";
 
 // Cex Widthdraw
 
 "cex_withdraw.network" = "Сеть";
 "cex_withdraw.network_warning" = "Ensure the network matches the withdrawal address and the deposit platform supports it, or assets may be lost.";
 "cex_withdraw.fee" = "Комиссия";
-"cex_withdraw.fee_from_amount" = "Fee from amount";
-"cex_withdraw.error.insufficient_funds" = "Not enough available balance";
-"cex_withdraw.error.max_amount_violated" = "The maximum amount you can withdraw is %@";
+"cex_withdraw.fee_from_amount" = "Комиссия от суммы";
+"cex_withdraw.error.insufficient_funds" = "Недостаточно доступных средств";
+"cex_withdraw.error.max_amount_violated" = "Макс.сумма вывода: %@";
 "cex_withdraw.error.min_amount_violated" = "The minimum amount you can withdraw is %@";
 "cex_withdraw.address_required" = "Address is required";
 
@@ -1673,17 +1674,17 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Cex Withdraw Confirm
 
-"cex_withdraw_confirm.you_withdraw" = "You Withdraw";
+"cex_withdraw_confirm.you_withdraw" = "Вывод средств";
 "cex_withdraw_confirm.network" = "Сеть";
 "cex_withdraw_confirm.withdraw" = "Withdraw";
-"cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
+"cex_withdraw_confirm.withdraw_failed" = "Вывод средств не выполнен";
 
 // Coinzix Verify Withdraw
 
-"coinzix_verify.title" = "Security Verification";
-"coinzix_verify.failed" = "Failed to verify";
-"coinzix_verify.submit" = "Submit";
-"coinzix_verify.email_pin" = "Verification Code";
-"coinzix_verify.email_pin.description" = "Enter verification code sent to your email";
-"coinzix_verify.google_pin" = "Google Authentication Code";
-"coinzix_verify.google_pin.description" = "Enter google authentication code from your Google Authenticator App";
+"coinzix_verify.title" = "Проверка безопасности";
+"coinzix_verify.failed" = "Не подтверждено";
+"coinzix_verify.submit" = "Подтвердить";
+"coinzix_verify.email_pin" = "Код верификации";
+"coinzix_verify.email_pin.description" = "Введите код подтверждения, отправленный на вашу эл. почту:";
+"coinzix_verify.google_pin" = "Код Google Authenticator";
+"coinzix_verify.google_pin.description" = "Введите код Google аутентификации из приложения Google Authenticator";
