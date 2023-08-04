@@ -814,12 +814,20 @@
 
 "coin_analytics.last_30d" = "最近30天";
 "coin_analytics.current" = "当前";
-"coin_analytics.rating_scale" = "评分范围";
-"coin_analytics.rating_scale.description" = "评级表按市场资本化率从前250个令牌得出，按百分比按比例调整，以获得最终评级等级。";
-"coin_analytics.rating_scale.excellent" = "非常好";
-"coin_analytics.rating_scale.good" = "好";
-"coin_analytics.rating_scale.fair" = "一般";
-"coin_analytics.rating_scale.poor" = "糟糕";
+
+"coin_analytics.overall_score" = "Overall Score";
+"coin_analytics.overall_score.excellent" = "Excellent";
+"coin_analytics.overall_score.good" = "Good";
+"coin_analytics.overall_score.fair" = "Fair";
+"coin_analytics.overall_score.poor" = "Poor";
+"coin_analytics.overall_score.cex_volume" = "The overall score is based on the average daily trading volume on centralized exchanges over the last 7 days.";
+"coin_analytics.overall_score.dex_volume" = "The overall score is based on the average daily trading volume on decentralized exchanges over the last 7 days.";
+"coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total avilable liquidity on decentralized exchanges.";
+"coin_analytics.overall_score.active_addresses" = "The overall score is based on the average daily active addresses over the last 7 days.";
+"coin_analytics.overall_score.project_tvl" = "The overall score is based on the total value locked (assets under management) on the project represented by the given token.";
+"coin_analytics.overall_score.transaction_count" = "The overall score is based on the average daily transaction count over the last 7 days.";
+"coin_analytics.overall_score.holders" = "The overall score is based on the total number of addresses holding respective token.";
+
 "coin_analytics.rank" = "排名";
 "coin_analytics.30_day_rank" = "30天排名";
 "coin_analytics.30_day_volume" = "30天交易量";
