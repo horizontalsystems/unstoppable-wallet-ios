@@ -5,7 +5,23 @@ import SnapKit
 import ComponentKit
 
 class CoinAnalyticsRatingScaleViewController: ThemeViewController {
+    private let _title: String
+    private let _description: String
+    private let scores: [CoinAnalyticsModule.Rating: String]
+
     private let tableView = SectionsTableView(style: .grouped)
+
+    init(title: String, description: String, scores: [CoinAnalyticsModule.Rating: String]) {
+        _title = title
+        _description = description
+        self.scores = scores
+
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +40,7 @@ class CoinAnalyticsRatingScaleViewController: ThemeViewController {
         tableView.sectionDataSource = self
 
         tableView.registerCell(forClass: MarkdownHeader1Cell.self)
+        tableView.registerCell(forClass: MarkdownHeader3Cell.self)
         tableView.registerCell(forClass: MarkdownTextCell.self)
 
         tableView.buildSections()
@@ -43,8 +60,9 @@ extension CoinAnalyticsRatingScaleViewController: SectionsDataSource {
                     id: "info",
                     footerState: .margin(height: .margin12),
                     rows: [
-                        MarkdownViewController.header1Row(id: "header", string: "coin_analytics.rating_scale".localized),
-                        MarkdownViewController.textRow(id: "description", string: "coin_analytics.rating_scale.description".localized)
+                        MarkdownViewController.header1Row(id: "header", string: "coin_analytics.overall_score".localized),
+                        MarkdownViewController.header3Row(id: "sub-header", string: _title),
+                        MarkdownViewController.textRow(id: "description", string: _description)
                     ]
             ),
             Section(
@@ -59,7 +77,7 @@ extension CoinAnalyticsRatingScaleViewController: SectionsDataSource {
                                     .imageElement(image: .local(rating.image), size: .image24),
                                     .margin8,
                                     .textElement(text: .subhead1(rating.title.uppercased(), color: rating.color)),
-                                    .textElement(text: .subhead1(rating.percents.uppercased(), color: rating.color)),
+                                    .textElement(text: .subhead1(scores[rating], color: rating.color)),
                                 ]),
                                 tableView: tableView,
                                 id: "rating-\(index)",

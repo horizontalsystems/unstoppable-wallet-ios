@@ -37,16 +37,7 @@ extension CoinAnalyticsModule {
         case poor
 
         var title: String {
-            "coin_analytics.rating_scale.\(rawValue)".localized
-        }
-
-        var percents: String {
-            switch self {
-            case .excellent: return "25%"
-            case .good: return "25%-50%"
-            case .fair: return "50%-75%"
-            case .poor: return "75%-100%"
-            }
+            "coin_analytics.overall_score.\(rawValue)".localized
         }
 
         var image: UIImage? {

@@ -264,7 +264,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func sync(nftVisible: Bool) {
-        navigationItem.rightBarButtonItem = nftVisible ? UIBarButtonItem(image: UIImage(named: "nft_24"), style: .plain, target: self, action: #selector(onTapNft)) : nil
+//        navigationItem.rightBarButtonItem = nftVisible ? UIBarButtonItem(image: UIImage(named: "nft_24"), style: .plain, target: self, action: #selector(onTapNft)) : nil
     }
 
     private func sync(state: WalletViewModel.State) {
