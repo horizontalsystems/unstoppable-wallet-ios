@@ -814,12 +814,20 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "coin_analytics.last_30d" = "último 30d";
 "coin_analytics.current" = "actual";
-"coin_analytics.rating_scale" = "Escala de Calificación";
-"coin_analytics.rating_scale.description" = "La escala de calificación se deriva de los 250 tokens más altos por capitalización de mercado y se ajusta proporcionalmente por porcentaje para obtener la escala de calificación final.";
-"coin_analytics.rating_scale.excellent" = "Excelente";
-"coin_analytics.rating_scale.good" = "Bueno";
-"coin_analytics.rating_scale.fair" = "Aceptable";
-"coin_analytics.rating_scale.poor" = "Insuficiente";
+
+"coin_analytics.overall_score" = "Overall Score";
+"coin_analytics.overall_score.excellent" = "Excellent";
+"coin_analytics.overall_score.good" = "Good";
+"coin_analytics.overall_score.fair" = "Fair";
+"coin_analytics.overall_score.poor" = "Poor";
+"coin_analytics.overall_score.cex_volume" = "The overall score is based on the average daily trading volume on centralized exchanges over the last 7 days.";
+"coin_analytics.overall_score.dex_volume" = "The overall score is based on the average daily trading volume on decentralized exchanges over the last 7 days.";
+"coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total avilable liquidity on decentralized exchanges.";
+"coin_analytics.overall_score.active_addresses" = "The overall score is based on the average daily active addresses over the last 7 days.";
+"coin_analytics.overall_score.project_tvl" = "The overall score is based on the total value locked (assets under management) on the project represented by the given token.";
+"coin_analytics.overall_score.transaction_count" = "The overall score is based on the average daily transaction count over the last 7 days.";
+"coin_analytics.overall_score.holders" = "The overall score is based on the total number of addresses holding respective token.";
+
 "coin_analytics.rank" = "Puesto";
 "coin_analytics.30_day_rank" = "Rango de 30 días";
 "coin_analytics.30_day_volume" = "Volumen de 30 días";
