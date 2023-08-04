@@ -364,7 +364,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.next_button" = "Siguiente";
 "send.error.invalid" = "Inválido";
 "send.error.address" = "Dirección";
-"send.hodler_locktime" = "TimeLock";
+"send.hodler_locktime" = "Timelock";
 "send.hodler_locktime_hour" = "1 hora";
 "send.hodler_locktime_month" = "1 mes";
 "send.hodler_locktime_half_year" = "6 meses";
@@ -413,7 +413,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "send.stuck_warning" = "¡Advertencia! Riesgo de atascarse";
 
-"send.lock_time" = "TimeLock";
+"send.lock_time" = "Timelock";
 
 "approve.confirmation.you_approve" = "Apruebas";
 "approve.confirmation.you_revoke" = "Revocas";
@@ -489,7 +489,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Swap Confirmation
 
 "swap.confirmation.swap_button" = "Permutar";
-"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
+"swap.confirmation.impact_too_high" = "%@ ha desactivado la acción de intercambio para esta operación porque está recibiendo un precio extremadamente desfavorable. Esto se debe a una liquidez extremadamente baja. \nSi aún desea intercambiar, utilice el sitio web %@ en su lugar.";
 "swap.confirmation.impact_warning" = "¡Importante! Has obtenido un precio extremadamente desfavorable debido a la baja liquidez del mercado.";
 
 "swap.confirmation.minimum_received" = "Mínimo Recibido";
@@ -706,7 +706,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.period" = "Period";
 "coin_analytics.period.select_title" = "Select Period";
 "coin_analytics.period.1h" = "1 hora";
-"coin_analytics.period.4h" = "4 hours";
+"coin_analytics.period.4h" = "4 horas";
 "coin_analytics.period.1d" = "1 day";
 "coin_analytics.period.1w" = "1 week";
 
@@ -989,11 +989,11 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "Las siguientes características son experimentales y deben utilizarse con precaución. Aunque hemos probado a fondo estas características usando nuestros propios fondos criptográficos, no podemos garantizar que funcionen como se espera en todos los casos posibles.";
-"settings.experimental_features.bitcoin_hodling" = "TimeLock";
+"settings.experimental_features.bitcoin_hodling" = "Timelock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "TimeLock";
+"settings.bitcoin_hodling.title" = "Timelock";
 "settings.bitcoin_hodling.lock_time" = "Activar";
 "settings.bitcoin_hodling.description" = "This enables you to send Bitcoins that cannot be spent until a specified date. \n\nThe receiver of such transactions should use the %@ wallet app version 0.10 or newer, with the BIP44 address format for Bitcoin. \n\nOnly the %@ wallet can correctly identify such transactions on the Bitcoin network, as well as enable the receiver to spend those Bitcoins after the lock period expires. \n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transactions to yourself.";
 
@@ -1242,7 +1242,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Lock Info
 
-"lock_info.title" = "TimeLock";
+"lock_info.title" = "Timelock";
 "lock_info.text" = "El remitente envió estos fondos con un bloqueo del gasto que expirará en la fecha mostrada.\n\nNo te preocupes, los Bitcoins recibidos ya son tuyos, pero hasta que el período de bloqueo expire, no puedes gastarlos en la red Bitcoin.";
 
 // Double Spend Info
