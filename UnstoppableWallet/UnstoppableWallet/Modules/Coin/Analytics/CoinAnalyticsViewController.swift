@@ -27,6 +27,16 @@ class CoinAnalyticsViewController: ThemeViewController {
     private var viewItem: CoinAnalyticsViewModel.ViewItem?
     private var indicatorViewItem: CoinAnalyticsViewModel.IndicatorViewItem?
 
+    private let currencyFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.maximumFractionDigits = 0
+        formatter.minimumFractionDigits = 0
+        formatter.currencySymbol = "$"
+        formatter.internationalCurrencySymbol = "$"
+        return formatter
+    }()
+
     init(viewModel: CoinAnalyticsViewModel) {
         self.viewModel = viewModel
 
@@ -128,6 +138,11 @@ class CoinAnalyticsViewController: ThemeViewController {
 
         tableView.isHidden = viewItem == nil
         tableView.reload()
+    }
+
+    private func formatUsd(value: Int, number: String) -> String {
+        let string = currencyFormatter.string(from: value as NSNumber) ?? ""
+        return number.localized(string)
     }
 
     private func openTechnicalIndicatorInfo() {
@@ -232,6 +247,111 @@ class CoinAnalyticsViewController: ThemeViewController {
         parentNavigationController?.present(viewController, animated: true)
     }
 
+    private func openCexVolumeScoreInfo() {
+        let viewController = CoinAnalyticsRatingScaleViewController(
+                title: "coin_analytics.cex_volume".localized,
+                description: "coin_analytics.overall_score.cex_volume".localized,
+                scores: [
+                    .excellent: "> \(formatUsd(value: 10, number: "number.million"))",
+                    .good: "> \(formatUsd(value: 5, number: "number.million"))",
+                    .fair: "> \(formatUsd(value: 1, number: "number.million"))",
+                    .poor: "< \(formatUsd(value: 1, number: "number.million"))",
+                ]
+        )
+
+        parentNavigationController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
+    private func openDexVolumeScoreInfo() {
+        let viewController = CoinAnalyticsRatingScaleViewController(
+                title: "coin_analytics.dex_volume".localized,
+                description: "coin_analytics.overall_score.dex_volume".localized,
+                scores: [
+                    .excellent: "> \(formatUsd(value: 1, number: "number.million"))",
+                    .good: "> \(formatUsd(value: 500, number: "number.thousand"))",
+                    .fair: "> \(formatUsd(value: 100, number: "number.thousand"))",
+                    .poor: "< \(formatUsd(value: 100, number: "number.thousand"))",
+                ]
+        )
+
+        parentNavigationController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
+    private func openDexLiquidityScoreInfo() {
+        let viewController = CoinAnalyticsRatingScaleViewController(
+                title: "coin_analytics.dex_liquidity".localized,
+                description: "coin_analytics.overall_score.dex_liquidity".localized,
+                scores: [
+                    .excellent: "> \(formatUsd(value: 2, number: "number.million"))",
+                    .good: "> \(formatUsd(value: 1, number: "number.million"))",
+                    .fair: "> \(formatUsd(value: 500, number: "number.thousand"))",
+                    .poor: "< \(formatUsd(value: 500, number: "number.thousand"))",
+                ]
+        )
+
+        parentNavigationController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
+    private func openAddressesScoreInfo() {
+        let viewController = CoinAnalyticsRatingScaleViewController(
+                title: "coin_analytics.active_addresses".localized,
+                description: "coin_analytics.overall_score.active_addresses".localized,
+                scores: [
+                    .excellent: "> 500",
+                    .good: "> 200",
+                    .fair: "> 100",
+                    .poor: "< 100",
+                ]
+        )
+
+        parentNavigationController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
+    private func openTvlScoreInfo() {
+        let viewController = CoinAnalyticsRatingScaleViewController(
+                title: "coin_analytics.project_tvl".localized,
+                description: "coin_analytics.overall_score.project_tvl".localized,
+                scores: [
+                    .excellent: "> \(formatUsd(value: 200, number: "number.million"))",
+                    .good: "> \(formatUsd(value: 100, number: "number.million"))",
+                    .fair: "> \(formatUsd(value: 50, number: "number.million"))",
+                    .poor: "< \(formatUsd(value: 50, number: "number.million"))",
+                ]
+        )
+
+        parentNavigationController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
+    private func openTransactionCountScoreInfo() {
+        let viewController = CoinAnalyticsRatingScaleViewController(
+                title: "coin_analytics.transaction_count".localized,
+                description: "coin_analytics.overall_score.transaction_count".localized,
+                scores: [
+                    .excellent: "> \("number.thousand".localized("10"))",
+                    .good: "> \("number.thousand".localized("5"))",
+                    .fair: "> \("number.thousand".localized("1"))",
+                    .poor: "< \("number.thousand".localized("1"))",
+                ]
+        )
+
+        parentNavigationController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
+    private func openHoldersScoreInfo() {
+        let viewController = CoinAnalyticsRatingScaleViewController(
+                title: "coin_analytics.holders".localized,
+                description: "coin_analytics.overall_score.holders".localized,
+                scores: [
+                    .excellent: "> \("number.thousand".localized("100"))",
+                    .good: "> \("number.thousand".localized("50"))",
+                    .fair: "> \("number.thousand".localized("30"))",
+                    .poor: "< \("number.thousand".localized("30"))",
+                ]
+        )
+
+        parentNavigationController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
+    }
+
     private func openMajorHolders(blockchain: Blockchain) {
         let viewController = CoinMajorHoldersModule.viewController(coin: viewModel.coin, blockchain: blockchain)
         parentNavigationController?.present(viewController, animated: true)
@@ -265,11 +385,6 @@ class CoinAnalyticsViewController: ThemeViewController {
     private func openProDataChart(type: CoinProChartModule.ProChartType) {
         let viewController = CoinProChartModule.viewController(coin: viewModel.coin, type: type)
         parentNavigationController?.present(viewController, animated: true)
-    }
-
-    private func openRatings() {
-        let viewController = CoinAnalyticsRatingScaleViewController()
-        parentNavigationController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
     private func openRanks(type: CoinRankModule.RankType) {
@@ -454,9 +569,9 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                 ])
     }
 
-    private func ratingRow(id: String, rating: Previewable<CoinAnalyticsModule.Rating>, isFirst: Bool = false, isLast: Bool = false) -> RowProtocol {
+    private func ratingRow(id: String, rating: Previewable<CoinAnalyticsModule.Rating>, isFirst: Bool = false, isLast: Bool = false, action: @escaping () -> ()) -> RowProtocol {
         let titleElements: [CellBuilderNew.CellElement] = [
-            .textElement(text: .subhead2("coin_analytics.rating_scale".localized), parameters: .highHugging),
+            .textElement(text: .subhead2("coin_analytics.overall_score".localized), parameters: .highHugging),
             .margin8,
             .imageElement(image: .local(UIImage(named: "circle_information_20")?.withTintColor(.themeGray)), size: .image20)
         ]
@@ -474,9 +589,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     bind: { cell in
                         cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                     },
-                    action: { [weak self] in
-                        self?.openRatings()
-                    }
+                    action: action
             )
         case .regular(let rating):
             return CellBuilderNew.row(
@@ -493,9 +606,7 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     bind: { cell in
                         cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
                     },
-                    action: { [weak self] in
-                        self?.openRatings()
-                    }
+                    action: action
             )
         }
     }
@@ -526,7 +637,10 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     ratingRow(
                             id: "cex-volume-rating",
                             rating: rating,
-                            isLast: rows.count + 1 == itemCount
+                            isLast: rows.count + 1 == itemCount,
+                            action: { [weak self] in
+                                self?.openCexVolumeScoreInfo()
+                            }
                     )
             )
         }
@@ -579,7 +693,10 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     ratingRow(
                             id: "dex-volume-rating",
                             rating: rating,
-                            isLast: rows.count + 1 == itemCount
+                            isLast: rows.count + 1 == itemCount,
+                            action: { [weak self] in
+                                self?.openDexVolumeScoreInfo()
+                            }
                     )
             )
         }
@@ -632,7 +749,10 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     ratingRow(
                             id: "dex-liquidity-rating",
                             rating: rating,
-                            isLast: rows.count + 1 == itemCount
+                            isLast: rows.count + 1 == itemCount,
+                            action: { [weak self] in
+                                self?.openDexLiquidityScoreInfo()
+                            }
                     )
             )
         }
@@ -685,7 +805,10 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     ratingRow(
                             id: "addresses-rating",
                             rating: rating,
-                            isLast: rows.count + 1 == itemCount
+                            isLast: rows.count + 1 == itemCount,
+                            action: { [weak self] in
+                                self?.openAddressesScoreInfo()
+                            }
                     )
             )
         }
@@ -749,7 +872,10 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     ratingRow(
                             id: "tx-count-rating",
                             rating: rating,
-                            isLast: rows.count + 1 == itemCount
+                            isLast: rows.count + 1 == itemCount,
+                            action: { [weak self] in
+                                self?.openTransactionCountScoreInfo()
+                            }
                     )
             )
         }
@@ -861,7 +987,10 @@ extension CoinAnalyticsViewController: SectionsDataSource {
                     ratingRow(
                             id: "holders-rating",
                             rating: rating,
-                            isLast: false
+                            isLast: false,
+                            action: { [weak self] in
+                                self?.openHoldersScoreInfo()
+                            }
                     )
             )
         }
@@ -925,9 +1054,12 @@ extension CoinAnalyticsViewController: SectionsDataSource {
         if let rating = viewItem.rating {
             rows.append(
                     ratingRow(
-                            id: "cex-volume-rating",
+                            id: "tvl-rating",
                             rating: rating,
-                            isLast: rows.count + 1 == itemCount
+                            isLast: rows.count + 1 == itemCount,
+                            action: { [weak self] in
+                                self?.openTvlScoreInfo()
+                            }
                     )
             )
         }
