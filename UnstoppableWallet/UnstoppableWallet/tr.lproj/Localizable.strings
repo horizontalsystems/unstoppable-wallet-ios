@@ -410,9 +410,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "send.fee_settings.stuck_warning.title" = "Takılma riski";
 "send.fee_settings.stuck_warning" = "İşlem takılabilir veya başarısız olabilir.";
-"send.fee_settings.fee_error.title" = "Fee Error";
-"send.fee_settings.too_low" = "Fee Rate is too low.";
-"send.fee_settings.fee_rate_unavailable" = "Fee Rate unavailable. Please, check fee rates manually";
+"send.fee_settings.fee_error.title" = "Ücret Hatası";
+"send.fee_settings.too_low" = "Ücret Oranı çok düşük.";
+"send.fee_settings.fee_rate_unavailable" = "Ücret Oranı mevcut değil. Lütfen ücret oranlarını manuel olarak kontrol edin";
 
 "send.stuck_warning" = "Uyarı! Takılma riski";
 
