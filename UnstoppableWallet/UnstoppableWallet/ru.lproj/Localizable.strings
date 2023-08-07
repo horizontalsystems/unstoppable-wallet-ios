@@ -818,10 +818,10 @@
 "coin_analytics.current" = "текущее";
 
 "coin_analytics.overall_score" = "Overall Score";
-"coin_analytics.overall_score.excellent" = "Excellent";
-"coin_analytics.overall_score.good" = "Good";
-"coin_analytics.overall_score.fair" = "Fair";
-"coin_analytics.overall_score.poor" = "Poor";
+"coin_analytics.overall_score.excellent" = "Отлично";
+"coin_analytics.overall_score.good" = "Хорошо";
+"coin_analytics.overall_score.fair" = "Приемлемо";
+"coin_analytics.overall_score.poor" = "Плохо";
 "coin_analytics.overall_score.cex_volume" = "The overall score is based on the average daily trading volume on centralized exchanges over the last 7 days.";
 "coin_analytics.overall_score.dex_volume" = "The overall score is based on the average daily trading volume on decentralized exchanges over the last 7 days.";
 "coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total avilable liquidity on decentralized exchanges.";
