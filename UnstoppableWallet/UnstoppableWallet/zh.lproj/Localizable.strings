@@ -410,6 +410,9 @@
 
 "send.fee_settings.stuck_warning.title" = "有被卡的风险";
 "send.fee_settings.stuck_warning" = "交易可能被卡或失败。";
+"send.fee_settings.fee_error.title" = "Fee Error";
+"send.fee_settings.too_low" = "Fee Rate is too low.";
+"send.fee_settings.fee_rate_unavailable" = "Fee Rate unavailable. Please, check fee rates manually";
 
 "send.stuck_warning" = "警告！有被骗的风险";
 
