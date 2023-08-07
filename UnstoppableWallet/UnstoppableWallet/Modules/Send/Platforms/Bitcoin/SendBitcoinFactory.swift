@@ -72,11 +72,10 @@ class SendBitcoinFactory: BaseSendFactory {
     private let addressService: AddressService
     private let timeLockService: TimeLockService?
     private let adapterService: SendBitcoinAdapterService
-    private let customFeeRateProvider: ICustomRangedFeeRateProvider?
     private let logger: Logger
     private let token: Token
 
-    init(fiatService: FiatService, amountCautionService: SendAmountCautionService, addressService: AddressService, feeFiatService: FiatService, feeService: SendFeeService, feeRateService: FeeRateService, timeLockService: TimeLockService?, adapterService: SendBitcoinAdapterService, customFeeRateProvider: ICustomRangedFeeRateProvider?, logger: Logger, token: Token) {
+    init(fiatService: FiatService, amountCautionService: SendAmountCautionService, addressService: AddressService, feeFiatService: FiatService, feeService: SendFeeService, feeRateService: FeeRateService, timeLockService: TimeLockService?, adapterService: SendBitcoinAdapterService, logger: Logger, token: Token) {
         self.fiatService = fiatService
         self.amountCautionService = amountCautionService
         self.feeFiatService = feeFiatService
@@ -85,7 +84,6 @@ class SendBitcoinFactory: BaseSendFactory {
         self.addressService = addressService
         self.timeLockService = timeLockService
         self.adapterService = adapterService
-        self.customFeeRateProvider = customFeeRateProvider
         self.logger = logger
         self.token = token
     }
@@ -133,7 +131,7 @@ extension SendBitcoinFactory: ISendFeeSettingsFactory {
         var dataSources: [ISendSettingsDataSource] = []
 
         let feeViewModel = SendFeeViewModel(service: feeService)
-        let feeCautionViewModel = SendFeeWarningViewModel(service: feeRateService)
+        let feeCautionViewModel = SendFeeCautionViewModel(service: feeRateService)
         let amountCautionViewModel = SendFeeSettingsAmountCautionViewModel(service: amountCautionService, feeToken: token)
         let feeRateViewModel = FeeRateViewModel(service: feeRateService, feeCautionViewModel: feeCautionViewModel, amountCautionViewModel: amountCautionViewModel)
         if token.blockchainType == .bitcoin {

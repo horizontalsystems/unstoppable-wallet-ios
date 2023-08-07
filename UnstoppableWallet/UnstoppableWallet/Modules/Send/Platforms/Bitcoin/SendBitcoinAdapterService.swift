@@ -103,10 +103,11 @@ class SendBitcoinAdapterService {
     }
 
     private func sync(feeRate: DataStatus<Int>? = nil, updatedFrom: UpdatedField = .feeRate) {
-        let feeRate = feeRate ?? feeRateService.status
+        let feeRateStatus = feeRate ?? feeRateService.status
         let amount = amountInputService.amount
+        var feeRate = 0
 
-        switch feeRate {
+        switch feeRateStatus {
         case .loading:
             guard !amount.isZero else {      // force update fee for bitcoin, when clear amount to zero value
                 feeState = .completed(0)
@@ -116,9 +117,11 @@ class SendBitcoinAdapterService {
             feeState = .loading
         case .failed(let error):
             feeState = .failed(error)
-        case .completed(let feeRate):
-            update(feeRate: feeRate, amount: amount, address: addressService.state.address?.raw, pluginData: pluginData, updatedFrom: updatedFrom)
+        case .completed(let _feeRate):
+            feeRate = _feeRate
         }
+
+        update(feeRate: feeRate, amount: amount, address: addressService.state.address?.raw, pluginData: pluginData, updatedFrom: updatedFrom)
     }
 
     private func update(feeRate: Int, amount: Decimal, address: String?, pluginData: [UInt8: IBitcoinPluginData], updatedFrom: UpdatedField) {

@@ -8,7 +8,7 @@ import RxCocoa
 class SendBitcoinViewController: BaseSendViewController {
     private let disposeBag = DisposeBag()
 
-    private let feeWarningViewModel: ITitledCautionViewModel
+    private let feeCautionViewModel: ITitledCautionViewModel
 
     private let feeCell: FeeCell
     private let feeCautionCell = TitledHighlightedDescriptionCell()
@@ -21,10 +21,10 @@ class SendBitcoinViewController: BaseSendViewController {
          amountCautionViewModel: SendAmountCautionViewModel,
          recipientViewModel: RecipientAddressViewModel,
          feeViewModel: SendFeeViewModel,
-         feeWarningViewModel: ITitledCautionViewModel
+         feeCautionViewModel: ITitledCautionViewModel
     ) {
 
-        self.feeWarningViewModel = feeWarningViewModel
+        self.feeCautionViewModel = feeCautionViewModel
 
         feeCell = FeeCell(viewModel: feeViewModel, title: "fee_settings.fee".localized)
 
@@ -50,7 +50,7 @@ class SendBitcoinViewController: BaseSendViewController {
             self?.openInfo(title: "fee_settings.fee".localized, description: "fee_settings.fee.info".localized)
         }
 
-        subscribe(disposeBag, feeWarningViewModel.cautionDriver) { [weak self] in
+        subscribe(disposeBag, feeCautionViewModel.cautionDriver) { [weak self] in
             self?.handle(caution: $0)
         }
 
@@ -86,14 +86,14 @@ class SendBitcoinViewController: BaseSendViewController {
         )
     }
 
-    var feeWarningSection: SectionProtocol {
+    var feeCautionSection: SectionProtocol {
         Section(
-                id: "fee-warning",
+                id: "fee-caution",
                 headerState: .margin(height: .margin12),
                 rows: [
                     StaticRow(
                             cell: feeCautionCell,
-                            id: "fee-warning",
+                            id: "fee-caution",
                             dynamicHeight: { [weak self] containerWidth in
                                 self?.feeCautionCell.cellHeight(containerWidth: containerWidth) ?? 0
                             }
@@ -104,7 +104,7 @@ class SendBitcoinViewController: BaseSendViewController {
 
     override func buildSections() -> [SectionProtocol] {
         var sections = [availableBalanceSection, amountSection, recipientSection, feeSection]
-        sections.append(contentsOf: [feeWarningSection, buttonSection])
+        sections.append(contentsOf: [feeCautionSection, buttonSection])
 
         return sections
     }

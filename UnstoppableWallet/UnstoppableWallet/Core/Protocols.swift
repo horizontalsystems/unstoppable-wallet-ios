@@ -129,12 +129,7 @@ protocol INftEventProvider {
 }
 
 protocol IFeeRateProvider {
-    func recommendedFeeRate() async throws -> Int
-}
-
-protocol ICustomRangedFeeRateProvider: IFeeRateProvider {
-    var customFeeRange: ClosedRange<Int> { get }
-    var step: Int { get }
+    func feeRates() async throws -> FeeRateProvider.FeeRates
 }
 
 protocol IAppManager {

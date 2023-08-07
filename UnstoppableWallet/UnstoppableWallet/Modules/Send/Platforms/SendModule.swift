@@ -127,10 +127,7 @@ class SendModule {
 
         // Fee
         let feeViewModel = SendFeeViewModel(service: feeService)
-        let feeWarningViewModel = SendFeeWarningViewModel(service: feeRateService)
-
-        // Confirmation and Settings
-        let customRangedFeeRateProvider = feeRateProvider as? ICustomRangedFeeRateProvider
+        let feeCautionViewModel = SendFeeCautionViewModel(service: feeRateService)
 
         let sendFactory = SendBitcoinFactory(
                 fiatService: fiatService,
@@ -141,7 +138,6 @@ class SendModule {
                 feeRateService: feeRateService,
                 timeLockService: timeLockService,
                 adapterService: bitcoinAdapterService,
-                customFeeRateProvider: customRangedFeeRateProvider,
                 logger: App.shared.logger,
                 token: token
         )
@@ -155,7 +151,7 @@ class SendModule {
                 amountCautionViewModel: amountCautionViewModel,
                 recipientViewModel: recipientViewModel,
                 feeViewModel: feeViewModel,
-                feeWarningViewModel: feeWarningViewModel
+                feeCautionViewModel: feeCautionViewModel
         )
 
         return ThemeNavigationController(rootViewController: viewController)

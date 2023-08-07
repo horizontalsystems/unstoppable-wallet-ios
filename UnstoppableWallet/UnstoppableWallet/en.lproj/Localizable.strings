@@ -410,6 +410,9 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "send.fee_settings.stuck_warning.title" = "Risk of getting stuck";
 "send.fee_settings.stuck_warning" = "The transaction may get stuck or fail.";
+"send.fee_settings.fee_error.title" = "Fee Error";
+"send.fee_settings.too_low" = "Fee Rate is too low.";
+"send.fee_settings.fee_rate_unavailable" = "Fee Rate unavailable. Please, check fee rates manually";
 
 "send.stuck_warning" = "Warning! Risk of getting stuck";
 

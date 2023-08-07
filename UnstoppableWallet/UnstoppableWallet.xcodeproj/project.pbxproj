@@ -1455,7 +1455,7 @@
 		2FA5D1897F90F77E6D9076AB /* LegacyEvmFeeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D735675BD26B75B7FFC7 /* LegacyEvmFeeDataSource.swift */; };
 		2FA5D18A57B386FD3A4384BA /* Eip1559EvmFeeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DEDF215D171796AA34FE /* Eip1559EvmFeeViewModel.swift */; };
 		2FA5D1A368FEA07EA308A94A /* BitcoinIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DE3FC4EA4B42BC982C9A /* BitcoinIncomingTransactionRecord.swift */; };
-		2FA5D1E33A714D64DDAFA119 /* SendFeeWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D5CBE81863EDADA1D47D /* SendFeeWarningViewModel.swift */; };
+		2FA5D1E33A714D64DDAFA119 /* SendFeeCautionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D5CBE81863EDADA1D47D /* SendFeeCautionViewModel.swift */; };
 		2FA5D1F6979A345597788DE9 /* NonceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D64286A249D6D106DDFC /* NonceService.swift */; };
 		2FA5D201AED8FB83968A5220 /* StepperAmountInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D5A6EDE4A729F3DFF626 /* StepperAmountInputView.swift */; };
 		2FA5D20BC28280786A0FC3FE /* DropDownListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DB591688EEA6116C8323 /* DropDownListCell.swift */; };
@@ -1467,7 +1467,7 @@
 		2FA5D2FA6FE5298D991A7248 /* FeeRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D96AE7C5E97B6E609CA5 /* FeeRateService.swift */; };
 		2FA5D2FE81DA1FB5A63C2D7C /* BitcoinCore+Hodler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D33978B54432713B047C /* BitcoinCore+Hodler.swift */; };
 		2FA5D342449885CF8D58B704 /* HdWalletExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DA265C9608D0BCF88F17 /* HdWalletExtensions.swift */; };
-		2FA5D37B3AD06F8249FA7959 /* SendFeeWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D5CBE81863EDADA1D47D /* SendFeeWarningViewModel.swift */; };
+		2FA5D37B3AD06F8249FA7959 /* SendFeeCautionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D5CBE81863EDADA1D47D /* SendFeeCautionViewModel.swift */; };
 		2FA5D3893C3B6F2270F857C7 /* SendEvmCautionsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DD57DA8B88537341459E /* SendEvmCautionsFactory.swift */; };
 		2FA5D3AFFBE0E51DD79236EF /* LegacyEvmFeeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D735675BD26B75B7FFC7 /* LegacyEvmFeeDataSource.swift */; };
 		2FA5D3C3D3AB41202B592640 /* Eip1559EvmFeeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D5BC7249DDB680769ADD /* Eip1559EvmFeeDataSource.swift */; };
@@ -3384,7 +3384,7 @@
 		2FA5D5A6EDE4A729F3DFF626 /* StepperAmountInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepperAmountInputView.swift; sourceTree = "<group>"; };
 		2FA5D5B2E57E92B6EF057356 /* FeeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeCell.swift; sourceTree = "<group>"; };
 		2FA5D5BC7249DDB680769ADD /* Eip1559EvmFeeDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Eip1559EvmFeeDataSource.swift; sourceTree = "<group>"; };
-		2FA5D5CBE81863EDADA1D47D /* SendFeeWarningViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeWarningViewModel.swift; sourceTree = "<group>"; };
+		2FA5D5CBE81863EDADA1D47D /* SendFeeCautionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendFeeCautionViewModel.swift; sourceTree = "<group>"; };
 		2FA5D64286A249D6D106DDFC /* NonceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonceService.swift; sourceTree = "<group>"; };
 		2FA5D6522540716BACE4AD09 /* InputOutputOrderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputOutputOrderViewModel.swift; sourceTree = "<group>"; };
 		2FA5D657FD86FE9B675B475D /* TransactionInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoViewModel.swift; sourceTree = "<group>"; };
@@ -5994,7 +5994,7 @@
 		2FA5D752137F74F62C01383E /* FeeWarning */ = {
 			isa = PBXGroup;
 			children = (
-				2FA5D5CBE81863EDADA1D47D /* SendFeeWarningViewModel.swift */,
+				2FA5D5CBE81863EDADA1D47D /* SendFeeCautionViewModel.swift */,
 				2FA5D8546E264BEEE654D17B /* SendFeeSettingsAmountCautionViewModel.swift */,
 			);
 			path = FeeWarning;
@@ -8808,7 +8808,7 @@
 				2FA5DF42271E59C1CE40B5DB /* FeeRateViewModel.swift in Sources */,
 				2FA5D2FA6FE5298D991A7248 /* FeeRateService.swift in Sources */,
 				2FA5DF8F364E6B5BED14C0B4 /* SendSettingsViewController.swift in Sources */,
-				2FA5D1E33A714D64DDAFA119 /* SendFeeWarningViewModel.swift in Sources */,
+				2FA5D1E33A714D64DDAFA119 /* SendFeeCautionViewModel.swift in Sources */,
 				2FA5DCCE2273577F8F12004F /* SendFeeSettingsAmountCautionViewModel.swift in Sources */,
 				2FA5D7C2BEF5739328BA8239 /* TimeLockDataSource.swift in Sources */,
 				2FA5DE46C61524144F406FDB /* TimeLockService.swift in Sources */,
@@ -10065,7 +10065,7 @@
 				2FA5DF43F20E03E94403555D /* FeeRateViewModel.swift in Sources */,
 				2FA5DF7570C7D9E33922CB03 /* FeeRateService.swift in Sources */,
 				2FA5DD05ECC5501DC33050C6 /* SendSettingsViewController.swift in Sources */,
-				2FA5D37B3AD06F8249FA7959 /* SendFeeWarningViewModel.swift in Sources */,
+				2FA5D37B3AD06F8249FA7959 /* SendFeeCautionViewModel.swift in Sources */,
 				2FA5D7CC1617FDF8D2EAFB56 /* SendFeeSettingsAmountCautionViewModel.swift in Sources */,
 				2FA5DA3E8B501D515A25E8A2 /* TimeLockDataSource.swift in Sources */,
 				2FA5D4AB0DEF37A103E1E130 /* TimeLockService.swift in Sources */,
@@ -10718,7 +10718,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/FeeRateKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.0;
+				version = 2.1.0;
 			};
 		};
 		D3604E8328F03CDC0066C366 /* XCRemoteSwiftPackageReference "BinanceChainKit.Swift" */ = {
