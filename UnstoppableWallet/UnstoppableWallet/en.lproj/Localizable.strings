@@ -165,7 +165,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "coin_settings.title" = "Blockchain Settings";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
 "sync_mode.from_blockchain" = "From Blockchain";
 "blockchain_settings.description" = "Select the address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
 
@@ -338,6 +338,17 @@ Go to Settings - > %@ and allow access to the camera.";
 "deposit.not_active" = "not active";
 "deposit.not_active.title" = "Not Active Address";
 "deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
+
+
+"receive_network_select.title" = "Network";
+"receive_network_select.description" = "Choose a network and get an address to receive.";
+
+"receive_address_format_select.title" = "Address Format";
+"receive_address_format_select.description" = "Choose a network and get an address to receive.";
+"receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
+"receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
+
+"receive_address.recommended" = " (recommended)";
 
 // Send
 
