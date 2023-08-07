@@ -412,6 +412,9 @@
 
 "send.fee_settings.stuck_warning.title" = "Внимание! Транзакция может застрять в сети";
 "send.fee_settings.stuck_warning" = "Транзакция может застрять в сети или будет отклонена.";
+"send.fee_settings.fee_error.title" = "Ошибка комиссии";
+"send.fee_settings.too_low" = "Ставка комиссии слишком низкая.";
+"send.fee_settings.fee_rate_unavailable" = "Ставка комиссии недоступна. Пожалуйста, проверьте ставки комиссии вручную";
 
 "send.stuck_warning" = "Внимание! Транзакция может застрять в сети";
 
@@ -816,12 +819,20 @@
 
 "coin_analytics.last_30d" = "Последние 30 дн.";
 "coin_analytics.current" = "текущее";
-"coin_analytics.rating_scale" = "Масштаб рейтинга";
-"coin_analytics.rating_scale.description" = "Шкала рейтинга формируется из 250 топ-токенов по рыночной капитализации и пропорционально скорректирована на процент для получения окончательной рейтинговой шкалы.";
-"coin_analytics.rating_scale.excellent" = "Отлично";
-"coin_analytics.rating_scale.good" = "Хорошо";
-"coin_analytics.rating_scale.fair" = "Приемлемо";
-"coin_analytics.rating_scale.poor" = "Плохо";
+
+"coin_analytics.overall_score" = "Общий балл";
+"coin_analytics.overall_score.excellent" = "Отлично";
+"coin_analytics.overall_score.good" = "Хорошо";
+"coin_analytics.overall_score.fair" = "Приемлемо";
+"coin_analytics.overall_score.poor" = "Плохо";
+"coin_analytics.overall_score.cex_volume" = "Общий балл основан на средневзвешенном объеме торговли за последние 7 дней на централизованных биржах.";
+"coin_analytics.overall_score.dex_volume" = "Общий балл основан на среднем ежедневном объеме торговли на децентрализованных биржах за последние 7 дней.";
+"coin_analytics.overall_score.dex_liquidity" = "Общий балл основан на общей доступной ликвидности на децентрализованных биржах.";
+"coin_analytics.overall_score.active_addresses" = "Общий балл основан на среднедневных активных адресах за последние 7 дней.";
+"coin_analytics.overall_score.project_tvl" = "Общая балл основан на общей закрытой стоимости (активы, находящиеся в ведении управления) на проекте, представленном данным токеном.";
+"coin_analytics.overall_score.transaction_count" = "Общий счет основан на среднем подсчете ежедневных транзакций за последние 7 дней.";
+"coin_analytics.overall_score.holders" = "Общий балл основан на общем количестве адресов, содержащих соответствующий токен.";
+
 "coin_analytics.rank" = "Рейтинг";
 "coin_analytics.30_day_rank" = "Рейтинг на 30д";
 "coin_analytics.30_day_volume" = "Объем за 30д";

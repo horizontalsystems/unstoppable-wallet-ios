@@ -410,6 +410,9 @@
 
 "send.fee_settings.stuck_warning.title" = "有被卡的风险";
 "send.fee_settings.stuck_warning" = "交易可能被卡或失败。";
+"send.fee_settings.fee_error.title" = "手续费错误";
+"send.fee_settings.too_low" = "费用率太低。";
+"send.fee_settings.fee_rate_unavailable" = "费用率不可用。请手动检查费率。";
 
 "send.stuck_warning" = "警告！有被骗的风险";
 
@@ -814,12 +817,20 @@
 
 "coin_analytics.last_30d" = "最近30天";
 "coin_analytics.current" = "当前";
-"coin_analytics.rating_scale" = "评分范围";
-"coin_analytics.rating_scale.description" = "评级表按市场资本化率从前250个令牌得出，按百分比按比例调整，以获得最终评级等级。";
-"coin_analytics.rating_scale.excellent" = "非常好";
-"coin_analytics.rating_scale.good" = "好";
-"coin_analytics.rating_scale.fair" = "一般";
-"coin_analytics.rating_scale.poor" = "糟糕";
+
+"coin_analytics.overall_score" = "总体得分";
+"coin_analytics.overall_score.excellent" = "极好的";
+"coin_analytics.overall_score.good" = "好";
+"coin_analytics.overall_score.fair" = "公平的";
+"coin_analytics.overall_score.poor" = "差的";
+"coin_analytics.overall_score.cex_volume" = "总的分数是根据过去7天中央交易所的平均每日交易量计算的。";
+"coin_analytics.overall_score.dex_volume" = "总的分数是根据过去7天分散交易所的平均每日交易量计算的。";
+"coin_analytics.overall_score.dex_liquidity" = "总分数是根据分散交易所的可动用流动资金总额计算的。";
+"coin_analytics.overall_score.active_addresses" = "总得分是根据过去7天中每日平均活动地址计算的。";
+"coin_analytics.overall_score.project_tvl" = "总体分数是根据给定令牌所代表的项目的总值锁定(管理中的资产)计算的。";
+"coin_analytics.overall_score.transaction_count" = "总的分数是根据过去7天的平均每日交易数计算的。";
+"coin_analytics.overall_score.holders" = "总的分数是根据持有相应代币的地址总数计算的。";
+
 "coin_analytics.rank" = "排名";
 "coin_analytics.30_day_rank" = "30天排名";
 "coin_analytics.30_day_volume" = "30天交易量";

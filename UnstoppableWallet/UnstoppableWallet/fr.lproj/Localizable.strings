@@ -410,6 +410,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "send.fee_settings.stuck_warning.title" = "Risque de blocage";
 "send.fee_settings.stuck_warning" = "La transaction risque d'être bloquée ou d'échouer.";
+"send.fee_settings.fee_error.title" = "Erreur de frais";
+"send.fee_settings.too_low" = "Le taux de frais est trop faible.";
+"send.fee_settings.fee_rate_unavailable" = "Taux de frais indisponible. Veuillez vérifier les taux de frais manuellement";
 
 "send.stuck_warning" = "Attention ! Risque de blocage";
 
@@ -814,12 +817,20 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "coin_analytics.last_30d" = "30 derniers j.";
 "coin_analytics.current" = "actuel";
-"coin_analytics.rating_scale" = "Échelle de notation";
-"coin_analytics.rating_scale.description" = "L'échelle de notation est dérivée des 250 premiers jetons par capitalisation boursière et est ajustée proportionnellement par pourcentage pour obtenir l'échelle de notation finale.";
-"coin_analytics.rating_scale.excellent" = "Excellent";
-"coin_analytics.rating_scale.good" = "Bon";
-"coin_analytics.rating_scale.fair" = "Équitable";
-"coin_analytics.rating_scale.poor" = "Mauvais";
+
+"coin_analytics.overall_score" = "Score global";
+"coin_analytics.overall_score.excellent" = "Excellent";
+"coin_analytics.overall_score.good" = "Bon";
+"coin_analytics.overall_score.fair" = "Équitable";
+"coin_analytics.overall_score.poor" = "Mauvais";
+"coin_analytics.overall_score.cex_volume" = "Le score global est basé sur le volume de négociation quotidien moyen sur les bourses centralisées au cours des 7 derniers jours.";
+"coin_analytics.overall_score.dex_volume" = "Le score global est basé sur le volume de négociation quotidien moyen sur les bourses décentralisées au cours des 7 derniers jours.";
+"coin_analytics.overall_score.dex_liquidity" = "Le score global est basé sur la liquidité totale disponible sur les échanges décentralisés.";
+"coin_analytics.overall_score.active_addresses" = "Le score global est basé sur la moyenne quotidienne des adresses actives au cours des 7 derniers jours.";
+"coin_analytics.overall_score.project_tvl" = "Le score global est basé sur la valeur totale verrouillée (actifs sous gestion) sur le projet représenté par le jeton donné.";
+"coin_analytics.overall_score.transaction_count" = "Le score global est basé sur le nombre moyen quotidien de transactions sur les 7 derniers jours.";
+"coin_analytics.overall_score.holders" = "Le score global est basé sur le nombre total d'adresses détenant le jeton respectif.";
+
 "coin_analytics.rank" = "Rang";
 "coin_analytics.30_day_rank" = "Classement sur 30 jours";
 "coin_analytics.30_day_volume" = "Volume sur 30 jours";

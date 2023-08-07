@@ -410,6 +410,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "send.fee_settings.stuck_warning.title" = "Riesgo de atascarse";
 "send.fee_settings.stuck_warning" = "La transacción puede quedarse atascada o fallar.";
+"send.fee_settings.fee_error.title" = "Error de tarifa";
+"send.fee_settings.too_low" = "La tarifa es demasiado baja.";
+"send.fee_settings.fee_rate_unavailable" = "Tarifa Tasa no disponible. Por favor, consulte las tarifas manualmente";
 
 "send.stuck_warning" = "¡Advertencia! Riesgo de atascarse";
 
@@ -814,12 +817,20 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "coin_analytics.last_30d" = "último 30d";
 "coin_analytics.current" = "actual";
-"coin_analytics.rating_scale" = "Escala de Calificación";
-"coin_analytics.rating_scale.description" = "La escala de calificación se deriva de los 250 tokens más altos por capitalización de mercado y se ajusta proporcionalmente por porcentaje para obtener la escala de calificación final.";
-"coin_analytics.rating_scale.excellent" = "Excelente";
-"coin_analytics.rating_scale.good" = "Bueno";
-"coin_analytics.rating_scale.fair" = "Aceptable";
-"coin_analytics.rating_scale.poor" = "Insuficiente";
+
+"coin_analytics.overall_score" = "Puntuación general";
+"coin_analytics.overall_score.excellent" = "Excelente";
+"coin_analytics.overall_score.good" = "Bueno";
+"coin_analytics.overall_score.fair" = "Justo";
+"coin_analytics.overall_score.poor" = "Pobre";
+"coin_analytics.overall_score.cex_volume" = "El puntaje general se basa en el volumen diario promedio de las operaciones centralizadas en los últimos 7 días.";
+"coin_analytics.overall_score.dex_volume" = "El puntaje general se basa en el volumen diario promedio de las operaciones de los mercados descentralizados en los últimos 7 días.";
+"coin_analytics.overall_score.dex_liquidity" = "La puntuación general se basa en la liquidez total disponible en los intercambios descentralizados.";
+"coin_analytics.overall_score.active_addresses" = "La puntuación general se basa en la media diaria de las direcciones activas en los últimos 7 días.";
+"coin_analytics.overall_score.project_tvl" = "La puntuación general se basa en el valor total bloqueado (activos bajo administración) en el proyecto representado por el token dado.";
+"coin_analytics.overall_score.transaction_count" = "La puntuación general se basa en el promedio diario de las transacciones durante los últimos 7 días.";
+"coin_analytics.overall_score.holders" = "La puntuación general se basa en el número total de direcciones que mantienen sus respectivos token.";
+
 "coin_analytics.rank" = "Puesto";
 "coin_analytics.30_day_rank" = "Rango de 30 días";
 "coin_analytics.30_day_volume" = "Volumen de 30 días";
