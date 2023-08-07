@@ -410,6 +410,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "send.fee_settings.stuck_warning.title" = "Risque de blocage";
 "send.fee_settings.stuck_warning" = "La transaction risque d'être bloquée ou d'échouer.";
+"send.fee_settings.fee_error.title" = "Fee Error";
+"send.fee_settings.too_low" = "Fee Rate is too low.";
+"send.fee_settings.fee_rate_unavailable" = "Fee Rate unavailable. Please, check fee rates manually";
 
 "send.stuck_warning" = "Attention ! Risque de blocage";
 
@@ -815,18 +818,18 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_analytics.last_30d" = "30 derniers j.";
 "coin_analytics.current" = "actuel";
 
-"coin_analytics.overall_score" = "Overall Score";
+"coin_analytics.overall_score" = "Score global";
 "coin_analytics.overall_score.excellent" = "Excellent";
-"coin_analytics.overall_score.good" = "Good";
-"coin_analytics.overall_score.fair" = "Fair";
-"coin_analytics.overall_score.poor" = "Poor";
-"coin_analytics.overall_score.cex_volume" = "The overall score is based on the average daily trading volume on centralized exchanges over the last 7 days.";
-"coin_analytics.overall_score.dex_volume" = "The overall score is based on the average daily trading volume on decentralized exchanges over the last 7 days.";
-"coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total avilable liquidity on decentralized exchanges.";
-"coin_analytics.overall_score.active_addresses" = "The overall score is based on the average daily active addresses over the last 7 days.";
-"coin_analytics.overall_score.project_tvl" = "The overall score is based on the total value locked (assets under management) on the project represented by the given token.";
-"coin_analytics.overall_score.transaction_count" = "The overall score is based on the average daily transaction count over the last 7 days.";
-"coin_analytics.overall_score.holders" = "The overall score is based on the total number of addresses holding respective token.";
+"coin_analytics.overall_score.good" = "Bon";
+"coin_analytics.overall_score.fair" = "Équitable";
+"coin_analytics.overall_score.poor" = "Mauvais";
+"coin_analytics.overall_score.cex_volume" = "Le score global est basé sur le volume de négociation quotidien moyen sur les bourses centralisées au cours des 7 derniers jours.";
+"coin_analytics.overall_score.dex_volume" = "Le score global est basé sur le volume de négociation quotidien moyen sur les bourses décentralisées au cours des 7 derniers jours.";
+"coin_analytics.overall_score.dex_liquidity" = "Le score global est basé sur la liquidité totale disponible sur les échanges décentralisés.";
+"coin_analytics.overall_score.active_addresses" = "Le score global est basé sur la moyenne quotidienne des adresses actives au cours des 7 derniers jours.";
+"coin_analytics.overall_score.project_tvl" = "Le score global est basé sur la valeur totale verrouillée (actifs sous gestion) sur le projet représenté par le jeton donné.";
+"coin_analytics.overall_score.transaction_count" = "Le score global est basé sur le nombre moyen quotidien de transactions sur les 7 derniers jours.";
+"coin_analytics.overall_score.holders" = "Le score global est basé sur le nombre total d'adresses détenant le jeton respectif.";
 
 "coin_analytics.rank" = "Rang";
 "coin_analytics.30_day_rank" = "Classement sur 30 jours";
