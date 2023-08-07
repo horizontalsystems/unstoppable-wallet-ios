@@ -90,11 +90,10 @@ class SendSettingsViewController: ThemeViewController {
         tableView.registerCell(forClass: TitledHighlightedDescriptionCell.self)
         tableView.sectionDataSource = self
 
-        dataSources.forEach { $0.viewDidLoad() }
-
         tableView.buildSections()
         syncResetButton()
         handle(caution: nil)
+        dataSources.forEach { $0.viewDidLoad() }
 
         loaded = true
     }

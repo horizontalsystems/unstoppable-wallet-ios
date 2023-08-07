@@ -35,12 +35,14 @@ class FeeRateDataSource {
 
         subscribe(disposeBag, feeRateViewModel.feeRateDriver) { [weak self] in self?.feeRateCell.value = $0 }
         subscribe(disposeBag, feeRateViewModel.alteredStateSignal) { [weak self] in self?.onUpdateAlteredState?() }
-        subscribe(disposeBag, feeRateViewModel.cautionDriver) { [weak self] in
-            self?.feeRateCell.set(cautionType: $0?.type)
-            self?.onCaution?($0)
-        }
+        subscribe(disposeBag, feeRateViewModel.cautionDriver) { [weak self] in self?.handleCaution(caution: $0) }
 
         feeRateCell.onChangeValue = { [weak self] value in self?.feeRateViewModel.set(value: value) }
+    }
+
+    private func handleCaution(caution: TitledCaution?) {
+        feeRateCell.set(cautionType: caution?.type)
+        onCaution?(caution)
     }
 
 }

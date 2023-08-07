@@ -7,14 +7,14 @@ class FeeRateViewModel {
     private let disposeBag = DisposeBag()
 
     private let service: FeeRateService
-    private let feeCautionViewModel: SendFeeWarningViewModel
+    private let feeCautionViewModel: SendFeeCautionViewModel
     private let amountCautionViewModel: SendFeeSettingsAmountCautionViewModel
 
     private let alteredStateRelay = PublishRelay<Void>()
     private let feeRateRelay = BehaviorRelay<Decimal?>(value: nil)
     private let cautionRelay = BehaviorRelay<TitledCaution?>(value: nil)
 
-    init(service: FeeRateService, feeCautionViewModel: SendFeeWarningViewModel, amountCautionViewModel: SendFeeSettingsAmountCautionViewModel) {
+    init(service: FeeRateService, feeCautionViewModel: SendFeeCautionViewModel, amountCautionViewModel: SendFeeSettingsAmountCautionViewModel) {
         self.service = service
         self.feeCautionViewModel = feeCautionViewModel
         self.amountCautionViewModel = amountCautionViewModel
@@ -31,15 +31,14 @@ class FeeRateViewModel {
     private func syncCaution() {
         var caution: TitledCaution? = nil
 
-        if let error = amountCautionViewModel.amountCaution {
-            caution = error
-        } else if let warning = feeCautionViewModel.caution {
-            caution = warning
+        if let amountCaution = amountCautionViewModel.amountCaution {
+            caution = amountCaution
+        } else if let feeCaution = feeCautionViewModel.caution {
+            caution = feeCaution
         }
 
         cautionRelay.accept(caution)
     }
-
 
     private func sync(feeRateStatus: DataStatus<Int>) {
         if case .completed(let feeRate) = feeRateStatus {
