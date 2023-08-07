@@ -176,3 +176,11 @@ extension BlockchainType {
     }
 
 }
+
+extension BlockchainType: Comparable {
+
+    public static func <(lhs: BlockchainType, rhs: BlockchainType) -> Bool {
+        lhs.order < rhs.order
+    }
+
+}
