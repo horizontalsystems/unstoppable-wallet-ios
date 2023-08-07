@@ -468,7 +468,7 @@ class WalletViewController: ThemeViewController {
 
     private func openReceive(wallet: Wallet) {
         if let module = DepositModule.viewController(wallet: wallet) {
-            present(module, animated: true)
+            present(ThemeNavigationController(rootViewController: module), animated: true)
         }
     }
 
@@ -574,10 +574,16 @@ class WalletViewController: ThemeViewController {
                 self?.present(viewController, animated: true)
             }
         }
-        // Master-account actions
+        // Decentralized actions
         cell.actions[.send] = { [weak self] in
             let viewController = WalletModule.sendViewController()
             self?.present(viewController, animated: true)
+        }
+
+        cell.actions[.receive] = { [weak self] in
+            if let viewController = ReceiveModule.viewController() {
+                self?.present(viewController, animated: true)
+            }
         }
     }
 

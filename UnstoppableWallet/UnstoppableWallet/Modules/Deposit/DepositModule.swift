@@ -25,7 +25,7 @@ struct DepositModule {
         let viewModel = DepositViewModel(service: service, depositViewItemHelper: depositViewItemHelper)
         let viewController = DepositViewController(viewModel: viewModel)
 
-        return ThemeNavigationController(rootViewController: viewController)
+        return viewController
     }
 
 }

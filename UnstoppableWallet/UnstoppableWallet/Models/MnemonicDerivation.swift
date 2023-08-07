@@ -22,6 +22,13 @@ enum MnemonicDerivation: String, CaseIterable {
         }
     }
 
+    var recommended: Bool {
+        switch self {
+        case .bip84: return true
+        default: return false
+        }
+    }
+
     var purpose: Purpose {
         switch self {
         case .bip44: return .bip44
@@ -33,10 +40,10 @@ enum MnemonicDerivation: String, CaseIterable {
 
     var order: Int {
         switch self {
-        case .bip44: return 0
-        case .bip49: return 1
-        case .bip84: return 2
-        case .bip86: return 3
+        case .bip84: return 0
+        case .bip86: return 1
+        case .bip49: return 2
+        case .bip44: return 3
         }
     }
 
