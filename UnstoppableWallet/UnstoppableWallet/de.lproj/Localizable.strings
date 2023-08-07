@@ -410,6 +410,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "send.fee_settings.stuck_warning.title" = "Gefahr des Festklemmens";
 "send.fee_settings.stuck_warning" = "Die Transaktion kann festklemmen oder fehlschlagen.";
+"send.fee_settings.fee_error.title" = "Fee Error";
+"send.fee_settings.too_low" = "Fee Rate is too low.";
+"send.fee_settings.fee_rate_unavailable" = "Fee Rate unavailable. Please, check fee rates manually";
 
 "send.stuck_warning" = "Warnung! Gefahr des Festklemmens";
 
