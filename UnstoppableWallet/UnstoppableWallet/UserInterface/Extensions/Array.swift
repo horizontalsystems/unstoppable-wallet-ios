@@ -16,3 +16,17 @@ extension Array {
     }
 
 }
+
+extension Array where Element: Equatable {
+
+    func removeDuplicates() -> Self {
+        var uniqueElements = [Element]()
+        for element in self {
+            if !uniqueElements.contains(element) {
+                uniqueElements.append(element)
+            }
+        }
+        return uniqueElements
+    }
+
+}
