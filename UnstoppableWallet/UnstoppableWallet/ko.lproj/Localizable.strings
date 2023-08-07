@@ -408,6 +408,9 @@
 
 "send.fee_settings.stuck_warning.title" = "갇힐 위험";
 "send.fee_settings.stuck_warning" = "트랜잭션이 중단되거나 실패할 수 있습니다.";
+"send.fee_settings.fee_error.title" = "Fee Error";
+"send.fee_settings.too_low" = "Fee Rate is too low.";
+"send.fee_settings.fee_rate_unavailable" = "Fee Rate unavailable. Please, check fee rates manually";
 
 "send.stuck_warning" = "경고! 갇힐 위험";
 
