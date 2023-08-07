@@ -410,9 +410,9 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 
 "send.fee_settings.stuck_warning.title" = "Risco de ficar trancado";
 "send.fee_settings.stuck_warning" = "A transação pode ficar presa ou falhar.";
-"send.fee_settings.fee_error.title" = "Fee Error";
-"send.fee_settings.too_low" = "Fee Rate is too low.";
-"send.fee_settings.fee_rate_unavailable" = "Fee Rate unavailable. Please, check fee rates manually";
+"send.fee_settings.fee_error.title" = "Erro de taxa";
+"send.fee_settings.too_low" = "Taxa de taxa é muito baixa.";
+"send.fee_settings.fee_rate_unavailable" = "Tarifa indisponível. Por favor, verifique as taxas de taxas manualmente";
 
 "send.stuck_warning" = "Atenção! Risco de ficar preso";
 
