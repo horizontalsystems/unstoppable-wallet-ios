@@ -13,14 +13,21 @@ enum BitcoinCashCoinType: String, CaseIterable {
         }
     }
 
+    var recommended: Bool {
+        switch self {
+        case .type145: return true
+        default: return false
+        }
+    }
+
     var description: String {
         "coin_settings.bitcoin_cash_coin_type.title.\(self)".localized
     }
 
     var order: Int {
         switch self {
-        case .type0: return 0
-        case .type145: return 1
+        case .type145: return 0
+        case .type0: return 1
         }
     }
 
