@@ -410,9 +410,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "send.fee_settings.stuck_warning.title" = "Risque de blocage";
 "send.fee_settings.stuck_warning" = "La transaction risque d'être bloquée ou d'échouer.";
-"send.fee_settings.fee_error.title" = "Fee Error";
-"send.fee_settings.too_low" = "Fee Rate is too low.";
-"send.fee_settings.fee_rate_unavailable" = "Fee Rate unavailable. Please, check fee rates manually";
+"send.fee_settings.fee_error.title" = "Erreur de frais";
+"send.fee_settings.too_low" = "Le taux de frais est trop faible.";
+"send.fee_settings.fee_rate_unavailable" = "Taux de frais indisponible. Veuillez vérifier les taux de frais manuellement";
 
 "send.stuck_warning" = "Attention ! Risque de blocage";
 
