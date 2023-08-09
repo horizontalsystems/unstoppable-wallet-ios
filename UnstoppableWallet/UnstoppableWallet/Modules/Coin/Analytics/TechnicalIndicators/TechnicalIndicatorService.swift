@@ -154,7 +154,7 @@ class TechnicalIndicatorService {
         let chartData = ChartData(items: items, startWindow: startTimestamp, endWindow: endTimestamp)
 
         for period in Self.maPeriods {
-            if let emaValues = try? IndicatorCalculator.ma(period: period, values: values) {
+            if let emaValues = try? IndicatorCalculator.ema(period: period, values: values) {
                 chartData.add(name: "ema_\(period)", values: emaValues)
             }
             if let smaValues = try? IndicatorCalculator.ma(period: period, values: values) {
