@@ -23,13 +23,13 @@ class TransactionsCoinSelectViewModel {
             switch item.type {
             case .all:
                 return ViewItem(type: .all, selected: item.selected)
-            case .token(let configuredToken):
+            case .token(let token):
                 let tokenViewItem = TokenViewItem(
-                        imageUrl: configuredToken.token.coin.imageUrl,
-                        placeholderImageName: configuredToken.token.placeholderImageName,
-                        name: configuredToken.token.coin.name,
-                        code: configuredToken.token.coin.code,
-                        badge: configuredToken.badge
+                        imageUrl: token.coin.imageUrl,
+                        placeholderImageName: token.placeholderImageName,
+                        name: token.coin.name,
+                        code: token.coin.code,
+                        badge: token.badge
                 )
 
                 return ViewItem(type: .token(viewItem: tokenViewItem), selected: item.selected)

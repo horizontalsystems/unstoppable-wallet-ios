@@ -1,3 +1,5 @@
+import MarketKit
+
 enum BitcoinCashCoinType: String, CaseIterable {
     case type0
     case type145
@@ -17,6 +19,17 @@ enum BitcoinCashCoinType: String, CaseIterable {
         switch self {
         case .type0: return 0
         case .type145: return 1
+        }
+    }
+
+}
+
+extension TokenType.AddressType {
+
+    var bitcoinCashCoinType: BitcoinCashCoinType {
+        switch self {
+        case .type0: return .type0
+        case .type145: return .type145
         }
     }
 

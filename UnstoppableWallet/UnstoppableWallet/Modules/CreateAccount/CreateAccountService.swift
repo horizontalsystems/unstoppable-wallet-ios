@@ -36,7 +36,7 @@ class CreateAccountService {
 
     private func activateDefaultWallets(account: Account) throws {
         let tokenQueries = [
-            TokenQuery(blockchainType: .bitcoin, tokenType: .native),
+            TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)), //todo: make derivation supports accountType
             TokenQuery(blockchainType: .ethereum, tokenType: .native),
             TokenQuery(blockchainType: .binanceSmartChain, tokenType: .native),
             TokenQuery(blockchainType: .ethereum, tokenType: .eip20(address: "0xdac17f958d2ee523a2206206994597c13d831ec7")), // USDT
@@ -47,17 +47,7 @@ class CreateAccountService {
 
         for token in try marketKit.tokens(queries: tokenQueries) {
             predefinedBlockchainService.prepareNew(account: account, blockchainType: token.blockchainType)
-
-            let defaultSettingsArray = token.blockchainType.defaultSettingsArray(accountType: account.type)
-
-            if defaultSettingsArray.isEmpty {
-                wallets.append(Wallet(token: token, account: account))
-            } else {
-                for coinSettings in defaultSettingsArray {
-                    let configuredToken = ConfiguredToken(token: token, coinSettings: coinSettings)
-                    wallets.append(Wallet(configuredToken: configuredToken, account: account))
-                }
-            }
+            wallets.append(Wallet(token: token, account: account))
         }
 
         walletManager.save(wallets: wallets)

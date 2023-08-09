@@ -25,14 +25,14 @@ class ChooseWatchViewModel {
 
         viewItems = service.items.map { item in
             switch item {
-            case let .coin(uid, token, coinSettings):
+            case let .coin(token):
                 return CoinToggleViewModel.ViewItem(
-                    uid: uid,
+                    uid: token.type.id,
                     imageUrl: token.coin.imageUrl,
                     placeholderImageName: "placeholder_circle_32",
                     title: token.coin.code,
                     subtitle: token.coin.name,
-                    badge: token.blockchain.type.badge(coinSettings: coinSettings),
+                    badge: token.badge,
                     state: .toggleVisible(enabled: false, hasSettings: false, hasInfo: false)
                 )
 

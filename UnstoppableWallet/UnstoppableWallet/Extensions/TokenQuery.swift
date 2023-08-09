@@ -9,10 +9,10 @@ extension TokenQuery {
     // todo: remove this method
     var isSupported: Bool {
         switch (blockchainType, tokenType) {
-        case (.bitcoin, .native): return true
-        case (.bitcoinCash, .native): return true
+        case (.bitcoin, .derived): return true
+        case (.bitcoinCash, .addressType): return true
         case (.ecash, .native): return true
-        case (.litecoin, .native): return true
+        case (.litecoin, .derived): return true
         case (.dash, .native): return true
         case (.zcash, .native): return true
         case (.ethereum, .native), (.ethereum, .eip20): return true

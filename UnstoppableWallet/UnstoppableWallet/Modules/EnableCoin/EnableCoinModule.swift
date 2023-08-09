@@ -9,20 +9,14 @@ struct EnableCoinModule {
         let restoreSettingsViewModel = RestoreSettingsViewModel(service: restoreSettingsService)
         let restoreSettingsView = RestoreSettingsView(viewModel: restoreSettingsViewModel)
 
-        let coinSettingsService = CoinSettingsService()
-        let coinSettingsViewModel = CoinSettingsViewModel(service: coinSettingsService)
-        let coinSettingsView = CoinSettingsView(viewModel: coinSettingsViewModel)
-
         let service = EnableCoinService(
                 coinTokensService: coinTokensService,
-                restoreSettingsService: restoreSettingsService,
-                coinSettingsService: coinSettingsService
+                restoreSettingsService: restoreSettingsService
         )
 
         let view = EnableCoinView(
                 coinTokensView: coinTokensView,
-                restoreSettingsView: restoreSettingsView,
-                coinSettingsView: coinSettingsView
+                restoreSettingsView: restoreSettingsView
         )
 
         return (service, view)

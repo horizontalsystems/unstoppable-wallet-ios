@@ -4,6 +4,7 @@ import RxSwift
 import UIExtensions
 import ThemeKit
 import ComponentKit
+import MarketKit
 
 class TransactionsHeaderView: UIView {
     static let height: CGFloat = .heightSingleLineCell
@@ -78,7 +79,7 @@ class TransactionsHeaderView: UIView {
     }
 
     @objc private func onTapTokenButton() {
-        let module = TransactionsCoinSelectModule.viewController(configuredToken: viewModel.configuredToken, delegate: self)
+        let module = TransactionsCoinSelectModule.viewController(token: viewModel.token, delegate: self)
         viewController?.present(module, animated: true)
     }
 
@@ -86,8 +87,8 @@ class TransactionsHeaderView: UIView {
 
 extension TransactionsHeaderView: ITransactionsCoinSelectDelegate {
 
-    func didSelect(configuredToken: ConfiguredToken?) {
-        viewModel.onSelect(configuredToken: configuredToken)
+    func didSelect(token: Token?) {
+        viewModel.onSelect(token: token)
     }
 
 }

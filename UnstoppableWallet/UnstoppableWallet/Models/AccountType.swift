@@ -69,14 +69,14 @@ enum AccountType {
         }
     }
 
-    func supports(configuredToken: ConfiguredToken) -> Bool {
+    func supports(token: Token) -> Bool {
         switch self {
         case .mnemonic:
-            switch (configuredToken.blockchainType, configuredToken.token.type) {
-            case (.bitcoin, .native): return true
-            case (.bitcoinCash, .native): return true
+            switch (token.blockchainType, token.type) {
+            case (.bitcoin, .derived): return true
+            case (.bitcoinCash, .addressType): return true
             case (.ecash, .native): return true
-            case (.litecoin, .native): return true
+            case (.litecoin, .derived): return true
             case (.dash, .native): return true
             case (.zcash, .native): return true
             case (.binanceChain, .native), (.binanceChain, .bep2): return true
@@ -92,13 +92,13 @@ enum AccountType {
             default: return false
             }
         case .hdExtendedKey(let key):
-            switch configuredToken.blockchainType {
+            switch token.blockchainType {
             case .bitcoin, .litecoin:
-                guard let derivation = configuredToken.coinSettings.derivation, key.purposes.contains(where: { $0.mnemonicDerivation == derivation }) else {
+                guard let derivation = token.type.derivation, key.purposes.contains(where: { $0.mnemonicDerivation == derivation }) else {
                     return false
                 }
 
-                if configuredToken.blockchainType == .bitcoin {
+                if token.blockchainType == .bitcoin {
                     return key.coinTypes.contains(where: { $0 == .bitcoin })
                 }
 
@@ -109,7 +109,7 @@ enum AccountType {
                 return false
             }
         case .evmPrivateKey, .evmAddress:
-            switch (configuredToken.blockchainType, configuredToken.token.type) {
+            switch (token.blockchainType, token.type) {
             case (.ethereum, .native), (.ethereum, .eip20): return true
             case (.binanceSmartChain, .native), (.binanceSmartChain, .eip20): return true
             case (.polygon, .native), (.polygon, .eip20): return true
@@ -121,7 +121,7 @@ enum AccountType {
             default: return false
             }
         case .tronAddress:
-            switch (configuredToken.blockchainType, configuredToken.token.type) {
+            switch (token.blockchainType, token.type) {
             case (.tron, .native), (.tron, .eip20): return true
             default: return false
             }

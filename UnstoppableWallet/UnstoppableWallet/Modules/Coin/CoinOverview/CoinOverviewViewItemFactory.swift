@@ -72,7 +72,7 @@ class CoinOverviewViewItemFactory {
 
     private func typeViewItems(tokenItems: [CoinOverviewService.TokenItem]) -> [CoinOverviewViewModel.TypeViewItem] {
         tokenItems.map { item in
-            let blockchain = item.configuredToken.blockchain
+            let blockchain = item.token.blockchain
 
             let title: String?
             let subtitle: String?
@@ -81,19 +81,16 @@ class CoinOverviewViewItemFactory {
             var showAdd = false
             var showAdded = false
 
-            switch item.configuredToken.token.type {
+            switch item.token.type {
             case .native:
-                switch blockchain.type {
-                case .bitcoin, .litecoin:
-                    title = item.configuredToken.coinSettings.derivation?.title
-                    subtitle = item.configuredToken.coinSettings.derivation?.addressType
-                case .bitcoinCash:
-                    title = item.configuredToken.coinSettings.bitcoinCashCoinType?.title
-                    subtitle = item.configuredToken.coinSettings.bitcoinCashCoinType?.description
-                default:
-                    title = blockchain.name
-                    subtitle = "coin_platforms.native".localized
-                }
+                title = blockchain.name
+                subtitle = "coin_platforms.native".localized
+            case .derived(let derivation):
+                title = derivation.mnemonicDerivation.title
+                subtitle = derivation.mnemonicDerivation.addressType
+            case .addressType(let type):
+                title = type.bitcoinCashCoinType.title
+                subtitle = type.bitcoinCashCoinType.description
             case .eip20(let address):
                 title = blockchain.name
                 subtitle = address.shortened

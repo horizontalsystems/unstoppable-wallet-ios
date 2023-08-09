@@ -29,7 +29,7 @@ class TransactionsViewModel {
 
         subscribe(disposeBag, service.typeFilterObservable) { [weak self] in self?.sync(typeFilter: $0) }
         subscribe(disposeBag, service.blockchainObservable) { [weak self] in self?.syncBlockchainTitle(blockchain: $0) }
-        subscribe(disposeBag, service.configuredTokenObservable) { [weak self] in self?.syncTokenTitle(configuredToken: $0) }
+        subscribe(disposeBag, service.tokenObservable) { [weak self] in self?.syncTokenTitle(token: $0) }
         subscribe(disposeBag, service.itemDataObservable) { [weak self] in self?.sync(itemData: $0) }
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
         subscribe(disposeBag, service.syncingObservable) { [weak self] in self?.syncViewStatus(syncing: $0) }
@@ -37,7 +37,7 @@ class TransactionsViewModel {
         subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in self?.reSyncViewItems() }
 
         syncBlockchainTitle(blockchain: service.blockchain)
-        syncTokenTitle(configuredToken: service.configuredToken)
+        syncTokenTitle(token: service.token)
         _sync(itemData: service.itemData)
         _syncViewStatus(syncing: service.syncing)
         sync(canReset: service.canReset)
@@ -71,13 +71,13 @@ class TransactionsViewModel {
         blockchainTitleRelay.accept(title)
     }
 
-    private func syncTokenTitle(configuredToken: ConfiguredToken?) {
+    private func syncTokenTitle(token: Token?) {
         var title: String
 
-        if let configuredToken = configuredToken {
-            title = configuredToken.token.coin.code
+        if let token {
+            title = token.coin.code
 
-            if let badge = configuredToken.badge {
+            if let badge = token.badge {
                 title += " (\(badge))"
             }
         } else {
@@ -215,8 +215,8 @@ extension TransactionsViewModel {
                 }
     }
 
-    var configuredToken: ConfiguredToken? {
-        service.configuredToken
+    var token: Token? {
+        service.token
     }
 
     func onSelectTypeFilter(index: Int) {
@@ -233,8 +233,8 @@ extension TransactionsViewModel {
         service.set(blockchain: service.allBlockchains.first(where: { $0.uid == uid }))
     }
 
-    func onSelect(configuredToken: ConfiguredToken?) {
-        service.set(configuredToken: configuredToken)
+    func onSelect(token: Token?) {
+        service.set(token: token)
     }
 
     func record(uid: String) -> TransactionRecord? {

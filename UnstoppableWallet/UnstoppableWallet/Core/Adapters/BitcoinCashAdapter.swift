@@ -8,7 +8,7 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
     private let bitcoinCashKit: BitcoinCashKit.Kit
 
     init(wallet: Wallet, syncMode: BitcoinCore.SyncMode) throws {
-        guard let bitcoinCashCoinType = wallet.coinSettings.bitcoinCashCoinType else {
+        guard let bitcoinCashCoinType = wallet.token.type.bitcoinCashCoinType else {
             throw AdapterError.wrongParameters
         }
 

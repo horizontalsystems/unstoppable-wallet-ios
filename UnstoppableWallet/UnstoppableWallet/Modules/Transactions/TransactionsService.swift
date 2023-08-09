@@ -44,10 +44,10 @@ class TransactionsService {
         }
     }
 
-    private let configuredTokenRelay = PublishRelay<ConfiguredToken?>()
-    private(set) var configuredToken: ConfiguredToken? {
+    private let tokenRelay = PublishRelay<Token?>()
+    private(set) var token: Token? {
         didSet {
-            configuredTokenRelay.accept(configuredToken)
+            tokenRelay.accept(token)
         }
     }
 
@@ -85,7 +85,7 @@ class TransactionsService {
     }
 
     private var _canReset: Bool {
-        typeFilter != .all || blockchain != nil || configuredToken != nil
+        typeFilter != .all || blockchain != nil || token != nil
     }
 
     private func syncWallets() {
@@ -101,8 +101,8 @@ class TransactionsService {
             self.blockchain = nil
         }
 
-        if let configuredToken = configuredToken, !walletManager.activeWallets.contains(where: { $0.configuredToken == configuredToken }) {
-            self.configuredToken = nil
+        if let token, !walletManager.activeWallets.contains(where: { $0.token == token }) {
+            self.token = nil
             blockchain = nil
         }
 
@@ -123,7 +123,7 @@ class TransactionsService {
                 wallets: walletManager.activeWallets,
                 blockchainType: blockchain?.type,
                 filter: typeFilter,
-                configuredToken: configuredToken
+                token: token
         )
 
         _initPoolGroup()
@@ -350,8 +350,8 @@ extension TransactionsService {
         blockchainRelay.asObservable()
     }
 
-    var configuredTokenObservable: Observable<ConfiguredToken?> {
-        configuredTokenRelay.asObservable()
+    var tokenObservable: Observable<Token?> {
+        tokenRelay.asObservable()
     }
 
     var itemDataObservable: Observable<ItemData> {
@@ -402,7 +402,7 @@ extension TransactionsService {
             }
 
             self.blockchain = blockchain
-            self.configuredToken = nil
+            self.token = nil
 
             self._syncCanReset()
 
@@ -411,14 +411,14 @@ extension TransactionsService {
         }
     }
 
-    func set(configuredToken: ConfiguredToken?) {
+    func set(token: Token?) {
         queue.async {
-            guard self.configuredToken != configuredToken else {
+            guard self.token != token else {
                 return
             }
 
-            self.configuredToken = configuredToken
-            self.blockchain = configuredToken?.token.blockchain
+            self.token = token
+            self.blockchain = token?.blockchain
 
             self._syncCanReset()
 
@@ -435,7 +435,7 @@ extension TransactionsService {
 
             self.typeFilter = .all
             self.blockchain = nil
-            self.configuredToken = nil
+            self.token = nil
 
             self._syncCanReset()
 

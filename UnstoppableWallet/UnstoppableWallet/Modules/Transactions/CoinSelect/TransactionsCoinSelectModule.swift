@@ -3,14 +3,14 @@ import ThemeKit
 import MarketKit
 
 protocol ITransactionsCoinSelectDelegate: AnyObject {
-    func didSelect(configuredToken: ConfiguredToken?)
+    func didSelect(token: Token?)
 }
 
 struct TransactionsCoinSelectModule {
 
-    static func viewController(configuredToken: ConfiguredToken?, delegate: ITransactionsCoinSelectDelegate) -> UIViewController {
+    static func viewController(token: Token?, delegate: ITransactionsCoinSelectDelegate) -> UIViewController {
         let service = TransactionsCoinSelectService(
-                configuredToken: configuredToken,
+                token: token,
                 walletManager: App.shared.walletManager,
                 delegate: delegate
         )
