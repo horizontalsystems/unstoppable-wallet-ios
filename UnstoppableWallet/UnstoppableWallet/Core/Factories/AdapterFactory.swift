@@ -96,11 +96,11 @@ extension AdapterFactory {
     func adapter(wallet: Wallet) -> IAdapter? {
         switch (wallet.token.type, wallet.token.blockchain.type) {
 
-        case (.native, .bitcoin):
+        case (.derived, .bitcoin):
             let syncMode = btcBlockchainManager.syncMode(blockchainType: .bitcoin, accountOrigin: wallet.account.origin)
             return try? BitcoinAdapter(wallet: wallet, syncMode: syncMode)
 
-        case (.native, .bitcoinCash):
+        case (.addressType, .bitcoinCash):
             let syncMode = btcBlockchainManager.syncMode(blockchainType: .bitcoinCash, accountOrigin: wallet.account.origin)
             return try? BitcoinCashAdapter(wallet: wallet, syncMode: syncMode)
 
@@ -108,7 +108,7 @@ extension AdapterFactory {
             let syncMode = btcBlockchainManager.syncMode(blockchainType: .ecash, accountOrigin: wallet.account.origin)
             return try? ECashAdapter(wallet: wallet, syncMode: syncMode)
 
-        case (.native, .litecoin):
+        case (.derived, .litecoin):
             let syncMode = btcBlockchainManager.syncMode(blockchainType: .litecoin, accountOrigin: wallet.account.origin)
             return try? LitecoinAdapter(wallet: wallet, syncMode: syncMode)
 

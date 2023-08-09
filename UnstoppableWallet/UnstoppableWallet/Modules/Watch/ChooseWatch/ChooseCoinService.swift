@@ -27,49 +27,37 @@ class ChooseCoinService {
         }
 
         let blockchainTypes: [BlockchainType] = [.bitcoin, .bitcoinCash, .ecash, .litecoin, .dash]
-        let tokenQueries = blockchainTypes.map { TokenQuery(blockchainType: $0, tokenType: .native)}
+        let tokenQueries = blockchainTypes.map { $0.nativeTokenQueries }.flatMap { $0 }
+
         guard let tokens = try? marketKit.tokens(queries: tokenQueries) else {
             return []
         }
 
-        var items = [WatchModule.Item]()
-
-        for (index, token) in tokens.sorted(by: { $0.blockchainType.order < $1.blockchainType.order }).enumerated() {
-            guard token.blockchainType.supports(accountType: accountType) else {
-                continue
-            }
-
-            switch token.blockchainType.coinSettingType {
-                case .derivation:
-                    for purpose in key.purposes {
-                        let coinSettings: CoinSettings = [.derivation: purpose.mnemonicDerivation.rawValue]
-                        items.append(.coin(uid: "\(index)_\(purpose.mnemonicDerivation.rawValue)", token: token, coinSettings: coinSettings))
+        return tokens
+                .filter { token in
+                    guard token.blockchainType.supports(accountType: accountType) else {
+                        return false
                     }
 
-                case .bitcoinCashCoinType:
-                    BitcoinCashCoinType.allCases.forEach { coinType in
-                        let coinSettings: CoinSettings = [.bitcoinCashCoinType: coinType.rawValue]
-                        items.append(.coin(uid: "\(index)_\(coinType.rawValue)", token: token, coinSettings: coinSettings))
+                    switch token.type {
+                    case .derived(let derivation): return key.purposes.map { $0.mnemonicDerivation }.contains(derivation.mnemonicDerivation)
+                    default: return true
                     }
-
-                default:
-                    items.append(.coin(uid: "\(index)", token: token, coinSettings: [:]))
-            }
-        }
-
-        return items
+                }
+                .map { token in
+                    .coin(token: token)
+                }
     }
 
     private func enableWallets(account: Account, enabledTokensUids: [String]) {
         var wallets = [Wallet]()
 
         for item in items {
-            guard case let .coin(uid, token, coinSettings) = item, enabledTokensUids.contains(uid) else {
+            guard case let .coin(token) = item, enabledTokensUids.contains(token.type.id) else {
                 continue
             }
 
-            let configuredToken = ConfiguredToken(token: token, coinSettings: coinSettings)
-            wallets.append(Wallet(configuredToken: configuredToken, account: account))
+            wallets.append(Wallet(token: token, account: account))
         }
 
         walletManager.save(wallets: wallets)

@@ -17,7 +17,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
                 throw AdapterError.unsupportedAccount
             }
 
-            guard let derivation = wallet.coinSettings.derivation else {
+            guard let derivation = wallet.token.type.derivation else {
                 throw AdapterError.wrongParameters
             }
 
@@ -31,7 +31,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
                     logger: logger
             )
         case let .hdExtendedKey(key):
-            guard let derivation = wallet.coinSettings.derivation else {
+            guard let derivation = wallet.token.type.derivation else {
                 throw AdapterError.wrongParameters
             }
 

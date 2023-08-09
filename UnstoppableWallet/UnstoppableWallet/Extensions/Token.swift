@@ -75,6 +75,8 @@ extension Token {
     var typeInfo: String {
         switch type {
         case .native: return "coin_platforms.native".localized
+        case .derived(let derivation): return derivation.mnemonicDerivation.title
+        case .addressType(let type): return type.bitcoinCashCoinType.title
         case .eip20(let address): return address.shortened
         case .bep2(let symbol): return symbol
         default: return ""
@@ -89,18 +91,11 @@ extension Token {
         }
     }
 
-    var configuredTokens: [ConfiguredToken] {
-        switch blockchainType {
-        case .bitcoin, .litecoin:
-            return MnemonicDerivation.allCases.map {
-                ConfiguredToken(token: self, coinSettings: [.derivation: $0.rawValue])
-            }
-        case .bitcoinCash:
-            return BitcoinCashCoinType.allCases.map {
-                ConfiguredToken(token: self, coinSettings: [.bitcoinCashCoinType: $0.rawValue])
-            }
-        default:
-            return [ConfiguredToken(token: self)]
+    var badge: String? {
+        switch type {
+        case .derived(let derivation): return derivation.mnemonicDerivation.rawValue.uppercased()
+        case .addressType(let type): return type.bitcoinCashCoinType.title.uppercased()
+        default: return protocolName?.uppercased()
         }
     }
 
