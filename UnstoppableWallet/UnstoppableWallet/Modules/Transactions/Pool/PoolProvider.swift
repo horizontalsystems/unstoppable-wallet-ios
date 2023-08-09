@@ -44,11 +44,11 @@ extension PoolProvider {
     }
 
     func recordsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
-        adapter.transactionsSingle(from: from, token: source.configuredToken?.token, filter: source.filter, limit: limit)
+        adapter.transactionsSingle(from: from, token: source.token, filter: source.filter, limit: limit)
     }
 
     func recordsObservable() -> Observable<[TransactionRecord]> {
-        adapter.transactionsObservable(token: source.configuredToken?.token, filter: source.filter)
+        adapter.transactionsObservable(token: source.token, filter: source.filter)
     }
 
     func lastBlockUpdatedObservable() -> Observable<Void> {

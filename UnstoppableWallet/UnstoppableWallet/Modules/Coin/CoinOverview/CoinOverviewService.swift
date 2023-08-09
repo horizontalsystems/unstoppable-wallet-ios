@@ -35,41 +35,32 @@ class CoinOverviewService {
     private func sync(info: MarketInfoOverview) {
         let account = accountManager.activeAccount
 
-        let configuredTokens = info.fullCoin.tokens
-                .map { $0.configuredTokens }
-                .flatMap { $0 }
+        let tokens = info.fullCoin.tokens
                 .filter {
-                    switch $0.token.type {
+                    switch $0.type {
                     case .unsupported(_, let reference): return reference != nil
                     default: return true
                     }
                 }
 
-        let walletConfiguredTokens = walletManager.activeWallets.map { $0.configuredToken }
+        let walletTokens = walletManager.activeWallets.map { $0.token }
 
-        let tokenItems = configuredTokens
-                .sorted { lhsConfiguredToken, rhsConfiguredToken in
-                    let lhsTypeOrder = lhsConfiguredToken.token.type.order
-                    let rhsTypeOrder = rhsConfiguredToken.token.type.order
+        let tokenItems = tokens
+                .sorted { lhsToken, rhsToken in
+                    let lhsTypeOrder = lhsToken.type.order
+                    let rhsTypeOrder = rhsToken.type.order
 
                     guard lhsTypeOrder == rhsTypeOrder else {
                         return lhsTypeOrder < rhsTypeOrder
                     }
 
-                    let lhsOrder = lhsConfiguredToken.blockchainType.order
-                    let rhsOrder = rhsConfiguredToken.blockchainType.order
-
-                    if lhsOrder != rhsOrder {
-                        return lhsOrder < rhsOrder
-                    }
-
-                    return lhsConfiguredToken.coinSettings.order < rhsConfiguredToken.coinSettings.order
+                    return lhsToken.blockchainType.order < rhsToken.blockchainType.order
                 }
-                .map { configuredToken in
+                .map { token in
                     let state: TokenItemState
 
-                    if let account = account, !account.watchAccount, account.type.supports(configuredToken: configuredToken) {
-                        if walletConfiguredTokens.contains(configuredToken) {
+                    if let account = account, !account.watchAccount, account.type.supports(token: token) {
+                        if walletTokens.contains(token) {
                             state = .alreadyAdded
                         } else {
                             state = .canBeAdded
@@ -79,7 +70,7 @@ class CoinOverviewService {
                     }
 
                     return TokenItem(
-                            configuredToken: configuredToken,
+                            token: token,
                             state: state
                     )
                 }
@@ -150,9 +141,9 @@ extension CoinOverviewService {
             throw EditWalletError.noActiveAccount
         }
 
-        let configuredToken = item.tokens[index].configuredToken
+        let token = item.tokens[index].token
 
-        let wallet = Wallet(configuredToken: configuredToken, account: account)
+        let wallet = Wallet(token: token, account: account)
 
         if add {
             walletManager.save(wallets: [wallet])
@@ -174,7 +165,7 @@ extension CoinOverviewService {
     }
 
     struct TokenItem {
-        let configuredToken: ConfiguredToken
+        let token: Token
         let state: TokenItemState
     }
 

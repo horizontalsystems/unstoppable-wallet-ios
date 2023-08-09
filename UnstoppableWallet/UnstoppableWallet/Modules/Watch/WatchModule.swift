@@ -113,7 +113,7 @@ extension WatchModule {
     }
 
     enum Item {
-        case coin(uid: String, token: Token, coinSettings: CoinSettings)
+        case coin(token: Token)
         case blockchain(blockchain: Blockchain)
     }
 

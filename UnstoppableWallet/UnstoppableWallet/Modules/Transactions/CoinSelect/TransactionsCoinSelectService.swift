@@ -3,7 +3,7 @@ import RxRelay
 import MarketKit
 
 class TransactionsCoinSelectService {
-    private let configuredToken: ConfiguredToken?
+    private let token: Token?
     private let walletManager: WalletManager
     private weak var delegate: ITransactionsCoinSelectDelegate?
     private let disposeBag = DisposeBag()
@@ -17,8 +17,8 @@ class TransactionsCoinSelectService {
 
     private var filter: String = ""
 
-    init(configuredToken: ConfiguredToken?, walletManager: WalletManager, delegate: ITransactionsCoinSelectDelegate?) {
-        self.configuredToken = configuredToken
+    init(token: Token?, walletManager: WalletManager, delegate: ITransactionsCoinSelectDelegate?) {
+        self.token = token
         self.walletManager = walletManager
         self.delegate = delegate
 
@@ -42,17 +42,17 @@ class TransactionsCoinSelectService {
                         return lhsName < rhsName
                     }
 
-                    return lhsWallet.configuredToken.badge ?? "" < rhsWallet.configuredToken.badge ?? ""
+                    return lhsWallet.token.badge ?? "" < rhsWallet.token.badge ?? ""
                 }
                 .map { wallet in
                     Item(
-                            type: .token(configuredToken: wallet.configuredToken),
-                            selected: wallet.configuredToken == configuredToken
+                            type: .token(token: wallet.token),
+                            selected: wallet.token == token
                     )
                 }
 
         if filter.isEmpty {
-            items.insert(Item(type: .all, selected: configuredToken == nil), at: 0)
+            items.insert(Item(type: .all, selected: token == nil), at: 0)
         }
 
         self.items = items
@@ -79,9 +79,9 @@ extension TransactionsCoinSelectService {
 
         switch items[index].type {
         case .all:
-            delegate?.didSelect(configuredToken: nil)
+            delegate?.didSelect(token: nil)
         case .token(let configuredToken):
-            delegate?.didSelect(configuredToken: configuredToken)
+            delegate?.didSelect(token: configuredToken)
         }
     }
 
@@ -96,7 +96,7 @@ extension TransactionsCoinSelectService {
 
     enum ItemType {
         case all
-        case token(configuredToken: ConfiguredToken)
+        case token(token: Token)
     }
 
 }

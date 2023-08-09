@@ -35,7 +35,7 @@ extension EnabledWalletStorage {
                 try enabledWallet.insert(db)
             }
             for enabledWallet in deletedEnabledWallets {
-                try EnabledWallet.filter(EnabledWallet.Columns.tokenQueryId == enabledWallet.tokenQueryId && EnabledWallet.Columns.coinSettingsId == enabledWallet.coinSettingsId && EnabledWallet.Columns.accountId == enabledWallet.accountId).deleteAll(db)
+                try EnabledWallet.filter(EnabledWallet.Columns.tokenQueryId == enabledWallet.tokenQueryId && EnabledWallet.Columns.accountId == enabledWallet.accountId).deleteAll(db)
             }
         }
 

@@ -4,13 +4,13 @@ import MarketKit
 
 class PoolGroupFactory {
 
-    private func providers(wallets: [Wallet], blockchainType: BlockchainType?, filter: TransactionTypeFilter, configuredToken: ConfiguredToken?) -> [PoolProvider] {
-        if let configuredToken = configuredToken {
+    private func providers(wallets: [Wallet], blockchainType: BlockchainType?, filter: TransactionTypeFilter, token: Token?) -> [PoolProvider] {
+        if let token = token {
             let poolSource = PoolSource(
-                    blockchainType: configuredToken.token.blockchainType,
+                    token: token,
+                    blockchainType: token.blockchainType,
                     filter: filter,
-                    configuredToken: configuredToken,
-                    bep2Symbol: configuredToken.token.type.bep2Symbol
+                    bep2Symbol: token.type.bep2Symbol
             )
 
             if let adapter = App.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
@@ -20,9 +20,9 @@ class PoolGroupFactory {
         } else if let blockchainType = blockchainType {
             if App.shared.evmBlockchainManager.allBlockchains.contains(where: { $0.type == blockchainType }) || blockchainType == .tron {
                 let poolSource = PoolSource(
+                        token: nil,
                         blockchainType: blockchainType,
                         filter: filter,
-                        configuredToken: nil,
                         bep2Symbol: nil
                 )
 
@@ -38,9 +38,9 @@ class PoolGroupFactory {
                     }
 
                     let poolSource = PoolSource(
+                            token: wallet.token,
                             blockchainType: blockchainType,
                             filter: filter,
-                            configuredToken: wallet.configuredToken,
                             bep2Symbol: wallet.token.type.bep2Symbol
                     )
 
@@ -59,16 +59,16 @@ class PoolGroupFactory {
 
                 if App.shared.evmBlockchainManager.allBlockchains.contains(where: { $0 == wallet.token.blockchain }) || wallet.token.blockchainType == .tron {
                     poolSource = PoolSource(
+                            token: nil,
                             blockchainType: wallet.token.blockchainType,
                             filter: filter,
-                            configuredToken: nil,
                             bep2Symbol: nil
                     )
                 } else {
                     poolSource = PoolSource(
+                            token: wallet.token,
                             blockchainType: wallet.token.blockchainType,
                             filter: filter,
-                            configuredToken: wallet.configuredToken,
                             bep2Symbol: wallet.token.type.bep2Symbol
                     )
                 }
@@ -92,8 +92,8 @@ class PoolGroupFactory {
 
 extension PoolGroupFactory {
 
-    func poolGroup(wallets: [Wallet], blockchainType: BlockchainType?, filter: TransactionTypeFilter, configuredToken: ConfiguredToken?) -> PoolGroup {
-        let providers = providers(wallets: wallets, blockchainType: blockchainType, filter: filter, configuredToken: configuredToken)
+    func poolGroup(wallets: [Wallet], blockchainType: BlockchainType?, filter: TransactionTypeFilter, token: Token?) -> PoolGroup {
+        let providers = providers(wallets: wallets, blockchainType: blockchainType, filter: filter, token: token)
         return PoolGroup(pools: providers.map { Pool(provider: NonSpamPoolProvider(poolProvider: $0)) })
     }
 
