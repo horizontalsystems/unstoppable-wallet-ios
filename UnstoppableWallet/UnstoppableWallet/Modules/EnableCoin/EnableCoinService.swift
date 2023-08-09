@@ -5,17 +5,15 @@ import MarketKit
 class EnableCoinService {
     private let coinTokensService: CoinTokensService
     private let restoreSettingsService: RestoreSettingsService
-    private let coinSettingsService: CoinSettingsService
     private let disposeBag = DisposeBag()
 
-    private let enableCoinRelay = PublishRelay<([ConfiguredToken], RestoreSettings)>()
+    private let enableCoinRelay = PublishRelay<([Token], RestoreSettings)>()
     private let disableCoinRelay = PublishRelay<Coin>()
     private let cancelEnableCoinRelay = PublishRelay<Coin>()
 
-    init(coinTokensService: CoinTokensService, restoreSettingsService: RestoreSettingsService, coinSettingsService: CoinSettingsService) {
+    init(coinTokensService: CoinTokensService, restoreSettingsService: RestoreSettingsService) {
         self.coinTokensService = coinTokensService
         self.restoreSettingsService = restoreSettingsService
-        self.coinSettingsService = coinSettingsService
 
         subscribe(disposeBag, coinTokensService.approveTokensObservable) { [weak self] coinWithTokens in
             self?.handleApproveCoinTokens(coin: coinWithTokens.coin, tokens: coinWithTokens.tokens)
@@ -29,32 +27,13 @@ class EnableCoinService {
         subscribe(disposeBag, restoreSettingsService.rejectApproveSettingsObservable) { [weak self] token in
             self?.handleRejectApproveRestoreSettings(token: token)
         }
-        subscribe(disposeBag, coinSettingsService.approveSettingsObservable) { [weak self] tokenWithSettings in
-            self?.handleApproveCoinSettings(token: tokenWithSettings.token, settingsArray: tokenWithSettings.settingsArray)
-        }
-        subscribe(disposeBag, coinSettingsService.rejectApproveSettingsObservable) { [weak self] token in
-            self?.handleRejectApproveCoinSettings(token: token)
-        }
     }
 
     private func handleApproveRestoreSettings(token: Token, settings: RestoreSettings = [:]) {
-        enableCoinRelay.accept(([ConfiguredToken(token: token)], settings))
+        enableCoinRelay.accept(([token], settings))
     }
 
     private func handleRejectApproveRestoreSettings(token: Token) {
-        cancelEnableCoinRelay.accept(token.coin)
-    }
-
-    private func handleApproveCoinSettings(token: Token, settingsArray: [CoinSettings] = []) {
-        if settingsArray.isEmpty {
-            disableCoinRelay.accept(token.coin)
-        } else {
-            let configuredTokens = settingsArray.map { ConfiguredToken(token: token, coinSettings: $0) }
-            enableCoinRelay.accept((configuredTokens, [:]))
-        }
-    }
-
-    private func handleRejectApproveCoinSettings(token: Token) {
         cancelEnableCoinRelay.accept(token.coin)
     }
 
@@ -62,8 +41,7 @@ class EnableCoinService {
         if tokens.isEmpty {
             disableCoinRelay.accept(coin)
         } else {
-            let configuredTokens = tokens.map { ConfiguredToken(token: $0) }
-            enableCoinRelay.accept((configuredTokens, [:]))
+            enableCoinRelay.accept((tokens, [:]))
         }
     }
 
@@ -75,7 +53,7 @@ class EnableCoinService {
 
 extension EnableCoinService {
 
-    var enableCoinObservable: Observable<([ConfiguredToken], RestoreSettings)> {
+    var enableCoinObservable: Observable<([Token], RestoreSettings)> {
         enableCoinRelay.asObservable()
     }
 
@@ -95,33 +73,19 @@ extension EnableCoinService {
 
             if !token.blockchainType.restoreSettingTypes.isEmpty {
                 restoreSettingsService.approveSettings(token: token, account: account)
-            } else if token.blockchainType.coinSettingType != nil {
-                coinSettingsService.approveSettings(token: token, accountType: accountType, settingsArray: token.blockchainType.defaultSettingsArray(accountType: accountType))
             } else if token.type != .native {
                 coinTokensService.approveTokens(coin: fullCoin.coin, eligibleTokens: eligibleTokens, currentTokens: eligibleTokens)
             } else {
-                enableCoinRelay.accept(([ConfiguredToken(token: token)], [:]))
+                enableCoinRelay.accept(([token], [:]))
             }
         } else {
             coinTokensService.approveTokens(coin: fullCoin.coin, eligibleTokens: eligibleTokens, currentTokens: eligibleTokens.isEmpty ? [] : [eligibleTokens.sorted()[0]])
         }
     }
 
-    func configure(fullCoin: FullCoin, accountType: AccountType, configuredTokens: [ConfiguredToken]) {
+    func configure(fullCoin: FullCoin, accountType: AccountType, tokens: [Token]) {
         let eligibleTokens = fullCoin.eligibleTokens(accountType: accountType)
-
-        if eligibleTokens.count == 1 {
-            let token = eligibleTokens[0]
-
-            if token.blockchainType.coinSettingType != nil {
-                let settingsArray = configuredTokens.map { $0.coinSettings }
-                coinSettingsService.approveSettings(token: token, accountType: accountType, settingsArray: settingsArray, allowEmpty: true)
-                return
-            }
-        }
-
-        let currentTokens = configuredTokens.map { $0.token }
-        coinTokensService.approveTokens(coin: fullCoin.coin, eligibleTokens: eligibleTokens, currentTokens: currentTokens, allowEmpty: true)
+        coinTokensService.approveTokens(coin: fullCoin.coin, eligibleTokens: eligibleTokens, currentTokens: tokens, allowEmpty: true)
     }
 
     func save(restoreSettings: RestoreSettings, account: Account, blockchainType: BlockchainType) {

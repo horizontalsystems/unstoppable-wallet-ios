@@ -13,7 +13,6 @@ class WalletStorage {
     private func enabledWallet(wallet: Wallet) -> EnabledWallet {
         EnabledWallet(
                 tokenQueryId: wallet.token.tokenQuery.id,
-                coinSettingsId: wallet.coinSettings.id,
                 accountId: wallet.account.id,
                 coinName: wallet.coin.name,
                 coinCode: wallet.coin.code,
@@ -40,14 +39,11 @@ extension WalletStorage {
             }
 
             if let token = tokens.first(where: { $0.tokenQuery == tokenQuery }) {
-                let coinSettings = CoinSettings(id: enabledWallet.coinSettingsId)
-                let configuredToken = ConfiguredToken(token: token, coinSettings: coinSettings)
-                return Wallet(configuredToken: configuredToken, account: account)
+                return Wallet(token: token, account: account)
             }
 
             if let coinName = enabledWallet.coinName, let coinCode = enabledWallet.coinCode, let tokenDecimals = enabledWallet.tokenDecimals,
                let blockchain = blockchains.first(where: { $0.uid == tokenQuery.blockchainType.uid }) {
-                let coinSettings = CoinSettings(id: enabledWallet.coinSettingsId)
                 let coinUid = tokenQuery.customCoinUid
 
                 let token = Token(
@@ -57,8 +53,7 @@ extension WalletStorage {
                         decimals: tokenDecimals
                 )
 
-                let configuredToken = ConfiguredToken(token: token, coinSettings: coinSettings)
-                return Wallet(configuredToken: configuredToken, account: account)
+                return Wallet(token: token, account: account)
             }
 
             return nil

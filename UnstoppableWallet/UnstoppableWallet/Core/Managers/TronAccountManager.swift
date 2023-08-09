@@ -174,7 +174,6 @@ class TronAccountManager {
         let enabledWallets = infos.map { info in
             EnabledWallet(
                 tokenQueryId: TokenQuery(blockchainType: blockchainType, tokenType: info.type).id,
-                coinSettingsId: "",
                 accountId: account.id,
                 coinName: info.coinName,
                 coinCode: info.coinCode,

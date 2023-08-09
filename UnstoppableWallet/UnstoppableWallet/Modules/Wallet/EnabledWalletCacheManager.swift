@@ -46,7 +46,7 @@ extension EnabledWalletCacheManager {
         }
 
         func balanceData(wallet: Wallet) -> BalanceData? {
-            caches.first { $0.tokenQueryId == wallet.token.tokenQuery.id && $0.coinSettingsId == wallet.coinSettings.id }?.balanceData
+            caches.first { $0.tokenQueryId == wallet.token.tokenQuery.id }?.balanceData
         }
     }
 

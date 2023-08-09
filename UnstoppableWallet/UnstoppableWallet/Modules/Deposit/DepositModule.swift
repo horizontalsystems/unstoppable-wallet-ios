@@ -9,7 +9,7 @@ struct DepositModule {
         }
 
         let depositViewItemHelper: DepositAddressViewHelper
-        if let derivation = wallet.coinSettings.derivation {                                            // has mnemonic typed wallet
+        if let derivation = wallet.token.type.derivation {                                            // has mnemonic typed wallet
             depositViewItemHelper = DepositAddressViewHelper.Derivation(
                     testNet: !depositAdapter.isMainNet,
                     mnemonicDerivation: derivation)

@@ -51,7 +51,7 @@ class WalletService {
                 let hideZeroBalances = activeAccount?.type.hideZeroBalances ?? false
 
                 if hideZeroBalances {
-                    state = .loaded(items: items.filter { $0.balanceData.balanceTotal != 0 || $0.element.wallet?.token.type == .native })
+                    state = .loaded(items: items.filter { $0.balanceData.balanceTotal != 0 || ($0.element.wallet?.token.type.isNative ?? false) })
                 } else {
                     state = .loaded(items: items)
                 }

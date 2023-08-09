@@ -36,36 +36,6 @@ extension BlockchainType {
         return "https://cdn.blocksdecoded.com/blockchain-icons/32px/\(uid)@\(scale)x.png"
     }
 
-    var coinSettingType: CoinSettingType? {
-        switch self {
-        case .bitcoin, .litecoin: return .derivation
-        case .bitcoinCash: return .bitcoinCashCoinType
-        default: return nil
-        }
-    }
-
-    func defaultSettingsArray(accountType: AccountType) -> [CoinSettings] {
-        switch self {
-        case .bitcoin, .litecoin:
-            switch accountType {
-            case .mnemonic:
-                return [[.derivation: MnemonicDerivation.bip84.rawValue]]
-            case .hdExtendedKey(let key):
-                if let purpose = key.purposes.first {
-                    return [[.derivation: purpose.mnemonicDerivation.rawValue]]
-                } else {
-                    return []
-                }
-            default:
-                return []
-            }
-        case .bitcoinCash:
-            return [[.bitcoinCashCoinType: BitcoinCashCoinType.type145.rawValue]]
-        default:
-            return []
-        }
-    }
-
     var restoreSettingTypes: [RestoreSettingType] {
         switch self {
         case .zcash: return [.birthdayHeight]
@@ -154,17 +124,6 @@ extension BlockchainType {
         return false
     }
 
-    func badge(coinSettings: CoinSettings) -> String? {
-        switch self {
-        case .bitcoin, .litecoin:
-            return coinSettings.derivation?.rawValue.uppercased()
-        case .bitcoinCash:
-            return coinSettings.bitcoinCashCoinType?.title.uppercased()
-        default:
-            return nil
-        }
-    }
-
     var description: String {
         switch self {
         case .bitcoin: return "BTC (BIP44, BIP49, BIP84, BIP86)"
@@ -196,6 +155,23 @@ extension BlockchainType {
         case .optimism: return UIColor(hex: 0xEB3431)
         case .arbitrumOne: return UIColor(hex: 0x96BEDC)
         default: return nil
+        }
+    }
+
+    var nativeTokenQueries: [TokenQuery] {
+        switch self {
+        case .bitcoin, .litecoin:
+            return TokenType.Derivation.allCases.map {
+                TokenQuery(blockchainType: self, tokenType: .derived(derivation: $0))
+            }
+        case .bitcoinCash:
+            return TokenType.AddressType.allCases.map {
+                TokenQuery(blockchainType: self, tokenType: .addressType(type: $0))
+            }
+        default:
+            return [
+                TokenQuery(blockchainType: self, tokenType: .native)
+            ]
         }
     }
 

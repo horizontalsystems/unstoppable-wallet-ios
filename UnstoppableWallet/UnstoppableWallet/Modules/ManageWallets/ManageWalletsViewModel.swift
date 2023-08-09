@@ -25,15 +25,15 @@ class ManageWalletsViewModel {
     }
 
     private func viewItem(item: ManageWalletsService.Item) -> ViewItem {
-        let token = item.configuredToken.token
+        let token = item.token
 
         return ViewItem(
-                uid: String(item.configuredToken.hashValue),
+                uid: String(item.token.hashValue),
                 imageUrl: token.coin.imageUrl,
                 placeholderImageName: token.placeholderImageName,
                 title: token.coin.code,
                 subtitle: token.coin.name,
-                badge: item.configuredToken.badge,
+                badge: item.token.badge,
                 enabled: item.enabled,
                 hasInfo: item.hasInfo
         )
