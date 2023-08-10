@@ -121,7 +121,7 @@ extension ReceiveService {
     }
 
     func onSelect(fullCoin: FullCoin) {
-        let eligibleTokens = fullCoin.eligibleTokens(accountType: account.type)
+        let eligibleTokens = fullCoin.tokens.filter { account.type.supports(token: $0) }
         // For alone token check exists and show address
         if eligibleTokens.count == 1 {
             showReceive(token: fullCoin.tokens[0])
@@ -160,8 +160,8 @@ extension ReceiveService {
         })
 
         // filter not supported by current account
-        let predefined = fullCoins?.filter { coin in
-            !coin.eligibleTokens(accountType: account.type).isEmpty
+        let predefined = fullCoins?.filter { fullCoin in
+            fullCoin.tokens.contains { account.type.supports(token: $0) }
         } ?? []
 
         return predefined
