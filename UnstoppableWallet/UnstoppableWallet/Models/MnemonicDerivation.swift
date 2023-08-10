@@ -22,14 +22,16 @@ enum MnemonicDerivation: String, CaseIterable {
         }
     }
 
-    var recommended: Bool {
+    var purpose: Purpose {
         switch self {
-        case .bip84: return true
-        default: return false
+        case .bip44: return .bip44
+        case .bip49: return .bip49
+        case .bip84: return .bip84
+        case .bip86: return .bip86
         }
     }
 
-    var purpose: Purpose {
+    var derivation: TokenType.Derivation {
         switch self {
         case .bip44: return .bip44
         case .bip49: return .bip49
