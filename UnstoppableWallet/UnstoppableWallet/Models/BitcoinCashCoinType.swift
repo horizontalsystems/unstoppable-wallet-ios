@@ -1,6 +1,8 @@
 import MarketKit
 
 enum BitcoinCashCoinType: String, CaseIterable {
+    static let `default` = type145
+
     case type0
     case type145
 
