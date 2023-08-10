@@ -24,7 +24,7 @@ extension CoinProvider {
                 let fullCoins = try marketKit.fullCoins(filter: filter)
 
                 return fullCoins.filter { fullCoin in
-                    !fullCoin.eligibleTokens(accountType: accountType).isEmpty
+                    fullCoin.tokens.contains { accountType.supports(token: $0) }
                 }
             } else {
                 return predefined
