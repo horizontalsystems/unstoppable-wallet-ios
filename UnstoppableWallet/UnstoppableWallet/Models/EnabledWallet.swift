@@ -24,7 +24,7 @@ class EnabledWallet: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case tokenQueryId, accountId, coinName, coinCode, tokenDecimals // todo: migration - remove coinSettingsId
+        case tokenQueryId, accountId, coinName, coinCode, tokenDecimals
     }
 
     required init(row: Row) {
