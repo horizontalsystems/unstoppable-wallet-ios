@@ -2284,6 +2284,8 @@
 		D02A67D5272A7460009B2C1C /* CoinTweetsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02A67BA272A7460009B2C1C /* CoinTweetsService.swift */; };
 		D02A67D7272A7460009B2C1C /* CoinTweetsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02A67BB272A7460009B2C1C /* CoinTweetsModule.swift */; };
 		D02A67D8272A7460009B2C1C /* CoinTweetsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02A67BB272A7460009B2C1C /* CoinTweetsModule.swift */; };
+		D046016E2A8504F400194648 /* EnabledWallet_v_0_34.swift in Sources */ = {isa = PBXBuildFile; fileRef = D046016D2A8504F400194648 /* EnabledWallet_v_0_34.swift */; };
+		D046016F2A8504F400194648 /* EnabledWallet_v_0_34.swift in Sources */ = {isa = PBXBuildFile; fileRef = D046016D2A8504F400194648 /* EnabledWallet_v_0_34.swift */; };
 		D04D98EA268055A2001A3135 /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04D98E9268055A2001A3135 /* TransactionRecord.swift */; };
 		D04D98EB268055A2001A3135 /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04D98E9268055A2001A3135 /* TransactionRecord.swift */; };
 		D05E968D2A25D6C6002CCD71 /* Trc20Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E968C2A25D6C6002CCD71 /* Trc20Adapter.swift */; };
@@ -3760,6 +3762,7 @@
 		D02A67B9272A7460009B2C1C /* TweetsPageResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetsPageResponse.swift; sourceTree = "<group>"; };
 		D02A67BA272A7460009B2C1C /* CoinTweetsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTweetsService.swift; sourceTree = "<group>"; };
 		D02A67BB272A7460009B2C1C /* CoinTweetsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTweetsModule.swift; sourceTree = "<group>"; };
+		D046016D2A8504F400194648 /* EnabledWallet_v_0_34.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnabledWallet_v_0_34.swift; sourceTree = "<group>"; };
 		D04D98E9268055A2001A3135 /* TransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecord.swift; sourceTree = "<group>"; };
 		D05E968C2A25D6C6002CCD71 /* Trc20Adapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trc20Adapter.swift; sourceTree = "<group>"; };
 		D05E968F2A261D82002CCD71 /* TronTransactionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronTransactionAdapter.swift; sourceTree = "<group>"; };
@@ -4193,6 +4196,7 @@
 				11B35DFA83DA24A00D73EA7D /* RestoreSettingRecord_v_0_25.swift */,
 				11B35EBD933DD3C9E72F1CA8 /* EnabledWallet_v_0_25.swift */,
 				11B357B2D07C69579BAEC997 /* CoinType.swift */,
+				D046016D2A8504F400194648 /* EnabledWallet_v_0_34.swift */,
 			);
 			path = Deprecated;
 			sourceTree = "<group>";
@@ -8354,6 +8358,7 @@
 				11B359C198AA7A141522E5E9 /* EvmAccountManagerFactory.swift in Sources */,
 				11B350918797E615D4FF6677 /* BlockchainSettingRecordStorage.swift in Sources */,
 				11B35B7132B99D12DC745064 /* BtcBlockchainSettingsModule.swift in Sources */,
+				D046016F2A8504F400194648 /* EnabledWallet_v_0_34.swift in Sources */,
 				11B35F6B92C2FB142E522828 /* BtcBlockchainSettingsViewModel.swift in Sources */,
 				11B3564C09AB663A2F146BE8 /* BtcBlockchainSettingsViewController.swift in Sources */,
 				11B35CC0D8AC06CE594F84DA /* BtcBlockchainSettingsService.swift in Sources */,
@@ -9591,6 +9596,7 @@
 				ABC9ABF99296DEA24FC5BFF0 /* SendAmountCautionService.swift in Sources */,
 				ABC9AB1E703AE57DF856ECD9 /* SendAmountCautionViewModel.swift in Sources */,
 				1A564E2897197EB14584A62E /* MarketOverviewViewModel.swift in Sources */,
+				D046016E2A8504F400194648 /* EnabledWallet_v_0_34.swift in Sources */,
 				11B3538CDAA5FE6682A661D0 /* EvmAccountManagerFactory.swift in Sources */,
 				11B35696E9CD808522BEFCD6 /* BlockchainSettingRecordStorage.swift in Sources */,
 				11B3581F4D975FC21B9A25F2 /* BtcBlockchainSettingsModule.swift in Sources */,

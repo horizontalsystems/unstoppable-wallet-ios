@@ -658,15 +658,15 @@ class StorageMigrator {
 
             try db.drop(table: EnabledWallet_v_0_25.databaseTableName)
 
-            try db.create(table: EnabledWallet.databaseTableName) { t in
-                t.column(EnabledWallet.Columns.tokenQueryId.name, .text).notNull()
-                t.column("coinSettingsId", .text).notNull()
-                t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
-                t.column(EnabledWallet.Columns.coinName.name, .text)
-                t.column(EnabledWallet.Columns.coinCode.name, .text)
-                t.column(EnabledWallet.Columns.tokenDecimals.name, .integer)
+            try db.create(table: EnabledWallet_v_0_34.databaseTableName) { t in
+                t.column(EnabledWallet_v_0_34.Columns.tokenQueryId.name, .text).notNull()
+                t.column(EnabledWallet_v_0_34.Columns.coinSettingsId.name, .text).notNull()
+                t.column(EnabledWallet_v_0_34.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWallet_v_0_34.Columns.coinName.name, .text)
+                t.column(EnabledWallet_v_0_34.Columns.coinCode.name, .text)
+                t.column(EnabledWallet_v_0_34.Columns.tokenDecimals.name, .integer)
 
-                t.primaryKey([EnabledWallet.Columns.tokenQueryId.name, EnabledWallet.Columns.accountId.name], onConflict: .replace)
+                t.primaryKey([EnabledWallet_v_0_34.Columns.tokenQueryId.name, EnabledWallet_v_0_34.Columns.coinSettingsId.name, EnabledWallet_v_0_34.Columns.accountId.name], onConflict: .replace)
             }
 
             for old in oldWallets {
@@ -753,15 +753,15 @@ class StorageMigrator {
             }
 
             var enabledWallets: [EnabledWallet] = []
-            let rows = try Row.fetchCursor(db, sql: "SELECT * FROM \(EnabledWallet.databaseTableName)")
+            let rows = try Row.fetchCursor(db, sql: "SELECT * FROM \(EnabledWallet_v_0_34.databaseTableName)")
 
             while let row = try rows.next() {
-                guard let tokenQuery = tokenQuery(tokenQueryId: row["tokenQueryId"], coinSettingsId: row["coinSettingsId"]) else {
+                guard let tokenQueryId = tokenQueryId(tokenQueryId: row["tokenQueryId"], coinSettingsId: row["coinSettingsId"]) else {
                     continue
                 }
 
                 let updatedWallet = EnabledWallet(
-                    tokenQueryId: tokenQuery.id,
+                    tokenQueryId: tokenQueryId,
                     accountId: row["accountId"], coinName: row["coinName"],
                     coinCode: row["coinCode"], tokenDecimals: row["tokenDecimals"]
                 )
@@ -769,7 +769,7 @@ class StorageMigrator {
                 enabledWallets.append(updatedWallet)
             }
 
-            try db.drop(table: EnabledWallet.databaseTableName)
+            try db.drop(table: EnabledWallet_v_0_34.databaseTableName)
             try db.create(table: EnabledWallet.databaseTableName) { t in
                 t.column(EnabledWallet.Columns.tokenQueryId.name, .text).notNull()
                 t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
@@ -812,17 +812,23 @@ class StorageMigrator {
         }
     }
 
-    private static func tokenQuery(tokenQueryId: String, coinSettingsId: String) -> TokenQuery? {
-        guard let tokenQuery = TokenQuery(id: tokenQueryId) else {
+    private static func tokenQueryId(tokenQueryId: String, coinSettingsId: String) -> String? {
+        let chunks = tokenQueryId.split(separator: "|").map { String($0) }
+
+        guard chunks.count == 2 else {
             return nil
         }
 
-        guard tokenQuery.tokenType == .native else {
-            return tokenQuery
+        let blockchainUid = chunks[0]
+        let tokenType = chunks[1]
+
+        let tokenTypeChunks = tokenType.split(separator: ":").map { String($0) }
+        guard tokenTypeChunks.count == 1 && tokenTypeChunks[0] == "native" else {
+            return tokenQueryId
         }
 
-        switch tokenQuery.blockchainType {
-            case .bitcoin, .litecoin:
+        switch blockchainUid {
+            case "bitcoin", "litecoin":
                 let chunks = coinSettingsId.split(separator: "|")
 
                 for chunk in chunks {
@@ -832,16 +838,17 @@ class StorageMigrator {
                         continue
                     }
 
-                    guard String(subChunks[0]) == "derivation",
-                          let derivation = TokenType.Derivation(rawValue: String(subChunks[1])) else {
+                    let settingsName = String(subChunks[0])
+                    let derivation = String(subChunks[1])
+                    guard settingsName == "derivation", ["bip44", "bip49", "bip84", "bip86"].contains(derivation) else {
                         continue
                     }
 
-                    let tokenType = TokenType.derived(derivation: derivation)
-                    return TokenQuery(blockchainType: tokenQuery.blockchainType, tokenType: tokenType)
+                    return "\(blockchainUid)|derived:\(derivation)"
                 }
 
-            case .bitcoinCash:
+
+            case "bitcoin-cash":
                 let chunks = coinSettingsId.split(separator: "|")
 
                 for chunk in chunks {
@@ -851,17 +858,17 @@ class StorageMigrator {
                         continue
                     }
 
-                    guard String(subChunks[0]) == "bitcoinCashCoinType",
-                          let addressType = TokenType.AddressType(rawValue: String(subChunks[1])) else {
+                    let settingsName = String(subChunks[0])
+                    let addressType = String(subChunks[1])
+                    guard settingsName == "bitcoinCashCoinType", ["type0", "type145"].contains(addressType) else {
                         continue
                     }
 
-                    let tokenType = TokenType.addressType(type: addressType)
-                    return TokenQuery(blockchainType: .bitcoinCash, tokenType: tokenType)
+                    return "\(blockchainUid)|address_type:\(addressType)"
                 }
 
             default:
-                return TokenQuery(blockchainType: tokenQuery.blockchainType, tokenType: .native)
+                return tokenQueryId
         }
 
         return nil
