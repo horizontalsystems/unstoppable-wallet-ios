@@ -660,7 +660,7 @@ class StorageMigrator {
 
             try db.create(table: EnabledWallet.databaseTableName) { t in
                 t.column(EnabledWallet.Columns.tokenQueryId.name, .text).notNull()
-//                t.column("coinSettingsId", .text).notNull()
+                t.column("coinSettingsId", .text).notNull()
                 t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
                 t.column(EnabledWallet.Columns.coinName.name, .text)
                 t.column(EnabledWallet.Columns.coinCode.name, .text)
@@ -672,7 +672,6 @@ class StorageMigrator {
             for old in oldWallets {
                 let record = EnabledWallet(
                         tokenQueryId: tokenQuery(coinTypeId: old.coinId).id,
-//                        coinSettingsId: old.coinSettingsId,
                         accountId: old.accountId,
                         coinName: old.coinName,
                         coinCode: old.coinCode,
@@ -690,7 +689,7 @@ class StorageMigrator {
 
             try db.create(table: EnabledWalletCache.databaseTableName) { t in
                 t.column(EnabledWalletCache.Columns.tokenQueryId.name, .text).notNull()
-//                t.column("coinSettingsId", .text).notNull()
+                t.column("coinSettingsId", .text).notNull()
                 t.column(EnabledWalletCache.Columns.accountId.name, .text).notNull()
                 t.column(EnabledWalletCache.Columns.balance.name, .text).notNull()
                 t.column(EnabledWalletCache.Columns.balanceLocked.name, .text).notNull()
@@ -742,6 +741,50 @@ class StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Update EnabledWallet entities") { db in
+            try db.drop(table: EnabledWalletCache.databaseTableName)
+            try db.create(table: EnabledWalletCache.databaseTableName) { t in
+                t.column(EnabledWalletCache.Columns.tokenQueryId.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.balance.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.balanceLocked.name, .text).notNull()
+
+                t.primaryKey([EnabledWalletCache.Columns.tokenQueryId.name, EnabledWalletCache.Columns.accountId.name], onConflict: .replace)
+            }
+
+            var enabledWallets: [EnabledWallet] = []
+            let rows = try Row.fetchCursor(db, sql: "SELECT * FROM \(EnabledWallet.databaseTableName)")
+
+            while let row = try rows.next() {
+                guard let tokenQuery = tokenQuery(tokenQueryId: row["tokenQueryId"], coinSettingsId: row["coinSettingsId"]) else {
+                    continue
+                }
+
+                let updatedWallet = EnabledWallet(
+                    tokenQueryId: tokenQuery.id,
+                    accountId: row["accountId"], coinName: row["coinName"],
+                    coinCode: row["coinCode"], tokenDecimals: row["tokenDecimals"]
+                )
+
+                enabledWallets.append(updatedWallet)
+            }
+
+            try db.drop(table: EnabledWallet.databaseTableName)
+            try db.create(table: EnabledWallet.databaseTableName) { t in
+                t.column(EnabledWallet.Columns.tokenQueryId.name, .text).notNull()
+                t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWallet.Columns.coinName.name, .text)
+                t.column(EnabledWallet.Columns.coinCode.name, .text)
+                t.column(EnabledWallet.Columns.tokenDecimals.name, .integer)
+
+                t.primaryKey([EnabledWallet.Columns.tokenQueryId.name, EnabledWallet.Columns.accountId.name], onConflict: .replace)
+            }
+
+            for wallet in enabledWallets {
+                try wallet.insert(db)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 
@@ -767,6 +810,61 @@ class StorageMigrator {
         case .bep2(let symbol): return symbol == "BNB" ? TokenQuery(blockchainType: .binanceChain, tokenType: .native) : TokenQuery(blockchainType: .binanceChain, tokenType: .bep2(symbol: symbol))
         default: return TokenQuery(blockchainType: .unsupported(uid: ""), tokenType: .unsupported(type: "", reference: nil))
         }
+    }
+
+    private static func tokenQuery(tokenQueryId: String, coinSettingsId: String) -> TokenQuery? {
+        guard let tokenQuery = TokenQuery(id: tokenQueryId) else {
+            return nil
+        }
+
+        guard tokenQuery.tokenType == .native else {
+            return tokenQuery
+        }
+
+        switch tokenQuery.blockchainType {
+            case .bitcoin, .litecoin:
+                let chunks = coinSettingsId.split(separator: "|")
+
+                for chunk in chunks {
+                    let subChunks = chunk.split(separator: ":")
+
+                    guard subChunks.count == 2 else {
+                        continue
+                    }
+
+                    guard String(subChunks[0]) == "derivation",
+                          let derivation = TokenType.Derivation(rawValue: String(subChunks[1])) else {
+                        continue
+                    }
+
+                    let tokenType = TokenType.derived(derivation: derivation)
+                    return TokenQuery(blockchainType: tokenQuery.blockchainType, tokenType: tokenType)
+                }
+
+            case .bitcoinCash:
+                let chunks = coinSettingsId.split(separator: "|")
+
+                for chunk in chunks {
+                    let subChunks = chunk.split(separator: ":")
+
+                    guard subChunks.count == 2 else {
+                        continue
+                    }
+
+                    guard String(subChunks[0]) == "bitcoinCashCoinType",
+                          let addressType = TokenType.AddressType(rawValue: String(subChunks[1])) else {
+                        continue
+                    }
+
+                    let tokenType = TokenType.addressType(type: addressType)
+                    return TokenQuery(blockchainType: .bitcoinCash, tokenType: tokenType)
+                }
+
+            default:
+                return TokenQuery(blockchainType: tokenQuery.blockchainType, tokenType: .native)
+        }
+
+        return nil
     }
 
 }
