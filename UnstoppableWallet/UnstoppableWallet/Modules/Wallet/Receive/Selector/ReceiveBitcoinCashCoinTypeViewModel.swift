@@ -13,7 +13,7 @@ extension ReceiveBitcoinCashCoinTypeViewModel {
 
     var viewItems: [ReceiveSelectorViewModel.ViewItem] {
         wallets.compactMap { wallet in
-            guard let bitcoinCashCoinType = wallet.configuredToken.coinSettings.bitcoinCashCoinType else {
+            guard let bitcoinCashCoinType = wallet.token.type.bitcoinCashCoinType else {
                 return nil
             }
 
@@ -28,7 +28,7 @@ extension ReceiveBitcoinCashCoinTypeViewModel {
 
     func item(uid: String) -> Wallet? {
         wallets.first { wallet in
-            wallet.configuredToken.coinSettings.derivation == MnemonicDerivation(rawValue: uid)
+            wallet.token.type.bitcoinCashCoinType == BitcoinCashCoinType(rawValue: uid)
         }
     }
 

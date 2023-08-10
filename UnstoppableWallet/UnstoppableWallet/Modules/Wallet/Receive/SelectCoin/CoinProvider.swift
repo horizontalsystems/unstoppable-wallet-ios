@@ -41,7 +41,7 @@ extension CoinProvider {
     static func nativeCoins(marketKit: MarketKit.Kit) -> [Coin] {
         do {
             let blockchainTypes = BlockchainType.supported.sorted()
-            let queries = blockchainTypes.map { TokenQuery(blockchainType: $0, tokenType: .native) }
+            let queries = blockchainTypes.map { $0.nativeTokenQueries }.flatMap { $0 }
             let nativeTokens = try marketKit.tokens(queries: queries)
             return nativeTokens.map { $0.coin }
         } catch {

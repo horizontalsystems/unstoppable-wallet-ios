@@ -2120,6 +2120,7 @@
 		ABC9A9221E4FF0734089BCAB /* WalletConnectV2MainPendingRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AFF8093DEB7AFD7DBBCC /* WalletConnectV2MainPendingRequestService.swift */; };
 		ABC9A933C2603486BA181B19 /* SendFeeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ADB77831DCB474B24C8A /* SendFeeService.swift */; };
 		ABC9A9493F250B81E1152012 /* SendBitcoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A696DCBBE4761E77311C /* SendBitcoinService.swift */; };
+		ABC9A95175D7C08F5FC1C28C /* DepositAddressViewHelperFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2F8A72178D33690091E /* DepositAddressViewHelperFactory.swift */; };
 		ABC9A9562DD283B6FCACBCF9 /* MarketCardTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC7983E4A81E421AB639 /* MarketCardTitleView.swift */; };
 		ABC9A9568395FB2EB273571B /* WalletConnectV2PairingModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA6A9EA3FAE9031A34C8 /* WalletConnectV2PairingModule.swift */; };
 		ABC9A95E667DD7BD26602D8E /* SendEip721Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACE7CB7CC9C118C72559 /* SendEip721Service.swift */; };
@@ -2261,6 +2262,7 @@
 		ABC9AE5E1323605AA1E71813 /* WalletSendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD529B3F3E909766BB81 /* WalletSendViewModel.swift */; };
 		ABC9AE66F6D18A152EC7FD15 /* WalletConnectV1MainRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6CFF0208D48FE778028 /* WalletConnectV1MainRequestViewModel.swift */; };
 		ABC9AE6D877341985A6F651F /* SendBitcoinAmountInputService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACF1F55164BDFD049793 /* SendBitcoinAmountInputService.swift */; };
+		ABC9AE780F954B12224A8940 /* DepositAddressViewHelperFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2F8A72178D33690091E /* DepositAddressViewHelperFactory.swift */; };
 		ABC9AE832E74D8DCADB83803 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7FC41B9F98871246E0E /* ImageCell.swift */; };
 		ABC9AE863B44E921F58DF3EA /* WalletConnectMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A3A694467493C6F4AACE /* WalletConnectMainViewController.swift */; };
 		ABC9AEA4EF88D31D00781014 /* ContactLabelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB89F64056FFB98928E7 /* ContactLabelService.swift */; };
@@ -3646,6 +3648,7 @@
 		ABC9A2D87362E00FD9FB5688 /* ContactBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactBookViewController.swift; sourceTree = "<group>"; };
 		ABC9A2F3E5147E0E92258FBB /* ChartIndicatorsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartIndicatorsService.swift; sourceTree = "<group>"; };
 		ABC9A2F6EDC8BB83ED7B75BA /* WalletConnectV2PendingRequestsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectV2PendingRequestsModule.swift; sourceTree = "<group>"; };
+		ABC9A2F8A72178D33690091E /* DepositAddressViewHelperFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepositAddressViewHelperFactory.swift; sourceTree = "<group>"; };
 		ABC9A2FD4A59DB53631435BA /* SendConfirmationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendConfirmationService.swift; sourceTree = "<group>"; };
 		ABC9A309A58148C40912B964 /* ContactBookSettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactBookSettingsService.swift; sourceTree = "<group>"; };
 		ABC9A30A8F78E9C9AEE861F1 /* NftAssetCellFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftAssetCellFactory.swift; sourceTree = "<group>"; };
@@ -5899,6 +5902,7 @@
 				1A5645371B2FC499500DCA93 /* DepositViewModel.swift */,
 				11B35ED7203AD00030A8BA23 /* DepositViewController.swift */,
 				ABC9A8D867671EA1C72236B3 /* DepositAddressViewHelper.swift */,
+				ABC9A2F8A72178D33690091E /* DepositAddressViewHelperFactory.swift */,
 			);
 			path = Deposit;
 			sourceTree = "<group>";
@@ -9052,6 +9056,7 @@
 				ABC9A51598E38E3CFABCE2A0 /* ReceiveViewModel.swift in Sources */,
 				ABC9ABDF40EB0212C61A3445 /* ReceiveDerivationViewModel.swift in Sources */,
 				ABC9A4EEADCC40B0D9C7BB4F /* ReceiveBitcoinCashCoinTypeViewModel.swift in Sources */,
+				ABC9AE780F954B12224A8940 /* DepositAddressViewHelperFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10319,6 +10324,7 @@
 				ABC9AE2E8C57D670047BFB7D /* ReceiveViewModel.swift in Sources */,
 				ABC9AD92EF99EF3EEE404E7E /* ReceiveDerivationViewModel.swift in Sources */,
 				ABC9ACF3701F8E0ED2E396FF /* ReceiveBitcoinCashCoinTypeViewModel.swift in Sources */,
+				ABC9A95175D7C08F5FC1C28C /* DepositAddressViewHelperFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,14 +13,14 @@ extension ReceiveDerivationViewModel {
 
     var viewItems: [ReceiveSelectorViewModel.ViewItem] {
         wallets.compactMap { wallet in
-            guard let derivation = wallet.configuredToken.coinSettings.derivation else {
+            guard let derivation = wallet.token.type.derivation else {
                 return nil
             }
 
             return ReceiveSelectorViewModel.ViewItem(
                     uid: derivation.rawValue,
                     imageUrl: nil,
-                    title: derivation.addressType + (derivation.recommended ? "receive_address.recommended".localized : ""),
+                    title: derivation.addressType + (derivation == MnemonicDerivation.default ? "receive_address.recommended".localized : ""),
                     subtitle: derivation.title
             )
         }
@@ -28,7 +28,7 @@ extension ReceiveDerivationViewModel {
 
     func item(uid: String) -> Wallet? {
         wallets.first { wallet in
-            wallet.configuredToken.coinSettings.derivation == MnemonicDerivation(rawValue: uid)
+            wallet.token.type.derivation == MnemonicDerivation(rawValue: uid)
         }
     }
 

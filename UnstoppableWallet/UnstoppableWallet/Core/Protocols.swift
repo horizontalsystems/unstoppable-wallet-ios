@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 import RxSwift
 import GRDB
@@ -34,6 +35,20 @@ protocol IBalanceAdapter: IBaseAdapter {
 
 protocol IDepositAdapter: IBaseAdapter {
     var receiveAddress: DepositAddress { get }
+    var receiveAddressStatus: DataStatus<DepositAddress> { get }
+    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> { get }
+}
+
+extension IDepositAdapter {
+
+    var receiveAddressStatus: DataStatus<DepositAddress> {
+        .completed(receiveAddress)
+    }
+
+    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
+        Just(receiveAddressStatus).eraseToAnyPublisher()
+    }
+
 }
 
 protocol ITransactionsAdapter {
