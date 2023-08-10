@@ -14,9 +14,7 @@ class ReceiveTokenViewModel: IReceiveSelectorViewModel {
 extension ReceiveTokenViewModel {
 
     var viewItems: [ReceiveSelectorViewModel.ViewItem] {
-        let tokens = fullCoin.tokens
-                .filter { token in token.isSupported }
-                .filter { token in token.blockchainType.supports(accountType: accountType) }
+        let tokens = fullCoin.tokens.filter { accountType.supports(token: $0) }
         return tokens.map {
             ReceiveSelectorViewModel.ViewItem(uid: $0.blockchain.uid,
                     imageUrl: $0.blockchainType.imageUrl,
