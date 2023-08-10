@@ -34,19 +34,8 @@ class ChooseCoinService {
         }
 
         return tokens
-                .filter { token in
-                    guard token.blockchainType.supports(accountType: accountType) else {
-                        return false
-                    }
-
-                    switch token.type {
-                    case .derived(let derivation): return key.purposes.map { $0.mnemonicDerivation }.contains(derivation.mnemonicDerivation)
-                    default: return true
-                    }
-                }
-                .map { token in
-                    .coin(token: token)
-                }
+                .filter { accountType.supports(token: $0) }
+                .map { .coin(token: $0) }
     }
 
     private func enableWallets(account: Account, enabledTokensUids: [String]) {

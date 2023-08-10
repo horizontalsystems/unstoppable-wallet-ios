@@ -57,18 +57,6 @@ enum AccountType {
         }
     }
 
-    // todo: remove this method
-    var supportedDerivations: [MnemonicDerivation] {
-        switch self {
-        case .mnemonic:
-            return [.bip44, .bip49, .bip84, .bip86]
-        case .hdExtendedKey(let key):
-            return key.purposes.map { $0.mnemonicDerivation }
-        default:
-            return []
-        }
-    }
-
     func supports(token: Token) -> Bool {
         switch self {
         case .mnemonic:

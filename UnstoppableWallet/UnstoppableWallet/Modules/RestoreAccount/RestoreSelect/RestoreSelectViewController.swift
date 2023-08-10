@@ -8,13 +8,15 @@ import ComponentKit
 
 class RestoreSelectViewController: CoinToggleViewController {
     private let viewModel: RestoreSelectViewModel
-    private let enableCoinView: EnableCoinView
+    private let blockchainTokensView: BlockchainTokensView
+    private let restoreSettingsView: RestoreSettingsView
 
     private weak var returnViewController: UIViewController?
 
-    init(viewModel: RestoreSelectViewModel, enableCoinView: EnableCoinView, returnViewController: UIViewController?) {
+    init(viewModel: RestoreSelectViewModel, blockchainTokensView: BlockchainTokensView, restoreSettingsView: RestoreSettingsView, returnViewController: UIViewController?) {
         self.viewModel = viewModel
-        self.enableCoinView = enableCoinView
+        self.blockchainTokensView = blockchainTokensView
+        self.restoreSettingsView = restoreSettingsView
         self.returnViewController = returnViewController
 
         super.init(viewModel: viewModel)
@@ -32,7 +34,10 @@ class RestoreSelectViewController: CoinToggleViewController {
         title = "restore_select.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.import".localized, style: .done, target: self, action: #selector(onTapRightBarButton))
 
-        enableCoinView.onOpenController = { [weak self] controller in
+        blockchainTokensView.onOpenController = { [weak self] controller in
+            self?.open(controller: controller)
+        }
+        restoreSettingsView.onOpenController = { [weak self] controller in
             self?.open(controller: controller)
         }
 
