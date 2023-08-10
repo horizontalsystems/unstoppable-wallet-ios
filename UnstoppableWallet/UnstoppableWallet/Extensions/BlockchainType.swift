@@ -158,6 +158,17 @@ extension BlockchainType {
         }
     }
 
+    var defaultTokenQuery: TokenQuery {
+        switch self {
+        case .bitcoin, .litecoin:
+            return TokenQuery(blockchainType: self, tokenType: .derived(derivation: MnemonicDerivation.default.derivation))
+        case .bitcoinCash:
+            return TokenQuery(blockchainType: self, tokenType: .addressType(type: BitcoinCashCoinType.default.addressType))
+        default:
+            return TokenQuery(blockchainType: self, tokenType: .native)
+        }
+    }
+
     var nativeTokenQueries: [TokenQuery] {
         switch self {
         case .bitcoin, .litecoin:

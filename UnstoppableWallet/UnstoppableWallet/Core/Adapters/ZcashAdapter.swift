@@ -40,6 +40,7 @@ class ZcashAdapter {
     private let balanceStateSubject = PublishSubject<AdapterState>()
     private let balanceSubject = PublishSubject<BalanceData>()
     private let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
+    private let depositAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
 
     private var preparing: Bool = false
     private var lastBlockHeight: Int = 0
@@ -143,6 +144,7 @@ class ZcashAdapter {
         preparing = true
         state = .preparing
 
+        depositAddressSubject.send(.loading)
         Task {
             do {
                 let tool = initializer.makeDerivationTool()
@@ -166,6 +168,8 @@ class ZcashAdapter {
                     throw AppError.ZcashError.noReceiveAddress
                 }
                 zAddress = saplingAddress.stringEncoded
+                depositAddressSubject.send(.completed(DepositAddress(saplingAddress.stringEncoded)))
+
                 logger?.log(level: .debug, message: "Successful get address for 0 account! \(saplingAddress.stringEncoded)")
 
                 let transactionPool = ZcashTransactionPool(receiveAddress: saplingAddress, synchronizer: synchronizer)
@@ -706,6 +710,10 @@ extension ZcashAdapter: IDepositAdapter {
     var receiveAddress: DepositAddress {
         // only first account
         DepositAddress(zAddress ?? "n/a".localized)
+    }
+
+    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
+        depositAddressSubject.eraseToAnyPublisher()
     }
 
 }

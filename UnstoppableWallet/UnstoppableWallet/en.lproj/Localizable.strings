@@ -331,6 +331,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "deposit.address" = "Address";
 "deposit.your_address" = "Your Address";
 "receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
+"deposit.no_adapter.error" = "Can't provide address";
 
 "deposit.not_active" = "not active";
 "deposit.not_active.title" = "Not Active Address";

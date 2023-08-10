@@ -13,10 +13,10 @@ enum BitcoinCashCoinType: String, CaseIterable {
         }
     }
 
-    var recommended: Bool {
+    var addressType: TokenType.AddressType {
         switch self {
-        case .type145: return true
-        default: return false
+        case .type0: return .type0
+        case .type145: return .type145
         }
     }
 

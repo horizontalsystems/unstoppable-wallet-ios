@@ -11,6 +11,7 @@ class ReceiveService {
     private let showBlockchainSelectSubject = PassthroughSubject<(FullCoin, AccountType), Never>()
     private let showDerivationSelectSubject = PassthroughSubject<[Wallet], Never>()
     private let showBitcoinCashCoinTypeSelectSubject = PassthroughSubject<[Wallet], Never>()
+    private let showZcashTypeSelectSubject = PassthroughSubject<Void, Never>()
 
     init(account: Account, walletManager: WalletManager, marketKit: MarketKit.Kit) {
         self.account = account
@@ -18,48 +19,83 @@ class ReceiveService {
         self.marketKit = marketKit
     }
 
-    private func checkExists(token: Token) {
+    private func showReceive(token: Token) {
         // check if wallet already exist
-        let wallets = walletManager
+        let wallet = walletManager
                 .activeWallets
-                .filter { wallet in wallet.token == token }
+                .first { $0.token == token }
 
-        switch wallets.count {
-        case 0:                 // create wallet and show deposit
+        if let wallet {
+            showTokenSubject.send(wallet)
+        } else {
             let wallet = createWallet(token: token)
-            showDeposit(wallet: wallet)
-        case 1:                 // just show deposit. When unique token and it's restored
-            showDeposit(wallet: wallets[0])
-        default:                // show choose derivation, addressFormat or other (when token is unique, but many wallets)
-            chooseExact(token: token, wallets: wallets)
+            showTokenSubject.send(wallet)
         }
     }
 
     private func createWallet(token: Token) -> Wallet {
-        let defaultSettings = token.blockchainType.defaultSettings(accountType: account.type)
-        let configuredToken = ConfiguredToken(token: token, coinSettings: defaultSettings)
-        let wallet = Wallet(configuredToken: configuredToken, account: account)
+        let wallet = Wallet(token: token, account: account)
 
         walletManager.save(wallets: [wallet])
         return wallet
     }
 
-    private func showDeposit(wallet: Wallet) {
-        showTokenSubject.send(wallet)
+    private func chooseTokenWithSettings(tokens: [Token]) {
+        // all tokens will have same blockchain type
+        guard let blockchainType = tokens.first?.blockchainType else {
+            return
+        }
+
+        // check if has existed wallets
+        let wallets = walletManager
+                .activeWallets
+                .filter { wallet in tokens.contains(wallet.token) }
+
+        switch wallets.count {
+        case 0:                                             // create wallet and show deposit
+            switch blockchainType {
+            case .bitcoin, .litecoin, .bitcoinCash:
+                guard let defaultToken = try? marketKit.token(query: blockchainType.defaultTokenQuery) else {
+                    return
+                }
+
+                let wallet = createWallet(token: defaultToken)
+                showTokenSubject.send(wallet)
+            case .zcash:
+                showZcashTypeSelectSubject.send()           // we must enable zcash wallet and ask for birthday
+            default: ()
+            }
+        case 1:                                             // just show deposit. When unique token and it's restored
+            showTokenSubject.send(wallets[0])
+        default:                                            // show choose derivation, addressFormat or other (when token is unique, but many wallets)
+            chooseTokenType(blockchainType: blockchainType, wallets: wallets)
+        }
     }
 
-    private func chooseExact(token: Token, wallets: [Wallet]) {
-        switch token.blockchainType {
+    private func chooseTokenType(blockchainType: BlockchainType, wallets: [Wallet]) {
+        switch blockchainType {
         case .bitcoin, .litecoin:
             showDerivationSelectSubject.send(wallets)
         case .bitcoinCash:
             showBitcoinCashCoinTypeSelectSubject.send(wallets)
-        case .zcash:
-            ()
         default: // other blockchains can't have more than 1 wallet
             ()
         }
     }
+
+    private func hasSettings(_ tokens: [Token]) -> Bool {
+        tokens.allSatisfy({ token in
+            switch token.blockchainType {
+            case .zcash: return true
+            default: ()
+            }
+            switch token.type {
+            case .derived, .addressType: return true
+            default: return false
+            }
+        })
+    }
+
 }
 
 extension ReceiveService {
@@ -76,30 +112,39 @@ extension ReceiveService {
         showBitcoinCashCoinTypeSelectSubject.eraseToAnyPublisher()
     }
 
+    var showZcashTypeSelectPublisher: AnyPublisher<Void, Never> {
+        showZcashTypeSelectSubject.eraseToAnyPublisher()
+    }
+
     var showBlockchainSelectPublisher: AnyPublisher<(FullCoin, AccountType), Never> {
         showBlockchainSelectSubject.eraseToAnyPublisher()
     }
 
     func onSelect(fullCoin: FullCoin) {
-        if fullCoin.tokens.count == 1 {
-            checkExists(token: fullCoin.tokens[0])
+        let eligibleTokens = fullCoin.eligibleTokens(accountType: account.type)
+        // For alone token check exists and show address
+        if eligibleTokens.count == 1 {
+            showReceive(token: fullCoin.tokens[0])
+            return
+        }
+        // For multi tokens check hasSettings(derived and addressType)
+        // if has, check exists wallets and show address or only exists tokens
+        // Otherwise, show
+        if hasSettings(eligibleTokens) {
+            chooseTokenWithSettings(tokens: eligibleTokens)
         } else {
             showBlockchainSelectSubject.send((fullCoin, account.type))
         }
     }
 
     func onSelectExact(token: Token) {
-        checkExists(token: token)
+        showReceive(token: token)
     }
 
 }
 extension ReceiveService {
 
     var predefinedCoins: [FullCoin] {
-        guard let accountType = App.shared.accountManager.activeAccount?.type else {
-            return []
-        }
-
         // get all restored coins
         let activeWallets = walletManager.activeWallets
         let walletCoins = activeWallets.map {
@@ -116,7 +161,7 @@ extension ReceiveService {
 
         // filter not supported by current account
         let predefined = fullCoins?.filter { coin in
-            !coin.eligibleTokens(accountType: accountType).isEmpty
+            !coin.eligibleTokens(accountType: account.type).isEmpty
         } ?? []
 
         return predefined
