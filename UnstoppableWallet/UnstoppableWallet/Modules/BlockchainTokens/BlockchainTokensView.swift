@@ -2,13 +2,13 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class CoinTokensView {
-    private let viewModel: CoinTokensViewModel
+class BlockchainTokensView {
+    private let viewModel: BlockchainTokensViewModel
     private let disposeBag = DisposeBag()
 
     var onOpenController: ((UIViewController) -> ())?
 
-    init(viewModel: CoinTokensViewModel) {
+    init(viewModel: BlockchainTokensViewModel) {
         self.viewModel = viewModel
 
         subscribe(disposeBag, viewModel.openBottomSelectorSignal) { [weak self] config in
@@ -23,7 +23,7 @@ class CoinTokensView {
 
 }
 
-extension CoinTokensView: IBottomMultiSelectorDelegate {
+extension BlockchainTokensView: IBottomMultiSelectorDelegate {
 
     func bottomSelectorOnSelect(indexes: [Int]) {
         viewModel.onSelect(indexes: indexes)

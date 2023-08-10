@@ -2,6 +2,8 @@ import MarketKit
 import HdWalletKit
 
 enum MnemonicDerivation: String, CaseIterable {
+    static let `default` = bip84
+
     case bip44
     case bip49
     case bip84

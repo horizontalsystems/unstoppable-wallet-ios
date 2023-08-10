@@ -180,7 +180,6 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Coin Platforms
 
-"coin_platforms.description" = "This token exists on multiple blockchains.";
 "coin_platforms.native" = "Native";
 
 // Copy Warning

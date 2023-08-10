@@ -6,7 +6,7 @@ extension Token {
         switch type {
         case .native:
             switch blockchainType {
-                case .ethereum, .binanceSmartChain, .tron: return nil
+            case .ethereum, .binanceSmartChain, .tron: return nil
             case .binanceChain: return "BEP2"
             default: return blockchain.name
             }
@@ -24,34 +24,8 @@ extension Token {
         }
     }
 
-    var tokenBlockchain: String {
-        switch type {
-        case .native:
-            switch blockchainType {
-            case .binanceChain: return "\(blockchain.name) (BEP2)"
-            default: return blockchain.name
-            }
-        case .eip20:
-            switch blockchainType {
-            case .ethereum: return "\(blockchain.name) (ERC20)"
-            case .binanceSmartChain: return "\(blockchain.name) (BEP20)"
-            case .tron: return "\(blockchain.name) (TRC20)"
-            default: return blockchain.name
-            }
-        case .bep2:
-            return "\(blockchain.name) (BEP2)"
-        default:
-            return blockchain.name
-        }
-    }
-
     var isCustom: Bool {
         coin.uid == tokenQuery.customCoinUid
-    }
-
-    // todo: remove this method
-    var isSupported: Bool {
-        tokenQuery.isSupported
     }
 
     var placeholderImageName: String {
@@ -69,25 +43,6 @@ extension Token {
         case .gnosis: return true
         case .fantom: return true
         default: return false
-        }
-    }
-
-    var typeInfo: String {
-        switch type {
-        case .native: return "coin_platforms.native".localized
-        case .derived(let derivation): return derivation.mnemonicDerivation.title
-        case .addressType(let type): return type.bitcoinCashCoinType.title
-        case .eip20(let address): return address.shortened
-        case .bep2(let symbol): return symbol
-        default: return ""
-        }
-    }
-
-    var copyableTypeInfo: String? {
-        switch type {
-        case .eip20(let address): return address
-        case .bep2(let symbol): return symbol
-        default: return nil
         }
     }
 

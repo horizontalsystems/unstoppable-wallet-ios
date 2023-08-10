@@ -51,4 +51,28 @@ extension TokenType {
         }
     }
 
+    var title: String {
+        switch self {
+        case .derived(let derivation): return derivation.mnemonicDerivation.title
+        case .addressType(let type): return type.bitcoinCashCoinType.title
+        default: return ""
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .derived(let derivation): return derivation.mnemonicDerivation.addressType
+        case .addressType(let type): return type.bitcoinCashCoinType.description
+        default: return ""
+        }
+    }
+
+    var isDefault: Bool {
+        switch self {
+        case .derived(let derivation): return derivation.mnemonicDerivation == MnemonicDerivation.default
+        case .addressType(let type): return type.bitcoinCashCoinType == BitcoinCashCoinType.default
+        default: return false
+        }
+    }
+
 }
