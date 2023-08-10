@@ -1,15 +1,34 @@
+import Combine
 import UIKit
 import ThemeKit
 import SnapKit
 import ComponentKit
 import Alamofire
 import Kingfisher
+import HUD
 
 class DepositViewController: ThemeViewController {
     private let qrCodeSideMargin: CGFloat = 72
     private let smallScreenQrCodeSideMargin: CGFloat = 88
 
+    private var cancellables = Set<AnyCancellable>()
+
     private let viewModel: DepositViewModel
+
+    private let spinner = HUDActivityView.create(with: .medium24)
+    private let spinnerView = UIView()
+    private let errorView = PlaceholderView()
+    private let qrCodeImageView = UIImageView()
+    private let testnetImageView = UIImageView()
+
+    private let stackView = UIStackView()
+    private let addressTitleLabel = UILabel()
+    private let addressLabel = UILabel()
+    private let infoButton = UIButton()
+
+    private var margin: CGFloat { view.width > 320 ? qrCodeSideMargin : smallScreenQrCodeSideMargin }
+
+    private var viewItem: DepositViewModel.ViewItem?
 
     init(viewModel: DepositViewModel) {
         self.viewModel = viewModel
@@ -24,21 +43,8 @@ class DepositViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = viewModel.watchAccount ? "deposit.address".localized : "deposit.receive_coin".localized(viewModel.coin.code)
+        title = viewModel.title
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
-
-        let imageView = UIImageView()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
-
-        imageView.kf.setImage(
-                with: URL(string: viewModel.coin.imageUrl),
-                placeholder: UIImage(named: viewModel.placeholderImageName),
-                options: [.scaleFactor(UIScreen.main.scale)]
-        )
-
-        imageView.snp.makeConstraints { maker in
-            maker.size.equalTo(CGFloat.iconSize24)
-        }
 
         let topWrapperView = UIView()
 
@@ -56,8 +62,6 @@ class DepositViewController: ThemeViewController {
             maker.centerY.equalToSuperview()
         }
 
-        let margin = view.width > 320 ? qrCodeSideMargin : smallScreenQrCodeSideMargin
-        let qrCodeImageView = UIImageView()
 
         contentWrapperView.addSubview(qrCodeImageView)
         qrCodeImageView.snp.makeConstraints { maker in
@@ -76,27 +80,15 @@ class DepositViewController: ThemeViewController {
         let qrCodeRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapCopy))
         qrCodeImageView.addGestureRecognizer(qrCodeRecognizer)
 
-        let address = viewModel.address
-
-
-        let size = view.width - 2 * margin
-
-        qrCodeImageView.asyncSetImage { UIImage.qrCodeImage(qrCodeString: address, size: size)  }
-
-        if viewModel.testNet {
-            let testnetImageView = UIImageView()
-
-            view.addSubview(testnetImageView)
-            testnetImageView.snp.makeConstraints { maker in
-                maker.top.equalTo(qrCodeImageView.snp.bottom)
-                maker.centerX.equalToSuperview()
-            }
-
-            testnetImageView.image = UIImage(named: "testnet_24")?.withRenderingMode(.alwaysTemplate)
-            testnetImageView.tintColor = .themeRed50
+        view.addSubview(testnetImageView)
+        testnetImageView.snp.makeConstraints { maker in
+            maker.top.equalTo(qrCodeImageView.snp.bottom)
+            maker.centerX.equalToSuperview()
         }
 
-        let stackView = UIStackView()
+        testnetImageView.image = UIImage(named: "testnet_24")?.withRenderingMode(.alwaysTemplate)
+        testnetImageView.tintColor = .themeRed50
+        testnetImageView.isHidden = true
 
         contentWrapperView.addSubview(stackView)
         stackView.snp.makeConstraints { maker in
@@ -107,45 +99,19 @@ class DepositViewController: ThemeViewController {
         stackView.spacing = 0
         stackView.alignment = .center
 
-        let addressTitleLabel = UILabel()
         addressTitleLabel.setContentHuggingPriority(.required, for: .horizontal)
         stackView.addArrangedSubview(addressTitleLabel)
 
         addressTitleLabel.numberOfLines = 0
 
-        let plainColor: UIColor = viewModel.testNet ? .themeLucian : .themeGray
-        let additionalColor = viewModel.additionalInfo.customColor ?? plainColor
-        let addressTitle = viewModel.watchAccount ? "deposit.address".localized : "deposit.your_address".localized
-
-        let mutableString = NSMutableAttributedString(
-                string: addressTitle,
-                attributes: [
-                    .font: UIFont.subhead2,
-                    .foregroundColor: plainColor
-                ])
-
-        if let text = viewModel.additionalInfo.text {
-            mutableString.append(
-                    NSAttributedString(string: " (\(text))", attributes: [
-                        .font: UIFont.subhead2,
-                        .foregroundColor: additionalColor
-                    ])
-            )
+        let infoButton = UIButton()
+        infoButton.snp.makeConstraints { make in
+            make.size.equalTo(CGFloat.margin24)
         }
 
-        addressTitleLabel.attributedText = mutableString
-
-        if case .warning = viewModel.additionalInfo {
-            let infoButton = UIButton()
-            infoButton.snp.makeConstraints { make in
-                make.size.equalTo(CGFloat.margin24)
-            }
-
-            stackView.addArrangedSubview(infoButton)
-
-            infoButton.setImage(UIImage(named: "circle_information_20")?.withTintColor(additionalColor), for: .normal)
-            infoButton.addTarget(self, action: #selector(onInfoButton), for: .touchUpInside)
-        }
+        stackView.addArrangedSubview(infoButton)
+        infoButton.addTarget(self, action: #selector(onInfoButton), for: .touchUpInside)
+        infoButton.isHidden = true
 
         let addressLabelWrapper = UIView()
 
@@ -160,8 +126,6 @@ class DepositViewController: ThemeViewController {
         addressLabelWrapper.isUserInteractionEnabled = true
         addressLabelWrapper.addGestureRecognizer(addressRecognizer)
 
-        let addressLabel = UILabel()
-
         addressLabelWrapper.addSubview(addressLabel)
         addressLabel.snp.makeConstraints { maker in
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
@@ -172,7 +136,6 @@ class DepositViewController: ThemeViewController {
         addressLabel.numberOfLines = 0
         addressLabel.font = .subhead1
         addressLabel.textColor = .themeBran
-        addressLabel.text = viewModel.address
 
         let copyButton = PrimaryButton()
 
@@ -186,6 +149,7 @@ class DepositViewController: ThemeViewController {
         copyButton.setTitle("button.copy".localized, for: .normal)
         copyButton.addTarget(self, action: #selector(onTapCopy), for: .touchUpInside)
         copyButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
+
         let shareButton = PrimaryButton()
 
         view.addSubview(shareButton)
@@ -198,14 +162,60 @@ class DepositViewController: ThemeViewController {
         shareButton.set(style: .gray)
         shareButton.setTitle("button.share".localized, for: .normal)
         shareButton.addTarget(self, action: #selector(onTapShare), for: .touchUpInside)
+
+        view.addSubview(spinnerView)
+        spinnerView.backgroundColor = view.backgroundColor
+        spinnerView.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
+
+        spinnerView.addSubview(spinner)
+        spinner.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+
+        spinnerView.isHidden = true
+
+        view.addSubview(errorView)
+        errorView.snp.makeConstraints { maker in
+            maker.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        errorView.image = UIImage(named: "sync_error_48")
+        errorView.text = "sync_error".localized
+        errorView.isHidden = true
+
+        viewModel.loadingPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] loading in
+                    self?.show(loading)
+                }
+                .store(in: &cancellables)
+
+        viewModel.errorPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] error in
+                    self?.show(error)
+                }
+                .store(in: &cancellables)
+
+        viewModel.viewItemPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] viewItem in
+                    self?.show(viewItem)
+                }
+                .store(in: &cancellables)
     }
 
     @objc private func onTapCopy() {
-        CopyHelper.copyAndNotify(value: viewModel.address)
+        guard let address = viewItem?.address else {
+            return
+        }
+        CopyHelper.copyAndNotify(value: address)
     }
 
     @objc private func onInfoButton() {
-        guard case let .warning(_, title, text) = viewModel.additionalInfo else {
+        guard case let .warning(_, title, text) = viewItem?.additionalInfo else {
             return
         }
 
@@ -213,12 +223,57 @@ class DepositViewController: ThemeViewController {
     }
 
     @objc private func onTapShare() {
-        let activityViewController = UIActivityViewController(activityItems: [viewModel.address], applicationActivities: [])
+        guard let address = viewItem?.address else {
+            return
+        }
+
+        let activityViewController = UIActivityViewController(activityItems: [address], applicationActivities: [])
         present(activityViewController, animated: true, completion: nil)
     }
 
     @objc private func onTapClose() {
         dismiss(animated: true)
+    }
+
+    private func show(_ loading: Bool) {
+        spinnerView.isHidden = !loading
+        if loading {
+            spinner.startAnimating()
+        } else {
+            spinner.stopAnimating()
+        }
+    }
+
+    private func show(_ error: String?) {
+        guard let error else {
+            errorView.isHidden = true
+            return
+        }
+
+        errorView.isHidden = false
+        errorView.text = error
+    }
+
+    private func show(_ viewItem: DepositViewModel.ViewItem?) {
+        self.viewItem = viewItem
+        guard let viewItem else {
+            return
+        }
+
+        let size = view.width - 2 * margin
+        qrCodeImageView.asyncSetImage { UIImage.qrCodeImage(qrCodeString: viewItem.address, size: size)  }
+
+        testnetImageView.isHidden = viewItem.isMainNet
+
+        if case .warning = viewItem.additionalInfo {
+            infoButton.isHidden = false
+            infoButton.setImage(UIImage(named: "circle_information_20")?.withTintColor(.themeJacob), for: .normal)
+        } else {
+            infoButton.isHidden = true
+        }
+
+        addressTitleLabel.attributedText = viewItem.title
+        addressLabel.text = viewItem.address
     }
 
 }

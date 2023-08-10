@@ -39,6 +39,11 @@ class ReceiveSelectorViewController<ViewModel: IReceiveSelectorViewModel>: Theme
         tableView.buildSections()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
+    }
+
     @objc private func onTapClose() {
         dismiss(animated: true)
     }
