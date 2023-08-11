@@ -161,15 +161,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "restore.binance.failed_to_connect" = "Failed to connect your API Key";
 "restore.binance.invalid_qr_code" = "Invalid QR Code";
 
-// Restore Coinzix
-
-"restore.coinzix.description" = "Enter your email and password from Coinzix Account";
-"restore.coinzix.sign_up" = "Sign Up";
-"restore.coinzix.login" = "Log In";
-"restore.coinzix.sample_username" = "Email";
-"restore.coinzix.sample_password" = "Password";
-"restore.coinzix.login_failed" = "Login Failed";
-
 // Coin Settings
 
 "coin_settings.title" = "Blockchain Settings";
@@ -1685,13 +1676,3 @@ Go to Settings - > %@ and allow access to the camera.";
 "cex_withdraw_confirm.network" = "Network";
 "cex_withdraw_confirm.withdraw" = "Withdraw";
 "cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
-
-// Coinzix Verify Withdraw
-
-"coinzix_verify.title" = "Security Verification";
-"coinzix_verify.failed" = "Failed to verify";
-"coinzix_verify.submit" = "Submit";
-"coinzix_verify.email_pin" = "Verification Code";
-"coinzix_verify.email_pin.description" = "Enter verification code sent to your email";
-"coinzix_verify.google_pin" = "Google Authentication Code";
-"coinzix_verify.google_pin.description" = "Enter google authentication code from your Google Authenticator App";
