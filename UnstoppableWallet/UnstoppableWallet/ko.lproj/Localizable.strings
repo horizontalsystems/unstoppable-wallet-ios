@@ -380,14 +380,15 @@
 "send.confirmation.total" = "합계";
 "send.confirmation.fee" = "수수료";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.send_button" = "전송";
+"send.confirmation.slide_to_send" = "Slide to Send";
 "send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
-"send.confirmation.resend_button" = "재전송";
+"send.confirmation.slide_to_resend" = "Slide to Resend";
 "send.confirmation.cancel_description" = "이 작업은 자신에게 새로운 0 금액 트랜잭션으로 다시 전송하여 이전 트랜잭션을 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
-"send.confirmation.cancel_button" = "트랜잭션 취소";
+"send.confirmation.slide_to_cancel" = "Slide to Cancel";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "메소드";
 "send.amount_error.balance" = "잔고 부족";
+"send.address_error.own_address" = "Cannot transfer TRX to yourself";
 "send.amount_error.maximum_amount" = "최대 %@ 금액";
 "send.amount_error.minimum_amount" = "최소 %@ 금액";
 "send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
@@ -1489,6 +1490,7 @@
 "fee_settings.errors.replacement_transaction_underpriced" = "교체 거래에 대한 낮은 수수료";
 "fee_settings.errors.transaction_underpriced" = "낮은 거래 수수료";
 "fee_settings.errors.tips_higher_than_max_fee" = "최대 수수료가 너무 낮습니다.";
+"fee_settings.errors.zero_amount.info" = "Cannot transfer 0 TRX";
 "fee_settings.warning.risk_of_getting_stuck" = "위험";
 "fee_settings.warning.risk_of_getting_stuck.info" = "트랜잭션이 잠시 동안 보류 상태로 유지되거나 완전히 실패할 수 있습니다.";
 "fee_settings.warning.overpricing" = "수수료가 너무 높음";
