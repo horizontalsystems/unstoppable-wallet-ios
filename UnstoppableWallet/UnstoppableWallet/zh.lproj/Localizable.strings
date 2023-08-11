@@ -161,15 +161,6 @@
 "restore.binance.failed_to_connect" = "连接您的 API 密钥失败";
 "restore.binance.invalid_qr_code" = "无效二维码";
 
-// Restore Coinzix
-
-"restore.coinzix.description" = "从 Coinzix 帐户输入您的电子邮件和密码";
-"restore.coinzix.sign_up" = "注册";
-"restore.coinzix.login" = "登录";
-"restore.coinzix.sample_username" = "电子邮件";
-"restore.coinzix.sample_password" = "密码";
-"restore.coinzix.login_failed" = "登录失败";
-
 // Coin Settings
 
 "coin_settings.title" = "区块链设置";
@@ -1685,13 +1676,3 @@
 "cex_withdraw_confirm.network" = "网络";
 "cex_withdraw_confirm.withdraw" = "提取";
 "cex_withdraw_confirm.withdraw_failed" = "提取失败";
-
-// Coinzix Verify Withdraw
-
-"coinzix_verify.title" = "安全验证";
-"coinzix_verify.failed" = "验证失败";
-"coinzix_verify.submit" = "提交";
-"coinzix_verify.email_pin" = "验证码";
-"coinzix_verify.email_pin.description" = "输入验证码发送到您的电子邮件";
-"coinzix_verify.google_pin" = "Google 身份验证码";
-"coinzix_verify.google_pin.description" = "从您的 Google 身份验证器应用程序中输入 Google 身份验证码";
