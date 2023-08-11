@@ -161,15 +161,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "restore.binance.failed_to_connect" = "API Anahtarınız bağlanamadı";
 "restore.binance.invalid_qr_code" = "Geçersiz QR Kodu";
 
-// Restore Coinzix
-
-"restore.coinzix.description" = "Coinzix Hesabından e-postanızı ve şifrenizi girin";
-"restore.coinzix.sign_up" = "Üye olmak";
-"restore.coinzix.login" = "Giriş yapmak";
-"restore.coinzix.sample_username" = "E-Posta";
-"restore.coinzix.sample_password" = "Şifre";
-"restore.coinzix.login_failed" = "Giriş başarısız oldu";
-
 // Coin Settings
 
 "coin_settings.title" = "Blockchain Ayarları";
@@ -1085,7 +1076,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Settings -> Privacy
 
 "settings.privacy" = "Gizlilik";
-"settings.privacy.description" = "%@ herhangi bir veri toplamaz veya kullanıcıları hakkında herhangi bir veriyi ifşa edebilecek analiz araçları kullanmaz. Unstoppable cüzdanı kullanıcıları için yüksek düzeyde gizlilik sağlamak üzere tasarlanmıştır.";
+"settings.privacy.description" = "%@ herhangi bir veri toplamaz veya kullanıcıları hakkında herhangi bir veriyi ifşa edebilecek analiz araçları kullanmaz. Сüzdanı kullanıcıları için yüksek düzeyde gizlilik sağlamak üzere tasarlanmıştır.";
 "settings.privacy.statement.user_data_storage" = "Kullanıcı verileri her zaman kullanıcının cihazında kalır.";
 "settings.privacy.statement.data_usage" = "Bu cüzdan, kullanıcılar hakkında herhangi bir veri toplamaz.";
 "settings.privacy.statement.data_privacy" = "Bu cüzdan, kullanıcılar hakkında herhangi bir veri paylaşmaz.";
@@ -1685,13 +1676,3 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "cex_withdraw_confirm.network" = "Ağ";
 "cex_withdraw_confirm.withdraw" = "Hesaptan Çek";
 "cex_withdraw_confirm.withdraw_failed" = "Para çekme başarısız oldu";
-
-// Coinzix Verify Withdraw
-
-"coinzix_verify.title" = "Güvenlik Doğrulaması";
-"coinzix_verify.failed" = "Doğrulama başarısız oldu";
-"coinzix_verify.submit" = "Onayla";
-"coinzix_verify.email_pin" = "Onay kodu";
-"coinzix_verify.email_pin.description" = "E-postanıza gönderilen doğrulama kodunu girin";
-"coinzix_verify.google_pin" = "Google Kimlik Doğrulama Kodu";
-"coinzix_verify.google_pin.description" = "Google Authenticator Uygulamanızdan google kimlik doğrulama kodunu girin";
