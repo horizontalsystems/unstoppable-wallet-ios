@@ -163,15 +163,6 @@
 "restore.binance.failed_to_connect" = "Не удалось подключиться к твоему API ключу";
 "restore.binance.invalid_qr_code" = "Недопустимый QR-код";
 
-// Restore Coinzix
-
-"restore.coinzix.description" = "Введите адрес электронной почты и пароль из аккаунта Coinzix";
-"restore.coinzix.sign_up" = "Регистрация";
-"restore.coinzix.login" = "Войти";
-"restore.coinzix.sample_username" = "Email";
-"restore.coinzix.sample_password" = "Пароль";
-"restore.coinzix.login_failed" = "Ошибка при входе";
-
 // Coin Settings
 
 "coin_settings.title" = "Настройки блокчейна";
@@ -1689,13 +1680,3 @@
 "cex_withdraw_confirm.network" = "Сеть";
 "cex_withdraw_confirm.withdraw" = "Вывод средств";
 "cex_withdraw_confirm.withdraw_failed" = "Вывод средств не выполнен";
-
-// Coinzix Verify Withdraw
-
-"coinzix_verify.title" = "Проверка безопасности";
-"coinzix_verify.failed" = "Не подтверждено";
-"coinzix_verify.submit" = "Подтвердить";
-"coinzix_verify.email_pin" = "Код верификации";
-"coinzix_verify.email_pin.description" = "Введите код подтверждения, отправленный на вашу эл. почту:";
-"coinzix_verify.google_pin" = "Код Google Authenticator";
-"coinzix_verify.google_pin.description" = "Введите код Google аутентификации из приложения Google Authenticator";
