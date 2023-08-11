@@ -56,16 +56,25 @@ class SendTronConfirmationViewModel {
                 sendEnabledRelay.accept(false)
 
                 let cautions = errors.map { error in
-                    if let tronError = error as? SendTronConfirmationService.TransactionError,
-                       case let .insufficientBalance(balance) = tronError {
-                        let coinValue = coinServiceFactory.baseCoinService.coinValue(value: balance)
-                        let balanceString = ValueFormatter.instance.formatShort(coinValue: coinValue)
+                    if let tronError = error as? SendTronConfirmationService.TransactionError {
+                        switch tronError {
+                            case .insufficientBalance(let balance):
+                                let coinValue = coinServiceFactory.baseCoinService.coinValue(value: balance)
+                                let balanceString = ValueFormatter.instance.formatShort(coinValue: coinValue)
 
-                        return TitledCaution(
-                            title: "fee_settings.errors.insufficient_balance".localized,
-                            text: "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? ""),
-                            type: .error
-                        )
+                                return TitledCaution(
+                                    title: "fee_settings.errors.insufficient_balance".localized,
+                                    text: "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? ""),
+                                    type: .error
+                                )
+
+                            case .zeroAmount:
+                                return TitledCaution(
+                                    title: "alert.error".localized,
+                                    text: "fee_settings.errors.zero_amount.info".localized,
+                                    type: .error
+                                )
+                        }
                     } else {
                         return TitledCaution(
                             title: "Error",

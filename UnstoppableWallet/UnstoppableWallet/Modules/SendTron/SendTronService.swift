@@ -29,6 +29,13 @@ class SendTronService {
         }
     }
 
+    private let addressErrorRelay = PublishRelay<Error?>()
+    private var addressError: Error? = nil {
+        didSet {
+            addressErrorRelay.accept(addressError)
+        }
+    }
+
     private let activeAddressRelay = PublishRelay<Bool>()
 
     init(token: Token, adapter: ISendTronAdapter, addressService: AddressService) {
@@ -84,6 +91,10 @@ extension SendTronService {
 
     var amountCautionObservable: Observable<(error: Error?, warning: AmountWarning?)> {
         amountCautionRelay.asObservable()
+    }
+
+    var addressErrorObservable: Observable<Error?> {
+        addressErrorRelay.asObservable()
     }
 
     var activeAddressObservable: Observable<Bool> {
@@ -161,6 +172,12 @@ extension SendTronService: IAmountInputService {
             return
         }
 
+        guard tronAddress != adapter.tronKitWrapper.tronKit.receiveAddress else {
+            state = .notReady
+            addressError = AddressError.ownAddress
+            return
+        }
+
         Single<Bool>
             .create { [weak self] observer in
                 let task = Task { [weak self] in
@@ -192,6 +209,10 @@ extension SendTronService {
     enum AmountError: Error {
         case invalidDecimal
         case insufficientBalance
+    }
+
+    enum AddressError: Error {
+        case ownAddress
     }
 
     enum AmountWarning {

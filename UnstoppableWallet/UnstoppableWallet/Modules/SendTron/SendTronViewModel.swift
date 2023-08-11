@@ -10,6 +10,7 @@ class SendTronViewModel {
 
     private let proceedEnabledRelay = BehaviorRelay<Bool>(value: false)
     private let amountCautionRelay = BehaviorRelay<Caution?>(value: nil)
+    private let addressCautionRelay = BehaviorRelay<Caution?>(value: nil)
     private let proceedRelay = PublishRelay<Contract>()
 
     init(service: SendTronService) {
@@ -17,6 +18,7 @@ class SendTronViewModel {
 
         subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(disposeBag, service.amountCautionObservable) { [weak self] in self?.sync(amountCaution: $0) }
+        subscribe(disposeBag, service.addressErrorObservable) { [weak self] in self?.sync(addressError: $0) }
 
         sync(state: service.state)
     }
@@ -43,6 +45,16 @@ class SendTronViewModel {
         amountCautionRelay.accept(caution)
     }
 
+    private func sync(addressError: Error?) {
+        var caution: Caution? = nil
+
+        if let error = addressError {
+            caution = Caution(text: error.smartDescription, type: .error)
+        }
+
+        addressCautionRelay.accept(caution)
+    }
+
 }
 
 extension SendTronViewModel {
@@ -53,6 +65,10 @@ extension SendTronViewModel {
 
     var amountCautionDriver: Driver<Caution?> {
         amountCautionRelay.asDriver()
+    }
+
+    var addressCautionDriver: Driver<Caution?> {
+        addressCautionRelay.asDriver()
     }
 
     var proceedSignal: Signal<Contract> {
@@ -78,6 +94,17 @@ extension SendTronService.AmountError: LocalizedError {
     var errorDescription: String? {
         switch self {
             case .insufficientBalance: return "send.amount_error.balance".localized
+            default: return "\(self)"
+        }
+    }
+
+}
+
+extension SendTronService.AddressError: LocalizedError {
+
+    var errorDescription: String? {
+        switch self {
+            case .ownAddress: return "send.address_error.own_address".localized
             default: return "\(self)"
         }
     }
