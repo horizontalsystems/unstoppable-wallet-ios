@@ -382,14 +382,15 @@
 "send.confirmation.total" = "总额";
 "send.confirmation.fee" = "费用";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.send_button" = "发送​​";
+"send.confirmation.slide_to_send" = "Slide to Send";
 "send.confirmation.resend_description" = "此操作将尝试通过向自己重新发送新的金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
-"send.confirmation.resend_button" = "重新发送";
+"send.confirmation.slide_to_resend" = "Slide to Resend";
 "send.confirmation.cancel_description" = "此操作将尝试通过向自己重新发送新的0金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
-"send.confirmation.cancel_button" = "取消交易";
+"send.confirmation.slide_to_cancel" = "Slide to Cancel";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "方法";
 "send.amount_error.balance" = "余额不足";
+"send.address_error.own_address" = "Cannot transfer TRX to yourself";
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
 "send.amount_error.min_required_balance" = "最小要求剩余 %@";
@@ -1491,6 +1492,7 @@
 "fee_settings.errors.replacement_transaction_underpriced" = "替换交易的低费用";
 "fee_settings.errors.transaction_underpriced" = "低交易费用";
 "fee_settings.errors.tips_higher_than_max_fee" = "最高费用过低";
+"fee_settings.errors.zero_amount.info" = "Cannot transfer 0 TRX";
 "fee_settings.warning.risk_of_getting_stuck" = "有风险";
 "fee_settings.warning.risk_of_getting_stuck.info" = "交易可能会在一段时间内仍然处于待处理状态或完全失败。";
 "fee_settings.warning.overpricing" = "费用太高";
