@@ -161,15 +161,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "restore.binance.failed_to_connect" = "Impossible de connecter votre clé API";
 "restore.binance.invalid_qr_code" = "QR-Code invalide";
 
-// Restore Coinzix
-
-"restore.coinzix.description" = "Entrez votre adresse e-mail et votre mot de passe depuis le compte Coinzix";
-"restore.coinzix.sign_up" = "S'inscrire";
-"restore.coinzix.login" = "Log In";
-"restore.coinzix.sample_username" = "Email";
-"restore.coinzix.sample_password" = "Mot de passe";
-"restore.coinzix.login_failed" = "Échec de la connexion";
-
 // Coin Settings
 
 "coin_settings.title" = "Paramètres de la Blockchain";
@@ -1686,13 +1677,3 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "cex_withdraw_confirm.network" = "Réseau";
 "cex_withdraw_confirm.withdraw" = "Retraits";
 "cex_withdraw_confirm.withdraw_failed" = "Échec du retrait";
-
-// Coinzix Verify Withdraw
-
-"coinzix_verify.title" = "Vérification de la sécurité";
-"coinzix_verify.failed" = "Échec de la vérification";
-"coinzix_verify.submit" = "Soumettre";
-"coinzix_verify.email_pin" = "Code de vérification";
-"coinzix_verify.email_pin.description" = "Entrez le code de vérification envoyé à votre adresse e-mail";
-"coinzix_verify.google_pin" = "Google Authentication Code";
-"coinzix_verify.google_pin.description" = "Entrez le code d'authentification Google depuis votre application Google Authenticator";
