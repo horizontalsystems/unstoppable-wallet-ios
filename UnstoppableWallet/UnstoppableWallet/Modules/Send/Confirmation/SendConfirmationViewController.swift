@@ -11,7 +11,7 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
 
     private let tableView = SectionsTableView(style: .grouped)
     private let bottomWrapper = BottomGradientHolder()
-    private let sendButton = PrimaryButton()
+    private let sendButton = SliderButton()
 
     private var viewItems = [[SendConfirmationViewModel.ViewItem]]()
 
@@ -44,9 +44,11 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
         bottomWrapper.add(to: self, under: tableView)
         bottomWrapper.addSubview(sendButton)
 
-        sendButton.set(style: .yellow)
-        sendButton.setTitle("send.confirmation.send_button".localized, for: .normal)
-        sendButton.addTarget(self, action: #selector(onTapSend), for: .touchUpInside)
+        sendButton.title = "send.confirmation.slide_to_send".localized
+        sendButton.image = UIImage(named: "arrow_medium_2_right_24")
+        sendButton.onTap = { [weak self] in
+            self?.viewModel.send()
+        }
 
         subscribe(disposeBag, viewModel.sendEnabledDriver) { [weak self] in self?.sendButton.isEnabled = $0 }
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in self?.sync(viewItems: $0) }
@@ -64,10 +66,6 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
 
     @objc private func onTapCancel() {
         dismiss(animated: true)
-    }
-
-    @objc private func onTapSend() {
-        viewModel.send()
     }
 
     func handleSendSuccess() {
