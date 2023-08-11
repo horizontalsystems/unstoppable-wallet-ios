@@ -159,15 +159,6 @@
 "restore.binance.failed_to_connect" = "API 키 연결 실패";
 "restore.binance.invalid_qr_code" = "잘못된 QR 코드";
 
-// Restore Coinzix
-
-"restore.coinzix.description" = "코인직스 계정의 이메일과 비밀번호를 입력하세요";
-"restore.coinzix.sign_up" = "회원가입";
-"restore.coinzix.login" = "로그인";
-"restore.coinzix.sample_username" = "Email";
-"restore.coinzix.sample_password" = "비밀번호";
-"restore.coinzix.login_failed" = "로그인 실패";
-
 // Coin Settings
 
 "coin_settings.title" = "블록 체인 설정";
@@ -1683,13 +1674,3 @@
 "cex_withdraw_confirm.network" = "네트워크";
 "cex_withdraw_confirm.withdraw" = "빼다";
 "cex_withdraw_confirm.withdraw_failed" = "출금 실패";
-
-// Coinzix Verify Withdraw
-
-"coinzix_verify.title" = "보안 확인";
-"coinzix_verify.failed" = "검증 실패";
-"coinzix_verify.submit" = "제출하기";
-"coinzix_verify.email_pin" = "인증 코드";
-"coinzix_verify.email_pin.description" = "인증 코드를 이메일로 보냈습니다.";
-"coinzix_verify.google_pin" = "구글 OTP";
-"coinzix_verify.google_pin.description" = "Google Authenticator 앱에서 인증 코드를 입력하십시오.";
