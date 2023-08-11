@@ -6,10 +6,10 @@ import RxCocoa
 import ComponentKit
 
 class SendEvmConfirmationViewController: SendEvmTransactionViewController {
-    private let sendButton = PrimaryButton()
+    private let sendButton = SliderButton()
 
     var confirmationTitle = "confirm".localized
-    var confirmationButtonTitle = "send.confirmation.send_button".localized
+    var confirmationButtonTitle = "send.confirmation.slide_to_send".localized
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,15 +18,13 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
 
         bottomWrapper.addSubview(sendButton)
 
-        sendButton.set(style: .yellow)
-        sendButton.setTitle(confirmationButtonTitle, for: .normal)
-        sendButton.addTarget(self, action: #selector(onTapSend), for: .touchUpInside)
+        sendButton.title = confirmationButtonTitle
+        sendButton.image = UIImage(named: "arrow_medium_2_right_24")
+        sendButton.onTap = { [weak self] in
+            self?.transactionViewModel.send()
+        }
 
         subscribe(disposeBag, transactionViewModel.sendEnabledDriver) { [weak self] in self?.sendButton.isEnabled = $0 }
-    }
-
-    @objc private func onTapSend() {
-        transactionViewModel.send()
     }
 
     override func handleSending() {

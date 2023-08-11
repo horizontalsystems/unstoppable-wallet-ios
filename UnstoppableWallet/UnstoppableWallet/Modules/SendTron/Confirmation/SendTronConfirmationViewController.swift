@@ -17,7 +17,7 @@ class SendTronConfirmationViewController: ThemeViewController {
     private let tableView = SectionsTableView(style: .grouped)
     let bottomWrapper = BottomGradientHolder()
 
-    private let sendButton = PrimaryButton()
+    private let sendButton = SliderButton()
     private let feeCell: FeeCell
 
     private var sectionViewItems = [SendTronConfirmationViewModel.SectionViewItem]()
@@ -63,9 +63,11 @@ class SendTronConfirmationViewController: ThemeViewController {
 
         bottomWrapper.addSubview(sendButton)
 
-        sendButton.set(style: .yellow)
-        sendButton.setTitle("send.confirmation.send_button".localized, for: .normal)
-        sendButton.addTarget(self, action: #selector(onTapSend), for: .touchUpInside)
+        sendButton.title = "send.confirmation.slide_to_send".localized
+        sendButton.image = UIImage(named: "arrow_medium_2_right_24")
+        sendButton.onTap = { [weak self] in
+            self?.transactionViewModel.send()
+        }
 
         subscribe(disposeBag, transactionViewModel.cautionsDriver) { [weak self] in self?.handle(cautions: $0) }
         subscribe(disposeBag, transactionViewModel.sendingSignal) { [weak self] in self?.handleSending() }
@@ -82,10 +84,6 @@ class SendTronConfirmationViewController: ThemeViewController {
         tableView.buildSections()
 
         isLoaded = true
-    }
-
-    @objc private func onTapSend() {
-        transactionViewModel.send()
     }
 
     private func handle(cautions: [TitledCaution]) {

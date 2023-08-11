@@ -10742,7 +10742,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ComponentKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.6;
+				version = 2.0.9;
 			};
 		};
 		D3C187D3290FCF7D00FE1900 /* XCRemoteSwiftPackageReference "HUD.Swift" */ = {
