@@ -92,6 +92,10 @@ class SendTronViewController: ThemeViewController {
             self?.amountCell.set(cautionType: caution?.type)
             self?.amountCautionCell.set(caution: caution)
         }
+        subscribe(disposeBag, viewModel.addressCautionDriver) { [weak self] caution in
+            self?.recipientCell.set(cautionType: caution?.type)
+            self?.recipientCautionCell.set(caution: caution)
+        }
         subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openConfirm(contract: $0) }
 
         tableView.buildSections()

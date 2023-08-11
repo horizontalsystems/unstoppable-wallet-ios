@@ -11,7 +11,6 @@ class SendTronConfirmationService {
 
     private let trxDecimals = Decimal(1_000_000)
     private let feeService: SendFeeService
-    private let contract: Contract
     private let tronKitWrapper: TronKitWrapper
     private let evmLabelManager: EvmLabelManager
     private let sendAddress: TronKit.Address?
@@ -39,6 +38,7 @@ class SendTronConfirmationService {
         }
     }
 
+    private(set) var contract: Contract
     private(set) var dataState: DataState
 
     private let sendStateRelay = PublishRelay<SendState>()
@@ -54,12 +54,9 @@ class SendTronConfirmationService {
         self.feeService = feeService
         self.evmLabelManager = evmLabelManager
 
-        let tronKit = tronKitWrapper.tronKit
-        let decoration = tronKit.decorate(contract: contract)
-
         dataState = DataState(
             contract: contract,
-            decoration: decoration
+            decoration: tronKitWrapper.tronKit.decorate(contract: contract)
         )
 
         switch contract {
@@ -67,7 +64,7 @@ class SendTronConfirmationService {
                 sendAddress = transfer.toAddress
 
             case is TriggerSmartContract:
-                if let transfer = decoration as? OutgoingEip20Decoration {
+                if let transfer = dataState.decoration as? OutgoingEip20Decoration {
                     sendAddress = transfer.to
                 } else {
                     sendAddress = nil
@@ -116,10 +113,28 @@ class SendTronConfirmationService {
 
         feeState = .completed(Decimal(totalFees) / trxDecimals)
 
-        var totalAmount = totalFees
+        var totalAmount = 0
         if let transfer = contract as? TransferContract {
-            totalAmount += transfer.amount
+            var sentAmount = transfer.amount
+            if tronKit.trxBalance == transfer.amount {
+                // If the maximum amount is being sent, then we subtract fees from sent amount
+                sentAmount = sentAmount - totalFees
+
+                guard sentAmount > 0 else {
+                    state = .notReady(errors: [TransactionError.zeroAmount])
+                    return
+                }
+
+                contract = tronKit.transferContract(toAddress: transfer.toAddress, value: sentAmount)
+                dataState = DataState(
+                    contract: contract,
+                    decoration: tronKit.decorate(contract: contract)
+                )
+            }
+            totalAmount += sentAmount
         }
+
+        totalAmount += totalFees
 
         if tronKit.trxBalance < totalAmount {
             state = .notReady(errors: [TransactionError.insufficientBalance(balance: tronKit.trxBalance)])
@@ -207,6 +222,7 @@ extension SendTronConfirmationService {
 
     enum TransactionError: Error {
         case insufficientBalance(balance: BigUInt)
+        case zeroAmount
     }
 
 }
