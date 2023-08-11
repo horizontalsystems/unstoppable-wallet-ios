@@ -142,7 +142,7 @@ class BalanceButtonsView: UIView {
         receiveCircleButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttons.count <= 3
         depositButtonWrapper.isHidden = (buttons[.deposit] ?? .hidden) == .hidden
         addressButton.isHidden = (buttons[.address] ?? .hidden) == .hidden
-        swapButtonWrapper.isHidden = true //(buttons[.swap] ?? .hidden) == .hidden
+        swapButtonWrapper.isHidden = (buttons[.swap] ?? .hidden) == .hidden
         chartButtonWrapper.isHidden = (buttons[.chart] ?? .hidden) == .hidden
 
         onTapSend = sendAction
