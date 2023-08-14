@@ -345,6 +345,10 @@ Go to Settings - > %@ and allow access to the camera.";
 "deposit.not_active.title" = "Not Active Address";
 "deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
 
+"deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
+"deposit.zcash.restore.already_own" = "Yes, I already own";
+"deposit.zcash.restore.dont_have" = "No, I don’t have";
+
 "deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
 
 "receive_network_select.title" = "Network";
