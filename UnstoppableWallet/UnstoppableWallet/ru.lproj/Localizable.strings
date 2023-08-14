@@ -1663,13 +1663,13 @@
 // Cex Deposit
 
 "cex_deposit.title" = "Депозит %@";
-"cex_deposit.qr_code_description" = "Ваш адрес для депозита %@";
+"deposit.qr_code_description" = "Ваш адрес для депозита %@";
 "cex_deposit.address" = "Адрес";
 "cex_deposit.network" = "Сеть";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Мин. сумма";
 "cex_deposit.warning_memo" = "Необходимо memo (tag), или вы потеряете ваши монеты.";
-"cex_deposit.warning" = "Отправка только %@ на этот адрес. Отправка других типов токенов на этот адрес приведет к их окончательной потере.";
+"deposit.warning" = "Отправка только %@ на этот адрес. Отправка других типов токенов на этот адрес приведет к их окончательной потере.";
 "cex_deposit.copy_address" = "Копировать адрес";
 "cex_deposit.share_address" = "Поделиться адресом";
 "cex_deposit.failed" = "Не удалось загрузить адрес депозита. Повторите попытку.";

@@ -1659,13 +1659,13 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 // Cex Deposit
 
 "cex_deposit.title" = "Depósito %@";
-"cex_deposit.qr_code_description" = "Seu endereço para o depósito %@";
+"deposit.qr_code_description" = "Seu endereço para o depósito %@";
 "cex_deposit.address" = "Endereço";
 "cex_deposit.network" = "Rede";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Valor Mín.";
 "cex_deposit.warning_memo" = "Memo (tag) é necessário, ou você perderá suas moedas.";
-"cex_deposit.warning" = "Envie apenas %@ para este endereço. Enviar outros tipos de tokens para este endereço resultará em sua perda suprema.";
+"deposit.warning" = "Envie apenas %@ para este endereço. Enviar outros tipos de tokens para este endereço resultará em sua perda suprema.";
 "cex_deposit.copy_address" = "Copiar Endereço";
 "cex_deposit.share_address" = "Compartilhar endereço";
 "cex_deposit.failed" = "Não foi possível carregar o endereço de depósito. Por favor, tente novamente.";

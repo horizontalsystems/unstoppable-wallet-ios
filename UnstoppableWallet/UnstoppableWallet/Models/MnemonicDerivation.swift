@@ -49,6 +49,10 @@ enum MnemonicDerivation: String, CaseIterable {
         }
     }
 
+    var recommended: String {
+        self == Self.default ? "blockchain_type.recommended".localized : ""
+    }
+
 }
 
 extension Purpose {
