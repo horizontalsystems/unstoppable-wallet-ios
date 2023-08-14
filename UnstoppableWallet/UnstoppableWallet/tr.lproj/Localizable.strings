@@ -1659,13 +1659,13 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Cex Deposit
 
 "cex_deposit.title" = "Depozito %@";
-"cex_deposit.qr_code_description" = "%@ yatırmak için adresiniz";
+"deposit.qr_code_description" = "%@ yatırmak için adresiniz";
 "cex_deposit.address" = "Adres";
 "cex_deposit.network" = "Ağ";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. miktar";
 "cex_deposit.warning_memo" = "Not (etiket) gereklidir, aksi takdirde madeni paralarınızı kaybedersiniz.";
-"cex_deposit.warning" = "Bu adrese yalnızca %@ gönderin. Bu adrese başka türden jetonların gönderilmesi nihai kayıplarına neden olacaktır.";
+"deposit.warning" = "Bu adrese yalnızca %@ gönderin. Bu adrese başka türden jetonların gönderilmesi nihai kayıplarına neden olacaktır.";
 "cex_deposit.copy_address" = "Adresi Kopyala";
 "cex_deposit.share_address" = " Adresi paylaş";
 "cex_deposit.failed" = "Para yatırma adresi yüklenemedi. Lütfen tekrar deneyiniz.";

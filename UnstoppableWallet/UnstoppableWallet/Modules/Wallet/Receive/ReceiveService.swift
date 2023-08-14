@@ -124,7 +124,7 @@ extension ReceiveService {
         let eligibleTokens = fullCoin.tokens.filter { account.type.supports(token: $0) }
         // For alone token check exists and show address
         if eligibleTokens.count == 1 {
-            showReceive(token: fullCoin.tokens[0])
+            showReceive(token: eligibleTokens[0])
             return
         }
         // For multi tokens check hasSettings(derived and addressType)

@@ -11,6 +11,7 @@ class BalanceCell: UITableViewCell {
     private let topView = BalanceTopView()
     private let separatorView = UIView()
     private let lockedAmountView = BalanceLockedAmountView()
+    private let buttonsView = BalanceButtonsView()
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -44,13 +45,20 @@ class BalanceCell: UITableViewCell {
             maker.top.equalTo(separatorView.snp.bottom)
             maker.height.equalTo(BalanceLockedAmountView.height)
         }
+
+        cardView.contentView.addSubview(buttonsView)
+        buttonsView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.top.equalTo(lockedAmountView.snp.bottom).offset(CGFloat.margin6)
+            maker.height.equalTo(BalanceButtonsView.height)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
 
-    func bind(viewItem: BalanceViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onTap: (() -> ())?, onTapError: (() -> ())?) {
+    func bind(viewItem: BalanceViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onSend: @escaping () -> (), onWithdraw: @escaping () -> (), onReceive: @escaping () -> (), onDeposit: @escaping () -> (), onSwap: @escaping () -> (), onChart: @escaping () -> (), onTapError: (() -> ())?) {
         topView.bind(viewItem: viewItem.topViewItem, onTapError: onTapError)
         topView.layoutIfNeeded()
 
@@ -71,6 +79,11 @@ class BalanceCell: UITableViewCell {
                 self.contentView.layoutIfNeeded()
             }
         }
+
+        if let buttons = viewItem.buttons {
+            buttonsView.bind(buttons: buttons, sendAction: onSend, withdrawAction: onWithdraw, receiveAction: onReceive, depositAction: onDeposit, swapAction: onSwap, chartAction: onChart)
+        }
+        buttonsView.set(hidden: viewItem.buttons == nil, animated: animated, duration: duration)
     }
 
     static func height(viewItem: BalanceViewItem) -> CGFloat {
@@ -83,7 +96,7 @@ class BalanceCell: UITableViewCell {
         }
 
         if viewItem.buttons != nil {
-            height += BalanceTopView.expandedMargin
+            height += BalanceTopView.expandedMargin + .margin6
             height += BalanceButtonsView.height
         }
 

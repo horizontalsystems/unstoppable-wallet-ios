@@ -1660,13 +1660,13 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Cex Deposit
 
 "cex_deposit.title" = "Dépôt %@";
-"cex_deposit.qr_code_description" = "Votre adresse pour le dépôt %@";
+"deposit.qr_code_description" = "Votre adresse pour le dépôt %@";
 "cex_deposit.address" = "Adresses";
 "cex_deposit.network" = "Réseau";
 "cex_deposit.memo" = "Mémo (Tag)";
 "cex_deposit.min_amount" = "Montant minimum";
 "cex_deposit.warning_memo" = "Mémo (tag) est requis ou vous perdrez vos pièces.";
-"cex_deposit.warning" = "Envoyer seulement %@ à cette adresse. Envoyer d'autres types de jetons à cette adresse entraînera leur perte ultime.";
+"deposit.warning" = "Envoyer seulement %@ à cette adresse. Envoyer d'autres types de jetons à cette adresse entraînera leur perte ultime.";
 "cex_deposit.copy_address" = "Copier l'adresse";
 "cex_deposit.share_address" = "Partager l'adresse";
 "cex_deposit.failed" = "Impossible de charger l'adresse du dépôt. Veuillez réessayer.";

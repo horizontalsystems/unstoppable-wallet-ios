@@ -20,7 +20,7 @@ extension ReceiveBitcoinCashCoinTypeViewModel {
             return ReceiveSelectorViewModel.ViewItem(
                     uid: bitcoinCashCoinType.rawValue,
                     imageUrl: nil,
-                    title: bitcoinCashCoinType.description,
+                    title: bitcoinCashCoinType.description + bitcoinCashCoinType.recommended,
                     subtitle: bitcoinCashCoinType.title.uppercased()
             )
         }
