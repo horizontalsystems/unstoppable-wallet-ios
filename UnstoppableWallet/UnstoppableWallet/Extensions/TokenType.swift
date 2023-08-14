@@ -61,8 +61,8 @@ extension TokenType {
 
     var description: String {
         switch self {
-        case .derived(let derivation): return derivation.mnemonicDerivation.addressType
-        case .addressType(let type): return type.bitcoinCashCoinType.description
+        case .derived(let derivation): return derivation.mnemonicDerivation.addressType + derivation.mnemonicDerivation.recommended
+        case .addressType(let type): return type.bitcoinCashCoinType.description + type.bitcoinCashCoinType.recommended
         default: return ""
         }
     }

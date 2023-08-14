@@ -1650,13 +1650,13 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Cex Deposit
 
 "cex_deposit.title" = "Depositar %@";
-"cex_deposit.qr_code_description" = "Tu dirección para depositar %@";
+"deposit.qr_code_description" = "Tu dirección para depositar %@";
 "cex_deposit.address" = "Dirección";
 "cex_deposit.network" = "Red";
 "cex_deposit.memo" = "Memo (Etiqueta)";
 "cex_deposit.min_amount" = "Importe mínimo";
 "cex_deposit.warning_memo" = "Se requiere Memo (etiqueta) o perderá sus monedas.";
-"cex_deposit.warning" = "Enviar sólo %@ a esta dirección. Enviar otros tipos de tokens a esta dirección dará como resultado su pérdida definitiva.";
+"deposit.warning" = "Enviar sólo %@ a esta dirección. Enviar otros tipos de tokens a esta dirección dará como resultado su pérdida definitiva.";
 "cex_deposit.copy_address" = "Copiar la dirección";
 "cex_deposit.share_address" = "Compartir Dirección";
 "cex_deposit.failed" = "Error al cargar la dirección del depósito. Vuelva a intentarlo.";

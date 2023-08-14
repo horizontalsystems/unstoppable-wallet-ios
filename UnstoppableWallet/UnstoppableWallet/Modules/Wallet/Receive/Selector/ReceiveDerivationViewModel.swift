@@ -20,7 +20,7 @@ extension ReceiveDerivationViewModel {
             return ReceiveSelectorViewModel.ViewItem(
                     uid: derivation.rawValue,
                     imageUrl: nil,
-                    title: derivation.addressType + (derivation == MnemonicDerivation.default ? "receive_address.recommended".localized : ""),
+                    title: derivation.addressType + derivation.recommended,
                     subtitle: derivation.title
             )
         }

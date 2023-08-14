@@ -428,8 +428,33 @@ class WalletViewController: ThemeViewController {
                 viewItem: viewItem,
                 animated: animated,
                 duration: animationDuration,
-                onTap: { [weak self] in
-                    print("Tap cell in wallet")
+                onSend: { [weak self] in
+                    if let wallet = viewItem.element.wallet {
+                        self?.openSend(wallet: wallet)
+                    }
+                },
+                onWithdraw: { [weak self] in
+                    if let cexAsset = viewItem.element.cexAsset {
+                        self?.openWithdraw(cexAsset: cexAsset)
+                    }
+                },
+                onReceive: { [weak self] in
+                    if let wallet = viewItem.element.wallet {
+                        self?.viewModel.onTapReceive(wallet: wallet)
+                    }
+                },
+                onDeposit: { [weak self] in
+                    if let cexAsset = viewItem.element.cexAsset {
+                        self?.openDeposit(cexAsset: cexAsset)
+                    }
+                },
+                onSwap: { [weak self] in
+                    if let wallet = viewItem.element.wallet {
+                        self?.openSwap(wallet: wallet)
+                    }
+                },
+                onChart: { [weak self] in
+                    self?.viewModel.onTapChart(element: viewItem.element)
                 },
                 onTapError: { [weak self] in
                     self?.viewModel.onTapFailedIcon(element: viewItem.element)
@@ -467,7 +492,7 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openReceive(wallet: Wallet) {
-        if let module = DepositModule.viewController(wallet: wallet) {
+        if let module = ReceiveAddressModule.viewController(wallet: wallet) {
             present(ThemeNavigationController(rootViewController: module), animated: true)
         }
     }

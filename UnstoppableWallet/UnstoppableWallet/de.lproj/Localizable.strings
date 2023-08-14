@@ -1650,13 +1650,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Cex Deposit
 
 "cex_deposit.title" = "Auftragen %@";
-"cex_deposit.qr_code_description" = "Ihre Adresse für %@";
+"deposit.qr_code_description" = "Ihre Adresse für %@";
 "cex_deposit.address" = "Adresse";
 "cex_deposit.network" = "Netzwerk";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. Amount";
 "cex_deposit.warning_memo" = "Memo (Tag) ist erforderlich, sonst verlieren Sie Ihre Münzen.";
-"cex_deposit.warning" = "Senden Sie nur %@ an diese Adresse. Das Senden anderer Arten von Tokens an diese Adresse führt zu ihrem ultimativen Verlust.";
+"deposit.warning" = "Senden Sie nur %@ an diese Adresse. Das Senden anderer Arten von Tokens an diese Adresse führt zu ihrem ultimativen Verlust.";
 "cex_deposit.copy_address" = "Adresse kopieren";
 "cex_deposit.share_address" = "Adresse teilen";
 "cex_deposit.failed" = "Fehler beim Laden der Einzahlungsadresse. Bitte erneut versuchen.";

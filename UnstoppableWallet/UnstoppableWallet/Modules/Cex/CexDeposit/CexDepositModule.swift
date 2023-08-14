@@ -23,8 +23,10 @@ struct CexDepositModule {
         }
 
         let service = CexDepositService(cexAsset: cexAsset, network: network, provider: cexAccount.depositProvider)
-        let viewModel = CexDepositViewModel(service: service)
-        return CexDepositViewController(viewModel: viewModel)
+        let viewItemFactory = CexDepositViewItemFactory()
+        let viewModel = ReceiveAddressViewModel(service: service, viewItemFactory: viewItemFactory)
+
+        return ReceiveAddressViewController(viewModel: viewModel)
     }
 
 }
