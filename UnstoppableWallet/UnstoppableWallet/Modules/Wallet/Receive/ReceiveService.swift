@@ -6,17 +6,19 @@ class ReceiveService {
     private let account: Account
     private let walletManager: WalletManager
     private let marketKit: MarketKit.Kit
+    private let restoreSettingsService: RestoreSettingsService
 
     private let showTokenSubject = PassthroughSubject<Wallet, Never>()
     private let showBlockchainSelectSubject = PassthroughSubject<(FullCoin, AccountType), Never>()
     private let showDerivationSelectSubject = PassthroughSubject<[Wallet], Never>()
     private let showBitcoinCashCoinTypeSelectSubject = PassthroughSubject<[Wallet], Never>()
-    private let showZcashTypeSelectSubject = PassthroughSubject<Void, Never>()
+    private let showZcashRestoreSelectSubject = PassthroughSubject<Token, Never>()
 
-    init(account: Account, walletManager: WalletManager, marketKit: MarketKit.Kit) {
+    init(account: Account, walletManager: WalletManager, marketKit: MarketKit.Kit, restoreSettingsService: RestoreSettingsService) {
         self.account = account
         self.walletManager = walletManager
         self.marketKit = marketKit
+        self.restoreSettingsService = restoreSettingsService
     }
 
     private func showReceive(token: Token) {
@@ -42,7 +44,7 @@ class ReceiveService {
 
     private func chooseTokenWithSettings(tokens: [Token]) {
         // all tokens will have same blockchain type
-        guard let blockchainType = tokens.first?.blockchainType else {
+        guard let first = tokens.first else {
             return
         }
 
@@ -53,22 +55,22 @@ class ReceiveService {
 
         switch wallets.count {
         case 0:                                             // create wallet and show deposit
-            switch blockchainType {
+            switch first.blockchainType {
             case .bitcoin, .litecoin, .bitcoinCash:
-                guard let defaultToken = try? marketKit.token(query: blockchainType.defaultTokenQuery) else {
+                guard let defaultToken = try? marketKit.token(query: first.blockchainType.defaultTokenQuery) else {
                     return
                 }
 
                 let wallet = createWallet(token: defaultToken)
                 showTokenSubject.send(wallet)
             case .zcash:
-                showZcashTypeSelectSubject.send()           // we must enable zcash wallet and ask for birthday
+                showZcashRestoreSelectSubject.send(first)           // we must enable zcash wallet and ask for birthday
             default: ()
             }
         case 1:                                             // just show deposit. When unique token and it's restored
             showTokenSubject.send(wallets[0])
         default:                                            // show choose derivation, addressFormat or other (when token is unique, but many wallets)
-            chooseTokenType(blockchainType: blockchainType, wallets: wallets)
+            chooseTokenType(blockchainType: first.blockchainType, wallets: wallets)
         }
     }
 
@@ -112,8 +114,8 @@ extension ReceiveService {
         showBitcoinCashCoinTypeSelectSubject.eraseToAnyPublisher()
     }
 
-    var showZcashTypeSelectPublisher: AnyPublisher<Void, Never> {
-        showZcashTypeSelectSubject.eraseToAnyPublisher()
+    var showZcashRestoreSelectPublisher: AnyPublisher<Token, Never> {
+        showZcashRestoreSelectSubject.eraseToAnyPublisher()
     }
 
     var showBlockchainSelectPublisher: AnyPublisher<(FullCoin, AccountType), Never> {
@@ -122,8 +124,10 @@ extension ReceiveService {
 
     func onSelect(fullCoin: FullCoin) {
         let eligibleTokens = fullCoin.tokens.filter { account.type.supports(token: $0) }
+
+        let avoidSimpleShow = eligibleTokens.first { token in token.blockchainType == .zcash } != nil
         // For alone token check exists and show address
-        if eligibleTokens.count == 1 {
+        if eligibleTokens.count == 1, !avoidSimpleShow {
             showReceive(token: eligibleTokens[0])
             return
         }
@@ -138,6 +142,13 @@ extension ReceiveService {
     }
 
     func onSelectExact(token: Token) {
+        showReceive(token: token)
+    }
+
+    func onRestoreZcash(token: Token, height: Int?) {
+        let tokenWithSettings = restoreSettingsService.enter(birthdayHeight: height, token: token)
+
+        restoreSettingsService.save(settings: tokenWithSettings.settings, account: account, blockchainType: token.blockchainType)
         showReceive(token: token)
     }
 
