@@ -224,10 +224,32 @@ extension WalletViewModel {
     }
 
     func onTap(element: WalletModule.Element) {
-        guard let coin = element.coin else {
-            return
+        queue.async {
+            guard case .list(var viewItems) = self.state else {
+                return
+            }
+
+            if self.expandedElement == element {
+                self.expandedElement = nil
+
+                if let item = self.service.item(element: element), let index = viewItems.firstIndex(where: { $0.element == element }) {
+                    viewItems[index] = self._viewItem(item: item)
+                }
+            } else {
+                let oldExpandedElement = self.expandedElement
+                self.expandedElement = element
+
+                if let oldExpandedElement, let item = self.service.item(element: oldExpandedElement), let index = viewItems.firstIndex(where: { $0.element == oldExpandedElement }) {
+                    viewItems[index] = self._viewItem(item: item)
+                }
+
+                if let item = self.service.item(element: element), let index = viewItems.firstIndex(where: { $0.element == element }) {
+                    viewItems[index] = self._viewItem(item: item)
+                }
+            }
+
+            self.state = .list(viewItems: viewItems)
         }
-        openCoinPageRelay.accept(coin)
     }
 
     func onTapReceive(wallet: Wallet) {

@@ -87,10 +87,10 @@ class CoinOverviewViewItemFactory {
                 subtitle = "coin_platforms.native".localized
             case .derived(let derivation):
                 title = derivation.mnemonicDerivation.title
-                subtitle = derivation.mnemonicDerivation.addressType
+                subtitle = derivation.mnemonicDerivation.addressType + derivation.mnemonicDerivation.recommended
             case .addressType(let type):
                 title = type.bitcoinCashCoinType.title
-                subtitle = type.bitcoinCashCoinType.description
+                subtitle = type.bitcoinCashCoinType.description + type.bitcoinCashCoinType.recommended
             case .eip20(let address):
                 title = blockchain.name
                 subtitle = address.shortened

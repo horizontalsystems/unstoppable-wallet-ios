@@ -174,7 +174,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "coin_settings.title" = "Blockchain Settings";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommended)";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.from_blockchain" = "From Blockchain";
 "blockchain_settings.description" = "Select the address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
 
@@ -342,10 +342,16 @@ Go to Settings - > %@ and allow access to the camera.";
 "receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
 "deposit.no_adapter.error" = "Can't provide address";
 
-"deposit.not_active" = "not active";
+"deposit.address_format" = "Format";
+"deposit.qr_code_description" = "Your address for depositing %@";
+"deposit.qr_code_description.watch" = "Watch address of %@";
+"deposit.account" = "Account";
+
+"deposit.not_active" = "Not active";
 "deposit.not_active.title" = "Not Active Address";
 "deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
 
+"deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
 
 "receive_network_select.title" = "Network";
 "receive_network_select.description" = "Choose a network and get an address to receive.";
@@ -355,7 +361,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
 
-"receive_address.recommended" = " (recommended)";
+"blockchain_type.recommended" = " (recommended)";
 
 // Send
 
@@ -1661,13 +1667,12 @@ Go to Settings - > %@ and allow access to the camera.";
 // Cex Deposit
 
 "cex_deposit.title" = "Deposit %@";
-"cex_deposit.qr_code_description" = "Your address for depositing %@";
 "cex_deposit.address" = "Address";
+
 "cex_deposit.network" = "Network";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. Amount";
 "cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
-"cex_deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
 "cex_deposit.copy_address" = "Copy Address";
 "cex_deposit.share_address" = "Share Address";
 "cex_deposit.failed" = "Failed to load deposit address. Please retry.";

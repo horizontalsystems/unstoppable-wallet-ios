@@ -1648,13 +1648,13 @@
 // Cex Deposit
 
 "cex_deposit.title" = "침전 %@";
-"cex_deposit.qr_code_description" = "입금 주소: %@";
+"deposit.qr_code_description" = "입금 주소: %@";
 "cex_deposit.address" = "주소";
 "cex_deposit.network" = "네트워크";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "최소  금액";
 "cex_deposit.warning_memo" = "메모(tag)는 필수입니다. 메모 없이는 코인을 잃을 수 있습니다.";
-"cex_deposit.warning" = "이 주소로는 %@만 보내주세요. 다른 종류의 토큰을 이 주소로 보내면 최종적으로 손실이 발생합니다.";
+"deposit.warning" = "이 주소로는 %@만 보내주세요. 다른 종류의 토큰을 이 주소로 보내면 최종적으로 손실이 발생합니다.";
 "cex_deposit.copy_address" = "주소 복사";
 "cex_deposit.share_address" = "주소 공유";
 "cex_deposit.failed" = "입금 주소를 불러오지 못했습니다. 다시 시도해주세요.";
