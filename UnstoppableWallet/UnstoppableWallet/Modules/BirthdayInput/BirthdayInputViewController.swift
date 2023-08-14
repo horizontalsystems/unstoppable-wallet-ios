@@ -6,14 +6,11 @@ import SnapKit
 import MarketKit
 import SectionsTableView
 
-protocol IBirthdayInputDelegate: AnyObject {
-    func didEnter(birthdayHeight: Int?)
-    func didCancelEnterBirthdayHeight()
-}
-
 class BirthdayInputViewController: KeyboardAwareViewController {
     private let token: Token
-    private weak var delegate: IBirthdayInputDelegate?
+
+    var onEnterBirthdayHeight: ((Int?) -> ())?
+    var onCancel: (() -> ())?
 
     private let iconImageView = UIImageView()
     private let tableView = SectionsTableView(style: .grouped)
@@ -28,9 +25,8 @@ class BirthdayInputViewController: KeyboardAwareViewController {
     private var walletType: WalletType = .new
     private var didTapDone = false
 
-    init(token: Token, delegate: IBirthdayInputDelegate) {
+    init(token: Token) {
         self.token = token
-        self.delegate = delegate
 
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
@@ -83,7 +79,7 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         super.viewDidDisappear(animated)
 
         if !didTapDone {
-            delegate?.didCancelEnterBirthdayHeight()
+            onCancel?()
         }
     }
 
@@ -128,7 +124,7 @@ class BirthdayInputViewController: KeyboardAwareViewController {
     }
 
     @objc private func onTapCancel() {
-        delegate?.didCancelEnterBirthdayHeight()
+        onCancel?()
         dismiss(animated: true)
     }
 
@@ -136,10 +132,10 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         didTapDone = true
 
         if walletType == .new {
-            delegate?.didEnter(birthdayHeight: nil)
+            onEnterBirthdayHeight?(nil)
         } else {
             let birthdayHeight = heightInputCell.inputText.flatMap { Int($0) } ?? 0
-            delegate?.didEnter(birthdayHeight: birthdayHeight)
+            onEnterBirthdayHeight?(birthdayHeight)
         }
 
         dismiss(animated: true)

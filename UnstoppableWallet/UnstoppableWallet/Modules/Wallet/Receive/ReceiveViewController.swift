@@ -36,6 +36,13 @@ class ReceiveViewController: ThemeNavigationController {
                 }
                 .store(in: &cancellables)
 
+        viewModel.showZcashRestoreSelectPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] token in
+                    self?.showZcashRestoreSelect(token: token)
+                }
+                .store(in: &cancellables)
+
         viewModel.showBlockchainSelectPublisher
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] (fullCoin, accountType) in
@@ -69,11 +76,39 @@ class ReceiveViewController: ThemeNavigationController {
         pushViewController(viewController, animated: true)
     }
 
+    private func showZcashRestoreSelect(token: Token) {
+        let viewController = BottomSheetModule.viewController(
+                image: .remote(url: token.coin.imageUrl, placeholder: "placeholder_circle_32"),
+                title: token.coin.code,
+                subtitle: token.coin.name,
+                items: [
+                    .description(text: "deposit.zcash.restore.description".localized)
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "deposit.zcash.restore.already_own".localized, actionType: .afterClose, action: { [weak self] in
+                        self?.showRestoreZcash(token: token)
+                    }),
+                    .init(style: .gray, title: "deposit.zcash.restore.dont_have".localized, actionType: .afterClose, action: { [weak self] in
+                        self?.viewModel.onRestoreZcash(token: token, height: nil)
+                    }),
+                ])
+
+        present(viewController, animated: true)
+    }
+
     private func showBlockchainSelect(fullCoin: FullCoin, accountType: AccountType) {
         let viewController = ReceiveModule.selectTokenViewController(fullCoin: fullCoin, accountType: accountType) { [weak self] token in
             self?.onSelectExact(token: token)
         }
         pushViewController(viewController, animated: true)
+    }
+
+    private func showRestoreZcash(token: Token) {
+        let viewController = BirthdayInputViewController(token: token)
+        viewController.onEnterBirthdayHeight = { [weak self] height in
+            self?.viewModel.onRestoreZcash(token: token, height: height)
+        }
+        present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
 }
