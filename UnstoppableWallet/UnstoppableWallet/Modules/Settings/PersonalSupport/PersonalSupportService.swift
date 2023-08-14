@@ -4,6 +4,7 @@ import HsExtensions
 
 class PersonalSupportService {
     private let marketKit: MarketKit.Kit
+    private let localStorage: LocalStorage
     private var tasks = Set<AnyTask>()
 
     private let successSubject = PassthroughSubject<Void, Never>()
@@ -16,8 +17,12 @@ class PersonalSupportService {
         }
     }
 
-    init(marketKit: MarketKit.Kit) {
+    @PostPublished private(set) var requested: Bool
+
+    init(marketKit: MarketKit.Kit, localStorage: LocalStorage) {
         self.marketKit = marketKit
+        self.localStorage = localStorage
+        requested = localStorage.telegramSupportRequested
 
         sync()
     }
@@ -57,13 +62,19 @@ extension PersonalSupportService {
         Task { [weak self, marketKit] in
             do {
                 try await marketKit.requestPersonalSupport(telegramUsername: username)
+                self?.localStorage.telegramSupportRequested = true
                 self?.requestButtonState = .disabled
                 self?.successSubject.send()
+                self?.requested = true
             } catch {
                 self?.requestButtonState = .enabled
                 self?.errorSubject.send(error)
             }
         }.store(in: &tasks)
+    }
+
+    func newRequest() {
+        requested = false
     }
 
 }

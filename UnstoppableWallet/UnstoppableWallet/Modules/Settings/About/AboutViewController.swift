@@ -74,7 +74,7 @@ class AboutViewController: ThemeViewController {
         present(activityViewController, animated: true, completion: nil)
     }
 
-    private func handleContact() {
+    private func handleEmailContact() {
         let email = AppConfig.reportEmail
 
         if MFMailComposeViewController.canSendMail() {
@@ -86,6 +86,28 @@ class AboutViewController: ThemeViewController {
         } else {
             CopyHelper.copyAndNotify(value: email)
         }
+    }
+
+    private func handleTelegramContact() {
+        navigationController?.pushViewController(PersonalSupportModule.viewController(), animated: true)
+    }
+
+    private func handleContact() {
+        let viewController = BottomSheetModule.viewController(
+            image: .local(image: UIImage(named: "at_24")?.withTintColor(.themeJacob)),
+            title: "settings.contact.title".localized,
+            items: [],
+            buttons: [
+                .init(style: .yellow, title: "settings.contact.via_email".localized, actionType: .afterClose) { [weak self] in
+                    self?.handleEmailContact()
+                },
+                .init(style: .gray, title: "settings.contact.via_telegram".localized, actionType: .afterClose) { [weak self] in
+                    self?.handleTelegramContact()
+                }
+            ]
+        )
+
+        present(viewController, animated: true)
     }
 
     private func openTwitter() {
