@@ -87,7 +87,7 @@ class PlaceholderView: UIView {
         }
     }
 
-    func addPrimaryButton(style: PrimaryButton.Style, title: String, target: Any, action: Selector) {
+    @discardableResult func addPrimaryButton(style: PrimaryButton.Style, title: String, target: Any, action: Selector) -> UIButton {
         let button = PrimaryButton()
 
         button.set(style: style)
@@ -96,6 +96,8 @@ class PlaceholderView: UIView {
 
         stackView.addArrangedSubview(button)
         stackView.setCustomSpacing(.margin16, after: button)
+
+        return button
     }
 
     func configureSyncError(title: String = "sync_error".localized, action: (() -> ())? = nil) {
@@ -116,6 +118,15 @@ class PlaceholderView: UIView {
                 target: self,
                 action: #selector(retry)
         )
+    }
+
+    func removeAllButtons() {
+        for view in stackView.arrangedSubviews {
+            if view is UIButton {
+                stackView.removeArrangedSubview(view)
+            }
+        }
+        stackView.setNeedsLayout()
     }
 
     @objc private func retry() {

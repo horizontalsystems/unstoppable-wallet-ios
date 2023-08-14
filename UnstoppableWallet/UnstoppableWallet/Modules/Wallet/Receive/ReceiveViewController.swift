@@ -49,7 +49,7 @@ class ReceiveViewController: ThemeNavigationController {
     }
 
     private func showReceive(wallet: Wallet) {
-        guard let viewController = DepositModule.viewController(wallet: wallet) else {
+        guard let viewController = ReceiveAddressModule.viewController(wallet: wallet) else {
             return
         }
         pushViewController(viewController, animated: true)

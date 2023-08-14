@@ -27,17 +27,20 @@ extension SectionsTableView {
         )
     }
 
-    func highlightedDescriptionRow(id: String, style: HighlightedDescriptionBaseView.Style = .yellow, text: String, ignoreBottomMargin: Bool = false) -> RowProtocol {
+    func highlightedDescriptionRow(id: String, style: HighlightedDescriptionBaseView.Style = .yellow, text: String, ignoreBottomMargin: Bool = false, topVerticalMargin: CGFloat? = nil) -> RowProtocol {
         registerCell(forClass: HighlightedDescriptionCell.self)
 
         return Row<HighlightedDescriptionCell>(
                 id: id,
                 dynamicHeight: { width in
-                    HighlightedDescriptionCell.height(containerWidth: width, text: text, ignoreBottomMargin: ignoreBottomMargin)
+                    HighlightedDescriptionCell.height(containerWidth: width, text: text, ignoreBottomMargin: ignoreBottomMargin, topVerticalMargin: topVerticalMargin ?? HighlightedDescriptionCell.defaultVerticalMargin)
                 },
                 bind: { cell, _ in
                     cell.set(style: style)
                     cell.descriptionText = text
+                    if let topVerticalMargin {
+                        cell.set(verticalMargin: topVerticalMargin)
+                    }
                 }
         )
     }
