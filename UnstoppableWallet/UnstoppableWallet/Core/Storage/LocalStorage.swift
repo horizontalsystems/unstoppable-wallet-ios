@@ -18,6 +18,7 @@ class LocalStorage {
     private let keyRemoteContactSync = "icloud-sync-value"
     private let keyUserChartIndicatorsSync = "user-chart-indicators"
     private let keyIndicatorsShown = "indicators-shown"
+    private let keyTelegramSupportRequested = "telegram-support-requested"
 
     private let storage: StorageKit.ILocalStorage
 
@@ -93,6 +94,11 @@ extension LocalStorage {
     var indicatorsShown: Bool {
         get { storage.value(for: keyIndicatorsShown) ?? true }
         set { storage.set(value: newValue, for: keyIndicatorsShown) }
+    }
+
+    var telegramSupportRequested: Bool {
+        get { storage.value(for: keyTelegramSupportRequested) ?? false }
+        set { storage.set(value: newValue, for: keyTelegramSupportRequested) }
     }
 
 }

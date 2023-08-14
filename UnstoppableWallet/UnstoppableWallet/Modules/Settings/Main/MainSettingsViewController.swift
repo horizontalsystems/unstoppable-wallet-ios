@@ -233,32 +233,6 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
-    private func onPersonalSupportTapped() {
-        if viewModel.isAuthenticated {
-            navigationController?.pushViewController(PersonalSupportModule.viewController(), animated: true)
-        } else {
-            let viewController = SubscriptionInfoViewController()
-            present(ThemeNavigationController(rootViewController: viewController), animated: true)
-        }
-    }
-
-    private var supportRows: [RowProtocol] {
-        [
-            tableView.universalRow48(
-                id: "personal-support",
-                image: .local(UIImage(named: "support_2_24")?.withTintColor(.themeJacob)),
-                title: .body("settings.personal_support".localized),
-                accessoryType: .disclosure,
-                autoDeselect: true,
-                isFirst: true,
-                isLast: true,
-                action: { [weak self] in
-                    self?.onPersonalSupportTapped()
-                }
-            )
-        ]
-    }
-
     private var appearanceRows: [RowProtocol] {
         [
             StaticRow(
@@ -389,7 +363,6 @@ extension MainSettingsViewController: SectionsDataSource {
         var sections: [SectionProtocol] = [
             Section(id: "account", headerState: .margin(height: .margin12), rows: accountRows),
             Section(id: "wallet_connect", headerState: .margin(height: .margin32), rows: walletConnectRows),
-//            Section(id: "personal_support", headerState: .margin(height: .margin32), rows: supportRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
             Section(id: "experimental", headerState: .margin(height: .margin32), rows: experimentalRows),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
