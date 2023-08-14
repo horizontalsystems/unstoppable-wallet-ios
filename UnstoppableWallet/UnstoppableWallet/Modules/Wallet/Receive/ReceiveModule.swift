@@ -12,8 +12,10 @@ struct ReceiveModule {
         let service = ReceiveService(
                 account: account,
                 walletManager: App.shared.walletManager,
-                marketKit: App.shared.marketKit
+                marketKit: App.shared.marketKit,
+                restoreSettingsService: RestoreSettingsService(manager: App.shared.restoreSettingsManager)
         )
+
         let viewModel = ReceiveViewModel(service: service)
 
         let coinProvider = CoinProvider(
