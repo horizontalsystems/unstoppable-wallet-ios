@@ -21,6 +21,10 @@ extension ReceiveViewModel {
         service.onSelectExact(token: token)
     }
 
+    func onRestoreZcash(token: Token, height: Int?) {
+        service.onRestoreZcash(token: token, height: height)
+    }
+
 }
 
 extension ReceiveViewModel {
@@ -35,6 +39,10 @@ extension ReceiveViewModel {
 
     var showBitcoinCashCoinTypeSelectPublisher: AnyPublisher<[Wallet], Never> {
         service.showBitcoinCashCoinTypeSelectPublisher
+    }
+
+    var showZcashRestoreSelectPublisher: AnyPublisher<Token, Never> {
+        service.showZcashRestoreSelectPublisher
     }
 
     var showBlockchainSelectPublisher: AnyPublisher<(FullCoin, AccountType), Never> {

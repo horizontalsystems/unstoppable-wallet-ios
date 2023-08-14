@@ -63,7 +63,7 @@ extension RestoreSettingsService {
         manager.save(settings: settings, account: account, blockchainType: blockchainType)
     }
 
-    func enter(birthdayHeight: Int?, token: Token) {
+    @discardableResult func enter(birthdayHeight: Int?, token: Token) -> TokenWithSettings {
         var settings = RestoreSettings()
         if let birthdayHeight = birthdayHeight?.description ?? RestoreSettingType.birthdayHeight.createdAccountValue(blockchainType: token.blockchainType) {
             settings[.birthdayHeight] = String(birthdayHeight)
@@ -71,6 +71,8 @@ extension RestoreSettingsService {
 
         let tokenWithSettings = TokenWithSettings(token: token, settings: settings)
         approveSettingsRelay.accept(tokenWithSettings)
+
+        return tokenWithSettings
     }
 
     func cancel(token: Token) {

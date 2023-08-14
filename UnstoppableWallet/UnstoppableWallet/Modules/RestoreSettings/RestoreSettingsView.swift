@@ -19,20 +19,14 @@ class RestoreSettingsView {
     }
 
     private func showBirthdayAlert(token: Token) {
-        let controller = BirthdayInputViewController(token: token, delegate: self)
+        let controller = BirthdayInputViewController(token: token)
+        controller.onEnterBirthdayHeight = { [weak self] height in
+            self?.viewModel.onEnter(birthdayHeight: height)
+        }
+        controller.onCancel = { [weak self] in
+            self?.viewModel.onCancelEnterBirthdayHeight()
+        }
         onOpenController?(ThemeNavigationController(rootViewController: controller))
-    }
-
-}
-
-extension RestoreSettingsView: IBirthdayInputDelegate {
-
-    func didEnter(birthdayHeight: Int?) {
-        viewModel.onEnter(birthdayHeight: birthdayHeight)
-    }
-
-    func didCancelEnterBirthdayHeight() {
-        viewModel.onCancelEnterBirthdayHeight()
     }
 
 }
