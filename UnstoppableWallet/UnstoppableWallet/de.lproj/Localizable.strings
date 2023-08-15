@@ -390,7 +390,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Methode";
 "send.amount_error.balance" = "Nicht genügend Guthaben";
-"send.address_error.own_address" = "Cannot transfer TRX to yourself";
+"send.address_error.own_address" = "TRX kann nicht auf sich selbst übertragen werden";
 "send.amount_error.maximum_amount" = "Maximaler Betrag %@";
 "send.amount_error.minimum_amount" = "Minimaler Betrag %@";
 "send.amount_error.min_required_balance" = "Mindestens erforderlicher Rest %@";
@@ -987,9 +987,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.personal_support.requested" = "Angefragt";
 "settings.personal_support.failed" = "Anfrage fehlgeschlagen";
 "settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
-"settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
-"settings.personal_support.requested.open_telegram" = "Open Telegram";
-"settings.personal_support.requested.new_request" = "New Request";
+"settings.personal_support.requested.description" = "Sie haben bereits einen privaten Chat angefordert, finden Sie ihn auf Telegram";
+"settings.personal_support.requested.open_telegram" = "Telegram öffnen";
+"settings.personal_support.requested.new_request" = "Neue Zahlungsaufforderung";
 
 // Settings -> Experimental Features
 
@@ -1080,8 +1080,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Settings -> About App -> Contact
 
 "settings.contact.title" = "Kontakt";
-"settings.contact.via_email" = "via E-mail";
-"settings.contact.via_telegram" = "via Telegram";
+"settings.contact.via_email" = "per e-Mail";
+"settings.contact.via_telegram" = "per Telegram";
 
 // Settings -> Privacy
 
@@ -1501,7 +1501,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "fee_settings.errors.replacement_transaction_underpriced" = "Niedrige Gebühr für Ersatztransaktionen";
 "fee_settings.errors.transaction_underpriced" = "Niedrige Transaktionsgebühr";
 "fee_settings.errors.tips_higher_than_max_fee" = "Max Gebühr ist zu niedrig";
-"fee_settings.errors.zero_amount.info" = "Cannot transfer 0 TRX";
+"fee_settings.errors.zero_amount.info" = "Kann 0 TRX nicht übertragen";
 "fee_settings.warning.risk_of_getting_stuck" = "Riskant";
 "fee_settings.warning.risk_of_getting_stuck.info" = "Die Transaktion kann eine Zeit lang ausstehend bleiben oder ganz fehlschlagen.";
 "fee_settings.warning.overpricing" = "Gebühr zu hoch";
