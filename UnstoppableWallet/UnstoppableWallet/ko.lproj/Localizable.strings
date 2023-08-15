@@ -985,6 +985,9 @@
 "settings.personal_support.requested" = "신청 완료";
 "settings.personal_support.failed" = "요청 실패";
 "settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
+"settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
+"settings.personal_support.requested.open_telegram" = "Open Telegram";
+"settings.personal_support.requested.new_request" = "New Request";
 
 // Settings -> Experimental Features
 
@@ -1071,6 +1074,12 @@
 "settings.about_app.contact" = "연락처";
 "settings.about_app.rate_us" = "앱 평가";
 "settings.about_app.tell_friends" = "친구에게 추천하기";
+
+// Settings -> About App -> Contact
+
+"settings.contact.title" = "연락처";
+"settings.contact.via_email" = "via E-mail";
+"settings.contact.via_telegram" = "via Telegram";
 
 // Settings -> Privacy
 
