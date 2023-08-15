@@ -10,6 +10,7 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
 
     var confirmationTitle = "confirm".localized
     var confirmationButtonTitle = "send.confirmation.slide_to_send".localized
+    var confirmationButtonFinalTitle = "send.confirmation.sending".localized
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +20,9 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
         bottomWrapper.addSubview(sendButton)
 
         sendButton.title = confirmationButtonTitle
-        sendButton.image = UIImage(named: "arrow_medium_2_right_24")
+        sendButton.finalTitle = confirmationButtonFinalTitle
+        sendButton.slideImage = UIImage(named: "arrow_medium_2_right_24")
+        sendButton.finalImage = UIImage(named: "check_2_24")
         sendButton.onTap = { [weak self] in
             self?.transactionViewModel.send()
         }

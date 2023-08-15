@@ -45,7 +45,9 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
         bottomWrapper.addSubview(sendButton)
 
         sendButton.title = "send.confirmation.slide_to_send".localized
-        sendButton.image = UIImage(named: "arrow_medium_2_right_24")
+        sendButton.finalTitle = "send.confirmation.sending".localized
+        sendButton.slideImage = UIImage(named: "arrow_medium_2_right_24")
+        sendButton.finalImage = UIImage(named: "check_2_24")
         sendButton.onTap = { [weak self] in
             self?.viewModel.send()
         }

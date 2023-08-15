@@ -162,10 +162,12 @@ struct SendEvmConfirmationModule {
         case .speedUp:
             viewController.confirmationTitle = "tx_info.options.speed_up".localized
             viewController.confirmationButtonTitle = "send.confirmation.slide_to_resend".localized
+            viewController.confirmationButtonFinalTitle = "send.confirmation.resending".localized
             viewController.topDescription = "send.confirmation.resend_description".localized
         case .cancel:
             viewController.confirmationTitle = "tx_info.options.cancel".localized
             viewController.confirmationButtonTitle = "send.confirmation.slide_to_cancel".localized
+            viewController.confirmationButtonFinalTitle = "send.confirmation.cancelling".localized
             viewController.topDescription = "send.confirmation.cancel_description".localized
         }
 
