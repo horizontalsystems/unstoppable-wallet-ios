@@ -987,6 +987,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.personal_support.requested" = "Solicitado";
 "settings.personal_support.failed" = "Error en la solicitud";
 "settings.personal_support.need_subscription" = "Esta característica sólo para usuarios premium de %@ Wallet. Más información en nuestro sitio oficial.";
+"settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
+"settings.personal_support.requested.open_telegram" = "Open Telegram";
+"settings.personal_support.requested.new_request" = "New Request";
 
 // Settings -> Experimental Features
 
@@ -1073,6 +1076,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.about_app.contact" = "Contacto";
 "settings.about_app.rate_us" = "Califícanos";
 "settings.about_app.tell_friends" = "Recomendar a un amigo";
+
+// Settings -> About App -> Contact
+
+"settings.contact.title" = "Contacto";
+"settings.contact.via_email" = "via E-mail";
+"settings.contact.via_telegram" = "via Telegram";
 
 // Settings -> Privacy
 
