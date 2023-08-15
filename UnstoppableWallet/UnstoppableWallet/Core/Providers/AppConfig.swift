@@ -17,6 +17,11 @@ struct AppConfig {
     static let mempoolSpaceUrl = "https://mempool.space"
     static let guidesIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/v1.2/index.json")!
     static let faqIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/unstoppable-wallet-website/master/src/faq.json")!
+    static let donationAddresses: [String: String] = [
+        "BTC": "bc1qw5tw4cnyt0vxts70ntdzxesn2zzz97t6r29pjj",
+        "ETH": "0x8a2Bec907827F496752c3F24F960B3cddc5D311B",
+        "BNB": "0x8a2Bec907827F496752c3F24F960B3cddc5D311B"
+    ]
 
     static var appName: String {
         (Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String) ?? ""

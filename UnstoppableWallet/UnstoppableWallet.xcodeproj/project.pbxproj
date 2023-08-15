@@ -2332,6 +2332,8 @@
 		D05F132F2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05F132D2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift */; };
 		D06669022A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */; };
 		D06669032A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */; };
+		D06F756F2A8BA35F00184227 /* DonateAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F756E2A8BA35F00184227 /* DonateAddressViewController.swift */; };
+		D06F75702A8BA35F00184227 /* DonateAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F756E2A8BA35F00184227 /* DonateAddressViewController.swift */; };
 		D07157DB2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
 		D07157DC2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
 		D07157DE2A2DDA09006F141F /* SendTronService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DD2A2DDA09006F141F /* SendTronService.swift */; };
@@ -3797,6 +3799,7 @@
 		D05E96B82A2A1113002CCD71 /* WatchTronService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTronService.swift; sourceTree = "<group>"; };
 		D05F132D2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTronTokenBlockchainService.swift; sourceTree = "<group>"; };
 		D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronRecipientAddressViewModel.swift; sourceTree = "<group>"; };
+		D06F756E2A8BA35F00184227 /* DonateAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateAddressViewController.swift; sourceTree = "<group>"; };
 		D07157DA2A2DD968006F141F /* SendTronModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronModule.swift; sourceTree = "<group>"; };
 		D07157DD2A2DDA09006F141F /* SendTronService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronService.swift; sourceTree = "<group>"; };
 		D07157E02A2DDA17006F141F /* SendTronViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronViewModel.swift; sourceTree = "<group>"; };
@@ -5052,6 +5055,7 @@
 				11B3563CCEF5817CCA5A0C6A /* Appearance */,
 				1A5648A0CFE0BED4703D9794 /* Privacy */,
 				11B35C3CD4FFDE56E8E30B80 /* BlockchainSettings */,
+				D06F756D2A8BA33000184227 /* Donate */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -7251,6 +7255,14 @@
 			path = Evm;
 			sourceTree = "<group>";
 		};
+		D06F756D2A8BA33000184227 /* Donate */ = {
+			isa = PBXGroup;
+			children = (
+				D06F756E2A8BA35F00184227 /* DonateAddressViewController.swift */,
+			);
+			path = Donate;
+			sourceTree = "<group>";
+		};
 		D07157D72A2DD7A8006F141F /* SendTron */ = {
 			isa = PBXGroup;
 			children = (
@@ -8249,6 +8261,7 @@
 				2FA5D4C4D13E610DA6009C48 /* CoinOverviewViewModel.swift in Sources */,
 				D05E969E2A2627AF002CCD71 /* TronContractCallTransactionRecord.swift in Sources */,
 				2FA5D72F396BC5D16C228112 /* CoinOverviewService.swift in Sources */,
+				D06F75702A8BA35F00184227 /* DonateAddressViewController.swift in Sources */,
 				2FA5DF327EC188AC29719179 /* CoinOverviewModule.swift in Sources */,
 				2FA5D0F37E1B46988A88DB29 /* CoinOverviewViewController.swift in Sources */,
 				11B35CD199C820EC89FBB546 /* MarketListViewModel.swift in Sources */,
@@ -9494,6 +9507,7 @@
 				D05E969A2A26278D002CCD71 /* TronApproveTransactionRecord.swift in Sources */,
 				2FA5D40FA7CAC1BA01C0B373 /* CoinOverviewViewModel.swift in Sources */,
 				2FA5DBE42827FF3D114DBF4B /* CoinOverviewService.swift in Sources */,
+				D06F756F2A8BA35F00184227 /* DonateAddressViewController.swift in Sources */,
 				2FA5DF4BB73C12C8DDF42599 /* CoinOverviewModule.swift in Sources */,
 				D05E969D2A2627AF002CCD71 /* TronContractCallTransactionRecord.swift in Sources */,
 				2FA5DF596B5EE00090E050D9 /* CoinOverviewViewController.swift in Sources */,

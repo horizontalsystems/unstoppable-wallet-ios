@@ -7,13 +7,10 @@ class PlaceholderCell: BaseThemeCell {
     private static let verticalPadding: CGFloat = .margin32
     private static let iconWrapperSize: CGFloat = 100
     private static let contentWidth: CGFloat = 264
-    private static let textFont: UIFont = .subhead2
+    private static let textFont: UIFont = .headline2
 
     private let iconImageView = UIImageView()
     private let label = UILabel()
-    private let button = PrimaryButton()
-
-    private var onTapButton: (() -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -39,32 +36,16 @@ class PlaceholderCell: BaseThemeCell {
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = Self.textFont
-        label.textColor = .themeGray
-
-        wrapperView.addSubview(button)
-        button.snp.makeConstraints { maker in
-            maker.centerX.equalToSuperview()
-            maker.top.equalTo(label.snp.bottom).offset(Self.verticalPadding)
-            maker.width.equalTo(Self.contentWidth)
-        }
-
-        button.addTarget(self, action: #selector(_onTapButton), for: .touchUpInside)
+        label.textColor = .themeLeah
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @objc private func _onTapButton() {
-        onTapButton?()
-    }
-
-    func bind(icon: UIImage?, text: String, buttonTitle: String, buttonStyle: PrimaryButton.Style, onTapButton: @escaping () -> ()) {
+    func bind(icon: UIImage?, text: String) {
         iconImageView.image = icon
         label.text = text
-        button.setTitle(buttonTitle, for: .normal)
-        button.set(style: buttonStyle)
-        self.onTapButton = onTapButton
     }
 
 }
@@ -73,7 +54,7 @@ extension PlaceholderCell {
 
     static func height(text: String) -> CGFloat {
         let textHeight = text.height(forContainerWidth: contentWidth, font: textFont)
-        return verticalPadding + iconWrapperSize + verticalPadding + textHeight + verticalPadding + .heightButton + verticalPadding
+        return verticalPadding + iconWrapperSize + verticalPadding + textHeight + verticalPadding
     }
 
 }

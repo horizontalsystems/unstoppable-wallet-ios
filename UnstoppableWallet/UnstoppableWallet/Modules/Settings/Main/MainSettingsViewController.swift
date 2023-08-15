@@ -196,6 +196,10 @@ class MainSettingsViewController: ThemeViewController {
         ]))
     }
 
+    @objc private func onDonateTapped() {
+        present(ThemeNavigationController(rootViewController: DonateAddressViewController()), animated: true)
+    }
+
     private var accountRows: [RowProtocol] {
         [
             StaticRow(
@@ -336,6 +340,21 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
+    private var donateRows: [RowProtocol] {
+        [
+            tableView.universalRow48(
+                id: "donate",
+                image: .local(UIImage(named: "heart_fill_24")?.withTintColor(.themeJacob)),
+                title: .body("settings.donate.title".localized),
+                accessoryType: .disclosure,
+                autoDeselect: true,
+                isFirst: true,
+                isLast: true,
+                action: { [weak self] in self?.onDonateTapped() }
+            )
+        ]
+    }
+
     private var footerRows: [RowProtocol] {
         [
             StaticRow(
@@ -361,7 +380,8 @@ extension MainSettingsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
-            Section(id: "account", headerState: .margin(height: .margin12), rows: accountRows),
+            Section(id: "donate", headerState: .margin(height: .margin12), rows: donateRows),
+            Section(id: "account", headerState: .margin(height: .margin32), rows: accountRows),
             Section(id: "wallet_connect", headerState: .margin(height: .margin32), rows: walletConnectRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
             Section(id: "experimental", headerState: .margin(height: .margin32), rows: experimentalRows),
