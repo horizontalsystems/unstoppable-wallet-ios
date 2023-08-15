@@ -392,7 +392,7 @@
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Метод";
 "send.amount_error.balance" = "Недостаточно средств";
-"send.address_error.own_address" = "Cannot transfer TRX to yourself";
+"send.address_error.own_address" = "Невозможно отправить TRX самому себе";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
 "send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
@@ -989,9 +989,9 @@
 "settings.personal_support.requested" = "Запрошено";
 "settings.personal_support.failed" = "Ошибка запроса";
 "settings.personal_support.need_subscription" = "Эта функция доступна только для премиум-пользователей %@ Wallet . Дополнительная информация на нашем официальном сайте.";
-"settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
-"settings.personal_support.requested.open_telegram" = "Open Telegram";
-"settings.personal_support.requested.new_request" = "New Request";
+"settings.personal_support.requested.description" = "Вы уже запросили приватный чат, найдите его в Telegram";
+"settings.personal_support.requested.open_telegram" = "Открыть Telegram";
+"settings.personal_support.requested.new_request" = "Новый запрос";
 
 // Settings -> Experimental Features
 
@@ -1082,8 +1082,8 @@
 // Settings -> About App -> Contact
 
 "settings.contact.title" = "Обратная связь";
-"settings.contact.via_email" = "via E-mail";
-"settings.contact.via_telegram" = "via Telegram";
+"settings.contact.via_email" = "по электронной почте";
+"settings.contact.via_telegram" = "через Telegram";
 
 // Settings -> Privacy
 
@@ -1505,7 +1505,7 @@
 "fee_settings.errors.replacement_transaction_underpriced" = "Низкая комиссия на замену транзакции";
 "fee_settings.errors.transaction_underpriced" = "Низкая комиссия за транзакцию";
 "fee_settings.errors.tips_higher_than_max_fee" = "Слишком низкая макс. комиссия";
-"fee_settings.errors.zero_amount.info" = "Cannot transfer 0 TRX";
+"fee_settings.errors.zero_amount.info" = "Невозможно отправить 0 TRX";
 "fee_settings.warning.risk_of_getting_stuck" = "Риски";
 "fee_settings.warning.risk_of_getting_stuck.info" = "Обработка транзакции может отложиться на некоторое время, или транзакцию могут полностью отклонить.";
 "fee_settings.warning.overpricing" = "Слишком высокая комиссия";
