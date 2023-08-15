@@ -383,10 +383,13 @@
 "send.confirmation.fee" = "费用";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.slide_to_send" = "Slide to Send";
+"send.confirmation.sending" = "发送中";
 "send.confirmation.resend_description" = "此操作将尝试通过向自己重新发送新的金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
 "send.confirmation.slide_to_resend" = "Slide to Resend";
+"send.confirmation.resending" = "Resending";
 "send.confirmation.cancel_description" = "此操作将尝试通过向自己重新发送新的0金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
 "send.confirmation.slide_to_cancel" = "Slide to Cancel";
+"send.confirmation.cancelling" = "Cancelling";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "方法";
 "send.amount_error.balance" = "余额不足";
