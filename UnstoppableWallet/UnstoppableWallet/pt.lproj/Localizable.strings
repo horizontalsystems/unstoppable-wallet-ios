@@ -390,7 +390,7 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Método";
 "send.amount_error.balance" = "Saldo insuficiente";
-"send.address_error.own_address" = "Cannot transfer TRX to yourself";
+"send.address_error.own_address" = "Não é possível transferir TRX para si mesmo";
 "send.amount_error.maximum_amount" = "Valor máximo: %@";
 "send.amount_error.minimum_amount" = "Valor mínimo: %@";
 "send.amount_error.min_required_balance" = "Restante min. necessário %@";
@@ -987,9 +987,9 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "settings.personal_support.requested" = "Solicitado";
 "settings.personal_support.failed" = "Falha na solicitação";
 "settings.personal_support.need_subscription" = "Esse recurso somente para usuários premium da %@ Carteira. Mais informações em nosso site oficial.";
-"settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
-"settings.personal_support.requested.open_telegram" = "Open Telegram";
-"settings.personal_support.requested.new_request" = "New Request";
+"settings.personal_support.requested.description" = "Você já pediu um chat privado, encontre-o no Telegram";
+"settings.personal_support.requested.open_telegram" = "Abrir Telegram";
+"settings.personal_support.requested.new_request" = "Nova solicitação";
 
 // Settings -> Experimental Features
 
@@ -1501,7 +1501,7 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "fee_settings.errors.replacement_transaction_underpriced" = "Taxa baixa para transação substituída";
 "fee_settings.errors.transaction_underpriced" = "Taxa baixa para transação";
 "fee_settings.errors.tips_higher_than_max_fee" = "A taxa máxima é muito baixa";
-"fee_settings.errors.zero_amount.info" = "Cannot transfer 0 TRX";
+"fee_settings.errors.zero_amount.info" = "Não é possível transferir 0 TRX";
 "fee_settings.warning.risk_of_getting_stuck" = "Arriscado";
 "fee_settings.warning.risk_of_getting_stuck.info" = "A transação pode permanecer pendente por um tempo ou falhar completamente.";
 "fee_settings.warning.overpricing" = "Taxa Muito Alta";
