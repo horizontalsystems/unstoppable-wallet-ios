@@ -385,10 +385,13 @@
 "send.confirmation.fee" = "Комиссия";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.slide_to_send" = "Slide to Send";
+"send.confirmation.sending" = "Отправка";
 "send.confirmation.resend_description" = "Это действие аннулирует предыдущую транзакцию, переотправив ее с более высокой комиссией. Если исходная транзакция ожидает обработки во время отправки новой, то вероятность ее аннулирования и замены довольно высока. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.slide_to_resend" = "Slide to Resend";
+"send.confirmation.resending" = "Resending";
 "send.confirmation.cancel_description" = "Это действие аннулирует предыдущую транзакцию, переотправив ее себе как транзакцию с нулевой суммой. Если исходная транзакция ожидает обработки во время отправки новой, то вероятность ее аннулирования и замены довольно высока. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.slide_to_cancel" = "Slide to Cancel";
+"send.confirmation.cancelling" = "Cancelling";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Метод";
 "send.amount_error.balance" = "Недостаточно средств";
