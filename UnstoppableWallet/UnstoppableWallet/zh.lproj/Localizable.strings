@@ -390,7 +390,7 @@
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "方法";
 "send.amount_error.balance" = "余额不足";
-"send.address_error.own_address" = "Cannot transfer TRX to yourself";
+"send.address_error.own_address" = "无法将 TRX 转移给自己";
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
 "send.amount_error.min_required_balance" = "最小要求剩余 %@";
@@ -987,9 +987,9 @@
 "settings.personal_support.requested" = "已申请";
 "settings.personal_support.failed" = "请求失败";
 "settings.personal_support.need_subscription" = "此功能仅适用于 %@ 钱包高级用户。我们官方网站中的更多信息。";
-"settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
-"settings.personal_support.requested.open_telegram" = "Open Telegram";
-"settings.personal_support.requested.new_request" = "New Request";
+"settings.personal_support.requested.description" = "您已经请求了一个私聊，在Telegram 上找到它";
+"settings.personal_support.requested.open_telegram" = "打开 Telegram";
+"settings.personal_support.requested.new_request" = "新建请求";
 
 // Settings -> Experimental Features
 
@@ -1080,8 +1080,8 @@
 // Settings -> About App -> Contact
 
 "settings.contact.title" = "联系";
-"settings.contact.via_email" = "via E-mail";
-"settings.contact.via_telegram" = "via Telegram";
+"settings.contact.via_email" = "通过电子邮件";
+"settings.contact.via_telegram" = "通过 Telegram";
 
 // Settings -> Privacy
 
@@ -1501,7 +1501,7 @@
 "fee_settings.errors.replacement_transaction_underpriced" = "替换交易的低费用";
 "fee_settings.errors.transaction_underpriced" = "低交易费用";
 "fee_settings.errors.tips_higher_than_max_fee" = "最高费用过低";
-"fee_settings.errors.zero_amount.info" = "Cannot transfer 0 TRX";
+"fee_settings.errors.zero_amount.info" = "无法传输 0 TRX";
 "fee_settings.warning.risk_of_getting_stuck" = "有风险";
 "fee_settings.warning.risk_of_getting_stuck.info" = "交易可能会在一段时间内仍然处于待处理状态或完全失败。";
 "fee_settings.warning.overpricing" = "费用太高";
