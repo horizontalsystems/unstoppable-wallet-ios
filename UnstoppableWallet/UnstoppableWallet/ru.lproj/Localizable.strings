@@ -1637,7 +1637,7 @@
 "cex_coin_select.withdraw" = "Вывод средств";
 "cex_coin_select.withdraw.empty" = "У вас нет активов для вывода.";
 "cex_coin_select.search_placeholder" = "Код или имя";
-"cex_coin_select.suspended" = "Приостановлен";
+"cex_coin_select.suspended" = "Приостановлено";
 
 // Cex Deposit Network Select
 
