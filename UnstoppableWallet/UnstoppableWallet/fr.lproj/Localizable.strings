@@ -987,6 +987,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.personal_support.requested" = "Demandé";
 "settings.personal_support.failed" = "La requête a échoué";
 "settings.personal_support.need_subscription" = "Cette fonctionnalité est réservée aux utilisateurs premium du Portefeuille %@ . Plus d'infos sur notre site officiel.";
+"settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
+"settings.personal_support.requested.open_telegram" = "Open Telegram";
+"settings.personal_support.requested.new_request" = "New Request";
 
 // Settings -> Experimental Features
 
@@ -1073,6 +1076,12 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.about_app.contact" = "Contact";
 "settings.about_app.rate_us" = "Evaluez-nous";
 "settings.about_app.tell_friends" = "Partager avec ami";
+
+// Settings -> About App -> Contact
+
+"settings.contact.title" = "Contact";
+"settings.contact.via_email" = "via E-mail";
+"settings.contact.via_telegram" = "via Telegram";
 
 // Settings -> Privacy
 
