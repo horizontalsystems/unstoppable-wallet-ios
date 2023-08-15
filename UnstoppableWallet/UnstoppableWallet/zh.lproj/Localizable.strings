@@ -987,6 +987,9 @@
 "settings.personal_support.requested" = "已申请";
 "settings.personal_support.failed" = "请求失败";
 "settings.personal_support.need_subscription" = "此功能仅适用于 %@ 钱包高级用户。我们官方网站中的更多信息。";
+"settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
+"settings.personal_support.requested.open_telegram" = "Open Telegram";
+"settings.personal_support.requested.new_request" = "New Request";
 
 // Settings -> Experimental Features
 
@@ -1073,6 +1076,12 @@
 "settings.about_app.contact" = "联系";
 "settings.about_app.rate_us" = "评价我们";
 "settings.about_app.tell_friends" = "分享给好友";
+
+// Settings -> About App -> Contact
+
+"settings.contact.title" = "联系";
+"settings.contact.via_email" = "via E-mail";
+"settings.contact.via_telegram" = "via Telegram";
 
 // Settings -> Privacy
 
