@@ -340,7 +340,9 @@ class ChartCell: UITableViewCell {
             chartSecondaryTitleLabel.isHidden = false
             chartSecondaryValueLabel.isHidden = false
             chartSecondaryTitleLabel.attributedText = top
+            chartSecondaryTitleLabel.lineBreakMode = .byTruncatingTail
             chartSecondaryValueLabel.attributedText = bottom
+            chartSecondaryValueLabel.lineBreakMode = .byTruncatingTail
             chartSecondaryDiffLabel.isHidden = true
         }
 
