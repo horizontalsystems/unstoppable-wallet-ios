@@ -961,6 +961,8 @@
 "settings.faq" = "FAQ";
 "settings.theme" = "테마";
 "settings.info_subtitle" = "분산형 앱";
+"settings.donate.description" = "Together, with your support, we can make this app even better!";
+"settings.donate.title" = "Donate";
 
 // Settings -> Base Currency
 
