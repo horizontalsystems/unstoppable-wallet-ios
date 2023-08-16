@@ -382,18 +382,18 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.total" = "Toplam";
 "send.confirmation.fee" = "Ücret";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.slide_to_send" = "Slide to Send";
+"send.confirmation.slide_to_send" = "Göndermek için Kaydırın";
 "send.confirmation.sending" = "Gönderiliyor";
 "send.confirmation.resend_description" = "Bunu yapmak, daha yüksek bir ücretle işlemi yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
-"send.confirmation.slide_to_resend" = "Slide to Resend";
-"send.confirmation.resending" = "Resending";
+"send.confirmation.slide_to_resend" = "Yeniden Göndermek için Kaydırın";
+"send.confirmation.resending" = "Gönderme";
 "send.confirmation.cancel_description" = "Bunu yapmak, kendine yeni bir 0 tutarlı işlemi olarak yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
-"send.confirmation.slide_to_cancel" = "Slide to Cancel";
-"send.confirmation.cancelling" = "Cancelling";
+"send.confirmation.slide_to_cancel" = "İptal etmek için kaydırın";
+"send.confirmation.cancelling" = "iptal";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Yöntem";
 "send.amount_error.balance" = "Yetersiz bakiye";
-"send.address_error.own_address" = "Cannot transfer TRX to yourself";
+"send.address_error.own_address" = "TRX kendinize aktarılamıyor";
 "send.amount_error.maximum_amount" = "Maksimum miktar %@";
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
 "send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
@@ -963,8 +963,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.faq" = "FAQ";
 "settings.theme" = "Tema";
 "settings.info_subtitle" = "decentralized uygulama";
-"settings.donate.description" = "Together, with your support, we can make this app even better!";
-"settings.donate.title" = "Donate";
+"settings.donate.description" = "Desteğinizle birlikte bu uygulamayı daha da iyi hale getirebiliriz!";
+"settings.donate.title" = "Bağış yapmak";
 
 // Settings -> Base Currency
 
@@ -993,8 +993,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.personal_support.failed" = "Request failed";
 "settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
 "settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
-"settings.personal_support.requested.open_telegram" = "Open Telegram";
-"settings.personal_support.requested.new_request" = "New Request";
+"settings.personal_support.requested.open_telegram" = "Abrir Telegram";
+"settings.personal_support.requested.new_request" = "Yeni istek";
 
 // Settings -> Experimental Features
 
@@ -1085,8 +1085,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Settings -> About App -> Contact
 
 "settings.contact.title" = "Iletişim";
-"settings.contact.via_email" = "via E-mail";
-"settings.contact.via_telegram" = "via Telegram";
+"settings.contact.via_email" = "E-posta yoluyla";
+"settings.contact.via_telegram" = "Telegram aracılığıyla";
 
 // Settings -> Privacy
 
@@ -1506,7 +1506,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "fee_settings.errors.replacement_transaction_underpriced" = "Değiştirme işlemi için Düşük Ücret";
 "fee_settings.errors.transaction_underpriced" = "İşlem Ücreti Düşük";
 "fee_settings.errors.tips_higher_than_max_fee" = "Max Fee çok düşük";
-"fee_settings.errors.zero_amount.info" = "Cannot transfer 0 TRX";
+"fee_settings.errors.zero_amount.info" = "0 TRX aktarılamıyor";
 "fee_settings.warning.risk_of_getting_stuck" = "Riskli";
 "fee_settings.warning.risk_of_getting_stuck.info" = "İşlem bir süre beklemede kalabilir veya tamamen başarısız olabilir.";
 "fee_settings.warning.overpricing" = "Ücret Çok Yüksek";
