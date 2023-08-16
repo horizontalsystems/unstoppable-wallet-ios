@@ -10,7 +10,7 @@ struct BalanceViewItem {
     let buttons: [WalletModule.Button: ButtonState]?
 }
 
-struct SendViewItem {
+struct WalletTokenViewItem {
     let element: WalletModule.Element
 
     let topViewItem: BalanceTopViewItem
@@ -135,13 +135,13 @@ extension BalanceViewItem: DiffAware {
 
 }
 
-extension SendViewItem: DiffAware {
+extension WalletTokenViewItem: DiffAware {
 
     public var diffId: WalletModule.Element {
         element
     }
 
-    static func compareContent(_ a: SendViewItem, _ b: SendViewItem) -> Bool {
+    static func compareContent(_ a: WalletTokenViewItem, _ b: WalletTokenViewItem) -> Bool {
         a.topViewItem == b.topViewItem
     }
 

@@ -3,11 +3,11 @@ import CurrencyKit
 import MarketKit
 import EvmKit
 
-class WalletSendViewItemFactory {
+class WalletTokenListViewItemFactory {
     private let minimumProgress = 10
     private let infiniteProgress = 50
 
-    private func topViewItem(item: WalletService.Item, balancePrimaryValue: BalancePrimaryValue) -> BalanceTopViewItem {
+    private func topViewItem(item: WalletTokenListService.Item, balancePrimaryValue: BalancePrimaryValue) -> BalanceTopViewItem {
         let state = item.state
 
         return BalanceTopViewItem(
@@ -24,7 +24,7 @@ class WalletSendViewItemFactory {
         )
     }
 
-    private func secondaryInfo(item: WalletService.Item, balancePrimaryValue: BalancePrimaryValue) -> BalanceSecondaryInfoViewItem {
+    private func secondaryInfo(item: WalletTokenListService.Item, balancePrimaryValue: BalancePrimaryValue) -> BalanceSecondaryInfoViewItem {
         if case let .syncing(progress, lastBlockDate) = item.state {
             return .syncing(progress: progress, syncedUntil: lastBlockDate.map { DateHelper.instance.formatSyncedThroughDate(from: $0) })
         } else if case let .customSyncing(main, secondary, _) = item.state {
@@ -73,14 +73,14 @@ class WalletSendViewItemFactory {
         }
     }
 
-    private func primaryValue(item: WalletService.Item, balancePrimaryValue: BalancePrimaryValue) -> (text: String?, dimmed: Bool) {
+    private func primaryValue(item: WalletTokenListService.Item, balancePrimaryValue: BalancePrimaryValue) -> (text: String?, dimmed: Bool) {
         switch balancePrimaryValue {
         case .coin: return coinValue(value: item.balanceData.balanceTotal, decimalCount: item.element.decimals, state: item.state)
         case .currency: return currencyValue(value: item.balanceData.balanceTotal, state: item.state, priceItem: item.priceItem)
         }
     }
 
-    private func secondaryValue(item: WalletService.Item, balancePrimaryValue: BalancePrimaryValue, expanded: Bool) -> (text: String?, dimmed: Bool) {
+    private func secondaryValue(item: WalletTokenListService.Item, balancePrimaryValue: BalancePrimaryValue, expanded: Bool) -> (text: String?, dimmed: Bool) {
         switch balancePrimaryValue {
         case .coin: return currencyValue(value: item.balanceData.balanceTotal, state: item.state, priceItem: item.priceItem)
         case .currency: return coinValue(value: item.balanceData.balanceTotal, decimalCount: item.element.decimals, state: item.state)
@@ -110,10 +110,10 @@ class WalletSendViewItemFactory {
 
 }
 
-extension WalletSendViewItemFactory {
+extension WalletTokenListViewItemFactory {
 
-    func viewItem(item: WalletService.Item, balancePrimaryValue: BalancePrimaryValue) -> SendViewItem {
-        SendViewItem(
+    func viewItem(item: WalletTokenListService.Item, balancePrimaryValue: BalancePrimaryValue) -> WalletTokenViewItem {
+        WalletTokenViewItem(
                 element: item.element,
                 topViewItem: topViewItem(item: item, balancePrimaryValue: balancePrimaryValue)
         )
