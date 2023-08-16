@@ -2,9 +2,9 @@ import Foundation
 
 class WalletSorter {
 
-    private let descending: (WalletService.Item, WalletService.Item) -> Bool = { lhsItem, rhsItem in
-        let lhsBalance = lhsItem.balanceData.balance
-        let rhsBalance = rhsItem.balanceData.balance
+    private let descending: (ISortableWalletItem, ISortableWalletItem) -> Bool = { lhsItem, rhsItem in
+        let lhsBalance = lhsItem.balance
+        let rhsBalance = rhsItem.balance
         let lhsHasPrice = lhsItem.priceItem != nil
         let rhsHasPrice = rhsItem.priceItem != nil
 
@@ -18,26 +18,65 @@ class WalletSorter {
         return lhsHasPrice
     }
 
-    func sort(items: [WalletService.Item], sortType: WalletModule.SortType) -> [WalletService.Item] {
+    func sort<Item: ISortableWalletItem>(items: [Item], sortType: WalletModule.SortType) -> [Item] {
         switch sortType {
         case .balance:
-            let nonZeroItems = items.filter { !$0.balanceData.balance.isZero }
-            let zeroItems = items.filter { $0.balanceData.balance.isZero }
+            let nonZeroItems = items.filter { !$0.balance.isZero }
+            let zeroItems = items.filter { $0.balance.isZero }
 
             return nonZeroItems.sorted(by: descending) + zeroItems.sorted(by: descending)
         case .name:
             return items.sorted { lhsItem, rhsItem in
-                lhsItem.element.name.caseInsensitiveCompare(rhsItem.element.name) == .orderedAscending
+                lhsItem.name.caseInsensitiveCompare(rhsItem.name) == .orderedAscending
             }
         case .percentGrowth:
             return items.sorted { lhsItem, rhsItem in
-                guard let lhsDiff = lhsItem.priceItem?.diff, let rhsDiff = rhsItem.priceItem?.diff else {
-                    return lhsItem.priceItem?.diff != nil
+                guard let lhsDiff = lhsItem.diff, let rhsDiff = rhsItem.diff else {
+                    return lhsItem.diff != nil
                 }
 
                 return lhsDiff > rhsDiff
             }
         }
+    }
+
+}
+
+protocol ISortableWalletItem {
+    var balance: Decimal { get }
+    var priceItem: WalletCoinPriceService.Item? { get }
+    var name: String { get }
+    var diff: Decimal? { get }
+}
+
+extension WalletService.Item: ISortableWalletItem {
+
+    var balance: Decimal {
+        balanceData.balance
+    }
+
+    var name: String {
+        element.name
+    }
+
+    var diff: Decimal? {
+        priceItem?.diff
+    }
+
+}
+
+extension WalletTokenListService.Item: ISortableWalletItem {
+
+    var balance: Decimal {
+        balanceData.balance
+    }
+
+    var name: String {
+        element.name
+    }
+
+    var diff: Decimal? {
+        priceItem?.diff
     }
 
 }
