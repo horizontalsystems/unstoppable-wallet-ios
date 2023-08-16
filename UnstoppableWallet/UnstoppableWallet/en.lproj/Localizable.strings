@@ -371,6 +371,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "send.title" = "Send %@";
 "send.send" = "Send";
+"send.no_assets" = "You have no assets to send.";
 "send.amount_placeholder" = "Amount";
 "send.address_placeholder" = "Address";
 "send.address_or_domain_placeholder" = "Address or Domain";
@@ -450,6 +451,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Swap
 
 "swap.title" = "Swap";
+"swap.no_assets" = "You have no assets to swap.";
 "swap.you_pay" = "You Pay";
 "swap.estimated" = "estimated";
 "swap.balance" = "Balance";

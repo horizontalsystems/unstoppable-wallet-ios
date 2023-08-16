@@ -3,7 +3,7 @@ import ThemeKit
 import SnapKit
 import ComponentKit
 
-class SendCell: UITableViewCell {
+class WalletTokenCell: UITableViewCell {
     private let topView = BalanceTopView()
     private let separatorView = UIView()
 
@@ -32,7 +32,7 @@ class SendCell: UITableViewCell {
         fatalError("not implemented")
     }
 
-    func bind(viewItem: SendViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onTap: (() -> ())? = nil, onTapError: (() -> ())?) {
+    func bind(viewItem: WalletTokenViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onTap: (() -> ())? = nil, onTapError: (() -> ())?) {
         topView.bind(viewItem: viewItem.topViewItem, onTapError: onTapError)
         topView.layoutIfNeeded()
 

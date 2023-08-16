@@ -53,43 +53,102 @@ struct WalletModule {
         return WalletViewController(viewModel: viewModel)
     }
 
-    static func sendViewController() -> UIViewController {
+    static func sendTokenListViewController() -> UIViewController? {
+        guard let account = App.shared.accountManager.activeAccount else {
+            return nil
+        }
+
         let coinPriceService = WalletCoinPriceService(
                 currencyKit: App.shared.currencyKit,
                 marketKit: App.shared.marketKit
         )
 
-        let elementServiceFactory = WalletElementServiceFactory(
-                adapterManager: App.shared.adapterManager,
-                walletManager: App.shared.walletManager,
-                cexAssetManager: App.shared.cexAssetManager
+        let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
+        let elementService = WalletBlockchainElementService(
+                account: account,
+                adapterService: adapterService,
+                walletManager: App.shared.walletManager
         )
+        adapterService.delegate = elementService
 
-        let service = WalletService(
-                elementServiceFactory: elementServiceFactory,
+        let service = WalletTokenListService(
+                elementService: elementService,
                 coinPriceService: coinPriceService,
-                accountManager: App.shared.accountManager,
                 cacheManager: App.shared.enabledWalletCacheManager,
-                accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
                 reachabilityManager: App.shared.reachabilityManager,
                 balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
-                balanceHiddenManager: App.shared.balanceHiddenManager,
-                balanceConversionManager: App.shared.balanceConversionManager,
-                cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
-                rateAppManager: App.shared.rateAppManager,
                 appManager: App.shared.appManager,
                 feeCoinProvider: App.shared.feeCoinProvider,
-                localStorage: StorageKit.LocalStorage.default
+                account: account
         )
-
+        elementService.delegate = service
         coinPriceService.delegate = service
 
-        let viewModel = WalletSendViewModel(
+        let viewModel = WalletTokenListViewModel(
                 service: service,
-                factory: WalletSendViewItemFactory()
+                factory: WalletTokenListViewItemFactory(),
+                title: "send.send".localized,
+                emptyText: "send.no_assets".localized
         )
 
-        return ThemeNavigationController(rootViewController: WalletSendViewController(viewModel: viewModel))
+        let viewController = WalletTokenListViewController(viewModel: viewModel)
+        viewController.onSelectWallet = { [weak viewController] wallet in
+            if let module = SendModule.controller(wallet: wallet) {
+                viewController?.present(module, animated: true)
+            }
+        }
+
+        return ThemeNavigationController(rootViewController: viewController)
+    }
+
+    static func swapTokenListViewController() -> UIViewController? {
+        guard let account = App.shared.accountManager.activeAccount else {
+            return nil
+        }
+
+        let coinPriceService = WalletCoinPriceService(
+                currencyKit: App.shared.currencyKit,
+                marketKit: App.shared.marketKit
+        )
+
+        let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
+        let elementService = WalletBlockchainElementService(
+                account: account,
+                adapterService: adapterService,
+                walletManager: App.shared.walletManager
+        )
+        adapterService.delegate = elementService
+
+        let service = WalletTokenListService(
+                elementService: elementService,
+                coinPriceService: coinPriceService,
+                cacheManager: App.shared.enabledWalletCacheManager,
+                reachabilityManager: App.shared.reachabilityManager,
+                balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+                appManager: App.shared.appManager,
+                feeCoinProvider: App.shared.feeCoinProvider,
+                account: account
+        )
+        service.elementFilter = { element in element.wallet?.token.swappable ?? false }
+
+        elementService.delegate = service
+        coinPriceService.delegate = service
+
+        let viewModel = WalletTokenListViewModel(
+                service: service,
+                factory: WalletTokenListViewItemFactory(),
+                title: "swap.title".localized,
+                emptyText: "swap.no_assets".localized
+        )
+
+        let viewController = WalletTokenListViewController(viewModel: viewModel)
+        viewController.onSelectWallet = { [weak viewController] wallet in
+            if let module = SwapModule.viewController(tokenFrom: wallet.token) {
+                viewController?.navigationController?.pushViewController(module, animated: true)
+            }
+        }
+
+        return ThemeNavigationController(rootViewController: viewController)
     }
 
 }

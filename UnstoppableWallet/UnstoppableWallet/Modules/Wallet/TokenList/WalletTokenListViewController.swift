@@ -9,10 +9,10 @@ import HUD
 import MarketKit
 import ComponentKit
 
-class WalletSendViewController: ThemeSearchViewController {
+class WalletTokenListViewController: ThemeSearchViewController {
     private let animationDuration: TimeInterval = 0.2
 
-    private let viewModel: WalletSendViewModel
+    private let viewModel: WalletTokenListViewModel
     private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
 
@@ -25,12 +25,14 @@ class WalletSendViewController: ThemeSearchViewController {
     private let failedView = PlaceholderView()
     private let invalidApiKeyView = PlaceholderView()
 
-    private var viewItems = [SendViewItem]()
+    private var viewItems = [WalletTokenViewItem]()
     private var isLoaded = false
 
-    private let queue = DispatchQueue(label: "\(AppConfig.label).wallet_send_view_controller", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).wallet_tokens_view_controller", qos: .userInitiated)
 
-    init(viewModel: WalletSendViewModel) {
+    var onSelectWallet: ((Wallet) -> ())?
+
+    init(viewModel: WalletTokenListViewModel) {
         self.viewModel = viewModel
 
         super.init(scrollViews: [tableView])
@@ -47,9 +49,10 @@ class WalletSendViewController: ThemeSearchViewController {
             tableView.sectionHeaderTopPadding = 0
         }
 
-        title = "Send".localized
+        title = viewModel.title
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapClose))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.searchController?.searchBar.placeholder = "add_token.coin_name".localized
 
         refreshControl.tintColor = .themeLeah
@@ -67,7 +70,7 @@ class WalletSendViewController: ThemeSearchViewController {
 
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.registerCell(forClass: SendCell.self)
+        tableView.registerCell(forClass: WalletTokenCell.self)
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { make in
@@ -81,7 +84,7 @@ class WalletSendViewController: ThemeSearchViewController {
         }
 
         emptyView.image = UIImage(named: "empty_wallet_48")
-        emptyView.text = "You have no assets to send.".localized
+        emptyView.text = viewModel.emptyText
 
         view.addSubview(failedView)
         failedView.snp.makeConstraints { maker in
@@ -107,9 +110,8 @@ class WalletSendViewController: ThemeSearchViewController {
 
         subscribe(disposeBag, viewModel.noConnectionErrorSignal) { HudHelper.instance.show(banner: .noInternet) }
         subscribe(disposeBag, viewModel.showSyncingSignal) { HudHelper.instance.show(banner: .attention(string: "Wait for synchronization")) }
-        subscribe(disposeBag, viewModel.openSendSignal) { [weak self] in self?.openSend(wallet: $0) }
+        subscribe(disposeBag, viewModel.selectWalletSignal) { [weak self] in self?.onSelect(wallet: $0) }
         subscribe(disposeBag, viewModel.openSyncErrorSignal) { [weak self] in self?.openSyncError(wallet: $0, error: $1) }
-        subscribe(disposeBag, viewModel.showAccountsLostSignal) { [weak self] in self?.showAccountsLost() }
 
         viewModel.$state
                 .receive(on: DispatchQueue.main)
@@ -131,33 +133,10 @@ class WalletSendViewController: ThemeSearchViewController {
         super.viewDidAppear(animated)
 
         tableView.refreshControl = refreshControl
-
-        viewModel.onAppear()
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        viewModel.onDisappear()
     }
 
     @objc func onTapClose() {
         dismiss(animated: true)
-    }
-
-    @objc func onTapCreate() {
-        let viewController = CreateAccountModule.viewController(sourceViewController: self)
-        present(viewController, animated: true)
-    }
-
-    @objc func onTapRestore() {
-        let viewController = RestoreTypeModule.viewController(sourceViewController: self)
-        present(viewController, animated: true)
-    }
-
-    @objc func onTapWatch() {
-        let viewController = WatchModule.viewController()
-        present(viewController, animated: true)
     }
 
     @objc func onRefresh() {
@@ -172,7 +151,7 @@ class WalletSendViewController: ThemeSearchViewController {
         // todo
     }
 
-    private func sync(state: WalletSendViewModel.State) {
+    private func sync(state: WalletTokenListViewModel.State) {
         switch state {
         case .list(let viewItems): navigationItem.searchController?.searchBar.isHidden = viewItems.isEmpty
         default: navigationItem.searchController?.searchBar.isHidden = true
@@ -215,7 +194,7 @@ class WalletSendViewController: ThemeSearchViewController {
         }
     }
 
-    private func handle(newViewItems: [SendViewItem]) {
+    private func handle(newViewItems: [WalletTokenViewItem]) {
         let changes = diff(old: viewItems, new: newViewItems)
 
         guard !changes.isEmpty else {
@@ -253,13 +232,13 @@ class WalletSendViewController: ThemeSearchViewController {
         }
 
         updateIndexes.forEach {
-            if let cell = tableView.cellForRow(at: IndexPath(row: $0, section: 0)) as? SendCell {
+            if let cell = tableView.cellForRow(at: IndexPath(row: $0, section: 0)) as? WalletTokenCell {
                 bind(cell: cell, viewItem: viewItems[$0], animated: true)
             }
         }
     }
 
-    private func bind(cell: SendCell, viewItem: SendViewItem, animated: Bool = false) {
+    private func bind(cell: WalletTokenCell, viewItem: WalletTokenViewItem, animated: Bool = false) {
         cell.bind(
                 viewItem: viewItem,
                 animated: animated,
@@ -270,10 +249,8 @@ class WalletSendViewController: ThemeSearchViewController {
         )
     }
 
-    private func openSend(wallet: Wallet) {
-        if let module = SendModule.controller(wallet: wallet) {
-            present(module, animated: true)
-        }
+    private func onSelect(wallet: Wallet) {
+        onSelectWallet?(wallet)
     }
 
     private func openSyncError(wallet: Wallet, error: Error) {
@@ -293,7 +270,7 @@ class WalletSendViewController: ThemeSearchViewController {
 
 }
 
-extension WalletSendViewController: UITableViewDataSource {
+extension WalletTokenListViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         1
@@ -304,21 +281,21 @@ extension WalletSendViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.dequeueReusableCell(withIdentifier: String(describing: SendCell.self), for: indexPath)
+        tableView.dequeueReusableCell(withIdentifier: String(describing: WalletTokenCell.self), for: indexPath)
     }
 
 }
 
-extension WalletSendViewController: UITableViewDelegate {
+extension WalletTokenListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? SendCell {
+        if let cell = cell as? WalletTokenCell {
             bind(cell: cell, viewItem: viewItems[indexPath.row])
         }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        SendCell.height
+        WalletTokenCell.height
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

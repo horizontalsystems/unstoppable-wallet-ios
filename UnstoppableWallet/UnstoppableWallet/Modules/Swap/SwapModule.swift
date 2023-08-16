@@ -53,8 +53,7 @@ class SwapModule {
                 viewModel: viewModel,
                 dataSourceManager: swapDexManager
         )
-
-        return ThemeNavigationController(rootViewController: viewController)
+        return viewController
     }
 
 }
