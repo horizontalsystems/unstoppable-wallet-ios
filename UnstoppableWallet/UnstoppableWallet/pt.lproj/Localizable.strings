@@ -382,14 +382,14 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "send.confirmation.total" = "Total";
 "send.confirmation.fee" = "Taxa";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.slide_to_send" = "Slide to Send";
+"send.confirmation.slide_to_send" = "Deslize para enviar";
 "send.confirmation.sending" = "Enviando";
 "send.confirmation.resend_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
-"send.confirmation.slide_to_resend" = "Slide to Resend";
-"send.confirmation.resending" = "Resending";
+"send.confirmation.slide_to_resend" = "Deslize para reenviar";
+"send.confirmation.resending" = "Reenviando";
 "send.confirmation.cancel_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
-"send.confirmation.slide_to_cancel" = "Slide to Cancel";
-"send.confirmation.cancelling" = "Cancelling";
+"send.confirmation.slide_to_cancel" = "Deslize para Cancelar";
+"send.confirmation.cancelling" = "Cancelando";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Método";
 "send.amount_error.balance" = "Saldo insuficiente";
@@ -963,8 +963,8 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "settings.faq" = "FAQ";
 "settings.theme" = "Tema";
 "settings.info_subtitle" = "aplicativo descentralizado";
-"settings.donate.description" = "Together, with your support, we can make this app even better!";
-"settings.donate.title" = "Donate";
+"settings.donate.description" = "Juntos, com o seu apoio, podemos fazer este aplicativo ainda melhor!";
+"settings.donate.title" = "Doar";
 
 // Settings -> Base Currency
 
