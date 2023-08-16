@@ -178,7 +178,7 @@ class ReceiveAddressViewController<Service: IReceiveAddressService, Factory: IRe
 }
 
 extension ReceiveAddressViewController: SectionsDataSource {
-    private func qrRow(address: String, text: String) -> RowProtocol {
+    private func qrRow(address: String, imageUrl: String?, text: String) -> RowProtocol {
         Row<QrCodeCell>(
                 id: "qr-code",
                 dynamicHeight: { width in
@@ -186,6 +186,7 @@ extension ReceiveAddressViewController: SectionsDataSource {
                 },
                 bind: { [weak self] cell, _ in
                     cell.set(qrCodeString: address, text: text)
+                    cell.set(tokenUrl: imageUrl)
                     cell.onTap = {
                         self?.onTapCopy()
                     }
@@ -274,7 +275,7 @@ extension ReceiveAddressViewController: SectionsDataSource {
             viewItems.enumerated().forEach { index, viewItem in
                 switch viewItem {
                 case let .qrItem(item):
-                    rows.append(qrRow(address: item.address, text: item.text))
+                    rows.append(qrRow(address: item.address, imageUrl: item.imageUrl, text: item.text))
                 case let .value(title, value, copyable):
                     let rowInfo = RowInfo(index: index, count: viewItems.count)
                     rows.append(valueRow(title: title, value: value, copyable: copyable, rowInfo: rowInfo))

@@ -6,6 +6,7 @@ import ComponentKit
 class QrCodeCell: UITableViewCell {
     private static let horizontalMargin: CGFloat = .margin16
     private static let qrCodeSize: CGFloat = 150
+    private static let tokenWrapperSize: CGFloat = 40
     private static let qrCodePadding: CGFloat = .margin4
     private static let qrCodeTopMargin: CGFloat = .margin32
     private static let qrCodeBottomMargin: CGFloat = .margin12
@@ -14,6 +15,7 @@ class QrCodeCell: UITableViewCell {
     private static let textFont: UIFont = .subhead2
 
     private let qrImageView = UIImageView()
+    private let tokenImageView = UIImageView()
     private let label = UILabel()
 
     var onTap: (() -> ())?
@@ -61,6 +63,23 @@ class QrCodeCell: UITableViewCell {
         qrImageView.backgroundColor = .white
         qrImageView.contentMode = .center
 
+        let tokenWrapperView = UIView()
+        qrImageView.addSubview(tokenWrapperView)
+        tokenWrapperView.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+            maker.size.equalTo(Self.tokenWrapperSize)
+        }
+
+        tokenWrapperView.isUserInteractionEnabled = false
+        tokenWrapperView.cornerRadius = .cornerRadius8
+        tokenWrapperView.backgroundColor = .themeWhite
+
+        tokenWrapperView.addSubview(tokenImageView)
+        tokenImageView.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+            maker.size.equalTo(CGFloat.iconSize32)
+        }
+
         wrapperView.addSubview(label)
         label.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(Self.textHorizontalMargin)
@@ -86,6 +105,13 @@ class QrCodeCell: UITableViewCell {
         qrImageView.asyncSetImage { UIImage.qrCodeImage(qrCodeString: qrCodeString, size: size) }
 
         label.text = text
+    }
+
+    func set(tokenUrl: String?) {
+        guard let tokenUrl else {
+            return
+        }
+        tokenImageView.setImage(withUrlString: tokenUrl, placeholder: nil)
     }
 
 }
