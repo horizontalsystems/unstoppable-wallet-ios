@@ -40,4 +40,10 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
         super.handleSendSuccess(transactionHash: transactionHash)
     }
 
+    override func handleSendFailed(error: String) {
+        super.handleSendFailed(error: error)
+
+        sendButton.reset()
+    }
+
 }

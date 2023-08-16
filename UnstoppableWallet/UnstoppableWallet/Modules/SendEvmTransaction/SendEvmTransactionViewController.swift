@@ -133,7 +133,7 @@ class SendEvmTransactionViewController: ThemeViewController {
         present(controller, animated: true)
     }
 
-    private func handleSendFailed(error: String) {
+    func handleSendFailed(error: String) {
         HudHelper.instance.show(banner: .error(string: error))
     }
 

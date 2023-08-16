@@ -118,6 +118,7 @@ class SendTronConfirmationViewController: ThemeViewController {
 
     private func handleSendFailed(error: String) {
         HudHelper.instance.show(banner: .error(string: error))
+        sendButton.reset()
     }
 
     private func reloadTable() {

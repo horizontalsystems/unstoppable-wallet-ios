@@ -78,6 +78,7 @@ class SendConfirmationViewController: ThemeViewController, SectionsDataSource {
 
     private func handleSendFailed(error: String) {
         HudHelper.instance.show(banner: .error(string: error))
+        sendButton.reset()
     }
 
     private func row(viewItem: SendConfirmationViewModel.ViewItem, rowInfo: RowInfo) -> RowProtocol {
