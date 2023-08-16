@@ -963,6 +963,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.faq" = "FAQ";
 "settings.theme" = "Thème";
 "settings.info_subtitle" = "application décentralisée";
+"settings.donate.description" = "Together, with your support, we can make this app even better!";
+"settings.donate.title" = "Donate";
 
 // Settings -> Base Currency
 
