@@ -131,32 +131,42 @@ class WalletConnectV2MainService {
     }
 
     private func blockchains(by proposal: WalletConnectSign.Session.Proposal) throws ->  WalletConnectMainModule.BlockchainSet {
-        // check that we have only eip155 namespace for working
-        guard proposal.requiredNamespaces.count == 1,
-              let requiredEip155 = proposal.requiredNamespaces["eip155"] else {
-            throw WalletConnectMainModule.SessionError.unsupportedChainId
-        }
         guard let account = accountManager.activeAccount else {
             return .empty
         }
-        // no any chains to sign
-        guard let wcRequiredChains = requiredEip155.chains?.compactMap({ $0 }) else {
-            return .empty
-        }
+        // check that we have only eip155 namespace for working
 
-        var items = blockchainItems(blockchains: wcRequiredChains, account: account, selected: true)
-        // We must sign all required chains
-        guard items.count == wcRequiredChains.count else {
+        var items = [WalletConnectMainModule.BlockchainItem]()
+        if proposal.requiredNamespaces.count == 0 {
+            // do nothing
+        } else if proposal.requiredNamespaces.count == 1, let requiredEip155 = proposal.requiredNamespaces["eip155"] {
+            // no any chains to sign
+            guard let wcRequiredChains = requiredEip155.chains?.compactMap({ $0 }) else {
+                return .empty
+            }
+
+            items = blockchainItems(blockchains: wcRequiredChains, account: account, selected: true)
+            // We must sign all required chains
+            guard items.count == wcRequiredChains.count else {
+                throw WalletConnectMainModule.SessionError.unsupportedChainId
+            }
+        } else {
             throw WalletConnectMainModule.SessionError.unsupportedChainId
         }
         // Add all optionals chains from proposal
+
+        guard let eip155 = proposal.requiredNamespaces["eip155"] ?? proposal.optionalNamespaces?["eip155"] else {
+            throw WalletConnectMainModule.SessionError.unsupportedChainId
+        }
+
         if let optionalEip155 = proposal.optionalNamespaces?["eip155"],
            let optionalChains = optionalEip155.chains?.compactMap({ $0 }) {
 
             items.append(contentsOf: blockchainItems(blockchains: optionalChains, account: account, selected: false))
         }
 
-        return .init(items: Set(items), methods: requiredEip155.methods, events: requiredEip155.events)
+
+        return .init(items: Set(items), methods: eip155.methods, events: eip155.events)
     }
 
     private func blockchainItems(blockchains: [WalletConnectUtils.Blockchain], account: Account, selected: Bool) -> [WalletConnectMainModule.BlockchainItem] {
