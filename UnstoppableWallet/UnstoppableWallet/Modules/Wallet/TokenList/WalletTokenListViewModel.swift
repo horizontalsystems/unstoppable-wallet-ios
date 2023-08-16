@@ -6,30 +6,32 @@ import RxCocoa
 import MarketKit
 import HsExtensions
 
-class WalletSendViewModel {
-    private let service: WalletService
-    private let factory: WalletSendViewItemFactory
+class WalletTokenListViewModel {
+    private let service: WalletTokenListService
+    private let factory: WalletTokenListViewItemFactory
     private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
+
+    let title: String
+    let emptyText: String
 
     private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
     private let noConnectionErrorRelay = PublishRelay<()>()
     private let showSyncingRelay = PublishRelay<()>()
-    private let openSendRelay = PublishRelay<Wallet>()
+    private let selectWalletRelay = PublishRelay<Wallet>()
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
 
     @PostPublished private(set) var state: State = .list(viewItems: [])
 
-    private var expandedElement: WalletModule.Element?
     private var filter: String?
 
-    private let queue = DispatchQueue(label: "\(AppConfig.label).wallet-view-model", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "\(AppConfig.label).wallet-tokens-view-model", qos: .userInitiated)
 
-    init(service: WalletService, factory: WalletSendViewItemFactory) {
+    init(service: WalletTokenListService, factory: WalletTokenListViewItemFactory, title: String, emptyText: String) {
         self.service = service
         self.factory = factory
-
-        service.sortType = .balance
+        self.title = title
+        self.emptyText = emptyText
 
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
         subscribe(disposeBag, service.balancePrimaryValueObservable) { [weak self] _ in self?.onUpdateBalancePrimaryValue() }
@@ -41,18 +43,18 @@ class WalletSendViewModel {
         _sync(serviceState: service.state)
     }
 
-    private func sync(serviceState: WalletService.State) {
+    private func sync(serviceState: WalletTokenListService.State) {
         queue.async {
             self._sync(serviceState: serviceState)
         }
     }
 
-    private func _sync(serviceState: WalletService.State) {
+    private func _sync(serviceState: WalletTokenListService.State) {
         switch service.state {
         case .noAccount: state = .noAccount
         case .loading: state = .loading
         case .loaded(let items):
-            if items.isEmpty, !service.cexAccount {
+            if items.isEmpty {
                 state = .empty
             } else {
                 state = .list(viewItems: items.compactMap { _viewItem(item: $0) })
@@ -69,7 +71,7 @@ class WalletSendViewModel {
         sync(serviceState: service.state)
     }
 
-    private func syncUpdated(item: WalletService.Item) {
+    private func syncUpdated(item: WalletTokenListService.Item) {
         queue.async {
             guard case .list(var viewItems) = self.state else {
                 return
@@ -86,7 +88,7 @@ class WalletSendViewModel {
         }
     }
 
-    private func _viewItem(item: WalletService.Item) -> SendViewItem? {
+    private func _viewItem(item: WalletTokenListService.Item) -> WalletTokenViewItem? {
         if let filter = filter, !filter.isEmpty {
             if !(item.element.name.localizedCaseInsensitiveContains(filter) || (item.element.coin?.name.localizedCaseInsensitiveContains(filter) ?? false)) {
                 return nil
@@ -106,7 +108,7 @@ class WalletSendViewModel {
 
 }
 
-extension WalletSendViewModel {
+extension WalletTokenListViewModel {
 
     var showWarningDriver: Driver<CancellableTitledCaution?> {
         showWarningRelay.asDriver()
@@ -120,20 +122,12 @@ extension WalletSendViewModel {
         showSyncingRelay.asSignal()
     }
 
-    var openSendSignal: Signal<Wallet> {
-        openSendRelay.asSignal()
+    var selectWalletSignal: Signal<Wallet> {
+        selectWalletRelay.asSignal()
     }
 
     var openSyncErrorSignal: Signal<(Wallet, Error)> {
         openSyncErrorRelay.asSignal()
-    }
-
-    var showAccountsLostSignal: Signal<()> {
-        service.accountsLostObservable.asSignal(onErrorJustReturn: ())
-    }
-
-    var lastCreatedAccount: Account? {
-        service.lastCreatedAccount
     }
 
     func onTapFailedIcon(element: WalletModule.Element) {
@@ -157,28 +151,20 @@ extension WalletSendViewModel {
         openSyncErrorRelay.accept((wallet, error))
     }
 
-    func onAppear() {
-        service.notifyAppear()
-    }
-
-    func onDisappear() {
-        service.notifyDisappear()
-    }
-
     func onTriggerRefresh() {
         service.refresh()
     }
 
-    func didSelect(item: SendViewItem) {
+    func didSelect(item: WalletTokenViewItem) {
         if item.topViewItem.indefiniteSearchCircle || item.topViewItem.syncSpinnerProgress != nil {
             showSyncingRelay.accept(())
             return
         }
         if item.topViewItem.failedImageViewVisible {
             onTapFailedIcon(element: item.element)
-        }
+        } else
         if let wallet = item.element.wallet {
-            openSendRelay.accept(wallet)
+            selectWalletRelay.accept(wallet)
         }
     }
 
@@ -190,10 +176,10 @@ extension WalletSendViewModel {
 
 }
 
-extension WalletSendViewModel {
+extension WalletTokenListViewModel {
 
     enum State: CustomStringConvertible {
-        case list(viewItems: [SendViewItem])
+        case list(viewItems: [WalletTokenViewItem])
         case noAccount
         case empty
         case loading
