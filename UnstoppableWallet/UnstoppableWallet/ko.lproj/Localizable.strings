@@ -159,15 +159,6 @@
 "restore.binance.failed_to_connect" = "API 키 연결 실패";
 "restore.binance.invalid_qr_code" = "잘못된 QR 코드";
 
-// Restore Coinzix
-
-"restore.coinzix.description" = "코인직스 계정의 이메일과 비밀번호를 입력하세요";
-"restore.coinzix.sign_up" = "회원가입";
-"restore.coinzix.login" = "로그인";
-"restore.coinzix.sample_username" = "Email";
-"restore.coinzix.sample_password" = "비밀번호";
-"restore.coinzix.login_failed" = "로그인 실패";
-
 // Coin Settings
 
 "coin_settings.title" = "블록 체인 설정";
@@ -389,14 +380,18 @@
 "send.confirmation.total" = "합계";
 "send.confirmation.fee" = "수수료";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.send_button" = "전송";
+"send.confirmation.slide_to_send" = "슬라이드하여 보내기";
+"send.confirmation.sending" = "전송중";
 "send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
-"send.confirmation.resend_button" = "재전송";
+"send.confirmation.slide_to_resend" = "슬라이드하여 재전송";
+"send.confirmation.resending" = "재전송 중";
 "send.confirmation.cancel_description" = "이 작업은 자신에게 새로운 0 금액 트랜잭션으로 다시 전송하여 이전 트랜잭션을 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
-"send.confirmation.cancel_button" = "트랜잭션 취소";
+"send.confirmation.slide_to_cancel" = "슬라이드하여 취소";
+"send.confirmation.cancelling" = "취소 중";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "메소드";
 "send.amount_error.balance" = "잔고 부족";
+"send.address_error.own_address" = "TRX를 자신에게 전송할 수 없습니다";
 "send.amount_error.maximum_amount" = "최대 %@ 금액";
 "send.amount_error.minimum_amount" = "최소 %@ 금액";
 "send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
@@ -966,6 +961,8 @@
 "settings.faq" = "FAQ";
 "settings.theme" = "테마";
 "settings.info_subtitle" = "분산형 앱";
+"settings.donate.description" = "함께, 여러분의 지원으로 우리는 이 앱을 더 좋게 만들 수 있습니다!";
+"settings.donate.title" = "후원하기";
 
 // Settings -> Base Currency
 
@@ -993,6 +990,9 @@
 "settings.personal_support.requested" = "신청 완료";
 "settings.personal_support.failed" = "요청 실패";
 "settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
+"settings.personal_support.requested.description" = "이미 비공개 채팅을 요청하셨습니다. Telegram에서 찾아보세요.";
+"settings.personal_support.requested.open_telegram" = "오픈 텔레그램";
+"settings.personal_support.requested.new_request" = "요청";
 
 // Settings -> Experimental Features
 
@@ -1079,6 +1079,12 @@
 "settings.about_app.contact" = "연락처";
 "settings.about_app.rate_us" = "앱 평가";
 "settings.about_app.tell_friends" = "친구에게 추천하기";
+
+// Settings -> About App -> Contact
+
+"settings.contact.title" = "연락처";
+"settings.contact.via_email" = "이메일로";
+"settings.contact.via_telegram" = "텔레그램을 통해";
 
 // Settings -> Privacy
 
@@ -1498,6 +1504,7 @@
 "fee_settings.errors.replacement_transaction_underpriced" = "교체 거래에 대한 낮은 수수료";
 "fee_settings.errors.transaction_underpriced" = "낮은 거래 수수료";
 "fee_settings.errors.tips_higher_than_max_fee" = "최대 수수료가 너무 낮습니다.";
+"fee_settings.errors.zero_amount.info" = "0 TRX 을(를) 전송할 수 없습니다.";
 "fee_settings.warning.risk_of_getting_stuck" = "위험";
 "fee_settings.warning.risk_of_getting_stuck.info" = "트랜잭션이 잠시 동안 보류 상태로 유지되거나 완전히 실패할 수 있습니다.";
 "fee_settings.warning.overpricing" = "수수료가 너무 높음";
@@ -1683,13 +1690,3 @@
 "cex_withdraw_confirm.network" = "네트워크";
 "cex_withdraw_confirm.withdraw" = "빼다";
 "cex_withdraw_confirm.withdraw_failed" = "출금 실패";
-
-// Coinzix Verify Withdraw
-
-"coinzix_verify.title" = "보안 확인";
-"coinzix_verify.failed" = "검증 실패";
-"coinzix_verify.submit" = "제출하기";
-"coinzix_verify.email_pin" = "인증 코드";
-"coinzix_verify.email_pin.description" = "인증 코드를 이메일로 보냈습니다.";
-"coinzix_verify.google_pin" = "구글 OTP";
-"coinzix_verify.google_pin.description" = "Google Authenticator 앱에서 인증 코드를 입력하십시오.";

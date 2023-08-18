@@ -161,15 +161,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "restore.binance.failed_to_connect" = "API Anahtarınız bağlanamadı";
 "restore.binance.invalid_qr_code" = "Geçersiz QR Kodu";
 
-// Restore Coinzix
-
-"restore.coinzix.description" = "Coinzix Hesabından e-postanızı ve şifrenizi girin";
-"restore.coinzix.sign_up" = "Üye olmak";
-"restore.coinzix.login" = "Giriş yapmak";
-"restore.coinzix.sample_username" = "E-Posta";
-"restore.coinzix.sample_password" = "Şifre";
-"restore.coinzix.login_failed" = "Giriş başarısız oldu";
-
 // Coin Settings
 
 "coin_settings.title" = "Blockchain Ayarları";
@@ -391,14 +382,18 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.total" = "Toplam";
 "send.confirmation.fee" = "Ücret";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.send_button" = "Gönder";
+"send.confirmation.slide_to_send" = "Göndermek için Kaydırın";
+"send.confirmation.sending" = "Gönderiliyor";
 "send.confirmation.resend_description" = "Bunu yapmak, daha yüksek bir ücretle işlemi yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
-"send.confirmation.resend_button" = "Yeniden Gönder";
+"send.confirmation.slide_to_resend" = "Yeniden Göndermek için Kaydırın";
+"send.confirmation.resending" = "Gönderme";
 "send.confirmation.cancel_description" = "Bunu yapmak, kendine yeni bir 0 tutarlı işlemi olarak yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
-"send.confirmation.cancel_button" = "İşlemi İptal Et";
+"send.confirmation.slide_to_cancel" = "İptal etmek için kaydırın";
+"send.confirmation.cancelling" = "iptal";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Yöntem";
 "send.amount_error.balance" = "Yetersiz bakiye";
+"send.address_error.own_address" = "TRX kendinize aktarılamıyor";
 "send.amount_error.maximum_amount" = "Maksimum miktar %@";
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
 "send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
@@ -968,6 +963,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.faq" = "FAQ";
 "settings.theme" = "Tema";
 "settings.info_subtitle" = "decentralized uygulama";
+"settings.donate.description" = "Desteğinizle birlikte bu uygulamayı daha da iyi hale getirebiliriz!";
+"settings.donate.title" = "Bağış yapmak";
 
 // Settings -> Base Currency
 
@@ -995,6 +992,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.personal_support.requested" = "Requested";
 "settings.personal_support.failed" = "Request failed";
 "settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
+"settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
+"settings.personal_support.requested.open_telegram" = "Abrir Telegram";
+"settings.personal_support.requested.new_request" = "Yeni istek";
 
 // Settings -> Experimental Features
 
@@ -1082,10 +1082,16 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.about_app.rate_us" = "Bizi Değerlendirin";
 "settings.about_app.tell_friends" = "Arkadaşlarına bahset";
 
+// Settings -> About App -> Contact
+
+"settings.contact.title" = "Iletişim";
+"settings.contact.via_email" = "E-posta yoluyla";
+"settings.contact.via_telegram" = "Telegram aracılığıyla";
+
 // Settings -> Privacy
 
 "settings.privacy" = "Gizlilik";
-"settings.privacy.description" = "%@ herhangi bir veri toplamaz veya kullanıcıları hakkında herhangi bir veriyi ifşa edebilecek analiz araçları kullanmaz. Unstoppable cüzdanı kullanıcıları için yüksek düzeyde gizlilik sağlamak üzere tasarlanmıştır.";
+"settings.privacy.description" = "%@ herhangi bir veri toplamaz veya kullanıcıları hakkında herhangi bir veriyi ifşa edebilecek analiz araçları kullanmaz. Сüzdanı kullanıcıları için yüksek düzeyde gizlilik sağlamak üzere tasarlanmıştır.";
 "settings.privacy.statement.user_data_storage" = "Kullanıcı verileri her zaman kullanıcının cihazında kalır.";
 "settings.privacy.statement.data_usage" = "Bu cüzdan, kullanıcılar hakkında herhangi bir veri toplamaz.";
 "settings.privacy.statement.data_privacy" = "Bu cüzdan, kullanıcılar hakkında herhangi bir veri paylaşmaz.";
@@ -1500,6 +1506,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "fee_settings.errors.replacement_transaction_underpriced" = "Değiştirme işlemi için Düşük Ücret";
 "fee_settings.errors.transaction_underpriced" = "İşlem Ücreti Düşük";
 "fee_settings.errors.tips_higher_than_max_fee" = "Max Fee çok düşük";
+"fee_settings.errors.zero_amount.info" = "0 TRX aktarılamıyor";
 "fee_settings.warning.risk_of_getting_stuck" = "Riskli";
 "fee_settings.warning.risk_of_getting_stuck.info" = "İşlem bir süre beklemede kalabilir veya tamamen başarısız olabilir.";
 "fee_settings.warning.overpricing" = "Ücret Çok Yüksek";
@@ -1685,13 +1692,3 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "cex_withdraw_confirm.network" = "Ağ";
 "cex_withdraw_confirm.withdraw" = "Hesaptan Çek";
 "cex_withdraw_confirm.withdraw_failed" = "Para çekme başarısız oldu";
-
-// Coinzix Verify Withdraw
-
-"coinzix_verify.title" = "Güvenlik Doğrulaması";
-"coinzix_verify.failed" = "Doğrulama başarısız oldu";
-"coinzix_verify.submit" = "Onayla";
-"coinzix_verify.email_pin" = "Onay kodu";
-"coinzix_verify.email_pin.description" = "E-postanıza gönderilen doğrulama kodunu girin";
-"coinzix_verify.google_pin" = "Google Kimlik Doğrulama Kodu";
-"coinzix_verify.google_pin.description" = "Google Authenticator Uygulamanızdan google kimlik doğrulama kodunu girin";

@@ -161,15 +161,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "restore.binance.failed_to_connect" = "Error al conectar tu Clave API";
 "restore.binance.invalid_qr_code" = "Invalid QR Code";
 
-// Restore Coinzix
-
-"restore.coinzix.description" = "Introduzca su correo electrónico y contraseña desde la cuenta Coinzix";
-"restore.coinzix.sign_up" = "Regístrate";
-"restore.coinzix.login" = "Iniciar sesión";
-"restore.coinzix.sample_username" = "Correo electrónico";
-"restore.coinzix.sample_password" = "Contraseña";
-"restore.coinzix.login_failed" = "Inicio de sesión fallido";
-
 // Coin Settings
 
 "coin_settings.title" = "Configuración de Blockchain";
@@ -391,14 +382,18 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.total" = "Összesen";
 "send.confirmation.fee" = "Comisión";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.send_button" = "Enviar";
+"send.confirmation.slide_to_send" = "Deslizar para enviar";
+"send.confirmation.sending" = "Enviar";
 "send.confirmation.resend_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que será invalidada y reemplazada. Sólo una de estas dos transacciones se incluirá en la cadena de bloques.";
-"send.confirmation.resend_button" = "Reenviar";
+"send.confirmation.slide_to_resend" = "Deslizar para reenviar";
+"send.confirmation.resending" = "Reenviando";
 "send.confirmation.cancel_description" = "Esta acción intentará invalidar la transacción anterior reenviándola con una tarifa más alta. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que será invalidada y reemplazada. Sólo una de estas dos transacciones se incluirá en la cadena de bloques.";
-"send.confirmation.cancel_button" = "Cancelar la transacción";
+"send.confirmation.slide_to_cancel" = "Deslizar para cancelar";
+"send.confirmation.cancelling" = "Cancelado";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Método";
 "send.amount_error.balance" = "Saldo insuficiente";
+"send.address_error.own_address" = "No se puede transferir TRX a ti mismo";
 "send.amount_error.maximum_amount" = "Monto máximo %@";
 "send.amount_error.minimum_amount" = "Monto mínimo %@";
 "send.amount_error.min_required_balance" = "Min. requerido restante %@";
@@ -968,6 +963,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.faq" = "FAQ";
 "settings.theme" = "Tema";
 "settings.info_subtitle" = "app descentralizada";
+"settings.donate.description" = "¡Junto con tu apoyo, podemos hacer esta aplicación aún mejor!";
+"settings.donate.title" = "Donar";
 
 // Settings -> Base Currency
 
@@ -995,6 +992,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.personal_support.requested" = "Solicitado";
 "settings.personal_support.failed" = "Error en la solicitud";
 "settings.personal_support.need_subscription" = "Esta característica sólo para usuarios premium de %@ Wallet. Más información en nuestro sitio oficial.";
+"settings.personal_support.requested.description" = "Ya has solicitado un chat privado, encuentra en Telegram";
+"settings.personal_support.requested.open_telegram" = "Abrir Telegram";
+"settings.personal_support.requested.new_request" = "Nueva requisición";
 
 // Settings -> Experimental Features
 
@@ -1081,6 +1081,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.about_app.contact" = "Contacto";
 "settings.about_app.rate_us" = "Califícanos";
 "settings.about_app.tell_friends" = "Recomendar a un amigo";
+
+// Settings -> About App -> Contact
+
+"settings.contact.title" = "Contacto";
+"settings.contact.via_email" = "vía E-mail";
+"settings.contact.via_telegram" = "vía Telegram";
 
 // Settings -> Privacy
 
@@ -1500,6 +1506,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "fee_settings.errors.replacement_transaction_underpriced" = "Tarifa baja para la transacción de reemplazo";
 "fee_settings.errors.transaction_underpriced" = "Tarifa baja para la transacción";
 "fee_settings.errors.tips_higher_than_max_fee" = "Tarifa máxima es demasiado baja";
+"fee_settings.errors.zero_amount.info" = "No se puede transferir 0 TRX";
 "fee_settings.warning.risk_of_getting_stuck" = "Arriesgado";
 "fee_settings.warning.risk_of_getting_stuck.info" = "La transacción puede permanecer pendiente por un tiempo o fallar por completo.";
 "fee_settings.warning.overpricing" = "Cuota demasiado alta";
@@ -1685,13 +1692,3 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "cex_withdraw_confirm.network" = "Red";
 "cex_withdraw_confirm.withdraw" = "Retirar";
 "cex_withdraw_confirm.withdraw_failed" = "Fallo al retirar";
-
-// Coinzix Verify Withdraw
-
-"coinzix_verify.title" = "Verificación de seguridad";
-"coinzix_verify.failed" = "Error al verificar";
-"coinzix_verify.submit" = "Enviar";
-"coinzix_verify.email_pin" = "Código de verificación";
-"coinzix_verify.email_pin.description" = "El código de verificación se ha enviado a tu correo";
-"coinzix_verify.google_pin" = "Código de Google Authenticator";
-"coinzix_verify.google_pin.description" = "Introduce el código de autenticación de Google desde tu aplicación de Google Authenticator";
