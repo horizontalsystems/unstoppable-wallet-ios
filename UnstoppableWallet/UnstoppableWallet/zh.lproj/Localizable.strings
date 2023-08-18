@@ -963,8 +963,8 @@
 "settings.faq" = "常见问题";
 "settings.theme" = "主题";
 "settings.info_subtitle" = "分布式应用程序";
-"settings.donate.description" = "Together, with your support, we can make this app even better!";
-"settings.donate.title" = "Donate";
+"settings.donate.description" = "在你的支持下，我们可以使这个应用更好！";
+"settings.donate.title" = "捐助";
 
 // Settings -> Base Currency
 
