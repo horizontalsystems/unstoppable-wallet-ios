@@ -269,6 +269,9 @@
 "backup.cloud.not_available" = "iCloud 服务不可用";
 "backup.cloud.cant_create_file" = "无法将文件保存到iCloud。";
 "backup.cloud.cant_delete_file" = "无法从 iCloud 删除";
+"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.description" = "To create a backup, you need to provide access to iCloud storage.";
 
 
 // Errors
@@ -385,11 +388,9 @@
 "send.confirmation.slide_to_send" = "滑动发送";
 "send.confirmation.sending" = "发送中";
 "send.confirmation.resend_description" = "此操作将尝试通过向自己重新发送新的金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
-"send.confirmation.slide_to_resend" = "滑动以重新发送";
-"send.confirmation.resending" = "重新发送";
+"send.confirmation.resend" = "重新发送";
 "send.confirmation.cancel_description" = "此操作将尝试通过向自己重新发送新的0金额交易以使之前的交易失效。如果发送新交易后，原交易仍然处于待处理状态，那么很有可能（但不保证）它已经失效和已被替换。这两个交易中只有一个会被包含在区块链中。";
-"send.confirmation.slide_to_cancel" = "滑动以取消";
-"send.confirmation.cancelling" = "正在取消";
+"send.confirmation.cancel" = "取消交易";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "方法";
 "send.amount_error.balance" = "余额不足";
@@ -486,7 +487,8 @@
 
 // Swap Confirmation
 
-"swap.confirmation.swap_button" = "掉期交易";
+"swap.confirmation.slide_to_swap" = "Slide to Swap";
+"swap.confirmation.swapping" = "交易";
 "swap.confirmation.impact_too_high" = "%@ 已禁用此交易的掉期操作，因为您得到的价格极其不利。 这是由于流动性极低造成的。\n如果您仍想兑换，请使用 %@ 网站。";
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
 
