@@ -269,9 +269,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "backup.cloud.not_available" = "iCloud Kullanılamıyor";
 "backup.cloud.cant_create_file" = "Dosya iCloud'a kaydedilemiyor";
 "backup.cloud.cant_delete_file" = "iCloud'dan silinemiyor";
-"backup.cloud.no_access.title" = "Access iCloud";
-"backup.cloud.no_access.title" = "Access iCloud";
-"backup.cloud.no_access.description" = "To create a backup, you need to provide access to iCloud storage.";
+"backup.cloud.no_access.title" = "iCloud'a erişim";
+"backup.cloud.no_access.title" = "iCloud'a erişim";
+"backup.cloud.no_access.description" = "Yedek oluşturmak için, iCloud depolama alanına erişim sağlamanız gerekmektedir.";
 
 
 // Errors
@@ -487,7 +487,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Swap Confirmation
 
-"swap.confirmation.slide_to_swap" = "Slide to Swap";
+"swap.confirmation.slide_to_swap" = "Değiştirmek için kaydır";
 "swap.confirmation.swapping" = "Takas";
 "swap.confirmation.impact_too_high" = "%@, son derece elverişsiz bir fiyat aldığınız için bu ticaret için takas işlemini devre dışı bıraktı. Bunun nedeni son derece düşük likiditedir.\nHala takas yapmak istiyorsanız lütfen bunun yerine %@ web sitesini kullanın.";
 "swap.confirmation.impact_warning" = "Önemli! Son derece olumsuz bir fiyat alıyorsunuz. Bunun nedeni son derece düşük likiditedir.";
