@@ -269,6 +269,9 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "backup.cloud.not_available" = "iCloud indisponível";
 "backup.cloud.cant_create_file" = "Não é possível salvar o arquivo no iCloud";
 "backup.cloud.cant_delete_file" = "Não é possível excluir do iCloud";
+"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.description" = "To create a backup, you need to provide access to iCloud storage.";
 
 
 // Errors
@@ -385,11 +388,9 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "send.confirmation.slide_to_send" = "Deslize para enviar";
 "send.confirmation.sending" = "Enviando";
 "send.confirmation.resend_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
-"send.confirmation.slide_to_resend" = "Deslize para reenviar";
-"send.confirmation.resending" = "Reenviando";
+"send.confirmation.resend" = "Enviar novamente";
 "send.confirmation.cancel_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
-"send.confirmation.slide_to_cancel" = "Deslize para Cancelar";
-"send.confirmation.cancelling" = "Cancelando";
+"send.confirmation.cancel" = "Cancelar transação";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Método";
 "send.amount_error.balance" = "Saldo insuficiente";
@@ -486,7 +487,8 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 
 // Swap Confirmation
 
-"swap.confirmation.swap_button" = "Trocar";
+"swap.confirmation.slide_to_swap" = "Slide to Swap";
+"swap.confirmation.swapping" = "Trocando";
 "swap.confirmation.impact_too_high" = "%@ desativou a ação de troca para essa troca porque você está obtendo um preço extremamente desfavorável. Isso se deve a liquidez extremamente baixa.\nSe você ainda quiser trocar, use o site %@.";
 "swap.confirmation.impact_warning" = "Importante! Você está recebendo um preço extremamente desfavorável. Isso se deve a uma liquidez extremamente baixa.";
 
