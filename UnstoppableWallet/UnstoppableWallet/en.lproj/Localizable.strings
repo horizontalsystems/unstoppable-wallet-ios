@@ -385,11 +385,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.confirmation.slide_to_send" = "Slide to Send";
 "send.confirmation.sending" = "Sending";
 "send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
-"send.confirmation.slide_to_resend" = "Slide to Resend";
-"send.confirmation.resending" = "Resending";
+"send.confirmation.resend" = "Resend";
 "send.confirmation.cancel_description" = "This action will attempt to invalidate previous transaction by resending as a new 0 amount transaction to self. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
-"send.confirmation.slide_to_cancel" = "Slide to Cancel";
-"send.confirmation.cancelling" = "Cancelling";
+"send.confirmation.cancel" = "Cancel Transaction";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Method";
 "send.amount_error.balance" = "Not Enough Balance";
@@ -486,7 +484,8 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Swap Confirmation
 
-"swap.confirmation.swap_button" = "Swap";
+"swap.confirmation.slide_to_swap" = "Slide to Swap";
+"swap.confirmation.swapping" = "Swapping";
 "swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
 "swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
 

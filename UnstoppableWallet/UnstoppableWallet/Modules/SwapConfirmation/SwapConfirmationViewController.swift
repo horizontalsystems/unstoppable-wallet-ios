@@ -6,7 +6,7 @@ import RxCocoa
 import ComponentKit
 
 class SwapConfirmationViewController: SendEvmTransactionViewController {
-    private let swapButton = PrimaryButton()
+    private let swapButton = SliderButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,15 +15,15 @@ class SwapConfirmationViewController: SendEvmTransactionViewController {
 
         bottomWrapper.addSubview(swapButton)
 
-        swapButton.set(style: .yellow)
-        swapButton.setTitle("swap.confirmation.swap_button".localized, for: .normal)
-        swapButton.addTarget(self, action: #selector(onTapSwap), for: .touchUpInside)
+        swapButton.title = "swap.confirmation.slide_to_swap".localized
+        swapButton.finalTitle = "swap.confirmation.swapping".localized
+        swapButton.slideImage = UIImage(named: "arrow_medium_2_right_24")
+        swapButton.finalImage = UIImage(named: "check_2_24")
+        swapButton.onTap = { [weak self] in
+            self?.transactionViewModel.send()
+        }
 
         subscribe(disposeBag, transactionViewModel.sendEnabledDriver) { [weak self] in self?.swapButton.isEnabled = $0 }
-    }
-
-    @objc private func onTapSwap() {
-        transactionViewModel.send()
     }
 
     override func handleSending() {
@@ -36,5 +36,10 @@ class SwapConfirmationViewController: SendEvmTransactionViewController {
         super.handleSendSuccess(transactionHash: transactionHash)
     }
 
+    override func handleSendFailed(error: String) {
+        super.handleSendFailed(error: error)
+
+        swapButton.reset()
+    }
 
 }
