@@ -267,9 +267,9 @@
 "backup.cloud.not_available" = "iCloud를 사용할 수 없음";
 "backup.cloud.cant_create_file" = "파일을 iCloud에 저장할 수 없음";
 "backup.cloud.cant_delete_file" = "iCloud에서 삭제할 수 없습니다";
-"backup.cloud.no_access.title" = "Access iCloud";
-"backup.cloud.no_access.title" = "Access iCloud";
-"backup.cloud.no_access.description" = "To create a backup, you need to provide access to iCloud storage.";
+"backup.cloud.no_access.title" = "아이클라우드 접근하기";
+"backup.cloud.no_access.title" = "아이클라우드 접근하기";
+"backup.cloud.no_access.description" = "iCloud 스토리지에 백업을 만들려면 액세스 권한을 제공해야 합니다.";
 
 
 // Errors
@@ -485,7 +485,7 @@
 
 // Swap Confirmation
 
-"swap.confirmation.slide_to_swap" = "Slide to Swap";
+"swap.confirmation.slide_to_swap" = "밀어서 결제하기";
 "swap.confirmation.swapping" = "스와핑";
 "swap.confirmation.impact_too_high" = "%@은 현재 유동성이 매우 낮아 매우 불리한 가격으로 거래되고 있으므로, 이 거래에 대한 스왑 조치를 비활성화했습니다.\n교환을 원하시면 %@ 웹사이트를 사용하십시오.";
 "swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";
