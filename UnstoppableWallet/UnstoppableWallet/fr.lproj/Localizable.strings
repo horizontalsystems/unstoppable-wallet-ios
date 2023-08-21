@@ -269,6 +269,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "backup.cloud.not_available" = "iCloud n'est pas disponible";
 "backup.cloud.cant_create_file" = "Impossible de sauvegarder le fichier sur iCloud";
 "backup.cloud.cant_delete_file" = "Impossible de supprimer de iCloud";
+"backup.cloud.no_access.title" = "Accéder à iCloud";
+"backup.cloud.no_access.title" = "Accéder à iCloud";
+"backup.cloud.no_access.description" = "Pour créer une sauvegarde, vous devez fournir un accès au stockage iCloud.";
 
 
 // Errors
@@ -385,11 +388,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.confirmation.slide_to_send" = "Glisser pour envoyer";
 "send.confirmation.sending" = "En attente";
 "send.confirmation.resend_description" = "Cette action tentera d'invalider la transaction précédente en la renvoyant avec des frais plus élevés. Si la transaction originale reste en attente lorsqu'une nouvelle transaction est envoyée, il y a de fortes chances (non garanties) qu'elle soit invalidée et remplacée. Seule une de ces deux transactions sera incluse dans la blockchain.";
-"send.confirmation.slide_to_resend" = "Glisser pour renvoyer";
-"send.confirmation.resending" = "Envoi en cours";
+"send.confirmation.resend" = "Réenvoyer";
 "send.confirmation.cancel_description" = "Cette action tentera d'invalider la transaction précédente en l'envoyant à nouveau comme une nouvelle transaction de valeur 0 à soi-même. Si la transaction originale reste en attente lorsqu'une nouvelle transaction est envoyée, il y a de fortes chances (non garanties) qu'elle soit invalidée et remplacée. Seule une de ces deux transactions sera incluse dans la blockchain.";
-"send.confirmation.slide_to_cancel" = "Glisser pour annuler";
-"send.confirmation.cancelling" = "Annulation en cours";
+"send.confirmation.cancel" = "Annuler la transaction";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Méthode";
 "send.amount_error.balance" = "Solde insuffisant";
@@ -486,7 +487,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Swap Confirmation
 
-"swap.confirmation.swap_button" = "Echanger";
+"swap.confirmation.slide_to_swap" = "Glisser pour changer";
+"swap.confirmation.swapping" = "Swapping";
 "swap.confirmation.impact_too_high" = "%@ a désactivé l'action d'échange pour cet échange parce que vous obtenez un prix extrêmement défavorable. Ceci est dû à une liquidité extrêmement faible.\nSi vous voulez toujours échanger, veuillez utiliser le site Web %@ à la place.";
 "swap.confirmation.impact_warning" = "Important ! Vous avez reçu un prix extrêmement défavorable en raison d'une liquidité extrêmement faible.";
 
