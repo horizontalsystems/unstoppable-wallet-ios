@@ -267,6 +267,9 @@
 "backup.cloud.not_available" = "iCloud를 사용할 수 없음";
 "backup.cloud.cant_create_file" = "파일을 iCloud에 저장할 수 없음";
 "backup.cloud.cant_delete_file" = "iCloud에서 삭제할 수 없습니다";
+"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.description" = "To create a backup, you need to provide access to iCloud storage.";
 
 
 // Errors
@@ -383,11 +386,9 @@
 "send.confirmation.slide_to_send" = "슬라이드하여 보내기";
 "send.confirmation.sending" = "전송중";
 "send.confirmation.resend_description" = "이 작업은 이전 거래를 더 높은 수수료로 다시 보내서 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
-"send.confirmation.slide_to_resend" = "슬라이드하여 재전송";
-"send.confirmation.resending" = "재전송 중";
+"send.confirmation.resend" = "재전송";
 "send.confirmation.cancel_description" = "이 작업은 자신에게 새로운 0 금액 트랜잭션으로 다시 전송하여 이전 트랜잭션을 무효화하려고 시도합니다. 새 트랜잭션이 전송되었을 때 원래 트랜잭션이 보류 상태로 남아 있으면 해당 트랜잭션이 무효화되고 교체될 가능성이 높습니다(보장되지 않음). 이 두 트랜잭션 중 하나만 블록체인에 포함됩니다.";
-"send.confirmation.slide_to_cancel" = "슬라이드하여 취소";
-"send.confirmation.cancelling" = "취소 중";
+"send.confirmation.cancel" = "트랜잭션 취소";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "메소드";
 "send.amount_error.balance" = "잔고 부족";
@@ -484,7 +485,8 @@
 
 // Swap Confirmation
 
-"swap.confirmation.swap_button" = "스왑";
+"swap.confirmation.slide_to_swap" = "Slide to Swap";
+"swap.confirmation.swapping" = "스와핑";
 "swap.confirmation.impact_too_high" = "%@은 현재 유동성이 매우 낮아 매우 불리한 가격으로 거래되고 있으므로, 이 거래에 대한 스왑 조치를 비활성화했습니다.\n교환을 원하시면 %@ 웹사이트를 사용하십시오.";
 "swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";
 
