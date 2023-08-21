@@ -102,13 +102,13 @@ extension BottomSheetModule {
 
     static func cloudNotAvailableController() -> UIViewController {
         BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "no_internet_24")?.withTintColor(.themeJacob)),
-                title: "settings.icloud_sync.alert.title".localized,
+                image: .local(image: UIImage(named: "icloud_24")?.withTintColor(.themeJacob)),
+                title: "backup.cloud.no_access.title".localized,
                 items: [
-                    .highlightedDescription(text: "settings.icloud_sync.alert.description".localized)
+                    .highlightedDescription(text: "backup.cloud.no_access.description".localized)
                 ],
                 buttons: [
-                    .init(style: .yellow, title: "button.continue".localized, actionType: .afterClose),
+                    .init(style: .yellow, title: "button.ok".localized, actionType: .afterClose),
                 ]
         )
     }

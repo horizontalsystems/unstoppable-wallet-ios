@@ -269,6 +269,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup.cloud.not_available" = "iCloud not Available";
 "backup.cloud.cant_create_file" = "Can't save File to iCloud";
 "backup.cloud.cant_delete_file" = "Can't delete from iCloud";
+"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.description" = "To create a backup, you need to provide access to iCloud storage.";
 
 
 // Errors
