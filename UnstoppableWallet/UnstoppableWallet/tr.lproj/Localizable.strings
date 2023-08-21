@@ -269,6 +269,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "backup.cloud.not_available" = "iCloud Kullanılamıyor";
 "backup.cloud.cant_create_file" = "Dosya iCloud'a kaydedilemiyor";
 "backup.cloud.cant_delete_file" = "iCloud'dan silinemiyor";
+"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.description" = "To create a backup, you need to provide access to iCloud storage.";
 
 
 // Errors
@@ -385,11 +388,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.slide_to_send" = "Göndermek için Kaydırın";
 "send.confirmation.sending" = "Gönderiliyor";
 "send.confirmation.resend_description" = "Bunu yapmak, daha yüksek bir ücretle işlemi yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
-"send.confirmation.slide_to_resend" = "Yeniden Göndermek için Kaydırın";
-"send.confirmation.resending" = "Gönderme";
+"send.confirmation.resend" = "Yeniden Gönder";
 "send.confirmation.cancel_description" = "Bunu yapmak, kendine yeni bir 0 tutarlı işlemi olarak yeniden göndererek önceki işlemi geçersiz kılmaya çalışacaktır. Yeni bir işlem gönderildiğinde ilk işlem beklemede kalırsa, geçersiz olması ve değiştirilmesi olasılığı yüksektir (garanti edilmez). Bu iki işlemden sadece biri blok zincire eklenecektir.";
-"send.confirmation.slide_to_cancel" = "İptal etmek için kaydırın";
-"send.confirmation.cancelling" = "iptal";
+"send.confirmation.cancel" = "İşlemi İptal Et";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Yöntem";
 "send.amount_error.balance" = "Yetersiz bakiye";
@@ -486,7 +487,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Swap Confirmation
 
-"swap.confirmation.swap_button" = "Takas";
+"swap.confirmation.slide_to_swap" = "Slide to Swap";
+"swap.confirmation.swapping" = "Takas";
 "swap.confirmation.impact_too_high" = "%@, son derece elverişsiz bir fiyat aldığınız için bu ticaret için takas işlemini devre dışı bıraktı. Bunun nedeni son derece düşük likiditedir.\nHala takas yapmak istiyorsanız lütfen bunun yerine %@ web sitesini kullanın.";
 "swap.confirmation.impact_warning" = "Önemli! Son derece olumsuz bir fiyat alıyorsunuz. Bunun nedeni son derece düşük likiditedir.";
 
