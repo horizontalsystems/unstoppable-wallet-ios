@@ -966,7 +966,7 @@
 "settings.theme" = "Тема";
 "settings.info_subtitle" = "децентрализованное приложение";
 "settings.donate.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
-"settings.donate.title" = "Пожертвовать";
+"settings.donate.title" = "Донаты";
 
 // Settings -> Base Currency
 
