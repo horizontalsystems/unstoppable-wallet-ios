@@ -271,6 +271,9 @@
 "backup.cloud.not_available" = "iCloud недоступен";
 "backup.cloud.cant_create_file" = "Не удается сохранить файл в iCloud";
 "backup.cloud.cant_delete_file" = "Не удается удалить из iCloud";
+"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.description" = "To create a backup, you need to provide access to iCloud storage.";
 
 
 // Errors
@@ -387,11 +390,9 @@
 "send.confirmation.slide_to_send" = "Проведите для отправки";
 "send.confirmation.sending" = "Отправка";
 "send.confirmation.resend_description" = "Это действие аннулирует предыдущую транзакцию, переотправив ее с более высокой комиссией. Если исходная транзакция ожидает обработки во время отправки новой, то вероятность ее аннулирования и замены довольно высока. Только одна из этих двух транзакций будет включена в блокчейн.";
-"send.confirmation.slide_to_resend" = "Проведите для переотправки";
-"send.confirmation.resending" = "Повторная отправка";
+"send.confirmation.resend" = "Отправить повторно";
 "send.confirmation.cancel_description" = "Это действие аннулирует предыдущую транзакцию, переотправив ее себе как транзакцию с нулевой суммой. Если исходная транзакция ожидает обработки во время отправки новой, то вероятность ее аннулирования и замены довольно высока. Только одна из этих двух транзакций будет включена в блокчейн.";
-"send.confirmation.slide_to_cancel" = "Проведите для отмены";
-"send.confirmation.cancelling" = "Отмена";
+"send.confirmation.cancel" = "Отменить транзакцию";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Метод";
 "send.amount_error.balance" = "Недостаточно средств";
@@ -488,7 +489,8 @@
 
 // Swap Confirmation
 
-"swap.confirmation.swap_button" = "Обменять";
+"swap.confirmation.slide_to_swap" = "Slide to Swap";
+"swap.confirmation.swapping" = "Обмен";
 "swap.confirmation.impact_too_high" = "%@ отключил действие \"swap\" для этой сделки, так как вы получаете чрезвычайно невыгодную цену. Это связано с крайне низкой ликвидностью. \nЕсли вы все еще хотите поменять валюту, используйте веб-сайт %@ вместо этого.";
 "swap.confirmation.impact_warning" = "Важно! Вы получаете чрезвычайно неблагоприятную цену. Это связано с крайне низкой ликвидностью.";
 
