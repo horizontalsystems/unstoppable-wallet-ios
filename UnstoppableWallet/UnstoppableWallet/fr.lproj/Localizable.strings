@@ -269,9 +269,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "backup.cloud.not_available" = "iCloud n'est pas disponible";
 "backup.cloud.cant_create_file" = "Impossible de sauvegarder le fichier sur iCloud";
 "backup.cloud.cant_delete_file" = "Impossible de supprimer de iCloud";
-"backup.cloud.no_access.title" = "Access iCloud";
-"backup.cloud.no_access.title" = "Access iCloud";
-"backup.cloud.no_access.description" = "To create a backup, you need to provide access to iCloud storage.";
+"backup.cloud.no_access.title" = "Accéder à iCloud";
+"backup.cloud.no_access.title" = "Accéder à iCloud";
+"backup.cloud.no_access.description" = "Pour créer une sauvegarde, vous devez fournir un accès au stockage iCloud.";
 
 
 // Errors
@@ -487,7 +487,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Swap Confirmation
 
-"swap.confirmation.slide_to_swap" = "Slide to Swap";
+"swap.confirmation.slide_to_swap" = "Glisser pour changer";
 "swap.confirmation.swapping" = "Swapping";
 "swap.confirmation.impact_too_high" = "%@ a désactivé l'action d'échange pour cet échange parce que vous obtenez un prix extrêmement défavorable. Ceci est dû à une liquidité extrêmement faible.\nSi vous voulez toujours échanger, veuillez utiliser le site Web %@ à la place.";
 "swap.confirmation.impact_warning" = "Important ! Vous avez reçu un prix extrêmement défavorable en raison d'une liquidité extrêmement faible.";
