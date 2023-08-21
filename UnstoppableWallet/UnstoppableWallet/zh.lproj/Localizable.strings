@@ -269,9 +269,9 @@
 "backup.cloud.not_available" = "iCloud 服务不可用";
 "backup.cloud.cant_create_file" = "无法将文件保存到iCloud。";
 "backup.cloud.cant_delete_file" = "无法从 iCloud 删除";
-"backup.cloud.no_access.title" = "Access iCloud";
-"backup.cloud.no_access.title" = "Access iCloud";
-"backup.cloud.no_access.description" = "To create a backup, you need to provide access to iCloud storage.";
+"backup.cloud.no_access.title" = "访问 iCloud";
+"backup.cloud.no_access.title" = "访问 iCloud";
+"backup.cloud.no_access.description" = "要创建备份，您需要提供访问 iCloud 存储。";
 
 
 // Errors
@@ -487,7 +487,7 @@
 
 // Swap Confirmation
 
-"swap.confirmation.slide_to_swap" = "Slide to Swap";
+"swap.confirmation.slide_to_swap" = "滑动切换";
 "swap.confirmation.swapping" = "交易";
 "swap.confirmation.impact_too_high" = "%@ 已禁用此交易的掉期操作，因为您得到的价格极其不利。 这是由于流动性极低造成的。\n如果您仍想兑换，请使用 %@ 网站。";
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
