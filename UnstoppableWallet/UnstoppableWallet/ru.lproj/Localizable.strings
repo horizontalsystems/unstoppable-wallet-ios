@@ -271,9 +271,9 @@
 "backup.cloud.not_available" = "iCloud недоступен";
 "backup.cloud.cant_create_file" = "Не удается сохранить файл в iCloud";
 "backup.cloud.cant_delete_file" = "Не удается удалить из iCloud";
-"backup.cloud.no_access.title" = "Access iCloud";
-"backup.cloud.no_access.title" = "Access iCloud";
-"backup.cloud.no_access.description" = "To create a backup, you need to provide access to iCloud storage.";
+"backup.cloud.no_access.title" = "Доступ к iCloud";
+"backup.cloud.no_access.title" = "Доступ к iCloud";
+"backup.cloud.no_access.description" = "Для создания резервной копии необходимо предоставить доступ к iCloud памяти.";
 
 
 // Errors
@@ -489,7 +489,7 @@
 
 // Swap Confirmation
 
-"swap.confirmation.slide_to_swap" = "Slide to Swap";
+"swap.confirmation.slide_to_swap" = "Проведите для обмена";
 "swap.confirmation.swapping" = "Обмен";
 "swap.confirmation.impact_too_high" = "%@ отключил действие \"swap\" для этой сделки, так как вы получаете чрезвычайно невыгодную цену. Это связано с крайне низкой ликвидностью. \nЕсли вы все еще хотите поменять валюту, используйте веб-сайт %@ вместо этого.";
 "swap.confirmation.impact_warning" = "Важно! Вы получаете чрезвычайно неблагоприятную цену. Это связано с крайне низкой ликвидностью.";
@@ -968,7 +968,7 @@
 "settings.theme" = "Тема";
 "settings.info_subtitle" = "децентрализованное приложение";
 "settings.donate.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
-"settings.donate.title" = "Донаты";
+"settings.donate.title" = "Поддержать";
 
 // Settings -> Base Currency
 
