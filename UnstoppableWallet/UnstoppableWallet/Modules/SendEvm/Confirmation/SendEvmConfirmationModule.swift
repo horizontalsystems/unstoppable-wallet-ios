@@ -102,7 +102,7 @@ struct SendEvmConfirmationModule {
         let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
         let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
         let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService)
-        let controller = SendEvmConfirmationViewController(transactionViewModel: viewModel, settingsViewModel: settingsViewModel)
+        let controller = SendEvmConfirmationViewController(mode: .send, transactionViewModel: viewModel, settingsViewModel: settingsViewModel)
 
         return controller
     }
@@ -156,22 +156,13 @@ struct SendEvmConfirmationModule {
         let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
         let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService)
 
-        let viewController = SendEvmConfirmationViewController(transactionViewModel: viewModel, settingsViewModel: settingsViewModel)
-
+        let mode: SendEvmConfirmationViewController.Mode
         switch type {
-        case .speedUp:
-            viewController.confirmationTitle = "tx_info.options.speed_up".localized
-            viewController.confirmationButtonTitle = "send.confirmation.slide_to_resend".localized
-            viewController.confirmationButtonFinalTitle = "send.confirmation.resending".localized
-            viewController.topDescription = "send.confirmation.resend_description".localized
-        case .cancel:
-            viewController.confirmationTitle = "tx_info.options.cancel".localized
-            viewController.confirmationButtonTitle = "send.confirmation.slide_to_cancel".localized
-            viewController.confirmationButtonFinalTitle = "send.confirmation.cancelling".localized
-            viewController.topDescription = "send.confirmation.cancel_description".localized
+        case .speedUp: mode = .resend
+        case .cancel: mode = .cancel
         }
 
-        return viewController
+        return SendEvmConfirmationViewController(mode: mode, transactionViewModel: viewModel, settingsViewModel: settingsViewModel)
     }
 
 }
