@@ -41,6 +41,7 @@ struct MainModule {
 
         let walletConnectWorkerService = WalletConnectV2AppShowService(
                 walletConnectV2Manager: App.shared.walletConnectV2SessionManager,
+                cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
                 accountManager: App.shared.accountManager,
                 pinKit: App.shared.pinKit)
         let walletConnectWorkerViewModel = WalletConnectV2AppShowViewModel(service: walletConnectWorkerService)
