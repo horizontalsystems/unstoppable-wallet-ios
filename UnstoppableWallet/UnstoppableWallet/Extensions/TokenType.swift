@@ -75,4 +75,13 @@ extension TokenType {
         }
     }
 
+    var meta: String? {
+        switch self {
+        case .derived(let derivation): return derivation.rawValue
+        case .addressType(let type): return type.rawValue
+        case .bep2(let symbol): return symbol
+        default: return nil
+        }
+    }
+
 }

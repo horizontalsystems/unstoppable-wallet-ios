@@ -23,9 +23,8 @@ struct Wallet {
 
     var transactionSource: TransactionSource {
         TransactionSource(
-                token: token,
                 blockchainType: token.blockchainType,
-                bep2Symbol: token.type.bep2Symbol
+                meta: token.type.meta
         )
     }
 
