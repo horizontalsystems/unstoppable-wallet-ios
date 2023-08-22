@@ -9,8 +9,7 @@ class PoolGroupFactory {
             let poolSource = PoolSource(
                     token: token,
                     blockchainType: token.blockchainType,
-                    filter: filter,
-                    bep2Symbol: token.type.bep2Symbol
+                    filter: filter
             )
 
             if let adapter = App.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
@@ -22,8 +21,7 @@ class PoolGroupFactory {
                 let poolSource = PoolSource(
                         token: nil,
                         blockchainType: blockchainType,
-                        filter: filter,
-                        bep2Symbol: nil
+                        filter: filter
                 )
 
                 if let adapter = App.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
@@ -40,8 +38,7 @@ class PoolGroupFactory {
                     let poolSource = PoolSource(
                             token: wallet.token,
                             blockchainType: blockchainType,
-                            filter: filter,
-                            bep2Symbol: wallet.token.type.bep2Symbol
+                            filter: filter
                     )
 
                     if let adapter = App.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
@@ -61,15 +58,13 @@ class PoolGroupFactory {
                     poolSource = PoolSource(
                             token: nil,
                             blockchainType: wallet.token.blockchainType,
-                            filter: filter,
-                            bep2Symbol: nil
+                            filter: filter
                     )
                 } else {
                     poolSource = PoolSource(
                             token: wallet.token,
                             blockchainType: wallet.token.blockchainType,
-                            filter: filter,
-                            bep2Symbol: wallet.token.type.bep2Symbol
+                            filter: filter
                     )
                 }
 
