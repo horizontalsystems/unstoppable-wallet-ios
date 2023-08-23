@@ -19,9 +19,26 @@ struct TransactionsModule {
         let contactLabelService = TransactionsContactLabelService(contactManager: App.shared.contactManager)
         let viewItemFactory = TransactionsViewItemFactory(evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService)
         let viewModel = TransactionsViewModel(service: service, contactLabelService: contactLabelService, factory: viewItemFactory)
-        let viewController = TransactionsViewController(viewModel: viewModel)
+        let dataSource = TransactionsTableViewDataSource(viewModel: viewModel)
 
-        return viewController
+        return TransactionsViewController(viewModel: viewModel, dataSource: dataSource)
+    }
+
+    static func dataSource(token: Token) -> ISectionDataSource {
+        let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
+        let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
+
+        let service = TokenTransactionsService(
+                token: token,
+                rateService: rateService,
+                nftMetadataService: nftMetadataService
+        )
+
+        let contactLabelService = TransactionsContactLabelService(contactManager: App.shared.contactManager)
+        let viewItemFactory = TransactionsViewItemFactory(evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService)
+        let viewModel = BaseTransactionsViewModel(service: service, contactLabelService: contactLabelService, factory: viewItemFactory)
+
+        return TransactionsTableViewDataSource(viewModel: viewModel)
     }
 
 }

@@ -3,28 +3,31 @@ import Foundation
 import UIKit
 
 protocol ISectionDataSource: UITableViewDelegate, UITableViewDataSource {
+    var indexPathConverter: ISectionDataSourceIndexPathConverter? { get set }
     func prepare(tableView: UITableView)
-    var sectionsUpdatedPublisher: AnyPublisher<Void, Never> { get }
+}
+
+protocol ISectionDataSourceIndexPathConverter: AnyObject {
+    func originalIndexPath(tableView: UITableView, dataSource: ISectionDataSource, indexPath: IndexPath) -> IndexPath
+}
+
+extension ISectionDataSourceIndexPathConverter {
+
+    func originalIndexPath(tableView: UITableView, dataSource: ISectionDataSource, indexPath: IndexPath) -> IndexPath {
+        indexPath
+    }
+
 }
 
 class DataSourceChain: NSObject {
     private var dataSources = [ISectionDataSource]()
     private var cancellables: [AnyCancellable] = []
 
-    private let sectionsUpdatedSubject = PassthroughSubject<Void, Never>()
+    weak var indexPathConverter: ISectionDataSourceIndexPathConverter? // unused
 
     func append(source: ISectionDataSource) {
         dataSources.append(source)
-
-        source.sectionsUpdatedPublisher
-                .sink { [weak self] in
-                    self?.handleUpdated()
-                }
-                .store(in: &cancellables)
-    }
-
-    private func handleUpdated() {
-        sectionsUpdatedSubject.send()
+        source.indexPathConverter = self
     }
 
     private func sectionCount(tableView: UITableView, before section: Int) -> Int {
@@ -57,14 +60,23 @@ class DataSourceChain: NSObject {
 
 }
 
+extension DataSourceChain: ISectionDataSourceIndexPathConverter {
+
+    func originalIndexPath(tableView: UITableView, dataSource: ISectionDataSource, indexPath: IndexPath) -> IndexPath {
+        guard let dataSourceIndex = dataSources.firstIndex(where: { $0.isEqual(dataSource) }) else {
+            return indexPath
+        }
+
+        let sectionCountBefore = sectionCount(tableView: tableView, before: dataSourceIndex)
+        return IndexPath(row: indexPath.row, section: indexPath.section + sectionCountBefore)
+    }
+
+}
+
 extension DataSourceChain: ISectionDataSource {
 
     func prepare(tableView: UITableView) {
         dataSources.forEach { $0.prepare(tableView: tableView) }
-    }
-
-    var sectionsUpdatedPublisher: AnyPublisher<(), Never> {
-        sectionsUpdatedSubject.eraseToAnyPublisher()
     }
 
 }
@@ -77,7 +89,9 @@ extension DataSourceChain: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let index = sourceIndex(tableView, for: section)
-        return dataSources[index].tableView(tableView, numberOfRowsInSection: section)
+        let sectionCountBefore = sectionCount(tableView: tableView, before: index)
+
+        return dataSources[index].tableView(tableView, numberOfRowsInSection: section - sectionCountBefore)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

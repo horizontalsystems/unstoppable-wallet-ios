@@ -8,16 +8,21 @@ struct WalletTokenModule {
         let service = WalletTokenService(element: element)
         let viewModel = WalletTokenViewModel(service: service)
 
-        let dataSource = DataSourceChain()
+        let dataSourceChain = DataSourceChain()
 
         guard let tokenBalanceView = WalletTokenBalanceModule.view(element: element) else {
             return nil
         }
-        dataSource.append(source: tokenBalanceView)
+        dataSourceChain.append(source: tokenBalanceView)
+
+        if let wallet = element.wallet {
+            let transactionsDataSource = TransactionsModule.dataSource(token: wallet.token)
+            dataSourceChain.append(source: transactionsDataSource)
+        }
 
         let viewController = WalletTokenViewController(
                 viewModel: viewModel,
-                dataSource: dataSource
+                dataSource: dataSourceChain
         )
 
         tokenBalanceView.parentViewController = viewController
