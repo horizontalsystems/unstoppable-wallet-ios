@@ -97,7 +97,6 @@ extension ReceiveSelectCoinViewController: SectionsDataSource {
                                 accessoryType: .disclosure,
                                 backgroundStyle: .transparent,
                                 autoDeselect: true,
-                                isFirst: index == 0,
                                 isLast: isLast
                         ) { [weak self] in
                             self?.onSelect(uid: viewItem.uid)

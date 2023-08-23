@@ -4,8 +4,8 @@ import ThemeKit
 import ComponentKit
 
 class WalletHeaderCell: UITableViewCell {
-    private let amountView = HeaderAmountView()
-    private let buttonsView = BalanceButtonsView()
+    internal var amountView = HeaderAmountView()
+    internal let buttonsView = BalanceButtonsView()
 
     var actions: [WalletModule.Button: () -> ()] = [:]
 
@@ -53,7 +53,7 @@ class WalletHeaderCell: UITableViewCell {
         set { amountView.onTapConvertedAmount = newValue }
     }
 
-    func bind(viewItem: WalletViewModel.HeaderViewItem) {
+    func bind(viewItem: WalletModule.HeaderViewItem) {
         amountView.set(amountText: viewItem.amount, expired: viewItem.amountExpired)
         amountView.set(convertedAmountText: viewItem.convertedValue, expired: viewItem.convertedValueExpired)
         buttonsView.bind(
@@ -71,7 +71,7 @@ class WalletHeaderCell: UITableViewCell {
 
 extension WalletHeaderCell {
 
-    static func height(viewItem: WalletViewModel.HeaderViewItem?) -> CGFloat {
+    static func height(viewItem: WalletModule.HeaderViewItem?) -> CGFloat {
         guard let viewItem else {
             return HeaderAmountView.height
         }

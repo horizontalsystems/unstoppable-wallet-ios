@@ -5,7 +5,7 @@ import ComponentKit
 
 class HeaderAmountView: UIView {
     static let height: CGFloat = 131
-
+    private let stackView = UIStackView()
     private let amountButton = TextButtonComponent()
     private let convertedAmountButton = TextButtonComponent()
 
@@ -13,22 +13,23 @@ class HeaderAmountView: UIView {
         super.init(frame: .zero)
 
         snp.makeConstraints { maker in
-            maker.height.equalTo(Self.height)
+            maker.height.equalTo(HeaderAmountView.height)
         }
 
-        addSubview(amountButton)
-        amountButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(CGFloat.margin32)
-            make.centerX.equalToSuperview()
+        addSubview(stackView)
+        stackView.snp.makeConstraints { maker in
+            maker.top.equalToSuperview().inset(CGFloat.margin32)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
         }
 
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.spacing = .margin6
+
+        stackView.addArrangedSubview(amountButton)
         amountButton.font = .title2R
 
-        addSubview(convertedAmountButton)
-        convertedAmountButton.snp.makeConstraints { make in
-            make.top.equalTo(amountButton.snp.bottom).offset(CGFloat.margin6)
-            make.centerX.equalToSuperview()
-        }
+        stackView.addArrangedSubview(convertedAmountButton)
 
         convertedAmountButton.font = .body
     }

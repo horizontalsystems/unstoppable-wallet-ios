@@ -32,7 +32,7 @@ class WalletTokenCell: UITableViewCell {
         fatalError("not implemented")
     }
 
-    func bind(viewItem: WalletTokenViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onTap: (() -> ())? = nil, onTapError: (() -> ())?) {
+    func bind(viewItem: WalletTokenViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onTapError: (() -> ())?) {
         topView.bind(viewItem: viewItem.topViewItem, onTapError: onTapError)
         topView.layoutIfNeeded()
 
