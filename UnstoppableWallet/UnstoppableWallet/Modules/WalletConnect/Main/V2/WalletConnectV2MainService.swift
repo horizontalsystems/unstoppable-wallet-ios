@@ -330,7 +330,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         }
 
         let accounts = chains.compactMap { chain in
-            if let firstBlockchainItem = blockchains.items.first,
+            if let firstBlockchainItem = blockchains.items.first(where: { item in item.chainId == chain.id }),
                     let wcBlockchain = WalletConnectUtils.Blockchain(namespace: firstBlockchainItem.namespace, reference: chain.id.description),
                     let wcAccount = WalletConnectUtils.Account(blockchain: wcBlockchain, address: firstBlockchainItem.address) {
                         return wcAccount

@@ -70,6 +70,7 @@ class WalletConnectV2ListView {
             .image32 { component in
                 component.imageView.cornerRadius = .cornerRadius8
                 component.imageView.layer.cornerCurve = .continuous
+                component.imageView.contentMode = .scaleAspectFit
                 component.setImage(urlString: viewItem.imageUrl, placeholder: UIImage(named: "placeholder_rectangle_32"))
             },
             .vStackCentered([
