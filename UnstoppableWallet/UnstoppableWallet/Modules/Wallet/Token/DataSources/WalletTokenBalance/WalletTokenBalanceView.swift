@@ -7,12 +7,11 @@ class WalletTokenBalanceView: NSObject {
     private let viewModel: WalletTokenBalanceViewModel
     private var cancellables: [AnyCancellable] = []
 
-    private let sectionsUpdatedSubject = PassthroughSubject<Void, Never>()
-
     private var headerViewItem: BalanceTopViewItem?
     private var tableView: UITableView?
 
     weak var parentViewController: UIViewController?
+    weak var indexPathConverter: ISectionDataSourceIndexPathConverter?
 
     init(viewModel: WalletTokenBalanceViewModel) {
         self.viewModel = viewModel
@@ -106,10 +105,6 @@ extension WalletTokenBalanceView: ISectionDataSource {
         self.tableView = tableView
     }
 
-    var sectionsUpdatedPublisher: AnyPublisher<(), Never> {
-        sectionsUpdatedSubject.eraseToAnyPublisher()
-    }
-
 }
 
 extension WalletTokenBalanceView: UITableViewDataSource {
@@ -123,7 +118,8 @@ extension WalletTokenBalanceView: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: WalletTokenBalanceCell.self), for: indexPath)
+        let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: WalletTokenBalanceCell.self), for: originalIndexPath)
 
         if let headerCell = cell as? WalletTokenBalanceCell {
             bindHeaderActions(cell: headerCell)
