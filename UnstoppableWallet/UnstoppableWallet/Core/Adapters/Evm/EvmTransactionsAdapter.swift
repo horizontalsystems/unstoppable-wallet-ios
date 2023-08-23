@@ -42,7 +42,7 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
         case .all: ()
         case .incoming: type = .incoming
         case .outgoing: type = .outgoing
-        case .swap: type = .swap
+//        case .swap: type = .swap
         case .approve: type = .approve
         }
 
