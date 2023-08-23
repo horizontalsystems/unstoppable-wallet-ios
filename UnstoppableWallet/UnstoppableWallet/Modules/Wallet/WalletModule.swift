@@ -268,4 +268,20 @@ extension WalletModule {
 
     }
 
+    class HeaderViewItem {
+        let amount: String?
+        let amountExpired: Bool
+        let convertedValue: String?
+        let convertedValueExpired: Bool
+        let buttons: [WalletModule.Button: ButtonState]
+
+        init(amount: String?, amountExpired: Bool, convertedValue: String?, convertedValueExpired: Bool, buttons: [WalletModule.Button: ButtonState]) {
+            self.amount = amount
+            self.amountExpired = amountExpired
+            self.convertedValue = convertedValue
+            self.convertedValueExpired = convertedValueExpired
+            self.buttons = buttons
+        }
+    }
+
 }

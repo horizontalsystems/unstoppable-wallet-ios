@@ -16,6 +16,7 @@ class WalletViewModel {
     private let titleRelay = BehaviorRelay<String?>(value: nil)
     private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
     private let openReceiveRelay = PublishRelay<Wallet>()
+    private let openElementRelay = PublishRelay<WalletModule.Element>()
     private let openBackupRequiredRelay = PublishRelay<Wallet>()
     private let openCoinPageRelay = PublishRelay<Coin>()
     private let noConnectionErrorRelay = PublishRelay<()>()
@@ -24,12 +25,10 @@ class WalletViewModel {
     private let scrollToTopRelay = PublishRelay<()>()
 
     @PostPublished private(set) var state: State = .list(viewItems: [])
-    @PostPublished private(set) var headerViewItem: HeaderViewItem?
+    @PostPublished private(set) var headerViewItem: WalletModule.HeaderViewItem?
     @Published private(set) var sortBy: String?
     @Published private(set) var controlViewItem: ControlViewItem?
     @Published private(set) var nftVisible: Bool = false
-
-    private var expandedElement: WalletModule.Element?
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).wallet-view-model", qos: .userInitiated)
 
@@ -135,8 +134,7 @@ class WalletViewModel {
         factory.viewItem(
                 item: item,
                 balancePrimaryValue: service.balancePrimaryValue,
-                balanceHidden: service.balanceHidden,
-                expanded: item.element == expandedElement
+                balanceHidden: service.balanceHidden
         )
     }
 
@@ -154,6 +152,10 @@ extension WalletViewModel {
 
     var openReceiveSignal: Signal<Wallet> {
         openReceiveRelay.asSignal()
+    }
+
+    var openElementSignal: Signal<WalletModule.Element> {
+        openElementRelay.asSignal()
     }
 
     var openBackupRequiredSignal: Signal<Wallet> {
@@ -224,32 +226,7 @@ extension WalletViewModel {
     }
 
     func onTap(element: WalletModule.Element) {
-        queue.async {
-            guard case .list(var viewItems) = self.state else {
-                return
-            }
-
-            if self.expandedElement == element {
-                self.expandedElement = nil
-
-                if let item = self.service.item(element: element), let index = viewItems.firstIndex(where: { $0.element == element }) {
-                    viewItems[index] = self._viewItem(item: item)
-                }
-            } else {
-                let oldExpandedElement = self.expandedElement
-                self.expandedElement = element
-
-                if let oldExpandedElement, let item = self.service.item(element: oldExpandedElement), let index = viewItems.firstIndex(where: { $0.element == oldExpandedElement }) {
-                    viewItems[index] = self._viewItem(item: item)
-                }
-
-                if let item = self.service.item(element: element), let index = viewItems.firstIndex(where: { $0.element == element }) {
-                    viewItems[index] = self._viewItem(item: item)
-                }
-            }
-
-            self.state = .list(viewItems: viewItems)
-        }
+        openElementRelay.accept(element)
     }
 
     func onTapReceive(wallet: Wallet) {
@@ -302,10 +279,6 @@ extension WalletViewModel {
     }
 
     func onDisable(element: WalletModule.Element) {
-        if expandedElement == element {
-            expandedElement = nil
-        }
-
         service.disable(element: element)
     }
 
@@ -337,14 +310,6 @@ extension WalletViewModel {
             case .invalidApiKey: return "invalidApiKey"
             }
         }
-    }
-
-    struct HeaderViewItem {
-        let amount: String?
-        let amountExpired: Bool
-        let convertedValue: String?
-        let convertedValueExpired: Bool
-        let buttons: [WalletModule.Button: ButtonState]
     }
 
     struct ControlViewItem {

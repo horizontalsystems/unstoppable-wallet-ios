@@ -29,7 +29,7 @@ class WalletViewController: ThemeViewController {
     private let invalidApiKeyView = PlaceholderView()
 
     private var viewItems = [BalanceViewItem]()
-    private var headerViewItem: WalletViewModel.HeaderViewItem?
+    private var headerViewItem: WalletModule.HeaderViewItem?
 
     private var warningViewItem: CancellableTitledCaution?
     private var viewItemsOffset: Int {
@@ -62,6 +62,7 @@ class WalletViewController: ThemeViewController {
         }
 
         navigationItem.largeTitleDisplayMode = .never
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         refreshControl.tintColor = .themeLeah
         refreshControl.alpha = 0.6
@@ -165,6 +166,7 @@ class WalletViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.titleDriver) { [weak self] in self?.navigationItem.title = $0 }
         subscribe(disposeBag, viewModel.showWarningDriver) { [weak self] in self?.sync(warning: $0) }
         subscribe(disposeBag, viewModel.openReceiveSignal) { [weak self] in self?.openReceive(wallet: $0) }
+        subscribe(disposeBag, viewModel.openElementSignal) { [weak self] in self?.open(element: $0) }
         subscribe(disposeBag, viewModel.openBackupRequiredSignal) { [weak self] in self?.openBackupRequired(wallet: $0) }
         subscribe(disposeBag, viewModel.openCoinPageSignal) { [weak self] in self?.openCoinPage(coin: $0) }
         subscribe(disposeBag, viewModel.noConnectionErrorSignal) { HudHelper.instance.show(banner: .noInternet) }
@@ -316,7 +318,7 @@ class WalletViewController: ThemeViewController {
         }
     }
 
-    private func sync(headerViewItem: WalletViewModel.HeaderViewItem?) {
+    private func sync(headerViewItem: WalletModule.HeaderViewItem?) {
         let heightChanged = self.headerViewItem?.buttons.isEmpty != headerViewItem?.buttons.isEmpty
 
         self.headerViewItem = headerViewItem
@@ -428,34 +430,6 @@ class WalletViewController: ThemeViewController {
                 viewItem: viewItem,
                 animated: animated,
                 duration: animationDuration,
-                onSend: { [weak self] in
-                    if let wallet = viewItem.element.wallet {
-                        self?.openSend(wallet: wallet)
-                    }
-                },
-                onWithdraw: { [weak self] in
-                    if let cexAsset = viewItem.element.cexAsset {
-                        self?.openWithdraw(cexAsset: cexAsset)
-                    }
-                },
-                onReceive: { [weak self] in
-                    if let wallet = viewItem.element.wallet {
-                        self?.viewModel.onTapReceive(wallet: wallet)
-                    }
-                },
-                onDeposit: { [weak self] in
-                    if let cexAsset = viewItem.element.cexAsset {
-                        self?.openDeposit(cexAsset: cexAsset)
-                    }
-                },
-                onSwap: { [weak self] in
-                    if let wallet = viewItem.element.wallet {
-                        self?.openSwap(wallet: wallet)
-                    }
-                },
-                onChart: { [weak self] in
-                    self?.viewModel.onTapChart(element: viewItem.element)
-                },
                 onTapError: { [weak self] in
                     self?.viewModel.onTapFailedIcon(element: viewItem.element)
                 }
@@ -494,6 +468,12 @@ class WalletViewController: ThemeViewController {
     private func openReceive(wallet: Wallet) {
         if let module = ReceiveAddressModule.viewController(wallet: wallet) {
             present(ThemeNavigationController(rootViewController: module), animated: true)
+        }
+    }
+
+    private func open(element: WalletModule.Element) {
+        if let viewController = WalletTokenModule.viewController(element: element) {
+            navigationController?.pushViewController(viewController, animated: true)
         }
     }
 

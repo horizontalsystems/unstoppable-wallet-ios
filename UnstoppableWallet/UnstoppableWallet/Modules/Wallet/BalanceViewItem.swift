@@ -7,7 +7,6 @@ struct BalanceViewItem {
 
     let topViewItem: BalanceTopViewItem
     let lockedAmountViewItem: BalanceLockedAmountViewItem?
-    let buttons: [WalletModule.Button: ButtonState]?
 }
 
 struct WalletTokenViewItem {
@@ -129,8 +128,7 @@ extension BalanceViewItem: DiffAware {
 
     static func compareContent(_ a: BalanceViewItem, _ b: BalanceViewItem) -> Bool {
         a.topViewItem == b.topViewItem &&
-                a.lockedAmountViewItem == b.lockedAmountViewItem &&
-                a.buttons == b.buttons
+                a.lockedAmountViewItem == b.lockedAmountViewItem
     }
 
 }
