@@ -25,11 +25,11 @@ class LogoHeaderCell: UITableViewCell {
             maker.size.equalTo(Self.logoSize)
         }
 
-        logoImageView.contentMode = .scaleAspectFill
+        logoImageView.contentMode = .scaleAspectFit
         logoImageView.cornerRadius = .cornerRadius16
         logoImageView.layer.cornerCurve = .continuous
         logoImageView.clipsToBounds = true
-        logoImageView.backgroundColor = .themeSteel20
+        logoImageView.backgroundColor = .clear
 
         contentView.addSubview(stackView)
         stackView.snp.makeConstraints { maker in
@@ -76,8 +76,8 @@ class LogoHeaderCell: UITableViewCell {
         }
     }
 
-    func set(imageUrl: String?, placeholderImage: UIImage? = nil) {
-        logoImageView.kf.setImage(with: imageUrl.flatMap { URL(string: $0) }, placeholder: placeholderImage)
+    func set(imageUrl: String?) {
+        logoImageView.kf.setImage(with: imageUrl.flatMap { URL(string: $0) }, placeholder: UIImage(named: "placeholder_rectangle_32"))
     }
 
 }

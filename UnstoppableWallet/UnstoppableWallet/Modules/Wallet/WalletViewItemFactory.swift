@@ -158,7 +158,7 @@ class WalletViewItemFactory {
             return [
                 .send: .enabled,
                 .receive: .enabled,
-                .swap: .enabled
+//                .swap: .enabled
             ]
         case .evmAddress, .tronAddress: return [:]
         }
