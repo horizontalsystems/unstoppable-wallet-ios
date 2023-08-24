@@ -2,7 +2,7 @@ import Foundation
 
 struct WalletTokenBalanceModule {
 
-    static func view(element: WalletModule.Element) -> WalletTokenBalanceView? {
+    static func dataSource(element: WalletModule.Element) -> WalletTokenBalanceDataSource? {
         guard let account = App.shared.accountManager.activeAccount else {
             return nil
         }
@@ -22,13 +22,15 @@ struct WalletTokenBalanceModule {
                 coinPriceService: coinPriceService,
                 elementService: elementService,
                 appManager: App.shared.appManager,
+                cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
+                balanceHiddenManager: App.shared.balanceHiddenManager,
                 account: account,
                 element: element
         )
 
         let factory = WalletTokenBalanceViewItemFactory()
         let tokenBalanceViewModel = WalletTokenBalanceViewModel(service: tokenBalanceService, factory: factory)
-        return WalletTokenBalanceView(viewModel: tokenBalanceViewModel)
+        return WalletTokenBalanceDataSource(viewModel: tokenBalanceViewModel)
     }
 
 }

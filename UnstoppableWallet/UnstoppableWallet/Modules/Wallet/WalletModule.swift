@@ -94,7 +94,7 @@ struct WalletModule {
         let viewController = WalletTokenListViewController(viewModel: viewModel)
         viewController.onSelectWallet = { [weak viewController] wallet in
             if let module = SendModule.controller(wallet: wallet) {
-                viewController?.present(module, animated: true)
+                viewController?.navigationController?.pushViewController(module, animated: true)
             }
         }
 

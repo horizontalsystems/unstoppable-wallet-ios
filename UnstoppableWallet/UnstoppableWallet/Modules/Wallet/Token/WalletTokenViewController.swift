@@ -8,7 +8,7 @@ class WalletTokenViewController: ThemeViewController {
     private let viewModel: WalletTokenViewModel
     private var cancellables = [AnyCancellable]()
 
-    private let tableView = UITableView(frame: .zero, style: .plain)
+    private let tableView = UITableView(frame: .zero, style: .grouped)
     private let dataSource: ISectionDataSource
 
     init(viewModel: WalletTokenViewModel, dataSource: ISectionDataSource) {
@@ -16,13 +16,6 @@ class WalletTokenViewController: ThemeViewController {
         self.dataSource = dataSource
 
         super.init()
-
-//        dataSource.sectionsUpdatedPublisher
-//                .receive(on: DispatchQueue.main)
-//                .sink { [weak self] in
-//                    self?.handleSectionsUpdated()
-//                }
-//                .store(in: &cancellables)
 
         navigationItem.largeTitleDisplayMode = .never
         hidesBottomBarWhenPushed = true

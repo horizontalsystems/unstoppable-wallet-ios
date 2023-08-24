@@ -9,13 +9,13 @@ class WalletTokenBalanceCell: UITableViewCell {
     private let stackView = UIStackView()
     private let testnetImageView = UIImageView()
     private let coinIconView = BalanceCoinIconHolder()
-    private let amountLabel = UILabel()
+    private let amountButton = TextButtonComponent()
     private let descriptionLabel = UILabel()
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        backgroundColor = .blue
+        backgroundColor = .clear
         selectionStyle = .none
         clipsToBounds = true
 
@@ -28,7 +28,6 @@ class WalletTokenBalanceCell: UITableViewCell {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = .margin6
-        stackView.backgroundColor = .yellow
 
         stackView.addArrangedSubview(testnetImageView)
         testnetImageView.image = UIImage(named: "testnet_16")?.withRenderingMode(.alwaysTemplate)
@@ -47,42 +46,47 @@ class WalletTokenBalanceCell: UITableViewCell {
             make.height.equalTo(44)
         }
 
-        stackView.addArrangedSubview(amountLabel)
-        amountLabel.font = .title2R
-        amountLabel.textColor = .themeLeah
-        amountLabel.backgroundColor = .green
+        stackView.addArrangedSubview(amountButton)
+        amountButton.font = .title2R
+        amountButton.textColor = .themeLeah
 
         stackView.addArrangedSubview(descriptionLabel)
 
         descriptionLabel.font = .body
         descriptionLabel.textColor = .themeGray
-        descriptionLabel.backgroundColor = .purple
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
 
-    func bind(viewItem: BalanceTopViewItem, onTapError: (() -> ())?) {
+    func bind(viewItem: WalletTokenBalanceViewModel.ViewItem, onTapError: (() -> ())?) {
         testnetImageView.isHidden = viewItem.isMainNet
         coinIconView.bind(
                 iconUrlString: viewItem.iconUrlString,
                 placeholderIconName: viewItem.placeholderIconName,
                 spinnerProgress: viewItem.syncSpinnerProgress,
-                indefiniteSearchCircle: true, //viewItem.indefiniteSearchCircle,
+                indefiniteSearchCircle: viewItem.indefiniteSearchCircle,
                 failViewVisible: viewItem.failedImageViewVisible,
                 onTapError: onTapError
         )
 
-        amountLabel.text = viewItem.primaryValue?.text
-        descriptionLabel.text = "asadasdsa"
+        amountButton.text = viewItem.balanceValue?.text
+        amountButton.textColor = (viewItem.balanceValue?.dimmed ?? true) ? .themeGray : .themeLeah
+        descriptionLabel.text = viewItem.descriptionValue?.text
+        descriptionLabel.textColor = (viewItem.descriptionValue?.dimmed ?? true) ? .themeGray50 : .themeGray
+    }
+
+    var onTapAmount: (() -> ())? {
+        get { amountButton.onTap }
+        set { amountButton.onTap = newValue }
     }
 
 }
 
 extension WalletTokenBalanceCell {
 
-    static func height(viewItem: BalanceTopViewItem?) -> CGFloat {
+    static func height(viewItem: WalletTokenBalanceViewModel.ViewItem?) -> CGFloat {
         var height: CGFloat = Self.height
 
         guard let viewItem else {

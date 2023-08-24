@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import RxSwift
 import CurrencyKit
@@ -7,22 +8,36 @@ class WalletTokenBalanceService {
     private let disposeBag = DisposeBag()
 
     private let coinPriceService: WalletCoinPriceService
-    private let account: Account
-    private let element: WalletModule.Element
     private let elementService: IWalletElementService
+    private let cloudAccountBackupManager: CloudAccountBackupManager
+    private let balanceHiddenManager: BalanceHiddenManager
 
-    @PostPublished private(set) var item: Item?
+    private let account: Account
+    let element: WalletModule.Element
+
+    @PostPublished private(set) var item: BalanceItem?
+    private let itemUpdatedSubject = PassthroughSubject<Void, Never>()
+    private let balanceHiddenSubject = PassthroughSubject<Bool, Never>()
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).wallet-token-balance-service", qos: .userInitiated)
 
-    init(coinPriceService: WalletCoinPriceService, elementService: IWalletElementService, appManager: IAppManager, account: Account, element: WalletModule.Element) {
+    init(coinPriceService: WalletCoinPriceService, elementService: IWalletElementService,
+         appManager: IAppManager, cloudAccountBackupManager: CloudAccountBackupManager,
+         balanceHiddenManager: BalanceHiddenManager, account: Account, element: WalletModule.Element) {
         self.coinPriceService = coinPriceService
         self.elementService = elementService
+        self.cloudAccountBackupManager = cloudAccountBackupManager
+        self.balanceHiddenManager = balanceHiddenManager
+
         self.account = account
         self.element = element
 
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in
             self?.coinPriceService.refresh()
+        }
+
+        subscribe(disposeBag, balanceHiddenManager.balanceHiddenObservable) { [weak self] in
+            self?.balanceHiddenSubject.send($0)
         }
 
         elementService.delegate = self
@@ -40,7 +55,7 @@ class WalletTokenBalanceService {
     private func _sync() {
         let priceItemMap = coinPriceService.itemMap(coinUids: [element.priceCoinUid].compactMap { $0 })
 
-        let item = Item(
+        let item = BalanceItem(
                 element: element,
                 isMainNet: elementService.isMainNet(element: element) ?? fallbackIsMainNet,
                 watchAccount: account.watchAccount,
@@ -71,15 +86,31 @@ class WalletTokenBalanceService {
 
 extension WalletTokenBalanceService {
 
-    var wallet: Wallet {
-        element.wallet!
+    var itemUpdatedPublisher: AnyPublisher<Void, Never> {
+        itemUpdatedSubject.eraseToAnyPublisher()
+    }
+
+    var balanceHidden: Bool {
+        balanceHiddenManager.balanceHidden
+    }
+
+    var balanceHiddenPublisher: AnyPublisher<Bool, Never> {
+        balanceHiddenSubject.eraseToAnyPublisher()
+    }
+
+    func isCloudBackedUp() -> Bool {
+        cloudAccountBackupManager.backedUp(uniqueId: account.type.uniqueId())
+    }
+
+    func toggleBalanceHidden() {
+        balanceHiddenManager.toggleBalanceHidden()
     }
 
 }
 
 extension WalletTokenBalanceService {
 
-    class Item {
+    class BalanceItem {
         let element: WalletModule.Element
         var isMainNet: Bool
         var watchAccount: Bool
@@ -101,29 +132,40 @@ extension WalletTokenBalanceService {
 extension WalletTokenBalanceService: IWalletElementServiceDelegate {
 
     func didUpdate(elementState: WalletModule.ElementState, elementService: IWalletElementService) {
-        queue.async {
-            self._sync()
+        queue.async { [weak self] in
+            self?._sync()
         }
     }
 
-    func didUpdateElements(elementService: IWalletElementService) {
-    }
+    func didUpdateElements(elementService: IWalletElementService) {}
 
     func didUpdate(isMainNet: Bool, element: WalletModule.Element) {
-        queue.async {
-            self.item?.isMainNet = isMainNet
+        guard element == self.element else {
+            return
+        }
+        queue.async { [weak self] in
+            self?.item?.isMainNet = isMainNet
+            self?.itemUpdatedSubject.send()
         }
     }
 
     func didUpdate(balanceData: BalanceData, element: WalletModule.Element) {
-        queue.async {
-            self.item?.balanceData = balanceData
+        guard element == self.element else {
+            return
+        }
+        queue.async { [weak self] in
+            self?.item?.balanceData = balanceData
+            self?.itemUpdatedSubject.send()
         }
     }
 
     func didUpdate(state: AdapterState, element: WalletModule.Element) {
-        queue.async {
-            self.item?.state = state
+        guard element == self.element else {
+            return
+        }
+        queue.async { [weak self] in
+            self?.item?.state = state
+            self?.itemUpdatedSubject.send()
         }
     }
 
@@ -131,36 +173,16 @@ extension WalletTokenBalanceService: IWalletElementServiceDelegate {
 
 extension WalletTokenBalanceService: IWalletCoinPriceServiceDelegate {
 
-    private func _handleUpdated(priceItemMap: [String: WalletCoinPriceService.Item], items: [Item]) {
-//        for item in items {
-//            if let priceCoinUid = item.element.priceCoinUid {
-//                item.priceItem = priceItemMap[priceCoinUid]
-//            }
-//        }
-//
-//        internalState = .loaded(items: _sorted(items: items))
-//        _syncTotalItem()
-    }
-
-    func didUpdateBaseCurrency() {
-        queue.async {
-//            guard case .loaded(let items) = self.internalState else {
-//                return
-//            }
-//
-//            let coinUids = Array(Set(items.compactMap { $0.element.priceCoinUid }))
-//            self._handleUpdated(priceItemMap: self.coinPriceService.itemMap(coinUids: coinUids), items: items)
+    private func _handleUpdated(priceItemMap: [String: WalletCoinPriceService.Item], items: [BalanceItem]) {
+        queue.async { [weak self] in
+            if let priceCoinUid = self?.element.priceCoinUid {
+                self?.item?.priceItem = priceItemMap[priceCoinUid]
+                self?.itemUpdatedSubject.send()
+            }
         }
     }
 
-    func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]) {
-        queue.async {
-//            guard case .loaded(let items) = self.internalState else {
-//                return
-//            }
-//
-//            self._handleUpdated(priceItemMap: itemsMap, items: items)
-        }
-    }
+    func didUpdateBaseCurrency() {}
+    func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]) {}
 
 }
