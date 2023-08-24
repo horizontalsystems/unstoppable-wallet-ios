@@ -165,10 +165,9 @@ class WalletViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.titleDriver) { [weak self] in self?.navigationItem.title = $0 }
         subscribe(disposeBag, viewModel.showWarningDriver) { [weak self] in self?.sync(warning: $0) }
-        subscribe(disposeBag, viewModel.openReceiveSignal) { [weak self] in self?.openReceive(wallet: $0) }
+        subscribe(disposeBag, viewModel.openReceiveSignal) { [weak self] in self?.openReceive() }
         subscribe(disposeBag, viewModel.openElementSignal) { [weak self] in self?.open(element: $0) }
-        subscribe(disposeBag, viewModel.openBackupRequiredSignal) { [weak self] in self?.openBackupRequired(wallet: $0) }
-        subscribe(disposeBag, viewModel.openCoinPageSignal) { [weak self] in self?.openCoinPage(coin: $0) }
+        subscribe(disposeBag, viewModel.openBackupRequiredSignal) { [weak self] in self?.openBackupRequired(account: $0) }
         subscribe(disposeBag, viewModel.noConnectionErrorSignal) { HudHelper.instance.show(banner: .noInternet) }
         subscribe(disposeBag, viewModel.openSyncErrorSignal) { [weak self] in self?.openSyncError(wallet: $0, error: $1) }
         subscribe(disposeBag, viewModel.showAccountsLostSignal) { [weak self] in self?.showAccountsLost() }
@@ -453,21 +452,9 @@ class WalletViewController: ThemeViewController {
         present(alertController, animated: true)
     }
 
-    private func openSend(wallet: Wallet) {
-        if let module = SendModule.controller(wallet: wallet) {
-            present(module, animated: true)
-        }
-    }
-
-    private func openWithdraw(cexAsset: CexAsset) {
-        if let viewController = CexWithdrawModule.viewController(cexAsset: cexAsset) {
-            present(ThemeNavigationController(rootViewController: viewController), animated: true)
-        }
-    }
-
-    private func openReceive(wallet: Wallet) {
-        if let module = ReceiveAddressModule.viewController(wallet: wallet) {
-            present(ThemeNavigationController(rootViewController: module), animated: true)
+    private func openReceive() {
+        if let viewController = ReceiveModule.viewController() {
+            present(viewController, animated: true)
         }
     }
 
@@ -484,35 +471,23 @@ class WalletViewController: ThemeViewController {
         present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
-    private func openSwap(wallet: Wallet) {
-        if let viewController = SwapModule.viewController(tokenFrom: wallet.token) {
-            present(ThemeNavigationController(rootViewController: viewController), animated: true)
-        }
-    }
-
-    private func openCoinPage(coin: Coin) {
-        if let viewController = CoinPageModule.viewController(coinUid: coin.uid) {
-            present(viewController, animated: true)
-        }
-    }
-
-    private func openBackupRequired(wallet: Wallet) {
+    private func openBackupRequired(account: Account) {
         let viewController = BottomSheetModule.viewController(
                 image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
                 title: "backup_required.title".localized,
                 items: [
-                    .highlightedDescription(text: "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name))
+                    .highlightedDescription(text: "receive_alert.any_coins.not_backed_up_description".localized(account.name))
                 ],
                 buttons: [
                     .init(style: .yellow, title: "backup_prompt.backup_manual".localized, imageName: "edit_24", actionType: .afterClose) { [ weak self] in
-                        guard let viewController = BackupModule.manualViewController(account: wallet.account) else {
+                        guard let viewController = BackupModule.manualViewController(account: account) else {
                             return
                         }
 
                         self?.present(viewController, animated: true)
                     },
                     .init(style: .gray, title: "backup_prompt.backup_cloud".localized, imageName: "icloud_24", actionType: .afterClose) { [ weak self] in
-                        let viewController = BackupModule.cloudViewController(account: wallet.account)
+                        let viewController = BackupModule.cloudViewController(account: account)
                         self?.present(viewController, animated: true)
                     },
                     .init(style: .transparent, title: "button.cancel".localized)
@@ -595,9 +570,7 @@ class WalletViewController: ThemeViewController {
         }
 
         cell.actions[.receive] = { [weak self] in
-            if let viewController = ReceiveModule.viewController() {
-                self?.present(viewController, animated: true)
-            }
+            self?.viewModel.onTapReceive()
         }
     }
 

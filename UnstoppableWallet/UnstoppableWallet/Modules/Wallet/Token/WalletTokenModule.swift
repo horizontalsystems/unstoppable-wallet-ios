@@ -10,10 +10,10 @@ struct WalletTokenModule {
 
         let dataSourceChain = DataSourceChain()
 
-        guard let tokenBalanceView = WalletTokenBalanceModule.view(element: element) else {
+        guard let tokenBalanceDataSource = WalletTokenBalanceModule.dataSource(element: element) else {
             return nil
         }
-        dataSourceChain.append(source: tokenBalanceView)
+        dataSourceChain.append(source: tokenBalanceDataSource)
 
         if let wallet = element.wallet {
             let transactionsDataSource = TransactionsModule.dataSource(token: wallet.token)
@@ -25,7 +25,7 @@ struct WalletTokenModule {
                 dataSource: dataSourceChain
         )
 
-        tokenBalanceView.parentViewController = viewController
+        tokenBalanceDataSource.parentViewController = viewController
 
         return viewController
     }

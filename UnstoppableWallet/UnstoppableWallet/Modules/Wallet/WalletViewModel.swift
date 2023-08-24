@@ -15,10 +15,9 @@ class WalletViewModel {
 
     private let titleRelay = BehaviorRelay<String?>(value: nil)
     private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
-    private let openReceiveRelay = PublishRelay<Wallet>()
+    private let openReceiveRelay = PublishRelay<()>()
     private let openElementRelay = PublishRelay<WalletModule.Element>()
-    private let openBackupRequiredRelay = PublishRelay<Wallet>()
-    private let openCoinPageRelay = PublishRelay<Coin>()
+    private let openBackupRequiredRelay = PublishRelay<Account>()
     private let noConnectionErrorRelay = PublishRelay<()>()
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
     private let playHapticRelay = PublishRelay<()>()
@@ -150,7 +149,7 @@ extension WalletViewModel {
         showWarningRelay.asDriver()
     }
 
-    var openReceiveSignal: Signal<Wallet> {
+    var openReceiveSignal: Signal<()> {
         openReceiveRelay.asSignal()
     }
 
@@ -158,12 +157,8 @@ extension WalletViewModel {
         openElementRelay.asSignal()
     }
 
-    var openBackupRequiredSignal: Signal<Wallet> {
+    var openBackupRequiredSignal: Signal<Account> {
         openBackupRequiredRelay.asSignal()
-    }
-
-    var openCoinPageSignal: Signal<Coin> {
-        openCoinPageRelay.asSignal()
     }
 
     var noConnectionErrorSignal: Signal<()> {
@@ -229,20 +224,15 @@ extension WalletViewModel {
         openElementRelay.accept(element)
     }
 
-    func onTapReceive(wallet: Wallet) {
-        if wallet.account.backedUp || service.isCloudBackedUp(account: wallet.account) {
-            openReceiveRelay.accept(wallet)
-        } else {
-            openBackupRequiredRelay.accept(wallet)
-        }
-    }
-
-    func onTapChart(element: WalletModule.Element) {
-        guard let coin = element.coin, let item = service.item(element: element), item.priceItem != nil else {
+    func onTapReceive() {
+        guard let account = service.activeAccount else {
             return
         }
-
-        openCoinPageRelay.accept(coin)
+        if account.backedUp || service.isCloudBackedUp(account: account) {
+            openReceiveRelay.accept(())
+        } else {
+            openBackupRequiredRelay.accept(account)
+        }
     }
 
     func onTapFailedIcon(element: WalletModule.Element) {

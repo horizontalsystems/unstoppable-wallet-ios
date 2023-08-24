@@ -5,7 +5,7 @@ import ThemeKit
 import ComponentKit
 
 class BalanceButtonsView: UIView {
-    public static let height: CGFloat = 66
+    public static let height: CGFloat = 70
 
     private let sendButtonWrapper = UIControl()
     private let sendButton = PrimaryButton()
