@@ -25,7 +25,7 @@ class WalletTokenListViewController: ThemeSearchViewController {
     private let failedView = PlaceholderView()
     private let invalidApiKeyView = PlaceholderView()
 
-    private var viewItems = [WalletTokenViewItem]()
+    private var viewItems = [BalanceViewItem]()
     private var isLoaded = false
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).wallet_tokens_view_controller", qos: .userInitiated)
@@ -194,7 +194,7 @@ class WalletTokenListViewController: ThemeSearchViewController {
         }
     }
 
-    private func handle(newViewItems: [WalletTokenViewItem]) {
+    private func handle(newViewItems: [BalanceViewItem]) {
         let changes = diff(old: viewItems, new: newViewItems)
 
         guard !changes.isEmpty else {
@@ -238,7 +238,7 @@ class WalletTokenListViewController: ThemeSearchViewController {
         }
     }
 
-    private func bind(cell: WalletTokenCell, viewItem: WalletTokenViewItem, animated: Bool = false) {
+    private func bind(cell: WalletTokenCell, viewItem: BalanceViewItem, animated: Bool = false) {
         cell.bind(
                 viewItem: viewItem,
                 animated: animated,

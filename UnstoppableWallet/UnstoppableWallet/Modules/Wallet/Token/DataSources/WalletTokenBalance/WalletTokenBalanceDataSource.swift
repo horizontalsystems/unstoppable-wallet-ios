@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import UIKit
+import ComponentKit
 import HUD
 import MarketKit
 import ThemeKit
@@ -26,6 +27,18 @@ class WalletTokenBalanceDataSource: NSObject {
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] in
                     self?.playHaptic()
+                }
+                .store(in: &cancellables)
+
+        viewModel.noConnectionErrorPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { HudHelper.instance.show(banner: .noInternet) }
+                .store(in: &cancellables)
+
+        viewModel.openSyncErrorPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.openSyncError(wallet: $0, error: $1)
                 }
                 .store(in: &cancellables)
 
@@ -104,8 +117,8 @@ class WalletTokenBalanceDataSource: NSObject {
 
     private func bind(cell: WalletTokenBalanceCell) {
         if let headerViewItem {
-            cell.bind(viewItem: headerViewItem) {
-                print("tap error")
+            cell.bind(viewItem: headerViewItem) { [weak self] in
+                self?.viewModel.onTapFailedIcon()
             }
         }
     }
@@ -120,7 +133,7 @@ class WalletTokenBalanceDataSource: NSObject {
             return
         }
         cell.set(backgroundStyle: .externalBorderOnly, cornerRadius: .margin12, isFirst: row == 0, isLast: row == count - 1)
-        cell.bind(item: item)
+        cell.bind(title: item.title, amount: item.amountValue?.text, dimmed: item.amountValue?.dimmed ?? false)
     }
 
     private func bindActions(cell: BalanceButtonsCell) {
@@ -151,15 +164,21 @@ class WalletTokenBalanceDataSource: NSObject {
             cell.actions[.receive] = { [weak self] in
                 self?.viewModel.onTapReceive()
             }
-            cell.actions[.chart] = { [weak self] in
-                self?.viewModel.onTapChart()
-            }
+        }
+        cell.actions[.chart] = { [weak self] in
+            self?.viewModel.onTapChart()
         }
     }
 
     private func playHaptic() {
         HapticGenerator.instance.notification(.feedback(.soft))
     }
+
+    private func openSyncError(wallet: Wallet, error: Error) {
+        let viewController = BalanceErrorModule.viewController(wallet: wallet, error: error, sourceViewController: parentViewController)
+        parentViewController?.present(viewController, animated: true)
+    }
+
 
     private func openReceive(wallet: Wallet) {
         guard let viewController = ReceiveAddressModule.viewController(wallet: wallet) else {

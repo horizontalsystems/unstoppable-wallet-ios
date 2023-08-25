@@ -24,6 +24,7 @@ struct WalletTokenBalanceModule {
                 appManager: App.shared.appManager,
                 cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
                 balanceHiddenManager: App.shared.balanceHiddenManager,
+                reachabilityManager: App.shared.reachabilityManager,
                 account: account,
                 element: element
         )

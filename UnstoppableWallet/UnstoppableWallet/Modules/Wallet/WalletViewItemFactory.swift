@@ -41,17 +41,6 @@ class WalletViewItemFactory {
         }
     }
 
-    private func lockedAmountViewItem(item: WalletService.Item, balanceHidden: Bool) -> BalanceLockedAmountViewItem? {
-        nil
-//        guard item.balanceData.balanceLocked > 0, !balanceHidden else {
-//        }
-//
-//        return BalanceLockedAmountViewItem(
-//                coinValue: coinValue(value: item.balanceData.balanceLocked, decimalCount: item.element.decimals, symbol: item.element.coin?.code, state: item.state, expanded: true),
-//                currencyValue: currencyValue(value: item.balanceData.balanceLocked, state: item.state, priceItem: item.priceItem, expanded: true)
-//        )
-    }
-
     private func iconUrlString(coin: Coin?, state: AdapterState) -> String? {
         switch state {
         case .notSynced: return nil
@@ -171,8 +160,7 @@ extension WalletViewItemFactory {
     func viewItem(item: WalletService.Item, balancePrimaryValue: BalancePrimaryValue, balanceHidden: Bool) -> BalanceViewItem {
         BalanceViewItem(
                 element: item.element,
-                topViewItem: topViewItem(item: item, balancePrimaryValue: balancePrimaryValue, balanceHidden: balanceHidden),
-                lockedAmountViewItem: lockedAmountViewItem(item: item, balanceHidden: balanceHidden)
+                topViewItem: topViewItem(item: item, balancePrimaryValue: balancePrimaryValue, balanceHidden: balanceHidden)
         )
     }
 

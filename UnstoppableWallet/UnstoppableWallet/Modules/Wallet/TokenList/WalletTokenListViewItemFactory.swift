@@ -112,8 +112,8 @@ class WalletTokenListViewItemFactory {
 
 extension WalletTokenListViewItemFactory {
 
-    func viewItem(item: WalletTokenListService.Item, balancePrimaryValue: BalancePrimaryValue) -> WalletTokenViewItem {
-        WalletTokenViewItem(
+    func viewItem(item: WalletTokenListService.Item, balancePrimaryValue: BalancePrimaryValue) -> BalanceViewItem {
+        BalanceViewItem(
                 element: item.element,
                 topViewItem: topViewItem(item: item, balancePrimaryValue: balancePrimaryValue)
         )

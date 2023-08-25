@@ -11,6 +11,7 @@ class WalletTokenBalanceService {
     private let elementService: IWalletElementService
     private let cloudAccountBackupManager: CloudAccountBackupManager
     private let balanceHiddenManager: BalanceHiddenManager
+    private let reachabilityManager: IReachabilityManager
 
     private let account: Account
     let element: WalletModule.Element
@@ -23,11 +24,13 @@ class WalletTokenBalanceService {
 
     init(coinPriceService: WalletCoinPriceService, elementService: IWalletElementService,
          appManager: IAppManager, cloudAccountBackupManager: CloudAccountBackupManager,
-         balanceHiddenManager: BalanceHiddenManager, account: Account, element: WalletModule.Element) {
+         balanceHiddenManager: BalanceHiddenManager, reachabilityManager: IReachabilityManager,
+         account: Account, element: WalletModule.Element) {
         self.coinPriceService = coinPriceService
         self.elementService = elementService
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.balanceHiddenManager = balanceHiddenManager
+        self.reachabilityManager = reachabilityManager
 
         self.account = account
         self.element = element
@@ -80,6 +83,10 @@ class WalletTokenBalanceService {
 
     private var fallbackAdapterState: AdapterState {
         .syncing(progress: nil, lastBlockDate: nil)
+    }
+
+    var isReachable: Bool {
+        reachabilityManager.isReachable
     }
 
 }

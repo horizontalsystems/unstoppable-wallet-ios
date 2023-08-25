@@ -89,15 +89,11 @@ extension WalletTokenBalanceCell {
     static func height(viewItem: WalletTokenBalanceViewModel.ViewItem?) -> CGFloat {
         var height: CGFloat = Self.height
 
-        guard let viewItem else {
-            return height
-        }
-
-        if !viewItem.isMainNet {
+        if !(viewItem?.isMainNet ?? true) {
             height += .margin12
         }
 
-        return HeaderAmountView.height
+        return height
     }
 
 }

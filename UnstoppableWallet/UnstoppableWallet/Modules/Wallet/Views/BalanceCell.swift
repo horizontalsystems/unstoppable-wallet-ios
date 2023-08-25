@@ -9,8 +9,6 @@ class BalanceCell: UITableViewCell {
     private let cardView = CardView(insets: .zero)
 
     private let topView = BalanceTopView()
-    private let separatorView = UIView()
-    private let lockedAmountView = BalanceLockedAmountView()
 
     override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,61 +26,19 @@ class BalanceCell: UITableViewCell {
             maker.leading.top.trailing.equalToSuperview()
             maker.height.equalTo(BalanceTopView.height)
         }
-
-        cardView.contentView.addSubview(separatorView)
-        separatorView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin12)
-            maker.bottom.equalTo(topView).offset(BalanceTopView.expandedMargin)
-            maker.height.equalTo(CGFloat.heightOneDp)
-        }
-
-        separatorView.backgroundColor = .themeSteel20
-
-        cardView.contentView.addSubview(lockedAmountView)
-        lockedAmountView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview()
-            maker.top.equalTo(separatorView.snp.bottom)
-            maker.height.equalTo(BalanceLockedAmountView.height)
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("not implemented")
     }
 
-    func bind(viewItem: BalanceViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onTapError: (() -> ())?) {
+    func bind(viewItem: BalanceViewItem, onTapError: (() -> ())?) {
         topView.bind(viewItem: viewItem.topViewItem, onTapError: onTapError)
         topView.layoutIfNeeded()
-
-        separatorView.set(hidden: true, animated: animated, duration: duration)
-
-        if let viewItem = viewItem.lockedAmountViewItem {
-            lockedAmountView.bind(viewItem: viewItem)
-            lockedAmountView.layoutIfNeeded()
-        }
-
-        lockedAmountView.set(hidden: viewItem.lockedAmountViewItem == nil, animated: animated, duration: duration)
-        lockedAmountView.snp.updateConstraints { maker in
-            maker.height.equalTo(viewItem.lockedAmountViewItem != nil ? BalanceLockedAmountView.height : 0)
-        }
-
-        if animated {
-            UIView.animate(withDuration: duration) {
-                self.contentView.layoutIfNeeded()
-            }
-        }
     }
 
-    static func height(viewItem: BalanceViewItem) -> CGFloat {
-        var height: CGFloat = margins.height
-
-        height += BalanceTopView.height
-
-        if viewItem.lockedAmountViewItem != nil {
-            height += BalanceLockedAmountView.height
-        }
-
-        return height
+    static func height() -> CGFloat {
+        return BalanceTopView.height + margins.height
     }
 
 }

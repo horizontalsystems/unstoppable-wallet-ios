@@ -18,7 +18,7 @@ class BalanceButtonsCell: UITableViewCell {
         contentView.addSubview(buttonsView)
         buttonsView.snp.makeConstraints { maker in
             maker.top.bottom.equalToSuperview()
-            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin24)
         }
     }
 
