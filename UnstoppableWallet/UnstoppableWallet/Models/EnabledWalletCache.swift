@@ -11,13 +11,13 @@ class EnabledWalletCache: Record {
         tokenQueryId = wallet.token.tokenQuery.id
         accountId = wallet.account.id
         balance = balanceData.balance
-        balanceLocked = balanceData.balanceLocked
+        balanceLocked = balanceData.locked
 
         super.init()
     }
 
     var balanceData: BalanceData {
-        BalanceData(balance: balance, balanceLocked: balanceLocked)
+        BalanceData(balance: balance, locked: balanceLocked)
     }
 
     override class var databaseTableName: String {

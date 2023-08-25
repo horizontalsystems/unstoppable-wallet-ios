@@ -101,6 +101,13 @@ extension WalletTokenBalanceViewModel {
 
 extension WalletTokenBalanceViewModel {
 
+    struct BalanceCustomStateViewItem {
+        let title: String
+        let amountValue: (text: String?, dimmed: Bool)?
+        let infoTitle: String
+        let infoDescription: String
+    }
+
     struct ViewItem {
         let isMainNet: Bool
         let iconUrlString: String?
@@ -112,6 +119,7 @@ extension WalletTokenBalanceViewModel {
 
         let balanceValue: (text: String?, dimmed: Bool)?
         let descriptionValue: (text: String?, dimmed: Bool)?
+        let customStates: [BalanceCustomStateViewItem]
     }
 
 }

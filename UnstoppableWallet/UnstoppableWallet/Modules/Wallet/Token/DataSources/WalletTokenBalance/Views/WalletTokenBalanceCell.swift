@@ -19,7 +19,7 @@ class WalletTokenBalanceCell: UITableViewCell {
         selectionStyle = .none
         clipsToBounds = true
 
-        addSubview(stackView)
+        contentView.addSubview(stackView)
         stackView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(CGFloat.margin6)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)

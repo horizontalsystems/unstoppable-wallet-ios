@@ -55,7 +55,9 @@ class TransactionsTableViewDataSource: NSObject {
 //            print("Update Item: \(updateInfo.sectionIndex)-\(updateInfo.index)")
             let indexPath = IndexPath(row: updateInfo.index, section: updateInfo.sectionIndex)
 
-            if let cell = tableView?.cellForRow(at: indexPath) as? BaseThemeCell {
+            if let tableView,
+               let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath),
+               let cell = tableView.cellForRow(at: originalIndexPath) as? BaseThemeCell {
                 cell.bind(rootElement: rootElement(viewItem: sectionViewItems[updateInfo.sectionIndex].viewItems[updateInfo.index]))
             }
         } else {

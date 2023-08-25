@@ -48,7 +48,8 @@ class WalletTokenBalanceViewItemFactory {
                 indefiniteSearchCircle: indefiniteSearchCircle(state: state),
                 failedImageViewVisible: failedImageViewVisible(state: state),
                 balanceValue: balanceValue(item: item, balanceHidden: balanceHidden),
-                descriptionValue: descriptionValue(item: item, balanceHidden: balanceHidden)
+                descriptionValue: descriptionValue(item: item, balanceHidden: balanceHidden),
+                customStates: customStates(item: item, balanceHidden: balanceHidden)
         )
     }
 
@@ -136,6 +137,63 @@ class WalletTokenBalanceViewItemFactory {
                 text: balanceHidden ? "*****" : ValueFormatter.instance.formatFull(currencyValue: currencyValue),
                 dimmed: state != .synced || priceItem.expired
         )
+    }
+
+    private func customStates(item: WalletTokenBalanceService.BalanceItem, balanceHidden: Bool) -> [WalletTokenBalanceViewModel.BalanceCustomStateViewItem] {
+        let stateItems = [
+            CustomStateItem(
+                    title: "balance.token.locked".localized,
+                    lockedAmount: item.balanceData.locked,
+                    infoTitle: "balance.token.locked.info.title".localized,
+                    infoDescription: "balance.token.locked.info.description".localized
+            ),
+            CustomStateItem(
+                    title: "balance.token.staked".localized,
+                    lockedAmount: item.balanceData.staked,
+                    infoTitle: "balance.token.staked.info.title".localized,
+                    infoDescription: "balance.token.staked.info.description".localized
+            ),
+            CustomStateItem(
+                    title: "balance.token.frozen".localized,
+                    lockedAmount: item.balanceData.frozen,
+                    infoTitle: "balance.token.frozen.info.title".localized,
+                    infoDescription: "balance.token.frozen.info.description".localized
+            ),
+        ]
+
+        return stateItems
+                .compactMap {
+                    lockedAmountViewItem(
+                            customStateItem: $0,
+                            item: item,
+                            balanceHidden: balanceHidden
+                    )
+                }
+    }
+
+    private func lockedAmountViewItem(customStateItem: CustomStateItem, item: WalletTokenBalanceService.BalanceItem, balanceHidden: Bool) -> WalletTokenBalanceViewModel.BalanceCustomStateViewItem? {
+        guard customStateItem.lockedAmount > 0 else {
+            return nil
+        }
+
+        let value = coinValue(value: customStateItem.lockedAmount, decimalCount: item.element.decimals, symbol: item.element.coin?.code, balanceHidden: balanceHidden, state: item.state)
+        return .init(
+                title: customStateItem.title,
+                amountValue: value,
+                infoTitle: customStateItem.infoTitle,
+                infoDescription: customStateItem.infoDescription
+        )
+    }
+
+}
+
+extension WalletTokenBalanceViewItemFactory {
+
+    private struct CustomStateItem {
+        let title: String
+        let lockedAmount: Decimal
+        let infoTitle: String
+        let infoDescription: String
     }
 
 }
