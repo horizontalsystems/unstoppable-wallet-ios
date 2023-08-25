@@ -24,12 +24,13 @@ struct TransactionsModule {
         return TransactionsViewController(viewModel: viewModel, dataSource: dataSource)
     }
 
-    static func dataSource(token: Token) -> ISectionDataSource {
+    static func dataSource(token: Token) -> TransactionsTableViewDataSource {
         let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyKit: App.shared.currencyKit)
         let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
 
         let service = TokenTransactionsService(
                 token: token,
+                adapterManager: App.shared.transactionAdapterManager,
                 rateService: rateService,
                 nftMetadataService: nftMetadataService
         )
