@@ -4,6 +4,7 @@ import UIKit
 import HUD
 import MarketKit
 import ThemeKit
+import SectionsTableView
 
 class WalletTokenBalanceDataSource: NSObject {
     private let viewModel: WalletTokenBalanceViewModel
@@ -68,17 +69,35 @@ class WalletTokenBalanceDataSource: NSObject {
     }
 
     private func sync(headerViewItem: WalletTokenBalanceViewModel.ViewItem?) {
+        let oldStatesCount = self.headerViewItem?.customStates.count ?? 0
         self.headerViewItem = headerViewItem
 
-        if let headerCell = tableView?.cellForRow(at: IndexPath(row: 0, section: 0)) as? WalletTokenBalanceCell {
-            bind(cell: headerCell)
+        guard oldStatesCount == headerViewItem?.customStates.count ?? 0 else {
+            tableView?.reloadData()
+            return
+        }
+
+        if let tableView {
+            if let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: 0, section: 0)),
+               let headerCell = tableView.cellForRow(at: originalIndexPath) as? WalletTokenBalanceCell {
+                bind(cell: headerCell)
+            }
+
+            headerViewItem?.customStates.enumerated().forEach { index, _ in
+                if let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: index, section: 1)),
+                   let cell = tableView.cellForRow(at: originalIndexPath) as? WalletTokenBalanceCustomAmountCell {
+                    bind(cell: cell, row: index)
+                }
+            }
         }
     }
 
     private func sync(buttons: [WalletModule.Button: ButtonState]) {
         self.buttons = buttons
 
-        if let cell = tableView?.cellForRow(at: IndexPath(row: 1, section: 0)) as? BalanceButtonsCell {
+        if let tableView,
+           let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: 1, section: 0)),
+           let cell = tableView.cellForRow(at: originalIndexPath) as? BalanceButtonsCell {
             bind(cell: cell)
         }
     }
@@ -93,6 +112,15 @@ class WalletTokenBalanceDataSource: NSObject {
 
     private func bind(cell: BalanceButtonsCell) {
         cell.bind(buttons: buttons)
+    }
+
+    private func bind(cell: WalletTokenBalanceCustomAmountCell, row: Int) {
+        guard let count = headerViewItem?.customStates.count,
+              let item = headerViewItem?.customStates.at(index: row) else {
+            return
+        }
+        cell.set(backgroundStyle: .externalBorderOnly, cornerRadius: .margin12, isFirst: row == 0, isLast: row == count - 1)
+        cell.bind(item: item)
     }
 
     private func bindActions(cell: BalanceButtonsCell) {
@@ -180,6 +208,8 @@ extension WalletTokenBalanceDataSource: ISectionDataSource {
     func prepare(tableView: UITableView) {
         tableView.registerCell(forClass: WalletTokenBalanceCell.self)
         tableView.registerCell(forClass: BalanceButtonsCell.self)
+        tableView.registerCell(forClass: WalletTokenBalanceCustomAmountCell.self)
+        tableView.registerHeaderFooter(forClass: SectionColorHeader.self)
         self.tableView = tableView
     }
 
@@ -188,21 +218,28 @@ extension WalletTokenBalanceDataSource: ISectionDataSource {
 extension WalletTokenBalanceDataSource: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        1
+        1 + ((headerViewItem?.customStates.isEmpty ?? true) ? 0 : 1)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        switch section {
+        case 0: return 2
+        case 1: return headerViewItem?.customStates.count ?? 0
+        default: return 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             switch indexPath.row {
             case 0:
                 let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: WalletTokenBalanceCell.self), for: originalIndexPath)
                 if let cell = cell as? WalletTokenBalanceCell {
-                    cell.onTapAmount = { [weak self] in self?.viewModel.onTapAmount() }
+                    cell.onTapAmount = { [weak self] in
+                        self?.viewModel.onTapAmount()
+                    }
                 }
                 return cell
             case 1:
@@ -214,9 +251,12 @@ extension WalletTokenBalanceDataSource: UITableViewDataSource {
                 return cell
             default: ()
             }
+        case 1:
+            return tableView.dequeueReusableCell(withIdentifier: String(describing: WalletTokenBalanceCustomAmountCell.self), for: originalIndexPath)
+        default: ()
         }
 
-        fatalError("Wrong cell indexPath :\(indexPath)")
+        return UITableViewCell()
     }
 
 }
@@ -230,25 +270,53 @@ extension WalletTokenBalanceDataSource: UITableViewDelegate {
         if let cell = cell as? BalanceButtonsCell {
             bind(cell: cell)
         }
+        if let cell = cell as? WalletTokenBalanceCustomAmountCell {
+            bind(cell: cell, row: indexPath.row)
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
             switch indexPath.row {
             case 0: return WalletTokenBalanceCell.height(viewItem: headerViewItem)
-            case 1: return BalanceButtonsCell.height
-            default: return 0
+            default: return BalanceButtonsCell.height
             }
+        case 1: return .heightSingleLineCell
+        default: return 0
         }
+    }
 
-        return 0
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch section {
+        case 0, 1:
+            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: SectionColorHeader.self)) as? SectionColorHeader
+            view?.backgroundView?.backgroundColor = .clear
+            return view
+        default: return nil
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return .margin12
+        switch section {
+        case 0: return .margin12
+        case 1: return .margin8
+        default: return .zero
         }
-        return .zero
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 1:
+            let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
+            tableView.deselectRow(at: originalIndexPath, animated: true)
+
+            if let viewItem = headerViewItem?.customStates.at(index: indexPath.row) {
+                let viewController = BottomSheetModule.description(title: viewItem.infoTitle, text: viewItem.infoDescription)
+                parentViewController?.present(viewController, animated: true)
+            }
+        default: ()
+        }
     }
 
 }

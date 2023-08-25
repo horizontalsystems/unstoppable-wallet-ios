@@ -8,7 +8,7 @@ class WalletTokenViewController: ThemeViewController {
     private let viewModel: WalletTokenViewModel
     private var cancellables = [AnyCancellable]()
 
-    private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let tableView = UITableView(frame: .zero, style: .plain)
     private let dataSource: ISectionDataSource
 
     init(viewModel: WalletTokenViewModel, dataSource: ISectionDataSource) {

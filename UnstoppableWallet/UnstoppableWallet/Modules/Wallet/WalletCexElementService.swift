@@ -90,7 +90,7 @@ extension WalletCexElementService: IWalletElementService {
             return nil
         }
 
-        return BalanceData(balance: cexAsset.freeBalance, balanceLocked: cexAsset.lockedBalance)
+        return BalanceData(balance: cexAsset.freeBalance, locked: cexAsset.lockedBalance)
     }
 
     func state(element: WalletModule.Element) -> AdapterState? {

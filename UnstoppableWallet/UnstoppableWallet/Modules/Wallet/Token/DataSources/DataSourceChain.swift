@@ -116,7 +116,6 @@ extension DataSourceChain: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let sourcePath = sourcePath(tableView, forRowAt: indexPath)
 
-        tableView.deselectRow(at: sourcePath.indexPath, animated: true)
         dataSources[sourcePath.source].tableView?(tableView, didSelectRowAt: sourcePath.indexPath)
     }
 
