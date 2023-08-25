@@ -10,7 +10,7 @@ import HsExtensions
 import Combine
 
 class ZcashAdapter {
-    private static let endPoint = "lightwalletd.electriccoin.co" //"mainnet.lightwalletd.com"
+    private static let endPoint = "mainnet.lightwalletd.com" // "lightwalletd.electriccoin.co"
     private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
 
     private let disposeBag = DisposeBag()
