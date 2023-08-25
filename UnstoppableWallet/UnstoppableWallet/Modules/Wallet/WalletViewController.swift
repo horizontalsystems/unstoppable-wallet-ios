@@ -419,16 +419,14 @@ class WalletViewController: ThemeViewController {
 
         updateIndexes.forEach {
             if let cell = tableView.cellForRow(at: IndexPath(row: $0 + viewItemsOffset, section: 1)) as? BalanceCell {
-                bind(cell: cell, viewItem: viewItems[$0], animated: true)
+                bind(cell: cell, viewItem: viewItems[$0])
             }
         }
     }
 
-    private func bind(cell: BalanceCell, viewItem: BalanceViewItem, animated: Bool = false) {
+    private func bind(cell: BalanceCell, viewItem: BalanceViewItem) {
         cell.bind(
                 viewItem: viewItem,
-                animated: animated,
-                duration: animationDuration,
                 onTapError: { [weak self] in
                     self?.viewModel.onTapFailedIcon(element: viewItem.element)
                 }
@@ -661,7 +659,7 @@ extension WalletViewController: UITableViewDelegate {
             if warningViewItem != nil, indexPath.row == 0 {
                 return TitledHighlightedDescriptionCell.height(containerWidth: tableView.width, text: warningViewItem?.text ?? "") + .margin32
             }
-            return BalanceCell.height(viewItem: viewItems[indexPath.row - viewItemsOffset])
+            return BalanceCell.height()
         }
     }
 

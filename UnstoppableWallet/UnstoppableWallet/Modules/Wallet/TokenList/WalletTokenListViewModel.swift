@@ -88,7 +88,7 @@ class WalletTokenListViewModel {
         }
     }
 
-    private func _viewItem(item: WalletTokenListService.Item) -> WalletTokenViewItem? {
+    private func _viewItem(item: WalletTokenListService.Item) -> BalanceViewItem? {
         if let filter = filter, !filter.isEmpty {
             if !(item.element.name.localizedCaseInsensitiveContains(filter) || (item.element.coin?.name.localizedCaseInsensitiveContains(filter) ?? false)) {
                 return nil
@@ -155,7 +155,7 @@ extension WalletTokenListViewModel {
         service.refresh()
     }
 
-    func didSelect(item: WalletTokenViewItem) {
+    func didSelect(item: BalanceViewItem) {
         if item.topViewItem.indefiniteSearchCircle || item.topViewItem.syncSpinnerProgress != nil {
             showSyncingRelay.accept(())
             return
@@ -179,7 +179,7 @@ extension WalletTokenListViewModel {
 extension WalletTokenListViewModel {
 
     enum State: CustomStringConvertible {
-        case list(viewItems: [WalletTokenViewItem])
+        case list(viewItems: [BalanceViewItem])
         case noAccount
         case empty
         case loading

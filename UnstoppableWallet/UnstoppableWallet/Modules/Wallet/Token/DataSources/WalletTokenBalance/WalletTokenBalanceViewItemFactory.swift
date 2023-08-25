@@ -143,19 +143,19 @@ class WalletTokenBalanceViewItemFactory {
         let stateItems = [
             CustomStateItem(
                     title: "balance.token.locked".localized,
-                    lockedAmount: item.balanceData.locked,
+                    amount: item.balanceData.locked,
                     infoTitle: "balance.token.locked.info.title".localized,
                     infoDescription: "balance.token.locked.info.description".localized
             ),
             CustomStateItem(
                     title: "balance.token.staked".localized,
-                    lockedAmount: item.balanceData.staked,
+                    amount: item.balanceData.staked,
                     infoTitle: "balance.token.staked.info.title".localized,
                     infoDescription: "balance.token.staked.info.description".localized
             ),
             CustomStateItem(
                     title: "balance.token.frozen".localized,
-                    lockedAmount: item.balanceData.frozen,
+                    amount: item.balanceData.frozen,
                     infoTitle: "balance.token.frozen.info.title".localized,
                     infoDescription: "balance.token.frozen.info.description".localized
             ),
@@ -172,11 +172,11 @@ class WalletTokenBalanceViewItemFactory {
     }
 
     private func lockedAmountViewItem(customStateItem: CustomStateItem, item: WalletTokenBalanceService.BalanceItem, balanceHidden: Bool) -> WalletTokenBalanceViewModel.BalanceCustomStateViewItem? {
-        guard customStateItem.lockedAmount > 0 else {
+        guard customStateItem.amount > 0 else {
             return nil
         }
 
-        let value = coinValue(value: customStateItem.lockedAmount, decimalCount: item.element.decimals, symbol: item.element.coin?.code, balanceHidden: balanceHidden, state: item.state)
+        let value = coinValue(value: customStateItem.amount, decimalCount: item.element.decimals, symbol: item.element.coin?.code, balanceHidden: balanceHidden, state: item.state)
         return .init(
                 title: customStateItem.title,
                 amountValue: value,
@@ -191,7 +191,7 @@ extension WalletTokenBalanceViewItemFactory {
 
     private struct CustomStateItem {
         let title: String
-        let lockedAmount: Decimal
+        let amount: Decimal
         let infoTitle: String
         let infoDescription: String
     }

@@ -4,14 +4,6 @@ import MarketKit
 
 struct BalanceViewItem {
     let element: WalletModule.Element
-
-    let topViewItem: BalanceTopViewItem
-    let lockedAmountViewItem: BalanceLockedAmountViewItem?
-}
-
-struct WalletTokenViewItem {
-    let element: WalletModule.Element
-
     let topViewItem: BalanceTopViewItem
 }
 
@@ -46,19 +38,6 @@ enum BalanceDiffType {
     case dimmed
     case positive
     case negative
-}
-
-struct BalanceLockedAmountViewItem {
-    let coinValue: (text: String?, dimmed: Bool)
-    let currencyValue: (text: String?, dimmed: Bool)?
-}
-
-struct BalanceButtonsViewItem {
-    let sendButtonState: ButtonState
-    let receiveButtonState: ButtonState
-    let addressButtonState: ButtonState
-    let swapButtonState: ButtonState
-    let chartButtonState: ButtonState
 }
 
 extension BalanceTopViewItem: Equatable {
@@ -109,17 +88,6 @@ extension BalanceSecondaryAmountViewItem: Equatable {
 
 }
 
-extension BalanceLockedAmountViewItem: Equatable {
-
-    static func ==(lhs: BalanceLockedAmountViewItem, rhs: BalanceLockedAmountViewItem) -> Bool {
-        lhs.coinValue.text == rhs.coinValue.text &&
-                lhs.coinValue.dimmed == rhs.coinValue.dimmed &&
-                lhs.currencyValue?.text == rhs.currencyValue?.text &&
-                lhs.currencyValue?.dimmed == rhs.currencyValue?.dimmed
-    }
-
-}
-
 extension BalanceViewItem: DiffAware {
 
     public var diffId: WalletModule.Element {
@@ -127,19 +95,6 @@ extension BalanceViewItem: DiffAware {
     }
 
     static func compareContent(_ a: BalanceViewItem, _ b: BalanceViewItem) -> Bool {
-        a.topViewItem == b.topViewItem &&
-                a.lockedAmountViewItem == b.lockedAmountViewItem
-    }
-
-}
-
-extension WalletTokenViewItem: DiffAware {
-
-    public var diffId: WalletModule.Element {
-        element
-    }
-
-    static func compareContent(_ a: WalletTokenViewItem, _ b: WalletTokenViewItem) -> Bool {
         a.topViewItem == b.topViewItem
     }
 
@@ -148,7 +103,7 @@ extension WalletTokenViewItem: DiffAware {
 extension BalanceViewItem: CustomStringConvertible {
 
     var description: String {
-        "[topViewItem: \(topViewItem); lockedAmountViewItem: ; buttonsViewItem: ]"
+        "[topViewItem: \(topViewItem); buttonsViewItem: ]"
     }
 
 }

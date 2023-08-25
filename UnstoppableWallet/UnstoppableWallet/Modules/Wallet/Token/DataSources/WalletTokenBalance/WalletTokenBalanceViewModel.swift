@@ -16,6 +16,8 @@ class WalletTokenBalanceViewModel {
     private let openReceiveSubject = PassthroughSubject<Wallet, Never>()
     private let openBackupRequiredSubject = PassthroughSubject<Wallet, Never>()
     private let openCoinPageSubject = PassthroughSubject<Coin, Never>()
+    private let noConnectionErrorSubject = PassthroughSubject<Void, Never>()
+    private let openSyncErrorSubject = PassthroughSubject<(Wallet, Error), Never>()
 
     init(service: WalletTokenBalanceService, factory: WalletTokenBalanceViewItemFactory) {
         self.service = service
@@ -66,6 +68,14 @@ extension WalletTokenBalanceViewModel {
         openCoinPageSubject.eraseToAnyPublisher()
     }
 
+    var noConnectionErrorPublisher: AnyPublisher<Void, Never> {
+        noConnectionErrorSubject.eraseToAnyPublisher()
+    }
+
+    var openSyncErrorPublisher: AnyPublisher<(Wallet, Error), Never> {
+        openSyncErrorSubject.eraseToAnyPublisher()
+    }
+
     var element: WalletModule.Element {
         service.element
     }
@@ -95,6 +105,27 @@ extension WalletTokenBalanceViewModel {
         }
 
         openCoinPageSubject.send(coin)
+    }
+
+    func onTapFailedIcon() {
+        guard service.isReachable else {
+            noConnectionErrorSubject.send()
+            return
+        }
+
+        guard let item = service.item else {
+            return
+        }
+
+        guard case let .notSynced(error) = item.state else {
+            return
+        }
+
+        guard let wallet = element.wallet else {
+            return
+        }
+
+        openSyncErrorSubject.send((wallet, error))
     }
 
 }
