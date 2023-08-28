@@ -13,7 +13,7 @@ class BaseTransactionsViewModel {
     private let typeFilterIndexRelay = BehaviorRelay<Int>(value: 0)
 
     private let viewDataRelay = BehaviorRelay<ViewData>(value: ViewData(sectionViewItems: [], allLoaded: true, updateInfo: nil))
-    private var viewStatusRelay = BehaviorRelay<ViewStatus>(value: ViewStatus(showProgress: false, messageType: nil))
+    private var syncingRelay = BehaviorRelay<Bool>(value: false)
     private var resetEnabledRelay = BehaviorRelay<Bool>(value: false)
 
     private var sectionViewItems = [SectionViewItem]()
@@ -28,12 +28,12 @@ class BaseTransactionsViewModel {
         subscribe(disposeBag, service.typeFilterObservable) { [weak self] in self?.sync(typeFilter: $0) }
         subscribe(disposeBag, service.itemDataObservable) { [weak self] in self?.sync(itemData: $0) }
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
-        subscribe(disposeBag, service.syncingObservable) { [weak self] in self?.syncViewStatus(syncing: $0) }
+        subscribe(disposeBag, service.syncingObservable) { [weak self] in self?.sync(syncing: $0) }
         subscribe(disposeBag, service.canResetObservable) { [weak self] in self?.sync(canReset: $0) }
         subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in self?.reSyncViewItems() }
 
         _sync(itemData: service.itemData)
-        _syncViewStatus(syncing: service.syncing)
+        _sync(syncing: service.syncing)
         sync(canReset: service.canReset)
     }
 
@@ -64,7 +64,7 @@ class BaseTransactionsViewModel {
         sectionViewItems = sectionViewItems(viewItems: viewItems)
 
         _reportViewData(allLoaded: itemData.allLoaded)
-        _syncViewStatus(syncing: service.syncing)
+        _sync(syncing: service.syncing)
     }
 
     private func syncUpdated(item: TransactionsService.Item) {
@@ -88,19 +88,14 @@ class BaseTransactionsViewModel {
         viewDataRelay.accept(viewData)
     }
 
-    private func syncViewStatus(syncing: Bool) {
+    private func sync(syncing: Bool) {
         queue.async {
-            self._syncViewStatus(syncing: syncing)
+            self._sync(syncing: syncing)
         }
     }
 
-    private func _syncViewStatus(syncing: Bool) {
-        let viewStatus = ViewStatus(
-                showProgress: syncing,
-                messageType: sectionViewItems.isEmpty ? (syncing ? .syncing : .empty) : nil
-        )
-
-        viewStatusRelay.accept(viewStatus)
+    private func _sync(syncing: Bool) {
+        syncingRelay.accept(syncing)
     }
 
     private func sectionViewItems(viewItems: [ViewItem]) -> [SectionViewItem] {
@@ -154,8 +149,8 @@ extension BaseTransactionsViewModel {
         viewDataRelay.asDriver()
     }
 
-    var viewStatusDriver: Driver<ViewStatus> {
-        viewStatusRelay.asDriver()
+    var syncingDriver: Driver<Bool> {
+        syncingRelay.asDriver()
     }
 
     var resetEnabledDriver: Driver<Bool> {
@@ -263,16 +258,6 @@ extension BaseTransactionsViewModel {
     struct UpdateInfo {
         let sectionIndex: Int
         let index: Int
-    }
-
-    struct ViewStatus {
-        let showProgress: Bool
-        let messageType: MessageType?
-    }
-
-    enum MessageType {
-        case syncing
-        case empty
     }
 
 }
