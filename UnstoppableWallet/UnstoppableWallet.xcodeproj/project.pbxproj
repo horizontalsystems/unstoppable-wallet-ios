@@ -443,6 +443,7 @@
 		11B3558898EE33B8D6E571CE /* MnemonicPhraseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3513049D27CB1FA264600 /* MnemonicPhraseCell.swift */; };
 		11B3558A85AE9CAD42030EAD /* FiatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350EE043CD96E484F9524 /* FiatService.swift */; };
 		11B35590A4DA4BCFB3D38DDF /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352884D47E0B23DCF2C2C /* AppManager.swift */; };
+		11B35595C2C6D69FA19E0A8C /* DonateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C87D34FE41411AF8E06 /* DonateCell.swift */; };
 		11B355967997A7C65B008BC7 /* SendEvmTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B31362C98B401A8F9A1 /* SendEvmTransactionViewController.swift */; };
 		11B355984178BF117AB606F5 /* SendAvailableBalanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352F8D9567E50A0DA2F67 /* SendAvailableBalanceCell.swift */; };
 		11B3559EF99DB1F9703547D5 /* EvmSyncSourceStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3564E87C69B2989E6A3D2 /* EvmSyncSourceStorage.swift */; };
@@ -574,6 +575,7 @@
 		11B35783103DBC24D9EB7E85 /* Guide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353B4C04282FDBB1B6563 /* Guide.swift */; };
 		11B357975E11BDDCEAA491B4 /* EnabledWallet_v_0_10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353A0B705D8EABC5B6827 /* EnabledWallet_v_0_10.swift */; };
 		11B3579C9B49D3B2F1DB389F /* TransactionsCoinSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D7E1CB9D978EE1BC15 /* TransactionsCoinSelectViewController.swift */; };
+		11B357A00BA8E78AA9B44640 /* DonateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C87D34FE41411AF8E06 /* DonateCell.swift */; };
 		11B357A607396E857705024F /* WalletTokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B64097CCFA552310E3D /* WalletTokenCell.swift */; };
 		11B357A9F8949912C12A17D7 /* NftCollectionOverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351436E090F4C05243103 /* NftCollectionOverviewViewModel.swift */; };
 		11B357ADA154348A3C1A987B /* CoinTreasuriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351E253E310F1738EBE13 /* CoinTreasuriesViewController.swift */; };
@@ -3158,6 +3160,7 @@
 		11B35C7DCF9B7894F7600623 /* LaunchModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchModule.swift; sourceTree = "<group>"; };
 		11B35C7F043B6C41E53D43BC /* SendEvmTransactionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEvmTransactionService.swift; sourceTree = "<group>"; };
 		11B35C7FCEFE15A50EB5C6E0 /* CoinReportsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinReportsViewController.swift; sourceTree = "<group>"; };
+		11B35C87D34FE41411AF8E06 /* DonateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DonateCell.swift; sourceTree = "<group>"; };
 		11B35C996B6E9B084C05A087 /* TextFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		11B35C9F199E2A1D297480A4 /* AlertModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertModule.swift; sourceTree = "<group>"; };
 		11B35C9F5EFAF496CF05E563 /* WalletConnectSendEthereumTransactionRequestModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectSendEthereumTransactionRequestModule.swift; sourceTree = "<group>"; };
@@ -4284,6 +4287,7 @@
 				11B3597E2B288ECD850C1DFE /* PasteInputCell.swift */,
 				11B356F4578E266268264021 /* QrCodeCell.swift */,
 				D00267B82A57E6CE00D6B2D5 /* ResendPastInputCell.swift */,
+				11B35C87D34FE41411AF8E06 /* DonateCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -9093,6 +9097,7 @@
 				11B351F1347A73080BB2795F /* TokenTransactionsService.swift in Sources */,
 				11B35DCAC5CAD6936EB5EB90 /* TransactionsTableViewDataSource.swift in Sources */,
 				ABC9A458626E9C13F229741F /* WalletTokenBalanceCustomAmountCell.swift in Sources */,
+				11B357A00BA8E78AA9B44640 /* DonateCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10365,6 +10370,7 @@
 				11B359DBC1A8C5226C025E0D /* TokenTransactionsService.swift in Sources */,
 				11B356757D1E8F12B4FE981B /* TransactionsTableViewDataSource.swift in Sources */,
 				ABC9A2CA505DB49DE0FB28DD /* WalletTokenBalanceCustomAmountCell.swift in Sources */,
+				11B35595C2C6D69FA19E0A8C /* DonateCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

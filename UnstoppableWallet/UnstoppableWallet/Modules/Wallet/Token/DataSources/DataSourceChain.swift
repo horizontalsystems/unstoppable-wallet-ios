@@ -3,18 +3,28 @@ import Foundation
 import UIKit
 
 protocol ISectionDataSource: UITableViewDelegate, UITableViewDataSource {
-    var indexPathConverter: ISectionDataSourceIndexPathConverter? { get set }
+    var delegate: ISectionDataSourceDelegate? { get set }
     func prepare(tableView: UITableView)
 }
 
-protocol ISectionDataSourceIndexPathConverter: AnyObject {
+protocol ISectionDataSourceDelegate: AnyObject {
     func originalIndexPath(tableView: UITableView, dataSource: ISectionDataSource, indexPath: IndexPath) -> IndexPath
+    func height(tableView: UITableView, before dataSource: ISectionDataSource) -> CGFloat
+    func height(tableView: UITableView, except dataSource: ISectionDataSource) -> CGFloat
 }
 
-extension ISectionDataSourceIndexPathConverter {
+extension ISectionDataSourceDelegate {
 
     func originalIndexPath(tableView: UITableView, dataSource: ISectionDataSource, indexPath: IndexPath) -> IndexPath {
         indexPath
+    }
+
+    func height(tableView: UITableView, before dataSource: ISectionDataSource) -> CGFloat {
+        .zero
+    }
+
+    func height(tableView: UITableView, except dataSource: ISectionDataSource) -> CGFloat {
+        .zero
     }
 
 }
@@ -23,11 +33,11 @@ class DataSourceChain: NSObject {
     private var dataSources = [ISectionDataSource]()
     private var cancellables: [AnyCancellable] = []
 
-    weak var indexPathConverter: ISectionDataSourceIndexPathConverter? // unused
+    weak var delegate: ISectionDataSourceDelegate? // unused
 
     func append(source: ISectionDataSource) {
         dataSources.append(source)
-        source.indexPathConverter = self
+        source.delegate = self
     }
 
     private func sectionCount(tableView: UITableView, before section: Int) -> Int {
@@ -58,9 +68,27 @@ class DataSourceChain: NSObject {
         return SourceIndexPath(source: sourceIndex, indexPath: path)
     }
 
+    private func height(_ tableView: UITableView, dataSource: ISectionDataSource, section: Int) -> CGFloat {
+        let numberOfRows = dataSource.tableView(tableView, numberOfRowsInSection: section)
+        return (0..<numberOfRows)
+                .map { dataSource.tableView?(tableView, heightForRowAt: IndexPath(row: $0, section: section)) ?? 0 }
+                .reduce(0, +)
+    }
+
+    private func height(_ tableView: UITableView, dataSource: ISectionDataSource) -> CGFloat {
+        let sections = dataSource.numberOfSections?(in: tableView) ?? 0
+        return (0..<sections)
+                .map {
+                    height(tableView, dataSource: dataSource, section: $0) +
+                            (dataSource.tableView?(tableView, heightForHeaderInSection: $0) ?? 0) +
+                            (dataSource.tableView?(tableView, heightForFooterInSection: $0) ?? 0)
+                }
+                .reduce(0, +)
+    }
+
 }
 
-extension DataSourceChain: ISectionDataSourceIndexPathConverter {
+extension DataSourceChain: ISectionDataSourceDelegate {
 
     func originalIndexPath(tableView: UITableView, dataSource: ISectionDataSource, indexPath: IndexPath) -> IndexPath {
         guard let dataSourceIndex = dataSources.firstIndex(where: { $0.isEqual(dataSource) }) else {
@@ -69,6 +97,30 @@ extension DataSourceChain: ISectionDataSourceIndexPathConverter {
 
         let sectionCountBefore = sectionCount(tableView: tableView, before: dataSourceIndex)
         return IndexPath(row: indexPath.row, section: indexPath.section + sectionCountBefore)
+    }
+
+    func height(tableView: UITableView, before dataSource: ISectionDataSource) -> CGFloat {
+        guard let dataSourceIndex = dataSources.firstIndex(where: { $0.isEqual(dataSource) }) else {
+            return .zero
+        }
+
+        return dataSources
+                .prefix(dataSourceIndex)
+                .map { height(tableView, dataSource: $0) }
+                .reduce(0, +)
+    }
+
+    func height(tableView: UITableView, except dataSource: ISectionDataSource) -> CGFloat {
+        guard let dataSourceIndex = dataSources.firstIndex(where: { $0.isEqual(dataSource) }) else {
+            return .zero
+        }
+
+        let sources = dataSources.prefix(dataSourceIndex) + dataSources.suffix(from: dataSourceIndex + 1)
+
+        return sources
+                .prefix(dataSourceIndex)
+                .map { height(tableView, dataSource: $0) }
+                .reduce(0, +)
     }
 
 }

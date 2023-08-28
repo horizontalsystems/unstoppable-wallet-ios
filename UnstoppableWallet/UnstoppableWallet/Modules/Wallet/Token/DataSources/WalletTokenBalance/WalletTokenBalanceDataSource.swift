@@ -16,7 +16,7 @@ class WalletTokenBalanceDataSource: NSObject {
     private var tableView: UITableView?
 
     weak var parentViewController: UIViewController?
-    weak var indexPathConverter: ISectionDataSourceIndexPathConverter?
+    weak var delegate: ISectionDataSourceDelegate?
 
     init(viewModel: WalletTokenBalanceViewModel) {
         self.viewModel = viewModel
@@ -91,13 +91,13 @@ class WalletTokenBalanceDataSource: NSObject {
         }
 
         if let tableView {
-            if let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: 0, section: 0)),
+            if let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: 0, section: 0)),
                let headerCell = tableView.cellForRow(at: originalIndexPath) as? WalletTokenBalanceCell {
                 bind(cell: headerCell)
             }
 
             headerViewItem?.customStates.enumerated().forEach { index, _ in
-                if let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: index, section: 1)),
+                if let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: index, section: 1)),
                    let cell = tableView.cellForRow(at: originalIndexPath) as? WalletTokenBalanceCustomAmountCell {
                     bind(cell: cell, row: index)
                 }
@@ -109,7 +109,7 @@ class WalletTokenBalanceDataSource: NSObject {
         self.buttons = buttons
 
         if let tableView,
-           let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: 1, section: 0)),
+           let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: 1, section: 0)),
            let cell = tableView.cellForRow(at: originalIndexPath) as? BalanceButtonsCell {
             bind(cell: cell)
         }
@@ -249,7 +249,7 @@ extension WalletTokenBalanceDataSource: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
+        let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
         switch indexPath.section {
         case 0:
             switch indexPath.row {
@@ -327,7 +327,7 @@ extension WalletTokenBalanceDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 1:
-            let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
+            let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
             tableView.deselectRow(at: originalIndexPath, animated: true)
 
             if let viewItem = headerViewItem?.customStates.at(index: indexPath.row) {

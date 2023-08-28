@@ -9,19 +9,19 @@ class TransactionsTableViewDataSource: NSObject {
     private let viewModel: BaseTransactionsViewModel
     private let disposeBag = DisposeBag()
 
-    private var sectionViewItems = [TransactionsViewModel.SectionViewItem]()
+    private var sectionViewItems = [BaseTransactionsViewModel.SectionViewItem]()
     private var allLoaded = true
     private var loaded = false
 
     weak var viewController: UIViewController?
     private weak var tableView: UITableView?
-    weak var indexPathConverter: ISectionDataSourceIndexPathConverter?
+    weak var delegate: ISectionDataSourceDelegate?
 
     init(viewModel: BaseTransactionsViewModel) {
         self.viewModel = viewModel
     }
 
-    private func itemClicked(item: TransactionsViewModel.ViewItem) {
+    private func itemClicked(item: BaseTransactionsViewModel.ViewItem) {
         if let record = viewModel.record(uid: item.uid) {
             guard let module = TransactionInfoModule.instance(transactionRecord: record) else {
                 return
@@ -31,7 +31,7 @@ class TransactionsTableViewDataSource: NSObject {
         }
     }
 
-    private func color(valueType: TransactionsViewModel.ValueType) -> UIColor {
+    private func color(valueType: BaseTransactionsViewModel.ValueType) -> UIColor {
         switch valueType {
         case .incoming: return .themeRemus
         case .outgoing: return .themeLucian
@@ -40,7 +40,7 @@ class TransactionsTableViewDataSource: NSObject {
         }
     }
 
-    private func handle(viewData: TransactionsViewModel.ViewData) {
+    private func handle(viewData: BaseTransactionsViewModel.ViewData) {
         sectionViewItems = viewData.sectionViewItems
 
         if let allLoaded = viewData.allLoaded {
@@ -56,7 +56,7 @@ class TransactionsTableViewDataSource: NSObject {
             let indexPath = IndexPath(row: updateInfo.index, section: updateInfo.sectionIndex)
 
             if let tableView,
-               let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath),
+               let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath),
                let cell = tableView.cellForRow(at: originalIndexPath) as? BaseThemeCell {
                 cell.bind(rootElement: rootElement(viewItem: sectionViewItems[updateInfo.sectionIndex].viewItems[updateInfo.index]))
             }
@@ -66,7 +66,11 @@ class TransactionsTableViewDataSource: NSObject {
         }
     }
 
-    private func rootElement(viewItem: TransactionsViewModel.ViewItem) -> CellBuilderNew.CellElement {
+    private func sync(syncing: Bool) {
+        // todo
+    }
+
+    private func rootElement(viewItem: BaseTransactionsViewModel.ViewItem) -> CellBuilderNew.CellElement {
         .hStack([
             .transactionImage { component in
                 component.set(progress: viewItem.progress)
@@ -166,21 +170,29 @@ extension TransactionsTableViewDataSource: ISectionDataSource {
 
         tableView.registerCell(forClass: SpinnerCell.self)
         tableView.registerCell(forClass: EmptyCell.self)
+        tableView.registerCell(forClass: PlaceholderCell.self)
         tableView.registerHeaderFooter(forClass: TransactionDateHeaderView.self)
 
         self.tableView = tableView
 
         subscribe(disposeBag, viewModel.viewDataDriver) { [weak self] in self?.handle(viewData: $0) }
+        subscribe(disposeBag, viewModel.syncingDriver) { [weak self] in self?.sync(syncing: $0) }
 
         loaded = true
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        sectionViewItems.count + (allLoaded ? 0 : 1) + 1
+        if sectionViewItems.isEmpty {
+            return 1
+        } else {
+            return sectionViewItems.count + (allLoaded ? 0 : 1) + 1
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section < sectionViewItems.count {
+        if sectionViewItems.isEmpty {
+            return 1
+        } else if section < sectionViewItems.count {
             return sectionViewItems[section].viewItems.count
         } else {
             return 1
@@ -188,9 +200,11 @@ extension TransactionsTableViewDataSource: ISectionDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
+        let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
 
-        if indexPath.section < sectionViewItems.count {
+        if sectionViewItems.isEmpty {
+            return tableView.dequeueReusableCell(withIdentifier: String(describing: PlaceholderCell.self), for: originalIndexPath)
+        } else if indexPath.section < sectionViewItems.count {
             return CellBuilderNew.preparedCell(
                     tableView: tableView,
                     indexPath: originalIndexPath,
@@ -206,7 +220,13 @@ extension TransactionsTableViewDataSource: ISectionDataSource {
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.section < sectionViewItems.count {
+        if sectionViewItems.isEmpty {
+            if let cell = cell as? PlaceholderCell {
+                cell.set(backgroundStyle: .transparent, isFirst: true)
+                cell.icon = UIImage(named: "outgoing_raw_48")
+                cell.text = "transactions.empty_text".localized
+            }
+        } else if indexPath.section < sectionViewItems.count {
             let viewItems = sectionViewItems[indexPath.section].viewItems
             let viewItem = viewItems[indexPath.row]
 
@@ -220,7 +240,7 @@ extension TransactionsTableViewDataSource: ISectionDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let originalIndexPath = indexPathConverter?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
+        let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
 
         if indexPath.section < sectionViewItems.count {
             tableView.deselectRow(at: originalIndexPath, animated: true)
@@ -229,7 +249,14 @@ extension TransactionsTableViewDataSource: ISectionDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        indexPath.section < sectionViewItems.count ? .heightDoubleLineCell : .margin32
+        if sectionViewItems.isEmpty {
+            let contentHeight = delegate?.height(tableView: tableView, except: self) ?? 0
+            return max(0, tableView.height - tableView.safeAreaInsets.height - contentHeight)
+        } else if indexPath.section < sectionViewItems.count {
+            return .heightDoubleLineCell
+        } else {
+            return .margin32
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

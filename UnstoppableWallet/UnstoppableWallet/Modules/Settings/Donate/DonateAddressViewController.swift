@@ -45,7 +45,7 @@ class DonateAddressViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        tableView.registerCell(forClass: PlaceholderCell.self)
+        tableView.registerCell(forClass: DonateCell.self)
         tableView.registerCell(forClass: MarkdownHeader1Cell.self)
 
         tableView.sectionDataSource = self
@@ -66,10 +66,10 @@ class DonateAddressViewController: ThemeViewController {
                 headerState: .margin(height: .margin24),
                 footerState: .margin(height: .margin24),
                 rows: [
-                    Row<PlaceholderCell>(
+                    Row<DonateCell>(
                         id: "description",
                         autoDeselect: true,
-                        dynamicHeight: { containerWidth in PlaceholderCell.height(text: "settings.donate.description".localized) },
+                        dynamicHeight: { containerWidth in DonateCell.height(text: "settings.donate.description".localized) },
                         bind: { cell, _ in
                             cell.set(backgroundStyle: .lawrence, isFirst: true, isLast: true)
                             cell.bind(
