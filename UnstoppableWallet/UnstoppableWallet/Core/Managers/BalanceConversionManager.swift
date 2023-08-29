@@ -4,7 +4,11 @@ import StorageKit
 import MarketKit
 
 class BalanceConversionManager {
-    private let blockchainTypes: [BlockchainType] = [.bitcoin, .ethereum, .binanceSmartChain]
+    private let tokenQueries = [
+        TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)),
+        TokenQuery(blockchainType: .ethereum, tokenType: .native),
+        TokenQuery(blockchainType: .binanceSmartChain, tokenType: .native)
+    ]
     private let keyBlockchainUid = "conversion-blockchain-uid"
 
     private let marketKit: MarketKit.Kit
@@ -25,10 +29,9 @@ class BalanceConversionManager {
         self.marketKit = marketKit
 
         do {
-            let queries = blockchainTypes.map { TokenQuery(blockchainType: $0, tokenType: .native) }
-            let tokens = try marketKit.tokens(queries: queries)
-            conversionTokens = blockchainTypes.compactMap { blockchainType in
-                tokens.first { $0.blockchainType == blockchainType }
+            let tokens = try marketKit.tokens(queries: tokenQueries)
+            conversionTokens = tokenQueries.compactMap { tokenQuery in
+                tokens.first { $0.tokenQuery == tokenQuery }
             }
         } catch {
             conversionTokens = []
