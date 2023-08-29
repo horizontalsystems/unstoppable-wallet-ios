@@ -32,7 +32,6 @@ extension ReceiveAddressModule {
     struct QrItem {
         let address: String
         let text: String
-        let imageUrl: String?
     }
 
     struct DescriptionItem {

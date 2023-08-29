@@ -151,10 +151,6 @@ extension WalletTokenListViewModel {
         openSyncErrorRelay.accept((wallet, error))
     }
 
-    func onTriggerRefresh() {
-        service.refresh()
-    }
-
     func didSelect(item: BalanceViewItem) {
         if item.topViewItem.indefiniteSearchCircle || item.topViewItem.syncSpinnerProgress != nil {
             showSyncingRelay.accept(())

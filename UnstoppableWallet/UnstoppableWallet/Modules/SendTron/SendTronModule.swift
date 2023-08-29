@@ -45,7 +45,7 @@ class SendTronModule {
             recipientViewModel: recipientViewModel
         )
 
-        return ThemeNavigationController(rootViewController: viewController)
+        return viewController
     }
 
 }

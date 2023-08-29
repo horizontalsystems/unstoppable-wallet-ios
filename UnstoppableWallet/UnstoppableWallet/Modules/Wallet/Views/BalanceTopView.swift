@@ -5,7 +5,6 @@ import ComponentKit
 
 class BalanceTopView: UIView {
     static let height: CGFloat = 62
-    static let expandedMargin: CGFloat = 6
 
     private let coinIconView = BalanceCoinIconHolder()
     private let testnetImageView = UIImageView()

@@ -301,14 +301,6 @@ extension WalletTokenListService {
         }
     }
 
-    func refresh() {
-        elementService.refresh()
-
-        queue.async {
-            self.coinPriceService.refresh()
-        }
-    }
-
 }
 
 extension WalletTokenListService {

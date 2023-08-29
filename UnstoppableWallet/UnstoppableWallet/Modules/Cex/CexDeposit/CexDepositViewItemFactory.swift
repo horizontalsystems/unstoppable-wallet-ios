@@ -8,8 +8,7 @@ class CexDepositViewItemFactory: IReceiveAddressViewItemFactory {
 
         let qrItem = ReceiveAddressModule.QrItem(
                 address: item.address,
-                text: "deposit.qr_code_description".localized(item.coinCode),
-                imageUrl: item.imageUrl
+                text: "deposit.qr_code_description".localized(item.coinCode)
         )
         sections.append([.qrItem(qrItem)])
 

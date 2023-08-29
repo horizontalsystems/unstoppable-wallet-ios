@@ -73,12 +73,17 @@ class QrCodeCell: UITableViewCell {
         tokenWrapperView.isUserInteractionEnabled = false
         tokenWrapperView.cornerRadius = .cornerRadius8
         tokenWrapperView.backgroundColor = .themeWhite
+        tokenWrapperView.clipsToBounds = true
 
         tokenWrapperView.addSubview(tokenImageView)
         tokenImageView.snp.makeConstraints { maker in
             maker.center.equalToSuperview()
             maker.size.equalTo(CGFloat.iconSize32)
         }
+
+        tokenImageView.contentMode = .scaleAspectFit
+        tokenImageView.image = UIImage(named: AppIcon.main.imageName)
+        tokenImageView.cornerRadius = 6
 
         wrapperView.addSubview(label)
         label.snp.makeConstraints { make in
@@ -105,13 +110,6 @@ class QrCodeCell: UITableViewCell {
         qrImageView.asyncSetImage { UIImage.qrCodeImage(qrCodeString: qrCodeString, size: size) }
 
         label.text = text
-    }
-
-    func set(tokenUrl: String?) {
-        guard let tokenUrl else {
-            return
-        }
-        tokenImageView.setImage(withUrlString: tokenUrl, placeholder: nil)
     }
 
 }

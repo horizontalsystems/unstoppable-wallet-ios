@@ -65,7 +65,9 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
 
         title = "send.title".localized(viewModel.token.coin.code)
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
+        if (navigationController?.viewControllers.count ?? 0) == 1 {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
+        }
 
         if feeSettingsFactory == nil {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(didTapCancel))

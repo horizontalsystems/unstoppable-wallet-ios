@@ -154,7 +154,7 @@ class SendModule {
                 feeCautionViewModel: feeCautionViewModel
         )
 
-        return ThemeNavigationController(rootViewController: viewController)
+        return viewController
     }
 
     private static func viewController(token: Token, adapter: ISendBinanceAdapter) -> UIViewController? {
@@ -246,7 +246,7 @@ class SendModule {
                 feeWarningViewModel: feeWarningViewModel
         )
 
-        return ThemeNavigationController(rootViewController: viewController)
+        return viewController
     }
 
     private static func viewController(token: Token, adapter: ISendZcashAdapter) -> UIViewController? {
@@ -335,7 +335,7 @@ class SendModule {
                 feeViewModel: feeViewModel
         )
 
-        return ThemeNavigationController(rootViewController: viewController)
+        return viewController
     }
 
 }
