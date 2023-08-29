@@ -141,12 +141,14 @@ class WalletTokenBalanceDataSource: NSObject {
         case .cexAsset(let cexAsset):
             cell.actions[.deposit] = { [weak self] in
                 if let viewController = CexDepositModule.viewController(cexAsset: cexAsset) {
-                    self?.parentViewController?.navigationController?.pushViewController(viewController, animated: true)
+                    let navigationController = ThemeNavigationController(rootViewController: viewController)
+                    self?.parentViewController?.present(navigationController, animated: true)
                 }
             }
             cell.actions[.withdraw] = { [weak self] in
                 if let viewController = CexWithdrawModule.viewController(cexAsset: cexAsset) {
-                    self?.parentViewController?.navigationController?.pushViewController(viewController, animated: true)
+                    let navigationController = ThemeNavigationController(rootViewController: viewController)
+                    self?.parentViewController?.present(navigationController, animated: true)
                 }
             }
         case .wallet(let wallet):

@@ -15,7 +15,9 @@ struct WalletTokenBalanceModule {
         let elementServiceFactory = WalletElementServiceFactory(
                 adapterManager: App.shared.adapterManager,
                 walletManager: App.shared.walletManager,
-                cexAssetManager: App.shared.cexAssetManager)
+                cexAssetManager: App.shared.cexAssetManager
+        )
+
         let elementService = elementServiceFactory.elementService(account: account)
 
         let tokenBalanceService = WalletTokenBalanceService(
@@ -34,7 +36,4 @@ struct WalletTokenBalanceModule {
         return WalletTokenBalanceDataSource(viewModel: tokenBalanceViewModel)
     }
 
-}
-
-extension WalletTokenBalanceModule {
 }
