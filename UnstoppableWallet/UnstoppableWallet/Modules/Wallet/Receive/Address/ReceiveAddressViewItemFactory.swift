@@ -11,8 +11,7 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
         let text = (item.watchAccount ? "deposit.qr_code_description.watch" : "deposit.qr_code_description").localized(item.coinCode)
         let qrItem = ReceiveAddressModule.QrItem(
                 address: item.address.address,
-                text: text,
-                imageUrl: item.imageUrl
+                text: text
         )
         sections.append([.qrItem(qrItem)])
 

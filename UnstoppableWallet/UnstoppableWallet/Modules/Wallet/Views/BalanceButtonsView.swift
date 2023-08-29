@@ -71,7 +71,7 @@ class BalanceButtonsView: UIView {
             maker.width.equalTo(sendButton)
         }
 
-        receiveButton.set(style: .gray)
+        receiveButton.set(style: .gray, accessoryType: .icon(image: UIImage(named: "arrow_medium_2_down_left_24")))
         receiveButton.setTitle("balance.receive".localized, for: .normal)
         receiveButton.addTarget(self, action: #selector(onReceive), for: .touchUpInside)
 

@@ -152,7 +152,7 @@ class WalletTokenBalanceDataSource: NSObject {
         case .wallet(let wallet):
             cell.actions[.send] = { [weak self] in
                 if let viewController = SendModule.controller(wallet: wallet) {
-                    self?.parentViewController?.present(viewController, animated: true)
+                    self?.parentViewController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
                 }
             }
             cell.actions[.swap] = { [weak self] in

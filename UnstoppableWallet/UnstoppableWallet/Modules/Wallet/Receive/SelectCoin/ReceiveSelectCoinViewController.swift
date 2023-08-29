@@ -94,7 +94,6 @@ extension ReceiveSelectCoinViewController: SectionsDataSource {
                                 image: .url(viewItem.imageUrl, placeholder: "placeholder_circle_32"),
                                 title: .body(viewItem.title),
                                 description: .subhead2(viewItem.description),
-                                accessoryType: .disclosure,
                                 backgroundStyle: .transparent,
                                 autoDeselect: true,
                                 isLast: isLast

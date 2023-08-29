@@ -4,6 +4,7 @@ import SnapKit
 import ComponentKit
 
 class WalletTokenCell: UITableViewCell {
+    private let topSeparatorView = UIView()
     private let topView = BalanceTopView()
     private let separatorView = UIView()
 
@@ -12,6 +13,13 @@ class WalletTokenCell: UITableViewCell {
 
         backgroundColor = .clear
 
+        contentView.addSubview(topSeparatorView)
+        topSeparatorView.snp.makeConstraints { maker in
+            maker.leading.top.trailing.equalToSuperview()
+            maker.height.equalTo(CGFloat.heightOneDp)
+        }
+
+        topSeparatorView.backgroundColor = .themeSteel20
         contentView.addSubview(topView)
         topView.snp.makeConstraints { maker in
             maker.leading.top.trailing.equalToSuperview()
@@ -32,7 +40,8 @@ class WalletTokenCell: UITableViewCell {
         fatalError("not implemented")
     }
 
-    func bind(viewItem: BalanceViewItem, animated: Bool = false, duration: TimeInterval = 0.2, onTapError: (() -> ())?) {
+    func bind(viewItem: BalanceViewItem, first: Bool = false, animated: Bool = false, duration: TimeInterval = 0.2, onTapError: (() -> ())?) {
+        topSeparatorView.isHidden = !first
         topView.bind(viewItem: viewItem.topViewItem, onTapError: onTapError)
         topView.layoutIfNeeded()
 

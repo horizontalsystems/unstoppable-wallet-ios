@@ -17,7 +17,6 @@ class WalletTokenListViewController: ThemeSearchViewController {
     private let disposeBag = DisposeBag()
 
     private let tableView = UITableView(frame: .zero, style: .plain)
-    private let refreshControl = UIRefreshControl()
 
     private let spinner = HUDActivityView.create(with: .medium24)
 
@@ -55,10 +54,6 @@ class WalletTokenListViewController: ThemeSearchViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.searchController?.searchBar.placeholder = "add_token.coin_name".localized
 
-        refreshControl.tintColor = .themeLeah
-        refreshControl.alpha = 0.6
-        refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
-
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
@@ -71,6 +66,7 @@ class WalletTokenListViewController: ThemeSearchViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.registerCell(forClass: WalletTokenCell.self)
+        tableView.registerCell(forClass: EmptyCell.self)
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { make in
@@ -129,22 +125,8 @@ class WalletTokenListViewController: ThemeSearchViewController {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        tableView.refreshControl = refreshControl
-    }
-
     @objc func onTapClose() {
         dismiss(animated: true)
-    }
-
-    @objc func onRefresh() {
-        viewModel.onTriggerRefresh()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            self?.refreshControl.endRefreshing()
-        }
     }
 
     @objc private func onTapRetry() {
@@ -233,14 +215,15 @@ class WalletTokenListViewController: ThemeSearchViewController {
 
         updateIndexes.forEach {
             if let cell = tableView.cellForRow(at: IndexPath(row: $0, section: 0)) as? WalletTokenCell {
-                bind(cell: cell, viewItem: viewItems[$0], animated: true)
+                bind(cell: cell, viewItem: viewItems[$0], first: $0 == 0, animated: true)
             }
         }
     }
 
-    private func bind(cell: WalletTokenCell, viewItem: BalanceViewItem, animated: Bool = false) {
+    private func bind(cell: WalletTokenCell, viewItem: BalanceViewItem, first: Bool = false, animated: Bool = false) {
         cell.bind(
                 viewItem: viewItem,
+                first: first,
                 animated: animated,
                 duration: animationDuration,
                 onTapError: { [weak self] in
@@ -273,15 +256,23 @@ class WalletTokenListViewController: ThemeSearchViewController {
 extension WalletTokenListViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        1
+        2
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewItems.count
+        switch section {
+        case 0: return viewItems.count
+        case 1: return 1
+        default: return 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.dequeueReusableCell(withIdentifier: String(describing: WalletTokenCell.self), for: indexPath)
+        switch indexPath.section {
+        case 0: return tableView.dequeueReusableCell(withIdentifier: String(describing: WalletTokenCell.self), for: indexPath)
+        default: return tableView.dequeueReusableCell(withIdentifier: String(describing: EmptyCell.self), for: indexPath)
+        }
+
     }
 
 }
@@ -290,12 +281,15 @@ extension WalletTokenListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? WalletTokenCell {
-            bind(cell: cell, viewItem: viewItems[indexPath.row])
+            bind(cell: cell, viewItem: viewItems[indexPath.row], first: indexPath.row == 0)
         }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        WalletTokenCell.height
+        switch indexPath.section {
+        case 0: return WalletTokenCell.height
+        default: return .margin32
+        }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

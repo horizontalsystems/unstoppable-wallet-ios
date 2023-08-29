@@ -7,9 +7,6 @@ class WalletViewItemFactory {
     private let minimumProgress = 10
     private let infiniteProgress = 50
 
-    init() {
-    }
-
     private func topViewItem(item: WalletService.Item, balancePrimaryValue: BalancePrimaryValue, balanceHidden: Bool) -> BalanceTopViewItem {
         let state = item.state
 
@@ -147,7 +144,7 @@ class WalletViewItemFactory {
             return [
                 .send: .enabled,
                 .receive: .enabled,
-//                .swap: .enabled
+                .swap: .enabled
             ]
         case .evmAddress, .tronAddress: return [:]
         }
