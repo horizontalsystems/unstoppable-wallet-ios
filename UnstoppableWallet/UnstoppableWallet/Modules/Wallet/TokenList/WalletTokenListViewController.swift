@@ -215,15 +215,18 @@ class WalletTokenListViewController: ThemeSearchViewController {
 
         updateIndexes.forEach {
             if let cell = tableView.cellForRow(at: IndexPath(row: $0, section: 0)) as? WalletTokenCell {
-                bind(cell: cell, viewItem: viewItems[$0], first: $0 == 0, animated: true)
+                bind(cell: cell, index: $0, animated: true)
             }
         }
     }
 
-    private func bind(cell: WalletTokenCell, viewItem: BalanceViewItem, first: Bool = false, animated: Bool = false) {
+    private func bind(cell: WalletTokenCell, index: Int, animated: Bool = false) {
+        let viewItem = viewItems[index]
+
+        cell.set(backgroundStyle: .transparent, isLast: index == viewItems.count - 1)
+
         cell.bind(
                 viewItem: viewItem,
-                first: first,
                 animated: animated,
                 duration: animationDuration,
                 onTapError: { [weak self] in
@@ -281,7 +284,7 @@ extension WalletTokenListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? WalletTokenCell {
-            bind(cell: cell, viewItem: viewItems[indexPath.row], first: indexPath.row == 0)
+            bind(cell: cell, index: indexPath.row)
         }
     }
 
@@ -293,8 +296,10 @@ extension WalletTokenListViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.didSelect(item: viewItems[indexPath.item])
+        if indexPath.section == 0 {
+            tableView.deselectRow(at: indexPath, animated: true)
+            viewModel.didSelect(item: viewItems[indexPath.row])
+        }
     }
 
 }
