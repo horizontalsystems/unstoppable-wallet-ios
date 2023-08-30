@@ -171,7 +171,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Coin Platforms
 
-"coin_platforms.description" = "Ce token existe sur plusieurs blockchains.";
 "coin_platforms.native" = "Natif";
 
 // Copy Warning
@@ -318,6 +317,17 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "lost_accounts.warning_title" = "Erreur du trousseau d’accès iOS";
 "lost_accounts.warning_message" = "Les données cryptées concernant votre portefeuille ont été récemment invalidées parce que l'écran de verrouillage de votre iOS a été modifié";
 
+// Token Balance Page
+"balance.token.locked" = "Locked";
+"balance.token.locked.info.title" = "Locked title";
+"balance.token.locked.info.description" = "Locked Description Text";
+"balance.token.staked" = "Staked";
+"balance.token.staked.info.title" = "Staked title";
+"balance.token.staked.info.description" = "Staked Description Text";
+"balance.token.frozen" = "Frozen";
+"balance.token.frozen.info.title" = "Frozen title";
+"balance.token.frozen.info.description" = "Frozen Description Text";
+
 // Account switcher
 
 "switch_account.title" = "Changer de portefeuille";
@@ -335,15 +345,39 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.address" = "Adresses";
 "deposit.your_address" = "Votre address";
 "receive_alert.not_backed_up_description" = "Vous devez sauvegarder %@ avant de recevoir %@.";
+"receive_alert.any_coins.not_backed_up_description" = "You need to backup %@ before you may receive any coins.";
+"deposit.no_adapter.error" = "Can't provide address";
+
+"deposit.address_format" = "Format";
+"deposit.qr_code_description" = "Votre adresse pour le dépôt %@";
+"deposit.qr_code_description.watch" = "Watch address of %@";
+"deposit.account" = "Compte";
 
 "deposit.not_active" = "non actif";
 "deposit.not_active.title" = "Adresse non-active";
 "deposit.not_active.tron_description" = "Les comptes récemment créés sur la blockchain TRON sont inactifs et ne peuvent pas être interrogés ou explorés. Ils doivent être activés.\n\nLe transfert de jetons TRX ou TRC-10 vers une adresse de compte inactive activera le compte. Pour activer un nouveau compte sur la chaîne Tron, des frais de 1 TRX sont nécessaires";
 
+"deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
+"deposit.zcash.restore.already_own" = "Yes, I already own";
+"deposit.zcash.restore.dont_have" = "No, I don’t have";
+
+"deposit.warning" = "Envoyer seulement %@ à cette adresse. Envoyer d'autres types de jetons à cette adresse entraînera leur perte ultime.";
+
+"receive_network_select.title" = "Network";
+"receive_network_select.description" = "Choose a network and get an address to receive.";
+
+"receive_address_format_select.title" = "Address Format";
+"receive_address_format_select.description" = "Choose a network and get an address to receive.";
+"receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
+"receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
+
+"blockchain_type.recommended" = " (recommended)";
+
 // Send
 
 "send.title" = "Envoyer %@";
 "send.send" = "Envoyer";
+"send.no_assets" = "You have no assets to send.";
 "send.amount_placeholder" = "Montant";
 "send.address_placeholder" = "Adresses";
 "send.address_or_domain_placeholder" = "Adresse ou domaine";
@@ -425,6 +459,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Swap
 
 "swap.title" = "Echanger";
+"swap.no_assets" = "You have no assets to swap.";
 "swap.you_pay" = "Vous payez";
 "swap.estimated" = "estimé";
 "swap.balance" = "Solde";
@@ -878,9 +913,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "transactions.all_blockchains" = "Toutes les blockchains";
 "transactions.all_coins" = "Toutes les pièces";
 "transactions.choose_coin" = "Choisir la pièce";
-"transactions.clear" = "Effacer";
 "transactions.filter_all" = "Tout";
-"transactions.syncing_text" = "Veuillez attendre la fin de la synchronisation";
 "transactions.empty_text" = "Vous n'avez encore aucune transaction en cours ou passée";
 "transactions.pending" = "En attente";
 "transactions.processing" = "Traitement en cours";
@@ -1312,9 +1345,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Activer le portefeuille";
 "wallet_connect.address" = "Adresses";
-"wallet_connect.network" = "Réseau";
+"wallet_connect.network" = "Network";
 "wallet_connect.address" = "Adresses";
-"wallet_connect.network" = "Réseau";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Demandes en attente";
 "wallet_connect.main.no_any_supported_chains" = "Aucune chaîne prise en charge !";
 "wallet_connect.main.unsupported_chains" = "Certaines chaînes ne sont pas prises en charge !";
@@ -1660,13 +1693,12 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Cex Deposit
 
 "cex_deposit.title" = "Dépôt %@";
-"deposit.qr_code_description" = "Votre adresse pour le dépôt %@";
 "cex_deposit.address" = "Adresses";
-"cex_deposit.network" = "Réseau";
+
+"cex_deposit.network" = "Network";
 "cex_deposit.memo" = "Mémo (Tag)";
 "cex_deposit.min_amount" = "Montant minimum";
 "cex_deposit.warning_memo" = "Mémo (tag) est requis ou vous perdrez vos pièces.";
-"deposit.warning" = "Envoyer seulement %@ à cette adresse. Envoyer d'autres types de jetons à cette adresse entraînera leur perte ultime.";
 "cex_deposit.copy_address" = "Copier l'adresse";
 "cex_deposit.share_address" = "Partager l'adresse";
 "cex_deposit.failed" = "Impossible de charger l'adresse du dépôt. Veuillez réessayer.";
@@ -1675,7 +1707,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Cex Widthdraw
 
-"cex_withdraw.network" = "Réseau";
+"cex_withdraw.network" = "Network";
 "cex_withdraw.network_warning" = "Assurez-vous que le réseau correspond à l'adresse de retrait et que la plateforme de dépôt le supporte, ou que les actifs peuvent être perdus.";
 "cex_withdraw.fee" = "Frais";
 "cex_withdraw.fee_from_amount" = "Frais du montant";
@@ -1686,12 +1718,12 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Cex Withdraw Network Select
 
-"cex_withdraw_network_select.title" = "Réseau";
+"cex_withdraw_network_select.title" = "Network";
 "cex_withdraw_network_select.description" = "Assurez-vous que le réseau correspond à l'adresse de retrait et que la plateforme de dépôt le supporte.";
 
 // Cex Withdraw Confirm
 
 "cex_withdraw_confirm.you_withdraw" = "Vous retirez";
-"cex_withdraw_confirm.network" = "Réseau";
+"cex_withdraw_confirm.network" = "Network";
 "cex_withdraw_confirm.withdraw" = "Retraits";
 "cex_withdraw_confirm.withdraw_failed" = "Échec du retrait";
