@@ -41,6 +41,7 @@ class ZcashAdapter {
     private let balanceSubject = PublishSubject<BalanceData>()
     private let transactionRecordsSubject = PublishSubject<[TransactionRecord]>()
 
+    private var started = false
     private var preparing: Bool = false
     private var lastBlockHeight: Int = 0
 
@@ -145,9 +146,9 @@ class ZcashAdapter {
 
         Task {
             do {
-                let tool = initializer.makeDerivationTool()
-                guard let unifiedSpendingKey = try? await tool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: 0),
-                      let unifiedViewingKey = try? await tool.deriveUnifiedFullViewingKey(from: unifiedSpendingKey) else {
+                let tool = DerivationTool(networkType: .mainnet)
+                guard let unifiedSpendingKey = try? tool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: 0),
+                      let unifiedViewingKey = try? tool.deriveUnifiedFullViewingKey(from: unifiedSpendingKey) else {
 
                     throw AppError.ZcashError.cantCreateKeys
                 }
@@ -237,38 +238,42 @@ class ZcashAdapter {
         var syncStatus = self.state
 
         switch state.syncStatus {
-        case .disconnected:
-            logger?.log(level: .debug, message: "State: Disconnected")
-            syncStatus = .syncing(progress: nil, lastBlockDate: nil)
-        case .stopped:
-            logger?.log(level: .debug, message: "State: Stopped")
-            syncStatus = .notSynced(error: AppError.unknownError)
-        case .synced:
+        case .unprepared:
+            if started {
+                logger?.log(level: .debug, message: "State: Disconnected")
+                syncStatus = .syncing(progress: nil, lastBlockDate: nil)
+            } else {
+                syncStatus = .idle
+            }
+        case .upToDate:
+            if !started {
+                started = true
+            }
             logger?.log(level: .debug, message: "State: Synced")
             syncStatus = .synced
             lastBlockHeight = max(state.latestScannedHeight, lastBlockHeight)
             logger?.log(level: .debug, message: "Update BlockHeight = \(lastBlockHeight)")
+            checkFailingTransactions()
         case .syncing(let progress):
+            if !started {
+                started = true
+            }
             logger?.log(level: .debug, message: "State: Syncing")
             logger?.log(level: .debug, message: "State progress: \(progress)")
-            lastBlockHeight = max(progress.progressHeight, lastBlockHeight)
+            lastBlockHeight = max(state.latestScannedHeight, lastBlockHeight)
             logger?.log(level: .debug, message: "Update BlockHeight = \(lastBlockHeight)")
 
             lastBlockUpdatedSubject.onNext(())
 
-            syncStatus = .downloadingBlocks(number: progress.progressHeight, lastBlock: progress.targetHeight)
-        case .enhancing(let p):
-            logger?.log(level: .debug, message: "State: Enhancing")
-            logger?.log(level: .debug, message: "State: ==> \n\(p)")
-            syncStatus = .enhancingTransactions(number: p.enhancedTransactions, count: p.totalTransactions)
-        case .unprepared:
-            syncStatus = .notSynced(error: AppError.unknownError)
-        case .fetching:
-            logger?.log(level: .debug, message: "State: Fetching")
-            syncStatus = .syncing(progress: 0, lastBlockDate: nil)
+            syncStatus = .downloadingBlocks(number: state.latestScannedHeight, lastBlock: state.latestBlockHeight)
         case .error(let error):
-            logger?.log(level: .error, message: "State: Error: \(error)")
-            syncStatus = .notSynced(error: AppError.unknownError)
+            if !started, case .synchronizerDisconnected = error as? ZcashError {
+                syncStatus = .idle
+            } else {
+                started = true
+                logger?.log(level: .error, message: "State: Error: \(error)")
+                syncStatus = .notSynced(error: AppError.unknownError)
+            }
         }
 
         if syncStatus != self.state {
@@ -283,18 +288,25 @@ class ZcashAdapter {
             transactions.forEach { overview in
                 logger?.log(level: .debug, message: "tx: v =\(overview.value.decimalValue.decimalString) : fee = \(overview.fee?.decimalString() ?? "N/A") : height = \(overview.minedHeight?.description ?? "N/A")")
             }
+            let lastBlockHeight = inRange.upperBound
             Task {
-                let newTxs = await transactionPool?.sync(transactions: transactions) ?? []
+                let newTxs = await transactionPool?.sync(transactions: transactions, lastBlockHeight: lastBlockHeight) ?? []
                 transactionRecordsSubject.onNext(newTxs.map {
                     transactionRecord(fromTransaction: $0)
                 })
             }
         case .minedTransaction(let pendingEntity):
             logger?.log(level: .debug, message: "found pending tx: v =\(pendingEntity.value.decimalValue.decimalString) : fee = \(pendingEntity.fee?.decimalString() ?? "N/A")")
-            update(transactions: [pendingEntity])
+            Task {
+                try await update(transactions: [pendingEntity])
+            }
         default:
             logger?.log(level: .debug, message: "Event: \(event)")
         }
+    }
+
+    private func checkFailingTransactions() {
+        reSyncPending()
     }
 
     private func reSyncPending() {
@@ -302,16 +314,17 @@ class ZcashAdapter {
             let pending = await synchronizer.pendingTransactions
             logger?.log(level: .debug, message: "Resync pending txs: \(pending.count)")
             pending.forEach { entity in
-                logger?.log(level: .debug, message: "TX: \(entity.createTime) : \(entity.value.decimalValue.description) : \(entity.recipient.asString ?? ""): \(entity.memo?.encodedString ?? "NoMemo")")
+                logger?.log(level: .debug, message: "TX : \(entity.value.decimalValue.description)")
             }
             if !pending.isEmpty {
-                update(transactions: pending)
+                try await update(transactions: pending)
             }
         }
     }
 
-    private func update(transactions: [PendingTransactionEntity]) {
-        let newTxs = transactionPool?.sync(transactions: transactions) ?? []
+    private func update(transactions: [ZcashTransaction.Overview]) async throws {
+        let newTxs = await transactionPool?.sync(transactions: transactions, lastBlockHeight: lastBlockHeight) ?? []
+        logger?.log(level: .debug, message: "pool will update txs: \(newTxs.count)")
         transactionRecordsSubject.onNext(newTxs.map {
             transactionRecord(fromTransaction: $0)
         })
@@ -337,7 +350,7 @@ class ZcashAdapter {
                     conflictingHash: nil,
                     showRawTransaction: showRawTransaction,
                     amount: abs(transaction.value.decimalValue.decimalValue),
-                    from: nil,
+                    from: transaction.recipientAddress,
                     memo: transaction.memo
             )
         } else {
@@ -356,7 +369,7 @@ class ZcashAdapter {
                     conflictingHash: nil,
                     showRawTransaction: showRawTransaction,
                     amount: abs(transaction.value.decimalValue.decimalValue),
-                    to: transaction.toAddress,
+                    to: transaction.recipientAddress,
                     sentToSelf: false,
                     memo: transaction.memo
             )
@@ -402,7 +415,7 @@ class ZcashAdapter {
         Task {
             let txs = await synchronizer.pendingTransactions
             // fetch the first one that's reported to be unmined
-            guard let firstUnmined = txs.filter({ !$0.isMined }).first else {
+            guard let firstUnmined = txs.filter({ $0.minedHeight == nil }).first else {
                 App.shared.localStorage.zcashAlwaysPendingRewind = true
                 completion?()
                 return
@@ -412,9 +425,9 @@ class ZcashAdapter {
         }
     }
 
-    private func rewind(unmined: PendingTransactionEntity, completion: (() -> ())? = nil) {
+    private func rewind(unmined: ZcashTransaction.Overview, completion: (() -> ())? = nil) {
         synchronizer
-                .rewind(.transaction(unmined.makeTransactionEntity(defaultFee: defaultFee(network: network))))
+                .rewind(.transaction(unmined))
                 .sink(receiveCompletion: { result in
                         switch result {
                         case .finished:
@@ -467,7 +480,7 @@ class ZcashAdapter {
     deinit {
         NotificationCenter.default.removeObserver(self)
         Task { [weak self] in
-            await self?.synchronizer.stop()
+            self?.synchronizer.stop()
             self?.logger?.log(level: .debug, message: "Synchronizer Was Stopped")
         }
     }
@@ -484,14 +497,13 @@ extension ZcashAdapter {
                 cacheDbURL: nil,
                 fsBlockDbRoot: try fsBlockDbRootURL(uniqueId: uniqueId, network: network),
                 dataDbURL: try dataDbURL(uniqueId: uniqueId, network: network),
-                pendingDbURL: try pendingDbURL(uniqueId: uniqueId, network: network),
                 endpoint: LightWalletEndpoint(address: endPoint, port: 9067, secure: true, streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000),
                 network: network,
                 spendParamsURL: try spendParamsURL(uniqueId: uniqueId),
                 outputParamsURL: try outputParamsURL(uniqueId: uniqueId),
                 saplingParamsSourceURL: SaplingParamsSourceURL.default,
                 alias: .custom(uniqueId),
-                logLevel: .error
+                loggingPolicy: .default(.debug)
         )
     }
 
@@ -517,10 +529,6 @@ extension ZcashAdapter {
 
     private static func dataDbURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
         try dataDirectoryUrl().appendingPathComponent(network.constants.defaultDbNamePrefix + uniqueId + ZcashSDK.defaultDataDbName, isDirectory: false)
-    }
-
-    private static func pendingDbURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
-        try dataDirectoryUrl().appendingPathComponent(network.constants.defaultDbNamePrefix + uniqueId + ZcashSDK.defaultPendingDbName, isDirectory: false)
     }
 
     private static func spendParamsURL(uniqueId: String) throws -> URL {
@@ -577,10 +585,8 @@ extension ZcashAdapter: IAdapter {
     }
 
     func stop() {
-        Task {
-            await synchronizer.stop()
-            logger?.log(level: .debug, message: "Synchronizer will stop")
-        }
+        synchronizer.stop()
+        logger?.log(level: .debug, message: "Synchronizer will stop")
     }
 
     func refresh() {
@@ -755,7 +761,7 @@ extension ZcashAdapter: ISendZcashAdapter {
                             zatoshi: Zatoshi.from(decimal: amount),
                             toAddress: address,
                             memo: memo)
-                    self.logger?.log(level: .debug, message: "Successful send TX: \(pendingEntity.createTime) : \(pendingEntity.value.decimalValue.description) : \(pendingEntity.recipient.asString ?? "") : \(pendingEntity.memo?.encodedString ?? "NoMemo")")
+                    self.logger?.log(level: .debug, message: "Successful send TX: : \(pendingEntity.value.decimalValue.description):")
                     self.reSyncPending()
                     observer(.success(()))
                 } catch {
