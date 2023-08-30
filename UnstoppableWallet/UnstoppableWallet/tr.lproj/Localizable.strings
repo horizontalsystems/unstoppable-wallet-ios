@@ -171,7 +171,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Coin Platforms
 
-"coin_platforms.description" = "Bu token birden fazla blok zincirinde bulunur.";
 "coin_platforms.native" = "Yerel";
 
 // Copy Warning
@@ -318,6 +317,17 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "lost_accounts.warning_title" = "iOS Keychain Hatası";
 "lost_accounts.warning_message" = "iOS cihazınızın kilidi değiştirildiğinden cüzdan bilginizi tutan şifreli dosya artık geçersiz";
 
+// Token Balance Page
+"balance.token.locked" = "Locked";
+"balance.token.locked.info.title" = "Locked title";
+"balance.token.locked.info.description" = "Locked Description Text";
+"balance.token.staked" = "Staked";
+"balance.token.staked.info.title" = "Staked title";
+"balance.token.staked.info.description" = "Staked Description Text";
+"balance.token.frozen" = "Frozen";
+"balance.token.frozen.info.title" = "Frozen title";
+"balance.token.frozen.info.description" = "Frozen Description Text";
+
 // Account switcher
 
 "switch_account.title" = "Cüzdan Değiştir";
@@ -335,15 +345,39 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.address" = "Adres";
 "deposit.your_address" = "Adresiniz";
 "receive_alert.not_backed_up_description" = "%@ almadan önce %@ anahtarlarınızı yedeklemeniz gerekiyor.";
+"receive_alert.any_coins.not_backed_up_description" = "You need to backup %@ before you may receive any coins.";
+"deposit.no_adapter.error" = "Can't provide address";
+
+"deposit.address_format" = "Format";
+"deposit.qr_code_description" = "%@ yatırmak için adresiniz";
+"deposit.qr_code_description.watch" = "Watch address of %@";
+"deposit.account" = "Account";
 
 "deposit.not_active" = "aktif değil";
 "deposit.not_active.title" = "Aktif Adres Değil";
 "deposit.not_active.tron_description" = "TRON blok zincirinde yeni oluşturulan hesaplar etkin değildir ve sorgulanamaz veya araştırılamaz. Etkinleştirilmeleri gerekiyor.\n\nTRX veya TRC-10 jetonlarını etkin olmayan bir hesap adresine aktarmak, hesabı etkinleştirir. Tron zincirinde yeni bir hesabın etkinleştirilmesi 1 TRX ücret gerektirir";
 
+"deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
+"deposit.zcash.restore.already_own" = "Yes, I already own";
+"deposit.zcash.restore.dont_have" = "No, I don’t have";
+
+"deposit.warning" = "Bu adrese yalnızca %@ gönderin. Bu adrese başka türden jetonların gönderilmesi nihai kayıplarına neden olacaktır.";
+
+"receive_network_select.title" = "Network";
+"receive_network_select.description" = "Choose a network and get an address to receive.";
+
+"receive_address_format_select.title" = "Address Format";
+"receive_address_format_select.description" = "Choose a network and get an address to receive.";
+"receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
+"receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
+
+"blockchain_type.recommended" = " (recommended)";
+
 // Send
 
 "send.title" = "%@ gönder";
 "send.send" = "Gönder";
+"send.no_assets" = "You have no assets to send.";
 "send.amount_placeholder" = "Tutar";
 "send.address_placeholder" = "Adres";
 "send.address_or_domain_placeholder" = "Adres veya Domain";
@@ -425,6 +459,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Swap
 
 "swap.title" = "Takas";
+"swap.no_assets" = "You have no assets to swap.";
 "swap.you_pay" = "Ödediğiniz";
 "swap.estimated" = "tahmini";
 "swap.balance" = "Bakiye";
@@ -878,9 +913,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "transactions.all_blockchains" = "Tüm Blok Zincirleri";
 "transactions.all_coins" = "Tüm paralar";
 "transactions.choose_coin" = "Kripto Parayı Seç";
-"transactions.clear" = "Temizle";
 "transactions.filter_all" = "Hepsi";
-"transactions.syncing_text" = "Lütfen güncellemenin bitmesini bekleyin";
 "transactions.empty_text" = "Henüz herhangi bir bekleyen veya geçmiş işlem yok";
 "transactions.pending" = "Bekleyen";
 "transactions.processing" = "İşleniyor";
@@ -1312,9 +1345,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Aktif Cüzdan";
 "wallet_connect.address" = "Adres";
-"wallet_connect.network" = "Ağ";
+"wallet_connect.network" = "Network";
 "wallet_connect.address" = "Adres";
-"wallet_connect.network" = "Ağ";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
 "wallet_connect.main.no_any_supported_chains" = "Desteklenen zincir yok!";
 "wallet_connect.main.unsupported_chains" = "Bazı zincirler desteklenmiyor!";
@@ -1659,13 +1692,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Cex Deposit
 
 "cex_deposit.title" = "Depozito %@";
-"deposit.qr_code_description" = "%@ yatırmak için adresiniz";
 "cex_deposit.address" = "Adres";
-"cex_deposit.network" = "Ağ";
+
+"cex_deposit.network" = "Network";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. miktar";
 "cex_deposit.warning_memo" = "Not (etiket) gereklidir, aksi takdirde madeni paralarınızı kaybedersiniz.";
-"deposit.warning" = "Bu adrese yalnızca %@ gönderin. Bu adrese başka türden jetonların gönderilmesi nihai kayıplarına neden olacaktır.";
 "cex_deposit.copy_address" = "Adresi Kopyala";
 "cex_deposit.share_address" = " Adresi paylaş";
 "cex_deposit.failed" = "Para yatırma adresi yüklenemedi. Lütfen tekrar deneyiniz.";
@@ -1674,7 +1706,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Cex Widthdraw
 
-"cex_withdraw.network" = "Ağ";
+"cex_withdraw.network" = "Network";
 "cex_withdraw.network_warning" = "Ağın para çekme adresiyle eşleştiğinden ve para yatırma platformunun bunu desteklediğinden emin olun, aksi takdirde varlıklar kaybolabilir.";
 "cex_withdraw.fee" = "Ücret";
 "cex_withdraw.fee_from_amount" = "Tutardan ücret";
@@ -1685,12 +1717,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Cex Withdraw Network Select
 
-"cex_withdraw_network_select.title" = "Ağ";
+"cex_withdraw_network_select.title" = "Network";
 "cex_withdraw_network_select.description" = "Ağın para çekme adresiyle eşleştiğinden ve para yatırma platformunun bunu desteklediğinden emin olun.";
 
 // Cex Withdraw Confirm
 
 "cex_withdraw_confirm.you_withdraw" = "Geri Çekilirsin";
-"cex_withdraw_confirm.network" = "Ağ";
+"cex_withdraw_confirm.network" = "Network";
 "cex_withdraw_confirm.withdraw" = "Hesaptan Çek";
 "cex_withdraw_confirm.withdraw_failed" = "Para çekme başarısız oldu";
