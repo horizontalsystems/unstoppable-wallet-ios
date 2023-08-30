@@ -171,7 +171,6 @@
 
 // Coin Platforms
 
-"coin_platforms.description" = "此令牌存在于多个区块链中。";
 "coin_platforms.native" = "原生";
 
 // Copy Warning
@@ -318,6 +317,17 @@
 "lost_accounts.warning_title" = "iOS Keychain 错误";
 "lost_accounts.warning_message" = "因为您的 iOS 锁定屏幕已被更改，所以保存您钱包的加密数据目前已失效";
 
+// Token Balance Page
+"balance.token.locked" = "Locked";
+"balance.token.locked.info.title" = "Locked title";
+"balance.token.locked.info.description" = "Locked Description Text";
+"balance.token.staked" = "Staked";
+"balance.token.staked.info.title" = "Staked title";
+"balance.token.staked.info.description" = "Staked Description Text";
+"balance.token.frozen" = "Frozen";
+"balance.token.frozen.info.title" = "Frozen title";
+"balance.token.frozen.info.description" = "Frozen Description Text";
+
 // Account switcher
 
 "switch_account.title" = "切换钱包";
@@ -335,15 +345,39 @@
 "deposit.address" = "地址";
 "deposit.your_address" = "您的地址";
 "receive_alert.not_backed_up_description" = "您必须在接收%@之前先备份%@。";
+"receive_alert.any_coins.not_backed_up_description" = "You need to backup %@ before you may receive any coins.";
+"deposit.no_adapter.error" = "Can't provide address";
+
+"deposit.address_format" = "Format";
+"deposit.qr_code_description" = "您存放 %@ 的地址";
+"deposit.qr_code_description.watch" = "Watch address of %@";
+"deposit.account" = "账户";
 
 "deposit.not_active" = "不活动";
 "deposit.not_active.title" = "未激活的地址";
 "deposit.not_active.tron_description" = "新创建的 TRON 区块链上的帐户是不活动的，无法查询或探索。它们需要激活。\n\n正在将TRX或 TRC-10令牌传输到一个不活动的帐户地址将激活该帐户。 激活Tron链上的一个新帐户需要1TRX";
 
+"deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
+"deposit.zcash.restore.already_own" = "Yes, I already own";
+"deposit.zcash.restore.dont_have" = "No, I don’t have";
+
+"deposit.warning" = "只发送 %@ 到此地址。向此地址发送其他类型的令牌将导致其最终丢失。";
+
+"receive_network_select.title" = "Network";
+"receive_network_select.description" = "Choose a network and get an address to receive.";
+
+"receive_address_format_select.title" = "Address Format";
+"receive_address_format_select.description" = "Choose a network and get an address to receive.";
+"receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
+"receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
+
+"blockchain_type.recommended" = " (recommended)";
+
 // Send
 
 "send.title" = "发送%@";
 "send.send" = "发送​​";
+"send.no_assets" = "You have no assets to send.";
 "send.amount_placeholder" = "金额";
 "send.address_placeholder" = "地址";
 "send.address_or_domain_placeholder" = "地址或域名";
@@ -425,6 +459,7 @@
 // Swap
 
 "swap.title" = "掉期交易";
+"swap.no_assets" = "You have no assets to swap.";
 "swap.you_pay" = "您支付";
 "swap.estimated" = "估计";
 "swap.balance" = "余额";
@@ -878,9 +913,7 @@
 "transactions.all_blockchains" = "所有Blockchains";
 "transactions.all_coins" = "所有硬币";
 "transactions.choose_coin" = "选择代币";
-"transactions.clear" = "清空";
 "transactions.filter_all" = "所有";
-"transactions.syncing_text" = "请等待同步结束";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
 "transactions.pending" = "待处理";
 "transactions.processing" = "正在处理";
@@ -1312,9 +1345,9 @@
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "激活钱包";
 "wallet_connect.address" = "地址";
-"wallet_connect.network" = "网络";
+"wallet_connect.network" = "Network";
 "wallet_connect.address" = "地址";
-"wallet_connect.network" = "网络";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "待处理请求";
 "wallet_connect.main.no_any_supported_chains" = "没有任何支持的链！";
 "wallet_connect.main.unsupported_chains" = "一些链是不支持的！";
@@ -1659,13 +1692,12 @@
 // Cex Deposit
 
 "cex_deposit.title" = "存款 %@";
-"deposit.qr_code_description" = "您存放 %@ 的地址";
 "cex_deposit.address" = "地址";
-"cex_deposit.network" = "网络";
+
+"cex_deposit.network" = "Network";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "最小金额";
 "cex_deposit.warning_memo" = "Memo(标签)是必需的，否则您将丢失您的硬币。";
-"deposit.warning" = "只发送 %@ 到此地址。向此地址发送其他类型的令牌将导致其最终丢失。";
 "cex_deposit.copy_address" = "复制地址";
 "cex_deposit.share_address" = "共享地址";
 "cex_deposit.failed" = "加载存款地址失败。请重试。";
@@ -1674,7 +1706,7 @@
 
 // Cex Widthdraw
 
-"cex_withdraw.network" = "网络";
+"cex_withdraw.network" = "Network";
 "cex_withdraw.network_warning" = "确保网络匹配提款地址和存款平台支持它，否则资产可能丢失。";
 "cex_withdraw.fee" = "费用";
 "cex_withdraw.fee_from_amount" = "费用金额";
@@ -1685,12 +1717,12 @@
 
 // Cex Withdraw Network Select
 
-"cex_withdraw_network_select.title" = "网络";
+"cex_withdraw_network_select.title" = "Network";
 "cex_withdraw_network_select.description" = "确保网络匹配提款地址和存款平台支持它。";
 
 // Cex Withdraw Confirm
 
 "cex_withdraw_confirm.you_withdraw" = "您已退出";
-"cex_withdraw_confirm.network" = "网络";
+"cex_withdraw_confirm.network" = "Network";
 "cex_withdraw_confirm.withdraw" = "提取";
 "cex_withdraw_confirm.withdraw_failed" = "提取失败";
