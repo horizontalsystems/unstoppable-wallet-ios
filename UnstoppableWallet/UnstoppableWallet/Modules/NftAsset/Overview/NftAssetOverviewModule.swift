@@ -4,6 +4,7 @@ struct NftAssetOverviewModule {
 
     static func viewController(providerCollectionUid: String, nftUid: NftUid) -> NftAssetOverviewViewController {
         let coinPriceService = WalletCoinPriceService(
+                tag: "nft-asset-overview",
                 currencyKit: App.shared.currencyKit,
                 marketKit: App.shared.marketKit
         )

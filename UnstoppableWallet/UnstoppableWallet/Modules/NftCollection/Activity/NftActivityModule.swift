@@ -5,7 +5,7 @@ import MarketKit
 struct NftActivityModule {
 
     static func viewController(eventListType: NftEventListType, defaultEventType: NftEventMetadata.EventType? = .sale) -> NftActivityViewController {
-        let coinPriceService = WalletCoinPriceService(currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
+        let coinPriceService = WalletCoinPriceService(tag: "nft-activity", currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
         let service = NftActivityService(eventListType: eventListType, defaultEventType: defaultEventType, nftMetadataManager: App.shared.nftMetadataManager, coinPriceService: coinPriceService)
         let viewModel = NftActivityViewModel(service: service)
 

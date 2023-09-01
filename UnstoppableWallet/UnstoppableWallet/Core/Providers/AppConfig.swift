@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 struct AppConfig {
     static let label = "io.horizontalsystems.unstoppable"
@@ -22,6 +23,18 @@ struct AppConfig {
         "ETH": "0x8a2Bec907827F496752c3F24F960B3cddc5D311B",
         "BNB": "0x8a2Bec907827F496752c3F24F960B3cddc5D311B"
     ]
+
+    static var appVersion: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+    }
+
+    static var appBuild: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
+    }
+
+    static var appId: String? {
+        UIDevice.current.identifierForVendor?.uuidString
+    }
 
     static var appName: String {
         (Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String) ?? ""
