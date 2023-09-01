@@ -181,10 +181,11 @@ class WalletService {
             internalState = .loaded(items: sorter.sort(items: items, sortType: sortType))
             _syncTotalItem()
 
-            let coinUids = Set(elements.compactMap { $0.priceCoinUid })
-            let feeCoinUids = Set(elements.compactMap { $0.wallet }.compactMap { feeCoinProvider.feeToken(token: $0.token) }.map { $0.coin.uid })
-
-            coinPriceService.set(coinUids: coinUids.union(feeCoinUids).union(balanceConversionManager.conversionTokens.map { $0.coin.uid }))
+            coinPriceService.set(
+                    coinUids: Set(elements.compactMap { $0.priceCoinUid }),
+                    feeCoinUids: Set(elements.compactMap { $0.wallet }.compactMap { feeCoinProvider.feeToken(token: $0.token) }.map { $0.coin.uid }),
+                    conversionCoinUids: Set(balanceConversionManager.conversionTokens.map { $0.coin.uid })
+            )
         case .failed(let reason):
             internalState = .failed(reason: reason)
         }

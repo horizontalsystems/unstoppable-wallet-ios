@@ -10,6 +10,7 @@ struct WalletModule {
 
     static func viewController() -> UIViewController {
         let coinPriceService = WalletCoinPriceService(
+                tag: "wallet",
                 currencyKit: App.shared.currencyKit,
                 marketKit: App.shared.marketKit
         )
@@ -59,6 +60,7 @@ struct WalletModule {
         }
 
         let coinPriceService = WalletCoinPriceService(
+                tag: "send-token-list",
                 currencyKit: App.shared.currencyKit,
                 marketKit: App.shared.marketKit
         )
@@ -107,6 +109,7 @@ struct WalletModule {
         }
 
         let coinPriceService = WalletCoinPriceService(
+                tag: "swap-token-list",
                 currencyKit: App.shared.currencyKit,
                 marketKit: App.shared.marketKit
         )

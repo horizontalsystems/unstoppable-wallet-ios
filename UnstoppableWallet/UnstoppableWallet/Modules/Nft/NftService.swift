@@ -175,7 +175,10 @@ class NftService {
 
         _syncItems()
 
-        coinPriceService.set(coinUids: allCoinUids(items: items).union(balanceConversionManager.conversionTokens.map { $0.coin.uid }))
+        coinPriceService.set(
+                coinUids: allCoinUids(items: items),
+                conversionCoinUids: Set(balanceConversionManager.conversionTokens.map { $0.coin.uid })
+        )
     }
 
     private func syncItems() {

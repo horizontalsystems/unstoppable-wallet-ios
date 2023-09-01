@@ -11,6 +11,7 @@ protocol IWalletCoinPriceServiceDelegate: AnyObject {
 class WalletCoinPriceService {
     weak var delegate: IWalletCoinPriceServiceDelegate?
 
+    private let tag: String
     private let currencyKit: CurrencyKit.Kit
     private let marketKit: MarketKit.Kit
     private var cancellables = Set<AnyCancellable>()
@@ -18,8 +19,11 @@ class WalletCoinPriceService {
 
     private(set) var currency: Currency
     private var coinUids = Set<String>()
+    private var feeCoinUids = Set<String>()
+    private var conversionCoinUids = Set<String>()
 
-    init(currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
+    init(tag: String, currencyKit: CurrencyKit.Kit, marketKit: MarketKit.Kit) {
+        self.tag = tag
         self.currencyKit = currencyKit
         self.marketKit = marketKit
 
@@ -41,11 +45,25 @@ class WalletCoinPriceService {
     private func subscribeToCoinPrices() {
         coinPriceCancellables = Set()
 
-        marketKit.coinPriceMapPublisher(coinUids: Array(coinUids), currencyCode: currencyKit.baseCurrency.code)
-                .sink { [weak self] in
-                    self?.onUpdate(coinPriceMap: $0)
-                }
-                .store(in: &coinPriceCancellables)
+        if !coinUids.isEmpty {
+            marketKit.coinPriceMapPublisher(tag: tag, coinUids: Array(coinUids), currencyCode: currencyKit.baseCurrency.code)
+                    .sink { [weak self] in
+                        self?.onUpdate(coinPriceMap: $0)
+                    }
+                    .store(in: &coinPriceCancellables)
+        }
+
+        if !feeCoinUids.isEmpty {
+            marketKit.coinPriceMapPublisher(tag: "fee:\(tag)", coinUids: Array(feeCoinUids), currencyCode: currencyKit.baseCurrency.code)
+                    .sink { _ in }
+                    .store(in: &coinPriceCancellables)
+        }
+
+        if !conversionCoinUids.isEmpty {
+            marketKit.coinPriceMapPublisher(tag: "conversion:\(tag)", coinUids: Array(conversionCoinUids), currencyCode: currencyKit.baseCurrency.code)
+                    .sink { _ in }
+                    .store(in: &coinPriceCancellables)
+        }
     }
 
     private func onUpdate(coinPriceMap: [String: CoinPrice]) {
@@ -67,12 +85,15 @@ class WalletCoinPriceService {
 
 extension WalletCoinPriceService {
 
-    func set(coinUids: Set<String>) {
-        guard self.coinUids != coinUids else {
+    func set(coinUids: Set<String>, feeCoinUids: Set<String> = Set(), conversionCoinUids: Set<String> = Set()) {
+        if self.coinUids == coinUids && self.feeCoinUids == feeCoinUids && self.conversionCoinUids == conversionCoinUids {
             return
         }
 
         self.coinUids = coinUids
+        self.feeCoinUids = feeCoinUids
+        self.conversionCoinUids = conversionCoinUids
+
         subscribeToCoinPrices()
     }
 
