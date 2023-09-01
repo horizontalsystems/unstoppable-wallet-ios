@@ -128,6 +128,8 @@ class App {
                 cryptoCompareApiKey: AppConfig.cryptoCompareApiKey,
                 defiYieldApiKey: AppConfig.defiYieldApiKey,
                 hsProviderApiKey: AppConfig.hsProviderApiKey,
+                appVersion: AppConfig.appVersion,
+                appId: AppConfig.appId,
                 minLogLevel: .error
         )
         marketKit.sync()
