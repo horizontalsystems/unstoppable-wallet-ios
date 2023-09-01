@@ -10806,7 +10806,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.2.2;
+				version = 2.2.3;
 			};
 		};
 		D3604E7128F03B0A0066C366 /* XCRemoteSwiftPackageReference "ScanQrKit.Swift" */ = {
