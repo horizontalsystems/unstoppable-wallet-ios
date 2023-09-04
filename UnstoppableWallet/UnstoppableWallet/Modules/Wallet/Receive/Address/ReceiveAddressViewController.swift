@@ -178,6 +178,7 @@ class ReceiveAddressViewController<Service: IReceiveAddressService, Factory: IRe
 }
 
 extension ReceiveAddressViewController: SectionsDataSource {
+
     private func qrRow(address: String, text: String) -> RowProtocol {
         Row<QrCodeCell>(
                 id: "qr-code",

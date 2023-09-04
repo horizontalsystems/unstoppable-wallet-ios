@@ -44,6 +44,7 @@ class QrCodeCell: UITableViewCell {
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(Self.qrCodeTopMargin)
             make.width.equalTo(qrCodeWrapperView.snp.height)
+            make.size.equalTo(Self.qrCodeSize)
         }
 
         qrCodeWrapperView.isUserInteractionEnabled = true
