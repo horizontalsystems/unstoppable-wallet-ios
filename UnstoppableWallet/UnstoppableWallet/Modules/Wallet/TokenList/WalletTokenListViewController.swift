@@ -135,7 +135,7 @@ class WalletTokenListViewController: ThemeSearchViewController {
 
     private func sync(state: WalletTokenListViewModel.State) {
         switch state {
-        case .list(let viewItems): navigationItem.searchController?.searchBar.isHidden = viewItems.isEmpty
+        case .list: navigationItem.searchController?.searchBar.isHidden = false
         default: navigationItem.searchController?.searchBar.isHidden = true
         }
         switch state {
@@ -162,6 +162,7 @@ class WalletTokenListViewController: ThemeSearchViewController {
 
         switch state {
         case .empty: emptyView.isHidden = false
+        case .list(let items): emptyView.isHidden = !items.isEmpty
         default: emptyView.isHidden = true
         }
 
