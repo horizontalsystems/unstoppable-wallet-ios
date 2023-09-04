@@ -49,6 +49,7 @@ class PrivateKeysViewController: ThemeViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
