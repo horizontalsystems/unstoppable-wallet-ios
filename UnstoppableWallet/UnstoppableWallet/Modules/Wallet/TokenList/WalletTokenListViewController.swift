@@ -162,7 +162,6 @@ class WalletTokenListViewController: ThemeSearchViewController {
 
         switch state {
         case .empty: emptyView.isHidden = false
-        case .list(let items): emptyView.isHidden = !items.isEmpty
         default: emptyView.isHidden = true
         }
 
