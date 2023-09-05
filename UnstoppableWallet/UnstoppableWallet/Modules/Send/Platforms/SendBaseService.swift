@@ -10,7 +10,7 @@ extension SendBaseService {
 
     enum Mode {
         case send
-        case donate(address: String)
+        case predefined(address: String)
     }
 
     enum AmountError: Error {

@@ -215,13 +215,15 @@ struct WalletModule {
         dataSourceChain.append(source: dataSource)
 
         let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
+
+        descriptionDataSource.viewController = viewController
         dataSource.viewController = viewController
         dataSource.onSelectWallet = { [weak viewController] wallet in
             guard let address = AppConfig.donationAddresses.first(where: { $0.key == wallet.token.blockchainType })?.value else {
                 return
             }
 
-            if let module = SendModule.controller(wallet: wallet, mode: .donate(address: address)) {
+            if let module = SendModule.controller(wallet: wallet, mode: .predefined(address: address)) {
                 viewController?.navigationController?.pushViewController(module, animated: true)
             }
         }

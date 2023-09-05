@@ -62,14 +62,14 @@ extension SendTronViewModel {
     var title: String {
         switch service.mode {
         case .send: return "send.title".localized(token.coin.code)
-        case .donate: return "donate.title".localized(token.coin.code)
+        case .predefined: return "donate.title".localized(token.coin.code)
         }
     }
 
     var showAddress: Bool {
         switch service.mode {
         case .send: return true
-        case .donate: return false
+        case .predefined: return false
         }
     }
 
