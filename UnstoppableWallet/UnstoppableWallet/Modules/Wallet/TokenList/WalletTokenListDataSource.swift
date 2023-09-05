@@ -105,16 +105,17 @@ class WalletTokenListDataSource: NSObject {
             updateIndexes.forEach {
                 if let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: $0, section: 0)),
                    let cell = tableView.cellForRow(at: originalIndexPath) as? WalletTokenCell {
-                    bind(cell: cell, index: $0, animated: true)
+                    let heightBefore = delegate?.height(tableView: tableView, before: self) ?? 0
+                    bind(cell: cell, index: $0, hideTopSeparator: heightBefore != 0 && $0 == 0, animated: true)
                 }
             }
         }
     }
 
-    private func bind(cell: WalletTokenCell, index: Int, animated: Bool = false) {
+    private func bind(cell: WalletTokenCell, index: Int, hideTopSeparator: Bool, animated: Bool = false) {
         let viewItem = viewItems[index]
 
-        cell.set(backgroundStyle: .transparent, isLast: index == viewItems.count - 1)
+        cell.set(backgroundStyle: .transparent, isFirst: hideTopSeparator, isLast: index == viewItems.count - 1)
 
         cell.bind(
                 viewItem: viewItem,
@@ -257,7 +258,8 @@ extension WalletTokenListDataSource: ISectionDataSource {
         }
 
         if let cell = cell as? WalletTokenCell {
-            bind(cell: cell, index: indexPath.row)
+            let heightBefore = delegate?.height(tableView: tableView, before: self) ?? 0
+            bind(cell: cell, index: indexPath.row, hideTopSeparator: heightBefore != 0 && indexPath.row == 0)
         }
     }
 
