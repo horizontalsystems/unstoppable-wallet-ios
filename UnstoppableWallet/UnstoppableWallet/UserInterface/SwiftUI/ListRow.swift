@@ -8,5 +8,6 @@ struct ListRow<Content: View>: View {
             content
         }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
+                .frame(minHeight: .heightCell48)
     }
 }

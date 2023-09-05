@@ -3,6 +3,7 @@ import SwiftUI
 struct SimpleActivateView: View {
     @ObservedObject var viewModel: SimpleActivateViewModel
 
+    let title: String
     let toggleText: String
     let description: String
 
@@ -19,6 +20,7 @@ struct SimpleActivateView: View {
             }
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
+                .navigationBarTitle(title)
     }
 
 }
