@@ -5,7 +5,7 @@ import StorageKit
 
 class SendTronModule {
 
-    static func viewController(token: Token, adapter: ISendTronAdapter) -> UIViewController {
+    static func viewController(token: Token, mode: SendBaseService.Mode, adapter: ISendTronAdapter) -> UIViewController {
         let tronAddressParserItem = TronAddressParser()
         let addressParserChain = AddressParserChain().append(handler: tronAddressParserItem)
 
@@ -16,7 +16,7 @@ class SendTronModule {
             blockchainType: .tron
         )
 
-        let service = SendTronService(token: token, adapter: adapter, addressService: addressService)
+        let service = SendTronService(token: token, mode: mode, adapter: adapter, addressService: addressService)
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
         let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
 

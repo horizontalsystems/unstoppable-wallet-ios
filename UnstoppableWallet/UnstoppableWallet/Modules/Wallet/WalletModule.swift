@@ -93,8 +93,14 @@ struct WalletModule {
                 emptyText: "send.no_assets".localized
         )
 
-        let viewController = WalletTokenListViewController(viewModel: viewModel)
-        viewController.onSelectWallet = { [weak viewController] wallet in
+        let dataSourceChain = DataSourceChain()
+        let dataSource = WalletTokenListDataSource(viewModel: viewModel)
+        dataSource.delegate = dataSourceChain
+        dataSourceChain.append(source: dataSource)
+
+        let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
+        dataSource.viewController = viewController
+        dataSource.onSelectWallet = { [weak viewController] wallet in
             if let module = SendModule.controller(wallet: wallet) {
                 viewController?.navigationController?.pushViewController(module, animated: true)
             }
@@ -144,9 +150,78 @@ struct WalletModule {
                 emptyText: "swap.no_assets".localized
         )
 
-        let viewController = WalletTokenListViewController(viewModel: viewModel)
-        viewController.onSelectWallet = { [weak viewController] wallet in
+        let dataSourceChain = DataSourceChain()
+        let dataSource = WalletTokenListDataSource(viewModel: viewModel)
+        dataSource.delegate = dataSourceChain
+        dataSourceChain.append(source: dataSource)
+
+        let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
+        dataSource.viewController = viewController
+        dataSource.onSelectWallet = { [weak viewController] wallet in
             if let module = SwapModule.viewController(tokenFrom: wallet.token) {
+                viewController?.navigationController?.pushViewController(module, animated: true)
+            }
+        }
+
+        return ThemeNavigationController(rootViewController: viewController)
+    }
+
+    static func donateTokenListViewController() -> UIViewController? {
+        guard let account = App.shared.accountManager.activeAccount else {
+            return nil
+        }
+
+        let coinPriceService = WalletCoinPriceService(
+                tag: "send-token-list",
+                currencyKit: App.shared.currencyKit,
+                marketKit: App.shared.marketKit
+        )
+
+        let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
+        let elementService = WalletBlockchainElementService(
+                account: account,
+                adapterService: adapterService,
+                walletManager: App.shared.walletManager
+        )
+        adapterService.delegate = elementService
+
+        let service = WalletTokenListService(
+                elementService: elementService,
+                coinPriceService: coinPriceService,
+                cacheManager: App.shared.enabledWalletCacheManager,
+                reachabilityManager: App.shared.reachabilityManager,
+                balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+                appManager: App.shared.appManager,
+                feeCoinProvider: App.shared.feeCoinProvider,
+                account: account
+        )
+        elementService.delegate = service
+        coinPriceService.delegate = service
+
+        let viewModel = WalletTokenListViewModel(
+                service: service,
+                factory: WalletTokenListViewItemFactory(),
+                title: "donate.list.title".localized,
+                emptyText: "donate.no_assets".localized
+        )
+
+        let dataSourceChain = DataSourceChain()
+        let descriptionDataSource = DonateDescriptionDataSource()
+        descriptionDataSource.delegate = dataSourceChain
+        dataSourceChain.append(source: descriptionDataSource)
+
+        let dataSource = WalletTokenListDataSource(viewModel: viewModel)
+        dataSource.delegate = dataSourceChain
+        dataSourceChain.append(source: dataSource)
+
+        let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
+        dataSource.viewController = viewController
+        dataSource.onSelectWallet = { [weak viewController] wallet in
+            guard let address = AppConfig.donationAddresses.first(where: { $0.key == wallet.token.blockchainType })?.value else {
+                return
+            }
+
+            if let module = SendModule.controller(wallet: wallet, mode: .donate(address: address)) {
                 viewController?.navigationController?.pushViewController(module, animated: true)
             }
         }

@@ -8,6 +8,8 @@ import HsExtensions
 
 class SendTronService {
     let sendToken: Token
+    let mode: SendBaseService.Mode
+
     private let disposeBag = DisposeBag()
     private let adapter: ISendTronAdapter
     private let addressService: AddressService
@@ -38,10 +40,16 @@ class SendTronService {
 
     private let activeAddressRelay = PublishRelay<Bool>()
 
-    init(token: Token, adapter: ISendTronAdapter, addressService: AddressService) {
+    init(token: Token, mode: SendBaseService.Mode, adapter: ISendTronAdapter, addressService: AddressService) {
         sendToken = token
+        self.mode = mode
         self.adapter = adapter
         self.addressService = addressService
+
+        switch mode {
+        case .donate(let address): addressService.set(text: address)
+        case .send: ()
+        }
 
         subscribe(disposeBag, addressService.stateObservable) { [weak self] in self?.sync(addressState: $0) }
     }

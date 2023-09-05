@@ -452,6 +452,13 @@ Go to Settings - > %@ and allow access to the camera.";
 "approve.confirmation.you_revoke" = "You Revoke";
 "approve.confirmation.spender" = "Spender";
 
+// Donate
+
+"donate.list.title" = "Donate with";
+"donate.title" = "Donate %@";
+"donate.no_assets" = "You have no assets to donate.";
+"donate.support.description" = "Together, with your support, we can make this app even better!";
+
 // CoinSelector
 
 "choose_coin.title" = "Choose Coins";

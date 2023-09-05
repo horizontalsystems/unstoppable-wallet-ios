@@ -1,15 +1,17 @@
+import Combine
 import UIKit
-import SectionsTableView
-import SnapKit
-import ThemeKit
+import Alamofire
 import RxSwift
 import RxCocoa
-import MarketKit
+import SnapKit
 import ComponentKit
-import Alamofire
+import MarketKit
+import SectionsTableView
+import ThemeKit
 
 class CoinToggleViewController: ThemeSearchViewController {
     private let viewModel: ICoinToggleViewModel
+    private var cancellables = Set<AnyCancellable>()
     let disposeBag = DisposeBag()
 
     let tableView = SectionsTableView(style: .grouped)
@@ -41,6 +43,10 @@ class CoinToggleViewController: ThemeSearchViewController {
         }
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.onUpdate(viewItems: $0) }
+        $filter
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
+                .store(in: &cancellables)
 
         tableView.buildSections()
 
@@ -147,10 +153,6 @@ class CoinToggleViewController: ThemeSearchViewController {
                 },
                 action: action
         )
-    }
-
-    override func onUpdate(filter: String?) {
-        viewModel.onUpdate(filter: filter ?? "")
     }
 
     private func onToggle(viewItem: CoinToggleViewModel.ViewItem, enabled: Bool) {

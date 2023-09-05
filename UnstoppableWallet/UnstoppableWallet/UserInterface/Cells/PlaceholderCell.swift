@@ -29,4 +29,12 @@ class PlaceholderCell: BaseThemeCell {
         set { placeholderView.text = newValue }
     }
 
+    @discardableResult func addPrimaryButton(style: PrimaryButton.Style, title: String, target: Any, action: Selector) -> UIButton {
+        placeholderView.addPrimaryButton(style: style, title: title, target: target, action: action)
+    }
+
+    func removeAllButtons() {
+        placeholderView.removeAllButtons()
+    }
+
 }

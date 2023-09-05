@@ -48,8 +48,7 @@ class SendEvmViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "send.title".localized(viewModel.token.coin.code)
-
+        title = viewModel.title
 
         if (navigationController?.viewControllers.count ?? 0) == 1 {
             navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
@@ -141,10 +140,10 @@ class SendEvmViewController: ThemeViewController {
 extension SendEvmViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
-        [
+        var sections = [
             Section(
                     id: "available-balance",
-                    headerState: .margin(height: .margin4),
+                    headerState: .margin(height: .margin12),
                     rows: [
                         StaticRow(
                                 cell: availableBalanceCell,
@@ -155,7 +154,7 @@ extension SendEvmViewController: SectionsDataSource {
             ),
             Section(
                     id: "amount",
-                    headerState: .margin(height: .margin8),
+                    headerState: .margin(height: .margin16),
                     rows: [
                         StaticRow(
                                 cell: amountCell,
@@ -170,39 +169,49 @@ extension SendEvmViewController: SectionsDataSource {
                                 }
                         )
                     ]
-            ),
-            Section(
-                    id: "recipient",
-                    headerState: .margin(height: .margin16),
-                    rows: [
-                        StaticRow(
-                                cell: recipientCell,
-                                id: "recipient-input",
-                                dynamicHeight: { [weak self] width in
-                                    self?.recipientCell.height(containerWidth: width) ?? 0
-                                }
-                        ),
-                        StaticRow(
-                                cell: recipientCautionCell,
-                                id: "recipient-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.recipientCautionCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
-            ),
-            Section(
-                    id: "button",
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: buttonCell,
-                                id: "button",
-                                height: PrimaryButtonCell.height
-                        )
-                    ]
             )
         ]
+
+        if viewModel.showAddress {
+            sections.append(
+                    Section(
+                            id: "recipient",
+                            headerState: .margin(height: .margin16),
+                            rows: [
+                                StaticRow(
+                                        cell: recipientCell,
+                                        id: "recipient-input",
+                                        dynamicHeight: { [weak self] width in
+                                            self?.recipientCell.height(containerWidth: width) ?? 0
+                                        }
+                                ),
+                                StaticRow(
+                                        cell: recipientCautionCell,
+                                        id: "recipient-caution",
+                                        dynamicHeight: { [weak self] width in
+                                            self?.recipientCautionCell.height(containerWidth: width) ?? 0
+                                        }
+                                )
+                            ]
+                    )
+            )
+        }
+
+        sections.append(
+                Section(
+                        id: "button",
+                        footerState: .margin(height: .margin32),
+                        rows: [
+                            StaticRow(
+                                    cell: buttonCell,
+                                    id: "button",
+                                    height: PrimaryButtonCell.height
+                            )
+                        ]
+                )
+        )
+
+        return sections
     }
 
 }

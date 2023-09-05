@@ -198,7 +198,10 @@ class MainSettingsViewController: ThemeViewController {
     }
 
     @objc private func onDonateTapped() {
-        present(ThemeNavigationController(rootViewController: DonateAddressViewController()), animated: true)
+        guard let viewController = WalletModule.donateTokenListViewController() else {
+            return
+        }
+        present(viewController, animated: true)
     }
 
     private var accountRows: [RowProtocol] {

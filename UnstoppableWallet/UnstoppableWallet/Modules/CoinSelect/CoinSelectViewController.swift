@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 import SectionsTableView
 import SnapKit
@@ -10,6 +11,7 @@ import Alamofire
 class CoinSelectViewController: ThemeSearchViewController {
     private let viewModel: CoinSelectViewModel
     private weak var delegate: ICoinSelectDelegate?
+    private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
@@ -45,6 +47,10 @@ class CoinSelectViewController: ThemeSearchViewController {
         navigationItem.searchController?.searchBar.placeholder = "placeholder.search".localized
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.handle(viewItems: $0) }
+        $filter
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.viewModel.apply(filter: $0) }
+                .store(in: &cancellables)
     }
 
     @objc func onTapClose() {
@@ -60,10 +66,6 @@ class CoinSelectViewController: ThemeSearchViewController {
         self.viewItems = viewItems
 
         tableView.reload()
-    }
-
-    override func onUpdate(filter: String?) {
-        viewModel.apply(filter: filter)
     }
 
 }
