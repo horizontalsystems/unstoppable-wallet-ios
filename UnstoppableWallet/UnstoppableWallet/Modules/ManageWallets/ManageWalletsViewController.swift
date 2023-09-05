@@ -1,15 +1,17 @@
+import Combine
 import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
-import SectionsTableView
 import ComponentKit
+import SectionsTableView
 import ThemeKit
 
 class ManageWalletsViewController: ThemeSearchViewController {
     private let viewModel: ManageWalletsViewModel
     private let restoreSettingsView: RestoreSettingsView
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let tableView = SectionsTableView(style: .grouped)
     private let notFoundPlaceholder = PlaceholderView(layoutType: .keyboard)
@@ -67,6 +69,11 @@ class ManageWalletsViewController: ThemeSearchViewController {
         subscribe(disposeBag, viewModel.showInfoSignal) { [weak self] in self?.showInfo(viewItem: $0) }
         subscribe(disposeBag, viewModel.showBirthdayHeightSignal) { [weak self] in self?.showBirthdayHeight(viewItem: $0) }
         subscribe(disposeBag, viewModel.showContractSignal) { [weak self] in self?.showContract(viewItem: $0) }
+
+        $filter
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
+                .store(in: &cancellables)
 
         tableView.buildSections()
 
@@ -130,10 +137,6 @@ class ManageWalletsViewController: ThemeSearchViewController {
         )
 
         present(viewController, animated: true)
-    }
-
-    override func onUpdate(filter: String?) {
-        viewModel.onUpdate(filter: filter ?? "")
     }
 
     private func onToggle(index: Int, enabled: Bool) {

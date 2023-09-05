@@ -10,7 +10,7 @@ protocol ITitledCautionViewModel {
 
 class SendModule {
 
-    static func controller(wallet: Wallet) -> UIViewController? {
+    static func controller(wallet: Wallet, mode: SendBaseService.Mode = .send) -> UIViewController? {
         guard let adapter = App.shared.adapterManager.adapter(for: wallet) else {
             return nil
         }
@@ -19,20 +19,20 @@ class SendModule {
 
         switch adapter {
         case let adapter as ISendBitcoinAdapter:
-            return SendModule.viewController(token: token, adapter: adapter)
+            return SendModule.viewController(token: token, mode: mode, adapter: adapter)
         case let adapter as ISendBinanceAdapter:
-            return SendModule.viewController(token: token, adapter: adapter)
+            return SendModule.viewController(token: token, mode: mode, adapter: adapter)
         case let adapter as ISendZcashAdapter:
-            return SendModule.viewController(token: token, adapter: adapter)
+            return SendModule.viewController(token: token, mode: mode, adapter: adapter)
         case let adapter as ISendEthereumAdapter:
-            return SendEvmModule.viewController(token: token, adapter: adapter)
+            return SendEvmModule.viewController(token: token, mode: mode, adapter: adapter)
         case let adapter as ISendTronAdapter:
-            return SendTronModule.viewController(token: token, adapter: adapter)
+            return SendTronModule.viewController(token: token, mode: mode, adapter: adapter)
         default: return nil
         }
     }
 
-    private static func viewController(token: Token, adapter: ISendBitcoinAdapter) -> UIViewController? {
+    private static func viewController(token: Token, mode: SendBaseService.Mode, adapter: ISendBitcoinAdapter) -> UIViewController? {
         guard let feeRateProvider = App.shared.feeRateProviderFactory.provider(blockchainType: token.blockchainType) else {
             return nil
         }
@@ -93,7 +93,8 @@ class SendModule {
                 feeRateService: feeRateService,
                 timeLockErrorService: timeLockErrorService,
                 reachabilityManager: App.shared.reachabilityManager,
-                token: token
+                token: token,
+                mode: mode
         )
 
         //Add dependencies
@@ -157,7 +158,7 @@ class SendModule {
         return viewController
     }
 
-    private static func viewController(token: Token, adapter: ISendBinanceAdapter) -> UIViewController? {
+    private static func viewController(token: Token, mode: SendBaseService.Mode, adapter: ISendBinanceAdapter) -> UIViewController? {
         let feeToken = App.shared.feeCoinProvider.feeToken(token: token) ?? token
 
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
@@ -189,7 +190,8 @@ class SendModule {
                 memoService: memoService,
                 adapter: adapter,
                 reachabilityManager: App.shared.reachabilityManager,
-                token: token
+                token: token,
+                mode: mode
         )
 
         //Add dependencies
@@ -249,7 +251,7 @@ class SendModule {
         return viewController
     }
 
-    private static func viewController(token: Token, adapter: ISendZcashAdapter) -> UIViewController? {
+    private static func viewController(token: Token, mode: SendBaseService.Mode, adapter: ISendZcashAdapter) -> UIViewController? {
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
         let coinService = CoinService(token: token, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
         let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)
@@ -279,7 +281,8 @@ class SendModule {
                 memoService: memoService,
                 adapter: adapter,
                 reachabilityManager: App.shared.reachabilityManager,
-                token: token
+                token: token,
+                mode: mode
         )
 
         //Add dependencies

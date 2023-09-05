@@ -5,6 +5,7 @@ import MarketKit
 
 protocol ISendBaseService {
     var token: Token { get }
+    var mode: SendBaseService.Mode { get }
     var state: SendBaseService.State { get }
     var stateObservable: Observable<SendBaseService.State> { get }
 }
@@ -54,6 +55,20 @@ extension SendViewModel {
 
     var token: Token {
         service.token
+    }
+
+    var title: String {
+        switch service.mode {
+        case .send: return "send.title".localized(token.coin.code)
+        case .donate: return "donate.title".localized(token.coin.code)
+        }
+    }
+
+    var showAddress: Bool {
+        switch service.mode {
+        case .send: return true
+        case .donate: return false
+        }
     }
 
     func didTapProceed() {

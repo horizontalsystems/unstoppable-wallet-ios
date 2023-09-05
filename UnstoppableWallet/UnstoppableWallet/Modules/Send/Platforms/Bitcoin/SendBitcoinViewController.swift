@@ -103,8 +103,12 @@ class SendBitcoinViewController: BaseSendViewController {
     }
 
     override func buildSections() -> [SectionProtocol] {
-        var sections = [availableBalanceSection, amountSection, recipientSection, feeSection]
-        sections.append(contentsOf: [feeCautionSection, buttonSection])
+        var sections = super.buildSections()
+        sections.append(contentsOf: [
+            feeSection,
+            feeCautionSection,
+            buttonSection
+        ])
 
         return sections
     }

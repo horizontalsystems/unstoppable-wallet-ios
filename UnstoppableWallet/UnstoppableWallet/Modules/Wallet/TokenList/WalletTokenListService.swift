@@ -71,6 +71,12 @@ class WalletTokenListService {
     }
 
     private func sync(elementState: WalletModule.ElementState, elementService: IWalletElementService) {
+        // this service used only for coins accounts, not cexes or watch accounts
+        if account.cexAccount || account.watchAccount {
+            internalState = .noAccount
+            return
+        }
+
         switch elementState {
         case .loading:
             internalState = .loading

@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import MarketKit
 
 struct AppConfig {
     static let label = "io.horizontalsystems.unstoppable"
@@ -18,10 +19,24 @@ struct AppConfig {
     static let mempoolSpaceUrl = "https://mempool.space"
     static let guidesIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/v1.2/index.json")!
     static let faqIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/unstoppable-wallet-website/master/src/faq.json")!
-    static let donationAddresses: [String: String] = [
-        "BTC": "bc1qw5tw4cnyt0vxts70ntdzxesn2zzz97t6r29pjj",
-        "ETH": "0x8a2Bec907827F496752c3F24F960B3cddc5D311B",
-        "BNB": "0x8a2Bec907827F496752c3F24F960B3cddc5D311B"
+    static let donationAddresses: [BlockchainType: String] = [
+        .bitcoin: "bc1qxt5u5swx3sk6y2923whr4tvjreza43g37czv67",
+        .bitcoinCash: "bitcoincash:qz6sy9fq66yvfl5mvpfv3v2nqw5pervvkc425nj9g0\n",
+        .ecash: "ecash:qp6t4rqd4qdlq0vlucjhucjxygn5969j3cdan6ykzr\n",
+        .litecoin: "ltc1q05f90wt464h8dft9t7q9sp9n0qeprlv30070at\n",
+        .dash: "Xp24AqFUP9nF3ycLCmTDvgezxSt3RAKP2r",
+        .zcash: "zs1jpd8u7zghtq5eg48l384y6fpy7cr0xmqehnw5mujpm8v2u7jr9a3j7luftqpthf6a8f720vdfyn",
+        .ethereum: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
+        .binanceSmartChain: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
+        .binanceChain: "bnb1m0ys77zwg74733f5wwyzhjme2xrdq4ee84smf4",
+        .polygon: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
+        .avalanche: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
+        .optimism: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
+        .arbitrumOne: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
+        .gnosis: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
+        .fantom: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
+        .tron: "TQzANCd363w5CjRWDtswm8Y5nFPAdnwekF",
+        .solana: "5gattKnvu5f1NDHBuZ6VfDXjRrJa9UcAArkZ3ys3e82F"
     ]
 
     static var appVersion: String {

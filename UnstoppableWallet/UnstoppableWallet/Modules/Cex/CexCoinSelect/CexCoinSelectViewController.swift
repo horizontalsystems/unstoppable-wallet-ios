@@ -38,6 +38,11 @@ class CexCoinSelectViewController: ThemeSearchViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapCancel))
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
+        $filter
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.viewModel.onUpdate(filter: $0) }
+                .store(in: &cancellables)
+
         if viewModel.isEmpty {
             navigationItem.searchController = nil
 
@@ -88,10 +93,6 @@ class CexCoinSelectViewController: ThemeSearchViewController {
 
     @objc func onTapCancel() {
         dismiss(animated: true)
-    }
-
-    override func onUpdate(filter: String?) {
-        viewModel.onUpdate(filter: filter)
     }
 
     private func sync(viewItems: [CexCoinSelectViewModel.ViewItem]) {

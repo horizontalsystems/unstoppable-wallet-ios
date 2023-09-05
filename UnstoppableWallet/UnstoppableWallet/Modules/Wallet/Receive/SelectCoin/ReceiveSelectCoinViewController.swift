@@ -51,6 +51,10 @@ class ReceiveSelectCoinViewController: ThemeSearchViewController {
                     self?.sync(viewItems: viewItems)
                 }
                 .store(in: &cancellables)
+        $filter
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.viewModel.apply(filter: $0) }
+                .store(in: &cancellables)
 
         sync(viewItems: viewModel.viewItems)
     }
@@ -70,10 +74,6 @@ class ReceiveSelectCoinViewController: ThemeSearchViewController {
         self.viewItems = viewItems
 
         tableView.reload()
-    }
-
-    override func onUpdate(filter: String?) {
-        viewModel.apply(filter: filter)
     }
 
 }

@@ -5,7 +5,7 @@ import StorageKit
 
 class SendEvmModule {
 
-    static func viewController(token: Token, adapter: ISendEthereumAdapter) -> UIViewController {
+    static func viewController(token: Token, mode: SendBaseService.Mode, adapter: ISendEthereumAdapter) -> UIViewController {
         let evmAddressParserItem = EvmAddressParser()
         let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, coinCode: token.coin.code, token: token)
 
@@ -26,7 +26,7 @@ class SendEvmModule {
                 blockchainType: token.blockchainType
         )
 
-        let service = SendEvmService(token: token, adapter: adapter, addressService: addressService)
+        let service = SendEvmService(token: token, mode: mode, adapter: adapter, addressService: addressService)
 
         let switchService = AmountTypeSwitchService(localStorage: StorageKit.LocalStorage.default)
         let fiatService = FiatService(switchService: switchService, currencyKit: App.shared.currencyKit, marketKit: App.shared.marketKit)

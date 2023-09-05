@@ -1,15 +1,17 @@
+import Combine
 import UIKit
-import SectionsTableView
-import SnapKit
-import ThemeKit
-import RxSwift
-import MarketKit
-import ComponentKit
 import Alamofire
+import RxSwift
+import SnapKit
+import ComponentKit
+import MarketKit
+import ThemeKit
+import SectionsTableView
 
 class TransactionsCoinSelectViewController: ThemeSearchViewController {
     private let viewModel: TransactionsCoinSelectViewModel
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let tableView = SectionsTableView(style: .grouped)
     private var viewItems = [TransactionsCoinSelectViewModel.ViewItem]()
@@ -43,6 +45,11 @@ class TransactionsCoinSelectViewController: ThemeSearchViewController {
         navigationItem.searchController?.searchBar.placeholder = "placeholder.search".localized
 
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.handle(viewItems: $0) }
+
+        $filter
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.viewModel.apply(filter: $0) }
+                .store(in: &cancellables)
     }
 
     @objc func onTapCancel() {
@@ -58,10 +65,6 @@ class TransactionsCoinSelectViewController: ThemeSearchViewController {
         self.viewItems = viewItems
 
         tableView.reload()
-    }
-
-    override func onUpdate(filter: String?) {
-        viewModel.apply(filter: filter)
     }
 
 }

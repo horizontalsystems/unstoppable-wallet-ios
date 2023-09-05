@@ -1,9 +1,13 @@
+import Combine
 import UIKit
+import HsExtensions
 import ThemeKit
 
 class ThemeSearchViewController: KeyboardAwareViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var currentFilter: String?
+
+    @PostPublished var filter: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,9 +45,6 @@ class ThemeSearchViewController: KeyboardAwareViewController {
         }
     }
 
-    func onUpdate(filter: String?) {
-    }
-
 }
 
 extension ThemeSearchViewController: UISearchControllerDelegate {
@@ -67,7 +68,8 @@ extension ThemeSearchViewController: UISearchResultsUpdating {
 
         if filter != currentFilter {
             currentFilter = filter
-            onUpdate(filter: filter)
+
+            self.filter = filter
         }
     }
 

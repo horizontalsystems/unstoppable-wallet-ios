@@ -4,11 +4,12 @@ import HUD
 import RxSwift
 
 class SendAvailableBalanceCell: UITableViewCell {
-    let cellHeight: CGFloat = 29
+    let cellHeight: CGFloat = 40
 
     private let viewModel: ISendAvailableBalanceViewModel
     private let disposeBag = DisposeBag()
 
+    private let wrapperView = UIView()
     private let availableAmountTitleLabel = UILabel()
     private let availableAmountValueLabel = UILabel()
     private let spinner = HUDActivityView.create(with: .small20)
@@ -21,7 +22,18 @@ class SendAvailableBalanceCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
 
-        contentView.addSubview(availableAmountTitleLabel)
+        contentView.addSubview(wrapperView)
+
+        wrapperView.clipsToBounds = true
+        wrapperView.cornerRadius = .cornerRadius12
+        wrapperView.layer.borderColor = UIColor.themeSteel20.cgColor
+        wrapperView.layer.borderWidth = .heightOneDp
+        wrapperView.snp.makeConstraints { maker in
+            maker.top.bottom.equalToSuperview()
+            maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
+        }
+
+        wrapperView.addSubview(availableAmountTitleLabel)
         availableAmountTitleLabel.text = "send.available_balance".localized
         availableAmountTitleLabel.font = .subhead2
         availableAmountTitleLabel.textColor = .themeGray
@@ -30,7 +42,7 @@ class SendAvailableBalanceCell: UITableViewCell {
             maker.leading.equalToSuperview().offset(CGFloat.margin16)
         }
 
-        contentView.addSubview(availableAmountValueLabel)
+        wrapperView.addSubview(availableAmountValueLabel)
         availableAmountValueLabel.font = .subhead1
 
         availableAmountValueLabel.textColor = .themeLeah
@@ -39,7 +51,7 @@ class SendAvailableBalanceCell: UITableViewCell {
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)
         }
 
-        contentView.addSubview(spinner)
+        wrapperView.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
             maker.centerY.equalToSuperview()
             maker.trailing.equalToSuperview().inset(CGFloat.margin16)

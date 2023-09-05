@@ -8,6 +8,8 @@ import HsExtensions
 
 class SendEvmService {
     let sendToken: Token
+    let mode: SendBaseService.Mode
+
     private let disposeBag = DisposeBag()
     private let adapter: ISendEthereumAdapter
     private let addressService: AddressService
@@ -29,10 +31,16 @@ class SendEvmService {
         }
     }
 
-    init(token: Token, adapter: ISendEthereumAdapter, addressService: AddressService) {
+    init(token: Token, mode: SendBaseService.Mode, adapter: ISendEthereumAdapter, addressService: AddressService) {
         sendToken = token
+        self.mode = mode
         self.adapter = adapter
         self.addressService = addressService
+
+        switch mode {
+        case .donate(let address): addressService.set(text: address)
+        case .send: ()
+        }
 
         subscribe(disposeBag, addressService.stateObservable) { [weak self] in self?.sync(addressState: $0) }
     }

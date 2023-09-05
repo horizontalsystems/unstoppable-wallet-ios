@@ -119,15 +119,15 @@ class SendBinanceViewController: BaseSendViewController {
     }
 
     override func buildSections() -> [SectionProtocol] {
-        [
-            availableBalanceSection,
-            amountSection,
-            recipientSection,
+        var sections = super.buildSections()
+        sections.append(contentsOf: [
             memoSection,
             feeSection,
             feeWarningSection,
             buttonSection
-        ]
+        ])
+
+        return sections
     }
 
 }

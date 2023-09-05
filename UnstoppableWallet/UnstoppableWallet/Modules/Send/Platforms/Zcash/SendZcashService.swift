@@ -10,6 +10,8 @@ class SendZcashService {
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).send-bitcoin-service")
 
     let token: Token
+    let mode: SendBaseService.Mode
+
     private let amountService: IAmountInputService
     private let amountCautionService: SendAmountCautionService
     private let addressService: AddressService
@@ -30,13 +32,19 @@ class SendZcashService {
         }
     }
 
-    init(amountService: IAmountInputService, amountCautionService: SendAmountCautionService, addressService: AddressService, memoService: SendMemoInputService, adapter: ISendZcashAdapter, reachabilityManager: IReachabilityManager, token: Token) {
+    init(amountService: IAmountInputService, amountCautionService: SendAmountCautionService, addressService: AddressService, memoService: SendMemoInputService, adapter: ISendZcashAdapter, reachabilityManager: IReachabilityManager, token: Token, mode: SendBaseService.Mode) {
         self.amountService = amountService
         self.amountCautionService = amountCautionService
         self.addressService = addressService
         self.memoService = memoService
         self.adapter = adapter
         self.token = token
+        self.mode = mode
+
+        switch mode {
+        case .donate(let address): addressService.set(text: address)
+        case .send: ()
+        }
 
         subscribe(MainScheduler.instance, disposeBag, reachabilityManager.reachabilityObservable) { [weak self] isReachable in
             if isReachable {

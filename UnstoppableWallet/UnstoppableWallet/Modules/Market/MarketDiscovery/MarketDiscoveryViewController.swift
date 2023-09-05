@@ -1,14 +1,16 @@
+import Combine
 import UIKit
 import RxSwift
-import ThemeKit
 import SnapKit
-import SectionsTableView
 import ComponentKit
 import HUD
+import SectionsTableView
+import ThemeKit
 
 class MarketDiscoveryViewController: ThemeSearchViewController {
     private let viewModel: MarketDiscoveryViewModel
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let headerView: MarketSingleSortHeaderView
     private let spinner = HUDActivityView.create(with: .medium24)
@@ -109,6 +111,11 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
         subscribe(disposeBag, viewModel.unfavoritedDriver) { HudHelper.instance.show(banner: .removedFromWatchlist) }
         subscribe(disposeBag, viewModel.failDriver) { HudHelper.instance.show(banner: .error(string: "alert.unknown_error".localized)) }
 
+        $filter
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
+                .store(in: &cancellables)
+
         isLoaded = true
     }
 
@@ -143,10 +150,6 @@ class MarketDiscoveryViewController: ThemeSearchViewController {
 
     @objc private func onRetry() {
         viewModel.refresh()
-    }
-
-    override func onUpdate(filter: String?) {
-        viewModel.onUpdate(filter: filter ?? "")
     }
 
     private func reloadTable() {

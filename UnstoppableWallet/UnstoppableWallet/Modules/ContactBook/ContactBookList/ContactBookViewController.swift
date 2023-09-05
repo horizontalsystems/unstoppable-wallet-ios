@@ -1,9 +1,10 @@
+import Combine
 import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
-import SectionsTableView
 import ComponentKit
+import SectionsTableView
 import ThemeKit
 
 class ContactBookViewController: ThemeSearchViewController {
@@ -12,6 +13,8 @@ class ContactBookViewController: ThemeSearchViewController {
     private let presented: Bool
 
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
+
     private let tableView = SectionsTableView(style: .grouped)
     private let manageBarButtonView = ManageBarButtonView()
     private let notFoundPlaceholder = PlaceholderView()
@@ -92,6 +95,12 @@ class ContactBookViewController: ThemeSearchViewController {
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.onUpdate(viewItems: $0) }
         subscribe(disposeBag, viewModel.emptyListDriver) { [weak self] in self?.set(emptyList: $0) }
         subscribe(disposeBag, viewModel.showBadgeDriver) { [weak self] in self?.manageBarButtonView.isBadgeHidden = !$0 }
+
+        $filter
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in self?.viewModel.onUpdate(filter: $0 ?? "") }
+                .store(in: &cancellables)
+
 
         tableView.buildSections()
 
@@ -221,10 +230,6 @@ class ContactBookViewController: ThemeSearchViewController {
         } catch {
             print("Can't remove contact \(error)")
         }
-    }
-
-    override func onUpdate(filter: String?) {
-        viewModel.onUpdate(filter: filter ?? "")
     }
 
 }
