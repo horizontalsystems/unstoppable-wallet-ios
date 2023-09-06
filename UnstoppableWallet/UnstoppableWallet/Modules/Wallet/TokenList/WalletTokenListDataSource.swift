@@ -105,8 +105,8 @@ class WalletTokenListDataSource: NSObject {
             updateIndexes.forEach {
                 if let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: $0, section: 0)),
                    let cell = tableView.cellForRow(at: originalIndexPath) as? WalletTokenCell {
-                    let heightBefore = delegate?.height(tableView: tableView, before: self) ?? 0
-                    bind(cell: cell, index: $0, hideTopSeparator: heightBefore != 0 && $0 == 0, animated: true)
+                    let hideTopSeparator = originalIndexPath.row == 0 && originalIndexPath.section != 0
+                    bind(cell: cell, index: $0, hideTopSeparator: hideTopSeparator, animated: true)
                 }
             }
         }
@@ -258,8 +258,9 @@ extension WalletTokenListDataSource: ISectionDataSource {
         }
 
         if let cell = cell as? WalletTokenCell {
-            let heightBefore = delegate?.height(tableView: tableView, before: self) ?? 0
-            bind(cell: cell, index: indexPath.row, hideTopSeparator: heightBefore != 0 && indexPath.row == 0)
+            let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
+            let hideTopSeparator = originalIndexPath.row == 0 && originalIndexPath.section != 0
+            bind(cell: cell, index: indexPath.row, hideTopSeparator: hideTopSeparator)
         }
     }
 

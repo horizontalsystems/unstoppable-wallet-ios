@@ -7,7 +7,7 @@ import HsExtensions
 import StorageKit
 import CurrencyKit
 
-class WalletTokenListService {
+class WalletTokenListService: IWalletTokenListService {
     private let elementService: IWalletElementService
     private let coinPriceService: WalletCoinPriceService
     private let cacheManager: EnabledWalletCacheManager
@@ -40,7 +40,12 @@ class WalletTokenListService {
         }
     }
 
-    @PostPublished private(set) var state: State = .loading
+    var state: State = .loading {
+        didSet {
+            stateUpdatedSubject.send(state)
+        }
+    }
+    let stateUpdatedSubject = PassthroughSubject<State, Never>()
 
     private let itemUpdatedRelay = PublishRelay<Item>()
 
@@ -71,12 +76,6 @@ class WalletTokenListService {
     }
 
     private func sync(elementState: WalletModule.ElementState, elementService: IWalletElementService) {
-        // this service used only for coins accounts, not cexes or watch accounts
-        if account.cexAccount || account.watchAccount {
-            internalState = .noAccount
-            return
-        }
-
         switch elementState {
         case .loading:
             internalState = .loading
@@ -140,6 +139,10 @@ class WalletTokenListService {
         items.first {
             $0.element == element
         }
+    }
+
+    var stateUpdatedPublisher: AnyPublisher<WalletTokenListService.State, Never> {
+        stateUpdatedSubject.eraseToAnyPublisher()
     }
 
     var balancePrimaryValueObservable: Observable<BalancePrimaryValue> {

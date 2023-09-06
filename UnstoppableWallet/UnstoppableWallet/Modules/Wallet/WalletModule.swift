@@ -167,36 +167,42 @@ struct WalletModule {
     }
 
     static func donateTokenListViewController() -> UIViewController? {
-        guard let account = App.shared.accountManager.activeAccount else {
-            return nil
+        let service: IWalletTokenListService
+        if let account = App.shared.accountManager.activeAccount, !account.watchAccount, !account.cexAccount {
+            let coinPriceService = WalletCoinPriceService(
+                    tag: "send-token-list",
+                    currencyKit: App.shared.currencyKit,
+                    marketKit: App.shared.marketKit
+            )
+
+            let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
+            let elementService = WalletBlockchainElementService(
+                    account: account,
+                    adapterService: adapterService,
+                    walletManager: App.shared.walletManager
+            )
+            adapterService.delegate = elementService
+
+            let tokenListService = WalletTokenListService(
+                    elementService: elementService,
+                    coinPriceService: coinPriceService,
+                    cacheManager: App.shared.enabledWalletCacheManager,
+                    reachabilityManager: App.shared.reachabilityManager,
+                    balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+                    appManager: App.shared.appManager,
+                    feeCoinProvider: App.shared.feeCoinProvider,
+                    account: account
+            )
+            elementService.delegate = tokenListService
+            coinPriceService.delegate = tokenListService
+
+            service = tokenListService
+        } else {
+            service = NoAccountWalletTokenListService(
+                    reachabilityManager: App.shared.reachabilityManager,
+                    balancePrimaryValueManager: App.shared.balancePrimaryValueManager
+            )
         }
-
-        let coinPriceService = WalletCoinPriceService(
-                tag: "send-token-list",
-                currencyKit: App.shared.currencyKit,
-                marketKit: App.shared.marketKit
-        )
-
-        let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
-        let elementService = WalletBlockchainElementService(
-                account: account,
-                adapterService: adapterService,
-                walletManager: App.shared.walletManager
-        )
-        adapterService.delegate = elementService
-
-        let service = WalletTokenListService(
-                elementService: elementService,
-                coinPriceService: coinPriceService,
-                cacheManager: App.shared.enabledWalletCacheManager,
-                reachabilityManager: App.shared.reachabilityManager,
-                balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
-                appManager: App.shared.appManager,
-                feeCoinProvider: App.shared.feeCoinProvider,
-                account: account
-        )
-        elementService.delegate = service
-        coinPriceService.delegate = service
 
         let viewModel = WalletTokenListViewModel(
                 service: service,
