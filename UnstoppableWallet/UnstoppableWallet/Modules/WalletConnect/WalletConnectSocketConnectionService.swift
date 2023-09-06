@@ -9,7 +9,7 @@ import RxCocoa
 import RxRelay
 
 
-class WalletConnectV2SocketConnectionService {
+class WalletConnectSocketConnectionService {
     private static let retryInterval = 10
     private let reachabilityManager: IReachabilityManager
     private let logger: Logger?
@@ -84,7 +84,7 @@ class WalletConnectV2SocketConnectionService {
 
 }
 
-extension WalletConnectV2SocketConnectionService {
+extension WalletConnectSocketConnectionService {
 
     func retry() {
         do {
@@ -116,7 +116,7 @@ extension WalletConnectV2SocketConnectionService {
 
 }
 
-extension WalletConnectV2SocketConnectionService {
+extension WalletConnectSocketConnectionService {
 
     enum Status {
         case disconnected

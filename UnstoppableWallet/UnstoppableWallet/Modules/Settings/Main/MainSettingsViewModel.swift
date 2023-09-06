@@ -155,7 +155,7 @@ extension MainSettingsViewModel {
 
     enum WalletConnectOpenMode {
         case list
-        case errorDialog(error: WalletConnectV2AppShowView.WalletConnectOpenError)
+        case errorDialog(error: WalletConnectAppShowView.WalletConnectOpenError)
     }
 
 }

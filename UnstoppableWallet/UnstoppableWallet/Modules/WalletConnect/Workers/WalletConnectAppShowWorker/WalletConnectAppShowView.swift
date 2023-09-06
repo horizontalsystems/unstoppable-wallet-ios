@@ -5,12 +5,12 @@ import ThemeKit
 import WalletConnectSign
 import ComponentKit
 
-class WalletConnectV2AppShowView {
+class WalletConnectAppShowView {
     private let disposeBag = DisposeBag()
-    private let viewModel: WalletConnectV2AppShowViewModel
+    private let viewModel: WalletConnectAppShowViewModel
     private weak var parentViewController: UIViewController?
 
-    init(viewModel: WalletConnectV2AppShowViewModel, parentViewController: UIViewController?) {
+    init(viewModel: WalletConnectAppShowViewModel, parentViewController: UIViewController?) {
         self.viewModel = viewModel
         self.parentViewController = parentViewController
 
@@ -18,26 +18,16 @@ class WalletConnectV2AppShowView {
         subscribe(disposeBag, viewModel.openWalletConnectSignal) { [weak self] in self?.openWalletConnect(mode: $0) }
     }
 
-    private func openWalletConnect(mode: WalletConnectV2AppShowViewModel.WalletConnectOpenMode) {
+    private func openWalletConnect(mode: WalletConnectAppShowViewModel.WalletConnectOpenMode) {
         switch mode {
         case .pair(let uri):
             switch WalletConnectUriHandler.uriVersion(uri: uri) {
-            case 1:
-                WalletConnectUriHandler.createServiceV1(uri: uri)
-                        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                        .observeOn(MainScheduler.instance)
-                        .subscribe(onSuccess: { [weak self] service in
-                            self?.processWalletConnectV1(service: service)
-                        }, onError: { [weak self] error in
-                            self?.handle(error: error)
-                        })
-                        .disposed(by: disposeBag)
             case 2:
-                WalletConnectUriHandler.pairV2(uri: uri)
+                WalletConnectUriHandler.pair(uri: uri)
                         .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                         .observeOn(MainScheduler.instance)
-                        .subscribe(onSuccess: { [weak self] service in
-                            self?.showV2PairedSuccessful()
+                        .subscribe(onSuccess: { [weak self] in
+                            self?.showPairedSuccessful()
                         }, onError: { [weak self] error in
                             self?.handle(error: error)
                         })
@@ -48,7 +38,7 @@ class WalletConnectV2AppShowView {
         case .proposal(let proposal):
             processWalletConnectPair(proposal: proposal)
         case .errorDialog(let error):
-            WalletConnectV2AppShowView.showWalletConnectError(error: error, sourceViewController: parentViewController)
+            WalletConnectAppShowView.showWalletConnectError(error: error, sourceViewController: parentViewController)
         }
     }
 
@@ -62,19 +52,7 @@ class WalletConnectV2AppShowView {
         }
     }
 
-
-    private func processWalletConnectV1(service: WalletConnectV1MainService) {
-        guard let viewController = WalletConnectMainModule.viewController(
-                service: service,
-                sourceViewController: parentViewController?.visibleController)
-        else {
-            return
-        }
-
-        parentViewController?.visibleController.present(viewController, animated: true)
-    }
-
-    private func showV2PairedSuccessful() {
+    private func showPairedSuccessful() {
         HudHelper.instance.show(banner: .success(string: "Pairing successful. Please wait for a new session!"))
     }
 
@@ -83,7 +61,7 @@ class WalletConnectV2AppShowView {
     }
 
     private func handle(request: WalletConnectRequest) {
-        guard let viewController = WalletConnectRequestModule.viewController(signService: App.shared.walletConnectV2SessionManager.service, request: request) else {
+        guard let viewController = WalletConnectRequestModule.viewController(signService: App.shared.walletConnectSessionManager.service, request: request) else {
             return
         }
 
@@ -92,7 +70,7 @@ class WalletConnectV2AppShowView {
 
 }
 
-extension WalletConnectV2AppShowView {
+extension WalletConnectAppShowView {
 
     static func showWalletConnectError(error: WalletConnectOpenError, sourceViewController: UIViewController?) {
         let viewController: UIViewController
@@ -158,7 +136,7 @@ extension WalletConnectV2AppShowView {
 
 }
 
-extension WalletConnectV2AppShowView: IDeepLinkHandler {
+extension WalletConnectAppShowView: IDeepLinkHandler {
 
     func handle(deepLink: DeepLinkManager.DeepLink) {
         switch deepLink {

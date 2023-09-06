@@ -2,14 +2,14 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-class WalletConnectV2MainPendingRequestViewModel {
-    private let service: WalletConnectV2MainPendingRequestService
+class WalletConnectMainPendingRequestViewModel {
+    private let service: WalletConnectMainPendingRequestService
     private let disposeBag = DisposeBag()
 
     private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
     private let showPendingRequestRelay = PublishRelay<WalletConnectRequest>()
 
-    init(service: WalletConnectV2MainPendingRequestService) {
+    init(service: WalletConnectMainPendingRequestService) {
         self.service = service
 
         subscribe(disposeBag, service.itemsObservable) { [weak self] in
@@ -22,7 +22,7 @@ class WalletConnectV2MainPendingRequestViewModel {
         sync(items: service.items)
     }
 
-    private func sync(items: [WalletConnectV2MainPendingRequestService.Item]) {
+    private func sync(items: [WalletConnectMainPendingRequestService.Item]) {
         let viewItems = items.map { request in
             ViewItem(
                     id: request.id,
@@ -38,7 +38,7 @@ class WalletConnectV2MainPendingRequestViewModel {
 
 }
 
-extension WalletConnectV2MainPendingRequestViewModel {
+extension WalletConnectMainPendingRequestViewModel {
 
     var viewItemsDriver: Driver<[ViewItem]> {
         viewItemsRelay.asDriver()
@@ -58,7 +58,7 @@ extension WalletConnectV2MainPendingRequestViewModel {
 
 }
 
-extension WalletConnectV2MainPendingRequestViewModel {
+extension WalletConnectMainPendingRequestViewModel {
 
     struct ViewItem {
         let id: Int
@@ -70,7 +70,7 @@ extension WalletConnectV2MainPendingRequestViewModel {
 
 }
 
-extension WalletConnectV2MainPendingRequestService.RequestMethod {
+extension WalletConnectMainPendingRequestService.RequestMethod {
 
     var title: String {
         switch self {

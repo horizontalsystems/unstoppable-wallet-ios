@@ -22,10 +22,10 @@ struct WalletConnectRequestModule {
     static func viewController(signService: IWalletConnectSignService, request: WalletConnectRequest) -> UIViewController? {
         switch request {
         case let request as WalletConnectSignMessageRequest:
-            let service = App.shared.walletConnectV2SessionManager.service
+            let service = App.shared.walletConnectSessionManager.service
             return WalletConnectSignMessageRequestModule.viewController(signService: service, request: request)
         case let request as WalletConnectSendEthereumTransactionRequest:
-            let service = App.shared.walletConnectV2SessionManager.service
+            let service = App.shared.walletConnectSessionManager.service
             return WalletConnectSendEthereumTransactionRequestModule.viewController(signService: service, request: request)
         default: return nil
         }

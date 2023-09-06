@@ -1,10 +1,10 @@
 import RxSwift
 import RxRelay
 
-class WalletConnectV2PendingRequestsService {
+class WalletConnectPendingRequestsService {
     private let disposeBag = DisposeBag()
 
-    private let sessionManager: WalletConnectV2SessionManager
+    private let sessionManager: WalletConnectSessionManager
     private let accountManager: AccountManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let signService: IWalletConnectSignService
@@ -20,7 +20,7 @@ class WalletConnectV2PendingRequestsService {
 
     private let showPendingRequestRelay = PublishRelay<WalletConnectRequest>()
 
-    init(sessionManager: WalletConnectV2SessionManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, signService: IWalletConnectSignService) {
+    init(sessionManager: WalletConnectSessionManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, signService: IWalletConnectSignService) {
         self.sessionManager = sessionManager
         self.accountManager = accountManager
         self.evmBlockchainManager = evmBlockchainManager
@@ -82,7 +82,7 @@ class WalletConnectV2PendingRequestsService {
 
 }
 
-extension WalletConnectV2PendingRequestsService {
+extension WalletConnectPendingRequestsService {
 
     func blockchain(chainId: String?) -> String? {
         guard let chainId = chainId,
@@ -120,7 +120,7 @@ extension WalletConnectV2PendingRequestsService {
 
         let chain = WalletConnectRequest.Chain(id: chainId, chainName: blockchain.name, address: address.eip55)
 
-        guard let wcRequest = try? WalletConnectV2RequestMapper.map(dAppName: session?.peer.name, chain: chain, request: request) else {
+        guard let wcRequest = try? WalletConnectRequestMapper.map(dAppName: session?.peer.name, chain: chain, request: request) else {
             return
         }
 
@@ -137,7 +137,7 @@ extension WalletConnectV2PendingRequestsService {
 
 }
 
-extension WalletConnectV2PendingRequestsService {
+extension WalletConnectPendingRequestsService {
 
     struct RequestItem {
         let id: Int

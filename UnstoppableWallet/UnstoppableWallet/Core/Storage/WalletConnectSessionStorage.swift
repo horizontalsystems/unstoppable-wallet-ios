@@ -11,27 +11,29 @@ class WalletConnectSessionStorage {
 
 extension WalletConnectSessionStorage {
 
-    func sessions(accountId: String) -> [WalletConnectSession] {
+    func sessions(accountId: String?) -> [WalletConnectSession] {
         try! dbPool.read { db in
-            try WalletConnectSession.filter(WalletConnectSession.Columns.accountId == accountId).fetchAll(db)
+            var request = WalletConnectSession.all()
+            if let accountId = accountId {
+                request = request.filter(WalletConnectSession.Columns.accountId == accountId)
+            }
+            return try request.fetchAll(db)
         }
     }
 
-    func session(peerId: String, accountId: String) -> WalletConnectSession? {
-        try! dbPool.read { db in
-            try WalletConnectSession.filter(WalletConnectSession.Columns.peerId == peerId && WalletConnectSession.Columns.accountId == accountId).fetchOne(db)
-        }
-    }
-
-    func save(session: WalletConnectSession) {
+    func save(sessions: [WalletConnectSession]) {
         _ = try! dbPool.write { db in
-            try session.insert(db)
+            for session in sessions {
+                try session.insert(db)
+            }
         }
     }
 
-    func deleteSession(peerId: String) {
+    func deleteSession(topics: [String]) {
         _ = try! dbPool.write { db in
-            try WalletConnectSession.filter(WalletConnectSession.Columns.peerId == peerId).deleteAll(db)
+            for topic in topics {
+                try WalletConnectSession.filter(WalletConnectSession.Columns.topic == topic).deleteAll(db)
+            }
         }
     }
 

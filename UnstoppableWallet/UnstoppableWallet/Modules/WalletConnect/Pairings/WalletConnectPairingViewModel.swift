@@ -2,15 +2,15 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-class WalletConnectV2PairingViewModel {
-    private let service: WalletConnectV2PairingService
+class WalletConnectPairingViewModel {
+    private let service: WalletConnectPairingService
     private let disposeBag = DisposeBag()
 
     private let viewItemRelay = BehaviorRelay<[ViewItem]>(value: [])
     private let showDisconnectingRelay = PublishRelay<()>()
     private let showDisconnectedRelay = PublishRelay<Bool>()
 
-    init(service: WalletConnectV2PairingService) {
+    init(service: WalletConnectPairingService) {
         self.service = service
 
         subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
@@ -19,7 +19,7 @@ class WalletConnectV2PairingViewModel {
         sync(items: service.items)
     }
 
-    private func sync(items: [WalletConnectV2PairingService.Item]) {
+    private func sync(items: [WalletConnectPairingService.Item]) {
         let viewItems = items.map { item in
             ViewItem(topic: item.topic, title: item.appName, description: item.appUrl, imageUrl: item.appIcons.first)
         }
@@ -27,7 +27,7 @@ class WalletConnectV2PairingViewModel {
         viewItemRelay.accept(viewItems)
     }
 
-    private func sync(pairingKillingState: WalletConnectV2PairingService.PairingKillingState) {
+    private func sync(pairingKillingState: WalletConnectPairingService.PairingKillingState) {
         switch pairingKillingState {
         case .processing: showDisconnectingRelay.accept(())
         case .completed: showDisconnectedRelay.accept(true)
@@ -37,7 +37,7 @@ class WalletConnectV2PairingViewModel {
 
 }
 
-extension WalletConnectV2PairingViewModel {
+extension WalletConnectPairingViewModel {
 
     var viewItemsDriver: Driver<[ViewItem]> {
         viewItemRelay.asDriver()
@@ -62,7 +62,7 @@ extension WalletConnectV2PairingViewModel {
 
 }
 
-extension WalletConnectV2PairingViewModel {
+extension WalletConnectPairingViewModel {
 
     struct ViewItem {
         let topic: String

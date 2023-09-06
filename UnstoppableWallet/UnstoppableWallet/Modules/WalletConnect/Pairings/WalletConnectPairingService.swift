@@ -2,10 +2,10 @@ import RxSwift
 import RxRelay
 import WalletConnectPairing
 
-class WalletConnectV2PairingService {
+class WalletConnectPairingService {
     private var disposeBag = DisposeBag()
 
-    private let sessionManager: WalletConnectV2SessionManager
+    private let sessionManager: WalletConnectSessionManager
 
     private let itemsRelay = PublishRelay<[Item]>()
     private(set) var items = [Item]() {
@@ -16,7 +16,7 @@ class WalletConnectV2PairingService {
 
     private let pairingKillingRelay = PublishRelay<PairingKillingState>()
 
-    init(sessionManager: WalletConnectV2SessionManager) {
+    init(sessionManager: WalletConnectSessionManager) {
         self.sessionManager = sessionManager
 
         subscribe(disposeBag, sessionManager.pairingsObservable) { [weak self] _ in self?.syncPairings() }
@@ -37,7 +37,7 @@ class WalletConnectV2PairingService {
 
 }
 
-extension WalletConnectV2PairingService {
+extension WalletConnectPairingService {
 
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
@@ -82,7 +82,7 @@ extension WalletConnectV2PairingService {
 
 }
 
-extension WalletConnectV2PairingService {
+extension WalletConnectPairingService {
 
     enum PairingKillingState {
         case processing

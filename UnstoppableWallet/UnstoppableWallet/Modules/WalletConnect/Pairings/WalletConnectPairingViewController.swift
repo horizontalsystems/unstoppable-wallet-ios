@@ -4,16 +4,16 @@ import ThemeKit
 import RxSwift
 import ComponentKit
 
-class WalletConnectV2PairingViewController: ThemeViewController {
-    private let viewModel: WalletConnectV2PairingViewModel
+class WalletConnectPairingViewController: ThemeViewController {
+    private let viewModel: WalletConnectPairingViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
     private var isLoaded = false
 
-    private var viewItems = [WalletConnectV2PairingViewModel.ViewItem]()
+    private var viewItems = [WalletConnectPairingViewModel.ViewItem]()
 
-    init(viewModel: WalletConnectV2PairingViewModel) {
+    init(viewModel: WalletConnectPairingViewModel) {
         self.viewModel = viewModel
 
         super.init()
@@ -55,7 +55,7 @@ class WalletConnectV2PairingViewController: ThemeViewController {
         isLoaded = true
     }
 
-    private func sync(items: [WalletConnectV2PairingViewModel.ViewItem]) {
+    private func sync(items: [WalletConnectPairingViewModel.ViewItem]) {
         viewItems = items
         guard !viewItems.isEmpty else {
             navigationController?.popViewController(animated: true)
@@ -74,7 +74,7 @@ class WalletConnectV2PairingViewController: ThemeViewController {
         tableView.reload()
     }
 
-    private func cell(tableView: UITableView, viewItem: WalletConnectV2PairingViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: (() -> ())? = nil) -> RowProtocol {
+    private func cell(tableView: UITableView, viewItem: WalletConnectPairingViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: (() -> ())? = nil) -> RowProtocol {
         let elements: [CellBuilderNew.CellElement] = [
             .image32 { component in
                 component.imageView.layer.cornerCurve = .continuous
@@ -117,7 +117,7 @@ class WalletConnectV2PairingViewController: ThemeViewController {
         )
     }
 
-    private func section(viewItems: [WalletConnectV2PairingViewModel.ViewItem]) -> SectionProtocol {
+    private func section(viewItems: [WalletConnectPairingViewModel.ViewItem]) -> SectionProtocol {
         Section(
                 id: "section-list",
                 headerState: .margin(height: .margin12),
@@ -162,7 +162,7 @@ class WalletConnectV2PairingViewController: ThemeViewController {
 
 }
 
-extension WalletConnectV2PairingViewController: SectionsDataSource {
+extension WalletConnectPairingViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         var sections = [section(viewItems: viewItems)]

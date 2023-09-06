@@ -5,15 +5,14 @@ import WalletConnectSign
 import HsToolKit
 import EvmKit
 
-class WalletConnectV2MainService {
+class WalletConnectMainService {
     private let disposeBag = DisposeBag()
 
-    private let service: WalletConnectV2Service
+    private let service: WalletConnectService
     private let manager: WalletConnectManager
     private let reachabilityManager: IReachabilityManager
     private let accountManager: AccountManager
     private let evmBlockchainManager: EvmBlockchainManager
-    private let evmChainParser: WalletConnectEvmChainParser
 
     private var proposal: WalletConnectSign.Session.Proposal?
     private(set) var session: WalletConnectSign.Session? {
@@ -40,7 +39,7 @@ class WalletConnectV2MainService {
         }
     }
 
-    init(session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, service: WalletConnectV2Service, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, evmChainParser: WalletConnectEvmChainParser) {
+    init(session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, service: WalletConnectService, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager) {
         self.session = session
         self.proposal = proposal
         self.service = service
@@ -48,7 +47,6 @@ class WalletConnectV2MainService {
         self.reachabilityManager = reachabilityManager
         self.accountManager = accountManager
         self.evmBlockchainManager = evmBlockchainManager
-        self.evmChainParser = evmChainParser
 
         subscribe(disposeBag, service.receiveProposalObservable) { [weak self] in
             self?.proposal = $0
@@ -193,7 +191,7 @@ class WalletConnectV2MainService {
 
 }
 
-extension WalletConnectV2MainService: IWalletConnectMainService {
+extension WalletConnectMainService {
 
     var activeAccountName: String? {
         accountManager.activeAccount?.name
@@ -202,7 +200,6 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
     var appMetaItem: WalletConnectMainModule.AppMetaItem? {
         if let session = session {
             return WalletConnectMainModule.AppMetaItem(
-                    multiChain: true,
                     name: session.peer.name,
                     url: session.peer.url,
                     description: session.peer.description,
@@ -211,7 +208,6 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
         }
         if let proposal = proposal {
             return WalletConnectMainModule.AppMetaItem(
-                    multiChain: true,
                     name: proposal.proposer.name,
                     url: proposal.proposer.url,
                     description: proposal.proposer.description,
@@ -277,7 +273,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
     }
 
     func select(chainId: Int) {
-        // not required for V2
+        // not required for V2 // todo: Refactor and remove
     }
 
     func toggle(chainId: Int) {
@@ -389,7 +385,7 @@ extension WalletConnectV2MainService: IWalletConnectMainService {
 
 }
 
-extension WalletConnectV2MainService {
+extension WalletConnectMainService {
 
     struct RejectionReason: Reason {
         let code: Int

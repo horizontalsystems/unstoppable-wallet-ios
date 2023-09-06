@@ -5,11 +5,11 @@ import WalletConnectSign
 import WalletConnectPairing
 import MarketKit
 
-class WalletConnectV2SessionManager {
+class WalletConnectSessionManager {
     private let disposeBag = DisposeBag()
 
-    let service: WalletConnectV2Service
-    private let storage: WalletConnectV2SessionStorage
+    let service: WalletConnectService
+    private let storage: WalletConnectSessionStorage
     private let accountManager: AccountManager
     private let currentDateProvider: CurrentDateProvider
     private let evmBlockchainManager: EvmBlockchainManager
@@ -19,7 +19,7 @@ class WalletConnectV2SessionManager {
     private let pairingsRelay = BehaviorRelay<[WalletConnectPairing.Pairing]>(value: [])
     private let sessionRequestReceivedRelay = PublishRelay<WalletConnectRequest>()
 
-    init(service: WalletConnectV2Service, storage: WalletConnectV2SessionStorage, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, currentDateProvider: CurrentDateProvider) {
+    init(service: WalletConnectService, storage: WalletConnectSessionStorage, accountManager: AccountManager, evmBlockchainManager: EvmBlockchainManager, currentDateProvider: CurrentDateProvider) {
         self.service = service
         self.storage = storage
         self.accountManager = accountManager
@@ -50,7 +50,7 @@ class WalletConnectV2SessionManager {
     }
 
     private func handleDeleted(account: Account) {
-        storage.deleteSessionsV2(accountId: account.id)
+        storage.deleteSessions(accountId: account.id)
         syncSessions()
         syncPendingRequest()
     }
@@ -66,7 +66,7 @@ class WalletConnectV2SessionManager {
         }
 
         let currentSessions = allSessions
-        let allDbSessions = storage.sessionsV2(accountId: nil)
+        let allDbSessions = storage.sessions(accountId: nil)
         let dbTopics = allDbSessions.map {
             $0.topic
         }
@@ -81,9 +81,9 @@ class WalletConnectV2SessionManager {
         }
 
         storage.save(sessions: newSessions.map {
-            WalletConnectV2Session(accountId: accountId, topic: $0.topic)
+            WalletConnectSession(accountId: accountId, topic: $0.topic)
         })
-        storage.deleteSessionV2(topics: deletedTopics)
+        storage.deleteSession(topics: deletedTopics)
 
         sessionsRelay.accept(sessions(accountId: accountId, sessions: currentSessions))
         activePendingRequestsRelay.accept(activePendingRequests)
@@ -93,7 +93,7 @@ class WalletConnectV2SessionManager {
         guard let account = accountManager.activeAccount else {
             return
         }
-        let activeSessions = storage.sessionsV2(accountId: account.id)
+        let activeSessions = storage.sessions(accountId: account.id)
 
         guard let chainId = Int(request.chainId.reference),
               let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
@@ -107,7 +107,7 @@ class WalletConnectV2SessionManager {
         let chain = WalletConnectRequest.Chain(id: chainId, chainName: blockchain.name, address: address.eip55)
         guard activeSessions.first(where: { session in session.topic == request.topic }) != nil,
               let session = allSessions.first(where: { session in session.topic == request.topic }),
-              let request = try? WalletConnectV2RequestMapper.map(dAppName: session.peer.name, chain: chain, request: request) else {
+              let request = try? WalletConnectRequestMapper.map(dAppName: session.peer.name, chain: chain, request: request) else {
             return
         }
 
@@ -116,7 +116,7 @@ class WalletConnectV2SessionManager {
 
     private func sessions(accountId: String, sessions: [WalletConnectSign.Session]?) -> [WalletConnectSign.Session] {
         let sessions = sessions ?? allSessions
-        let dbSessions = storage.sessionsV2(accountId: accountId)
+        let dbSessions = storage.sessions(accountId: accountId)
 
         let accountSessions = sessions.filter { session in
             dbSessions.contains {
@@ -147,7 +147,7 @@ class WalletConnectV2SessionManager {
 
     private func requests(accountId: String? = nil) -> [WalletConnectSign.Request] {
         let allRequests = service.pendingRequests
-        let dbSessions = storage.sessionsV2(accountId: accountId)
+        let dbSessions = storage.sessions(accountId: accountId)
 
         return allRequests.filter { request in
             dbSessions.contains { session in
@@ -158,7 +158,7 @@ class WalletConnectV2SessionManager {
 
 }
 
-extension WalletConnectV2SessionManager {
+extension WalletConnectSessionManager {
 
     public var sessions: [WalletConnectSign.Session] {
         guard let accountId = accountManager.activeAccount?.id else {
@@ -179,7 +179,7 @@ extension WalletConnectV2SessionManager {
     }
 
     public func deleteSession(topic: String) {
-        service.disconnect(topic: topic, reason: WalletConnectV2MainService.RejectionReason(code: 1, message: "Session Killed by User"))
+        service.disconnect(topic: topic, reason: WalletConnectMainService.RejectionReason(code: 1, message: "Session Killed by User"))
     }
 
     public var activePendingRequests: [WalletConnectSign.Request] {

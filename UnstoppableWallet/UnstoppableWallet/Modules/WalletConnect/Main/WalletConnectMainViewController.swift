@@ -15,9 +15,7 @@ class WalletConnectMainViewController: ThemeViewController {
 
     private weak var sourceViewController: UIViewController?
 
-    var requestView: IWalletConnectMainRequestView?
-
-    var pendingRequestViewModel: WalletConnectV2MainPendingRequestViewModel? {
+    var pendingRequestViewModel: WalletConnectMainPendingRequestViewModel? {
         didSet {
             pendingRequestDisposeBag = DisposeBag()
             if let viewModel = pendingRequestViewModel {
@@ -30,7 +28,7 @@ class WalletConnectMainViewController: ThemeViewController {
             }
         }
     }
-    private var pendingRequestViewItems = [WalletConnectV2MainPendingRequestViewModel.ViewItem]()
+    private var pendingRequestViewItems = [WalletConnectMainPendingRequestViewModel.ViewItem]()
 
     private let spinner = HUDActivityView.create(with: .large48)
     private let buttonsHolder = BottomGradientHolder()
@@ -222,9 +220,9 @@ class WalletConnectMainViewController: ThemeViewController {
         }
     }
 
-    // V2 pending requests section
+    // pending requests section
 
-    private func sync(pendingRequestViewItems: [WalletConnectV2MainPendingRequestViewModel.ViewItem]) {
+    private func sync(pendingRequestViewItems: [WalletConnectMainPendingRequestViewModel.ViewItem]) {
         self.pendingRequestViewItems = pendingRequestViewItems
 
         tableView.reload()
@@ -234,12 +232,12 @@ class WalletConnectMainViewController: ThemeViewController {
         pendingRequestViewModel?.onSelect(requestId: requestId)
     }
 
-    private func onTapReject(pendingRequestViewItem: WalletConnectV2MainPendingRequestViewModel.ViewItem) {
+    private func onTapReject(pendingRequestViewItem: WalletConnectMainPendingRequestViewModel.ViewItem) {
         pendingRequestViewModel?.onReject(id: pendingRequestViewItem.id)
     }
 
     private func showPending(request: WalletConnectRequest) {
-        guard let viewController = WalletConnectRequestModule.viewController(signService: App.shared.walletConnectV2SessionManager.service, request: request) else {
+        guard let viewController = WalletConnectRequestModule.viewController(signService: App.shared.walletConnectSessionManager.service, request: request) else {
             return
         }
 
@@ -251,7 +249,7 @@ class WalletConnectMainViewController: ThemeViewController {
 
 extension WalletConnectMainViewController: SectionsDataSource {
 
-    private func pendingRequestCell(viewItem: WalletConnectV2MainPendingRequestViewModel.ViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
+    private func pendingRequestCell(viewItem: WalletConnectMainPendingRequestViewModel.ViewItem, isFirst: Bool, isLast: Bool) -> RowProtocol {
         var elements: [CellBuilderNew.CellElement] = [
             .vStackCentered([
                 .text { component in

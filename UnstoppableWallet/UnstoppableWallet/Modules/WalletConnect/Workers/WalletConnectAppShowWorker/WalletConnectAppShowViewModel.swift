@@ -3,14 +3,14 @@ import RxSwift
 import RxCocoa
 import WalletConnectSign
 
-class WalletConnectV2AppShowViewModel {
+class WalletConnectAppShowViewModel {
     private let disposeBag = DisposeBag()
-    private let service: WalletConnectV2AppShowService
+    private let service: WalletConnectAppShowService
 
     private let showSessionRequestRelay = PublishRelay<WalletConnectRequest>()
     private let openWalletConnectRelay = PublishRelay<WalletConnectOpenMode>()
 
-    init(service: WalletConnectV2AppShowService) {
+    init(service: WalletConnectAppShowService) {
         self.service = service
 
         subscribe(disposeBag, service.showSessionProposalObservable) { [weak self] in self?.showSession(proposal: $0) }
@@ -41,7 +41,7 @@ class WalletConnectV2AppShowViewModel {
 
 }
 
-extension WalletConnectV2AppShowViewModel {
+extension WalletConnectAppShowViewModel {
 
     var openWalletConnectSignal: Signal<WalletConnectOpenMode> {
         openWalletConnectRelay.asSignal()
@@ -54,12 +54,12 @@ extension WalletConnectV2AppShowViewModel {
 }
 
 
-extension WalletConnectV2AppShowViewModel {
+extension WalletConnectAppShowViewModel {
 
     enum WalletConnectOpenMode {
         case pair(url: String)
         case proposal(WalletConnectSign.Session.Proposal)
-        case errorDialog(error: WalletConnectV2AppShowView.WalletConnectOpenError)
+        case errorDialog(error: WalletConnectAppShowView.WalletConnectOpenError)
     }
 
 }

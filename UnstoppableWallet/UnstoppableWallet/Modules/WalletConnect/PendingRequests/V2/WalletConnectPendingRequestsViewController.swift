@@ -4,16 +4,16 @@ import ThemeKit
 import RxSwift
 import ComponentKit
 
-class WalletConnectV2PendingRequestsViewController: ThemeViewController {
-    private let viewModel: WalletConnectV2PendingRequestsViewModel
+class WalletConnectPendingRequestsViewController: ThemeViewController {
+    private let viewModel: WalletConnectPendingRequestsViewModel
     private let disposeBag = DisposeBag()
 
     private let tableView = SectionsTableView(style: .grouped)
     private var isLoaded = false
 
-    private var viewItems = [WalletConnectV2PendingRequestsViewModel.SectionViewItem]()
+    private var viewItems = [WalletConnectPendingRequestsViewModel.SectionViewItem]()
 
-    init(viewModel: WalletConnectV2PendingRequestsViewModel) {
+    init(viewModel: WalletConnectPendingRequestsViewModel) {
         self.viewModel = viewModel
 
         super.init()
@@ -48,7 +48,7 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
         isLoaded = true
     }
 
-    private func sync(items: [WalletConnectV2PendingRequestsViewModel.SectionViewItem]) {
+    private func sync(items: [WalletConnectPendingRequestsViewModel.SectionViewItem]) {
         viewItems = items
         guard !viewItems.isEmpty else {
             navigationController?.popViewController(animated: true)
@@ -76,7 +76,7 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
     }
 
     private func showPending(request: WalletConnectRequest) {
-        guard let viewController = WalletConnectRequestModule.viewController(signService: App.shared.walletConnectV2SessionManager.service, request: request) else {
+        guard let viewController = WalletConnectRequestModule.viewController(signService: App.shared.walletConnectSessionManager.service, request: request) else {
             return
         }
 
@@ -114,7 +114,7 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
         )
     }
 
-    private func section(sectionViewItem: WalletConnectV2PendingRequestsViewModel.SectionViewItem) -> SectionProtocol {
+    private func section(sectionViewItem: WalletConnectPendingRequestsViewModel.SectionViewItem) -> SectionProtocol {
         Section(id: "section-\(sectionViewItem.title)",
                 headerState: .margin(height: .margin12),
                 footerState: sectionViewItem.selected ? .margin(height: .margin32) : tableView.sectionFooter(text: "wallet_connect.pending_requests.nonactive_footer".localized),
@@ -182,13 +182,13 @@ class WalletConnectV2PendingRequestsViewController: ThemeViewController {
         )
     }
 
-    private func onTapReject(viewItem: WalletConnectV2PendingRequestsViewModel.ViewItem) {
+    private func onTapReject(viewItem: WalletConnectPendingRequestsViewModel.ViewItem) {
         viewModel.onReject(id: viewItem.id)
     }
 
 }
 
-extension WalletConnectV2PendingRequestsViewController: SectionsDataSource {
+extension WalletConnectPendingRequestsViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         viewItems.map { section(sectionViewItem: $0) }
