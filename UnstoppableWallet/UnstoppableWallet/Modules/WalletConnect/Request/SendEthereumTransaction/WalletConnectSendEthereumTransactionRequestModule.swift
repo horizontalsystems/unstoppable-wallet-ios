@@ -4,14 +4,6 @@ import MarketKit
 
 struct WalletConnectSendEthereumTransactionRequestModule {
 
-    static func viewController(signService: WalletConnectV1MainService, requestId: Int) -> UIViewController? {
-        guard let request = signService.pendingRequest(requestId: requestId) as? WalletConnectSendEthereumTransactionRequest else {
-            return nil
-        }
-
-        return viewController(signService: signService, request: request)
-    }
-
     static func viewController(signService: IWalletConnectSignService, request: WalletConnectSendEthereumTransactionRequest) -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount,
               let evmKitWrapper = App.shared.walletConnectManager.evmKitWrapper(chainId: request.chain.id, account: account) else {

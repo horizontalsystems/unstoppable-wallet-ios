@@ -21,15 +21,13 @@ class MainSettingsService {
     private let systemInfoManager: SystemInfoManager
     private let currencyKit: CurrencyKit.Kit
     private let walletConnectSessionManager: WalletConnectSessionManager
-    private let walletConnectV2SessionManager: WalletConnectV2SessionManager
     private let subscriptionManager: SubscriptionManager
 
     private let iCloudAvailableErrorRelay = BehaviorRelay<Bool>(value: false)
     private let noWalletRequiredActionsRelay = BehaviorRelay<Bool>(value: false)
 
     init(backupManager: BackupManager, cloudAccountBackupManager: CloudAccountBackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager, pinKit: PinKit.Kit, termsManager: TermsManager,
-         systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit,
-         walletConnectSessionManager: WalletConnectSessionManager, walletConnectV2SessionManager: WalletConnectV2SessionManager, subscriptionManager: SubscriptionManager) {
+         systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit, walletConnectSessionManager: WalletConnectSessionManager, subscriptionManager: SubscriptionManager) {
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.backupManager = backupManager
         self.accountRestoreWarningManager = accountRestoreWarningManager
@@ -40,7 +38,6 @@ class MainSettingsService {
         self.systemInfoManager = systemInfoManager
         self.currencyKit = currencyKit
         self.walletConnectSessionManager = walletConnectSessionManager
-        self.walletConnectV2SessionManager = walletConnectV2SessionManager
         self.subscriptionManager = subscriptionManager
 
         subscribe(disposeBag, contactBookManager.iCloudErrorObservable) { [weak self] error in
@@ -98,21 +95,19 @@ extension MainSettingsService {
     }
 
     var walletConnectSessionCount: Int {
-        walletConnectSessionManager.sessions.count + walletConnectV2SessionManager.sessions.count
+        walletConnectSessionManager.sessions.count
     }
 
     var walletConnectSessionCountObservable: Observable<Int> {
-        Observable.combineLatest(walletConnectSessionManager.sessionsObservable, walletConnectV2SessionManager.sessionsObservable).map {
-            $0.count + $1.count
-        }
+        walletConnectSessionManager.sessionsObservable.map { $0.count }
     }
 
     var walletConnectPendingRequestCount: Int {
-        walletConnectV2SessionManager.activePendingRequests.count
+        walletConnectSessionManager.activePendingRequests.count
     }
 
     var walletConnectPendingRequestCountObservable: Observable<Int> {
-        walletConnectV2SessionManager.activePendingRequestsObservable.map { $0.count }
+        walletConnectSessionManager.activePendingRequestsObservable.map { $0.count }
     }
 
 

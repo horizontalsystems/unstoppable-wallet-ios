@@ -5,85 +5,36 @@ import WalletConnectSign
 import WalletConnectUtils
 import MarketKit
 
-protocol IWalletConnectMainService {
-    var activeAccountName: String? { get }
-    var appMetaItem: WalletConnectMainModule.AppMetaItem? { get }
-    var allowedBlockchains: [WalletConnectMainModule.BlockchainItem] { get }
-    var allowedBlockchainsObservable: Observable<[WalletConnectMainModule.BlockchainItem]> { get }
-    var hint: String? { get }
-    var state: WalletConnectMainModule.State { get }
-    var connectionState: WalletConnectMainModule.ConnectionState { get }
-
-    var stateObservable: Observable<WalletConnectMainModule.State> { get }
-    var connectionStateObservable: Observable<WalletConnectMainModule.ConnectionState> { get }
-    var proposalTimeOutAttentionObservable: Observable<()> { get }
-    var errorObservable: Observable<Error> { get }
-
-    func select(chainId: Int)
-    func toggle(chainId: Int)
-    func reconnect()
-    func approveSession()
-    func rejectSession()
-    func killSession()
-}
-
-protocol IWalletConnectMainRequestView {
-
-}
-
 struct WalletConnectMainModule {
 
-    static func viewController(session: WalletConnectSession, sourceViewController: UIViewController?) -> UIViewController? {
-        let service = try? WalletConnectV1MainService(
-                session: session,
-                manager: App.shared.walletConnectManager,
-                sessionManager: App.shared.walletConnectSessionManager,
-                reachabilityManager: App.shared.reachabilityManager,
-                accountManager: App.shared.accountManager,
-                evmBlockchainManager: App.shared.evmBlockchainManager
-        )
-
-        return service.flatMap { viewController(service: $0, sourceViewController: sourceViewController) }
-    }
-
     static func viewController(session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, sourceViewController: UIViewController?) -> UIViewController? {
-        let service = App.shared.walletConnectV2SessionManager.service
+        let service = App.shared.walletConnectSessionManager.service
 
-        let mainService = WalletConnectV2MainService(
+        let mainService = WalletConnectMainService(
                 session: session,
                 proposal: proposal,
                 service: service,
                 manager: App.shared.walletConnectManager,
                 reachabilityManager: App.shared.reachabilityManager,
                 accountManager: App.shared.accountManager,
-                evmBlockchainManager: App.shared.evmBlockchainManager,
-                evmChainParser: WalletConnectEvmChainParser()
+                evmBlockchainManager: App.shared.evmBlockchainManager
         )
 
         return viewController(service: mainService, sourceViewController: sourceViewController)
     }
 
-    static func viewController(service: IWalletConnectMainService, sourceViewController: UIViewController?) -> UIViewController? {
+    static func viewController(service: WalletConnectMainService, sourceViewController: UIViewController?) -> UIViewController? {
         let viewModel = WalletConnectMainViewModel(service: service)
         let viewController = WalletConnectMainViewController(viewModel: viewModel, sourceViewController: sourceViewController)
-        switch service {
-        case let service as WalletConnectV1MainService:
-            let requestViewModel = WalletConnectV1MainRequestViewModel(service: service)
-            let requestView = WalletConnectV1MainRequestView(viewModel: requestViewModel)
-            requestView.sourceViewController = viewController
 
-            viewController.requestView = requestView
-        case let service as WalletConnectV2MainService:
-            let pendingRequestService = WalletConnectV2MainPendingRequestService(
-                    service: service,
-                    accountManager: App.shared.accountManager,
-                    sessionManager: App.shared.walletConnectV2SessionManager,
-                    evmBlockchainManager: App.shared.evmBlockchainManager,
-                    signService: App.shared.walletConnectV2SessionManager.service)
-            let pendingRequestViewModel = WalletConnectV2MainPendingRequestViewModel(service: pendingRequestService)
-            viewController.pendingRequestViewModel = pendingRequestViewModel
-        default: return nil
-        }
+        let pendingRequestService = WalletConnectMainPendingRequestService(
+                service: service,
+                accountManager: App.shared.accountManager,
+                sessionManager: App.shared.walletConnectSessionManager,
+                evmBlockchainManager: App.shared.evmBlockchainManager,
+                signService: App.shared.walletConnectSessionManager.service)
+        let pendingRequestViewModel = WalletConnectMainPendingRequestViewModel(service: pendingRequestService)
+        viewController.pendingRequestViewModel = pendingRequestViewModel
 
         return ThemeNavigationController(rootViewController: viewController)
     }
@@ -93,7 +44,6 @@ struct WalletConnectMainModule {
 extension WalletConnectMainModule {
 
     struct AppMetaItem {
-        let multiChain: Bool
         let name: String
         let url: String
         let description: String

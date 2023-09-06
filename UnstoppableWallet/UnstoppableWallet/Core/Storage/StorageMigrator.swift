@@ -327,18 +327,6 @@ class StorageMigrator {
             }
         }
 
-        migrator.registerMigration("createWalletConnectSessions") { db in
-            try db.create(table: WalletConnectSession.databaseTableName) { t in
-                t.column(WalletConnectSession.Columns.chainId.name, .integer).notNull()
-                t.column(WalletConnectSession.Columns.accountId.name, .text).notNull()
-                t.column(WalletConnectSession.Columns.session.name, .text).notNull()
-                t.column(WalletConnectSession.Columns.peerId.name, .text).notNull()
-                t.column(WalletConnectSession.Columns.peerMeta.name, .text).notNull()
-
-                t.primaryKey([WalletConnectSession.Columns.chainId.name, WalletConnectSession.Columns.accountId.name, WalletConnectSession.Columns.peerId.name], onConflict: .replace)
-            }
-        }
-
         migrator.registerMigration("extractCoinsAndChangeCoinIds") { db in
             // apply changes in database
             try db.drop(table: CoinRecord_v19.databaseTableName)
@@ -532,11 +520,11 @@ class StorageMigrator {
         }
 
         migrator.registerMigration("createWalletConnectV2Sessions") { db in
-            try db.create(table: WalletConnectV2Session.databaseTableName) { t in
-                t.column(WalletConnectV2Session.Columns.accountId.name, .text).notNull()
-                t.column(WalletConnectV2Session.Columns.topic.name, .text).notNull()
+            try db.create(table: WalletConnectSession.databaseTableName) { t in
+                t.column(WalletConnectSession.Columns.accountId.name, .text).notNull()
+                t.column(WalletConnectSession.Columns.topic.name, .text).notNull()
 
-                t.primaryKey([WalletConnectV2Session.Columns.accountId.name, WalletConnectV2Session.Columns.topic.name], onConflict: .replace)
+                t.primaryKey([WalletConnectSession.Columns.accountId.name, WalletConnectSession.Columns.topic.name], onConflict: .replace)
             }
         }
 

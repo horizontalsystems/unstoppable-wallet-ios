@@ -18,7 +18,7 @@ class AppManager {
     private let deepLinkManager: DeepLinkManager
     private let evmLabelManager: EvmLabelManager
     private let balanceHiddenManager: BalanceHiddenManager
-    private let walletConnectV2SocketConnectionService: WalletConnectV2SocketConnectionService
+    private let walletConnectSocketConnectionService: WalletConnectSocketConnectionService
     private let nftMetadataSyncer: NftMetadataSyncer
 
     private let didBecomeActiveSubject = PublishSubject<()>()
@@ -30,7 +30,7 @@ class AppManager {
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
          logRecordManager: LogRecordManager,
          deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager,
-         walletConnectV2SocketConnectionService: WalletConnectV2SocketConnectionService, nftMetadataSyncer: NftMetadataSyncer
+         walletConnectSocketConnectionService: WalletConnectSocketConnectionService, nftMetadataSyncer: NftMetadataSyncer
     ) {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -46,7 +46,7 @@ class AppManager {
         self.deepLinkManager = deepLinkManager
         self.evmLabelManager = evmLabelManager
         self.balanceHiddenManager = balanceHiddenManager
-        self.walletConnectV2SocketConnectionService = walletConnectV2SocketConnectionService
+        self.walletConnectSocketConnectionService = walletConnectSocketConnectionService
         self.nftMetadataSyncer = nftMetadataSyncer
     }
 
@@ -85,7 +85,7 @@ extension AppManager {
         debugBackgroundLogger?.logEnterBackground()
 
         pinKit.didEnterBackground()
-        walletConnectV2SocketConnectionService.didEnterBackground()
+        walletConnectSocketConnectionService.didEnterBackground()
         balanceHiddenManager.didEnterBackground()
     }
 
@@ -99,7 +99,7 @@ extension AppManager {
         keychainKit.handleForeground()
         pinKit.willEnterForeground()
         adapterManager.refresh()
-        walletConnectV2SocketConnectionService.willEnterForeground()
+        walletConnectSocketConnectionService.willEnterForeground()
 
         nftMetadataSyncer.sync()
     }

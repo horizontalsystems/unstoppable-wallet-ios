@@ -3,11 +3,11 @@ import RxSwift
 import RxRelay
 import WalletConnectSign
 
-class WalletConnectV2MainPendingRequestService {
+class WalletConnectMainPendingRequestService {
     private let disposeBag = DisposeBag()
 
     private let accountManager: AccountManager
-    private let sessionManager: WalletConnectV2SessionManager
+    private let sessionManager: WalletConnectSessionManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let signService: IWalletConnectSignService
     private var session: WalletConnectSign.Session?
@@ -21,7 +21,7 @@ class WalletConnectV2MainPendingRequestService {
 
     private let showPendingRequestRelay = PublishRelay<WalletConnectRequest>()
 
-    init(service: WalletConnectV2MainService, accountManager: AccountManager, sessionManager: WalletConnectV2SessionManager, evmBlockchainManager: EvmBlockchainManager, signService: IWalletConnectSignService) {
+    init(service: WalletConnectMainService, accountManager: AccountManager, sessionManager: WalletConnectSessionManager, evmBlockchainManager: EvmBlockchainManager, signService: IWalletConnectSignService) {
         self.accountManager = accountManager
         self.sessionManager = sessionManager
         self.evmBlockchainManager = evmBlockchainManager
@@ -61,7 +61,7 @@ class WalletConnectV2MainPendingRequestService {
 
 }
 
-extension WalletConnectV2MainPendingRequestService {
+extension WalletConnectMainPendingRequestService {
 
     var itemsObservable: Observable<[Item]> {
         itemsRelay.asObservable()
@@ -99,7 +99,7 @@ extension WalletConnectV2MainPendingRequestService {
 
         let chain = WalletConnectRequest.Chain(id: chainId, chainName: blockchain.name, address: address.eip55)
 
-        guard let wcRequest = try? WalletConnectV2RequestMapper.map(dAppName: session?.peer.name, chain: chain, request: request) else {
+        guard let wcRequest = try? WalletConnectRequestMapper.map(dAppName: session?.peer.name, chain: chain, request: request) else {
             return
         }
 
@@ -112,7 +112,7 @@ extension WalletConnectV2MainPendingRequestService {
 
 }
 
-extension WalletConnectV2MainPendingRequestService {
+extension WalletConnectMainPendingRequestService {
 
     struct Item {
         let id: Int

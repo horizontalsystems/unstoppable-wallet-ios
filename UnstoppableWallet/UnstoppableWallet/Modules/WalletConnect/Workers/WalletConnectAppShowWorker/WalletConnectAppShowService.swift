@@ -3,9 +3,9 @@ import RxCocoa
 import WalletConnectSign
 import PinKit
 
-class WalletConnectV2AppShowService {
+class WalletConnectAppShowService {
     private let disposeBag = DisposeBag()
-    private let walletConnectV2Manager: WalletConnectV2SessionManager
+    private let walletConnectManager: WalletConnectSessionManager
     private let cloudAccountBackupManager: CloudAccountBackupManager
     private let accountManager: AccountManager
     private let pinKit: PinKit.Kit
@@ -13,14 +13,14 @@ class WalletConnectV2AppShowService {
     private let showSessionProposalRelay = PublishRelay<WalletConnectSign.Session.Proposal>()
     private let showSessionRequestRelay = PublishRelay<WalletConnectRequest>()
 
-    init(walletConnectV2Manager: WalletConnectV2SessionManager, cloudAccountBackupManager: CloudAccountBackupManager, accountManager: AccountManager, pinKit: PinKit.Kit) {
-        self.walletConnectV2Manager = walletConnectV2Manager
+    init(walletConnectManager: WalletConnectSessionManager, cloudAccountBackupManager: CloudAccountBackupManager, accountManager: AccountManager, pinKit: PinKit.Kit) {
+        self.walletConnectManager = walletConnectManager
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.accountManager = accountManager
         self.pinKit = pinKit
 
-        subscribe(disposeBag, walletConnectV2Manager.service.receiveProposalObservable) { [weak self] in self?.receive(proposal: $0) }
-        subscribe(disposeBag, walletConnectV2Manager.sessionRequestReceivedObservable) { [weak self] in self?.receive(request: $0) }
+        subscribe(disposeBag, walletConnectManager.service.receiveProposalObservable) { [weak self] in self?.receive(proposal: $0) }
+        subscribe(disposeBag, walletConnectManager.sessionRequestReceivedObservable) { [weak self] in self?.receive(request: $0) }
     }
 
     private func receive(proposal: WalletConnectSign.Session.Proposal) {
@@ -35,7 +35,7 @@ class WalletConnectV2AppShowService {
 
 }
 
-extension WalletConnectV2AppShowService {
+extension WalletConnectAppShowService {
 
     var activeAccount: Account? {
         accountManager.activeAccount

@@ -3,7 +3,7 @@ import WalletConnectSign
 import WalletConnectV1
 import HsExtensions
 
-struct WalletConnectV2RequestMapper {
+struct WalletConnectRequestMapper {
 
     static func map(dAppName: String?, chain: WalletConnectRequest.Chain, request: WalletConnectSign.Request) throws -> WalletConnectRequest? {
         let id = request.id.intValue

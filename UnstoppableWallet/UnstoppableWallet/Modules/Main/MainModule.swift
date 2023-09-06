@@ -24,7 +24,7 @@ struct MainModule {
                 accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
                 pinKit: App.shared.pinKit,
                 termsManager: App.shared.termsManager,
-                walletConnectV2SessionManager: App.shared.walletConnectV2SessionManager,
+                walletConnectSessionManager: App.shared.walletConnectSessionManager,
                 contactBookManager: App.shared.contactManager
         )
         let releaseNotesService = ReleaseNotesService(
@@ -39,13 +39,13 @@ struct MainModule {
         let viewModel = MainViewModel(service: service, badgeService: badgeService, releaseNotesService: releaseNotesService, jailbreakService: jailbreakService, deepLinkService: deepLinkService)
         let viewController = MainViewController(viewModel: viewModel)
 
-        let walletConnectWorkerService = WalletConnectV2AppShowService(
-                walletConnectV2Manager: App.shared.walletConnectV2SessionManager,
+        let walletConnectWorkerService = WalletConnectAppShowService(
+                walletConnectManager: App.shared.walletConnectSessionManager,
                 cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
                 accountManager: App.shared.accountManager,
                 pinKit: App.shared.pinKit)
-        let walletConnectWorkerViewModel = WalletConnectV2AppShowViewModel(service: walletConnectWorkerService)
-        let walletConnectWorkerView = WalletConnectV2AppShowView(
+        let walletConnectWorkerViewModel = WalletConnectAppShowViewModel(service: walletConnectWorkerService)
+        let walletConnectWorkerView = WalletConnectAppShowView(
                 viewModel: walletConnectWorkerViewModel,
                 parentViewController: viewController)
 
