@@ -6,8 +6,20 @@ import RxCocoa
 import MarketKit
 import HsExtensions
 
+protocol IWalletTokenListService {
+    var state: WalletTokenListService.State { get set }
+    var stateUpdatedPublisher: AnyPublisher<WalletTokenListService.State, Never> { get }
+
+    var isReachable: Bool { get }
+    var balancePrimaryValueObservable: Observable<BalancePrimaryValue> { get }
+    var balancePrimaryValue: BalancePrimaryValue { get }
+    var itemUpdatedObservable: Observable<WalletTokenListService.Item> { get }
+
+    func item(element: WalletModule.Element) -> WalletTokenListService.Item?
+}
+
 class WalletTokenListViewModel {
-    private let service: WalletTokenListService
+    private let service: IWalletTokenListService
     private let factory: WalletTokenListViewItemFactory
     private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
@@ -27,7 +39,7 @@ class WalletTokenListViewModel {
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).wallet-tokens-view-model", qos: .userInitiated)
 
-    init(service: WalletTokenListService, factory: WalletTokenListViewItemFactory, title: String, emptyText: String) {
+    init(service: IWalletTokenListService, factory: WalletTokenListViewItemFactory, title: String, emptyText: String) {
         self.service = service
         self.factory = factory
         self.title = title
@@ -36,7 +48,7 @@ class WalletTokenListViewModel {
         subscribe(disposeBag, service.itemUpdatedObservable) { [weak self] in self?.syncUpdated(item: $0) }
         subscribe(disposeBag, service.balancePrimaryValueObservable) { [weak self] _ in self?.onUpdateBalancePrimaryValue() }
 
-        service.$state
+        service.stateUpdatedPublisher
                 .sink { [weak self] in self?.sync(serviceState: $0) }
                 .store(in: &cancellables)
 
