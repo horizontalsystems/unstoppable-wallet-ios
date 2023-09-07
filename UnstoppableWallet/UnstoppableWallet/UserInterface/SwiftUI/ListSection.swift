@@ -1,13 +1,7 @@
 import SwiftUI
 
 struct ListSection<Content: View>: View {
-    var content: Content
-    var footerText: String?
-
-    init(footerText: String? = nil, @ViewBuilder content: @escaping () -> Content) {
-        self.content = content()
-        self.footerText = footerText
-    }
+    @ViewBuilder let content: Content
 
     var body: some View {
         VStack(spacing: 0) {
@@ -16,12 +10,6 @@ struct ListSection<Content: View>: View {
                     }
                     .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(Color.themeLawrence))
                     .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
-
-            if let footerText {
-                Text(footerText)
-                        .themeSubhead2()
-                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: 0, trailing: .margin16))
-            }
         }
     }
 

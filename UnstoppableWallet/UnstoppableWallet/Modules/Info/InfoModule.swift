@@ -1,3 +1,4 @@
+import SwiftUI
 import UIKit
 import ThemeKit
 
@@ -37,13 +38,14 @@ extension InfoModule {
         )
     }
 
-    static var restoreSourceInfo: UIViewController {
-        viewController(
+    static var restoreSourceInfo: some View {
+        InfoView(
                 viewItems: [
                     .header1(text: "blockchain_settings.info.restore_source".localized),
                     .text(text: "blockchain_settings.info.restore_source.content".localized(AppConfig.appName)),
                 ]
         )
+                .ignoresSafeArea()
     }
 
     static var transactionInputsOutputsInfo: UIViewController {
@@ -82,6 +84,20 @@ extension InfoModule {
                     .text(text: "status_info.failed.content".localized(AppConfig.appName))
                 ]
         )
+    }
+
+}
+
+struct InfoView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let viewItems: [InfoModule.ViewItem]
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        InfoModule.viewController(viewItems: viewItems)
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
     }
 
 }

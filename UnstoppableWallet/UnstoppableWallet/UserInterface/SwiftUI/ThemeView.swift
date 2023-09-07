@@ -5,7 +5,7 @@ struct ThemeView<Content: View>: View {
 
     var body: some View {
         ZStack {
-            Color.themeTyler.edgesIgnoringSafeArea(.all)
+            Color.themeTyler.ignoresSafeArea()
             content
         }
     }
@@ -21,6 +21,18 @@ struct ScrollableThemeView<Content: View>: View {
                 content
             }
         }
+    }
+
+}
+
+struct ThemeNavigationView<Content: View>: View {
+    @ViewBuilder let content: Content
+
+    var body: some View {
+        NavigationView {
+            content
+        }
+                .accentColor(.themeJacob)
     }
 
 }

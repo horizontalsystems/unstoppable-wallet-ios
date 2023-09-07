@@ -1,6 +1,10 @@
-enum BtcRestoreMode: String, CaseIterable {
+enum BtcRestoreMode: String, CaseIterable, Identifiable {
     case api
     case blockchain
+
+    var id: Self {
+        self
+    }
 
     var title: String {
         switch self {
