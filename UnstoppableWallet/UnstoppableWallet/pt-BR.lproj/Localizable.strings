@@ -1,90 +1,90 @@
 "button.ok" = "OK";
-"button.apply" = "Aplicar";
-"button.cancel" = "Cancelar";
-"button.close" = "Fechar";
-"button.continue" = "Continuar";
-"button.done" = "Concluído";
-"button.reset" = "Resetar";
-"button.import" = "Importar";
-"button.next" = "Próximo";
-"button.delete" = "Deletar";
-"button.share" = "Compartilhar";
-"button.paste" = "Colar";
-"button.resend" = "Enviar novamente";
+"button.apply" = "Apply";
+"button.cancel" = "Cancel";
+"button.close" = "Close";
+"button.continue" = "Continue";
+"button.done" = "Done";
+"button.reset" = "Reset";
+"button.import" = "Import";
+"button.next" = "Next";
+"button.delete" = "Delete";
+"button.share" = "Share";
+"button.paste" = "Paste";
+"button.resend" = "Resend";
 "button.backup" = "Backup";
-"button.copy" = "Copiar";
-"button.retry" = "Tentar de novo";
-"button.report" = "Reportar";
-"button.add" = "Adicionar";
-"button.approve" = "Aprovar";
-"button.revoke" = "Revogar";
-"button.reject" = "Rejeitar";
-"button.connect" = "Conectar";
-"button.save" = "Salvar";
-"button.send" = "Enviar";
-"button.sign" = "Assinar";
-"button.more" = "Mostrar Mais";
-"button.i_understand" = "Estou ciente";
-"button.learn_more" = "Saiba Mais";
+"button.copy" = "Copy";
+"button.retry" = "Retry";
+"button.report" = "Report";
+"button.add" = "Add";
+"button.approve" = "Approve";
+"button.revoke" = "Revoke";
+"button.reject" = "Reject";
+"button.connect" = "Connect";
+"button.save" = "Save";
+"button.send" = "Send";
+"button.sign" = "Sign";
+"button.more" = "Show More";
+"button.i_understand" = "I Understand";
+"button.learn_more" = "Learn More";
 
-"alert" = "Alerta";
-"alert.copied" = "Copiado";
-"alert.saved" = "Salvo";
-"alert.saved_to_icloud" = "Salvo no iCloud";
-"alert.no_internet" = "Sem Internet";
-"alert.wrong_amount" = "Quantia Errada";
-"alert.no_fee" = "Taxa Errada";
-"alert.warning" = "Aviso";
-"alert.error" = "Erro";
-"alert.unknown_error" = "Erro Desconhecido";
-"alert.success_action" = "Concluído";
-"alert.success" = "Sucesso or Completado";
+"alert" = "Alert";
+"alert.copied" = "Copied";
+"alert.saved" = "Saved";
+"alert.saved_to_icloud" = "Saved to iCloud";
+"alert.no_internet" = "No Internet";
+"alert.wrong_amount" = "Wrong Amount";
+"alert.no_fee" = "Wrong Fee";
+"alert.warning" = "Warning";
+"alert.error" = "Error";
+"alert.unknown_error" = "Unknown Error";
+"alert.success_action" = "Done";
+"alert.success" = "Success";
 
-"alert.added_to_watchlist" = "Adicionado à Lista";
-"alert.removed_from_watchlist" = "Removido da Lista";
-"alert.added_to_wallet" = "Adicionado à Carteira";
-"alert.removed_from_wallet" = "Removido da Carteira";
-"alert.already_added_to_wallet" = "Já adicionado à carteira";
-"alert.not_supported_yet" = "Não suportado ainda";
-"alert.copied" = "Copiado";
-"alert.created" = "Criado";
-"alert.imported" = "Importado";
-"alert.wallet_added" = "Carteira Adicionada";
-"alert.deleted" = "Excluído";
-"alert.waiting_for_session" = "Aguardando sessão";
-"alert.try_again" = "Tentar novamente";
-"alert.disconnecting" = "Desconectando";
-"alert.disconnected" = "Desconectado";
-"alert.enabling" = "Ativando";
-"alert.enabled_coins" = "Moedas a mais ativadas %@";
-"alert.sending" = "Enviando";
-"alert.sent" = "Enviado";
-"alert.swapping" = "Trocando";
-"alert.swapped" = "Trocado";
-"alert.approving" = "Aprovando";
-"alert.approved" = "Aprovado";
-"alert.revoking" = "Revogando";
-"alert.revoked" = "Revogado";
+"alert.added_to_watchlist" = "Added to Watchlist";
+"alert.removed_from_watchlist" = "Removed from Watchlist";
+"alert.added_to_wallet" = "Added to Wallet";
+"alert.removed_from_wallet" = "Removed from Wallet";
+"alert.already_added_to_wallet" = "Already added to Wallet";
+"alert.not_supported_yet" = "Not Supported Yet";
+"alert.copied" = "Copied";
+"alert.created" = "Created";
+"alert.imported" = "Imported";
+"alert.wallet_added" = "Wallet Added";
+"alert.deleted" = "Deleted";
+"alert.waiting_for_session" = "Waiting for Session";
+"alert.try_again" = "Try Again";
+"alert.disconnecting" = "Disconnecting";
+"alert.disconnected" = "Disconnected";
+"alert.enabling" = "Enabling";
+"alert.enabled_coins" = "Enabled %@ more coins";
+"alert.sending" = "Sending";
+"alert.sent" = "Sent";
+"alert.swapping" = "Swapping";
+"alert.swapped" = "Swapped";
+"alert.approving" = "Approving";
+"alert.approved" = "Approved";
+"alert.revoking" = "Revoking";
+"alert.revoked" = "Revoked";
 
-"no_results_found" = "Nenhum resultado encontrado";
-"action.loading" = "carregando...";
-"placeholder.search" = "Buscar";
+"no_results_found" = "No results found";
+"action.loading" = "loading...";
+"placeholder.search" = "Search";
 
 "status" = "Status";
-"connecting" = "Conectando...";
-"online" = "On-line";
-"offline" = "Desconectado";
-"confirm" = "Confirmar";
-"connect" = "Conectar";
-"price" = "Preço";
-"value" = "Valor";
-"note" = "Observação";
+"connecting" = "Connecting...";
+"online" = "Online";
+"offline" = "Offline";
+"confirm" = "Confirm";
+"connect" = "Connect";
+"price" = "Price";
+"value" = "Value";
+"note" = "Note";
 
-"version" = "Versão %@";
+"version" = "Version %@";
 
 "n/a" = "N/A";
 
-"sync_error" = "Erro de sincronização. Tente novamente.";
+"sync_error" = "Sync error. Try again.";
 
 "number.thousand" = "%@K";
 "number.million" = "%@M";
@@ -92,520 +92,564 @@
 "number.trillion" = "%@T";
 "number.quadrillion" = "%@Q";
 
-"selector.any" = "Qualquer";
+"selector.any" = "Any";
 
 // Access Camera
 
-"access_camera.message" = "%@ precisa acessar sua câmera para escanear o código QR.
+"access_camera.message" = "%@ absolutely needs access to your tremendous camera for scanning that fantastic QR code. Believe me!.
 
-Vá para Configurações - > %@ e permita o acesso à câmera.";
-"access_camera.settings" = "Configurações";
+Go to Settings - > %@ and allow access to the camera.";
+"access_camera.settings" = "Settings";
 
 // Restore
 
-"restore.title" = "Importar carteira";
-"restore.advanced" = "Avançado";
-"restore.import_by" = "Importar por";
-"restore.restore_type.mnemonic" = "Frase de Recuperação";
-"restore.restore_type.private_key" = "Chave Privada";
-"restore.mnemonic.placeholder" = "Insira 12, 15, 18, 21 ou 24 palavras";
-"restore.private_key.placeholder" = "Insira a Chave Privada EVM, a Chave Raiz BIP32 ou a Chave Privada Estendida de Conta";
-"restore.private_key.invalid_key" = "Chave Inválida";
-"restore_error.mnemonic_word_count" = "Número incorreto de palavras. Deve ter entre 12 ou 24 palavras. Você inseriu: %@";
-"restore.checksum_error" = "Soma de Verificação Inválida";
-"restore.passphrase" = "Senha";
-"restore.input.passphrase" = "Senha";
-"restore.passphrase_description" = "Esta senha é usada para criptografar o arquivo de backup de sua carteira. Não está relacionado à sua senha do Apple iCloud. Não pode ser recuperada ou redefinida se for perdida ou esquecida.";
-"restore.error.empty_passphrase" = "O senha não pode estar em branco";
-"restore.non_standard_import" = "Restauração Não-Padrão";
-"restore.non_standard_import.description" = "Esta página fornece um mecanismo de importação de carteira especial para usuários %@ que têm uma carteira não padrão. Tais carteiras podem ter sido criadas na versão %@ do 0. 7 - 0,28 usando uma frase de recuperação não inglesa e/ou um caractere especial na senha da carteira (ou seja, símbolo diacrítico).\n\nSe você é afetado com o seu saldo de carteira será mostrado 0 após importar tal carteira na versão 0.29 ou superior. Esta página permitirá que você restaure o acesso à sua carteira não padrão. Uma vez importado, recomenda-se criar uma nova carteira (que será compatível com o padrão) e mover fundos para lá.";
-"restore.warning.non_recommended.description" = "Esta carteira parece usar um caractere não padrão em sua lista de palavras secretas e/ou uma frase secreta.  Se você não ver um saldo ou transações, leia abaixo para obter detalhes.\n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
-"restore.error.non_standard.description" = "Esta é uma carteira não padrão. \n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
+"restore.title" = "Import Wallet";
+"restore.advanced" = "Advanced";
+"restore.import_by" = "Import By";
+"restore.restore_type.mnemonic" = "Recovery Phrase";
+"restore.restore_type.private_key" = "Private Key";
+"restore.mnemonic.placeholder" = "Enter Recovery Phrase";
+"restore.private_key.placeholder" = "Give me that EVM Private Key, that BIP32 Root Key, or that Account Extended Private Key, folks. We're talking big league security here!";
+"restore.private_key.invalid_key" = "Invalid Key";
+"restore_error.mnemonic_word_count" = "Hey, you, %@! You're off the mark. You need between 12 and 24 words, no less, no more. Let's get it right!";
+"restore.checksum_error" = "Invalid checksum";
+"restore.passphrase" = "Passphrase";
+"restore.input.passphrase" = "Passphrase";
+"restore.passphrase_description" = "Listen up, folks. This password right here, it's for your wallet's backup file, not your fancy Apple iCloud password, okay? And here's the deal, you forget this one, there's no recovery, no reset. It's like a key to Fort Knox, so guard it like gold!";
+"restore.error.empty_passphrase" = "Folks, we can't have an empty passphrase here, okay?";
+"restore.non_standard_import" = "Non-Standard Import";
+"restore.non_standard_import.description" = "This page provides a special wallet import mechanism to %@ users who have a non-standard wallet. Such wallets might have been created in %@ version 0.27 - 0.28 using a non-English recovery phrase and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
+"restore.warning.non_recommended.description" = "This wallet seems to use a non-standard character in its recovery phrase and/or a passphrase. If you do not see a balance or transactions please read below for details.  \n\nCLICK TO GET MORE INFO";
+"restore.error.non_standard.description"  = "This is a non-standard wallet.\n\nCLICK TO GET MORE INFO";
 
 // Restore Type
 
-"restore_type.title" = "Importar carteira";
+"restore_type.title" = "Import Wallet";
 
-"restore_type.recovery.title" = "da Frase de Recuperação";
-"restore_type.cloud.title" = "do iCloud";
-"restore_type.cex.title" = "da Exchange Wallet";
+"restore_type.recovery.title" = "from Recovery Phrase";
+"restore_type.cloud.title" = "from iCloud";
+"restore_type.cex.title" = "from Exchange Wallet";
 
-"restore_type.recovery.description" = "Importar usando frase de recuperação ou chave privada.";
-"restore_type.cloud.description" = "Importe de um arquivo de backup em sua keychain.";
-"restore_type.cex.description" = "Conecte a uma carteira em uma troca centralizada.";
+"restore_type.recovery.description" = "Import like a pro! Recovery phrase or private key, you choose. It's your call, folks!";
+"restore_type.cloud.description" = "Import straight from your keychain, folks. It's like having the keys to the kingdom right at your fingertips!";
+"restore_type.cex.description" = "Let's make a connection, folks! Connect to that wallet on the centralized exchange and get ready to win big!";
 
 // Restore Cloud
 
-"restore.cloud.title" = "Selecionar Backup";
-"restore.cloud.description" = "Selecione a cópia de backup da carteira que você deseja restaurar.";
-"restore.cloud.empty" = "Nenhum backup encontrado.";
-"restore.cloud.imported" = "Carteiras importadas";
+"restore.cloud.title" = "Select Backup";
+"restore.cloud.description" = "Time to choose, folks! Pick the backup wallet you want to bring back. It's all about making the right choice!";
+"restore.cloud.empty" = "Can you believe it, folks? No backups found. It's a clean slate, a fresh start!";
+"restore.cloud.imported" = "Imported wallets";
 
-"restore.cloud.password.title" = "Digite a senha";
-"restore.cloud.password.placeholder" = "Fazer Backup da Senha";
-"restore.cloud.password.description" = "Digite a senha de backup para importar sua carteira.";
+"restore.cloud.password.title" = "Enter Password";
+"restore.cloud.password.placeholder" = "Backup Password";
+"restore.cloud.password.description" = "Give me that backup password, folks. We're importing your wallet from iCloud, and security is the name of the game!";
 
 // Restore Cex
 
-"restore.cex.title" = "Selecione o CEX";
-"restore.cex.description" = "Selecione a troca centralizada à qual você deseja se conectar.";
+"restore.cex.title" = "Select CEX";
+"restore.cex.description" = "Choose your battlefield, folks! Select the centralized exchange you want to connect to, and let's make some deals!";
 
 // Restore Binance
 
-"restore.binance.description" = "Por favor, forneça as Chaves da API e Segredo da API para vincular o seu troco.";
-"restore.binance.api_key" = "Chave de API";
-"restore.binance.secret_key" = "Chave secreta";
-"restore.binance.connect" = "Conectar";
-"restore.binance.connecting" = "Conectando...";
-"restore.binance.get_api_keys" = "Obter chaves API";
-"restore.binance.failed_to_connect" = "Falha ao conectar sua chave de API";
+"restore.binance.description" = "Please provide the API Keys and API Secret to link your exchange.";
+"restore.binance.api_key" = "API Key";
+"restore.binance.secret_key" = "Secret Key";
+"restore.binance.connect" = "Connect";
+"restore.binance.connecting" = "Connecting...";
+"restore.binance.get_api_keys" = "Get API Keys";
+"restore.binance.failed_to_connect" = "Failed to connect your API Key";
 "restore.binance.invalid_qr_code" = "Invalid QR Code";
 
 // Coin Settings
 
-"coin_settings.title" = "Configurações da Blockchain";
+"coin_settings.title" = "Blockchain Settings";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recomendado)";
-"sync_mode.from_blockchain" = "Da Blockchain";
-"blockchain_settings.description" = "Selecione o formato de endereço para receber pagamentos. Um formato correto deve ser escolhido quando restaurar uma carteira existente.";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
+"sync_mode.from_blockchain" = "From Blockchain";
+"blockchain_settings.description" = "Get ready to receive payments, folks! When restoring your wallet, make sure to select the right address format. It's all about getting it right!";
 
 // Coin Platforms
 
-"coin_platforms.description" = "Este token existe em várias blockchains.";
-"coin_platforms.native" = "Nativo";
+"coin_platforms.native" = "Native";
 
 // Copy Warning
 
-"copy_warning.title" = "Risco de Copiar";
-"copy_warning.description" = "Como medida de segurança, recomendamos que você não use a ação de copiar para este valor.";
-"copy_warning.dont_copy" = "Não Copiar";
-"copy_warning.i_will_risk_it" = "Eu vou arriscar";
+"copy_warning.title" = "Risk of Copying";
+"copy_warning.description" = "As a safety measure, we recommend that you do not use the copy action for this value.";
+"copy_warning.dont_copy" = "Don't Copy";
+"copy_warning.i_will_risk_it" = "I will risk it";
 
 // Recovery Phrase
 
-"recovery_phrase.title" = "Frase de Recuperação";
-"recovery_phrase.warning" = "Nunca compartilhe essa chave com ninguém. A equipe de suporte do %@ Wallet nunca pedirá por isso.";
-"recovery_phrase.tap_to_show" = "Toque para mostrar a frase de recuperação";
-"recovery_phrase.passphrase" = "Senha";
-"recovery_phrase.copy_warning.title" = "Risco ao copiar a frase de recuperação";
-"recovery_phrase.copy_warning.description" = "Como medida de segurança, recomendamos que não use a ação de copiar na frase de recuperação.";
+"recovery_phrase.title" = "Recovery Phrase";
+"recovery_phrase.warning" = "Listen up, folks, and listen good. This key, you never, ever share it with anyone, okay? Not even with the %@ Wallet support team. They'll never ask for it. It's your key to the kingdom, so keep it locked up tight!";
+"recovery_phrase.tap_to_show" = "Tap right there, folks, and behold the recovery phrase. It's like unlocking a treasure chest!";
+"recovery_phrase.passphrase" = "Passphrase";
+"recovery_phrase.copy_warning.title" = "Risk of Recovery Phrase copy";
+"recovery_phrase.copy_warning.description" = "As a security measure,we recommend not using copy action on recovery phrase.";
 
 // EVM Private Key
 
-"evm_private_key.title" = "Chave Privada EVM";
-"evm_private_key.tap_to_show" = "Toque para mostrar a chave privada";
+"evm_private_key.title" = "EVM Private Key";
+"evm_private_key.tap_to_show" = "Give it a tap, folks, and reveal that private key. It's like finding the secret to success!";
 
 // Extended Key
 
-"extended_key.bip32_root_key" = "Chave Raiz BIP32";
-"extended_key.account_extended_private_key" = "Chave Privada Estendida da Conta";
-"extended_key.account_extended_public_key" = "Chave Pública Estendida da Conta";
-"extended_key.purpose" = "Propósito";
+"extended_key.bip32_root_key" = "BIP32 Root Key";
+"extended_key.account_extended_private_key" = "Account Extended Private Key";
+"extended_key.account_extended_public_key" = "Account Extended Public Key";
+"extended_key.purpose" = "Purpose";
 "extended_key.blockchain" = "Blockchain";
-"extended_key.account" = "Conta";
-"extended_key.tap_to_show" = "Toque para mostrar a chave privada estendida";
+"extended_key.account" = "Account";
+"extended_key.tap_to_show" = "Get ready for it, folks! A little tap, and you'll see that extended private key. It's like unlocking a world of possibilities!";
 
 // Backup
 
-"backup.title" = "Frase de Recuperação";
-"backup.description" = "Escreva essas palavras na ordem correta e mantenha-as em um lugar seguro";
-"backup.tap_to_show" = "Toque para mostrar a frase de recuperação";
-"backup.passphrase" = "Senha";
-"backup.verify" = "Confirmar";
-"backup.verified" = "Confirmado";
+"backup.title" = "Recovery Phrase";
+"backup.description" = "Here's the drill, folks: Write these words down, in the right order, and keep 'em locked up tight in a safe place. It's your ticket to security!";
+"backup.tap_to_show" = "Give it a tap, folks, and let that recovery phrase shine. It's your secret code to safeguarding your assets!";
+"backup.passphrase" = "Passphrase";
+"backup.verify" = "Verify";
+"backup.verified" = "Verified";
 
 // Backup Verify Words
 
-"backup_verify_words.title" = "Confirmar";
-"backup_verify_words.description" = "Selecione duas palavras solicitadas da sua frase de recuperação de carteira";
-"backup_verify_words.incorrect_word" = "Palavra incorreta";
+"backup_verify_words.title" = "Verify";
+"backup_verify_words.description" = "Select two requested words from your wallet recovery phrase";
+"backup_verify_words.incorrect_word" = "Incorrect Word";
 
 // Backup Verify Passphrase
 
-"backup_verify_passphrase.title" = "Confirmar";
-"backup_verify_passphrase.description" = "Insira a senha";
-"backup_verify_passphrase.incorrect_passphrase" = "Senha incorreta";
+"backup_verify_passphrase.title" = "Verify";
+"backup_verify_passphrase.description" = "Enter the passphrase";
+"backup_verify_passphrase.incorrect_passphrase" = "Incorrect passphrase";
 
 // Backup Required
 
-"backup_required.title" = "Backup necessário";
+"backup_required.title" = "Backup Required";
 
 // Backup Prompt
 
-"backup_prompt.title" = "Backup Manual";
-"backup_prompt.warning" = "Crie uma cópia de backup da frase de recuperação e da senha associada que permitirá recuperar sua carteira caso seu telefone seja perdido, roubado, quebrado etc.";
+"backup_prompt.title" = "Manual Backup";
+"backup_prompt.warning" = "Listen up, folks. You've got to create a backup of that recovery phrase and the password that goes with it. This is your lifeline, in case your phone decides to go rogue – lost, stolen, broken, you name it. Protect your assets, it's the smart play!";
 "backup_prompt.backup" = "Backup";
-"backup_prompt.backup_manual" = "Backup Manual";
-"backup_prompt.backup_cloud" = "Backup para o iCloud";
-"backup_prompt.later" = "Mais tarde";
+"backup_prompt.backup_manual" = "Manual Backup";
+"backup_prompt.backup_cloud" = "Backup to iCloud";
+"backup_prompt.later" = "Later";
 
 // Backup to iCloud
 
-"backup.cloud.title" = "Backup para o iCloud";
-"backup.cloud.description" = "O armazenamento em iCloud é um serviço de armazenamento em nuvem de terceiros fornecido pela Apple. É importante saber que seus dados serão armazenados nos servidores da Apple, não em seus dispositivos pessoais. Isso significa que você está confiando seus dados e entregando a segurança de suas informações a um serviço terceirizado.";
+"backup.cloud.title" = "Backup to iCloud";
+"backup.cloud.description" = "Let's get this straight, folks. iCloud storage, it's from Apple, okay? But here's the deal: when you use it, your data, it's not hanging out on your own gadgets. Nope, it's on Apple's servers. So, you're putting your trust, your data's security, in the hands of a third-party service. That's the real story here.";
 
-"backup.cloud.terms.item.1" = "Compreendo que perder acesso ao meu iCloud resultará em perder acesso ao backup de uma respectiva carteira.";
+"backup.cloud.terms.item.1" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
 
-"backup.cloud.name.title" = "Nome do Backup";
-"backup.cloud.name.description" = "Digite o nome para o arquivo de backup.";
-"backup.cloud.name.empty" = "O nome do Backup não pode estar vazio!";
-"backup.cloud.name.error.empty" = "O nome do backup não pode estar vazio";
-"backup.cloud.name.error.already_exist" = "O nome do Backup já existe!";
-"backup.cloud.name.placeholder" = "Nome";
+"backup.cloud.name.title" = "Backup Name";
+"backup.cloud.name.description" = "Give it a name, folks! This backup file needs an identity. Make it memorable!";
+"backup.cloud.name.empty" = "Whoops, folks! You can't leave that backup name hanging empty. Fill it up with something good!";
+"backup.cloud.name.error.empty" = "Remember, folks, that backup name, it can't be an empty slate. Give it some character!";
+"backup.cloud.name.error.already_exist" = "Well, folks, looks like you're not the only one with that backup name. It's already in the club!";
+"backup.cloud.name.placeholder" = "Name";
 
-"backup.cloud.password.title" = "Definir Senha";
-"backup.cloud.password.description" = "Defina a senha de desbloqueio para o seu backup. Deve consistir de pelo menos 8 símbolos e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial.";
-"backup.cloud.password.highlighted_description" = "Não esqueça esta senha! Ela é separada da sua senha do iCloud da Apple e não pode ser recuperada ou redefinida.";
-"backup.cloud.password.placeholder" = "Senha";
-"backup.cloud.password.confirm.placeholder" = "Confirmar";
-"backup.cloud.password.save" = "Salvar e fazer Backup";
+"backup.cloud.password.title" = "Set Password";
+"backup.cloud.password.description" = "Here's the deal, folks: You've got to set an unlock password for your backup. It's gotta be strong, okay? We're talking at least 8 symbols, including one lowercase letter, one uppercase letter, a number, and a special character. It's your vault's first line of defense!";
+"backup.cloud.password.highlighted_description" = "Don't forget this password! It is separate from your Apple iCloud password, and it cannot be recovered or reset.";
+"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.confirm.placeholder" = "Confirm";
+"backup.cloud.password.save" = "Save and Backup";
 
-"backup.cloud.password.error.empty_passphrase" = "A senha não pode estar vazia";
-"backup.cloud.password.error.forbidden_symbols" = "Por favor, use apenas símbolos suportados: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"backup.cloud.password.error.minimum_requirement" = "Pelo menos 8 caracteres, incluindo uma letra maiúscula, uma letra minúscula, um número e um símbolo";
-"backup.cloud.password.error.invalid_password" = "Senha Incorreta";
-"backup.cloud.password.error.invalid_backup" = "O backup está corrompido";
-"backup.cloud.password.confirm.error.doesnt_match" = "A senha não corresponde";
-"backup.cloud.not_available" = "iCloud indisponível";
-"backup.cloud.cant_create_file" = "Não é possível salvar o arquivo no iCloud";
-"backup.cloud.cant_delete_file" = "Não é possível excluir do iCloud";
-"backup.cloud.no_access.title" = "Acessar o iCloud";
-"backup.cloud.no_access.title" = "Acessar o iCloud";
-"backup.cloud.no_access.description" = "Para criar um backup, você precisa fornecer acesso ao armazenamento iCloud.";
+"backup.cloud.password.error.empty_passphrase" = "Passphrase cannot be empty";
+"backup.cloud.password.error.forbidden_symbols" = "Please use only supported symbols: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"backup.cloud.password.error.minimum_requirement" = "At least 8 characters, including one uppercase letter, one lowercase letter, one number, and one symbol";
+"backup.cloud.password.error.invalid_password" = "Incorrect Password";
+"backup.cloud.password.error.invalid_backup" = "Backup is corrupted";
+"backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
+"backup.cloud.not_available" = "iCloud not Available";
+"backup.cloud.cant_create_file" = "Can't save File to iCloud";
+"backup.cloud.cant_delete_file" = "Can't delete from iCloud";
+"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.description" = "To create a backup, you need to provide access to iCloud storage.";
 
 
 // Errors
 
-"error.send.self_transfer" = "Não é possível enviar para você mesmo";
-"error.send_binance.memo_required" = "O receptor requer uma nota não vazia na transação de transferência";
-"error.send_binance.only_digits_allowed" = "Requer que o memorando contenha apenas dígitos";
-"error.send_z_cash.transparent_address" = "O %@ não suporta pagamentos para um endereço transparente";
+"error.send.self_transfer" = "Sending to yourself is not supported";
+"error.send_binance.memo_required" = "The receiver requires a non-empty memo in the transfer transaction";
+"error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
+"error.send_z_cash.transparent_address" = "%@ doesn't support payments to a transparent address";
 
 // Balance
 
-"balance.title" = "Saldo";
-"balance.tab_bar_item" = "Saldo";
-"balance.send" = "Enviar";
-"balance.withdraw" = "Sacar";
-"balance.swap" = "Trocar";
-"balance.receive" = "Receber";
-"balance.deposit" = "Receber";
-"balance.address" = "Endereço";
-"balance.rate_per_coin" = "%@ por %@";
-"balance.syncing" = "Sincronizando...";
-"balance.searching" = "Procurando transações...";
-"balance.downloading_sapling" = "Baixando prévias.. %d%%";
-"balance.downloading_blocks" = "Baixando Blocos";
-"balance.scanning_blocks" = "Verificando Blocos";
-"balance.enhancing_transactions" = "Aprimorando Transações";
+"balance.title" = "Balance";
+"balance.tab_bar_item" = "Balance";
+"balance.send" = "Send";
+"balance.withdraw" = "Withdraw";
+"balance.swap" = "Swap";
+"balance.receive" = "Receive";
+"balance.deposit" = "Deposit";
+"balance.address" = "Address";
+"balance.rate_per_coin" = "%@ per %@";
+"balance.syncing" = "Syncing...";
+"balance.searching" = "Searching transactions...";
+"balance.downloading_sapling" = "Downloading Sapling... %d%%";
+"balance.downloading_blocks" = "Downloading Blocks";
+"balance.scanning_blocks" = "Scanning Blocks";
+"balance.enhancing_transactions" = "Enhancing Transactions";
 
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Sincronizando... %@";
-"balance.synced_through" = "até %@";
-"balance.add_coin" = "Adicionar Moeda";
-"balance.invalid_api_key" = "Chave de API inválida";
-"balance.empty.add_coins" = "Adicionar Moedas";
-"balance.empty.description" = "Você não adicionou nenhuma moeda nesta carteira.";
-"balance.watch_empty.description" = "Este endereço da carteira não tem nenhum saldo";
-"balance.sort_by" = "Organizar por";
-"balance.sort.header" = "Organizar por";
-"balance.sort.valueHighToLow" = "Saldo";
-"balance.sort.az" = "Nome";
-"balance.sort.price_change" = "Mudança de Preço";
+"balance.syncing_percent" = "Syncing... %@";
+"balance.synced_through" = "until %@";
+"balance.add_coin" = "Add Coin";
+"balance.invalid_api_key" = "Invalid API Key";
+"balance.empty.add_coins" = "Add Coins";
+"balance.empty.description" = "You haven't added any coins to this wallet.";
+"balance.watch_empty.description" = "This wallet address does not have any balance";
+"balance.sort_by" = "Sort By";
+"balance.sort.header" = "Sort by";
+"balance.sort.valueHighToLow" = "Balance";
+"balance.sort.az" = "Name";
+"balance.sort.price_change" = "Price Change";
 
-"balance_error.change_source" = "Mudar a fonte";
-"balance_error.sync_error" = "Erro de Sincronização";
-"lost_accounts.warning_title" = "Erro de Keychain do iOS";
-"lost_accounts.warning_message" = "Os dados criptografados que continham sua carteira foram invalidados recentemente porque a tela de bloqueio do iOS foi alterada";
+"balance_error.change_source" = "Change Source";
+"balance_error.sync_error" = "Sync Error";
+"lost_accounts.warning_title" = "iOS Keychain Error";
+"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
+
+// Token Balance Page
+"balance.token.locked" = "Locked";
+"balance.token.locked.info.title" = "Locked title";
+"balance.token.locked.info.description" = "Locked Description Text";
+"balance.token.staked" = "Staked";
+"balance.token.staked.info.title" = "Staked title";
+"balance.token.staked.info.description" = "Staked Description Text";
+"balance.token.frozen" = "Frozen";
+"balance.token.frozen.info.title" = "Frozen title";
+"balance.token.frozen.info.description" = "Frozen Description Text";
 
 // Account switcher
 
-"switch_account.title" = "Trocar carteira";
-"switch_account.wallets" = "Carteiras";
-"switch_account.watch_wallets" = "Ver Endereço";
+"switch_account.title" = "Switch Wallet";
+"switch_account.wallets" = "Wallets";
+"switch_account.watch_wallets" = "Watch Wallets";
 
 // Release notes
 
-"release_notes.title" = "O que há de novo";
-"release_notes.follow_us" = "Siga a gente";
+"release_notes.title" = "What's New";
+"release_notes.follow_us" = "Follow Us";
 
 // Deposit
 
-"deposit.receive_coin" = "Receber %@";
-"deposit.address" = "Endereço";
-"deposit.your_address" = "Seu endereço";
-"receive_alert.not_backed_up_description" = "Você precisa fazer um backup de %@ antes de poder receber %@.";
+"deposit.receive_coin" = "Receive %@";
+"deposit.address" = "Address";
+"deposit.your_address" = "Your Address";
+"receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
+"receive_alert.any_coins.not_backed_up_description" = "You need to backup %@ before you may receive any coins.";
+"deposit.no_adapter.error" = "Can't provide address";
 
-"deposit.not_active" = "não ativo";
-"deposit.not_active.title" = "Endereço não ativo";
-"deposit.not_active.tron_description" = "Contas recém-criadas no blockchain TRON estão inativas e não podem ser consultadas ou exploradas. Elas precisam ser ativadas.\n\nPara ativar uma nova conta na cadeia Tron, é necessário transferir tokens TRX ou TRC-10 para um endereço de conta inativo, juntamente com uma taxa de ativação de 1 TRX";
+"deposit.address_format" = "Format";
+"deposit.qr_code_description" = "Your address for depositing %@";
+"deposit.qr_code_description.watch" = "Watch address of %@";
+"deposit.account" = "Account";
+
+"deposit.not_active" = "Not active";
+"deposit.not_active.title" = "Not Active Address";
+"deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
+
+"deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
+"deposit.zcash.restore.already_own" = "Yes, I already own";
+"deposit.zcash.restore.dont_have" = "No, I don’t have";
+
+"deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
+
+"receive_network_select.title" = "Network";
+"receive_network_select.description" = "Choose a network and get an address to receive.";
+
+"receive_address_format_select.title" = "Address Format";
+"receive_address_format_select.description" = "Choose a network and get an address to receive.";
+"receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
+"receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
+
+"blockchain_type.recommended" = " (recommended)";
 
 // Send
 
-"send.title" = "Enviar %@";
-"send.send" = "Enviar";
-"send.amount_placeholder" = "Montante";
-"send.address_placeholder" = "Endereço";
-"send.address_or_domain_placeholder" = "Endereço ou Domínio";
-"send.fee" = "Taxa";
-"send.network_fee" = "Taxa de Rede";
-"send.estimated_fee" = "Taxa estimada";
-"send.max_fee" = "Taxa máxima";
+"send.title" = "Send %@";
+"send.send" = "Send";
+"send.no_assets" = "You have no assets to send.";
+"send.amount_placeholder" = "Amount";
+"send.address_placeholder" = "Address";
+"send.address_or_domain_placeholder" = "Address or Domain";
+"send.fee" = "Fee";
+"send.network_fee" = "Network Fee";
+"send.estimated_fee" = "Estimated Fee";
+"send.max_fee" = "Max Fee";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
-"send.available_balance" = "Saldo Disponível";
-"send.max_button" = "Máximo";
-"send.next_button" = "Próximo";
-"send.error.invalid" = "Inválido";
-"send.error.address" = "Endereço";
-"send.hodler_locktime" = "TravaTempo";
-"send.hodler_locktime_hour" = "1 hora";
-"send.hodler_locktime_month" = "1 mês";
-"send.hodler_locktime_half_year" = "6 meses";
-"send.hodler_locktime_year" = "1 ano";
-"send.hodler_locktime_off" = "Desligado";
-"send.hodler_error.unsupported_address" = "O bloqueio de tempo só funciona com endereços P2PKH (iniciando com 1)";
-"send.fee_info.title" = "Taxa de tarifa";
+"send.available_balance" = "Available Balance";
+"send.max_button" = "Max";
+"send.next_button" = "Next";
+"send.error.invalid" = "Invalid";
+"send.error.address" = "Address";
+"send.hodler_locktime" = "TimeLock";
+"send.hodler_locktime_hour" = "1 hour";
+"send.hodler_locktime_month" = "1 month";
+"send.hodler_locktime_half_year" = "6 months";
+"send.hodler_locktime_year" = "1 year";
+"send.hodler_locktime_off" = "Off";
+"send.hodler_error.unsupported_address" = "Time locking works only when sending to payment addresses starting with 1... (aka BIP44 addresses)";
+"send.fee_info.title" = "Fee Rate";
 "send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
-"send.transaction_inputs_outputs_info.title" = "Entradas / Saídas de Transação";
-"send.transaction_inputs_outputs_info.description" = "A maioria das transações em Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira %@ implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários %@:";
-"send.transaction_inputs_outputs_info.shuffle.title" = "1. Embaralhar";
-"send.transaction_inputs_outputs_info.shuffle.description" = "A ordem das saídas da transação é aleatória em cada transação. Às vezes, a mudança pode ser a primeira saída, às vezes pode ser a segunda. Se um usuário confiar no desenvolvedor do aplicativo, considere essa uma opção recomendada.";
-"send.transaction_inputs_outputs_info.deterministic.title" = "2. Determinístico";
-"send.transaction_inputs_outputs_info.deterministic.description" = "Existe um padrão comumente aceitado para ordenar saídas de transações (conhecido como BIP69). Em carteiras de código aberto, esse padrão garante que os usuários de carteiras não precisem confiar em como os desenvolvedores do aplicativo implementam a ordem das saídas. Como esse padrão é novo, poucas carteiras o implementaram ainda. Como resultado, é possível ver no blockchain se uma transação foi enviada de uma carteira que usa esse padrão ou não.";
+"send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
+"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe %@ wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to %@ users:";
+"send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
+"send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
+"send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
+"send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
 
-"send.confirmation.you_send" = "Enviar";
-"send.confirmation.to" = "Para";
-"send.confirmation.contact_name" = "Nome do Contato";
-"send.confirmation.domain" = "Domínio";
-"send.confirmation.address" = "Endereço";
-"send.confirmation.account" = "Conta";
+"send.confirmation.you_send" = "You Send";
+"send.confirmation.to" = "To";
+"send.confirmation.contact_name" = "Contact Name";
+"send.confirmation.domain" = "Domain";
+"send.confirmation.address" = "Address";
+"send.confirmation.account" = "Account";
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
-"send.confirmation.fee" = "Taxa";
-"send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.slide_to_send" = "Deslize para enviar";
-"send.confirmation.sending" = "Enviando";
-"send.confirmation.resend_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
-"send.confirmation.resend" = "Enviar novamente";
-"send.confirmation.cancel_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
-"send.confirmation.cancel" = "Cancelar transação";
+"send.confirmation.fee" = "Fee";
+"send.confirmation.time_lock" = "Time Lock";
+"send.confirmation.slide_to_send" = "Slide to Send";
+"send.confirmation.sending" = "Sending";
+"send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.resend" = "Resend";
+"send.confirmation.cancel_description" = "This action will attempt to invalidate previous transaction by resending as a new 0 amount transaction to self. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.cancel" = "Cancel Transaction";
 "send.confirmation.nonce" = "Nonce";
-"send.confirmation.method" = "Método";
-"send.amount_error.balance" = "Saldo insuficiente";
-"send.address_error.own_address" = "Não é possível transferir TRX para si mesmo";
-"send.amount_error.maximum_amount" = "Valor máximo: %@";
-"send.amount_error.minimum_amount" = "Valor mínimo: %@";
-"send.amount_error.min_required_balance" = "Restante min. necessário %@";
-"send.amount_warning.coin_needed_for_fee" = "Considere deixar algum %@ no saldo para poder pagar transações futuras.";
-"send.token.insufficient_fee_alert" = "Taxas de transação para %@ (%@) pagas em %@. Você precisa de %@.";
+"send.confirmation.method" = "Method";
+"send.amount_error.balance" = "Not Enough Balance";
+"send.address_error.own_address" = "Cannot transfer TRX to yourself";
+"send.amount_error.maximum_amount" = "Maximum amount %@";
+"send.amount_error.minimum_amount" = "Minimum amount %@";
+"send.amount_error.min_required_balance" = "Min. required remainder %@";
+"send.amount_warning.coin_needed_for_fee" = "Consider leaving some %@ on balance to be able to pay for future transactions.";
+"send.token.insufficient_fee_alert" = "Transaction fees for transferring %@ (on %@) paid in %@. You need %@.";
 
-"send.fee_settings.amount_error.balance.title" = "Saldo insuficiente";
-"send.fee_settings.amount_error.balance" = "O saldo atual de %@ está abaixo do valor necessário para processar a transação, incluindo taxa de transação.";
+"send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
+"send.fee_settings.amount_error.balance" = "The current %@ balance is below the amount required to process theis transaction, including transaction fee.";
 
-"send.fee_settings.stuck_warning.title" = "Risco de ficar trancado";
-"send.fee_settings.stuck_warning" = "A transação pode ficar presa ou falhar.";
-"send.fee_settings.fee_error.title" = "Erro de taxa";
-"send.fee_settings.too_low" = "Taxa de taxa é muito baixa.";
-"send.fee_settings.fee_rate_unavailable" = "Tarifa indisponível. Por favor, verifique as taxas de taxas manualmente";
+"send.fee_settings.stuck_warning.title" = "Risk of getting stuck";
+"send.fee_settings.stuck_warning" = "The transaction may get stuck or fail.";
+"send.fee_settings.fee_error.title" = "Fee Error";
+"send.fee_settings.too_low" = "Fee Rate is too low.";
+"send.fee_settings.fee_rate_unavailable" = "Fee Rate unavailable. Please, check fee rates manually";
 
-"send.stuck_warning" = "Atenção! Risco de ficar preso";
+"send.stuck_warning" = "Warning! Risk of getting stuck";
 
-"send.lock_time" = "TravaTempo";
+"send.lock_time" = "TimeLock";
 
-"approve.confirmation.you_approve" = "Você concorda";
-"approve.confirmation.you_revoke" = "Você revoga";
-"approve.confirmation.spender" = "Gastador";
+"approve.confirmation.you_approve" = "You Approve";
+"approve.confirmation.you_revoke" = "You Revoke";
+"approve.confirmation.spender" = "Spender";
+
+// Donate
+
+"donate.list.title" = "Donate with";
+"donate.list.get_address" = "Get Address";
+"donate.list.get_address.title" = "Addresses";
+"donate.title" = "Donate %@";
+"donate.no_assets" = "You have no assets to donate.";
+"donate.support.description" = "Together, with your support, we can make this app even better!";
 
 // CoinSelector
 
-"choose_coin.title" = "Escolher Moedas";
+"choose_coin.title" = "Choose Coins";
 
 // Swap
 
-"swap.title" = "Trocar";
-"swap.you_pay" = "Você Paga";
-"swap.estimated" = "estimado";
-"swap.balance" = "Saldo";
-"swap.allowance" = "Preço";
-"swap.you_get" = "Você recebe";
-"swap.token" = "Selecionar";
-"swap.advanced_settings" = "Configurações de troca";
-"swap.proceed_button" = "Próximo";
-"swap.approve.title" = "Aprovar Troca";
-"swap.approve.description" = "Você deve conceder permissão a um contrato inteligente para trocar um determinado token em seu nome. Esta permissão define o valor que pode ser usado por um contrato inteligente. Isso não afeta seu saldo mas requer uma pequena taxa para executar uma transação aprovada. \n\nEmbora possa ser feito sob demanda antes de cada negociação, é mais barato aprovar um montante mais elevado antecipadamente para futuras operações.";
-"swap.approve.amount_error.already_approved" = "Você já tem uma permissão para este valor";
-"swap.approving_button" = "Aprovando...";
-"swap.revoke_warning" = "Você pode trocar %@, ou você precisa revogar e aprovar o novo valor";
-"swap.revoking_button" = "Revogando...";
-"swap.not_available_button" = "Saldo N/A";
-"swap.trade_error.not_found" = "Não é possível trocar esses tokens";
-"swap.trade_error.wrap_unwrap_not_allowed" = "Este serviço não permite embalagem/desagregação. Por favor, tente outro serviço de troca. 1Inch recomendado";
-"swap.button_error.insufficient_balance" = "Saldo insuficiente";
-"swap.switch_provider.title" = "Serviço de Troca";
-"swap.amount_type.coin" = "Moeda";
+"swap.title" = "Swap";
+"swap.no_assets" = "You have no assets to swap.";
+"swap.you_pay" = "You Pay";
+"swap.estimated" = "estimated";
+"swap.balance" = "Balance";
+"swap.allowance" = "Allowance";
+"swap.you_get" = "You Get";
+"swap.token" = "Select";
+"swap.advanced_settings" = "Swap Settings";
+"swap.proceed_button" = "Next";
+"swap.approve.title" = "Swap Approve";
+"swap.approve.description" = "You should grant permission to a smart contract to swap a given token on your behalf. This permission sets the amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute an approval transaction. \n\nWhile it may be done on-demand before each trade, it's cheaper to approve a higher amount in advance for future trades.";
+"swap.approve.amount_error.already_approved" = "You already have an allowance for this amount";
+"swap.approving_button" = "Approving...";
+"swap.revoke_warning" = "You can exchange %@, or you need to revoke and approve the new amount";
+"swap.revoking_button" = "Revoking...";
+"swap.not_available_button" = "Balance N/A";
+"swap.trade_error.not_found" = "Can't swap these tokens";
+"swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
+"swap.button_error.insufficient_balance" = "Insufficient balance";
+"swap.switch_provider.title" = "Swap Service";
+"swap.amount_type.coin" = "Coin";
 
-"swap.price" = "Preço";
-"swap.buy_price" = "Preço de Compra";
-"swap.sell_price" = "Preço de Venda";
-"swap.price_impact" = "Impacto de preço";
-"swap.maximum_paid" = "Quantia Máxima";
-"swap.minimum_got" = "Valor garantido";
+"swap.price" = "Price";
+"swap.buy_price" = "Buy Price";
+"swap.sell_price" = "Sell Price";
+"swap.price_impact" = "Price Impact";
+"swap.maximum_paid" = "Maximum Amount";
+"swap.minimum_got" = "Guaranteed Amount";
 "swap.estimate_short" = "(est)";
 "swap.minimum_short" = "(min)";
-"swap.maximum_short" = "(máx)";
+"swap.maximum_short" = "(max)";
 
 // Swap Advanced Settings
 
-"swap.advanced_settings.slippage" = "Tolerância de Slippage";
-"swap.advanced_settings.slippage.footer" = "Sua transação será revertida se o preço mudar desfavoravelmente em mais do que esta porcentagem";
-"swap.advanced_settings.deadline" = "Data-limite da operação";
-"swap.advanced_settings.deadline.footer" = "Sua transação será revertida se ficar pendente por mais tempo.";
-"swap.advanced_settings.recipient.footer" = "Após a operação de câmbio, o valor será transferido para o endereço especificado";
+"swap.advanced_settings.slippage" = "Slippage Tolerance";
+"swap.advanced_settings.slippage.footer" = "Your transaction will revert if the price changes unfavorably by more than this percentage";
+"swap.advanced_settings.deadline" = "Transaction Deadline";
+"swap.advanced_settings.deadline.footer" = "Your transaction will revert if it is pending for more than this long.";
+"swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
 "swap.advanced_settings.deadline_minute" = "%@ min";
-"swap.advanced_settings.recipient_address" = "Endereço do Destinatário";
-"swap.advanced_settings.warning.unusual_slippage" = "Sua operação pode ser de front-running";
-"swap.advanced_settings.service_fee_description" = "Uma taxa de serviço para a ação de troca na plataforma normalmente 0,3% ou 0,6%";
-"swap.advanced_settings.error.lower_slippage" = "É provável que sua transação falhe.";
-"swap.advanced_settings.error.higher_slippage" = "Tolerância do Slippage não pode ser maior que %@%%";
-"swap.advanced_settings.error.invalid_address" = "Endereço Inválido";
-"swap.advanced_settings.error.invalid_slippage" = "Slippage Inválido";
-"swap.advanced_settings.error.invalid_deadline" = "Prazo de tarefa inválido";
+"swap.advanced_settings.recipient_address" = "Recipient Address";
+"swap.advanced_settings.warning.unusual_slippage" = "Your transaction may be frontrun";
+"swap.advanced_settings.service_fee_description" = "A service fee for the swap action on the platform typicaly either 0.3% or 0.6%";
+"swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";
+"swap.advanced_settings.error.higher_slippage" = "Slippage Tolerance can’t be more than %@%%";
+"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
+"swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
 
-"swap.one_inch.error.cannot_estimate" = "Erro de Estimativa";
-"swap.one_inch.error.cannot_estimate.info" = "Verifique o saldo para garantir que haja %@ suficiente para cobrir a taxa. Ou tente aumentar o preço do slippage e tente novamente. Será possível tentar novamente em 3 seg...";
-"swap.one_inch.error.insufficient_liquidity" = "Liquidez Insuficiente";
-"swap.one_inch.error.insufficient_liquidity.info" = "Provavelmente não existe liquidez suficiente disponível para processar esta operação. Tente reduzir o valor.";
+"swap.one_inch.error.cannot_estimate" = "Estimation Error";
+"swap.one_inch.error.cannot_estimate.info" = "Check the balance to ensure there is enough %@ to cover the fee. Or try increasing the price slippage amount and try again. Will auto-retry in 3 sec...";
+"swap.one_inch.error.insufficient_liquidity" = "Insufficient Liquidity";
+"swap.one_inch.error.insufficient_liquidity.info" = "Likely there is not enough liquidity available to process this trade. Try lowering the amount.";
 
-"swap.service" = "Serviço";
-"swap.service.title" = "Serviço";
+"swap.service" = "Service";
+"swap.service.title" = "Service";
 
 // Swap Approving
 
-"swap.approve.subtitle" = "Trocar";
+"swap.approve.subtitle" = "Swap";
 
 // Swap Confirmation
 
-"swap.confirmation.slide_to_swap" = "Deslize para trocar";
-"swap.confirmation.swapping" = "Trocando";
-"swap.confirmation.impact_too_high" = "%@ desativou a ação de troca para essa troca porque você está obtendo um preço extremamente desfavorável. Isso se deve a liquidez extremamente baixa.\nSe você ainda quiser trocar, use o site %@.";
-"swap.confirmation.impact_warning" = "Importante! Você está recebendo um preço extremamente desfavorável. Isso se deve a uma liquidez extremamente baixa.";
+"swap.confirmation.slide_to_swap" = "Slide to Swap";
+"swap.confirmation.swapping" = "Swapping";
+"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
+"swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
 
-"swap.confirmation.minimum_received" = "Mínimo recebido";
-"swap.confirmation.maximum_sent" = "Gastos máximos";
+"swap.confirmation.minimum_received" = "Minimum Received";
+"swap.confirmation.maximum_sent" = "Maximum Sent";
 
-"swap.dex_info.description" = "Este serviço de troca é fornecido por %@, um protocolo descentralizado de troca de tokens construído na blockchain %@. \n\n%@ É totalmente automatizado e gerenciado por contratos inteligentes que facilitam a troca de tokens de uma forma confiável sem qualquer meio de trapaça.";
+"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
 
-"swap.dex_info.header_dex_related" = "%@ Relacionado";
-"swap.dex_info.header_allowance" = "Preço";
-"swap.dex_info.content_allowance" = "O montante que uma exchange pode gastar em nome do usuário na execução de trocas simbólicas. É necessária uma margem suficiente para que uma transação de troca efetiva possa ocorrer.";
-"swap.dex_info.header_price_impact" = "Impacto de preço";
-"swap.dex_info.content_price_impact" = "O desvio de preço esperado de um valor mostrado, normalmente aumenta com o montante de swap.";
-"swap.dex_info.header_swap_fee" = "Tarifas de troca";
-"swap.dex_info.content_swap_fee" = "Uma taxa de serviço para a ação de troca na plataforma, mostrada na moeda que o usuário vende. Para a maioria das encomendas, deve situar-se nos 0,3% ou nos 0,6%.";
-"swap.dex_info.header_guaranteed_amount" = "Valor garantido";
-"swap.dex_info.content_guaranteed_amount" = "A quantia mínima que um usuário receberá em resultado de uma ação de troca.";
-"swap.dex_info.header_maximum_spend" = "Gastos máximos";
-"swap.dex_info.content_maximum_spend" = "A quantia mínima que um usuário receberá em resultado de uma ação de troca.";
+"swap.dex_info.header_dex_related" = "%@ Related";
+"swap.dex_info.header_allowance" = "Allowance";
+"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.dex_info.header_price_impact" = "Price Impact";
+"swap.dex_info.content_price_impact" = "The expected price deviation from a shown price typically increases with the swap amount.";
+"swap.dex_info.header_swap_fee" = "Swap Fee";
+"swap.dex_info.content_swap_fee" = "A service fee for the swap action on the platform, shown in the currency the user sells. For most orders, it should be either 0.3 % or 0.6 %.";
+"swap.dex_info.header_guaranteed_amount" = "Guaranteed Amount";
+"swap.dex_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
+"swap.dex_info.header_maximum_spend" = "Maximum Spend";
+"swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
 
-"swap.dex_info.header_other" = "Outros";
-"swap.dex_info.header_transaction_fee" = "Taxa de Transação";
-"swap.dex_info.content_transaction_fee" = "O custo de processamento estimado da determinada transação em %@ blockchain. %@ transações relacionadas normalmente custarão mais do que as transações genéricas de transferência do token.";
-"swap.dex_info.header_transaction_speed" = "Velocidade da Transação";
-"swap.dex_info.content_transaction_speed" = "Transações com uma taxa de transação maior resultarão em velocidades de processamento mais rápidas. O oposto também é verdade.";
+"swap.dex_info.header_other" = "Other";
+"swap.dex_info.header_transaction_fee" = "Transaction Fee";
+"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
+"swap.dex_info.header_transaction_speed" = "Transaction Speed";
+"swap.dex_info.content_transaction_speed" = "Transactions with a higher transaction fee will result in faster processing speeds. The opposite is true as well.";
 
 "swap.dex_info.link_button" = "%@ Site";
 
 // Market
 
-"market.tab_bar_item" = "Mercados";
-"market.title" = "Mercados";
-"market.category.overview" = "Visão geral";
-"market.category.posts" = "Notícias";
-"market.category.watchlist" = "Lista de observação";
-"market.total_market_cap" = "Valor Total de M.";
-"market.24h_volume" = "Volume em 24h";
-"market.defi_cap" = "Mercado de DeFi";
-"market.defi_tvl" = "TVL no DeFi";
+"market.tab_bar_item" = "Markets";
+"market.title" = "Markets";
+"market.category.overview" = "Overview";
+"market.category.posts" = "News";
+"market.category.watchlist" = "Watchlist";
+"market.total_market_cap" = "Total M.Cap";
+"market.24h_volume" = "24h Volume";
+"market.defi_cap" = "DeFi Cap";
+"market.defi_tvl" = "TVL in DeFi";
 
-"market.project_has_no_coin" = "Esse projeto não tem uma moeda";
+"market.project_has_no_coin" = "This project doesn’t have a coin";
 
-"market.top.section.header.see_all" = "Ver tudo";
-"market.top.section.header.top_gainers" = "Maiores Altas";
-"market.top.section.header.top_losers" = "Maiores Quedas";
-"market.top.section.header.top_sectors" = "Principais Setores";
-"market.top.section.header.news" = "Notícias";
+"market.top.section.header.see_all" = "See All";
+"market.top.section.header.top_gainers" = "Top Gainers";
+"market.top.section.header.top_losers" = "Top Losers";
+"market.top.section.header.top_sectors" = "Top Sectors";
+"market.top.section.header.news" = "News";
 "market.top.volume.title" = "Vol";
-"market.top.market_cap.title" = "Cap. de mercado";
-"market.top.diluted_market_cap.title" = "MCap Diludido";
+"market.top.market_cap.title" = "MCap";
+"market.top.diluted_market_cap.title" = "Diluted MCap";
 
-"market.market_field.mcap" = "Cap. de mercado";
+"market.market_field.mcap" = "MCap";
 "market.market_field.vol" = "Vol";
 
 "market.tvl.market_field.value" = "USD";
-"market.tvl.market_field.diff" = "Percentual";
+"market.tvl.market_field.diff" = "Percent";
 
-"market.tvl.platform_field.all" = "Todos";
+"market.tvl.platform_field.all" = "All";
 
-"market.sort_by" = "Organizar por";
+"market.sort_by" = "Sort By";
 
-"market.top.title" = "Top Moedas";
-"market.top.description" = "Top moedas por classificação de capitalização de mercado";
+"market.top.title" = "Top Coins";
+"market.top.description" = "Top Coins by market cap rank";
 
-"market.top.highest_cap" = "Maior capitalização";
-"market.top.lowest_cap" = "Menor capitalização";
-"market.top.highest_volume" = "Maior volume";
-"market.top.lowest_volume" = "Menor volume";
-"market.top.top_gainers" = "Maiores Altas";
-"market.top.top_losers" = "Maiores Quedas";
-"market.top.top_collections" = "Principais Coleções NFT";
-"market.top.floor_price" = "Andar:";
-"market.top.top_platforms" = "Melhores Plataformas";
-"market.top.protocols" = "Protocolos";
+"market.top.highest_cap" = "Highest Cap";
+"market.top.lowest_cap" = "Lowest Cap";
+"market.top.highest_volume" = "Highest Volume";
+"market.top.lowest_volume" = "Lowest Volume";
+"market.top.top_gainers" = "Top Gainers";
+"market.top.top_losers" = "Top Losers";
+"market.top.top_collections" = "Top NFT Collections";
+"market.top.floor_price" = "Floor:";
+"market.top.top_platforms" = "Top Platforms";
+"market.top.protocols" = "Protocols";
 
-"top_platforms.title" = "Classificação de Plataformas";
-"top_platforms.description" = "Liderança de plataformas de blockchain por mercado cumulativo de projetos construídos no topo.";
+"top_platforms.title" = "Platforms Rank";
+"top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
 
-"top_platform.title" = "%@ Ecossistema";
-"top_platform.description" = "Valor de mercado de todos procolos na cadeia %@";
+"top_platform.title" = "%@ Ecosystem";
+"top_platform.description" = "Market cap of all protocols on the %@ chain";
 
-"market_discovery.title" = "Descobrir";
-"market_discovery.filters" = "Filtros";
-"market_discovery.browse_categories" = "Navegar nas categorias";
-"market_discovery.top_coins" = "TOP Moedas";
-"market_discovery.not_found" = "Nenhum resultado encontrado";
+"market_discovery.title" = "Discovery";
+"market_discovery.filters" = "Filters";
+"market_discovery.browse_categories" = "Browse Categories";
+"market_discovery.top_coins" = "TOP Coins";
+"market_discovery.not_found" = "No results found";
 
-"market_watchlist.empty.caption" = "Seu catálogo está vazio.";
+"market_watchlist.empty.caption" = "Your watchlist is empty.";
 
-"market.search.title" = "Buscar";
-"market.search.empty_text" = "Nenhum resultado encontrado";
+"market.search.title" = "Search";
+"market.search.empty_text" = "No results found";
 
-"market.advanced_search.title" = "Filtros";
-"market.advanced_search.show_results" = "Mostrar Resultados";
-"market.advanced_search.empty_results" = "Nenhum resultado";
-"market.advanced_search.dex_description" = "Esta configuração se aplica a tokens operados na Ethereum (Uniswap DEX) e na Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.title" = "Filters";
+"market.advanced_search.show_results" = "Show Results";
+"market.advanced_search.empty_results" = "Empty Results";
+"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
 "market.advanced_search.24h" = "24h";
 
-"market.advanced_search.market_parameters" = "Parâmetros do mercado";
-"market.advanced_search.network_parameters" = "Parâmetros de rede";
-"market.advanced_search.price_parameters" = "Parâmetros de preço";
-"market.advanced_search.choose_set" = "Escolha o Conjunto";
-"market.advanced_search.market_cap" = "Capitalização de mercado";
-"market.advanced_search.volume" = "Volume de Operações";
-"market.advanced_search.liquidity" = "Liquidez DEX";
+"market.advanced_search.market_parameters" = "Market Parameters";
+"market.advanced_search.network_parameters" = "Network Parameters";
+"market.advanced_search.price_parameters" = "Price Parameters";
+"market.advanced_search.choose_set" = "Choose Set";
+"market.advanced_search.market_cap" = "Market Cap";
+"market.advanced_search.volume" = "Trading Volume";
+"market.advanced_search.liquidity" = "DEX Liquidity";
 "market.advanced_search.blockchains" = "Blockchains";
-"market.advanced_search.price_period" = "Período de Preço";
-"market.advanced_search.price_change" = "Mudança de Preço";
+"market.advanced_search.price_period" = "Price Period";
+"market.advanced_search.price_change" = "Price Change";
 
-"market.advanced_search.outperformed_btc" = "BTC superado";
-"market.advanced_search.outperformed_eth" = "ETH superado";
-"market.advanced_search.outperformed_bnb" = "BNB superado";
-"market.advanced_search.price_close_to_ath" = "Preço próximo a ATH";
-"market.advanced_search.price_close_to_atl" = "Preço próximo a ATL";
+"market.advanced_search.outperformed_btc" = "Outperformed BTC";
+"market.advanced_search.outperformed_eth" = "Outperformed ETH";
+"market.advanced_search.outperformed_bnb" = "Outperformed BNB";
+"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
+"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
 
-"market.advanced_search.top" = "Primeiros %d";
-"market.advanced_search.reset_all" = "Resetar";
+"market.advanced_search.top" = "Top %d";
+"market.advanced_search.reset_all" = "Reset";
 
 "market.advanced_search.less_5_m" = "< 5M";
 "market.advanced_search.less_10_m" = "< 10M";
@@ -614,759 +658,757 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "market.advanced_search.m_5_m_20" = "5M - 20M";
 "market.advanced_search.m_10_m_40" = "10M - 40M";
 "market.advanced_search.m_20_m_100" = "20M - 100M";
-"market.advanced_search.m_40_m_200" = "40M — 200M";
-"market.advanced_search.m_50_m_200" = "50M — 200M";
-"market.advanced_search.m_100_b_1" = "100M — 1B";
-"market.advanced_search.m_200_b_1" = "200M — 1B";
-"market.advanced_search.m_200_b_2" = "200M — 2B";
-"market.advanced_search.m_500_b_2" = "500M — 2B";
-"market.advanced_search.b_1_b_5" = "1B — 5B";
-"market.advanced_search.b_1_b_10" = "1B — 10B";
-"market.advanced_search.b_2_b_10" = "2B — 10B";
-"market.advanced_search.b_10_b_50" = "10B — 50B";
-"market.advanced_search.b_10_b_100" = "10B — 100B";
-"market.advanced_search.b_100_b_500" = "100B — 500B";
+"market.advanced_search.m_40_m_200" = "40M - 200M";
+"market.advanced_search.m_50_m_200" = "50M - 200M";
+"market.advanced_search.m_100_b_1" = "100M - 1B";
+"market.advanced_search.m_200_b_1" = "200M - 1B";
+"market.advanced_search.m_200_b_2" = "200M - 2B";
+"market.advanced_search.m_500_b_2" = "500M - 2B";
+"market.advanced_search.b_1_b_5" = "1B - 5B";
+"market.advanced_search.b_1_b_10" = "1B - 10B";
+"market.advanced_search.b_2_b_10" = "2B - 10B";
+"market.advanced_search.b_10_b_50" = "10B - 50B";
+"market.advanced_search.b_10_b_100" = "10B - 100B";
+"market.advanced_search.b_100_b_500" = "100B - 500B";
 "market.advanced_search.more_5_b" = "> 5B";
 "market.advanced_search.more_10_b" = "> 10B";
 "market.advanced_search.more_50_b" = "> 50B";
 "market.advanced_search.more_500_b" = "> 500B";
 
-"market.advanced_search.day" = "1 Dia";
-"market.advanced_search.week" = "1 Semana";
-"market.advanced_search.week2" = "2 Semanas";
-"market.advanced_search.month" = "1 Mês";
-"market.advanced_search.month6" = "6 Meses";
-"market.advanced_search.year" = "1 Ano";
+"market.advanced_search.day" = "1 Day";
+"market.advanced_search.week" = "1 Week";
+"market.advanced_search.week2" = "2 Weeks";
+"market.advanced_search.month" = "1 Month";
+"market.advanced_search.month6" = "6 Months";
+"market.advanced_search.year" = "1 Year";
 
-"market.advanced_search_results.title" = "Resultados";
+"market.advanced_search_results.title" = "Results";
 
-"market.global.total_market_cap.title" = "Capitalização Total de Mercado";
-"market.global.total_market_cap.description" = "Valor total de mercado de todas as criptomoedas";
+"market.global.total_market_cap.title" = "Total Market Cap";
+"market.global.total_market_cap.description" = "Total market value of all cryptocurrencies";
 
-"market.global.volume_24h.title" = "Volume em 24h";
-"market.global.volume_24h.description" = "O volume de operação em 24h do mercado de cripto";
+"market.global.volume_24h.title" = "24h Volume";
+"market.global.volume_24h.description" = "The 24h trading volume of crypto market";
 
-"market.global.defi_cap.title" = "Mercado de DeFi";
-"market.global.defi_cap.description" = "Valor total de mercado de projetos DeFi";
+"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.defi_cap.description" = "Total market value of DeFi projects";
 
-"market.global.tvl_in_defi.title" = "TVL no DeFi";
-"market.global.tvl_in_defi.description" = "Valor total bloqueado (TVL) no DeFi";
-"market.global.tvl_in_defi.multi_chain" = "Multi-Cadeia";
-"market.global.tvl_in_defi.filter_by_chain" = "Filtrar por cadeia";
+"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
+"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
+"market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
 
 // Coin Page
 
-"coin_page.overview" = "Preço";
-"coin_page.analytics" = "Análises";
-"coin_page.markets" = "Mercados";
+"coin_page.overview" = "Price";
+"coin_page.analytics" = "Analytics";
+"coin_page.markets" = "Markets";
 "coin_page.tweets" = "Tweets";
 
 // Coin Page -> Overview
 
-"coin_overview.indicators" = "Indicadores";
-"coin_overview.indicators.show" = "Mostrar";
-"coin_overview.indicators.hide" = "Ocultar";
-"coin_overview.market_cap" = "Capitalização de mercado";
-"coin_overview.circulating_supply" = "Em Circulação";
-"coin_overview.total_supply" = "Fornecimento total";
-"coin_overview.diluted_market_cap" = "MCap Diludido";
-"coin_overview.genesis_date" = "Data de Início";
-"coin_overview.trading_volume" = "Volume de Operações";
+"coin_overview.indicators" = "Indicators";
+"coin_overview.indicators.show" = "Show";
+"coin_overview.indicators.hide" = "Hide";
+"coin_overview.market_cap" = "Market Cap";
+"coin_overview.circulating_supply" = "In Circulation";
+"coin_overview.total_supply" = "Total Supply";
+"coin_overview.diluted_market_cap" = "Diluted MCap";
+"coin_overview.genesis_date" = "Inception Date";
+"coin_overview.trading_volume" = "Trading Volume";
 
-"coin_overview.roi.hour24" = "1 Dia";
-"coin_overview.roi.day7" = "1 Semana";
-"coin_overview.roi.day14" = "2 Semanas";
-"coin_overview.roi.day30" = "1 Mês";
-"coin_overview.roi.day200" = "6 Meses";
-"coin_overview.roi.year1" = "1 Ano";
+"coin_overview.roi.hour24" = "1 Day";
+"coin_overview.roi.day7" = "1 Week";
+"coin_overview.roi.day14" = "2 Weeks";
+"coin_overview.roi.day30" = "1 Month";
+"coin_overview.roi.day200" = "6 Month";
+"coin_overview.roi.year1" = "1 Year";
 
-"coin_overview.category" = "Categoria";
+"coin_overview.category" = "Category";
 
 "coin_overview.blockchains" = "Blockchains";
 "coin_overview.bips" = "BIPs";
-"coin_overview.coin_types" = "Tipos de moeda";
-"coin_overview.show_more" = "Mostrar Mais";
-"coin_overview.show_less" = "Mostrar menos";
+"coin_overview.coin_types" = "Coin Types";
+"coin_overview.show_more" = "Show More";
+"coin_overview.show_less" = "Show Less";
 "coin_overview.links" = "Links";
 
-"coin_overview.guide" = "Guia";
-"coin_overview.website" = "Site";
+"coin_overview.guide" = "Guide";
+"coin_overview.website" = "Website";
 "coin_overview.whitepaper" = "Whitepaper";
 
 // Coin Page -> Analytics
 
-"coin_analytics.indicators.summary" = "Resumo";
-"coin_analytics.indicators.title" = "Indicadores Técnicos";
-"coin_analytics.indicators.no_data" = "Sem dados";
-"coin_analytics.indicators.strong_buy" = "Compra forte";
-"coin_analytics.indicators.buy" = "Comprar";
-"coin_analytics.indicators.neutral" = "Neutra";
-"coin_analytics.indicators.sell" = "Irá vender";
-"coin_analytics.indicators.strong_sell" = "Venda forte";
-"coin_analytics.period" = "Período";
-"coin_analytics.period.select_title" = "Selecionar Período";
-"coin_analytics.period.1h" = "1 hora";
-"coin_analytics.period.4h" = "4 horas";
-"coin_analytics.period.1d" = "1 dia";
-"coin_analytics.period.1w" = "1 semana";
+"coin_analytics.indicators.summary" = "Summary";
+"coin_analytics.indicators.title" = "Technical Indicators";
+"coin_analytics.indicators.no_data" = "No Data";
+"coin_analytics.indicators.strong_buy" = "Strong Buy";
+"coin_analytics.indicators.buy" = "Buy";
+"coin_analytics.indicators.neutral" = "Neutral";
+"coin_analytics.indicators.sell" = "Sell";
+"coin_analytics.indicators.strong_sell" = "Strong Sell";
+"coin_analytics.period" = "Period";
+"coin_analytics.period.select_title" = "Select Period";
+"coin_analytics.period.1h" = "1 hour";
+"coin_analytics.period.4h" = "4 hours";
+"coin_analytics.period.1d" = "1 day";
+"coin_analytics.period.1w" = "1 week";
 
-"coin_analytics.details" = "Detalhes";
+"coin_analytics.details" = "Details";
 
-"coin_analytics.not_available" = "Este projeto não tem dados de análise";
+"coin_analytics.not_available" = "This project has no analytics data";
 
-"coin_analytics.technical_indicators" = "Indicadores Técnicos";
-"coin_analytics.technical_indicators.info1" = "Resumo: Esta é uma visão geral das técnicas de um ativo, considerando uma variedade de indicadores técnicos e prazos. Ele fornece uma visão de consenso (Comprar, Vender ou Neutra) com base nestes indicadores.";
-"coin_analytics.technical_indicators.info2" = "Movendo Médias (PMA): Estes são indicadores técnicos usados comumente que suavizam dados de preços para criar um indicador de evolução de seguimento. Eles mostram o preço médio durante um período de tempo específico. Existem vários tipos de MAs:\n\nMédia Simples de Movimento (SMA): Isso calcula a média de uma gama de preços selecionada. usualmente fechando preços, pelo número de períodos desse intervalo.\n\nMédia exponencial em movimento (EMA): Isso dá mais peso aos preços recentes, respondendo assim mais rapidamente às alterações recentes de preços.";
-"coin_analytics.technical_indicators.info3" = "Osciladores: Estes são indicadores técnicos que variam ao longo do tempo em uma banda (acima e abaixo de uma linha centralizada, ou entre os níveis do conjunto). Destinam-se a ajudar a identificar condições sobrecompradas e sobrevendidas num mercado. Aqui estão alguns osciladores comuns:\n\nÍndice de Força Relativa (RSI): Isso mede a velocidade e a mudança de movimentos de preços. Geralmente é utilizada para identificar condições sobrecompradas ou sobrevendidas.\n\nDivergência Média de Convergência (MACD): Isso é usado para identificar sinais potenciais de compra e venda. Ele aciona sinais técnicos quando cruza acima (para comprar) ou abaixo (para vender) sua linha de sinal.";
+"coin_analytics.technical_indicators" = "Technical Indicators";
+"coin_analytics.technical_indicators.info1" = "Summary: This is a general overview of an asset's technicals, considering a variety of technical indicators and timeframes. It provides a consensus viewpoint (Buy, Sell, or Neutral) based on these indicators.";
+"coin_analytics.technical_indicators.info2" = "Moving Averages (MA): These are commonly used technical indicators that smooth out price data to create a trend-following indicator. They show the average price over a specific time period. There are several types of MAs:\n\nSimple Moving Average (SMA): This calculates the average of a selected range of prices, usually closing prices, by the number of periods in that range.\n\nExponential Moving Average (EMA): This gives more weight to recent prices, thereby responding more quickly to recent price changes.";
+"coin_analytics.technical_indicators.info3" = "Oscillators: These are technical indicators that fluctuate over time within a band (above and below a center line, or between set levels). They are designed to help identify overbought and oversold conditions in a market. Here are some common oscillators:\n\nRelative Strength Index (RSI): This measures the speed and change of price movements. It is usually used to identify overbought or oversold conditions.\n\nMoving Average Convergence Divergence (MACD): This is used to identify potential buy and sell signals. It triggers technical signals when it crosses above (to buy) or below (to sell) its signal line.";
 
-"coin_analytics.cex_volume" = "Volume CEX";
-"coin_analytics.cex_volume_rank" = "Ranking do Volume CEX";
-"coin_analytics.cex_volume_rank.description" = "Tokens classificados por volume de negociação para o token em corretoras centralizadas.";
-"coin_analytics.cex_volume.info1" = "Volume total de trading para o token em corretoras centralizadas durante um período de 30 dias.";
-"coin_analytics.cex_volume.info2" = "Gráfico mostrando a variação no volume diário de negociação do token nas principais corretoras centralizadas durante um período de 1 ano.";
-"coin_analytics.cex_volume.info3" = "Classificação do Token baseada no volume de trading nas principais corretoras centralizadas durante um período de 30 dias.";
-"coin_analytics.cex_volume.info4" = "Lista de todos os tokens com base no volume de trading em corretoras centralizadas ao longo de 24H / 7D / 1M.";
+"coin_analytics.cex_volume" = "CEX Volume";
+"coin_analytics.cex_volume_rank" = "CEX Volume Rank";
+"coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
+"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
+"coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
+"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over 30-day period.";
+"coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
 
-"coin_analytics.dex_volume" = "Volume DEX";
-"coin_analytics.dex_volume_rank" = "Ranking do Volume DEX";
-"coin_analytics.dex_volume_rank.description" = "Tokens classificados por volume de negociação para o token em corretoras descentralizadas.";
-"coin_analytics.dex_volume.info1" = "Volume total de trading para o token em corretoras centralizadas durante um período de 30 dias.";
-"coin_analytics.dex_volume.info2" = "Gráfico mostrando a variação no volume diário de negociação do token nas principais corretoras centralizadas durante um período de 1 ano.";
-"coin_analytics.dex_volume.info3" = "Classificação do Token baseada no volume de trading em principais corretoras centralizadas durante um período de 30 dias.";
-"coin_analytics.dex_volume.info4" = "Lista de todos os tokens com base no volume de trading em corretoras descentralizadas ao longo de 24H / 7D / 1M.";
-"coin_analytics.dex_volume.tracked_dexes" = "DEXes que estão sendo rastreados:";
+"coin_analytics.dex_volume" = "DEX Volume";
+"coin_analytics.dex_volume_rank" = "DEX Volume Rank";
+"coin_analytics.dex_volume_rank.description" = "Tokens ranked by trading volume for the token on decentralized exchanges.";
+"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over a 30-day period.";
+"coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
+"coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
+"coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
+"coin_analytics.dex_volume.tracked_dexes" = "DEXes that are being tracked:";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Sushiswap";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
 
-"coin_analytics.dex_liquidity" = "Liquidez DEX";
-"coin_analytics.dex_liquidity_rank" = "Ranking de Liquidez DEX";
-"coin_analytics.dex_liquidity_rank.description" = "Tokens classificados por liquidez disponível em corretoras descentralizadas.";
-"coin_analytics.dex_liquidity.info1" = "Quantidade total de liquidez disponível para o token em corretoras descentralizadas.";
-"coin_analytics.dex_liquidity.info2" = "Gráfico mostrando a variação na liquidez disponível para o token nas principais corretoras descentralizadas durante o período de 1 ano.";
-"coin_analytics.dex_liquidity.info3" = "Lista de todos os tokens com base na liquidez disponível para o token nas principais exchanges descentralizadas.";
-"coin_analytics.dex_liquidity.tracked_dexes" = "DEXes que estão sendo rastreados:";
+"coin_analytics.dex_liquidity" = "DEX Liquidity";
+"coin_analytics.dex_liquidity_rank" = "DEX Liquidity Rank";
+"coin_analytics.dex_liquidity_rank.description" = "Tokens ranked by available liquidity on decentralized exchanges.";
+"coin_analytics.dex_liquidity.info1" = "Total currently available liquidity for the token on leading decentralized exchanges.";
+"coin_analytics.dex_liquidity.info2" = "Chart showing variation in available liquidity for the token on leading decentralized exchanges over 1 year period.";
+"coin_analytics.dex_liquidity.info3" = "List of all tokens ranked based on available liquidity for the token on leading decentralized exchanges.";
+"coin_analytics.dex_liquidity.tracked_dexes" = "DEXes that are being tracked:";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
 
-"coin_analytics.active_addresses" = "Endereços ativos diários";
-"coin_analytics.active_addresses.30_day_unique_addresses" = "30 Dias Endereços Únicos";
-"coin_analytics.active_addresses_rank" = "Ranking de Endereços Ativos";
-"coin_analytics.active_addresses_rank.description" = "Tokens classificados pelo número de endereços exclusivos que realizam transações com o token.";
-"coin_analytics.active_addresses.info1" = "Número total de endereços ativos diários únicos em um período de 24 horas.";
-"coin_analytics.active_addresses.info2" = "Gráfico mostrando a variação na contagem diária de endereços ativos durante o período de 1 ano.";
-"coin_analytics.active_addresses.info3" = "Número total de endereços de blockchain únicos realizando transações com token em um período de 30 dias.";
-"coin_analytics.active_addresses.info4" = "Classificação do token com base no número de carteiras ativas realizando transações no período de 30 dias do token.";
-"coin_analytics.active_addresses.info5" = "Lista de todos os tokens classificados com base no número de endereços ativos diários que realizam transações com o token em intervalos de 24h / 7D / 1M.";
+"coin_analytics.active_addresses" = "Daily Active Addresses";
+"coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
+"coin_analytics.active_addresses_rank" = "Active Addresses Rank";
+"coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
+"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over a 24-hour period.";
+"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
+"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
+"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
+"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
 
-"coin_analytics.transaction_count" = "Contagem de transações";
-"coin_analytics.transaction_count_rank" = "Ranking de Contador Tx";
-"coin_analytics.transaction_count_rank.description" = "Tokens classificados por número de transações em uma blockchain.";
-"coin_analytics.transaction_count.info1" = "Número total de transações únicas na blockchain com token em um período de 30 dias.";
-"coin_analytics.transaction_count.info2" = "Gráfico mostrando a variação na contagem de transações no período de 1 ano.";
-"coin_analytics.transaction_count.info3" = "Ranking do token com base no número de transações com o período de 30 dias do token.";
-"coin_analytics.transaction_count.info4" = "Lista de todos os tokens classificados com base no número de transações com o token em intervalos de 24h / 7D / 1M.";
-"coin_analytics.transaction_count.info5" = "O número total de tokens transferidos sobre a blockchain ao longo do período de 30 dias.";
+"coin_analytics.transaction_count" = "Transaction Count";
+"coin_analytics.transaction_count_rank" = "Tx Count Rank";
+"coin_analytics.transaction_count_rank.description" = "Tokens ranked by number of transactions on a blockchain.";
+"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
+"coin_analytics.transaction_count.info2" = "Chart showing variation in transaction count over 1 year period.";
+"coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
+"coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
 
 "coin_analytics.holders" = "Holders";
-"coin_analytics.holders_rank" = "Classificação dos Holders";
-"coin_analytics.holders_rank.description" = "Raking de tokens por endereços únicos guardando-os em várias blockchains.";
-"coin_analytics.holders.info1" = "Número total de endereços únicos que contêm o token em várias blockchains.";
-"coin_analytics.holders.info2" = "As 10 principais carteiras que possuem o token em cada blockchain.";
-"coin_analytics.holders.tracked_blockchains" = "Blockchains rastreadas: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
-"coin_analytics.holders.in_top_10_addresses" = "Top 10 holders";
-"coin_analytics.holders.count" = "Número total de Holders: %@";
-"coin_analytics.holders.see_all" = "Ver tudo";
+"coin_analytics.holders_rank" = "Holders Rank";
+"coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
+"coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
+"coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
+"coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
+"coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
+"coin_analytics.holders.count" = "Total Holders: %@";
+"coin_analytics.holders.see_all" = "See All";
 
-"coin_analytics.project_tvl" = "Projeto TVL";
-"coin_analytics.tvl_ratio" = "Proporção de Capital de M. / TVB";
-"coin_analytics.project_tvl.info_title" = "Projeto TVB (Total de Valor Bloqueado)";
-"coin_analytics.project_tvl.info1" = "Valor-Total-Bloqueado (ou Ativos Sob Gerenciamento) nos contratos inteligentes do projeto.";
-"coin_analytics.project_tvl.info2" = "Gráfico mostrando a variação Valor-Total-Bloqueado nos contratos inteligentes do projeto durante o período de 1 ano.";
-"coin_analytics.project_tvl.info3" = "Classificação do token com base no Valor-Total-Bloqueado atual.";
-"coin_analytics.project_tvl.info4" = "Lista de todos os tokens classificados com base no Valor-Total-Bloqueado atual.";
-"coin_analytics.project_tvl.info5" = "Valor de Mercado / proporção VTB para o projeto.";
+"coin_analytics.project_tvl" = "Project TVL";
+"coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
+"coin_analytics.project_tvl.info_title" = "Project TVL (Total Value Locked)";
+"coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
+"coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
+"coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
+"coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
+"coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
 
-"coin_analytics.project_fee" = "Taxa do Projeto";
-"coin_analytics.project_fee_rank" = "Classificação da Taxa do Projeto";
-"coin_analytics.project_fee_rank.description" = "Tokens ranqueados de acordo com as taxas geradas pelos respectivos projetos. A forma como as taxas são coletadas varia do projeto para o projeto.";
+"coin_analytics.project_fee" = "Project Fee";
+"coin_analytics.project_fee_rank" = "Project Fee Rank";
+"coin_analytics.project_fee_rank.description" = "Tokens ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
 
-"coin_analytics.project_revenue" = "Receita do Projeto";
-"coin_analytics.project_revenue_rank" = "Ranking da Receita do Projeto";
-"coin_analytics.project_revenue_rank.description" = "Tokens classificados por receitas geradas para os holders através de mecanismos, ou seja, burns por staking ou token.";
+"coin_analytics.project_revenue" = "Project Revenue";
+"coin_analytics.project_revenue_rank" = "Project Revenue Rank";
+"coin_analytics.project_revenue_rank.description" = "Tokens ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
 
-"coin_analytics.other_data" = "Outros dados";
+"coin_analytics.other_data" = "Other Data";
 
-"coin_analytics.reports" = "Relatórios";
+"coin_analytics.reports" = "Reports";
 
-"coin_analytics.funding" = "Financiamento";
-"coin_analytics.funding.lead" = "Conduzir";
+"coin_analytics.funding" = "Funding";
+"coin_analytics.funding.lead" = "Lead";
 
-"coin_analytics.treasuries" = "Tesouros";
-"coin_analytics.treasuries.filters" = "Filtros";
-"coin_analytics.treasuries.filter.all" = "Todos";
-"coin_analytics.treasuries.filter.public" = "Público";
-"coin_analytics.treasuries.filter.private" = "Privado";
+"coin_analytics.treasuries" = "Treasuries";
+"coin_analytics.treasuries.filters" = "Filters";
+"coin_analytics.treasuries.filter.all" = "All";
+"coin_analytics.treasuries.filter.public" = "Public";
+"coin_analytics.treasuries.filter.private" = "Private";
 "coin_analytics.treasuries.filter.etf" = "ETF";
 
-"coin_analytics.audits" = "Auditorias";
-"coin_analytics.audits.issues" = "Ocorrências";
-"coin_analytics.audits.no_reports" = "Nenhum relatório de auditoria";
+"coin_analytics.audits" = "Audits";
+"coin_analytics.audits.issues" = "Issues";
+"coin_analytics.audits.no_reports" = "No audit reports";
 
-"coin_analytics.last_30d" = "últimos 30d";
-"coin_analytics.current" = "atual";
+"coin_analytics.last_30d" = "last 30d";
+"coin_analytics.current" = "current";
 
-"coin_analytics.overall_score" = "Pontuação geral";
-"coin_analytics.overall_score.excellent" = "Excelente";
-"coin_analytics.overall_score.good" = "Excelente";
-"coin_analytics.overall_score.fair" = "Justa";
-"coin_analytics.overall_score.poor" = "Pobre";
-"coin_analytics.overall_score.cex_volume" = "A pontuação geral é baseada no volume médio de trading diário em trocas centralizadas nos últimos 7 dias.";
-"coin_analytics.overall_score.dex_volume" = "A pontuação geral é baseada no volume médio diário de trading em trocas descentralizadas nos últimos 7 dias.";
-"coin_analytics.overall_score.dex_liquidity" = "A pontuação geral é baseada na liquidez total disponível em trocas descentralizadas.";
-"coin_analytics.overall_score.active_addresses" = "A pontuação geral é baseada na média diária ativa dos últimos 7 dias.";
-"coin_analytics.overall_score.project_tvl" = "A pontuação geral é baseada no valor total bloqueado (ativos sob gerenciação) no projeto representado pelo token fornecido.";
-"coin_analytics.overall_score.transaction_count" = "A pontuação geral é baseada na contagem média de transações diárias nos últimos 7 dias.";
-"coin_analytics.overall_score.holders" = "A pontuação geral é baseada no número total de endereços mantendo o respectivo token.";
+"coin_analytics.overall_score" = "Overall Score";
+"coin_analytics.overall_score.excellent" = "Excellent";
+"coin_analytics.overall_score.good" = "Good";
+"coin_analytics.overall_score.fair" = "Fair";
+"coin_analytics.overall_score.poor" = "Poor";
+"coin_analytics.overall_score.cex_volume" = "The overall score is based on the average daily trading volume on centralized exchanges over the last 7 days.";
+"coin_analytics.overall_score.dex_volume" = "The overall score is based on the average daily trading volume on decentralized exchanges over the last 7 days.";
+"coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total avilable liquidity on decentralized exchanges.";
+"coin_analytics.overall_score.active_addresses" = "The overall score is based on the average daily active addresses over the last 7 days.";
+"coin_analytics.overall_score.project_tvl" = "The overall score is based on the total value locked (assets under management) on the project represented by the given token.";
+"coin_analytics.overall_score.transaction_count" = "The overall score is based on the average daily transaction count over the last 7 days.";
+"coin_analytics.overall_score.holders" = "The overall score is based on the total number of addresses holding respective token.";
 
-"coin_analytics.rank" = "Classificação";
-"coin_analytics.30_day_rank" = "Classificação 30-Dias";
-"coin_analytics.30_day_volume" = "Volume 30 Dias";
+"coin_analytics.rank" = "Rank";
+"coin_analytics.30_day_rank" = "30-Day Rank";
+"coin_analytics.30_day_volume" = "30-Day Volume";
 
 // Coin Page -> Markets
 
-"coin_markets.empty" = "Não há dados disponíveis";
+"coin_markets.empty" = "No data available";
 
 // Coin Page -> Tweets
 
-"coin_tweets.reference_type.retweeted" = "Retweetado @%@";
-"coin_tweets.reference_type.quoted" = "Citado @%@";
-"coin_tweets.reference_type.replied" = "Respondido a @%@";
-"coin_tweets.no_tweets_yet" = "Não há tweets ainda";
-"coin_tweets.not_available" = "Nenhum twitter disponível";
-"coin_tweets.see_on_twitter" = "Veja no Twitter";
+"coin_tweets.reference_type.retweeted" = "Retweeted @%@";
+"coin_tweets.reference_type.quoted" = "Quoted @%@";
+"coin_tweets.reference_type.replied" = "Replied to @%@";
+"coin_tweets.no_tweets_yet" = "No tweets yet";
+"coin_tweets.not_available" = "No twitter available";
+"coin_tweets.see_on_twitter" = "See on Twitter";
 
 // Coin Page -> Indicators
 
-"chart_indicators.title" = "Indicadores";
-"chart_indicators.moving_averages" = "Média em Movimento";
-"chart_indicators.oscillators" = "Osciladores";
+"chart_indicators.title" = "Indicators";
+"chart_indicators.moving_averages" = "Moving Averages";
+"chart_indicators.oscillators" = "Oscillators";
 
 
-"chart_indicators.settings.period.error" = "O período não pode ser maior que %d";
+"chart_indicators.settings.period.error" = "Period can’t be more than %d";
 
-"chart_indicators.settings.ma.description" = "O EMA, SMA e WMA são médias móveis usadas em análise técnica:\n\nEMA enfatiza preços recentes para reações mais rápidas.\nSMA indica dados de preços médios para uma visão geral de tendência.\nSaldos WMA e redução de ruído por ponderação linearmente de dados recentes";
-"chart_indicators.settings.ma.type_title" = "tipo";
-"chart_indicators.settings.ma.period_title" = "Período";
+"chart_indicators.settings.ma.description" = "The EMA, SMA, and WMA are moving averages used in technical analysis:\n\nEMA emphasizes recent prices for quicker reactions.\nSMA averages price data for a general trend view.\nWMA balances sensitivity and noise reduction by linearly weighting recent data";
+"chart_indicators.settings.ma.type_title" = "Type";
+"chart_indicators.settings.ma.period_title" = "Period";
 
 "chart_indicators.settings.rsi.title" = "RSI";
-"chart_indicators.settings.rsi.description" = "O Índice de Força Relativa (RSI) é um oscilador de momentum que mede a velocidade e a mudança de preços, identificando supercomprados (acima de 70) ou supervendidos (abaixo de 30) condições de mercado. Ele também pode detectar reversões de preço através de divergências.";
-"chart_indicators.settings.rsi.period_title" = "Comprimento RSI";
+"chart_indicators.settings.rsi.description" = "The Relative Strength Index (RSI) is a momentum oscillator that measures price speed and change, identifying overbought (above 70) or oversold (below 30) market conditions. It can also detect price reversals through divergences.";
+"chart_indicators.settings.rsi.period_title" = "RSI Length";
 
 "chart_indicators.settings.macd.title" = "MACD";
-"chart_indicators.settings.macd.description" = "A Divergência de Convergência Média em Movimento (MACD) é um indicador de momento que acompanha a relação entre dois EMAs de um preço de segurança. Sinais de compra ou venda de oportunidades quando a linha MACD (EMA de 12 períodos menos 26-period EMA) cruza o EMA de 9 períodos, conhecido como a linha de sinal.";
-"chart_indicators.settings.macd.fast_period_title" = "Comprimento Rápido";
-"chart_indicators.settings.macd.slow_period_title" = "Comprimento Lento";
-"chart_indicators.settings.macd.signal_period_title" = "Suavização de sinal";
+"chart_indicators.settings.macd.description" = "The Moving Average Convergence Divergence (MACD) is a momentum indicator that tracks the relationship between two EMAs of a security's price. It signals buying or selling opportunities when the MACD line (12-period EMA minus 26-period EMA) crosses the 9-period EMA, known as the signal line.";
+"chart_indicators.settings.macd.fast_period_title" = "Fast Length";
+"chart_indicators.settings.macd.slow_period_title" = "Slow Length";
+"chart_indicators.settings.macd.signal_period_title" = "Signal Smoothing";
 
-"chart_indicators.settings.macd.slow_fast.error" = "O comprimento rápido deve ser menor que o comprimento lento";
+"chart_indicators.settings.macd.slow_fast.error" = "Fast Length must be less than Slow Length";
 
 // Transactions
 
-"transactions.title" = "Transações";
-"transactions.tab_bar_item" = "Transações";
+"transactions.title" = "Transactions";
+"transactions.tab_bar_item" = "Transactions";
 "transactions.blockchain" = "Blockchain";
-"transactions.all_blockchains" = "Todas Blockchains";
-"transactions.all_coins" = "Todas as moedas";
-"transactions.choose_coin" = "Escolher Moedas";
-"transactions.clear" = "Limpar";
-"transactions.filter_all" = "Todos";
-"transactions.syncing_text" = "Por favor, aguarde a sincronização concluir";
-"transactions.empty_text" = "Você ainda não tem nenhuma transação pendente ou anterior";
-"transactions.pending" = "Pendente";
-"transactions.processing" = "Processando";
-"transactions.completed" = "Concluído";
-"transactions.failed" = "Falhou";
+"transactions.all_blockchains" = "All Blockchains";
+"transactions.all_coins" = "All Coins";
+"transactions.choose_coin" = "Choose Coin";
+"transactions.filter_all" = "All";
+"transactions.empty_text" = "You don't have any pending or past transactions yet";
+"transactions.pending" = "Pending";
+"transactions.processing" = "Processing";
+"transactions.completed" = "Completed";
+"transactions.failed" = "Failed";
 
-"transactions.receive" = "Receber";
-"transactions.send" = "Enviar";
-"transactions.burn" = "Queimar";
+"transactions.receive" = "Receive";
+"transactions.send" = "Send";
+"transactions.burn" = "Burn";
 "transactions.mint" = "Mint";
-"transactions.approve" = "Aprovar";
-"transactions.swap" = "Trocar";
-"transactions.contract_call" = "Chamada de Contrato";
-"transactions.contract_creation" = "Criação de contrato";
-"transactions.external_call" = "Ligação Externa";
+"transactions.approve" = "Approve";
+"transactions.swap" = "Swap";
+"transactions.contract_call" = "Contract Call";
+"transactions.contract_creation" = "Contract Creation";
+"transactions.external_call" = "External Call";
 
-"transactions.to" = "Para %@";
-"transactions.from" = "De %@";
+"transactions.to" = "To %@";
+"transactions.from" = "From %@";
 
-"transactions.multiple" = "Múltiplo";
+"transactions.multiple" = "Multiple";
 
-"transactions.value.unlimited" = "ilimitado";
+"transactions.value.unlimited" = "unlimited";
 
-"transactions.today" = "Hoje";
-"transactions.yesterday" = "Ontem";
+"transactions.today" = "Today";
+"transactions.yesterday" = "Yesterday";
 
-"transactions.types.all" = "Todos";
-"transactions.types.incoming" = "Recebido";
-"transactions.types.outgoing" = "Enviado";
-"transactions.types.swap" = "Trocas";
-"transactions.types.approve" = "Aprovações";
+"transactions.types.all" = "All";
+"transactions.types.incoming" = "Received";
+"transactions.types.outgoing" = "Sent";
+"transactions.types.swap" = "Swaps";
+"transactions.types.approve" = "Approvals";
 
-"transactions.unknown_transaction.title" = "Transação Desconhecida";
-"transactions.unknown_transaction.description" = "Transação não pôde ser analisada";
+"transactions.unknown_transaction.title" = "Unknown Transaction";
+"transactions.unknown_transaction.description" = "Transaction can not be parsed";
 
 // Transaction Info
 
-"tx_info.title" = "Informações sobre a transação";
-"tx_info.date" = "Data";
-"tx_info.title_approval" = "Aprovação de troca";
-"tx_info.status.pending" = "Pendente";
-"tx_info.status.completed" = "Concluído";
-"tx_info.status.failed" = "Falhou";
-"tx_info.from_hash" = "De";
+"tx_info.title" = "Transaction Info";
+"tx_info.date" = "Date";
+"tx_info.title_approval" = "Swap Approval";
+"tx_info.status.pending" = "Pending";
+"tx_info.status.completed" = "Completed";
+"tx_info.status.failed" = "Failed";
+"tx_info.from_hash" = "From";
 "tx_info.transaction_id" = "ID";
-"tx_info.to_hash" = "Para";
-"tx_info.spender" = "Gastador";
-"tx_info.contact_name" = "Nome do Contato";
-"tx_info.button_explorer" = "Ver no %@";
-"tx_info.rate" = "Dados históricos";
-"tx_info.options.speed_up" = "Acelerar";
-"tx_info.options.cancel" = "Cancelar transação";
-"tx_info.transaction.already_in_block" = "A transação já foi confirmada";
-"tx_info.fee" = "Taxa";
-"tx_info.fee.estimated" = "Taxa (est.)";
-"tx_info.to_self_note" = "Esta transação é enviada para o próprio endereço";
-"tx_info.double_spent_note" = "Risco de gasto duplo!";
-"tx_info.locked_until" = "Bloqueado até %@";
-"tx_info.unlocked_at" = "Desbloqueado às %@";
-"tx_info.recipient_hash" = "Destinatário";
-"tx_info.raw_transaction" = "Transação bruta";
+"tx_info.to_hash" = "To";
+"tx_info.spender" = "Spender";
+"tx_info.contact_name" = "Contact Name";
+"tx_info.button_explorer" = "View on %@";
+"tx_info.rate" = "Historical Rate";
+"tx_info.options.speed_up" = "Speed Up";
+"tx_info.options.cancel" = "Cancel Transaction";
+"tx_info.transaction.already_in_block" = "Transaction already in block";
+"tx_info.fee" = "Fee";
+"tx_info.fee.estimated" = "Fee (est.)";
+"tx_info.to_self_note" = "This transaction is sent to own address";
+"tx_info.double_spent_note" = "Double Spend Risk!";
+"tx_info.locked_until" = "Locked until %@";
+"tx_info.unlocked_at" = "Unlocked at %@";
+"tx_info.recipient_hash" = "Recipient";
+"tx_info.raw_transaction" = "Raw Transaction";
 "tx_info.memo" = "Memo";
-"tx_info.service" = "Serviço";
-"tx_info.view_on" = "Ver no %@";
-"tx_info.you_pay" = "Você Paga";
-"tx_info.you_get" = "Você recebe";
-"tx_info.you_paid" = "Você Paga";
-"tx_info.you_got" = "Você Tem";
-"tx_info.price" = "Preço";
+"tx_info.service" = "Service";
+"tx_info.view_on" = "View on %@";
+"tx_info.you_pay" = "You Pay";
+"tx_info.you_get" = "You Get";
+"tx_info.you_paid" = "You Paid";
+"tx_info.you_got" = "You Got";
+"tx_info.price" = "Price";
 
 // Settings
 
-"settings.title" = "Configurações";
-"settings.tab_bar_item" = "Configurações";
-"settings.manage_accounts" = "Gerenciar carteiras";
-"settings.blockchain_settings" = "Configurações da Blockchain";
-"settings.security" = "Segurança";
+"settings.title" = "Settings";
+"settings.tab_bar_item" = "Settings";
+"settings.manage_accounts" = "Manage Wallets";
+"settings.blockchain_settings" = "Blockchain Settings";
+"settings.security" = "Security";
 "settings.experimental_features" = "Experimental";
-"settings.personal_support" = "Suporte Pessoal";
-"settings.base_currency" = "Moeda base";
-"settings.language" = "Idioma";
+"settings.personal_support" = "Personal Support";
+"settings.base_currency" = "Base Currency";
+"settings.language" = "Language";
 "settings.faq" = "FAQ";
-"settings.theme" = "Tema";
-"settings.info_subtitle" = "aplicativo descentralizado";
-"settings.donate.description" = "Juntos, com o seu apoio, podemos fazer este aplicativo ainda melhor!";
-"settings.donate.title" = "Doar";
+"settings.theme" = "Theme";
+"settings.info_subtitle" = "decentralized app";
+"settings.donate.description" = "Together, with your support, we can make this app even better!";
+"settings.donate.title" = "Donate";
 
 // Settings -> Base Currency
 
-"settings.base_currency.title" = "Moeda base";
-"settings.base_currency.other" = "Outros";
-"settings.base_currency.disclaimer" = "Aviso Legal";
-"settings.base_currency.disclaimer.description" = "Os dados da taxa de câmbio são fornecidos por um serviço de terceiros - Coingecko.com. \n\nO aplicativo de carteira %@ não garante que esses valores sejam sempre corretos e que correspondam aos dados do mercado. A chance de inconsistência é maior se você selecionar qualquer moeda base que não seja %@.";
-"settings.base_currency.disclaimer.set" = "Definir";
+"settings.base_currency.title" = "Base Currency";
+"settings.base_currency.other" = "Other";
+"settings.base_currency.disclaimer" = "Disclaimer";
+"settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe %@ wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
+"settings.base_currency.disclaimer.set" = "Set";
 
 // Settings -> Manage Wallet
 
-"manage_wallets.title" = "Gerente de Moedas";
-"manage_wallets.not_found" = "Nenhum resultado encontrado. Tente adicionar token manualmente.";
-"manage_wallets.search_placeholder" = "Nome, código ou endereço do contrato";
-"manage_wallets.contract_address" = "Endereço do Contrato";
-"manage_wallets.derivation_description" = "Existem 4 formatos de endereço que %@ carteiras podem usar para receber pagamentos recebidos:\n\n- BIP44 (mais antigo)\n- BIP49\n- BIP84 (recomendado)\n- BIP86 (mais recente)\n\nEnquanto a Carteira %@ suporta todos os 4, ele recomenda usar uma carteira %@ operando no formato BIP84.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "Existem 2 formatos de endereço, Bitcoin Cash carteiras podem usar para receber pagamentos recebidos:\n\n- TYPE 0 (mais antigo)\n- TYPE 145 (mais recente)\n\nEnquanto a carteira %@ suporta ambos eles recomenda o uso de uma carteira Bitcoin Cash operando no formato TYPE 145.";
+"manage_wallets.title" = "Coin Manager";
+"manage_wallets.not_found" = "No results found. Try to add token manually.";
+"manage_wallets.search_placeholder" = "Name, code or contract address";
+"manage_wallets.contract_address" = "Contract Address";
+"manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile %@ wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile %@ wallet supports both of them it recommends to use a Bitcoin Cash wallet operating in TYPE 145 format.";
 
 // Settings -> Personal Support
 
-"settings.personal_support.telegram_username.title" = "Conta";
+"settings.personal_support.telegram_username.title" = "Account";
 "settings.personal_support.telegram_username.placeholder" = "@username";
-"settings.personal_support.description" = "Digite seu nome de conta do Telegram para abrir um chat de suporte pessoal e enviaremos uma mensagem para você.";
-"settings.personal_support.request" = "Solicitar";
-"settings.personal_support.requested" = "Solicitado";
-"settings.personal_support.failed" = "Falha na solicitação";
-"settings.personal_support.need_subscription" = "Esse recurso somente para usuários premium da %@ Carteira. Mais informações em nosso site oficial.";
-"settings.personal_support.requested.description" = "Você já pediu um chat privado, encontre-o no Telegram";
-"settings.personal_support.requested.open_telegram" = "Abrir Telegram";
-"settings.personal_support.requested.new_request" = "Nova solicitação";
+"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
+"settings.personal_support.request" = "Request";
+"settings.personal_support.requested" = "Requested";
+"settings.personal_support.failed" = "Request failed";
+"settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
+"settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
+"settings.personal_support.requested.open_telegram" = "Open Telegram";
+"settings.personal_support.requested.new_request" = "New Request";
 
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Experimental";
-"settings.experimental_features.description" = "Os recursos abaixo são experimentais e devem ser usados com cautela. Enquanto nós testamos minuciosamente esses recursos usando nossos próprios fundos cripto, nós não podemos garantir que eles funcionarão como esperado em todos os casos possíveis.";
-"settings.experimental_features.bitcoin_hodling" = "TravaTempo";
+"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.";
+"settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "TravaTempo";
-"settings.bitcoin_hodling.lock_time" = "Ativar";
-"settings.bitcoin_hodling.description" = "Isso permite que você envie Bitcoins que não podem ser gastos até uma data especificada. \n\nO destinatário de tais transações deve usar o aplicativo de carteira %@ versão 0.10 ou mais recente, com o formato de endereço BIP44 para Bitcoin. \n\nSomente a carteira %@ pode identificar corretamente tais transações na rede Bitcoin, bem como permitir que o receptor gaste esses Bitcoins após o período de bloqueio expirar. \n\nSe você é um HOLDER, você pode usar este recurso para se forçar a manter seus Bitcoins enviando tais transações para si mesmo. \n\nSendo um recurso experimental, o valor máximo por transação é limitado a 0,5 BTC.";
+"settings.bitcoin_hodling.title" = "TimeLock";
+"settings.bitcoin_hodling.lock_time" = "Activate";
+"settings.bitcoin_hodling.description" = "This enables you to send Bitcoins that cannot be spent until a specified date. \n\nThe receiver of such transactions should use the %@ wallet app version 0.10 or newer, with the BIP44 address format for Bitcoin. \n\nOnly the %@ wallet can correctly identify such transactions on the Bitcoin network, as well as enable the receiver to spend those Bitcoins after the lock period expires. \n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transactions to yourself.";
 
 // Settings -> Terms
 
-"terms.title" = "Termos";
-"terms.i_agree" = "Eu concordo";
+"terms.title" = "Terms";
+"terms.i_agree" = "I Agree";
 
-"terms.item.1" = "Frases de recuperação de backup seguros para cada carteira. É a única maneira de recuperar o acesso a fundos se o aplicativo não funcionar.";
-"terms.item.2" = "As frases de recuperação de carteira são geradas aleatoriamente no dispositivo durante a configuração e não são armazenadas em outro lugar.";
-"terms.item.3" = "Desabilitando o PIN (código) no smartphone exclui todas as carteiras do aplicativo. As frases de recuperação serão necessárias para restaurar o acesso aos fundos.";
-"terms.item.4" = "O Jailbreaking (root), o uso de SO desatualizado e a instalação de aplicativos de fontes desconhecidas podem colocar em risco a segurança do dinheiro.";
-"terms.item.5" = "Pode haver problemas de software não descobertos no código que irá ligá-lo e causar problemas no aplicativo.";
+"terms.item.1" = "Securely backup recovery phrases for each wallet. It's the only way to regain access to funds if the app malfunctions.";
+"terms.item.2" = "The wallet recovery phrases are randomly generated on the device during setup and are not stored elsewhere.";
+"terms.item.3" = "Disabling unlock PIN (code) on the smartphone deletes all wallets from the app. Recovery phrases will be needed to restore access to funds.";
+"terms.item.4" = "Jailbreaking (rooting), using outdated OS, and installing apps from unknown sources may endanger the safety of funds.";
+"terms.item.5" = "There may be undiscovered software issues in the code powering this app which may cause the app to malfunction.";
 
 // Settings -> Tell Friends
 
-"settings_tell_friends.text" = "Seja Unstoppable";
+"settings_tell_friends.text" = "Be Unstoppable";
 
 // Settings -> Blockchain Settings
 
-"blockchain_settings.title" = "Configurações da Blockchain";
+"blockchain_settings.title" = "Blockchain Settings";
 
 // Settings -> Security
 
-"settings_security.title" = "Segurança";
-"settings_security.passcode" = "Senha";
-"settings_security.change_pin" = "Editar senha";
+"settings_security.title" = "Security";
+"settings_security.passcode" = "Passcode";
+"settings_security.change_pin" = "Edit Passcode";
 "settings_security.touch_id" = "Touch ID";
 "settings_security.face_id" = "Face ID";
-"settings_security.blockchain_settings" = "Configurações da Blockchain";
-"security_settings.delete_alert_button" = "Excluir do telefone";
+"settings_security.blockchain_settings" = "Blockchain Settings";
+"security_settings.delete_alert_button" = "Delete from Phone";
 
-"btc_blockchain_settings.restore_source" = "Restaurar Fonte";
-"btc_blockchain_settings.restore_source.description" = "Selecione uma fonte de dados para restaurar uma carteira com transações.";
-"btc_blockchain_settings.restore_source.alert" = "Após mudar a Restauração, a carteira terá que ressincronizar-se com a blockchain %@.";
+"btc_blockchain_settings.restore_source" = "Restore Source";
+"btc_blockchain_settings.restore_source.description" = "Select a data source for restoring a wallet with transactions.";
+"btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
 
-"btc_restore_mode.recommended" = "Recomendado";
-"btc_restore_mode.more_private" = "Mais Privado";
+"btc_restore_mode.recommended" = "Recommended";
+"btc_restore_mode.more_private" = "More Private";
 
-"btc_transaction_sort_mode.shuffle" = "Embaralhar";
-"btc_transaction_sort_mode.shuffle.description" = "Indexação aleatória";
-"btc_transaction_sort_mode.bip69" = "Bip69 Determinístico";
-"btc_transaction_sort_mode.bip69.description" = "Indexação Lexicográfica";
+"btc_transaction_sort_mode.shuffle" = "Shuffle";
+"btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
+"btc_transaction_sort_mode.bip69" = "Deterministic Bip69";
+"btc_transaction_sort_mode.bip69.description" = "Lexicographical Indexing";
 
-"blockchain_settings.info.restore_source" = "Restaurar Fonte";
+"blockchain_settings.info.restore_source" = "Restore Source";
 "blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like %@ to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
-"blockchain_settings.info.rpc_source" = "Fonte RPC";
+"blockchain_settings.info.rpc_source" = "RPC Source";
 "blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. %@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
 
 // Manage Accounts
 
-"manage_accounts.migration_required" = "Migração Necessária";
-"manage_accounts.migration_recommended" = "Migração Recomendada";
-"manage_accounts.backup_required" = "Backup necessário";
+"manage_accounts.migration_required" = "Migration Required";
+"manage_accounts.migration_recommended" = "Migration recommended";
+"manage_accounts.backup_required" = "Backup required";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Gerenciar carteiras";
-"settings_manage_keys.delete" = "Deletar";
+"settings_manage_keys.title" = "Manage Wallets";
+"settings_manage_keys.delete" = "Delete";
 "settings_manage_keys.backup" = "Backup";
-"settings_manage_keys.delete.title" = "Excluir Carteira";
-"settings_manage_keys.delete.confirmation_remove" = "A ação irá apagar esta carteira do dispositivo.";
-"settings_manage_keys.delete.confirmation_loose" = "Se você não fizer o backup da chave privada desta carteira, perderá o acesso aos seus fundos.";
-"settings_manage_keys.delete.confirmation_watch" = "Você quer parar de acompanhar este endereço da carteira?";
-"settings_manage_keys.delete.confirmation_watch.button" = "Parar de Acompanhar";
+"settings_manage_keys.delete.title" = "Delete Wallet";
+"settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from the device.";
+"settings_manage_keys.delete.confirmation_loose" = "If you didn't back up the private key for this wallet, you will lose access to your funds.";
+"settings_manage_keys.delete.confirmation_watch" = "Do you want to stop watching this wallet address?";
+"settings_manage_keys.delete.confirmation_watch.button" = "Stop Watching";
 
 // Settings -> About App
 
-"settings.about_app.title" = "Sobre o App";
-"settings.about_app.app_name" = "Carteira %@";
-"settings.about_app.description" = "A carteira %@ foi construída para aqueles que buscam investir e armazenar criptomoedas de forma privada e independente.\n\nÉ uma carteira não-custódia, peer-to-peer onde apenas o usuário tem controle sobre os fundos. Não coleta nenhum dado e mantém o usuário independente ao não bloquear os fundos do usuário para um aplicativo específico de carteira.\n\nA carteira %@ é totalmente de código aberto e qualquer um pode confirmar que o aplicativo funciona exatamente como afirma.";
-"settings.about_app.whats_new" = "O que há de novo";
-"settings.about_app.website" = "Site";
-"settings.about_app.contact" = "Contato";
-"settings.about_app.rate_us" = "Avalie-Nos";
-"settings.about_app.tell_friends" = "Indique para amigos";
+"settings.about_app.title" = "About App";
+"settings.about_app.app_name" = "%@ Wallet";
+"settings.about_app.description" =  "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
+"settings.about_app.whats_new" = "What's New";
+"settings.about_app.website" = "Website";
+"settings.about_app.contact" = "Contact";
+"settings.about_app.rate_us" = "Rate Us";
+"settings.about_app.tell_friends" = "Tell Friends";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Contato";
+"settings.contact.title" = "Contact";
 "settings.contact.via_email" = "via E-mail";
 "settings.contact.via_telegram" = "via Telegram";
 
 // Settings -> Privacy
 
-"settings.privacy" = "Privacidade";
-"settings.privacy.description" = "%@ não coleta nenhum dado ou usa ferramentas de análise que podem expor quaisquer dados sobre seus usuários. A carteira foi projetada para garantir um alto nível de privacidade para seus usuários.";
-"settings.privacy.statement.user_data_storage" = "Os dados do usuário sempre permanecem em seu dispositivo.";
-"settings.privacy.statement.data_usage" = "A carteira não coleta nenhum dado sobre os usuários.";
-"settings.privacy.statement.data_privacy" = "A carteira não coleta nenhum dado sobre os usuários.";
-"settings.privacy.statement.user_account" = "Não há nenhuma conta de usuário ou banco de dados mantendo os dados do usuário em algum lugar.";
+"settings.privacy" = "Privacy";
+"settings.privacy.description" = "%@ doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
+"settings.privacy.statement.user_data_storage" = "User data always remains on the user's device.";
+"settings.privacy.statement.data_usage" = "The wallet doesn't collect any data about users.";
+"settings.privacy.statement.data_privacy" = "The wallet doesn't share any data about users.";
+"settings.privacy.statement.user_account" = "There are no user accounts or databases keeping user data elsewhere.";
 
 // Settings -> Appearance
 
-"appearance.title" = "Aparência";
+"appearance.title" = "Appearance";
 
-"appearance.theme" = "Tema";
-"appearance.theme.system" = "Sistema";
-"appearance.theme.dark" = "Escuro";
-"appearance.theme.light" = "Claro";
+"appearance.theme" = "Theme";
+"appearance.theme.system" = "System";
+"appearance.theme.dark" = "Dark";
+"appearance.theme.light" = "Light";
 
-"appearance.tab_settings" = "Configurações de Abas";
-"appearance.markets_tab" = "Guia de Mercados";
-"appearance.launch_screen" = "Tela Inicial";
-"appearance.launch_screen.auto" = "Automático";
-"appearance.launch_screen.balance" = "Saldo";
-"appearance.launch_screen.market_overview" = "Visão geral do mercado";
-"appearance.launch_screen.watchlist" = "Lista de observação";
+"appearance.tab_settings" = "Tab Settings";
+"appearance.markets_tab" = "Markets Tab";
+"appearance.launch_screen" = "Launch Screen";
+"appearance.launch_screen.auto" = "Auto";
+"appearance.launch_screen.balance" = "Balance";
+"appearance.launch_screen.market_overview" = "Market Overview";
+"appearance.launch_screen.watchlist" = "Watchlist";
 
-"appearance.app_icon" = "Ícone do Aplicativo";
+"appearance.app_icon" = "App Icon";
 
-"appearance.balance_conversion" = "Conversão de saldo";
+"appearance.balance_conversion" = "Balance Conversion";
 
-"appearance.balance_value" = "Valor Patrimonial";
-"appearance.balance_value.coin_value" = "Valor da Moeda";
-"appearance.balance_value.fiat_value" = "Valor Fiat";
+"appearance.balance_value" = "Balance Value";
+"appearance.balance_value.coin_value" = "Coin Value";
+"appearance.balance_value.fiat_value" = "Fiat Value";
 
-"appearance.balance_auto_hide" = "Ocultar Saldo Automaticamente";
+"appearance.balance_auto_hide" = "Balance Auto Hide";
 
 // Settings -> Contacts
 
-"contacts.title" = "Contatos";
-"contacts.list.search_placeholder" = "Pesquisar por nome";
-"contacts.list.not_found" = "Você não tem nenhum contato adicionado";
-"contacts.list.not_found_search" = "Nenhum resultado encontrado";
-"contacts.add_new_contact" = "Adicionar um novo contato";
-"contacts.update_contact.already_has_address" = "O contato selecionado já tem um endereço em %@. Esta ação substituirá o endereço %@ por %@.";
-"contacts.update_contact.replace" = "Substituir";
-"contacts.list.addresses_count" = "Endereços: %d";
-"contacts.contact.new.title" = "Novo Contato";
-"contacts.contact.name.placeholder" = "Nome";
-"contacts.contact.update.error.name_already_exist" = "Nome já existe";
-"contacts.contact.add_address" = "Adicionar endereço";
-"contacts.contact.delete" = "Excluir contato";
+"contacts.title" = "Contacts";
+"contacts.list.search_placeholder" = "Search by name";
+"contacts.list.not_found" = "You do not have an added contact";
+"contacts.list.not_found_search" = "No results found";
+"contacts.add_new_contact" = "Add New Contact";
+"contacts.update_contact.already_has_address" = "Selected contact already has an address on %@. This action will replace the address %@ with %@.";
+"contacts.update_contact.replace" = "Replace";
+"contacts.list.addresses_count" = "Addresses: %d";
+"contacts.contact.new.title" = "New Contact";
+"contacts.contact.name.placeholder" = "Name";
+"contacts.contact.update.error.name_already_exist" = "Name Already Exist";
+"contacts.contact.add_address" = "Add Address";
+"contacts.contact.delete" = "Delete Contact";
 "contacts.contact.address.blockchains" = "Blockchains";
 "contacts.contact.address.blockchain" = "Blockchain";
-"contacts.contact.address.delete_address" = "Excluir endereço";
+"contacts.contact.address.delete_address" = "Delete Address";
 
-"contacts.restore.restored" = "Restaurado";
-"contacts.restore.parsing_error" = "O arquivo tem dados errados!";
-"contacts.restore.restore_error" = "Erro ao restaurar contatos";
-"contacts.restore.overwrite_alert.description" = "Esta ação substituirá seus contatos de pagamento locais, bem como sua cópia do iCloud (se houver uma).";
-"contacts.restore.overwrite_alert.replace" = "Substituir";
+"contacts.restore.restored" = "Restored";
+"contacts.restore.parsing_error" = "File has wrong data!";
+"contacts.restore.restore_error" = "Failed to restore contacts";
+"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one).";
+"contacts.restore.overwrite_alert.replace" = "Replace";
 
-"contacts.add_address.title" = "Adicionar endereço";
-"contacts.add_address.create_new" = "Criar Novo Contato";
-"contacts.add_address.add_to_contact" = "Adicionar ao Contato Existente";
-"contacts.add_address.exist_address" = "Este endereço já está em uso para %@";
+"contacts.add_address.title" = "Add Address";
+"contacts.add_address.create_new" = "Create New Contact";
+"contacts.add_address.add_to_contact" = "Add to Existing Contact";
+"contacts.add_address.exist_address" = "This address is already used for %@";
 
-"contacts.contact.delete_alert.title" = "Excluir contato";
-"contacts.contact.delete_alert.description" = "Você tem certeza que deseja excluir este contato?";
-"contacts.contact.delete_alert.delete" = "Deletar";
+"contacts.contact.delete_alert.title" = "Delete Contact";
+"contacts.contact.delete_alert.description" = "Are you sure you want to delete this contact?";
+"contacts.contact.delete_alert.delete" = "Delete";
 
-"contacts.contact.dismiss_changes.description" = "Tem certeza de que deseja descartar as novas alterações?";
-"contacts.contact.dismiss_changes.discard_changes" = "Descartar Alterações";
-"contacts.contact.dismiss_changes.keep_editing" = "Continuar Editando";
+"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
+"contacts.contact.dismiss_changes.discard_changes" = "Discard Changes";
+"contacts.contact.dismiss_changes.keep_editing" = "Keep Editing";
 
-"contacts.add_address.delete_alert.title" = "Excluir endereço";
-"contacts.add_address.delete_alert.description" = "Você tem certeza que deseja excluir este endereço?";
-"contacts.add_address.delete_alert.delete" = "Deletar";
+"contacts.add_address.delete_alert.title" = "Delete Address";
+"contacts.add_address.delete_alert.description" = "Are you sure you want to delete this address?";
+"contacts.add_address.delete_alert.delete" = "Delete";
 
 // Contacts -> Settings
 
-"contacts.settings.title" = "Configurações";
+"contacts.settings.title" = "Settings";
 
-"contacts.settings.restore_contacts" = "Restaurar contatos";
-"contacts.settings.backup_contacts" = "Backup de contatos";
+"contacts.settings.restore_contacts" = "Restore Contacts";
+"contacts.settings.backup_contacts" = "Backup Contacts";
 
 "contacts.settings.icloud_sync" = "iCloud Sync";
-"contacts.settings.description" = "Sincronize os contatos de pagamento no iCloud para facilitar o backup e o acesso entre vários dispositivos.";
-"contacts.settings.lost_synchronization.description" = "A sincronização do iCloud foi perdida. Por favor, verifique se o armazenamento do iCloud está ativado no seu dispositivo.";
-"contacts.settings.merge_disclaimer" = "Seus contatos de pagamento locais serão mesclados com os armazenados no iCloud.";
+"contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
+"contacts.settings.lost_synchronization.description" = "iCloud synchronization is lost. Please check that iCloud Storage is enabled on your device.";
+"contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
 
 "contacts.settings.alert.title" = "iCloud Sync";
-"contacts.settings.alert.description" = "Por favor, verifique se o armazenamento do iCloud está ativado no seu dispositivo.";
+"contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
 
-"contacts.settings.alert_error.title" = "erro do iCloud";
+"contacts.settings.alert_error.title" = "iCloud Error";
 
 // Set PIN
 
-"set_pin.title" = "Senha";
-"set_pin.info" = "Sua senha será usada para desbloquear sua carteira";
-"set_pin.wrong_confirmation" = "Senhas não conferem. Tente novamente";
+"set_pin.title" = "Passcode";
+"set_pin.info" = "Your passcode will be used to unlock your wallet";
+"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
 
 // Edit PIN
 
-"edit_pin.title" = "Editar senha";
-"edit_pin.unlock_info" = "Senha Atual";
-"edit_pin.new_pin_info" = "Nova Senha";
+"edit_pin.title" = "Edit Passcode";
+"edit_pin.unlock_info" = "Current Passcode";
+"edit_pin.new_pin_info" = "New Passcode";
 
 // Unlock PIN
 
-"unlock_pin.info" = "Senha";
-"unlock_pin.cant_save_pin" = "Opa! Não podemos salvar a sua senha, por favor, entre em contato conosco assim que possível!";
-"unlock_pin.blocked_until" = "Desativar até: %@";
+"unlock_pin.info" = "Passcode";
+"unlock_pin.cant_save_pin" = "Ouch! We cannot save your passcode, please contact us asap!";
+"unlock_pin.blocked_until" = "Disabled until: %@";
 
 
 // Key Types
 
 "chart.time_duration.day" = "24H";
 "chart.time_duration.week" = "7D";
-"chart.time_duration.week2" = "2S";
+"chart.time_duration.week2" = "2W";
 "chart.time_duration.month" = "1M";
 "chart.time_duration.month3" = "3M";
 "chart.time_duration.halfyear" = "6M";
-"chart.time_duration.year" = "1A";
-"chart.time_duration.year2" = "2A";
-"chart.time_duration.all" = "TODOS";
+"chart.time_duration.year" = "1Y";
+"chart.time_duration.year2" = "2Y";
+"chart.time_duration.all" = "ALL";
 
-"chart.market_cap" = "Capitalização de mercado";
+"chart.market_cap" = "Market Cap";
 "chart.volume" = "Volume (24h)";
-"chart.circulation" = "Em Circulação";
-"chart.selected.volume" = "Volume.";
+"chart.circulation" = "In Circulation";
+"chart.selected.volume" = "Vol.";
 
-"chart.market.header" = "Mercado";
-"chart.market.market_cap" = "Capitalização de mercado";
+"chart.market.header" = "Market";
+"chart.market.market_cap" = "Market Cap";
 "chart.market.volume" = "Volume (24h)";
-"chart.market.circulation" = "Em Circulação";
-"chart.market.total_supply" = "Fornecimento total";
+"chart.market.circulation" = "In Circulation";
+"chart.market.total_supply" = "Total Supply";
 
-"chart.performance.week_changes" = "Alterações (1S)";
-"chart.performance.month_changes" = "Alterações (1M)";
+"chart.performance.week_changes" = "Changes (1W)";
+"chart.performance.month_changes" = "Changes (1M)";
 
-"chart.about.header" = "Sobre";
-"chart.about.read_more" = "Ler Mais";
-"chart.about.read_less" = "Ler Menos";
+"chart.about.header" = "About";
+"chart.about.read_more" = "Read More";
+"chart.about.read_less" = "Read Less";
 
-"coin_page.return_of_investments" = "RDI";
+"coin_page.return_of_investments" = "ROI";
 
 // Create Wallet
 
-"create_wallet.title" = "Nova Carteira";
-"create_wallet.name" = "Nome";
-"create_wallet.advanced_setup" = "Avançado";
-"create_wallet.create" = "Criar";
-"create_wallet.advanced" = "Avançado";
-"create_wallet.phrase_count" = "Frase de Recuperação";
-"create_wallet.12_words" = "12 palavras (recomendado)";
-"create_wallet.n_words" = "%@ palavras";
-"create_wallet.word_list" = "Listas de palavras";
-"create_wallet.passphrase" = "Senha";
-"create_wallet.input.passphrase" = "Senha";
-"create_wallet.input.confirm" = "Confirmar";
-"create_wallet.passphrase_description" = "As frases-chave adicionam uma camada de segurança adicional para carteiras. Para restaurar tal carteira, um usuário precisa tanto de uma senha quanto mnemônica.\n\nAs frases-chave também tornam mais fácil para os usuários terem muitas carteiras de multi moedas usando uma única senha mnemônica, mas diferente.";
-"create_wallet.error.empty_passphrase" = "A senha não pode estar vazia";
-"create_wallet.error.forbidden_symbols" = "Por favor, use apenas símbolos suportados: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"create_wallet.error.invalid_confirmation" = "Confirmação da senha não coincide";
+"create_wallet.title" = "New Wallet";
+"create_wallet.name" = "Name";
+"create_wallet.advanced_setup" = "Advanced";
+"create_wallet.create" = "Create";
+"create_wallet.advanced" = "Advanced";
+"create_wallet.phrase_count" = "Recovery Phrase";
+"create_wallet.12_words" = "12 words (recommended)";
+"create_wallet.n_words" = "%@ words";
+"create_wallet.word_list" = "Word List";
+"create_wallet.passphrase" = "Passphrase";
+"create_wallet.input.passphrase" = "Passphrase";
+"create_wallet.input.confirm" = "Confirm";
+"create_wallet.passphrase_description" = "Passphrases add an additional security layer for wallets. To restore such a wallet a user required both a recovery phrase as well as a passphrase.\n\nPassphrases also make it easy for users to have many multi-coin wallets using a single mnemonic but different password.";
+"create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
+"create_wallet.error.forbidden_symbols" = "Please use only supported symbols:A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
+"create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
 
 // Restore Select
 
-"restore_select.title" = "Escolha as Blockchains";
+"restore_select.title" = "Choose Blockchains";
 
 // Lock Info
 
-"lock_info.title" = "TravaTempo";
-"lock_info.text" = "O remetente enviou esses fundos com um fechamento de gastos que expirará na data mostrada. \n\nNão se preocupe, o Bitcoin recebido já é seu, mas até que o período de bloqueio expire, você não pode gastá-los na rede Bitcoin.";
+"lock_info.title" = "TimeLock";
+"lock_info.text" = "The sender sent these funds with a spending lock that will expire on the shown date. \n\nNo worries, the received Bitcoins are already yours, but until the lock period expires you cannot spend them on the Bitcoin network.";
 
 // Double Spend Info
 
-"double_spend_info.title" = "Gasto Duplo";
-"double_spend_info.header" = "Risco de Gasto Duplo! Existe outra transação na Blockchain que está tentando gastar entradas usadas nesta transação. Apenas uma transação será aceita pela rede";
-"double_spend_info.this_hash" = "Esta Tx";
-"double_spend_info.conflicting_hash" = "Tx Conflitante";
+"double_spend_info.title" = "Double Spend";
+"double_spend_info.header" = "Double Spend Risk! There is another transaction on the blockchain that is trying to spend inputs used in this transaction. Only one transaction will be accepted by the network";
+"double_spend_info.this_hash" = "This Tx";
+"double_spend_info.conflicting_hash" = "Conflicting Tx";
 
 // Relative Date
-"timestamp.days_ago" = "%lud atrás";
-"timestamp.hours_ago" = "%luh atrás";
-"timestamp.min_ago" = "%lumin. atrás";
+"timestamp.days_ago" = "%lud ago";
+"timestamp.hours_ago" = "%luh ago";
+"timestamp.min_ago" = "%lum ago";
 
 // Intro
 
-"intro.unchain_assets.title" = "Libere Recursos";
-"intro.unchain_assets.description" = "Não se prenda, e não deixe que te prendam";
-"intro.go_borderless.title" = "Seja sem fronteiras";
-"intro.go_borderless.description" = "Ultrapasse barreiras e acesse mercados globais";
-"intro.stay_private.title" = "Mantenha sua Privacidade";
-"intro.stay_private.description" = "Não vaze seus dados privados e financeiros para o mundo";
+"intro.unchain_assets.title" = "Unchain Assets";
+"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
+"intro.go_borderless.title" = "Go Borderless";
+"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
+"intro.stay_private.title" = "Stay Private";
+"intro.stay_private.description" = "Do not leak your private and financial data to the world";
 
 // Guides
 
-"guides.tab_bar_item" = "Treinamento";
-"guides.title" = "Treinamento";
+"guides.tab_bar_item" = "Academy";
+"guides.title" = "Academy";
 
 // Add Token
 
-"add_token.title" = "Adicionar token";
+"add_token.title" = "Add Token";
 "add_token.blockchain" = "Blockchain";
-"add_token.already_added" = "Este token já está na lista de moedas";
-"add_token.invalid_contract_address" = "Endereço do contrato inválido";
-"add_token.invalid_bep2_symbol" = "Símbolo BEP2 inválido";
-"add_token.contract_address_not_found" = "Endereço do contrato não encontrado em %@ blockchain";
-"add_token.bep2_symbol_not_found" = "Símbolo BEP2 não encontrado";
-"add_token.input_placeholder.contract_address" = "Endereço do Contrato";
-"add_token.input_placeholder.bep2_symbol" = "Símbolo BEP2";
-"add_token.coin_name" = "Nome da Moeda";
-"add_token.symbol" = "Símbolo";
-"add_token.decimals" = "Decimais";
+"add_token.already_added" = "This token is already in the Coin Manager list";
+"add_token.invalid_contract_address" = "Invalid contract address";
+"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
+"add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
+"add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
+"add_token.input_placeholder.contract_address" = "Contract Address";
+"add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
+"add_token.coin_name" = "Coin Name";
+"add_token.symbol" = "Symbol";
+"add_token.decimals" = "Decimals";
 
 // Wallet Connect
 
 "wallet_connect.title" = "WalletConnect";
-"wallet_connect.error.invalid_url" = "Endereço URL Inválido";
+"wallet_connect.error.invalid_url" = "Invalid URL Address";
 "wallet_connect.url" = "URL";
-"wallet_connect.active_account" = "Carteira ativa";
-"wallet_connect.address" = "Endereço";
-"wallet_connect.network" = "Rede";
-"wallet_connect.address" = "Endereço";
-"wallet_connect.network" = "Rede";
-"wallet_connect.list.pending_requests" = "Solicitações Pendentes";
-"wallet_connect.main.no_any_supported_chains" = "Nenhuma cadeia suportada!";
-"wallet_connect.main.unsupported_chains" = "Algumas cadeias não são suportadas!";
-"wallet_connect.connect_description" = "Ao clicar em aprovar, você permite que este aplicativo veja seu endereço público. Este é um importante passo de segurança para proteger seus dados de potenciais riscos de phishing.";
-"wallet_connect.usage_description" = "Você pode ir ao navegador. Não feche esta página enquanto interage no navegador.";
-"wallet_connect.no_connection" = "Não foi possível estabelecer a conexão. Tente reconectar novamente.";
-"wallet_connect.button_reconnect" = "Reconectar";
-"wallet_connect.button_disconnect" = "Desconectar";
-"ethereum_transaction.error.title" = "Erro";
-"ethereum_transaction.error.insufficient_balance" = "A transação requer %@ para enviar.";
-"ethereum_transaction.error.insufficient_balance_with_fee" = "O saldo atual de %@ está abaixo do valor necessário para processar a transação, incluindo taxa de transação.";
-"ethereum_transaction.error.lower_than_base_gas_limit" = "O valor da taxa selecionada é muito baixo e será rejeitado!";
-"ethereum_transaction.error.nonce_already_in_block" = "A transação já foi confirmada!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "Taxa insuficiente para substituir a transação";
-"ethereum_transaction.error.transaction_underpriced" = "Taxa insuficiente para realizar transação";
-"ethereum_transaction.error.tips_higher_than_max_fee" = "Taxa máxima não pode ser inferior à dica, porque a taxa máxima inclui as dicas.";
-"ethereum_transaction.error.reverted" = "A transação não pode ser executada: %@";
-"wallet_connect.request_title" = "Chamada de Contrato";
-"wallet_connect.button.confirm" = "Confirmar";
-"wallet_connect.sign.request_title" = "Solicitação de assinatura";
-"wallet_connect.sign.domain" = "Domínio";
+"wallet_connect.active_account" = "Active Wallet";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Address";
+"wallet_connect.network" = "Network";
+"wallet_connect.list.pending_requests" = "Pending Requests";
+"wallet_connect.main.no_any_supported_chains" = "No any supported chains!";
+"wallet_connect.main.unsupported_chains" = "Some chains are unsupported!";
+"wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is an important security step to protect your data from potential phishing risks.";
+"wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
+"wallet_connect.no_connection" = "Failed to establish a connection. Try reconnecting again.";
+"wallet_connect.button_reconnect" = "Reconnect";
+"wallet_connect.button_disconnect" = "Disconnect";
+"ethereum_transaction.error.title" = "Error";
+"ethereum_transaction.error.insufficient_balance" = "The transaction requires %@ for sending.";
+"ethereum_transaction.error.insufficient_balance_with_fee" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
+"ethereum_transaction.error.nonce_already_in_block" = "The transaction is already in block!";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
+"ethereum_transaction.error.transaction_underpriced" = "Fee not enough to send the transaction";
+"ethereum_transaction.error.tips_higher_than_max_fee" = "Max fee cannot be lower than the tips, because Max fee includes the tips.";
+"ethereum_transaction.error.reverted" = "The transaction cannot be executed: %@";
+"wallet_connect.request_title" = "Contract Call";
+"wallet_connect.button.confirm" = "Confirm";
+"wallet_connect.sign.request_title" = "Sign Request";
+"wallet_connect.sign.domain" = "Domain";
 "wallet_connect.sign.dapp_name" = "dApp";
-"wallet_connect.sign.message" = "Mensagem não assinada";
+"wallet_connect.sign.message" = "Message to sign";
 
 "wallet_connect_list.title" = "WalletConnect";
-"wallet_connect.list.empty_view_text" = "Nenhuma sessão ativa";
+"wallet_connect.list.empty_view_text" = "No active sessions";
 
-"wallet_connect.list.pairings" = "Pareamento";
-"wallet_connect.list.version_text" = "Versão %@";
-"wallet_connect.list.v1_bottom_text" = "Na primeira versão do WalletConnect, você deve ir às sessões para ver e confirmar o pedido";
-"wallet_connect_list.new_connection" = "Nova Conexão";
-"wallet_connect_list.disconnecting" = "Desconectando";
+"wallet_connect.list.pairings" = "Pairings";
+"wallet_connect.list.version_text" = "Version %@";
+"wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
+"wallet_connect_list.new_connection" = "New Connection";
+"wallet_connect_list.disconnecting" = "Disconnecting";
 
-"wallet_connect.no_account.description" = "Você precisa criar ou importar uma carteira antes de usar o WalletConnect.";
-"wallet_connect.unbackuped_account.description" = "Você precisa fazer o backup de %@ antes de poder usar o WalletConnect";
+"wallet_connect.no_account.description" = "You need to create or import a wallet before you can use WalletConnect.";
+"wallet_connect.unbackuped_account.description" = "You need to backup %@ before you can use WalletConnect";
 
-"wallet_connect.non_supported_account.description" = "Seu tipo de carteira atual %@ não suporta WalletConnect";
-"wallet_connect.non_supported_account.switch" = "Alternar";
+"wallet_connect.non_supported_account.description" = "Your current wallet type %@ does not support WalletConnect";
+"wallet_connect.non_supported_account.switch" = "Switch";
 
-"wallet_connect.pending_requests_title" = "Solicitações Pendentes";
-"wallet_connect.paired_dapps.title" = "dApps pareados";
-"wallet_connect.paired_dapps.cant_disconnect" = "Não foi possível desconectar";
-"wallet_connect.paired_dapps.disconnect_all" = "Excluir Tudo";
-"wallet_connect.pending_requests.nonactive_footer" = "Para abrir um pedido você deve ativar a carteira desejada";
+"wallet_connect.pending_requests_title" = "Pending Requests";
+"wallet_connect.paired_dapps.title" = "Paired dApps";
+"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
+"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
+"wallet_connect.pending_requests.nonactive_footer" = "To open an request you must activate the desired wallet";
 
 // App Status
 
-"app_status.title" = "Status do app";
-"app_status.application_status" = "Status da aplicação";
-"app_status.linked_wallets" = "Carteiras Vinculadas";
-"app_status.version_history" = "Histórico da versão";
-"app_status.blockchain_status" = "Status da Blockchain";
+"app_status.title" = "App Status";
+"app_status.application_status" = "Application status";
+"app_status.linked_wallets" = "Linked Wallets";
+"app_status.version_history" = "Version History";
+"app_status.blockchain_status" = "Blockchain status";
 
 // FAQ
 
@@ -1375,322 +1417,321 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 // Status Info
 
 "status_info.title" = "Status";
-"status_info.pending.title" = "Pendente";
-"status_info.pending.content" = "A transação ainda não foi confirmada no blockchain. As transações enviadas com uma configuração de taxas recomendada ou maior são geralmente processadas dentro de alguns minutos. Transações enviadas com uma taxa baixa podem permanecer pendentes por algumas horas ou até mesmo dias, e podem até mesmo ser rejeitadas. Note que o status de uma transação individual na interface de carteira %@ tipicamente atualizado com um curto atraso.";
-"status_info.processing.title" = "Processando";
-"status_info.processing.content" = "A transação já foi incluída na blockchain, mas ainda não atingiu a finalidade permanente. Neste ponto, é seguro considerar a transação como concluída para pagamentos menores. Para pagamentos maiores, é recomendado esperar até que o status da transação seja alterado.";
-"status_info.completed.title" = "Concluído";
-"status_info.confirmed.content" = "A transação está concluída e considerada permanente e irreversível.";
-"status_info.failed.title" = "Falhou";
-"status_info.failed.content" = "A transação não foi processada e nenhuma transferência de valor ocorreu. Dependendo da razão de falha, algumas transações falhadas podem consumir taxas de transação. As transações que foram substituídas ou canceladas por outra transação não consomem taxas de transação e também aparecerão como falha. O app %@ é incapaz de mostrar o motivo de falhas nas transações, mas os usuários são capazes de procurar isso em um explorador público de blocos. . etherscan.io.";
+"status_info.pending.title" = "Pending";
+"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within a few minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Note that status of an individual transaction in %@ wallet interface typically updated with a short delay.";
+"status_info.processing.title" = "Processing";
+"status_info.processing.content" = "The transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider the transaction as completed for smaller payments. For larger payments, it's recommended to wait until the transaction status changes to completed.";
+"status_info.completed.title" = "Completed";
+"status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
+"status_info.failed.title" = "Failed";
+"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Depending on the fail reason, some failed transactions may consume transaction fees. Transactions that were replaced or canceled by another transaction do not consume transaction fees and will also appear as failed. The %@ app is unable to show the reason for failed transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
 
 // Onboarding
 
-"onboarding.balance.create" = "Nova Carteira";
-"onboarding.balance.import" = "Importar carteira";
-"onboarding.balance.watch" = "Ver Endereço";
+"onboarding.balance.create" = "New Wallet";
+"onboarding.balance.import" = "Import Wallet";
+"onboarding.balance.watch" = "Watch Wallet";
 
 // Manage Accounts
 
-"manage_accounts.n_words" = "%@ palavras";
-"manage_accounts.n_words_with_passphrase" = "%@ palavras com senha";
+"manage_accounts.n_words" = "%@ words";
+"manage_accounts.n_words_with_passphrase" = "%@ words with passphrase";
 
 // Manage Account
 
-"manage_account.name" = "Nome";
-"manage_account.recovery_phrase" = "Frase de Recuperação";
-"manage_account.public_keys" = "Chaves públicas";
-"manage_account.private_keys" = "Chave Privada";
-"manage_account.backup_recovery_phrase" = "Backup Manual";
-"manage_account.cloud_backup_recovery_phrase" = "Backup para o iCloud";
-"manage_account.cloud_delete_backup_recovery_phrase" = "Excluir Backup do iCloud";
-"manage_account.manual_backup_required" = "Backup Manual Requerido";
-"manage_account.manual_backup_required.description" = "Para excluir com segurança seu backup no iCloud, você precisará fazer backup da sua frase de recuperação manualmente.";
-"manage_account.manual_backup_required.button" = "Realizar backup agora";
-"manage_account.unlink" = "Desvincular Carteira";
-"manage_account.backup.no_backup_yet_description" = "Conclua uma das opções de backup da carteira para começar a usar a carteira.";
-"manage_account.backup.has_backup_description" = "É recomendável ter um backup manual para cada carteira.";
+"manage_account.name" = "Name";
+"manage_account.recovery_phrase" = "Recovery Phrase";
+"manage_account.public_keys" = "Public Keys";
+"manage_account.private_keys" = "Private Keys";
+"manage_account.backup_recovery_phrase" = "Manual Backup";
+"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
+"manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
+"manage_account.manual_backup_required" = "Manual Backup Required";
+"manage_account.manual_backup_required.description" = "In order to securely delete your backup on iCloud, you will need to manually backup your recovery phrase first.";
+"manage_account.manual_backup_required.button" = "Backup Now";
+"manage_account.unlink" = "Unlink Wallet";
+"manage_account.backup.no_backup_yet_description" = "Complete one of the wallet backup options to start using the wallet.";
+"manage_account.backup.has_backup_description" = "It's recommended to have a manual backup for each wallet.";
 
-"manage_account.cloud_delete_backup_recovery_phrase.description" = "Você tem certeza de que deseja excluir o backup da carteira do iCloud?";
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
 // Manage Account -> Public Keys
 
-"public_keys.title" = "Chaves públicas";
-"public_keys.evm_address" = "Endereço EVM";
-"public_keys.evm_address.description" = "Permite o monitoramento somente leitura de carteiras mantendo ativos na Ethereum, na Binance Smart Chain e em outras blockchains baseadas em EVM.";
-"public_keys.account_extended_public_key" = "Chave Pública Estendida da Conta";
-"public_keys.account_extended_public_key.description" = "Permite monitoramento somente leitura das carteiras segurando Bitcoin e outras cripto baseadas em UTXO (ou seja, Litecoin, Bitcoin Cash, Dash etc.).";
+"public_keys.title" = "Public Keys";
+"public_keys.evm_address" = "EVM Address";
+"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM based blockchains.";
+"public_keys.account_extended_public_key" = "Account Extended Public Key";
+"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
 
 // Manage Account -> Private Keys
 
-"private_keys.title" = "Chave Privada";
-"private_keys.evm_private_key" = "Chave Privada EVM";
-"private_keys.evm_private_key.description" = "Concede controle total sobre cripto baseado em EVM i.e Ethereum, Binance Smart Chain, etc. dentro da respectiva carteira.";
-"private_keys.bip32_root_key" = "Chave Raiz BIP32";
-"private_keys.bip32_root_key.description" = "Concede controle total sobre os ativos da respectiva carteira.";
-"private_keys.account_extended_private_key" = "Chave Privada Estendida da Conta";
-"private_keys.account_extended_private_key.description" = "Concede controle total sobre Bitcoin e outras criptomoedas baseadas em UTXO, ou seja, Litecoin, Bitcoin Cash, Dash etc. dentro da respectiva carteira.";
+"private_keys.title" = "Private Keys";
+"private_keys.evm_private_key" = "EVM Private Key";
+"private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
+"private_keys.bip32_root_key" = "BIP32 Root Key";
+"private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
+"private_keys.account_extended_private_key" = "Account Extended Private Key";
+"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within respective wallet.";
 
 // Manage Account -> EVM Address
 
-"evm_address.title" = "Endereço EVM";
+"evm_address.title" = "EVM Address";
 
 // Birthday Height
 
-"birthday_height.title" = "Aniversário";
+"birthday_height.title" = "Birthday Height";
 
 // Birthday Input
 
-"birthday_input.title" = "Aniversário";
-"birthday_input.description" = "Insira a data da criação da carteira para uma sincronização mais rápida.";
-"birthday_input.new_wallet" = "Nova Carteira";
-"birthday_input.new_wallet.description" = "Não tem nenhuma transação";
-"birthday_input.old_wallet" = "Carteira existente";
-"birthday_input.old_wallet.description" = "Tem transações";
-"birthday_input.input_placeholder" = "%@ (opcional)";
+"birthday_input.title" = "Birthday Height";
+"birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
+"birthday_input.new_wallet" = "New Wallet";
+"birthday_input.new_wallet.description" = "Doesn't have any transactions";
+"birthday_input.old_wallet" = "Existing Wallet";
+"birthday_input.old_wallet.description" = "Has transactions";
+"birthday_input.input_placeholder" = "%@ (optional)";
 
-"restore_setting.birthday_height" = "%@ Aniversário";
-"restore_setting.download.disclaimer" = "A sincronização inicial com o blockchain pode consumir muito tráfego na internet.";
+"restore_setting.birthday_height" = "%@ Birthday Height";
+"restore_setting.download.disclaimer" = "The initial synchronization with the blockchain can consume a lot of internet traffic.";
 
 // EVM Network
 
-"evm_network.rpc_source" = "Fonte RPC";
-"evm_network.added" = "Adicionado";
-"evm_network.add_new" = "Adicionar novo";
+"evm_network.rpc_source" = "RPC Source";
+"evm_network.added" = "Added";
+"evm_network.add_new" = "Add New";
 
 // Add RPC Source
 
-"add_evm_sync_source.title" = "Adicionar fonte RPC";
-"add_evm_sync_source.name" = "Nome";
-"add_evm_sync_source.rpc_url" = "URL RPC";
-"add_evm_sync_source.basic_auth" = "Autenticação básica (opcional)";
-"add_evm_sync_source.warning.url_exists" = "Fonte RPC com esta url já existe";
-"add_evm_sync_source.error.invalid_url" = "Url inserida é inválida. URL válida deve ter um dos seguintes esquemas: http, https, ws, wss";
+"add_evm_sync_source.title" = "Add RPC Source";
+"add_evm_sync_source.name" = "Name";
+"add_evm_sync_source.rpc_url" = "RPC URL";
+"add_evm_sync_source.basic_auth" = "Basic Auth (optional)";
+"add_evm_sync_source.warning.url_exists" = "RPC Source with this url already exists";
+"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: https, wss";
 
 // Send Settings
 
-"evm_send_settings.nonce" = "Nonce de Transação";
-"evm_send_settings.nonce.info" = "O nonce é um valor inteiro exclusivo para uma transação dentro da carteira do usuário. Ele normalmente aumenta com cada transação enviada e não precisa ser alterado. Os usuários avançados podem defini-lo igual a um nonce de uma transação pendente para cancelar e substituir essa transação, desde que a nova transação tenha uma taxa suficientemente alta para evitar que a antiga seja confirmada (por exemplo, eles podem querer acelerar sua confirmação, ou alterar totalmente os parâmetros da transação). Quando várias transações pendentes têm o mesmo nonce, apenas uma é confirmada, geralmente aquela com a taxa mais alta.";
-"evm_send_settings.nonce.errors.already_in_use" = "Usado Nonce";
-"evm_send_settings.nonce.errors.already_in_use.info" = "Já existe uma transação executada agora.";
+"evm_send_settings.nonce" = "Transaction Nonce";
+"evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
+"evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
+"evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
 
-"fee_settings" = "Avançado";
-"fee_settings.fee" = "Taxa";
-"fee_settings.fee.info" = "Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são mais altas quando muitas transações estão ocorrendo na rede.";
-"fee_settings.fee_rate" = "Taxa de tarifa";
-"fee_settings.fee_rate.description" = "Aqui é o valor recomendado para atingir os próximos 2 blocos";
-"fee_settings.inputs_outputs" = "Entrada/Saída";
-"fee_settings.transaction_settings" = "Configurações de transação";
-"fee_settings.transaction_settings.description" = "Torne suas %@ transações mais difíceis de rastrear, mudando a maneira como as transações são estruturadas.";
-"fee_settings.time_lock" = "TimeLock";
-"fee_settings.time_lock.description" = "TimeLock funciona apenas para enviar para endereços BIP44 (começando com 1)";
+"fee_settings" = "Advanced";
+"fee_settings.fee" = "Fee";
+"fee_settings.fee.info" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.";
+"fee_settings.fee_rate" = "Fee Rate";
+"fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
+"fee_settings.inputs_outputs" = "Inputs/Outputs";
+"fee_settings.transaction_settings" = "Transaction Settings";
+"fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
+"fee_settings.time_lock" = "Time Lock";
+"fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
 
-"fee_settings.network_fee" = "Taxa de Rede";
-"fee_settings.network_fee.info" = "O custo estimado do envio de determinada transação na rede.";
-"fee_settings.gas_limit" = "Limite de gás";
-"fee_settings.gas_limit.info" = "A complexidade da transação é medida em unidades chamadas \"gas\". Ela varia dependendo do contrato inteligente ser executado. O Limite de Gas é estimado o gas máximo necessário para o executar. O gas real utilizado normalmente será mais baixo.";
+"fee_settings.network_fee" = "Network Fee";
+"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
+"fee_settings.gas_limit" = "Gas Limit";
+"fee_settings.gas_limit.info" = "Transaction complexity is measured in units called \"gas\". It varies depending on the smart contract being executed. The Gas Limit is the estimated maximum gas needed to execute it. The actual gas used will normally be lower.";
 
-"fee_settings.gas_price" = "Preço do Gás";
-"fee_settings.gas_price.info" = "A taxa para transação na rede é medida em unidades de gás. O preço do gás é a quantidade que um usuário está disposto a gastar por unidade de gás. Quando a rede está ocupada, os preços do gás são altos e baixos quando está inativa. Um preço de gás insuficiente é frequentemente uma razão para que uma transação permaneça pendente por um período prolongado.";
+"fee_settings.gas_price" = "Gas Price";
+"fee_settings.gas_price.info" = "The fee for transacting on the network is measured in gas units. Gas Price is the amount a user is willing to spend per unit of gas. When the network is busy, gas prices are high, and low when it's idle. An insufficient gas price is often a reason for a transaction to remain pending for an extended period.";
 
-"fee_settings.base_fee" = "Taxa Base";
-"fee_settings.base_fee.info" = "O protocolo de rede determina o preço base por gas para cada bloco, a taxa base. Varia de acordo com o nível de utilização da rede de bloco para bloco. Ele pode aumentar ou diminuir em não mais do que 12,5% no próximo bloco, tornando as taxas mais previsíveis. O valor mostrado aqui é a taxa base de taxa atual do bloco.";
-"fee_settings.max_fee_rate" = "Taxa Máxima";
-"fee_settings.max_fee_rate.info" = "Este é o preço total máximo por gas que o usuário está disposto a pagar. Ela deve cobrir a taxa base da rede e a taxa máxima de prioridade. O valor mostrado aqui é sugerido com base em uma estimativa da taxa base do próximo bloco mais a taxa máxima de prioridade escolhida pelo usuário. A taxa real paga normalmente será menor. Definir isso mais baixo que a taxa base atual irá limitar a taxa paga, mas resultará em períodos de espera mais longos para que a transação seja confirmada, ou até mesmo em uma transação travada.";
-"fee_settings.tips" = "Taxa de prioridade máxima";
-"fee_settings.tips.info" = "Os usuários pagam taxas de prioridade para incentivar uma transação a ser confirmada mais rapidamente. Às vezes são chamados de tips. A taxa máxima de prioridade é o preço adicional máximo por gas que o usuário está disposto a pagar acima da taxa base. O valor mostrado aqui é sugerido com base nas condições previstas de rede. A taxa de prioridade real normalmente será menor. Definir como zero pode resultar em um longo tempo de espera para que a transação seja confirmada, como é colocado no final da fila de transações pendentes de todos os usuários.";
+"fee_settings.base_fee" = "Base Fee";
+"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
+"fee_settings.max_fee_rate" = "Max Fee Rate";
+"fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
+"fee_settings.tips" = "Max Priority Fee";
+"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
 
-"fee_settings.errors.insufficient_balance" = "Saldo insuficiente";
-"fee_settings.errors.unexpected_error" = "Erro inesperado";
-"fee_settings.errors.insufficient_balance.info" = "O saldo atual de %@ está abaixo do valor necessário para processar a transação, incluindo taxa de transação.";
-"fee_settings.errors.low_max_fee" = "Taxa baixa";
-"fee_settings.errors.low_max_fee.info" = "A taxa de transação definida é insuficiente para processar esta transação agora.";
-"fee_settings.errors.nonce_already_in_block" = "Não é possível substituir a transação.";
-"fee_settings.errors.replacement_transaction_underpriced" = "Taxa baixa para transação substituída";
-"fee_settings.errors.transaction_underpriced" = "Taxa baixa para transação";
-"fee_settings.errors.tips_higher_than_max_fee" = "A taxa máxima é muito baixa";
-"fee_settings.errors.zero_amount.info" = "Não é possível transferir 0 TRX";
-"fee_settings.warning.risk_of_getting_stuck" = "Arriscado";
-"fee_settings.warning.risk_of_getting_stuck.info" = "A transação pode permanecer pendente por um tempo ou falhar completamente.";
-"fee_settings.warning.overpricing" = "Taxa Muito Alta";
-"fee_settings.warning.overpricing.info" = "A taxa de transação definida é maior que o necessário para processar esta transação agora.";
+"fee_settings.errors.insufficient_balance" = "Insufficient balance";
+"fee_settings.errors.unexpected_error" = "Unexpected Error";
+"fee_settings.errors.insufficient_balance.info" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
+"fee_settings.errors.low_max_fee" = "Low Fee";
+"fee_settings.errors.low_max_fee.info" = "The set transaction fee amount is insufficient for processing this transaction now.";
+"fee_settings.errors.nonce_already_in_block" = "Can't replace transaction.";
+"fee_settings.errors.replacement_transaction_underpriced" = "Low Fee for replacement transaction";
+"fee_settings.errors.transaction_underpriced" = "Low Fee for transaction";
+"fee_settings.errors.tips_higher_than_max_fee" = "Max Fee is too low";
+"fee_settings.errors.zero_amount.info" = "Cannot transfer 0 TRX";
+"fee_settings.warning.risk_of_getting_stuck" = "Risky";
+"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may remain pending for a while or fail entirely.";
+"fee_settings.warning.overpricing" = "Fee Too High";
+"fee_settings.warning.overpricing.info" = "The set transaction fee is higher than necessary for processing this transaction now.";
 
 // Watch Address
 
-"watch_address.title" = "Ver Endereço";
-"watch_address.watch" = "Ver";
-"watch_address.address" = "Endereço";
-"watch_address.by" = "Por";
-"watch_address.watch_by" = "Assistir Por";
-"watch_address.evm_address" = "Endereço EVM";
-"watch_address.tron_address" = "Endereço TRON";
-"watch_address.public_key" = "xPubKey da Conta";
-"watch_address.public_key.placeholder" = "Insira a chave pública estendida da conta ";
-"watch_address.public_key.invalid_key" = "Chave Inválida";
-"watch_address.choose_blockchain" = "Escolha Blockchain";
-"watch_address.choose_coin" = "Escolher Moedas";
+"watch_address.title" = "Watch Wallet";
+"watch_address.watch" = "Watch";
+"watch_address.address" = "Address";
+"watch_address.by" = "By";
+"watch_address.watch_by" = "Watch By";
+"watch_address.evm_address" = "EVM Address";
+"watch_address.tron_address" = "TRON Address";
+"watch_address.public_key" = "Account xPubKey";
+"watch_address.public_key.placeholder" = "Enter Account Extended Public Key ";
+"watch_address.public_key.invalid_key" = "Invalid Key";
+"watch_address.choose_blockchain" = "Choose Blockchain";
+"watch_address.choose_coin" = "Choose Coin";
 
 // Nft Collections
 
 "nft_collections.title" = "NFTs";
-"nft_collections.price_mode" = "Modo de Preço";
-"nft_collections.last_sale" = "Última Venda";
-"nft_collections.average_7d" = "Média 7D";
-"nft_collections.average_30d" = "Média 30D";
-"nft_collections.on_sale" = "À Venda";
-"nft_collections.empty" = "Você não tem NFTs em sua carteira";
+"nft_collections.price_mode" = "Price Mode";
+"nft_collections.last_sale" = "Last Sale";
+"nft_collections.average_7d" = "Average 7D";
+"nft_collections.average_30d" = "Average 30D";
+"nft_collections.on_sale" = "On Sale";
+"nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
-"top_nft_collections.title" = "Principais Coleções NFT";
-"top_nft_collections.description" = "Liderando coleções NFT pelo volume de trading.";
+"top_nft_collections.title" = "Top NFT Collections";
+"top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
 
-"nft_asset.tab.overview" = "Visão geral";
-"nft_asset.tab.activity" = "Atividade";
+"nft_asset.tab.overview" = "Overview";
+"nft_asset.tab.activity" = "Activity";
 
-"nft_asset.last_sale" = "Última Venda";
-"nft_asset.average_7d" = "Média de 7 dias";
-"nft_asset.average_30d" = "Média de 30 dias";
-"nft_asset.floor_price" = "Preço Mínimo";
-"nft_asset.on_sale" = "À Venda";
-"nft_asset.on_auction" = "Leilão";
-"nft_asset.until_date" = "até %@";
-"nft_asset.buy_now" = "Compre Agora";
-"nft_asset.minimum_bid" = "Oferta Mínima";
-"nft_asset.best_offer" = "Melhor Oferta";
-"nft_asset.properties" = "Propriedades";
-"nft_asset.description" = "Descrição";
-"nft_asset.details" = "Detalhes";
-"nft_asset.details.contract_address" = "Endereço do Contrato";
-"nft_asset.details.token_id" = "ID do Token";
-"nft_asset.details.token_standard" = "Critérios do Token";
+"nft_asset.last_sale" = "Last Sale";
+"nft_asset.average_7d" = "7 Day Average";
+"nft_asset.average_30d" = "30 Day Average";
+"nft_asset.floor_price" = "Floor Price";
+"nft_asset.on_sale" = "On Sale";
+"nft_asset.on_auction" = "On Auction";
+"nft_asset.until_date" = "until %@";
+"nft_asset.buy_now" = "Buy Now";
+"nft_asset.minimum_bid" = "Minimum Bid";
+"nft_asset.best_offer" = "Best Offer";
+"nft_asset.properties" = "Properties";
+"nft_asset.description" = "Description";
+"nft_asset.details" = "Details";
+"nft_asset.details.contract_address" = "Contract Address";
+"nft_asset.details.token_id" = "Token ID";
+"nft_asset.details.token_standard" = "Token Standard";
 "nft_asset.details.blockchain" = "Blockchain";
 "nft_asset.links" = "Links";
-"nft_asset.links.website" = "Site";
-"nft_asset.options.save_to_photos" = "Salvar na Galeria";
-"nft_asset.options.set_as_watch_face" = "Definir como Face Assistida";
-"nft_asset.save_to_photos.failed" = "Falha ao salvar a imagem NFT";
+"nft_asset.links.website" = "Website";
+"nft_asset.options.save_to_photos" = "Save to Photos";
+"nft_asset.options.set_as_watch_face" = "Set as Watch Face";
+"nft_asset.save_to_photos.failed" = "Failed to save NFT image";
 
 // Nft Collection
 
-"nft_collection.tab.overview" = "Visão geral";
-"nft_collection.tab.assets" = "Itens";
-"nft_collection.tab.activity" = "Atividade";
+"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.assets" = "Items";
+"nft_collection.tab.activity" = "Activity";
 
-"nft_collection.overview.description" = "Descrição";
-"nft_collection.overview.contracts" = "Contratos";
+"nft_collection.overview.description" = "Description";
+"nft_collection.overview.contracts" = "Contracts";
 "nft_collection.overview.links" = "Links";
-"nft_collection.overview.links.website" = "Site";
+"nft_collection.overview.links.website" = "Website";
 
 
-"nft_collection.overview.owners" = "Donos";
-"nft_collection.overview.items" = "Itens";
-"nft_collection.overview.24h_volume" = "Volume em 24h";
-"nft_collection.overview.today_sellers" = "Vendedores de Hoje";
-"nft_collection.overview.floor_price" = "Preço Mínimo";
-"nft_collection.overview.all_time_average" = "Média de todo o período";
-"nft_collection.overview.royalty" = "Direitos Autorais";
-"nft_collection.overview.inception_date" = "Data de Início";
+"nft_collection.overview.owners" = "Owners";
+"nft_collection.overview.items" = "Items";
+"nft_collection.overview.24h_volume" = "24h Volume";
+"nft_collection.overview.today_sellers" = "Today's Sellers";
+"nft_collection.overview.floor_price" = "Floor Price";
+"nft_collection.overview.all_time_average" = "All time average";
+"nft_collection.overview.royalty" = "Royalty";
+"nft_collection.overview.inception_date" = "Inception Date";
 
-"nft.activity.contracts" = "Contratos";
-"nft.activity.empty_list" = "Sem atividade de item ainda";
-"nft.activity.event_types" = "Tipos de Eventos";
-"nft.activity.event_type.all" = "Todos os Eventos";
-"nft.activity.event_type.sale" = "Venda";
-"nft.activity.event_type.transfer" = "Transferir";
+"nft.activity.contracts" = "Contracts";
+"nft.activity.empty_list" = "No item activity yet";
+"nft.activity.event_types" = "Event Types";
+"nft.activity.event_type.all" = "All Events";
+"nft.activity.event_type.sale" = "Sale";
+"nft.activity.event_type.transfer" = "Transfer";
 "nft.activity.event_type.mint" = "Mint";
-"nft.activity.event_type.list" = "Lista";
-"nft.activity.event_type.listCancel" = "Lista De Cancelar";
-"nft.activity.event_type.offer" = "Oferta";
-"nft.activity.event_type.offerCancel" = "Cancelar oferta";
+"nft.activity.event_type.list" = "List";
+"nft.activity.event_type.listCancel" = "List Cancel";
+"nft.activity.event_type.offer" = "Offer";
+"nft.activity.event_type.offerCancel" = "Offer Cancel";
 
 // Subscription Info
 
-"subscription_info.title" = "Recursos Premium";
-"subscription_info.info1.title" = "Análise de Criptomoedas";
-"subscription_info.info1.text" = "Oportunidades Spot Lucrativas, Evite Bases e Maximize Seus Lucros no Mundo Dinâmico das Criptomoedas.";
-"subscription_info.info2.title" = "Indicadores de Gráfico";
-"subscription_info.info2.text" = "Oportunidades Spot Lucrativas, Evite Bases e Maximize Seus Lucros no Mundo Dinâmico das Criptomoedas.";
-"subscription_info.info3.title" = "Suporte Pessoal";
-"subscription_info.info3.text" = "Oportunidades Spot Lucrativas, Evite Bases e Maximize Seus Lucros no Mundo Dinâmico das Criptomoedas.";
-"subscription_info.get_premium" = "Obter Premium";
-"subscription_info.already_have" = "Eu já tenho Premium";
+"subscription_info.title" = "Premium Features";
+"subscription_info.info1.title" = "Cryptocurrency Analytics";
+"subscription_info.info1.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
+"subscription_info.info2.title" = "Chart Indicators";
+"subscription_info.info2.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
+"subscription_info.info3.title" = "Personal Support";
+"subscription_info.info3.text" = "Spot Lucrative Opportunities, Avoid Scams, and Maximize Your Profits in the Dynamic World of Cryptocurrency.";
+"subscription_info.get_premium" = "Get Premium";
+"subscription_info.already_have" = "I already have Premium";
 
 // Activate Subscription
 
-"activate_subscription.title" = "Ativar";
-"activate_subscription.wallet" = "Carteira";
-"activate_subscription.address" = "Endereço";
-"activate_subscription.message" = "Mensagem para Assinar";
-"activate_subscription.sign" = "Assinar";
-"activate_subscription.activating" = "Ativando...";
-"activate_subscription.failed_to_activate" = "Falha ao ativar a assinatura";
-"activate_subscription.activated" = "Ativado";
-"activate_subscription.no_subscriptions" = "Seu endereço de carteira não tem uma assinatura para recursos premium, você precisa comprá-la para ativar a assinatura.";
+"activate_subscription.title" = "Activate";
+"activate_subscription.wallet" = "Wallet";
+"activate_subscription.address" = "Address";
+"activate_subscription.message" = "Message to Sign";
+"activate_subscription.sign" = "Sign";
+"activate_subscription.activating" = "Activating...";
+"activate_subscription.failed_to_activate" = "Failed to activate subscription";
+"activate_subscription.activated" = "Activated";
+"activate_subscription.no_subscriptions" = "Your wallet address does not have a subscription to premium features, you need to purchase it to activate the subscription.";
 
 // Launch
 
-"launch.failed_to_launch" = "Falha ao iniciar o aplicativo devido a um erro interno. Tente reiniciar o aplicativo ou relate o erro à nossa equipe de suporte.";
-"launch.failed_to_launch.report" = "Reportar";
+"launch.failed_to_launch" = "Failed to launch application due to internal error. Please try restarting app or report the error to our support team.";
+"launch.failed_to_launch.report" = "Report";
 
 // Tron
 
-"tron.send.activation_fee" = "Taxa de ativação";
-"tron.send.resources_consumed" = "Recursos consumidos";
+"tron.send.activation_fee" = "Activation Fee";
+"tron.send.resources_consumed" = "Resources Consumed";
 "tron.send.bandwidth" = "Bandwidth";
 "tron.send.energy" = "Energy";
-"tron.send.fee.info" = "O custo estimado de envio de determinada transação na rede. (Sem excluir Energy, Bandwidth e Taxa de Ativação)";
-"tron.send.resources_consumed.info" = "A bandwidth é a unidade que mede o tamanho dos bytes de transação armazenados no banco de dados blockchain. Quanto maior a transação, mais recursos de largura de banda serão consumidos.\n\nEnergy é a unidade que mede a quantidade de computação necessária pela máquina virtual TRON para realizar operações específicas na rede TRON.\n\nComo as transações de contrato inteligente exigem recursos de computação para executar, cada transação de contrato inteligente requer o pagamento da taxa de energy.";
-"tron.send.activation_fee.info" = "Transferir tokens TRX ou TRC-10 para um endereço de conta inativo ativará a conta.";
-"tron.send.inactive_address" = "Este endereço não está ativo";
+"tron.send.fee.info" = "The estimated cost of sending given transaction on the network. (Without excluding Energy, Bandwidth and Activating Fee)";
+"tron.send.resources_consumed.info" = "Bandwidth is the unit that measures the size of the transaction bytes stored in the blockchain database. The larger the transaction, the more bandwidth resources will be consumed.\n\nEnergy is the unit that measures the amount of computation required by the TRON virtual machine to perform specific operations on the TRON network.\n\nSince smart contract transactions require computing resources to execute, each smart contract transaction requires to pay for the energy fee.";
+"tron.send.activation_fee.info" = "Transferring TRX or TRC-10 tokens to an inactive account address will activate the account.";
+"tron.send.inactive_address" = "This address is not active";
 
 // Cex Coin Select
 
-"cex_coin_select.title" = "Escolher Moedas";
-"cex_coin_select.withdraw" = "Sacar";
-"cex_coin_select.withdraw.empty" = "Você não tem ativos para retirar.";
-"cex_coin_select.search_placeholder" = "Código ou Nome da Moeda";
-"cex_coin_select.suspended" = "Suspenso";
+"cex_coin_select.title" = "Choose Coin";
+"cex_coin_select.withdraw" = "Withdraw";
+"cex_coin_select.withdraw.empty" = "You have no assets to withdraw.";
+"cex_coin_select.search_placeholder" = "Coin Code or Name";
+"cex_coin_select.suspended" = "Suspended";
 
 // Cex Deposit Network Select
 
-"cex_deposit_network_select.title" = "Escolha a Rede";
-"cex_deposit_network_select.description" = "Escolha uma rede e receba um endereço para depositar.";
+"cex_deposit_network_select.title" = "Choose Network";
+"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
 
 // Cex Deposit
 
-"cex_deposit.title" = "Depósito %@";
-"deposit.qr_code_description" = "Seu endereço para o depósito %@";
-"cex_deposit.address" = "Endereço";
-"cex_deposit.network" = "Rede";
+"cex_deposit.title" = "Deposit %@";
+"cex_deposit.address" = "Address";
+
+"cex_deposit.network" = "Network";
 "cex_deposit.memo" = "Memo (Tag)";
-"cex_deposit.min_amount" = "Valor Mín.";
-"cex_deposit.warning_memo" = "Memo (tag) é necessário, ou você perderá suas moedas.";
-"deposit.warning" = "Envie apenas %@ para este endereço. Enviar outros tipos de tokens para este endereço resultará em sua perda suprema.";
-"cex_deposit.copy_address" = "Copiar Endereço";
-"cex_deposit.share_address" = "Compartilhar endereço";
-"cex_deposit.failed" = "Não foi possível carregar o endereço de depósito. Por favor, tente novamente.";
-"cex_deposit.memo_warning.title" = "Importante";
-"cex_deposit.memo_warning.description" = "Ambos os memorandos (tag) e o endereço são necessários para garantir que as ativos são recebidas. Caso contrário, seus fundos serão perdidos.";
+"cex_deposit.min_amount" = "Min. Amount";
+"cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
+"cex_deposit.copy_address" = "Copy Address";
+"cex_deposit.share_address" = "Share Address";
+"cex_deposit.failed" = "Failed to load deposit address. Please retry.";
+"cex_deposit.memo_warning.title" = "Important";
+"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
 
 // Cex Widthdraw
 
-"cex_withdraw.network" = "Rede";
-"cex_withdraw.network_warning" = "Certifique-se de que a rede corresponde ao endereço de retirada e a plataforma de depósito suporta, ou os ativos podem ser perdidos.";
-"cex_withdraw.fee" = "Taxa";
-"cex_withdraw.fee_from_amount" = "Taxa a partir do valor";
-"cex_withdraw.error.insufficient_funds" = "Saldo disponível insuficiente";
-"cex_withdraw.error.max_amount_violated" = "O valor máximo que você pode retirar é %@";
-"cex_withdraw.error.min_amount_violated" = "O valor mínimo que você pode retirar é %@";
-"cex_withdraw.address_required" = "O endereço é obrigatório";
+"cex_withdraw.network" = "Network";
+"cex_withdraw.network_warning" = "Ensure the network matches the withdrawal address and the deposit platform supports it, or assets may be lost.";
+"cex_withdraw.fee" = "Fee";
+"cex_withdraw.fee_from_amount" = "Fee from amount";
+"cex_withdraw.error.insufficient_funds" = "Not enough available balance";
+"cex_withdraw.error.max_amount_violated" = "The maximum amount you can withdraw is %@";
+"cex_withdraw.error.min_amount_violated" = "The minimum amount you can withdraw is %@";
+"cex_withdraw.address_required" = "Address is required";
 
 // Cex Withdraw Network Select
 
-"cex_withdraw_network_select.title" = "Rede";
-"cex_withdraw_network_select.description" = "Certifique-se de que a rede corresponde ao endereço de retirada e a plataforma de depósito suporta.";
+"cex_withdraw_network_select.title" = "Network";
+"cex_withdraw_network_select.description" = "Ensure the network matches the withdrawal address and the deposit platform supports it.";
 
 // Cex Withdraw Confirm
 
-"cex_withdraw_confirm.you_withdraw" = "Você retira";
-"cex_withdraw_confirm.network" = "Rede";
-"cex_withdraw_confirm.withdraw" = "Sacar";
-"cex_withdraw_confirm.withdraw_failed" = "Falha na retirada";
+"cex_withdraw_confirm.you_withdraw" = "You Withdraw";
+"cex_withdraw_confirm.network" = "Network";
+"cex_withdraw_confirm.withdraw" = "Withdraw";
+"cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
