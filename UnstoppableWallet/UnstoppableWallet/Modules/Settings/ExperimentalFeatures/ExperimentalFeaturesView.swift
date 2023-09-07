@@ -18,7 +18,7 @@ struct ExperimentalFeaturesView: View {
             }
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-                .navigationBarTitle("settings.experimental_features.title".localized)
+                .navigationTitle("settings.experimental_features.title".localized)
     }
 
 }

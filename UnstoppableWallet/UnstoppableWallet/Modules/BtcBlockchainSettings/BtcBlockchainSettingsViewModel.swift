@@ -1,42 +1,27 @@
-import RxSwift
-import RxRelay
-import RxCocoa
+import SwiftUI
 
-class BtcBlockchainSettingsViewModel {
+class BtcBlockchainSettingsViewModel: ObservableObject {
     private let service: BtcBlockchainSettingsService
-    private let disposeBag = DisposeBag()
 
-    private let restoreModeViewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
-    private let finishRelay = PublishRelay<()>()
+    let restoreModes: [BtcRestoreMode] = BtcRestoreMode.allCases
+
+    @Published var selectedRestoreMode: BtcRestoreMode {
+        didSet {
+            saveEnabled = selectedRestoreMode != service.currentRestoreMode
+        }
+    }
+
+    @Published var saveEnabled = false
 
     init(service: BtcBlockchainSettingsService) {
         self.service = service
 
-        syncRestoreModeState()
-    }
-
-    private func syncRestoreModeState() {
-        let viewItems = BtcRestoreMode.allCases.map { mode in
-            ViewItem(name: mode.title, description: mode.description, selected: mode == service.restoreMode)
-        }
-        restoreModeViewItemsRelay.accept(viewItems)
+        selectedRestoreMode = service.currentRestoreMode
     }
 
 }
 
 extension BtcBlockchainSettingsViewModel {
-
-    var restoreModeViewItemsDriver: Driver<[ViewItem]> {
-        restoreModeViewItemsRelay.asDriver()
-    }
-
-    var canSaveDriver: Driver<Bool> {
-        service.hasChangesObservable.asDriver(onErrorJustReturn: false)
-    }
-
-    var finishSignal: Signal<()> {
-        finishRelay.asSignal()
-    }
 
     var title: String {
         service.blockchain.name
@@ -46,24 +31,8 @@ extension BtcBlockchainSettingsViewModel {
         service.blockchain.type.imageUrl
     }
 
-    func onSelectRestoreMode(index: Int) {
-        service.restoreMode = BtcRestoreMode.allCases[index]
-        syncRestoreModeState()
-    }
-
     func onTapSave() {
-        service.save()
-        finishRelay.accept(())
-    }
-
-}
-
-extension BtcBlockchainSettingsViewModel {
-
-    struct ViewItem {
-        let name: String
-        let description: String
-        let selected: Bool
+        service.save(restoreMode: selectedRestoreMode)
     }
 
 }

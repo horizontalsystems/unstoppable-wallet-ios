@@ -10,17 +10,20 @@ struct SimpleActivateView: View {
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin32) {
-                ListSection(footerText: description) {
-                    ListRow {
-                        Toggle(isOn: $viewModel.activated) {
-                            Text(toggleText).themeBody()
+                VStack(spacing: 0) {
+                    ListSection {
+                        ListRow {
+                            Toggle(isOn: $viewModel.activated) {
+                                Text(toggleText).themeBody()
+                            }
                         }
                     }
+                    ListSectionFooter(text: description)
                 }
             }
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-                .navigationBarTitle(title)
+                .navigationTitle(title)
     }
 
 }
