@@ -249,7 +249,8 @@ class MainSettingsViewController: ThemeViewController {
                     id: "security",
                     height: .heightCell48,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(SecuritySettingsModule.viewController(), animated: true)
+                        let viewController = SecuritySettingsModule.view().toViewController(title: "settings_security.title".localized)
+                        self?.navigationController?.pushViewController(viewController, animated: true)
                     }
             ),
             StaticRow(
