@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class MainViewModel {
     private let service: MainService
@@ -9,6 +9,7 @@ class MainViewModel {
     private let releaseNotesService: ReleaseNotesService
     private let jailbreakService: JailbreakService
     private let deepLinkService: DeepLinkService
+    private let eventHandler: IEventHandler
     private let disposeBag = DisposeBag()
 
     private let balanceTabStateRelay = BehaviorRelay<BalanceTabState>(value: .balance)
@@ -16,15 +17,16 @@ class MainViewModel {
     private let showMarketRelay = BehaviorRelay<Bool>(value: true)
 
     private let showReleaseNotesRelay = PublishRelay<URL?>()
-    private let showJailbreakRelay = PublishRelay<()>()
-    private let showDeepLinkRelay = PublishRelay<DeepLinkManager.DeepLink?>()
+    private let showJailbreakRelay = PublishRelay<Void>()
+    private let showEventRelay = PublishRelay<Any>()
 
-    init(service: MainService, badgeService: MainBadgeService, releaseNotesService: ReleaseNotesService, jailbreakService: JailbreakService, deepLinkService: DeepLinkService) {
+    init(service: MainService, badgeService: MainBadgeService, releaseNotesService: ReleaseNotesService, jailbreakService: JailbreakService, deepLinkService: DeepLinkService, eventHandler: IEventHandler) {
         self.service = service
         self.badgeService = badgeService
         self.releaseNotesService = releaseNotesService
         self.jailbreakService = jailbreakService
         self.deepLinkService = deepLinkService
+        self.eventHandler = eventHandler
 
         subscribe(disposeBag, service.hasAccountsObservable) { [weak self] in self?.sync(hasAccounts: $0) }
         subscribe(disposeBag, service.hasWalletsObservable) { [weak self] in self?.sync(hasWallets: $0) }
@@ -51,20 +53,29 @@ class MainViewModel {
         showMarketRelay.accept(showMarket)
     }
 
+    private func handleDeepLink(deepLink: DeepLinkManager.DeepLink) {
+        deepLinkService.setDeepLinkShown()
+        Task {
+            do {
+                try await eventHandler.handle(event: deepLink, eventType: .walletConnectDeepLink)
+            } catch {
+                print("Can't handle Deep Link \(error)")
+            }
+        }
+    }
+
     func handleNextAlert() {
         if let releaseNotesUrl = releaseNotesService.releaseNotesUrl {
             showReleaseNotesRelay.accept(releaseNotesUrl)
         } else if jailbreakService.needToShowAlert {
             showJailbreakRelay.accept(())
         } else if let deepLink = deepLinkService.deepLink {
-            showDeepLinkRelay.accept(deepLink)
+            handleDeepLink(deepLink: deepLink)
         }
     }
-
 }
 
 extension MainViewModel {
-
     var settingsBadgeDriver: Driver<(Bool, Int)> {
         badgeService.settingsBadgeObservable.asDriver(onErrorJustReturn: (false, 0))
     }
@@ -81,12 +92,8 @@ extension MainViewModel {
         showReleaseNotesRelay.asDriver(onErrorJustReturn: nil)
     }
 
-    var showJailbreakDriver: Driver<()> {
+    var showJailbreakDriver: Driver<Void> {
         showJailbreakRelay.asDriver(onErrorJustReturn: ())
-    }
-
-    var showDeepLinkDriver: Driver<DeepLinkManager.DeepLink?> {
-        showDeepLinkRelay.asDriver(onErrorJustReturn: nil)
     }
 
     var needToShowJailbreakAlert: Bool {
@@ -121,21 +128,14 @@ extension MainViewModel {
         jailbreakService.setAlertShown()
     }
 
-    func onDeepLinkShown() {
-        deepLinkService.setDeepLinkShown()
-    }
-
     func onSwitch(tab: MainModule.Tab) {
         service.set(tab: tab)
     }
-
 }
 
 extension MainViewModel {
-
     enum BalanceTabState {
         case balance
         case onboarding
     }
-
 }

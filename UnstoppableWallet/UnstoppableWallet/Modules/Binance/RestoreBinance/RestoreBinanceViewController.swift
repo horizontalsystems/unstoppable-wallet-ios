@@ -1,10 +1,10 @@
 import Combine
-import UIKit
+import ComponentKit
+import HUD
+import SectionsTableView
 import SnapKit
 import ThemeKit
-import ComponentKit
-import SectionsTableView
-import HUD
+import UIKit
 
 class RestoreBinanceViewController: ThemeViewController {
     private let viewModel: RestoreBinanceViewModel
@@ -29,7 +29,8 @@ class RestoreBinanceViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -88,40 +89,40 @@ class RestoreBinanceViewController: ThemeViewController {
         getApiKeysButton.addTarget(self, action: #selector(onTapGetApiKeys), for: .touchUpInside)
 
         viewModel.$connectEnabled
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] enabled in self?.connectButton.isEnabled = enabled }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] enabled in self?.connectButton.isEnabled = enabled }
+            .store(in: &cancellables)
 
         viewModel.$connectVisible
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] visible in self?.connectButton.isHidden = !visible }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] visible in self?.connectButton.isHidden = !visible }
+            .store(in: &cancellables)
 
         viewModel.$connectingVisible
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] visible in self?.connectingButton.isHidden = !visible }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] visible in self?.connectingButton.isHidden = !visible }
+            .store(in: &cancellables)
 
         viewModel.valuesPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] apiKey, secretKey in
-                    self?.apiKeyCell.inputText = apiKey
-                    self?.secretKeyCell.inputText = secretKey
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] apiKey, secretKey in
+                self?.apiKeyCell.inputText = apiKey
+                self?.secretKeyCell.inputText = secretKey
+            }
+            .store(in: &cancellables)
 
         viewModel.errorPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { text in HudHelper.instance.showErrorBanner(title: text) }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { text in HudHelper.instance.showErrorBanner(title: text) }
+            .store(in: &cancellables)
 
         viewModel.successPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    HudHelper.instance.show(banner: .imported)
-                    (self?.returnViewController ?? self)?.dismiss(animated: true)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                HudHelper.instance.show(banner: .imported)
+                (self?.returnViewController ?? self)?.dismiss(animated: true)
+            }
+            .store(in: &cancellables)
 
         tableView.buildSections()
         isLoaded = true
@@ -140,7 +141,8 @@ class RestoreBinanceViewController: ThemeViewController {
 
     @objc private func onTapScanQr() {
         let scanQrViewController = ScanQrViewController()
-        scanQrViewController.delegate = self
+        scanQrViewController.didFetch = { [weak self] in self?.viewModel.onFetch(qrCodeString: $0) }
+
         present(scanQrViewController, animated: true)
     }
 
@@ -151,63 +153,52 @@ class RestoreBinanceViewController: ThemeViewController {
     @objc private func onTapGetApiKeys() {
         UrlManager.open(url: "https://www.binance.com/en/my/settings/api-management")
     }
-
 }
 
 extension RestoreBinanceViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         [
             Section(
-                    id: "description",
-                    headerState: .margin(height: .margin12),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        tableView.descriptionRow(
-                                id: "description",
-                                text: "restore.binance.description".localized,
-                                font: .subhead2,
-                                textColor: .themeGray,
-                                ignoreBottomMargin: true
-                        )
-                    ]
+                id: "description",
+                headerState: .margin(height: .margin12),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    tableView.descriptionRow(
+                        id: "description",
+                        text: "restore.binance.description".localized,
+                        font: .subhead2,
+                        textColor: .themeGray,
+                        ignoreBottomMargin: true
+                    ),
+                ]
             ),
             Section(
-                    id: "api-key",
-                    headerState: .margin(height: .margin12),
-                    rows: [
-                        StaticRow(
-                                cell: apiKeyCell,
-                                id: "api-key",
-                                dynamicHeight: { [weak self] width in
-                                    self?.apiKeyCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
+                id: "api-key",
+                headerState: .margin(height: .margin12),
+                rows: [
+                    StaticRow(
+                        cell: apiKeyCell,
+                        id: "api-key",
+                        dynamicHeight: { [weak self] width in
+                            self?.apiKeyCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
             ),
             Section(
-                    id: "secret-key",
-                    headerState: .margin(height: .margin16),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: secretKeyCell,
-                                id: "secret-key",
-                                dynamicHeight: { [weak self] width in
-                                    self?.secretKeyCell.height(containerWidth: width) ?? 0
-                                }
-                        )
-                    ]
-            )
+                id: "secret-key",
+                headerState: .margin(height: .margin16),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: secretKeyCell,
+                        id: "secret-key",
+                        dynamicHeight: { [weak self] width in
+                            self?.secretKeyCell.height(containerWidth: width) ?? 0
+                        }
+                    ),
+                ]
+            ),
         ]
     }
-
-}
-
-extension RestoreBinanceViewController: IScanQrViewControllerDelegate {
-
-    func didFetch(string: String) {
-        viewModel.onFetch(qrCodeString: string)
-    }
-
 }

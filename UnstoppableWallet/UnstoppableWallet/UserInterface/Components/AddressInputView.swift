@@ -80,7 +80,8 @@ class AddressInputView: UIView {
 
     private func onTapScan() {
         let scanQrViewController = ScanQrViewController()
-        scanQrViewController.delegate = self
+        scanQrViewController.didFetch = { [weak self] in self?.onFetchText?($0) }
+
         onOpenViewController?(scanQrViewController)
     }
 
@@ -157,14 +158,6 @@ extension AddressInputView {
 
     func height(containerWidth: CGFloat) -> CGFloat {
         formValidatedView.height(containerWidth: containerWidth)
-    }
-
-}
-
-extension AddressInputView: IScanQrViewControllerDelegate {
-
-    func didFetch(string: String) {
-        onFetchText?(string)
     }
 
 }

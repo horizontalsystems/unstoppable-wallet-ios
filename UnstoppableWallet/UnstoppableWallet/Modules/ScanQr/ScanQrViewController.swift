@@ -1,20 +1,16 @@
-import UIKit
+import ComponentKit
+import ScanQrKit
 import SnapKit
 import ThemeKit
-import ScanQrKit
-import ComponentKit
-
-protocol IScanQrViewControllerDelegate: AnyObject {
-    func didFetch(string: String)
-}
+import UIKit
 
 class ScanQrViewController: ThemeViewController {
-    weak var delegate: IScanQrViewControllerDelegate?
-
     private let scanView: ScanQrView
 
     private let reportAfterDismiss: Bool
     private let pasteEnabled: Bool
+
+    var didFetch: ((String) -> Void)?
 
     init(reportAfterDismiss: Bool = false, pasteEnabled: Bool = false) {
         self.reportAfterDismiss = reportAfterDismiss
@@ -26,7 +22,8 @@ class ScanQrViewController: ThemeViewController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -92,21 +89,18 @@ class ScanQrViewController: ThemeViewController {
     private func onFetch(string: String) {
         if reportAfterDismiss {
             dismiss(animated: true) { [weak self] in
-                self?.delegate?.didFetch(string: string)
+                self?.didFetch?(string)
             }
         } else {
-            delegate?.didFetch(string: string)
+            didFetch?(string)
             dismiss(animated: true)
         }
     }
-
 }
 
 extension ScanQrViewController: IScanQrCodeDelegate {
-
     func didScan(string: String) {
         scanView.stop()
         onFetch(string: string)
     }
-
 }

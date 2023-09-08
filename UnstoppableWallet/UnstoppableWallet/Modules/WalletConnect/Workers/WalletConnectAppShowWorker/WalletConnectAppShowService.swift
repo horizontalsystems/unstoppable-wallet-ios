@@ -1,17 +1,19 @@
-import RxSwift
-import RxCocoa
-import WalletConnectSign
+import Combine
+import Foundation
 import PinKit
+import RxSwift
+import WalletConnectSign
 
 class WalletConnectAppShowService {
-    private let disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private let walletConnectManager: WalletConnectSessionManager
     private let cloudAccountBackupManager: CloudAccountBackupManager
     private let accountManager: AccountManager
     private let pinKit: PinKit.Kit
 
-    private let showSessionProposalRelay = PublishRelay<WalletConnectSign.Session.Proposal>()
-    private let showSessionRequestRelay = PublishRelay<WalletConnectRequest>()
+    private let showSessionProposalSubject = PassthroughSubject<WalletConnectSign.Session.Proposal, Never>()
+    private let showSessionRequestSubject = PassthroughSubject<WalletConnectRequest, Never>()
 
     init(walletConnectManager: WalletConnectSessionManager, cloudAccountBackupManager: CloudAccountBackupManager, accountManager: AccountManager, pinKit: PinKit.Kit) {
         self.walletConnectManager = walletConnectManager
@@ -24,19 +26,17 @@ class WalletConnectAppShowService {
     }
 
     private func receive(proposal: WalletConnectSign.Session.Proposal) {
-            showSessionProposalRelay.accept(proposal)
+        showSessionProposalSubject.send(proposal)
     }
 
     private func receive(request: WalletConnectRequest) {
         if !pinKit.isLocked {
-            showSessionRequestRelay.accept(request)
+            showSessionRequestSubject.send(request)
         }
     }
-
 }
 
 extension WalletConnectAppShowService {
-
     var activeAccount: Account? {
         accountManager.activeAccount
     }
@@ -49,12 +49,15 @@ extension WalletConnectAppShowService {
         return account.backedUp || cloudAccountBackupManager.backedUp(uniqueId: account.type.uniqueId())
     }
 
-    var showSessionProposalObservable: Observable<WalletConnectSign.Session.Proposal> {
-        showSessionProposalRelay.asObservable()
+    var showSessionProposalPublisher: AnyPublisher<WalletConnectSign.Session.Proposal, Never> {
+        showSessionProposalSubject.eraseToAnyPublisher()
     }
 
-    var showSessionRequestObservable: Observable<WalletConnectRequest> {
-        showSessionRequestRelay.asObservable()
+    var showSessionRequestPublisher: AnyPublisher<WalletConnectRequest, Never> {
+        showSessionRequestSubject.eraseToAnyPublisher()
     }
 
+    func validate(uri: String) throws {
+        try walletConnectManager.validate(uri: uri)
+    }
 }

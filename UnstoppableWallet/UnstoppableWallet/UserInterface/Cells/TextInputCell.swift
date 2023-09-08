@@ -1,7 +1,7 @@
-import UIKit
+import ComponentKit
 import SnapKit
 import ThemeKit
-import ComponentKit
+import UIKit
 
 class TextInputCell: UITableViewCell {
     private static let minimalTextHeight: CGFloat = 64
@@ -21,10 +21,10 @@ class TextInputCell: UITableViewCell {
     private let qrButton = SecondaryCircleButton()
     private let pasteButton = SecondaryButton()
 
-    var onChangeHeight: (() -> ())?
-    var onChangeText: ((String) -> ())?
-    var onChangeTextViewCaret: ((UITextView) -> ())?
-    var onOpenViewController: ((UIViewController) -> ())?
+    var onChangeHeight: (() -> Void)?
+    var onChangeText: ((String) -> Void)?
+    var onChangeTextViewCaret: ((UITextView) -> Void)?
+    var onOpenViewController: ((UIViewController) -> Void)?
 
     private(set) var textForHeight: String = "" {
         didSet {
@@ -107,7 +107,8 @@ class TextInputCell: UITableViewCell {
         syncComponents()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -121,7 +122,8 @@ class TextInputCell: UITableViewCell {
 
     @objc private func onTapQr() {
         let scanQrViewController = ScanQrViewController()
-        scanQrViewController.delegate = self
+        scanQrViewController.didFetch = { [weak self] in self?.set(text: $0) }
+
         onOpenViewController?(scanQrViewController)
     }
 
@@ -167,11 +169,9 @@ class TextInputCell: UITableViewCell {
         let textHeight = textForHeight.height(forContainerWidth: textWidth, font: textViewFont)
         return max(Self.minimalTextHeight, textHeight) + textViewEdgeInsets.height
     }
-
 }
 
 extension TextInputCell: UITextViewDelegate {
-
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         textForHeight = (textView.text as NSString).replacingCharacters(in: range, with: text)
         return true
@@ -183,18 +183,7 @@ extension TextInputCell: UITextViewDelegate {
         onChangeText?(textView.text)
     }
 
-    public func textViewDidBeginEditing(_ textView: UITextView) {
-    }
+    public func textViewDidBeginEditing(_: UITextView) {}
 
-    public func textViewDidEndEditing(_ textView: UITextView) {
-    }
-
-}
-
-extension TextInputCell: IScanQrViewControllerDelegate {
-
-    func didFetch(string: String) {
-        set(text: string)
-    }
-
+    public func textViewDidEndEditing(_: UITextView) {}
 }

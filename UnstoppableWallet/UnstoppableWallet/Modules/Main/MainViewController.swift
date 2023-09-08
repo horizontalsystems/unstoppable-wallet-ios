@@ -1,22 +1,21 @@
-import UIKit
-import ThemeKit
-import RxSwift
-import RxCocoa
-import StorageKit
 import HsToolKit
+import RxCocoa
+import RxSwift
+import StorageKit
+import ThemeKit
+import UIKit
 
 class MainViewController: ThemeTabBarController {
     private let disposeBag = DisposeBag()
 
     private let viewModel: MainViewModel
-    var workers = [IMainWorker]()
 
     private var marketModule: UIViewController?
     private let balanceModule = ThemeNavigationController(rootViewController: WalletModule.viewController())
     private let transactionsModule = ThemeNavigationController(rootViewController: TransactionsModule.viewController())
     private let settingsModule = ThemeNavigationController(rootViewController: MainSettingsModule.viewController())
 
-    private var showAlerts = [(() -> ())]()
+    private var showAlerts = [() -> Void]()
 
     private var lastTimeStamp: TimeInterval = 0
     private var didAppear: Bool = false
@@ -29,7 +28,8 @@ class MainViewController: ThemeTabBarController {
         selectedIndex = viewModel.initialTab.rawValue
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -43,7 +43,6 @@ class MainViewController: ThemeTabBarController {
         subscribe(disposeBag, viewModel.showMarketDriver) { [weak self] in self?.handle(showMarket: $0) }
         subscribe(disposeBag, viewModel.showReleaseNotesDriver) { [weak self] in self?.showReleaseNotes(url: $0) }
         subscribe(disposeBag, viewModel.showJailbreakDriver) { [weak self] in self?.showJailbreakAlert() }
-        subscribe(disposeBag, viewModel.showDeepLinkDriver) { [weak self] in self?.handle(deepLink: $0) }
 
         viewModel.onLoad()
     }
@@ -77,7 +76,7 @@ class MainViewController: ThemeTabBarController {
         }
     }
 
-    private func sync(balanceTabState: MainViewModel.BalanceTabState) {
+    private func sync(balanceTabState _: MainViewModel.BalanceTabState) {
         var viewControllers = [UIViewController]()
         if viewModel.showMarket {
             let marketModule = marketModule ?? ThemeNavigationController(rootViewController: MarketModule.viewController())
@@ -91,7 +90,7 @@ class MainViewController: ThemeTabBarController {
         viewControllers.append(contentsOf: [
             balanceModule,
             transactionsModule,
-            settingsModule
+            settingsModule,
         ])
 
         setViewControllers(viewControllers, animated: didAppear)
@@ -140,21 +139,7 @@ class MainViewController: ThemeTabBarController {
         showAlerts.removeFirst()
     }
 
-    private func handle(deepLink: DeepLinkManager.DeepLink?) {
-        guard let deepLink = deepLink else {
-            return
-        }
-
-        workers.forEach { worker in
-            if let handler = worker as? IDeepLinkHandler {
-                viewModel.onDeepLinkShown()
-                handler.handle(deepLink: deepLink)
-            }
-        }
-    }
-
-    private func handle(showMarket: Bool) {
+    private func handle(showMarket _: Bool) {
         sync(balanceTabState: viewModel.balanceTabState)
     }
-
 }

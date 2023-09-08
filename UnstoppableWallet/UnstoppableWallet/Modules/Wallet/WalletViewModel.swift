@@ -1,13 +1,14 @@
-import Foundation
 import Combine
-import RxSwift
-import RxRelay
-import RxCocoa
-import MarketKit
+import Foundation
 import HsExtensions
+import MarketKit
+import RxCocoa
+import RxRelay
+import RxSwift
 
 class WalletViewModel {
     private let service: WalletService
+    private let eventHandler: IEventHandler
     private let factory: WalletViewItemFactory
     private let accountRestoreWarningFactory: AccountRestoreWarningFactory
     private var cancellables = Set<AnyCancellable>()
@@ -15,24 +16,27 @@ class WalletViewModel {
 
     private let titleRelay = BehaviorRelay<String?>(value: nil)
     private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
-    private let openReceiveRelay = PublishRelay<()>()
+    private let openReceiveRelay = PublishRelay<Void>()
     private let openElementRelay = PublishRelay<WalletModule.Element>()
     private let openBackupRequiredRelay = PublishRelay<Account>()
-    private let noConnectionErrorRelay = PublishRelay<()>()
+    private let noConnectionErrorRelay = PublishRelay<Void>()
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
-    private let playHapticRelay = PublishRelay<()>()
-    private let scrollToTopRelay = PublishRelay<()>()
+    private let playHapticRelay = PublishRelay<Void>()
+    private let scrollToTopRelay = PublishRelay<Void>()
+    private let disableQrScannerRelay = PublishRelay<Bool>()
 
     @PostPublished private(set) var state: State = .list(viewItems: [])
     @PostPublished private(set) var headerViewItem: WalletModule.HeaderViewItem?
     @Published private(set) var sortBy: String?
     @Published private(set) var controlViewItem: ControlViewItem?
     @Published private(set) var nftVisible: Bool = false
+    @Published private(set) var qrScanVisible: Bool = true
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).wallet-view-model", qos: .userInitiated)
 
-    init(service: WalletService, factory: WalletViewItemFactory, accountRestoreWarningFactory: AccountRestoreWarningFactory) {
+    init(service: WalletService, eventHandler: IEventHandler, factory: WalletViewItemFactory, accountRestoreWarningFactory: AccountRestoreWarningFactory) {
         self.service = service
+        self.eventHandler = eventHandler
         self.factory = factory
         self.accountRestoreWarningFactory = accountRestoreWarningFactory
 
@@ -43,12 +47,12 @@ class WalletViewModel {
         subscribe(disposeBag, service.balancePrimaryValueObservable) { [weak self] _ in self?.onUpdateBalancePrimaryValue() }
 
         service.$state
-                .sink { [weak self] in self?.sync(serviceState: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(serviceState: $0) }
+            .store(in: &cancellables)
 
         service.$totalItem
-                .sink { [weak self] in self?.sync(totalItem: $0) }
-                .store(in: &cancellables)
+            .sink { [weak self] in self?.sync(totalItem: $0) }
+            .store(in: &cancellables)
 
         sync(activeAccount: service.activeAccount)
         sync(totalItem: service.totalItem)
@@ -62,17 +66,17 @@ class WalletViewModel {
         }
     }
 
-    private func _sync(serviceState: WalletService.State) {
+    private func _sync(serviceState _: WalletService.State) {
         switch service.state {
         case .noAccount: state = .noAccount
         case .loading: state = .loading
-        case .loaded(let items):
+        case let .loaded(items):
             if items.isEmpty, !service.cexAccount {
                 state = service.watchAccount ? .watchEmpty : .empty
             } else {
                 state = .list(viewItems: items.map { _viewItem(item: $0) })
             }
-        case .failed(let reason):
+        case let .failed(reason):
             switch reason {
             case .syncFailed: state = .syncFailed
             case .invalidApiKey: state = .invalidApiKey
@@ -116,7 +120,7 @@ class WalletViewModel {
 
     private func syncUpdated(item: WalletService.Item) {
         queue.async {
-            guard case .list(var viewItems) = self.state else {
+            guard case var .list(viewItems) = self.state else {
                 return
             }
 
@@ -131,16 +135,14 @@ class WalletViewModel {
 
     private func _viewItem(item: WalletService.Item) -> BalanceViewItem {
         factory.viewItem(
-                item: item,
-                balancePrimaryValue: service.balancePrimaryValue,
-                balanceHidden: service.balanceHidden
+            item: item,
+            balancePrimaryValue: service.balancePrimaryValue,
+            balanceHidden: service.balanceHidden
         )
     }
-
 }
 
 extension WalletViewModel {
-
     var titleDriver: Driver<String?> {
         titleRelay.asDriver()
     }
@@ -149,7 +151,7 @@ extension WalletViewModel {
         showWarningRelay.asDriver()
     }
 
-    var openReceiveSignal: Signal<()> {
+    var openReceiveSignal: Signal<Void> {
         openReceiveRelay.asSignal()
     }
 
@@ -161,7 +163,7 @@ extension WalletViewModel {
         openBackupRequiredRelay.asSignal()
     }
 
-    var noConnectionErrorSignal: Signal<()> {
+    var noConnectionErrorSignal: Signal<Void> {
         noConnectionErrorRelay.asSignal()
     }
 
@@ -169,23 +171,27 @@ extension WalletViewModel {
         openSyncErrorRelay.asSignal()
     }
 
-    var showAccountsLostSignal: Signal<()> {
+    var showAccountsLostSignal: Signal<Void> {
         service.accountsLostObservable.asSignal(onErrorJustReturn: ())
     }
 
-    var playHapticSignal: Signal<()> {
+    var playHapticSignal: Signal<Void> {
         playHapticRelay.asSignal()
     }
 
-    var scrollToTopSignal: Signal<()> {
+    var scrollToTopSignal: Signal<Void> {
         scrollToTopRelay.asSignal()
+    }
+
+    var disableQrScannerSignal: Signal<Bool> {
+        disableQrScannerRelay.asSignal()
     }
 
     var sortTypeViewItems: [AlertViewItem] {
         WalletModule.SortType.allCases.map { sortType in
             AlertViewItem(
-                    text: sortType.title,
-                    selected: sortType == service.sortType
+                text: sortType.title,
+                selected: sortType == service.sortType
             )
         }
     }
@@ -276,10 +282,21 @@ extension WalletViewModel {
         service.didIgnoreAccountWarning()
     }
 
+    func process(scanned: String) {
+        Task { [weak self, eventHandler] in
+            defer {
+                self?.disableQrScannerRelay.accept(false)
+            }
+
+            do {
+                self?.disableQrScannerRelay.accept(true)
+                try await eventHandler.handle(event: scanned, eventType: .walletConnectUri)
+            } catch {}
+        }
+    }
 }
 
 extension WalletViewModel {
-
     enum State: CustomStringConvertible {
         case list(viewItems: [BalanceViewItem])
         case noAccount
@@ -291,7 +308,7 @@ extension WalletViewModel {
 
         var description: String {
             switch self {
-            case .list(let viewItems): return "list: \(viewItems.count) view items"
+            case let .list(viewItems): return "list: \(viewItems.count) view items"
             case .noAccount: return "noAccount"
             case .empty: return "empty"
             case .watchEmpty: return "watchEmpty"
@@ -306,5 +323,4 @@ extension WalletViewModel {
         let watchVisible: Bool
         let coinManagerVisible: Bool
     }
-
 }
