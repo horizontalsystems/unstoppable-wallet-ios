@@ -1,7 +1,6 @@
 import MarketKit
 
 extension Blockchain {
-
     var shortName: String {
         switch type {
         case .binanceSmartChain: return "BSC"
@@ -17,5 +16,10 @@ extension Blockchain {
 
         return explorerUrl.replacingOccurrences(of: "$ref", with: reference)
     }
+}
 
+extension Blockchain: Identifiable {
+    public var id: String {
+        uid
+    }
 }

@@ -1,81 +1,56 @@
-import RxSwift
-import RxRelay
-import RxCocoa
+import Combine
 import MarketKit
+import RxRelay
+import RxSwift
 
-class BlockchainSettingsViewModel {
-    private let service: BlockchainSettingsService
+class BlockchainSettingsViewModel: ObservableObject {
+    private let btcBlockchainManager: BtcBlockchainManager
+    private let evmBlockchainManager: EvmBlockchainManager
+    private let evmSyncSourceManager: EvmSyncSourceManager
     private let disposeBag = DisposeBag()
 
-    private let viewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(btcViewItems: [], evmViewItems: []))
-    private let openBtcBlockchainRelay = PublishRelay<Blockchain>()
-    private let openEvmBlockchainRelay = PublishRelay<Blockchain>()
+    @Published var btcItems: [BtcItem] = []
+    @Published var evmItems: [EvmItem] = []
 
-    init(service: BlockchainSettingsService) {
-        self.service = service
+    init(btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager) {
+        self.btcBlockchainManager = btcBlockchainManager
+        self.evmBlockchainManager = evmBlockchainManager
+        self.evmSyncSourceManager = evmSyncSourceManager
 
-        subscribe(disposeBag, service.itemObservable) { [weak self] in self?.sync(item: $0) }
+        subscribe(disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] _ in self?.syncBtcItems() }
+        subscribe(disposeBag, evmSyncSourceManager.syncSourceObservable) { [weak self] _ in self?.syncEvmItems() }
 
-        sync(item: service.item)
+        syncBtcItems()
+        syncEvmItems()
     }
 
-    private func sync(item: BlockchainSettingsService.Item) {
-        let btcViewItems = item.btcItems.map { btcItem in
-            BlockchainViewItem(
-                    iconUrl: btcItem.blockchain.type.imageUrl,
-                    name: btcItem.blockchain.name,
-                    value: "\(btcItem.restoreMode.title)"
-            )
-        }
-
-        let evmViewItems = item.evmItems.map { evmItem in
-            BlockchainViewItem(
-                    iconUrl: evmItem.blockchain.type.imageUrl,
-                    name: evmItem.blockchain.name,
-                    value: evmItem.syncSource.name
-            )
-        }
-
-        viewItemRelay.accept(ViewItem(btcViewItems: btcViewItems, evmViewItems: evmViewItems))
+    private func syncBtcItems() {
+        btcItems = btcBlockchainManager.allBlockchains
+            .map { blockchain in
+                let restoreMode = btcBlockchainManager.restoreMode(blockchainType: blockchain.type)
+                return BtcItem(blockchain: blockchain, restoreMode: restoreMode)
+            }
+            .sorted { $0.blockchain.type.order < $1.blockchain.type.order }
     }
 
+    private func syncEvmItems() {
+        evmItems = evmBlockchainManager.allBlockchains
+            .map { blockchain in
+                let syncSource = evmSyncSourceManager.syncSource(blockchainType: blockchain.type)
+                return EvmItem(blockchain: blockchain, syncSource: syncSource)
+            }
+            .sorted { $0.blockchain.type.order < $1.blockchain.type.order }
+    }
 }
 
 extension BlockchainSettingsViewModel {
-
-    var viewItemDriver: Driver<ViewItem> {
-        viewItemRelay.asDriver()
+    struct BtcItem {
+        let blockchain: Blockchain
+        let restoreMode: BtcRestoreMode
     }
 
-    var openBtcBlockchainSignal: Signal<Blockchain> {
-        openBtcBlockchainRelay.asSignal()
+    struct EvmItem {
+        let blockchain: Blockchain
+        let syncSource: EvmSyncSource
     }
-
-    var openEvmBlockchainSignal: Signal<Blockchain> {
-        openEvmBlockchainRelay.asSignal()
-    }
-
-    func onTapBtc(index: Int) {
-        openBtcBlockchainRelay.accept(service.item.btcItems[index].blockchain)
-    }
-
-    func onTapEvm(index: Int) {
-        openEvmBlockchainRelay.accept(service.item.evmItems[index].blockchain)
-    }
-
-}
-
-extension BlockchainSettingsViewModel {
-
-    struct ViewItem {
-        let btcViewItems: [BlockchainViewItem]
-        let evmViewItems: [BlockchainViewItem]
-    }
-
-    struct BlockchainViewItem {
-        let iconUrl: String
-        let name: String
-        let value: String
-    }
-
 }

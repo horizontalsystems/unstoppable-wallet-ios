@@ -1,4 +1,4 @@
-import SwiftUI
+import Combine
 
 class BtcBlockchainSettingsViewModel: ObservableObject {
     private let service: BtcBlockchainSettingsService
