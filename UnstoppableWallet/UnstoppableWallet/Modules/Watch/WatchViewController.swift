@@ -137,6 +137,7 @@ class WatchViewController: KeyboardAwareViewController {
                 viewItems: WatchModule.WatchType.allCases.enumerated().map { index, watchType in
                     AlertViewItem(
                             text: watchType.title,
+                            description: watchType.subtitle,
                             selected: self.watchType == watchType
                     )
                 }
