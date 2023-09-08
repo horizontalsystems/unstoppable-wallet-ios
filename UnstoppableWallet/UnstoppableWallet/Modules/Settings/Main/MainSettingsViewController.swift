@@ -300,7 +300,8 @@ class MainSettingsViewController: ThemeViewController {
                     isFirst: true,
                     isLast: true,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(ExperimentalFeaturesModule.viewController(), animated: true)
+                        let viewController = ExperimentalFeaturesView().toViewController(title: "settings.experimental_features.title".localized)
+                        self?.navigationController?.pushViewController(viewController, animated: true)
                     }
             )
         ]
