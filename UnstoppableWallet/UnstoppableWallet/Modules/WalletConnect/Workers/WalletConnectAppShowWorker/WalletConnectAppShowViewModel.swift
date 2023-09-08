@@ -1,65 +1,74 @@
+import Combine
 import UIKit
-import RxSwift
-import RxCocoa
 import WalletConnectSign
 
 class WalletConnectAppShowViewModel {
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private let service: WalletConnectAppShowService
 
-    private let showSessionRequestRelay = PublishRelay<WalletConnectRequest>()
-    private let openWalletConnectRelay = PublishRelay<WalletConnectOpenMode>()
+    private let showSessionRequestSubject = PassthroughSubject<WalletConnectRequest, Never>()
+    private let openWalletConnectSubject = PassthroughSubject<WalletConnectOpenMode, Never>()
 
     init(service: WalletConnectAppShowService) {
         self.service = service
 
-        subscribe(disposeBag, service.showSessionProposalObservable) { [weak self] in self?.showSession(proposal: $0) }
-        subscribe(disposeBag, service.showSessionRequestObservable) { [weak self] in self?.showSession(request: $0) }
+        service.showSessionProposalPublisher
+            .sink { [weak self] in self?.showSession(proposal: $0) }
+            .store(in: &cancellables)
+        service.showSessionRequestPublisher
+            .sink { [weak self] in self?.showSession(request: $0) }
+            .store(in: &cancellables)
     }
 
     private func showSession(proposal: WalletConnectSign.Session.Proposal) {
-        openWalletConnectRelay.accept(.proposal(proposal))
+        openWalletConnectSubject.send(.proposal(proposal))
     }
 
     private func showSession(request: WalletConnectRequest) {
-        showSessionRequestRelay.accept(request)
+        showSessionRequestSubject.send(request)
     }
 
-    func onWalletConnectDeepLink(url: String) {
-        guard let activeAccount = service.activeAccount else {
-            openWalletConnectRelay.accept(.errorDialog(error: .noAccount))
-            return
-        }
-
-        if !activeAccount.type.supportsWalletConnect {
-            openWalletConnectRelay.accept(.errorDialog(error: .nonSupportedAccountType(accountTypeDescription: activeAccount.type.description)))
-            return
-        }
-
-        openWalletConnectRelay.accept(service.activeAccountBackedUp ? .pair(url: url) : .errorDialog(error: .unbackupedAccount(account: activeAccount)))
+    func validate(uri: String) throws {
+        try service.validate(uri: uri)
     }
 
+    func handleWalletConnect(url: String) throws {
+        var error: WalletConnectAppShowView.WalletConnectOpenError?
+        if service.activeAccount == nil {
+            error = WalletConnectAppShowView.WalletConnectOpenError.noAccount
+        }
+
+        if let activeAccount = service.activeAccount, !activeAccount.type.supportsWalletConnect {
+            error = WalletConnectAppShowView.WalletConnectOpenError.nonSupportedAccountType(accountTypeDescription: activeAccount.type.description)
+        }
+
+        if let activeAccount = service.activeAccount, !service.activeAccountBackedUp {
+            error = WalletConnectAppShowView.WalletConnectOpenError.unbackupedAccount(account: activeAccount)
+            openWalletConnectSubject.send(service.activeAccountBackedUp ? .pair(url: url) : .errorDialog(error: .unbackupedAccount(account: activeAccount)))
+        }
+        if let error {
+            openWalletConnectSubject.send(.errorDialog(error: error))
+            throw error
+        }
+
+        openWalletConnectSubject.send(.pair(url: url))
+    }
 }
 
 extension WalletConnectAppShowViewModel {
-
-    var openWalletConnectSignal: Signal<WalletConnectOpenMode> {
-        openWalletConnectRelay.asSignal()
+    var openWalletConnectPublisher: AnyPublisher<WalletConnectOpenMode, Never> {
+        openWalletConnectSubject.eraseToAnyPublisher()
     }
 
-    var showSessionRequestSignal: Signal<WalletConnectRequest> {
-        showSessionRequestRelay.asSignal()
+    var showSessionRequestPublisher: AnyPublisher<WalletConnectRequest, Never> {
+        showSessionRequestSubject.eraseToAnyPublisher()
     }
-
 }
 
-
 extension WalletConnectAppShowViewModel {
-
     enum WalletConnectOpenMode {
         case pair(url: String)
         case proposal(WalletConnectSign.Session.Proposal)
         case errorDialog(error: WalletConnectAppShowView.WalletConnectOpenError)
     }
-
 }

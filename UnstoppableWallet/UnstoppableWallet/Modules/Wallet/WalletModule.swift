@@ -1,54 +1,54 @@
-import UIKit
-import ThemeKit
-import RxSwift
-import StorageKit
+import CurrencyKit
 import LanguageKit
 import MarketKit
-import CurrencyKit
+import RxSwift
+import StorageKit
+import ThemeKit
+import UIKit
 
 struct WalletModule {
-
     static func viewController() -> UIViewController {
         let coinPriceService = WalletCoinPriceService(
-                tag: "wallet",
-                currencyKit: App.shared.currencyKit,
-                marketKit: App.shared.marketKit
+            tag: "wallet",
+            currencyKit: App.shared.currencyKit,
+            marketKit: App.shared.marketKit
         )
 
         let elementServiceFactory = WalletElementServiceFactory(
-                adapterManager: App.shared.adapterManager,
-                walletManager: App.shared.walletManager,
-                cexAssetManager: App.shared.cexAssetManager
+            adapterManager: App.shared.adapterManager,
+            walletManager: App.shared.walletManager,
+            cexAssetManager: App.shared.cexAssetManager
         )
 
         let service = WalletService(
-                elementServiceFactory: elementServiceFactory,
-                coinPriceService: coinPriceService,
-                accountManager: App.shared.accountManager,
-                cacheManager: App.shared.enabledWalletCacheManager,
-                accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
-                reachabilityManager: App.shared.reachabilityManager,
-                balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
-                balanceHiddenManager: App.shared.balanceHiddenManager,
-                balanceConversionManager: App.shared.balanceConversionManager,
-                cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
-                rateAppManager: App.shared.rateAppManager,
-                appManager: App.shared.appManager,
-                feeCoinProvider: App.shared.feeCoinProvider,
-                localStorage: StorageKit.LocalStorage.default
+            elementServiceFactory: elementServiceFactory,
+            coinPriceService: coinPriceService,
+            accountManager: App.shared.accountManager,
+            cacheManager: App.shared.enabledWalletCacheManager,
+            accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
+            reachabilityManager: App.shared.reachabilityManager,
+            balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+            balanceHiddenManager: App.shared.balanceHiddenManager,
+            balanceConversionManager: App.shared.balanceConversionManager,
+            cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
+            rateAppManager: App.shared.rateAppManager,
+            appManager: App.shared.appManager,
+            feeCoinProvider: App.shared.feeCoinProvider,
+            localStorage: StorageKit.LocalStorage.default
         )
 
         coinPriceService.delegate = service
 
         let accountRestoreWarningFactory = AccountRestoreWarningFactory(
-                localStorage: StorageKit.LocalStorage.default,
-                languageManager: LanguageManager.shared
+            localStorage: StorageKit.LocalStorage.default,
+            languageManager: LanguageManager.shared
         )
 
         let viewModel = WalletViewModel(
-                service: service,
-                factory: WalletViewItemFactory(),
-                accountRestoreWarningFactory: accountRestoreWarningFactory
+            service: service,
+            eventHandler: App.shared.appEventHandler,
+            factory: WalletViewItemFactory(),
+            accountRestoreWarningFactory: accountRestoreWarningFactory
         )
 
         return WalletViewController(viewModel: viewModel)
@@ -60,37 +60,37 @@ struct WalletModule {
         }
 
         let coinPriceService = WalletCoinPriceService(
-                tag: "send-token-list",
-                currencyKit: App.shared.currencyKit,
-                marketKit: App.shared.marketKit
+            tag: "send-token-list",
+            currencyKit: App.shared.currencyKit,
+            marketKit: App.shared.marketKit
         )
 
         let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
         let elementService = WalletBlockchainElementService(
-                account: account,
-                adapterService: adapterService,
-                walletManager: App.shared.walletManager
+            account: account,
+            adapterService: adapterService,
+            walletManager: App.shared.walletManager
         )
         adapterService.delegate = elementService
 
         let service = WalletTokenListService(
-                elementService: elementService,
-                coinPriceService: coinPriceService,
-                cacheManager: App.shared.enabledWalletCacheManager,
-                reachabilityManager: App.shared.reachabilityManager,
-                balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
-                appManager: App.shared.appManager,
-                feeCoinProvider: App.shared.feeCoinProvider,
-                account: account
+            elementService: elementService,
+            coinPriceService: coinPriceService,
+            cacheManager: App.shared.enabledWalletCacheManager,
+            reachabilityManager: App.shared.reachabilityManager,
+            balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+            appManager: App.shared.appManager,
+            feeCoinProvider: App.shared.feeCoinProvider,
+            account: account
         )
         elementService.delegate = service
         coinPriceService.delegate = service
 
         let viewModel = WalletTokenListViewModel(
-                service: service,
-                factory: WalletTokenListViewItemFactory(),
-                title: "send.send".localized,
-                emptyText: "send.no_assets".localized
+            service: service,
+            factory: WalletTokenListViewItemFactory(),
+            title: "send.send".localized,
+            emptyText: "send.no_assets".localized
         )
 
         let dataSourceChain = DataSourceChain()
@@ -115,28 +115,28 @@ struct WalletModule {
         }
 
         let coinPriceService = WalletCoinPriceService(
-                tag: "swap-token-list",
-                currencyKit: App.shared.currencyKit,
-                marketKit: App.shared.marketKit
+            tag: "swap-token-list",
+            currencyKit: App.shared.currencyKit,
+            marketKit: App.shared.marketKit
         )
 
         let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
         let elementService = WalletBlockchainElementService(
-                account: account,
-                adapterService: adapterService,
-                walletManager: App.shared.walletManager
+            account: account,
+            adapterService: adapterService,
+            walletManager: App.shared.walletManager
         )
         adapterService.delegate = elementService
 
         let service = WalletTokenListService(
-                elementService: elementService,
-                coinPriceService: coinPriceService,
-                cacheManager: App.shared.enabledWalletCacheManager,
-                reachabilityManager: App.shared.reachabilityManager,
-                balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
-                appManager: App.shared.appManager,
-                feeCoinProvider: App.shared.feeCoinProvider,
-                account: account
+            elementService: elementService,
+            coinPriceService: coinPriceService,
+            cacheManager: App.shared.enabledWalletCacheManager,
+            reachabilityManager: App.shared.reachabilityManager,
+            balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+            appManager: App.shared.appManager,
+            feeCoinProvider: App.shared.feeCoinProvider,
+            account: account
         )
         service.elementFilter = { element in element.wallet?.token.swappable ?? false }
 
@@ -144,10 +144,10 @@ struct WalletModule {
         coinPriceService.delegate = service
 
         let viewModel = WalletTokenListViewModel(
-                service: service,
-                factory: WalletTokenListViewItemFactory(),
-                title: "swap.title".localized,
-                emptyText: "swap.no_assets".localized
+            service: service,
+            factory: WalletTokenListViewItemFactory(),
+            title: "swap.title".localized,
+            emptyText: "swap.no_assets".localized
         )
 
         let dataSourceChain = DataSourceChain()
@@ -170,28 +170,28 @@ struct WalletModule {
         let service: IWalletTokenListService
         if let account = App.shared.accountManager.activeAccount, !account.watchAccount, !account.cexAccount {
             let coinPriceService = WalletCoinPriceService(
-                    tag: "send-token-list",
-                    currencyKit: App.shared.currencyKit,
-                    marketKit: App.shared.marketKit
+                tag: "send-token-list",
+                currencyKit: App.shared.currencyKit,
+                marketKit: App.shared.marketKit
             )
 
             let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
             let elementService = WalletBlockchainElementService(
-                    account: account,
-                    adapterService: adapterService,
-                    walletManager: App.shared.walletManager
+                account: account,
+                adapterService: adapterService,
+                walletManager: App.shared.walletManager
             )
             adapterService.delegate = elementService
 
             let tokenListService = WalletTokenListService(
-                    elementService: elementService,
-                    coinPriceService: coinPriceService,
-                    cacheManager: App.shared.enabledWalletCacheManager,
-                    reachabilityManager: App.shared.reachabilityManager,
-                    balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
-                    appManager: App.shared.appManager,
-                    feeCoinProvider: App.shared.feeCoinProvider,
-                    account: account
+                elementService: elementService,
+                coinPriceService: coinPriceService,
+                cacheManager: App.shared.enabledWalletCacheManager,
+                reachabilityManager: App.shared.reachabilityManager,
+                balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+                appManager: App.shared.appManager,
+                feeCoinProvider: App.shared.feeCoinProvider,
+                account: account
             )
             elementService.delegate = tokenListService
             coinPriceService.delegate = tokenListService
@@ -199,16 +199,16 @@ struct WalletModule {
             service = tokenListService
         } else {
             service = NoAccountWalletTokenListService(
-                    reachabilityManager: App.shared.reachabilityManager,
-                    balancePrimaryValueManager: App.shared.balancePrimaryValueManager
+                reachabilityManager: App.shared.reachabilityManager,
+                balancePrimaryValueManager: App.shared.balancePrimaryValueManager
             )
         }
 
         let viewModel = WalletTokenListViewModel(
-                service: service,
-                factory: WalletTokenListViewItemFactory(),
-                title: "donate.list.title".localized,
-                emptyText: "donate.no_assets".localized
+            service: service,
+            factory: WalletTokenListViewItemFactory(),
+            title: "donate.list.title".localized,
+            emptyText: "donate.no_assets".localized
         )
 
         let dataSourceChain = DataSourceChain()
@@ -236,11 +236,9 @@ struct WalletModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
-
 }
 
 extension WalletModule {
-
     enum ElementState: CustomStringConvertible {
         case loading
         case loaded(elements: [Element])
@@ -249,7 +247,7 @@ extension WalletModule {
         var description: String {
             switch self {
             case .loading: return "loading"
-            case .loaded(let elements): return "loaded: \(elements.count) elements"
+            case let .loaded(elements): return "loaded: \(elements.count) elements"
             case .failed: return "failed"
             }
         }
@@ -266,59 +264,59 @@ extension WalletModule {
 
         var name: String {
             switch self {
-            case .wallet(let wallet): return wallet.coin.code
-            case .cexAsset(let cexAsset): return cexAsset.coinCode
+            case let .wallet(wallet): return wallet.coin.code
+            case let .cexAsset(cexAsset): return cexAsset.coinCode
             }
         }
 
         var coin: Coin? {
             switch self {
-            case .wallet(let wallet): return wallet.coin
-            case .cexAsset(let cexAsset): return cexAsset.coin
+            case let .wallet(wallet): return wallet.coin
+            case let .cexAsset(cexAsset): return cexAsset.coin
             }
         }
 
         var wallet: Wallet? {
             switch self {
-            case .wallet(let wallet): return wallet
+            case let .wallet(wallet): return wallet
             default: return nil
             }
         }
 
         var cexAsset: CexAsset? {
             switch self {
-            case .cexAsset(let cexAsset): return cexAsset
+            case let .cexAsset(cexAsset): return cexAsset
             default: return nil
             }
         }
 
         var decimals: Int {
             switch self {
-            case .wallet(let wallet): return wallet.decimals
-            case .cexAsset: return 8 // todo: how many decimals for coin???
+            case let .wallet(wallet): return wallet.decimals
+            case .cexAsset: return 8 // TODO: how many decimals for coin???
             }
         }
 
         var priceCoinUid: String? {
             switch self {
-            case .wallet(let wallet): return wallet.token.isCustom ? nil : wallet.coin.uid
-            case .cexAsset(let cexAsset): return cexAsset.coin?.uid
+            case let .wallet(wallet): return wallet.token.isCustom ? nil : wallet.coin.uid
+            case let .cexAsset(cexAsset): return cexAsset.coin?.uid
             }
         }
 
         func hash(into hasher: inout Hasher) {
             switch self {
-            case .wallet(let wallet):
+            case let .wallet(wallet):
                 hasher.combine(wallet)
-            case .cexAsset(let cexAsset):
+            case let .cexAsset(cexAsset):
                 hasher.combine(cexAsset)
             }
         }
 
-        static func ==(lhs: Element, rhs: Element) -> Bool {
+        static func == (lhs: Element, rhs: Element) -> Bool {
             switch (lhs, rhs) {
-            case (.wallet(let lhsWallet), .wallet(let rhsWallet)): return lhsWallet == rhsWallet
-            case (.cexAsset(let lhsCexAsset), .cexAsset(let rhsCexAsset)): return lhsCexAsset == rhsCexAsset
+            case let (.wallet(lhsWallet), .wallet(rhsWallet)): return lhsWallet == rhsWallet
+            case let (.cexAsset(lhsCexAsset), .cexAsset(rhsCexAsset)): return lhsCexAsset == rhsCexAsset
             default: return false
             }
         }
@@ -351,7 +349,6 @@ extension WalletModule {
             case .percentGrowth: return "balance.sort.price_change".localized
             }
         }
-
     }
 
     class HeaderViewItem {
@@ -369,5 +366,4 @@ extension WalletModule {
             self.buttons = buttons
         }
     }
-
 }

@@ -1,9 +1,9 @@
-import WalletConnectUtils
-import RxSwift
-import RxCocoa
-import WalletConnectSign
-import WalletConnectPairing
 import MarketKit
+import RxCocoa
+import RxSwift
+import WalletConnectPairing
+import WalletConnectSign
+import WalletConnectUtils
 
 class WalletConnectSessionManager {
     private let disposeBag = DisposeBag()
@@ -55,7 +55,7 @@ class WalletConnectSessionManager {
         syncPendingRequest()
     }
 
-    private func handle(activeAccount: Account?) {
+    private func handle(activeAccount _: Account?) {
         syncSessions()
         syncPendingRequest()
     }
@@ -98,16 +98,18 @@ class WalletConnectSessionManager {
         guard let chainId = Int(request.chainId.reference),
               let blockchain = evmBlockchainManager.blockchain(chainId: chainId),
               let address = try? WalletConnectManager.evmAddress(
-                      account: account,
-                      chain: evmBlockchainManager.chain(blockchainType: blockchain.type)
-              ) else {
+                  account: account,
+                  chain: evmBlockchainManager.chain(blockchainType: blockchain.type)
+              )
+        else {
             return
         }
 
         let chain = WalletConnectRequest.Chain(id: chainId, chainName: blockchain.name, address: address.eip55)
         guard activeSessions.first(where: { session in session.topic == request.topic }) != nil,
               let session = allSessions.first(where: { session in session.topic == request.topic }),
-              let request = try? WalletConnectRequestMapper.map(dAppName: session.peer.name, chain: chain, request: request) else {
+              let request = try? WalletConnectRequestMapper.map(dAppName: session.peer.name, chain: chain, request: request)
+        else {
             return
         }
 
@@ -141,10 +143,6 @@ class WalletConnectSessionManager {
         }
     }
 
-    public func disconnectPairing(topic: String) -> Single<()> {
-        service.disconnectPairing(topic: topic)
-    }
-
     private func requests(accountId: String? = nil) -> [WalletConnectSign.Request] {
         let allRequests = service.pendingRequests
         let dbSessions = storage.sessions(accountId: accountId)
@@ -155,10 +153,12 @@ class WalletConnectSessionManager {
             }
         }
     }
-
 }
 
 extension WalletConnectSessionManager {
+    public func validate(uri: String) throws {
+        _ = try service.validate(uri: uri)
+    }
 
     public var sessions: [WalletConnectSign.Session] {
         guard let accountId = accountManager.activeAccount?.id else {
@@ -210,4 +210,7 @@ extension WalletConnectSessionManager {
         sessionRequestReceivedRelay.asObservable()
     }
 
+    public func disconnectPairing(topic: String) -> Single<Void> {
+        service.disconnectPairing(topic: topic)
+    }
 }

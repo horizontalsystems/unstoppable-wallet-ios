@@ -1,10 +1,10 @@
-import UIKit
-import RxSwift
-import RxCocoa
-import WalletConnectSign
 import ComponentKit
+import RxCocoa
+import RxSwift
 import SectionsTableView
 import ThemeKit
+import UIKit
+import WalletConnectSign
 
 class WalletConnectListViewController: ThemeViewController {
     private let disposeBag = DisposeBag()
@@ -28,14 +28,9 @@ class WalletConnectListViewController: ThemeViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    deinit {
-        if viewModel.isWaitingForSession {
-            HudHelper.instance.hide()
-        }
     }
 
     override func viewDidLoad() {
@@ -71,16 +66,12 @@ class WalletConnectListViewController: ThemeViewController {
         bottomButton.setTitle("wallet_connect_list.new_connection".localized, for: .normal)
         bottomButton.addTarget(self, action: #selector(startNewConnection), for: .touchUpInside)
 
-        subscribe(disposeBag, viewModel.showWalletConnectValidatedSignal) { [weak self] in self?.showValidatedSuccessful(uri: $0) }
-        subscribe(disposeBag, viewModel.showWaitingForSessionSignal) { [weak self] in self?.showWaitingForSession(true) }
-        subscribe(disposeBag, viewModel.hideWaitingForSessionSignal) { [weak self] in self?.showWaitingForSession(false) }
         subscribe(disposeBag, viewModel.disableNewConnectionSignal) { [weak self] in self?.disableNewConnection($0) }
         subscribe(disposeBag, viewModel.showErrorSignal) { [weak self] in self?.showError(text: $0) }
-        subscribe(disposeBag, viewModel.newConnectionErrorSignal) { [weak self] in self?.show(newConnectionError: $0) }
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.sync(viewItems: $0) }
         subscribe(disposeBag, viewModel.pairingCountDriver) { [weak self] in self?.sync(pairingCount: $0) }
-        subscribe(disposeBag, viewModel.showDisconnectingSignal) { HudHelper.instance.showSpinner(title: "wallet_connect_list.disconnecting".localized, userInteractionEnabled: false) }
-        subscribe(disposeBag, viewModel.showSuccessSignal) { HudHelper.instance.show(banner: .done) }
+        subscribe(disposeBag, viewModel.showDisconnectingSignal) { HudHelper.instance.show(banner: .disconnectingWalletConnect) }
+        subscribe(disposeBag, viewModel.showSuccessSignal) { HudHelper.instance.show(banner: .disconnectedWalletConnect) }
         subscribe(disposeBag, viewModel.showWalletConnectSessionSignal) { [weak self] in self?.show(session: $0) }
 
         if viewModel.emptyList {
@@ -108,23 +99,9 @@ class WalletConnectListViewController: ThemeViewController {
 
     @objc private func startNewConnection() {
         let scanQrViewController = ScanQrViewController(reportAfterDismiss: true, pasteEnabled: true)
-        scanQrViewController.delegate = self
+        scanQrViewController.didFetch = { [weak self] in self?.viewModel.didScan(string: $0) }
+
         present(scanQrViewController, animated: true)
-    }
-
-    private func showValidatedSuccessful(uri: String) {
-        viewModel.pair(validUri: uri)
-    }
-
-    private func showWaitingForSession(_ isShow: Bool) {
-        bottomButton.isEnabled = !isShow
-        navigationItem.rightBarButtonItem?.isEnabled = !isShow
-
-        if isShow {
-            HudHelper.instance.show(banner: .waitingForSession)
-        } else {
-            HudHelper.instance.hide()
-        }
     }
 
     private func show(session: WalletConnectSign.Session) {
@@ -152,15 +129,15 @@ class WalletConnectListViewController: ThemeViewController {
 
     private func show(newConnectionError: String) {
         let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)),
-                title: "WalletConnect",
-                items: [
-                    .highlightedDescription(text: newConnectionError)
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "alert.try_again".localized, actionType: .afterClose) { [ weak self] in self?.startNewConnection() },
-                    .init(style: .transparent, title: "button.cancel".localized)
-                ]
+            image: .local(image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)),
+            title: "WalletConnect",
+            items: [
+                .highlightedDescription(text: newConnectionError),
+            ],
+            buttons: [
+                .init(style: .yellow, title: "alert.try_again".localized, actionType: .afterClose) { [weak self] in self?.startNewConnection() },
+                .init(style: .transparent, title: "button.cancel".localized),
+            ]
         )
 
         present(viewController, animated: true)
@@ -168,14 +145,14 @@ class WalletConnectListViewController: ThemeViewController {
 
     private func deleteRowAction(id: Int) -> RowAction {
         RowAction(pattern: .icon(
-                image: UIImage(named: "circle_minus_shifted_24"),
-                background: UIColor(red: 0, green: 0, blue: 0, alpha: 0)
-        ), action: { [weak self] cell in
+            image: UIImage(named: "circle_minus_shifted_24"),
+            background: UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        ), action: { [weak self] _ in
             self?.viewModel.kill(id: id)
         })
     }
 
-    private func cell(tableView: UITableView, viewItem: WalletConnectListViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: @escaping () -> ()) -> RowProtocol? {
+    private func cell(tableView: UITableView, viewItem: WalletConnectListViewModel.ViewItem, isFirst: Bool, isLast: Bool, action: @escaping () -> Void) -> RowProtocol? {
         let rowAction = deleteRowAction(id: viewItem.id)
 
         let elements: [CellBuilderNew.CellElement] = [
@@ -196,7 +173,7 @@ class WalletConnectListViewController: ThemeViewController {
                     component.font = .subhead2
                     component.textColor = .themeGray
                     component.text = viewItem.description
-                }
+                },
             ]),
             .badge { component in
                 if let badge = viewItem.badge {
@@ -209,31 +186,30 @@ class WalletConnectListViewController: ThemeViewController {
             },
             .image20 { component in
                 component.imageView.image = UIImage(named: "arrow_big_forward_20")
-            }
+            },
         ]
 
         return CellBuilderNew.row(
-                rootElement: .hStack(elements),
-                tableView: tableView,
-                id: viewItem.title,
-                height: .heightDoubleLineCell,
-                autoDeselect: true,
-                rowActionProvider: { [rowAction] },
-                bind: { cell in cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast) },
-                action: action
+            rootElement: .hStack(elements),
+            tableView: tableView,
+            id: viewItem.title,
+            height: .heightDoubleLineCell,
+            autoDeselect: true,
+            rowActionProvider: { [rowAction] },
+            bind: { cell in cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast) },
+            action: action
         )
     }
 
     private func pairingCountCell(tableView: SectionsTableView, pairingCount: Int) -> RowProtocol {
         tableView.universalRow48(id: "session-pairing",
-                title: .body("wallet_connect.list.pairings".localized),
-                value: .subhead1("\(pairingCount)", color: .themeGray),
-                accessoryType: .disclosure,
-                autoDeselect: true,
-                isFirst: true,
-                isLast: true,
-                action: { [weak self] in self?.showPairings() }
-        )
+                                 title: .body("wallet_connect.list.pairings".localized),
+                                 value: .subhead1("\(pairingCount)", color: .themeGray),
+                                 accessoryType: .disclosure,
+                                 autoDeselect: true,
+                                 isFirst: true,
+                                 isLast: true,
+                                 action: { [weak self] in self?.showPairings() })
     }
 
     private func pairingSection(tableView: SectionsTableView, showHeader: Bool) -> SectionProtocol? {
@@ -243,10 +219,10 @@ class WalletConnectListViewController: ThemeViewController {
 
         let cell = pairingCountCell(tableView: tableView, pairingCount: pairingCount)
         return Section(
-                id: "section_pairing",
-                headerState: showHeader ? tableView.sectionHeader(text: "wallet_connect.list.version_text".localized("2.0")) : .margin(height: 0),
-                footerState: .margin(height: .margin24),
-                rows: [cell]
+            id: "section_pairing",
+            headerState: showHeader ? tableView.sectionHeader(text: "wallet_connect.list.version_text".localized("2.0")) : .margin(height: 0),
+            footerState: .margin(height: .margin24),
+            rows: [cell]
         )
     }
 
@@ -256,41 +232,30 @@ class WalletConnectListViewController: ThemeViewController {
         }
 
         return Section(
-                id: "section_2",
-                headerState: tableView.sectionHeader(text: "wallet_connect.list.version_text".localized("2.0")),
-                footerState: .margin(height: .margin24),
-                rows: viewItems.enumerated().compactMap { index, viewItem in
-                    let isFirst = index == 0
-                    let isLast = index == viewItems.count - 1
+            id: "section_2",
+            headerState: tableView.sectionHeader(text: "wallet_connect.list.version_text".localized("2.0")),
+            footerState: .margin(height: .margin24),
+            rows: viewItems.enumerated().compactMap { index, viewItem in
+                let isFirst = index == 0
+                let isLast = index == viewItems.count - 1
 
-                    return cell(tableView: tableView, viewItem: viewItem, isFirst: isFirst, isLast: isLast) { [weak self] in
-                        self?.viewModel.showSession(id: viewItem.id)
-                    }
+                return cell(tableView: tableView, viewItem: viewItem, isFirst: isFirst, isLast: isLast) { [weak self] in
+                    self?.viewModel.showSession(id: viewItem.id)
                 }
+            }
         )
     }
-
 }
 
 extension WalletConnectListViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [Section(id: "top-margin", headerState: .margin(height: .margin12))]
 
         sections.append(contentsOf: [
             section(tableView: tableView, viewItems: viewItems),
-            pairingSection(tableView: tableView, showHeader: viewItems.isEmpty)
+            pairingSection(tableView: tableView, showHeader: viewItems.isEmpty),
         ].compactMap { $0 })
 
         return sections
     }
-
-}
-
-extension WalletConnectListViewController: IScanQrViewControllerDelegate {
-
-    func didFetch(string: String) {
-        viewModel.didScan(string: string)
-    }
-
 }

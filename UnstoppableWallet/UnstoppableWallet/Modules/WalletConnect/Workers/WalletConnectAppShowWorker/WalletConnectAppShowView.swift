@@ -1,43 +1,54 @@
-import UIKit
-import RxSwift
-import RxCocoa
-import ThemeKit
-import WalletConnectSign
+import Combine
 import ComponentKit
+import ThemeKit
+import UIKit
+import WalletConnectSign
 
 class WalletConnectAppShowView {
-    private let disposeBag = DisposeBag()
+    private let timeOut = 5
+
     private let viewModel: WalletConnectAppShowViewModel
-    private weak var parentViewController: UIViewController?
+    private var cancellables = Set<AnyCancellable>()
+    private var timerCancellable: AnyCancellable?
+    private var isWaitingHandlerCancellable: AnyCancellable?
 
-    init(viewModel: WalletConnectAppShowViewModel, parentViewController: UIViewController?) {
+    @Published private var isWaitingForSession = false
+
+    weak var parentViewController: UIViewController?
+
+    init(viewModel: WalletConnectAppShowViewModel) {
         self.viewModel = viewModel
-        self.parentViewController = parentViewController
 
-        subscribe(disposeBag, viewModel.showSessionRequestSignal) { [weak self] request in self?.handle(request: request) }
-        subscribe(disposeBag, viewModel.openWalletConnectSignal) { [weak self] in self?.openWalletConnect(mode: $0) }
+        viewModel.showSessionRequestPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.handle(request: $0) }
+            .store(in: &cancellables)
+
+        viewModel.openWalletConnectPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.openWalletConnect(mode: $0) }
+            .store(in: &cancellables)
     }
 
     private func openWalletConnect(mode: WalletConnectAppShowViewModel.WalletConnectOpenMode) {
         switch mode {
-        case .pair(let uri):
-            switch WalletConnectUriHandler.uriVersion(uri: uri) {
-            case 2:
-                WalletConnectUriHandler.pair(uri: uri)
-                        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                        .observeOn(MainScheduler.instance)
-                        .subscribe(onSuccess: { [weak self] in
-                            self?.showPairedSuccessful()
-                        }, onError: { [weak self] error in
-                            self?.handle(error: error)
-                        })
-                        .disposed(by: disposeBag)
-            default:
-                handle(error: WalletConnectUriHandler.ConnectionError.wrongUri)
+        case let .pair(uri):
+            Task { [weak self] in
+                switch WalletConnectUriHandler.uriVersion(uri: uri) {
+                case 2:
+                    do {
+                        try await WalletConnectUriHandler.pair(uri: uri)
+                        await self?.showPairedSuccessful()
+                    } catch {
+                        await self?.handle(error: error)
+                    }
+                default: await self?.handle(error: WalletConnectUriHandler.ConnectionError.wrongUri)
+                }
             }
-        case .proposal(let proposal):
+        case let .proposal(proposal):
+            showProposalSuccessful()
             processWalletConnectPair(proposal: proposal)
-        case .errorDialog(let error):
+        case let .errorDialog(error):
             WalletConnectAppShowView.showWalletConnectError(error: error, sourceViewController: parentViewController)
         }
     }
@@ -52,11 +63,25 @@ class WalletConnectAppShowView {
         }
     }
 
-    private func showPairedSuccessful() {
-        HudHelper.instance.show(banner: .success(string: "Pairing successful. Please wait for a new session!"))
+    @MainActor private func showPairedSuccessful() {
+        HudHelper.instance.show(banner: .waitingForSession)
+
+        timerCancellable = Just(())
+            .delay(for: .seconds(timeOut), scheduler: RunLoop.main)
+            .sink { [weak self] in
+                self?.isWaitingForSession = false
+                HudHelper.instance.show(banner: .error(string: "alert.try_again".localized))
+            }
     }
 
-    private func handle(error: Error) {
+    private func showProposalSuccessful() {
+        isWaitingForSession = false
+        HudHelper.instance.hide()
+        timerCancellable?.cancel()
+        timerCancellable = nil
+    }
+
+    @MainActor private func handle(error: Error) {
         HudHelper.instance.show(banner: .error(string: error.smartDescription))
     }
 
@@ -67,82 +92,108 @@ class WalletConnectAppShowView {
 
         parentViewController?.visibleController.present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
-
 }
 
 extension WalletConnectAppShowView {
-
     static func showWalletConnectError(error: WalletConnectOpenError, sourceViewController: UIViewController?) {
         let viewController: UIViewController
 
         switch error {
         case .noAccount:
             viewController = BottomSheetModule.viewController(
-                    image: .local(image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)),
-                    title: "wallet_connect.title".localized,
-                    items: [
-                        .highlightedDescription(text: "wallet_connect.no_account.description".localized)
-                    ],
-                    buttons: [
-                        .init(style: .yellow, title: "button.ok".localized)
-                    ]
+                image: .local(image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)),
+                title: "wallet_connect.title".localized,
+                items: [
+                    .highlightedDescription(text: "wallet_connect.no_account.description".localized),
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "button.ok".localized),
+                ]
             )
-        case .nonSupportedAccountType(let accountTypeDescription):
+        case let .nonSupportedAccountType(accountTypeDescription):
             viewController = BottomSheetModule.viewController(
-                    image: .local(image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)),
-                    title: "wallet_connect.title".localized,
-                    items: [
-                        .highlightedDescription(text: "wallet_connect.non_supported_account.description".localized(accountTypeDescription))
-                    ],
-                    buttons: [
-                        .init(style: .yellow, title: "wallet_connect.non_supported_account.switch".localized, actionType: .afterClose) { [weak sourceViewController] in
-                            sourceViewController?.present(SwitchAccountModule.viewController(), animated: true)
-                        },
-                        .init(style: .transparent, title: "button.cancel".localized)
-                    ]
+                image: .local(image: UIImage(named: "wallet_connect_24")?.withTintColor(.themeJacob)),
+                title: "wallet_connect.title".localized,
+                items: [
+                    .highlightedDescription(text: "wallet_connect.non_supported_account.description".localized(accountTypeDescription)),
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "wallet_connect.non_supported_account.switch".localized, actionType: .afterClose) { [weak sourceViewController] in
+                        sourceViewController?.present(SwitchAccountModule.viewController(), animated: true)
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized),
+                ]
             )
-        case .unbackupedAccount(let account):
+        case let .unbackupedAccount(account):
             viewController = BottomSheetModule.viewController(
-                    image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
-                    title: "backup_required.title".localized,
-                    items: [
-                        .highlightedDescription(text: "wallet_connect.unbackuped_account.description".localized(account.name))
-                    ],
-                    buttons: [
-                        .init(style: .yellow, title: "backup_prompt.backup".localized, actionType: .afterClose) { [ weak sourceViewController] in
-                            guard let viewController = BackupModule.manualViewController(account: account) else {
-                                return
-                            }
+                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+                title: "backup_required.title".localized,
+                items: [
+                    .highlightedDescription(text: "wallet_connect.unbackuped_account.description".localized(account.name)),
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "backup_prompt.backup".localized, actionType: .afterClose) { [weak sourceViewController] in
+                        guard let viewController = BackupModule.manualViewController(account: account) else {
+                            return
+                        }
 
-                            sourceViewController?.present(viewController, animated: true)
-                        },
-                        .init(style: .gray, title: "backup_prompt.backup_cloud".localized, imageName: "icloud_24", actionType: .afterClose) { [ weak sourceViewController] in
-                            let viewController = BackupModule.cloudViewController(account: account)
-                            sourceViewController?.present(viewController, animated: true)
-                        },
-                        .init(style: .transparent, title: "button.cancel".localized)
-                    ]
+                        sourceViewController?.present(viewController, animated: true)
+                    },
+                    .init(style: .gray, title: "backup_prompt.backup_cloud".localized, imageName: "icloud_24", actionType: .afterClose) { [weak sourceViewController] in
+                        let viewController = BackupModule.cloudViewController(account: account)
+                        sourceViewController?.present(viewController, animated: true)
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized),
+                ]
             )
         }
 
         sourceViewController?.present(viewController, animated: true)
     }
 
-    enum WalletConnectOpenError {
+    enum WalletConnectOpenError: Error {
         case noAccount
         case nonSupportedAccountType(accountTypeDescription: String)
         case unbackupedAccount(account: Account)
     }
-
 }
 
-extension WalletConnectAppShowView: IDeepLinkHandler {
+extension WalletConnectAppShowView: IEventHandler {
+    var eventType: EventHandler.EventType { [.walletConnectDeepLink, .walletConnectUri] }
 
-    func handle(deepLink: DeepLinkManager.DeepLink) {
-        switch deepLink {
-        case let .walletConnect(url):
-            viewModel.onWalletConnectDeepLink(url: url)
+    func handle(event: Any, eventType _: EventHandler.EventType) async throws {
+        var uri: String?
+        switch event {
+        case let event as String:
+            uri = event
+        case let event as DeepLinkManager.DeepLink:
+            if case let .walletConnect(url) = event {
+                uri = url
+            }
+        default: ()
+        }
+
+        guard let uri else {
+            throw EventHandler.HandleError.noSuitableHandler
+        }
+
+        do {
+            try viewModel.validate(uri: uri)
+        } catch {
+            throw EventHandler.HandleError.noSuitableHandler
+        }
+
+        try viewModel.handleWalletConnect(url: uri)
+
+        isWaitingForSession = true
+        await withCheckedContinuation { [weak self] continuation in
+            self?.isWaitingHandlerCancellable = self?.$isWaitingForSession
+                .sink { isWaiting in
+                    if !isWaiting {
+                        self?.isWaitingHandlerCancellable = nil
+                        continuation.resume()
+                    }
+                }
         }
     }
-
 }

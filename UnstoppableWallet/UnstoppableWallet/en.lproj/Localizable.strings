@@ -65,6 +65,7 @@
 "alert.approved" = "Approved";
 "alert.revoking" = "Revoking";
 "alert.revoked" = "Revoked";
+"alert.cant_recognize" = "Can't Recognize";
 
 "no_results_found" = "No results found";
 "action.loading" = "loading...";
