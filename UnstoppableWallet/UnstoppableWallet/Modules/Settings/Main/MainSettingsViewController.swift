@@ -221,7 +221,8 @@ class MainSettingsViewController: ThemeViewController {
                     accessoryType: .disclosure,
                     isLast: true,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(BlockchainSettingsModule.viewController(), animated: true)
+                        let viewController = BlockchainSettingsModule.view().toViewController(title: "blockchain_settings.title".localized)
+                        self?.navigationController?.pushViewController(viewController, animated: true)
                     }
             )
         ]
