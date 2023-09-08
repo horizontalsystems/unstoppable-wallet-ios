@@ -63,7 +63,7 @@ class BlockchainSettingsViewController: ThemeViewController {
     }
 
     private func openBtc(blockchain: Blockchain) {
-        present(BtcBlockchainSettingsModule.viewController(blockchain: blockchain), animated: true)
+        present(BtcBlockchainSettingsModule.view(blockchain: blockchain).toNavigationViewController(), animated: true)
     }
 
     private func openEvm(blockchain: Blockchain) {

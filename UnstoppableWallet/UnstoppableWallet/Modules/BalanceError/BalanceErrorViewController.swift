@@ -112,7 +112,7 @@ class BalanceErrorViewController: ThemeActionSheetController {
 
     private func openBtc(blockchain: Blockchain) {
         dismiss(animated: true) { [weak self] in
-            self?.sourceViewController?.present(BtcBlockchainSettingsModule.viewController(blockchain: blockchain), animated: true)
+            self?.sourceViewController?.present(BtcBlockchainSettingsModule.view(blockchain: blockchain).toNavigationViewController(), animated: true)
         }
     }
 
