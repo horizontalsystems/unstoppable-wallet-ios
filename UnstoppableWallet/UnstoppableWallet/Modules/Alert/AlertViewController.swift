@@ -1,7 +1,8 @@
-import UIKit
 import ActionSheet
-import ThemeKit
+import ComponentKit
 import SectionsTableView
+import ThemeKit
+import UIKit
 
 class AlertViewController: ThemeActionSheetController {
     private let alertTitle: String
@@ -17,7 +18,8 @@ class AlertViewController: ThemeActionSheetController {
         super.init()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -28,8 +30,6 @@ class AlertViewController: ThemeActionSheetController {
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-
-        tableView.allowsSelection = false
 
         tableView.registerCell(forClass: AlertTitleCell.self)
         tableView.registerCell(forClass: AlertItemCell.self)
@@ -42,35 +42,53 @@ class AlertViewController: ThemeActionSheetController {
 
     private var titleRow: RowProtocol {
         Row<AlertTitleCell>(
-                id: "title",
-                height: AlertTitleCell.height,
-                bind: { [weak self] cell, _ in
-                    cell.bind(text: self?.alertTitle)
-                }
+            id: "title",
+            height: AlertTitleCell.height,
+            bind: { [weak self] cell, _ in
+                cell.bind(text: self?.alertTitle)
+            }
         )
     }
 
     private func itemRow(viewItem: AlertViewItem, index: Int) -> RowProtocol {
-        Row<AlertItemCell>(
-                id: "item_\(index)",
-                hash: "\(viewItem.selected)",
-                height: .heightCell48,
-                bind: {  [weak self] cell, _ in
-                    cell.set(backgroundStyle: .transparent)
-                    cell.title = viewItem.text
-                    cell.isSelected = viewItem.selected
-                    cell.isEnabled = !viewItem.disabled
-                    cell.onSelect = {
-                        self?.delegate?.onTapViewItem(index: index)
-                    }
-                }
+        let defaultColor: UIColor = viewItem.disabled ? .themeGray50 : .themeLeah
+
+        var elements = [CellBuilderNew.CellElement]()
+        var verticalTexts = [CellBuilderNew.CellElement]()
+        verticalTexts.append(
+            .textElement(
+                text: .body(viewItem.text, color: viewItem.selected ? .themeJacob : defaultColor),
+                parameters: .centerAlignment
+            )
+        )
+        if let description = viewItem.description {
+            verticalTexts.append(.margin(1))
+            verticalTexts.append(
+                .textElement(
+                    text: .subhead2(description),
+                    parameters: .centerAlignment
+                )
+            )
+        }
+        elements.append(.vStackCentered(verticalTexts))
+
+        return CellBuilderNew.row(
+            rootElement: .hStack(elements),
+            tableView: tableView,
+            id: "item_\(index)",
+            height: viewItem.description == nil ? .heightCell48 : .heightDoubleLineCell,
+            autoDeselect: true,
+            bind: { cell in
+                cell.set(backgroundStyle: .transparent)
+            },
+            action: {  [weak self] in
+                self?.delegate?.onTapViewItem(index: index)
+            }
         )
     }
-
 }
 
 extension AlertViewController: SectionsDataSource {
-
     func buildSections() -> [SectionProtocol] {
         var rows = [RowProtocol]()
 
@@ -79,13 +97,10 @@ extension AlertViewController: SectionsDataSource {
 
         return [Section(id: "main", rows: rows)]
     }
-
 }
 
 extension AlertViewController: IAlertView {
-
     func set(viewItems: [AlertViewItem]) {
         self.viewItems = viewItems
     }
-
 }
