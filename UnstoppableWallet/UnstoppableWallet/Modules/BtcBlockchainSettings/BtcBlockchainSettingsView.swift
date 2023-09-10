@@ -32,7 +32,7 @@ struct BtcBlockchainSettingsView: View {
                                     }
 
                                     if restoreMode == viewModel.selectedRestoreMode {
-                                        Image("check_1_20").themeIcon(color: .themeJacob)
+                                        Image.checkIcon
                                     }
                                 }
                             }

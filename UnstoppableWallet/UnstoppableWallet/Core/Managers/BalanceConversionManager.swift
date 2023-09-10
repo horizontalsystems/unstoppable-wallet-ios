@@ -1,13 +1,13 @@
-import RxSwift
-import RxRelay
-import StorageKit
 import MarketKit
+import RxRelay
+import RxSwift
+import StorageKit
 
 class BalanceConversionManager {
     private let tokenQueries = [
         TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)),
         TokenQuery(blockchainType: .ethereum, tokenType: .native),
-        TokenQuery(blockchainType: .binanceSmartChain, tokenType: .native)
+        TokenQuery(blockchainType: .binanceSmartChain, tokenType: .native),
     ]
     private let keyBlockchainUid = "conversion-blockchain-uid"
 
@@ -46,11 +46,9 @@ class BalanceConversionManager {
             conversionToken = conversionTokens.first
         }
     }
-
 }
 
 extension BalanceConversionManager {
-
     var conversionTokenObservable: Observable<Token?> {
         conversionTokenRelay.asObservable()
     }
@@ -65,12 +63,7 @@ extension BalanceConversionManager {
         self.conversionToken = conversionTokens[newIndex]
     }
 
-    func setConversionToken(index: Int) {
-        guard index < conversionTokens.count else {
-            return
-        }
-
-        conversionToken = conversionTokens[index]
+    func set(conversionToken: Token?) {
+        self.conversionToken = conversionToken
     }
-
 }

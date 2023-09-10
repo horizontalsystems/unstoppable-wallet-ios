@@ -1,178 +1,76 @@
-import RxSwift
-import RxRelay
-import RxCocoa
+import MarketKit
+import SwiftUI
+import ThemeKit
 
-class AppearanceViewModel {
-    private let service: AppearanceService
-    private let disposeBag = DisposeBag()
+class AppearanceViewModel: ObservableObject {
+    private let themeManager: ThemeManager
+    private let launchScreenManager: LaunchScreenManager
+    private let appIconManager: AppIconManager
+    private let balancePrimaryValueManager: BalancePrimaryValueManager
+    private let balanceConversionManager: BalanceConversionManager
+    private let balanceHiddenManager: BalanceHiddenManager
 
-    private let themeModeViewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
-    private let launchScreenViewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
-    private let appIconViewItemsRelay = BehaviorRelay<[AppIconViewItem]>(value: [])
-    private let conversionViewItemsRelay = BehaviorRelay<[ConversionViewItem]>(value: [])
-    private let balanceValueViewItemsRelay = BehaviorRelay<[BalanceValueViewItem]>(value: [])
+    let themeModes: [ThemeMode] = [.system, .dark, .light]
+    let conversionTokens: [Token]
 
-    init(service: AppearanceService) {
-        self.service = service
-
-        subscribe(disposeBag, service.themeModeItemsObservable) { [weak self] in self?.sync(themeModeItems: $0) }
-        subscribe(disposeBag, service.launchScreenItemsObservable) { [weak self] in self?.sync(launchScreenItems: $0) }
-        subscribe(disposeBag, service.appIconItemsObservable) { [weak self] in self?.sync(appIconItems: $0) }
-        subscribe(disposeBag, service.conversionItemsObservable) { [weak self] in self?.sync(conversionItems: $0) }
-        subscribe(disposeBag, service.balancePrimaryValueItemsObservable) { [weak self] in self?.sync(balancePrimaryValueItems: $0) }
-
-        sync(themeModeItems: service.themeModeItems)
-        sync(launchScreenItems: service.launchScreenItems)
-        sync(appIconItems: service.appIconItems)
-        sync(conversionItems: service.conversionItems)
-        sync(balancePrimaryValueItems: service.balancePrimaryValueItems)
-    }
-
-    private func sync(themeModeItems: [AppearanceService.ThemeModeItem]) {
-        let viewItems = themeModeItems.map { item in
-            ViewItem(
-                    iconName: item.themeMode.iconName,
-                    title: item.themeMode.title,
-                    selected: item.current
-            )
+    @Published var themMode: ThemeMode {
+        didSet {
+            themeManager.themeMode = themMode
         }
-        themeModeViewItemsRelay.accept(viewItems)
     }
 
-    private func sync(launchScreenItems: [AppearanceService.LaunchScreenItem]) {
-        let viewItems = launchScreenItems.map { item in
-            ViewItem(
-                    iconName: item.launchScreen.iconName,
-                    title: item.launchScreen.title,
-                    selected: item.current
-            )
+    @Published var showMarketTab: Bool {
+        didSet {
+            launchScreenManager.showMarket = showMarketTab
         }
-        launchScreenViewItemsRelay.accept(viewItems)
     }
 
-    private func sync(appIconItems: [AppearanceService.AppIconItem]) {
-        let viewItems = appIconItems.map { item in
-            AppIconViewItem(
-                    imageName: item.appIcon.imageName,
-                    title: item.appIcon.title,
-                    selected: item.current
-            )
+    @Published var launchScreen: LaunchScreen {
+        didSet {
+            launchScreenManager.launchScreen = launchScreen
         }
-        appIconViewItemsRelay.accept(viewItems)
     }
 
-    private func sync(conversionItems: [AppearanceService.ConversionItem]) {
-        let viewItems = conversionItems.map { item in
-            ConversionViewItem(
-                    urlString: item.token.coin.imageUrl,
-                    title: item.token.coin.code,
-                    selected: item.current
-            )
+    @Published var conversionToken: Token? {
+        didSet {
+            balanceConversionManager.set(conversionToken: conversionToken)
         }
-        conversionViewItemsRelay.accept(viewItems)
     }
 
-    private func sync(balancePrimaryValueItems: [AppearanceService.BalancePrimaryValueItem]) {
-        let viewItems = balancePrimaryValueItems.map { item in
-            BalanceValueViewItem(
-                    title: item.value.title,
-                    subtitle: item.value.subtitle,
-                    selected: item.current
-            )
+    @Published var balancePrimaryValue: BalancePrimaryValue {
+        didSet {
+            balancePrimaryValueManager.balancePrimaryValue = balancePrimaryValue
         }
-        balanceValueViewItemsRelay.accept(viewItems)
     }
 
-}
-
-extension AppearanceViewModel {
-
-    var themeModeViewItemsDriver: Driver<[ViewItem]> {
-        themeModeViewItemsRelay.asDriver()
+    @Published var balanceAutoHide: Bool {
+        didSet {
+            balanceHiddenManager.set(balanceAutoHide: balanceAutoHide)
+        }
     }
 
-    var launchScreenViewItemsDriver: Driver<[ViewItem]> {
-        launchScreenViewItemsRelay.asDriver()
+    @Published var appIcon: AppIcon {
+        didSet {
+            appIconManager.appIcon = appIcon
+        }
     }
 
-    var appIconViewItemsDriver: Driver<[AppIconViewItem]> {
-        appIconViewItemsRelay.asDriver()
+    init(themeManager: ThemeManager, launchScreenManager: LaunchScreenManager, appIconManager: AppIconManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceConversionManager: BalanceConversionManager, balanceHiddenManager: BalanceHiddenManager) {
+        self.themeManager = themeManager
+        self.launchScreenManager = launchScreenManager
+        self.appIconManager = appIconManager
+        self.balancePrimaryValueManager = balancePrimaryValueManager
+        self.balanceConversionManager = balanceConversionManager
+        self.balanceHiddenManager = balanceHiddenManager
+
+        conversionTokens = balanceConversionManager.conversionTokens
+
+        themMode = themeManager.themeMode
+        showMarketTab = launchScreenManager.showMarket
+        launchScreen = launchScreenManager.launchScreen
+        conversionToken = balanceConversionManager.conversionToken
+        balancePrimaryValue = balancePrimaryValueManager.balancePrimaryValue
+        balanceAutoHide = balanceHiddenManager.balanceAutoHide
+        appIcon = appIconManager.appIcon
     }
-
-    var conversionViewItemsDriver: Driver<[ConversionViewItem]> {
-        conversionViewItemsRelay.asDriver()
-    }
-
-    var balanceValueViewItemsDriver: Driver<[BalanceValueViewItem]> {
-        balanceValueViewItemsRelay.asDriver()
-    }
-
-    var showMarketTabDriver: Driver<Bool> {
-        service.showMarketTabObservable.asDriver(onErrorJustReturn: true)
-    }
-
-    var showMarketTab: Bool {
-        service.showMarketTab
-    }
-
-    var balanceAutoHide: Bool {
-        service.balanceAutoHide
-    }
-
-    func onSelectThemeMode(index: Int) {
-        service.setThemeMode(index: index)
-    }
-
-    func onSelectLaunchScreen(index: Int) {
-        service.setLaunchScreen(index: index)
-    }
-
-    func onToggleShowMarketScreen() {
-        service.toggleMarketScreen()
-    }
-
-    func onSelectAppIcon(index: Int) {
-        service.setAppIcon(index: index)
-    }
-
-    func onSelectConversionCoin(index: Int) {
-        service.setConversionCoin(index: index)
-    }
-
-    func onSelectBalanceValue(index: Int) {
-        service.setBalancePrimaryValue(index: index)
-    }
-
-    func onSet(balanceAutoHide: Bool) {
-        service.set(balanceAutoHide: balanceAutoHide)
-    }
-
-}
-
-extension AppearanceViewModel {
-
-    struct ViewItem {
-        let iconName: String
-        let title: String
-        let selected: Bool
-    }
-
-    struct AppIconViewItem {
-        let imageName: String
-        let title: String
-        let selected: Bool
-    }
-
-    struct ConversionViewItem {
-        let urlString: String
-        let title: String
-        let selected: Bool
-    }
-
-    struct BalanceValueViewItem {
-        let title: String
-        let subtitle: String
-        let selected: Bool
-    }
-
 }
