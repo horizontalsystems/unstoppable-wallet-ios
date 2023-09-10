@@ -5,34 +5,43 @@ enum AppIcon {
     var name: String? {
         switch self {
         case .main: return nil
-        case .alternate(let name, _): return name
+        case let .alternate(name, _): return name
         }
     }
 
     var title: String {
         switch self {
         case .main: return "Main"
-        case .alternate(_, let title): return title
+        case let .alternate(_, title): return title
         }
     }
 
     var imageName: String {
         switch self {
         case .main: return "AppIcon60x60"
-        case .alternate(let name, _): return "\(name)60x60"
+        case let .alternate(name, _): return "\(name)60x60"
         }
     }
+}
 
+extension AppIcon: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case .main:
+            hasher.combine("main")
+        case let .alternate(name, _):
+            hasher.combine("alternate")
+            hasher.combine(name)
+        }
+    }
 }
 
 extension AppIcon: Equatable {
-
-    public static func ==(lhs: AppIcon, rhs: AppIcon) -> Bool {
+    public static func == (lhs: AppIcon, rhs: AppIcon) -> Bool {
         switch (lhs, rhs) {
         case (.main, .main): return true
-        case (.alternate(let lhsName, _), .alternate(let rhsName, _)): return lhsName == rhsName
+        case let (.alternate(lhsName, _), .alternate(rhsName, _)): return lhsName == rhsName
         default: return false
         }
     }
-
 }

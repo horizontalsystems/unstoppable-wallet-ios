@@ -268,7 +268,8 @@ class MainSettingsViewController: ThemeViewController {
                     id: "launch-screen",
                     height: .heightCell48,
                     action: { [weak self] in
-                        self?.navigationController?.pushViewController(AppearanceModule.viewController(), animated: true)
+                        let viewController = AppearanceModule.view().toViewController(title: "appearance.title".localized)
+                        self?.navigationController?.pushViewController(viewController, animated: true)
                     }
             ),
             StaticRow(
