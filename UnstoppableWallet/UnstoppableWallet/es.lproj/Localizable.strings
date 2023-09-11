@@ -319,7 +319,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "lost_accounts.warning_message" = "Los datos encriptados de su monedero han sido recientemente invalidados porque se cambió la pantalla de bloqueo de tu iOS";
 
 // Token Balance Page
-"balance.token.locked" = "Locked";
+"balance.token.locked" = "Bloqueado";
 "balance.token.locked.info.title" = "Locked title";
 "balance.token.locked.info.description" = "Locked Description Text";
 "balance.token.staked" = "Staked";
