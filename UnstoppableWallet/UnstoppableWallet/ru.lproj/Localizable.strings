@@ -65,7 +65,7 @@
 "alert.approved" = "Разрешено";
 "alert.revoking" = "Отмена";
 "alert.revoked" = "Отменен";
-"alert.cant_recognize" = "Can't Recognize";
+"alert.cant_recognize" = "Не удалось распознать";
 
 "no_results_found" = "Ничего не найдено";
 "action.loading" = "загрузка...";
@@ -321,7 +321,7 @@
 "lost_accounts.warning_message" = "Зашифрованные данные вашего кошелька были недавно аннулированы, поскольку ваш экран блокировки iOS был изменен";
 
 // Token Balance Page
-"balance.token.locked" = "Locked";
+"balance.token.locked" = "Заблокировано";
 "balance.token.locked.info.title" = "Locked title";
 "balance.token.locked.info.description" = "Locked Description Text";
 "balance.token.staked" = "Staked";
@@ -351,7 +351,7 @@
 "receive_alert.any_coins.not_backed_up_description" = "You need to backup %@ before you may receive any coins.";
 "deposit.no_adapter.error" = "Can't provide address";
 
-"deposit.address_format" = "Format";
+"deposit.address_format" = "Формат";
 "deposit.qr_code_description" = "Ваш адрес для депозита %@";
 "deposit.qr_code_description.watch" = "Watch address of %@";
 "deposit.account" = "Account";
@@ -366,21 +366,21 @@
 
 "deposit.warning" = "Отправка только %@ на этот адрес. Отправка других типов токенов на этот адрес приведет к их окончательной потере.";
 
-"receive_network_select.title" = "Network";
+"receive_network_select.title" = "Сеть";
 "receive_network_select.description" = "Choose a network and get an address to receive.";
 
-"receive_address_format_select.title" = "Address Format";
+"receive_address_format_select.title" = "Формат адреса";
 "receive_address_format_select.description" = "Choose a network and get an address to receive.";
 "receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
 
-"blockchain_type.recommended" = " (recommended)";
+"blockchain_type.recommended" = " (рекомендовано)";
 
 // Send
 
 "send.title" = "Отправить %@";
 "send.send" = "Отправить";
-"send.no_assets" = "You have no assets to send.";
+"send.no_assets" = "У вас нет активов для отправки.";
 "send.amount_placeholder" = "Сумма";
 "send.address_placeholder" = "Адрес";
 "send.address_or_domain_placeholder" = "Адрес или домен";
@@ -1125,13 +1125,13 @@
 "settings.about_app.description" = "Кошелек %@ создан для тех, кто хочет инвестировать и хранить криптовалюты частным и независимым образом.\n\nЭто одноранговый кошелек, где только пользователь имеет контроль над средствами. Он не собирает никаких данных и обеспечивает независимость пользователя, не привязывая средства пользователя к определенному приложению.\n\nКошелек %@ имеет полностью открытый исходный код, и любой может подтвердить, что приложение работает именно так, как заявлено.";
 "settings.about_app.whats_new" = "Что нового";
 "settings.about_app.website" = "Веб-сайт";
-"settings.about_app.contact" = "Contact Us";
+"settings.about_app.contact" = "Связаться с нами";
 "settings.about_app.rate_us" = "Оценить нас";
 "settings.about_app.tell_friends" = "Рассказать друзьям";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Contact Us";
+"settings.contact.title" = "Связаться с нами";
 "settings.contact.via_email" = "по электронной почте";
 "settings.contact.via_telegram" = "через Telegram";
 
@@ -1357,9 +1357,9 @@
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Активный Кошелек";
 "wallet_connect.address" = "Адрес";
-"wallet_connect.network" = "Network";
+"wallet_connect.network" = "Сеть";
 "wallet_connect.address" = "Адрес";
-"wallet_connect.network" = "Network";
+"wallet_connect.network" = "Сеть";
 "wallet_connect.list.pending_requests" = "Ожидающие запросы";
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
 "wallet_connect.main.unsupported_chains" = "Некоторые блокчейны не поддерживаются!";
@@ -1708,7 +1708,7 @@
 "cex_deposit.title" = "Депозит %@";
 "cex_deposit.address" = "Адрес";
 
-"cex_deposit.network" = "Network";
+"cex_deposit.network" = "Сеть";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Мин. сумма";
 "cex_deposit.warning_memo" = "Необходимо memo (tag), или вы потеряете ваши монеты.";
@@ -1720,7 +1720,7 @@
 
 // Cex Widthdraw
 
-"cex_withdraw.network" = "Network";
+"cex_withdraw.network" = "Сеть";
 "cex_withdraw.network_warning" = "Убедитесь, что сеть совпадает с адресом снятия, а платформа депозита поддерживает его, или активы могут быть потеряны.";
 "cex_withdraw.fee" = "Комиссия";
 "cex_withdraw.fee_from_amount" = "Комиссия от суммы";
@@ -1731,12 +1731,12 @@
 
 // Cex Withdraw Network Select
 
-"cex_withdraw_network_select.title" = "Network";
+"cex_withdraw_network_select.title" = "Сеть";
 "cex_withdraw_network_select.description" = "Убедитесь, что сеть совпадает с адресом снятия и платформа депозита поддерживает его.";
 
 // Cex Withdraw Confirm
 
 "cex_withdraw_confirm.you_withdraw" = "Вывод средств";
-"cex_withdraw_confirm.network" = "Network";
+"cex_withdraw_confirm.network" = "Сеть";
 "cex_withdraw_confirm.withdraw" = "Вывод средств";
 "cex_withdraw_confirm.withdraw_failed" = "Вывод средств не выполнен";
