@@ -364,11 +364,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "deposit.warning" = "Bu adrese yalnızca %@ gönderin. Bu adrese başka türden jetonların gönderilmesi nihai kayıplarına neden olacaktır.";
 
-"receive_network_select.title" = "Network";
-"receive_network_select.description" = "Choose a network and get an address to receive.";
+"receive_network_select.title" = "Ağ";
+"receive_network_select.description" = "Bir ağ seçin ve para yatırmak için bir adres alın.";
 
-"receive_address_format_select.title" = "Address Format";
-"receive_address_format_select.description" = "Choose a network and get an address to receive.";
+"receive_address_format_select.title" = "Adres Formatı";
+"receive_address_format_select.description" = "Bir ağ seçin ve para yatırmak için bir adres alın.";
 "receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
 
@@ -456,8 +456,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Donate
 
 "donate.list.title" = "Donate with";
-"donate.list.get_address" = "Get Address";
-"donate.list.get_address.title" = "Addresses";
+"donate.list.get_address" = "Adresi al";
+"donate.list.get_address.title" = "Adresler";
 "donate.title" = "Donate %@";
 "donate.no_assets" = "You have no assets to donate.";
 "donate.support.description" = "Together, with your support, we can make this app even better!";
@@ -1355,9 +1355,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Aktif Cüzdan";
 "wallet_connect.address" = "Adres";
-"wallet_connect.network" = "Network";
+"wallet_connect.network" = "Ağ";
 "wallet_connect.address" = "Adres";
-"wallet_connect.network" = "Network";
+"wallet_connect.network" = "Ağ";
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
 "wallet_connect.main.no_any_supported_chains" = "Desteklenen zincir yok!";
 "wallet_connect.main.unsupported_chains" = "Bazı zincirler desteklenmiyor!";
@@ -1704,7 +1704,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "cex_deposit.title" = "Depozito %@";
 "cex_deposit.address" = "Adres";
 
-"cex_deposit.network" = "Network";
+"cex_deposit.network" = "Ağ";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. miktar";
 "cex_deposit.warning_memo" = "Not (etiket) gereklidir, aksi takdirde madeni paralarınızı kaybedersiniz.";
@@ -1716,7 +1716,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Cex Widthdraw
 
-"cex_withdraw.network" = "Network";
+"cex_withdraw.network" = "Ağ";
 "cex_withdraw.network_warning" = "Ağın para çekme adresiyle eşleştiğinden ve para yatırma platformunun bunu desteklediğinden emin olun, aksi takdirde varlıklar kaybolabilir.";
 "cex_withdraw.fee" = "Ücret";
 "cex_withdraw.fee_from_amount" = "Tutardan ücret";
@@ -1727,12 +1727,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Cex Withdraw Network Select
 
-"cex_withdraw_network_select.title" = "Network";
+"cex_withdraw_network_select.title" = "Ağ";
 "cex_withdraw_network_select.description" = "Ağın para çekme adresiyle eşleştiğinden ve para yatırma platformunun bunu desteklediğinden emin olun.";
 
 // Cex Withdraw Confirm
 
 "cex_withdraw_confirm.you_withdraw" = "Geri Çekilirsin";
-"cex_withdraw_confirm.network" = "Network";
+"cex_withdraw_confirm.network" = "Ağ";
 "cex_withdraw_confirm.withdraw" = "Hesaptan Çek";
 "cex_withdraw_confirm.withdraw_failed" = "Para çekme başarısız oldu";
