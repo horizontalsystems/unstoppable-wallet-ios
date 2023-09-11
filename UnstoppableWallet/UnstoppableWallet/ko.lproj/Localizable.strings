@@ -65,7 +65,7 @@
 "alert.approved" = "승인됨";
 "alert.revoking" = "철회";
 "alert.revoked" = "철회됨";
-"alert.cant_recognize" = "Can't Recognize";
+"alert.cant_recognize" = "인식할 수 없음";
 
 "no_results_found" = "No results found";
 "action.loading" = "로딩중";
@@ -317,15 +317,15 @@
 "lost_accounts.warning_message" = "iOS 잠금 화면이 변경되어 지갑이 보관된 암호화된 데이터가 최근에 무효화되었습니다";
 
 // Token Balance Page
-"balance.token.locked" = "Locked";
-"balance.token.locked.info.title" = "Locked title";
-"balance.token.locked.info.description" = "Locked Description Text";
-"balance.token.staked" = "Staked";
-"balance.token.staked.info.title" = "Staked title";
-"balance.token.staked.info.description" = "Staked Description Text";
-"balance.token.frozen" = "Frozen";
-"balance.token.frozen.info.title" = "Frozen title";
-"balance.token.frozen.info.description" = "Frozen Description Text";
+"balance.token.locked" = "잠김";
+"balance.token.locked.info.title" = "잠긴 제목";
+"balance.token.locked.info.description" = "잠긴 설명 텍스트";
+"balance.token.staked" = "판돈";
+"balance.token.staked.info.title" = "스테이크 타이틀";
+"balance.token.staked.info.description" = "측설 설명 텍스트";
+"balance.token.frozen" = "잠김";
+"balance.token.frozen.info.title" = "겨울왕국 제목";
+"balance.token.frozen.info.description" = "고정된 설명 텍스트";
 
 // Account switcher
 
@@ -344,31 +344,31 @@
 "deposit.address" = "주소";
 "deposit.your_address" = "당신의 주소";
 "receive_alert.not_backed_up_description" = "%@를 백업해야 %@를 받을 수 있습니다.";
-"receive_alert.any_coins.not_backed_up_description" = "You need to backup %@ before you may receive any coins.";
-"deposit.no_adapter.error" = "Can't provide address";
+"receive_alert.any_coins.not_backed_up_description" = "코인을 받으려면 %@을(를) 백업해야 합니다.";
+"deposit.no_adapter.error" = "주소를 제공할 수 없습니다.";
 
-"deposit.address_format" = "Format";
+"deposit.address_format" = "형식";
 "deposit.qr_code_description" = "입금 주소: %@";
-"deposit.qr_code_description.watch" = "Watch address of %@";
+"deposit.qr_code_description.watch" = "%@의 시계 주소";
 "deposit.account" = "계정";
 
 "deposit.not_active" = "비활성화됨";
 "deposit.not_active.title" = "비활성 주소";
 "deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
 
-"deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
-"deposit.zcash.restore.already_own" = "Yes, I already own";
-"deposit.zcash.restore.dont_have" = "No, I don’t have";
+"deposit.zcash.restore.description" = "이전에 ZEC 코인을 소유한 적이 있나요?";
+"deposit.zcash.restore.already_own" = "예, 이미 소유하고 있습니다";
+"deposit.zcash.restore.dont_have" = "아니요, 없어요";
 
 "deposit.warning" = "이 주소로는 %@만 보내주세요. 다른 종류의 토큰을 이 주소로 보내면 최종적으로 손실이 발생합니다.";
 
 "receive_network_select.title" = "회로망";
-"receive_network_select.description" = "Choose a network and get an address to receive.";
+"receive_network_select.description" = "네트워크를 선택하고 입금할 주소를 받으세요.";
 
 "receive_address_format_select.title" = "주소 형식";
-"receive_address_format_select.description" = "Choose a network and get an address to receive.";
-"receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
-"receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
+"receive_address_format_select.description" = "네트워크를 선택하고 입금할 주소를 받으세요.";
+"receive_address_format_select.bitcoin.bottom_description" = "향상된 처리량과 보안을 위해 Bitcoin에서는 기본 SegWit 형식이 선호됩니다. 모든 주소 형식(Taproot, SegWit, Legacy)을 사용하여 보낸 사람의 주소 형식에 관계없이 BTC를 수신할 수 있으므로 다양한 코인 유형에 걸쳐 원활한 거래가 가능합니다.";
+"receive_address_format_select.bitcoin_cash.bottom_description" = "향상된 사용자 경험과 호환성으로 인해 비트코인 캐시(BCH)를 수신하는 데 현금 주소 형식이 선호됩니다. 그러나 두 주소 형식은 보낸 사람의 주소 형식에 관계없이 BCH를 수신하는 데 상호 교환적으로 사용될 수 있습니다.";
 
 "blockchain_type.recommended" = " (평균)";
 
