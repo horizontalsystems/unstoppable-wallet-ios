@@ -1,13 +1,13 @@
 "button.ok" = "OK";
-"button.apply" = "Apply";
-"button.cancel" = "Cancel";
-"button.close" = "Close";
-"button.continue" = "Continue";
-"button.done" = "Done";
-"button.reset" = "Reset";
-"button.import" = "Import";
-"button.next" = "Next";
-"button.delete" = "Delete";
+"button.apply" = "Aplicar";
+"button.cancel" = "Cancelar";
+"button.close" = "Fechar";
+"button.continue" = "Continuar";
+"button.done" = "Concluído";
+"button.reset" = "Resetar";
+"button.import" = "Importar";
+"button.next" = "Próximo";
+"button.delete" = "Deletar";
 "button.share" = "Share";
 "button.paste" = "Paste";
 "button.resend" = "Resend";
@@ -37,7 +37,7 @@
 "alert.warning" = "Warning";
 "alert.error" = "Error";
 "alert.unknown_error" = "Unknown Error";
-"alert.success_action" = "Done";
+"alert.success_action" = "Concluído";
 "alert.success" = "Success";
 
 "alert.added_to_watchlist" = "Added to Watchlist";
@@ -278,53 +278,53 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "error.send.self_transfer" = "Sending to yourself is not supported";
 "error.send_binance.memo_required" = "The receiver requires a non-empty memo in the transfer transaction";
-"error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
-"error.send_z_cash.transparent_address" = "%@ doesn't support payments to a transparent address";
+"error.send_binance.only_digits_allowed" = "Requer que o memorando contenha apenas dígitos";
+"error.send_z_cash.transparent_address" = "O %@ não suporta pagamentos para um endereço transparente";
 
 // Balance
 
-"balance.title" = "Balance";
-"balance.tab_bar_item" = "Balance";
+"balance.title" = "Saldo";
+"balance.tab_bar_item" = "Saldo";
 "balance.send" = "Send";
-"balance.withdraw" = "Withdraw";
-"balance.swap" = "Swap";
-"balance.receive" = "Receive";
-"balance.deposit" = "Deposit";
-"balance.address" = "Address";
-"balance.rate_per_coin" = "%@ per %@";
-"balance.syncing" = "Syncing...";
-"balance.searching" = "Searching transactions...";
-"balance.downloading_sapling" = "Downloading Sapling... %d%%";
-"balance.downloading_blocks" = "Downloading Blocks";
-"balance.scanning_blocks" = "Scanning Blocks";
-"balance.enhancing_transactions" = "Enhancing Transactions";
+"balance.withdraw" = "Sacar";
+"balance.swap" = "Trocar";
+"balance.receive" = "Receber";
+"balance.deposit" = "Receber";
+"balance.address" = "Endereço";
+"balance.rate_per_coin" = "%@ por %@";
+"balance.syncing" = "Sincronizando...";
+"balance.searching" = "Procurando transações...";
+"balance.downloading_sapling" = "Baixando prévias.. %d%%";
+"balance.downloading_blocks" = "Baixando Blocos";
+"balance.scanning_blocks" = "Verificando Blocos";
+"balance.enhancing_transactions" = "Aprimorando Transações";
 
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Syncing... %@";
-"balance.synced_through" = "until %@";
-"balance.add_coin" = "Add Coin";
-"balance.invalid_api_key" = "Invalid API Key";
-"balance.empty.add_coins" = "Add Coins";
-"balance.empty.description" = "You haven't added any coins to this wallet.";
-"balance.watch_empty.description" = "This wallet address does not have any balance";
-"balance.sort_by" = "Sort By";
-"balance.sort.header" = "Sort by";
-"balance.sort.valueHighToLow" = "Balance";
+"balance.syncing_percent" = "Sincronizando... %@";
+"balance.synced_through" = "até %@";
+"balance.add_coin" = "Adicionar Moeda";
+"balance.invalid_api_key" = "Chave de API inválida";
+"balance.empty.add_coins" = "Adicionar Moedas";
+"balance.empty.description" = "Você não adicionou nenhuma moeda nesta carteira.";
+"balance.watch_empty.description" = "Este endereço da carteira não tem nenhum saldo";
+"balance.sort_by" = "Organizar por";
+"balance.sort.header" = "Organizar por";
+"balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Name";
-"balance.sort.price_change" = "Price Change";
+"balance.sort.price_change" = "Mudança de Preço";
 
-"balance_error.change_source" = "Change Source";
-"balance_error.sync_error" = "Sync Error";
-"lost_accounts.warning_title" = "iOS Keychain Error";
-"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
+"balance_error.change_source" = "Mudar a fonte";
+"balance_error.sync_error" = "Erro de Sincronização";
+"lost_accounts.warning_title" = "Erro de Keychain do iOS";
+"lost_accounts.warning_message" = "Os dados criptografados que continham sua carteira foram invalidados recentemente porque a tela de bloqueio do iOS foi alterada";
 
 // Token Balance Page
-"balance.token.locked" = "Locked";
-"balance.token.locked.info.title" = "Locked title";
-"balance.token.locked.info.description" = "Locked Description Text";
-"balance.token.staked" = "Staked";
-"balance.token.staked.info.title" = "Staked title";
-"balance.token.staked.info.description" = "Staked Description Text";
+"balance.token.locked" = "Bloqueado";
+"balance.token.locked.info.title" = "Título bloqueado";
+"balance.token.locked.info.description" = "Texto com Descrição Bloqueada";
+"balance.token.staked" = "Investido";
+"balance.token.staked.info.title" = "Título Implantado";
+"balance.token.staked.info.description" = "Texto com Descrição Implantada";
 "balance.token.frozen" = "Frozen";
 "balance.token.frozen.info.title" = "Frozen title";
 "balance.token.frozen.info.description" = "Frozen Description Text";
@@ -332,20 +332,20 @@ Go to Settings - > %@ and allow access to the camera.";
 // Account switcher
 
 "switch_account.title" = "Switch Wallet";
-"switch_account.wallets" = "Wallets";
-"switch_account.watch_wallets" = "Watch Wallets";
+"switch_account.wallets" = "Carteiras";
+"switch_account.watch_wallets" = "Ver Endereço";
 
 // Release notes
 
-"release_notes.title" = "What's New";
-"release_notes.follow_us" = "Follow Us";
+"release_notes.title" = "O que há de novo";
+"release_notes.follow_us" = "Siga a gente";
 
 // Deposit
 
-"deposit.receive_coin" = "Receive %@";
-"deposit.address" = "Address";
-"deposit.your_address" = "Your Address";
-"receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
+"deposit.receive_coin" = "Receber %@";
+"deposit.address" = "Endereço";
+"deposit.your_address" = "Seu endereço";
+"receive_alert.not_backed_up_description" = "Você precisa fazer um backup de %@ antes de poder receber %@.";
 "receive_alert.any_coins.not_backed_up_description" = "You need to backup %@ before you may receive any coins.";
 "deposit.no_adapter.error" = "Can't provide address";
 
@@ -380,7 +380,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.send" = "Send";
 "send.no_assets" = "You have no assets to send.";
 "send.amount_placeholder" = "Amount";
-"send.address_placeholder" = "Address";
+"send.address_placeholder" = "Endereço";
 "send.address_or_domain_placeholder" = "Address or Domain";
 "send.fee" = "Fee";
 "send.network_fee" = "Network Fee";
@@ -390,9 +390,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.duration.minutes" = "%d min.";
 "send.available_balance" = "Available Balance";
 "send.max_button" = "Max";
-"send.next_button" = "Next";
+"send.next_button" = "Próximo";
 "send.error.invalid" = "Invalid";
-"send.error.address" = "Address";
+"send.error.address" = "Endereço";
 "send.hodler_locktime" = "TimeLock";
 "send.hodler_locktime_hour" = "1 hour";
 "send.hodler_locktime_month" = "1 month";
@@ -409,22 +409,22 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
 "send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
 
-"send.confirmation.you_send" = "You Send";
-"send.confirmation.to" = "To";
-"send.confirmation.contact_name" = "Contact Name";
-"send.confirmation.domain" = "Domain";
-"send.confirmation.address" = "Address";
+"send.confirmation.you_send" = "Enviar";
+"send.confirmation.to" = "Para";
+"send.confirmation.contact_name" = "Nome do Contato";
+"send.confirmation.domain" = "Domínio";
+"send.confirmation.address" = "Endereço";
 "send.confirmation.account" = "Account";
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.total" = "Total";
 "send.confirmation.fee" = "Fee";
-"send.confirmation.time_lock" = "Time Lock";
-"send.confirmation.slide_to_send" = "Slide to Send";
+"send.confirmation.time_lock" = "TimeLock";
+"send.confirmation.slide_to_send" = "Deslize para enviar";
 "send.confirmation.sending" = "Sending";
-"send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.resend_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
 "send.confirmation.resend" = "Resend";
-"send.confirmation.cancel_description" = "This action will attempt to invalidate previous transaction by resending as a new 0 amount transaction to self. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.cancel_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
 "send.confirmation.cancel" = "Cancel Transaction";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Method";
@@ -468,16 +468,16 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Swap
 
-"swap.title" = "Swap";
+"swap.title" = "Trocar";
 "swap.no_assets" = "You have no assets to swap.";
 "swap.you_pay" = "You Pay";
 "swap.estimated" = "estimated";
-"swap.balance" = "Balance";
+"swap.balance" = "Saldo";
 "swap.allowance" = "Allowance";
 "swap.you_get" = "You Get";
 "swap.token" = "Select";
 "swap.advanced_settings" = "Swap Settings";
-"swap.proceed_button" = "Next";
+"swap.proceed_button" = "Próximo";
 "swap.approve.title" = "Swap Approve";
 "swap.approve.description" = "You should grant permission to a smart contract to swap a given token on your behalf. This permission sets the amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute an approval transaction. \n\nWhile it may be done on-demand before each trade, it's cheaper to approve a higher amount in advance for future trades.";
 "swap.approve.amount_error.already_approved" = "You already have an allowance for this amount";
@@ -528,7 +528,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Swap Approving
 
-"swap.approve.subtitle" = "Swap";
+"swap.approve.subtitle" = "Trocar";
 
 // Swap Confirmation
 
@@ -593,7 +593,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "market.tvl.platform_field.all" = "All";
 
-"market.sort_by" = "Sort By";
+"market.sort_by" = "Organizar por";
 
 "market.top.title" = "Top Coins";
 "market.top.description" = "Top Coins by market cap rank";
@@ -641,7 +641,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.advanced_search.liquidity" = "DEX Liquidity";
 "market.advanced_search.blockchains" = "Blockchains";
 "market.advanced_search.price_period" = "Price Period";
-"market.advanced_search.price_change" = "Price Change";
+"market.advanced_search.price_change" = "Mudança de Preço";
 
 "market.advanced_search.outperformed_btc" = "Outperformed BTC";
 "market.advanced_search.outperformed_eth" = "Outperformed ETH";
@@ -650,7 +650,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.advanced_search.price_close_to_atl" = "Price Close To ATL";
 
 "market.advanced_search.top" = "Top %d";
-"market.advanced_search.reset_all" = "Reset";
+"market.advanced_search.reset_all" = "Resetar";
 
 "market.advanced_search.less_5_m" = "< 5M";
 "market.advanced_search.less_10_m" = "< 10M";
@@ -930,12 +930,12 @@ Go to Settings - > %@ and allow access to the camera.";
 "transactions.completed" = "Completed";
 "transactions.failed" = "Failed";
 
-"transactions.receive" = "Receive";
+"transactions.receive" = "Receber";
 "transactions.send" = "Send";
 "transactions.burn" = "Burn";
 "transactions.mint" = "Mint";
 "transactions.approve" = "Approve";
-"transactions.swap" = "Swap";
+"transactions.swap" = "Trocar";
 "transactions.contract_call" = "Contract Call";
 "transactions.contract_creation" = "Contract Creation";
 "transactions.external_call" = "External Call";
@@ -969,9 +969,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "tx_info.status.failed" = "Failed";
 "tx_info.from_hash" = "From";
 "tx_info.transaction_id" = "ID";
-"tx_info.to_hash" = "To";
+"tx_info.to_hash" = "Para";
 "tx_info.spender" = "Spender";
-"tx_info.contact_name" = "Contact Name";
+"tx_info.contact_name" = "Nome do Contato";
 "tx_info.button_explorer" = "View on %@";
 "tx_info.rate" = "Historical Rate";
 "tx_info.options.speed_up" = "Speed Up";
@@ -1108,7 +1108,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Manage Keys
 
 "settings_manage_keys.title" = "Manage Wallets";
-"settings_manage_keys.delete" = "Delete";
+"settings_manage_keys.delete" = "Deletar";
 "settings_manage_keys.backup" = "Backup";
 "settings_manage_keys.delete.title" = "Delete Wallet";
 "settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from the device.";
@@ -1121,7 +1121,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.about_app.title" = "About App";
 "settings.about_app.app_name" = "%@ Wallet";
 "settings.about_app.description" = "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
-"settings.about_app.whats_new" = "What's New";
+"settings.about_app.whats_new" = "O que há de novo";
 "settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Contact Us";
 "settings.about_app.rate_us" = "Rate Us";
@@ -1155,7 +1155,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "appearance.markets_tab" = "Markets Tab";
 "appearance.launch_screen" = "Launch Screen";
 "appearance.launch_screen.auto" = "Auto";
-"appearance.launch_screen.balance" = "Balance";
+"appearance.launch_screen.balance" = "Saldo";
 "appearance.launch_screen.market_overview" = "Market Overview";
 "appearance.launch_screen.watchlist" = "Watchlist";
 
@@ -1201,7 +1201,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "contacts.contact.delete_alert.title" = "Delete Contact";
 "contacts.contact.delete_alert.description" = "Are you sure you want to delete this contact?";
-"contacts.contact.delete_alert.delete" = "Delete";
+"contacts.contact.delete_alert.delete" = "Deletar";
 
 "contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
 "contacts.contact.dismiss_changes.discard_changes" = "Discard Changes";
@@ -1209,7 +1209,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "contacts.add_address.delete_alert.title" = "Delete Address";
 "contacts.add_address.delete_alert.description" = "Are you sure you want to delete this address?";
-"contacts.add_address.delete_alert.delete" = "Delete";
+"contacts.add_address.delete_alert.delete" = "Deletar";
 
 // Contacts -> Settings
 
@@ -1354,9 +1354,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "wallet_connect.error.invalid_url" = "Invalid URL Address";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Active Wallet";
-"wallet_connect.address" = "Address";
+"wallet_connect.address" = "Endereço";
 "wallet_connect.network" = "Network";
-"wallet_connect.address" = "Address";
+"wallet_connect.address" = "Endereço";
 "wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Pending Requests";
 "wallet_connect.main.no_any_supported_chains" = "No any supported chains!";
@@ -1378,7 +1378,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "wallet_connect.request_title" = "Contract Call";
 "wallet_connect.button.confirm" = "Confirm";
 "wallet_connect.sign.request_title" = "Sign Request";
-"wallet_connect.sign.domain" = "Domain";
+"wallet_connect.sign.domain" = "Domínio";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Message to sign";
 
@@ -1524,7 +1524,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "fee_settings.inputs_outputs" = "Inputs/Outputs";
 "fee_settings.transaction_settings" = "Transaction Settings";
 "fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
-"fee_settings.time_lock" = "Time Lock";
+"fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
 
 "fee_settings.network_fee" = "Network Fee";
@@ -1561,7 +1561,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "watch_address.title" = "Watch Wallet";
 "watch_address.watch" = "Watch";
-"watch_address.address" = "Address";
+"watch_address.address" = "Endereço";
 "watch_address.by" = "By";
 "watch_address.watch_by" = "Watch By";
 "watch_address.evm_address" = "EVM Address";
@@ -1596,7 +1596,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "nft_asset.floor_price" = "Floor Price";
 "nft_asset.on_sale" = "On Sale";
 "nft_asset.on_auction" = "On Auction";
-"nft_asset.until_date" = "until %@";
+"nft_asset.until_date" = "até %@";
 "nft_asset.buy_now" = "Buy Now";
 "nft_asset.minimum_bid" = "Minimum Bid";
 "nft_asset.best_offer" = "Best Offer";
@@ -1662,7 +1662,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "activate_subscription.title" = "Activate";
 "activate_subscription.wallet" = "Wallet";
-"activate_subscription.address" = "Address";
+"activate_subscription.address" = "Endereço";
 "activate_subscription.message" = "Message to Sign";
 "activate_subscription.sign" = "Sign";
 "activate_subscription.activating" = "Activating...";
@@ -1689,7 +1689,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Cex Coin Select
 
 "cex_coin_select.title" = "Choose Coin";
-"cex_coin_select.withdraw" = "Withdraw";
+"cex_coin_select.withdraw" = "Sacar";
 "cex_coin_select.withdraw.empty" = "You have no assets to withdraw.";
 "cex_coin_select.search_placeholder" = "Coin Code or Name";
 "cex_coin_select.suspended" = "Suspended";
@@ -1702,7 +1702,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Cex Deposit
 
 "cex_deposit.title" = "Deposit %@";
-"cex_deposit.address" = "Address";
+"cex_deposit.address" = "Endereço";
 
 "cex_deposit.network" = "Network";
 "cex_deposit.memo" = "Memo (Tag)";
@@ -1734,5 +1734,5 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "cex_withdraw_confirm.you_withdraw" = "You Withdraw";
 "cex_withdraw_confirm.network" = "Network";
-"cex_withdraw_confirm.withdraw" = "Withdraw";
+"cex_withdraw_confirm.withdraw" = "Sacar";
 "cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
