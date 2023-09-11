@@ -4,11 +4,10 @@ import ThemeKit
 import ComponentKit
 
 class WalletTokenBalanceCell: UITableViewCell {
-    private static let height: CGFloat = 147
-
     private let stackView = UIStackView()
     private let testnetImageView = UIImageView()
     private let coinIconView = BalanceCoinIconHolder()
+    private let amountLabel = UILabel()
     private let amountButton = TextButtonComponent()
     private let descriptionLabel = UILabel()
 
@@ -21,7 +20,7 @@ class WalletTokenBalanceCell: UITableViewCell {
 
         contentView.addSubview(stackView)
         stackView.snp.makeConstraints { maker in
-            maker.top.equalToSuperview().inset(CGFloat.margin6)
+            maker.top.equalToSuperview().inset(18)
             maker.leading.trailing.equalToSuperview().inset(CGFloat.margin16)
         }
 
@@ -46,9 +45,17 @@ class WalletTokenBalanceCell: UITableViewCell {
             make.height.equalTo(44)
         }
 
-        stackView.addArrangedSubview(amountButton)
-        amountButton.font = .title2R
-        amountButton.textColor = .themeLeah
+        stackView.addArrangedSubview(amountLabel)
+        amountLabel.font = .title2R
+        amountLabel.textColor = .themeLeah
+        amountLabel.numberOfLines = 0
+        amountLabel.textAlignment = .center
+        amountLabel.isUserInteractionEnabled = true
+
+        amountLabel.addSubview(amountButton)
+        amountButton.snp.makeConstraints { maker in
+            maker.edges.equalToSuperview()
+        }
 
         stackView.addArrangedSubview(descriptionLabel)
 
@@ -71,9 +78,10 @@ class WalletTokenBalanceCell: UITableViewCell {
                 onTapError: onTapError
         )
 
-        amountButton.text = viewItem.balanceValue?.text
-        amountButton.textColor = (viewItem.balanceValue?.dimmed ?? true) ? .themeGray : .themeLeah
-        descriptionLabel.text = viewItem.descriptionValue?.text
+        amountLabel.text = viewItem.balanceValue?.text ?? "----"
+        amountLabel.textColor = (viewItem.balanceValue?.dimmed ?? true) ? .themeGray : .themeLeah
+
+        descriptionLabel.text = viewItem.descriptionValue?.text ?? "----"
         descriptionLabel.textColor = (viewItem.descriptionValue?.dimmed ?? true) ? .themeGray50 : .themeGray
     }
 
@@ -86,8 +94,10 @@ class WalletTokenBalanceCell: UITableViewCell {
 
 extension WalletTokenBalanceCell {
 
-    static func height(viewItem: WalletTokenBalanceViewModel.ViewItem?) -> CGFloat {
-        var height: CGFloat = Self.height
+    static func height(containerWidth: CGFloat, viewItem: WalletTokenBalanceViewModel.ViewItem?) -> CGFloat {
+        var height: CGFloat = .margin24 + .iconSize32 + .margin12
+        height += (viewItem?.balanceValue?.text ?? "----").height(forContainerWidth: containerWidth - 2 * .margin16, font: .title2R) + .margin6
+        height += (viewItem?.descriptionValue?.text ?? "----").height(forContainerWidth: containerWidth - 2 * .margin16, font: .body) + .margin24
 
         if !(viewItem?.isMainNet ?? true) {
             height += .margin12
