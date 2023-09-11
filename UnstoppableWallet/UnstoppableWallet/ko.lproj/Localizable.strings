@@ -65,6 +65,7 @@
 "alert.approved" = "승인됨";
 "alert.revoking" = "철회";
 "alert.revoked" = "철회됨";
+"alert.cant_recognize" = "Can't Recognize";
 
 "no_results_found" = "No results found";
 "action.loading" = "로딩중";
@@ -169,7 +170,6 @@
 
 // Coin Platforms
 
-"coin_platforms.description" = "This token exists on multiple blockchains.";
 "coin_platforms.native" = "네이티브";
 
 // Copy Warning
@@ -316,6 +316,17 @@
 "lost_accounts.warning_title" = "iOS 키체인 오류";
 "lost_accounts.warning_message" = "iOS 잠금 화면이 변경되어 지갑이 보관된 암호화된 데이터가 최근에 무효화되었습니다";
 
+// Token Balance Page
+"balance.token.locked" = "Locked";
+"balance.token.locked.info.title" = "Locked title";
+"balance.token.locked.info.description" = "Locked Description Text";
+"balance.token.staked" = "Staked";
+"balance.token.staked.info.title" = "Staked title";
+"balance.token.staked.info.description" = "Staked Description Text";
+"balance.token.frozen" = "Frozen";
+"balance.token.frozen.info.title" = "Frozen title";
+"balance.token.frozen.info.description" = "Frozen Description Text";
+
 // Account switcher
 
 "switch_account.title" = "지갑 변경";
@@ -333,15 +344,39 @@
 "deposit.address" = "주소";
 "deposit.your_address" = "당신의 주소";
 "receive_alert.not_backed_up_description" = "%@를 백업해야 %@를 받을 수 있습니다.";
+"receive_alert.any_coins.not_backed_up_description" = "You need to backup %@ before you may receive any coins.";
+"deposit.no_adapter.error" = "Can't provide address";
+
+"deposit.address_format" = "Format";
+"deposit.qr_code_description" = "입금 주소: %@";
+"deposit.qr_code_description.watch" = "Watch address of %@";
+"deposit.account" = "계정";
 
 "deposit.not_active" = "비활성화됨";
 "deposit.not_active.title" = "비활성 주소";
 "deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
 
+"deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
+"deposit.zcash.restore.already_own" = "Yes, I already own";
+"deposit.zcash.restore.dont_have" = "No, I don’t have";
+
+"deposit.warning" = "이 주소로는 %@만 보내주세요. 다른 종류의 토큰을 이 주소로 보내면 최종적으로 손실이 발생합니다.";
+
+"receive_network_select.title" = "Network";
+"receive_network_select.description" = "Choose a network and get an address to receive.";
+
+"receive_address_format_select.title" = "Address Format";
+"receive_address_format_select.description" = "Choose a network and get an address to receive.";
+"receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
+"receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
+
+"blockchain_type.recommended" = " (recommended)";
+
 // Send
 
 "send.title" = "전송 %@";
 "send.send" = "전송";
+"send.no_assets" = "You have no assets to send.";
 "send.amount_placeholder" = "양";
 "send.address_placeholder" = "주소";
 "send.address_or_domain_placeholder" = "주소 또는 도메인";
@@ -416,6 +451,15 @@
 "approve.confirmation.you_revoke" = "당신은 취소";
 "approve.confirmation.spender" = "스펜더";
 
+// Donate
+
+"donate.list.title" = "Donate with";
+"donate.list.get_address" = "Get Address";
+"donate.list.get_address.title" = "Addresses";
+"donate.title" = "Donate %@";
+"donate.no_assets" = "You have no assets to donate.";
+"donate.support.description" = "Together, with your support, we can make this app even better!";
+
 // CoinSelector
 
 "choose_coin.title" = "코인 선택하기";
@@ -423,6 +467,7 @@
 // Swap
 
 "swap.title" = "스왑";
+"swap.no_assets" = "You have no assets to swap.";
 "swap.you_pay" = "지불하기";
 "swap.estimated" = "예상";
 "swap.balance" = "잔액";
@@ -876,9 +921,7 @@
 "transactions.all_blockchains" = "모든 블록체인";
 "transactions.all_coins" = "모든코인";
 "transactions.choose_coin" = "코인 선택";
-"transactions.clear" = "지우기";
 "transactions.filter_all" = "All";
-"transactions.syncing_text" = "동기화가 끝날 때까지 기다려 주십시오";
 "transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
 "transactions.pending" = "보류 중";
 "transactions.processing" = "처리 중";
@@ -963,7 +1006,7 @@
 "settings.faq" = "FAQ";
 "settings.theme" = "테마";
 "settings.info_subtitle" = "분산형 앱";
-"settings.donate.description" = "함께, 여러분의 지원으로 우리는 이 앱을 더 좋게 만들 수 있습니다!";
+"settings.donate.description" = "Together, with your support, we can make this app even better!";
 "settings.donate.title" = "후원하기";
 
 // Settings -> Base Currency
@@ -1310,9 +1353,9 @@
 "wallet_connect.url" = "URL 주소";
 "wallet_connect.active_account" = "지갑 활성화";
 "wallet_connect.address" = "주소";
-"wallet_connect.network" = "네트워크";
+"wallet_connect.network" = "Network";
 "wallet_connect.address" = "주소";
-"wallet_connect.network" = "네트워크";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
 "wallet_connect.main.unsupported_chains" = "일부 체인은 지원되지 않습니다!";
@@ -1657,13 +1700,12 @@
 // Cex Deposit
 
 "cex_deposit.title" = "침전 %@";
-"deposit.qr_code_description" = "입금 주소: %@";
 "cex_deposit.address" = "주소";
-"cex_deposit.network" = "네트워크";
+
+"cex_deposit.network" = "Network";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "최소  금액";
 "cex_deposit.warning_memo" = "메모(tag)는 필수입니다. 메모 없이는 코인을 잃을 수 있습니다.";
-"deposit.warning" = "이 주소로는 %@만 보내주세요. 다른 종류의 토큰을 이 주소로 보내면 최종적으로 손실이 발생합니다.";
 "cex_deposit.copy_address" = "주소 복사";
 "cex_deposit.share_address" = "주소 공유";
 "cex_deposit.failed" = "입금 주소를 불러오지 못했습니다. 다시 시도해주세요.";
@@ -1672,7 +1714,7 @@
 
 // Cex Widthdraw
 
-"cex_withdraw.network" = "네트워크";
+"cex_withdraw.network" = "Network";
 "cex_withdraw.network_warning" = "출금 주소와 입금 플랫폼이 일치하는지 확인하고 지원하는 자산이어야 합니다. 그렇지 않으면 자산이 손실될 수 있습니다.";
 "cex_withdraw.fee" = "수수료";
 "cex_withdraw.fee_from_amount" = "금액에 대한 수수료";
@@ -1683,12 +1725,12 @@
 
 // Cex Withdraw Network Select
 
-"cex_withdraw_network_select.title" = "네트워크";
+"cex_withdraw_network_select.title" = "Network";
 "cex_withdraw_network_select.description" = "인출 주소가 네트워크와 일치하고, 입금 플랫폼이 해당 네트워크를 지원하는지 확인하세요.";
 
 // Cex Withdraw Confirm
 
 "cex_withdraw_confirm.you_withdraw" = "출금하셨습니다";
-"cex_withdraw_confirm.network" = "네트워크";
+"cex_withdraw_confirm.network" = "Network";
 "cex_withdraw_confirm.withdraw" = "빼다";
 "cex_withdraw_confirm.withdraw_failed" = "출금 실패";
