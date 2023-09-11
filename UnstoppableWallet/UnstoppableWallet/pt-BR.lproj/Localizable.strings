@@ -425,33 +425,33 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.confirmation.resend_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
 "send.confirmation.resend" = "Resend";
 "send.confirmation.cancel_description" = "Esta ação tentará invalidar a transação anterior, reenviando-a com uma taxa maior. Se a transação original permanecer pendente quando uma nova foi enviada há uma alta chance (não garantida) de que ela seja invalidada e substituída. Apenas uma dessas duas transações será incluída no blockchain.";
-"send.confirmation.cancel" = "Cancel Transaction";
+"send.confirmation.cancel" = "Cancelar transação";
 "send.confirmation.nonce" = "Nonce";
-"send.confirmation.method" = "Method";
-"send.amount_error.balance" = "Not Enough Balance";
-"send.address_error.own_address" = "Cannot transfer TRX to yourself";
-"send.amount_error.maximum_amount" = "Maximum amount %@";
-"send.amount_error.minimum_amount" = "Minimum amount %@";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
-"send.amount_warning.coin_needed_for_fee" = "Consider leaving some %@ on balance to be able to pay for future transactions.";
-"send.token.insufficient_fee_alert" = "Transaction fees for transferring %@ (on %@) paid in %@. You need %@.";
+"send.confirmation.method" = "Método";
+"send.amount_error.balance" = "Saldo insuficiente";
+"send.address_error.own_address" = "Não é possível transferir TRX para si mesmo";
+"send.amount_error.maximum_amount" = "Valor máximo: %@";
+"send.amount_error.minimum_amount" = "Valor mínimo: %@";
+"send.amount_error.min_required_balance" = "Restante min. necessário %@";
+"send.amount_warning.coin_needed_for_fee" = "Considere deixar algum %@ no saldo para poder pagar transações futuras.";
+"send.token.insufficient_fee_alert" = "Taxas de transação para %@ (%@) pagas em %@. Você precisa de %@.";
 
-"send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
-"send.fee_settings.amount_error.balance" = "The current %@ balance is below the amount required to process theis transaction, including transaction fee.";
+"send.fee_settings.amount_error.balance.title" = "Saldo insuficiente";
+"send.fee_settings.amount_error.balance" = "O saldo atual de %@ está abaixo do valor necessário para processar a transação, incluindo taxa de transação.";
 
-"send.fee_settings.stuck_warning.title" = "Risk of getting stuck";
-"send.fee_settings.stuck_warning" = "The transaction may get stuck or fail.";
-"send.fee_settings.fee_error.title" = "Fee Error";
-"send.fee_settings.too_low" = "Fee Rate is too low.";
-"send.fee_settings.fee_rate_unavailable" = "Fee Rate unavailable. Please, check fee rates manually";
+"send.fee_settings.stuck_warning.title" = "Risco de ficar trancado";
+"send.fee_settings.stuck_warning" = "A transação pode ficar presa ou falhar.";
+"send.fee_settings.fee_error.title" = "Erro de taxa";
+"send.fee_settings.too_low" = "Taxa de taxa é muito baixa.";
+"send.fee_settings.fee_rate_unavailable" = "Tarifa indisponível. Por favor, verifique as taxas de taxas manualmente";
 
-"send.stuck_warning" = "Warning! Risk of getting stuck";
+"send.stuck_warning" = "Atenção! Risco de ficar preso";
 
 "send.lock_time" = "TimeLock";
 
-"approve.confirmation.you_approve" = "You Approve";
-"approve.confirmation.you_revoke" = "You Revoke";
-"approve.confirmation.spender" = "Spender";
+"approve.confirmation.you_approve" = "Você concorda";
+"approve.confirmation.you_revoke" = "Você revoga";
+"approve.confirmation.spender" = "Gastador";
 
 // Donate
 
@@ -476,13 +476,13 @@ Go to Settings - > %@ and allow access to the camera.";
 "swap.allowance" = "Allowance";
 "swap.you_get" = "You Get";
 "swap.token" = "Select";
-"swap.advanced_settings" = "Swap Settings";
+"swap.advanced_settings" = "Configurações de troca";
 "swap.proceed_button" = "Próximo";
-"swap.approve.title" = "Swap Approve";
-"swap.approve.description" = "You should grant permission to a smart contract to swap a given token on your behalf. This permission sets the amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute an approval transaction. \n\nWhile it may be done on-demand before each trade, it's cheaper to approve a higher amount in advance for future trades.";
-"swap.approve.amount_error.already_approved" = "You already have an allowance for this amount";
-"swap.approving_button" = "Approving...";
-"swap.revoke_warning" = "You can exchange %@, or you need to revoke and approve the new amount";
+"swap.approve.title" = "Aprovar Troca";
+"swap.approve.description" = "Você deve conceder permissão a um contrato inteligente para trocar um determinado token em seu nome. Esta permissão define o valor que pode ser usado por um contrato inteligente. Isso não afeta seu saldo mas requer uma pequena taxa para executar uma transação aprovada. \n\nEmbora possa ser feito sob demanda antes de cada negociação, é mais barato aprovar um montante mais elevado antecipadamente para futuras operações.";
+"swap.approve.amount_error.already_approved" = "Você já tem uma permissão para este valor";
+"swap.approving_button" = "Aprovando...";
+"swap.revoke_warning" = "Você pode trocar %@, ou você precisa revogar e aprovar o novo valor";
 "swap.revoking_button" = "Revoking...";
 "swap.not_available_button" = "Balance N/A";
 "swap.trade_error.not_found" = "Can't swap these tokens";
@@ -537,83 +537,83 @@ Go to Settings - > %@ and allow access to the camera.";
 "swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
 "swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
 
-"swap.confirmation.minimum_received" = "Minimum Received";
-"swap.confirmation.maximum_sent" = "Maximum Sent";
+"swap.confirmation.minimum_received" = "Mínimo recebido";
+"swap.confirmation.maximum_sent" = "Gastos máximos";
 
-"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
+"swap.dex_info.description" = "Este serviço de troca é fornecido por %@, um protocolo descentralizado de troca de tokens construído na blockchain %@. \n\n%@ É totalmente automatizado e gerenciado por contratos inteligentes que facilitam a troca de tokens de uma forma confiável sem qualquer meio de trapaça.";
 
-"swap.dex_info.header_dex_related" = "%@ Related";
+"swap.dex_info.header_dex_related" = "%@ Relacionado";
 "swap.dex_info.header_allowance" = "Allowance";
-"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.dex_info.content_allowance" = "O montante que uma exchange pode gastar em nome do usuário na execução de trocas simbólicas. É necessária uma margem suficiente para que uma transação de troca efetiva possa ocorrer.";
 "swap.dex_info.header_price_impact" = "Price Impact";
-"swap.dex_info.content_price_impact" = "The expected price deviation from a shown price typically increases with the swap amount.";
-"swap.dex_info.header_swap_fee" = "Swap Fee";
-"swap.dex_info.content_swap_fee" = "A service fee for the swap action on the platform, shown in the currency the user sells. For most orders, it should be either 0.3 % or 0.6 %.";
+"swap.dex_info.content_price_impact" = "O desvio de preço esperado de um valor mostrado, normalmente aumenta com o montante de swap.";
+"swap.dex_info.header_swap_fee" = "Tarifas de troca";
+"swap.dex_info.content_swap_fee" = "Uma taxa de serviço para a ação de troca na plataforma, mostrada na moeda que o usuário vende. Para a maioria das encomendas, deve situar-se nos 0,3% ou nos 0,6%.";
 "swap.dex_info.header_guaranteed_amount" = "Guaranteed Amount";
-"swap.dex_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
-"swap.dex_info.header_maximum_spend" = "Maximum Spend";
-"swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
+"swap.dex_info.content_guaranteed_amount" = "A quantia mínima que um usuário receberá em resultado de uma ação de troca.";
+"swap.dex_info.header_maximum_spend" = "Gastos máximos";
+"swap.dex_info.content_maximum_spend" = "A quantia mínima que um usuário receberá em resultado de uma ação de troca.";
 
-"swap.dex_info.header_other" = "Other";
-"swap.dex_info.header_transaction_fee" = "Transaction Fee";
-"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
-"swap.dex_info.header_transaction_speed" = "Transaction Speed";
-"swap.dex_info.content_transaction_speed" = "Transactions with a higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+"swap.dex_info.header_other" = "Outros";
+"swap.dex_info.header_transaction_fee" = "Taxa de Transação";
+"swap.dex_info.content_transaction_fee" = "O custo de processamento estimado da determinada transação em %@ blockchain. %@ transações relacionadas normalmente custarão mais do que as transações genéricas de transferência do token.";
+"swap.dex_info.header_transaction_speed" = "Velocidade da Transação";
+"swap.dex_info.content_transaction_speed" = "Transações com uma taxa de transação maior resultarão em velocidades de processamento mais rápidas. O oposto também é verdade.";
 
 "swap.dex_info.link_button" = "%@ Site";
 
 // Market
 
-"market.tab_bar_item" = "Markets";
-"market.title" = "Markets";
-"market.category.overview" = "Overview";
-"market.category.posts" = "News";
-"market.category.watchlist" = "Watchlist";
-"market.total_market_cap" = "Total M.Cap";
-"market.24h_volume" = "24h Volume";
-"market.defi_cap" = "DeFi Cap";
-"market.defi_tvl" = "TVL in DeFi";
+"market.tab_bar_item" = "Mercados";
+"market.title" = "Mercados";
+"market.category.overview" = "Visão geral";
+"market.category.posts" = "Notícias";
+"market.category.watchlist" = "Lista de observação";
+"market.total_market_cap" = "Valor Total de M.";
+"market.24h_volume" = "Volume em 24h";
+"market.defi_cap" = "Mercado de DeFi";
+"market.defi_tvl" = "TVL no DeFi";
 
-"market.project_has_no_coin" = "This project doesn’t have a coin";
+"market.project_has_no_coin" = "Esse projeto não tem uma moeda";
 
-"market.top.section.header.see_all" = "See All";
-"market.top.section.header.top_gainers" = "Top Gainers";
-"market.top.section.header.top_losers" = "Top Losers";
-"market.top.section.header.top_sectors" = "Top Sectors";
-"market.top.section.header.news" = "News";
+"market.top.section.header.see_all" = "Ver tudo";
+"market.top.section.header.top_gainers" = "Maiores Altas";
+"market.top.section.header.top_losers" = "Maiores Quedas";
+"market.top.section.header.top_sectors" = "Principais Setores";
+"market.top.section.header.news" = "Notícias";
 "market.top.volume.title" = "Vol";
-"market.top.market_cap.title" = "MCap";
-"market.top.diluted_market_cap.title" = "Diluted MCap";
+"market.top.market_cap.title" = "Cap. de mercado";
+"market.top.diluted_market_cap.title" = "MCap Diludido";
 
-"market.market_field.mcap" = "MCap";
+"market.market_field.mcap" = "Cap. de mercado";
 "market.market_field.vol" = "Vol";
 
 "market.tvl.market_field.value" = "USD";
-"market.tvl.market_field.diff" = "Percent";
+"market.tvl.market_field.diff" = "Percentual";
 
-"market.tvl.platform_field.all" = "All";
+"market.tvl.platform_field.all" = "Todos";
 
 "market.sort_by" = "Organizar por";
 
-"market.top.title" = "Top Coins";
-"market.top.description" = "Top Coins by market cap rank";
+"market.top.title" = "Top Moedas";
+"market.top.description" = "Top moedas por classificação de capitalização de mercado";
 
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
-"market.top.top_gainers" = "Top Gainers";
-"market.top.top_losers" = "Top Losers";
-"market.top.top_collections" = "Top NFT Collections";
-"market.top.floor_price" = "Floor:";
-"market.top.top_platforms" = "Top Platforms";
-"market.top.protocols" = "Protocols";
+"market.top.highest_cap" = "Maior capitalização";
+"market.top.lowest_cap" = "Menor capitalização";
+"market.top.highest_volume" = "Maior volume";
+"market.top.lowest_volume" = "Menor volume";
+"market.top.top_gainers" = "Maiores Altas";
+"market.top.top_losers" = "Maiores Quedas";
+"market.top.top_collections" = "Principais Coleções NFT";
+"market.top.floor_price" = "Andar:";
+"market.top.top_platforms" = "Melhores Plataformas";
+"market.top.protocols" = "Protocolos";
 
-"top_platforms.title" = "Platforms Rank";
-"top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
+"top_platforms.title" = "Classificação de Plataformas";
+"top_platforms.description" = "Liderança de plataformas de blockchain por mercado cumulativo de projetos construídos no topo.";
 
-"top_platform.title" = "%@ Ecosystem";
-"top_platform.description" = "Market cap of all protocols on the %@ chain";
+"top_platform.title" = "%@ Ecossistema";
+"top_platform.description" = "Valor de mercado de todos procolos na cadeia %@";
 
 "market_discovery.title" = "Discovery";
 "market_discovery.filters" = "Filters";
@@ -679,31 +679,31 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.advanced_search.day" = "1 Day";
 "market.advanced_search.week" = "1 Week";
 "market.advanced_search.week2" = "2 Weeks";
-"market.advanced_search.month" = "1 Month";
-"market.advanced_search.month6" = "6 Months";
-"market.advanced_search.year" = "1 Year";
+"market.advanced_search.month" = "1 Mês";
+"market.advanced_search.month6" = "6 Meses";
+"market.advanced_search.year" = "1 Ano";
 
-"market.advanced_search_results.title" = "Results";
+"market.advanced_search_results.title" = "Resultados";
 
-"market.global.total_market_cap.title" = "Total Market Cap";
-"market.global.total_market_cap.description" = "Total market value of all cryptocurrencies";
+"market.global.total_market_cap.title" = "Capitalização Total de Mercado";
+"market.global.total_market_cap.description" = "Valor total de mercado de todas as criptomoedas";
 
-"market.global.volume_24h.title" = "24h Volume";
-"market.global.volume_24h.description" = "The 24h trading volume of crypto market";
+"market.global.volume_24h.title" = "Volume em 24h";
+"market.global.volume_24h.description" = "O volume de operação em 24h do mercado de cripto";
 
-"market.global.defi_cap.title" = "DeFi Cap";
-"market.global.defi_cap.description" = "Total market value of DeFi projects";
+"market.global.defi_cap.title" = "Mercado de DeFi";
+"market.global.defi_cap.description" = "Valor total de mercado de projetos DeFi";
 
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
-"market.global.tvl_in_defi.description" = "Total Value Locked (TVL) in DeFi";
-"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
+"market.global.tvl_in_defi.title" = "TVL no DeFi";
+"market.global.tvl_in_defi.description" = "Valor total bloqueado (TVL) no DeFi";
+"market.global.tvl_in_defi.multi_chain" = "Multi-Cadeia";
 "market.global.tvl_in_defi.filter_by_chain" = "Filter by chain";
 
 // Coin Page
 
 "coin_page.overview" = "Price";
 "coin_page.analytics" = "Analytics";
-"coin_page.markets" = "Markets";
+"coin_page.markets" = "Mercados";
 "coin_page.tweets" = "Tweets";
 
 // Coin Page -> Overview
@@ -714,16 +714,16 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_overview.market_cap" = "Market Cap";
 "coin_overview.circulating_supply" = "In Circulation";
 "coin_overview.total_supply" = "Total Supply";
-"coin_overview.diluted_market_cap" = "Diluted MCap";
+"coin_overview.diluted_market_cap" = "MCap Diludido";
 "coin_overview.genesis_date" = "Inception Date";
 "coin_overview.trading_volume" = "Trading Volume";
 
 "coin_overview.roi.hour24" = "1 Day";
 "coin_overview.roi.day7" = "1 Week";
 "coin_overview.roi.day14" = "2 Weeks";
-"coin_overview.roi.day30" = "1 Month";
+"coin_overview.roi.day30" = "1 Mês";
 "coin_overview.roi.day200" = "6 Month";
-"coin_overview.roi.year1" = "1 Year";
+"coin_overview.roi.year1" = "1 Ano";
 
 "coin_overview.category" = "Category";
 
@@ -820,7 +820,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
 "coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
 "coin_analytics.holders.count" = "Total Holders: %@";
-"coin_analytics.holders.see_all" = "See All";
+"coin_analytics.holders.see_all" = "Ver tudo";
 
 "coin_analytics.project_tvl" = "Project TVL";
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
@@ -848,7 +848,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "coin_analytics.treasuries" = "Treasuries";
 "coin_analytics.treasuries.filters" = "Filters";
-"coin_analytics.treasuries.filter.all" = "All";
+"coin_analytics.treasuries.filter.all" = "Todos";
 "coin_analytics.treasuries.filter.public" = "Public";
 "coin_analytics.treasuries.filter.private" = "Private";
 "coin_analytics.treasuries.filter.etf" = "ETF";
@@ -923,7 +923,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "transactions.all_blockchains" = "All Blockchains";
 "transactions.all_coins" = "All Coins";
 "transactions.choose_coin" = "Choose Coin";
-"transactions.filter_all" = "All";
+"transactions.filter_all" = "Todos";
 "transactions.empty_text" = "You don't have any pending or past transactions yet";
 "transactions.pending" = "Pending";
 "transactions.processing" = "Processing";
@@ -950,7 +950,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "transactions.today" = "Today";
 "transactions.yesterday" = "Yesterday";
 
-"transactions.types.all" = "All";
+"transactions.types.all" = "Todos";
 "transactions.types.incoming" = "Received";
 "transactions.types.outgoing" = "Sent";
 "transactions.types.swap" = "Swaps";
@@ -970,12 +970,12 @@ Go to Settings - > %@ and allow access to the camera.";
 "tx_info.from_hash" = "From";
 "tx_info.transaction_id" = "ID";
 "tx_info.to_hash" = "Para";
-"tx_info.spender" = "Spender";
+"tx_info.spender" = "Gastador";
 "tx_info.contact_name" = "Nome do Contato";
 "tx_info.button_explorer" = "View on %@";
 "tx_info.rate" = "Historical Rate";
 "tx_info.options.speed_up" = "Speed Up";
-"tx_info.options.cancel" = "Cancel Transaction";
+"tx_info.options.cancel" = "Cancelar transação";
 "tx_info.transaction.already_in_block" = "Transaction already in block";
 "tx_info.fee" = "Fee";
 "tx_info.fee.estimated" = "Fee (est.)";
@@ -1014,7 +1014,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> Base Currency
 
 "settings.base_currency.title" = "Base Currency";
-"settings.base_currency.other" = "Other";
+"settings.base_currency.other" = "Outros";
 "settings.base_currency.disclaimer" = "Disclaimer";
 "settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe %@ wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
 "settings.base_currency.disclaimer.set" = "Set";
@@ -1157,7 +1157,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Saldo";
 "appearance.launch_screen.market_overview" = "Market Overview";
-"appearance.launch_screen.watchlist" = "Watchlist";
+"appearance.launch_screen.watchlist" = "Lista de observação";
 
 "appearance.app_icon" = "App Icon";
 
@@ -1582,12 +1582,12 @@ Go to Settings - > %@ and allow access to the camera.";
 "nft_collections.on_sale" = "On Sale";
 "nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
-"top_nft_collections.title" = "Top NFT Collections";
+"top_nft_collections.title" = "Principais Coleções NFT";
 "top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
 
-"nft_asset.tab.overview" = "Overview";
+"nft_asset.tab.overview" = "Visão geral";
 "nft_asset.tab.activity" = "Activity";
 
 "nft_asset.last_sale" = "Last Sale";
@@ -1615,7 +1615,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Nft Collection
 
-"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.overview" = "Visão geral";
 "nft_collection.tab.assets" = "Items";
 "nft_collection.tab.activity" = "Activity";
 
@@ -1627,7 +1627,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "nft_collection.overview.owners" = "Owners";
 "nft_collection.overview.items" = "Items";
-"nft_collection.overview.24h_volume" = "24h Volume";
+"nft_collection.overview.24h_volume" = "Volume em 24h";
 "nft_collection.overview.today_sellers" = "Today's Sellers";
 "nft_collection.overview.floor_price" = "Floor Price";
 "nft_collection.overview.all_time_average" = "All time average";
