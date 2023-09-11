@@ -65,7 +65,7 @@
 "alert.approved" = "Aprobar";
 "alert.revoking" = "Revocando";
 "alert.revoked" = "Revocada";
-"alert.cant_recognize" = "Can't Recognize";
+"alert.cant_recognize" = "No se puede reconocer";
 
 "no_results_found" = "No se han encontrado resultados";
 "action.loading" = "cargando...";
@@ -320,14 +320,14 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Token Balance Page
 "balance.token.locked" = "Bloqueado";
-"balance.token.locked.info.title" = "Locked title";
-"balance.token.locked.info.description" = "Locked Description Text";
-"balance.token.staked" = "Staked";
-"balance.token.staked.info.title" = "Staked title";
-"balance.token.staked.info.description" = "Staked Description Text";
-"balance.token.frozen" = "Frozen";
-"balance.token.frozen.info.title" = "Frozen title";
-"balance.token.frozen.info.description" = "Frozen Description Text";
+"balance.token.locked.info.title" = "Título bloqueado";
+"balance.token.locked.info.description" = "Texto de descripción bloqueado";
+"balance.token.staked" = "Llevado";
+"balance.token.staked.info.title" = "Título tomado";
+"balance.token.staked.info.description" = "Texto de descripción tomada";
+"balance.token.frozen" = "Congelados";
+"balance.token.frozen.info.title" = "Título congelado";
+"balance.token.frozen.info.description" = "Texto de descripción congelada";
 
 // Account switcher
 
@@ -346,7 +346,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.address" = "Dirección";
 "deposit.your_address" = "Su dirección";
 "receive_alert.not_backed_up_description" = "Necesita una Copia de seguridad %@ antes de poder recibir %@.";
-"receive_alert.any_coins.not_backed_up_description" = "You need to backup %@ before you may receive any coins.";
+"receive_alert.any_coins.not_backed_up_description" = "Necesitas hacer una copia de seguridad de %@ antes de poder recibir cualquier moneda.";
 "deposit.no_adapter.error" = "No se puede proporcionar la dirección";
 
 "deposit.address_format" = "Formatear";
@@ -365,10 +365,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.warning" = "Enviar sólo %@ a esta dirección. Enviar otros tipos de tokens a esta dirección dará como resultado su pérdida definitiva.";
 
 "receive_network_select.title" = "La red";
-"receive_network_select.description" = "Choose a network and get an address to receive.";
+"receive_network_select.description" = "Elija una red y obtenga una dirección a recibir.";
 
 "receive_address_format_select.title" = "Formato de Dirección";
-"receive_address_format_select.description" = "Choose a network and get an address to receive.";
+"receive_address_format_select.description" = "Elija una red y obtenga una dirección a recibir.";
 "receive_address_format_select.bitcoin.bottom_description" = "El formato de SegWit nativo es preferido en Bitcoin para un mejor rendimiento y seguridad. Todos los formatos de dirección (Tapproot, SegWit, Legacy) pueden utilizarse de forma intercambiable para recibir BTC independientemente del formato de dirección del remitente, habilitando transacciones perfectas en diferentes tipos de moneda.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "El formato de Dirección de Efectivo es preferido para recibir Bitcoin Cash (BCH) debido a su mejor experiencia de usuario y compatibilidad. Sin embargo, ambos formatos de dirección se pueden utilizar de forma intercambiable para recibir BCH, independientemente del formato de dirección del remitente.";
 
