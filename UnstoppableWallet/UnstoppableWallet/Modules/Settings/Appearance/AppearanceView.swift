@@ -110,25 +110,28 @@ struct AppearanceView: View {
                 }
                 .padding(.top, .margin8)
 
-                ListSection {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: .margin16) {
-                        ForEach(AppIconManager.allAppIcons, id: \.self) { appIcon in
-                            Button(action: {
-                                viewModel.appIcon = appIcon
-                            }) {
-                                VStack(spacing: .margin12) {
-                                    Image(uiImage: UIImage(named: appIcon.imageName) ?? UIImage())
-                                        .resizable()
-                                        .scaledToFit()
-                                        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
-                                        .frame(width: 60, height: 60)
-                                    Text(appIcon.title)
-                                        .themeSubhead1(color: viewModel.appIcon == appIcon ? .themeJacob : .themeLeah, alignment: .center)
+                VStack(spacing: 0) {
+                    ListSectionHeader(text: "appearance.app_icon".localized)
+                    ListSection {
+                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: .margin16) {
+                            ForEach(AppIconManager.allAppIcons, id: \.self) { appIcon in
+                                Button(action: {
+                                    viewModel.appIcon = appIcon
+                                }) {
+                                    VStack(spacing: .margin12) {
+                                        Image(uiImage: UIImage(named: appIcon.imageName) ?? UIImage())
+                                            .resizable()
+                                            .scaledToFit()
+                                            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
+                                            .frame(width: 60, height: 60)
+                                        Text(appIcon.title)
+                                            .themeSubhead1(color: viewModel.appIcon == appIcon ? .themeJacob : .themeLeah, alignment: .center)
+                                    }
                                 }
                             }
                         }
+                        .padding(.margin16)
                     }
-                    .padding(.margin16)
                 }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))

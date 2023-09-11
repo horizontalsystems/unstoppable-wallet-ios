@@ -38,8 +38,8 @@ struct BlockchainSettingsView: View {
                             )
                         }
                     }
-                    .sheet(item: $evmSheetBlockchain) { _ in
-                        Text("TODO")
+                    .sheet(item: $evmSheetBlockchain) { blockchain in
+                        EvmNetworkView(blockchain: blockchain)
                     }
                 }
             }
