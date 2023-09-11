@@ -65,7 +65,7 @@
 "alert.approved" = "Bestätigt";
 "alert.revoking" = "Widerrufen";
 "alert.revoked" = "Widerrufen";
-"alert.cant_recognize" = "Can't Recognize";
+"alert.cant_recognize" = "Kann nicht erkennen";
 
 "no_results_found" = "No results found";
 "action.loading" = "wird geladen ...";
@@ -320,14 +320,14 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Token Balance Page
 "balance.token.locked" = "Locked";
-"balance.token.locked.info.title" = "Locked title";
-"balance.token.locked.info.description" = "Locked Description Text";
-"balance.token.staked" = "Staked";
-"balance.token.staked.info.title" = "Staked title";
-"balance.token.staked.info.description" = "Staked Description Text";
+"balance.token.locked.info.title" = "Gesperrter Titel";
+"balance.token.locked.info.description" = "Gesperrter Beschreibungstext";
+"balance.token.staked" = "Absteckung";
+"balance.token.staked.info.title" = "Absteckter Titel";
+"balance.token.staked.info.description" = "Absteckungstext";
 "balance.token.frozen" = "Frozen";
-"balance.token.frozen.info.title" = "Frozen title";
-"balance.token.frozen.info.description" = "Frozen Description Text";
+"balance.token.frozen.info.title" = "gefrorener Titel";
+"balance.token.frozen.info.description" = "gefrorener Beschreibungstext";
 
 // Account switcher
 
@@ -346,31 +346,31 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.address" = "Adresse";
 "deposit.your_address" = "Deine Adresse";
 "receive_alert.not_backed_up_description" = "Sie müssen %@ sichern, bevor Sie %@ empfangen können.";
-"receive_alert.any_coins.not_backed_up_description" = "You need to backup %@ before you may receive any coins.";
-"deposit.no_adapter.error" = "Can't provide address";
+"receive_alert.any_coins.not_backed_up_description" = "Du musst %@ sichern, bevor du Münzen erhalten kannst.";
+"deposit.no_adapter.error" = "Kann keine Adresse angeben";
 
 "deposit.address_format" = "Format";
 "deposit.qr_code_description" = "Ihre Adresse für %@";
-"deposit.qr_code_description.watch" = "Watch address of %@";
+"deposit.qr_code_description.watch" = "Beobachtungsadresse von %@";
 "deposit.account" = "Account";
 
 "deposit.not_active" = "nicht aktiv";
 "deposit.not_active.title" = "Keine aktive Adresse";
 "deposit.not_active.tron_description" = "Neu erstellte Konten in der TRON-Blockchain sind inaktiv und können nicht abgefragt oder untersucht werden. Sie müssen aktiviert werden.\n\nDie Übertragung von TRX- oder TRC-10-Token an eine inaktive Konto-Adresse wird das Konto aktivieren. Zur Aktivierung eines neuen Kontos auf der Tron-Kette ist eine Gebühr von 1 TRX erforderlich";
 
-"deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
-"deposit.zcash.restore.already_own" = "Yes, I already own";
-"deposit.zcash.restore.dont_have" = "No, I don’t have";
+"deposit.zcash.restore.description" = "Hast du schon einmal im Besitz von ZEC-Münzen?";
+"deposit.zcash.restore.already_own" = "Ja, ich besitze bereits";
+"deposit.zcash.restore.dont_have" = "Nein, ich habe nicht";
 
 "deposit.warning" = "Senden Sie nur %@ an diese Adresse. Das Senden anderer Arten von Tokens an diese Adresse führt zu ihrem ultimativen Verlust.";
 
 "receive_network_select.title" = "Netzwerk";
-"receive_network_select.description" = "Choose a network and get an address to receive.";
+"receive_network_select.description" = "Wählen Sie ein Netzwerk aus und erhalten Sie eine Adresse.";
 
-"receive_address_format_select.title" = "Address Format";
-"receive_address_format_select.description" = "Choose a network and get an address to receive.";
-"receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
-"receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
+"receive_address_format_select.title" = "Adressformatierung";
+"receive_address_format_select.description" = "Wählen Sie ein Netzwerk aus und erhalten Sie eine Adresse.";
+"receive_address_format_select.bitcoin.bottom_description" = "Das Native SegWit Format wird in Bitcoin bevorzugt für einen verbesserten Durchsatz und mehr Sicherheit. Alle Adressformate (Taproot, SegWit, Legacy) können unabhängig vom Adressformat des Absenders zum Empfang von BTC verwendet werden ermöglicht nahtlose Transaktionen über verschiedene Münztypen.";
+"receive_address_format_select.bitcoin_cash.bottom_description" = "Das Cash Address Format wird bevorzugt für den Erhalt von Bitcoin Cash (BCH) aufgrund seiner verbesserten Benutzerfreundlichkeit und Kompatibilität bevorzugt. Beide Adressformate können jedoch unabhängig vom Adressformat des Absenders austauschbar genutzt werden, um BCH zu empfangen.";
 
 "blockchain_type.recommended" = " (empfohlen)";
 
@@ -378,7 +378,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "send.title" = "Senden %@";
 "send.send" = "Senden";
-"send.no_assets" = "You have no assets to send.";
+"send.no_assets" = "Sie haben keine Assets zu senden.";
 "send.amount_placeholder" = "Betrag";
 "send.address_placeholder" = "Adresse";
 "send.address_or_domain_placeholder" = "Adresse oder Domäne";
@@ -1123,13 +1123,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.about_app.description" = "Die Brieftasche %@ wurde für diejenigen gebaut, die Kryptowährungen auf private und unabhängige Weise investieren und speichern möchten.\n\nEs handelt sich um eine nicht-Custodial, Peer-to-Peer-Wallet, bei der nur der Benutzer die Kontrolle über das Guthaben hat. Es sammelt keine Daten und hält den Benutzer unabhängig, indem er das Guthaben des Benutzers nicht an eine bestimmte Wallet-App sperrt.\n\nDie %@ Brieftasche ist vollständig Open-Source und jeder kann bestätigen, dass die App genau so funktioniert, wie sie es vorgibt.";
 "settings.about_app.whats_new" = "Das ist neu";
 "settings.about_app.website" = "Website";
-"settings.about_app.contact" = "Contact Us";
+"settings.about_app.contact" = "Kontaktiere uns";
 "settings.about_app.rate_us" = "Bewerten Sie uns";
 "settings.about_app.tell_friends" = "Freunden erzählen";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Contact Us";
+"settings.contact.title" = "Kontaktiere uns";
 "settings.contact.via_email" = "per e-Mail";
 "settings.contact.via_telegram" = "per Telegram";
 
