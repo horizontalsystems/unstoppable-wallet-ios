@@ -65,6 +65,7 @@
 "alert.approved" = "Approved";
 "alert.revoking" = "Revoking";
 "alert.revoked" = "Revoked";
+"alert.cant_recognize" = "Can't Recognize";
 
 "no_results_found" = "No results found";
 "action.loading" = "loading...";
@@ -120,7 +121,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "restore.non_standard_import" = "Non-Standard Import";
 "restore.non_standard_import.description" = "This page provides a special wallet import mechanism to %@ users who have a non-standard wallet. Such wallets might have been created in %@ version 0.27 - 0.28 using a non-English recovery phrase and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
 "restore.warning.non_recommended.description" = "This wallet seems to use a non-standard character in its recovery phrase and/or a passphrase. If you do not see a balance or transactions please read below for details.  \n\nCLICK TO GET MORE INFO";
-"restore.error.non_standard.description"  = "This is a non-standard wallet.\n\nCLICK TO GET MORE INFO";
+"restore.error.non_standard.description" = "This is a non-standard wallet.\n\nCLICK TO GET MORE INFO";
 
 // Restore Type
 
@@ -208,7 +209,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "backup.title" = "Recovery Phrase";
 "backup.description" = "Here's the drill, folks: Write these words down, in the right order, and keep 'em locked up tight in a safe place. It's your ticket to security!";
-"backup.tap_to_show" = "Give it a tap, folks, and let that recovery phrase shine. It's your secret code to safeguarding your assets!";
+"backup.tap_to_show" = "Tap right there, folks, and behold the recovery phrase. It's like unlocking a treasure chest!";
 "backup.passphrase" = "Passphrase";
 "backup.verify" = "Verify";
 "backup.verified" = "Verified";
@@ -1119,7 +1120,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "settings.about_app.title" = "About App";
 "settings.about_app.app_name" = "%@ Wallet";
-"settings.about_app.description" =  "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
+"settings.about_app.description" = "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
 "settings.about_app.whats_new" = "What's New";
 "settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Contact";
