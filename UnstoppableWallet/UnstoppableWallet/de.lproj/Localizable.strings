@@ -364,7 +364,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "deposit.warning" = "Senden Sie nur %@ an diese Adresse. Das Senden anderer Arten von Tokens an diese Adresse führt zu ihrem ultimativen Verlust.";
 
-"receive_network_select.title" = "Network";
+"receive_network_select.title" = "Netzwerk";
 "receive_network_select.description" = "Choose a network and get an address to receive.";
 
 "receive_address_format_select.title" = "Address Format";
@@ -372,7 +372,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
 
-"blockchain_type.recommended" = " (recommended)";
+"blockchain_type.recommended" = " (empfohlen)";
 
 // Send
 
@@ -455,12 +455,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Donate
 
-"donate.list.title" = "Donate with";
-"donate.list.get_address" = "Get Address";
-"donate.list.get_address.title" = "Addresses";
-"donate.title" = "Donate %@";
-"donate.no_assets" = "You have no assets to donate.";
-"donate.support.description" = "Together, with your support, we can make this app even better!";
+"donate.list.title" = "Spenden mit";
+"donate.list.get_address" = "Adresse erhalten";
+"donate.list.get_address.title" = "Adresse";
+"donate.title" = "%@ Spenden";
+"donate.no_assets" = "Sie haben keine Assets zu spenden.";
+"donate.support.description" = "Gemeinsam können wir mit Ihrer Unterstützung diese App noch besser machen!";
 
 // CoinSelector
 
@@ -469,7 +469,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Swap
 
 "swap.title" = "Swap";
-"swap.no_assets" = "You have no assets to swap.";
+"swap.no_assets" = "Du hast keine Vermögenswerte zum Tauschen.";
 "swap.you_pay" = "Sie bezahlen";
 "swap.estimated" = "geschätzt";
 "swap.balance" = "Guthaben";
@@ -478,7 +478,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "swap.token" = "Auswählen";
 "swap.advanced_settings" = "Swap-Einstellungen";
 "swap.proceed_button" = "Weiter";
-"swap.approve.title" = "Swap Approve";
+"swap.approve.title" = "Genehmigen tauschen";
 "swap.approve.description" = "Sie sollten einem intelligenten Vertrag die Erlaubnis erteilen, in Ihrem Namen gegebene Token einzutauschen. Diese Erlaubnis legt einen Betrag fest, der von einem intelligenten Vertrag verwendet werden kann. Sie wirkt sich nicht auf Ihr Guthaben aus, erfordert jedoch eine geringe Gebühr für die Ausführung der Genehmigungstransaktion.\n\nEs kann zwar vor jedem Handel auf Anfrage erfolgen, es ist jedoch günstiger, bei zukünftigen Handelsgeschäften einen höheren Betrag im Voraus für uns zu genehmigen.";
 "swap.approve.amount_error.already_approved" = "Sie haben bereits eine Vergütung für diesen Betrag";
 "swap.approving_button" = "Wird bestätigt...";
@@ -1008,7 +1008,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.faq" = "FAQ";
 "settings.theme" = "Design";
 "settings.info_subtitle" = "decentralized";
-"settings.donate.description" = "Together, with your support, we can make this app even better!";
+"settings.donate.description" = "Gemeinsam können wir mit Ihrer Unterstützung diese App noch besser machen!";
 "settings.donate.title" = "Spenden";
 
 // Settings -> Base Currency
@@ -1123,13 +1123,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.about_app.description" = "Die Brieftasche %@ wurde für diejenigen gebaut, die Kryptowährungen auf private und unabhängige Weise investieren und speichern möchten.\n\nEs handelt sich um eine nicht-Custodial, Peer-to-Peer-Wallet, bei der nur der Benutzer die Kontrolle über das Guthaben hat. Es sammelt keine Daten und hält den Benutzer unabhängig, indem er das Guthaben des Benutzers nicht an eine bestimmte Wallet-App sperrt.\n\nDie %@ Brieftasche ist vollständig Open-Source und jeder kann bestätigen, dass die App genau so funktioniert, wie sie es vorgibt.";
 "settings.about_app.whats_new" = "Das ist neu";
 "settings.about_app.website" = "Website";
-"settings.about_app.contact" = "Kontakt";
+"settings.about_app.contact" = "Contact Us";
 "settings.about_app.rate_us" = "Bewerten Sie uns";
 "settings.about_app.tell_friends" = "Freunden erzählen";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Kontakt";
+"settings.contact.title" = "Contact Us";
 "settings.contact.via_email" = "per e-Mail";
 "settings.contact.via_telegram" = "per Telegram";
 
@@ -1355,9 +1355,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Aktive Wallet";
 "wallet_connect.address" = "Adresse";
-"wallet_connect.network" = "Network";
+"wallet_connect.network" = "Netzwerk";
 "wallet_connect.address" = "Adresse";
-"wallet_connect.network" = "Network";
+"wallet_connect.network" = "Netzwerk";
 "wallet_connect.list.pending_requests" = "Ausstehende Anfragen";
 "wallet_connect.main.no_any_supported_chains" = "Keine unterstützten Ketten!";
 "wallet_connect.main.unsupported_chains" = "Einige Ketten werden nicht unterstützt!";
@@ -1704,7 +1704,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "cex_deposit.title" = "Auftragen %@";
 "cex_deposit.address" = "Adresse";
 
-"cex_deposit.network" = "Network";
+"cex_deposit.network" = "Netzwerk";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. Amount";
 "cex_deposit.warning_memo" = "Memo (Tag) ist erforderlich, sonst verlieren Sie Ihre Münzen.";
@@ -1716,7 +1716,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Cex Widthdraw
 
-"cex_withdraw.network" = "Network";
+"cex_withdraw.network" = "Netzwerk";
 "cex_withdraw.network_warning" = "Stellen Sie sicher, dass das Netzwerk mit der Auszahlungsadresse übereinstimmt und die Einzahlungsplattform sie unterstützt, oder es können Vermögenswerte verloren gehen.";
 "cex_withdraw.fee" = "Gebühr";
 "cex_withdraw.fee_from_amount" = "Gebühr aus Betrag";
@@ -1727,12 +1727,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Cex Withdraw Network Select
 
-"cex_withdraw_network_select.title" = "Network";
+"cex_withdraw_network_select.title" = "Netzwerk";
 "cex_withdraw_network_select.description" = "Stellen Sie sicher, dass das Netzwerk mit der Auszahlungsadresse übereinstimmt und die Einzahlungsplattform unterstützt sie.";
 
 // Cex Withdraw Confirm
 
 "cex_withdraw_confirm.you_withdraw" = "Sie zurückziehen";
-"cex_withdraw_confirm.network" = "Network";
+"cex_withdraw_confirm.network" = "Netzwerk";
 "cex_withdraw_confirm.withdraw" = "Abheben";
 "cex_withdraw_confirm.withdraw_failed" = "Fehler bei Auszahlung";
