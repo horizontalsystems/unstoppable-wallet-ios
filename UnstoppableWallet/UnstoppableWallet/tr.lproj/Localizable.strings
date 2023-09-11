@@ -372,7 +372,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
 
-"blockchain_type.recommended" = " (recommended)";
+"blockchain_type.recommended" = " (ortalama)";
 
 // Send
 
