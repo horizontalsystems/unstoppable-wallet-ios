@@ -65,7 +65,7 @@
 "alert.approved" = "Approuvé";
 "alert.revoking" = "Révocation en cours";
 "alert.revoked" = "Révoqué";
-"alert.cant_recognize" = "Can't Recognize";
+"alert.cant_recognize" = "Impossible de reconnaître";
 
 "no_results_found" = "Aucun résultat";
 "action.loading" = "chargement en cours...";
@@ -320,14 +320,14 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Token Balance Page
 "balance.token.locked" = "Verrouillé";
-"balance.token.locked.info.title" = "Locked title";
-"balance.token.locked.info.description" = "Locked Description Text";
-"balance.token.staked" = "Staked";
-"balance.token.staked.info.title" = "Staked title";
-"balance.token.staked.info.description" = "Staked Description Text";
-"balance.token.frozen" = "Frozen";
-"balance.token.frozen.info.title" = "Frozen title";
-"balance.token.frozen.info.description" = "Frozen Description Text";
+"balance.token.locked.info.title" = "Titre verrouillé";
+"balance.token.locked.info.description" = "Texte de description verrouillé";
+"balance.token.staked" = "Stakée";
+"balance.token.staked.info.title" = "Titre de la consommation";
+"balance.token.staked.info.description" = "Texte de description de prise";
+"balance.token.frozen" = "Gelée";
+"balance.token.frozen.info.title" = "Titre gelé";
+"balance.token.frozen.info.description" = "Texte de description gelé";
 
 // Account switcher
 
@@ -346,39 +346,39 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.address" = "Adresses";
 "deposit.your_address" = "Votre address";
 "receive_alert.not_backed_up_description" = "Vous devez sauvegarder %@ avant de recevoir %@.";
-"receive_alert.any_coins.not_backed_up_description" = "You need to backup %@ before you may receive any coins.";
-"deposit.no_adapter.error" = "Can't provide address";
+"receive_alert.any_coins.not_backed_up_description" = "Vous devez sauvegarder %@ avant de pouvoir recevoir des pièces.";
+"deposit.no_adapter.error" = "Impossible de fournir l'adresse";
 
 "deposit.address_format" = "Format";
 "deposit.qr_code_description" = "Votre adresse pour le dépôt %@";
-"deposit.qr_code_description.watch" = "Watch address of %@";
+"deposit.qr_code_description.watch" = "Adresse de la montre de %@";
 "deposit.account" = "Compte";
 
 "deposit.not_active" = "non actif";
 "deposit.not_active.title" = "Adresse non-active";
 "deposit.not_active.tron_description" = "Les comptes récemment créés sur la blockchain TRON sont inactifs et ne peuvent pas être interrogés ou explorés. Ils doivent être activés.\n\nLe transfert de jetons TRX ou TRC-10 vers une adresse de compte inactive activera le compte. Pour activer un nouveau compte sur la chaîne Tron, des frais de 1 TRX sont nécessaires";
 
-"deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
-"deposit.zcash.restore.already_own" = "Yes, I already own";
-"deposit.zcash.restore.dont_have" = "No, I don’t have";
+"deposit.zcash.restore.description" = "Avez-vous déjà possédé des pièces de monnaie ZEC?";
+"deposit.zcash.restore.already_own" = "Oui, je suis déjà propriétaire";
+"deposit.zcash.restore.dont_have" = "Non, je n'ai pas";
 
 "deposit.warning" = "Envoyer seulement %@ à cette adresse. Envoyer d'autres types de jetons à cette adresse entraînera leur perte ultime.";
 
-"receive_network_select.title" = "Network";
-"receive_network_select.description" = "Choose a network and get an address to receive.";
+"receive_network_select.title" = "Réseau";
+"receive_network_select.description" = "Choisissez un réseau et obtenez une adresse à recevoir.";
 
-"receive_address_format_select.title" = "Address Format";
-"receive_address_format_select.description" = "Choose a network and get an address to receive.";
-"receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
-"receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
+"receive_address_format_select.title" = "Format de l'adresse";
+"receive_address_format_select.description" = "Choisissez un réseau et obtenez une adresse à recevoir.";
+"receive_address_format_select.bitcoin.bottom_description" = "Le format Native SegWit est préféré dans Bitcoin pour améliorer le débit et la sécurité. Tous les formats d'adresse (Taproot, SegWit, Legacy) peuvent être utilisés de manière interchangeable pour recevoir BTC quel que soit le format d'adresse de l'expéditeur, permettant des transactions transparentes entre différents types de pièces.";
+"receive_address_format_select.bitcoin_cash.bottom_description" = "Le format d'adresse en espèces est préféré pour recevoir Bitcoin Cash (BCH) en raison de son expérience utilisateur améliorée et de sa compatibilité. Cependant, les deux formats d'adresse peuvent être utilisés de façon interchangeable pour recevoir le BCH, quel que soit le format de l'adresse de l'expéditeur.";
 
-"blockchain_type.recommended" = " (recommended)";
+"blockchain_type.recommended" = " (recommandé)";
 
 // Send
 
 "send.title" = "Envoyer %@";
 "send.send" = "Envoyer";
-"send.no_assets" = "You have no assets to send.";
+"send.no_assets" = "Vous n'avez pas d'actifs à envoyer.";
 "send.amount_placeholder" = "Montant";
 "send.address_placeholder" = "Adresses";
 "send.address_or_domain_placeholder" = "Adresse ou domaine";
@@ -459,8 +459,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "donate.list.get_address" = "Obtenir une adresse";
 "donate.list.get_address.title" = "Adresses";
 "donate.title" = "Donate %@";
-"donate.no_assets" = "You have no assets to donate.";
-"donate.support.description" = "Together, with your support, we can make this app even better!";
+"donate.no_assets" = "Vous n'avez pas d'actifs à donner.";
+"donate.support.description" = "Ensemble, avec votre soutien, nous pouvons encore améliorer cette application!";
 
 // CoinSelector
 
@@ -469,7 +469,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Swap
 
 "swap.title" = "Echanger";
-"swap.no_assets" = "You have no assets to swap.";
+"swap.no_assets" = "Vous n'avez pas d'actifs à échanger.";
 "swap.you_pay" = "Vous payez";
 "swap.estimated" = "estimé";
 "swap.balance" = "Solde";
@@ -1008,7 +1008,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.faq" = "FAQ";
 "settings.theme" = "Thème";
 "settings.info_subtitle" = "application décentralisée";
-"settings.donate.description" = "Together, with your support, we can make this app even better!";
+"settings.donate.description" = "Ensemble, avec votre soutien, nous pouvons encore améliorer cette application!";
 "settings.donate.title" = "Faire un don";
 
 // Settings -> Base Currency
@@ -1123,13 +1123,13 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.about_app.description" = "Le portefeuille %@ est conçu pour ceux qui cherchent à investir et à stocker des cryptomonnaies de manière privée et indépendante.\n\nC'est un portefeuille non-dépositaire, peer-to-peer où seul l'utilisateur a le contrôle sur les fonds. Il ne collecte aucune donnée et garde l'utilisateur indépendant en ne verrouillant pas les fonds de l'utilisateur sur une application spécifique de portefeuille.\n\nLe portefeuille %@ est entièrement open-source et tout le monde peut confirmer que l'application fonctionne exactement comme il le prétend.";
 "settings.about_app.whats_new" = "Nouveautés";
 "settings.about_app.website" = "Site Web";
-"settings.about_app.contact" = "Contact Us";
+"settings.about_app.contact" = "Contactez-nous";
 "settings.about_app.rate_us" = "Evaluez-nous";
 "settings.about_app.tell_friends" = "Partager avec ami";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Contact Us";
+"settings.contact.title" = "Contactez-nous";
 "settings.contact.via_email" = "par e-mail";
 "settings.contact.via_telegram" = "par Telegram";
 
@@ -1355,9 +1355,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Activer le portefeuille";
 "wallet_connect.address" = "Adresses";
-"wallet_connect.network" = "Network";
+"wallet_connect.network" = "Réseau";
 "wallet_connect.address" = "Adresses";
-"wallet_connect.network" = "Network";
+"wallet_connect.network" = "Réseau";
 "wallet_connect.list.pending_requests" = "Demandes en attente";
 "wallet_connect.main.no_any_supported_chains" = "Aucune chaîne prise en charge !";
 "wallet_connect.main.unsupported_chains" = "Certaines chaînes ne sont pas prises en charge !";
@@ -1705,7 +1705,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "cex_deposit.title" = "Dépôt %@";
 "cex_deposit.address" = "Adresses";
 
-"cex_deposit.network" = "Network";
+"cex_deposit.network" = "Réseau";
 "cex_deposit.memo" = "Mémo (Tag)";
 "cex_deposit.min_amount" = "Montant minimum";
 "cex_deposit.warning_memo" = "Mémo (tag) est requis ou vous perdrez vos pièces.";
@@ -1717,7 +1717,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Cex Widthdraw
 
-"cex_withdraw.network" = "Network";
+"cex_withdraw.network" = "Réseau";
 "cex_withdraw.network_warning" = "Assurez-vous que le réseau correspond à l'adresse de retrait et que la plateforme de dépôt le supporte, ou que les actifs peuvent être perdus.";
 "cex_withdraw.fee" = "Frais";
 "cex_withdraw.fee_from_amount" = "Frais du montant";
@@ -1728,12 +1728,12 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Cex Withdraw Network Select
 
-"cex_withdraw_network_select.title" = "Network";
+"cex_withdraw_network_select.title" = "Réseau";
 "cex_withdraw_network_select.description" = "Assurez-vous que le réseau correspond à l'adresse de retrait et que la plateforme de dépôt le supporte.";
 
 // Cex Withdraw Confirm
 
 "cex_withdraw_confirm.you_withdraw" = "Vous retirez";
-"cex_withdraw_confirm.network" = "Network";
+"cex_withdraw_confirm.network" = "Réseau";
 "cex_withdraw_confirm.withdraw" = "Retraits";
 "cex_withdraw_confirm.withdraw_failed" = "Échec du retrait";
