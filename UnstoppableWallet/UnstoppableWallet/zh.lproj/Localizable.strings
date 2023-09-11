@@ -319,7 +319,7 @@
 "lost_accounts.warning_message" = "因为您的 iOS 锁定屏幕已被更改，所以保存您钱包的加密数据目前已失效";
 
 // Token Balance Page
-"balance.token.locked" = "Locked";
+"balance.token.locked" = "锁住";
 "balance.token.locked.info.title" = "Locked title";
 "balance.token.locked.info.description" = "Locked Description Text";
 "balance.token.staked" = "Staked";
@@ -456,11 +456,11 @@
 // Donate
 
 "donate.list.title" = "Donate with";
-"donate.list.get_address" = "Get Address";
-"donate.list.get_address.title" = "Addresses";
-"donate.title" = "Donate %@";
-"donate.no_assets" = "You have no assets to donate.";
-"donate.support.description" = "Together, with your support, we can make this app even better!";
+"donate.list.get_address" = "获取地址";
+"donate.list.get_address.title" = "地址";
+"donate.title" = "捐赠%@";
+"donate.no_assets" = "您没有资产可以捐赠。";
+"donate.support.description" = "在你的支持下，我们可以使这个应用更好！";
 
 // CoinSelector
 
@@ -469,7 +469,7 @@
 // Swap
 
 "swap.title" = "掉期交易";
-"swap.no_assets" = "You have no assets to swap.";
+"swap.no_assets" = "您目前没有可供交换的资产。";
 "swap.you_pay" = "您支付";
 "swap.estimated" = "估计";
 "swap.balance" = "余额";
@@ -708,7 +708,7 @@
 
 // Coin Page -> Overview
 
-"coin_overview.indicators" = "Indicators";
+"coin_overview.indicators" = "指标";
 "coin_overview.indicators.show" = "查看";
 "coin_overview.indicators.hide" = "隐藏";
 "coin_overview.market_cap" = "市场价值";
@@ -892,7 +892,7 @@
 
 // Coin Page -> Indicators
 
-"chart_indicators.title" = "Indicators";
+"chart_indicators.title" = "指标";
 "chart_indicators.moving_averages" = "移动平均线";
 "chart_indicators.oscillators" = "震荡指标";
 
@@ -1008,7 +1008,7 @@
 "settings.faq" = "常见问题";
 "settings.theme" = "主题";
 "settings.info_subtitle" = "分布式应用程序";
-"settings.donate.description" = "Together, with your support, we can make this app even better!";
+"settings.donate.description" = "在你的支持下，我们可以使这个应用更好！";
 "settings.donate.title" = "捐助";
 
 // Settings -> Base Currency
@@ -1123,13 +1123,13 @@
 "settings.about_app.description" = "%@ 钱包是为那些寻求投资和以私人和独立方式存储加密货币的人建造的。\n\n它是一个非保管的、对等的钱包，在那里只有用户能够控制资金。 它不收集任何数据，并且通过不将用户的资金锁定到特定的钱包应用程序来保持用户独立。\n\n %@ 钱包完全开源，任何人都可以确认应用程序的工作完全如其所声称的那样正常。";
 "settings.about_app.whats_new" = "新增内容";
 "settings.about_app.website" = "网站";
-"settings.about_app.contact" = "联系";
+"settings.about_app.contact" = "Contact Us";
 "settings.about_app.rate_us" = "评价我们";
 "settings.about_app.tell_friends" = "分享给好友";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "联系";
+"settings.contact.title" = "Contact Us";
 "settings.contact.via_email" = "通过电子邮件";
 "settings.contact.via_telegram" = "通过 Telegram";
 
@@ -1339,7 +1339,7 @@
 "add_token.blockchain" = "Blockchain";
 "add_token.already_added" = "该代币已在代币管理列表中";
 "add_token.invalid_contract_address" = "请输入正确的合约地址";
-"add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
+"add_token.invalid_bep2_symbol" = "无效的 BEP2 符号";
 "add_token.contract_address_not_found" = "在 %@ 区块链中找不到合同地址";
 "add_token.bep2_symbol_not_found" = "找不到 BEP2 符号";
 "add_token.input_placeholder.contract_address" = "智能合约地址";
