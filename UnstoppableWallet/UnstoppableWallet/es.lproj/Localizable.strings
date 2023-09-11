@@ -65,6 +65,7 @@
 "alert.approved" = "Aprobar";
 "alert.revoking" = "Revocando";
 "alert.revoked" = "Revocada";
+"alert.cant_recognize" = "Can't Recognize";
 
 "no_results_found" = "No se han encontrado resultados";
 "action.loading" = "cargando...";
@@ -171,7 +172,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Coin Platforms
 
-"coin_platforms.description" = "Este token existe en múltiples blockchains.";
 "coin_platforms.native" = "Nativa";
 
 // Copy Warning
@@ -318,6 +318,17 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "lost_accounts.warning_title" = "Error de la cadena de Claves del iOs ";
 "lost_accounts.warning_message" = "Los datos encriptados de su monedero han sido recientemente invalidados porque se cambió la pantalla de bloqueo de tu iOS";
 
+// Token Balance Page
+"balance.token.locked" = "Locked";
+"balance.token.locked.info.title" = "Locked title";
+"balance.token.locked.info.description" = "Locked Description Text";
+"balance.token.staked" = "Staked";
+"balance.token.staked.info.title" = "Staked title";
+"balance.token.staked.info.description" = "Staked Description Text";
+"balance.token.frozen" = "Frozen";
+"balance.token.frozen.info.title" = "Frozen title";
+"balance.token.frozen.info.description" = "Frozen Description Text";
+
 // Account switcher
 
 "switch_account.title" = "Cambiar monedero";
@@ -335,15 +346,39 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.address" = "Dirección";
 "deposit.your_address" = "Su dirección";
 "receive_alert.not_backed_up_description" = "Necesita una Copia de seguridad %@ antes de poder recibir %@.";
+"receive_alert.any_coins.not_backed_up_description" = "You need to backup %@ before you may receive any coins.";
+"deposit.no_adapter.error" = "Can't provide address";
+
+"deposit.address_format" = "Format";
+"deposit.qr_code_description" = "Tu dirección para depositar %@";
+"deposit.qr_code_description.watch" = "Watch address of %@";
+"deposit.account" = "Account";
 
 "deposit.not_active" = "inactivo";
 "deposit.not_active.title" = "Dirección no activa";
 "deposit.not_active.tron_description" = "Las cuentas recién creadas en la cadena de bloques TRON están inactivas y no se pueden consultar ni explorar. Necesitan ser activadas.\n\nPara activar una cuenta inactiva, transfiera tokens TRX o TRC-10 a su dirección. Para activar una nueva cuenta en la cadena Tron, se requiere una cuota de 1 TRX";
 
+"deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
+"deposit.zcash.restore.already_own" = "Yes, I already own";
+"deposit.zcash.restore.dont_have" = "No, I don’t have";
+
+"deposit.warning" = "Enviar sólo %@ a esta dirección. Enviar otros tipos de tokens a esta dirección dará como resultado su pérdida definitiva.";
+
+"receive_network_select.title" = "Network";
+"receive_network_select.description" = "Choose a network and get an address to receive.";
+
+"receive_address_format_select.title" = "Address Format";
+"receive_address_format_select.description" = "Choose a network and get an address to receive.";
+"receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
+"receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
+
+"blockchain_type.recommended" = " (recommended)";
+
 // Send
 
 "send.title" = "Enviar %@";
 "send.send" = "Enviar";
+"send.no_assets" = "You have no assets to send.";
 "send.amount_placeholder" = "Importe";
 "send.address_placeholder" = "Dirección";
 "send.address_or_domain_placeholder" = "Dominio o dirección";
@@ -418,6 +453,15 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "approve.confirmation.you_revoke" = "Revocas";
 "approve.confirmation.spender" = "Gastador";
 
+// Donate
+
+"donate.list.title" = "Donate with";
+"donate.list.get_address" = "Get Address";
+"donate.list.get_address.title" = "Addresses";
+"donate.title" = "Donate %@";
+"donate.no_assets" = "You have no assets to donate.";
+"donate.support.description" = "Together, with your support, we can make this app even better!";
+
 // CoinSelector
 
 "choose_coin.title" = "Elegir monedas";
@@ -425,6 +469,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Swap
 
 "swap.title" = "Permutar";
+"swap.no_assets" = "You have no assets to swap.";
 "swap.you_pay" = "Usted paga";
 "swap.estimated" = "estimado";
 "swap.balance" = "Saldo";
@@ -878,9 +923,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "transactions.all_blockchains" = "Todos los bloqueos";
 "transactions.all_coins" = "Todas";
 "transactions.choose_coin" = "Elegir moneda";
-"transactions.clear" = "Claro";
 "transactions.filter_all" = "Todo";
-"transactions.syncing_text" = "Por favor, espere a que termine la sincronización";
 "transactions.empty_text" = "Todavía no tienes transacciones pendientes o pasadas";
 "transactions.pending" = "Pendiente";
 "transactions.processing" = "Procesando";
@@ -965,7 +1008,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.faq" = "FAQ";
 "settings.theme" = "Tema";
 "settings.info_subtitle" = "app descentralizada";
-"settings.donate.description" = "¡Junto con tu apoyo, podemos hacer esta aplicación aún mejor!";
+"settings.donate.description" = "Together, with your support, we can make this app even better!";
 "settings.donate.title" = "Donar";
 
 // Settings -> Base Currency
@@ -1312,9 +1355,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Active su cartera";
 "wallet_connect.address" = "Dirección";
-"wallet_connect.network" = "Red";
+"wallet_connect.network" = "Network";
 "wallet_connect.address" = "Dirección";
-"wallet_connect.network" = "Red";
+"wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Solicitudes Pendientes";
 "wallet_connect.main.no_any_supported_chains" = "¡No hay cadenas compatibles!";
 "wallet_connect.main.unsupported_chains" = "¡Algunas cadenas no son soportadas!";
@@ -1659,13 +1702,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Cex Deposit
 
 "cex_deposit.title" = "Depositar %@";
-"deposit.qr_code_description" = "Tu dirección para depositar %@";
 "cex_deposit.address" = "Dirección";
-"cex_deposit.network" = "Red";
+
+"cex_deposit.network" = "Network";
 "cex_deposit.memo" = "Memo (Etiqueta)";
 "cex_deposit.min_amount" = "Importe mínimo";
 "cex_deposit.warning_memo" = "Se requiere Memo (etiqueta) o perderá sus monedas.";
-"deposit.warning" = "Enviar sólo %@ a esta dirección. Enviar otros tipos de tokens a esta dirección dará como resultado su pérdida definitiva.";
 "cex_deposit.copy_address" = "Copiar la dirección";
 "cex_deposit.share_address" = "Compartir Dirección";
 "cex_deposit.failed" = "Error al cargar la dirección del depósito. Vuelva a intentarlo.";
@@ -1674,7 +1716,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Cex Widthdraw
 
-"cex_withdraw.network" = "Red";
+"cex_withdraw.network" = "Network";
 "cex_withdraw.network_warning" = "Asegúrese de que la red coincide con la dirección de retiro y la plataforma de depósito la apoya, o los activos pueden perderse.";
 "cex_withdraw.fee" = "Comisión";
 "cex_withdraw.fee_from_amount" = "Comisión por importe";
@@ -1685,12 +1727,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Cex Withdraw Network Select
 
-"cex_withdraw_network_select.title" = "Red";
+"cex_withdraw_network_select.title" = "Network";
 "cex_withdraw_network_select.description" = "Asegúrese de que la red coincide con la dirección de retiro y la plataforma de depósito lo soporta.";
 
 // Cex Withdraw Confirm
 
 "cex_withdraw_confirm.you_withdraw" = "Retira";
-"cex_withdraw_confirm.network" = "Red";
+"cex_withdraw_confirm.network" = "Network";
 "cex_withdraw_confirm.withdraw" = "Retirar";
 "cex_withdraw_confirm.withdraw_failed" = "Fallo al retirar";
