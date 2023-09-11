@@ -120,6 +120,13 @@ class WalletTokenBalanceDataSource: NSObject {
             cell.bind(viewItem: headerViewItem) { [weak self] in
                 self?.viewModel.onTapFailedIcon()
             }
+
+            if let tableView {
+                UIView.animate(withDuration: 0.3) {
+                    tableView.beginUpdates()
+                    tableView.endUpdates()
+                }
+            }
         }
     }
 
@@ -300,7 +307,7 @@ extension WalletTokenBalanceDataSource: UITableViewDelegate {
         switch indexPath.section {
         case 0:
             switch indexPath.row {
-            case 0: return WalletTokenBalanceCell.height(viewItem: headerViewItem)
+            case 0: return WalletTokenBalanceCell.height(containerWidth: tableView.width, viewItem: headerViewItem)
             default: return BalanceButtonsCell.height
             }
         case 1: return .heightSingleLineCell
