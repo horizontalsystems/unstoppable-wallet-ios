@@ -362,21 +362,21 @@
 
 "deposit.warning" = "이 주소로는 %@만 보내주세요. 다른 종류의 토큰을 이 주소로 보내면 최종적으로 손실이 발생합니다.";
 
-"receive_network_select.title" = "Network";
+"receive_network_select.title" = "회로망";
 "receive_network_select.description" = "Choose a network and get an address to receive.";
 
-"receive_address_format_select.title" = "Address Format";
+"receive_address_format_select.title" = "주소 형식";
 "receive_address_format_select.description" = "Choose a network and get an address to receive.";
 "receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
 
-"blockchain_type.recommended" = " (recommended)";
+"blockchain_type.recommended" = " (평균)";
 
 // Send
 
 "send.title" = "전송 %@";
 "send.send" = "전송";
-"send.no_assets" = "You have no assets to send.";
+"send.no_assets" = "자산을 보낼 수 없습니다.";
 "send.amount_placeholder" = "양";
 "send.address_placeholder" = "주소";
 "send.address_or_domain_placeholder" = "주소 또는 도메인";
@@ -453,12 +453,12 @@
 
 // Donate
 
-"donate.list.title" = "Donate with";
-"donate.list.get_address" = "Get Address";
-"donate.list.get_address.title" = "Addresses";
-"donate.title" = "Donate %@";
-"donate.no_assets" = "You have no assets to donate.";
-"donate.support.description" = "Together, with your support, we can make this app even better!";
+"donate.list.title" = "기부하기";
+"donate.list.get_address" = "주소 받기";
+"donate.list.get_address.title" = "구애";
+"donate.title" = "기부하기 %@";
+"donate.no_assets" = "당신은 기부할 자산이 없습니다.";
+"donate.support.description" = "함께, 여러분의 지원으로 우리는 이 앱을 더 좋게 만들 수 있습니다!";
 
 // CoinSelector
 
@@ -467,7 +467,7 @@
 // Swap
 
 "swap.title" = "스왑";
-"swap.no_assets" = "You have no assets to swap.";
+"swap.no_assets" = "자산을 교환할 수 없습니다.";
 "swap.you_pay" = "지불하기";
 "swap.estimated" = "예상";
 "swap.balance" = "잔액";
@@ -1006,7 +1006,7 @@
 "settings.faq" = "FAQ";
 "settings.theme" = "테마";
 "settings.info_subtitle" = "분산형 앱";
-"settings.donate.description" = "Together, with your support, we can make this app even better!";
+"settings.donate.description" = "함께, 여러분의 지원으로 우리는 이 앱을 더 좋게 만들 수 있습니다!";
 "settings.donate.title" = "후원하기";
 
 // Settings -> Base Currency
@@ -1121,13 +1121,13 @@
 "settings.about_app.description" = "%@ 지갑은 암호화폐를 개인적이고 독립적인 방식으로 투자하고 보관하려는 사람들을 위해 만들어졌습니다. \n\n이 지갑은 사용자만이 자금에 대한 통제를 갖는 비보관형 P2P 지갑입니다. 데이터를 수집하지 않으며 사용자의 자금을 특정 지갑 앱에 잠그지 않아 독립성을 유지합니다. \n\n%@ 지갑은 완전한 오픈소스이며 누구든지 앱이 주장하는 대로 정확하게 작동하는지 확인할 수 있습니다.";
 "settings.about_app.whats_new" = "새로운 기능";
 "settings.about_app.website" = "Website";
-"settings.about_app.contact" = "Contact Us";
+"settings.about_app.contact" = "문의하기";
 "settings.about_app.rate_us" = "앱 평가";
 "settings.about_app.tell_friends" = "친구에게 추천하기";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Contact Us";
+"settings.contact.title" = "문의하기";
 "settings.contact.via_email" = "이메일로";
 "settings.contact.via_telegram" = "텔레그램을 통해";
 
@@ -1150,7 +1150,7 @@
 "appearance.theme.light" = "밝은";
 
 "appearance.tab_settings" = "탭 설정";
-"appearance.markets_tab" = "Markets Tab";
+"appearance.markets_tab" = "마켓 탭";
 "appearance.launch_screen" = "시작 화면";
 "appearance.launch_screen.auto" = "자동";
 "appearance.launch_screen.balance" = "잔액";
@@ -1165,7 +1165,7 @@
 "appearance.balance_value.coin_value" = "코인 가치";
 "appearance.balance_value.fiat_value" = "법정 가치";
 
-"appearance.balance_auto_hide" = "Balance Auto Hide";
+"appearance.balance_auto_hide" = "밸런스 자동 숨기기";
 
 // Settings -> Contacts
 
@@ -1353,9 +1353,9 @@
 "wallet_connect.url" = "URL 주소";
 "wallet_connect.active_account" = "지갑 활성화";
 "wallet_connect.address" = "주소";
-"wallet_connect.network" = "Network";
+"wallet_connect.network" = "회로망";
 "wallet_connect.address" = "주소";
-"wallet_connect.network" = "Network";
+"wallet_connect.network" = "회로망";
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
 "wallet_connect.main.unsupported_chains" = "일부 체인은 지원되지 않습니다!";
@@ -1702,7 +1702,7 @@
 "cex_deposit.title" = "침전 %@";
 "cex_deposit.address" = "주소";
 
-"cex_deposit.network" = "Network";
+"cex_deposit.network" = "회로망";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "최소  금액";
 "cex_deposit.warning_memo" = "메모(tag)는 필수입니다. 메모 없이는 코인을 잃을 수 있습니다.";
@@ -1714,7 +1714,7 @@
 
 // Cex Widthdraw
 
-"cex_withdraw.network" = "Network";
+"cex_withdraw.network" = "회로망";
 "cex_withdraw.network_warning" = "출금 주소와 입금 플랫폼이 일치하는지 확인하고 지원하는 자산이어야 합니다. 그렇지 않으면 자산이 손실될 수 있습니다.";
 "cex_withdraw.fee" = "수수료";
 "cex_withdraw.fee_from_amount" = "금액에 대한 수수료";
@@ -1725,12 +1725,12 @@
 
 // Cex Withdraw Network Select
 
-"cex_withdraw_network_select.title" = "Network";
+"cex_withdraw_network_select.title" = "회로망";
 "cex_withdraw_network_select.description" = "인출 주소가 네트워크와 일치하고, 입금 플랫폼이 해당 네트워크를 지원하는지 확인하세요.";
 
 // Cex Withdraw Confirm
 
 "cex_withdraw_confirm.you_withdraw" = "출금하셨습니다";
-"cex_withdraw_confirm.network" = "Network";
+"cex_withdraw_confirm.network" = "회로망";
 "cex_withdraw_confirm.withdraw" = "빼다";
 "cex_withdraw_confirm.withdraw_failed" = "출금 실패";
