@@ -428,7 +428,7 @@
 "send.confirmation.resend" = "Отправить повторно";
 "send.confirmation.cancel_description" = "Это действие аннулирует предыдущую транзакцию, переотправив ее себе как транзакцию с нулевой суммой. Если исходная транзакция ожидает обработки во время отправки новой, то вероятность ее аннулирования и замены довольно высока. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.cancel" = "Отменить транзакцию";
-"send.confirmation.nonce" = "Nonce";
+"send.confirmation.nonce" = "Memo";
 "send.confirmation.method" = "Метод";
 "send.amount_error.balance" = "Недостаточно средств";
 "send.address_error.own_address" = "Невозможно отправить TRX самому себе";
@@ -458,11 +458,11 @@
 // Donate
 
 "donate.list.title" = "Donate with";
-"donate.list.get_address" = "Get Address";
-"donate.list.get_address.title" = "Addresses";
-"donate.title" = "Donate %@";
+"donate.list.get_address" = "Получить адрес";
+"donate.list.get_address.title" = "Адреса";
+"donate.title" = "Поддержи нас %@";
 "donate.no_assets" = "You have no assets to donate.";
-"donate.support.description" = "Together, with your support, we can make this app even better!";
+"donate.support.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
 
 // CoinSelector
 
@@ -471,7 +471,7 @@
 // Swap
 
 "swap.title" = "Обменять";
-"swap.no_assets" = "You have no assets to swap.";
+"swap.no_assets" = "У вас нет активов для обмена.";
 "swap.you_pay" = "Платите";
 "swap.estimated" = "приблизительно";
 "swap.balance" = "Баланс";
@@ -1010,7 +1010,7 @@
 "settings.faq" = "FAQ";
 "settings.theme" = "Тема";
 "settings.info_subtitle" = "децентрализованное приложение";
-"settings.donate.description" = "Together, with your support, we can make this app even better!";
+"settings.donate.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
 "settings.donate.title" = "Поддержать";
 
 // Settings -> Base Currency
@@ -1125,13 +1125,13 @@
 "settings.about_app.description" = "Кошелек %@ создан для тех, кто хочет инвестировать и хранить криптовалюты частным и независимым образом.\n\nЭто одноранговый кошелек, где только пользователь имеет контроль над средствами. Он не собирает никаких данных и обеспечивает независимость пользователя, не привязывая средства пользователя к определенному приложению.\n\nКошелек %@ имеет полностью открытый исходный код, и любой может подтвердить, что приложение работает именно так, как заявлено.";
 "settings.about_app.whats_new" = "Что нового";
 "settings.about_app.website" = "Веб-сайт";
-"settings.about_app.contact" = "Обратная связь";
+"settings.about_app.contact" = "Contact Us";
 "settings.about_app.rate_us" = "Оценить нас";
 "settings.about_app.tell_friends" = "Рассказать друзьям";
 
 // Settings -> About App -> Contact
 
-"settings.contact.title" = "Обратная связь";
+"settings.contact.title" = "Contact Us";
 "settings.contact.via_email" = "по электронной почте";
 "settings.contact.via_telegram" = "через Telegram";
 
