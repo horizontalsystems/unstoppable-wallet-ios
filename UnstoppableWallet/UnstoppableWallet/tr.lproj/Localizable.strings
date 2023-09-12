@@ -369,7 +369,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "receive_network_select.description" = "Bir ağ seçin ve para yatırmak için bir adres alın.";
 
 "receive_address_format_select.title" = "Adres Formatı";
-"receive_address_format_select.description" = "Bir ağ seçin ve para yatırmak için bir adres alın.";
+"receive_address_format_select.description" = "Select an address format to receive your address.";
 "receive_address_format_select.bitcoin.bottom_description" = "Bitcoin'de daha iyi bir verimlilik ve güvenlik için yerel SegWit formatı tercih edilir. Tüm adres formatları (Taproot, SegWit, Legacy), gönderenin adres formatına bakılmaksızın BTC almak için birbirinin yerine kullanılabilir ve farklı para birimlerinde kesintisiz işlemlere olanak tanır.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "Geliştirilmiş kullanıcı deneyimi ve uyumluluğu nedeniyle Bitcoin Cash (BCH) almak için Nakit Adresi formatı tercih edilmektedir. Ancak gönderenin adres formatı ne olursa olsun, BCH'yi almak için her iki adres formatı da birbirinin yerine kullanılabilir.";
 
