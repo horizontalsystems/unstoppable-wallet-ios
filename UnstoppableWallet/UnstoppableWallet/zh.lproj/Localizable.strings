@@ -369,7 +369,7 @@
 "receive_network_select.description" = "选择一个网络并获取要接收的地址。";
 
 "receive_address_format_select.title" = "地址格式";
-"receive_address_format_select.description" = "选择一个网络并获取要接收的地址。";
+"receive_address_format_select.description" = "Select an address format to receive your address.";
 "receive_address_format_select.bitcoin.bottom_description" = "本机SegWit格式是比特币中为了改进输送和安全性而偏爱的。 所有地址格式 (Taproot, SegWit, Legacy) 可以互换使用来接收BTC ，而不论发送者的地址格式。 启用跨越不同种类的无缝交易。";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "现金地址格式更适合接收比特币现金(BCH)，因为它提高了用户体验和兼容性。 然而，无论发件人的地址格式如何，两种地址格式都可以互换地用于接收BCCH。";
 
