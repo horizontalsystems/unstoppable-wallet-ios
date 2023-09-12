@@ -1562,7 +1562,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Watch Address
 
 "watch_address.title" = "Regarder les portefeuilles";
-"watch_address.watch" = "Suivi";
+"watch_address.watch" = "Suivant";
 "watch_address.address" = "Adresses";
 "watch_address.by" = "Par";
 "watch_address.watch_by" = "Regarder par";
@@ -1710,8 +1710,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "cex_deposit.memo" = "Mémo (Tag)";
 "cex_deposit.min_amount" = "Montant minimum";
 "cex_deposit.warning_memo" = "Mémo (tag) est requis ou vous perdrez vos pièces.";
-"cex_deposit.copy_address" = "Copier l'adresse";
-"cex_deposit.share_address" = "Partager l'adresse";
+"cex_deposit.copy_address" = "Copier";
+"cex_deposit.share_address" = "Partager";
 "cex_deposit.failed" = "Impossible de charger l'adresse du dépôt. Veuillez réessayer.";
 "cex_deposit.memo_warning.title" = "Important";
 "cex_deposit.memo_warning.description" = "A la fois un mémo (tag) et l'adresse sont nécessaires pour s'assurer que les actifs sont reçus. Sinon, vos fonds seront perdus.";
