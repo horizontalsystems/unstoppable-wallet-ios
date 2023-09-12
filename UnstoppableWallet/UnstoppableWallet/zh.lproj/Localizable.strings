@@ -1561,7 +1561,7 @@
 // Watch Address
 
 "watch_address.title" = "观察地址";
-"watch_address.watch" = "观察";
+"watch_address.watch" = "下一步";
 "watch_address.address" = "地址";
 "watch_address.by" = "由";
 "watch_address.watch_by" = "观看者";
@@ -1709,8 +1709,8 @@
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "最小金额";
 "cex_deposit.warning_memo" = "Memo(标签)是必需的，否则您将丢失您的硬币。";
-"cex_deposit.copy_address" = "复制地址";
-"cex_deposit.share_address" = "共享地址";
+"cex_deposit.copy_address" = "复制";
+"cex_deposit.share_address" = "分享";
 "cex_deposit.failed" = "加载存款地址失败。请重试。";
 "cex_deposit.memo_warning.title" = "重要信息";
 "cex_deposit.memo_warning.description" = "需要填写备注(标签)和地址以确保收到资产。否则您的资金将丢失。";
