@@ -1561,7 +1561,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Watch Address
 
 "watch_address.title" = "Ver Endereço";
-"watch_address.watch" = "Ver";
+"watch_address.watch" = "Próximo";
 "watch_address.address" = "Endereço";
 "watch_address.by" = "Por";
 "watch_address.watch_by" = "Assistir Por";
@@ -1709,8 +1709,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Valor Mín.";
 "cex_deposit.warning_memo" = "Memo (tag) é necessário, ou você perderá suas moedas.";
-"cex_deposit.copy_address" = "Copiar Endereço";
-"cex_deposit.share_address" = "Compartilhar endereço";
+"cex_deposit.copy_address" = "Copiar";
+"cex_deposit.share_address" = "Compartilhar";
 "cex_deposit.failed" = "Não foi possível carregar o endereço de depósito. Por favor, tente novamente.";
 "cex_deposit.memo_warning.title" = "Importante";
 "cex_deposit.memo_warning.description" = "Ambos os memorandos (tag) e o endereço são necessários para garantir que as ativos são recebidas. Caso contrário, seus fundos serão perdidos.";
