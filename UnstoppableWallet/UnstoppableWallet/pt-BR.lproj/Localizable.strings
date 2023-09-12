@@ -320,8 +320,8 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Token Balance Page
 "balance.token.locked" = "Bloqueado";
-"balance.token.locked.info.title" = "Título bloqueado";
-"balance.token.locked.info.description" = "Texto com Descrição Bloqueada";
+"balance.token.locked.info.title" = "TravaTempo";
+"balance.token.locked.info.description" = "O remetente enviou esses fundos com um fechamento de gastos que expirará na data mostrada. \n\nNão se preocupe, o Bitcoin recebido já é seu, mas até que o período de bloqueio expire, você não pode gastá-los na rede Bitcoin.";
 "balance.token.staked" = "Investido";
 "balance.token.staked.info.title" = "Título Implantado";
 "balance.token.staked.info.description" = "Texto com Descrição Implantada";
