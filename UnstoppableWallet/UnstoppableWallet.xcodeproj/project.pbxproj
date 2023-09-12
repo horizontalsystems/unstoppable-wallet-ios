@@ -2399,6 +2399,8 @@
 		D05E96BA2A2A1113002CCD71 /* WatchTronService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E96B82A2A1113002CCD71 /* WatchTronService.swift */; };
 		D05F132E2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05F132D2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift */; };
 		D05F132F2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05F132D2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift */; };
+		D061A5322AA846FA009AAD57 /* SecuritySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061A5312AA846FA009AAD57 /* SecuritySettingsView.swift */; };
+		D061A5332AA846FA009AAD57 /* SecuritySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D061A5312AA846FA009AAD57 /* SecuritySettingsView.swift */; };
 		D06669022A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */; };
 		D06669032A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */; };
 		D07157DB2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
@@ -2561,9 +2563,7 @@
 		D3840589218317DF007D50AD /* MainSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564879AD72301AAB78F8F5 /* MainSettingsViewController.swift */; };
 		D384058B218317DF007D50AD /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4FFB99D10A8F343E9C /* LanguageManager.swift */; };
 		D384058C218317DF007D50AD /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352044BCE494491257933 /* LocalStorage.swift */; };
-		D384058E218317DF007D50AD /* SecuritySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647AD931E3B90C974A6CB /* SecuritySettingsViewController.swift */; };
 		D384058F218317DF007D50AD /* SecuritySettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641572B6E46E18B52A6A9 /* SecuritySettingsModule.swift */; };
-		D3840590218317DF007D50AD /* SecuritySettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564082B28C17265B23D88A /* SecuritySettingsService.swift */; };
 		D3840592218317DF007D50AD /* SecuritySettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56446DB62F52AC4C3C2C30 /* SecuritySettingsViewModel.swift */; };
 		D3840593218317DF007D50AD /* BitcoinAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D114BED753EEBA8B8D /* BitcoinAdapter.swift */; };
 		D384059A218317DF007D50AD /* KeyboardObservingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3535FC407BA20765EBCF4 /* KeyboardObservingViewController.swift */; };
@@ -2591,9 +2591,7 @@
 		D384067821831B3D007D50AD /* MainSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564879AD72301AAB78F8F5 /* MainSettingsViewController.swift */; };
 		D384067A21831B3D007D50AD /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4FFB99D10A8F343E9C /* LanguageManager.swift */; };
 		D384067B21831B3D007D50AD /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352044BCE494491257933 /* LocalStorage.swift */; };
-		D384067D21831B3D007D50AD /* SecuritySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5647AD931E3B90C974A6CB /* SecuritySettingsViewController.swift */; };
 		D384067E21831B3D007D50AD /* SecuritySettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5641572B6E46E18B52A6A9 /* SecuritySettingsModule.swift */; };
-		D384067F21831B3D007D50AD /* SecuritySettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564082B28C17265B23D88A /* SecuritySettingsService.swift */; };
 		D384068121831B3D007D50AD /* SecuritySettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56446DB62F52AC4C3C2C30 /* SecuritySettingsViewModel.swift */; };
 		D384068221831B3D007D50AD /* BitcoinAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352D114BED753EEBA8B8D /* BitcoinAdapter.swift */; };
 		D384068921831B3D007D50AD /* KeyboardObservingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3535FC407BA20765EBCF4 /* KeyboardObservingViewController.swift */; };
@@ -3307,7 +3305,6 @@
 		1A56400EBD84656A0447EA59 /* WalletConnectSignMessageRequestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectSignMessageRequestService.swift; sourceTree = "<group>"; };
 		1A56404C1C16B85434117DB7 /* AppStatusModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStatusModule.swift; sourceTree = "<group>"; };
 		1A5640528EFD15137E218EA3 /* MainSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsViewModel.swift; sourceTree = "<group>"; };
-		1A564082B28C17265B23D88A /* SecuritySettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsService.swift; sourceTree = "<group>"; };
 		1A5640B4F6298D9F326C5EDE /* MarketOverviewTopCoinsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewTopCoinsViewModel.swift; sourceTree = "<group>"; };
 		1A5641572B6E46E18B52A6A9 /* SecuritySettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsModule.swift; sourceTree = "<group>"; };
 		1A5641679DC88BE355F0F3A0 /* Development.template.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Development.template.xcconfig; sourceTree = "<group>"; };
@@ -3356,7 +3353,6 @@
 		1A56477F6FC71270AD53A3AE /* MarketOverviewTopPlatformsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewTopPlatformsViewModel.swift; sourceTree = "<group>"; };
 		1A5647ACB8A65C250F62E07D /* AdapterState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterState.swift; sourceTree = "<group>"; };
 		1A5647AD7481B36F20D4DDF9 /* MainSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSettingsModule.swift; sourceTree = "<group>"; };
-		1A5647AD931E3B90C974A6CB /* SecuritySettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsViewController.swift; sourceTree = "<group>"; };
 		1A5647FA18CC69113ECB6581 /* MarketOverviewGlobalDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketOverviewGlobalDataSource.swift; sourceTree = "<group>"; };
 		1A564814721244F4D4D87557 /* ReachabilityViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityViewModel.swift; sourceTree = "<group>"; };
 		1A564827B8F8D94DC4D7CC0F /* AppStatusPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStatusPresenter.swift; sourceTree = "<group>"; };
@@ -3894,6 +3890,7 @@
 		D05E96B52A29F9D3002CCD71 /* WatchTronAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTronAddressViewModel.swift; sourceTree = "<group>"; };
 		D05E96B82A2A1113002CCD71 /* WatchTronService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTronService.swift; sourceTree = "<group>"; };
 		D05F132D2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTronTokenBlockchainService.swift; sourceTree = "<group>"; };
+		D061A5312AA846FA009AAD57 /* SecuritySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsView.swift; sourceTree = "<group>"; };
 		D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronRecipientAddressViewModel.swift; sourceTree = "<group>"; };
 		D07157DA2A2DD968006F141F /* SendTronModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronModule.swift; sourceTree = "<group>"; };
 		D07157DD2A2DDA09006F141F /* SendTronService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronService.swift; sourceTree = "<group>"; };
@@ -5877,9 +5874,8 @@
 			isa = PBXGroup;
 			children = (
 				1A5641572B6E46E18B52A6A9 /* SecuritySettingsModule.swift */,
-				1A564082B28C17265B23D88A /* SecuritySettingsService.swift */,
 				1A56446DB62F52AC4C3C2C30 /* SecuritySettingsViewModel.swift */,
-				1A5647AD931E3B90C974A6CB /* SecuritySettingsViewController.swift */,
+				D061A5312AA846FA009AAD57 /* SecuritySettingsView.swift */,
 			);
 			path = Security;
 			sourceTree = "<group>";
@@ -7862,11 +7858,9 @@
 				D3840589218317DF007D50AD /* MainSettingsViewController.swift in Sources */,
 				D384058B218317DF007D50AD /* LanguageManager.swift in Sources */,
 				D384058C218317DF007D50AD /* LocalStorage.swift in Sources */,
-				D384058E218317DF007D50AD /* SecuritySettingsViewController.swift in Sources */,
 				D023D26B2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
 				D05E96BA2A2A1113002CCD71 /* WatchTronService.swift in Sources */,
 				D384058F218317DF007D50AD /* SecuritySettingsModule.swift in Sources */,
-				D3840590218317DF007D50AD /* SecuritySettingsService.swift in Sources */,
 				D3840592218317DF007D50AD /* SecuritySettingsViewModel.swift in Sources */,
 				D3840593218317DF007D50AD /* BitcoinAdapter.swift in Sources */,
 				D384059A218317DF007D50AD /* KeyboardObservingViewController.swift in Sources */,
@@ -8574,6 +8568,7 @@
 				11B358164F9FBBE78CBC806A /* NftActivityModule.swift in Sources */,
 				11B357ED24AA2E6ED1AE51FD /* NftActivityViewController.swift in Sources */,
 				11B35BDC20A4965D1793B97A /* NftActivityViewModel.swift in Sources */,
+				D061A5332AA846FA009AAD57 /* SecuritySettingsView.swift in Sources */,
 				11B358033DAB0FF23CF0E309 /* NftActivityService.swift in Sources */,
 				11B3584017622E1F2B3BA464 /* NftAssetButtonCell.swift in Sources */,
 				11B353B085BD167026DE4B5B /* CustomToken.swift in Sources */,
@@ -9138,11 +9133,9 @@
 				D384067821831B3D007D50AD /* MainSettingsViewController.swift in Sources */,
 				D384067A21831B3D007D50AD /* LanguageManager.swift in Sources */,
 				D384067B21831B3D007D50AD /* LocalStorage.swift in Sources */,
-				D384067D21831B3D007D50AD /* SecuritySettingsViewController.swift in Sources */,
 				D384067E21831B3D007D50AD /* SecuritySettingsModule.swift in Sources */,
 				D023D26A2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
 				D05E96B92A2A1113002CCD71 /* WatchTronService.swift in Sources */,
-				D384067F21831B3D007D50AD /* SecuritySettingsService.swift in Sources */,
 				D384068121831B3D007D50AD /* SecuritySettingsViewModel.swift in Sources */,
 				D384068221831B3D007D50AD /* BitcoinAdapter.swift in Sources */,
 				D384068921831B3D007D50AD /* KeyboardObservingViewController.swift in Sources */,
@@ -9851,6 +9844,7 @@
 				11B35AB6026D794BAFEC094E /* NftCollectionAssetsService.swift in Sources */,
 				11B358AA46441AF0A7DCAA89 /* NftActivityModule.swift in Sources */,
 				11B35EBDDAB95E919600AE72 /* NftActivityViewController.swift in Sources */,
+				D061A5322AA846FA009AAD57 /* SecuritySettingsView.swift in Sources */,
 				11B35CCAC0A3C35C1B9BD918 /* NftActivityViewModel.swift in Sources */,
 				11B35AC60BE4DC210C3C2312 /* NftActivityService.swift in Sources */,
 				11B35DC513240DBF0C78ED92 /* NftAssetButtonCell.swift in Sources */,
@@ -10837,7 +10831,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/PinKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.3;
+				version = 2.0.4;
 			};
 		};
 		D3604E7728F03B9F0066C366 /* XCRemoteSwiftPackageReference "ModuleKit.Swift" */ = {

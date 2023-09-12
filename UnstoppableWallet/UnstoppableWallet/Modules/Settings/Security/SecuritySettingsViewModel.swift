@@ -1,106 +1,105 @@
-import RxSwift
-import RxRelay
-import RxCocoa
+import Combine
+import ComponentKit
+import PinKit
+import SwiftUI
 
-class SecuritySettingsViewModel {
-    private let service: SecuritySettingsService
-    private let disposeBag = DisposeBag()
+class SecuritySettingsViewModel: ObservableObject {
+    private let pinKit: PinKit.Kit
+    private var cancellables = Set<AnyCancellable>()
 
-    private let pinViewItemRelay = BehaviorRelay<PinViewItem>(value: PinViewItem(enabled: false, editVisible: false, biometryViewItem: nil))
-    private let showErrorRelay = PublishRelay<String>()
-    private let openSetPinRelay = PublishRelay<()>()
-    private let openUnlockRelay = PublishRelay<()>()
-
-    init(service: SecuritySettingsService) {
-        self.service = service
-
-        subscribe(disposeBag, service.pinItemObservable) { [weak self] in self?.sync(pinItem: $0) }
-
-        sync(pinItem: service.pinItem)
-    }
-
-    private func sync(pinItem: SecuritySettingsService.PinItem) {
-        let viewItem = PinViewItem(
-                enabled: pinItem.enabled,
-                editVisible: pinItem.enabled,
-                biometryViewItem: biometryViewItem(pinItem: pinItem)
-        )
-
-        pinViewItemRelay.accept(viewItem)
-    }
-
-    private func biometryViewItem(pinItem: SecuritySettingsService.PinItem) -> BiometryViewItem? {
-        guard pinItem.enabled else {
-            return nil
-        }
-
-        guard let biometryType = pinItem.biometryType else {
-            return nil
-        }
-
-        switch biometryType {
-        case .faceId: return BiometryViewItem(enabled: pinItem.biometryEnabled, icon: "face_id_24", title: "settings_security.face_id".localized)
-        case .touchId: return BiometryViewItem(enabled: pinItem.biometryEnabled, icon: "touch_id_2_24", title: "settings_security.touch_id".localized)
-        case .none: return nil
+    @Published var passcodeEnabled: Bool = false {
+        didSet {
+            passcodeSwitchOn = passcodeEnabled
         }
     }
 
+    @Published var passcodeSwitchOn: Bool = false {
+        didSet {
+            guard oldValue != passcodeSwitchOn else {
+                return
+            }
+
+            if passcodeSwitchOn {
+                if !passcodeEnabled {
+                    setPasscodePresented = true
+                }
+            } else {
+                if passcodeEnabled {
+                    unlockPasscodePresented = true
+                }
+            }
+        }
+    }
+
+    @Published var setPasscodePresented: Bool = false
+    @Published var unlockPasscodePresented: Bool = false
+
+    @Published var biometryEnabled: Bool = false {
+        didSet {
+            if pinKit.biometryEnabled != biometryEnabled {
+                pinKit.biometryEnabled = biometryEnabled
+            }
+        }
+    }
+
+    @Published var biometryAvailable: Bool = true
+
+    var biometryTitle: String = ""
+    var biometryIconName: String = ""
+
+    init(pinKit: PinKit.Kit) {
+        self.pinKit = pinKit
+
+        pinKit.isPinSetPublisher
+            .sink { [weak self] _ in self?.sync() }
+            .store(in: &cancellables)
+
+        pinKit.biometryTypePublisher
+            .sink { [weak self] _ in self?.sync() }
+            .store(in: &cancellables)
+
+        sync()
+    }
+
+    private func sync() {
+        passcodeEnabled = pinKit.isPinSet
+        biometryEnabled = pinKit.biometryEnabled
+
+        switch pinKit.biometryType {
+            case .faceId:
+                biometryAvailable = true
+                biometryTitle = "settings_security.face_id".localized
+                biometryIconName = "face_id_24"
+            case .touchId:
+                biometryAvailable = true
+                biometryTitle = "settings_security.touch_id".localized
+                biometryIconName = "touch_id_2_24"
+            default:
+                biometryAvailable = false
+                biometryTitle = ""
+                biometryIconName = ""
+        }
+    }
 }
 
 extension SecuritySettingsViewModel {
-
-    var pinViewItemDriver: Driver<PinViewItem> {
-        pinViewItemRelay.asDriver()
-    }
-
-    var showErrorSignal: Signal<String> {
-        showErrorRelay.asSignal()
-    }
-
-    var openSetPinSignal: Signal<()> {
-        openSetPinRelay.asSignal()
-    }
-
-    var openUnlockSignal: Signal<()> {
-        openUnlockRelay.asSignal()
-    }
-
-    func onTogglePin(isOn: Bool) {
-        if service.pinItem.enabled {
-            openUnlockRelay.accept(())
-        } else {
-            openSetPinRelay.accept(())
-        }
-    }
-
-    func onToggleBiometry(isOn: Bool) {
-        service.toggleBiometry(isOn: isOn)
-    }
-
-    func onUnlock() -> Bool {
+    func onUnlock() {
         do {
-            try service.disablePin()
-            return true
+            try pinKit.clear()
         } catch {
-            showErrorRelay.accept(error.smartDescription)
-            return false
+            HudHelper.instance.show(banner: .error(string: error.smartDescription))
         }
     }
 
-}
-
-extension SecuritySettingsViewModel {
-
-    struct PinViewItem {
-        let enabled: Bool
-        let editVisible: Bool
-        let biometryViewItem: BiometryViewItem?
+    func cancelSetPasscode() {
+        if !passcodeEnabled {
+            passcodeSwitchOn = false
+        }
     }
 
-    struct BiometryViewItem {
-        let enabled: Bool
-        let icon: String
-        let title: String
+    func cancelUnlock() {
+        if passcodeEnabled {
+            passcodeSwitchOn = true
+        }
     }
-
 }

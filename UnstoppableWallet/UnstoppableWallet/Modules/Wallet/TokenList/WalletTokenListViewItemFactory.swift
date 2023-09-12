@@ -89,7 +89,7 @@ class WalletTokenListViewItemFactory {
 
     private func coinValue(value: Decimal, decimalCount: Int, symbol: String? = nil, state: AdapterState) -> (text: String?, dimmed: Bool) {
         (
-                text: ValueFormatter.instance.formatFull(value: value, decimalCount: decimalCount, symbol: symbol),
+                text: ValueFormatter.instance.formatShort(value: value, decimalCount: decimalCount, symbol: symbol),
                 dimmed: state != .synced
         )
     }
@@ -103,7 +103,7 @@ class WalletTokenListViewItemFactory {
         let currencyValue = CurrencyValue(currency: price.currency, value: value * price.value)
 
         return (
-                text: ValueFormatter.instance.formatFull(currencyValue: currencyValue),
+                text: ValueFormatter.instance.formatShort(currencyValue: currencyValue),
                 dimmed: state != .synced || priceItem.expired
         )
     }

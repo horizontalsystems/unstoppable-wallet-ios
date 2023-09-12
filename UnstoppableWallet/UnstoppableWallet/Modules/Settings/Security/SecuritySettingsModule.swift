@@ -1,11 +1,9 @@
-import UIKit
+import SwiftUI
 
 struct SecuritySettingsModule {
+    static func view() -> some View {
+        let viewModel = SecuritySettingsViewModel(pinKit: App.shared.pinKit)
 
-    static func viewController() -> UIViewController {
-        let service = SecuritySettingsService(pinKit: App.shared.pinKit)
-        let viewModel = SecuritySettingsViewModel(service: service)
-        return SecuritySettingsViewController(viewModel: viewModel)
+        return SecuritySettingsView(viewModel: viewModel)
     }
-
 }
