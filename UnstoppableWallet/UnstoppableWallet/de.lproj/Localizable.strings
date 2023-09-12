@@ -350,6 +350,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.no_adapter.error" = "Kann keine Adresse angeben";
 
 "deposit.address_format" = "Format";
+"deposit.address_network" = "Netzwerk";
 "deposit.qr_code_description" = "Ihre Adresse für %@";
 "deposit.qr_code_description.watch" = "Beobachtungsadresse von %@";
 "deposit.account" = "Account";
