@@ -371,7 +371,7 @@
 "receive_network_select.description" = "Выберите сеть и получите адрес для получения.";
 
 "receive_address_format_select.title" = "Формат адреса";
-"receive_address_format_select.description" = "Выберите сеть и получите адрес для получения.";
+"receive_address_format_select.description" = "Select an address format to receive your address.";
 "receive_address_format_select.bitcoin.bottom_description" = "Формат Native SegWit предпочтителен в Биткойне для повышения пропускной способности и безопасности. Все форматы адресов (Taproot, SegWit, Legacy) могут использоваться взаимозаменяемо для получения BTC независимо от формата адреса отправителя, что обеспечивает бесперебойные транзакции между различными типами монет.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "Формат Cash Address предпочтителен для получения Bitcoin Cash (BCH) из-за улучшенного пользовательского опыта и совместимости. Однако, оба формата адреса могут использоваться взаимозаменяемо для получения BCH, независимо от формата адреса отправителя.";
 
