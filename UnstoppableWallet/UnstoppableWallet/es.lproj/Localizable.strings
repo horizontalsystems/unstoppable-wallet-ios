@@ -1561,7 +1561,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Watch Address
 
 "watch_address.title" = "Ver Monedero";
-"watch_address.watch" = "Ver";
+"watch_address.watch" = "Siguiente";
 "watch_address.address" = "Dirección";
 "watch_address.by" = "Por";
 "watch_address.watch_by" = "Ver por";
@@ -1709,8 +1709,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "cex_deposit.memo" = "Memo (Etiqueta)";
 "cex_deposit.min_amount" = "Importe mínimo";
 "cex_deposit.warning_memo" = "Se requiere Memo (etiqueta) o perderá sus monedas.";
-"cex_deposit.copy_address" = "Copiar la dirección";
-"cex_deposit.share_address" = "Compartir Dirección";
+"cex_deposit.copy_address" = "Copiar";
+"cex_deposit.share_address" = "Compartir";
 "cex_deposit.failed" = "Error al cargar la dirección del depósito. Vuelva a intentarlo.";
 "cex_deposit.memo_warning.title" = "Importante";
 "cex_deposit.memo_warning.description" = "Tanto un memo (etiqueta) como la dirección son necesarios para asegurar que los activos sean recibidos. De lo contrario sus fondos se perderán.";
