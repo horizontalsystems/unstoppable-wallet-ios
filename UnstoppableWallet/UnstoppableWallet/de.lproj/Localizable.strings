@@ -320,8 +320,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Token Balance Page
 "balance.token.locked" = "Locked";
-"balance.token.locked.info.title" = "Gesperrter Titel";
-"balance.token.locked.info.description" = "Gesperrter Beschreibungstext";
+"balance.token.locked.info.title" = "TimeLock";
+"balance.token.locked.info.description" = "Der Sender hat dieses Guthaben mit einer Ausgabesperre versehen, die zu dem angezeigten Datum abläuft.\n\nKeine Sorge, die erhaltenen Bitcoin sind bereits Ihre. Die Bitcoins sind nur zeitweise gesperrt, so dass Sie sie erst nach Ablauf der Sperrzeit im Bitcoin-Netzwerk ausgeben können.";
 "balance.token.staked" = "Absteckung";
 "balance.token.staked.info.title" = "Absteckter Titel";
 "balance.token.staked.info.description" = "Absteckungstext";
