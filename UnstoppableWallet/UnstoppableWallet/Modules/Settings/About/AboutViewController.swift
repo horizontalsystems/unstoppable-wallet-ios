@@ -285,7 +285,7 @@ extension AboutViewController: SectionsDataSource {
                     rows: [
                         row(
                                 id: "email",
-                                image: "at_24",
+                                image: "mail_24",
                                 title: "settings.about_app.contact".localized,
                                 isFirst: true,
                                 isLast: true,

@@ -16,8 +16,9 @@ class ReceiveSelectCoinService {
     private func sync() {
         let filter = provider.filter
 
-        coins = provider.fetch().sorted { lhsFullCoin, rhsFullCoin in
-            if !filter.isEmpty {
+        let coins = provider.fetch()
+        if !filter.isEmpty {
+            self.coins = coins.sorted { lhsFullCoin, rhsFullCoin in
                 let filter = filter.lowercased()
 
                 let lhsExactCode = lhsFullCoin.coin.code.lowercased() == filter
@@ -26,16 +27,7 @@ class ReceiveSelectCoinService {
                 if lhsExactCode != rhsExactCode {
                     return lhsExactCode
                 }
-            }
 
-            let lhsMarketCapRank = lhsFullCoin.coin.marketCapRank ?? Int.max
-            let rhsMarketCapRank = rhsFullCoin.coin.marketCapRank ?? Int.max
-
-            if lhsMarketCapRank != rhsMarketCapRank {
-                return lhsMarketCapRank < rhsMarketCapRank
-            }
-
-            if !filter.isEmpty {
                 let lhsStartsWithCode = lhsFullCoin.coin.code.lowercased().starts(with: filter)
                 let rhsStartsWithCode = rhsFullCoin.coin.code.lowercased().starts(with: filter)
 
@@ -49,16 +41,16 @@ class ReceiveSelectCoinService {
                 if lhsStartsWithName != rhsStartsWithName {
                     return lhsStartsWithName
                 }
-            }
 
-            return lhsFullCoin.coin.name.lowercased() < rhsFullCoin.coin.name.lowercased()
+                return lhsFullCoin.coin.name.lowercased() < rhsFullCoin.coin.name.lowercased()
+            }
+        } else {
+            self.coins = coins
         }
     }
-
 }
 
 extension ReceiveSelectCoinService {
-
     func set(filter: String) {
         provider.filter = filter
 
@@ -70,5 +62,4 @@ extension ReceiveSelectCoinService {
             coin.coin.uid == uid
         }
     }
-
 }
