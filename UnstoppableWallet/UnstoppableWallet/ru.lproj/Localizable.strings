@@ -348,29 +348,29 @@
 "deposit.address" = "Адрес";
 "deposit.your_address" = "Ваш адрес";
 "receive_alert.not_backed_up_description" = "Вам нужно сделать резервную копию %@ перед получением %@.";
-"receive_alert.any_coins.not_backed_up_description" = "You need to backup %@ before you may receive any coins.";
-"deposit.no_adapter.error" = "Can't provide address";
+"receive_alert.any_coins.not_backed_up_description" = "Вам нужно сделать резервную копию %@ перед тем, как вы сможете получить любые монеты.";
+"deposit.no_adapter.error" = "Не удается предоставить адрес";
 
 "deposit.address_format" = "Формат";
 "deposit.qr_code_description" = "Ваш адрес для депозита %@";
-"deposit.qr_code_description.watch" = "Watch address of %@";
+"deposit.qr_code_description.watch" = "Отслеживаемый адрес %@";
 "deposit.account" = "Account";
 
 "deposit.not_active" = "не активен";
 "deposit.not_active.title" = "Неактивный адрес";
 "deposit.not_active.tron_description" = "Недавно созданные учетные записи в блокчейне TRON неактивны и не могут быть запрошены или изучены. Они должны быть активированы.\n\nАктивация новой учетной записи в цепочке Tron требует комиссию в размере 1 TRX. Для активации достаточно просто перевести токены TRX или TRC-10 на неактивный адрес аккаунта";
 
-"deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
-"deposit.zcash.restore.already_own" = "Yes, I already own";
-"deposit.zcash.restore.dont_have" = "No, I don’t have";
+"deposit.zcash.restore.description" = "Вы уже владели какими-либо монетами ZEC?";
+"deposit.zcash.restore.already_own" = "Да, у меня уже есть";
+"deposit.zcash.restore.dont_have" = "Нет, у меня нет";
 
 "deposit.warning" = "Отправка только %@ на этот адрес. Отправка других типов токенов на этот адрес приведет к их окончательной потере.";
 
 "receive_network_select.title" = "Сеть";
-"receive_network_select.description" = "Choose a network and get an address to receive.";
+"receive_network_select.description" = "Выберите сеть и получите адрес для получения.";
 
 "receive_address_format_select.title" = "Формат адреса";
-"receive_address_format_select.description" = "Choose a network and get an address to receive.";
+"receive_address_format_select.description" = "Выберите сеть и получите адрес для получения.";
 "receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
 
@@ -457,7 +457,7 @@
 
 // Donate
 
-"donate.list.title" = "Donate with";
+"donate.list.title" = "Поддержи нас";
 "donate.list.get_address" = "Получить адрес";
 "donate.list.get_address.title" = "Адреса";
 "donate.title" = "Поддержи нас %@";
