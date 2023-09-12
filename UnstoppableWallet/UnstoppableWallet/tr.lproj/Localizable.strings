@@ -350,6 +350,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.no_adapter.error" = "Adres veremiyorum";
 
 "deposit.address_format" = "Biçim";
+"deposit.address_network" = "Ağ";
 "deposit.qr_code_description" = "%@ yatırmak için adresiniz";
 "deposit.qr_code_description.watch" = "%@ adresini izle";
 "deposit.account" = "Account";
