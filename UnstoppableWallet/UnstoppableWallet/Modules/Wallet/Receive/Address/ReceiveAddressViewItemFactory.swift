@@ -18,10 +18,13 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
         var viewItems = [ReceiveAddressModule.Item]()
         viewItems.append(.value(title: "deposit.address".localized, value: item.address.address, copyable: false))
 
+        var title: String = "deposit.address_network".localized
         var value: String = ""
         if let derivation = item.token.type.derivation {
+            title = "deposit.address_format".localized
             value = derivation.addressType + " (\(derivation.title))"
         } else if let addressType = item.token.type.bitcoinCashCoinType {
+            title = "deposit.address_format".localized
             value = addressType.description + " (\(addressType.title))"
         } else {
             value = item.token.blockchain.name
@@ -29,7 +32,7 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
         if !item.isMainNet {
             value += " (TestNet)"
         }
-        viewItems.append(.value(title: "deposit.address_format".localized, value: value, copyable: false))
+        viewItems.append(.value(title: title, value: value, copyable: false))
 
         var popupViewItem: ReceiveAddressModule.PopupWarningItem?
         if let address = item.address as? ActivatedDepositAddress, !address.isActive {
