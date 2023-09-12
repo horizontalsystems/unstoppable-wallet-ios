@@ -320,8 +320,8 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Token Balance Page
 "balance.token.locked" = "Locked";
-"balance.token.locked.info.title" = "Locked title";
-"balance.token.locked.info.description" = "Locked Description Text";
+"balance.token.locked.info.title" = "TimeLock";
+"balance.token.locked.info.description" = "The sender sent these funds with a spending lock that will expire on the shown date. \n\nNo worries, the received Bitcoins are already yours, but until the lock period expires you cannot spend them on the Bitcoin network.";
 "balance.token.staked" = "Staked";
 "balance.token.staked.info.title" = "Staked title";
 "balance.token.staked.info.description" = "Staked Description Text";
