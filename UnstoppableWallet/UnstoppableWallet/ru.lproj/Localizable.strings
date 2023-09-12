@@ -322,8 +322,8 @@
 
 // Token Balance Page
 "balance.token.locked" = "Заблокировано";
-"balance.token.locked.info.title" = "Locked title";
-"balance.token.locked.info.description" = "Locked Description Text";
+"balance.token.locked.info.title" = "TimeLock";
+"balance.token.locked.info.description" = "Эти средства были отправлены с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткойны уже ваши, но до истечения периода блокировки, вы не сможете их потратить в сети Bitcoin.";
 "balance.token.staked" = "Staked";
 "balance.token.staked.info.title" = "Staked title";
 "balance.token.staked.info.description" = "Staked Description Text";
