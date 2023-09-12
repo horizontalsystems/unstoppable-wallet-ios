@@ -352,6 +352,7 @@
 "deposit.no_adapter.error" = "Не удается предоставить адрес";
 
 "deposit.address_format" = "Формат";
+"deposit.address_network" = "Сеть";
 "deposit.qr_code_description" = "Ваш адрес для депозита %@";
 "deposit.qr_code_description.watch" = "Отслеживаемый адрес %@";
 "deposit.account" = "Account";
