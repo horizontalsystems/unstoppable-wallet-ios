@@ -68,17 +68,12 @@ class ManageWalletsService {
     private func fetchTokens() -> [Token] {
         do {
             if filter.trimmingCharacters(in: .whitespaces).isEmpty {
-                let queries = [
-                    TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)),
-                    TokenQuery(blockchainType: .ethereum, tokenType: .native),
-                    TokenQuery(blockchainType: .binanceSmartChain, tokenType: .native),
-                ]
-
-                let tokens = try marketKit.tokens(queries: queries)
+                let list = BlockchainType.supported.map { $0.defaultTokenQuery }
+                let tokens = try marketKit.tokens(queries: list)
                 let featuredTokens = tokens.filter { account.type.supports(token: $0) }
                 let enabledTokens = wallets.map { $0.token }
 
-                return Array(Set(featuredTokens + enabledTokens))
+                return (enabledTokens + featuredTokens).removeDuplicates()
             } else if let ethAddress = try? EvmKit.Address(hex: filter) {
                 let address = ethAddress.hex
                 let tokens = try marketKit.tokens(reference: address)
@@ -136,22 +131,10 @@ class ManageWalletsService {
                     return lhsStartsWithName
                 }
             }
-
-            let lhsMarketCapRank = lhsToken.coin.marketCapRank ?? Int.max
-            let rhsMarketCapRank = rhsToken.coin.marketCapRank ?? Int.max
-
-            if lhsMarketCapRank != rhsMarketCapRank {
-                return lhsMarketCapRank < rhsMarketCapRank
+            if lhsToken.blockchainType.order != rhsToken.blockchainType.order {
+                return lhsToken.blockchainType.order < rhsToken.blockchainType.order
             }
-
-            let lhsName = lhsToken.coin.name.lowercased()
-            let rhsName = rhsToken.coin.name.lowercased()
-
-            if lhsName != rhsName {
-                return lhsName < rhsName
-            }
-
-            return lhsToken.blockchainType.order < rhsToken.blockchainType.order
+            return lhsToken.badge ?? "" < rhsToken.badge ?? ""
         }
     }
 

@@ -155,6 +155,10 @@ extension ReceiveService {
 }
 extension ReceiveService {
 
+    func isEnabled(coin: Coin) -> Bool {
+        walletManager.activeWallets.contains { $0.coin == coin }
+    }
+
     var predefinedCoins: [FullCoin] {
         // get all restored coins
         let activeWallets = walletManager.activeWallets
@@ -173,9 +177,18 @@ extension ReceiveService {
         // filter not supported by current account
         let predefined = fullCoins?.filter { fullCoin in
             fullCoin.tokens.contains { account.type.supports(token: $0) }
-        } ?? []
+        }.sorted { lhsCoin, rhsCoin in
+            let lhsEnabled = isEnabled(coin: lhsCoin.coin)
+            let rhsEnabled = isEnabled(coin: rhsCoin.coin)
 
-        return predefined
+            if lhsEnabled != rhsEnabled {
+                return lhsEnabled
+            }
+
+            return lhsCoin.coin.marketCapRank ?? Int.max < rhsCoin.coin.marketCapRank ?? Int.max
+        }
+
+        return predefined ?? []
     }
 
 }
