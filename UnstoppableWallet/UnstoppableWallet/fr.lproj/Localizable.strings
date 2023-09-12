@@ -350,6 +350,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.no_adapter.error" = "Impossible de fournir l'adresse";
 
 "deposit.address_format" = "Format";
+"deposit.address_network" = "Réseau";
 "deposit.qr_code_description" = "Votre adresse pour le dépôt %@";
 "deposit.qr_code_description.watch" = "Adresse de la montre de %@";
 "deposit.account" = "Compte";
