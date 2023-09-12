@@ -350,6 +350,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "deposit.no_adapter.error" = "Can't provide address";
 
 "deposit.address_format" = "Format";
+"deposit.address_network" = "Network";
 "deposit.qr_code_description" = "Your address for depositing %@";
 "deposit.qr_code_description.watch" = "Watch address of %@";
 "deposit.account" = "Account";
