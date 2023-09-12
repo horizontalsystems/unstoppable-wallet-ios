@@ -1561,7 +1561,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Watch Address
 
 "watch_address.title" = "Watch Wallet";
-"watch_address.watch" = "Watch";
+"watch_address.watch" = "Next";
 "watch_address.address" = "Address";
 "watch_address.by" = "By";
 "watch_address.watch_by" = "Watch By";
@@ -1709,8 +1709,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. Amount";
 "cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
-"cex_deposit.copy_address" = "Copy Address";
-"cex_deposit.share_address" = "Share Address";
+"cex_deposit.copy_address" = "Copy";
+"cex_deposit.share_address" = "Share";
 "cex_deposit.failed" = "Failed to load deposit address. Please retry.";
 "cex_deposit.memo_warning.title" = "Important";
 "cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
