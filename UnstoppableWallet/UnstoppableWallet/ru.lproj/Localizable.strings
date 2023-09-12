@@ -1565,7 +1565,7 @@
 // Watch Address
 
 "watch_address.title" = "Просмотр кошелька";
-"watch_address.watch" = "Смотреть";
+"watch_address.watch" = "Далее";
 "watch_address.address" = "Адрес";
 "watch_address.by" = "Из";
 "watch_address.watch_by" = "Смотреть из";
@@ -1713,8 +1713,8 @@
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Мин. сумма";
 "cex_deposit.warning_memo" = "Необходимо memo (tag), или вы потеряете ваши монеты.";
-"cex_deposit.copy_address" = "Копировать адрес";
-"cex_deposit.share_address" = "Поделиться адресом";
+"cex_deposit.copy_address" = "Копировать";
+"cex_deposit.share_address" = "Поделиться";
 "cex_deposit.failed" = "Не удалось загрузить адрес депозита. Повторите попытку.";
 "cex_deposit.memo_warning.title" = "Важно";
 "cex_deposit.memo_warning.description" = "Для получения активов необходимы memo(tag) и адрес. В противном случае Ваши средства будут утеряны.";
