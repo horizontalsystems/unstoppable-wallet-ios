@@ -350,6 +350,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.no_adapter.error" = "No se puede proporcionar la dirección";
 
 "deposit.address_format" = "Formatear";
+"deposit.address_network" = "La red";
 "deposit.qr_code_description" = "Tu dirección para depositar %@";
 "deposit.qr_code_description.watch" = "Ver dirección de %@";
 "deposit.account" = "Account";
