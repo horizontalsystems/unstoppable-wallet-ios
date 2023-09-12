@@ -1561,7 +1561,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Watch Address
 
 "watch_address.title" = "Wallet ansehen";
-"watch_address.watch" = "Beobachten";
+"watch_address.watch" = "Weiter";
 "watch_address.address" = "Adresse";
 "watch_address.by" = "Von";
 "watch_address.watch_by" = "Beobachten von";
@@ -1709,8 +1709,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. Amount";
 "cex_deposit.warning_memo" = "Memo (Tag) ist erforderlich, sonst verlieren Sie Ihre Münzen.";
-"cex_deposit.copy_address" = "Adresse kopieren";
-"cex_deposit.share_address" = "Adresse teilen";
+"cex_deposit.copy_address" = "Kopieren";
+"cex_deposit.share_address" = "Teilen";
 "cex_deposit.failed" = "Fehler beim Laden der Einzahlungsadresse. Bitte erneut versuchen.";
 "cex_deposit.memo_warning.title" = "Wichtig";
 "cex_deposit.memo_warning.description" = "Sowohl eine Memo (Tag) als auch die Adresse werden benötigt, um sicherzustellen, dass Vermögenswerte empfangen werden. Andernfalls gehen Ihre Gelder verloren.";
