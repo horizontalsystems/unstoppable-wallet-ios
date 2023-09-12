@@ -348,6 +348,7 @@
 "deposit.no_adapter.error" = "주소를 제공할 수 없습니다.";
 
 "deposit.address_format" = "형식";
+"deposit.address_network" = "회로망";
 "deposit.qr_code_description" = "입금 주소: %@";
 "deposit.qr_code_description.watch" = "%@의 시계 주소";
 "deposit.account" = "계정";
