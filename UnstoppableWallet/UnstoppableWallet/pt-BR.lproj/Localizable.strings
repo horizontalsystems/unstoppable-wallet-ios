@@ -97,10 +97,9 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ precisa acessar sua câmera para escanear o código QR.
+"access_camera.message" = "%@ absolutely needs access to your tremendous camera for scanning that fantastic QR code. Believe me!.
 
-
-Vá para Configurações - > %@ e permita o acesso à câmera.";
+Go to Settings - > %@ and allow access to the camera.";
 "access_camera.settings" = "Configurações";
 
 // Restore
@@ -111,15 +110,14 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "restore.restore_type.mnemonic" = "Frase de Recuperação";
 "restore.restore_type.private_key" = "Chave Privada";
 "restore.mnemonic.placeholder" = "Insira 12, 15, 18, 21 ou 24 palavras";
-
-"restore.private_key.placeholder" = "Insira a Chave Privada EVM, a Chave Raiz BIP32 ou a Chave Privada Estendida de Conta";
+"restore.private_key.placeholder" = "Give me that EVM Private Key, that BIP32 Root Key, or that Account Extended Private Key, folks. We're talking big league security here!";
 "restore.private_key.invalid_key" = "Chave Inválida";
-"restore_error.mnemonic_word_count" = "Número incorreto de palavras. Deve ter entre 12 ou 24 palavras. Você inseriu: %@";
+"restore_error.mnemonic_word_count" = "Hey, you, %@! You're off the mark. You need between 12 and 24 words, no less, no more. Let's get it right!";
 "restore.checksum_error" = "Soma de Verificação Inválida";
 "restore.passphrase" = "Senha";
 "restore.input.passphrase" = "Senha";
-"restore.passphrase_description" = "Esta senha é usada para criptografar o arquivo de backup de sua carteira. Não está relacionado à sua senha do Apple iCloud. Não pode ser recuperada ou redefinida se for perdida ou esquecida.";
-"restore.error.empty_passphrase" = "O senha não pode estar em branco";
+"restore.passphrase_description" = "Listen up, folks. This password right here, it's for your wallet's backup file, not your fancy Apple iCloud password, okay? And here's the deal, you forget this one, there's no recovery, no reset. It's like a key to Fort Knox, so guard it like gold!";
+"restore.error.empty_passphrase" = "Folks, we can't have an empty passphrase here, okay?";
 "restore.non_standard_import" = "Restauração Não-Padrão";
 "restore.non_standard_import.description" = "Esta página fornece um mecanismo de importação de carteira especial para usuários %@ que têm uma carteira não padrão. Tais carteiras podem ter sido criadas na versão %@ do 0. 7 - 0,28 usando uma frase de recuperação não inglesa e/ou um caractere especial na senha da carteira (ou seja, símbolo diacrítico).\n\nSe você é afetado com o seu saldo de carteira será mostrado 0 após importar tal carteira na versão 0.29 ou superior. Esta página permitirá que você restaure o acesso à sua carteira não padrão. Uma vez importado, recomenda-se criar uma nova carteira (que será compatível com o padrão) e mover fundos para lá.";
 "restore.warning.non_recommended.description" = "Esta carteira parece usar um caractere não padrão em sua lista de palavras secretas e/ou uma frase secreta.  Se você não ver um saldo ou transações, leia abaixo para obter detalhes.\n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
@@ -133,25 +131,25 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "restore_type.cloud.title" = "do iCloud";
 "restore_type.cex.title" = "da Exchange Wallet";
 
-"restore_type.recovery.description" = "Importar usando frase de recuperação ou chave privada.";
-"restore_type.cloud.description" = "Importe de um arquivo de backup em sua keychain.";
-"restore_type.cex.description" = "Conecte a uma carteira em uma troca centralizada.";
+"restore_type.recovery.description" = "Import like a pro! Recovery phrase or private key, you choose. It's your call, folks!";
+"restore_type.cloud.description" = "Import straight from your keychain, folks. It's like having the keys to the kingdom right at your fingertips!";
+"restore_type.cex.description" = "Let's make a connection, folks! Connect to that wallet on the centralized exchange and get ready to win big!";
 
 // Restore Cloud
 
 "restore.cloud.title" = "Selecionar Backup";
-"restore.cloud.description" = "Selecione a cópia de backup da carteira que você deseja restaurar.";
-"restore.cloud.empty" = "Nenhum backup encontrado.";
+"restore.cloud.description" = "Time to choose, folks! Pick the backup wallet you want to bring back. It's all about making the right choice!";
+"restore.cloud.empty" = "Can you believe it, folks? No backups found. It's a clean slate, a fresh start!";
 "restore.cloud.imported" = "Carteiras importadas";
 
 "restore.cloud.password.title" = "Digite a senha";
 "restore.cloud.password.placeholder" = "Fazer Backup da Senha";
-"restore.cloud.password.description" = "Digite a senha de backup para importar sua carteira.";
+"restore.cloud.password.description" = "Give me that backup password, folks. We're importing your wallet from iCloud, and security is the name of the game!";
 
 // Restore Cex
 
 "restore.cex.title" = "Selecione o CEX";
-"restore.cex.description" = "Selecione a troca centralizada à qual você deseja se conectar.";
+"restore.cex.description" = "Choose your battlefield, folks! Select the centralized exchange you want to connect to, and let's make some deals!";
 
 // Restore Binance
 
@@ -170,11 +168,10 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recomendado)";
 "sync_mode.from_blockchain" = "Da Blockchain";
+"blockchain_settings.description" = "Get ready to receive payments, folks! When restoring your wallet, make sure to select the right address format. It's all about getting it right!";
 
 // Coin Platforms
 
-"blockchain_settings.description" = "Selecione o formato de endereço para receber pagamentos. Um formato correto deve ser escolhido quando restaurar uma carteira existente.";
-"coin_platforms.description" = "Este token existe em várias blockchains.";
 "coin_platforms.native" = "Nativo";
 
 // Copy Warning
@@ -187,9 +184,8 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 // Recovery Phrase
 
 "recovery_phrase.title" = "Frase de Recuperação";
-
-"recovery_phrase.warning" = "Nunca compartilhe essa chave com ninguém. A equipe de suporte do %@ Wallet nunca pedirá por isso.";
-"recovery_phrase.tap_to_show" = "Toque para mostrar a frase de recuperação";
+"recovery_phrase.warning" = "Listen up, folks, and listen good. This key, you never, ever share it with anyone, okay? Not even with the %@ Wallet support team. They'll never ask for it. It's your key to the kingdom, so keep it locked up tight!";
+"recovery_phrase.tap_to_show" = "Tap right there, folks, and behold the recovery phrase. It's like unlocking a treasure chest!";
 "recovery_phrase.passphrase" = "Senha";
 "recovery_phrase.copy_warning.title" = "Risco ao copiar a frase de recuperação";
 "recovery_phrase.copy_warning.description" = "Como medida de segurança, recomendamos que não use a ação de copiar na frase de recuperação.";
@@ -197,7 +193,7 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 // EVM Private Key
 
 "evm_private_key.title" = "Chave Privada EVM";
-"evm_private_key.tap_to_show" = "Toque para mostrar a chave privada";
+"evm_private_key.tap_to_show" = "Give it a tap, folks, and reveal that private key. It's like finding the secret to success!";
 
 // Extended Key
 
@@ -207,13 +203,13 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "extended_key.purpose" = "Propósito";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "Conta";
-"extended_key.tap_to_show" = "Toque para mostrar a chave privada estendida";
+"extended_key.tap_to_show" = "Get ready for it, folks! A little tap, and you'll see that extended private key. It's like unlocking a world of possibilities!";
 
 // Backup
 
 "backup.title" = "Frase de Recuperação";
-"backup.description" = "Escreva essas palavras na ordem correta e mantenha-as em um lugar seguro";
-"backup.tap_to_show" = "Toque para mostrar a frase de recuperação";
+"backup.description" = "Here's the drill, folks: Write these words down, in the right order, and keep 'em locked up tight in a safe place. It's your ticket to security!";
+"backup.tap_to_show" = "Tap right there, folks, and behold the recovery phrase. It's like unlocking a treasure chest!";
 "backup.passphrase" = "Senha";
 "backup.verify" = "Confirmar";
 "backup.verified" = "Confirmado";
@@ -237,7 +233,7 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 // Backup Prompt
 
 "backup_prompt.title" = "Backup Manual";
-"backup_prompt.warning" = "Crie uma cópia de backup da frase de recuperação e da senha associada que permitirá recuperar sua carteira caso seu telefone seja perdido, roubado, quebrado etc.";
+"backup_prompt.warning" = "Listen up, folks. You've got to create a backup of that recovery phrase and the password that goes with it. This is your lifeline, in case your phone decides to go rogue – lost, stolen, broken, you name it. Protect your assets, it's the smart play!";
 "backup_prompt.backup" = "Backup";
 "backup_prompt.backup_manual" = "Backup Manual";
 "backup_prompt.backup_cloud" = "Backup para o iCloud";
@@ -246,22 +242,19 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 // Backup to iCloud
 
 "backup.cloud.title" = "Backup para o iCloud";
-"backup.cloud.description" = "O armazenamento em iCloud é um serviço de armazenamento em nuvem de terceiros fornecido pela Apple. É importante saber que seus dados serão armazenados nos servidores da Apple, não em seus dispositivos pessoais. Isso significa que você está confiando seus dados e entregando a segurança de suas informações a um serviço terceirizado.";
+"backup.cloud.description" = "Let's get this straight, folks. iCloud storage, it's from Apple, okay? But here's the deal: when you use it, your data, it's not hanging out on your own gadgets. Nope, it's on Apple's servers. So, you're putting your trust, your data's security, in the hands of a third-party service. That's the real story here.";
 
 "backup.cloud.terms.item.1" = "Compreendo que perder acesso ao meu iCloud resultará em perder acesso ao backup de uma respectiva carteira.";
 
 "backup.cloud.name.title" = "Nome do Backup";
-"backup.cloud.password.title" = "Definir Senha";
-"backup.cloud.password.description" = "Here's the deal, folks: You've got to set an unlock password for your backup. It's gotta be strong, okay? We're talking at least 8 symbols, including one lowercase letter, one uppercase letter, a number, and a special character. It's your vault's first line of defense!";
-
-"backup.cloud.name.description" = "Digite o nome para o arquivo de backup.";
-"backup.cloud.name.empty" = "O nome do Backup não pode estar vazio!";
-"backup.cloud.name.error.empty" = "O nome do backup não pode estar vazio";
-"backup.cloud.name.error.already_exist" = "O nome do Backup já existe!";
+"backup.cloud.name.description" = "Give it a name, folks! This backup file needs an identity. Make it memorable!";
+"backup.cloud.name.empty" = "Whoops, folks! You can't leave that backup name hanging empty. Fill it up with something good!";
+"backup.cloud.name.error.empty" = "Remember, folks, that backup name, it can't be an empty slate. Give it some character!";
+"backup.cloud.name.error.already_exist" = "Well, folks, looks like you're not the only one with that backup name. It's already in the club!";
 "backup.cloud.name.placeholder" = "Nome";
 
 "backup.cloud.password.title" = "Definir Senha";
-"backup.cloud.password.description" = "Defina a senha de desbloqueio para o seu backup. Deve consistir de pelo menos 8 símbolos e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial.";
+"backup.cloud.password.description" = "Here's the deal, folks: You've got to set an unlock password for your backup. It's gotta be strong, okay? We're talking at least 8 symbols, including one lowercase letter, one uppercase letter, a number, and a special character. It's your vault's first line of defense!";
 "backup.cloud.password.highlighted_description" = "Não esqueça esta senha! Ela é separada da sua senha do iCloud da Apple e não pode ser recuperada ou redefinida.";
 "backup.cloud.password.placeholder" = "Senha";
 "backup.cloud.password.confirm.placeholder" = "Confirmar";
@@ -357,6 +350,7 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "deposit.no_adapter.error" = "Não pode fornecer o endereço";
 
 "deposit.address_format" = "Formato";
+"deposit.address_network" = "Rede";
 "deposit.qr_code_description" = "Seu endereço para o depósito %@";
 "deposit.qr_code_description.watch" = "Endereço do relógio do %@";
 "deposit.account" = "Conta";
@@ -380,10 +374,6 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "O formato de endereço em dinheiro é preferido para receber Bitcoin Cash (BCH) devido à sua experiência e compatibilidade melhoradas. No entanto, ambos os formatos de endereço podem ser usados internamente para receber BCH, independentemente do formato de endereço do remetente.";
 
 "blockchain_type.recommended" = " (recomendado)";
-
-"deposit.not_active" = "não ativo";
-"deposit.not_active.title" = "Endereço não ativo";
-"deposit.not_active.tron_description" = "Contas recém-criadas no blockchain TRON estão inativas e não podem ser consultadas ou exploradas. Elas precisam ser ativadas.\n\nPara ativar uma nova conta na cadeia Tron, é necessário transferir tokens TRX ou TRC-10 para um endereço de conta inativo, juntamente com uma taxa de ativação de 1 TRX";
 
 // Send
 
@@ -523,8 +513,6 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "swap.advanced_settings.recipient_address" = "Endereço do Destinatário";
 "swap.advanced_settings.warning.unusual_slippage" = "Sua operação pode ser de Front running";
 "swap.advanced_settings.service_fee_description" = "Uma taxa de serviço para a ação de troca na plataforma é tipicamente 0,3% ou 0,6%";
-"swap.advanced_settings.warning.unusual_slippage" = "Sua operação pode ser de front-running";
-"swap.advanced_settings.service_fee_description" = "Uma taxa de serviço para a ação de troca na plataforma normalmente 0,3% ou 0,6%";
 "swap.advanced_settings.error.lower_slippage" = "É provável que sua transação falhe.";
 "swap.advanced_settings.error.higher_slippage" = "Tolerância do Slippage não pode ser maior que %@%%";
 "swap.advanced_settings.error.invalid_address" = "Endereço Inválido";
@@ -649,7 +637,7 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "market.advanced_search.network_parameters" = "Parâmetros de rede";
 "market.advanced_search.price_parameters" = "Parâmetros de preço";
 "market.advanced_search.choose_set" = "Escolha o Conjunto";
-"market.advanced_search.market_cap" = "Capitalização de mercado";
+"market.advanced_search.market_cap" = "Capitalização de Mercado";
 "market.advanced_search.volume" = "Volume de Operações";
 "market.advanced_search.liquidity" = "Liquidez DEX";
 "market.advanced_search.blockchains" = "Blockchains";
@@ -936,9 +924,7 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "transactions.all_blockchains" = "Todas Blockchains";
 "transactions.all_coins" = "Todas as moedas";
 "transactions.choose_coin" = "Escolher Moedas";
-"transactions.clear" = "Limpar";
 "transactions.filter_all" = "Todos";
-"transactions.syncing_text" = "Por favor, aguarde a sincronização concluir";
 "transactions.empty_text" = "Você ainda não tem nenhuma transação pendente ou anterior";
 "transactions.pending" = "Pendente";
 "transactions.processing" = "Processando";
@@ -1138,13 +1124,13 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 "settings.about_app.description" = "A carteira %@ foi construída para aqueles que buscam investir e armazenar criptomoedas de forma privada e independente.\n\nÉ uma carteira não-custódia, peer-to-peer onde apenas o usuário tem controle sobre os fundos. Não coleta nenhum dado e mantém o usuário independente ao não bloquear os fundos do usuário para um aplicativo específico de carteira.\n\nA carteira %@ é totalmente de código aberto e qualquer um pode confirmar que o aplicativo funciona exatamente como afirma.";
 "settings.about_app.whats_new" = "O que há de novo";
 "settings.about_app.website" = "Site";
+"settings.about_app.contact" = "Fale Conosco";
 "settings.about_app.rate_us" = "Avalie-Nos";
 "settings.about_app.tell_friends" = "Indique para amigos";
 
 // Settings -> About App -> Contact
 
 "settings.contact.title" = "Fale Conosco";
-"settings.contact.title" = "Contato";
 "settings.contact.via_email" = "via E-mail";
 "settings.contact.via_telegram" = "via Telegram";
 
@@ -1281,7 +1267,6 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 
 "chart.market.header" = "Mercado";
 "chart.market.market_cap" = "Capitalização de Mercado";
-
 "chart.market.volume" = "Volume (24h)";
 "chart.market.circulation" = "Em Circulação";
 "chart.market.total_supply" = "Fornecimento total";
@@ -1714,48 +1699,6 @@ Vá para Configurações - > %@ e permita o acesso à câmera.";
 
 "cex_deposit_network_select.title" = "Escolha a Rede";
 "cex_deposit_network_select.description" = "Escolha uma rede e receba um endereço para depositar.";
-
-// Cex Deposit
-
-"cex_deposit.title" = "Depósito %@";
-"cex_deposit.qr_code_description" = "Seu endereço para o depósito %@";
-"cex_deposit.address" = "Endereço";
-"cex_deposit.network" = "Rede";
-"cex_deposit.memo" = "Memo (Tag)";
-"cex_deposit.min_amount" = "Valor Mín.";
-"cex_deposit.warning_memo" = "Memo (tag) é necessário, ou você perderá suas moedas.";
-"cex_deposit.warning" = "Envie apenas %@ para este endereço. Enviar outros tipos de tokens para este endereço resultará em sua perda suprema.";
-"cex_deposit.copy_address" = "Copiar Endereço";
-"cex_deposit.share_address" = "Compartilhar endereço";
-"cex_deposit.failed" = "Não foi possível carregar o endereço de depósito. Por favor, tente novamente.";
-"cex_deposit.memo_warning.title" = "Importante";
-"cex_deposit.memo_warning.description" = "Ambos os memorandos (tag) e o endereço são necessários para garantir que as ativos são recebidas. Caso contrário, seus fundos serão perdidos.";
-
-// Cex Widthdraw
-
-"cex_withdraw.network" = "Rede";
-"cex_withdraw.network_warning" = "Certifique-se de que a rede corresponde ao endereço de retirada e a plataforma de depósito suporta, ou os ativos podem ser perdidos.";
-"cex_withdraw.fee" = "Taxa";
-"cex_withdraw.fee_from_amount" = "Taxa a partir do valor";
-"cex_withdraw.error.insufficient_funds" = "Saldo disponível insuficiente";
-"cex_withdraw.error.max_amount_violated" = "O valor máximo que você pode retirar é %@";
-"cex_withdraw.error.min_amount_violated" = "O valor mínimo que você pode retirar é %@";
-"cex_withdraw.address_required" = "O endereço é obrigatório";
-
-// Cex Withdraw Network Select
-
-"cex_withdraw_network_select.title" = "Rede";
-"cex_withdraw_network_select.description" = "Certifique-se de que a rede corresponde ao endereço de retirada e a plataforma de depósito suporta.";
-
-// Cex Withdraw Confirm
-
-"cex_withdraw_confirm.you_withdraw" = "Você retira";
-"cex_withdraw_confirm.network" = "Rede";
-"cex_withdraw_confirm.withdraw" = "Sacar";
-"cex_withdraw_confirm.withdraw_failed" = "Falha na retirada";
-
-"cex_deposit_network_select.title" = "Choose Network";
-"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
 
 // Cex Deposit
 
