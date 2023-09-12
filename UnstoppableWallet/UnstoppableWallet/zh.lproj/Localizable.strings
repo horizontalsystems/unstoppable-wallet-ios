@@ -350,6 +350,7 @@
 "deposit.no_adapter.error" = "无法提供地址";
 
 "deposit.address_format" = "格式";
+"deposit.address_network" = "網絡";
 "deposit.qr_code_description" = "您存放 %@ 的地址";
 "deposit.qr_code_description.watch" = "观看 %@ 的地址";
 "deposit.account" = "账户";
