@@ -1561,7 +1561,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Watch Address
 
 "watch_address.title" = "Cüzdan İzle";
-"watch_address.watch" = "İzle";
+"watch_address.watch" = "İleri";
 "watch_address.address" = "Adres";
 "watch_address.by" = "İçerik";
 "watch_address.watch_by" = "İzle";
@@ -1709,8 +1709,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. miktar";
 "cex_deposit.warning_memo" = "Not (etiket) gereklidir, aksi takdirde madeni paralarınızı kaybedersiniz.";
-"cex_deposit.copy_address" = "Adresi Kopyala";
-"cex_deposit.share_address" = " Adresi paylaş";
+"cex_deposit.copy_address" = "Kopyala";
+"cex_deposit.share_address" = "Paylaş";
 "cex_deposit.failed" = "Para yatırma adresi yüklenemedi. Lütfen tekrar deneyiniz.";
 "cex_deposit.memo_warning.title" = "Önemli";
 "cex_deposit.memo_warning.description" = "Varlıkların alındığından emin olmak için hem not (etiket) hem de adres gereklidir. Aksi takdirde paranız kaybolacaktır.";
