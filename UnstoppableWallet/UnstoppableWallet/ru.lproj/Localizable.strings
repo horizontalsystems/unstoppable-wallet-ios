@@ -461,7 +461,7 @@
 "donate.list.title" = "Поддержи нас";
 "donate.list.get_address" = "Получить адрес";
 "donate.list.get_address.title" = "Адреса";
-"donate.title" = "Поддержи нас %@";
+"donate.title" = "Пожертвовать %@";
 "donate.no_assets" = "У вас нет активов для пожертвования.";
 "donate.support.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
 
@@ -1012,7 +1012,7 @@
 "settings.theme" = "Тема";
 "settings.info_subtitle" = "децентрализованное приложение";
 "settings.donate.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
-"settings.donate.title" = "Поддержать";
+"settings.donate.title" = "Поддержи нас";
 
 // Settings -> Base Currency
 
