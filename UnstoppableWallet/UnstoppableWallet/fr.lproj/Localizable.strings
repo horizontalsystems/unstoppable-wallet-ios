@@ -369,7 +369,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "receive_network_select.description" = "Choisissez un réseau et obtenez une adresse à recevoir.";
 
 "receive_address_format_select.title" = "Format de l'adresse";
-"receive_address_format_select.description" = "Select an address format to receive your address.";
+"receive_address_format_select.description" = "Sélectionnez un format d'adresse pour recevoir votre adresse.";
 "receive_address_format_select.bitcoin.bottom_description" = "Le format Native SegWit est préféré dans Bitcoin pour améliorer le débit et la sécurité. Tous les formats d'adresse (Taproot, SegWit, Legacy) peuvent être utilisés de manière interchangeable pour recevoir BTC quel que soit le format d'adresse de l'expéditeur, permettant des transactions transparentes entre différents types de pièces.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "Le format d'adresse en espèces est préféré pour recevoir Bitcoin Cash (BCH) en raison de son expérience utilisateur améliorée et de sa compatibilité. Cependant, les deux formats d'adresse peuvent être utilisés de façon interchangeable pour recevoir le BCH, quel que soit le format de l'adresse de l'expéditeur.";
 
