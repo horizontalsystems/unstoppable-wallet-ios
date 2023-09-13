@@ -320,8 +320,8 @@
 
 // Token Balance Page
 "balance.token.locked" = "锁住";
-"balance.token.locked.info.title" = "锁定标题";
-"balance.token.locked.info.description" = "锁定描述文本";
+"balance.token.locked.info.title" = "TimeLock";
+"balance.token.locked.info.description" = "汇款人通过将在所显示日期失效的消费锁定汇出这些资金。\n\n无需担心，收到的比特币已经属于您，但在锁定期限结束前，您无法在比特币网络上消费它们。";
 "balance.token.staked" = "已关注";
 "balance.token.staked.info.title" = "关注的标题";
 "balance.token.staked.info.description" = "相关的描述文本";
@@ -350,6 +350,7 @@
 "deposit.no_adapter.error" = "无法提供地址";
 
 "deposit.address_format" = "格式";
+"deposit.address_network" = "網絡";
 "deposit.qr_code_description" = "您存放 %@ 的地址";
 "deposit.qr_code_description.watch" = "观看 %@ 的地址";
 "deposit.account" = "账户";
@@ -368,7 +369,7 @@
 "receive_network_select.description" = "选择一个网络并获取要接收的地址。";
 
 "receive_address_format_select.title" = "地址格式";
-"receive_address_format_select.description" = "选择一个网络并获取要接收的地址。";
+"receive_address_format_select.description" = "选择地址格式接收您的地址。";
 "receive_address_format_select.bitcoin.bottom_description" = "本机SegWit格式是比特币中为了改进输送和安全性而偏爱的。 所有地址格式 (Taproot, SegWit, Legacy) 可以互换使用来接收BTC ，而不论发送者的地址格式。 启用跨越不同种类的无缝交易。";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "现金地址格式更适合接收比特币现金(BCH)，因为它提高了用户体验和兼容性。 然而，无论发件人的地址格式如何，两种地址格式都可以互换地用于接收BCCH。";
 
@@ -1560,7 +1561,7 @@
 // Watch Address
 
 "watch_address.title" = "观察地址";
-"watch_address.watch" = "观察";
+"watch_address.watch" = "下一步";
 "watch_address.address" = "地址";
 "watch_address.by" = "由";
 "watch_address.watch_by" = "观看者";
@@ -1708,8 +1709,8 @@
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "最小金额";
 "cex_deposit.warning_memo" = "Memo(标签)是必需的，否则您将丢失您的硬币。";
-"cex_deposit.copy_address" = "复制地址";
-"cex_deposit.share_address" = "共享地址";
+"cex_deposit.copy_address" = "复制";
+"cex_deposit.share_address" = "分享";
 "cex_deposit.failed" = "加载存款地址失败。请重试。";
 "cex_deposit.memo_warning.title" = "重要信息";
 "cex_deposit.memo_warning.description" = "需要填写备注(标签)和地址以确保收到资产。否则您的资金将丢失。";

@@ -322,8 +322,8 @@
 
 // Token Balance Page
 "balance.token.locked" = "Заблокировано";
-"balance.token.locked.info.title" = "Locked title";
-"balance.token.locked.info.description" = "Locked Description Text";
+"balance.token.locked.info.title" = "TimeLock";
+"balance.token.locked.info.description" = "Эти средства были отправлены с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткойны уже ваши, но до истечения периода блокировки, вы не сможете их потратить в сети Bitcoin.";
 "balance.token.staked" = "Staked";
 "balance.token.staked.info.title" = "Staked title";
 "balance.token.staked.info.description" = "Staked Description Text";
@@ -352,6 +352,7 @@
 "deposit.no_adapter.error" = "Не удается предоставить адрес";
 
 "deposit.address_format" = "Формат";
+"deposit.address_network" = "Сеть";
 "deposit.qr_code_description" = "Ваш адрес для депозита %@";
 "deposit.qr_code_description.watch" = "Отслеживаемый адрес %@";
 "deposit.account" = "Account";
@@ -370,7 +371,7 @@
 "receive_network_select.description" = "Выберите сеть и получите адрес для получения.";
 
 "receive_address_format_select.title" = "Формат адреса";
-"receive_address_format_select.description" = "Выберите сеть и получите адрес для получения.";
+"receive_address_format_select.description" = "Выберите формат адреса для получения вашего адреса.";
 "receive_address_format_select.bitcoin.bottom_description" = "Формат Native SegWit предпочтителен в Биткойне для повышения пропускной способности и безопасности. Все форматы адресов (Taproot, SegWit, Legacy) могут использоваться взаимозаменяемо для получения BTC независимо от формата адреса отправителя, что обеспечивает бесперебойные транзакции между различными типами монет.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "Формат Cash Address предпочтителен для получения Bitcoin Cash (BCH) из-за улучшенного пользовательского опыта и совместимости. Однако, оба формата адреса могут использоваться взаимозаменяемо для получения BCH, независимо от формата адреса отправителя.";
 
@@ -460,7 +461,7 @@
 "donate.list.title" = "Поддержи нас";
 "donate.list.get_address" = "Получить адрес";
 "donate.list.get_address.title" = "Адреса";
-"donate.title" = "Поддержи нас %@";
+"donate.title" = "Пожертвовать %@";
 "donate.no_assets" = "У вас нет активов для пожертвования.";
 "donate.support.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
 
@@ -1011,7 +1012,7 @@
 "settings.theme" = "Тема";
 "settings.info_subtitle" = "децентрализованное приложение";
 "settings.donate.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
-"settings.donate.title" = "Поддержать";
+"settings.donate.title" = "Поддержи нас";
 
 // Settings -> Base Currency
 
@@ -1564,7 +1565,7 @@
 // Watch Address
 
 "watch_address.title" = "Просмотр кошелька";
-"watch_address.watch" = "Смотреть";
+"watch_address.watch" = "Далее";
 "watch_address.address" = "Адрес";
 "watch_address.by" = "Из";
 "watch_address.watch_by" = "Смотреть из";
@@ -1712,8 +1713,8 @@
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Мин. сумма";
 "cex_deposit.warning_memo" = "Необходимо memo (tag), или вы потеряете ваши монеты.";
-"cex_deposit.copy_address" = "Копировать адрес";
-"cex_deposit.share_address" = "Поделиться адресом";
+"cex_deposit.copy_address" = "Копировать";
+"cex_deposit.share_address" = "Поделиться";
 "cex_deposit.failed" = "Не удалось загрузить адрес депозита. Повторите попытку.";
 "cex_deposit.memo_warning.title" = "Важно";
 "cex_deposit.memo_warning.description" = "Для получения активов необходимы memo(tag) и адрес. В противном случае Ваши средства будут утеряны.";

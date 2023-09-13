@@ -320,8 +320,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Token Balance Page
 "balance.token.locked" = "Locked";
-"balance.token.locked.info.title" = "Gesperrter Titel";
-"balance.token.locked.info.description" = "Gesperrter Beschreibungstext";
+"balance.token.locked.info.title" = "TimeLock";
+"balance.token.locked.info.description" = "Der Sender hat dieses Guthaben mit einer Ausgabesperre versehen, die zu dem angezeigten Datum abläuft.\n\nKeine Sorge, die erhaltenen Bitcoin sind bereits Ihre. Die Bitcoins sind nur zeitweise gesperrt, so dass Sie sie erst nach Ablauf der Sperrzeit im Bitcoin-Netzwerk ausgeben können.";
 "balance.token.staked" = "Absteckung";
 "balance.token.staked.info.title" = "Absteckter Titel";
 "balance.token.staked.info.description" = "Absteckungstext";
@@ -350,6 +350,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.no_adapter.error" = "Kann keine Adresse angeben";
 
 "deposit.address_format" = "Format";
+"deposit.address_network" = "Netzwerk";
 "deposit.qr_code_description" = "Ihre Adresse für %@";
 "deposit.qr_code_description.watch" = "Beobachtungsadresse von %@";
 "deposit.account" = "Account";
@@ -368,7 +369,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "receive_network_select.description" = "Wählen Sie ein Netzwerk aus und erhalten Sie eine Adresse.";
 
 "receive_address_format_select.title" = "Adressformatierung";
-"receive_address_format_select.description" = "Wählen Sie ein Netzwerk aus und erhalten Sie eine Adresse.";
+"receive_address_format_select.description" = "Wählen Sie ein Adressformat aus, um Ihre Adresse zu erhalten.";
 "receive_address_format_select.bitcoin.bottom_description" = "Das Native SegWit Format wird in Bitcoin bevorzugt für einen verbesserten Durchsatz und mehr Sicherheit. Alle Adressformate (Taproot, SegWit, Legacy) können unabhängig vom Adressformat des Absenders zum Empfang von BTC verwendet werden ermöglicht nahtlose Transaktionen über verschiedene Münztypen.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "Das Cash Address Format wird bevorzugt für den Erhalt von Bitcoin Cash (BCH) aufgrund seiner verbesserten Benutzerfreundlichkeit und Kompatibilität bevorzugt. Beide Adressformate können jedoch unabhängig vom Adressformat des Absenders austauschbar genutzt werden, um BCH zu empfangen.";
 
@@ -1560,7 +1561,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Watch Address
 
 "watch_address.title" = "Wallet ansehen";
-"watch_address.watch" = "Beobachten";
+"watch_address.watch" = "Weiter";
 "watch_address.address" = "Adresse";
 "watch_address.by" = "Von";
 "watch_address.watch_by" = "Beobachten von";
@@ -1708,8 +1709,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. Amount";
 "cex_deposit.warning_memo" = "Memo (Tag) ist erforderlich, sonst verlieren Sie Ihre Münzen.";
-"cex_deposit.copy_address" = "Adresse kopieren";
-"cex_deposit.share_address" = "Adresse teilen";
+"cex_deposit.copy_address" = "Kopieren";
+"cex_deposit.share_address" = "Teilen";
 "cex_deposit.failed" = "Fehler beim Laden der Einzahlungsadresse. Bitte erneut versuchen.";
 "cex_deposit.memo_warning.title" = "Wichtig";
 "cex_deposit.memo_warning.description" = "Sowohl eine Memo (Tag) als auch die Adresse werden benötigt, um sicherzustellen, dass Vermögenswerte empfangen werden. Andernfalls gehen Ihre Gelder verloren.";

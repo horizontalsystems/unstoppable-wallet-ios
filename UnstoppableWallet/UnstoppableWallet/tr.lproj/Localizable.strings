@@ -320,8 +320,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Token Balance Page
 "balance.token.locked" = "Kilitli";
-"balance.token.locked.info.title" = "Kilitli Başlık";
-"balance.token.locked.info.description" = "Kilitli Açıklama Metni";
+"balance.token.locked.info.title" = "TimeLock";
+"balance.token.locked.info.description" = "Gönderici bu fonları belirtilen tarihte sona erecek şekilde bir harcama kilidiyle gönderdi.\n\nEndişelenmeyin, alınan Bitcoin'ler zaten sizindir ancak kilitleme süresi sona erene kadar bunları Bitcoin ağında harcayamazsınız.";
 "balance.token.staked" = "Staked";
 "balance.token.staked.info.title" = "Staked title";
 "balance.token.staked.info.description" = "Staked Description Text";
@@ -350,6 +350,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.no_adapter.error" = "Adres veremiyorum";
 
 "deposit.address_format" = "Biçim";
+"deposit.address_network" = "Ağ";
 "deposit.qr_code_description" = "%@ yatırmak için adresiniz";
 "deposit.qr_code_description.watch" = "%@ adresini izle";
 "deposit.account" = "Account";
@@ -368,7 +369,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "receive_network_select.description" = "Bir ağ seçin ve para yatırmak için bir adres alın.";
 
 "receive_address_format_select.title" = "Adres Formatı";
-"receive_address_format_select.description" = "Bir ağ seçin ve para yatırmak için bir adres alın.";
+"receive_address_format_select.description" = "Adresinizi almak için bir adres biçimi seçin.";
 "receive_address_format_select.bitcoin.bottom_description" = "Bitcoin'de daha iyi bir verimlilik ve güvenlik için yerel SegWit formatı tercih edilir. Tüm adres formatları (Taproot, SegWit, Legacy), gönderenin adres formatına bakılmaksızın BTC almak için birbirinin yerine kullanılabilir ve farklı para birimlerinde kesintisiz işlemlere olanak tanır.";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "Geliştirilmiş kullanıcı deneyimi ve uyumluluğu nedeniyle Bitcoin Cash (BCH) almak için Nakit Adresi formatı tercih edilmektedir. Ancak gönderenin adres formatı ne olursa olsun, BCH'yi almak için her iki adres formatı da birbirinin yerine kullanılabilir.";
 
@@ -1560,7 +1561,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Watch Address
 
 "watch_address.title" = "Cüzdan İzle";
-"watch_address.watch" = "İzle";
+"watch_address.watch" = "İleri";
 "watch_address.address" = "Adres";
 "watch_address.by" = "İçerik";
 "watch_address.watch_by" = "İzle";
@@ -1708,8 +1709,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. miktar";
 "cex_deposit.warning_memo" = "Not (etiket) gereklidir, aksi takdirde madeni paralarınızı kaybedersiniz.";
-"cex_deposit.copy_address" = "Adresi Kopyala";
-"cex_deposit.share_address" = " Adresi paylaş";
+"cex_deposit.copy_address" = "Kopyala";
+"cex_deposit.share_address" = "Paylaş";
 "cex_deposit.failed" = "Para yatırma adresi yüklenemedi. Lütfen tekrar deneyiniz.";
 "cex_deposit.memo_warning.title" = "Önemli";
 "cex_deposit.memo_warning.description" = "Varlıkların alındığından emin olmak için hem not (etiket) hem de adres gereklidir. Aksi takdirde paranız kaybolacaktır.";
