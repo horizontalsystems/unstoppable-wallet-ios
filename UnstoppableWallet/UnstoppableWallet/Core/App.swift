@@ -158,7 +158,6 @@ class App {
         accountRestoreWarningManager = AccountRestoreWarningManager(accountManager: accountManager, localStorage: StorageKit.LocalStorage.default)
         accountFactory = AccountFactory(accountManager: accountManager)
 
-        cloudAccountBackupManager = CloudAccountBackupManager(ubiquityContainerIdentifier: AppConfig.sharedCloudContainer, logger: logger)
         backupManager = BackupManager(accountManager: accountManager)
 
         kitCleaner = KitCleaner(accountManager: accountManager)
@@ -191,6 +190,8 @@ class App {
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)
         predefinedBlockchainService = PredefinedBlockchainService(restoreSettingsManager: restoreSettingsManager)
+
+        cloudAccountBackupManager = CloudAccountBackupManager(ubiquityContainerIdentifier: AppConfig.sharedCloudContainer, restoreSettingsManager: restoreSettingsManager, logger: logger)
 
         let hsLabelProvider = HsLabelProvider(networkManager: networkManager)
         let evmLabelStorage = EvmLabelStorage(dbPool: dbPool)

@@ -260,8 +260,14 @@ extension AccountType {
             } catch {
                 return nil
             }
-        case .evmAddress, .tronAddress:
-            return nil
+        case .evmAddress:
+            return AccountType.evmAddress(address: EvmKit.Address(raw: uniqueId))
+        case .tronAddress:
+            do {
+                return AccountType.tronAddress(address: try TronKit.Address(raw: uniqueId))
+            } catch {
+                return nil
+            }
         case .cex:
             guard let cexAccount = CexAccount.decode(uniqueId: string) else {
                 return nil

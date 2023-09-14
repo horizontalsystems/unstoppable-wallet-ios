@@ -117,7 +117,7 @@ extension AdapterFactory {
             return try? DashAdapter(wallet: wallet, syncMode: syncMode)
 
         case (.native, .zcash):
-            let restoreSettings = restoreSettingsManager.settings(account: wallet.account, blockchainType: .zcash)
+            let restoreSettings = restoreSettingsManager.settings(accountId: wallet.account.id, blockchainType: .zcash)
             return try? ZcashAdapter(wallet: wallet, restoreSettings: restoreSettings)
 
         case (.native, .binanceChain), (.bep2, .binanceChain):

@@ -9,6 +9,7 @@ class RestoreCloudPassphraseModule {
                 accountFactory: App.shared.accountFactory,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,
+                restoreSettingsManager: App.shared.restoreSettingsManager,
                 item: item
         )
         let viewModel = RestoreCloudPassphraseViewModel(service: service)
