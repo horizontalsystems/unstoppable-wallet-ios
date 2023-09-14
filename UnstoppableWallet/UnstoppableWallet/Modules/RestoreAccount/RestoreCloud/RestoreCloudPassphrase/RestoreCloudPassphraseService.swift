@@ -4,16 +4,34 @@ class RestoreCloudPassphraseService {
     private let iCloudManager: CloudAccountBackupManager
     private let accountFactory: AccountFactory
     private let accountManager: AccountManager
+    private let walletManager: WalletManager
 
     private let restoredBackup: RestoreCloudModule.RestoredBackup
 
     var passphrase: String = ""
 
-    init(iCloudManager: CloudAccountBackupManager, accountFactory: AccountFactory, accountManager: AccountManager, item: RestoreCloudModule.RestoredBackup) {
+    init(iCloudManager: CloudAccountBackupManager, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, item: RestoreCloudModule.RestoredBackup) {
         self.iCloudManager = iCloudManager
         self.accountFactory = accountFactory
         self.accountManager = accountManager
-        self.restoredBackup = item
+        self.walletManager = walletManager
+        restoredBackup = item
+    }
+
+    private func createAccount(accountType: AccountType) {
+        let account = accountFactory.account(type: accountType, origin: .restored, backedUp: restoredBackup.walletBackup.isManualBackedUp, name: restoredBackup.name)
+        accountManager.save(account: account)
+
+        let wallets = restoredBackup.walletBackup.enabledWallets.map {
+            EnabledWallet(
+                    tokenQueryId: $0.tokenQueryId,
+                    accountId: account.id,
+                    coinName: $0.coinName,
+                    coinCode: $0.coinCode,
+                    tokenDecimals: $0.tokenDecimals
+            )
+        }
+        walletManager.save(enabledWallets: wallets)
     }
 
 }
@@ -77,10 +95,12 @@ extension RestoreCloudPassphraseService {
                 accountManager.save(account: account)
                 return .success
             default:
+                createAccount(accountType: accountType)
                 return .restoredAccount(RestoreCloudModule.RestoredAccount(
                         name: restoredBackup.name,
                         accountType: accountType,
-                        isManualBackedUp: restoredBackup.walletBackup.isManualBackedUp
+                        isManualBackedUp: restoredBackup.walletBackup.isManualBackedUp,
+                        showSelectCoins: restoredBackup.walletBackup.enabledWallets.isEmpty
                 ))
             }
         } catch {

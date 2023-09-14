@@ -2,14 +2,16 @@ import Foundation
 
 class BackupCloudPassphraseService {
     private let iCloudManager: CloudAccountBackupManager
+    private let walletManager: WalletManager
     private let account: Account
     private let name: String
 
     var passphrase: String = ""
     var passphraseConfirmation: String = ""
 
-    init(iCloudManager: CloudAccountBackupManager, account: Account, name: String) {
+    init(iCloudManager: CloudAccountBackupManager, walletManager: WalletManager, account: Account, name: String) {
         self.iCloudManager = iCloudManager
+        self.walletManager = walletManager
         self.account = account
         self.name = name
     }
@@ -41,7 +43,8 @@ extension BackupCloudPassphraseService {
         }
 
         do {
-            try iCloudManager.save(accountType: account.type, isManualBackedUp: account.backedUp, passphrase: passphrase, name: name)
+            let wallets = App.shared.walletManager.wallets(account: account)
+            try iCloudManager.save(accountType: account.type, wallets: wallets, isManualBackedUp: account.backedUp, passphrase: passphrase, name: name)
         } catch {
             if case .urlNotAvailable = error as? CloudAccountBackupManager.BackupError {
                 throw CreateError.urlNotAvailable

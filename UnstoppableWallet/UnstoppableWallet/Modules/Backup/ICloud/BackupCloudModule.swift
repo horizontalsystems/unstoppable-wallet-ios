@@ -22,7 +22,7 @@ class BackupCloudModule {
     }
 
     static func backupPassword(account: Account, name: String) -> UIViewController {
-        let service = BackupCloudPassphraseService(iCloudManager: App.shared.cloudAccountBackupManager, account: account, name: name)
+        let service = BackupCloudPassphraseService(iCloudManager: App.shared.cloudAccountBackupManager, walletManager: App.shared.walletManager, account: account, name: name)
         let viewModel = BackupCloudPassphraseViewModel(service: service)
         let controller = BackupCloudPassphraseViewController(viewModel: viewModel)
 

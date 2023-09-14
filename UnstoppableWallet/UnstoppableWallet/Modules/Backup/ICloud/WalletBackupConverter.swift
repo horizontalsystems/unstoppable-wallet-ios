@@ -1,43 +1,45 @@
 import Foundation
+import MarketKit
 
 class WalletBackupConverter {
-    private static let version = 1
+    private static let version = 2
 
-    static func encode(accountType: AccountType, isManualBackedUp: Bool, passphrase: String) throws -> Data {
+    static func encode(accountType: AccountType, wallets: [WalletBackup.EnabledWallet], isManualBackedUp: Bool, passphrase: String) throws -> Data {
         let message = accountType.uniqueId(hashed: false)
         let iv = BackupCryptoHelper.generateInitialVector().hs.hex
 
         let cipherText = try BackupCryptoHelper.AES128(
-                operation: .encrypt,
-                ivHex: iv,
-                pass: passphrase,
-                message: message,
-                kdf: .defaultBackup
+            operation: .encrypt,
+            ivHex: iv,
+            pass: passphrase,
+            message: message,
+            kdf: .defaultBackup
         )
         let encodedCipherText = cipherText.base64EncodedString()
         let mac = try BackupCryptoHelper.mac(
-                pass: passphrase,
-                message: encodedCipherText.hs.data,
-                kdf: .defaultBackup
+            pass: passphrase,
+            message: encodedCipherText.hs.data,
+            kdf: .defaultBackup
         )
 
         let crypto = WalletBackupCrypto(
-                cipher: BackupCryptoHelper.defaultCypher,
-                cipherParams: CipherParams(iv: iv),
-                cipherText: encodedCipherText,
-                kdf: BackupCryptoHelper.defaultKdf,
-                kdfParams: .defaultBackup,
-                mac: mac.hs.hex)
+            cipher: BackupCryptoHelper.defaultCypher,
+            cipherParams: CipherParams(iv: iv),
+            cipherText: encodedCipherText,
+            kdf: BackupCryptoHelper.defaultKdf,
+            kdfParams: .defaultBackup,
+            mac: mac.hs.hex
+        )
         let backup = WalletBackup(
-                crypto: crypto,
-                id: accountType.uniqueId().hs.hex,
-                type: AccountType.Abstract(accountType),
-                isManualBackedUp: isManualBackedUp,
-                version: Self.version,
-                timestamp: Date().timeIntervalSince1970
+            crypto: crypto,
+            enabledWallets: wallets,
+            id: accountType.uniqueId().hs.hex,
+            type: AccountType.Abstract(accountType),
+            isManualBackedUp: isManualBackedUp,
+            version: Self.version,
+            timestamp: Date().timeIntervalSince1970
         )
         return try JSONEncoder().encode(backup)
-
     }
 
     static func decode(data: Data, passphrase: String) throws -> AccountType {
@@ -48,11 +50,12 @@ class WalletBackupConverter {
         }
 
         let decryptData = try BackupCryptoHelper.AES128(
-                operation: .decrypt,
-                ivHex: backup.crypto.cipherParams.iv,
-                pass: passphrase,
-                message: message,
-                kdf: .defaultBackup)
+            operation: .decrypt,
+            ivHex: backup.crypto.cipherParams.iv,
+            pass: passphrase,
+            message: message,
+            kdf: .defaultBackup
+        )
 
         guard let accountType = AccountType.decode(uniqueId: decryptData, type: backup.type) else {
             throw CodingError.cantDecodeAccountType
@@ -60,14 +63,11 @@ class WalletBackupConverter {
 
         return accountType
     }
-
 }
 
 extension WalletBackupConverter {
-
     enum CodingError: Error {
         case cantDecodeCipherText
         case cantDecodeAccountType
     }
-
 }
