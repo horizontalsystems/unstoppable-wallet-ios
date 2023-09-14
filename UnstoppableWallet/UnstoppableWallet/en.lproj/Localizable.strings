@@ -243,7 +243,6 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "backup.cloud.title" = "Backup to iCloud";
 "backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
-
 "backup.cloud.terms.item.1" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
 
 "backup.cloud.name.title" = "Backup Name";
@@ -270,9 +269,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup.cloud.cant_create_file" = "Can't save File to iCloud";
 "backup.cloud.cant_delete_file" = "Can't delete from iCloud";
 "backup.cloud.no_access.title" = "Access iCloud";
-"backup.cloud.no_access.title" = "Access iCloud";
 "backup.cloud.no_access.description" = "To create a backup, you need to provide access to iCloud storage.";
-
 
 // Errors
 
@@ -542,7 +539,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "swap.confirmation.maximum_sent" = "Maximum Sent";
 
 "swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
-
 "swap.dex_info.header_dex_related" = "%@ Related";
 "swap.dex_info.header_allowance" = "Allowance";
 "swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
