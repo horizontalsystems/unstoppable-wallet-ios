@@ -134,14 +134,14 @@ extension CloudAccountBackupManager {
         iCloudUrl != nil
     }
 
-    func save(accountType: AccountType, isManualBackedUp: Bool, passphrase: String, name: String) throws {
+    func save(accountType: AccountType, wallets: [Wallet], isManualBackedUp: Bool, passphrase: String, name: String) throws {
         guard let iCloudUrl else {
             throw BackupError.urlNotAvailable
         }
 
         do {
             let name = name + Self.fileExtension
-            let encoded = try WalletBackupConverter.encode(accountType: accountType, isManualBackedUp: isManualBackedUp, passphrase: passphrase)
+            let encoded = try WalletBackupConverter.encode(accountType: accountType, wallets: wallets.map { WalletBackup.EnabledWallet($0) }, isManualBackedUp: isManualBackedUp, passphrase: passphrase)
 
             try fileStorage.write(directoryUrl: iCloudUrl, filename: name, data: encoded)
             logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, save \(name)")

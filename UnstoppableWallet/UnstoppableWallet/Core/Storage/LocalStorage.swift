@@ -1,6 +1,6 @@
 import Foundation
-import StorageKit
 import MarketKit
+import StorageKit
 
 class LocalStorage {
     private let agreementAcceptedKey = "i_understand_key"
@@ -25,11 +25,9 @@ class LocalStorage {
     init(storage: StorageKit.ILocalStorage) {
         self.storage = storage
     }
-
 }
 
 extension LocalStorage {
-
     var debugLog: String? {
         get { storage.value(for: debugLogKey) }
         set { storage.set(value: newValue, for: debugLogKey) }
@@ -100,5 +98,64 @@ extension LocalStorage {
         get { storage.value(for: keyTelegramSupportRequested) ?? false }
         set { storage.set(value: newValue, for: keyTelegramSupportRequested) }
     }
+}
 
+extension LocalStorage {
+    var backup: [String: Any] {
+        var fields: [String: Any] = [
+            "lock_time_enabled": lockTimeEnabled.description,
+            "contacts_sync": remoteContactsSync.description,
+            "show_indicators": indicatorsShown.description,
+        ]
+
+        if let chartIndicators {
+            fields["chart_indicators"] = chartIndicators.hs.hexString
+        }
+
+        let providers: [String: String] = BlockchainType
+            .supported
+            .filter { !$0.allowedProviders.isEmpty }
+            .map { ($0.uid, defaultProvider(blockchainType: $0).rawValue) }
+            .reduce(into: [:]) { $0[$1.0] = $1.1 }
+
+        fields["swap_providers"] = providers
+
+        return fields
+    }
+
+    private func bool(value: Any?) -> Bool? {
+        if let string = value as? String,
+           let enabled = Bool(string) {
+            return enabled
+        }
+        return nil
+    }
+
+    func restore(backup _: [String: Any]) {
+        if let lockTime = bool(value: backup["lock_time_enabled"]) {
+            lockTimeEnabled = lockTime
+        }
+        if let contactsSync = bool(value: backup["contacts_sync"]) {
+            remoteContactsSync = contactsSync
+        }
+        if let showIndicators = bool(value: backup["show_indicators"]) {
+            indicatorsShown = showIndicators
+        }
+
+        if let chartIndicators = backup["chart_indicators"] as? String,
+           let data = chartIndicators.hs.hexData {
+            self.chartIndicators = data
+        }
+
+        if let providers = backup["swap_providers"] as? [String: String] {
+            providers.forEach { key, value in
+                let type = BlockchainType(uid: key)
+                if let provider = SwapModule.Dex.Provider(rawValue: value),
+                   !type.allowedProviders.isEmpty {
+
+                    setDefaultProvider(blockchainType: type, provider: provider)
+                }
+            }
+        }
+    }
 }

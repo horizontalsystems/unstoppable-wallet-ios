@@ -67,8 +67,14 @@ extension RestoreCloudPassphraseViewModel {
                 self?.processing = false
 
                 switch result {
-                case .success: self?.successSubject.send()
-                case .restoredAccount(let account): self?.openSelectCoinsSubject.send(account)
+                case .success:
+                    self?.successSubject.send()
+                case .restoredAccount(let account):
+                    if account.showSelectCoins {
+                        self?.openSelectCoinsSubject.send(account)
+                    } else {
+                        self?.successSubject.send()
+                    }
                 }
             } catch {
                 switch (error as? RestoreCloudPassphraseService.RestoreError) {
