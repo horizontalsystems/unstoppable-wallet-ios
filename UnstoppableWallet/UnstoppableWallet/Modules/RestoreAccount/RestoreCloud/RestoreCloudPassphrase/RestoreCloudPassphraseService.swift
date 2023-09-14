@@ -1,20 +1,23 @@
 import Foundation
+import MarketKit
 
 class RestoreCloudPassphraseService {
     private let iCloudManager: CloudAccountBackupManager
     private let accountFactory: AccountFactory
     private let accountManager: AccountManager
     private let walletManager: WalletManager
+    private let restoreSettingsManager: RestoreSettingsManager
 
     private let restoredBackup: RestoreCloudModule.RestoredBackup
 
     var passphrase: String = ""
 
-    init(iCloudManager: CloudAccountBackupManager, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, item: RestoreCloudModule.RestoredBackup) {
+    init(iCloudManager: CloudAccountBackupManager, accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager, restoreSettingsManager: RestoreSettingsManager, item: RestoreCloudModule.RestoredBackup) {
         self.iCloudManager = iCloudManager
         self.accountFactory = accountFactory
         self.accountManager = accountManager
         self.walletManager = walletManager
+        self.restoreSettingsManager = restoreSettingsManager
         restoredBackup = item
     }
 
@@ -23,7 +26,18 @@ class RestoreCloudPassphraseService {
         accountManager.save(account: account)
 
         let wallets = restoredBackup.walletBackup.enabledWallets.map {
-            EnabledWallet(
+            if !$0.settings.isEmpty {
+                var restoreSettings = [RestoreSettingType: String]()
+                $0.settings.forEach { key, value in
+                    if let key = RestoreSettingType(rawValue: key) {
+                        restoreSettings[key] = value
+                    }
+                }
+                if let tokenQuery = TokenQuery(id: $0.tokenQueryId) {
+                    restoreSettingsManager.save(settings: restoreSettings, account: account, blockchainType: tokenQuery.blockchainType)
+                }
+            }
+            return EnabledWallet(
                     tokenQueryId: $0.tokenQueryId,
                     accountId: account.id,
                     coinName: $0.coinName,

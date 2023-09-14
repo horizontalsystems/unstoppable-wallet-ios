@@ -1,14 +1,15 @@
-import Foundation
 import Combine
-import HsToolKit
+import Foundation
 import HsExtensions
+import HsToolKit
 
 class CloudAccountBackupManager {
-    static private let batchingInterval: TimeInterval = 1
-    static private let fileExtension = ".json"
+    private static let batchingInterval: TimeInterval = 1
+    private static let fileExtension = ".json"
 
     private let ubiquityContainerIdentifier: String?
     private let fileStorage: FileStorage
+    private let restoreSettingsManager: RestoreSettingsManager
     private let logger: Logger?
 
     private var metadataMonitor: MetadataMonitor?
@@ -16,16 +17,17 @@ class CloudAccountBackupManager {
 
     var iCloudUrl: URL? {
         FileManager
-                .default
-                .url(forUbiquityContainerIdentifier: ubiquityContainerIdentifier)?
-                .appendingPathComponent("Documents")
+            .default
+            .url(forUbiquityContainerIdentifier: ubiquityContainerIdentifier)?
+            .appendingPathComponent("Documents")
     }
 
     @PostPublished private(set) var items = [String: WalletBackup]()
     @PostPublished private(set) var state = State.loading
 
-    init(ubiquityContainerIdentifier: String?, logger: Logger?) {
+    init(ubiquityContainerIdentifier: String?, restoreSettingsManager: RestoreSettingsManager, logger: Logger?) {
         self.ubiquityContainerIdentifier = ubiquityContainerIdentifier
+        self.restoreSettingsManager = restoreSettingsManager
 
         fileStorage = FileStorage(logger: logger)
         self.logger = logger
@@ -49,10 +51,10 @@ class CloudAccountBackupManager {
         logger?.debug("=C-MANAGER> Turn ON monitor")
 
         metadataMonitor.needUpdatePublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.reload()
-                }.store(in: &publishers)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.reload()
+            }.store(in: &publishers)
     }
 
     private func reload() {
@@ -113,11 +115,9 @@ class CloudAccountBackupManager {
         logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, read \(items.count) files")
         return items
     }
-
 }
 
 extension CloudAccountBackupManager {
-
     func backedUp(uniqueId: Data) -> Bool {
         items.contains { _, backup in backup.id == uniqueId.hs.hex }
     }
@@ -125,23 +125,32 @@ extension CloudAccountBackupManager {
     var existFilenames: [String] {
         items.map { ($0.key as NSString).deletingPathExtension }
     }
-
 }
 
 extension CloudAccountBackupManager {
-
     var isAvailable: Bool {
         iCloudUrl != nil
     }
 
-    func save(accountType: AccountType, wallets: [Wallet], isManualBackedUp: Bool, passphrase: String, name: String) throws {
+    func save(account: Account, wallets: [Wallet], isManualBackedUp: Bool, passphrase: String, name: String) throws {
         guard let iCloudUrl else {
             throw BackupError.urlNotAvailable
         }
 
         do {
             let name = name + Self.fileExtension
-            let encoded = try WalletBackupConverter.encode(accountType: accountType, wallets: wallets.map { WalletBackup.EnabledWallet($0) }, isManualBackedUp: isManualBackedUp, passphrase: passphrase)
+            let encoded = try WalletBackupConverter.encode(
+                accountType: account.type,
+                wallets: wallets.map {
+                    let settings = restoreSettingsManager
+                        .settings(accountId: account.id, blockchainType: $0.token.blockchainType)
+                        .reduce(into: [:], { $0[$1.0.rawValue] = $1.1 })
+
+                    return WalletBackup.EnabledWallet($0, settings: settings)
+                },
+                isManualBackedUp: isManualBackedUp,
+                passphrase: passphrase
+            )
 
             try fileStorage.write(directoryUrl: iCloudUrl, filename: name, data: encoded)
             logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, save \(name)")
@@ -149,7 +158,6 @@ extension CloudAccountBackupManager {
             logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, can't save \(name). Because: \(error)")
             throw error
         }
-
     }
 
     func delete(uniqueId: Data) throws {
@@ -162,7 +170,7 @@ extension CloudAccountBackupManager {
             throw BackupError.urlNotAvailable
         }
 
-        guard let item = items.first(where: { name, backup in backup.id == uniqueId }) else {
+        guard let item = items.first(where: { _, backup in backup.id == uniqueId }) else {
             throw BackupError.itemNotFound
         }
 
@@ -179,11 +187,9 @@ extension CloudAccountBackupManager {
             throw error
         }
     }
-
 }
 
 extension CloudAccountBackupManager {
-
     enum BackupError: Error {
         case urlNotAvailable
         case itemNotFound
@@ -194,5 +200,4 @@ extension CloudAccountBackupManager {
         case success
         case error(Error)
     }
-
 }

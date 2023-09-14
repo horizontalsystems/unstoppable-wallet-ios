@@ -54,31 +54,40 @@ class WalletBackup: Codable {
 }
 
 extension WalletBackup {
+    struct Settings: Codable {
+        let type: String
+        let value: String
+    }
+
     struct EnabledWallet: Codable {
         let tokenQueryId: String
         let coinName: String?
         let coinCode: String?
         let tokenDecimals: Int?
+        let settings: [String: String]
 
         enum CodingKeys: String, CodingKey {
             case tokenQueryId = "token_query_id"
             case coinName = "coin_name"
             case coinCode = "coin_code"
             case tokenDecimals = "decimals"
+            case settings
         }
 
-        init(tokenQueryId: String, coinName: String?, coinCode: String?, tokenDecimals: Int?) {
+        init(tokenQueryId: String, coinName: String?, coinCode: String?, tokenDecimals: Int?, settings: [String: String]) {
             self.tokenQueryId = tokenQueryId
             self.coinName = coinName
             self.coinCode = coinCode
             self.tokenDecimals = tokenDecimals
+            self.settings = settings
         }
 
-        init(_ wallet: Wallet) {
+        init(_ wallet: Wallet, settings: [String: String]) {
             tokenQueryId = wallet.token.tokenQuery.id
             coinName = wallet.coin.name
             coinCode = wallet.coin.code
             tokenDecimals = wallet.decimals
+            self.settings = settings
         }
 
         init(from decoder: Decoder) throws {
@@ -87,8 +96,9 @@ extension WalletBackup {
             let coinName = try? container.decode(String.self, forKey: .coinName)
             let coinCode = try container.decode(String.self, forKey: .coinCode)
             let tokenDecimals = try container.decode(Int.self, forKey: .tokenDecimals)
+            let settings = try? container.decode([String: String].self, forKey: .settings)
 
-            self.init(tokenQueryId: tokenQueryId, coinName: coinName, coinCode: coinCode, tokenDecimals: tokenDecimals)
+            self.init(tokenQueryId: tokenQueryId, coinName: coinName, coinCode: coinCode, tokenDecimals: tokenDecimals, settings: settings ?? [:])
         }
 
         public func encode(to encoder: Encoder) throws {
@@ -97,6 +107,9 @@ extension WalletBackup {
             try container.encode(coinName, forKey: .coinName)
             try container.encode(coinCode, forKey: .coinCode)
             try container.encode(tokenDecimals, forKey: .tokenDecimals)
+            if !settings.isEmpty {
+                try container.encode(settings, forKey: .settings)
+            }
         }
     }
 }

@@ -44,7 +44,7 @@ extension BackupCloudPassphraseService {
 
         do {
             let wallets = App.shared.walletManager.wallets(account: account)
-            try iCloudManager.save(accountType: account.type, wallets: wallets, isManualBackedUp: account.backedUp, passphrase: passphrase, name: name)
+            try iCloudManager.save(account: account, wallets: wallets, isManualBackedUp: account.backedUp, passphrase: passphrase, name: name)
         } catch {
             if case .urlNotAvailable = error as? CloudAccountBackupManager.BackupError {
                 throw CreateError.urlNotAvailable
