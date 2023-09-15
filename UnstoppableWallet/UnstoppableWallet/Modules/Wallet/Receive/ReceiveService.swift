@@ -1,6 +1,6 @@
+import Combine
 import Foundation
 import MarketKit
-import Combine
 
 class ReceiveService {
     private let account: Account
@@ -24,8 +24,8 @@ class ReceiveService {
     private func showReceive(token: Token) {
         // check if wallet already exist
         let wallet = walletManager
-                .activeWallets
-                .first { $0.token == token }
+            .activeWallets
+            .first { $0.token == token }
 
         if let wallet {
             showTokenSubject.send(wallet)
@@ -50,11 +50,11 @@ class ReceiveService {
 
         // check if has existed wallets
         let wallets = walletManager
-                .activeWallets
-                .filter { wallet in tokens.contains(wallet.token) }
+            .activeWallets
+            .filter { wallet in tokens.contains(wallet.token) }
 
         switch wallets.count {
-        case 0:                                             // create wallet and show deposit
+        case 0: // create wallet and show deposit
             switch first.blockchainType {
             case .bitcoin, .litecoin, .bitcoinCash:
                 guard let defaultToken = try? marketKit.token(query: first.blockchainType.defaultTokenQuery) else {
@@ -64,12 +64,12 @@ class ReceiveService {
                 let wallet = createWallet(token: defaultToken)
                 showTokenSubject.send(wallet)
             case .zcash:
-                showZcashRestoreSelectSubject.send(first)           // we must enable zcash wallet and ask for birthday
+                showZcashRestoreSelectSubject.send(first) // we must enable zcash wallet and ask for birthday
             default: ()
             }
-        case 1:                                             // just show deposit. When unique token and it's restored
+        case 1: // just show deposit. When unique token and it's restored
             showTokenSubject.send(wallets[0])
-        default:                                            // show choose derivation, addressFormat or other (when token is unique, but many wallets)
+        default: // show choose derivation, addressFormat or other (when token is unique, but many wallets)
             chooseTokenType(blockchainType: first.blockchainType, wallets: wallets)
         }
     }
@@ -86,7 +86,7 @@ class ReceiveService {
     }
 
     private func hasSettings(_ tokens: [Token]) -> Bool {
-        tokens.allSatisfy({ token in
+        tokens.allSatisfy { token in
             switch token.blockchainType {
             case .zcash: return true
             default: ()
@@ -95,13 +95,11 @@ class ReceiveService {
             case .derived, .addressType: return true
             default: return false
             }
-        })
+        }
     }
-
 }
 
 extension ReceiveService {
-
     var showTokenPublisher: AnyPublisher<Wallet, Never> {
         showTokenSubject.eraseToAnyPublisher()
     }
@@ -151,44 +149,10 @@ extension ReceiveService {
         restoreSettingsService.save(settings: tokenWithSettings.settings, account: account, blockchainType: token.blockchainType)
         showReceive(token: token)
     }
-
 }
-extension ReceiveService {
 
+extension ReceiveService {
     func isEnabled(coin: Coin) -> Bool {
         walletManager.activeWallets.contains { $0.coin == coin }
     }
-
-    var predefinedCoins: [FullCoin] {
-        // get all restored coins
-        let activeWallets = walletManager.activeWallets
-        let walletCoins = activeWallets.map {
-            $0.coin
-        }
-        // get all native coins for supported blockchains
-        let nativeCoins = CoinProvider.nativeCoins(marketKit: marketKit)
-        let predefinedCoins = (walletCoins + nativeCoins).removeDuplicates()
-
-        // found all full coins
-        let fullCoins = try? marketKit.fullCoins(coinUids: predefinedCoins.map {
-            $0.uid
-        })
-
-        // filter not supported by current account
-        let predefined = fullCoins?.filter { fullCoin in
-            fullCoin.tokens.contains { account.type.supports(token: $0) }
-        }.sorted { lhsCoin, rhsCoin in
-            let lhsEnabled = isEnabled(coin: lhsCoin.coin)
-            let rhsEnabled = isEnabled(coin: rhsCoin.coin)
-
-            if lhsEnabled != rhsEnabled {
-                return lhsEnabled
-            }
-
-            return lhsCoin.coin.marketCapRank ?? Int.max < rhsCoin.coin.marketCapRank ?? Int.max
-        }
-
-        return predefined ?? []
-    }
-
 }
