@@ -20,8 +20,8 @@ struct ReceiveModule {
 
         let coinProvider = CoinProvider(
                 marketKit: App.shared.marketKit,
-                accountType: account.type,
-                predefined: service.predefinedCoins
+                walletManager: App.shared.walletManager,
+                accountType: account.type
         )
 
         let selectCoinService = ReceiveSelectCoinService(provider: coinProvider)
