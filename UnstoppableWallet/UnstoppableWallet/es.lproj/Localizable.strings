@@ -243,7 +243,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "backup.cloud.title" = "Copia de seguridad en iCloud";
 "backup.cloud.description" = "El almacenamiento en iCloud es un servicio de almacenamiento en la nube de terceros proporcionado por Apple. Es importante tener en cuenta que sus datos se almacenarán en los servidores de Apple, no en sus dispositivos personales. Por lo tanto, está confiando sus datos y entregando la seguridad de su información a un servicio de terceros.";
-
 "backup.cloud.terms.item.1" = "Entiendo que perder el acceso a mi iCloud, resultará en perder el acceso a la copia de seguridad de una cartera respectiva.";
 
 "backup.cloud.name.title" = "Nombre de copia de seguridad";
@@ -270,9 +269,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "backup.cloud.cant_create_file" = "No se puede guardar el archivo en iCloud";
 "backup.cloud.cant_delete_file" = "No se puede eliminar de iCloud";
 "backup.cloud.no_access.title" = "Acceder a iCloud";
-"backup.cloud.no_access.title" = "Acceder a iCloud";
 "backup.cloud.no_access.description" = "Para crear una copia de seguridad, necesita proporcionar acceso al almacenamiento de iCloud.";
-
 
 // Errors
 
@@ -542,7 +539,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.confirmation.maximum_sent" = "Gasto máximo";
 
 "swap.dex_info.description" = "Este servicio de intercambio está impulsado por %@, un intercambio de token descentralizado construido en %@ blockchain.\n\n%@ está completamente automatizado y administrado por contratos inteligentes que facilitan los intercambios de token de una manera conflaible y sin ninguna intención para hacer estafas.";
-
 "swap.dex_info.header_dex_related" = "%@ Relacionado";
 "swap.dex_info.header_allowance" = "Permiso de acceso";
 "swap.dex_info.content_allowance" = "La cantidad que un intercambio puede gastar en nombre del usuario al ejecutar swaps de token. Se requiere un permiso suficiente para establecer una transacción anterior antes de que pueda tener lugar una transacción de intercambio real.";
