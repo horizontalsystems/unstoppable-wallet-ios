@@ -241,7 +241,6 @@
 
 "backup.cloud.title" = "iCloud에 백업";
 "backup.cloud.description" = "iCloud 저장소는 Apple에서 제공하는 타사 클라우드 저장소 서비스입니다. 데이터가 개인 기기가 아닌 Apple 서버에 저장된다는 점을 아는 것이 중요합니다. 이것은 귀하가 귀하의 데이터를 위탁하고 귀하의 정보 보안을 제3자 서비스에 넘기고 있음을 의미합니다.";
-
 "backup.cloud.terms.item.1" = "내 iCloud에 대한 액세스 권한을 상실하면 해당 지갑의 백업에 대한 액세스 권한도 잃게 된다는 점을 이해합니다.";
 
 "backup.cloud.name.title" = "백업 이름";
@@ -268,9 +267,7 @@
 "backup.cloud.cant_create_file" = "파일을 iCloud에 저장할 수 없음";
 "backup.cloud.cant_delete_file" = "iCloud에서 삭제할 수 없습니다";
 "backup.cloud.no_access.title" = "아이클라우드 접근하기";
-"backup.cloud.no_access.title" = "아이클라우드 접근하기";
 "backup.cloud.no_access.description" = "iCloud 스토리지에 백업을 만들려면 액세스 권한을 제공해야 합니다.";
-
 
 // Errors
 
@@ -540,7 +537,6 @@
 "swap.confirmation.maximum_sent" = "최대 속도";
 
 "swap.dex_info.description" = "이 거래소 서비스는 %@ 블록체인에 구축된 분산형 토큰 교환 프로토콜인 %@에 의해 구동됩니다.\n\n%@는 스마트 계약에 의해 완전 자동화되고 관리되므로 부정 행위 없이 토큰 교환을 안정적으로 수행할 수 있습니다.";
-
 "swap.dex_info.header_dex_related" = "%@ 관련됨";
 "swap.dex_info.header_allowance" = "허용량";
 "swap.dex_info.content_allowance" = "토큰 스왑을 실행할 때 거래소가 사용자를 대신하여 지출할 수 있는 금액. 실제 스왑 거래가 발생하기 전에 선행 거래 설정 충분한 여유가 필요합니다.";
