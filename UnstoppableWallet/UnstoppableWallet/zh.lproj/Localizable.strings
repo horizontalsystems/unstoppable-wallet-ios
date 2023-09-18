@@ -243,7 +243,6 @@
 
 "backup.cloud.title" = "备份到iCloud";
 "backup.cloud.description" = "iCloud 存储是 Apple 提供的第三方云存储服务。请注意，您的数据将存储在 Apple 的服务器上，而不是您的个人设备上。这意味着您正在委托您的数据并将信息的安全性移交给第三方服务。";
-
 "backup.cloud.terms.item.1" = "我了解无法访问我的 iCloud 将导致无法访问相应钱包的备份。";
 
 "backup.cloud.name.title" = "备份名称";
@@ -270,9 +269,7 @@
 "backup.cloud.cant_create_file" = "无法将文件保存到iCloud。";
 "backup.cloud.cant_delete_file" = "无法从 iCloud 删除";
 "backup.cloud.no_access.title" = "访问 iCloud";
-"backup.cloud.no_access.title" = "访问 iCloud";
 "backup.cloud.no_access.description" = "要创建备份，您需要提供访问 iCloud 存储。";
-
 
 // Errors
 
@@ -542,7 +539,6 @@
 "swap.confirmation.maximum_sent" = "最大支出";
 
 "swap.dex_info.description" = "此兑换服务由基于%@区块链的分散式代币兑换协议%@提供。\n\n%@由不存在任何欺诈手段、以可靠方式推动代币兑换的智能合约来实现完全自动化并管理。";
-
 "swap.dex_info.header_dex_related" = "%@关联";
 "swap.dex_info.header_allowance" = "补贴";
 "swap.dex_info.content_allowance" = "当执行令牌交换时，交易所可以代表用户花费的金额。 在进行实际互换交易之前，需要先确定足够的备抵。";
