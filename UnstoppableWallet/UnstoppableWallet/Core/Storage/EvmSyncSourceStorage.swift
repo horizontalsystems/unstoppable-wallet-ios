@@ -11,6 +11,12 @@ class EvmSyncSourceStorage {
 
 extension EvmSyncSourceStorage {
 
+    func getAll() throws ->  [EvmSyncSourceRecord] {
+        try dbPool.read { db in
+            try EvmSyncSourceRecord.fetchAll(db)
+        }
+    }
+
     func records(blockchainTypeUid: String) throws -> [EvmSyncSourceRecord] {
         try dbPool.read { db in
             try EvmSyncSourceRecord.filter(EvmSyncSourceRecord.Columns.blockchainTypeUid == blockchainTypeUid).fetchAll(db)

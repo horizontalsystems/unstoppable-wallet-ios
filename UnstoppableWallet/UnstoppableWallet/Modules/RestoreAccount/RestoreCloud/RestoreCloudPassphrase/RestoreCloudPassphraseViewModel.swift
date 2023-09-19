@@ -77,7 +77,7 @@ extension RestoreCloudPassphraseViewModel {
                     }
                 }
             } catch {
-                switch (error as? RestoreCloudPassphraseService.RestoreError) {
+                switch (error as? RestoreCloudModule.RestoreError) {
                 case .emptyPassphrase:
                     self?.passphraseCaution = Caution(text: "backup.cloud.password.error.empty_passphrase".localized, type: .error)
                 case .simplePassword:

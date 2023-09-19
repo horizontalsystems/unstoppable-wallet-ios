@@ -25,7 +25,7 @@ struct WalletTokenBalanceModule {
                 coinPriceService: coinPriceService,
                 elementService: elementService,
                 appManager: App.shared.appManager,
-                cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
+                cloudAccountBackupManager: App.shared.cloudBackupManager,
                 balanceHiddenManager: App.shared.balanceHiddenManager,
                 reachabilityManager: App.shared.reachabilityManager,
                 account: account,

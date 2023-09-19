@@ -1,9 +1,14 @@
 import Foundation
 import ObjectMapper
 
-class ContactAddress: ImmutableMappable, Hashable, Equatable {
+class ContactAddress: Codable, ImmutableMappable, Hashable, Equatable {
     let blockchainUid: String
     let address: String
+
+    enum CodingKeys: String, CodingKey {
+        case blockchainUid = "blockchain_uid"
+        case address = "address"
+    }
 
     init(blockchainUid: String, address: String) {
         self.blockchainUid = blockchainUid
@@ -11,13 +16,13 @@ class ContactAddress: ImmutableMappable, Hashable, Equatable {
     }
 
     required init(map: Map) throws {
-        blockchainUid = try map.value("blockchain_uid")
-        address = try map.value("address")
+        blockchainUid = try map.value(CodingKeys.blockchainUid.rawValue)
+        address = try map.value(CodingKeys.address.rawValue)
     }
 
     func mapping(map: Map) {
-        blockchainUid >>> map["blockchain_uid"]
-        address       >>> map["address"]
+        blockchainUid >>> map[CodingKeys.blockchainUid.rawValue]
+        address       >>> map[CodingKeys.address.rawValue]
     }
 
     func hash(into hasher: inout Hasher) {
@@ -40,7 +45,7 @@ extension Array where Element == ContactAddress {
 
 }
 
-class Contact: ImmutableMappable, Hashable, Equatable {
+class Contact: Codable, ImmutableMappable, Hashable, Equatable {
     let uid: String
     let modifiedAt: TimeInterval
     let name: String
@@ -81,7 +86,7 @@ class Contact: ImmutableMappable, Hashable, Equatable {
 
 }
 
-class DeletedContact: ImmutableMappable, Hashable, Equatable {
+class DeletedContact: Codable, ImmutableMappable, Hashable, Equatable {
     let uid: String
     let deletedAt: TimeInterval
 
@@ -110,7 +115,7 @@ class DeletedContact: ImmutableMappable, Hashable, Equatable {
 
 }
 
-class ContactBook: ImmutableMappable {
+class ContactBook: Codable, ImmutableMappable {
     static let empty = ContactBook(contacts: [], deletedContacts: [])
     let version: Int
     let contacts: [Contact]

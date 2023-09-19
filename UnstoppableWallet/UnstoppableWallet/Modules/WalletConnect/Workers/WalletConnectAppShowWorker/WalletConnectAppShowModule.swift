@@ -4,7 +4,7 @@ class WalletConnectAppShowModule {
     static func handler(parentViewController: UIViewController? = nil) -> IEventHandler {
         let walletConnectWorkerService = WalletConnectAppShowService(
             walletConnectManager: App.shared.walletConnectSessionManager,
-            cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
+            cloudAccountBackupManager: App.shared.cloudBackupManager,
             accountManager: App.shared.accountManager,
             pinKit: App.shared.pinKit
         )

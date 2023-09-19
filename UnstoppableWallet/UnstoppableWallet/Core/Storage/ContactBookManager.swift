@@ -415,7 +415,15 @@ extension ContactBookManager {
         return contacts
     }
 
-    func restore(contacts:[BackupContact]) throws {
+    func restore(crypto: BackupCrypto, passphrase: String) throws {
+        let data = try crypto.data(passphrase: passphrase)
+        let decoder = JSONDecoder()
+        let contacts = try decoder.decode([BackupContact].self, from: data)
+
+        try restore(contacts: contacts)
+    }
+
+    func restore(contacts: [BackupContact]) throws {
         guard let localUrl else {
             state = .failed(ContactBookManager.StorageError.localUrlNotAvailable)
             return

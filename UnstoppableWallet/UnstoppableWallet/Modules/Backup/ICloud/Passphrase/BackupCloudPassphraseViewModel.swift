@@ -81,18 +81,18 @@ extension BackupCloudPassphraseViewModel {
             processing = false
             finishSubject.send(())
         } catch {
-            switch (error as? BackupCloudPassphraseService.CreateError) {
-            case .emptyPassphrase:
+            switch error {
+            case BackupCrypto.ValidationError.emptyPassphrase:
                 passphraseCaution = Caution(text: "backup.cloud.password.error.empty_passphrase".localized, type: .error)
-            case .simplePassword:
+            case BackupCrypto.ValidationError.simplePassword:
                 passphraseCaution = Caution(text: "backup.cloud.password.error.minimum_requirement".localized, type: .error)
-            case .invalidConfirmation:
+            case BackupCloudPassphraseService.CreateError.invalidConfirmation:
                 passphraseConfirmationCaution = Caution(text: "backup.cloud.password.confirm.error.doesnt_match".localized, type: .error)
-            case .urlNotAvailable:
+            case BackupCloudPassphraseService.CreateError.urlNotAvailable:
                 showErrorSubject.send("backup.cloud.not_available".localized)
-            case .cantSaveFile:
+            case BackupCloudPassphraseService.CreateError.cantSaveFile:
                 showErrorSubject.send("backup.cloud.cant_create_file".localized)
-            case .none:
+            default:
                 showErrorSubject.send(error.smartDescription)
             }
             processing = false

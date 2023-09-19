@@ -6,16 +6,21 @@ struct RestoreCloudModule {
 
     static func viewController(returnViewController: UIViewController?) -> UIViewController {
         let service = RestoreCloudService(
-                cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
+                cloudAccountBackupManager: App.shared.cloudBackupManager,
                 accountManager: App.shared.accountManager
         )
         let viewModel = RestoreCloudViewModel(service: service)
         return RestoreCloudViewController(viewModel: viewModel, returnViewController: returnViewController)
     }
 
-    struct RestoredBackup {
+    struct RestoredBackup: Codable {
         let name: String
         let walletBackup: WalletBackup
+
+        enum CodingKeys: String, CodingKey {
+            case name
+            case walletBackup = "backup"
+        }
     }
 
     struct RestoredAccount {
@@ -25,4 +30,13 @@ struct RestoreCloudModule {
         let showSelectCoins: Bool
     }
 
+}
+
+extension RestoreCloudModule {
+    enum RestoreError: Error {
+        case emptyPassphrase
+        case simplePassword
+        case invalidPassword
+        case invalidBackup
+    }
 }

@@ -13,7 +13,7 @@ class ManageAccountService {
     }
 
     private let accountManager: AccountManager
-    private let cloudBackupManager: CloudAccountBackupManager
+    private let cloudBackupManager: CloudBackupManager
     private let pinKit: PinKit.Kit
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
@@ -30,7 +30,7 @@ class ManageAccountService {
 
     private var newName: String
 
-    init?(accountId: String, accountManager: AccountManager, cloudBackupManager: CloudAccountBackupManager, pinKit: PinKit.Kit) {
+    init?(accountId: String, accountManager: AccountManager, cloudBackupManager: CloudBackupManager, pinKit: PinKit.Kit) {
         guard let account = accountManager.account(id: accountId) else {
             return nil
         }
@@ -46,7 +46,7 @@ class ManageAccountService {
         subscribe(disposeBag, accountManager.accountUpdatedObservable) { [weak self] in self?.handleUpdated(account: $0) }
         subscribe(disposeBag, accountManager.accountDeletedObservable) { [weak self] in self?.handleDeleted(account: $0) }
 
-        cloudBackupManager.$items
+        cloudBackupManager.$oneWalletItems
                 .sink { [weak self] _ in
                     self?.cloudBackedUpRelay.accept(())
                 }

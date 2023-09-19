@@ -2,12 +2,12 @@ import UIKit
 import Combine
 
 class RestoreTypeViewModel {
-    private let cloudAccountBackupManager: CloudAccountBackupManager
+    private let cloudAccountBackupManager: CloudBackupManager
 
     private let showCloudNotAvailableSubject = PassthroughSubject<Void, Never>()
     private let showModuleSubject = PassthroughSubject<RestoreType, Never>()
 
-    init(cloudAccountBackupManager: CloudAccountBackupManager) {
+    init(cloudAccountBackupManager: CloudBackupManager) {
         self.cloudAccountBackupManager = cloudAccountBackupManager
     }
 

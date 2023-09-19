@@ -30,7 +30,7 @@ struct WalletModule {
             balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
             balanceHiddenManager: App.shared.balanceHiddenManager,
             balanceConversionManager: App.shared.balanceConversionManager,
-            cloudAccountBackupManager: App.shared.cloudAccountBackupManager,
+            cloudAccountBackupManager: App.shared.cloudBackupManager,
             rateAppManager: App.shared.rateAppManager,
             appManager: App.shared.appManager,
             feeCoinProvider: App.shared.feeCoinProvider,
