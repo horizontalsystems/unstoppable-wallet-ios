@@ -8,14 +8,14 @@ class WalletConnectAppShowService {
     private var disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
     private let walletConnectManager: WalletConnectSessionManager
-    private let cloudAccountBackupManager: CloudAccountBackupManager
+    private let cloudAccountBackupManager: CloudBackupManager
     private let accountManager: AccountManager
     private let pinKit: PinKit.Kit
 
     private let showSessionProposalSubject = PassthroughSubject<WalletConnectSign.Session.Proposal, Never>()
     private let showSessionRequestSubject = PassthroughSubject<WalletConnectRequest, Never>()
 
-    init(walletConnectManager: WalletConnectSessionManager, cloudAccountBackupManager: CloudAccountBackupManager, accountManager: AccountManager, pinKit: PinKit.Kit) {
+    init(walletConnectManager: WalletConnectSessionManager, cloudAccountBackupManager: CloudBackupManager, accountManager: AccountManager, pinKit: PinKit.Kit) {
         self.walletConnectManager = walletConnectManager
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.accountManager = accountManager

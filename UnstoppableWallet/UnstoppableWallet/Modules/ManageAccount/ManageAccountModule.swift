@@ -9,7 +9,7 @@ struct ManageAccountModule {
         guard let service = ManageAccountService(
                 accountId: accountId,
                 accountManager: App.shared.accountManager,
-                cloudBackupManager: App.shared.cloudAccountBackupManager,
+                cloudBackupManager: App.shared.cloudBackupManager,
                 pinKit: App.shared.pinKit
         ) else {
             return nil

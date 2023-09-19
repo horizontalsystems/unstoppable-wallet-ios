@@ -6,6 +6,7 @@ import MarketKit
 import PinKit
 import StorageKit
 import ThemeKit
+import LanguageKit
 
 class App {
     static var instance: App?
@@ -105,7 +106,8 @@ class App {
 
     let appManager: AppManager
     let contactManager: ContactBookManager
-    let cloudAccountBackupManager: CloudAccountBackupManager
+    let appBackupProvider: AppBackupProvider
+    let cloudBackupManager: CloudBackupManager
 
     let appEventHandler = EventHandler()
 
@@ -190,8 +192,6 @@ class App {
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)
         predefinedBlockchainService = PredefinedBlockchainService(restoreSettingsManager: restoreSettingsManager)
-
-        cloudAccountBackupManager = CloudAccountBackupManager(ubiquityContainerIdentifier: AppConfig.sharedCloudContainer, restoreSettingsManager: restoreSettingsManager, logger: logger)
 
         let hsLabelProvider = HsLabelProvider(networkManager: networkManager)
         let evmLabelStorage = EvmLabelStorage(dbPool: dbPool)
@@ -305,6 +305,30 @@ class App {
 
         let cexAssetRecordStorage = CexAssetRecordStorage(dbPool: dbPool)
         cexAssetManager = CexAssetManager(accountManager: accountManager, marketKit: marketKit, storage: cexAssetRecordStorage)
+
+        appBackupProvider = AppBackupProvider(
+                accountManager: accountManager,
+                accountFactory: accountFactory,
+                walletManager: walletManager,
+                favoritesManager: favoritesManager,
+                evmSyncSourceManager: evmSyncSourceManager,
+                restoreSettingsManager: restoreSettingsManager,
+                localStorage: localStorage,
+                languageManager: LanguageManager.shared,
+                currencyKit: currencyKit,
+                themeManager: themeManager,
+                launchScreenManager: launchScreenManager,
+                appIconManager: appIconManager,
+                balancePrimaryValueManager: balancePrimaryValueManager,
+                balanceConversionManager: balanceConversionManager,
+                balanceHiddenManager: balanceHiddenManager,
+                contactManager: contactManager
+        )
+        cloudBackupManager = CloudBackupManager(
+                ubiquityContainerIdentifier: AppConfig.sharedCloudContainer,
+                appBackupProvider: appBackupProvider,
+                logger: logger
+        )
 
         appManager = AppManager(
             accountManager: accountManager,

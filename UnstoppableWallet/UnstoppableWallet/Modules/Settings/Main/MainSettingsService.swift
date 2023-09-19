@@ -12,7 +12,7 @@ class MainSettingsService {
     private let disposeBag = DisposeBag()
 
     private let backupManager: BackupManager
-    private let cloudAccountBackupManager: CloudAccountBackupManager
+    private let cloudAccountBackupManager: CloudBackupManager
     private let accountRestoreWarningManager: AccountRestoreWarningManager
     private let accountManager: AccountManager
     private let contactBookManager: ContactBookManager
@@ -26,7 +26,7 @@ class MainSettingsService {
     private let iCloudAvailableErrorRelay = BehaviorRelay<Bool>(value: false)
     private let noWalletRequiredActionsRelay = BehaviorRelay<Bool>(value: false)
 
-    init(backupManager: BackupManager, cloudAccountBackupManager: CloudAccountBackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager, pinKit: PinKit.Kit, termsManager: TermsManager,
+    init(backupManager: BackupManager, cloudAccountBackupManager: CloudBackupManager, accountRestoreWarningManager: AccountRestoreWarningManager, accountManager: AccountManager, contactBookManager: ContactBookManager, pinKit: PinKit.Kit, termsManager: TermsManager,
          systemInfoManager: SystemInfoManager, currencyKit: CurrencyKit.Kit, walletConnectSessionManager: WalletConnectSessionManager, subscriptionManager: SubscriptionManager) {
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.backupManager = backupManager

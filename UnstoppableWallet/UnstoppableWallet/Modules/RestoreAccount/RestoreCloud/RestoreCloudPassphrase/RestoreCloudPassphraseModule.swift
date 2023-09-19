@@ -5,7 +5,8 @@ class RestoreCloudPassphraseModule {
 
     static func restorePassword(item: RestoreCloudModule.RestoredBackup, returnViewController: UIViewController?) -> UIViewController {
         let service = RestoreCloudPassphraseService(
-                iCloudManager: App.shared.cloudAccountBackupManager,
+                iCloudManager: App.shared.cloudBackupManager,
+                appBackupProvider: App.shared.appBackupProvider,
                 accountFactory: App.shared.accountFactory,
                 accountManager: App.shared.accountManager,
                 walletManager: App.shared.walletManager,

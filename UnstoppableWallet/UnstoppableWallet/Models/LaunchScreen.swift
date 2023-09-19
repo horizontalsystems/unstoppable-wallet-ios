@@ -23,3 +23,12 @@ enum LaunchScreen: String, CaseIterable {
     }
 
 }
+
+extension LaunchScreen: Codable {
+    enum CodingKeys: String, CodingKey {
+        case auto
+        case balance
+        case marketOverview = "market_overview"
+        case watchlist
+    }
+}

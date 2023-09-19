@@ -2,7 +2,7 @@ import Foundation
 import Combine
 
 class RestoreCloudService {
-    private let cloudAccountBackupManager: CloudAccountBackupManager
+    private let cloudAccountBackupManager: CloudBackupManager
     private let accountManager: AccountManager
 
     private var cancellables = Set<AnyCancellable>()
@@ -10,17 +10,17 @@ class RestoreCloudService {
     private let deleteItemCompletedSubject = PassthroughSubject<Bool, Never>()
     @Published var items = [Item]()
 
-    init(cloudAccountBackupManager: CloudAccountBackupManager, accountManager: AccountManager) {
+    init(cloudAccountBackupManager: CloudBackupManager, accountManager: AccountManager) {
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.accountManager = accountManager
 
-        cloudAccountBackupManager.$items
+        cloudAccountBackupManager.$oneWalletItems
                 .sink { [weak self] in
                         self?.sync(backups: $0)
                 }
                 .store(in: &cancellables)
 
-        sync(backups: cloudAccountBackupManager.items)
+        sync(backups: cloudAccountBackupManager.oneWalletItems)
     }
 
     private func sync(backups: [String: WalletBackup]) {

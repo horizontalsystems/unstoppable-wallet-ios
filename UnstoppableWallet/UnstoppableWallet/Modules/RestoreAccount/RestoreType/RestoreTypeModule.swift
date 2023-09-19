@@ -4,7 +4,7 @@ import ThemeKit
 struct RestoreTypeModule {
 
     static func viewController(sourceViewController: UIViewController? = nil, returnViewController: UIViewController? = nil) -> UIViewController {
-        let viewModel = RestoreTypeViewModel(cloudAccountBackupManager: App.shared.cloudAccountBackupManager)
+        let viewModel = RestoreTypeViewModel(cloudAccountBackupManager: App.shared.cloudBackupManager)
         let viewController = RestoreTypeViewController(viewModel: viewModel, returnViewController: returnViewController)
         let module = ThemeNavigationController(rootViewController: viewController)
 

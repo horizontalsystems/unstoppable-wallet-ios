@@ -3,13 +3,13 @@ import Foundation
 import HsExtensions
 import HsToolKit
 
-class CloudAccountBackupManager {
+class CloudBackupManager {
     private static let batchingInterval: TimeInterval = 1
     private static let fileExtension = ".json"
 
     private let ubiquityContainerIdentifier: String?
     private let fileStorage: FileStorage
-    private let restoreSettingsManager: RestoreSettingsManager
+    private let appBackupProvider: AppBackupProvider
     private let logger: Logger?
 
     private var metadataMonitor: MetadataMonitor?
@@ -22,12 +22,13 @@ class CloudAccountBackupManager {
             .appendingPathComponent("Documents")
     }
 
-    @PostPublished private(set) var items = [String: WalletBackup]()
+    @PostPublished private(set) var oneWalletItems = [String: WalletBackup]()
+    @PostPublished private(set) var fullBackupItems = [String: FullBackup]()
     @PostPublished private(set) var state = State.loading
 
-    init(ubiquityContainerIdentifier: String?, restoreSettingsManager: RestoreSettingsManager, logger: Logger?) {
+    init(ubiquityContainerIdentifier: String?, appBackupProvider: AppBackupProvider, logger: Logger?) {
         self.ubiquityContainerIdentifier = ubiquityContainerIdentifier
-        self.restoreSettingsManager = restoreSettingsManager
+        self.appBackupProvider = appBackupProvider
 
         fileStorage = FileStorage(logger: logger)
         self.logger = logger
@@ -70,11 +71,14 @@ class CloudAccountBackupManager {
 
         do {
             forceDownloadContainerFiles(url: url)
-            let items = try Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
+            let oneWalletItems: [String: WalletBackup] = try Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
+            let fullBackupItems: [String: FullBackup] = try Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
 
             state = .success
             logger?.log(level: .debug, message: "CloudAccountManager.state = \(state)")
-            self.items = items
+
+            self.oneWalletItems = oneWalletItems
+            self.fullBackupItems = fullBackupItems
         } catch {
             state = .error(error)
             logger?.log(level: .debug, message: "CloudAccountManager.state = \(state)")
@@ -98,14 +102,14 @@ class CloudAccountBackupManager {
         }
     }
 
-    private static func downloadItems(url: URL, fileStorage: FileStorage, logger: Logger? = nil) throws -> [String: WalletBackup] {
+    private static func downloadItems<T: Decodable>(url: URL, fileStorage: FileStorage, logger: Logger? = nil) throws -> [String: T] {
         let files = try fileStorage.fileList(url: url).filter { s in s.contains(Self.fileExtension) }
-        var items = [String: WalletBackup]()
+        var items = [String: T]()
 
         for file in files {
             do {
                 let data = try fileStorage.read(directoryUrl: url, filename: file)
-                let backup = try JSONDecoder().decode(WalletBackup.self, from: data)
+                let backup = try JSONDecoder().decode(T.self, from: data)
                 items[file] = backup
             } catch {
                 logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, can't read \(file). Because: \(error)")
@@ -115,45 +119,66 @@ class CloudAccountBackupManager {
         logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, read \(items.count) files")
         return items
     }
-}
 
-extension CloudAccountBackupManager {
-    func backedUp(uniqueId: Data) -> Bool {
-        items.contains { _, backup in backup.id == uniqueId.hs.hex }
-    }
-
-    var existFilenames: [String] {
-        items.map { ($0.key as NSString).deletingPathExtension }
-    }
-}
-
-extension CloudAccountBackupManager {
-    var isAvailable: Bool {
-        iCloudUrl != nil
-    }
-
-    func save(account: Account, wallets: [Wallet], isManualBackedUp: Bool, passphrase: String, name: String) throws {
+    private func save(encoded: Data, name: String) throws {
         guard let iCloudUrl else {
             throw BackupError.urlNotAvailable
         }
 
         do {
             let name = name + Self.fileExtension
-            let encoded = try WalletBackupConverter.encode(
-                accountType: account.type,
-                wallets: wallets.map {
-                    let settings = restoreSettingsManager
-                        .settings(accountId: account.id, blockchainType: $0.token.blockchainType)
-                        .reduce(into: [:], { $0[$1.0.rawValue] = $1.1 })
-
-                    return WalletBackup.EnabledWallet($0, settings: settings)
-                },
-                isManualBackedUp: isManualBackedUp,
-                passphrase: passphrase
-            )
 
             try fileStorage.write(directoryUrl: iCloudUrl, filename: name, data: encoded)
             logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, save \(name)")
+        } catch {
+            logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, can't save \(name). Because: \(error)")
+            throw error
+        }
+    }
+}
+
+extension CloudBackupManager {
+    func backedUp(uniqueId: Data) -> Bool {
+        oneWalletItems.contains { _, backup in backup.id == uniqueId.hs.hex }
+    }
+
+    var existFilenames: [String] {
+        oneWalletItems.map { ($0.key as NSString).deletingPathExtension } +
+            fullBackupItems.map { ($0.key as NSString).deletingPathExtension }
+    }
+}
+
+extension CloudBackupManager {
+    var isAvailable: Bool {
+        iCloudUrl != nil
+    }
+
+    func save(account: Account, passphrase: String, name: String) throws {
+        let backup = try appBackupProvider.walletBackup(
+            account: account,
+            passphrase: passphrase
+        )
+
+        do {
+            let encoded = try JSONEncoder().encode(backup)
+            try save(encoded: encoded, name: name)
+        } catch {
+            logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, can't save \(name). Because: \(error)")
+            throw error
+        }
+    }
+
+    func save(fields: [AppBackupProvider.Field], passphrase: String, name: String) throws {
+        let backup = try appBackupProvider.fullBackup(
+                fields: fields,
+                passphrase: passphrase
+        )
+
+        do {
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(backup)
+            let encoded = try JSONEncoder().encode(backup)
+            try save(encoded: encoded, name: name)
         } catch {
             logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, can't save \(name). Because: \(error)")
             throw error
@@ -170,7 +195,7 @@ extension CloudAccountBackupManager {
             throw BackupError.urlNotAvailable
         }
 
-        guard let item = items.first(where: { _, backup in backup.id == uniqueId }) else {
+        guard let item = oneWalletItems.first(where: { _, backup in backup.id == uniqueId }) else {
             throw BackupError.itemNotFound
         }
 
@@ -179,8 +204,7 @@ extension CloudAccountBackupManager {
             try fileStorage.deleteFile(url: fileUrl)
 
             // system will automatically updates items but after 1-2 seconds. So we need force update
-            items[item.key] = nil
-
+            oneWalletItems[item.key] = nil
             logger?.log(level: .debug, message: "CloudAccountManager.delete \(item.key) successful")
         } catch {
             logger?.log(level: .debug, message: "CloudAccountManager.delete \(item.key) unsuccessful because: \(error)")
@@ -189,7 +213,7 @@ extension CloudAccountBackupManager {
     }
 }
 
-extension CloudAccountBackupManager {
+extension CloudBackupManager {
     enum BackupError: Error {
         case urlNotAvailable
         case itemNotFound

@@ -31,6 +31,13 @@ extension FavoriteCoinRecordStorage {
         }
     }
 
+    func deleteAll() {
+        _ = try! dbPool.write { db in
+            try FavoriteCoinRecord
+                    .deleteAll(db)
+        }
+    }
+
     func deleteFavoriteCoinRecord(coinUid: String) {
         _ = try! dbPool.write { db in
             try FavoriteCoinRecord

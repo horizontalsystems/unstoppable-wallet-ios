@@ -3,12 +3,12 @@ import Combine
 import HsExtensions
 
 class ICloudBackupNameService {
-    private let iCloudManager: CloudAccountBackupManager
+    private let iCloudManager: CloudBackupManager
     let account: Account
 
     @PostPublished private(set) var state: State = .failure(error: NameError.empty)
 
-    init(iCloudManager: CloudAccountBackupManager, account: Account) {
+    init(iCloudManager: CloudBackupManager, account: Account) {
         self.iCloudManager = iCloudManager
         self.account = account
 

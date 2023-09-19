@@ -1,7 +1,7 @@
 import Foundation
 
 class WalletBackup: Codable {
-    let crypto: WalletBackupCrypto
+    let crypto: BackupCrypto
     let id: String
     let type: AccountType.Abstract
     let isManualBackedUp: Bool
@@ -19,19 +19,19 @@ class WalletBackup: Codable {
         case timestamp
     }
 
-    init(crypto: WalletBackupCrypto, enabledWallets: [EnabledWallet], id: String, type: AccountType.Abstract, isManualBackedUp: Bool, version: Int, timestamp: TimeInterval) {
+    init(crypto: BackupCrypto, enabledWallets: [EnabledWallet], id: String, type: AccountType.Abstract, isManualBackedUp: Bool, version: Int, timestamp: TimeInterval) {
         self.crypto = crypto
         self.enabledWallets = enabledWallets
         self.id = id
         self.type = type
         self.isManualBackedUp = isManualBackedUp
         self.version = version
-        self.timestamp = timestamp.rounded()
+        self.timestamp = timestamp
     }
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        crypto = try container.decode(WalletBackupCrypto.self, forKey: .crypto)
+        crypto = try container.decode(BackupCrypto.self, forKey: .crypto)
         enabledWallets = (try? container.decode([EnabledWallet].self, forKey: .enabledWallets)) ?? []
         id = try container.decode(String.self, forKey: .id)
         type = try container.decode(AccountType.Abstract.self, forKey: .type)
