@@ -180,35 +180,6 @@ class NftAssetOverviewViewController: ThemeViewController {
         urlManager.open(url: url, from: parentNavigationController ?? self)
     }
 
-    private func openSend() {
-       guard let viewController = SendNftModule.viewController(nftUid: viewModel.nftUid) else {
-           return
-       }
-
-        parentNavigationController?.present(viewController, animated: true)
-    }
-
-    private func openOptionsMenu() {
-        let controller = AlertViewControllerNew.instance(
-                viewItems: [
-                    .init(text: "button.share".localized),
-                    .init(text: "nft_asset.options.save_to_photos".localized),
-//                    .init(text: "nft_asset.options.set_as_watch_face".localized)
-                ],
-                reportAfterDismiss: true,
-                onSelect: { [weak self] index in
-                    switch index {
-                    case 0: self?.handleShare()
-                    case 1: self?.handleSaveToPhotos()
-//                    case 2: self?.handleSetWatchFace()
-                    default: ()
-                    }
-                }
-        )
-
-        (parentNavigationController ?? self).present(controller, animated: true)
-    }
-
     private func handleShare() {
         if let providerUrl = providerUrl {
             openShare(text: providerUrl)
@@ -319,17 +290,11 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                             height: .heightButton,
                             bind: { [weak self] cell, _ in
                                 cell.bind(
-                                        providerTitle: self?.viewModel.providerTitle,
-                                        onTapSend: sendVisible ? { [weak self] in
-                                            self?.openSend()
-                                        } : nil,
-                                        onTapProvider: {
-                                            if let url = self?.providerUrl {
-                                                self?.openLink(url: url)
-                                            }
+                                        onTapShare: { [weak self] in
+                                            self?.handleShare()
                                         },
-                                        onTapMore: {
-                                            self?.openOptionsMenu()
+                                        onTapSave: { [weak self] in
+                                            self?.handleSaveToPhotos()
                                         }
                                 )
                             }
