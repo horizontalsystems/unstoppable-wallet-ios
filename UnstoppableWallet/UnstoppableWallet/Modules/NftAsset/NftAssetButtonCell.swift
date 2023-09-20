@@ -1,16 +1,14 @@
-import UIKit
 import ComponentKit
+import UIKit
 
 class NftAssetButtonCell: UITableViewCell {
-    private let providerButton = PrimaryButton()
-    private let sendButton = PrimaryButton()
-    private let moreButton = PrimaryCircleButton()
+    private let saveButton = PrimaryButton()
+    private let shareButton = PrimaryButton()
 
     private let stackView = UIStackView()
 
-    private var onTapSend: (() -> ())?
-    private var onTapProvider: (() -> ())?
-    private var onTapMore: (() -> ())?
+    private var onTapShare: (() -> Void)?
+    private var onTapSave: (() -> Void)?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -25,51 +23,37 @@ class NftAssetButtonCell: UITableViewCell {
             maker.height.equalTo(CGFloat.heightButton)
         }
 
-        stackView.addArrangedSubview(sendButton)
-        stackView.addArrangedSubview(providerButton)
-        stackView.addArrangedSubview(moreButton)
+        stackView.addArrangedSubview(shareButton)
+        stackView.addArrangedSubview(saveButton)
 
         stackView.spacing = .margin8
         stackView.alignment = .fill
-        stackView.distribution = .fill
+        stackView.distribution = .fillEqually
 
-        sendButton.set(style: .yellow)
-        sendButton.addTarget(self, action: #selector(onTapSendButton), for: .touchUpInside)
-        sendButton.setTitle("button.send".localized, for: .normal)
+        shareButton.set(style: .yellow)
+        shareButton.addTarget(self, action: #selector(onTapShareButton), for: .touchUpInside)
+        shareButton.setTitle("button.share".localized, for: .normal)
 
-        providerButton.set(style: .gray)
-        providerButton.addTarget(self, action: #selector(onTapProviderButton), for: .touchUpInside)
-
-        moreButton.set(style: .gray)
-        moreButton.set(image: UIImage(named: "more_24"))
-        moreButton.addTarget(self, action: #selector(onTapMoreButton), for: .touchUpInside)
+        saveButton.set(style: .gray)
+        saveButton.addTarget(self, action: #selector(onTapSaveButton), for: .touchUpInside)
+        saveButton.setTitle("button.save".localized, for: .normal)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @objc private func onTapSendButton() {
-        onTapSend?()
+    @objc private func onTapSaveButton() {
+        onTapSave?()
     }
 
-    @objc private func onTapProviderButton() {
-        onTapProvider?()
+    @objc private func onTapShareButton() {
+        onTapShare?()
     }
 
-    @objc private func onTapMoreButton() {
-        onTapMore?()
+    func bind(onTapShare: @escaping () -> Void, onTapSave: @escaping () -> Void) {
+        self.onTapShare = onTapShare
+        self.onTapSave = onTapSave
     }
-
-    func bind(providerTitle: String?, onTapSend: (() -> ())?, onTapProvider: @escaping () -> (), onTapMore: @escaping () -> ()) {
-        providerButton.setTitle(providerTitle, for: .normal)
-
-        sendButton.isHidden = onTapSend == nil
-        providerButton.isHidden = onTapSend != nil
-
-        self.onTapSend = onTapSend
-        self.onTapProvider = onTapProvider
-        self.onTapMore = onTapMore
-    }
-
 }
