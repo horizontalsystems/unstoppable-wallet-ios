@@ -61,7 +61,7 @@ class BitcoinFeeRateProvider: IFeeRateProvider {
 
     func feeRates() async throws -> FeeRateProvider.FeeRates {
         let rates = try await feeRateProvider.bitcoinFeeRate()
-        return .init(recommended: rates.economyFee, minimum: rates.minimumFee)
+        return .init(recommended: rates.halfHourFee, minimum: rates.minimumFee)
     }
 
 }
