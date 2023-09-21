@@ -96,9 +96,8 @@
 
 // Access Camera
 
-"access_camera.message"  = "Listen folks, %@ needs to see through your camera, okay.
+"access_camera.message" = "Listen folks, %@ needs to see through your camera, okay.
 To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
-
 "access_camera.settings" = "Settings";
 
 // Restore
@@ -110,9 +109,9 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "restore.restore_type.private_key" = "Private Key.";
 "restore.mnemonic.placeholder" = "Give me those magic words! Recovery Phrase, come on!";
 "restore.private_key.placeholder" = "Enter EVM Private Key, BIP32 Root Key or Account Extended Private Key";
-"restore.private_key.invalid_key" = "Invalid Key";
+"restore.private_key.invalid_key" = "This key? Not the best. It's wrong!";
 "restore_error.mnemonic_word_count" = "Listen, we need 12 to 24 words. Not more, not less. Perfect balance. You gave me: %@";
-"restore.checksum_error" = "Invalid checksum";
+"restore.checksum_error" = "Checksum? Fake news! It's wrong!";
 "restore.passphrase" = "Passphrase";
 "restore.input.passphrase" = "Passphrase";
 "restore.passphrase_description" = "You know, we have this tremendous password. It's for your wallet backup, not your Apple thing. It's so good, if you lose it, even I can't get it back for you!";
@@ -126,9 +125,9 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "restore_type.title" = "Import Wallet";
 
-"restore_type.recovery.title" = "from Recovery Phrase";
-"restore_type.cloud.title" = "from iCloud";
-"restore_type.cex.title" = "from Exchange Wallet";
+"restore_type.recovery.title" = "The Tremendous Recovery Phrase!";
+"restore_type.cloud.title" = "iCloud";
+"restore_type.cex.title" = "From the Exchange Wallet – The Best!";
 
 "restore_type.recovery.description" = "Importing with the mightiest recovery phrase or a super private key!";
 "restore_type.cloud.description" = "Importing from the backup – straight outta your keychain!";
@@ -136,30 +135,30 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Restore Cloud
 
-"restore.cloud.title" = "Select Backup";
+"restore.cloud.title" = "Backup? The Best Backup!";
 "restore.cloud.description" = "Pick your wallet's backup, the one you really wanna bring back!";
 "restore.cloud.empty" = "No backups found";
-"restore.cloud.imported" = "Imported wallets";
+"restore.cloud.imported" = "Wallets that we've made great again!";
 
-"restore.cloud.password.title" = "Enter Password";
-"restore.cloud.password.placeholder" = "Backup Password";
+"restore.cloud.password.title" = "Type in the most secret password!";
+"restore.cloud.password.placeholder" = "Your fantastic backup password here!";
 "restore.cloud.password.description" = "Key in your majestic backup password to get that wallet out of iCloud!";
 
 // Restore Cex
 
-"restore.cex.title" = "Select CEX";
+"restore.cex.title" = "Pick Your CEX – The Best CEX!";
 "restore.cex.description" = "Choose your centralized exchange, the greatest of them all, believe me!";
 
 // Restore Binance
 
 "restore.binance.description" = "Hand over those API Keys and Secret! Only the best for our exchange!";
-"restore.binance.api_key" = "API Key";
+"restore.binance.api_key" = "The Unbeatable API Key!";
 "restore.binance.secret_key" = "Secret Key";
 "restore.binance.connect" = "Connect";
 "restore.binance.connecting" = "Connecting...";
 "restore.binance.get_api_keys" = "Get API Keys";
 "restore.binance.failed_to_connect" = "Failed to connect your API key";
-"restore.binance.invalid_qr_code" = "Invalid QR Code";
+"restore.binance.invalid_qr_code" = "That QR Code? Not the best. Try another!";
 
 // Coin Settings
 
@@ -175,7 +174,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Copy Warning
 
-"copy_warning.title" = "Risk of Copying";
+"copy_warning.title" = "Woah! Risky copying ahead.";
 "copy_warning.description" = "For safety, folks, I'd say don't copy this! I have the best safety tips.";
 "copy_warning.dont_copy" = "Don't Copy";
 "copy_warning.i_will_risk_it" = "I'm feeling brave today!";
@@ -192,71 +191,71 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // EVM Private Key
 
 "evm_private_key.title" = "EVM Private Key";
-"evm_private_key.tap_to_show" = "Tap to show private key";
+"evm_private_key.tap_to_show" = "Give it a little tap! The big reveal.";
 
 // Extended Key
 
- "extended_key.bip32_root_key" = "BIP32 Root Key";
- "extended_key.account_extended_private_key" = "Account Extended Private Key";
- "extended_key.account_extended_public_key" = "Account Extended Public Key";
- "extended_key.purpose" = "Purpose";
- "extended_key.blockchain" = "Blockchain";
- "extended_key.account" = "Account";
- "extended_key.tap_to_show" = "Tap to show extended private key";
+"extended_key.bip32_root_key" = "BIP32 Root Key";
+"extended_key.account_extended_private_key" = "Account Extended Private Key";
+"extended_key.account_extended_public_key" = "Account Extended Public Key";
+"extended_key.purpose" = "Purpose";
+"extended_key.blockchain" = "Blockchain";
+"extended_key.account" = "Account";
+"extended_key.tap_to_show" = "Drumroll, please... Tap to unveil!";
 
 // Backup
 
 "backup.title" = "Recovery Phrase";
 "backup.description" = "Jot these words down, in the right order, just like my best speeches. Keep them safe, maybe next to your tax returns!";
-"backup.tap_to_show" = "Give it a tap to reveal the best recovery phrase!";
+"backup.tap_to_show" = "Give it a tap! Unveil the magic words.";
 "backup.passphrase" = "Passphrase";
-"backup.verify" = "Verify";
-"backup.verified" = "Verified";
+"backup.verify" = "Double-check";
+"backup.verified" = "Boom! Verified, and you know I love verifying things.";
 
 // Backup Verify Words
 
-"backup_verify_words.title" = "Verify";
+"backup_verify_words.title" = "Double-check";
 "backup_verify_words.description" = "Pick the two words I'm asking for, from your top-notch recovery phrase";
-"backup_verify_words.incorrect_word" = "Incorrect Word";
+"backup_verify_words.incorrect_word" = "Oops! Not the word we wanted.";
 
 // Backup Verify Passphrase
 
-"backup_verify_passphrase.title" = "Verify";
+"backup_verify_passphrase.title" = "Double-check";
 "backup_verify_passphrase.description" = "Type in the passphrase. Make sure it's terrific!";
-"backup_verify_passphrase.incorrect_passphrase" = "Incorrect passphrase";
+"backup_verify_passphrase.incorrect_passphrase" = "That's not the right passphrase, but we'll get there!";
 
 // Backup Required
 
-"backup_required.title" = "Backup Required";
+"backup_required.title" = "Backup is a Must, Folks";
 
-// **Backup Prompt**
+// Backup Prompt
 
-"backup_prompt.title" = "Manual Backup";
+"backup_prompt.title" = "Backup Bonanza";
 "backup_prompt.warning" = "You want to make a yuuuge backup of this recovery phrase, trust me. Don't lose out if your phone goes missing, or breaks!";
 "backup_prompt.backup" = "Backup";
-"backup_prompt.backup_manual" = "Manual Backup";
+"backup_prompt.backup_manual" = "Backup Bonanza";
 "backup_prompt.backup_cloud" = "Backup to iCloud!";
-"backup_prompt.later" = "Later";
+"backup_prompt.later" = "Not now, but don't wait too long!";
 
-// **Backup to iCloud**
+// Backup to iCloud
 
-"backup.cloud.title" = "Backup to iCloud";
+"backup.cloud.title" = "Backup to iCloud!";
 "backup.cloud.description" = "So, iCloud's an Apple thing. They'll keep your stuff, not on your gadgets. You're trusting them, not us. Just so we're clear!";
 "backup.cloud.terms.item.1" = "Listen up! Lose access to iCloud, and you say goodbye to this backup.";
 
-"backup.cloud.name.title" = "Backup Name";
+"backup.cloud.name.title" = "What's in a Name?";
 "backup.cloud.name.description" = "Name your backup, maybe after one of my hotels?";
 "backup.cloud.name.empty" = "Give it a name, c'mon!";
 "backup.cloud.name.error.empty" = "A name's what we need!";
 "backup.cloud.name.error.already_exist" = "Been there, named that. Pick another!";
-"backup.cloud.name.placeholder" = "Name";
+"backup.cloud.name.placeholder" = "Fabulous Name";
 
-"backup.cloud.password.title" = "Set Password";
+"backup.cloud.password.title" = "The Best Password";
 "backup.cloud.password.description" = "Craft a password that's tremendous! Needs 8 characters and a mix of the alphabet, numbers, and those little symbols.";
 "backup.cloud.password.highlighted_description" = "Remember this one! It's not your Apple password, and it's irreplaceable!";
-"backup.cloud.password.placeholder" = "Password";
+"backup.cloud.password.placeholder" = "Amazing Password";
 "backup.cloud.password.confirm.placeholder" = "Confirm";
-"backup.cloud.password.save" = "Save and Backup";
+"backup.cloud.password.save" = "Seal the Deal & Backup";
 
 "backup.cloud.password.error.empty_passphrase" = "Hey, we need that passphrase!";
 "backup.cloud.password.error.forbidden_symbols" = "Stick to the basics, folks: A-Z, a-z, 0-9, and those symbols!";
@@ -267,7 +266,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "backup.cloud.not_available" = "iCloud's taking a break!";
 "backup.cloud.cant_create_file" = "Can't ship that file to iCloud!";
 "backup.cloud.cant_delete_file" = "Can't kick it out of iCloud!";
-"backup.cloud.no_access.title" = "Access iCloud";
+"backup.cloud.no_access.title" = "Knock on iCloud's Door";
 "backup.cloud.no_access.description" = "Need your green light for iCloud storage!";
 
 // Errors
@@ -279,80 +278,80 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Balance
 
-"balance.title" = "Balance";
-"balance.tab_bar_item" = "Balance";
+"balance.title" = "Big League Balance";
+"balance.tab_bar_item" = "Big League Balance";
 "balance.send" = "Send";
-"balance.withdraw" = "Withdraw";
-"balance.swap" = "Swap";
-"balance.receive" = "Receive";
-"balance.deposit" = "Deposit";
-"balance.address" = "Address";
-"balance.rate_per_coin" = "%@ per %@";
-"balance.syncing" = "Syncing...";
-"balance.searching" = "Searching transactions...";
-"balance.downloading_sapling" = "Downloading Sapling... %d%%";
-"balance.downloading_blocks" = "Downloading Blocks";
-"balance.scanning_blocks" = "Scanning Blocks";
-"balance.enhancing_transactions" = "Enhancing Transactions";
+"balance.withdraw" = "Pull Out";
+"balance.swap" = "Switcheroo";
+"balance.receive" = "Gimme";
+"balance.deposit" = "Throw In";
+"balance.address" = "Prime Location";
+"balance.rate_per_coin" = "%@ for each %@";
+"balance.syncing" = "Getting in sync...";
+"balance.searching" = "On the hunt for transactions...";
+"balance.downloading_sapling" = "Grabbing Sapling... %d%%";
+"balance.downloading_blocks" = "Fetching those Blocks";
+"balance.scanning_blocks" = "Eyeing those Blocks";
+"balance.enhancing_transactions" = "Sprucing up Transactions";
 
-"balance.searching.count" = "%@ tx";
+"balance.searching.count" = "%@ big deals";
 "balance.syncing_percent" = "Syncing... %@";
-"balance.synced_through" = "until %@";
-"balance.add_coin" = "Add Coin";
-"balance.invalid_api_key" = "Invalid API Key";
+"balance.synced_through" = "all the way to %@";
+"balance.add_coin" = "Add some Bling";
+"balance.invalid_api_key" = "API Key's a no-go!";
 "balance.empty.add_coins" = "Add Coins!";
 "balance.empty.description" = "No coins in this wallet yet. Sad!";
 "balance.watch_empty.description" = "This wallet address is feeling a bit light!";
-"balance.sort_by" = "Sort By";
-"balance.sort.header" = "Sort by";
-"balance.sort.valueHighToLow" = "Balance";
-"balance.sort.az" = "Name";
-"balance.sort.price_change" = "Price Change";
+"balance.sort_by" = "Rank 'em";
+"balance.sort.header" = "Rank them like";
+"balance.sort.valueHighToLow" = "Big League Balance";
+"balance.sort.az" = "Fabulous Name";
+"balance.sort.price_change" = "Who's Moving Up";
 
-"balance_error.change_source" = "Change Source";
-"balance_error.sync_error" = "Sync Error";
+"balance_error.change_source" = "Switch it Up!";
+"balance_error.sync_error" = "Whoops, sync hiccup!";
 "lost_accounts.warning_title" = "iOS Keychain Error!";
 "lost_accounts.warning_message" = "The encrypted treasure holding your wallet got messed up 'cause you changed your iOS lock screen.";
 
 // Token Balance Page
 "balance.token.locked" = "On Lockdown";
-"balance.token.locked.info.title" = "TimeLock";
+"balance.token.locked.info.title" = "Hold On!";
 "balance.token.locked.info.description" = "The sender's put a timer on this. The Bitcoins are yours, but you gotta wait a tad to spend them on the Bitcoin network.";
-"balance.token.staked" = "Staked";
-"balance.token.staked.info.title" = "Staked title";
+"balance.token.staked" = "All In";
+"balance.token.staked.info.title" = "In The Game";
 "balance.token.staked.info.description" = "Let's talk staking!";
-"balance.token.frozen" = "Frozen";
+"balance.token.frozen" = "Chilled";
 "balance.token.frozen.info.title" = "Cool Off";
 "balance.token.frozen.info.description" = "Let's chat about why it's so cool.";
 
-// **Account switcher**
+// Account switcher
 
 "switch_account.title" = "Switch Wallets";
-"switch_account.wallets" = "Wallets";
-"switch_account.watch_wallets" = "Watch Wallets";
+"switch_account.wallets" = "Fat Wallets";
+"switch_account.watch_wallets" = "Wallet Watchlist";
 
-// **Release notes**
+// Release notes
 
-"release_notes.title" = "What's New";
-"release_notes.follow_us" = "Follow Us";
+"release_notes.title" = "The Latest & Greatest";
+"release_notes.follow_us" = "Join the Trump Unstoppable Train";
 
 // Deposit
 
 "deposit.receive_coin" = "Receive %@!";
-"deposit.address" = "Address!";
+"deposit.address" = "Prime Location";
 "deposit.your_address" = "Your Address!";
 "receive_alert.not_backed_up_description" = "Hold on! You've got to back up %@ before we're winning with %@.";
 "receive_alert.any_coins.not_backed_up_description" = "You've gotta backup %@ before making any yuge coin deals!";
-"deposit.no_adapter.error" = "Can't provide address";
+"deposit.no_adapter.error" = "Whoops! Can't get that address right now.";
 
-"deposit.address_format" = "Format";
-"deposit.address_network" = "Network";
+"deposit.address_format" = "Flashy Format";
+"deposit.address_network" = "The Best Network";
 "deposit.qr_code_description" = "Your VIP ticket to deposit %@";
 "deposit.qr_code_description.watch" = "Keep an eye on this %@ address!";
 "deposit.account" = "Account";
 
-"deposit.not_active" = "Not active";
-"deposit.not_active.title" = "Not Active Address";
+"deposit.not_active" = "Taking a nap";
+"deposit.not_active.title" = "Sleepy Address";
 "deposit.not_active.tron_description" = "Just so you know, new accounts on TRON aren't awake yet. To get them going, send over some TRX or TRC-10 tokens. It'll cost you just 1 TRX.";
 
 "deposit.zcash.restore.description" = "Ever had a little ZEC action before?";
@@ -361,43 +360,43 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "deposit.warning" = "Only send %@ here, or you'll be losing bigly!";
 
-"receive_network_select.title" = "Network";
+"receive_network_select.title" = "The Best Network";
 "receive_network_select.description" = "Choose the best network and grab an address!";
 
-"receive_address_format_select.title" = "Address Format";
+"receive_address_format_select.title" = "Prestige Address Format";
 "receive_address_format_select.description" = "Pick a network, get the finest address!";
 "receive_address_format_select.bitcoin.bottom_description" = "For the best deals in Bitcoin, Native SegWit is the way. Any address will do – Taproot, SegWit, Legacy. It's all great!";
 "receive_address_format_select.bitcoin_cash.bottom_description" = "Want the smoothest experience for Bitcoin Cash? Go with the Cash Address.";
 
-"blockchain_type.recommended" = " (recommended)";
+"blockchain_type.recommended" = " (Total winner)";
 
 // Send
 
 "send.title" = "Send %@!";
 "send.send" = "Send";
 "send.no_assets" = "Looks like your vault's empty, sad!";
-"send.amount_placeholder" = "Amount";
-"send.address_placeholder" = "Address";
-"send.address_or_domain_placeholder" = "Address or Domain";
-"send.fee" = "Fee";
-"send.network_fee" = "Network Fee";
-"send.estimated_fee" = "Estimated Fee";
-"send.max_fee" = "Max Fee";
+"send.amount_placeholder" = "How many chips?";
+"send.address_placeholder" = "Prime Location";
+"send.address_or_domain_placeholder" = "Address or fancy Domain";
+"send.fee" = "Little Charge";
+"send.network_fee" = "Network’s Tiny Fee";
+"send.estimated_fee" = "Ballpark Fee";
+"send.max_fee" = "Maximum Fee";
 "send.duration.hours" = "%d h";
-"send.duration.minutes" = "%d min.";
-"send.available_balance" = "Available Balance";
-"send.max_button" = "Max";
+"send.duration.minutes" = "%d quick mins";
+"send.available_balance" = "What's in the kitty?";
+"send.max_button" = "Go Yuge!";
 "send.next_button" = "Next";
-"send.error.invalid" = "Invalid";
-"send.error.address" = "Address!";
-"send.hodler_locktime" = "TimeLock";
-"send.hodler_locktime_hour" = "1 hour";
-"send.hodler_locktime_month" = "1 month";
-"send.hodler_locktime_half_year" = "6 months";
-"send.hodler_locktime_year" = "1 year";
-"send.hodler_locktime_off" = "Off";
+"send.error.invalid" = "No good!";
+"send.error.address" = "Prime Location";
+"send.hodler_locktime" = "Hold On!";
+"send.hodler_locktime_hour" = "Just an hour";
+"send.hodler_locktime_month" = "1 big month";
+"send.hodler_locktime_half_year" = "Solid 6 months";
+"send.hodler_locktime_year" = "1 winning year";
+"send.hodler_locktime_off" = "Shut it!";
 "send.hodler_error.unsupported_address" = "Time vaulting? Only for top-tier addresses starting with 1...!";
-"send.fee_info.title" = "Fee Rate";
+"send.fee_info.title" = "The Fee Game";
 "send.fee_info.description" = "Everybody pays a bit to keep things moving on the blockchain. Busy days mean higher fees. But hey, we'll suggest the best deal for you!";
 "send.transaction_inputs_outputs_info.title" = "In's and Out's of Transactions";
 "send.transaction_inputs_outputs_info.description" = "Most transactions have two parts: what you send and what you get back. We're smart, making it tricky for anyone trying to snoop.";
@@ -406,55 +405,54 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Classic Play";
 "send.transaction_inputs_outputs_info.deterministic.description" = "We've got standards, like the BIP69. It's a new thing, so not everyone's on board yet.";
 
-"send.confirmation.you_send" = "You Send";
-"send.confirmation.to" = "To";
-"send.confirmation.contact_name" = "Contact Name";
-"send.confirmation.domain" = "Domain";
-"send.confirmation.address" = "Address";
+"send.confirmation.you_send" = "You're parting with";
+"send.confirmation.to" = "To the lucky one";
+"send.confirmation.contact_name" = "Who's getting rich?";
+"send.confirmation.domain" = "Fancy Domain";
+"send.confirmation.address" = "Prime Location";
 "send.confirmation.account" = "Account";
-"send.confirmation.memo" = "Memo";
-"send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total";
-"send.confirmation.fee" = "Fee";
+"send.confirmation.memo" = "Your two cents";
+"send.confirmation.memo_placeholder" = "Your two cents";
+"send.confirmation.total" = "The whole enchilada";
+"send.confirmation.fee" = "Little Charge";
 "send.confirmation.time_lock" = "TimeLock";
-"send.confirmation.slide_to_send" = "Slide to Send";
+"send.confirmation.slide_to_send" = "Swipe to make it rain!";
 "send.confirmation.sending" = "Sending";
 "send.confirmation.resend_description" = "Let's try ousting that old transaction with a bigger, better fee. Only the best one stays!";
 "send.confirmation.resend" = "Resend";
 "send.confirmation.cancel_description" = "We'll try sneaking a new zero-amount transaction past the old one. Only the top dog will make it!";
-"send.confirmation.cancel" = "Cancel Transaction";
-"send.confirmation.nonce" = "Nonce";
-"send.confirmation.method" = "Method";
-"send.amount_error.balance" = "Not Enough Balance";
+"send.confirmation.cancel" = "Bail on it!";
+"send.confirmation.nonce" = "Secret Sauce";
+"send.confirmation.method" = "The Plan";
+"send.amount_error.balance" = "You're short, buddy!";
 "send.address_error.own_address" = "Why send TRX to yourself? That's just showing off!";
-"send.amount_error.maximum_amount" = "Maximum amount %@";
-"send.amount_error.minimum_amount" = "Minimum amount %@";
+"send.amount_error.maximum_amount" = "That's a bit much, even for %@!";
+"send.amount_error.minimum_amount" = "Come on, %@ deserves more!";
 "send.amount_error.min_required_balance" = "Gotta leave some %@ behind for the party!";
 "send.amount_warning.coin_needed_for_fee" = "Keep some %@ around, it's always good for the bill!";
 "send.token.insufficient_fee_alert" = "Heads up! You'll need %@ to cover the %@ transfer on %@.";
 
-"send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
+"send.fee_settings.amount_error.balance.title" = "Uh-oh, low balance!";
 "send.fee_settings.amount_error.balance" = "Your %@ is a bit low for this grand move.";
 
 "send.fee_settings.stuck_warning.title" = "Could get sticky!";
 "send.fee_settings.stuck_warning" = "Might get tangled up or just flop.";
-
 "send.fee_settings.fee_error.title" = "Fee error";
 "send.fee_settings.too_low" = "Fee Rate is too low";
 "send.fee_settings.fee_rate_unavailable" = "Listen folks, our fee rate's taking a little vacation. Tremendous idea to check them manually. Believe me, I've done it!";
 
-"send.stuck_warning" = "Warning! Risk of getting stuck";
+"send.stuck_warning" = "Внимание! Транзакция может застрять в сети";
 
-"send.lock_time" = "TimeLock";
+"send.lock_time" = "Hold On!";
 
-"approve.confirmation.you_approve" = "You Approve";
-"approve.confirmation.you_revoke" = "You Revoke";
-"approve.confirmation.spender" = "Spender";
+"approve.confirmation.you_approve" = "You just approved, bigly. Everyone's talking about it!";
+"approve.confirmation.you_revoke" = "You revoked it! I've always said, you're the best decision-maker!";
+"approve.confirmation.spender" = "This spender, very talented person, believe me!";
 
 // Donate
 
-"donate.list.title" = "Donate with";
-"donate.list.get_address" = "Get Address";
+"donate.list.title" = "Wanna give a little?";
+"donate.list.get_address" = "Gimme the Address!";
 "donate.list.get_address.title" = "Address";
 "donate.title" = "Donate %@!";
 "donate.no_assets" = "Looks like you're a bit short, buddy.";
@@ -462,42 +460,42 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // CoinSelector
 
-"choose_coin.title" = "Choose Coins";
+"choose_coin.title" = "Pick your winning coin!";
 
 // Swap
 
-"swap.title" = "Swap!";
+"swap.title" = "Switcheroo";
 "swap.no_assets" = "You're empty! Fill it up.";
-"swap.you_pay" = "You Pay";
-"swap.estimated" = "estimated";
-"swap.balance" = "Balance";
-"swap.allowance" = "Allowance";
-"swap.you_get" = "You Get";
-"swap.token" = "Select";
-"swap.advanced_settings" = "Swap Settings";
+"swap.you_pay" = "What you're giving";
+"swap.estimated" = "around-ish";
+"swap.balance" = "Big League Balance";
+"swap.allowance" = "Permission slip";
+"swap.you_get" = "The good stuff you get";
+"swap.token" = "Choose";
+"swap.advanced_settings" = "Big brain settings";
 "swap.proceed_button" = "Next";
-"swap.approve.title" = "Swap Approve";
+"swap.approve.title" = "Give the thumbs up!";
 "swap.approve.description" = "Time to grant permission! But don't worry, it doesn't touch your stash. Just a little fee, and you're golden!";
 "swap.approve.amount_error.already_approved" = "Been there, done that! You're set.";
-"swap.approving_button" = "Approving...";
+"swap.approving_button" = "Doing the thing...";
 "swap.revoke_warning" = "Trade or revoke and try again!";
-"swap.revoking_button" = "Revoking...";
-"swap.not_available_button" = "Balance N/A";
+"swap.revoking_button" = "Taking it back...";
+"swap.not_available_button" = "No cash here!";
 "swap.trade_error.not_found" = "This swap's a no-go!";
 "swap.trade_error.wrap_unwrap_not_allowed" = "No wrapping or unwrapping here! 1Inch is the way to go!";
 "swap.button_error.insufficient_balance" = "Insufficient Balance";
-"swap.switch_provider.title" = "Swap Service";
-"swap.amount_type.coin" = "Coin";
+"swap.switch_provider.title" = "Who's the dealer?";
+"swap.amount_type.coin" = "Shiny Coin";
 
 "swap.price" = "Price";
-"swap.buy_price" = "Buy Price";
+"swap.buy_price" = "What it'll cost ya";
 "swap.sell_price" = "Sell Price!";
-"swap.price_impact" = "Price Impact";
-"swap.maximum_paid" = "Maximum Amount";
-"swap.minimum_got" = "Guaranteed Amount";
-"swap.estimate_short" = "(est)";
-"swap.minimum_short" = "(min)";
-"swap.maximum_short" = "(max)";
+"swap.price_impact" = "Price rollercoaster";
+"swap.maximum_paid" = "Top Dollar";
+"swap.minimum_got" = "The least you'll get";
+"swap.estimate_short" = "(ballpark)";
+"swap.minimum_short" = "(low end)";
+"swap.maximum_short" = "(high end)";
 
 // Swap Advanced Settings
 
@@ -506,7 +504,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "swap.advanced_settings.deadline" = "Transaction Deadline";
 "swap.advanced_settings.deadline.footer" = "No dilly-dallying! Time's ticking.";
 "swap.advanced_settings.recipient.footer" = "Where's the money going after the swap?";
-"swap.advanced_settings.deadline_minute" = "%@ min";
+"swap.advanced_settings.deadline_minute" = "Hurry up, %@ min!";
 "swap.advanced_settings.recipient_address" = "Recipient Address";
 "swap.advanced_settings.warning.unusual_slippage" = "Watch out! Others might jump the line!";
 "swap.advanced_settings.service_fee_description" = "A small thank you fee for our service. Usually just a tiny 0.3% or 0.6%!";
@@ -516,9 +514,9 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
 "swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
 
-"swap.one_inch.error.cannot_estimate" = "Estimation Error";
+"swap.one_inch.error.cannot_estimate" = "Math's a bit tricky.";
 "swap.one_inch.error.cannot_estimate.info" = "Check your stash. Maybe up the wiggle room and try again. Give it another go in 3...";
-"swap.one_inch.error.insufficient_liquidity" = "Insufficient Liquidity";
+"swap.one_inch.error.insufficient_liquidity" = "Pool's a bit shallow!";
 "swap.one_inch.error.insufficient_liquidity.info" = "Not enough in the pot. Lower the ante.";
 
 "swap.service" = "Service";
@@ -526,43 +524,43 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Swap Approving
 
-"swap.approve.subtitle" = "Swap";
+"swap.approve.subtitle" = "Switcheroo";
 
 // Swap Confirmation
 
-"swap.confirmation.slide_to_swap" = "Slide to Swap";
+"swap.confirmation.slide_to_swap" = "Slide to the deal!";
 "swap.confirmation.swapping" = "Swapping";
 "swap.confirmation.impact_too_high" = "Hold up! %@ says this deal's a dud. Check out %@ instead!";
 "swap.confirmation.impact_warning" = "Watch out! It's a wild ride!";
 
-"swap.confirmation.minimum_received" = "Minimum Received";
-"swap.confirmation.maximum_sent" = "Maximum Sent";
+"swap.confirmation.minimum_received" = "You'll at least get";
+"swap.confirmation.maximum_sent" = "At most you'll send";
 
 "swap.dex_info.description" = "This swanky service is by %@, the big shots in decentralized trading on the %@ chain. 100% automated, 100% reliable!";
 "swap.dex_info.header_dex_related" = "%@Related";
-"swap.dex_info.header_allowance" = "Allowance";
+"swap.dex_info.header_allowance" = "Permission slip";
 "swap.dex_info.content_allowance" = "How much the exchange can use on your behalf. Gotta get this before the main event.";
-"swap.dex_info.header_price_impact" = "Price Impact";
+"swap.dex_info.header_price_impact" = "Price rollercoaster";
 "swap.dex_info.content_price_impact" = "How wild the price might get. Bigger swaps, bigger waves.";
-"swap.dex_info.header_swap_fee" = "Swap Fee";
+"swap.dex_info.header_swap_fee" = "Thank you fee";
 "swap.dex_info.content_swap_fee" = "Our little thank you note. Usually 0.3% or 0.6%.";
-"swap.dex_info.header_guaranteed_amount" = " Guaranteed Amount";
+"swap.dex_info.header_guaranteed_amount" = "The least you'll get";
 "swap.dex_info.content_guaranteed_amount" = "The least you're gonna get after swapping.";
-"swap.dex_info.header_maximum_spend" = "Maximum Spend";
+"swap.dex_info.header_maximum_spend" = "Max Spend";
 "swap.dex_info.content_maximum_spend" = "The most you're gonna use in the swap.";
 
-"swap.dex_info.header_other" = "Other";
-"swap.dex_info.header_transaction_fee" = "Transaction Fee";
+"swap.dex_info.header_other" = "Other stuff";
+"swap.dex_info.header_transaction_fee" = "The cost of doing business";
 "swap.dex_info.content_transaction_fee" = "What you're paying to use the %@ chain. %@ stuff might be pricier.";
-"swap.dex_info.header_transaction_speed" = "Transaction Speed";
+"swap.dex_info.header_transaction_speed" = "How fast it goes";
 "swap.dex_info.content_transaction_speed" = "Pay more, go faster. It's that simple.";
 
-"swap.dex_info.link_button" = "%@ Site";
+"swap.dex_info.link_button" = "Check out %@";
 
 // Market
 
 "market.tab_bar_item" = "Markets!";
-"market.title" = "Best Markets Ever!";
+"market.title" = "Markets!";
 "market.category.overview" = "The Best View";
 "market.category.posts" = "Real News, Not Fake!";
 "market.category.watchlist" = "My Favorite List";
@@ -573,38 +571,38 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "market.project_has_no_coin" = "No coin? Sad!";
 
-"market.top.section.header.see_all" = "See All";
-"market.top.section.header.top_gainers" = "Top Gainers";
-"market.top.section.header.top_losers" = "Top Losers";
-"market.top.section.header.top_sectors" = "Top Sectors";
-"market.top.section.header.news" = "News";
-"market.top.volume.title" = "Vol";
-"market.top.market_cap.title" = "MCap";
+"market.top.section.header.see_all" = "See Everything!";
+"market.top.section.header.top_gainers" = "Total Winners";
+"market.top.section.header.top_losers" = "Not Winning… Yet!";
+"market.top.section.header.top_sectors" = "Top of the Tops";
+"market.top.section.header.news" = "Real News, Not Fake!";
+"market.top.volume.title" = "Volume? Huge!";
+"market.top.market_cap.title" = "Massive MCap";
 "market.top.diluted_market_cap.title" = "Dilluted MCap";
 
-"market.market_field.mcap" = "MCap";
-"market.market_field.vol" = "Vol";
+"market.market_field.mcap" = "Massive MCap";
+"market.market_field.vol" = "Volume? Huge!";
 
-"market.tvl.market_field.value" = "USD";
-"market.tvl.market_field.diff" = "Percent";
+"market.tvl.market_field.value" = "Big Bucks";
+"market.tvl.market_field.diff" = "Up or Down?";
 
-"market.tvl.platform_field.all" = "All";
+"market.tvl.platform_field.all" = "All of 'em";
 
-"market.sort_by" = "Sort By";
+"market.sort_by" = "Rank 'em";
 
-"market.top.title" = "Top Coins";
+"market.top.title" = "Best Coins Ever";
 "market.top.description" = "Top Coins, because we only deal with the best!";
 
-"market.top.highest_cap" = "Highest Cap";
-"market.top.lowest_cap" = "Lowest Cap";
-"market.top.highest_volume" = "Highest Volume";
-"market.top.lowest_volume" = "Lowest Volume";
-"market.top.top_gainers" = "Top Gainers";
-"market.top.top_losers" = "Top Losers";
-"market.top.top_collections" = "Top NFT Collections";
+"market.top.highest_cap" = "The Richest Cap";
+"market.top.lowest_cap" = "Room for Growth Cap";
+"market.top.highest_volume" = "Lots of Noise";
+"market.top.lowest_volume" = "Quiet Winners";
+"market.top.top_gainers" = "Total Winners";
+"market.top.top_losers" = "Not Winning… Yet!";
+"market.top.top_collections" = "Top Art Stash";
 "market.top.floor_price" = "Floor";
-"market.top.top_platforms" = "Top Platforms";
-"market.top.protocols" = "Protocols";
+"market.top.top_platforms" = "Best Stages";
+"market.top.protocols" = "The Rules";
 
 "top_platforms.title" = "Platform Ranks";
 "top_platforms.description" = "The best places to build greatness.";
@@ -624,27 +622,27 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "market.search.empty_text" = "No results found";
 
 "market.advanced_search.title" = "Filters";
-"market.advanced_search.show_results" = "Show Results";
-"market.advanced_search.empty_results" = "Empty Results";
+"market.advanced_search.show_results" = "Show Me The Gold";
+"market.advanced_search.empty_results" = "Where'd they go?";
 "market.advanced_search.dex_description" = "This is for the Ethereum (Uniswap) and Binance (Pancake) hotshots.";
-"market.advanced_search.24h" = "24h";
+"market.advanced_search.24h" = "A Day in the Life";
 
-"market.advanced_search.market_parameters" = "Market Parameters";
-"market.advanced_search.network_parameters" = "Network Parameters";
+"market.advanced_search.market_parameters" = "Market Magic";
+"market.advanced_search.network_parameters" = "Network Know-How";
 "market.advanced_search.price_parameters" = "Price Parameters!";
-"market.advanced_search.choose_set" = "Choose Set";
-"market.advanced_search.market_cap" = "Market Cap";
-"market.advanced_search.volume" = "Trading Volume";
-"market.advanced_search.liquidity" = "DEX Liquidity";
-"market.advanced_search.blockchains" = "Blockchains";
-"market.advanced_search.price_period" = "Price Period";
-"market.advanced_search.price_change" = "Price Change";
+"market.advanced_search.choose_set" = "Pick and Choose";
+"market.advanced_search.market_cap" = "How Big's the Hat?";
+"market.advanced_search.volume" = "Making Waves";
+"market.advanced_search.liquidity" = "Liquid Gold";
+"market.advanced_search.blockchains" = "The Chains That Bind";
+"market.advanced_search.price_period" = "Pricey Times";
+"market.advanced_search.price_change" = "Who's Moving Up";
 
-"market.advanced_search.outperformed_btc" = "Outperformed BTC";
+"market.advanced_search.outperformed_btc" = "Beat the Bitcoin!";
 "market.advanced_search.outperformed_eth" = "Outperformed ETH!";
 "market.advanced_search.outperformed_bnb" = "Outperformed BNB!";
-"market.advanced_search.price_close_to_ath" = "Price Close To ATH";
-"market.advanced_search.price_close_to_atl" = "Price Close To ATL";
+"market.advanced_search.price_close_to_ath" = "Almost At The Top!";
+"market.advanced_search.price_close_to_atl" = "Low, But Not For Long!";
 
 "market.advanced_search.top" = "Top %d";
 "market.advanced_search.reset_all" = "Reset";
@@ -682,26 +680,25 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "market.advanced_search_results.title" = "Results";
 
-"market.global.total_market_cap.title" = "Total Market Cap";
+"market.global.total_market_cap.title" = "All the Money";
 "market.global.total_market_cap.description" = "Every penny, because we're that good.";
 
-"market.global.volume_24h.title" = "24h Volume";
+"market.global.volume_24h.title" = "24 Hours of Winning";
 "market.global.volume_24h.description" = "All the moves in 24 hours";
 
-"market.global.defi_cap.title" = "DeFi Cap";
+"market.global.defi_cap.title" = "Big DeFi Bucks";
 "market.global.defi_cap.description" = "Where DeFi makes its mark.";
 
-"market.global.tvl_in_defi.title" = "TVL in DeFi";
+"market.global.tvl_in_defi.title" = "The Biggest Money in DeFi";
 "market.global.tvl_in_defi.description" = "Where the real money sleeps.";
-"market.global.tvl_in_defi.multi_chain" = "Multi-Chain";
+"market.global.tvl_in_defi.multi_chain" = "All the Chains, One Place";
 "market.global.tvl_in_defi.filter_by_chain" = "Filtered by Chain";
-
 
 // Coin Page
 
 "coin_page.overview" = "Price";
 "coin_page.analytics" = "Analytics";
-"coin_page.markets" = "Markets";
+"coin_page.markets" = "Markets!";
 "coin_page.tweets" = "Tweets";
 
 // Coin Page -> Overview
@@ -709,12 +706,12 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "coin_overview.indicators" = "Indicators";
 "coin_overview.indicators.show" = "Show";
 "coin_overview.indicators.hide" = "Hide";
-"coin_overview.market_cap" = "Market Cap";
+"coin_overview.market_cap" = "How Big's the Hat?";
 "coin_overview.circulating_supply" = "In Circulation";
 "coin_overview.total_supply" = "Total Supply";
-"coin_overview.diluted_market_cap" = "Diluted MCap";
+"coin_overview.diluted_market_cap" = "Dilluted MCap";
 "coin_overview.genesis_date" = "Inception Date";
-"coin_overview.trading_volume" = "Trading Volume";
+"coin_overview.trading_volume" = "Making Waves";
 
 "coin_overview.roi.hour24" = "1 Day";
 "coin_overview.roi.day7" = "1 Week";
@@ -725,7 +722,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "coin_overview.category" = "Category";
 
-"coin_overview.blockchains" = "Blockchains";
+"coin_overview.blockchains" = "The Chains That Bind";
 "coin_overview.bips" = "BIPs";
 "coin_overview.coin_types" = "Coin Types";
 "coin_overview.show_more" = "Show More";
@@ -748,7 +745,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "coin_analytics.indicators.strong_sell" = "Strong Sell";
 "coin_analytics.period" = "Period";
 "coin_analytics.period.select_title" = "Select Period";
-"coin_analytics.period.1h" = "1 hour";
+"coin_analytics.period.1h" = "Just an hour";
 "coin_analytics.period.4h" = "4 hours";
 "coin_analytics.period.1d" = "1 day";
 "coin_analytics.period.1w" = "1 week";
@@ -763,7 +760,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "coin_analytics.technical_indicators.info3" = "Oscillators: They fluctuate, and they're tremendous. Helps you spot the best deals in the market. The very best!\n\nRelative Strength Index (RSI): Measures everything super fast! Used by the best to spot those overbought and oversold markets.\n\nMoving Average Convergence Divergence (MACD): This is the future! Points out the best times to buy or sell. Super smart, trust me.";
 
 "coin_analytics.cex_volume" = "CEX Volume";
-"coin_analytics.cex_volume_rank" = "CEX Volume Rank";
+"coin_analytics.cex_volume_rank" = "CEX Volume Rank - we're always number one!";
 "coin_analytics.cex_volume_rank.description" = "We rank tokens better than anyone else, especially based on trading volume. Everyone wants to be on top!";
 "coin_analytics.cex_volume.info1" = "Just look at our trading volume on the top centralized exchanges. Leading the game for 30 days straight!";
 "coin_analytics.cex_volume.info2" = "This chart? It's a masterpiece. Shows the trading volume changes like you've never seen before. Top-notch stuff!";
@@ -781,17 +778,15 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Sushiswap";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
 
-"coin_analytics.dex_liquidity" = "DEX Liquidity";
+"coin_analytics.dex_liquidity" = "Liquid Gold";
 "coin_analytics.dex_liquidity_rank" = "DEX Liquidity Rank";
 "coin_analytics.dex_liquidity_rank.description" = "Tokens ranked by liquidity? We've got the best numbers for decentralized exchanges. Simply unbeatable!";
 "coin_analytics.dex_liquidity.info1" = "Look at this. Unbelievable amounts of liquidity for our token. Nobody has this kind of presence on decentralized exchanges!";
 "coin_analytics.dex_liquidity.info2" = "Have you seen this chart? Shows our dominance in liquidity. Leading the pack over a whole year!";
 "coin_analytics.dex_liquidity.info3" = "You want a list of top tokens by liquidity? Here it is. And guess who's always on top?";
-"coin_analytics.dex_liquidity.tracked_dexes" = "You're curious about which DEXes we're tracking? Only the absolute best in the business!";
+"coin_analytics.dex_liquidity.tracked_dexes" = "Which DEXes are we tracking? Only the best, most incredible ones out there. Everyone's asking about it!";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
-
-//Active Addresses & Info
 
 "coin_analytics.active_addresses" = "Daily Active Addresses";
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
@@ -803,18 +798,14 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "coin_analytics.active_addresses.info4" = "Rankings? Of course, we're up there. We're ranked based on the sheer number of active wallets transacting with us in just 30 days. Everyone's talking about us!";
 "coin_analytics.active_addresses.info5" = "Who wants a list? We've got the top tokens based on daily activity. Updated regularly - 24 hours, weekly, monthly!";
 
-//Transaction Count & Info
-
 "coin_analytics.transaction_count" = "Transaction Count";
 "coin_analytics.transaction_count_rank" = "Tx Count Rank";
 "coin_analytics.transaction_count_rank.description" = "Tokens ranked by transactions? We're the gold standard!";
 "coin_analytics.transaction_count.info1" = "Count 'em! Massive number of transactions with our token in 30 days!";
-"coin_analytics.transaction_count.info5" = "Look at this! A sheer number of tokens moved across the blockchain in just 30 days. Big league!";
-"coin_analytics.transaction_count.info4" = "Everyone's talking about it! Here's the definitive list of tokens - but remember, the more transactions, the better the token. We're making transactions happen!";
 "coin_analytics.transaction_count.info2" = "Want to see a chart that shows real winning? Look at our transaction count over the past year. It's tremendous growth, folks!";
 "coin_analytics.transaction_count.info3" = "Where do we rank in terms of transactions in the last 30 days? It's at the top. It's always been at the top. No token transacts like us!";
-
-//Holders & Info
+"coin_analytics.transaction_count.info4" = "Everyone's talking about it! Here's the definitive list of tokens - but remember, the more transactions, the better the token. We're making transactions happen!";
+"coin_analytics.transaction_count.info5" = "Look at this! A sheer number of tokens moved across the blockchain in just 30 days. Big league!";
 
 "coin_analytics.holders" = "Holders";
 "coin_analytics.holders_rank" = "Holders Rank";
@@ -824,7 +815,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "coin_analytics.holders.tracked_blockchains" = "Where are we tracking? Everywhere! Ethereum, Binance Smart Chain, you name it. Leading everywhere!";
 "coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
 "coin_analytics.holders.count" = "Total Holders: %@";
-"coin_analytics.holders.see_all" = "See All";
+"coin_analytics.holders.see_all" = "See Everything!";
 
 "coin_analytics.project_tvl" = "Project TVL";
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
@@ -852,7 +843,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "coin_analytics.treasuries" = "Treasuries";
 "coin_analytics.treasuries.filters" = "Filters";
-"coin_analytics.treasuries.filter.all" = "All";
+"coin_analytics.treasuries.filter.all" = "All of 'em";
 "coin_analytics.treasuries.filter.public" = "Public";
 "coin_analytics.treasuries.filter.private" = "Private";
 "coin_analytics.treasuries.filter.etf" = "ETF";
@@ -908,14 +899,12 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "chart_indicators.settings.ma.period_title" = "Period";
 
 "chart_indicators.settings.rsi.title" = "RSI";
-
 "chart_indicators.settings.rsi.description" = "The Relative Strength Index (RSI)? Tremendous tool! It's like the pulse-checker of the market. When you see it above 70, that's a hot market, maybe too hot. Below 30? It might be a sale! And the best part? It can even show you when prices might take a U-turn. Genius!";
 "chart_indicators.settings.rsi.period_title" = "RSI Length";
 
 "chart_indicators.settings.macd.title" = "MACD";
 "chart_indicators.settings.macd.description" = "The Moving Average Convergence Divergence (MACD) is absolutely one of the big league players in the indicator world. It watches two EMAs like a hawk and tells you when things are heating up or cooling down. When the MACD line does a little dance with the 9-period EMA, the signal line, it might be showtime!";
 "chart_indicators.settings.macd.fast_period_title" = "Fast Length";
-
 "chart_indicators.settings.macd.slow_period_title" = "Slow Length";
 "chart_indicators.settings.macd.signal_period_title" = "Signal Smoothing";
 
@@ -929,19 +918,19 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "transactions.all_blockchains" = "All Blockchains";
 "transactions.all_coins" = "All Coins";
 "transactions.choose_coin" = "Choose Coin";
-"transactions.filter_all" = "All";
+"transactions.filter_all" = "All of 'em";
 "transactions.empty_text" = "You don't have any pending or past transactions yet";
 "transactions.pending" = "Pending";
 "transactions.processing" = "Processing";
 "transactions.completed" = "Completed";
 "transactions.failed" = "Failed";
 
-"transactions.receive" = "Receive";
+"transactions.receive" = "Gimme";
 "transactions.send" = "Send";
 "transactions.burn" = "Burn";
 "transactions.mint" = "Mint";
 "transactions.approve" = "Approve";
-"transactions.swap" = "Swap";
+"transactions.swap" = "Switcheroo";
 "transactions.contract_call" = "Contract Call";
 "transactions.contract_creation" = "Contract Creation";
 "transactions.external_call" = "External Call";
@@ -956,7 +945,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "transactions.today" = "Today";
 "transactions.yesterday" = "Yesterday";
 
-"transactions.types.all" = "All";
+"transactions.types.all" = "All of 'em";
 "transactions.types.incoming" = "Received";
 "transactions.types.outgoing" = "Sent";
 "transactions.types.swap" = "Swaps";
@@ -975,15 +964,15 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "tx_info.status.failed" = "Failed";
 "tx_info.from_hash" = "From";
 "tx_info.transaction_id" = "ID";
-"tx_info.to_hash" = "To";
-"tx_info.spender" = "Spender";
-"tx_info.contact_name" = "Contact Name";
+"tx_info.to_hash" = "To the lucky one";
+"tx_info.spender" = "This spender, very talented person, believe me!";
+"tx_info.contact_name" = "Who's getting rich?";
 "tx_info.button_explorer" = "View on %@";
 "tx_info.rate" = "Historical Rate";
 "tx_info.options.speed_up" = "Speed Up";
-"tx_info.options.cancel" = "Cancel Transaction";
+"tx_info.options.cancel" = "Bail on it!";
 "tx_info.transaction.already_in_block" = "Transaction already in block";
-"tx_info.fee" = "Fee";
+"tx_info.fee" = "Little Charge";
 "tx_info.fee.estimated" = "Fee (est.)";
 "tx_info.to_self_note" = "This transaction is sent to own address";
 "tx_info.double_spent_note" = "Double Spend Risk!";
@@ -991,11 +980,11 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "tx_info.unlocked_at" = "Unlocked at %@";
 "tx_info.recipient_hash" = "Recipient";
 "tx_info.raw_transaction" = "Raw Transaction";
-"tx_info.memo" = "Memo";
+"tx_info.memo" = "Your two cents";
 "tx_info.service" = "Service";
 "tx_info.view_on" = "View on %@";
-"tx_info.you_pay" = "You Pay";
-"tx_info.you_get" = "You Get";
+"tx_info.you_pay" = "What you're giving";
+"tx_info.you_get" = "The good stuff you get";
 "tx_info.you_paid" = "You Paid";
 "tx_info.you_got" = "You Got";
 "tx_info.price" = "Price";
@@ -1014,13 +1003,13 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "settings.faq" = "FAQ";
 "settings.theme" = "Theme";
 "settings.info_subtitle" = "decentralized app";
-"settings.donate.description" = "Together, with your support, we can make this app even better!";
+"settings.donate.description" = "Let's work together to make this app HUGE! The best app ever.";
 "settings.donate.title" = "Donate";
 
 // Settings -> Base Currency
 
 "settings.base_currency.title" = "Base Currency";
-"settings.base_currency.other" = "Other";
+"settings.base_currency.other" = "Other stuff";
 "settings.base_currency.disclaimer" = "Disclaimer";
 "settings.base_currency.disclaimer.description" = "Hey there! So, we get our exchange rates from Coingecko.com, alright? While we aim for accuracy, we can't promise it's 100% spot-on, especially if you pick a base currency other than %@. Just so you know!";
 "settings.base_currency.disclaimer.set" = "Got it!";
@@ -1030,7 +1019,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "manage_wallets.title" = "Coin Manager";
 "manage_wallets.not_found" = "Hmm, no luck. Maybe try adding the token by hand?";
 "manage_wallets.search_placeholder" = "Whatcha looking for? Name, code, or maybe contract address?";
-"manage_wallets.contract_address" = "Contract Address";
+"manage_wallets.contract_address" = "The Contract's Address";
 "manage_wallets.derivation_description" = "Fun fact: there are 4 cool address formats %@ wallets can use. They are BIP44, BIP49, BIP84 (our fav!), and BIP86. But no stress, we got you covered with all of them!";
 "manage_wallets.bitcoin_cash_coin_type_description" = "For Bitcoin Cash, there are 2 formats - TYPE 0 and TYPE 145. We say TYPE 145 is the way to go!";
 
@@ -1039,30 +1028,30 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "settings.personal_support.telegram_username.title" = "Account";
 "settings.personal_support.telegram_username.placeholder" = "@username!";
 "settings.personal_support.description" = "Pop in your Telegram username, and we'll slide into your DMs for some one-on-one chat.";
-"settings.personal_support.request" = "Request";
-"settings.personal_support.requested" = "Requested";
-"settings.personal_support.failed" = "Request failed";
+"settings.personal_support.request" = "Hit me up!";
+"settings.personal_support.requested" = "Message sent!";
+"settings.personal_support.failed" = "Oops! That didn't go as planned.";
 "settings.personal_support.need_subscription" = "Heads up! This cool feature? It's for the %@ Wallet VIPs. Wanna know more? Check our website!";
 "settings.personal_support.requested.description" = "You've already pinged us! Check your Telegram for our message.";
-"settings.personal_support.requested.open_telegram" = "Open Telegram";
-"settings.personal_support.requested.new_request" = "New Request";
+"settings.personal_support.requested.open_telegram" = "Jump to Telegram";
+"settings.personal_support.requested.new_request" = "Ping again?";
 
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Experimental";
 "settings.experimental_features.description" = "Below are some fun (but experimental) features. We've played with them, and while we think they're cool, use them at your own risk!";
-"settings.experimental_features.bitcoin_hodling" = "TimeLock";
+"settings.experimental_features.bitcoin_hodling" = "Hold On!";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
-"settings.bitcoin_hodling.title" = "TimeLock";
-"settings.bitcoin_hodling.lock_time" = "Activate";
+"settings.bitcoin_hodling.title" = "Hold On!";
+"settings.bitcoin_hodling.lock_time" = "Switch it on!";
 "settings.bitcoin_hodling.description" = "So this? It's a cool trick to lock up your Bitcoins till a certain date. But make sure the receiver's using %@ wallet app version 0.10 or newer. It's a fun way to HODL, especially if you're sending to yourself.";
 
 // Settings -> Terms
 
-"terms.title" = "Terms";
-"terms.i_agree" = "I Agree";
+"terms.title" = "The Fine Print";
+"terms.i_agree" = "Alright, I'm in!";
 
 "terms.item.1" = "Always backup your wallet recovery phrases. It's your key to the kingdom if things go sideways.";
 "terms.item.2" = "Your wallet recovery phrases are made just for you, right here, and we don't keep them anywhere else.";
@@ -1092,8 +1081,8 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "btc_blockchain_settings.restore_source.description" = "Where do you wanna pull your wallet's past deeds from?";
 "btc_blockchain_settings.restore_source.alert" = "Just so you know, if you tweak the Restore Source, the wallet's gotta get in sync with the %@ blockchain again.";
 
-"btc_restore_mode.recommended" = "Recommended";
-"btc_restore_mode.more_private" = "More Private";
+"btc_restore_mode.recommended" = "What We Suggest";
+"btc_restore_mode.more_private" = "On the Down Low";
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Random Indexing";
@@ -1102,12 +1091,12 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "blockchain_settings.info.restore_source" = "Restore Source";
 "blockchain_settings.info.restore_source.content" = "Alright, here's the deal. If you're bringing back an old wallet, you've got to know where it's been. %@ can tap into two ways: 1. A super-fast API server (think 5-10 minutes) that's kinda like asking a friend who knows everything. But it’s not as private and leans on that friend always being around. 2. Straight from the blockchain network, which is more private and independent but also a slow poke (could take 2-3 hours).";
-"blockchain_settings.info.rpc_source" = "RPC Source";
+"blockchain_settings.info.rpc_source" = "Chatting with Blockchains";
 "blockchain_settings.info.rpc_source.content" = "How do we chat with the blockchains when money's moving? With some (like Bitcoin), it's like chatting in a big group. With others (like Ethereum), we gotta use a middleman like Infura.io. No worries about your coins though, just how we connect. We're brainstorming more freestyle ways to link up. Stay tuned!";
 
 // Manage Accounts
 
-"manage_accounts.migration_required" = "Migration Required";
+"manage_accounts.migration_required" = "Time to Move!";
 "manage_accounts.migration_recommended" = "Migration Recommended";
 "manage_accounts.backup_required" = "Backup Required";
 
@@ -1116,18 +1105,18 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "settings_manage_keys.title" = "Manage Wallets";
 "settings_manage_keys.delete" = "Delete";
 "settings_manage_keys.backup" = "Backup";
-"settings_manage_keys.delete.title" = "Delete Wallet";
+"settings_manage_keys.delete.title" = "Ditch the Wallet";
 "settings_manage_keys.delete.confirmation_remove" = "Heads up! This will kick the wallet off the device.";
 "settings_manage_keys.delete.confirmation_loose" = "Hey, if you haven't stashed the key for this wallet, you could be saying bye to your bucks.";
 "settings_manage_keys.delete.confirmation_watch" = "Done watching this wallet's every move?";
-"settings_manage_keys.delete.confirmation_watch.button" = "Stop Watching";
+"settings_manage_keys.delete.confirmation_watch.button" = "Eyes Off";
 
 // Settings -> About App
 
 "settings.about_app.title" = "About App";
 "settings.about_app.app_name" = "%@ Wallet";
-"settings.about_app.description" =  "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
-"settings.about_app.whats_new" = "What's New";
+"settings.about_app.description" = "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
+"settings.about_app.whats_new" = "The Latest & Greatest";
 "settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Contact Us";
 "settings.about_app.rate_us" = "Rate Us";
@@ -1140,7 +1129,6 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "settings.contact.via_telegram" = "via Telegram";
 
 // Settings -> Privacy
-
 
 "settings.privacy" = "Privacy Vibes";
 "settings.privacy.description" = "Just so you know, %@ is like that friend who never spills your secrets. No data collection, no sneaky analytics, nada! We've built this wallet with your privacy front and center.";
@@ -1162,9 +1150,9 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "appearance.markets_tab" = "Markets Tab";
 "appearance.launch_screen" = "Launch Screen";
 "appearance.launch_screen.auto" = "Auto";
-"appearance.launch_screen.balance" = "Balance";
+"appearance.launch_screen.balance" = "Big League Balance";
 "appearance.launch_screen.market_overview" = "Market Overview";
-"appearance.launch_screen.watchlist" = "Watchlist";
+"appearance.launch_screen.watchlist" = "My Favorite List";
 
 "appearance.app_icon" = "App Icon";
 
@@ -1187,11 +1175,11 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "contacts.update_contact.replace" = "Replace";
 "contacts.list.addresses_count" = "Addresses: %d";
 "contacts.contact.new.title" = "New Contact";
-"contacts.contact.name.placeholder" = "Name";
+"contacts.contact.name.placeholder" = "Fabulous Name";
 "contacts.contact.update.error.name_already_exist" = "Name Already Exist";
 "contacts.contact.add_address" = "Add Address";
 "contacts.contact.delete" = "Delete Contact";
-"contacts.contact.address.blockchains" = "Blockchains";
+"contacts.contact.address.blockchains" = "The Chains That Bind";
 "contacts.contact.address.blockchain" = "Blockchain";
 "contacts.contact.address.delete_address" = "Delete Address";
 
@@ -1266,13 +1254,13 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "chart.time_duration.year2" = "2Y";
 "chart.time_duration.all" = "ALL";
 
-"chart.market_cap" = "Market Cap";
+"chart.market_cap" = "How Big's the Hat?";
 "chart.volume" = "Volume (24h)";
 "chart.circulation" = "In Circulation";
 "chart.selected.volume" = "Vol.";
 
 "chart.market.header" = "Market";
-"chart.market.market_cap" = "Market Cap";
+"chart.market.market_cap" = "How Big's the Hat?";
 "chart.market.volume" = "Volume (24h)";
 "chart.market.circulation" = "In Circulation";
 "chart.market.total_supply" = "Total Supply";
@@ -1289,7 +1277,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Create Wallet
 
 "create_wallet.title" = "New Wallet";
-"create_wallet.name" = "Name";
+"create_wallet.name" = "Fabulous Name";
 "create_wallet.advanced_setup" = "Advanced";
 "create_wallet.create" = "Create";
 "create_wallet.advanced" = "Advanced";
@@ -1301,17 +1289,18 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "create_wallet.input.passphrase" = "Passphrase";
 "create_wallet.input.confirm" = "Confirm";
 "create_wallet.passphrase_description" = "Think of passphrases as your wallet's secret handshake. If you ever need to bring back a lost wallet, you'll need the recovery phrase and this passphrase. Plus, with just one mnemonic, you can unlock a bunch of multi-coin wallets with different passphrases. Neat, right?";
-"create_wallet.error.empty_passphrase" = "Oops! Looks like you missed the passphrase. Please fill it in.";
+"create_wallet.error.empty_passphrase" = "Hey, we need that passphrase!";
 "create_wallet.error.forbidden_symbols" = "Hold on there, cowboy! Let's stick to the symbols we know and love::A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Hmm, your passphrase confirmations aren't matching. Let's try that again.";
+
 // Restore Select
 
 "restore_select.title" = "Choose Blockchains";
 
 // Lock Info
 
-"lock_info.title" = "TimeLock";
-"lock_info.text" = "Heads up! The sender locked these funds for a bit. The lock will lift on the indicated date. \n\nRest assured, those Bitcoins are already in your pocket. You'll just need to wait until the lock";
+"lock_info.title" = "Hold On!";
+"lock_info.text" = "The sender's put a timer on this. The Bitcoins are yours, but you gotta wait a tad to spend them on the Bitcoin network.";
 
 // Double Spend Info
 
@@ -1327,11 +1316,11 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Intro
 
-"intro.unchain_assets.title" = "Unchain Assets";
+"intro.unchain_assets.title" = "Break Those Chains!";
 "intro.unchain_assets.description" = "Why cage yourself in? And don’t let any losers do that to you. Be free!";
-"intro.go_borderless.title" = "Go Borderless";
+"intro.go_borderless.title" = "No Walls Here!";
 "intro.go_borderless.description" = "Skip those silly barriers. Access markets everywhere, like a boss!";
-"intro.stay_private.title" = "Stay Private";
+"intro.stay_private.title" = "Keep it Secret, Keep it Safe!";
 "intro.stay_private.description" = "Why broadcast your business? Keep your secrets, just like I do!";
 
 // Guides
@@ -1348,7 +1337,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "add_token.invalid_bep2_symbol" = "Invalid BEP2 symbol";
 "add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
 "add_token.bep2_symbol_not_found" = "BEP2 symbol not found";
-"add_token.input_placeholder.contract_address" = "Contract Address";
+"add_token.input_placeholder.contract_address" = "The Contract's Address";
 "add_token.input_placeholder.bep2_symbol" = "BEP2 Symbol";
 "add_token.coin_name" = "Coin Name";
 "add_token.symbol" = "Symbol";
@@ -1360,9 +1349,10 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "wallet_connect.error.invalid_url" = "Invalid URL Address";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Active Wallet";
-"wallet_connect.address" = "Address";
-"wallet_connect.network" = "Network";
+"wallet_connect.address" = "Prime Location";
+"wallet_connect.network" = "The Best Network";
 "wallet_connect.list.pending_requests" = "Pending Requests";
+"wallet_connect.main.no_any_supported_chains" = "No any supported chains!";
 "wallet_connect.main.unsupported_chains" = "Some of these chains? Very low energy. Not supported!";
 "wallet_connect.connect_description" = "Hit that approve, and you're letting the app see your VIP address. We're doing this, folks, to make security great again and keep the phishers out!";
 "wallet_connect.usage_description" = "You can head over to the browser, but remember - keep this page open. It's the best page!";
@@ -1381,7 +1371,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "wallet_connect.request_title" = "Contract Call";
 "wallet_connect.button.confirm" = "Confirm";
 "wallet_connect.sign.request_title" = "Sign Request";
-"wallet_connect.sign.domain" = "Domain";
+"wallet_connect.sign.domain" = "Fancy Domain";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Message to sign";
 
@@ -1396,6 +1386,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "wallet_connect.no_account.description" = "Before you jump into WalletConnect, you've gotta either build a wallet or bring one in, just like building or buying a beautiful hotel!";
 "wallet_connect.unbackuped_account.description" = "Hey, you've gotta backup %@ before using WalletConnect. Protect it, just like I protect my Twitter account!";
+
 "wallet_connect.non_supported_account.description" = "That wallet of yours, the %@ type? Not a fan of WalletConnect, sorry folks!";
 "wallet_connect.non_supported_account.switch" = "Switch";
 
@@ -1422,11 +1413,11 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "status_info.title" = "Status";
 "status_info.pending.title" = "Pending";
 "status_info.pending.content" = "Your transaction? It's like waiting for an applause at one of my rallies - coming but not here yet. If you paid a good fee, it'll be there in a jiffy. But if you went low-ball, might take longer - days even! And it could be shown the exit door. Remember, updates on the %@ wallet might lag a tad.";
-"status_info.processing.title" = "Getting Things Done";
+"status_info.processing.title" = "Processing";
 "status_info.processing.content" = "Your transaction? It's in the blockchain but not set in stone. For small deals, you can consider it done. But for the big league stuff, you might wanna hold your horses till it's totally completed.";
-"status_info.completed.title" = "Victory!";
+"status_info.completed.title" = "Completed";
 "status_info.confirmed.content" = "It's a done deal! That transaction? Set in stone and it's not going back.";
-"status_info.failed.title" = "Oops!";
+"status_info.failed.title" = "Failed";
 "status_info.failed.content" = "Didn't work out this time - like trying to get a Democrat to agree with me! Some slip-ups might still cost you fees. If another transaction nudged yours out or if it was canceled, no fees, but still an 'Oops'. The %@ app can't tell you why it failed, but you can play detective on block explorers like etherscan.io.";
 
 // Onboarding
@@ -1442,12 +1433,12 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Manage Account
 
-"manage_account.name" = "Name";
+"manage_account.name" = "Fabulous Name";
 "manage_account.recovery_phrase" = "Recovery Phrase";
 "manage_account.public_keys" = "Public Keys";
 "manage_account.private_keys" = "Private Keys";
-"manage_account.backup_recovery_phrase" = "Manual Backup";
-"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
+"manage_account.backup_recovery_phrase" = "Backup Bonanza";
+"manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud!";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
 "manage_account.manual_backup_required" = "You Need a Personal Backup!";
 "manage_account.manual_backup_required.description" = "Before you throw out the iCloud backup, be smart and write down your recovery phrase. It's like insurance for your wallet!";
@@ -1455,14 +1446,14 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "manage_account.unlink" = "Cut Ties with Wallet";
 "manage_account.backup.no_backup_yet_description" = "Want to use the wallet? First, pick a way to back it up, just like you'd have a backup plan for a business deal.";
 "manage_account.backup.has_backup_description" = "Always have a personal backup for each wallet. It's just good sense!";
-"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
 
+"manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
 // Manage Account -> Public Keys
 
 "public_keys.title" = "Public Keys";
 "public_keys.evm_address" = "EVM Address";
 "public_keys.evm_address.description" = "With this, you can peek (just peek!) at wallets on Ethereum, Binance Smart Chain, and those other EVM blockchains. Only the best blockchains!";
-"public_keys.account_extended_public_key" = "The Ultra Public Key for Accounts";
+"public_keys.account_extended_public_key" = "Account Extended Public Key";
 "public_keys.account_extended_public_key.description" = "This lets you have a little sneak peek (read-only, of course!) at wallets holding the big ones like Bitcoin, and the others like Litecoin, Bitcoin Cash, Dash, and more. It's huge!";
 
 // Manage Account -> Private Keys
@@ -1470,9 +1461,9 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "private_keys.title" = "Private Keys";
 "private_keys.evm_private_key" = "EVM Private Key";
 "private_keys.evm_private_key.description" = "You've got the golden key! Total power over EVM cryptos like Ethereum and Binance Smart Chain in the wallet. It's like owning the Trump Tower of crypto!";
-"private_keys.bip32_root_key" = "The Ultimate BIP32 Key";
+"private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "This key? It's yuge! Complete command over everything in the wallet. It's the Art of the Deal of keys!";
-"private_keys.account_extended_private_key" = "The Super Private Key for Accounts";
+"private_keys.account_extended_private_key" = "Account Extended Private Key";
 "private_keys.account_extended_private_key.description" = "With this, you're the boss of Bitcoin and those other coins like Litecoin, Bitcoin Cash, Dash, and more in the wallet. It's like being the president of cryptos!";
 
 // Manage Account -> EVM Address
@@ -1498,36 +1489,38 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // EVM Network
 
-"evm_network.rpc_source" = "RPC Source";
+"evm_network.rpc_source" = "Chatting with Blockchains";
 "evm_network.added" = "Added";
 "evm_network.add_new" = "Add New";
 
 // Add RPC Source
 
 "add_evm_sync_source.title" = "Add RPC Source";
-"add_evm_sync_source.name" = "Name";
+"add_evm_sync_source.name" = "Fabulous Name";
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "Basic Auth (optional)";
 "add_evm_sync_source.warning.url_exists" = "This RPC Source URL? It's already in the club. No duplicates, folks!";
 "add_evm_sync_source.error.invalid_url" = "The URL you punched in? Not good! Make sure it starts with https or wss, otherwise it's a no-go. It's basic URL etiquette!";
+
 // Send Settings
 
 "evm_send_settings.nonce" = "Transaction Nonce";
-"evm_send_settings.nonce.info" = "The nonce? Think of it as a unique badge number for your transactions. Usually, it goes up one by one, like my ratings! But hey, if you're a smart cookie, you can use it to swap out a slow transaction with a faster one. Just make sure you're willing to pay top dollar in fees. Because, remember, if two transactions have the same badge number, only the one that's willing to tip the most gets the VIP treatment!";"evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
+"evm_send_settings.nonce.info" = "The nonce? Think of it as a unique badge number for your transactions. Usually, it goes up one by one, like my ratings! But hey, if you're a smart cookie, you can use it to swap out a slow transaction with a faster one. Just make sure you're willing to pay top dollar in fees. Because, remember, if two transactions have the same badge number, only the one that's willing to tip the most gets the VIP treatment!";
+"evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
 "evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
 
 "fee_settings" = "Advanced";
-"fee_settings.fee" = "Fee";
+"fee_settings.fee" = "Little Charge";
 "fee_settings.fee.info" = "Think of blockchains like a fancy club in Manhattan. When it's crowded, you gotta pay a premium to get in. So, when there's a lot of action on the network, fees go up. Big league!";
-"fee_settings.fee_rate" = "Fee Rate";
+"fee_settings.fee_rate" = "The Fee Game";
 "fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
 "fee_settings.inputs_outputs" = "Inputs/Outputs";
 "fee_settings.transaction_settings" = "Transaction Settings";
 "fee_settings.transaction_settings.description" = "Want to move your Bitcoin with some mystery, like a billionaire in disguise? Tweak how the transactions are done, and you'll be harder to track!";
-"fee_settings.time_lock" = "Time Lock";
+"fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
 
-"fee_settings.network_fee" = "Network Fee";
+"fee_settings.network_fee" = "Network’s Tiny Fee";
 "fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
 "fee_settings.gas_limit" = "Gas Limit";
 "fee_settings.gas_limit.info" = "You know, transactions have their own kind of 'energy', and they call it 'gas'. Think of the Gas Limit as the biggest energy drink you'd need for a transaction. But usually, you'll sip less than what you think.";
@@ -1537,39 +1530,38 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "fee_settings.base_fee" = "Base Fee";
 "fee_settings.base_fee.info" = "So, every block has a ticket price set by the big network – they call it the base fee rate. Think of it as a fluctuating stock; sometimes up, sometimes down, but never more than 12.5% change. This ticket price changes based on how packed the network is. The number you're seeing? That's the current rate. Very transparent!";
-"fee_settings.max_fee_rate" = "Max Fee Rate";
+"fee_settings.max_fee_rate" = "Top Dollar Rate";
 "fee_settings.max_fee_rate.info" = "This is your ceiling - the max you're willing to spend per gas unit. It's gotta cover the basic fee and the special priority fee. The number here? It's a clever estimate, but usually, you'll end up spending less. Cut corners on this and you might be waiting a long time, or even get your transaction stuck in limbo!";
-"fee_settings.tips" = "Max Priority Fee";
+"fee_settings.tips" = "The Big Tipper's Fee";
 "fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
 
-
-"fee_settings.errors.insufficient_balance" = "Insufficient balance";
-"fee_settings.errors.unexpected_error" = "Unexpected Error";
-"fee_settings.errors.insufficient_balance.info" = "Listen, your %@ stash is looking a bit thin for this transaction, especially when we throw in the fee.";
-"fee_settings.errors.low_max_fee" = "Low Fee";
+"fee_settings.errors.insufficient_balance" = "Insufficient Balance";
+"fee_settings.errors.unexpected_error" = "Whoops, something went Trump-sized wrong!";
+"fee_settings.errors.insufficient_balance.info" = "Your %@ balance? Too low! Can't cover the transaction and the tiny fee!";
+"fee_settings.errors.low_max_fee" = "Your fee's too puny!";
 "fee_settings.errors.low_max_fee.info" = "That fee you set? Way too low for the big league transaction you're trying to do!";
 "fee_settings.errors.nonce_already_in_block" = "Too late, already made the move!";
 "fee_settings.errors.replacement_transaction_underpriced" = "Trying to switch things up? Your fee's still too skimpy!";
 "fee_settings.errors.transaction_underpriced" = "That's a bargain-bin fee!";
 "fee_settings.errors.tips_higher_than_max_fee" = "Your max fee? It's not gonna cut it!";
-"fee_settings.errors.zero_amount.info" = "Cannot transfer 0 TRX";
-"fee_settings.warning.risk_of_getting_stuck" = "Risky";
+"fee_settings.errors.zero_amount.info" = "You can't just send thin air!";
+"fee_settings.warning.risk_of_getting_stuck" = "Living on the edge!";
 "fee_settings.warning.risk_of_getting_stuck.info" = "This might take a while... or, who knows, might not even happen at all!";
-"fee_settings.warning.overpricing" = "Fee Too High";
+"fee_settings.warning.overpricing" = "Throwing your money away!";
 "fee_settings.warning.overpricing.info" = "Your fee is looking more lavish than Mar-a-Lago! Way more than what you need for this.";
 
 // Watch Address
 
 "watch_address.title" = "Watch Wallet";
 "watch_address.watch" = "Next";
-"watch_address.address" = "Address";
+"watch_address.address" = "Prime Location";
 "watch_address.by" = "By";
 "watch_address.watch_by" = "Watch By";
 "watch_address.evm_address" = "EVM Address";
 "watch_address.tron_address" = "TRON Address";
 "watch_address.public_key" = "Account xPubKey";
 "watch_address.public_key.placeholder" = "Enter Account Extended Public Key ";
-"watch_address.public_key.invalid_key" = "Invalid Key";
+"watch_address.public_key.invalid_key" = "This key? Not the best. It's wrong!";
 "watch_address.choose_blockchain" = "Choose Blockchain";
 "watch_address.choose_coin" = "Choose Coin";
 
@@ -1583,12 +1575,12 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "nft_collections.on_sale" = "On Sale";
 "nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
-"top_nft_collections.title" = "Top NFT Collections";
+"top_nft_collections.title" = "Top Art Stash";
 "top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
 
-"nft_asset.tab.overview" = "Overview";
+"nft_asset.tab.overview" = "The Best View";
 "nft_asset.tab.activity" = "Activity";
 
 "nft_asset.last_sale" = "Last Sale";
@@ -1597,14 +1589,14 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "nft_asset.floor_price" = "Floor Price";
 "nft_asset.on_sale" = "On Sale";
 "nft_asset.on_auction" = "On Auction";
-"nft_asset.until_date" = "until %@";
+"nft_asset.until_date" = "all the way to %@";
 "nft_asset.buy_now" = "Buy Now";
 "nft_asset.minimum_bid" = "Minimum Bid";
 "nft_asset.best_offer" = "Best Offer";
 "nft_asset.properties" = "Properties";
 "nft_asset.description" = "Description";
 "nft_asset.details" = "Details";
-"nft_asset.details.contract_address" = "Contract Address";
+"nft_asset.details.contract_address" = "The Contract's Address";
 "nft_asset.details.token_id" = "Token ID";
 "nft_asset.details.token_standard" = "Token Standard";
 "nft_asset.details.blockchain" = "Blockchain";
@@ -1616,7 +1608,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Nft Collection
 
-"nft_collection.tab.overview" = "Overview";
+"nft_collection.tab.overview" = "The Best View";
 "nft_collection.tab.assets" = "Items";
 "nft_collection.tab.activity" = "Activity";
 
@@ -1628,7 +1620,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 "nft_collection.overview.owners" = "Owners";
 "nft_collection.overview.items" = "Items";
-"nft_collection.overview.24h_volume" = "24h Volume";
+"nft_collection.overview.24h_volume" = "24 Hours of Winning";
 "nft_collection.overview.today_sellers" = "Today's Sellers";
 "nft_collection.overview.floor_price" = "Floor Price";
 "nft_collection.overview.all_time_average" = "All time average";
@@ -1661,9 +1653,9 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Activate Subscription
 
-"activate_subscription.title" = "Activate";
+"activate_subscription.title" = "Switch it on!";
 "activate_subscription.wallet" = "Wallet";
-"activate_subscription.address" = "Address";
+"activate_subscription.address" = "Prime Location";
 "activate_subscription.message" = "Message to Sign";
 "activate_subscription.sign" = "Sign";
 "activate_subscription.activating" = "Activating...";
@@ -1690,7 +1682,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Cex Coin Select
 
 "cex_coin_select.title" = "Choose Coin";
-"cex_coin_select.withdraw" = "Withdraw";
+"cex_coin_select.withdraw" = "Pull Out";
 "cex_coin_select.withdraw.empty" = "You have no assets to withdraw.";
 "cex_coin_select.search_placeholder" = "Coin Code or Name";
 "cex_coin_select.suspended" = "Suspended";
@@ -1703,9 +1695,9 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 // Cex Deposit
 
 "cex_deposit.title" = "Deposit %@";
-"cex_deposit.address" = "Address";
+"cex_deposit.address" = "Prime Location";
 
-"cex_deposit.network" = "Network";
+"cex_deposit.network" = "The Best Network";
 "cex_deposit.memo" = "Memo (Tag)";
 "cex_deposit.min_amount" = "Min. Amount";
 "cex_deposit.warning_memo" = "Memo (tag) is required, or your will lose your coins.";
@@ -1717,9 +1709,9 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Cex Widthdraw
 
-"cex_withdraw.network" = "Network";
+"cex_withdraw.network" = "The Best Network";
 "cex_withdraw.network_warning" = "Ensure the network matches the withdrawal address and the deposit platform supports it, or assets may be lost.";
-"cex_withdraw.fee" = "Fee";
+"cex_withdraw.fee" = "Little Charge";
 "cex_withdraw.fee_from_amount" = "Fee from amount";
 "cex_withdraw.error.insufficient_funds" = "Not enough available balance";
 "cex_withdraw.error.max_amount_violated" = "The maximum amount you can withdraw is %@";
@@ -1728,12 +1720,12 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 
 // Cex Withdraw Network Select
 
-"cex_withdraw_network_select.title" = "Network";
+"cex_withdraw_network_select.title" = "The Best Network";
 "cex_withdraw_network_select.description" = "Ensure the network matches the withdrawal address and the deposit platform supports it.";
 
 // Cex Withdraw Confirm
 
 "cex_withdraw_confirm.you_withdraw" = "You Withdraw";
-"cex_withdraw_confirm.network" = "Network";
-"cex_withdraw_confirm.withdraw" = "Withdraw";
+"cex_withdraw_confirm.network" = "The Best Network";
+"cex_withdraw_confirm.withdraw" = "Pull Out";
 "cex_withdraw_confirm.withdraw_failed" = "Withdraw failed";
