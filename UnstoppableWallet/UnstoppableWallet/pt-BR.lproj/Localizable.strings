@@ -46,7 +46,6 @@
 "alert.removed_from_wallet" = "Removido da Carteira";
 "alert.already_added_to_wallet" = "Já adicionado à carteira";
 "alert.not_supported_yet" = "Não suportado ainda";
-"alert.copied" = "Copiado";
 "alert.created" = "Criado";
 "alert.imported" = "Importado";
 "alert.wallet_added" = "Carteira Adicionada";
@@ -243,7 +242,6 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "backup.cloud.title" = "Backup para o iCloud";
 "backup.cloud.description" = "Let's get this straight, folks. iCloud storage, it's from Apple, okay? But here's the deal: when you use it, your data, it's not hanging out on your own gadgets. Nope, it's on Apple's servers. So, you're putting your trust, your data's security, in the hands of a third-party service. That's the real story here.";
-
 "backup.cloud.terms.item.1" = "Compreendo que perder acesso ao meu iCloud resultará em perder acesso ao backup de uma respectiva carteira.";
 
 "backup.cloud.name.title" = "Nome do Backup";
@@ -270,9 +268,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup.cloud.cant_create_file" = "Não é possível salvar o arquivo no iCloud";
 "backup.cloud.cant_delete_file" = "Não é possível excluir do iCloud";
 "backup.cloud.no_access.title" = "Acessar o iCloud";
-"backup.cloud.no_access.title" = "Acessar o iCloud";
 "backup.cloud.no_access.description" = "Para criar um backup, você precisa fornecer acesso ao armazenamento iCloud.";
-
 
 // Errors
 
@@ -542,7 +538,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "swap.confirmation.maximum_sent" = "Gastos máximos";
 
 "swap.dex_info.description" = "Este serviço de troca é fornecido por %@, um protocolo descentralizado de troca de tokens construído na blockchain %@. \n\n%@ É totalmente automatizado e gerenciado por contratos inteligentes que facilitam a troca de tokens de uma forma confiável sem qualquer meio de trapaça.";
-
 "swap.dex_info.header_dex_related" = "%@ Relacionado";
 "swap.dex_info.header_allowance" = "Preço";
 "swap.dex_info.content_allowance" = "O montante que uma exchange pode gastar em nome do usuário na execução de trocas simbólicas. É necessária uma margem suficiente para que uma transação de troca efetiva possa ocorrer.";
@@ -1355,8 +1350,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "wallet_connect.error.invalid_url" = "Endereço URL Inválido";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Carteira ativa";
-"wallet_connect.address" = "Endereço";
-"wallet_connect.network" = "Rede";
 "wallet_connect.address" = "Endereço";
 "wallet_connect.network" = "Rede";
 "wallet_connect.list.pending_requests" = "Solicitações Pendentes";
