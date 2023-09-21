@@ -46,7 +46,6 @@
 "alert.removed_from_wallet" = "Removed from Wallet";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
 "alert.not_supported_yet" = "Henüz Desteklenmiyor";
-"alert.copied" = "Kopyalandı";
 "alert.created" = "Oluşturuldu";
 "alert.imported" = "Geri yüklendi";
 "alert.wallet_added" = "Cüzdan Eklendi";
@@ -243,7 +242,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "backup.cloud.title" = "iCloud'a yedekle";
 "backup.cloud.description" = "iCloud depolama, Apple tarafından sağlanan bir üçüncü taraf bulut depolama hizmetidir. Verilerinizin kişisel cihazlarınızda değil, Apple'ın sunucularında saklanacağını bilmek önemlidir. Bu, verilerinizi emanet ettiğiniz ve bilgilerinizin güvenliğini üçüncü bir hizmete devrettiğiniz anlamına gelir.";
-
 "backup.cloud.terms.item.1" = "iCloud'uma erişimi kaybetmenin, ilgili cüzdanın yedeğine erişimi kaybetmeyle sonuçlanacağını anlıyorum.";
 
 "backup.cloud.name.title" = "Yedek Adı";
@@ -270,9 +268,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "backup.cloud.cant_create_file" = "Dosya iCloud'a kaydedilemiyor";
 "backup.cloud.cant_delete_file" = "iCloud'dan silinemiyor";
 "backup.cloud.no_access.title" = "iCloud'a erişim";
-"backup.cloud.no_access.title" = "iCloud'a erişim";
 "backup.cloud.no_access.description" = "Yedek oluşturmak için, iCloud depolama alanına erişim sağlamanız gerekmektedir.";
-
 
 // Errors
 
@@ -542,7 +538,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.confirmation.maximum_sent" = "Maksimum Harcama";
 
 "swap.dex_info.description" = "Bu takas etme hizmeti, %@ blok zinciri üzerine inşa edilmiş ve merkezi olmayan jeton takas etme protokolü olan %@ tarafından desteklenmektedir.\n\n%@, tamamen otomatiktir ve hile yapmadan jeton takaslarını güvenilir bir şekilde kolaylaştıran akıllı sözleşmelerle yönetilir.";
-
 "swap.dex_info.header_dex_related" = "%@";
 "swap.dex_info.header_allowance" = "Ödenek";
 "swap.dex_info.content_allowance" = "Bir borsanın, token takaslarını yürütürken kullanıcının adına harcayabileceği ödenek miktarı. Fiili bir takas işleminin gerçekleşmesinde yeterli ödenek gereklidir.";
@@ -1355,8 +1350,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.error.invalid_url" = "Geçersiz URL Adresi";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Aktif Cüzdan";
-"wallet_connect.address" = "Adres";
-"wallet_connect.network" = "Ağ";
 "wallet_connect.address" = "Adres";
 "wallet_connect.network" = "Ağ";
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
