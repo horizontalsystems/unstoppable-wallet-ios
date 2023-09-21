@@ -46,7 +46,6 @@
 "alert.removed_from_wallet" = "Aus Wallet entfernt";
 "alert.already_added_to_wallet" = "Bereits im Wallet enthalten";
 "alert.not_supported_yet" = "Wird noch nicht unterstützt";
-"alert.copied" = "Kopiert";
 "alert.created" = "Erstellt";
 "alert.imported" = "Wiederherstellen";
 "alert.wallet_added" = "Wallet hinzugefügt";
@@ -1351,8 +1350,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "wallet_connect.error.invalid_url" = "Ungültige URL-Adresse";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Aktive Wallet";
-"wallet_connect.address" = "Adresse";
-"wallet_connect.network" = "Netzwerk";
 "wallet_connect.address" = "Adresse";
 "wallet_connect.network" = "Netzwerk";
 "wallet_connect.list.pending_requests" = "Ausstehende Anfragen";
