@@ -46,7 +46,6 @@
 "alert.removed_from_wallet" = "Supprimé du portefeuille";
 "alert.already_added_to_wallet" = "Déjà ajouté au portefeuille";
 "alert.not_supported_yet" = "Pas pris en charge pour le moment";
-"alert.copied" = "Copié";
 "alert.created" = "Établi";
 "alert.imported" = "Importé";
 "alert.wallet_added" = "Portefeuille ajouté";
@@ -243,7 +242,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "backup.cloud.title" = "Sauvegarder sur iCloud";
 "backup.cloud.description" = "Le stockage iCloud est un service tiers de stockage cloud fourni par Apple. Il est important de savoir que vos données seront stockées sur les serveurs d'Apple, pas sur vos appareils personnels. Cela signifie que vous confiez vos données et que vous transmettez la sécurité de vos informations à un service tiers.";
-
 "backup.cloud.terms.item.1" = "Je comprends que la perte d'accès à mon iCloud entraînera la perte d'accès à la sauvegarde du portefeuille correspondant.";
 
 "backup.cloud.name.title" = "Nom de la sauvegarde";
@@ -270,9 +268,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "backup.cloud.cant_create_file" = "Impossible de sauvegarder le fichier sur iCloud";
 "backup.cloud.cant_delete_file" = "Impossible de supprimer de iCloud";
 "backup.cloud.no_access.title" = "Accéder à iCloud";
-"backup.cloud.no_access.title" = "Accéder à iCloud";
 "backup.cloud.no_access.description" = "Pour créer une sauvegarde, vous devez fournir un accès au stockage iCloud.";
-
 
 // Errors
 
@@ -542,7 +538,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.confirmation.maximum_sent" = "Dépense maximale";
 
 "swap.dex_info.description" = "Ce service d'échange est assuré par %@, un protocole d'échange de tokens décentralisé construit sur la blockchain %@.\n\n%@ est entièrement automatisé et géré par des contrats intelligents qui facilitent les échanges de tokens de manière fiable sans aucune possibilité de tricher.";
-
 "swap.dex_info.header_dex_related" = "Relatif à %@";
 "swap.dex_info.header_allowance" = "Allocation";
 "swap.dex_info.content_allowance" = "Le montant qu\'un échange peut dépenser pour le compte de l\'utilisateur lors de l\'exécution de swaps de jetons. Une provision suffisante est requise avant de pouvoir effectuer une opération d\'échange réelle.";
@@ -1355,8 +1350,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "wallet_connect.error.invalid_url" = "Adresse URL invalide";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Activer le portefeuille";
-"wallet_connect.address" = "Adresses";
-"wallet_connect.network" = "Réseau";
 "wallet_connect.address" = "Adresses";
 "wallet_connect.network" = "Réseau";
 "wallet_connect.list.pending_requests" = "Demandes en attente";
