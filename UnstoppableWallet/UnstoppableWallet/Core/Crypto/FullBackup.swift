@@ -38,7 +38,6 @@ extension FullBackup: Codable {
         if let contacts { try container.encode(contacts, forKey: .contacts) }
         if let settings { try container.encode(settings, forKey: .settings) }
         try container.encode(version, forKey: .version)
-        try container.encode(version, forKey: .version)
         try? container.encode(timestamp, forKey: .timestamp)
     }
 }

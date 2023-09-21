@@ -12,7 +12,9 @@ class AppBackupProvider {
     private let walletManager: WalletManager
     private let favoritesManager: FavoritesManager
     private let evmSyncSourceManager: EvmSyncSourceManager
+    private let btcBlockchainManager: BtcBlockchainManager
     private let restoreSettingsManager: RestoreSettingsManager
+    private let chartRepository: ChartIndicatorsRepository
     private let localStorage: LocalStorage
     private let languageManager: LanguageManager
     private let currencyKit: CurrencyKit.Kit
@@ -29,7 +31,9 @@ class AppBackupProvider {
          walletManager: WalletManager,
          favoritesManager: FavoritesManager,
          evmSyncSourceManager: EvmSyncSourceManager,
+         btcBlockchainManager: BtcBlockchainManager,
          restoreSettingsManager: RestoreSettingsManager,
+         chartRepository: ChartIndicatorsRepository,
          localStorage: LocalStorage,
          languageManager: LanguageManager,
          currencyKit: CurrencyKit.Kit,
@@ -46,7 +50,9 @@ class AppBackupProvider {
         self.walletManager = walletManager
         self.favoritesManager = favoritesManager
         self.evmSyncSourceManager = evmSyncSourceManager
+        self.btcBlockchainManager = btcBlockchainManager
         self.restoreSettingsManager = restoreSettingsManager
+        self.chartRepository = chartRepository
         self.localStorage = localStorage
         self.languageManager = languageManager
         self.currencyKit = currencyKit
@@ -105,18 +111,19 @@ extension AppBackupProvider {
                 let providers: [SettingsBackup.DefaultProvider] = BlockchainType
                     .supported
                     .filter { !$0.allowedProviders.isEmpty }
-                    .map { SettingsBackup.DefaultProvider(
-                        blockchainTypeId: $0.uid,
-                        provider: localStorage.defaultProvider(blockchainType: $0).rawValue
-                    )
+                    .map {
+                        SettingsBackup.DefaultProvider(
+                            blockchainTypeId: $0.uid,
+                            provider: localStorage.defaultProvider(blockchainType: $0).id
+                        )
                     }
-
                 settings = SettingsBackup(
                     evmSyncSources: evmSyncSourceManager.backup(passphrase: passphrase),
+                    btcModes: btcBlockchainManager.backup,
                     lockTimeEnabled: localStorage.lockTimeEnabled,
                     remoteContactsSync: localStorage.remoteContactsSync,
-                    defaultProviders: providers,
-                    chartIndicators: [],
+                    swapProviders: providers,
+                    chartIndicators: chartRepository.backup,
                     indicatorsShown: localStorage.indicatorsShown,
                     currentLanguage: languageManager.currentLanguage,
                     baseCurrency: currencyKit.baseCurrency.code,
@@ -138,7 +145,6 @@ extension AppBackupProvider {
         else {
             throw CodingError.emptyParameters
         }
-
 
         var contactCrypto: BackupCrypto?
         if !contacts.isEmpty {
@@ -221,8 +227,8 @@ extension AppBackupProvider {
         // restore only if all wallet was encrypted with password
         encodedWallets.forEach { wallet in
             walletRestore(
-                    backup: wallet.0,
-                    accountType: wallet.1
+                backup: wallet.0,
+                accountType: wallet.1
             )
         }
 
@@ -234,6 +240,8 @@ extension AppBackupProvider {
 
         if let settings = backup.settings {
             evmSyncSourceManager.restore(backup: settings.evmSyncSources)
+            btcBlockchainManager.restore(backup: settings.btcModes)
+            chartRepository.restore(backup: settings.chartIndicators)
             localStorage.restore(backup: settings)
             languageManager.currentLanguage = settings.currentLanguage
             if let currency = currencyKit.currencies.first(where: { $0.code == settings.baseCurrency }) {

@@ -1,6 +1,6 @@
-import Foundation
-import Combine
 import Chart
+import Combine
+import Foundation
 
 protocol IChartIndicatorsRepository {
     var indicators: [ChartIndicator] { get }
@@ -23,10 +23,10 @@ class ChartIndicatorsRepository {
         self.subscriptionManager = subscriptionManager
 
         subscriptionManager.$isAuthenticated
-                .sink { [weak self] _ in
-                    self?.updatedSubject.send()
-                }
-                .store(in: &cancellables)
+            .sink { [weak self] _ in
+                self?.updatedSubject.send()
+            }
+            .store(in: &cancellables)
     }
 
     private var userIndicators: [ChartIndicator] {
@@ -43,7 +43,6 @@ class ChartIndicatorsRepository {
 }
 
 extension ChartIndicatorsRepository: IChartIndicatorsRepository {
-
     var indicators: [ChartIndicator] {
         if subscriptionManager.isAuthenticated {
             return userIndicators
@@ -57,11 +56,9 @@ extension ChartIndicatorsRepository: IChartIndicatorsRepository {
             return
         }
 
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .sortedKeys
-
-        let oldIndicators = userIndicators
-        if indicators != oldIndicators {
+        if indicators != userIndicators {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .sortedKeys
             localStorage.chartIndicators = try? encoder.encode(ChartIndicators(with: indicators))
             updatedSubject.send()
         }
@@ -76,5 +73,114 @@ extension ChartIndicatorsRepository: IChartIndicatorsRepository {
             greatest = indicator.enabled ? max(greatest, indicator.greatestPeriod) : greatest
         }
     }
+}
 
+extension ChartIndicatorsRepository {
+    var backup: BackupIndicators {
+        var ma = [BackupMaIndicator]()
+        var rsi = [BackupRsiIndicator]()
+        var macd = [BackupMacdIndicator]()
+
+        userIndicators.forEach { indicator in
+            switch indicator {
+            case let indicator as MaIndicator:
+                ma.append(BackupMaIndicator(
+                    period: indicator.period,
+                    type: indicator.type.rawValue,
+                    enabled: indicator.enabled
+                ))
+            case let indicator as RsiIndicator:
+                rsi.append(BackupRsiIndicator(
+                    period: indicator.period,
+                    enabled: indicator.enabled
+                ))
+            case let indicator as MacdIndicator:
+                macd.append(BackupMacdIndicator(
+                    slow: indicator.slow,
+                    fast: indicator.fast,
+                    signal: indicator.signal,
+                    enabled: indicator.enabled
+                ))
+            default: ()
+            }
+        }
+        return BackupIndicators(
+                ma: ma,
+                rsi: rsi,
+                macd: macd
+        )
+    }
+
+    func restore(backup: BackupIndicators) {
+        var indicators = [ChartIndicator]()
+        backup.ma.enumerated().forEach { index, element in
+            indicators.append(
+                MaIndicator(
+                    id: "MA",
+                    index: index,
+                    enabled: element.enabled,
+                    period: element.period,
+                    type: MaIndicator.MaType(rawValue: element.type) ?? .sma,
+                    onChart: true,
+                    single: false,
+                    configuration: ChartIndicatorFactory.maConfiguration(index)
+                )
+            )
+        }
+        backup.rsi.enumerated().forEach { index, element in
+            indicators.append(
+                RsiIndicator(
+                    id: "RSI",
+                    index: index,
+                    enabled: element.enabled,
+                    period: element.period,
+                    onChart: false,
+                    single: true,
+                    configuration: ChartIndicatorFactory.rsiConfiguration
+                )
+            )
+        }
+        backup.macd.enumerated().forEach { index, element in
+            indicators.append(
+                    MacdIndicator(
+                            id: "MACD",
+                            index: index,
+                            enabled: element.enabled,
+                            fast: element.fast,
+                            slow: element.slow,
+                            signal: element.signal,
+                            onChart: false,
+                            single: true,
+                            configuration: ChartIndicatorFactory.macdConfiguration
+                    )
+            )
+        }
+        set(indicators: indicators)
+    }
+}
+
+extension ChartIndicatorsRepository {
+    struct BackupIndicators: Codable {
+        let ma: [BackupMaIndicator]
+        let rsi: [BackupRsiIndicator]
+        let macd: [BackupMacdIndicator]
+    }
+
+    struct BackupMaIndicator: Codable {
+        let period: Int
+        let type: String
+        let enabled: Bool
+    }
+
+    struct BackupRsiIndicator: Codable {
+        let period: Int
+        let enabled: Bool
+    }
+
+    struct BackupMacdIndicator: Codable {
+        let slow: Int
+        let fast: Int
+        let signal: Int
+        let enabled: Bool
+    }
 }
