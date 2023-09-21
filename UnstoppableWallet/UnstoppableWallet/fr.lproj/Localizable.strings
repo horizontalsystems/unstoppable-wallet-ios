@@ -46,7 +46,6 @@
 "alert.removed_from_wallet" = "Supprimé du portefeuille";
 "alert.already_added_to_wallet" = "Déjà ajouté au portefeuille";
 "alert.not_supported_yet" = "Pas pris en charge pour le moment";
-"alert.copied" = "Copié";
 "alert.created" = "Établi";
 "alert.imported" = "Importé";
 "alert.wallet_added" = "Portefeuille ajouté";
@@ -1351,8 +1350,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "wallet_connect.error.invalid_url" = "Adresse URL invalide";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Activer le portefeuille";
-"wallet_connect.address" = "Adresses";
-"wallet_connect.network" = "Réseau";
 "wallet_connect.address" = "Adresses";
 "wallet_connect.network" = "Réseau";
 "wallet_connect.list.pending_requests" = "Demandes en attente";
