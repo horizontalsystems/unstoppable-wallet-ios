@@ -46,7 +46,6 @@
 "alert.removed_from_wallet" = "Eliminado del monedero";
 "alert.already_added_to_wallet" = "Ya se ha añadido a Wallet";
 "alert.not_supported_yet" = "Aún no compatible";
-"alert.copied" = "Copiado";
 "alert.created" = "Creado";
 "alert.imported" = "Restaurado ";
 "alert.wallet_added" = "Cartera añadida";
@@ -1351,8 +1350,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "wallet_connect.error.invalid_url" = "Dirección URL inválida";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Active su cartera";
-"wallet_connect.address" = "Dirección";
-"wallet_connect.network" = "La red";
 "wallet_connect.address" = "Dirección";
 "wallet_connect.network" = "La red";
 "wallet_connect.list.pending_requests" = "Solicitudes Pendientes";
