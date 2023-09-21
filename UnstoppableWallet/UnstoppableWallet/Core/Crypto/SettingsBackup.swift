@@ -5,11 +5,12 @@ import ThemeKit
 
 struct SettingsBackup: Codable {
     let evmSyncSources: EvmSyncSourceManager.SyncSourceBackup
+    let btcModes: [BtcBlockchainManager.BtcRestoreModeBackup]
 
     let lockTimeEnabled: Bool
     let remoteContactsSync: Bool
-    let defaultProviders: [DefaultProvider]
-    let chartIndicators: [ChartIndicator]
+    let swapProviders: [DefaultProvider]
+    let chartIndicators: ChartIndicatorsRepository.BackupIndicators
     let indicatorsShown: Bool
     let currentLanguage: String
     let baseCurrency: String
@@ -24,9 +25,10 @@ struct SettingsBackup: Codable {
 
     enum CodingKeys: String, CodingKey {
         case evmSyncSources = "evm_sync_sources"
+        case btcModes = "btc_modes"
         case lockTimeEnabled = "lock_time"
         case remoteContactsSync = "contacts_sync"
-        case defaultProviders = "default_providers"
+        case swapProviders = "swap_providers"
         case chartIndicators = "indicators"
         case indicatorsShown = "indicators_shown"
         case currentLanguage = "language"
@@ -44,12 +46,12 @@ struct SettingsBackup: Codable {
 
 extension SettingsBackup {
     struct DefaultProvider: Codable {
+        let blockchainTypeId: String
+        let provider: String
+
         enum CodingKeys: String, CodingKey {
             case blockchainTypeId = "blockchain_type_id"
             case provider
         }
-
-        let blockchainTypeId: String
-        let provider: String
     }
 }

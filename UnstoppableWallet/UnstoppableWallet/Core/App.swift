@@ -306,13 +306,16 @@ class App {
         let cexAssetRecordStorage = CexAssetRecordStorage(dbPool: dbPool)
         cexAssetManager = CexAssetManager(accountManager: accountManager, marketKit: marketKit, storage: cexAssetRecordStorage)
 
+        let chartRepository = ChartIndicatorsRepository(localStorage: localStorage, subscriptionManager: subscriptionManager)
         appBackupProvider = AppBackupProvider(
                 accountManager: accountManager,
                 accountFactory: accountFactory,
                 walletManager: walletManager,
                 favoritesManager: favoritesManager,
                 evmSyncSourceManager: evmSyncSourceManager,
+                btcBlockchainManager: btcBlockchainManager,
                 restoreSettingsManager: restoreSettingsManager,
+                chartRepository: chartRepository,
                 localStorage: localStorage,
                 languageManager: LanguageManager.shared,
                 currencyKit: currencyKit,

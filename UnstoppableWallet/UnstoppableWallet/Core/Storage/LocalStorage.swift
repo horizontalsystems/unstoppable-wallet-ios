@@ -105,8 +105,7 @@ extension LocalStorage {
         lockTimeEnabled = backup.lockTimeEnabled
         remoteContactsSync = backup.remoteContactsSync
         indicatorsShown = backup.indicatorsShown
-        chartIndicators = backup.chartIndicators.encoded //todo:
-        backup.defaultProviders.forEach { provider in
+        backup.swapProviders.forEach { provider in
             let blockchainType = BlockchainType(uid: provider.blockchainTypeId)
             if let dexProvider = SwapModule.Dex.Provider(rawValue: provider.provider) {
                 return setDefaultProvider(blockchainType: blockchainType, provider: dexProvider)

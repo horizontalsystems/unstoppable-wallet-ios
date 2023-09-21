@@ -1,4 +1,4 @@
-enum BtcRestoreMode: String, CaseIterable, Identifiable {
+enum BtcRestoreMode: String, CaseIterable, Identifiable, Codable {
     case api
     case blockchain
 
