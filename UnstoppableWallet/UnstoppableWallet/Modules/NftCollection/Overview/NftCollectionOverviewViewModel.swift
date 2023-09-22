@@ -73,9 +73,9 @@ class NftCollectionOverviewViewModel {
             viewItems.append(LinkViewItem(type: .website, url: url))
         }
 
-        if let providerLink = service.providerLink {
-            viewItems.append(LinkViewItem(type: .provider(title: providerLink.title), url: providerLink.url))
-        }
+//        if let providerLink = service.providerLink {
+//            viewItems.append(LinkViewItem(type: .provider(title: providerLink.title), url: providerLink.url))
+//        }
 
         if let url = collection.discordLink {
             viewItems.append(LinkViewItem(type: .discord, url: url))

@@ -138,9 +138,9 @@ class NftAssetOverviewViewModel {
         if let url = asset.externalLink {
             viewItems.append(LinkViewItem(type: .website, url: url))
         }
-        if let title = service.providerTitle, let link = asset.providerLink {
-            viewItems.append(LinkViewItem(type: .provider(title: title), url: link))
-        }
+//        if let title = service.providerTitle, let link = asset.providerLink {
+//            viewItems.append(LinkViewItem(type: .provider(title: title), url: link))
+//        }
         if let url = collection.discordLink {
             viewItems.append(LinkViewItem(type: .discord, url: url))
         }
