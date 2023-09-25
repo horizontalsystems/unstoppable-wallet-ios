@@ -97,7 +97,7 @@
 // Access Camera
 
 
-"access_camera.message" = "Yo, %@ wants a lil' peek with that camera to catch that flashy QR code. 📸
+"access_camera.message" = "Yo, %@ wants a lil' peek with that camera to catch that flashy QR code.
 
 Swag your way to Settings -> %@ and let it shine!";
 "access_camera.settings" = "Settings";
@@ -116,12 +116,12 @@ Swag your way to Settings -> %@ and let it shine!";
 "restore.checksum_error" = "Invalid checksum";
 "restore.passphrase" = "Passphrase";
 "restore.input.passphrase" = "Passphrase";
-"restore.passphrase_description" = "This is the password that locks up your wallet backup, like a secret track. Ain't no iCloud vibes here. Lose it and it's gone, like old Kanye mixtapes."
+"restore.passphrase_description" = "This is the password that locks up your wallet backup, like a secret track. Ain't no iCloud vibes here. Lose it and it's gone, like old Kanye mixtapes.";
 "restore.error.empty_passphrase" = "The passphrase cannot be empty";
 "restore.non_standard_import" = "Non-Standard Import";
-"restore.non_standard_import.description" = "Yo, %@ fam, this page is for y'all with that unique Yeezy-style wallet. Maybe you were vibing in the %@ 0.27 - 0.28 era with some international lyrics or fancy symbols in your wallet. Seeing a big zero on that balance after the 0.29 drop? We got you. Dive in here to get back to the beat. And after? Consider rocking a brand-new, standard-compliant wallet and make those money moves."
-"restore.warning.non_recommended.description" = "Hold up! Your wallet's got that avant-garde character style. Not seeing the cash or the flow? Dive deep for the deets below. 🎤\n\nTAP IN FOR THE SCOOP"
-"restore.error.non_standard.description" = "Yo, this wallet's got its own wave. It's non-standard. 🕶️\n\nTAP TO UNRAVEL THE MYSTERY"
+"restore.non_standard_import.description" = "Yo, %@ fam, this page is for y'all with that unique Yeezy-style wallet. Maybe you were vibing in the %@ 0.27 - 0.28 era with some international lyrics or fancy symbols in your wallet. Seeing a big zero on that balance after the 0.29 drop? We got you. Dive in here to get back to the beat. And after? Consider rocking a brand-new, standard-compliant wallet and make those money moves.";
+"restore.warning.non_recommended.description" = "Hold up! Your wallet's got that avant-garde character style. Not seeing the cash or the flow? Dive deep for the deets below. 🎤\n\nTAP IN FOR THE SCOOP";
+"restore.error.non_standard.description" = "Yo, this wallet's got its own wave. It's non-standard. 🕶️\n\nTAP TO UNRAVEL THE MYSTERY";
 // Restore Type
 
 "restore_type.title" = "Import Wallet";
@@ -137,18 +137,18 @@ Swag your way to Settings -> %@ and let it shine!";
 // Restore Cloud
 
 "restore.cloud.title" = "Select Backup";
-"restore.cloud.description" = "Pick the mixtape (backup) of the wallet you wanna bring back to the spotlight."
+"restore.cloud.description" = "Pick the mixtape (backup) of the wallet you wanna bring back to the spotlight.";
 "restore.cloud.empty" = "No backups found.";
 "restore.cloud.imported" = "Imported wallets";
 
 "restore.cloud.password.title" = "Enter Password";
 "restore.cloud.password.placeholder" = "Backup Password";
-"restore.cloud.password.description" = "Drop that secret beat (backup password) to get your wallet vibes from the iCloud stage."
+"restore.cloud.password.description" = "Drop that secret beat (backup password) to get your wallet vibes from the iCloud stage.";
 
 // Restore Cex
 
 "restore.cex.title" = "Select CEX";
-"restore.cex.description" = "Pick the main stage (centralized exchange) you wanna rock with."
+"restore.cex.description" = "Pick the main stage (centralized exchange) you wanna rock with.";
 
 // Restore Binance
 
@@ -167,7 +167,7 @@ Swag your way to Settings -> %@ and let it shine!";
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.from_blockchain" = "From Blockchain";
-"blockchain_settings.description" = "Pick your style (address format) for catching those payments. When bringing back an old mix (restoring a wallet), make sure the beats match."
+"blockchain_settings.description" = "Pick your style (address format) for catching those payments. When bringing back an old mix (restoring a wallet), make sure the beats match.";
 
 // Coin Platforms
 
@@ -176,14 +176,14 @@ Swag your way to Settings -> %@ and let it shine!";
 // Copy Warning
 
 "copy_warning.title" = "Risk of Copying";
-"copy_warning.description" = "For safety, like rocking shades indoors, skip that copy action for this value, fam."
+"copy_warning.description" = "For safety, like rocking shades indoors, skip that copy action for this value, fam.";
 "copy_warning.dont_copy" = "Don't Copy";
 "copy_warning.i_will_risk_it" = "I will risk it";
 
 // Recovery Phrase
 
 "recovery_phrase.title" = "Recovery Phrase";
-"recovery_phrase.warning" = "Hold onto this key like a rare Yeezy drop. The %@ Wallet crew? We won't ever slide into your DMs for it."
+"recovery_phrase.warning" = "Hold onto this key like a rare Yeezy drop. The %@ Wallet crew? We won't ever slide into your DMs for it.";
 "recovery_phrase.tap_to_show" = "Tap to show recovery phrase";
 "recovery_phrase.passphrase" = "Passphrase";
 "recovery_phrase.copy_warning.title" = "Risk of Recovery Phrase copy";
@@ -207,7 +207,7 @@ Swag your way to Settings -> %@ and let it shine!";
 // Backup
 
 "backup.title" = "Recovery Phrase";
-"backup.description" = "Jot these words down, in flow, and stash them somewhere no haters can find."
+"backup.description" = "Jot these words down, in flow, and stash them somewhere no haters can find.";
 "backup.tap_to_show" = "Tap to show recovery phrase";
 "backup.passphrase" = "Passphrase";
 "backup.verify" = "Verify";
@@ -216,7 +216,7 @@ Swag your way to Settings -> %@ and let it shine!";
 // Backup Verify Words
 
 "backup_verify_words.title" = "Verify";
-"backup_verify_words.description" = "Pick out those two spotlight words from your wallet's lyrical recovery phrase."
+"backup_verify_words.description" = "Pick out those two spotlight words from your wallet's lyrical recovery phrase.";
 "backup_verify_words.incorrect_word" = "Incorrect Word";
 
 // Backup Verify Passphrase
@@ -232,7 +232,7 @@ Swag your way to Settings -> %@ and let it shine!";
 // Backup Prompt
 
 "backup_prompt.title" = "Manual Backup";
-"backup_prompt.warning" = "Craft a backup mix of the recovery vibes and that secret code. It's your safety net if your phone goes MIA, gets jacked, or just breaks down."
+"backup_prompt.warning" = "Craft a backup mix of the recovery vibes and that secret code. It's your safety net if your phone goes MIA, gets jacked, or just breaks down.";
 "backup_prompt.backup" = "Backup";
 "backup_prompt.backup_manual" = "Manual Backup";
 "backup_prompt.backup_cloud" = "Backup to iCloud";
@@ -241,7 +241,7 @@ Swag your way to Settings -> %@ and let it shine!";
 // Backup to iCloud
 
 "backup.cloud.title" = "Backup to iCloud";
-"backup.cloud.description" = "Heads up: iCloud is Apple's stage, not yours. Your beats (data) are on their mics (servers), not your personal studio. So, you're passing the mic and trust to them."
+"backup.cloud.description" = "Heads up: iCloud is Apple's stage, not yours. Your beats (data) are on their mics (servers), not your personal studio. So, you're passing the mic and trust to them.";
 "backup.cloud.terms.item.1" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
 
 "backup.cloud.name.title" = "Backup Name";
@@ -252,7 +252,7 @@ Swag your way to Settings -> %@ and let it shine!";
 "backup.cloud.name.placeholder" = "Name";
 
 "backup.cloud.password.title" = "Set Password";
-"backup.cloud.password.description" = "Craft a password that's as iconic as a Kanye track. Need 8 beats (symbols) with a mix of highs (uppercase), lows (lowercase), numbers, and some flair (special character)."
+"backup.cloud.password.description" = "Craft a password that's as iconic as a Kanye track. Need 8 beats (symbols) with a mix of highs (uppercase), lows (lowercase), numbers, and some flair (special character).";
 "backup.cloud.password.highlighted_description" = "Don't forget this password! It is separate from your Apple iCloud password, and it cannot be recovered or reset.";
 "backup.cloud.password.placeholder" = "Password";
 "backup.cloud.password.confirm.placeholder" = "Confirm";
@@ -260,7 +260,7 @@ Swag your way to Settings -> %@ and let it shine!";
 
 "backup.cloud.password.error.empty_passphrase" = "Passphrase cannot be empty";
 "backup.cloud.password.error.forbidden_symbols" = "Stick to the platinum hits: A-Z a-z 0-9 and these symbols:A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %. No remixes, please.";
-"backup.cloud.password.error.minimum_requirement" = "Bring at least 8 characters to the stage, featuring a capital hit, a chill lowercase, a number, and some special effects."
+"backup.cloud.password.error.minimum_requirement" = "Bring at least 8 characters to the stage, featuring a capital hit, a chill lowercase, a number, and some special effects.";
 "backup.cloud.password.error.invalid_password" = "Incorrect Password";
 "backup.cloud.password.error.invalid_backup" = "Backup is corrupted";
 "backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
@@ -268,14 +268,14 @@ Swag your way to Settings -> %@ and let it shine!";
 "backup.cloud.cant_create_file" = "Can't save File to iCloud";
 "backup.cloud.cant_delete_file" = "Can't delete from iCloud";
 "backup.cloud.no_access.title" = "Access iCloud";
-"backup.cloud.no_access.description" = "Wanna drop a backup? Gotta pass the mic to iCloud storage first."
+"backup.cloud.no_access.description" = "Wanna drop a backup? Gotta pass the mic to iCloud storage first.";
 
 // Errors
 
 "error.send.self_transfer" = "Sending to yourself is not supported";
-"error.send_binance.memo_required" = "Yo, the receiver's looking for a memo that's not silent. Drop some beats in that transfer note."
-"error.send_binance.only_digits_allowed" = "The memo's gotta be numbers only, like chart-topping digits."
-"error.send_z_cash.transparent_address" = "Hold up, %@ ain't vibing with payments to a see-through address."
+"error.send_binance.memo_required" = "Yo, the receiver's looking for a memo that's not silent. Drop some beats in that transfer note.";
+"error.send_binance.only_digits_allowed" = "The memo's gotta be numbers only, like chart-topping digits.";
+"error.send_z_cash.transparent_address" = "Hold up, %@ ain't vibing with payments to a see-through address.";
 
 // Balance
 
@@ -301,8 +301,8 @@ Swag your way to Settings -> %@ and let it shine!";
 "balance.add_coin" = "Add Coin";
 "balance.invalid_api_key" = "Invalid API Key";
 "balance.empty.add_coins" = "Add Coins";
-"balance.empty.description" = "Looks like your wallet's still waiting for its debut album. No coins dropped in yet."
-"balance.watch_empty.description" = "This wallet's address? Still waiting for its first hit single. No balance here."
+"balance.empty.description" = "Looks like your wallet's still waiting for its debut album. No coins dropped in yet.";
+"balance.watch_empty.description" = "This wallet's address? Still waiting for its first hit single. No balance here.";
 "balance.sort_by" = "Sort By";
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
@@ -317,7 +317,7 @@ Swag your way to Settings -> %@ and let it shine!";
 // Token Balance Page
 "balance.token.locked" = "Locked";
 "balance.token.locked.info.title" = "TimeLock";
-"balance.token.locked.info.description" = "The sender dropped these funds with a lil' hold - kinda like a track release date.\n\nChill, those Bitcoins are already in your studio, but you gotta wait for the drop before you can make it rain on the Bitcoin network."
+"balance.token.locked.info.description" = "The sender dropped these funds with a lil' hold - kinda like a track release date.\n\nChill, those Bitcoins are already in your studio, but you gotta wait for the drop before you can make it rain on the Bitcoin network.";
 "balance.token.staked" = "Staked";
 "balance.token.staked.info.title" = "Staked title";
 "balance.token.staked.info.description" = "Staked Description Text";
