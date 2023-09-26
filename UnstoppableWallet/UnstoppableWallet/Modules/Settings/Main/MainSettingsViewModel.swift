@@ -23,7 +23,7 @@ class MainSettingsViewModel {
         self.service = service
 
         manageWalletsAlertRelay = BehaviorRelay(value: !service.noWalletRequiredActions)
-        securityCenterAlertRelay = BehaviorRelay(value: !service.isPinSet)
+        securityCenterAlertRelay = BehaviorRelay(value: !service.isPasscodeSet)
         iCloudSyncAlertRelay = BehaviorRelay(value: service.isCloudAvailableError)
         walletConnectCountRelay = BehaviorRelay(value: Self.convert(walletConnectSessionCount: service.walletConnectSessionCount, walletConnectPendingRequestCount: service.walletConnectPendingRequestCount))
         baseCurrencyRelay = BehaviorRelay(value: service.baseCurrency.code)
@@ -36,7 +36,7 @@ class MainSettingsViewModel {
                 })
                 .disposed(by: disposeBag)
 
-        service.isPinSetPublisher
+        service.isPasscodeSetPublisher
                 .sink { [weak self] isPinSet in
                     self?.securityCenterAlertRelay.accept(!isPinSet)
                 }

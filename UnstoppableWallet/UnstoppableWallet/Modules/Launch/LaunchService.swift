@@ -1,23 +1,20 @@
 import StorageKit
-import PinKit
 
 class LaunchService {
     private let accountManager: AccountManager
-    private let pinKit: PinKit.Kit
+    private let passcodeManager: PasscodeManager
     private let keychainKit: IKeychainKit
     private let localStorage: LocalStorage
 
-    init(accountManager: AccountManager, pinKit: PinKit.Kit, keychainKit: IKeychainKit, localStorage: LocalStorage) {
+    init(accountManager: AccountManager, passcodeManager: PasscodeManager, keychainKit: IKeychainKit, localStorage: LocalStorage) {
         self.accountManager = accountManager
-        self.pinKit = pinKit
+        self.passcodeManager = passcodeManager
         self.keychainKit = keychainKit
         self.localStorage = localStorage
     }
-
 }
 
 extension LaunchService {
-
     var launchMode: LaunchModule.LaunchMode {
         let passcodeLockState = keychainKit.passcodeLockState
 
@@ -25,14 +22,12 @@ extension LaunchService {
             return .passcodeNotSet
         } else if passcodeLockState == .unknown {
             return .cannotCheckPasscode
-        } else if pinKit.isPinSet {
+        } else if passcodeManager.isPasscodeSet {
             return .unlock
         } else if accountManager.accounts.isEmpty && !localStorage.mainShownOnce {
-            return  .intro
+            return .intro
         } else {
             return .main
         }
-
     }
-
 }

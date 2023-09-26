@@ -1,109 +1,128 @@
-import PinKit
 import SwiftUI
 
 struct SecuritySettingsView: View {
     @ObservedObject var viewModel: SecuritySettingsViewModel
-    @State var editPasscodePresented: Bool = false
+
+    @State var createPasscodeReason: CreatePasscodeModule.CreatePasscodeReason?
+    @State var unlockReason: UnlockReason?
+
+    @State var editPasscodePresented = false
+    @State var createDuressPasscodePresented = false
+    @State var editDuressPasscodePresented = false
 
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin32) {
                 ListSection {
-                    ListRow {
-                        Image("dialpad_alt_2_24")
-                        Text("settings_security.passcode".localized).themeBody()
-                        Spacer()
-
-                        if !viewModel.passcodeEnabled {
-                            Image("warning_2_20")
-                                .renderingMode(.template)
-                                .foregroundColor(.themeLucian)
+                    if viewModel.isPasscodeSet {
+                        ClickableRow(action: {
+                            unlockReason = .changePasscode
+                        }) {
+                            Image("dialpad_alt_2_24").themeIcon(color: .themeJacob)
+                            Text("settings_security.edit_passcode".localized).themeBody(color: .themeJacob)
                         }
 
-                        Toggle(isOn: $viewModel.passcodeSwitchOn) {}
-                            .labelsHidden()
-                    }
-                    .sheet(isPresented: $viewModel.setPasscodePresented, onDismiss: { viewModel.cancelSetPasscode() }) {
-                        SetPinView(
-                            cancelAction: { viewModel.cancelSetPasscode() }
-                        ).edgesIgnoringSafeArea(.all)
-                    }
-                    .sheet(isPresented: $viewModel.unlockPasscodePresented, onDismiss: { viewModel.cancelUnlock() }) {
-                        UnlockPinView(
-                            unlockAction: { viewModel.onUnlock() },
-                            cancelAction: { viewModel.cancelUnlock() }
-                        ).edgesIgnoringSafeArea(.all)
-                    }
-
-                    if viewModel.passcodeEnabled {
-                        ClickableRow(action: { editPasscodePresented = true }) {
-                            Text("settings_security.change_pin".localized).themeBody()
-                            Image.disclosureIcon
+                        ClickableRow(action: {
+                            unlockReason = .disablePasscode
+                        }) {
+                            Image("trash_24").themeIcon(color: .themeLucian)
+                            Text("settings_security.disable_passcode".localized).themeBody(color: .themeLucian)
                         }
-                        .sheet(isPresented: $editPasscodePresented) {
-                            EditPinView().edgesIgnoringSafeArea(.all)
+                    } else {
+                        ClickableRow(action: {
+                            createPasscodeReason = .regular
+                        }) {
+                            Image("dialpad_alt_2_24").themeIcon(color: .themeJacob)
+                            Text("settings_security.enable_passcode".localized).themeBody(color: .themeJacob)
+                            Image("warning_2_20").themeIcon(color: .themeLucian)
                         }
                     }
                 }
 
-                if viewModel.passcodeEnabled && viewModel.biometryAvailable {
+                if let biometryType = viewModel.biometryType {
                     ListSection {
                         ListRow {
-                            Image(viewModel.biometryIconName)
-                            Toggle(isOn: $viewModel.biometryEnabled) {
-                                Text(viewModel.biometryTitle).themeBody()
+                            Image(biometryType.iconName)
+                            Toggle(isOn: $viewModel.isBiometryToggleOn) {
+                                Text(biometryType.title).themeBody()
+                            }
+                            .onChange(of: viewModel.isBiometryToggleOn) { isOn in
+                                if !viewModel.isPasscodeSet, isOn {
+                                    createPasscodeReason = .biometry(type: biometryType)
+                                }
                             }
                         }
                     }
                 }
             }
+            .sheet(item: $createPasscodeReason) { reason in
+                CreatePasscodeModule.createPasscodeView(
+                    reason: reason,
+                    onCreate: {
+                        switch reason {
+                        case .biometry:
+                            viewModel.set(biometryEnabled: true)
+                        case .duress:
+                            DispatchQueue.main.async {
+                                createDuressPasscodePresented = true
+                            }
+                        default: ()
+                        }
+                    },
+                    onCancel: {
+                        switch reason {
+                        case .biometry: viewModel.isBiometryToggleOn = false
+                        default: ()
+                        }
+                    }
+                )
+            }
+            .sheet(item: $unlockReason) { reason in
+                ThemeNavigationView {
+                    UnlockModule.moduleUnlockView(biometryAllowed: false) {
+                        switch reason {
+                        case .changePasscode:
+                            DispatchQueue.main.async {
+                                editPasscodePresented = true
+                            }
+                        case .disablePasscode:
+                            viewModel.removePasscode()
+                        case .enableDuressMode:
+                            DispatchQueue.main.async {
+                                createDuressPasscodePresented = true
+                            }
+                        case .changeDuressPasscode:
+                            DispatchQueue.main.async {
+                                editDuressPasscodePresented = true
+                            }
+                        case .disableDuressMode:
+                            viewModel.removeDuressPasscode()
+                        }
+                    }
+                }
+            }
+            .sheet(isPresented: $editPasscodePresented) {
+                EditPasscodeModule.editPasscodeView()
+            }
+            .sheet(isPresented: $createDuressPasscodePresented) {
+                CreatePasscodeModule.createDuressPasscodeView()
+            }
+            .sheet(isPresented: $editDuressPasscodePresented) {
+                EditPasscodeModule.editDuressPasscodeView()
+            }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
     }
-}
 
-struct SetPinView: UIViewControllerRepresentable, ISetPinDelegate {
-    typealias UIViewControllerType = UIViewController
+    enum UnlockReason: Identifiable {
+        case changePasscode
+        case disablePasscode
+        case enableDuressMode
+        case changeDuressPasscode
+        case disableDuressMode
 
-    let cancelAction: () -> ()
-
-    func makeUIViewController(context: Context) -> UIViewController {
-        App.shared.pinKit.setPinModule(delegate: self)
+        var id: Self {
+            self
+        }
     }
-
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
-
-    func didCancelSetPin() {
-        cancelAction()
-    }
-}
-
-struct EditPinView: UIViewControllerRepresentable {
-    typealias UIViewControllerType = UIViewController
-
-    func makeUIViewController(context: Context) -> UIViewController {
-        return App.shared.pinKit.editPinModule
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
-}
-
-struct UnlockPinView: UIViewControllerRepresentable {
-    typealias UIViewControllerType = UIViewController
-
-    let unlockAction: () -> ()
-    let cancelAction: () -> ()
-
-    func makeUIViewController(context: Context) -> UIViewController {
-        return App.shared.pinKit.unlockPinModule(
-            biometryUnlockMode: .disabled,
-            insets: .zero,
-            cancellable: true,
-            autoDismiss: true,
-            onUnlock: unlockAction,
-            onCancelUnlock: cancelAction
-        )
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }

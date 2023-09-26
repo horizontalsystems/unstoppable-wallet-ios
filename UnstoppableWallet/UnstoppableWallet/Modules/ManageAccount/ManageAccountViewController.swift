@@ -1,11 +1,10 @@
-import UIKit
-import ThemeKit
+import ComponentKit
+import RxCocoa
+import RxSwift
 import SectionsTableView
 import SnapKit
-import RxSwift
-import RxCocoa
-import ComponentKit
-import PinKit
+import ThemeKit
+import UIKit
 
 class ManageAccountViewController: KeyboardAwareViewController {
     private let viewModel: ManageAccountViewModel
@@ -30,7 +29,8 @@ class ManageAccountViewController: KeyboardAwareViewController {
         hidesBottomBarWhenPushed = true
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -101,16 +101,10 @@ class ManageAccountViewController: KeyboardAwareViewController {
     }
 
     private func openUnlock() {
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: .margin48, right: 0)
-        let viewController = App.shared.pinKit.unlockPinModule(
-                biometryUnlockMode: .auto,
-                insets: insets,
-                cancellable: true,
-                autoDismiss: true,
-                onUnlock: { [weak self] in
-                    self?.viewModel.onUnlock()
-                }
-        )
+        let viewController = UnlockModule.moduleUnlockView { [weak self] in
+            self?.viewModel.onUnlock()
+        }.toNavigationViewController()
+
         present(viewController, animated: true)
     }
 
@@ -132,7 +126,7 @@ class ManageAccountViewController: KeyboardAwareViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func openBackup(account: Account, onComplete: (() -> ())? = nil) {
+    private func openBackup(account: Account, onComplete: (() -> Void)? = nil) {
         guard let viewController = BackupModule.manualViewController(account: account, onComplete: onComplete) else {
             return
         }
@@ -203,88 +197,86 @@ class ManageAccountViewController: KeyboardAwareViewController {
             return self.present(controller, animated: true)
         }
     }
-
 }
 
 extension ManageAccountViewController: SectionsDataSource {
-
     private func row(keyAction: ManageAccountViewModel.KeyAction, isFirst: Bool, isLast: Bool) -> RowProtocol {
         switch keyAction {
         case .recoveryPhrase:
             return tableView.universalRow48(
-                    id: "recovery-phrase",
-                    image: .local(UIImage(named: "paper_contract_24")),
-                    title: .body("manage_account.recovery_phrase".localized),
-                    accessoryType: .disclosure,
-                    autoDeselect: true,
-                    isFirst: isFirst,
-                    isLast: isLast
+                id: "recovery-phrase",
+                image: .local(UIImage(named: "paper_contract_24")),
+                title: .body("manage_account.recovery_phrase".localized),
+                accessoryType: .disclosure,
+                autoDeselect: true,
+                isFirst: isFirst,
+                isLast: isLast
             ) { [weak self] in
                 self?.viewModel.onTapRecoveryPhrase()
             }
         case .privateKeys:
             return tableView.universalRow48(
-                    id: "private-keys",
-                    image: .local(UIImage(named: "key_24")),
-                    title: .body("manage_account.private_keys".localized),
-                    accessoryType: .disclosure,
-                    isFirst: isFirst,
-                    isLast: isLast
+                id: "private-keys",
+                image: .local(UIImage(named: "key_24")),
+                title: .body("manage_account.private_keys".localized),
+                accessoryType: .disclosure,
+                isFirst: isFirst,
+                isLast: isLast
             ) { [weak self] in
                 self?.openPrivateKeys()
             }
         case .publicKeys:
             return tableView.universalRow48(
-                    id: "public-keys",
-                    image: .local(UIImage(named: "binocule_24")),
-                    title: .body("manage_account.public_keys".localized),
-                    accessoryType: .disclosure,
-                    isFirst: isFirst,
-                    isLast: isLast
+                id: "public-keys",
+                image: .local(UIImage(named: "binocule_24")),
+                title: .body("manage_account.public_keys".localized),
+                accessoryType: .disclosure,
+                isFirst: isFirst,
+                isLast: isLast
             ) { [weak self] in
                 self?.openPublicKeys()
             }
         case let .manualBackup(isManualBackedUp):
             let accessory: CellBuilderNew.CellElement.AccessoryType = isManualBackedUp ?
-                    CellBuilderNew.CellElement.ImageAccessoryType(image: UIImage(named: "check_1_20")?.withTintColor(.themeRemus)) :
-                    CellBuilderNew.CellElement.ImageAccessoryType(image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian))
+                CellBuilderNew.CellElement.ImageAccessoryType(image: UIImage(named: "check_1_20")?.withTintColor(.themeRemus)) :
+                CellBuilderNew.CellElement.ImageAccessoryType(image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian))
 
             return tableView.universalRow48(
-                    id: "backup-recovery-phrase",
-                    image: .local(UIImage(named: "edit_24")?.withTintColor(.themeJacob)),
-                    title: .body("manage_account.backup_recovery_phrase".localized, color: .themeJacob),
-                    accessoryType: accessory,
-                    autoDeselect: true,
-                    isFirst: isFirst,
-                    isLast: isLast
+                id: "backup-recovery-phrase",
+                image: .local(UIImage(named: "edit_24")?.withTintColor(.themeJacob)),
+                title: .body("manage_account.backup_recovery_phrase".localized, color: .themeJacob),
+                accessoryType: accessory,
+                autoDeselect: true,
+                isFirst: isFirst,
+                isLast: isLast
             ) { [weak self] in
                 self?.viewModel.onTapBackup()
             }
         case let .cloudBackedUp(isCloudBackedUp, isManualBackedUp):
             if isCloudBackedUp {
                 return tableView.universalRow48(
-                        id: "cloud-backup-recovery",
-                        image: .local(UIImage(named: "no_internet_24")?.withTintColor(.themeLucian)),
-                        title: .body("manage_account.cloud_delete_backup_recovery_phrase".localized, color: .themeLucian),
-                        autoDeselect: true,
-                        isFirst: isFirst,
-                        isLast: isLast
+                    id: "cloud-backup-recovery",
+                    image: .local(UIImage(named: "no_internet_24")?.withTintColor(.themeLucian)),
+                    title: .body("manage_account.cloud_delete_backup_recovery_phrase".localized, color: .themeLucian),
+                    autoDeselect: true,
+                    isFirst: isFirst,
+                    isLast: isLast
                 ) { [weak self] in
                     self?.viewModel.onTapDeleteCloudBackup()
                 }
             }
 
             return tableView.universalRow48(
-                    id: "cloud-backup-recovery",
-                    image: .local(UIImage(named: "icloud_24")?.withTintColor(.themeJacob)),
-                    title: .body("manage_account.cloud_backup_recovery_phrase".localized, color: .themeJacob),
-                    accessoryType: CellBuilderNew.CellElement.ImageAccessoryType(
-                            image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian),
-                            visible: !isManualBackedUp
-                    ),
-                    autoDeselect: true,
-                    isFirst: isFirst,
-                    isLast: isLast
+                id: "cloud-backup-recovery",
+                image: .local(UIImage(named: "icloud_24")?.withTintColor(.themeJacob)),
+                title: .body("manage_account.cloud_backup_recovery_phrase".localized, color: .themeJacob),
+                accessoryType: CellBuilderNew.CellElement.ImageAccessoryType(
+                    image: UIImage(named: "warning_2_24")?.withTintColor(.themeLucian),
+                    visible: !isManualBackedUp
+                ),
+                autoDeselect: true,
+                isFirst: isFirst,
+                isLast: isLast
             ) { [weak self] in
                 self?.viewModel.onTapCloudBackup()
             }
@@ -294,78 +286,77 @@ extension ManageAccountViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         var sections: [SectionProtocol] = [
             Section(
-                    id: "margin",
-                    headerState: .margin(height: .margin12)
+                id: "margin",
+                headerState: .margin(height: .margin12)
             ),
             Section(
-                    id: "name",
-                    headerState: tableView.sectionHeader(text: "manage_account.name".localized),
-                    footerState: .margin(height: .margin32),
-                    rows: [
-                        StaticRow(
-                                cell: nameCell,
-                                id: "name",
-                                height: .heightSingleLineCell
-                        )
-                    ]
-            )
+                id: "name",
+                headerState: tableView.sectionHeader(text: "manage_account.name".localized),
+                footerState: .margin(height: .margin32),
+                rows: [
+                    StaticRow(
+                        cell: nameCell,
+                        id: "name",
+                        height: .heightSingleLineCell
+                    ),
+                ]
+            ),
         ]
 
         if let warningViewItem = warningViewItem {
             sections.append(
-                    Section(
-                        id: "migration-warning",
-                        footerState: .margin(height: .margin32),
-                        rows: [
-                            Row<TitledHighlightedDescriptionCell>(
-                                    id: "migration-cell",
-                                    dynamicHeight: { [weak self] containerWidth in
-                                        let text = self?.warningViewItem?.text ?? ""
-                                        return TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: text)
-                                    },
-                                    bind: { [weak self] cell, _ in
-                                        cell.set(backgroundStyle: .transparent, isFirst: true)
-                                        cell.bind(caution: warningViewItem)
-                                        cell.onBackgroundButton = { self?.onOpenWarning() }
-                                    }
-                            )
-                        ]
-                    )
+                Section(
+                    id: "migration-warning",
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        Row<TitledHighlightedDescriptionCell>(
+                            id: "migration-cell",
+                            dynamicHeight: { [weak self] containerWidth in
+                                let text = self?.warningViewItem?.text ?? ""
+                                return TitledHighlightedDescriptionCell.height(containerWidth: containerWidth, text: text)
+                            },
+                            bind: { [weak self] cell, _ in
+                                cell.set(backgroundStyle: .transparent, isFirst: true)
+                                cell.bind(caution: warningViewItem)
+                                cell.onBackgroundButton = { self?.onOpenWarning() }
+                            }
+                        ),
+                    ]
+                )
             )
         }
 
         sections.append(contentsOf:
-            keyActions.enumerated().map { (index, section) in
+            keyActions.enumerated().map { index, section in
                 Section(
-                        id: "actions-\(index)",
-                        footerState: section.footerText.isEmpty ? .margin(height: .margin32) : tableView.sectionFooter(text: section.footerText),
-                        rows: section.keyActions.enumerated().map { index, keyAction in
-                            row(keyAction: keyAction, isFirst: index == 0, isLast: index == section.keyActions.count - 1)
-                        }
+                    id: "actions-\(index)",
+                    footerState: section.footerText.isEmpty ? .margin(height: .margin32) : tableView.sectionFooter(text: section.footerText),
+                    rows: section.keyActions.enumerated().map { index, keyAction in
+                        row(keyAction: keyAction, isFirst: index == 0, isLast: index == section.keyActions.count - 1)
+                    }
                 )
             }
         )
 
         sections.append(
-                Section(
+            Section(
+                id: "unlink",
+                footerState: .margin(height: .margin32),
+                rows: [
+                    tableView.universalRow48(
                         id: "unlink",
-                        footerState: .margin(height: .margin32),
-                        rows: [
-                            tableView.universalRow48(
-                                    id: "unlink",
-                                    image: .local(UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
-                                    title: .body("manage_account.unlink".localized, color: .themeLucian),
-                                    autoDeselect: true,
-                                    isFirst: true,
-                                    isLast: true
-                            ) { [weak self] in
-                                self?.onTapUnlink()
-                            }
-                        ]
-                )
+                        image: .local(UIImage(named: "trash_24")?.withTintColor(.themeLucian)),
+                        title: .body("manage_account.unlink".localized, color: .themeLucian),
+                        autoDeselect: true,
+                        isFirst: true,
+                        isLast: true
+                    ) { [weak self] in
+                        self?.onTapUnlink()
+                    },
+                ]
+            )
         )
 
         return sections
     }
-
 }

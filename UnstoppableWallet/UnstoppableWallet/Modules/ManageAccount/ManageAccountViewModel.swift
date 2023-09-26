@@ -1,7 +1,7 @@
 import Foundation
-import RxSwift
-import RxRelay
 import RxCocoa
+import RxRelay
+import RxSwift
 
 class ManageAccountViewModel {
     private let service: ManageAccountService
@@ -11,7 +11,7 @@ class ManageAccountViewModel {
     private let keyActionsRelay = BehaviorRelay<[KeyActionSection]>(value: [])
     private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
     private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let openUnlockRelay = PublishRelay<()>()
+    private let openUnlockRelay = PublishRelay<Void>()
     private let openRecoveryPhraseRelay = PublishRelay<Account>()
     private let openBackupRelay = PublishRelay<Account>()
     private let openBackupAndDeleteCloudRelay = PublishRelay<Account>()
@@ -19,7 +19,7 @@ class ManageAccountViewModel {
     private let confirmDeleteCloudBackupRelay = PublishRelay<Bool>()
     private let cloudBackupDeletedRelay = PublishRelay<Bool>()
     private let openUnlinkRelay = PublishRelay<Account>()
-    private let finishRelay = PublishRelay<()>()
+    private let finishRelay = PublishRelay<Void>()
 
     private var unlockRequest: UnlockRequest = .recoveryPhrase
 
@@ -46,13 +46,13 @@ class ManageAccountViewModel {
     private func keyActions(account: Account, isCloudBackedUp: Bool) -> [KeyActionSection] {
         var backupActions = [KeyAction]()
 
-        var footerText: String = ""
+        var footerText = ""
 
         if account.canBeBackedUp {
             backupActions.append(.manualBackup(account.backedUp))
             footerText = !(account.backedUp || isCloudBackedUp) ?
-                    "manage_account.backup.no_backup_yet_description".localized :
-                    "manage_account.backup.has_backup_description".localized
+                "manage_account.backup.no_backup_yet_description".localized :
+                "manage_account.backup.has_backup_description".localized
         }
 
         if !account.watchAccount {
@@ -69,7 +69,7 @@ class ManageAccountViewModel {
         case .mnemonic: keyActions.append(contentsOf: [.recoveryPhrase, .privateKeys, .publicKeys])
         case .evmPrivateKey: keyActions.append(contentsOf: [.privateKeys, .publicKeys])
         case .evmAddress, .tronAddress: ()
-        case .hdExtendedKey(let key):
+        case let .hdExtendedKey(key):
             switch key {
             case .private: keyActions.append(contentsOf: [.privateKeys, .publicKeys])
             case .public: keyActions.append(contentsOf: [.publicKeys])
@@ -95,11 +95,9 @@ class ManageAccountViewModel {
         showWarningRelay.accept(accountRestoreWarningFactory.caution(account: account, canIgnoreActiveAccountWarning: false))
         keyActionsRelay.accept(keyActions(account: account, isCloudBackedUp: service.isCloudBackedUp))
     }
-
 }
 
 extension ManageAccountViewModel {
-
     var saveEnabledDriver: Driver<Bool> {
         saveEnabledRelay.asDriver()
     }
@@ -116,7 +114,7 @@ extension ManageAccountViewModel {
         accountRestoreWarningFactory.warningUrl(account: service.account)
     }
 
-    var openUnlockSignal: Signal<()> {
+    var openUnlockSignal: Signal<Void> {
         openUnlockRelay.asSignal()
     }
 
@@ -148,7 +146,7 @@ extension ManageAccountViewModel {
         openUnlinkRelay.asSignal()
     }
 
-    var finishSignal: Signal<()> {
+    var finishSignal: Signal<Void> {
         finishRelay.asSignal()
     }
 
@@ -178,7 +176,7 @@ extension ManageAccountViewModel {
     }
 
     func onTapRecoveryPhrase() {
-        if service.isPinSet {
+        if service.isPasscodeSet {
             unlockRequest = .recoveryPhrase
             openUnlockRelay.accept(())
         } else {
@@ -200,22 +198,20 @@ extension ManageAccountViewModel {
     }
 
     func deleteCloudBackupAfterManualBackup() {
-        if service.isPinSet {
+        if service.isPasscodeSet {
             unlockRequest = .backupAndDeleteCloud
             openUnlockRelay.accept(())
         } else {
             openBackupAndDeleteCloudRelay.accept(service.account)
         }
-
     }
-
 
     func onTapCloudBackup() {
         openCloudBackupRelay.accept(service.account)
     }
 
     func onTapBackup() {
-        if service.isPinSet {
+        if service.isPasscodeSet {
             unlockRequest = .backup
             openUnlockRelay.accept(())
         } else {
@@ -226,11 +222,9 @@ extension ManageAccountViewModel {
     func onTapUnlink() {
         openUnlinkRelay.accept(service.account)
     }
-
 }
 
 extension ManageAccountViewModel {
-
     enum UnlockRequest {
         case recoveryPhrase
         case backup
@@ -253,7 +247,5 @@ extension ManageAccountViewModel {
             self.keyActions = keyActions
             self.footerText = footerText
         }
-
     }
-
 }

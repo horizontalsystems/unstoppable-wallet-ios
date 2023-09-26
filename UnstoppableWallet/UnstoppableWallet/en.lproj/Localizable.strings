@@ -94,6 +94,9 @@
 
 "selector.any" = "Any";
 
+"face_id" = "Face ID";
+"touch_id" = "Touch ID";
+
 // Access Camera
 
 "access_camera.message" = "%@ needs access to your camera to scan the QR code.
@@ -1072,11 +1075,50 @@ Go to Settings - > %@ and allow access to the camera.";
 // Settings -> Security
 
 "settings_security.title" = "Security";
-"settings_security.passcode" = "Passcode";
-"settings_security.change_pin" = "Edit Passcode";
-"settings_security.touch_id" = "Touch ID";
-"settings_security.face_id" = "Face ID";
-"settings_security.blockchain_settings" = "Blockchain Settings";
+"settings_security.enable_passcode" = "Enable Passcode";
+"settings_security.edit_passcode" = "Edit Passcode";
+"settings_security.disable_passcode" = "Disable Passcode";
+
+// Create Passcode
+
+"create_passcode.title" = "Create Passcode";
+"create_passcode.description" = "Your passcode will be used to unlock your wallet";
+"create_passcode.description.biometry" = "Set a passcode to enable %@";
+"create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
+"create_passcode.confirm_passcode" = "Confirm passcode";
+
+// Create Duress Passcode
+
+"create_duress_passcode.title" = "Duress Passcode";
+"create_duress_passcode.description" = "Set a passcode for Duress Mode";
+"create_duress_passcode.confirm_passcode" = "Confirm passcode";
+
+// Edit Passcode
+
+"edit_passcode.title" = "Edit Passcode";
+"edit_passcode.enter_new_passcode" = "Enter new passcode";
+"edit_passcode.confirm_new_passcode" = "Confirm new passcode";
+
+// Edit Duress Passcode
+
+"edit_duress_passcode.title" = "Edit Duress Passcode";
+"edit_duress_passcode.enter_new_passcode" = "Enter new passcode for Duress Mode";
+"edit_duress_passcode.confirm_new_passcode" = "Confirm new passcode";
+
+// Set Passcode
+
+"set_passcode.invalid_confirmation" = "Invalid Confirmation";
+
+// Unlock
+
+"unlock.title" = "Unlock";
+"unlock.passcode" = "Passcode";
+"unlock.biometry_reason" = "Unlock wallet";
+"unlock.attempts_left" = "Attempts left: %@";
+"unlock.disabled_until" = "Disabled until: %@";
+"unlock.regular_mode" = "Regular Mode";
+"unlock.random_mode" = "Random Mode";
+
 "security_settings.delete_alert_button" = "Delete from Phone";
 
 "btc_blockchain_settings.restore_source" = "Restore Source";
@@ -1224,25 +1266,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
 
 "contacts.settings.alert_error.title" = "iCloud Error";
-
-// Set PIN
-
-"set_pin.title" = "Passcode";
-"set_pin.info" = "Your passcode will be used to unlock your wallet";
-"set_pin.wrong_confirmation" = "Passcode did not match. Try again";
-
-// Edit PIN
-
-"edit_pin.title" = "Edit Passcode";
-"edit_pin.unlock_info" = "Current Passcode";
-"edit_pin.new_pin_info" = "New Passcode";
-
-// Unlock PIN
-
-"unlock_pin.info" = "Passcode";
-"unlock_pin.cant_save_pin" = "Ouch! We cannot save your passcode, please contact us asap!";
-"unlock_pin.blocked_until" = "Disabled until: %@";
-
 
 // Key Types
 

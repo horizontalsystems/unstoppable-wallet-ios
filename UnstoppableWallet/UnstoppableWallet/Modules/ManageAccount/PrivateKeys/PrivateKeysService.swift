@@ -1,20 +1,16 @@
-import PinKit
-
 class PrivateKeysService {
     private let account: Account
-    private let pinKit: PinKit.Kit
+    private let passcodeManager: PasscodeManager
 
-    init(account: Account, pinKit: PinKit.Kit) {
+    init(account: Account, passcodeManager: PasscodeManager) {
         self.account = account
-        self.pinKit = pinKit
+        self.passcodeManager = passcodeManager
     }
-
 }
 
 extension PrivateKeysService {
-
-    var isPinSet: Bool {
-        pinKit.isPinSet
+    var isPasscodeSet: Bool {
+        passcodeManager.isPasscodeSet
     }
 
     var accountType: AccountType {
@@ -31,7 +27,7 @@ extension PrivateKeysService {
     var bip32RootKeySupported: Bool {
         switch account.type {
         case .mnemonic: return true
-        case .hdExtendedKey(let key):
+        case let .hdExtendedKey(key):
             switch key {
             case .private:
                 switch key.derivedType {
@@ -47,7 +43,7 @@ extension PrivateKeysService {
     var accountExtendedPrivateKeySupported: Bool {
         switch account.type {
         case .mnemonic: return true
-        case .hdExtendedKey(let key):
+        case let .hdExtendedKey(key):
             switch key {
             case .private: return true
             default: return false
@@ -55,5 +51,4 @@ extension PrivateKeysService {
         default: return false
         }
     }
-
 }
