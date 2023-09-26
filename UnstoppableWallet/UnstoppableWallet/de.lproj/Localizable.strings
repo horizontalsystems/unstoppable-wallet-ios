@@ -353,21 +353,21 @@ Swag your way to Settings -> %@ and let it shine!";
 
 "deposit.not_active" = "Not active";
 "deposit.not_active.title" = "Not Active Address";
-"deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
+"deposit.not_active.tron_description" = "New accounts on the TRON scene are like albums waiting to drop – they're here but not live yet. Gotta hit that play button. 🎵\n\nSlide some TRX or TRC-10 tokens over to that waiting address to wake it up. And yo, lighting up a fresh account on the Tron chain? It's a 1 TRX entrance fee.";
 
 "deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
 "deposit.zcash.restore.already_own" = "Yes, I already own";
 "deposit.zcash.restore.dont_have" = "No, I don’t have";
 
-"deposit.warning" = "Send only %@ to this address. Sending other types of tokens to this address will result in their ultimate loss.";
+"deposit.warning" = "Send only %@ to this address, like it's the VIP section of the crypto club. Slide in any other tokens, and they'll get lost in the crowd, never to be seen again.";
 
 "receive_network_select.title" = "Network";
-"receive_network_select.description" = "Choose a network and get an address to receive.";
+"receive_network_select.description" = "Pick your stage (network) and snatch that golden mic (address) to catch the crypto vibes.";
 
 "receive_address_format_select.title" = "Address Format";
-"receive_address_format_select.description" = "Select an address format to receive your address.";
-"receive_address_format_select.bitcoin.bottom_description" = "The Native SegWit format is preferred in Bitcoin for improved throughput and security. All address formats (Taproot, SegWit, Legacy) can be used interchangeably to receive BTC regardless of the sender's address format, enabling seamless transactions across different coin types.";
-"receive_address_format_select.bitcoin_cash.bottom_description" = "The Cash Address format is preferred for receiving Bitcoin Cash (BCH) due to its improved user experience and compatibility. However, both address formats can be used interchangeably to receive BCH, regardless of the sender's address format.";
+"receive_address_format_select.description" = "Choose your style of address format to catch those crypto beats.";
+"receive_address_format_select.bitcoin.bottom_description" = "In the Bitcoin realm, Native SegWit is the headliner for that extra stage presence and security mojo. Whether it's Taproot, SegWit, or Legacy, any of these hip formats will jive well to receive BTC, no matter how the sender's dropping it, making transactions a smooth groove across different coin scenes.";
+"receive_address_format_select.bitcoin_cash.bottom_description" = "When it's about catching Bitcoin Cash (BCH), the Cash Address format is the real crowd-pleaser for its slick moves and compatibility charm. Whichever format the sender's rocking, both address styles will vibe well to receive BCH, keeping the crypto party going.";
 
 "blockchain_type.recommended" = " (recommended)";
 
@@ -396,15 +396,15 @@ Swag your way to Settings -> %@ and let it shine!";
 "send.hodler_locktime_half_year" = "6 months";
 "send.hodler_locktime_year" = "1 year";
 "send.hodler_locktime_off" = "Off";
-"send.hodler_error.unsupported_address" = "Time locking works only when sending to payment addresses starting with 1... (aka BIP44 addresses)";
+"send.hodler_error.unsupported_address" = "Time locking is like a VIP backstage pass, but it's an exclusive party only for addresses kicking it with a 1... (aka the BIP44 crew). So, make sure you're knocking on the right door!";
 "send.fee_info.title" = "Fee Rate";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
+"send.fee_info.description" = "Blockchain's got a cover charge, known as network fees, to get your transactions on the dance floor. When the club is packed with transactions, the cover charge goes up. 🎉\n\nYour %@ wallet is like your savvy friend who knows the bouncer—it estimates the fee based on the crowd inside (current blockchain activity), suggesting an amount that won't have you waiting in line too long.\n\nThe recommended fee rate is like your ticket price per byte, showing as satoshis to pay for each byte of your transaction. So, the total fee is like your group's cover charge, depending on the size of your crew (transaction size in bytes).\n\nFeel like splurging or saving? Use the controls to slide the fee rate up or down. But remember, going cheap might leave you stuck outside—the lower the fee, the longer the wait. If you're in a hurry to hit the dance floor, it's worth paying a little extra.";
 "send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
-"send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe %@ wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to %@ users:";
+"send.transaction_inputs_outputs_info.description" = "In the crypto world, transactions like to roll out in pairs, kinda like a rap duo. Most times, especially with Bitcoin and its homies like Bitcoin Cash, Dash, and Litecoin, when you send some coins, there are two outputs. One's the star of the show heading to the receiver, and the other's the change, making its way back to you. But here’s the snitch - the way most wallets set up these duos, it's like an open book, letting anyone see who’s the star and who’s the return ticket. And since the change usually bounces back in future gigs (transactions), it's like a signature autograph linking your transactions together. 🕵️\n\nNow, your %@ wallet is like your personal producer, tweaking the settings to keep the paparazzi guessing on which output is hitting the stage and which one's coming back for an encore.\n\nFor the %@ fam, there are two options to keep the show running smoothly while keeping the gossip columnists in the dark:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
-"send.transaction_inputs_outputs_info.shuffle.description" = "The order of transaction outputs is randomized on every transaction. Sometimes change can be the first output, sometimes it can be the second. If a user trusts the developer of the app, then consider this a recommended option.";
+"send.transaction_inputs_outputs_info.shuffle.description" = "This feature is like a DJ spinning the decks on every transaction. Sometimes the change is the opening act, sometimes it's the closing. If you're vibing with the app's developer, then this is your jam—a recommended choice to keep the beats unpredictable.";
 "send.transaction_inputs_outputs_info.deterministic.title" = "2. Deterministic";
-"send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
+"send.transaction_inputs_outputs_info.deterministic.description" = "Now, there's a set playlist known as BIP69 where the transaction outputs have a fixed order. In the open-source world, it's like having a known setlist, so you don't have to wonder about the app developer's taste in music. But it's a fresh release, not all wallets are playing this tune yet. So, it could be kinda obvious on the blockchain stage if your transaction is coming from a wallet that's on this beat or not.";
 
 "send.confirmation.you_send" = "You Send";
 "send.confirmation.to" = "To";
@@ -419,9 +419,9 @@ Swag your way to Settings -> %@ and let it shine!";
 "send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.slide_to_send" = "Slide to Send";
 "send.confirmation.sending" = "Sending";
-"send.confirmation.resend_description" = "This action will attempt to invalidate the previous transaction by resending it with a higher fee. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.resend_description" = "Stepping up on the gas with this move! You're about to make the old transaction old news by spinning it again with a higher fee. If the original track is still on pause when the new one drops, chances are (though not promised) it'll get bumped off the playlist. Only one of these tracks will make it to the blockchain charts.";
 "send.confirmation.resend" = "Resend";
-"send.confirmation.cancel_description" = "This action will attempt to invalidate previous transaction by resending as a new 0 amount transaction to self. If the original transaction remains pending when a new one sent there is s a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
+"send.confirmation.cancel_description" = "Hold up, you're about to pull a rewind. This move tries to erase the last transaction by dropping a fresh one with a zero amount, bouncing back to you. If the original jam is still waiting for the play when the new beat drops, it's likely (but not a sure shot) it'll get skipped. Only one of these beats will hit the blockchain airwaves.";
 "send.confirmation.cancel" = "Cancel Transaction";
 "send.confirmation.nonce" = "Nonce";
 "send.confirmation.method" = "Method";
@@ -430,17 +430,16 @@ Swag your way to Settings -> %@ and let it shine!";
 "send.amount_error.maximum_amount" = "Maximum amount %@";
 "send.amount_error.minimum_amount" = "Minimum amount %@";
 "send.amount_error.min_required_balance" = "Min. required remainder %@";
-"send.amount_warning.coin_needed_for_fee" = "Consider leaving some %@ on balance to be able to pay for future transactions.";
-"send.token.insufficient_fee_alert" = "Transaction fees for transferring %@ (on %@) paid in %@. You need %@.";
+"send.amount_warning.coin_needed_for_fee" = "Hold up, before you spend all your %@, stash a little for the cover charge on your next blockchain party moves. It's like saving some juice for the next beat drop!";
+"send.token.insufficient_fee_alert" = "Hold on to your headphones! To move your %@ on the %@ stage, you gotta pay the entrance fee in %@. Right now, you need some more %@ to get past the velvet rope.";
 
 "send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
-"send.fee_settings.amount_error.balance" = "The current %@ balance is below the amount required to process theis transaction, including transaction fee.";
-
+"send.fee_settings.amount_error.balance" = "Yo, your %@ balance is like a mic running low on battery. It's not enough to cover the gig and the backstage pass (transaction fee) for this show. Need to pump up those numbers to keep the beats rolling!";
 "send.fee_settings.stuck_warning.title" = "Risk of getting stuck";
 "send.fee_settings.stuck_warning" = "The transaction may get stuck or fail.";
 "send.fee_settings.fee_error.title" = "Fee Error";
 "send.fee_settings.too_low" = "Fee Rate is too low.";
-"send.fee_settings.fee_rate_unavailable" = "Fee Rate unavailable. Please, check fee rates manually";
+"send.fee_settings.fee_rate_unavailable" = "Looks like the Fee Rate is playing hide and seek right now. Time to go old school and check those fee rates manually, like flipping through a vinyl collection to find that perfect beat.";
 
 "send.stuck_warning" = "Warning! Risk of getting stuck";
 
@@ -457,7 +456,7 @@ Swag your way to Settings -> %@ and let it shine!";
 "donate.list.get_address.title" = "Addresses";
 "donate.title" = "Donate %@";
 "donate.no_assets" = "You have no assets to donate.";
-"donate.support.description" = "Together, with your support, we can make this app even better!";
+"donate.support.description" = "With your support, we can take this app to the next level, like turning a mixtape into a platinum album! Together, let's make this app the chart-topper of the crypto world!";
 
 // CoinSelector
 
@@ -476,14 +475,14 @@ Swag your way to Settings -> %@ and let it shine!";
 "swap.advanced_settings" = "Swap Settings";
 "swap.proceed_button" = "Next";
 "swap.approve.title" = "Swap Approve";
-"swap.approve.description" = "You should grant permission to a smart contract to swap a given token on your behalf. This permission sets the amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute an approval transaction. \n\nWhile it may be done on-demand before each trade, it's cheaper to approve a higher amount in advance for future trades.";
-"swap.approve.amount_error.already_approved" = "You already have an allowance for this amount";
+"swap.approve.description" = "Before hitting the swap stage, you gotta give the green light to a smart contract to be your agent, trading tokens on your behalf. This permission sets your spending limit on the mic. It doesn’t mess with your balance but drops a small fee for the approval gig. 🎤\n\nSure, you could do the approval dance before each show, but why not save some green by setting a higher limit now for the future tours?";
+"swap.approve.amount_error.already_approved" = "Hold up, you've already got the VIP pass for this amount!";
 "swap.approving_button" = "Approving...";
-"swap.revoke_warning" = "You can exchange %@, or you need to revoke and approve the new amount";
+"swap.revoke_warning" = "You're set to exchange %@, or if you wanna switch up the beat, revoke and approve a fresh amount.";
 "swap.revoking_button" = "Revoking...";
 "swap.not_available_button" = "Balance N/A";
 "swap.trade_error.not_found" = "Can't swap these tokens";
-"swap.trade_error.wrap_unwrap_not_allowed" = "This service doesn't allow wrapping/unwrapping. Please, try another swap service. 1Inch recommended";
+"swap.trade_error.wrap_unwrap_not_allowed" = "This joint doesn't do the wrap/unwrap dance. Slide over to another swap stage. 1Inch is the recommended groove for this move!";
 "swap.button_error.insufficient_balance" = "Insufficient balance";
 "swap.switch_provider.title" = "Swap Service";
 "swap.amount_type.coin" = "Coin";
@@ -501,24 +500,24 @@ Swag your way to Settings -> %@ and let it shine!";
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Slippage Tolerance";
-"swap.advanced_settings.slippage.footer" = "Your transaction will revert if the price changes unfavorably by more than this percentage";
+"swap.advanced_settings.slippage.footer" = "If the price pulls a shady move and slides unfavorably beyond this percentage, your transaction will hit the brakes and flip a U-turn. Keep it tight!";
 "swap.advanced_settings.deadline" = "Transaction Deadline";
-"swap.advanced_settings.deadline.footer" = "Your transaction will revert if it is pending for more than this long.";
-"swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
+"swap.advanced_settings.deadline.footer" = "If your transaction is chilling in the pending zone longer than this, it'll bounce back like a track that missed the drop deadline. Keep it timely!";
+"swap.advanced_settings.recipient.footer" = "Post-swap, the crypto beat will drop straight to the address you laid down. It's like sending the after-party invite to the right crib!";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Recipient Address";
 "swap.advanced_settings.warning.unusual_slippage" = "Your transaction may be frontrun";
-"swap.advanced_settings.service_fee_description" = "A service fee for the swap action on the platform typicaly either 0.3% or 0.6%";
+"swap.advanced_settings.service_fee_description" = "For the backstage pass to the swap scene on this platform, the house usually takes a 0.3% or 0.6% cut. It's the crypto cover charge to get your tokens grooving!";
 "swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";
-"swap.advanced_settings.error.higher_slippage" = "Slippage Tolerance can’t be more than %@%%";
+"swap.advanced_settings.error.higher_slippage" = "Hold the sliders! Slippage Tolerance can't crank up past %@%%. It's like trying to push the volume past the max, there's a limit to the beat!";
 "swap.advanced_settings.error.invalid_address" = "Invalid Address";
 "swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
 "swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
 
 "swap.one_inch.error.cannot_estimate" = "Estimation Error";
-"swap.one_inch.error.cannot_estimate.info" = "Check the balance to ensure there is enough %@ to cover the fee. Or try increasing the price slippage amount and try again. Will auto-retry in 3 sec...";
+"swap.one_inch.error.cannot_estimate.info" = "Hold up! Make sure your %@ stash is fat enough to cover the entrance fee. Or slide that price slippage amount up a notch and hit it again. We're winding it back for an auto-retry in 3 sec...";
 "swap.one_inch.error.insufficient_liquidity" = "Insufficient Liquidity";
-"swap.one_inch.error.insufficient_liquidity.info" = "Likely there is not enough liquidity available to process this trade. Try lowering the amount.";
+"swap.one_inch.error.insufficient_liquidity.info" = "Looks like the liquidity pool's run dry for this trade jam. Try dialing down the amount, like easing up on the bass to keep the flow going.";
 
 "swap.service" = "Service";
 "swap.service.title" = "Service";
@@ -531,30 +530,30 @@ Swag your way to Settings -> %@ and let it shine!";
 
 "swap.confirmation.slide_to_swap" = "Slide to Swap";
 "swap.confirmation.swapping" = "Swapping";
-"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\nIf you still want to swap please use %@ website instead.";
-"swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
+"swap.confirmation.impact_too_high" = "%@ hit the pause button on the swap for this trade since the price is looking more offbeat than a mixtape in a blender. That's what extremely low liquidity does.\nIf you're still feeling the swap vibes, slide over to the %@ website to keep the beat going.";
+"swap.confirmation.impact_warning" = "Heads up! The price on this one is diving lower than a bass drop, thanks to some seriously low liquidity. It's like buying concert tickets at sky-high prices when the venue's almost empty.";
 
 "swap.confirmation.minimum_received" = "Minimum Received";
 "swap.confirmation.maximum_sent" = "Maximum Sent";
 
-"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
+"swap.dex_info.description" = "The beats for this exchange service are laid down by %@, a decentralized token exchange maestro jamming on the %@ blockchain stage. 🎶\n\n%@ is the DJ with a smart contract playlist, automating the token swap party flawlessly, keeping it real with no room for any shady business on the dance floor.";
 "swap.dex_info.header_dex_related" = "%@ Related";
 "swap.dex_info.header_allowance" = "Allowance";
-"swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.dex_info.content_allowance" = "Picture the allowance as your personal DJ dropping beats on your behalf in the crypto club. It's the max tab you're letting the exchange run up when shaking it up with token swaps. Before the main event (the actual swap) kicks off, a little pre-party transaction sets up the allowance, ensuring the vibe stays smooth and the rhythm, right on point.";
 "swap.dex_info.header_price_impact" = "Price Impact";
-"swap.dex_info.content_price_impact" = "The expected price deviation from a shown price typically increases with the swap amount.";
+"swap.dex_info.content_price_impact" = "Think of Price Impact as the ripple in the groove when you drop a bigger beat. The more you swap, the more the price could freestyle away from the shown tag, kinda like a remix with each extra note you add to the mix.";
 "swap.dex_info.header_swap_fee" = "Swap Fee";
-"swap.dex_info.content_swap_fee" = "A service fee for the swap action on the platform, shown in the currency the user sells. For most orders, it should be either 0.3 % or 0.6 %.";
+"swap.dex_info.content_swap_fee" = "This is the cover charge to get your tokens grooving on the swap dance floor. Shown in the currency you're trading, it's like the DJ taking a small cut, either 0.3% or 0.6%, to keep the beats rolling. Just a small ticket price for a big crypto jam!";
 "swap.dex_info.header_guaranteed_amount" = "Guaranteed Amount";
-"swap.dex_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
+"swap.dex_info.content_guaranteed_amount" = "This is the vibe minimum, the lowest beat you'll catch from the swap jam. No matter how wild the crypto party gets, this number is the baseline groove you're guaranteed to walk away with post-swap.";
 "swap.dex_info.header_maximum_spend" = "Maximum Spend";
-"swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
+"swap.dex_info.content_maximum_spend" = "This is like your party budget cap, the most you'll drop on the swap floor. No surprises, just a clear beat on how high the tab can run in this crypto jam. It's the max rhythm you're willing to ride on the swap wave.";
 
 "swap.dex_info.header_other" = "Other";
 "swap.dex_info.header_transaction_fee" = "Transaction Fee";
-"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
+"swap.dex_info.content_transaction_fee" = "This is the backstage pass fee to get your transaction grooving on the %@ blockchain stage. When it comes to %@ jam sessions, they usually hit a higher note on the cost chart compared to your everyday token transfer gig. It's the estimated ticket price for this blockchain show.";
 "swap.dex_info.header_transaction_speed" = "Transaction Speed";
-"swap.dex_info.content_transaction_speed" = "Transactions with a higher transaction fee will result in faster processing speeds. The opposite is true as well.";
+"swap.dex_info.content_transaction_speed" = "It's a pay-to-play kinda rhythm. Crank up the transaction fee and you'll zip through the blockchain like a hot track on the charts. But if you lowball the fee, brace for a slower groove. It's like choosing between the express or the scenic route on the crypto highway.";
 
 "swap.dex_info.link_button" = "%@ Site";
 
@@ -606,7 +605,7 @@ Swag your way to Settings -> %@ and let it shine!";
 "market.top.protocols" = "Protocols";
 
 "top_platforms.title" = "Platforms Rank";
-"top_platforms.description" = "Leading blockchain platforms by cumulative market of projects built on top.";
+"top_platforms.description" = "Here's the hall of fame of blockchain stages, ranked by the market beat of the projects they've got jamming on top. It's where the big players drop their crypto tracks and keep the blockchain party pumping!";
 
 "top_platform.title" = "%@ Ecosystem";
 "top_platform.description" = "Market cap of all protocols on the %@ chain";
@@ -625,7 +624,7 @@ Swag your way to Settings -> %@ and let it shine!";
 "market.advanced_search.title" = "Filters";
 "market.advanced_search.show_results" = "Show Results";
 "market.advanced_search.empty_results" = "Empty Results";
-"market.advanced_search.dex_description" = "This setting applies to tokens traded on Ethereum (Uniswap DEX) and Binance Smart Chain (Pancake DEX).";
+"market.advanced_search.dex_description" = "This switch lights up the stage for tokens rocking out on Ethereum's Uniswap DEX and Binance Smart Chain's Pancake DEX. It's like the VIP access to the crypto concert of Ethereum and Binance Smart Chain, where tokens drop their beats and trade vibes.";
 "market.advanced_search.24h" = "24h";
 
 "market.advanced_search.market_parameters" = "Market Parameters";
@@ -756,35 +755,35 @@ Swag your way to Settings -> %@ and let it shine!";
 "coin_analytics.not_available" = "This project has no analytics data";
 
 "coin_analytics.technical_indicators" = "Technical Indicators";
-"coin_analytics.technical_indicators.info1" = "Summary: This is a general overview of an asset's technicals, considering a variety of technical indicators and timeframes. It provides a consensus viewpoint (Buy, Sell, or Neutral) based on these indicators.";
-"coin_analytics.technical_indicators.info2" = "Moving Averages (MA): These are commonly used technical indicators that smooth out price data to create a trend-following indicator. They show the average price over a specific time period. There are several types of MAs:\n\nSimple Moving Average (SMA): This calculates the average of a selected range of prices, usually closing prices, by the number of periods in that range.\n\nExponential Moving Average (EMA): This gives more weight to recent prices, thereby responding more quickly to recent price changes.";
-"coin_analytics.technical_indicators.info3" = "Oscillators: These are technical indicators that fluctuate over time within a band (above and below a center line, or between set levels). They are designed to help identify overbought and oversold conditions in a market. Here are some common oscillators:\n\nRelative Strength Index (RSI): This measures the speed and change of price movements. It is usually used to identify overbought or oversold conditions.\n\nMoving Average Convergence Divergence (MACD): This is used to identify potential buy and sell signals. It triggers technical signals when it crosses above (to buy) or below (to sell) its signal line.";
+"coin_analytics.technical_indicators.info1" = "Summary: This is like the highlight reel of an asset's technical groove, taking a peek at a variety of technical indicators and timeframes. It's the crowd's chant (Buy, Sell, or Neutral) echoing the vibe of these indicators.";
+"coin_analytics.technical_indicators.info2" = "Moving Averages (MA): These smooth operators help tune out the noise in price data, laying down a trend-following track. They jam the average price over a chosen time session. We've got a couple of chart-toppers here:\n\nSimple Moving Average (SMA): This one rides the smooth track, averaging out a selected range of prices, usually the closing numbers, over the number of periods in that range.\n\nExponential Moving Average (EMA): This one's got a knack for the fresh beats, giving more weight to the recent prices and bobbing to the recent price changes a tad quicker.";
+"coin_analytics.technical_indicators.info3" = "Oscillators: These are like the rhythm section of the technical band, vibing over time within a band (above and below a center line, or between set levels). They help spot when the market's feeling the high or low tide. Here are some headliners:\n\nRelative Strength Index (RSI): This one measures the pace and vibe of price movements, usually spotting when the market's feeling a bit too overhyped or underwhelmed.\n\nMoving Average Convergence Divergence (MACD): This is your cue to the market's buy and sell jam. It drops the beat for potential buy and sell signals when it crosses above (to buy) or below (to sell) its signal line, like a conductor leading the market orchestra.";
 
 "coin_analytics.cex_volume" = "CEX Volume";
 "coin_analytics.cex_volume_rank" = "CEX Volume Rank";
-"coin_analytics.cex_volume_rank.description" = "Tokens ranked by trading volume for the token on centralized exchanges.";
-"coin_analytics.cex_volume.info1" = "Total trading volume for the token on leading centralized exchanges over a 30-day period.";
-"coin_analytics.cex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading centralized exchanges over 1 year period.";
-"coin_analytics.cex_volume.info3" = "Token's rank is based on trading volume on leading centralized exchanges over 30-day period.";
-"coin_analytics.cex_volume.info4" = "List of all tokens ranked based on trading volume on centralized exchanges over 24H / 7D / 1M intervals.";
+"coin_analytics.cex_volume_rank.description" = "Here's the chart-toppers' list, where tokens are ranked by their trading jam volume on the centralized exchange stage. It's like the Billboard charts for tokens, where the trading volume is the beat that gets them to the top.";
+"coin_analytics.cex_volume.info1" = "Total trading rhythm for the token on the big-league centralized exchanges over a 30-day tour. It's the sum of all beats exchanged in a month-long crypto concert.";
+"coin_analytics.cex_volume.info2" = "A chart laying down the daily trading beat variation for the token on the grand stage of leading centralized exchanges over a year-long festival. It's the rhythm chart of trading vibes day by day.";
+"coin_analytics.cex_volume.info3" = "The token's rank is the stage it holds based on the trading volume jam on the leading centralized exchanges over a 30-day set. It's like the popularity chart in the crypto music fest based on the last month's jam.";
+"coin_analytics.cex_volume.info4" = "The roll call of tokens, ranked by their trading volume groove on the centralized exchanges over the 24-hour solo, 7-day gig, and 1-month tour. It's where tokens rock the trading stage and climb the charts.";
 
 "coin_analytics.dex_volume" = "DEX Volume";
 "coin_analytics.dex_volume_rank" = "DEX Volume Rank";
-"coin_analytics.dex_volume_rank.description" = "Tokens ranked by trading volume for the token on decentralized exchanges.";
-"coin_analytics.dex_volume.info1" = "Total trading volume for the token on leading decentralized exchanges over a 30-day period.";
-"coin_analytics.dex_volume.info2" = "Chart showing variation in daily trading volume for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_volume.info3" = "Token's rank based on trading volume on leading decentralized exchanges over 30-day period.";
-"coin_analytics.dex_volume.info4" = "List of all tokens ranked based on trading volume on decentralized exchanges over 24H / 7D / 1M intervals.";
+"coin_analytics.dex_volume_rank.description" = "Here's the indie chart where tokens are ranked by their trading beats on the decentralized exchange scene. It's like the underground chart for tokens, where the trading volume sets the stage.";
+"coin_analytics.dex_volume.info1" = "Total trading rhythm for the token on the leading decentralized exchanges over a 30-day indie tour. It's a month-long jam of decentralized beats.";
+"coin_analytics.dex_volume.info2" = "A chart that rocks the daily trading volume variation for the token on the leading decentralized exchanges over a year-long indie fest. It's the rhythm chart of trading vibes in the decentralized scene day by day.";
+"coin_analytics.dex_volume.info3" = "The token's rank is its stage in the indie scene, based on the trading volume jam on the leading decentralized exchanges over a 30-day set. It's like the indie charts based on the last month's jam.";
+"coin_analytics.dex_volume.info4" = "The roll call of tokens, ranked by their trading volume groove on the decentralized exchanges over the 24-hour solo, 7-day gig, and 1-month indie tour. It's where tokens rock the decentralized trading stage and climb the indie charts.";
 "coin_analytics.dex_volume.tracked_dexes" = "DEXes that are being tracked:";
 "coin_analytics.dex_volume.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Sushiswap";
 "coin_analytics.dex_volume.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap";
 
 "coin_analytics.dex_liquidity" = "DEX Liquidity";
 "coin_analytics.dex_liquidity_rank" = "DEX Liquidity Rank";
-"coin_analytics.dex_liquidity_rank.description" = "Tokens ranked by available liquidity on decentralized exchanges.";
-"coin_analytics.dex_liquidity.info1" = "Total currently available liquidity for the token on leading decentralized exchanges.";
-"coin_analytics.dex_liquidity.info2" = "Chart showing variation in available liquidity for the token on leading decentralized exchanges over 1 year period.";
-"coin_analytics.dex_liquidity.info3" = "List of all tokens ranked based on available liquidity for the token on leading decentralized exchanges.";
+"coin_analytics.dex_liquidity_rank.description" = "Presenting the liquidity leaderboard of the decentralized exchange universe. It's like the liquidity Olympics, where tokens are ranked by their available liquidity prowess on decentralized exchanges.";
+"coin_analytics.dex_liquidity.info1" = "The total liquidity pool party for the token on the leading decentralized exchanges. It's like the liquid assets festival, showing off how splashy the token can get.";
+"coin_analytics.dex_liquidity.info2" = "A graphical jam showing the ebb and flow of available liquidity for the token on the leading decentralized exchanges over a year-long festival. It's the liquidity chart that dances to the rhythm of decentralized vibes.";
+"coin_analytics.dex_liquidity.info3" = "The grand lineup of all tokens, ranked by their liquidity performance on the decentralized exchange stage. It's where tokens show their liquid groove and how they float in the decentralized waters.";
 "coin_analytics.dex_liquidity.tracked_dexes" = "DEXes that are being tracked:";
 "coin_analytics.dex_liquidity.tracked_dexes.info1" = "Ethereum : Uniswap V2/3, Balancer V1/2, Bancor V2, Curve, Sushiswap";
 "coin_analytics.dex_liquidity.tracked_dexes.info2" = "Binance-Smart-Chain : PancakeSwap, DODO V1/2";
@@ -793,27 +792,28 @@ Swag your way to Settings -> %@ and let it shine!";
 "coin_analytics.active_addresses.30_day_unique_addresses" = "30-Day Unique Addresses";
 "coin_analytics.active_addresses_rank" = "Active Addresses Rank";
 "coin_analytics.active_addresses_rank.description" = "Tokens ranked by number of unique addresses transacting with the token.";
-"coin_analytics.active_addresses.info1" = "Total number of unique daily active addresses over a 24-hour period.";
-"coin_analytics.active_addresses.info2" = "Chart showing variation in daily active address count over 1 year period.";
-"coin_analytics.active_addresses.info3" = "Total number of unique blockchain addresses transacting with token over 30-day period.";
-"coin_analytics.active_addresses.info4" = "Token's rank based on the number of active wallets transacting with the token 30-day period.";
-"coin_analytics.active_addresses.info5" = "List of all tokens ranked based on the number of daily active addresses transacting with the token over 24h / 7D / 1M intervals.";
+"coin_analytics.active_addresses.info1" = "Total count of unique daily active addresses making moves over a 24-hour rhythm. It's the daily dance of address activity, showing off their moves on the blockchain floor.";
+"coin_analytics.active_addresses.info2" = "A graphical tune showing the ups and downs of daily active address count dancing through a year-long period. It's the chart that grooves to the rhythm of address activity.";
+"coin_analytics.active_addresses.info3" = "Total count of unique blockchain addresses mingling with the token over a 30-day soiree. It's the monthly meet-and-greet of addresses and tokens.";
+
+"coin_analytics.active_addresses.info4" = "The token's popularity rank, based on the number of active wallets grooving with the token over a 30-day jam. It's where tokens see how well they've mingled in the blockchain party.";
+"coin_analytics.active_addresses.info5" = "The grand lineup of all tokens, ranked by their daily active address entourage over 24h / 7D / 1M intervals. It's the list that shows which tokens got the most addresses grooving.";
 
 "coin_analytics.transaction_count" = "Transaction Count";
 "coin_analytics.transaction_count_rank" = "Tx Count Rank";
-"coin_analytics.transaction_count_rank.description" = "Tokens ranked by number of transactions on a blockchain.";
-"coin_analytics.transaction_count.info1" = "Total number of unique blockchain transactions with token over 30-day period.";
-"coin_analytics.transaction_count.info2" = "Chart showing variation in transaction count over 1 year period.";
-"coin_analytics.transaction_count.info3" = "Token's rank based on the number of transactions with the token 30-day period.";
-"coin_analytics.transaction_count.info4" = "List of all tokens ranked based on the number of transactions with the token over 24h / 7D / 1M intervals.";
-"coin_analytics.transaction_count.info5" = "The total number of tokens transferred over the blockchain over the 30 day period.";
+"coin_analytics.transaction_count_rank.description" = "Tokens making waves by the number of transactions on the blockchain stage, ranked and ready to show their transaction moves.";
+"coin_analytics.transaction_count.info1" = "The total count of unique blockchain transactions grooving with the token over a 30-day rhythm. It's the monthly dance card of token transactions.";
+"coin_analytics.transaction_count.info2" = "A chart jamming to the variation in transaction count, grooving through a 1-year period. It's the visual tune of transaction activity through the seasons.";
+"coin_analytics.transaction_count.info3" = "The token's popularity rank, based on the number of transactions vibing with the token over a 30-day jam. It's where tokens see how well they've danced on the blockchain floor.";
+"coin_analytics.transaction_count.info4" = "The grand lineup of all tokens, ranked by their transaction count over the 24h / 7D / 1M intervals. It's the leaderboard of transaction activity, showing which tokens got the blockchain buzzing.";
+"coin_analytics.transaction_count.info5" = "The total count of tokens transferred over the blockchain groove during the 30-day fest. It's the movement of tokens, riding the blockchain wave.";
 
 "coin_analytics.holders" = "Holders";
 "coin_analytics.holders_rank" = "Holders Rank";
-"coin_analytics.holders_rank.description" = "Ranking tokens by unique addresses holding them on multiple blockchains.";
-"coin_analytics.holders.info1" = "Total number of unique addresses holding the token on various blockchains.";
-"coin_analytics.holders.info2" = "Top 10 wallets holding the token on each blockchain.";
-"coin_analytics.holders.tracked_blockchains" = "Tracked blockchains: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, Polygon";
+"coin_analytics.holders_rank.description" = "It's the royal lineup of tokens, ranked by the unique addresses holding them across multiple blockchain realms. A majestic glance at the token kingdom.";
+"coin_analytics.holders.info1" = "The grand total of unique addresses holding the token across various blockchain territories. It's the census of the token empire, counting the loyal subjects.";
+"coin_analytics.holders.info2" = "Meet the high rollers, the top 10 wallets holding the token on each blockchain. It's the elite gathering of token holders, showcasing the aristocracy of the blockchain society.";
+"coin_analytics.holders.tracked_blockchains" = "The tracked blockchains are the realms we venture: Ethereum, Binance Smart Chain, Optimism, Arbitrum, Celo, Cronos, Avalanche, Fantom, and Polygon. It's the blockchain expedition, exploring the vast lands of token holders.";
 "coin_analytics.holders.in_top_10_addresses" = "in top 10 holders";
 "coin_analytics.holders.count" = "Total Holders: %@";
 "coin_analytics.holders.see_all" = "See All";
@@ -821,19 +821,19 @@ Swag your way to Settings -> %@ and let it shine!";
 "coin_analytics.project_tvl" = "Project TVL";
 "coin_analytics.tvl_ratio" = "M.Cap / TVL Ratio";
 "coin_analytics.project_tvl.info_title" = "Project TVL (Total Value Locked)";
-"coin_analytics.project_tvl.info1" = "Total-Value-Locked (or Assets Under Management) in the project's smart contracts.";
-"coin_analytics.project_tvl.info2" = "Chart showing variation Total-Value-Locked in project's smart contracts over 1 year period.";
-"coin_analytics.project_tvl.info3" = "Token's rank based on current Total-Value-Locked.";
-"coin_analytics.project_tvl.info4" = "List of all tokens ranked based on current Total-Value-Locked.";
+"coin_analytics.project_tvl.info1" = "Total-Value-Locked (TVL), or the treasure stashed in the project's smart contracts. It's the bounty secured in digital vaults, a testament to the project's clout.";
+"coin_analytics.project_tvl.info2" = "A year-long saga, charted to show the ebbs and flows of Total-Value-Locked in the project's smart contracts. Witness the tides of fortune in this financial odyssey.";
+"coin_analytics.project_tvl.info3" = "Behold, the token's rank in the grand scheme, ascertained by the current Total-Value-Locked. A prestigious seat in the hall of blockchain valor.";
+"coin_analytics.project_tvl.info4" = "The leaderboard of tokens, ranked by the current Total-Value-Locked. It's the hall of fame for the stout-hearted projects, a tableau of blockchain affluence.";
 "coin_analytics.project_tvl.info5" = "Market Cap / TVL ratio for the project.";
 
 "coin_analytics.project_fee" = "Project Fee";
 "coin_analytics.project_fee_rank" = "Project Fee Rank";
-"coin_analytics.project_fee_rank.description" = "Tokens ranked according to fees generated by respective projects. The way fees are collected varies from project to project.";
+"coin_analytics.project_fee_rank.description" = "Here's the royal lineup of tokens, ranked by the fees they've raked in for their projects. Like the diverse beats in a Kanye album, each project has its own unique rhythm of fee collection. Let's see who's dropping the hottest tracks in the fee game.";
 
 "coin_analytics.project_revenue" = "Project Revenue";
 "coin_analytics.project_revenue_rank" = "Project Revenue Rank";
-"coin_analytics.project_revenue_rank.description" = "Tokens ranked by revenue generated for holders via mechanisms i.e. staking or token burns.";
+"coin_analytics.project_revenue_rank.description" = "We're ranking tokens by the moolah they bring to the table, thanks to fancy moves like staking and token burns. It's like a crypto cash showdown!";
 
 "coin_analytics.other_data" = "Other Data";
 
@@ -861,13 +861,13 @@ Swag your way to Settings -> %@ and let it shine!";
 "coin_analytics.overall_score.good" = "Good";
 "coin_analytics.overall_score.fair" = "Fair";
 "coin_analytics.overall_score.poor" = "Poor";
-"coin_analytics.overall_score.cex_volume" = "The overall score is based on the average daily trading volume on centralized exchanges over the last 7 days.";
-"coin_analytics.overall_score.dex_volume" = "The overall score is based on the average daily trading volume on decentralized exchanges over the last 7 days.";
-"coin_analytics.overall_score.dex_liquidity" = "The overall score is based on the total avilable liquidity on decentralized exchanges.";
-"coin_analytics.overall_score.active_addresses" = "The overall score is based on the average daily active addresses over the last 7 days.";
-"coin_analytics.overall_score.project_tvl" = "The overall score is based on the total value locked (assets under management) on the project represented by the given token.";
-"coin_analytics.overall_score.transaction_count" = "The overall score is based on the average daily transaction count over the last 7 days.";
-"coin_analytics.overall_score.holders" = "The overall score is based on the total number of addresses holding respective token.";
+"coin_analytics.overall_score.cex_volume" = "Score's vibing with the daily trading beats on those central stages. Past 7 days? Lit.";
+"coin_analytics.overall_score.dex_volume" = "Our overall score is all about that average daily trading volume on decentralized exchanges over the past week. It's like the wild, wild west of crypto.";
+"coin_analytics.overall_score.dex_liquidity" = "We're cooking up the overall score based on the total liquidity available on decentralized exchanges. It's like the secret sauce of crypto power.";
+"coin_analytics.overall_score.active_addresses" = "The overall score vibes with the average daily active addresses in the past week. It's like counting the partygoers in the crypto dance.";
+"coin_analytics.overall_score.project_tvl" = "Our overall score bows down to the total value locked (assets under management) in the project repped by the given token. It's like the Fort Knox of crypto.";
+"coin_analytics.overall_score.transaction_count" = "The overall score is riding the waves of the average daily transaction count over the last 7 days. It's like the heartbeat of the crypto world.";
+"coin_analytics.overall_score.holders" = "The overall score gives props to the total number of addresses holding the respective token. It's like a crypto fan club.";
 
 "coin_analytics.rank" = "Rank";
 "coin_analytics.30_day_rank" = "30-Day Rank";
@@ -895,7 +895,11 @@ Swag your way to Settings -> %@ and let it shine!";
 
 "chart_indicators.settings.period.error" = "Period can’t be more than %d";
 
-"chart_indicators.settings.ma.description" = "The EMA, SMA, and WMA are moving averages used in technical analysis:\n\nEMA emphasizes recent prices for quicker reactions.\nSMA averages price data for a general trend view.\nWMA balances sensitivity and noise reduction by linearly weighting recent data";
+"chart_indicators.settings.ma.description" = "In the world of technical analysis, we've got the EMA, SMA, and WMA – they're like the squad of moving averages:
+
+EMA's all about that 'in-the-moment' vibe, reacting quickly to recent prices.
+SMA's the chill one, taking the average of price data for a laid-back trend view.
+WMA's the balance master, weighing recent data like a DJ, making it smooth and noise-free.";
 "chart_indicators.settings.ma.type_title" = "Type";
 "chart_indicators.settings.ma.period_title" = "Period";
 
@@ -920,7 +924,7 @@ Swag your way to Settings -> %@ and let it shine!";
 "transactions.all_coins" = "All Coins";
 "transactions.choose_coin" = "Choose Coin";
 "transactions.filter_all" = "All";
-"transactions.empty_text" = "You don't have any pending or past transactions yet";
+"transactions.empty_text" = "Ain't no transactions in the crib yet, but don't worry, your crypto journey's just getting started. It's like we're pre-gaming for the big crypto party!";
 "transactions.pending" = "Pending";
 "transactions.processing" = "Processing";
 "transactions.completed" = "Completed";
@@ -1004,7 +1008,7 @@ Swag your way to Settings -> %@ and let it shine!";
 "settings.faq" = "FAQ";
 "settings.theme" = "Theme";
 "settings.info_subtitle" = "decentralized app";
-"settings.donate.description" = "Together, with your support, we can make this app even better!";
+"settings.donate.description" = "Listen up, fam! We're on a mission to make this app legendary, and with your support, we're unstoppable. It's like we're building the future of crypto together!";
 "settings.donate.title" = "Donate";
 
 // Settings -> Base Currency
@@ -1012,53 +1016,52 @@ Swag your way to Settings -> %@ and let it shine!";
 "settings.base_currency.title" = "Base Currency";
 "settings.base_currency.other" = "Other";
 "settings.base_currency.disclaimer" = "Disclaimer";
-"settings.base_currency.disclaimer.description" = "The exchange rate data is provided by a third party service - Coingecko.com. \n\nThe %@ wallet app doesn't guarantee these values are always correct and matches market data. The chance for inconsistency is higher if you select any base currency other than %@.";
+"settings.base_currency.disclaimer.description" = "Alright, here's the deal: Our exchange rate data is brought to you by the wizards over at Coingecko.com. But listen up, we can't guarantee these numbers are always on point and match the wild world of the market. The odds of things going a bit cray increase when you choose any base currency other than %@. Just keepin' it real, fam!";
 "settings.base_currency.disclaimer.set" = "Set";
 
 // Settings -> Manage Wallet
 
 "manage_wallets.title" = "Coin Manager";
-"manage_wallets.not_found" = "No results found. Try to add token manually.";
+"manage_wallets.not_found" = "No results in sight, huh? Time to get hands-on and add that token manually. It's like being your own crypto DJ – drop those tokens in!";
 "manage_wallets.search_placeholder" = "Name, code or contract address";
 "manage_wallets.contract_address" = "Contract Address";
-"manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile %@ wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
+"manage_wallets.derivation_description" = "Let's talk address formats, my crypto-savvy friend. %@ wallets can strut their stuff in 4 different ways:\n\nBIP44 (the OG)\n\nBIP49\n\nBIP84 (the cool kid)\n\nBIP86 (the new kid on the block)\n\nNow, while %@ wallet can handle all 4 like a boss, it's got a soft spot for the BIP84 format. It's like rockin' the freshest kicks – highly recommended!";
 "manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile %@ wallet supports both of them it recommends to use a Bitcoin Cash wallet operating in TYPE 145 format.";
 
 // Settings -> Personal Support
 
 "settings.personal_support.telegram_username.title" = "Account";
 "settings.personal_support.telegram_username.placeholder" = "@username";
-"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
+"settings.personal_support.description" = "Yo, want some one-on-one support? Drop your Telegram account name, and we'll slide into your DMs for a personal chat. It's like having a crypto concierge at your service!";
 "settings.personal_support.request" = "Request";
 "settings.personal_support.requested" = "Requested";
 "settings.personal_support.failed" = "Request failed";
-"settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
-"settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
+"settings.personal_support.need_subscription" = "Hold up! This feature is exclusive to %@ Wallet premium users. Get all the deets on our official site – it's like VIP access to the crypto world!";
+"settings.personal_support.requested.description" = "You're on it, fam! You've already thrown out the invite for that private chat. Now go find it on Telegram like a crypto detective!";
 "settings.personal_support.requested.open_telegram" = "Open Telegram";
 "settings.personal_support.requested.new_request" = "New Request";
 
 // Settings -> Experimental Features
 
 "settings.experimental_features.title" = "Experimental";
-"settings.experimental_features.description" = "The features below are experimental and should be used with caution. While we have thoroughly tested these features using our own crypto funds, we cannot guarantee they will work as expected in all possible cases.";
+"settings.experimental_features.description" = "Alright, fam, let's get experimental! These features down below are like the wild side of crypto. But a heads-up – they're a bit like riding a crypto rollercoaster. We've tested 'em with our own crypto stash, but no guarantees they'll work their magic every time. It's all part of the crypto adventure!";
 "settings.experimental_features.bitcoin_hodling" = "TimeLock";
 
 // Settings -> Experimental Features -> Bitcoin HODLing
 
 "settings.bitcoin_hodling.title" = "TimeLock";
 "settings.bitcoin_hodling.lock_time" = "Activate";
-"settings.bitcoin_hodling.description" = "This enables you to send Bitcoins that cannot be spent until a specified date. \n\nThe receiver of such transactions should use the %@ wallet app version 0.10 or newer, with the BIP44 address format for Bitcoin. \n\nOnly the %@ wallet can correctly identify such transactions on the Bitcoin network, as well as enable the receiver to spend those Bitcoins after the lock period expires. \n\nIf you’re a HODLer, you may use this feature to force yourself into hodling your Bitcoins by sending such transactions to yourself.";
-
+"settings.bitcoin_hodling.description" = "Alright, crypto HODLer, listen up! We've got a cool feature for you. It's like sending Bitcoins into the future – they can't be spent until a specific date rolls around.\n\nNow, here's the catch: To receive these time-locked transactions, your buddy on the other end needs the %@ wallet app, version 0.10 or newer, and should be rocking the BIP44 address format for Bitcoin. Only our %@ wallet can decode these time capsules on the Bitcoin network and set those Bitcoins free when the time's right.\n\nSo, if you're all about that HODL life, use this feature to test your diamond hands by sending these time-locked transactions to yourself. It's like locking your crypto in a vault, but with a twist!";
 // Settings -> Terms
 
 "terms.title" = "Terms";
 "terms.i_agree" = "I Agree";
 
-"terms.item.1" = "Securely backup recovery phrases for each wallet. It's the only way to regain access to funds if the app malfunctions.";
-"terms.item.2" = "The wallet recovery phrases are randomly generated on the device during setup and are not stored elsewhere.";
-"terms.item.3" = "Disabling unlock PIN (code) on the smartphone deletes all wallets from the app. Recovery phrases will be needed to restore access to funds.";
-"terms.item.4" = "Jailbreaking (rooting), using outdated OS, and installing apps from unknown sources may endanger the safety of funds.";
-"terms.item.5" = "There may be undiscovered software issues in the code powering this app which may cause the app to malfunction.";
+"terms.item.1" = "First rule of crypto club: Safeguard those recovery phrases like they're your golden ticket. They're your lifeline if the app goes all haywire.";
+"terms.item.2" = "These recovery phrases? They're like one-of-a-kind snowflakes, generated just for you during setup. We keep 'em locked tight on your device, nowhere else.";
+"terms.item.3" = "Warning: If you ditch the unlock PIN on your phone, it's a clean slate for your wallets in the app. You'll need those recovery phrases to bring 'em back from the digital abyss.";
+"terms.item.4" = "Stay woke, my friend. Don't be jailbreaking, using outdated OS, or downloading sketchy apps. It's like leaving the front door wide open for crypto trouble.";
+"terms.item.5" = "Hey, even superheroes have their kryptonite. There might be some undiscovered code quirks lurking in the shadows. If the app acts up, you know what to do – recovery phrases to the rescue!";
 
 // Settings -> Tell Friends
 
@@ -1079,8 +1082,8 @@ Swag your way to Settings -> %@ and let it shine!";
 "security_settings.delete_alert_button" = "Delete from Phone";
 
 "btc_blockchain_settings.restore_source" = "Restore Source";
-"btc_blockchain_settings.restore_source.description" = "Select a data source for restoring a wallet with transactions.";
-"btc_blockchain_settings.restore_source.alert" = "After changing Restore Source the wallet will have to resync itself with the %@ blockchain.";
+"btc_blockchain_settings.restore_source.description" = "Time to pick your data source for bringing back a wallet with all its transactions intact. It's like choosing the DJ for your crypto comeback party!";
+"btc_blockchain_settings.restore_source.description" = "Time to pick your data source for bringing back a wallet with all its transactions intact. It's like choosing the DJ for your crypto comeback party!";
 
 "btc_restore_mode.recommended" = "Recommended";
 "btc_restore_mode.more_private" = "More Private";
@@ -1091,9 +1094,10 @@ Swag your way to Settings -> %@ and let it shine!";
 "btc_transaction_sort_mode.bip69.description" = "Lexicographical Indexing";
 
 "blockchain_settings.info.restore_source" = "Restore Source";
-"blockchain_settings.info.restore_source.content" = "This setting is only relevant when restoring an existing wallet. It is a process of getting transaction history for a given cryptocurrency so the wallet app is able to display past transactions and calculate the user's balance. This needs to happen only once when the user restores previously created wallets.\n\nAt this point, there are two potential ways for a mobile wallet like %@ to do this:\n\n1. from the API Server: There is a third-party predefined server that hosts the entire blockchain and has all the data processed and optimized to provide that data in a fast manner. This method is fast but potentially (not necessarily) less private. It's also a centralized method to restore a wallet as it depends on the availability of a 3rd party server. This option is recommended due to its speed of getting data (5-10 minutes).\n\n2. from Blockchain: The app tries to restore directly from a network of blockchain nodes. This is a decentralized way to restore wallet balance and past transactions. The app pings many of the network nodes and requests data from them without addressing some nodes specifically. This option is slow and can easily take 2-3 hours, the app needs to be open while restoring is happening. This restore method doesn't depend on any entity and should work in all conditions.";
+"blockchain_settings.info.restore_source.content" = "Alright, let's break it down, crypto-style. This setting only matters when you're bringing back an old wallet from the crypto vault. It's like dusting off your treasure chest to see what's inside.\n\nHere's the lowdown:\n\nRestoring a Wallet: This is the process of getting all your transaction history for a specific cryptocurrency. It's what makes your wallet app show you past transactions and calculate your balance. You only gotta do this once when you're resurrecting a wallet.
+\n\nNow, there are two ways %@ wallet can pull this off:\n\nFrom the API Server: Think of this like a magic server that's got the entire blockchain data prepped and optimized for a quick download. It's fast but might be a bit less private, and it relies on that third-party server's availability. But it's the go-to option for speed demons – takes just 5-10 minutes.\n\nFrom the Blockchain: This is the decentralized route. The app reaches out to a network of blockchain nodes, pinging them for data. It's slower, like a crypto snail's pace, and can take 2-3 hours. But it's independent and works in any situation.\n\nSo, choose wisely, my crypto explorer – fast and potentially less private, or slow but steady and fully decentralized. The choice is yours!";
 "blockchain_settings.info.rpc_source" = "RPC Source";
-"blockchain_settings.info.rpc_source.content" = "This setting controls how this app interacts with blockchains when sending or receiving transactions.\n\nIn the case of Bitcoin, Bitcoin Cash, Litecoin, and Dash, the communication with blockchain network nodes is fully peer-to-peer. %@ pings many nodes and communicates with one of them. Each time the app connects to a different node.\n\nIn the case of Ethereum, Binance Smart Chain, and other EVM blockchains, there are no alternatives for mobile wallets to interact with respective blockchains other than via third-party RPC service providers (i.e. Infura.io) or personal nodes. That essentially means your communication with that blockchain is not decentralized. This doesn't impact your funds in any way, only the ability to connect to the blockchain network.\n\nRest assured, we are keeping this on the radar and will soon try to provide a decentralized way to sync. Patience.";
+"blockchain_settings.info.rpc_source.content" = "Time to dive into how this app talks to blockchains when you're sending or receiving transactions. It's like the language of crypto, ya know?\n\nFor Bitcoin, Bitcoin Cash, Litecoin, and Dash, it's all about that peer-to-peer vibe. %@ wallet chats with blockchain nodes, switching it up each time like a social butterfly.\n\nBut when it comes to Ethereum, Binance Smart Chain, and other EVM blockchains, there's no way for mobile wallets to chat with the blockchain directly. So, we rely on third-party RPC service providers like Infura.io. It's like having a crypto interpreter – your communication isn't decentralized, but your funds are all good.\n\nDon't worry, we're on it! We're working on a decentralized way to sync, so stay tuned, crypto fam. Patience is key!";
 
 // Manage Accounts
 
@@ -1107,16 +1111,16 @@ Swag your way to Settings -> %@ and let it shine!";
 "settings_manage_keys.delete" = "Delete";
 "settings_manage_keys.backup" = "Backup";
 "settings_manage_keys.delete.title" = "Delete Wallet";
-"settings_manage_keys.delete.confirmation_remove" = "The action will delete this wallet from the device.";
-"settings_manage_keys.delete.confirmation_loose" = "If you didn't back up the private key for this wallet, you will lose access to your funds.";
-"settings_manage_keys.delete.confirmation_watch" = "Do you want to stop watching this wallet address?";
+"settings_manage_keys.delete.confirmation_remove" = "Warning: This move is gonna wipe this wallet off your device. It's like saying goodbye to an old friend.";
+"settings_manage_keys.delete.confirmation_loose" = "And listen up, if you didn't back up that private key, you're gonna lose access to your crypto stash. It's like losing the keys to your Lambo.";
+"settings_manage_keys.delete.confirmation_watch" = "So, here's the deal: Do you wanna stop keeping an eye on this wallet address? It's like unfollowing someone on social media, but for crypto.";
 "settings_manage_keys.delete.confirmation_watch.button" = "Stop Watching";
 
 // Settings -> About App
 
 "settings.about_app.title" = "About App";
 "settings.about_app.app_name" = "%@ Wallet";
-"settings.about_app.description" =  "The %@ wallet is built for those looking to invest and store cryptocurrencies in a private and independent manner.\n\nIt's a non-custodial, peer-to-peer wallet where only the user has control over the funds. It doesn't collect any data and keeps the user independent by not locking the user's funds to a specific wallet app.\n\nThe %@ wallet is fully open-source and anyone can confirm the app works exactly as it claims to.";
+"settings.about_app.description" = "Welcome to the %@ wallet, where crypto independence is the name of the game!\n\nIt's your non-custodial sidekick, keeping your crypto stash private and secure.\n\nNo data collection here, it's all about you being in the driver's seat.\n\nYour funds, your rules – we don't lock 'em to a specific wallet app.\n\nWe're fully open-source, so anyone can peek under the hood and see we're the real deal.\n\nIt's like having a crypto bodyguard for your digital fortune!";
 "settings.about_app.whats_new" = "What's New";
 "settings.about_app.website" = "Website";
 "settings.about_app.contact" = "Contact Us";
@@ -1132,11 +1136,11 @@ Swag your way to Settings -> %@ and let it shine!";
 // Settings -> Privacy
 
 "settings.privacy" = "Privacy";
-"settings.privacy.description" = "%@ doesn't collect any data or use analytics tools that may expose any data about its users. The wallet is designed to ensure a high level of privacy for its users.";
-"settings.privacy.statement.user_data_storage" = "User data always remains on the user's device.";
-"settings.privacy.statement.data_usage" = "The wallet doesn't collect any data about users.";
-"settings.privacy.statement.data_privacy" = "The wallet doesn't share any data about users.";
-"settings.privacy.statement.user_account" = "There are no user accounts or databases keeping user data elsewhere.";
+"settings.privacy.description" = "Yo, at %@, we don't mess with your data. It's like your secret crypto lair, and we're the loyal guards at the door. Your privacy is our jam!";
+"settings.privacy.statement.user_data_storage" = "Your data? It's got one home – your device. We don't play landlord with your info, fam.";
+"settings.privacy.statement.data_usage" = "We're like the data-diet gurus – we don't collect any data about our users. It's all about that zero-calorie data!";
+"settings.privacy.statement.data_privacy" = "We're like a vault of secrets – your data is safe with us. We don't spill the beans or share anything about our users. It's like a silent night in the crypto world!";
+"settings.privacy.statement.user_account" = "No user accounts, no secret databases – we don't squirrel away your data anywhere else. Your crypto life, your control. It's like having the master key to your digital kingdom!";
 
 // Settings -> Appearance
 
@@ -1172,7 +1176,7 @@ Swag your way to Settings -> %@ and let it shine!";
 "contacts.list.not_found" = "You do not have an added contact";
 "contacts.list.not_found_search" = "No results found";
 "contacts.add_new_contact" = "Add New Contact";
-"contacts.update_contact.already_has_address" = "Selected contact already has an address on %@. This action will replace the address %@ with %@.";
+"contacts.update_contact.already_has_address" = "Hold up, fam! This contact's already got an address on %@. If you go ahead with this, you'll be swappin' out %@ for %@. It's like updating your friend's address in your Rolodex, but for crypto!";
 "contacts.update_contact.replace" = "Replace";
 "contacts.list.addresses_count" = "Addresses: %d";
 "contacts.contact.new.title" = "New Contact";
@@ -1187,7 +1191,7 @@ Swag your way to Settings -> %@ and let it shine!";
 "contacts.restore.restored" = "Restored";
 "contacts.restore.parsing_error" = "File has wrong data!";
 "contacts.restore.restore_error" = "Failed to restore contacts";
-"contacts.restore.overwrite_alert.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one).";
+"contacts.restore.overwrite_alert.description" = "Heads up, fam! This move is gonna hit the reset button on your local payment contacts, and if there's an iCloud copy, it's gonna give that a makeover too. It's like cleaning out your entire contact list and starting fresh in the crypto universe!";
 "contacts.restore.overwrite_alert.replace" = "Replace";
 
 "contacts.add_address.title" = "Add Address";
@@ -1196,15 +1200,15 @@ Swag your way to Settings -> %@ and let it shine!";
 "contacts.add_address.exist_address" = "This address is already used for %@";
 
 "contacts.contact.delete_alert.title" = "Delete Contact";
-"contacts.contact.delete_alert.description" = "Are you sure you want to delete this contact?";
+"contacts.contact.delete_alert.description" = "You sure you wanna drop this contact like a hot potato? It's like unfriending someone in the crypto world. Are you sure?";
 "contacts.contact.delete_alert.delete" = "Delete";
 
-"contacts.contact.dismiss_changes.description" = "Are you sure you want to discard these new changes?";
+"contacts.contact.dismiss_changes.description" = "Hold up, are you really gonna throw these changes out the window? It's like crumpling up a masterpiece and tossing it in the trash. You sure about this?";
 "contacts.contact.dismiss_changes.discard_changes" = "Discard Changes";
 "contacts.contact.dismiss_changes.keep_editing" = "Keep Editing";
 
 "contacts.add_address.delete_alert.title" = "Delete Address";
-"contacts.add_address.delete_alert.description" = "Are you sure you want to delete this address?";
+"contacts.add_address.delete_alert.description" = "Yo, are you sure you wanna wipe this address off the map? It's like erasing a treasure from your crypto map. Confirm or cancel, fam?";
 "contacts.add_address.delete_alert.delete" = "Delete";
 
 // Contacts -> Settings
@@ -1215,13 +1219,12 @@ Swag your way to Settings -> %@ and let it shine!";
 "contacts.settings.backup_contacts" = "Backup Contacts";
 
 "contacts.settings.icloud_sync" = "iCloud Sync";
-"contacts.settings.description" = "Sync payment contacts to iCloud for easy backup and access across multiple devices.";
-"contacts.settings.lost_synchronization.description" = "iCloud synchronization is lost. Please check that iCloud Storage is enabled on your device.";
-"contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
+"contacts.settings.description" = "Time to level up your crypto game! Sync those payment contacts to iCloud for smooth backup and access on all your devices. It's like having a crypto rolodex that follows you everywhere!";
+"contacts.settings.lost_synchronization.description" = "Uh-oh, we've lost our iCloud sync signal! Double-check that iCloud Storage is lit up on your device – we need that cloud connection to keep your contacts in harmony.";
+"contacts.settings.merge_disclaimer" = "Heads up, fam! When you hit that merge button, your local payment contacts are gonna get cozy with the ones chilling on iCloud. It's like a crypto family reunion!";
 
 "contacts.settings.alert.title" = "iCloud Sync";
-"contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
-
+"contacts.settings.alert.description" = "Hold up, fam! Before we dive into the iCloud wonderland, let's make sure that iCloud Storage is turned on in your device settings. It's like checking if the gas tank is full before hitting the open road!";
 "contacts.settings.alert_error.title" = "iCloud Error";
 
 // Set PIN
@@ -1239,7 +1242,7 @@ Swag your way to Settings -> %@ and let it shine!";
 // Unlock PIN
 
 "unlock_pin.info" = "Passcode";
-"unlock_pin.cant_save_pin" = "Ouch! We cannot save your passcode, please contact us asap!";
+"unlock_pin.cant_save_pin" = "Uh-oh! We hit a roadblock trying to save your passcode. It's like we're locked out of the code vault. Contact us pronto, we've got your back!";
 "unlock_pin.blocked_until" = "Disabled until: %@";
 
 
@@ -1301,12 +1304,12 @@ Swag your way to Settings -> %@ and let it shine!";
 // Lock Info
 
 "lock_info.title" = "TimeLock";
-"lock_info.text" = "The sender sent these funds with a spending lock that will expire on the shown date. \n\nNo worries, the received Bitcoins are already yours, but until the lock period expires you cannot spend them on the Bitcoin network.";
+"lock_info.text" = "Listen up, crypto connoisseur! The sender put a lock on these funds, but don't sweat it – the Bitcoins you received are already in your crypto pocket. Just one thing – you can't spend them on the Bitcoin network until that lock period unlocks itself on the date shown. It's like a crypto countdown!";
 
 // Double Spend Info
 
 "double_spend_info.title" = "Double Spend";
-"double_spend_info.header" = "Double Spend Risk! There is another transaction on the blockchain that is trying to spend inputs used in this transaction. Only one transaction will be accepted by the network";
+"double_spend_info.header" = "Double Spend Showdown! We've got a crypto cliffhanger here. There's another transaction on the blockchain, eyeing the same inputs as this one. But here's the deal: Only one of them will make it into the network's VIP club. It's like a crypto duel, may the fastest transaction win!";
 "double_spend_info.this_hash" = "This Tx";
 "double_spend_info.conflicting_hash" = "Conflicting Tx";
 
@@ -1318,11 +1321,11 @@ Swag your way to Settings -> %@ and let it shine!";
 // Intro
 
 "intro.unchain_assets.title" = "Unchain Assets";
-"intro.unchain_assets.description" = "Don't lock yourself in and don't let others do that to you";
+"intro.unchain_assets.description" = "Stay free, my friend. Don't lock yourself in, and don't let anyone else put you in chains. It's your crypto, your rules!";
 "intro.go_borderless.title" = "Go Borderless";
-"intro.go_borderless.description" = "Bypass conditional barriers and access markets globally";
+"intro.go_borderless.description" = "Break free from the shackles of conditional barriers and dive into global markets with no boundaries. It's like having a passport to the crypto world!";
 "intro.stay_private.title" = "Stay Private";
-"intro.stay_private.description" = "Do not leak your private and financial data to the world";
+"intro.stay_private.description" = "Keep it locked down, fam. Don't spill the beans on your private and financial data to the whole wide world. It's like guarding your crypto fortress!";
 
 // Guides
 
@@ -1355,19 +1358,19 @@ Swag your way to Settings -> %@ and let it shine!";
 "wallet_connect.list.pending_requests" = "Pending Requests";
 "wallet_connect.main.no_any_supported_chains" = "No any supported chains!";
 "wallet_connect.main.unsupported_chains" = "Some chains are unsupported!";
-"wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is an important security step to protect your data from potential phishing risks.";
-"wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
-"wallet_connect.no_connection" = "Failed to establish a connection. Try reconnecting again.";
+"wallet_connect.connect_description" = "Here's the deal, fam: When you hit 'approve,' you're giving this app the green light to peep at your public address. It's like showing your ID at the crypto club – an essential security move to keep the phishing pirates at bay!";
+"wallet_connect.usage_description" = "Here's the deal: You're in the driver's seat. You can hop over to the browser, but make sure you keep this page open while you're doing your thing out there. It's like having one foot in the crypto club and the other in the digital wild west!";
+"wallet_connect.no_connection" = "Uh-oh, we hit a snag trying to establish a connection. It's like trying to make a phone call in a dead zone. Give it another shot, fam!";
 "wallet_connect.button_reconnect" = "Reconnect";
 "wallet_connect.button_disconnect" = "Disconnect";
 "ethereum_transaction.error.title" = "Error";
-"ethereum_transaction.error.insufficient_balance" = "The transaction requires %@ for sending.";
-"ethereum_transaction.error.insufficient_balance_with_fee" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
-"ethereum_transaction.error.lower_than_base_gas_limit" = "The selected fee value is too low and will be rejected!";
-"ethereum_transaction.error.nonce_already_in_block" = "The transaction is already in block!";
-"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee not enough to replace the transaction";
-"ethereum_transaction.error.transaction_underpriced" = "Fee not enough to send the transaction";
-"ethereum_transaction.error.tips_higher_than_max_fee" = "Max fee cannot be lower than the tips, because Max fee includes the tips.";
+"ethereum_transaction.error.insufficient_balance" = "Hold up, fam! This transaction needs %@ to roll. It's like trying to buy a Lambo with pocket change.";
+"ethereum_transaction.error.insufficient_balance_with_fee" = "Uh-oh, your %@ balance is lower than the total amount needed for this transaction, including the transaction fee. It's like tryna buy a Lambo with Monopoly money.";
+"ethereum_transaction.error.lower_than_base_gas_limit" = "Whoa there, your selected fee is on the low side and won't fly. It's like trying to tip a waiter with a penny. Bump it up!";
+"ethereum_transaction.error.nonce_already_in_block" = "No need to double dip, fam! This transaction's already in the block – it's like trying to use the same ticket twice at a crypto concert.";
+"ethereum_transaction.error.replacement_transaction_underpriced" = "Fee's too low for a replacement, fam. It's like trying to one-up the competition with a dollar in a high-stakes poker game.";
+"ethereum_transaction.error.transaction_underpriced" = "Fee's not cutting it for this transaction, fam. It's like trying to send a text with no signal – ain't gonna work.";
+"ethereum_transaction.error.tips_higher_than_max_fee" = "Hold up, you can't have your cake and eat it too! Your max fee can't be lower than the tips – it's like asking for a discount after leaving a massive tip.";
 "ethereum_transaction.error.reverted" = "The transaction cannot be executed: %@";
 "wallet_connect.request_title" = "Contract Call";
 "wallet_connect.button.confirm" = "Confirm";
@@ -1381,21 +1384,21 @@ Swag your way to Settings -> %@ and let it shine!";
 
 "wallet_connect.list.pairings" = "Pairings";
 "wallet_connect.list.version_text" = "Version %@";
-"wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
+"wallet_connect.list.v1_bottom_text" = "Old school vibes, my friend! In the first version of WalletConnect, you gotta dive into sessions to check out and give the nod to those requests. It's like going through your voicemail to catch up on missed calls.";
 "wallet_connect_list.new_connection" = "New Connection";
 "wallet_connect_list.disconnecting" = "Disconnecting";
 
-"wallet_connect.no_account.description" = "You need to create or import a wallet before you can use WalletConnect.";
-"wallet_connect.unbackuped_account.description" = "You need to backup %@ before you can use WalletConnect";
+"wallet_connect.no_account.description" = "Hold your horses, champ! Before you can dive into WalletConnect, you gotta whip up a wallet or import one. It's like needing a ticket to get into the crypto party!";
+"wallet_connect.unbackuped_account.description" = "Safety first, my friend! Before you jump into %@ on WalletConnect, make sure you've got a solid backup in place. It's like checking your parachute before a skydive – essential!";
 
-"wallet_connect.non_supported_account.description" = "Your current wallet type %@ does not support WalletConnect";
+"wallet_connect.non_supported_account.description" = "Oops! Your current wallet type, %@, isn't vibing with WalletConnect. It's like trying to fit a square peg in a round hole – they just don't click.";
 "wallet_connect.non_supported_account.switch" = "Switch";
 
 "wallet_connect.pending_requests_title" = "Pending Requests";
 "wallet_connect.paired_dapps.title" = "Paired dApps";
 "wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
 "wallet_connect.paired_dapps.disconnect_all" = "Delete All";
-"wallet_connect.pending_requests.nonactive_footer" = "To open an request you must activate the desired wallet";
+"wallet_connect.pending_requests.nonactive_footer" = "Hold up, fam! To dive into those requests, you gotta activate the wallet you want first. It's like trying to start a car with a dead battery – gotta give it some juice!";
 
 // App Status
 
@@ -1413,13 +1416,13 @@ Swag your way to Settings -> %@ and let it shine!";
 
 "status_info.title" = "Status";
 "status_info.pending.title" = "Pending";
-"status_info.pending.content" = "The transaction has not been confirmed on the blockchain yet. Transactions sent with a recommended or higher fee setting are generally processed within a few minutes. Transactions sent with a low fee may remain pending for a few hours or even days, and can even be rejected. Note that status of an individual transaction in %@ wallet interface typically updated with a short delay.";
+"status_info.pending.content" = "Hang tight, crypto champ! This transaction's still in the waiting room, not confirmed on the blockchain just yet. If you sent it with a recommended or higher fee, it usually gets the green light in a few minutes. But if you went with a low fee, be prepared for a wait – it could be hours or even days, and there's a chance it might get the boot. Remember, the status in the %@ wallet interface might have a little delay, like waiting for the popcorn to pop in the microwave!";
 "status_info.processing.title" = "Processing";
-"status_info.processing.content" = "The transaction has been already included in the blockchain but has not reached permanent finality. At this point, it's safe to consider the transaction as completed for smaller payments. For larger payments, it's recommended to wait until the transaction status changes to completed.";
+"status_info.processing.content" = "We're on the move, crypto explorer! This transaction's been included in the blockchain, but we're not quite at the finish line yet. For smaller payments, you're good to go – it's like crossing the street with a green light. But for those bigger payments, it's smart to hang tight until the transaction status flips to 'completed.' It's like waiting for that 'Mission Accomplished' banner to drop!";
 "status_info.completed.title" = "Completed";
-"status_info.confirmed.content" = "Transaction is completed and considered permanent and irreversible.";
+"status_info.confirmed.content" = "Bingo! Your transaction is in the books – completed, permanent, and as solid as a rock. It's like locking your crypto treasure chest and tossing the key into the ocean. Irreversible, my friend!";
 "status_info.failed.title" = "Failed";
-"status_info.failed.content" = "The transaction did not get processed and no value transfer took place. Depending on the fail reason, some failed transactions may consume transaction fees. Transactions that were replaced or canceled by another transaction do not consume transaction fees and will also appear as failed. The %@ app is unable to show the reason for failed transactions, but users are able to look it up themselves on a public block explorer i.e. etherscan.io.";
+"status_info.failed.content" = "Oh, snap! This transaction hit a roadblock and didn't go through – no crypto magic this time. Depending on why it failed, some transactions might munch up those transaction fees. And if another transaction swooped in and canceled it, no fees were harmed in the process. Now, the %@ app might not spill the beans on why it failed, but you can always play detective and check it out on a public block explorer, like etherscan.io. It's like solving a crypto mystery!";
 
 // Onboarding
 
@@ -1442,30 +1445,31 @@ Swag your way to Settings -> %@ and let it shine!";
 "manage_account.cloud_backup_recovery_phrase" = "Backup to iCloud";
 "manage_account.cloud_delete_backup_recovery_phrase" = "Delete Backup from iCloud";
 "manage_account.manual_backup_required" = "Manual Backup Required";
-"manage_account.manual_backup_required.description" = "In order to securely delete your backup on iCloud, you will need to manually backup your recovery phrase first.";
+"manage_account.manual_backup_required.description" = "Hold up, crypto guardian! If you wanna securely nuke your iCloud backup, you gotta do a manual backup of your recovery phrase first. It's like making sure you've got a spare key before locking the front door!";
 "manage_account.manual_backup_required.button" = "Backup Now";
 "manage_account.unlink" = "Unlink Wallet";
-"manage_account.backup.no_backup_yet_description" = "Complete one of the wallet backup options to start using the wallet.";
-"manage_account.backup.has_backup_description" = "It's recommended to have a manual backup for each wallet.";
+"manage_account.backup.no_backup_yet_description" = "Slow down, champ! You gotta complete one of the wallet backup options before you can dive into the wallet. It's like making sure you've got a parachute before jumping out of an airplane.";
+"manage_account.backup.has_backup_description" = "Looking out for you, my friend! It's a smart move to have a manual backup for each wallet. It's like having a spare tire in your crypto journey – better safe than sorry!";
 
 "manage_account.cloud_delete_backup_recovery_phrase.description" = "Are you sure you want to delete your wallet backup from iCloud?";
+
 // Manage Account -> Public Keys
 
 "public_keys.title" = "Public Keys";
 "public_keys.evm_address" = "EVM Address";
-"public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM based blockchains.";
+"public_keys.evm_address.description" = "Unlock the read-only power, my friend! This lets you keep an eye on wallets loaded with assets on Ethereum, Binance Smart Chain, and other EVM-based blockchains. It's like having a front-row seat to the crypto show without needing a backstage pass!";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
-"public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
+"public_keys.account_extended_public_key.description" = "Get ready to peek behind the crypto curtain! This lets you monitor wallets with Bitcoin and other UTXO-based crypto like Litecoin, Bitcoin Cash, Dash, and more. It's like having x-ray vision for your crypto wallets!";
 
 // Manage Account -> Private Keys
 
 "private_keys.title" = "Private Keys";
 "private_keys.evm_private_key" = "EVM Private Key";
-"private_keys.evm_private_key.description" = "Grants full control over EVM based crypto i.e. Ethereum, Binance Smart Chain etc within respective wallet.";
+"private_keys.evm_private_key.description" = "Hold the keys to the kingdom, my friend! This gives you total control over EVM-based crypto like Ethereum, Binance Smart Chain, and more – all within the cozy confines of your wallet. It's like being the conductor of a crypto orchestra!";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
-"private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
+"private_keys.bip32_root_key.description" = "Get ready to rule the crypto kingdom! This gives you the ultimate control over all the assets in your wallet. It's like holding the keys to Fort Knox, but for your crypto treasure!";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
-"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within respective wallet.";
+"private_keys.account_extended_private_key.description" = "Ready to take the reins, my friend? This puts you in charge of Bitcoin and other UTXO-based crypto like Litecoin, Bitcoin Cash, Dash, and more – all from within your wallet. It's like being the captain of your own crypto ship!";
 
 // Manage Account -> EVM Address
 
@@ -1478,7 +1482,7 @@ Swag your way to Settings -> %@ and let it shine!";
 // Birthday Input
 
 "birthday_input.title" = "Birthday Height";
-"birthday_input.description" = "Enter wallet's birthday height for faster synchronization.";
+"birthday_input.description" = "Time to celebrate, crypto-style! Enter your wallet's birthday height to speed up the synchronization process. It's like setting the clock to fast-forward in your crypto journey!";
 "birthday_input.new_wallet" = "New Wallet";
 "birthday_input.new_wallet.description" = "Doesn't have any transactions";
 "birthday_input.old_wallet" = "Existing Wallet";
@@ -1486,7 +1490,7 @@ Swag your way to Settings -> %@ and let it shine!";
 "birthday_input.input_placeholder" = "%@ (optional)";
 
 "restore_setting.birthday_height" = "%@ Birthday Height";
-"restore_setting.download.disclaimer" = "The initial synchronization with the blockchain can consume a lot of internet traffic.";
+"restore_setting.download.disclaimer" = "Buckle up, champ! The initial blockchain synchronization can be a data-hungry beast. It's like revving the engine on a data highway. Just a heads-up!";
 
 // EVM Network
 
@@ -1501,55 +1505,55 @@ Swag your way to Settings -> %@ and let it shine!";
 "add_evm_sync_source.rpc_url" = "RPC URL";
 "add_evm_sync_source.basic_auth" = "Basic Auth (optional)";
 "add_evm_sync_source.warning.url_exists" = "RPC Source with this url already exists";
-"add_evm_sync_source.error.invalid_url" = "Entered url is invalid. Valid url must have one of the following schemes: https, wss";
+"add_evm_sync_source.error.invalid_url" = "Whoops! The URL you entered is a no-go. Valid URLs gotta roll with either the 'https' or 'wss' schemes. It's like trying to use a broken GPS – we need the right coordinates!";
 
 // Send Settings
 
 "evm_send_settings.nonce" = "Transaction Nonce";
-"evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
+"evm_send_settings.nonce.info" = "Listen up, crypto maestro! The nonce is like a special serial number for your transactions within your wallet. It usually goes up with each new transaction, and most of the time, you don't need to mess with it. But for the pros out there, you can set it to match the nonce of a pending transaction if you want to cancel or replace it. Just make sure your new transaction has a beefier fee to outmuscle the old one – it's like a crypto showdown, and the highest bidder wins!";
 "evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
-"evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
+"evm_send_settings.nonce.errors.already_in_use.info" = "Yep, an executed transaction with this nonce is already in the books. It's like trying to book a flight for a date that's already passed – not gonna happen!";
 
 "fee_settings" = "Advanced";
 "fee_settings.fee" = "Fee";
-"fee_settings.fee.info" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.";
+"fee_settings.fee.info" = "Listen up, crypto voyager! Blockchains like to get a little something for their trouble when you send transactions. These network fees can vary, and when the network's bustling with activity, the fees tend to get a bit higher. It's like paying a toll on a busy highway – gotta keep things moving!";
 "fee_settings.fee_rate" = "Fee Rate";
 "fee_settings.fee_rate.description" = "Here is the recommended value for hitting the next 2 blocks";
 "fee_settings.inputs_outputs" = "Inputs/Outputs";
 "fee_settings.transaction_settings" = "Transaction Settings";
-"fee_settings.transaction_settings.description" = "Make your Bitcoin transactions harder to trace by changing the way transactions are structured.";
+"fee_settings.transaction_settings.description" = "Time to level up your Bitcoin game! You can make your transactions more incognito by tweaking the way they're structured. It's like wearing a disguise in the crypto world – add an extra layer of privacy!";
 "fee_settings.time_lock" = "Time Lock";
 "fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
 
 "fee_settings.network_fee" = "Network Fee";
-"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
+"fee_settings.network_fee.info" = "Here's the lowdown, crypto explorer! This is the estimated cost of sending your transaction on the network. It's like knowing the price of admission before you hit the crypto party!";
 "fee_settings.gas_limit" = "Gas Limit";
-"fee_settings.gas_limit.info" = "Transaction complexity is measured in units called \"gas\". It varies depending on the smart contract being executed. The Gas Limit is the estimated maximum gas needed to execute it. The actual gas used will normally be lower.";
+"fee_settings.gas_limit.info" = "Let's talk gas, crypto maestro! Transactions come with a complexity rating measured in units called 'gas.' It can change depending on the smart contract you're messing with. The Gas Limit is like your estimate of the maximum gas needed to get the job done. But in reality, you usually end up using less – it's like budgeting for a road trip and having some gas left in the tank!";
 
 "fee_settings.gas_price" = "Gas Price";
-"fee_settings.gas_price.info" = "The fee for transacting on the network is measured in gas units. Gas Price is the amount a user is willing to spend per unit of gas. When the network is busy, gas prices are high, and low when it's idle. An insufficient gas price is often a reason for a transaction to remain pending for an extended period.";
+"fee_settings.gas_price.info" = "Time to talk gas prices, crypto pro! The fee you pay for your transaction on the network is measured in gas units. Gas Price is like how much you're willing to drop for each unit of gas. When the network's buzzing, gas prices shoot up like concert tickets, but when it's chill, they're more wallet-friendly. If you go too low, your transaction might be stuck in limbo for a while – it's like trying to buy a concert ticket with pocket change!";
 
 "fee_settings.base_fee" = "Base Fee";
-"fee_settings.base_fee.info" = "The network protocol determines the base price per gas for each block, called base fee rate. It varies according to the network utilization level from block to block. It can increase or decrease by no more than 12.5% in the next block, making fees more predictable. The value shown here is the current block's base fee rate.";
+"fee_settings.base_fee.info" = "Time to dive into the nitty-gritty of gas fees, crypto connoisseur! The network's got its own rules, and it sets a base price per gas for each block, known as the base fee rate. This rate can change from block to block, depending on how busy the network is. It's like the stock market, with its ups and downs, but it won't swing more than 12.5% in the next block, so fees stay somewhat predictable. What you see here is the base fee rate for the current block – it's like checking the temperature before you step outside!";
 "fee_settings.max_fee_rate" = "Max Fee Rate";
-"fee_settings.max_fee_rate.info" = "This is the maximum total price per gas the user is willing to pay. It must cover the network's base fee rate and max priority fee rate. The value shown here is suggested based on an estimate of the next block's base fee rate plus the max priority fee rate chosen by the user. The actual fee rate paid will normally be lower. Setting this lower than the current base fee rate will limit the fee paid, but will result in longer waiting times for the transaction to be confirmed, or even in a stuck transaction.";
+"fee_settings.max_fee_rate.info" = "Time to talk maximums, crypto strategist! This is the highest total price per gas you're willing to shell out. It's got to cover the network's base fee rate and the max priority fee rate you've chosen. What you see here is an estimate based on the next block's base fee rate plus your max priority fee rate. But in practice, you often end up paying less. If you set it lower than the current base fee rate, you might save some crypto, but be prepared for longer waits or even a stuck transaction – it's like choosing between express delivery and snail mail!";
 "fee_settings.tips" = "Max Priority Fee";
-"fee_settings.tips.info" = "Users pay priority fees to incentivize a transaction to be confirmed more quickly. They are sometimes called tips. The max priority fee rate is the maximum additional price per gas the user is willing to pay on top of the base fee rate. The value shown here is suggested based on predicted network conditions. The actual priority fee will normally be lower. Setting this to zero may result in a long waiting time for transaction to be confirmed, as it is placed at the end of the pending transactions queue from all users.";
+"fee_settings.tips.info" = "Think of this as your crypto tip! It's what you're willing to add on top of the base fee rate to get your transaction confirmed faster. The max priority fee rate is the most you'll pay per gas, and what you see here is an educated guess based on network conditions. You'll usually pay less. Setting it to zero might mean a long wait, like being last in line at the crypto cafe.";
 
 "fee_settings.errors.insufficient_balance" = "Insufficient balance";
 "fee_settings.errors.unexpected_error" = "Unexpected Error";
-"fee_settings.errors.insufficient_balance.info" = "The current %@ balance is below the amount required to process this transaction, including the transaction fee.";
+"fee_settings.errors.insufficient_balance.info" = "Your %@ balance isn't enough to cover the cost of this transaction, including the fee. Time to top up, my friend!";
 "fee_settings.errors.low_max_fee" = "Low Fee";
-"fee_settings.errors.low_max_fee.info" = "The set transaction fee amount is insufficient for processing this transaction now.";
+"fee_settings.errors.low_max_fee.info" = "The fee you've set for this transaction is just too low to make it happen right now. Time to bump it up a bit!";
 "fee_settings.errors.nonce_already_in_block" = "Can't replace transaction.";
 "fee_settings.errors.replacement_transaction_underpriced" = "Low Fee for replacement transaction";
 "fee_settings.errors.transaction_underpriced" = "Low Fee for transaction";
 "fee_settings.errors.tips_higher_than_max_fee" = "Max Fee is too low";
 "fee_settings.errors.zero_amount.info" = "Cannot transfer 0 TRX";
 "fee_settings.warning.risk_of_getting_stuck" = "Risky";
-"fee_settings.warning.risk_of_getting_stuck.info" = "The transaction may remain pending for a while or fail entirely.";
+"fee_settings.warning.risk_of_getting_stuck.info" = "Heads up, there's a chance this transaction could get stuck in limbo for a while or even fail entirely. Take care!";
 "fee_settings.warning.overpricing" = "Fee Too High";
-"fee_settings.warning.overpricing.info" = "The set transaction fee is higher than necessary for processing this transaction now.";
+"fee_settings.warning.overpricing.info" = "Hold your horses! The fee you've set is higher than what's needed right now. Save some crypto for the next round!";
 
 // Watch Address
 
@@ -1675,9 +1679,9 @@ Swag your way to Settings -> %@ and let it shine!";
 "tron.send.resources_consumed" = "Resources Consumed";
 "tron.send.bandwidth" = "Bandwidth";
 "tron.send.energy" = "Energy";
-"tron.send.fee.info" = "The estimated cost of sending given transaction on the network. (Without excluding Energy, Bandwidth and Activating Fee)";
-"tron.send.resources_consumed.info" = "Bandwidth is the unit that measures the size of the transaction bytes stored in the blockchain database. The larger the transaction, the more bandwidth resources will be consumed.\n\nEnergy is the unit that measures the amount of computation required by the TRON virtual machine to perform specific operations on the TRON network.\n\nSince smart contract transactions require computing resources to execute, each smart contract transaction requires to pay for the energy fee.";
-"tron.send.activation_fee.info" = "Transferring TRX or TRC-10 tokens to an inactive account address will activate the account.";
+"tron.send.fee.info" = "Time to talk costs, crypto navigator! This is the estimated price tag for sending your transaction on the network. It's like knowing the price of admission, but keep in mind, this cost doesn't exclude Energy, Bandwidth, and Activation Fees – it's the full package!";
+"tron.send.resources_consumed.info" = "Let's break it down, crypto scholar! Bandwidth measures the size of your transaction in bytes stored in the blockchain database. Bigger transactions gobble up more bandwidth.\n\nNow, Energy is all about the computational oomph needed by the TRON virtual machine to work its magic on the TRON network. Smart contract transactions, being the smarty-pants they are, need to chip in for energy, as they require some serious computing power to execute. It's like paying for fuel to power up your crypto engine!";
+"tron.send.activation_fee.info" = "Time for some crypto activation wisdom! When you transfer TRX or TRC-10 tokens to an inactive account address, you're essentially giving it a wake-up call. It's like inviting a friend to the crypto party – they're ready to join the fun!";
 "tron.send.inactive_address" = "This address is not active";
 
 // Cex Coin Select
@@ -1691,7 +1695,7 @@ Swag your way to Settings -> %@ and let it shine!";
 // Cex Deposit Network Select
 
 "cex_deposit_network_select.title" = "Choose Network";
-"cex_deposit_network_select.description" = "Choose a network and get an address to deposit.";
+"cex_deposit_network_select.description" = "Network selection time, crypto conductor! Pick a network and grab yourself an address for that sweet deposit action. It's like choosing the perfect stage for your crypto performance!";
 
 // Cex Deposit
 
@@ -1706,12 +1710,12 @@ Swag your way to Settings -> %@ and let it shine!";
 "cex_deposit.share_address" = "Share";
 "cex_deposit.failed" = "Failed to load deposit address. Please retry.";
 "cex_deposit.memo_warning.title" = "Important";
-"cex_deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
+"cex_deposit.memo_warning.description" = "Pay attention, crypto navigator! To make sure your assets land safely, you'll need both a memo (tag) and the address. It's like having the coordinates and the secret handshake to access your treasure chest. Without them, your funds could vanish into the crypto abyss!";
 
 // Cex Widthdraw
 
 "cex_withdraw.network" = "Network";
-"cex_withdraw.network_warning" = "Ensure the network matches the withdrawal address and the deposit platform supports it, or assets may be lost.";
+"cex_withdraw.network_warning" = "Listen up, crypto maestro! Make sure the network matches the withdrawal address, and check if the deposit platform supports it. Mismatched networks could lead to your assets taking an unexpected detour, and we don't want that, do we? Let's keep those crypto treasures safe!";
 "cex_withdraw.fee" = "Fee";
 "cex_withdraw.fee_from_amount" = "Fee from amount";
 "cex_withdraw.error.insufficient_funds" = "Not enough available balance";
@@ -1722,7 +1726,7 @@ Swag your way to Settings -> %@ and let it shine!";
 // Cex Withdraw Network Select
 
 "cex_withdraw_network_select.title" = "Network";
-"cex_withdraw_network_select.description" = "Ensure the network matches the withdrawal address and the deposit platform supports it.";
+"cex_withdraw_network_select.description" = "Time to play matchmaker, crypto cupid! Ensure that the network you choose for withdrawal matches the withdrawal address and is supported by the deposit platform. It's like making sure you're sending a love letter to the right address, so your crypto affection arrives safely!";
 
 // Cex Withdraw Confirm
 
