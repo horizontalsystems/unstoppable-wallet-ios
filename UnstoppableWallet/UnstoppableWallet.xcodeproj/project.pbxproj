@@ -1890,6 +1890,7 @@
 		6B146A982A52A69400648C10 /* ChartIndicatorSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B146A932A52A69400648C10 /* ChartIndicatorSettingsViewController.swift */; };
 		6B146A9B2A52A69400648C10 /* ChartIndicatorSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B146A952A52A69400648C10 /* ChartIndicatorSettingsModule.swift */; };
 		6B146A9C2A52A69400648C10 /* ChartIndicatorSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B146A952A52A69400648C10 /* ChartIndicatorSettingsModule.swift */; };
+		6B23E42A2AC2FDB500197523 /* libzcashlc in Frameworks */ = {isa = PBXBuildFile; productRef = 6B23E4292AC2FDB500197523 /* libzcashlc */; };
 		6B423FD42913785800EE5E70 /* BitcoinCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6B423FD32913785800EE5E70 /* BitcoinCore */; };
 		6B5546212A6E73190054B524 /* UIExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 6B5546202A6E73190054B524 /* UIExtensions */; };
 		6BCD53002A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
@@ -4045,6 +4046,7 @@
 				D38406A721831B3D007D50AD /* LocalAuthentication.framework in Frameworks */,
 				D3993DBB28F4277E008720FB /* ActionSheet in Frameworks */,
 				D3BF1E5C274BC29D00229A00 /* Down in Frameworks */,
+				6B23E42A2AC2FDB500197523 /* libzcashlc in Frameworks */,
 				D3604E4A28F02A8C0066C366 /* Eip20Kit in Frameworks */,
 				D3C187DE290FCFE400FE1900 /* StorageKit in Frameworks */,
 				D3604E4328F02A020066C366 /* EvmKit in Frameworks */,
@@ -7707,6 +7709,7 @@
 				D0EC34DA2A4450B100BB308B /* HCaptcha */,
 				6B5546202A6E73190054B524 /* UIExtensions */,
 				D3E6756D2AA9A21300F2BF60 /* SDWebImageSwiftUI */,
+				6B23E4292AC2FDB500197523 /* libzcashlc */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -7794,6 +7797,7 @@
 				D0EC34D92A4450B100BB308B /* XCRemoteSwiftPackageReference "HCaptcha-ios-sdk" */,
 				6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions.Swift" */,
 				D3E6756C2AA9A21300F2BF60 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				6B23E4282AC2FDB500197523 /* XCRemoteSwiftPackageReference "zcash-light-client-ffi" */,
 			);
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
@@ -10688,6 +10692,14 @@
 				kind = branch;
 			};
 		};
+		6B23E4282AC2FDB500197523 /* XCRemoteSwiftPackageReference "zcash-light-client-ffi" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/zcash-hackworks/zcash-light-client-ffi";
+			requirement = {
+				kind = exactVersion;
+				version = 0.3.1;
+			};
+		};
 		6B423FD22913785800EE5E70 /* XCRemoteSwiftPackageReference "BitcoinCore.Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
@@ -11052,6 +11064,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 500F1D0F27AA87BC002AA419 /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */;
 			productName = AlignedCollectionViewFlowLayout;
+		};
+		6B23E4292AC2FDB500197523 /* libzcashlc */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B23E4282AC2FDB500197523 /* XCRemoteSwiftPackageReference "zcash-light-client-ffi" */;
+			productName = libzcashlc;
 		};
 		6B423FD32913785800EE5E70 /* BitcoinCore */ = {
 			isa = XCSwiftPackageProductDependency;
