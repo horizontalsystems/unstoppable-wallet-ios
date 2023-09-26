@@ -1,13 +1,12 @@
 import Foundation
 import RxSwift
 import StorageKit
-import PinKit
 
 class AppManager {
     private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let adapterManager: AdapterManager
-    private let pinKit: PinKit.Kit
+    private let lockManager: LockManager
     private let keychainKit: IKeychainKit
     private let blurManager: BlurManager
     private let kitCleaner: KitCleaner
@@ -21,25 +20,25 @@ class AppManager {
     private let walletConnectSocketConnectionService: WalletConnectSocketConnectionService
     private let nftMetadataSyncer: NftMetadataSyncer
 
-    private let didBecomeActiveSubject = PublishSubject<()>()
-    private let willEnterForegroundSubject = PublishSubject<()>()
+    private let didBecomeActiveSubject = PublishSubject<Void>()
+    private let willEnterForegroundSubject = PublishSubject<Void>()
 
-    init(accountManager: AccountManager, walletManager: WalletManager, adapterManager: AdapterManager, pinKit: PinKit.Kit,
+    init(accountManager: AccountManager, walletManager: WalletManager, adapterManager: AdapterManager, lockManager: LockManager,
          keychainKit: IKeychainKit, blurManager: BlurManager,
          kitCleaner: KitCleaner, debugLogger: DebugLogger?,
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
          logRecordManager: LogRecordManager,
          deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager,
-         walletConnectSocketConnectionService: WalletConnectSocketConnectionService, nftMetadataSyncer: NftMetadataSyncer
-    ) {
+         walletConnectSocketConnectionService: WalletConnectSocketConnectionService, nftMetadataSyncer: NftMetadataSyncer)
+    {
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.adapterManager = adapterManager
-        self.pinKit = pinKit
+        self.lockManager = lockManager
         self.keychainKit = keychainKit
         self.blurManager = blurManager
         self.kitCleaner = kitCleaner
-        self.debugBackgroundLogger = debugLogger
+        debugBackgroundLogger = debugLogger
         self.appVersionManager = appVersionManager
         self.rateAppManager = rateAppManager
         self.logRecordManager = logRecordManager
@@ -49,18 +48,15 @@ class AppManager {
         self.walletConnectSocketConnectionService = walletConnectSocketConnectionService
         self.nftMetadataSyncer = nftMetadataSyncer
     }
-
 }
 
 extension AppManager {
-
     func didFinishLaunching() {
         debugBackgroundLogger?.logFinishLaunching()
 
         keychainKit.handleLaunch()
         accountManager.handleLaunch()
         walletManager.preloadWallets()
-        pinKit.didFinishLaunching()
         kitCleaner.clear()
 
         rateAppManager.onLaunch()
@@ -84,7 +80,7 @@ extension AppManager {
     func didEnterBackground() {
         debugBackgroundLogger?.logEnterBackground()
 
-        pinKit.didEnterBackground()
+        lockManager.didEnterBackground()
         walletConnectSocketConnectionService.didEnterBackground()
         balanceHiddenManager.didEnterBackground()
     }
@@ -97,7 +93,7 @@ extension AppManager {
         willEnterForegroundSubject.onNext(())
 
         keychainKit.handleForeground()
-        pinKit.willEnterForeground()
+        lockManager.willEnterForeground()
         adapterManager.refresh()
         walletConnectSocketConnectionService.willEnterForeground()
 
@@ -111,17 +107,14 @@ extension AppManager {
     func didReceive(url: URL) -> Bool {
         deepLinkManager.handle(url: url)
     }
-
 }
 
 extension AppManager: IAppManager {
-
-    var didBecomeActiveObservable: Observable<()> {
+    var didBecomeActiveObservable: Observable<Void> {
         didBecomeActiveSubject.asObservable()
     }
 
-    var willEnterForegroundObservable: Observable<()> {
+    var willEnterForegroundObservable: Observable<Void> {
         willEnterForegroundSubject.asObservable()
     }
-
 }

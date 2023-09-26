@@ -2,11 +2,10 @@ import CurrencyKit
 import Foundation
 import GRDB
 import HsToolKit
+import LanguageKit
 import MarketKit
-import PinKit
 import StorageKit
 import ThemeKit
-import LanguageKit
 
 class App {
     static var instance: App?
@@ -20,7 +19,13 @@ class App {
     }
 
     let keychainKit: IKeychainKit
-    let pinKit: PinKit.Kit
+
+    let passcodeManager: PasscodeManager
+    let biometryManager: BiometryManager
+    let lockManager: LockManager
+    let lockoutManager: LockoutManager
+
+    let blurManager: BlurManager
 
     let currencyKit: CurrencyKit.Kit
 
@@ -81,7 +86,7 @@ class App {
     let kitCleaner: KitCleaner
 
     let keychainKitDelegate: KeychainKitDelegate
-    let pinKitDelegate: PinKitDelegate
+    let lockDelegate = LockDelegate()
 
     let rateAppManager: RateAppManager
     let guidesManager: GuidesManager
@@ -239,8 +244,12 @@ class App {
         let favoriteCoinRecordStorage = FavoriteCoinRecordStorage(dbPool: dbPool)
         favoritesManager = FavoritesManager(storage: favoriteCoinRecordStorage)
 
-        pinKit = PinKit.Kit(secureStorage: keychainKit.secureStorage, localStorage: StorageKit.LocalStorage.default)
-        let blurManager = BlurManager(pinKit: pinKit)
+        biometryManager = BiometryManager(localStorage: StorageKit.LocalStorage.default)
+        passcodeManager = PasscodeManager(biometryManager: biometryManager, secureStorage: keychainKit.secureStorage)
+        lockManager = LockManager(passcodeManager: passcodeManager, localStorage: StorageKit.LocalStorage.default, delegate: lockDelegate)
+        lockoutManager = LockoutManager(secureStorage: keychainKit.secureStorage)
+
+        blurManager = BlurManager(lockManager: lockManager)
 
         let appVersionRecordStorage = AppVersionRecordStorage(dbPool: dbPool)
         let appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)
@@ -262,9 +271,6 @@ class App {
 
         keychainKitDelegate = KeychainKitDelegate(accountManager: accountManager, walletManager: walletManager)
         keychainKit.set(delegate: keychainKitDelegate)
-
-        pinKitDelegate = PinKitDelegate()
-        pinKit.set(delegate: pinKitDelegate)
 
         rateAppManager = RateAppManager(walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
 
@@ -308,36 +314,36 @@ class App {
 
         let chartRepository = ChartIndicatorsRepository(localStorage: localStorage, subscriptionManager: subscriptionManager)
         appBackupProvider = AppBackupProvider(
-                accountManager: accountManager,
-                accountFactory: accountFactory,
-                walletManager: walletManager,
-                favoritesManager: favoritesManager,
-                evmSyncSourceManager: evmSyncSourceManager,
-                btcBlockchainManager: btcBlockchainManager,
-                restoreSettingsManager: restoreSettingsManager,
-                chartRepository: chartRepository,
-                localStorage: localStorage,
-                languageManager: LanguageManager.shared,
-                currencyKit: currencyKit,
-                themeManager: themeManager,
-                launchScreenManager: launchScreenManager,
-                appIconManager: appIconManager,
-                balancePrimaryValueManager: balancePrimaryValueManager,
-                balanceConversionManager: balanceConversionManager,
-                balanceHiddenManager: balanceHiddenManager,
-                contactManager: contactManager
+            accountManager: accountManager,
+            accountFactory: accountFactory,
+            walletManager: walletManager,
+            favoritesManager: favoritesManager,
+            evmSyncSourceManager: evmSyncSourceManager,
+            btcBlockchainManager: btcBlockchainManager,
+            restoreSettingsManager: restoreSettingsManager,
+            chartRepository: chartRepository,
+            localStorage: localStorage,
+            languageManager: LanguageManager.shared,
+            currencyKit: currencyKit,
+            themeManager: themeManager,
+            launchScreenManager: launchScreenManager,
+            appIconManager: appIconManager,
+            balancePrimaryValueManager: balancePrimaryValueManager,
+            balanceConversionManager: balanceConversionManager,
+            balanceHiddenManager: balanceHiddenManager,
+            contactManager: contactManager
         )
         cloudBackupManager = CloudBackupManager(
-                ubiquityContainerIdentifier: AppConfig.sharedCloudContainer,
-                appBackupProvider: appBackupProvider,
-                logger: logger
+            ubiquityContainerIdentifier: AppConfig.sharedCloudContainer,
+            appBackupProvider: appBackupProvider,
+            logger: logger
         )
 
         appManager = AppManager(
             accountManager: accountManager,
             walletManager: walletManager,
             adapterManager: adapterManager,
-            pinKit: pinKit,
+            lockManager: lockManager,
             keychainKit: keychainKit,
             blurManager: blurManager,
             kitCleaner: kitCleaner,

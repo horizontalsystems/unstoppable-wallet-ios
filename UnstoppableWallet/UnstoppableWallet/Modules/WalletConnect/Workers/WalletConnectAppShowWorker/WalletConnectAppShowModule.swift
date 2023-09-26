@@ -6,7 +6,7 @@ class WalletConnectAppShowModule {
             walletConnectManager: App.shared.walletConnectSessionManager,
             cloudAccountBackupManager: App.shared.cloudBackupManager,
             accountManager: App.shared.accountManager,
-            pinKit: App.shared.pinKit
+            lockManager: App.shared.lockManager
         )
         let walletConnectWorkerViewModel = WalletConnectAppShowViewModel(service: walletConnectWorkerService)
 

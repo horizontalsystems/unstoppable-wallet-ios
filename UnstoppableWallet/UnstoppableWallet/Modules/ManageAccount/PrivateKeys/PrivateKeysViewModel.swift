@@ -58,7 +58,7 @@ extension PrivateKeysViewModel {
     }
 
     func onTapEvmPrivateKey() {
-        if service.isPinSet {
+        if service.isPasscodeSet {
             unlockRequest = .evmPrivateKey
             openUnlockRelay.accept(())
         } else {
@@ -67,7 +67,7 @@ extension PrivateKeysViewModel {
     }
 
     func onTapBip32RootKey() {
-        if service.isPinSet {
+        if service.isPasscodeSet {
             unlockRequest = .bip32RootKey
             openUnlockRelay.accept(())
         } else {
@@ -76,7 +76,7 @@ extension PrivateKeysViewModel {
     }
 
     func onTapAccountExtendedPrivateKey() {
-        if service.isPinSet {
+        if service.isPasscodeSet {
             unlockRequest = .accountExtendedPrivateKey
             openUnlockRelay.accept(())
         } else {
