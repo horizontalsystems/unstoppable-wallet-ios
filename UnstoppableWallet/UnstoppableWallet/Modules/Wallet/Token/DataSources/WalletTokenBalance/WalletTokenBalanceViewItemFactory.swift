@@ -14,7 +14,7 @@ class WalletTokenBalanceViewItemFactory {
         var buttons = [WalletModule.Button: ButtonState]()
 
         switch item.element {
-        case .wallet:
+        case .wallet(let wallet):
             if item.watchAccount {
                 buttons[.address] = .enabled
             } else {
@@ -22,6 +22,10 @@ class WalletTokenBalanceViewItemFactory {
 
                 buttons[.send] = sendButtonState
                 buttons[.receive] = .enabled
+
+                if wallet.token.swappable {
+                    buttons[.swap] = sendButtonState
+                }
             }
         case .cexAsset(let cexAsset):
             buttons[.withdraw] = cexAsset.withdrawEnabled ? .enabled : .disabled
