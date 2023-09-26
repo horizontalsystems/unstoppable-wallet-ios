@@ -3,7 +3,6 @@ import ZcashLightClientKit
 import HsExtensions
 
 class ZcashTransactionWrapper {
-    let id: String?
     let raw: Data?
     let transactionHash: String
     let transactionIndex: Int
@@ -18,7 +17,6 @@ class ZcashTransactionWrapper {
     let failed: Bool
 
     init?(tx: ZcashTransaction.Overview, memo: Memo?, recipient: TransactionRecipient?, lastBlockHeight: Int) {
-        id = tx.id.description
         raw = tx.raw
         transactionHash = tx.rawID.hs.reversedHex
         transactionIndex = tx.index ?? 0

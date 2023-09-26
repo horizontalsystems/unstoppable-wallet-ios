@@ -5,6 +5,7 @@ enum AdapterState {
     case syncing(progress: Int?, lastBlockDate: Date?)
     case customSyncing(main: String, secondary: String?, progress: Int?)
     case notSynced(error: Error)
+    case stopped
 
     var isSynced: Bool {
         switch self {
@@ -29,6 +30,7 @@ extension AdapterState: Equatable {
         case (.syncing(let lProgress, let lLastBlockDate), .syncing(let rProgress, let rLastBlockDate)): return lProgress == rProgress && lLastBlockDate == rLastBlockDate
         case (.customSyncing(let lMain, let lSecondary, let lProgress), .customSyncing(let rMain, let rSecondary, let rProgress)): return lMain == rMain && lSecondary == rSecondary && lProgress == rProgress
         case (.notSynced, .notSynced): return true
+        case (.stopped, .stopped): return true
         default: return false
         }
     }
