@@ -55,9 +55,9 @@ class ZcashTransactionPool {
 
     func initTransactions() async {
         let overviews = await synchronizer.transactions
-        let pending = await synchronizer.pendingTransactions
+//        let pending = await synchronizer.pendingTransactions
 
-        pendingTransactions = await Set(zcashTransactions(pending, lastBlockHeight: 0))
+//        pendingTransactions = await Set(zcashTransactions(pending, lastBlockHeight: 0))
         confirmedTransactions = Set(await zcashTransactions(overviews, lastBlockHeight: 0))
     }
 

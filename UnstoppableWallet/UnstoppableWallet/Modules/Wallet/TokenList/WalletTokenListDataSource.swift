@@ -103,8 +103,11 @@ class WalletTokenListDataSource: NSObject {
 
         if let tableView {
             updateIndexes.forEach {
-                if let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: $0, section: 0)),
-                   let cell = tableView.cellForRow(at: originalIndexPath) as? WalletTokenCell {
+                let indexPath = IndexPath(row: $0, section: 0)
+                let originalIndexPath = delegate?
+                    .originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
+
+                if let cell = tableView.cellForRow(at: originalIndexPath) as? WalletTokenCell {
                     let hideTopSeparator = originalIndexPath.row == 0 && originalIndexPath.section != 0
                     bind(cell: cell, index: $0, hideTopSeparator: hideTopSeparator, animated: true)
                 }

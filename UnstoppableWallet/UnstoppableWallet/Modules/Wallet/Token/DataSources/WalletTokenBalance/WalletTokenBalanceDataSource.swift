@@ -1,11 +1,11 @@
 import Combine
-import Foundation
-import UIKit
 import ComponentKit
+import Foundation
 import HUD
 import MarketKit
-import ThemeKit
 import SectionsTableView
+import ThemeKit
+import UIKit
 
 class WalletTokenBalanceDataSource: NSObject {
     private let viewModel: WalletTokenBalanceViewModel
@@ -24,58 +24,58 @@ class WalletTokenBalanceDataSource: NSObject {
         super.init()
 
         viewModel.playHapticPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.playHaptic()
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.playHaptic()
+            }
+            .store(in: &cancellables)
 
         viewModel.noConnectionErrorPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { HudHelper.instance.show(banner: .noInternet) }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { HudHelper.instance.show(banner: .noInternet) }
+            .store(in: &cancellables)
 
         viewModel.openSyncErrorPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.openSyncError(wallet: $0, error: $1)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.openSyncError(wallet: $0, error: $1)
+            }
+            .store(in: &cancellables)
 
         viewModel.openReceivePublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.openReceive(wallet: $0)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.openReceive(wallet: $0)
+            }
+            .store(in: &cancellables)
 
         viewModel.openBackupRequiredPublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.openBackupRequired(wallet: $0)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.openBackupRequired(wallet: $0)
+            }
+            .store(in: &cancellables)
 
         viewModel.openCoinPagePublisher
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.openCoinPage(coin: $0)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.openCoinPage(coin: $0)
+            }
+            .store(in: &cancellables)
 
         viewModel.$viewItem
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.sync(headerViewItem: $0)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.sync(headerViewItem: $0)
+            }
+            .store(in: &cancellables)
 
         viewModel.$buttons
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    self?.sync(buttons: $0)
-                }
-                .store(in: &cancellables)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.sync(buttons: $0)
+            }
+            .store(in: &cancellables)
 
         sync(headerViewItem: viewModel.viewItem)
         sync(buttons: viewModel.buttons)
@@ -91,14 +91,20 @@ class WalletTokenBalanceDataSource: NSObject {
         }
 
         if let tableView {
-            if let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: 0, section: 0)),
-               let headerCell = tableView.cellForRow(at: originalIndexPath) as? WalletTokenBalanceCell {
+            let firstIndexPath = IndexPath(row: 0, section: 0)
+            let originalIndexPath = delegate?
+                .originalIndexPath(tableView: tableView, dataSource: self, indexPath: firstIndexPath) ?? firstIndexPath
+
+            if let headerCell = tableView.cellForRow(at: originalIndexPath) as? WalletTokenBalanceCell {
                 bind(cell: headerCell)
             }
 
             headerViewItem?.customStates.enumerated().forEach { index, _ in
-                if let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: index, section: 1)),
-                   let cell = tableView.cellForRow(at: originalIndexPath) as? WalletTokenBalanceCustomAmountCell {
+                let indexPath = IndexPath(row: index, section: 1)
+                let originalIndexPath = delegate?
+                    .originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
+
+                if let cell = tableView.cellForRow(at: originalIndexPath) as? WalletTokenBalanceCustomAmountCell {
                     bind(cell: cell, row: index)
                 }
             }
@@ -108,9 +114,14 @@ class WalletTokenBalanceDataSource: NSObject {
     private func sync(buttons: [WalletModule.Button: ButtonState]) {
         self.buttons = buttons
 
-        if let tableView,
-           let originalIndexPath = delegate?.originalIndexPath(tableView: tableView, dataSource: self, indexPath: IndexPath(row: 1, section: 0)),
-           let cell = tableView.cellForRow(at: originalIndexPath) as? BalanceButtonsCell {
+        guard let tableView else {
+            return
+        }
+        let indexPath = IndexPath(row: 1, section: 0)
+        let originalIndexPath = delegate?
+            .originalIndexPath(tableView: tableView, dataSource: self, indexPath: indexPath) ?? indexPath
+
+        if let cell = tableView.cellForRow(at: originalIndexPath) as? BalanceButtonsCell {
             bind(cell: cell)
         }
     }
@@ -136,7 +147,8 @@ class WalletTokenBalanceDataSource: NSObject {
 
     private func bind(cell: WalletTokenBalanceCustomAmountCell, row: Int) {
         guard let count = headerViewItem?.customStates.count,
-              let item = headerViewItem?.customStates.at(index: row) else {
+              let item = headerViewItem?.customStates.at(index: row)
+        else {
             return
         }
         cell.set(backgroundStyle: .externalBorderOnly, cornerRadius: .margin12, isFirst: row == 0, isLast: row == count - 1)
@@ -145,7 +157,7 @@ class WalletTokenBalanceDataSource: NSObject {
 
     private func bindActions(cell: BalanceButtonsCell) {
         switch viewModel.element {
-        case .cexAsset(let cexAsset):
+        case let .cexAsset(cexAsset):
             cell.actions[.deposit] = { [weak self] in
                 if let viewController = CexDepositModule.viewController(cexAsset: cexAsset) {
                     let navigationController = ThemeNavigationController(rootViewController: viewController)
@@ -158,7 +170,7 @@ class WalletTokenBalanceDataSource: NSObject {
                     self?.parentViewController?.present(navigationController, animated: true)
                 }
             }
-        case .wallet(let wallet):
+        case let .wallet(wallet):
             cell.actions[.send] = { [weak self] in
                 if let viewController = SendModule.controller(wallet: wallet) {
                     self?.parentViewController?.present(ThemeNavigationController(rootViewController: viewController), animated: true)
@@ -188,7 +200,6 @@ class WalletTokenBalanceDataSource: NSObject {
         parentViewController?.present(viewController, animated: true)
     }
 
-
     private func openReceive(wallet: Wallet) {
         guard let viewController = ReceiveAddressModule.viewController(wallet: wallet) else {
             return
@@ -205,34 +216,32 @@ class WalletTokenBalanceDataSource: NSObject {
 
     private func openBackupRequired(wallet: Wallet) {
         let viewController = BottomSheetModule.viewController(
-                image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
-                title: "backup_required.title".localized,
-                items: [
-                    .highlightedDescription(text: "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name))
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "backup_prompt.backup_manual".localized, imageName: "edit_24", actionType: .afterClose) { [ weak self] in
-                        guard let viewController = BackupModule.manualViewController(account: wallet.account) else {
-                            return
-                        }
+            image: .local(image: UIImage(named: "warning_2_24")?.withTintColor(.themeJacob)),
+            title: "backup_required.title".localized,
+            items: [
+                .highlightedDescription(text: "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name)),
+            ],
+            buttons: [
+                .init(style: .yellow, title: "backup_prompt.backup_manual".localized, imageName: "edit_24", actionType: .afterClose) { [weak self] in
+                    guard let viewController = BackupModule.manualViewController(account: wallet.account) else {
+                        return
+                    }
 
-                        self?.parentViewController?.present(viewController, animated: true)
-                    },
-                    .init(style: .gray, title: "backup_prompt.backup_cloud".localized, imageName: "icloud_24", actionType: .afterClose) { [ weak self] in
-                        let viewController = BackupModule.cloudViewController(account: wallet.account)
-                        self?.parentViewController?.present(viewController, animated: true)
-                    },
-                    .init(style: .transparent, title: "button.cancel".localized)
-                ]
+                    self?.parentViewController?.present(viewController, animated: true)
+                },
+                .init(style: .gray, title: "backup_prompt.backup_cloud".localized, imageName: "icloud_24", actionType: .afterClose) { [weak self] in
+                    let viewController = BackupModule.cloudViewController(account: wallet.account)
+                    self?.parentViewController?.present(viewController, animated: true)
+                },
+                .init(style: .transparent, title: "button.cancel".localized),
+            ]
         )
 
         parentViewController?.present(viewController, animated: true)
     }
-
 }
 
 extension WalletTokenBalanceDataSource: ISectionDataSource {
-
     func prepare(tableView: UITableView) {
         tableView.registerCell(forClass: WalletTokenBalanceCell.self)
         tableView.registerCell(forClass: BalanceButtonsCell.self)
@@ -240,16 +249,14 @@ extension WalletTokenBalanceDataSource: ISectionDataSource {
         tableView.registerHeaderFooter(forClass: SectionColorHeader.self)
         self.tableView = tableView
     }
-
 }
 
 extension WalletTokenBalanceDataSource: UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         1 + ((headerViewItem?.customStates.isEmpty ?? true) ? 0 : 1)
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 2
         case 1: return headerViewItem?.customStates.count ?? 0
@@ -286,12 +293,10 @@ extension WalletTokenBalanceDataSource: UITableViewDataSource {
 
         return UITableViewCell()
     }
-
 }
 
 extension WalletTokenBalanceDataSource: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? WalletTokenBalanceCell {
             bind(cell: cell)
         }
@@ -325,7 +330,7 @@ extension WalletTokenBalanceDataSource: UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0: return .margin12
         case 1: return .margin8
@@ -346,5 +351,4 @@ extension WalletTokenBalanceDataSource: UITableViewDelegate {
         default: ()
         }
     }
-
 }

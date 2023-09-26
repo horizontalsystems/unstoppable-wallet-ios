@@ -29,6 +29,12 @@ class WalletViewItemFactory {
             return .syncing(progress: progress, syncedUntil: lastBlockDate.map { DateHelper.instance.formatSyncedThroughDate(from: $0) })
         } else if case let .customSyncing(main, secondary, _) = item.state {
             return .customSyncing(main: main, secondary: secondary)
+        } else if case .stopped = item.state {
+            return .amount(viewItem: BalanceSecondaryAmountViewItem(
+                    descriptionValue: (text: "balance.stopped".localized, dimmed: false),
+                    secondaryValue: nil,
+                    diff: nil
+            ))
         } else {
             return .amount(viewItem: BalanceSecondaryAmountViewItem(
                     descriptionValue: rateValue(rateItem: item.priceItem),
