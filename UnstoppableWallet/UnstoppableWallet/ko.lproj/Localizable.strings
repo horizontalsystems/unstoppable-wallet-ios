@@ -288,6 +288,7 @@
 "balance.rate_per_coin" = "%@ 당 %@";
 "balance.syncing" = "동기화 중입니다...";
 "balance.searching" = "거래 검색 중...";
+"balance.stopped" = "Stopped";
 "balance.downloading_sapling" = "묘목 다운로드 중... %d%%";
 "balance.downloading_blocks" = "블록 다운로드";
 "balance.scanning_blocks" = "스캐닝 블록";
