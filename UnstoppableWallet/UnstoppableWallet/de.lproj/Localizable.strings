@@ -290,6 +290,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.rate_per_coin" = "%@ pro %@";
 "balance.syncing" = "Synchronisieren...";
 "balance.searching" = "Transaktionen werden gesucht...";
+"balance.stopped" = "Stopped";
 "balance.downloading_sapling" = "Setze herunterladen... %d%%";
 "balance.downloading_blocks" = "Blöcke herunterladen";
 "balance.scanning_blocks" = "Scanne Blöcke";
