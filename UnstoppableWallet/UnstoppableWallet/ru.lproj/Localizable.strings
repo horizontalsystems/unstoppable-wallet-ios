@@ -289,6 +289,7 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "balance.rate_per_coin" = "%@ for each %@";
 "balance.syncing" = "Getting in sync...";
 "balance.searching" = "On the hunt for transactions...";
+"balance.stopped" = "Stopped";
 "balance.downloading_sapling" = "Grabbing Sapling... %d%%";
 "balance.downloading_blocks" = "Fetching those Blocks";
 "balance.scanning_blocks" = "Eyeing those Blocks";
