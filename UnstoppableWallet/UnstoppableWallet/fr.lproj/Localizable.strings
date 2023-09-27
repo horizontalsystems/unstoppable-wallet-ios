@@ -1078,6 +1078,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings_security.enable_passcode" = "Enable Passcode";
 "settings_security.edit_passcode" = "Edit Passcode";
 "settings_security.disable_passcode" = "Disable Passcode";
+"settings_security.balance_auto_hide" = "Balance Auto Hide";
+"settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
 
 // Create Passcode
 
@@ -1205,8 +1207,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "appearance.balance_value" = "Valeur du solde";
 "appearance.balance_value.coin_value" = "Valeur de la pièce";
 "appearance.balance_value.fiat_value" = "Valeur Fiat";
-
-"appearance.balance_auto_hide" = "Masquer le Solde Automatiquement";
 
 // Settings -> Contacts
 
