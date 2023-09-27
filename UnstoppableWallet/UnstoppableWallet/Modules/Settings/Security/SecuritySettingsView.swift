@@ -79,7 +79,7 @@ struct SecuritySettingsView: View {
             }
             .sheet(item: $unlockReason) { reason in
                 ThemeNavigationView {
-                    UnlockModule.moduleUnlockView(biometryAllowed: false) {
+                    UnlockModule.moduleUnlockView {
                         switch reason {
                         case .changePasscode:
                             DispatchQueue.main.async {
