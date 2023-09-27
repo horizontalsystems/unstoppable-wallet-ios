@@ -320,6 +320,9 @@
 "balance.token.locked" = "잠김";
 "balance.token.locked.info.title" = "시간 자물쇠";
 "balance.token.locked.info.description" = "발송자는 이러한 자금들을 표시된 날짜에 만료가 되는 잠금 지출과 함께 보냈습니다.\n\n걱정 하지마십시오, 수신된 비트코인은 이미 귀하의 것입니다 하지만 잠금 기간이 만료될때 까지 비트코인 네트워크에서 사용하실 수 없습니다.";
+"balance.token.processing" = "처리 중";
+"balance.token.processing.info.title" = "Processing amount";
+"balance.token.processing.info.description" = "Transactions with this amount still syncing. And when they will be confirmed, this tokens will be available for spending";
 "balance.token.staked" = "판돈";
 "balance.token.staked.info.title" = "스테이크 타이틀";
 "balance.token.staked.info.description" = "측설 설명 텍스트";
