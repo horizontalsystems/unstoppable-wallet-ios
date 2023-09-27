@@ -164,13 +164,14 @@ extension WalletTokenListViewModel {
     }
 
     func didSelect(item: BalanceViewItem) {
-        if item.topViewItem.indefiniteSearchCircle || item.topViewItem.syncSpinnerProgress != nil {
+        if item.topViewItem.failedImageViewVisible {
+            onTapFailedIcon(element: item.element)
+            return
+        }
+        if !item.topViewItem.sendEnabled {
             showSyncingRelay.accept(())
             return
         }
-        if item.topViewItem.failedImageViewVisible {
-            onTapFailedIcon(element: item.element)
-        } else
         if let wallet = item.element.wallet {
             selectWalletRelay.accept(wallet)
         }

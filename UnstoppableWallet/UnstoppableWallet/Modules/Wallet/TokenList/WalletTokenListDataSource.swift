@@ -166,7 +166,7 @@ extension WalletTokenListDataSource: ISectionDataSource {
         }
 
         subscribe(disposeBag, viewModel.noConnectionErrorSignal) { HudHelper.instance.show(banner: .noInternet) }
-        subscribe(disposeBag, viewModel.showSyncingSignal) { HudHelper.instance.show(banner: .attention(string: "Wait for synchronization")) }
+        subscribe(disposeBag, viewModel.showSyncingSignal) { HudHelper.instance.show(banner: .attention(string: "wait_for_synchronization".localized)) }
         subscribe(disposeBag, viewModel.selectWalletSignal) { [weak self] in self?.onSelect(wallet: $0) }
         subscribe(disposeBag, viewModel.openSyncErrorSignal) { [weak self] in self?.openSyncError(wallet: $0, error: $1) }
 

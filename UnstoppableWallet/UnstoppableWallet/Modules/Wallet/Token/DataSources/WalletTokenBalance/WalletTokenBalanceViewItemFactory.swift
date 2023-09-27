@@ -18,12 +18,9 @@ class WalletTokenBalanceViewItemFactory {
             if item.watchAccount {
                 buttons[.address] = .enabled
             } else {
-                let sendButtonState: ButtonState
-                switch item.state {
-                case .synced: sendButtonState = .enabled
-                case .syncing, .customSyncing: sendButtonState = item.balanceData.sendBeforeSync ? .enabled : .disabled
-                case .stopped, .notSynced: sendButtonState = .disabled
-                }
+                let sendButtonState: ButtonState = item
+                    .state
+                    .spendAllowed(beforeSync: item.balanceData.sendBeforeSync) ? .enabled : .disabled
 
                 buttons[.send] = sendButtonState
                 buttons[.receive] = .enabled
