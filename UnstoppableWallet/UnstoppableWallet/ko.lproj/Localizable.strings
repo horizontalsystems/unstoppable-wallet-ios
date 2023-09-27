@@ -1076,6 +1076,8 @@
 "settings_security.enable_passcode" = "Enable Passcode";
 "settings_security.edit_passcode" = "Edit Passcode";
 "settings_security.disable_passcode" = "Disable Passcode";
+"settings_security.balance_auto_hide" = "Balance Auto Hide";
+"settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
 
 // Create Passcode
 
@@ -1203,8 +1205,6 @@
 "appearance.balance_value" = "균형 가치";
 "appearance.balance_value.coin_value" = "코인 가치";
 "appearance.balance_value.fiat_value" = "법정 가치";
-
-"appearance.balance_auto_hide" = "밸런스 자동 숨기기";
 
 // Settings -> Contacts
 
