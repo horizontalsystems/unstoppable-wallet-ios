@@ -1,3 +1,4 @@
+import LanguageKit
 import SwiftUI
 
 struct PasscodeView: View {
@@ -63,7 +64,15 @@ struct PasscodeView: View {
                         .transition(.opacity.animation(.easeOut))
                         .id(errorText)
                 case let .locked(unlockDate):
-                    Text("unlock.disabled_until".localized("\(unlockDate)"))
+                    VStack(spacing: .margin16) {
+                        Image("lock_48")
+                            .foregroundColor(.themeGray)
+                        Text("unlock.disabled_until".localized(DateFormatter.cachedFormatter(format: "\(LanguageHourFormatter.hourFormat):mm:ss").string(from: unlockDate)))
+                            .foregroundColor(.themeGray)
+                            .font(.themeSubhead2)
+                            .padding(.horizontal, .margin48)
+                            .multilineTextAlignment(.center)
+                    }
                 }
             }
             .frame(maxHeight: .infinity)
@@ -72,6 +81,7 @@ struct PasscodeView: View {
                 NumPadView(
                     digits: $digits,
                     biometryType: $biometryType,
+                    disabled: Binding(get: { lockoutState.isLocked }, set: { _ in }),
                     onTapDigit: { digit in
                         guard passcode.count < maxDigits else {
                             return
@@ -92,6 +102,7 @@ struct PasscodeView: View {
                         Text(randomized ? "unlock.regular_mode".localized : "unlock.random_mode".localized)
                     }
                     .buttonStyle(SecondaryButtonStyle(style: .default))
+                    .disabled(lockoutState.isLocked)
                 }
             }
             .padding(.bottom, .margin32)
