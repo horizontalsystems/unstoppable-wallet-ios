@@ -15,7 +15,7 @@ struct UnlockModule {
         return UnlockView(viewModel: viewModel, autoDismiss: autoDismiss)
     }
 
-    static func moduleUnlockView(biometryAllowed: Bool = true, onUnlock: @escaping () -> Void) -> some View {
+    static func moduleUnlockView(biometryAllowed: Bool = false, onUnlock: @escaping () -> Void) -> some View {
         let viewModel = ModuleUnlockViewModel(
             passcodeManager: App.shared.passcodeManager,
             biometryManager: App.shared.biometryManager,
