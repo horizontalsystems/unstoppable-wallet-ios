@@ -1,6 +1,7 @@
 import Combine
 import HsExtensions
 import LocalAuthentication
+import UIKit
 
 class BaseUnlockViewModel: ObservableObject {
     let passcodeLength = 6
@@ -88,6 +89,7 @@ class BaseUnlockViewModel: ObservableObject {
         } else {
             passcode = ""
             lockoutManager.didFailUnlock()
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
     }
 
