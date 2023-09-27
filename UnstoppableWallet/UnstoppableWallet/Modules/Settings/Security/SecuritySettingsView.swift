@@ -54,6 +54,19 @@ struct SecuritySettingsView: View {
                         }
                     }
                 }
+
+                VStack(spacing: 0) {
+                    ListSection {
+                        ListRow {
+                            Image("eye_off_24").themeIcon()
+                            Toggle(isOn: $viewModel.balanceAutoHide) {
+                                Text("settings_security.balance_auto_hide".localized).themeBody()
+                            }
+                        }
+                    }
+
+                    ListSectionFooter(text: "settings_security.balance_auto_hide.description".localized)
+                }
             }
             .sheet(item: $createPasscodeReason) { reason in
                 CreatePasscodeModule.createPasscodeView(
