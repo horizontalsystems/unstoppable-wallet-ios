@@ -94,6 +94,9 @@
 
 "selector.any" = "Cualquier";
 
+"face_id" = "Face ID";
+"touch_id" = "Touch ID";
+
 // Access Camera
 
 "access_camera.message" = "%@ necesita acceso a tu cámara para escanear el código QR.
@@ -1072,11 +1075,50 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Settings -> Security
 
 "settings_security.title" = "Seguridad";
-"settings_security.passcode" = "Código de acceso";
-"settings_security.change_pin" = "Editar el código ";
-"settings_security.touch_id" = "Identificación táctil";
-"settings_security.face_id" = "Identificación de caras";
-"settings_security.blockchain_settings" = "Configuración de Blockchain";
+"settings_security.enable_passcode" = "Enable Passcode";
+"settings_security.edit_passcode" = "Edit Passcode";
+"settings_security.disable_passcode" = "Disable Passcode";
+
+// Create Passcode
+
+"create_passcode.title" = "Create Passcode";
+"create_passcode.description" = "Your passcode will be used to unlock your wallet";
+"create_passcode.description.biometry" = "Set a passcode to enable %@";
+"create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
+"create_passcode.confirm_passcode" = "Confirm passcode";
+
+// Create Duress Passcode
+
+"create_duress_passcode.title" = "Duress Passcode";
+"create_duress_passcode.description" = "Set a passcode for Duress Mode";
+"create_duress_passcode.confirm_passcode" = "Confirm passcode";
+
+// Edit Passcode
+
+"edit_passcode.title" = "Edit Passcode";
+"edit_passcode.enter_new_passcode" = "Enter new passcode";
+"edit_passcode.confirm_new_passcode" = "Confirm new passcode";
+
+// Edit Duress Passcode
+
+"edit_duress_passcode.title" = "Edit Duress Passcode";
+"edit_duress_passcode.enter_new_passcode" = "Enter new passcode for Duress Mode";
+"edit_duress_passcode.confirm_new_passcode" = "Confirm new passcode";
+
+// Set Passcode
+
+"set_passcode.invalid_confirmation" = "Invalid Confirmation";
+
+// Unlock
+
+"unlock.title" = "Unlock";
+"unlock.passcode" = "Passcode";
+"unlock.biometry_reason" = "Unlock wallet";
+"unlock.attempts_left" = "Attempts left: %@";
+"unlock.disabled_until" = "Disabled until: %@";
+"unlock.regular_mode" = "Regular Mode";
+"unlock.random_mode" = "Random Mode";
+
 "security_settings.delete_alert_button" = "Eliminar del teléfono";
 
 "btc_blockchain_settings.restore_source" = "Restaurar Fuente";
@@ -1224,25 +1266,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "contacts.settings.alert.description" = "Por favor, comprueba que iCloud Almacenamiento está habilitado en tu dispositivo.";
 
 "contacts.settings.alert_error.title" = "Error de iCloud";
-
-// Set PIN
-
-"set_pin.title" = "Código de acceso";
-"set_pin.info" = "Su código servirá para abrir su monedero y enviar dinero";
-"set_pin.wrong_confirmation" = "El código de acceso no coincide. Inténtelo de nuevo";
-
-// Edit PIN
-
-"edit_pin.title" = "Editar el código ";
-"edit_pin.unlock_info" = "Código actual";
-"edit_pin.new_pin_info" = "Nuevo código de acceso";
-
-// Unlock PIN
-
-"unlock_pin.info" = "Código de acceso";
-"unlock_pin.cant_save_pin" = "¡Ups! ¡No podemos guardar su código, póngase en contacto con nosotros lo antes posible!";
-"unlock_pin.blocked_until" = "Inhabilitado hasta: %@";
-
 
 // Key Types
 
