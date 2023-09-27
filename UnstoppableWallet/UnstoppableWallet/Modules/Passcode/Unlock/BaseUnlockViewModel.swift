@@ -62,7 +62,10 @@ class BaseUnlockViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         lockoutManager.$lockoutState
-            .sink { [weak self] in self?.lockoutState = $0 }
+            .sink { [weak self] in
+                self?.lockoutState = $0
+                self?.syncBiometryType()
+            }
             .store(in: &cancellables)
 
         syncErrorText()
@@ -70,7 +73,7 @@ class BaseUnlockViewModel: ObservableObject {
     }
 
     private func syncBiometryType() {
-        resolvedBiometryType = biometryEnabled && biometryAllowed ? biometryType : nil
+        resolvedBiometryType = biometryEnabled && biometryAllowed && !lockoutState.isAttempted ? biometryType : nil
     }
 
     func isValid(passcode _: String) -> Bool { false }

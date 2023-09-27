@@ -8,6 +8,7 @@ class LockoutManager {
     private let maxAttempts = 5
 
     private var secureStorage: ISecureStorage
+    private var timer: Timer?
 
     @PostPublished private(set) var lockoutState: LockoutState = .unlocked(attemptsLeft: 0, maxAttempts: 0)
 
@@ -52,8 +53,9 @@ class LockoutManager {
 }
 
 extension LockoutManager {
-
     func syncState() {
+        timer?.invalidate()
+
         if unlockAttempts < maxAttempts {
             lockoutState = .unlocked(attemptsLeft: maxAttempts - unlockAttempts, maxAttempts: maxAttempts)
         } else {
@@ -63,7 +65,11 @@ extension LockoutManager {
             if timePast > lockoutInterval {
                 lockoutState = .unlocked(attemptsLeft: 1, maxAttempts: maxAttempts)
             } else {
-                lockoutState = .locked(unlockDate: Date().addingTimeInterval(lockoutInterval - timePast))
+                let timeInterval = lockoutInterval - timePast
+                lockoutState = .locked(unlockDate: Date().addingTimeInterval(timeInterval))
+                timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { [weak self] _ in
+                    self?.syncState()
+                }
             }
         }
     }
@@ -83,4 +89,18 @@ extension LockoutManager {
 enum LockoutState {
     case unlocked(attemptsLeft: Int, maxAttempts: Int)
     case locked(unlockDate: Date)
+
+    var isLocked: Bool {
+        switch self {
+        case .unlocked: return false
+        case .locked: return true
+        }
+    }
+
+    var isAttempted: Bool {
+        switch self {
+        case let .unlocked(attemptsLeft, maxAttempts): return attemptsLeft != maxAttempts
+        case .locked: return true
+        }
+    }
 }
