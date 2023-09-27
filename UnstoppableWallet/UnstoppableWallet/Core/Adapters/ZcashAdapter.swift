@@ -66,17 +66,12 @@ class ZcashAdapter {
     private(set) var syncing: Bool = true
 
     private func defaultFee(network: ZcashNetwork, height: Int? = nil) -> Zatoshi {
-        let fee: Zatoshi
-        if let lastBlockHeight = height {
-            fee = network.constants.defaultFee(for: lastBlockHeight)
-        } else {
-            fee = network.constants.defaultFee()
-        }
-        return fee
+        network.constants.defaultFee(for: height ?? BlockHeight.max)
     }
 
     private func defaultFeeDecimal(network: ZcashNetwork, height: Int? = nil) -> Decimal {
-        defaultFee(network: network, height: height).decimalValue.decimalValue
+        // todo update fee settings
+        fee// defaultFee(network: network, height: height).decimalValue.decimalValue
     }
 
     init(wallet: Wallet, restoreSettings: RestoreSettings) throws {
@@ -87,7 +82,9 @@ class ZcashAdapter {
         }
 
         network = ZcashNetworkBuilder.network(for: .mainnet)
-        fee = network.constants.defaultFee().decimalValue.decimalValue
+
+        // todo: update fee settings
+        fee = 10_000//network.constants.defaultFee().decimalValue.decimalValue
 
         token = wallet.token
         transactionSource = wallet.transactionSource
@@ -190,7 +187,9 @@ class ZcashAdapter {
                             available: shieldedVerified
                     )
                 )
-                self?.lastBlockHeight = try await synchronizer.latestHeight()
+                let height = try await synchronizer.latestHeight()
+                self?.lastBlockHeight = height
+
                 self?.lastBlockUpdatedSubject.onNext(())
 
                 self?.finishPrepare()
@@ -828,7 +827,7 @@ enum ZCashAdapterState: Equatable {
         case let .downloadingSapling(progress):
             return .customSyncing(main: "balance.downloading_sapling".localized(progress), secondary: nil, progress: progress)
         case let .downloadingBlocks(progress, _):
-            let percentValue = ValueFormatter.instance.format(percentValue: Decimal(Double(progress)), showSign: false)
+            let percentValue = ValueFormatter.instance.format(percentValue: Decimal(Double(progress * 100)), showSign: false)
             return .customSyncing(main: "balance.downloading_blocks".localized, secondary: percentValue, progress: Int(progress * 100))
         case let .scanningBlocks(number, lastBlock):
             return .customSyncing(main: "Scanning Blocks", secondary: "\(number)/\(lastBlock)", progress: nil)

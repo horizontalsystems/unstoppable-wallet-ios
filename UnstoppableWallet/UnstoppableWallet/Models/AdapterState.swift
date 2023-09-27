@@ -21,6 +21,14 @@ enum AdapterState {
         }
     }
 
+    func spendAllowed(beforeSync: Bool) -> Bool {
+        switch self {
+        case .synced: return true
+        case .syncing, .customSyncing: return beforeSync ? true : false
+        case .stopped, .notSynced: return false
+        }
+    }
+
 }
 
 extension AdapterState: Equatable {
