@@ -669,20 +669,20 @@ class StorageMigrator {
                 try record.insert(db)
             }
 
-            // EnabledWalletCache
+            // EnabledWalletCache_v_0_36
 
             if try db.tableExists("enabled_wallet_caches") {
                 try db.drop(table: "enabled_wallet_caches")
             }
 
-            try db.create(table: EnabledWalletCache.databaseTableName) { t in
-                t.column(EnabledWalletCache.Columns.tokenQueryId.name, .text).notNull()
+            try db.create(table: EnabledWalletCache_v_0_36.databaseTableName) { t in
+                t.column(EnabledWalletCache_v_0_36.Columns.tokenQueryId.name, .text).notNull()
                 t.column("coinSettingsId", .text).notNull()
-                t.column(EnabledWalletCache.Columns.accountId.name, .text).notNull()
-                t.column(EnabledWalletCache.Columns.balance.name, .text).notNull()
-                t.column(EnabledWalletCache.Columns.balanceLocked.name, .text).notNull()
+                t.column(EnabledWalletCache_v_0_36.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWalletCache_v_0_36.Columns.balance.name, .text).notNull()
+                t.column(EnabledWalletCache_v_0_36.Columns.balanceLocked.name, .text).notNull()
 
-                t.primaryKey([EnabledWalletCache.Columns.tokenQueryId.name, EnabledWalletCache.Columns.accountId.name], onConflict: .replace)
+                t.primaryKey([EnabledWalletCache_v_0_36.Columns.tokenQueryId.name, EnabledWalletCache_v_0_36.Columns.accountId.name], onConflict: .replace)
             }
         }
 
@@ -730,14 +730,14 @@ class StorageMigrator {
         }
 
         migrator.registerMigration("Update EnabledWallet entities") { db in
-            try db.drop(table: EnabledWalletCache.databaseTableName)
-            try db.create(table: EnabledWalletCache.databaseTableName) { t in
-                t.column(EnabledWalletCache.Columns.tokenQueryId.name, .text).notNull()
-                t.column(EnabledWalletCache.Columns.accountId.name, .text).notNull()
-                t.column(EnabledWalletCache.Columns.balance.name, .text).notNull()
-                t.column(EnabledWalletCache.Columns.balanceLocked.name, .text).notNull()
+            try db.drop(table: EnabledWalletCache_v_0_36.databaseTableName)
+            try db.create(table: EnabledWalletCache_v_0_36.databaseTableName) { t in
+                t.column(EnabledWalletCache_v_0_36.Columns.tokenQueryId.name, .text).notNull()
+                t.column(EnabledWalletCache_v_0_36.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWalletCache_v_0_36.Columns.balance.name, .text).notNull()
+                t.column(EnabledWalletCache_v_0_36.Columns.balanceLocked.name, .text).notNull()
 
-                t.primaryKey([EnabledWalletCache.Columns.tokenQueryId.name, EnabledWalletCache.Columns.accountId.name], onConflict: .replace)
+                t.primaryKey([EnabledWalletCache_v_0_36.Columns.tokenQueryId.name, EnabledWalletCache_v_0_36.Columns.accountId.name], onConflict: .replace)
             }
 
             var enabledWallets: [EnabledWallet] = []
@@ -770,6 +770,17 @@ class StorageMigrator {
 
             for wallet in enabledWallets {
                 try wallet.insert(db)
+            }
+        }
+
+        migrator.registerMigration("Update EnabledWalletCache fields") { db in
+            try db.drop(table: EnabledWalletCache_v_0_36.databaseTableName)
+            try db.create(table: EnabledWalletCache.databaseTableName) { t in
+                t.column(EnabledWalletCache.Columns.tokenQueryId.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.balances.name, .text).notNull()
+
+                t.primaryKey([EnabledWalletCache.Columns.tokenQueryId.name, EnabledWalletCache_v_0_36.Columns.accountId.name], onConflict: .replace)
             }
         }
 

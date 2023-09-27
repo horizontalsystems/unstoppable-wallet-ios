@@ -52,7 +52,7 @@ protocol ISortableWalletItem {
 extension WalletService.Item: ISortableWalletItem {
 
     var balance: Decimal {
-        balanceData.balance
+        balanceData.available
     }
 
     var name: String {
@@ -68,7 +68,7 @@ extension WalletService.Item: ISortableWalletItem {
 extension WalletTokenListService.Item: ISortableWalletItem {
 
     var balance: Decimal {
-        balanceData.balance
+        balanceData.available
     }
 
     var name: String {

@@ -1,5 +1,5 @@
-import Foundation
 import CurrencyKit
+import Foundation
 import MarketKit
 
 class WalletTokenBalanceViewItemFactory {
@@ -14,11 +14,16 @@ class WalletTokenBalanceViewItemFactory {
         var buttons = [WalletModule.Button: ButtonState]()
 
         switch item.element {
-        case .wallet(let wallet):
+        case let .wallet(wallet):
             if item.watchAccount {
                 buttons[.address] = .enabled
             } else {
-                let sendButtonState: ButtonState = item.state == .synced ? .enabled : .disabled
+                let sendButtonState: ButtonState
+                switch item.state {
+                case .synced: sendButtonState = .enabled
+                case .syncing, .customSyncing: sendButtonState = item.balanceData.sendBeforeSync ? .enabled : .disabled
+                case .stopped, .notSynced: sendButtonState = .disabled
+                }
 
                 buttons[.send] = sendButtonState
                 buttons[.receive] = .enabled
@@ -27,7 +32,7 @@ class WalletTokenBalanceViewItemFactory {
                     buttons[.swap] = sendButtonState
                 }
             }
-        case .cexAsset(let cexAsset):
+        case let .cexAsset(cexAsset):
             buttons[.withdraw] = cexAsset.withdrawEnabled ? .enabled : .disabled
             buttons[.deposit] = cexAsset.depositEnabled ? .enabled : .disabled
         }
@@ -41,21 +46,21 @@ class WalletTokenBalanceViewItemFactory {
         let state = item.state
 
         return WalletTokenBalanceViewModel.ViewItem(
-                isMainNet: item.isMainNet,
-                iconUrlString: iconUrlString(coin: item.element.coin, state: state),
-                placeholderIconName: item.element.wallet?.token.placeholderImageName ?? "placeholder_circle_32",
-                syncSpinnerProgress: syncSpinnerProgress(state: state),
-                indefiniteSearchCircle: indefiniteSearchCircle(state: state),
-                failedImageViewVisible: failedImageViewVisible(state: state),
-                balanceValue: balanceValue(item: item, balanceHidden: balanceHidden),
-                descriptionValue: descriptionValue(item: item, balanceHidden: balanceHidden),
-                customStates: customStates(item: item, balanceHidden: balanceHidden)
+            isMainNet: item.isMainNet,
+            iconUrlString: iconUrlString(coin: item.element.coin, state: state),
+            placeholderIconName: item.element.wallet?.token.placeholderImageName ?? "placeholder_circle_32",
+            syncSpinnerProgress: syncSpinnerProgress(state: state),
+            indefiniteSearchCircle: indefiniteSearchCircle(state: state),
+            failedImageViewVisible: failedImageViewVisible(state: state),
+            balanceValue: balanceValue(item: item, balanceHidden: balanceHidden),
+            descriptionValue: descriptionValue(item: item, balanceHidden: balanceHidden),
+            customStates: customStates(item: item, balanceHidden: balanceHidden)
         )
     }
 
     private func descriptionValue(item: WalletTokenBalanceService.BalanceItem, balanceHidden: Bool) -> (text: String?, dimmed: Bool) {
         if case let .syncing(progress, lastBlockDate) = item.state {
-            var text: String = ""
+            var text = ""
             if let progress = progress {
                 text = "balance.syncing_percent".localized("\(progress)%")
             } else {
@@ -86,7 +91,7 @@ class WalletTokenBalanceViewItemFactory {
 
     private func syncSpinnerProgress(state: AdapterState) -> Int? {
         switch state {
-        case let .syncing(progress, _), .customSyncing(_, _, let progress):
+        case let .syncing(progress, _), let .customSyncing(_, _, progress):
             return progress.map { max(minimumProgress, $0) } ?? infiniteProgress
         default: return nil
         }
@@ -116,8 +121,8 @@ class WalletTokenBalanceViewItemFactory {
 
     private func coinValue(value: Decimal, decimalCount: Int, symbol: String? = nil, balanceHidden: Bool, state: AdapterState) -> (text: String?, dimmed: Bool) {
         (
-                text: balanceHidden ? "*****" : ValueFormatter.instance.formatFull(value: value, decimalCount: decimalCount, symbol: symbol),
-                dimmed: state != .synced
+            text: balanceHidden ? "*****" : ValueFormatter.instance.formatFull(value: value, decimalCount: decimalCount, symbol: symbol),
+            dimmed: state != .synced
         )
     }
 
@@ -130,66 +135,22 @@ class WalletTokenBalanceViewItemFactory {
         let currencyValue = CurrencyValue(currency: price.currency, value: value * price.value)
 
         return (
-                text: balanceHidden ? "*****" : ValueFormatter.instance.formatFull(currencyValue: currencyValue),
-                dimmed: state != .synced || priceItem.expired
+            text: balanceHidden ? "*****" : ValueFormatter.instance.formatFull(currencyValue: currencyValue),
+            dimmed: state != .synced || priceItem.expired
         )
     }
 
     private func customStates(item: WalletTokenBalanceService.BalanceItem, balanceHidden: Bool) -> [WalletTokenBalanceViewModel.BalanceCustomStateViewItem] {
-        let stateItems = [
-            CustomStateItem(
-                    title: "balance.token.locked".localized,
-                    amount: item.balanceData.locked,
-                    infoTitle: "balance.token.locked.info.title".localized,
-                    infoDescription: "balance.token.locked.info.description".localized
-            ),
-            CustomStateItem(
-                    title: "balance.token.staked".localized,
-                    amount: item.balanceData.staked,
-                    infoTitle: "balance.token.staked.info.title".localized,
-                    infoDescription: "balance.token.staked.info.description".localized
-            ),
-            CustomStateItem(
-                    title: "balance.token.frozen".localized,
-                    amount: item.balanceData.frozen,
-                    infoTitle: "balance.token.frozen.info.title".localized,
-                    infoDescription: "balance.token.frozen.info.description".localized
-            ),
-        ]
-
-        return stateItems
-                .compactMap {
-                    lockedAmountViewItem(
-                            customStateItem: $0,
-                            item: item,
-                            balanceHidden: balanceHidden
-                    )
-                }
+        item.balanceData
+            .customStates
+            .map {
+                let value = coinValue(value: $0.value, decimalCount: item.element.decimals, symbol: item.element.coin?.code, balanceHidden: balanceHidden, state: item.state)
+                return .init(
+                    title: $0.title,
+                    amountValue: value,
+                    infoTitle: $0.infoTitle,
+                    infoDescription: $0.infoDescription
+                )
+            }
     }
-
-    private func lockedAmountViewItem(customStateItem: CustomStateItem, item: WalletTokenBalanceService.BalanceItem, balanceHidden: Bool) -> WalletTokenBalanceViewModel.BalanceCustomStateViewItem? {
-        guard customStateItem.amount > 0 else {
-            return nil
-        }
-
-        let value = coinValue(value: customStateItem.amount, decimalCount: item.element.decimals, symbol: item.element.coin?.code, balanceHidden: balanceHidden, state: item.state)
-        return .init(
-                title: customStateItem.title,
-                amountValue: value,
-                infoTitle: customStateItem.infoTitle,
-                infoDescription: customStateItem.infoDescription
-        )
-    }
-
-}
-
-extension WalletTokenBalanceViewItemFactory {
-
-    private struct CustomStateItem {
-        let title: String
-        let amount: Decimal
-        let infoTitle: String
-        let infoDescription: String
-    }
-
 }
