@@ -117,7 +117,7 @@ extension HudHelper {
 
         var showingTime: TimeInterval? {
             switch self {
-            case .waitingForSession, .disconnectingWalletConnect, .enabling: return nil
+            case .waitingForSession, .disconnectingWalletConnect, .sending, .enabling: return nil
             default: return 2
             }
         }

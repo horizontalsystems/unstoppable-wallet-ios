@@ -16,7 +16,7 @@ class ZcashTransactionWrapper {
     let memo: String?
     let failed: Bool
 
-    init?(tx: ZcashTransaction.Overview, memo: Memo?, recipient: TransactionRecipient?, lastBlockHeight: Int) {
+    init?(tx: ZcashTransaction.Overview, memo: String?, recipient: TransactionRecipient?, lastBlockHeight: Int) {
         raw = tx.raw
         transactionHash = tx.rawID.hs.reversedHex
         transactionIndex = tx.index ?? 0
@@ -32,7 +32,7 @@ class ZcashTransactionWrapper {
         timestamp = failed ? 0 : (tx.blockTime ?? Date().timeIntervalSince1970) // need this to update pending transactions and shows on transaction tab
         value = tx.value
         fee = tx.fee
-        self.memo = memo.flatMap { $0.toString() }
+        self.memo = memo
     }
 
 }

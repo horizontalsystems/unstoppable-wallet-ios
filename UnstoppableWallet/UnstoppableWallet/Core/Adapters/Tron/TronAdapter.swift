@@ -55,7 +55,7 @@ extension TronAdapter: IBalanceAdapter {
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
         tronKit.trxBalancePublisher.asObservable().map { [weak self] in
-            self?.balanceData(balance: $0) ?? BalanceData(balance: 0)
+            self?.balanceData(balance: $0) ?? BalanceData(available: 0)
         }
     }
 

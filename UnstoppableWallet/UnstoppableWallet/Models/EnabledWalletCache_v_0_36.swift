@@ -1,26 +1,26 @@
 import Foundation
 import GRDB
 
-class EnabledWalletCache: Record {
+class EnabledWalletCache_v_0_36: Record {
     let tokenQueryId: String
     let accountId: String
+    let balance: Decimal
+    let balanceLocked: Decimal
     let balances: Data
 
     init(wallet: Wallet, balanceData: BalanceData) {
         tokenQueryId = wallet.token.tokenQuery.id
         accountId = wallet.account.id
-        balances = balanceData.encoded
+        balance = balanceData.available
+        balanceLocked = 0
+
+        balances = Data()
 
         super.init()
     }
 
     var balanceData: BalanceData {
-        do {
-            let balanceData = try BalanceData.instance(data: balances)
-            return balanceData
-        } catch {
-            return BalanceData(available: 0)
-        }
+        BalanceData(available: balance)
     }
 
     override class var databaseTableName: String {
@@ -28,13 +28,15 @@ class EnabledWalletCache: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case tokenQueryId, accountId, balances
+        case tokenQueryId, accountId, balance, balanceLocked // todo: migration - remove coinSettingsId
     }
 
     required init(row: Row) {
         tokenQueryId = row[Columns.tokenQueryId]
         accountId = row[Columns.accountId]
-        balances = row[Columns.balances]
+        balance = row[Columns.balance]
+        balanceLocked = row[Columns.balanceLocked]
+        balances = Data()
 
         super.init(row: row)
     }
@@ -42,7 +44,8 @@ class EnabledWalletCache: Record {
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.tokenQueryId] = tokenQueryId
         container[Columns.accountId] = accountId
-        container[Columns.balances] = balances
+        container[Columns.balance] = balance
+        container[Columns.balanceLocked] = balanceLocked
     }
 
 }

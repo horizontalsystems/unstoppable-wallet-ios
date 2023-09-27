@@ -29,7 +29,7 @@ class RateAppManager {
                 return false
             }
 
-            return adapter.balanceData.balance > 0
+            return adapter.balanceData.available > 0
         }
 
         guard hasBalance else {

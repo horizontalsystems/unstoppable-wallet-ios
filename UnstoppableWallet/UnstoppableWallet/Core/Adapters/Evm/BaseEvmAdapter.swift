@@ -44,7 +44,7 @@ class BaseEvmAdapter {
     }
 
     func balanceData(balance: BigUInt?) -> BalanceData {
-        BalanceData(balance: balanceDecimal(kitBalance: balance, decimals: decimals))
+        BalanceData(available: balanceDecimal(kitBalance: balance, decimals: decimals))
     }
 
 }

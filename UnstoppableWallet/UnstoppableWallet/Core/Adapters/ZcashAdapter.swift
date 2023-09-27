@@ -45,15 +45,6 @@ class ZcashAdapter {
     private var started = false
     private var lastBlockHeight: Int = 0
 
-    private var waitForStart: Bool = false {
-        didSet {
-            print("Change waitForStart to \(waitForStart) : zAddress : \(zAddress != nil)")
-            if waitForStart, zAddress != nil { // already prepared and has address
-                syncMain()
-            }
-        }
-    }
-
     private var synchronizerState: SynchronizerState? {
         didSet {
             lastBlockUpdatedSubject.onNext(())
@@ -89,7 +80,7 @@ class ZcashAdapter {
     }
 
     init(wallet: Wallet, restoreSettings: RestoreSettings) throws {
-        logger = HsToolKit.Logger(minLogLevel: .debug) // App.shared.logger.scoped(with: "ZCashKit") //
+        logger = App.shared.logger.scoped(with: "ZCashKit") // HsToolKit.Logger(minLogLevel: .debug) //
 
         guard let seed = wallet.account.type.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
@@ -141,7 +132,6 @@ class ZcashAdapter {
 
         // subscribe on background and events from sapling downloader
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        prepare(seedData: seedData, walletBirthday: birthday, for: initMode)
     }
 
     private func prepare(seedData: [UInt8], walletBirthday: BlockHeight, for initMode: WalletInitMode) {
@@ -195,9 +185,9 @@ class ZcashAdapter {
                 let shielded = await (try? synchronizer.getShieldedBalance(accountIndex: 0).decimalValue.decimalValue) ?? 0
                 let shieldedVerified = await (try? synchronizer.getShieldedVerifiedBalance(accountIndex: 0).decimalValue.decimalValue) ?? 0
                 self?.balanceSubject.onNext(
-                    BalanceData(
-                        balance: shieldedVerified,
-                        locked: shielded - shieldedVerified
+                    VerifiedBalanceData(
+                            fullBalance: shielded,
+                            available: shieldedVerified
                     )
                 )
                 self?.lastBlockHeight = try await synchronizer.latestHeight()
@@ -218,9 +208,26 @@ class ZcashAdapter {
     private func finishPrepare() {
         state = .idle
 
-        if waitForStart {
-            logger?.log(level: .debug, message: "Start kit after finish preparing!")
-            start()
+        logger?.log(level: .debug, message: "Start kit after finish preparing!")
+        startSynchronizer()
+    }
+
+    private func startSynchronizer() {
+        guard !state.isPrepairing else { // postpone start library until preparing will finish
+            logger?.log(level: .debug, message: "Can't start because preparing!")
+            return
+        }
+
+        if zAddress == nil { // else we need to try prepare library again
+            logger?.log(level: .debug, message: "No address, try to prepare kit again!")
+            prepare(seedData: seedData, walletBirthday: birthday, for: initMode)
+
+            return
+        }
+
+        if saplingDataExist() {
+            logger?.log(level: .debug, message: "Start syncing kit!")
+            syncMain()
         }
     }
 
@@ -298,7 +305,7 @@ class ZcashAdapter {
             transactions.forEach { overview in
                 logger?.log(level: .debug, message: "tx: v =\(overview.value.decimalValue.decimalString) : fee = \(overview.fee?.decimalString() ?? "N/A") : height = \(overview.minedHeight?.description ?? "N/A")")
             }
-            let lastBlockHeight = inRange.upperBound
+            let lastBlockHeight = max(inRange.upperBound, lastBlockHeight)
             Task {
                 let newTxs = await transactionPool?.sync(transactions: transactions, lastBlockHeight: lastBlockHeight) ?? []
                 transactionRecordsSubject.onNext(newTxs.map {
@@ -474,16 +481,12 @@ class ZcashAdapter {
 
     private var _balanceData: BalanceData {
         guard let synchronizerState = synchronizerState else {
-            return BalanceData(balance: 0)
+            return BalanceData(available: 0)
         }
 
-        let verifiedBalance: Zatoshi = synchronizerState.shieldedBalance.verified
-        let balance: Zatoshi = synchronizerState.shieldedBalance.total
-        let diff = balance - verifiedBalance
-
-        return BalanceData(
-            balance: verifiedBalance.decimalValue.decimalValue,
-            locked: diff.decimalValue.decimalValue
+        return VerifiedBalanceData(
+            fullBalance: synchronizerState.shieldedBalance.total.decimalValue.decimalValue,
+            available: synchronizerState.shieldedBalance.verified.decimalValue.decimalValue
         )
     }
 
@@ -571,24 +574,7 @@ extension ZcashAdapter: IAdapter {
     }
 
     func start() {
-        guard !state.isPrepairing else { // postpone start library until preparing will finish
-            logger?.log(level: .debug, message: "Can't start because preparing!")
-            waitForStart = true
-            return
-        }
-
-        if zAddress == nil { // else we need to try prepare library again
-            logger?.log(level: .debug, message: "No address, try to prepare kit again!")
-            prepare(seedData: seedData, walletBirthday: birthday, for: initMode)
-
-            return
-        }
-
-        waitForStart = false // if we has address just start syncing library or downloading sapling data
-        if saplingDataExist() {
-            logger?.log(level: .debug, message: "Start syncing kit!")
-            syncMain()
-        }
+        prepare(seedData: seedData, walletBirthday: birthday, for: initMode)
     }
 
     func stop() {
@@ -597,7 +583,7 @@ extension ZcashAdapter: IAdapter {
     }
 
     func refresh() {
-        start()
+        startSynchronizer()
     }
 
     private func syncMain() {
@@ -632,7 +618,7 @@ extension ZcashAdapter: IAdapter {
             balanceState = """
             shielded balance
               total:  \(balanceData.balanceTotal.description)
-            verified:  \(balanceData.balance)
+            verified:  \(balanceData.available)
             transparent balance
                  total: \(String(describing: status.transparentBalance.total))
               verified: \(String(describing: status.transparentBalance.verified))
@@ -726,7 +712,7 @@ extension ZcashAdapter: ISendZcashAdapter {
     }
 
     var availableBalance: Decimal {
-        max(0, balanceData.balance - fee) // TODO: check
+        max(0, balanceData.available - fee)
     }
 
     func validate(address: String) throws -> AddressType {
