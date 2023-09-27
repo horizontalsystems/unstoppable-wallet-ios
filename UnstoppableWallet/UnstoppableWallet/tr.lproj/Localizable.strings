@@ -1078,6 +1078,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings_security.enable_passcode" = "Enable Passcode";
 "settings_security.edit_passcode" = "Edit Passcode";
 "settings_security.disable_passcode" = "Disable Passcode";
+"settings_security.balance_auto_hide" = "Balance Auto Hide";
+"settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
 
 // Create Passcode
 
@@ -1205,8 +1207,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "appearance.balance_value" = "Bakiye değeri";
 "appearance.balance_value.coin_value" = "Para değeri";
 "appearance.balance_value.fiat_value" = "Fiat Değeri";
-
-"appearance.balance_auto_hide" = "Denge Otomatik Gizleme";
 
 // Settings -> Contacts
 
