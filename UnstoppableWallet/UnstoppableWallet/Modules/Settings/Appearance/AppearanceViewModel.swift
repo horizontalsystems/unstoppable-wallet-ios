@@ -8,7 +8,6 @@ class AppearanceViewModel: ObservableObject {
     private let appIconManager: AppIconManager
     private let balancePrimaryValueManager: BalancePrimaryValueManager
     private let balanceConversionManager: BalanceConversionManager
-    private let balanceHiddenManager: BalanceHiddenManager
 
     let themeModes: [ThemeMode] = [.system, .dark, .light]
     let conversionTokens: [Token]
@@ -43,25 +42,18 @@ class AppearanceViewModel: ObservableObject {
         }
     }
 
-    @Published var balanceAutoHide: Bool {
-        didSet {
-            balanceHiddenManager.set(balanceAutoHide: balanceAutoHide)
-        }
-    }
-
     @Published var appIcon: AppIcon {
         didSet {
             appIconManager.appIcon = appIcon
         }
     }
 
-    init(themeManager: ThemeManager, launchScreenManager: LaunchScreenManager, appIconManager: AppIconManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceConversionManager: BalanceConversionManager, balanceHiddenManager: BalanceHiddenManager) {
+    init(themeManager: ThemeManager, launchScreenManager: LaunchScreenManager, appIconManager: AppIconManager, balancePrimaryValueManager: BalancePrimaryValueManager, balanceConversionManager: BalanceConversionManager) {
         self.themeManager = themeManager
         self.launchScreenManager = launchScreenManager
         self.appIconManager = appIconManager
         self.balancePrimaryValueManager = balancePrimaryValueManager
         self.balanceConversionManager = balanceConversionManager
-        self.balanceHiddenManager = balanceHiddenManager
 
         conversionTokens = balanceConversionManager.conversionTokens
 
@@ -70,7 +62,6 @@ class AppearanceViewModel: ObservableObject {
         launchScreen = launchScreenManager.launchScreen
         conversionToken = balanceConversionManager.conversionToken
         balancePrimaryValue = balancePrimaryValueManager.balancePrimaryValue
-        balanceAutoHide = balanceHiddenManager.balanceAutoHide
         appIcon = appIconManager.appIcon
     }
 }

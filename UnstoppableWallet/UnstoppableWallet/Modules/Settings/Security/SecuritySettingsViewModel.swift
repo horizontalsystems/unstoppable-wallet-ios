@@ -4,6 +4,7 @@ class SecuritySettingsViewModel: ObservableObject {
     private let passcodeManager: PasscodeManager
     private let biometryManager: BiometryManager
     private let lockManager: LockManager
+    private let balanceHiddenManager: BalanceHiddenManager
     private var cancellables = Set<AnyCancellable>()
 
     @Published var currentPasscodeLevel: Int
@@ -19,10 +20,17 @@ class SecuritySettingsViewModel: ObservableObject {
         }
     }
 
-    init(passcodeManager: PasscodeManager, biometryManager: BiometryManager, lockManager: LockManager) {
+    @Published var balanceAutoHide: Bool {
+        didSet {
+            balanceHiddenManager.set(balanceAutoHide: balanceAutoHide)
+        }
+    }
+
+    init(passcodeManager: PasscodeManager, biometryManager: BiometryManager, lockManager: LockManager, balanceHiddenManager: BalanceHiddenManager) {
         self.passcodeManager = passcodeManager
         self.biometryManager = biometryManager
         self.lockManager = lockManager
+        self.balanceHiddenManager = balanceHiddenManager
 
         currentPasscodeLevel = passcodeManager.currentPasscodeLevel
         isPasscodeSet = passcodeManager.isPasscodeSet
@@ -30,6 +38,7 @@ class SecuritySettingsViewModel: ObservableObject {
         biometryType = biometryManager.biometryType
 
         isBiometryToggleOn = biometryManager.biometryEnabled
+        balanceAutoHide = balanceHiddenManager.balanceAutoHide
 
         passcodeManager.$currentPasscodeLevel
             .sink { [weak self] in self?.currentPasscodeLevel = $0 }

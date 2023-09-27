@@ -7,8 +7,7 @@ struct AppearanceModule {
             launchScreenManager: App.shared.launchScreenManager,
             appIconManager: App.shared.appIconManager,
             balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
-            balanceConversionManager: App.shared.balanceConversionManager,
-            balanceHiddenManager: App.shared.balanceHiddenManager
+            balanceConversionManager: App.shared.balanceConversionManager
         )
         return AppearanceView(viewModel: viewModel)
     }
