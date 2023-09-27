@@ -94,6 +94,9 @@
 
 "selector.any" = "어떤";
 
+"face_id" = "Face ID";
+"touch_id" = "Touch ID";
+
 // Access Camera
 
 "access_camera.message" = "%@이 QR코드를 스캔하기 위해선 카메라에 대한 접근이 필요합니다. \n\n설정 -> %@으로 가서 카메라 접근을 허용해 주세요.";
@@ -1070,11 +1073,50 @@
 // Settings -> Security
 
 "settings_security.title" = "보안 센터";
-"settings_security.passcode" = "비밀번호";
-"settings_security.change_pin" = "비밀번호 변경";
-"settings_security.touch_id" = "터치 아이디";
-"settings_security.face_id" = "얼굴인식 아이디";
-"settings_security.blockchain_settings" = "블록 체인 설정";
+"settings_security.enable_passcode" = "Enable Passcode";
+"settings_security.edit_passcode" = "Edit Passcode";
+"settings_security.disable_passcode" = "Disable Passcode";
+
+// Create Passcode
+
+"create_passcode.title" = "Create Passcode";
+"create_passcode.description" = "Your passcode will be used to unlock your wallet";
+"create_passcode.description.biometry" = "Set a passcode to enable %@";
+"create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
+"create_passcode.confirm_passcode" = "Confirm passcode";
+
+// Create Duress Passcode
+
+"create_duress_passcode.title" = "Duress Passcode";
+"create_duress_passcode.description" = "Set a passcode for Duress Mode";
+"create_duress_passcode.confirm_passcode" = "Confirm passcode";
+
+// Edit Passcode
+
+"edit_passcode.title" = "Edit Passcode";
+"edit_passcode.enter_new_passcode" = "Enter new passcode";
+"edit_passcode.confirm_new_passcode" = "Confirm new passcode";
+
+// Edit Duress Passcode
+
+"edit_duress_passcode.title" = "Edit Duress Passcode";
+"edit_duress_passcode.enter_new_passcode" = "Enter new passcode for Duress Mode";
+"edit_duress_passcode.confirm_new_passcode" = "Confirm new passcode";
+
+// Set Passcode
+
+"set_passcode.invalid_confirmation" = "Invalid Confirmation";
+
+// Unlock
+
+"unlock.title" = "Unlock";
+"unlock.passcode" = "Passcode";
+"unlock.biometry_reason" = "Unlock wallet";
+"unlock.attempts_left" = "Attempts left: %@";
+"unlock.disabled_until" = "Disabled until: %@";
+"unlock.regular_mode" = "Regular Mode";
+"unlock.random_mode" = "Random Mode";
+
 "security_settings.delete_alert_button" = "휴대전화에서 삭제";
 
 "btc_blockchain_settings.restore_source" = "매개 변수 복원";
@@ -1222,25 +1264,6 @@
 "contacts.settings.alert.description" = "기기에서 iCloud 저장소가 활성화되어 있는지 확인하세요.";
 
 "contacts.settings.alert_error.title" = "iCloud 오류";
-
-// Set PIN
-
-"set_pin.title" = "비밀번호";
-"set_pin.info" = "너의 비밀번호는 너의 지갑을 열어주고 돈을 보내는데 사용될 것입니다.";
-"set_pin.wrong_confirmation" = "비밀번호가 일치하지 않는다. 다시 시도하세요.";
-
-// Edit PIN
-
-"edit_pin.title" = "비밀번호 변경";
-"edit_pin.unlock_info" = "현재 비밀번호";
-"edit_pin.new_pin_info" = "새로운 비밀번호";
-
-// Unlock PIN
-
-"unlock_pin.info" = "비밀번호";
-"unlock_pin.cant_save_pin" = "아야! 저희는 귀하의 비밀번호를 저장할 수 없습니다, 가능한 빨리 연락해 주시기 바랍니다!";
-"unlock_pin.blocked_until" = "~때까지 사용 안 함: %@";
-
 
 // Key Types
 
