@@ -1077,6 +1077,8 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "settings_security.enable_passcode" = "Enable Passcode";
 "settings_security.edit_passcode" = "Edit Passcode";
 "settings_security.disable_passcode" = "Disable Passcode";
+"settings_security.balance_auto_hide" = "Balance Auto Hide";
+"settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
 
 // Create Passcode
 
@@ -1204,8 +1206,6 @@ To scan that bigly QR code. Just go to \"Settings\" -> and let %@ in!";
 "appearance.balance_value" = "Balance Value";
 "appearance.balance_value.coin_value" = "Coin Value";
 "appearance.balance_value.fiat_value" = "Fiat Value";
-
-"appearance.balance_auto_hide" = "Balance Auto Hide";
 
 // Settings -> Contacts
 
