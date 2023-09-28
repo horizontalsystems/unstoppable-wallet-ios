@@ -298,6 +298,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.downloading_blocks" = "Téléchargement des blocs";
 "balance.scanning_blocks" = "Blocs de numérisation";
 "balance.enhancing_transactions" = "Amélioration des transactions";
+"wait_for_synchronization" = "Wait for synchronization";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisation... %@";
