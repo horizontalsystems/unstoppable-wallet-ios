@@ -1082,6 +1082,10 @@
 "settings_security.disable_passcode" = "Disable Passcode";
 "settings_security.balance_auto_hide" = "Balance Auto Hide";
 "settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
+"settings_security.enable_duress_mode" = "Enable Duress Mode";
+"settings_security.edit_duress_passcode" = "Edit Duress Passcode";
+"settings_security.disable_duress_mode" = "Disable Duress Mode";
+"settings_security.duress_mode.description" = "A specialized mode designed to keep selected wallets safe under coercion.";
 
 // Create Passcode
 
@@ -1091,11 +1095,25 @@
 "create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
 "create_passcode.confirm_passcode" = "Confirm passcode";
 
-// Create Duress Passcode
+// Enable Duress Mode
 
-"create_duress_passcode.title" = "Duress Passcode";
-"create_duress_passcode.description" = "Set a passcode for Duress Mode";
-"create_duress_passcode.confirm_passcode" = "Confirm passcode";
+"enable_duress_mode.intro.title" = "Duress Passcode";
+"enable_duress_mode.intro.description" = "This mode allows user to setup multiple unlock app passcodes where a desired passcode shows only specified wallets. Designed to keep selected wallets safe under coercion or threats.";
+"enable_duress_mode.intro.notes" = "Notes";
+"enable_duress_mode.intro.biometrics.description" = "The %@ feature will work to unlock the Duress Mode. You can disable %@ for convenience.";
+"enable_duress_mode.intro.passcode_disabling" = "Passcode Disabling";
+"enable_duress_mode.intro.passcode_disabling.description" = "Disabling the passcode in the main mode will automatically reset the Duress Mode.";
+"enable_duress_mode.intro.passcode_change" = "Passcode Change";
+"enable_duress_mode.intro.passcode_change.description" = "Changing the passcode in the Duress Mode will also change the current passcode code for that mode.";
+
+"enable_duress_mode.select.title" = "Select Wallets";
+"enable_duress_mode.select.description" = "Select the wallets that will be displayed in Duress Mode.";
+"enable_duress_mode.select.wallets" = "지갑";
+"enable_duress_mode.select.watch_wallets" = "관찰 주소";
+
+"enable_duress_mode.passcode.title" = "Duress Passcode";
+"enable_duress_mode.passcode.description" = "Set a passcode for Duress Mode";
+"enable_duress_mode.passcode.confirm" = "Confirm passcode";
 
 // Edit Passcode
 
