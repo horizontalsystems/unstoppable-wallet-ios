@@ -11,19 +11,18 @@ class ActiveAccountStorage {
 
 extension ActiveAccountStorage {
 
-    var activeAccountId: String? {
-        get {
-            try! dbPool.read { db in
-                try ActiveAccount.fetchOne(db)?.accountId
-            }
+    func activeAccountId(level: Int) -> String? {
+        try? dbPool.read { db in
+            try ActiveAccount.filter(ActiveAccount.Columns.level == level).fetchOne(db)?.accountId
         }
-        set {
-            _ = try! dbPool.write { db in
-                if let accountId = newValue {
-                    try ActiveAccount(accountId: accountId).insert(db)
-                } else {
-                    try ActiveAccount.deleteAll(db)
-                }
+    }
+
+    func save(activeAccountId: String?, level: Int) {
+        _ = try? dbPool.write { db in
+            if let activeAccountId {
+                try ActiveAccount(level: level, accountId: activeAccountId).insert(db)
+            } else {
+                try ActiveAccount.filter(ActiveAccount.Columns.level == level).deleteAll(db)
             }
         }
     }

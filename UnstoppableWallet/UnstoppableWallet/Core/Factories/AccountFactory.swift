@@ -1,5 +1,5 @@
-import Foundation
 import EvmKit
+import Foundation
 
 class AccountFactory {
     private let accountManager: AccountManager
@@ -7,11 +7,9 @@ class AccountFactory {
     init(accountManager: AccountManager) {
         self.accountManager = accountManager
     }
-
 }
 
 extension AccountFactory {
-
     var nextAccountName: String {
         let nonWatchAccounts = accountManager.accounts.filter { !$0.watchAccount }
         let order = nonWatchAccounts.count + 1
@@ -22,7 +20,7 @@ extension AccountFactory {
     func nextAccountName(cex: Cex) -> String {
         let cexAccounts = accountManager.accounts.filter { account in
             switch account.type {
-            case .cex(let cexAccount): return cexAccount.cex == cex
+            case let .cex(cexAccount): return cexAccount.cex == cex
             default: return false
             }
         }
@@ -40,22 +38,23 @@ extension AccountFactory {
 
     func account(type: AccountType, origin: AccountOrigin, backedUp: Bool, name: String) -> Account {
         Account(
-                id: UUID().uuidString,
-                name: name,
-                type: type,
-                origin: origin,
-                backedUp: backedUp
+            id: UUID().uuidString,
+            level: accountManager.currentLevel,
+            name: name,
+            type: type,
+            origin: origin,
+            backedUp: backedUp
         )
     }
 
     func watchAccount(type: AccountType, name: String) -> Account {
         Account(
-                id: UUID().uuidString,
-                name: name,
-                type: type,
-                origin: .restored,
-                backedUp: true
+            id: UUID().uuidString,
+            level: accountManager.currentLevel,
+            name: name,
+            type: type,
+            origin: .restored,
+            backedUp: true
         )
     }
-
 }

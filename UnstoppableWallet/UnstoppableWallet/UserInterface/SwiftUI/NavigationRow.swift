@@ -10,6 +10,6 @@ struct NavigationRow<Content: View, Destination: View>: View {
                 content
             }
         }
-                .buttonStyle(RowButton())
+        .buttonStyle(RowButtonStyle())
     }
 }

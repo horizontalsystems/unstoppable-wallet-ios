@@ -157,11 +157,17 @@ class App {
         pasteboardManager = PasteboardManager()
         reachabilityManager = ReachabilityManager()
 
+        biometryManager = BiometryManager(localStorage: StorageKit.LocalStorage.default)
+        passcodeManager = PasscodeManager(biometryManager: biometryManager, secureStorage: keychainKit.secureStorage)
+        lockManager = LockManager(passcodeManager: passcodeManager, localStorage: StorageKit.LocalStorage.default, delegate: lockDelegate)
+        lockoutManager = LockoutManager(secureStorage: keychainKit.secureStorage)
+
+        blurManager = BlurManager(lockManager: lockManager)
+
         let accountRecordStorage = AccountRecordStorage(dbPool: dbPool)
         let accountStorage = AccountStorage(secureStorage: keychainKit.secureStorage, storage: accountRecordStorage)
         let activeAccountStorage = ActiveAccountStorage(dbPool: dbPool)
-        let accountCachedStorage = AccountCachedStorage(accountStorage: accountStorage, activeAccountStorage: activeAccountStorage)
-        accountManager = AccountManager(storage: accountCachedStorage)
+        accountManager = AccountManager(passcodeManager: passcodeManager, accountStorage: accountStorage, activeAccountStorage: activeAccountStorage)
         accountRestoreWarningManager = AccountRestoreWarningManager(accountManager: accountManager, localStorage: StorageKit.LocalStorage.default)
         accountFactory = AccountFactory(accountManager: accountManager)
 
@@ -243,13 +249,6 @@ class App {
 
         let favoriteCoinRecordStorage = FavoriteCoinRecordStorage(dbPool: dbPool)
         favoritesManager = FavoritesManager(storage: favoriteCoinRecordStorage)
-
-        biometryManager = BiometryManager(localStorage: StorageKit.LocalStorage.default)
-        passcodeManager = PasscodeManager(biometryManager: biometryManager, secureStorage: keychainKit.secureStorage)
-        lockManager = LockManager(passcodeManager: passcodeManager, localStorage: StorageKit.LocalStorage.default, delegate: lockDelegate)
-        lockoutManager = LockoutManager(secureStorage: keychainKit.secureStorage)
-
-        blurManager = BlurManager(lockManager: lockManager)
 
         let appVersionRecordStorage = AppVersionRecordStorage(dbPool: dbPool)
         let appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)

@@ -1,11 +1,10 @@
 import GRDB
 
-class ActiveAccount: Record {
-    let level: Int
+class ActiveAccount_v_0_36: Record {
+    let uniqueId: String = "active_account"
     let accountId: String
 
-    init(level: Int, accountId: String) {
-        self.level = level
+    init(accountId: String) {
         self.accountId = accountId
 
         super.init()
@@ -16,18 +15,17 @@ class ActiveAccount: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case level, accountId
+        case uniqueId, accountId
     }
 
     required init(row: Row) {
-        level = row[Columns.level]
         accountId = row[Columns.accountId]
 
         super.init(row: row)
     }
 
     override func encode(to container: inout PersistenceContainer) {
-        container[Columns.level] = level
+        container[Columns.uniqueId] = uniqueId
         container[Columns.accountId] = accountId
     }
 
