@@ -298,6 +298,7 @@
 "balance.downloading_blocks" = "正在下载块";
 "balance.scanning_blocks" = "扫描块";
 "balance.enhancing_transactions" = "加强交易";
+"wait_for_synchronization" = "Wait for synchronization";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "正在同步... %@";
