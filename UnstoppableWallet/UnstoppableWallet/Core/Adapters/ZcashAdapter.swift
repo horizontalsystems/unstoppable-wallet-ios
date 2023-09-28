@@ -84,7 +84,7 @@ class ZcashAdapter {
         network = ZcashNetworkBuilder.network(for: .mainnet)
 
         // todo: update fee settings
-        fee = 10_000//network.constants.defaultFee().decimalValue.decimalValue
+        fee = Zatoshi(10_000).decimalValue.decimalValue//network.constants.defaultFee().decimalValue.decimalValue
 
         token = wallet.token
         transactionSource = wallet.transactionSource
@@ -515,7 +515,7 @@ extension ZcashAdapter {
             outputParamsURL: outputParamsURL(uniqueId: uniqueId),
             saplingParamsSourceURL: SaplingParamsSourceURL.default,
             alias: .custom(uniqueId),
-            loggingPolicy: .default(.debug)
+            loggingPolicy: .default(.error)
         )
     }
 
@@ -714,9 +714,9 @@ extension ZcashAdapter: ISendZcashAdapter {
         max(0, balanceData.available - fee)
     }
 
-    func validate(address: String) throws -> AddressType {
-        guard address != receiveAddress.address else {
-            throw AppError.addressInvalid
+    func validate(address: String, checkSendToSelf: Bool = true) throws -> AddressType {
+        if checkSendToSelf, address == receiveAddress.address {
+            throw AppError.zcash(reason: .sendToSelf)
         }
 
         do {
