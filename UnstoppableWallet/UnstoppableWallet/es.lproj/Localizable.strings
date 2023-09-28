@@ -298,6 +298,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.downloading_blocks" = "Descargando bloques";
 "balance.scanning_blocks" = "Bloques de escaneo";
 "balance.enhancing_transactions" = "Mejorar las transacciones";
+"wait_for_synchronization" = "Wait for synchronization";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
