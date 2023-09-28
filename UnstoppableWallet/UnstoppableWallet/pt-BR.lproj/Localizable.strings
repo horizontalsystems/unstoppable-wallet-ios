@@ -298,6 +298,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.downloading_blocks" = "Baixando Blocos";
 "balance.scanning_blocks" = "Verificando Blocos";
 "balance.enhancing_transactions" = "Aprimorando Transações";
+"wait_for_synchronization" = "Wait for synchronization";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
