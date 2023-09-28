@@ -1,8 +1,7 @@
 import GRDB
 
-class AccountRecord: Record {
+class AccountRecord_v_0_36: Record {
     let id: String
-    let level: Int
     let name: String
     let type: String
     let origin: String
@@ -12,9 +11,8 @@ class AccountRecord: Record {
     var dataKey: String?
     var bip39Compliant: Bool?
 
-    init(id: String, level: Int, name: String, type: String, origin: String, backedUp: Bool, wordsKey: String?, saltKey: String?, dataKey: String?, bip39Compliant: Bool?) {
+    init(id: String, name: String, type: String, origin: String, backedUp: Bool, wordsKey: String?, saltKey: String?, dataKey: String?, bip39Compliant: Bool?) {
         self.id = id
-        self.level = level
         self.name = name
         self.type = type
         self.origin = origin
@@ -32,12 +30,11 @@ class AccountRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case id, level, name, type, origin, backedUp, wordsKey, saltKey, dataKey, bip39Compliant
+        case id, name, type, origin, backedUp, wordsKey, saltKey, dataKey, bip39Compliant
     }
 
     required init(row: Row) {
         id = row[Columns.id]
-        level = row[Columns.level]
         name = row[Columns.name]
         type = row[Columns.type]
         origin = row[Columns.origin]
@@ -52,7 +49,6 @@ class AccountRecord: Record {
 
     override func encode(to container: inout PersistenceContainer) {
         container[Columns.id] = id
-        container[Columns.level] = level
         container[Columns.name] = name
         container[Columns.type] = type
         container[Columns.origin] = origin

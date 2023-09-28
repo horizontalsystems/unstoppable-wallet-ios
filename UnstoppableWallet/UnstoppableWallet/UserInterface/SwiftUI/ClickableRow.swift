@@ -10,7 +10,7 @@ struct ClickableRow<Content: View>: View {
                 content
             }
         })
-                .buttonStyle(RowButton())
-                .contentShape(Rectangle())
+        .buttonStyle(RowButtonStyle())
+        .contentShape(Rectangle())
     }
 }

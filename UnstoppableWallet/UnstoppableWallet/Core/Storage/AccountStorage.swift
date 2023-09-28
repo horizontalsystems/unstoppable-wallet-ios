@@ -83,6 +83,7 @@ class AccountStorage {
 
         return Account(
                 id: id,
+                level: record.level,
                 name: record.name,
                 type: type,
                 origin: origin,
@@ -126,6 +127,7 @@ class AccountStorage {
 
         return AccountRecord(
                 id: id,
+                level: account.level,
                 name: account.name,
                 type: typeName.rawValue,
                 origin: account.origin.rawValue,

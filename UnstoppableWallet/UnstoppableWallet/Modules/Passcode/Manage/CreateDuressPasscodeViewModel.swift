@@ -1,21 +1,36 @@
 import Combine
 
 class CreateDuressPasscodeViewModel: SetPasscodeViewModel {
+    private let accountIds: [String]
+    private let accountManager: AccountManager
+
+    init(accountIds: [String], accountManager: AccountManager, passcodeManager: PasscodeManager) {
+        self.accountIds = accountIds
+        self.accountManager = accountManager
+
+        super.init(passcodeManager: passcodeManager)
+    }
+
     override var title: String {
-        "create_duress_passcode.title".localized
+        "enable_duress_mode.passcode.title".localized
     }
 
     override var passcodeDescription: String {
-        "create_duress_passcode.description".localized
+        "enable_duress_mode.passcode.description".localized
     }
 
     override var confirmDescription: String {
-        "create_duress_passcode.confirm_passcode".localized
+        "enable_duress_mode.passcode.confirm".localized
     }
 
     override func onEnter(passcode: String) {
         do {
             try passcodeManager.set(duressPasscode: passcode)
+
+            if !accountIds.isEmpty {
+                accountManager.setDuress(accountIds: accountIds)
+            }
+
             finishSubject.send()
         } catch {
             print("Create Duress Passcode Error: \(error)")

@@ -343,11 +343,11 @@ class StorageMigrator {
         }
 
         migrator.registerMigration("createActiveAccount") { db in
-            try db.create(table: ActiveAccount.databaseTableName) { t in
-                t.column(ActiveAccount.Columns.uniqueId.name, .text).notNull()
-                t.column(ActiveAccount.Columns.accountId.name, .text).notNull()
+            try db.create(table: ActiveAccount_v_0_36.databaseTableName) { t in
+                t.column(ActiveAccount_v_0_36.Columns.uniqueId.name, .text).notNull()
+                t.column(ActiveAccount_v_0_36.Columns.accountId.name, .text).notNull()
 
-                t.primaryKey([ActiveAccount.Columns.uniqueId.name], onConflict: .replace)
+                t.primaryKey([ActiveAccount_v_0_36.Columns.uniqueId.name], onConflict: .replace)
             }
         }
 
@@ -367,17 +367,17 @@ class StorageMigrator {
 
             try db.drop(table: AccountRecord_v_0_20.databaseTableName)
 
-            try db.create(table: AccountRecord.databaseTableName) { t in
-                t.column(AccountRecord.Columns.id.name, .text).notNull()
-                t.column(AccountRecord.Columns.name.name, .text).notNull()
-                t.column(AccountRecord.Columns.type.name, .text).notNull()
-                t.column(AccountRecord.Columns.origin.name, .text).notNull()
-                t.column(AccountRecord.Columns.backedUp.name, .boolean).notNull()
-                t.column(AccountRecord.Columns.wordsKey.name, .text)
-                t.column(AccountRecord.Columns.saltKey.name, .text)
-                t.column(AccountRecord.Columns.dataKey.name, .text)
+            try db.create(table: AccountRecord_v_0_36.databaseTableName) { t in
+                t.column(AccountRecord_v_0_36.Columns.id.name, .text).notNull()
+                t.column(AccountRecord_v_0_36.Columns.name.name, .text).notNull()
+                t.column(AccountRecord_v_0_36.Columns.type.name, .text).notNull()
+                t.column(AccountRecord_v_0_36.Columns.origin.name, .text).notNull()
+                t.column(AccountRecord_v_0_36.Columns.backedUp.name, .boolean).notNull()
+                t.column(AccountRecord_v_0_36.Columns.wordsKey.name, .text)
+                t.column(AccountRecord_v_0_36.Columns.saltKey.name, .text)
+                t.column(AccountRecord_v_0_36.Columns.dataKey.name, .text)
 
-                t.primaryKey([AccountRecord.Columns.id.name], onConflict: .replace)
+                t.primaryKey([AccountRecord_v_0_36.Columns.id.name], onConflict: .replace)
             }
 
             for (index, oldAccount) in oldAccounts.enumerated() {
@@ -402,7 +402,7 @@ class StorageMigrator {
                     accountType = "mnemonic"
                 }
 
-                let newAccount = AccountRecord(
+                let newAccount = AccountRecord_v_0_36(
                         id: oldAccount.id,
                         name: "Wallet \(index + 1)",
                         type: accountType,
@@ -417,7 +417,7 @@ class StorageMigrator {
                 try newAccount.insert(db)
 
                 if index == 0 {
-                    let activeAccount = ActiveAccount(accountId: oldAccount.id)
+                    let activeAccount = ActiveAccount_v_0_36(accountId: oldAccount.id)
                     try activeAccount.insert(db)
                 }
             }
@@ -495,7 +495,7 @@ class StorageMigrator {
 
         migrator.registerMigration("fillSaltToAccountsKeychain") { db in
             let keychain = Keychain(service: "io.horizontalsystems.bank.dev")
-            let records = try AccountRecord.fetchAll(db)
+            let records = try AccountRecord_v_0_36.fetchAll(db)
 
             for record in records {
                 try keychain.set("", key: "mnemonic_\(record.id)_salt")
@@ -697,8 +697,8 @@ class StorageMigrator {
         }
 
         migrator.registerMigration("checkBIP39Compliance") { db in
-            try db.alter(table: AccountRecord.databaseTableName) { t in
-                t.add(column: AccountRecord.Columns.bip39Compliant.name, .boolean)
+            try db.alter(table: AccountRecord_v_0_36.databaseTableName) { t in
+                t.add(column: AccountRecord_v_0_36.Columns.bip39Compliant.name, .boolean)
             }
         }
 
@@ -781,6 +781,29 @@ class StorageMigrator {
                 t.column(EnabledWalletCache.Columns.balances.name, .text).notNull()
 
                 t.primaryKey([EnabledWalletCache.Columns.tokenQueryId.name, EnabledWalletCache_v_0_36.Columns.accountId.name], onConflict: .replace)
+            }
+        }
+
+        migrator.registerMigration("Add level to AccountRecord") { db in
+            try db.alter(table: AccountRecord.databaseTableName) { t in
+                t.add(column: AccountRecord.Columns.level.name, .integer).defaults(to: 0)
+            }
+        }
+
+        migrator.registerMigration("Update ActiveAccount table") { db in
+            let activeAccountId = try ActiveAccount_v_0_36.fetchOne(db)?.accountId
+
+            try db.drop(table: ActiveAccount_v_0_36.databaseTableName)
+
+            try db.create(table: ActiveAccount.databaseTableName) { t in
+                t.column(ActiveAccount.Columns.level.name, .integer).notNull()
+                t.column(ActiveAccount.Columns.accountId.name, .text).notNull()
+
+                t.primaryKey([ActiveAccount.Columns.level.name], onConflict: .replace)
+            }
+
+            if let activeAccountId {
+                try ActiveAccount(level: 0, accountId: activeAccountId).insert(db)
             }
         }
 

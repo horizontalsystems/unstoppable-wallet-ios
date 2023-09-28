@@ -67,28 +67,65 @@ struct SecuritySettingsView: View {
 
                     ListSectionFooter(text: "settings_security.balance_auto_hide.description".localized)
                 }
-            }
-            .sheet(item: $createPasscodeReason) { reason in
-                CreatePasscodeModule.createPasscodeView(
-                    reason: reason,
-                    onCreate: {
-                        switch reason {
-                        case .biometry:
-                            viewModel.set(biometryEnabled: true)
-                        case .duress:
-                            DispatchQueue.main.async {
-                                createDuressPasscodePresented = true
+
+                VStack(spacing: 0) {
+                    ListSection {
+                        if viewModel.isDuressPasscodeSet {
+                            ClickableRow(action: {
+                                unlockReason = .changeDuressPasscode
+                            }) {
+                                Image("switch_wallet_24").themeIcon(color: .themeJacob)
+                                Text("settings_security.edit_duress_passcode".localized).themeBody(color: .themeJacob)
                             }
-                        default: ()
-                        }
-                    },
-                    onCancel: {
-                        switch reason {
-                        case .biometry: viewModel.isBiometryToggleOn = false
-                        default: ()
+
+                            ClickableRow(action: {
+                                unlockReason = .disableDuressMode
+                            }) {
+                                Image("trash_24").themeIcon(color: .themeLucian)
+                                Text("settings_security.disable_duress_mode".localized).themeBody(color: .themeLucian)
+                            }
+                        } else {
+                            ClickableRow(action: {
+                                if viewModel.isPasscodeSet {
+                                    unlockReason = .enableDuressMode
+                                } else {
+                                    createPasscodeReason = .duress
+                                }
+                            }) {
+                                Image("switch_wallet_24").themeIcon(color: .themeJacob)
+                                Text("settings_security.enable_duress_mode".localized).themeBody(color: .themeJacob)
+                            }
                         }
                     }
-                )
+
+                    ListSectionFooter(text: "settings_security.duress_mode.description".localized)
+                }
+            }
+            .sheet(item: $createPasscodeReason) { reason in
+                ThemeNavigationView {
+                    CreatePasscodeModule.createPasscodeView(
+                        reason: reason,
+                        showParentSheet: Binding(get: { createPasscodeReason != nil }, set: { if !$0 { createPasscodeReason = nil } }),
+                        onCreate: {
+                            switch reason {
+                            case .biometry:
+                                viewModel.set(biometryEnabled: true)
+                            case .duress:
+                                DispatchQueue.main.async {
+                                    createDuressPasscodePresented = true
+                                }
+                            default: ()
+                            }
+                        },
+                        onCancel: {
+                            switch reason {
+                            case .biometry: viewModel.isBiometryToggleOn = false
+                            default: ()
+                            }
+                        }
+                    )
+                }
+                .interactiveDismiss(canDismissSheet: false)
             }
             .sheet(item: $unlockReason) { reason in
                 ThemeNavigationView {
@@ -115,16 +152,17 @@ struct SecuritySettingsView: View {
                 }
             }
             .sheet(isPresented: $editPasscodePresented) {
-                EditPasscodeModule.editPasscodeView()
+                ThemeNavigationView { EditPasscodeModule.editPasscodeView(showParentSheet: $editPasscodePresented) }
             }
             .sheet(isPresented: $createDuressPasscodePresented) {
-                CreatePasscodeModule.createDuressPasscodeView()
+                ThemeNavigationView { DuressModeModule.view(showParentSheet: $createDuressPasscodePresented) }
             }
             .sheet(isPresented: $editDuressPasscodePresented) {
-                EditPasscodeModule.editDuressPasscodeView()
+                ThemeNavigationView { EditPasscodeModule.editDuressPasscodeView(showParentSheet: $editDuressPasscodePresented) }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
+        .navigationTitle("settings_security.title".localized)
     }
 
     enum UnlockReason: Identifiable {

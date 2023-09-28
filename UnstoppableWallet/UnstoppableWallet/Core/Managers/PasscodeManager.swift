@@ -11,9 +11,9 @@ class PasscodeManager {
 
     private var passcodes = [String]()
 
-    @PostPublished private(set) var currentPasscodeLevel: Int
-    @PostPublished private(set) var isPasscodeSet = false
-    @PostPublished private(set) var isDuressPasscodeSet = false
+    @DistinctPublished private(set) var currentPasscodeLevel: Int
+    @DistinctPublished private(set) var isPasscodeSet = false
+    @DistinctPublished private(set) var isDuressPasscodeSet = false
 
     init(biometryManager: BiometryManager, secureStorage: ISecureStorage) {
         self.biometryManager = biometryManager

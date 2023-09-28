@@ -7,7 +7,7 @@ struct ListRow<Content: View>: View {
         HStack(spacing: .margin16) {
             content
         }
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
-                .frame(minHeight: .heightCell48)
+        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
+        .frame(minHeight: .heightCell48)
     }
 }
